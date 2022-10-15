@@ -1,6 +1,10 @@
 export enum ServerEvent {
     ADMIN_RESET_SKIN = 'soz-core:server:admin:reset-skin',
-    ADMIN_SET_METADATA = 'soz-core:server:admin:set-health-metadata',
+    ADMIN_SET_AIO = 'soz-core:server:admin:set-aio',
+    ADMIN_SET_METADATA = 'soz-core:server:admin:set-metadata',
+    ADMIN_SET_STAMINA = 'soz-core:server:admin:set-stamina',
+    ADMIN_SET_STRENGTH = 'soz-core:server:admin:set-strength',
+    ADMIN_SET_STRESS_LEVEL = 'soz-core:server:admin:set-stress-level',
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
 

@@ -24,6 +24,7 @@ export class AdminMenuInteractiveProvider {
 
     private multiplayerTags: Map<string, number> = new Map();
     private playerBlips: Map<string, number> = new Map();
+    private previousPlayers: string[] = [];
 
     @OnNuiEvent(NuiEvent.AdminToggleDisplayOwners)
     public async toggleDisplayOwners(value: boolean): Promise<void> {
@@ -74,7 +75,13 @@ export class AdminMenuInteractiveProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayerNames)
-    public async toggleDisplayPlayerNames(value: boolean): Promise<void> {
+    public async toggleDisplayPlayerNames({
+        value,
+        withDetails,
+    }: {
+        value: boolean;
+        withDetails: boolean;
+    }): Promise<void> {
         if (!value) {
             for (const value of this.multiplayerTags.values()) {
                 SetMpGamerTagVisibility(value, 0, false);
@@ -84,9 +91,9 @@ export class AdminMenuInteractiveProvider {
             this.intervalHandlers.displayPlayerNames = null;
             return;
         }
-        await this.displayPlayerNames();
+        await this.displayPlayerNames(withDetails);
         this.intervalHandlers.displayPlayerNames = setInterval(async () => {
-            await this.displayPlayerNames();
+            await this.displayPlayerNames(withDetails);
         }, 5000);
     }
 
@@ -101,6 +108,14 @@ export class AdminMenuInteractiveProvider {
         }
         this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
             const players = await emitRpc<FullAdminPlayer[]>(RpcEvent.ADMIN_GET_FULL_PLAYERS);
+            // First clean the left players
+            for (const previousPlayer of this.previousPlayers) {
+                if (!players.find(player => player.citizenId === previousPlayer)) {
+                    this.QBCore.removeBlip(this.playerBlips.get(previousPlayer).toString());
+                    this.playerBlips.delete(previousPlayer);
+                }
+            }
+
             for (const player of players) {
                 const blipId = this.playerBlips.get(player.citizenId);
 
@@ -113,16 +128,19 @@ export class AdminMenuInteractiveProvider {
                         coords: { x: coords[0], y: coords[1], z: coords[2] },
                         heading: player.heading,
                         name: player.name,
+                        playername: player.name,
                         showheading: true,
                         sprite: 1,
                     });
+                    SetBlipCategory(createdBlip, 7);
                     this.playerBlips.set(player.citizenId, createdBlip);
                 }
             }
+            this.previousPlayers = players.map(player => player.citizenId);
         }, 2500);
     }
 
-    private async displayPlayerNames(): Promise<void> {
+    private async displayPlayerNames(withDetails: boolean): Promise<void> {
         for (const value of Object.values(this.multiplayerTags)) {
             RemoveMpGamerTag(value);
             this.multiplayerTags.delete(value);
@@ -132,9 +150,14 @@ export class AdminMenuInteractiveProvider {
 
         players.forEach(player => {
             this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.id));
+
+            let name = player.name;
+            if (withDetails) {
+                name += ` | ${player.id} | ${player.license}`;
+            }
             CreateMpGamerTagWithCrewColor(
                 this.multiplayerTags.get(player.citizenId),
-                player.name,
+                name,
                 false,
                 false,
                 '',

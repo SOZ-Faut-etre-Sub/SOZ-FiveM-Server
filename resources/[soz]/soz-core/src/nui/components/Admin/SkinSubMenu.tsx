@@ -51,12 +51,13 @@ const SKIN_OPTIONS = [
     { key: 'player_male', label: 'Joueur Homme', value: 'mp_m_freemode_01' },
 ];
 
-const TRANSLATED_INDEXES: { [key: string]: string } = {
+const TRANSLATED_INDEXES: Record<string, string> = {
+    Head: 'Tête',
     Mask: 'Masque',
     Hair: 'Coupe de cheveux',
     Torso: 'Torse',
     Legs: 'Jambes',
-    Bags: 'Sacs',
+    Bag: 'Sac',
     Shoes: 'Chaussures',
     Accessories: 'Accessoires',
     Undershirt: 'Undershirt',
@@ -65,9 +66,9 @@ const TRANSLATED_INDEXES: { [key: string]: string } = {
     Tops: 'Hauts',
     Hats: 'Chapeaux',
     Glasses: 'Lunettes',
-    EarPieces: 'Accessoires oreilles',
-    Watches: 'Montres',
-    Bracelets: 'Bracelets',
+    Ear: 'Accessoires oreilles',
+    LeftHand: 'Bras gauche',
+    RightHand: 'Bras droit',
 };
 
 export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updateState, state }) => {
