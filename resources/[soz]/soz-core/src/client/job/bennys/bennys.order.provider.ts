@@ -3,6 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
 import { NuiEvent } from '../../../shared/event';
+import { JobPermission } from '../../../shared/job';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
 import { Err, Ok } from '../../../shared/result';
@@ -94,7 +95,10 @@ export class BennysOrderProvider {
                 blackoutJob: 'bennys',
                 blackoutGlobal: true,
                 canInteract: () => {
-                    return this.playerService.isOnDuty() && this.QBCore.hasJobPermission('bennys', 'order');
+                    return (
+                        this.playerService.isOnDuty() &&
+                        this.QBCore.hasJobPermission('bennys', JobPermission.Bennys_Order)
+                    );
                 },
                 action: async () => {
                     this.nuiMenu.openMenu(MenuType.BennysOrderMenu);
