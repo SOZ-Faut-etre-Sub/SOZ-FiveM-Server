@@ -8,14 +8,6 @@ StonkJob.CollectedShops = {} -- In-memory, player-based save
 local playerInsideCloakroomZone = false
 
 Citizen.CreateThread(function()
-    -- BLIP
-    QBCore.Functions.CreateBlip("stonk-dep", {
-        name = StonkConfig.Blip.Name,
-        coords = StonkConfig.Blip.Coords,
-        sprite = StonkConfig.Blip.Icon,
-        scale = StonkConfig.Blip.Scale,
-    })
-
     -- MENU
     StonkJob.Menus["cash-transfer"] = {
         menu = MenuV:CreateMenu(nil, "Stonk Depository", "menu_job_carrier", "soz", "stonk:menu"),
@@ -263,49 +255,6 @@ StonkJob.Functions.GetItemCountFromInventory = function()
         end
     end
 end
-
-StonkJob.Functions.ResaleBags = function()
-    local count = StonkJob.Functions.GetItemCountFromInventory()
-    if not count or count < 1 then
-        exports["soz-hud"]:DrawNotification("Vous n'avez pas de sacs d'argent sur vous", "error")
-        return
-    elseif count >= StonkConfig.Resale.Quantity then
-        count = StonkConfig.Resale.Quantity
-    end
-
-    QBCore.Functions.Progressbar("stonk-resale-bag", string.format("Vous déposez %d sacs d'argent", count), StonkConfig.Resale.Duration * count, false, true,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(wasCancelled)
-        if not wasCancelled then
-            local success = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-resale-bag", count)
-            if success then
-                exports["soz-hud"]:DrawNotification(string.format("Vous avez déposé ~g~%d sacs d'argent", tonumber(count)))
-
-                TriggerServerEvent("monitor:server:event", "job_stonk_resale_bag", {}, {
-                    quantity = tonumber(count),
-                    position = GetEntityCoords(PlayerPedId()),
-                }, true)
-
-                Citizen.Wait(1000)
-                StonkJob.Functions.ResaleBags()
-            end
-        else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas déposé les sacs d'argent", "error")
-        end
-    end, function()
-        exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la revente de sacs d'argent", "error")
-    end)
-end
-
-AddEventHandler("soz-jobs:client:stonk-resale-bag", function()
-    Citizen.CreateThread(function()
-        StonkJob.Functions.ResaleBags()
-    end)
-end)
 
 -- FILL IN
 StonkJob.Functions.FillIn = function(data)
