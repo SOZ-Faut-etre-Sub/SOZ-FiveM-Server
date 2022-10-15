@@ -1,5 +1,15 @@
 -- LTD Gasoline PolyZone Locations
-Locations["ltdgasoline"] = {
+Locations["ltdgasoline-north"] = {
+    [5] = BoxZone:Create(vector3(1702.08, 4926.8, 42.06), 7.6, 13.6,
+                         {
+        name = "ltdgasoline5",
+        heading = 55,
+        minZ = 41.06,
+        maxZ = 43.06,
+        debugPoly = LocationDebugPoly,
+    }),
+}
+Locations["ltdgasoline-south"] = {
     [1] = BoxZone:Create(vector3(-50.3, -1753.56, 29.42), 7.6, 13.6,
                          {
         name = "ltdgasoline",
@@ -24,14 +34,6 @@ Locations["ltdgasoline"] = {
         heading = 10,
         minZ = 68.21,
         maxZ = 70.21,
-        debugPoly = LocationDebugPoly,
-    }),
-    [5] = BoxZone:Create(vector3(1702.08, 4926.8, 42.06), 7.6, 13.6,
-                         {
-        name = "ltdgasoline5",
-        heading = 55,
-        minZ = 41.06,
-        maxZ = 43.06,
         debugPoly = LocationDebugPoly,
     }),
     [6] = BoxZone:Create(vector3(-1424.8, -265.62, 46.32), 7.6, 13.6,
