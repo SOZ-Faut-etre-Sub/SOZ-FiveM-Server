@@ -64,7 +64,7 @@ export const StonkConfig = {
             society_gain: 360,
             refill_value: 6000,
             amount: 5,
-            timeout: 30 * 60 * 1000,
+            timeout: 10 * 60 * 1000,
             takeInAvailableIn: [
                 'binco',
                 'tattoo',
@@ -91,7 +91,7 @@ export const StonkConfig = {
             refill_value: 2000,
             society_gain: 120,
             amount: 5,
-            timeout: 10 * 60 * 1000,
+            timeout: 30 * 60 * 1000,
             takeInAvailableIn: ['ponsonbys'],
         },
     },
