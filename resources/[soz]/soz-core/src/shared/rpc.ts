@@ -11,5 +11,6 @@ export enum RpcEvent {
     JOB_GET_JOBS = 'soz-core:jobs:get-jobs',
     PLAYER_GET_HEALTH_BOOK = 'soz-core:player:get-health-book',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
+    STORAGE_SEARCH = 'soz-core:storage:search',
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
 }
