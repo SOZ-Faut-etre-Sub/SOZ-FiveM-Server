@@ -12,7 +12,7 @@ Config.Products["247supermarket-north"] = Config.Products["supermarket"]
 Config.Products["247supermarket-south"] = Config.Products["supermarket"]
 Config.Products["ltdgasoline-north"] = Config.Products["supermarket"]
 Config.Products["ltdgasoline-south"] = Config.Products["supermarket"]
-Config.Products["robsliquo-northr"] = Config.Products["supermarket"]
+Config.Products["robsliquor-north"] = Config.Products["supermarket"]
 Config.Products["robsliquor-south"] = Config.Products["supermarket"]
 
 Config.Products["zkea"] = {[1] = {name = "house_map", price = 15, amount = 2000}}
@@ -33,9 +33,7 @@ Config.Locations["247supermarket-south"] = {
     vector4(372.45, 326.52, 103.57, 254.29),
 }
 
-Config.Locations["ltdgasoline-north"] = {
-    vector4(1698.2, 4922.86, 42.06, 324.94),
-}
+Config.Locations["ltdgasoline-north"] = {vector4(1698.2, 4922.86, 42.06, 324.94)}
 Config.Locations["ltdgasoline-south"] = {
     vector4(-46.7, -1757.9, 29.42, 49.1),
     vector4(-706.16, -913.5, 19.22, 88.63),
