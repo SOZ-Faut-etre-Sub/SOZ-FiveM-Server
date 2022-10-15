@@ -26,6 +26,7 @@ export enum ServerEvent {
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
 
     STONK_RESELL = 'soz-core:server:job:stonk:resell',
+    STONK_COLLECT = 'soz-core:server:job:stonk:collect',
 
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',

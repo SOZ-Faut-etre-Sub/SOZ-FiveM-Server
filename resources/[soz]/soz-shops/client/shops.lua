@@ -1,12 +1,14 @@
 local stonkAction = {
-    event = "soz-jobs:client:stonk-collect-bag",
     icon = "c:stonk/collecter.png",
     label = "Collecter",
     canInteract = function()
-        return exports["soz-jobs"]:CanBagsBeCollected(currentShop)
+        return exports["soz-core"]:CanBagsBeCollected(currentShopBrand, currentShop)
     end,
     blackoutGlobal = true,
     blackoutJob = true,
+    action = function()
+        TriggerServerEvent("soz-core:server:job:stonk:collect", currentShopBrand, currentShop)
+    end,
 }
 
 CreateThread(function()

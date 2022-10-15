@@ -176,28 +176,6 @@ local function isOnDuty()
     return PlayerData.job.onduty
 end
 
-StonkJob.Permissions.CanBagsBeCollected = function(shopId)
-    local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.CollectBags)
-
-    if hasJobPermission then
-        local lastCollect = StonkJob.CollectedShops[shopId]
-        if lastCollect then
-            local now = GetGameTimer()
-            return isOnDuty() and lastCollect + StonkConfig.Collection.Cooldown < now
-        end
-    end
-
-    return isOnDuty() and hasJobPermission
-end
-exports("CanBagsBeCollected", StonkJob.Permissions.CanBagsBeCollected)
-
-StonkJob.Permissions.CanBagsBeResold = function()
-    local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.ResaleBags)
-
-    return isOnDuty() and hasJobPermission
-end
-exports("CanBagsBeResold", StonkJob.Permissions.CanBagsBeResold)
-
 StonkJob.Permissions.CanFillIn = function()
     local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.FillIn)
     return isOnDuty() and hasJobPermission
@@ -207,55 +185,6 @@ exports("CanFillIn", StonkJob.Permissions.CanFillIn)
 ---
 --- FARM
 ---
--- BAG COLLECTION
-StonkJob.Functions.CollectBags = function(currentShop, nBags)
-    local duration = StonkConfig.Collection.Duration * nBags
-    QBCore.Functions.Progressbar("stonk-collect-bag", "Vous collectez des sacs d'argent", duration, false, true,
-                                 {
-        disableMovement = true,
-        disableCarMovement = false,
-        disableMouse = false,
-        disableCombat = false,
-    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function(wasCancelled)
-        if not wasCancelled then
-            local success = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-collect-bag", nBags)
-            if success then
-                TriggerServerEvent("monitor:server:event", "job_stonk_collect_bag", {}, {
-                    quantity = nBags,
-                    position = GetEntityCoords(PlayerPedId()),
-                }, true)
-
-                StonkJob.CollectedShops[currentShop] = GetGameTimer()
-            end
-        else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas collecté les sacs d'argent", "error")
-        end
-    end)
-end
-
-AddEventHandler("soz-jobs:client:stonk-collect-bag", function()
-    local currentShop = exports["soz-shops"]:GetCurrentShop()
-
-    if not StonkJob.Permissions.CanBagsBeCollected(currentShop) then
-        return
-    end
-
-    Citizen.CreateThread(function()
-        local range = StonkConfig.Collection.Range
-        local nBags = math.random(range.min, range.max)
-        StonkJob.Functions.CollectBags(currentShop, nBags)
-    end)
-end)
-
--- BAG RESALE
-StonkJob.Functions.GetItemCountFromInventory = function()
-    for _, item in pairs(PlayerData.items or {}) do
-        if item.name == StonkConfig.Collection.BagItem then
-            return item.amount
-        end
-    end
-end
-
 -- FILL IN
 StonkJob.Functions.FillIn = function(data)
     QBCore.Functions.Progressbar("stonk_fill_in", "Vous remplissez...", StonkConfig.FillIn.Duration, false, true,
