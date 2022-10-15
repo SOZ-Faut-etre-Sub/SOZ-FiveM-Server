@@ -41,7 +41,11 @@ function SupermarketShop:GenerateMenu()
 end
 
 --- Exports shop
-ShopContext["247supermarket"] = SupermarketShop:new("Superette", "247supermarket", {sprite = 52, color = 2}, "ig_ashley")
-ShopContext["ltdgasoline"] = SupermarketShop:new("Superette", "ltdgasoline", {sprite = 52, color = 2}, "s_m_m_autoshop_02")
-ShopContext["robsliquor"] = SupermarketShop:new("Superette", "robsliquor", {sprite = 52, color = 2}, "a_m_m_genfat_02")
+ShopContext["247supermarket-north"] = SupermarketShop:new("Superette", "247supermarket-north", {sprite = 52, color = 2}, "ig_ashley")
+ShopContext["247supermarket-south"] = SupermarketShop:new("Superette", "247supermarket-south", {sprite = 52, color = 2}, "ig_ashley")
+ShopContext["ltdgasoline-north"] = SupermarketShop:new("Superette", "ltdgasoline-north", {sprite = 52, color = 2}, "s_m_m_autoshop_02")
+ShopContext["ltdgasoline-south"] = SupermarketShop:new("Superette", "ltdgasoline-south", {sprite = 52, color = 2}, "s_m_m_autoshop_02")
+ShopContext["robsliquor-north"] = SupermarketShop:new("Superette", "robsliquor-north", {sprite = 52, color = 2}, "a_m_m_genfat_02")
+ShopContext["robsliquor-south"] = SupermarketShop:new("Superette", "robsliquor-south", {sprite = 52, color = 2}, "a_m_m_genfat_02")
+
 ShopContext["zkea"] = SupermarketShop:new("Zkea", "zkea", {sprite = 123, color = 69}, "ig_brad")
