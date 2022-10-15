@@ -6,10 +6,10 @@ export class ClothingService {
     public applyComponent(component: Component, outfitItem: OutfitItem) {
         SetPedComponentVariation(
             PlayerPedId(),
-            component,
-            outfitItem.Drawable || 0,
-            outfitItem.Texture || 0,
-            outfitItem.Palette || 0
+            Number(component),
+            Number(outfitItem.Drawable),
+            Number(outfitItem.Texture),
+            Number(outfitItem.Palette)
         );
     }
 

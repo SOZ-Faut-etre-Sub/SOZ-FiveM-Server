@@ -2,15 +2,15 @@ export enum Component {
     Head = 0,
     Mask = 1,
     Hair = 2,
-    Arms = 3,
-    Pants = 4,
+    Torso = 3,
+    Legs = 4,
     Bag = 5,
     Shoes = 6,
-    Chain = 7,
-    Top = 8,
-    Bulletproof = 9,
+    Accessories = 7,
+    Undershirt = 8,
+    BodyArmor = 9,
     Decals = 10,
-    Torso = 11,
+    Tops = 11,
 }
 
 export enum Prop {
