@@ -8,6 +8,7 @@ local playerHaveJob = function(player, owner)
 end
 
 local playerHaveJobAndDuty = function(player, owner)
+    print("Check player have job and duty: ", player.PlayerData.job.id, owner, player.PlayerData.job.onduty)
     return player.PlayerData.job.id == owner and player.PlayerData.job.onduty
 end
 

@@ -38,6 +38,28 @@ local function getCocktailTargetOption()
     }
 end
 
+local function getCloakroomTargetOption(storage)
+    return {
+        color = 'baun',
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = "baun",
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            local result = exports["soz-inventory"]:Search(storage, 'work_clothes')
+            if not result then
+                TriggerEvent("hud:client:DrawNotification", "Il n'y a plus de tenues de travail dans le vestiaire.", "error")
+                return
+            end
+            TriggerEvent('jobs:client:baun:OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["baun_bahama_boss_storage"] = {
     label = "Stockage Patron Bahama Mamas",
     type = "boss_storage",
@@ -236,6 +258,7 @@ Config.Storages["baun_unicorn_cloakroom_1"] = {
     minZ = 27.82,
     maxZ = 30.27,
     heading = 30,
+    targetOption = getCloakroomTargetOption(storage),
 }
 
 Config.Storages["baun_unicorn_cloakroom_2"] = {
@@ -247,6 +270,7 @@ Config.Storages["baun_unicorn_cloakroom_2"] = {
     minZ = 27.87,
     maxZ = 30.27,
     heading = 30,
+    targetOption = getCloakroomTargetOption(storage),
 }
 
 Config.Storages["baun_bahama_cloakroom_1"] = {
@@ -258,4 +282,5 @@ Config.Storages["baun_bahama_cloakroom_1"] = {
     minZ = 29.92,
     maxZ = 31.92,
     heading = 303,
+    targetOption = getCloakroomTargetOption(storage),
 }
