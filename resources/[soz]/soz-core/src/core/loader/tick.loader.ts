@@ -15,15 +15,19 @@ export class TickLoader {
             const method = provider[methodName].bind(provider);
 
             const tick = setTick(async () => {
-                const result = await method();
+                try {
+                    const result = await method();
 
-                if (result === false) {
-                    clearTick(tick);
-                    return;
-                }
+                    if (result === false) {
+                        clearTick(tick);
+                        return;
+                    }
 
-                if (interval > 0) {
-                    await wait(interval);
+                    if (interval > 0) {
+                        await wait(interval);
+                    }
+                } catch (error) {
+                    console.error(`Error in ${provider.toString()}:${methodName}`, error);
                 }
             });
 
