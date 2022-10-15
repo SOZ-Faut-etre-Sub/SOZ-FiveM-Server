@@ -200,7 +200,7 @@ const GymWardrobeConfig: WardrobeConfig = {
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 15, Texture: 0, Palette: 0 },
             },
             Props: {},
         },
@@ -214,7 +214,7 @@ const GymWardrobeConfig: WardrobeConfig = {
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Torso]: { Drawable: 237, Texture: 0, Palette: 13 },
+                [Component.Tops]: { Drawable: 237, Texture: 0, Palette: 13 },
             },
             Props: {},
         },
@@ -230,7 +230,7 @@ const GymWardrobeConfig: WardrobeConfig = {
                 [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Torso]: { Drawable: 18, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 18, Texture: 0, Palette: 0 },
             },
             Props: {},
         },
@@ -244,7 +244,7 @@ const GymWardrobeConfig: WardrobeConfig = {
                 [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Torso]: { Drawable: 284, Texture: 4, Palette: 0 },
+                [Component.Tops]: { Drawable: 284, Texture: 4, Palette: 0 },
             },
             Props: {},
         },
@@ -622,7 +622,7 @@ export class PlayerHealthProvider {
                     menWardrobe['Homme sport'].Components[Component.Legs].Texture = getRandomItem([0, 5, 7, 12]);
                     menWardrobe['Homme sport'].Components[Component.Shoes].Texture = getRandomInt(0, 4);
                     menWardrobe['Homme sport'].Components[Component.Undershirt].Texture = getRandomInt(0, 7);
-                    menWardrobe['Homme sport'].Components[Component.Torso].Texture = getRandomInt(0, 20);
+                    menWardrobe['Homme sport'].Components[Component.Tops].Texture = getRandomInt(0, 20);
 
                     const randomSwimTexture = getRandomInt(0, 11);
 
@@ -630,7 +630,7 @@ export class PlayerHealthProvider {
                     femaleWardrobe['Femme natation'].Components[Component.Torso].Texture = randomSwimTexture;
                     femaleWardrobe['Femme sport'].Components[Component.Legs].Texture = getRandomInt(0, 2);
                     femaleWardrobe['Femme sport'].Components[Component.Shoes].Texture = getRandomInt(0, 3);
-                    femaleWardrobe['Femme sport'].Components[Component.Torso].Texture = getRandomInt(0, 11);
+                    femaleWardrobe['Femme sport'].Components[Component.Tops].Texture = getRandomInt(0, 11);
 
                     const outfitSelection = await this.playerWardrobe.selectOutfit(GymWardrobeConfig, 'Tenue civile');
 
