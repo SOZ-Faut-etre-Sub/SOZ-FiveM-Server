@@ -4,6 +4,7 @@ type BoxZoneOptions = {
     minZ?: number;
     maxZ?: number;
     heading?: number;
+    data?: any;
 };
 
 const rotatePoint = (center: Point2D | Point3D, point: Point2D | Point3D, angleInRad: number): Point2D => {

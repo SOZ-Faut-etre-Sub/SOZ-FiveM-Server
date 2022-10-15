@@ -13,6 +13,7 @@ import { FoodModule } from './server/job/food/food.module';
 import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { PlayerModule } from './server/player/player.module';
+import { StorageModule } from './server/storage/storage.module';
 import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
 import { VoipModule } from './server/voip/voip.module';
@@ -36,7 +37,8 @@ async function bootstrap() {
         AdminModule,
         VoipModule,
         JobModule,
-        BennysModule
+        BennysModule,
+        StorageModule
     );
 
     await app.stop();
