@@ -21,6 +21,37 @@ export enum JobType {
     Ffs = 'ffs',
 }
 
+export enum JobPermission {
+    Enrollment = 'enrollment',
+    ManageGrade = 'manage-grade',
+    SocietyDealershipVehicle = 'society-dealership-vehicle',
+    SocietyPrivateStorage = 'society-private-storage',
+    SocietyShop = 'society-shop',
+    SocietyBankAccount = 'society-bank-account',
+    SocietyBankInvoices = 'society-bank-invoices',
+    SocietyTakeOutPound = 'society-take-out-pound',
+    NewsManageArticle = 'manage-article',
+    CashTransfer_CollectBags = 'collect-bags',
+    CashTransfer_ResaleBags = 'resale-bags',
+    CashTransfer_FillIn = 'fill-in',
+    Food_Harvest = 'harvest',
+    Food_Craft = 'craft',
+    Fueler_ChangePrice = 'fueler-change-price',
+    CriminalRecord = 'criminal-record',
+    VehicleRegistrar = 'vehicle-registrar',
+    Investigation = 'investigation',
+    ManageInvestigation = 'investigation-manage',
+    Baun_Harvest = 'harvest',
+    Baun_Restock = 'restock',
+    Baun_Craft = 'craft',
+    Ffs_Harvest = 'harvest',
+    Ffs_Restock = 'restock',
+    Ffs_Craft = 'craft',
+    Bennys_Estimate = 'estimate',
+    Bennys_Resell = 'resell',
+    Bennys_Order = 'order',
+}
+
 export type Job = {
     // Must use the getJobs method to generate the id from the object.
     id: JobType;

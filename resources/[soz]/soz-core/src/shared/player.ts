@@ -48,6 +48,7 @@ export type PlayerCharInfo = {
 export type PlayerJob = {
     onduty: boolean;
     id: JobType;
+    grade: number;
 };
 
 export type PlayerHealthBook = {
