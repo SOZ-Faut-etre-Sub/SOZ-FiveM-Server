@@ -8,7 +8,6 @@ import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
-import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
@@ -19,6 +18,7 @@ import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
+import { JobModule } from './server/job/job.module';
 
 async function bootstrap() {
     const app = await Application.create(
