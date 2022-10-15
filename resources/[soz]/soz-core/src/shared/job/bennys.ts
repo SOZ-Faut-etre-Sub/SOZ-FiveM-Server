@@ -38,8 +38,15 @@ export const BennysConfig = {
     },
     Order: {
         zone: orderZone,
+        waitingTime: 60, // In minutes
     },
     Resell: {
         zone: resellZone,
     },
+};
+
+export type BennysOrder = {
+    uuid: string;
+    model: string;
+    orderDate: string;
 };
