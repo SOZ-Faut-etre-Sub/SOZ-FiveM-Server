@@ -2,7 +2,7 @@ import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { Component, OutfitItem } from '../../shared/cloth';
+import { Component, Outfit, OutfitItem } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { MenuType } from '../../shared/nui/menu';
@@ -36,8 +36,8 @@ export class MaskShopProvider {
     private clothingService: ClothingService;
 
     @OnNuiEvent(NuiEvent.ShopMaskPreview)
-    public async previewOutfitComponents(components: Partial<Record<Component, OutfitItem>>) {
-        for (const [componentIndex, component] of Object.entries(components)) {
+    public async previewOutfit(outfit: Outfit) {
+        for (const [componentIndex, component] of Object.entries(outfit.Components)) {
             this.clothingService.applyComponent(Number(componentIndex), component);
         }
         return Ok(true);

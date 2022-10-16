@@ -16,7 +16,7 @@ export class MaskShopProvider {
     private notifier: Notifier;
 
     @Rpc(RpcEvent.SHOP_MASK_GET_CATEGORIES)
-    public async onShopMaskGetCategories() {
+    async getMasks(): Promise<any> {
         return await this.prismaService.shop.findFirst({
             where: {
                 name: 'mask',
@@ -39,7 +39,7 @@ export class MaskShopProvider {
     }
 
     @Rpc(RpcEvent.SHOP_MASK_GET_ITEMS)
-    public async onShopMaskGetItems(source: number, categoryId: number) {
+    async getMaskItems(source: number, categoryId: number): Promise<any> {
         return await this.prismaService.shop_content.findMany({
             where: {
                 category_id: categoryId,
