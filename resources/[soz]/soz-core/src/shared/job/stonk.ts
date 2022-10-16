@@ -54,16 +54,14 @@ export const StonkConfig = {
     },
     collection: {
         jewelbag: {
-            society_gain: 720,
             refill_value: null,
-            amount: 5,
+            society_gain: 720,
             timeout: 24 * 60 * 60 * 1000,
             takeInAvailableIn: ['jewelry'],
         },
         small_moneybag: {
-            society_gain: 360,
             refill_value: 6000,
-            amount: 5,
+            society_gain: 360,
             timeout: 10 * 60 * 1000,
             takeInAvailableIn: [
                 'binco',
@@ -75,9 +73,8 @@ export const StonkConfig = {
             ],
         },
         medium_moneybag: {
-            society_gain: 240,
             refill_value: 4000,
-            amount: 5,
+            society_gain: 240,
             timeout: 20 * 60 * 1000,
             takeInAvailableIn: [
                 'suburban',
@@ -90,7 +87,6 @@ export const StonkConfig = {
         big_moneybag: {
             refill_value: 2000,
             society_gain: 120,
-            amount: 5,
             timeout: 30 * 60 * 1000,
             takeInAvailableIn: ['ponsonbys'],
         },

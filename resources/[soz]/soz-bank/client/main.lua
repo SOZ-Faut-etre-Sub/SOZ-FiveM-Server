@@ -41,6 +41,50 @@ bankSociety:onPlayerInOut(function(isPointInside, point)
 end)
 
 CreateThread(function()
+    local bankActions = {
+        {
+            label = "Compte Personnel",
+            icon = "c:bank/compte_personal.png",
+            event = "banking:openBankScreen",
+            blackoutGlobal = true,
+        },
+        {
+            label = "Compte Société",
+            icon = "c:bank/compte_societe.png",
+            event = "banking:openSocietyBankScreen",
+            blackoutGlobal = true,
+            canInteract = function(entity, distance, data)
+                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
+                           isInsideEntrepriseBankZone
+            end,
+        },
+    }
+
+    for _, item in pairs({"small_moneybag", "medium_moneybag", "big_moneybag"}) do
+        table.insert(bankActions, {
+            label = "Remplir avec " .. QBCore.Shared.Items[item].label,
+            icon = "c:stonk/remplir.png",
+            blackoutGlobal = true,
+            blackoutJob = "cash-transfer",
+            canInteract = function()
+                if currentBank.bank and currentBank.type then
+                    local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
+                    if currentMoney < Config.BankAtmDefault[currentBank.type].maxMoney then
+                        return PlayerData.job.onduty
+                    end
+                    return false
+                end
+            end,
+            action = function()
+                local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
+                local maxMoney = Config.BankAtmDefault[currentBank.type].maxMoney
+
+                TriggerServerEvent("soz-core:server:job:stonk:fill-in", currentBank.bank, item, currentMoney, maxMoney)
+            end,
+            item = item,
+        })
+    end
+
     for bank, coords in pairs(Config.BankPedLocations) do
         if not QBCore.Functions.GetBlip("bank_" .. bank) then
             if bank == "pacific1" then
@@ -64,49 +108,7 @@ CreateThread(function()
                 invincible = true,
                 blockevents = true,
                 scenario = "WORLD_HUMAN_CLIPBOARD",
-                target = {
-                    options = {
-                        {
-                            label = "Compte Personnel",
-                            icon = "c:bank/compte_personal.png",
-                            event = "banking:openBankScreen",
-                            blackoutGlobal = true,
-                        },
-                        {
-                            label = "Compte Société",
-                            icon = "c:bank/compte_societe.png",
-                            event = "banking:openSocietyBankScreen",
-                            blackoutGlobal = true,
-                            canInteract = function(entity, distance, data)
-                                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
-                                           isInsideEntrepriseBankZone
-                            end,
-                        },
-                        {
-                            label = "Remplir",
-                            icon = "c:stonk/remplir.png",
-                            event = "soz-jobs:client:stonk-fill-in",
-                            blackoutGlobal = true,
-                            blackoutJob = "cash-transfer",
-                            isBank = true,
-                            canInteract = function()
-                                local hasJobPermission = exports["soz-jobs"]:CanFillIn()
-                                if not hasJobPermission then
-                                    return false
-                                end
-
-                                if currentBank.bank and currentBank.type then
-                                    local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getBankMoney", currentBank.bank)
-                                    if currentMoney < Config.BankAtmDefault[currentBank.type].maxMoney then
-                                        return true
-                                    end
-                                    return false
-                                end
-                            end,
-                        },
-                    },
-                    distance = 3.0,
-                },
+                target = {options = bankActions,distance = 3.0},
             },
         })
     end
@@ -119,24 +121,6 @@ CreateThread(function()
                     icon = "c:bank/compte_personal.png",
                     label = "Compte Personnel",
                     atmType = atmType,
-                },
-                {
-                    label = "Remplir",
-                    icon = "c:stonk/remplir.png",
-                    event = "soz-jobs:client:stonk-fill-in",
-                    atmType = atmType,
-                    canInteract = function(entity)
-                        local hasJobPermission = exports["soz-jobs"]:CanFillIn()
-                        if not hasJobPermission then
-                            return false
-                        end
-
-                        local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getAtmMoney", atmType, GetEntityCoords(entity))
-                        if currentMoney < Config.BankAtmDefault[atmType].maxMoney then
-                            return true
-                        end
-                        return false
-                    end,
                 },
             },
             distance = 1.0,
