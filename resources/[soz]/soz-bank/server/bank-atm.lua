@@ -7,6 +7,22 @@ local function GetOrCreateAccount(accountName, coords)
     return account, created
 end
 
+local function GetClosestFleeca(coord)
+    local closestBank
+
+    for id, l in pairs(Config.BankPedLocations) do
+        if string.find(id, "pacific") == nil then
+            local distance = #(vector3(l.x, l.y, l.z) - coord)
+
+            if bestBank == nil or distance < bestBank.distance then
+                  bestBank = {id = id, distance = distance}
+            end
+        end
+    end
+
+    return bestBank.id
+end
+
 local function GetAtmHashByCoords(coords)
     local formattedCoords = {}
     for _, v in pairs({"x", "y", "z"}) do
@@ -15,8 +31,19 @@ local function GetAtmHashByCoords(coords)
     return GetHashKey(table.concat(formattedCoords, "_"))
 end
 
-local function GetAtmAccountName(atmType, atmCoordsHash)
-    return string.format("atm_%s_%s", atmType, atmCoordsHash)
+local function GetAtmAccountName(atmType, atmCoordsHash, coords)
+    local atmAccount = nil
+    local atmIdentifier = string.format("atm_%s_%s", atmType, atmCoordsHash)
+
+    if Config.AtmLocations[atmIdentifier] ~= nil then
+        atmAccount = Config.AtmLocations[atmIdentifier].accountId
+    end
+
+    if atmAccount == nil and coords then
+        atmAccount = 'bank_' .. GetClosestFleeca(coords)
+    end
+
+    return atmAccount
 end
 exports("GetAtmAccountName", GetAtmAccountName)
 
@@ -27,22 +54,19 @@ exports("GetBankAccountName", GetBankAccountName)
 
 local function GetAtmAccount(atmType, coords)
     local coordsHash = GetAtmHashByCoords(coords)
-    local accountName = GetAtmAccountName(atmType, coordsHash)
-    local pack = Config.AtmPacks[accountName]
-    if pack then
-        return GetOrCreateAccount(pack, coords)
-    end
+    local accountName = GetAtmAccountName(atmType, coordsHash, coords)
     return GetOrCreateAccount(accountName, coords)
 end
 
 QBCore.Functions.CreateCallback("banking:server:getAtmAccount", function(source, cb, atmType, coords)
+    local coordsHash = GetAtmHashByCoords(coords)
     local account, created = GetAtmAccount(atmType, coords)
     if created then
         for _, playerId in pairs(GetPlayers()) do
             TriggerClientEvent("banking:client:displayAtmBlips", playerId, {[account.owner] = coords})
         end
     end
-    cb(account.owner)
+    cb({account = account.owner, name = string.format("atm_%s_%s", atmType, coordsHash)})
 end)
 
 QBCore.Functions.CreateCallback("banking:server:getAtmMoney", function(source, cb, atmType, coords)

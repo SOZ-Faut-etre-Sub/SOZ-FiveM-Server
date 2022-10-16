@@ -81,14 +81,6 @@ MySQL.ready(function()
                 Account.Create(k, k, "bank-atm", "bank_" .. k, nil, nil, coords)
             end
         end
-
-        -- ATMs account
-        for _, atmData in pairs(AtmNotLoaded) do
-            local accId = atmData.accountId
-            if Config.AtmPacks[accId] == nil then
-                Account.Create(accId, accId, "bank-atm", accId, nil, nil, atmData.coords)
-            end
-        end
     end)
 
     for account, money in pairs(Config.FarmAccountMoney) do
@@ -260,3 +252,34 @@ local function GetMetrics()
 end
 
 exports("GetMetrics", GetMetrics)
+
+--- Capacity
+local function GetAccountCapacity(account)
+    local acc = Account(account)
+    local capacity = 0
+
+    if not acc then
+        return -1
+    end
+
+    for k, v in pairs(Config.BankAtmDefault) do
+        if string.find(acc.id, k) then
+            capacity = v.maxMoney
+        end
+    end
+
+    for k, v in pairs(Config.AtmLocations) do
+        if acc.id == v.accountId then
+            local type = "small"
+            if string.sub(acc.id, 4, 7) == "big" then
+                type = "big"
+            end
+
+            capacity = capacity + Config.BankAtmDefault[type].maxMoney
+        end
+    end
+
+    return capacity
+end
+
+exports("GetAccountCapacity", GetAccountCapacity)
