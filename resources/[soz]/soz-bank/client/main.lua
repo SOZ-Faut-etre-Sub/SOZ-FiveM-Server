@@ -54,8 +54,7 @@ CreateThread(function()
             event = "banking:openSocietyBankScreen",
             blackoutGlobal = true,
             canInteract = function(entity, distance, data)
-                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
-                           isInsideEntrepriseBankZone
+                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and isInsideEntrepriseBankZone
             end,
         },
     }
@@ -108,7 +107,7 @@ CreateThread(function()
                 invincible = true,
                 blockevents = true,
                 scenario = "WORLD_HUMAN_CLIPBOARD",
-                target = {options = bankActions,distance = 3.0},
+                target = {options = bankActions, distance = 3.0},
             },
         })
     end

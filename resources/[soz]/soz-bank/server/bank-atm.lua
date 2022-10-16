@@ -15,7 +15,7 @@ local function GetClosestFleeca(coord)
             local distance = #(vector3(l.x, l.y, l.z) - coord)
 
             if bestBank == nil or distance < bestBank.distance then
-                  bestBank = {id = id, distance = distance}
+                bestBank = {id = id, distance = distance}
             end
         end
     end
@@ -40,7 +40,7 @@ local function GetAtmAccountName(atmType, atmCoordsHash, coords)
     end
 
     if atmAccount == nil and coords then
-        atmAccount = 'bank_' .. GetClosestFleeca(coords)
+        atmAccount = "bank_" .. GetClosestFleeca(coords)
     end
 
     return atmAccount

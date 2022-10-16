@@ -152,7 +152,10 @@ RegisterNUICallback("doWithdraw", function(data, cb)
                     end
                     newAmount = amount + lastUse.amountWithdrawn
                 end
-                UsedBankAtm[data.atmName or data.bankAtmAccount] = {lastUsed = GetGameTimer(), amountWithdrawn = newAmount}
+                UsedBankAtm[data.atmName or data.bankAtmAccount] = {
+                    lastUsed = GetGameTimer(),
+                    amountWithdrawn = newAmount,
+                }
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
