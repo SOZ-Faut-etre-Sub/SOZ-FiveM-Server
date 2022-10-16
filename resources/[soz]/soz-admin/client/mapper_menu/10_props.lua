@@ -63,6 +63,7 @@ function MapperMenuProps(menu)
             {label = "borne civile", value = "soz_prop_elec01___default"},
             {label = "borne entreprise", value = "soz_prop_elec02___entreprise"},
             {label = "onduleur", value = "upwpile"},
+            {label = "ATM entreprise", value = "soz_atm_entreprise"},
         },
         select = function(_, value)
             local names = QBCore.Shared.SplitStr(value, "___")
