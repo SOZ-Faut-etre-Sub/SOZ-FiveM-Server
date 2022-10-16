@@ -4,7 +4,6 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
-import { FullAdminPlayer } from '../../shared/admin/admin';
 import { PlayerData } from '../../shared/player';
 import { RpcEvent } from '../../shared/rpc';
 import { getVehicleState, setVehicleState, VehicleEntityState } from '../../shared/vehicle';
