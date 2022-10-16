@@ -42,7 +42,7 @@ local function GetLastPurchase(source, dealershipId)
     local player = QBCore.Functions.GetPlayer(source)
     local citizenId = player.PlayerData.citizenid
 
-    return MySQL.Sync.fetchScalar("SELECT * FROM player_purchases WHERE citizenid = ? AND shop_type = 'dealership' AND shop_id = ?", {
+    return MySQL.Sync.fetchSingle("SELECT * FROM player_purchases WHERE citizenid = ? AND shop_type = 'dealership' AND shop_id = ?", {
         citizenId,
         dealershipId,
     })
