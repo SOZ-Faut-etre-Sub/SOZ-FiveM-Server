@@ -149,6 +149,7 @@ Config.ATMModels = {
     ["prop_atm_02"] = "big",
     ["prop_atm_03"] = "big",
     ["prop_fleeca_atm"] = "big",
+    ["soz_atm_entreprise"] = "ent",
 }
 
 Config.BankPedLocations = {
@@ -166,24 +167,29 @@ Config.BankPedLocations = {
 
 Config.BankAtmDefault = {
     ["pacific"] = {
-        maxMoney = 600000,
-        maxWithdrawal = 100000,
-        limit = 600000, -- in ms
+        maxMoney = 6000000,
+        maxWithdrawal = nil,
+        limit = nil, -- in ms
     },
     ["fleeca"] = {
-        maxMoney = 100000,
-        maxWithdrawal = 10000,
-        limit = 600000, -- in ms
+        maxMoney = 500000,
+        maxWithdrawal = 100000,
+        limit = 10 * 60 * 1000, -- in ms
     },
     ["big"] = {
-        maxMoney = 20000,
-        maxWithdrawal = 1000,
-        limit = 600000, -- in ms
+        maxMoney = 30000,
+        maxWithdrawal = 10000,
+        limit = 10 * 60 * 1000, -- in ms
     },
     ["small"] = {
-        maxMoney = 6000,
-        maxWithdrawal = 500,
-        limit = 600000, -- in ms
+        maxMoney = 15000,
+        maxWithdrawal = 5000,
+        limit = 10 * 60 * 1000, -- in ms
+    },
+    ["ent"] = {
+        maxMoney = 30000,
+        maxWithdrawal = 10000,
+        limit = 15 * 60 * 1000, -- in ms
     },
 }
 
