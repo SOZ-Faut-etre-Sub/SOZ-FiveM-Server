@@ -30,10 +30,14 @@ Citizen.CreateThread(function()
                 icon = "c:police/fouiller.png",
                 event = "police:client:SearchPlayer",
                 canInteract = function(entity)
+                    if PlayerData.job.id == "cash-transfer" then
+                        return exports["soz-jobs"]:WearVIPClothes()
+                    end
+
                     return PlayerData.job.onduty and
                                (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["cash-transfer"] = 0},
             },
             {
                 label = "Menotter",
@@ -66,10 +70,15 @@ Citizen.CreateThread(function()
                 event = "police:client:RequestEscortPlayer",
                 canInteract = function(entity)
                     local player, _ = QBCore.Functions.GetClosestPlayer()
+                    if PlayerData.job.id == "cash-transfer" then
+                        if not exports["soz-jobs"]:WearVIPClothes() then
+                            return false
+                        end
+                    end
                     return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
                                not IsPedInAnyVehicle(PlayerPedId())
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0, ["cash-transfer"] = 0},
             },
         },
         distance = 1.5,

@@ -207,3 +207,17 @@ RegisterNetEvent("stonk:client:applyDutyClothing", function()
         TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig)
     end)
 end)
+
+exports("WearVIPClothes", function()
+    local ped = PlayerPedId()
+
+    for id, component in pairs(StonkConfig.Cloakroom[PlayerData.skin.Model.Hash]["Tenue VIP"].Components) do
+        local drawable = GetPedDrawableVariation(ped, id)
+
+        if drawable ~= component.Drawable then
+            return false
+        end
+    end
+
+    return true
+end)
