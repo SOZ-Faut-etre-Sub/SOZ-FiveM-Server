@@ -111,7 +111,7 @@ export class AdminMenuInteractiveProvider {
             // First clean the left players
             for (const previousPlayer of this.previousPlayers) {
                 if (!players.find(player => player.citizenId === previousPlayer)) {
-                    this.QBCore.removeBlip(this.playerBlips.get(previousPlayer).toString());
+                    RemoveBlip(this.playerBlips.get(previousPlayer));
                     this.playerBlips.delete(previousPlayer);
                 }
             }

@@ -1,5 +1,4 @@
 export enum Component {
-    Head = 0,
     Mask = 1,
     Hair = 2,
     Torso = 3,
@@ -14,7 +13,7 @@ export enum Component {
 }
 
 export enum Prop {
-    Head = 0,
+    Hat = 0,
     Glasses = 1,
     Ear = 2,
     LeftHand = 6,

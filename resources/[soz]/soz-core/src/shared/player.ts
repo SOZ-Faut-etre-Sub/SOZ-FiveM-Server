@@ -18,6 +18,7 @@ export type QBCorePlayer = {
 export type PlayerData = {
     citizenid: string;
     license: string;
+    name: string;
     money: {
         marked_money: number;
         money: number;
