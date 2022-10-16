@@ -79,13 +79,13 @@ export class StonkResellProvider {
                 const transfer = await this.bankService.transferBankMoney(
                     StonkConfig.bankAccount.farm,
                     StonkConfig.bankAccount.safe,
-                    StonkConfig.collection[item].society_gain
+                    StonkConfig.collection[item].society_gain * resellAmount
                 );
                 if (!transfer) {
                     this.monitor.log('ERROR', 'Failed to transfer money to safe', {
                         account_source: StonkConfig.bankAccount.farm,
                         account_destination: StonkConfig.bankAccount.safe,
-                        amount: StonkConfig.collection[item].society_gain,
+                        amount: StonkConfig.collection[item].society_gain * resellAmount,
                     });
                 }
 
