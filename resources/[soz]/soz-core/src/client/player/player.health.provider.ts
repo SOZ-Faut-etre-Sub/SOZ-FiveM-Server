@@ -627,7 +627,7 @@ export class PlayerHealthProvider {
                     const randomSwimTexture = getRandomInt(0, 11);
 
                     femaleWardrobe['Femme natation'].Components[Component.Legs].Texture = randomSwimTexture;
-                    femaleWardrobe['Femme natation'].Components[Component.Torso].Texture = randomSwimTexture;
+                    femaleWardrobe['Femme natation'].Components[Component.Tops].Texture = randomSwimTexture;
                     femaleWardrobe['Femme sport'].Components[Component.Legs].Texture = getRandomInt(0, 2);
                     femaleWardrobe['Femme sport'].Components[Component.Shoes].Texture = getRandomInt(0, 3);
                     femaleWardrobe['Femme sport'].Components[Component.Tops].Texture = getRandomInt(0, 11);
