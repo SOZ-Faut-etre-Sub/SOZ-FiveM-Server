@@ -100,6 +100,9 @@ export enum ServerEvent {
     LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
     LSMC_REVIVE = 'lsmc:server:revive',
 
+    VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
+    VEHICLE_DELETED = 'soz-core:server:vehicle:deleted',
+
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
 
@@ -130,6 +133,7 @@ export enum ClientEvent {
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
+    LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
 
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
 
@@ -147,7 +151,8 @@ export enum ClientEvent {
 
     PROGRESS_START = 'soz-core:client:progress:start',
 
-    LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
+    VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
+    VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }

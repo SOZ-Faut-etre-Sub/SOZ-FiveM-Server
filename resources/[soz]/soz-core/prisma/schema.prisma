@@ -275,7 +275,7 @@ model player {
   cloth_config           String?                  @db.Text
   features               String?                  @default("[]") @db.Text
   player_cloth_set       player_cloth_set[]
-  player_vehicles        player_vehicles[]
+  player_vehicles        PlayerVehicle[]
   records_history_player player_records_history[] @relation("records_history_player")
   records_history_author player_records_history[] @relation("records_history_author")
 
@@ -306,7 +306,7 @@ model player_outfits {
   @@index([outfitId], map: "outfitId")
 }
 
-model player_vehicles {
+model PlayerVehicle {
   id              Int     @id @default(autoincrement())
   license         String? @db.VarChar(50)
   citizenid       String? @db.VarChar(50)
@@ -333,6 +333,7 @@ model player_vehicles {
   @@index([citizenid], map: "citizenid")
   @@index([license], map: "license")
   @@index([plate], map: "plate")
+  @@map("player_vehicles")
 }
 
 model storages {
