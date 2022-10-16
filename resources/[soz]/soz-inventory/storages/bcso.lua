@@ -1,3 +1,20 @@
+local function getCloakroomTargetOption(job, storage)
+    return {
+        color = job,
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = job,
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, 'police:client:OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["bcso_fridge"] = {
     label = "Frigo BCSO",
     type = "fridge",
@@ -61,10 +78,11 @@ Config.Storages["bcso_ammo"] = {
 Config.Storages["bcso_cloakroom"] = {
     label = "Vestiaire - BCSO",
     type = "cloakroom",
-    owner = "bcso",
+    owner = "ffs",
     position = vector3(1847.27, 3693.85, 34.27),
     size = vec2(8.0, 3.6),
     minZ = 33.27,
     maxZ = 35.27,
     heading = 300,
+    targetOption = getCloakroomTargetOption("bcso", "bcso_cloakroom"),
 }

@@ -1,3 +1,20 @@
+local function getCloakroomTargetOption(job, storage)
+    return {
+        color = job,
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = job,
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, job .. ':client:OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["lsmc_fridge"] = {
     label = "Frigo LSMC",
     type = "fridge",
@@ -54,6 +71,7 @@ Config.Storages["lsmc_male_cloakroom"] = {
     minZ = 31.71,
     maxZ = 34.01,
     heading = 320,
+    targetOption = getCloakroomTargetOption('lsmc', 'lsmc_male_cloakroom'),
 }
 
 Config.Storages["lsmc_female_cloakroom"] = {
@@ -65,4 +83,5 @@ Config.Storages["lsmc_female_cloakroom"] = {
     minZ = 31.51,
     maxZ = 33.91,
     heading = 320,
+    targetOption = getCloakroomTargetOption('lsmc', 'lsmc_female_cloakroom'),
 }

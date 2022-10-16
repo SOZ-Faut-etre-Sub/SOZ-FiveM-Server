@@ -190,8 +190,8 @@ end)
 ---
 --- MENUS
 ---
-RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(FoodJob.Menu, FoodConfig.Cloakroom)
+RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(FoodJob.Menu, FoodConfig.Cloakroom, storageId)
 end)
 
 ---

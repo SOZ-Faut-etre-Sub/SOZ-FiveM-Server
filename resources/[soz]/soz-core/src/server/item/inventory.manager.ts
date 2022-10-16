@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Rpc } from '../../core/decorators/rpc';
 import { InventoryItem, InventoryItemMetadata } from '../../shared/item';
+import { RpcEvent } from '../../shared/rpc';
 import { PlayerService } from '../player/player.service';
 
 @Injectable()
@@ -50,7 +52,7 @@ export class InventoryManager {
         return inventoryItem;
     }
 
-    public findItem(source, predicate: (item: InventoryItem) => boolean): InventoryItem | null {
+    public findItem(source: number, predicate: (item: InventoryItem) => boolean): InventoryItem | null {
         const items = this.playerService.getPlayer(source).items;
 
         if (Array.isArray(items)) {
@@ -68,8 +70,17 @@ export class InventoryManager {
         return this.sozInventory.GetItem(source, itemId, metadata);
     }
 
+    public search(
+        source: number | string,
+        searchType: 'slots' | 'amount',
+        itemId: string,
+        metadata?: InventoryItemMetadata
+    ): InventoryItem | InventoryItem[] | false {
+        return this.sozInventory.Search(source, searchType, itemId, metadata);
+    }
+
     public removeItemFromInventory(
-        source: number,
+        source: number | string,
         itemId: string,
         amount = 1,
         metadata?: InventoryItemMetadata,

@@ -1,3 +1,20 @@
+local function getCloakroomTargetOption(job, storage)
+    return {
+        color = job,
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = job,
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, 'police:client:OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["lspd_fridge"] = {
     label = "Frigo LSPD",
     type = "fridge",
@@ -65,6 +82,7 @@ Config.Storages["lspd_male_cloakroom"] = {
     minZ = 75.62,
     maxZ = 78.62,
     heading = 350,
+    targetOption = getCloakroomTargetOption("lspd", "lspd_male_cloakroom")
 }
 
 Config.Storages["lspd_female_cloakroom"] = {
@@ -76,4 +94,5 @@ Config.Storages["lspd_female_cloakroom"] = {
     minZ = 75.62,
     maxZ = 78.62,
     heading = 350,
+    targetOption = getCloakroomTargetOption("lspd", "lspd_female_cloakroom")
 }

@@ -1,3 +1,20 @@
+local function getCloakroomTargetOption(job, storage)
+    return {
+        color = job,
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = job,
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, 'soz-bennys:client:OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["bennys_stash"] = {
     label = "Stockage des mécanos",
     type = "storage",
@@ -33,4 +50,5 @@ Config.Storages["bennys_cloakroom"] = {
     minZ = 33.89,
     maxZ = 37.89,
     heading = 320,
+    targetOption = getCloakroomTargetOption('bennys', 'bennys_cloakroom'),
 }

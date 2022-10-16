@@ -8,8 +8,8 @@ BaunJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_baun", "soz", "baun:menu")
 BaunJob.Harvest = {}
 BaunJob.CraftZones = {}
 
-RegisterNetEvent("jobs:client:baun:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(BaunJob.Menu, BaunConfig.Cloakroom.Clothes)
+RegisterNetEvent("jobs:client:baun:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(BaunJob.Menu, BaunConfig.Cloakroom.Clothes, storageId)
 end)
 
 AddEventHandler("onClientResourceStart", function(resourceName)

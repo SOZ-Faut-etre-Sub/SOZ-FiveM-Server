@@ -1,3 +1,20 @@
+local function getCloakroomTargetOption(job, storage)
+    return {
+        color = job,
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = job,
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, 'jobs:client:' .. job .. ':OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["stonk_fridge"] = {
     label = "Frigo STONK Depository",
     type = "fridge",
@@ -52,6 +69,7 @@ Config.Storages["stonk_cloakroom_1"] = {
     minZ = 45.0,
     maxZ = 47.2,
     heading = 295,
+    targetOption = getCloakroomTargetOption('stonk', 'stonk_cloakroom_1'),
 }
 
 Config.Storages["stonk_cloakroom_2"] = {
@@ -63,4 +81,5 @@ Config.Storages["stonk_cloakroom_2"] = {
     minZ = 45.0,
     maxZ = 47.2,
     heading = 295,
+    targetOption = getCloakroomTargetOption('stonk', 'stonk_cloakroom_2'),
 }

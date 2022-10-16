@@ -1,3 +1,20 @@
+local function getCloakroomTargetOption(job, storage)
+    return {
+        color = job,
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = job,
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, 'jobs:client:' .. job .. ':OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["ffs_storage"] = {
     label = "Stockage Fight For Style",
     type = "storage",
@@ -40,4 +57,5 @@ Config.Storages["ffs_cloakroom"] = {
     minZ = 29.4,
     maxZ = 31.6,
     heading = 0,
+    targetOption = getCloakroomTargetOption('ffs', 'ffs_cloakroom'),
 }

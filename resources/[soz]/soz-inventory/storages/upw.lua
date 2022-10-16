@@ -1,3 +1,20 @@
+local function getCloakroomTargetOption(job, storage)
+    return {
+        color = job,
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = job,
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, job .. ':client:OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["upw_fridge"] = {
     label = "Unexptected Power and Water",
     type = "fridge",
@@ -37,6 +54,7 @@ Config.Storages["upw_cloakroom_1"] = {
     minZ = 40.86,
     maxZ = 43.86,
     heading = 4,
+    targetOption = getCloakroomTargetOption('upw', 'upw_cloakroom_1'),
 }
 
 Config.Storages["upw_cloakroom_2"] = {
@@ -48,4 +66,5 @@ Config.Storages["upw_cloakroom_2"] = {
     minZ = 40.86,
     maxZ = 43.86,
     heading = 4,
+    targetOption = getCloakroomTargetOption('upw', 'upw_cloakroom_2'),
 }

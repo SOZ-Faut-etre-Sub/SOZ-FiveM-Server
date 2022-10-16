@@ -53,8 +53,8 @@ CreateThread(function()
 end)
 
 --- Events
-RegisterNetEvent("jobs:client:news:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, NewsConfig.Cloakroom)
+RegisterNetEvent("jobs:client:news:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, NewsConfig.Cloakroom, storageId)
 end)
 
 RegisterNetEvent("jobs:client:news:SellNewspaper", function()
