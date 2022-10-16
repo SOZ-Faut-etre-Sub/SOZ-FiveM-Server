@@ -1,7 +1,7 @@
 Config = {}
 
 Config.AllowedJobInteraction = {"fbi", "lspd", "bcso"}
-Config.AllowedJobDragInteraction = {"fbi", "lspd", "bcso", "lsmc"}
+Config.AllowedJobDragInteraction = {"fbi", "lspd", "bcso", "lsmc", "cash-transfer"}
 
 Config.Badge = GetHashKey("prop_fib_badge")
 
