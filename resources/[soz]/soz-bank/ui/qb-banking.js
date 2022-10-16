@@ -5,6 +5,8 @@ const Config = {
 const playerAccountReg = /^[0-9]{3}Z[0-9]{4}T[0-9]{3}$/
 
 let isATM = false;
+let atmType = null;
+let atmName = null;
 let bankAtmAccount
 let widthdrawTimeout
 
@@ -55,6 +57,8 @@ window.addEventListener("message", function (event) {
             $("#bankingTransfer-tab").css({"display":"block"});
         }
         isATM = event.data.isATM;
+        atmType = event.data.atmType;
+        atmName = event.data.atmName;
 
         if (event.data.bankAtmAccount) {
             bankAtmAccount = event.data.bankAtmAccount;
@@ -155,6 +159,8 @@ $(function() {
             $("#withdrawErrorMsg").html('');
             $.post('https://soz-bank/doWithdraw', JSON.stringify({
                 isATM: isATM,
+                atmType: atmType,
+                atmName: atmName,
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
                 bankAtmAccount,
@@ -179,6 +185,8 @@ $(function() {
         if(amount > 0) {
             $.post('https://soz-bank/doWithdraw', JSON.stringify({
                 isATM: isATM,
+                atmType: atmType,
+                atmName: atmName,
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
                 bankAtmAccount,
@@ -194,6 +202,8 @@ $(function() {
             $("#depositErrorMsg").html('');
             $.post('https://soz-bank/doDeposit', JSON.stringify({
                 isATM: isATM,
+                atmType: atmType,
+                atmName: atmName,
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
             }));
@@ -210,6 +220,8 @@ $(function() {
         if(amount > 0) {
             $.post('https://soz-bank/doDeposit', JSON.stringify({
                 isATM: isATM,
+                atmType: atmType,
+                atmName: atmName,
                 account: $("#accountNumber").text(),
                 amount: parseInt(amount),
             }));

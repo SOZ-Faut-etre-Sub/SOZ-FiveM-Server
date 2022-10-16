@@ -83,16 +83,6 @@ CreateThread(function()
                             end,
                         },
                         {
-                            label = "Vendre",
-                            icon = "c:stonk/vendre.png",
-                            event = "soz-jobs:client:stonk-resale-bag",
-                            blackoutGlobal = true,
-                            blackoutJob = "cash-transfer",
-                            canInteract = function()
-                                return isInsideEntrepriseBankZone and exports["soz-jobs"]:CanBagsBeResold()
-                            end,
-                        },
-                        {
                             label = "Remplir",
                             icon = "c:stonk/remplir.png",
                             event = "soz-jobs:client:stonk-fill-in",
@@ -152,9 +142,9 @@ CreateThread(function()
             distance = 1.0,
         })
     end
-    for _, atmData in pairs(Config.AtmLocations) do
-        if Config.AtmPacks[atmData.accountId] == nil then
-            CreateAtmBlip(atmData.accountId, atmData.coords)
+    for id, atmData in pairs(Config.AtmLocations) do
+        if atmData.hideBlip ~= true then
+            CreateAtmBlip(id, atmData.coords)
         end
     end
 end)
@@ -166,7 +156,7 @@ function CreateAtmBlip(blipId, coords)
     QBCore.Functions.CreateBlip(blipId, {
         name = "ATM",
         coords = vector2(coords.x, coords.y),
-        sprite = 431,
+        sprite = 278,
         color = 60,
         alpha = 100,
     })

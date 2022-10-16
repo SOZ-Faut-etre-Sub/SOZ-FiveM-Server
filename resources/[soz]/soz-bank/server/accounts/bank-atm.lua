@@ -47,15 +47,14 @@ end
 ---       "atm_big_123456" => "big"
 --- @param businessid string
 --- @return string
-function GetTerminalType(businessid)
-    if string.match(businessid, "bank_%w+") then
-        return string.match(string.match(businessid, "%a+%d"), "%a+")
-    elseif string.match(businessid, "atm_%w+") then
-        return string.match(string.match(businessid, "_%w+_"), "%w+")
+function GetTerminalType(businessid, atmType)
+    if atmType then
+        return atmType
     end
+    return string.match(string.match(businessid, "%a+%d"), "%a+")
 end
-QBCore.Functions.CreateCallback("banking:server:GetTerminalType", function(source, cb, accountId)
-    return cb(GetTerminalType(accountId))
+QBCore.Functions.CreateCallback("banking:server:GetTerminalType", function(source, cb, accountId, atmType)
+    return cb(GetTerminalType(accountId, atmType))
 end)
 
 --- Get default money amout for specified type of account (bank/ATM)
