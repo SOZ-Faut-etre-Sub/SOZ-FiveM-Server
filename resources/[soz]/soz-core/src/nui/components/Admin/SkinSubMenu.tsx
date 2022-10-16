@@ -64,7 +64,7 @@ const TRANSLATED_INDEXES: Record<string, string> = {
     BodyArmor: 'Armure',
     Decals: 'Décalques',
     Tops: 'Hauts',
-    Hats: 'Chapeaux',
+    Hat: 'Chapeau',
     Glasses: 'Lunettes',
     Ear: 'Accessoires oreilles',
     LeftHand: 'Bras gauche',

@@ -2,7 +2,14 @@ import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
-import { MenuContent, MenuItemCheckbox, MenuTitle, SubMenu } from '../Styleguide/Menu';
+import {
+    MenuContent,
+    MenuItemCheckbox,
+    MenuItemSelect,
+    MenuItemSelectOption,
+    MenuTitle,
+    SubMenu,
+} from '../Styleguide/Menu';
 
 export type InteractiveSubMenuProps = {
     banner: string;
@@ -28,24 +35,19 @@ export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({
                 >
                     Afficher les propriétaires de véhicules
                 </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    checked={state.displayPlayerNames}
-                    onChange={async value => {
-                        updateState('interactive', 'displayPlayerNames', value);
-                        await fetchNui(NuiEvent.AdminToggleDisplayPlayerNames, { value, withDetails: false });
+                <MenuItemSelect
+                    title={'Afficher les noms des joueurs'}
+                    onConfirm={async value => {
+                        updateState('interactive', 'displayPlayerNames', !state.displayPlayerNames);
+                        await fetchNui(NuiEvent.AdminToggleDisplayPlayerNames, {
+                            value: !state.displayPlayerNames,
+                            withDetails: value === 1,
+                        });
                     }}
                 >
-                    Afficher les noms des joueurs (sans détails)
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    checked={state.displayPlayerNames}
-                    onChange={async value => {
-                        updateState('interactive', 'displayPlayerNames', value);
-                        await fetchNui(NuiEvent.AdminToggleDisplayPlayerNames, { value, withDetails: true });
-                    }}
-                >
-                    Afficher les noms des joueurs (avec détails)
-                </MenuItemCheckbox>
+                    <MenuItemSelectOption>Sans détails</MenuItemSelectOption>
+                    <MenuItemSelectOption>Avec détails</MenuItemSelectOption>
+                </MenuItemSelect>
                 <MenuItemCheckbox
                     checked={state.displayPlayersOnMap}
                     onChange={async value => {

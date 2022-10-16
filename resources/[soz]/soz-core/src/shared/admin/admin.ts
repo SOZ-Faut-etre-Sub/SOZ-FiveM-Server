@@ -22,6 +22,7 @@ export type AdminPlayer = {
     citizenId: string;
     license: string;
     name: string;
+    rpFullName: string;
 };
 
 export type FullAdminPlayer = AdminPlayer & {

@@ -30,7 +30,8 @@ export class AdminMenuInteractiveProvider {
                 id: playerData.source,
                 citizenId: playerData.citizenid,
                 license: playerData.license,
-                name: `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`,
+                name: playerData.name,
+                rpFullName: `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`,
             });
         }
         return players;
@@ -48,7 +49,8 @@ export class AdminMenuInteractiveProvider {
             const name = `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`;
             players.push({
                 id: playerData.source,
-                name: name,
+                name: playerData.name,
+                rpFullName: name,
                 license: playerData.license,
                 coords: GetEntityCoords(ped),
                 heading: GetEntityHeading(ped),

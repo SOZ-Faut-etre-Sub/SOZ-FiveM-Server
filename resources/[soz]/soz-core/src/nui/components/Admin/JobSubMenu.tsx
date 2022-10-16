@@ -24,7 +24,6 @@ export type JobSubMenuProps = {
 };
 
 export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, updateState }) => {
-    const [isOnDuty, setIsOnDuty] = useState<boolean>(false);
     const [jobs, setJobs] = useState<Job[]>([]);
     const [grades, setGrades] = useState<Job['grades']>([]);
 
@@ -97,11 +96,10 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                     ))}
                 </MenuItemSelect>
                 <MenuItemCheckbox
-                    checked={isOnDuty}
+                    checked={state.isOnDuty}
                     onChange={async value => {
-                        setIsOnDuty(value);
-                        await fetchNui(NuiEvent.AdminToggleDuty, value);
                         updateState('job', 'isOnDuty', value);
+                        await fetchNui(NuiEvent.AdminToggleDuty, value);
                     }}
                 >
                     Passer en service
