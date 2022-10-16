@@ -18,10 +18,12 @@ export enum RpcEvent {
     SHOP_MASK_GET_CATEGORIES = 'soz-core:shop:mask:get-categories',
     SHOP_MASK_GET_ITEMS = 'soz-core:shop:mask:get-items',
 
-    VOIP_IS_MUTED = 'soz-core:voip:is-muted',
-
     STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween1',
     STORY_HALLOWEEN_SCENARIO2 = 'soz-story:server:halloween2',
     STORY_HALLOWEEN_SCENARIO3 = 'soz-story:server:halloween3',
     STORY_HALLOWEEN_SCENARIO4 = 'soz-story:server:halloween4',
+
+    VEHICLE_HAS_KEY = 'soz-core:vehicle:has-key',
+
+    VOIP_IS_MUTED = 'soz-core:voip:is-muted',
 }

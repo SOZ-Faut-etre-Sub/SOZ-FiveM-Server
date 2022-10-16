@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { RGBColor } from '../../shared/color';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import {
     VehicleCondition,
     VehicleEntityState,
@@ -133,6 +134,37 @@ export class VehicleService {
 
     public getVehicleProperties(vehicle: number): any[] {
         return this.QBCore.getVehicleProperties(vehicle);
+    }
+
+    public getClosestVehicle(maxDistance = 10): number | null {
+        const currentPed = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(currentPed, false);
+
+        if (vehicle) {
+            return vehicle;
+        }
+
+        const vehicles = GetGamePool('CVehicle');
+        const playerCoords = GetEntityCoords(currentPed, false) as Vector3;
+
+        let closestVehicle = null;
+        let closestDistance = null;
+
+        for (const vehicle of vehicles) {
+            const vehicleCoords = GetEntityCoords(vehicle, false) as Vector3;
+            const distance = getDistance(playerCoords, vehicleCoords);
+
+            if (closestDistance === null || distance < closestDistance) {
+                closestVehicle = vehicle;
+                closestDistance = distance;
+            }
+        }
+
+        if (closestDistance > maxDistance) {
+            return null;
+        }
+
+        return closestVehicle;
     }
 
     public syncVehicle(vehicle: number, state: VehicleEntityState): void {

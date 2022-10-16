@@ -119,6 +119,8 @@ export class VehicleSpawner {
         try {
             await deletePromise;
 
+            this.vehicleStateService.unregisterSpawned(netId);
+
             return true;
         } catch (e) {
             console.error('Failed to delete vehicle', e);
