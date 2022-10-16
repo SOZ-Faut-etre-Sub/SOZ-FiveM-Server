@@ -300,8 +300,8 @@ AddEventHandler("locations:zone:exit", function(zone, _, isAKeroseneStation)
 end)
 
 --- Events
-RegisterNetEvent("jobs:client:fueler:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, FuelerConfig.Cloakroom)
+RegisterNetEvent("jobs:client:fueler:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, FuelerConfig.Cloakroom, storageId)
 end)
 
 RegisterNetEvent("jobs:client:fueler:OpenFuelStationPriceMenu", function()

@@ -44,7 +44,7 @@ SozJobCore.Functions.GetBossShopActions = function(job, event)
 end
 
 --- Cloakroom
-SozJobCore.Functions.OpenCloakroomMenu = function(menu, cloakroom)
+SozJobCore.Functions.OpenCloakroomMenu = function(menu, cloakroom, storageId)
     menu:ClearItems()
 
     menu:AddButton({
@@ -55,7 +55,7 @@ SozJobCore.Functions.OpenCloakroomMenu = function(menu, cloakroom)
                 disableMovement = true,
                 disableCombat = true,
             }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil, false)
+                TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
             end)
         end,
     })
@@ -69,7 +69,10 @@ SozJobCore.Functions.OpenCloakroomMenu = function(menu, cloakroom)
                     disableMovement = true,
                     disableCombat = true,
                 }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin, true)
+                    if storageId then
+                        TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
+                    end
+                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
                 end)
             end,
         })

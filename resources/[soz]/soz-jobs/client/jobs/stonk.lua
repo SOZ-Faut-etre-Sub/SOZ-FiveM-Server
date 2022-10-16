@@ -115,11 +115,11 @@ StonkJob.Functions.Menu.MenuAccessIsValid = function(job)
     return false
 end
 
-RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function()
+RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function(storageId)
     --- @type Menu
     local menu = StonkJob.Menus["cash-transfer"].menu
 
-    SozJobCore.Functions.OpenCloakroomMenu(menu, StonkConfig.Cloakroom)
+    SozJobCore.Functions.OpenCloakroomMenu(menu, StonkConfig.Cloakroom, storageId)
 
     menu:AddButton({
         label = "Tenue de service",

@@ -17,7 +17,7 @@ RegisterNetEvent("police:client:applyDutyClothing", function(clotheType)
         disableMovement = true,
         disableCombat = true,
     }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig, true)
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig)
     end)
 end)
 

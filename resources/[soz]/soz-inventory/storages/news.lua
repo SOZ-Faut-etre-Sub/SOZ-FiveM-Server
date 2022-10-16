@@ -1,3 +1,20 @@
+local function getCloakroomTargetOption(job, storage)
+    return {
+        color = job,
+        type = "client",
+        label = "Se changer",
+        icon = "c:jobs/habiller.png",
+        storage = storage,
+        job = job,
+        canInteract = function()
+            return PlayerData.job.onduty
+        end,
+        action = function()
+            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, 'jobs:client:' .. job .. ':OpenCloakroomMenu')
+        end,
+    }
+end
+
 Config.Storages["news_fridge"] = {
     label = "Frigo du Twitch News",
     type = "fridge",
@@ -33,4 +50,5 @@ Config.Storages["news_cloakroom"] = {
     minZ = 32.76,
     maxZ = 35.76,
     heading = 90,
+    targetOption = getCloakroomTargetOption('news', 'news_cloakroom'),
 }

@@ -4216,8 +4216,8 @@ QBShared.Items = {
         weight = 1000,
         type = 'outfit',
         unique = false,
-        useable = true,
-        shouldClose = true,
+        useable = false,
+        shouldClose = false,
         combinable = nil,
         description = 'Il faut bien porter quelque chose quand on bosse, non ?'
     },

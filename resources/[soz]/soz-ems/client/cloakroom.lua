@@ -1,4 +1,4 @@
-RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
+RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function(storageId)
     EmsJob.Functions.Menu.GenerateMenu(PlayerData.job.id, function(menu)
         menu:AddButton({
             label = "Tenue de service",
@@ -40,6 +40,9 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
                             TriggerServerEvent("lsmc:server:SetHazmat", true)
                         else
                             TriggerServerEvent("lsmc:server:SetHazmat", false)
+                        end
+                        if storageId then
+                            TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
                         end
                         TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin, true)
                     end)

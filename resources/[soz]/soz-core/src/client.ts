@@ -8,6 +8,7 @@ import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
+import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
@@ -36,7 +37,10 @@ async function bootstrap() {
         StreamModule,
         ZEventModule,
         AdminModule,
+<<<<<<< HEAD
         BennysModule,
+=======
+>>>>>>> feat(cloakroom): now using a work outfit will consume its storage
         JobModule
     );
 

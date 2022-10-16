@@ -91,8 +91,8 @@ RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
     end
 end)
 
-RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, GarbageConfig.Cloakroom)
+RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, GarbageConfig.Cloakroom, storageId)
 end)
 
 --- Threads
