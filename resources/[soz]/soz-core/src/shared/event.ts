@@ -62,6 +62,7 @@ export enum ServerEvent {
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
+    SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
 
     // not core
     ADMIN_ADD_VEHICLE = 'admin:vehicle:addVehicle',
@@ -208,4 +209,8 @@ export enum NuiEvent {
     MenuClosed = 'menu_closed',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
+
+    ShopMaskBuy = 'soz-core:client:shop:mask:buy',
+    ShopMaskPreview = 'soz-core:client:shop:mask:preview',
+    ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
 }

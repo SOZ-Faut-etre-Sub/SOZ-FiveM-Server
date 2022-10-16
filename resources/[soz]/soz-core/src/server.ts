@@ -15,6 +15,7 @@ import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { StonkModule } from './server/job/stonk/stonk.module';
 import { PlayerModule } from './server/player/player.module';
+import { ShopModule } from './server/shop/shop.module';
 import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
 import { VoipModule } from './server/voip/voip.module';
@@ -40,7 +41,8 @@ async function bootstrap() {
         JobModule,
         BennysModule,
         StonkModule,
-        FieldModule
+        FieldModule,
+        ShopModule
     );
 
     await app.stop();
