@@ -169,64 +169,6 @@ RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function()
     })
 end)
 
----
---- PERMISSIONS
----
-local function isOnDuty()
-    return PlayerData.job.onduty
-end
-
-StonkJob.Permissions.CanFillIn = function()
-    local hasJobPermission = SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.CashTransfer.FillIn)
-    return isOnDuty() and hasJobPermission
-end
-exports("CanFillIn", StonkJob.Permissions.CanFillIn)
-
----
---- FARM
----
--- FILL IN
-StonkJob.Functions.FillIn = function(data)
-    QBCore.Functions.Progressbar("stonk_fill_in", "Vous remplissez...", StonkConfig.FillIn.Duration, false, true,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
-        local payload = {}
-        if data.isBank then
-            local currentBank = exports["soz-bank"]:GetCurrentBank()
-            payload["bank"] = currentBank.bank
-        else
-            payload["coords"] = GetEntityCoords(data.entity)
-            payload["atmType"] = data.atmType
-        end
-
-        local res = QBCore.Functions.TriggerRpc("soz-jobs:server:stonk-fill-in", payload)
-        if not res.success then
-            local messages = {
-                ["invalid_quantity"] = "Vous n'avez pas de sacs d'argent sur vous",
-                ["invalid_money"] = "Ce compte est déjà plein",
-            }
-            local message = messages[res.reason]
-            if messages[res.reason] == nil then
-                message = string.format("Il y a eu une erreur: %s", res.reason)
-            end
-            exports["soz-hud"]:DrawNotification(message, "error")
-        else
-            exports["soz-hud"]:DrawNotification("Remplissage OK")
-            StonkJob.Functions.FillIn(data)
-        end
-    end, function()
-        exports["soz-hud"]:DrawNotification("Vous avez interrompu le remplissage", "warning")
-    end)
-end
-
-AddEventHandler("soz-jobs:client:stonk-fill-in", function(data)
-    StonkJob.Functions.FillIn(data)
-end)
-
 RegisterNetEvent("stonk:client:bossShop", function()
     if not SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.SocietyShop) then
         return
