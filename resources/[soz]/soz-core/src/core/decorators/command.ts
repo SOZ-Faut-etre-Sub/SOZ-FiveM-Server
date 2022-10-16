@@ -4,7 +4,7 @@ import { setMethodMetadata } from './reflect';
 export type CommandMetadata = {
     name: string;
     description: string;
-    role: SozRole | null;
+    role: SozRole[] | SozRole | null;
     keys: CommandKey[];
 };
 
