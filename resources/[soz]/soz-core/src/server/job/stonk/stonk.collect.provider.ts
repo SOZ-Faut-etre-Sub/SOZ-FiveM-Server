@@ -85,15 +85,12 @@ export class StonkCollectProvider {
                 },
                 {
                     item_label: outputItemLabel,
-                    quantity: StonkConfig.collection[item].amount,
+                    quantity: StonkConfig.resell.amount,
                     position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
                 }
             );
 
-            this.notifier.notify(
-                source,
-                `Vous avez collecté ${StonkConfig.collection[item].amount} ~g~${outputItemLabel}~s~.`
-            );
+            this.notifier.notify(source, `Vous avez collecté ${StonkConfig.resell.amount} ~g~${outputItemLabel}~s~.`);
         } else {
             this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de collecter.');
             return;
@@ -131,7 +128,7 @@ export class StonkCollectProvider {
             return false;
         }
 
-        const addRequest = this.inventoryManager.addItemToInventory(source, item, StonkConfig.collection[item].amount);
+        const addRequest = this.inventoryManager.addItemToInventory(source, item, StonkConfig.resell.amount);
 
         if (this.collectBagHistory[shop] === undefined) {
             this.collectBagHistory[shop] = {};
