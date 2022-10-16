@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
+import { isOk, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent } from '../../hook/nui';
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle, SubMenu } from '../Styleguide/Menu';
@@ -20,9 +21,13 @@ export const MaskShopMenu: FunctionComponent<MenuMaskShopStateProps> = ({ catalo
     const navigate = useNavigate();
     const [items, setItems] = useState<any[]>([]);
 
-    useNuiEvent('mask_shop', 'SelectCategory', ({ id, items }) => {
+    const selectCategory = (id, items) => {
         setItems(items);
         navigate(`/${MenuType.MaskShop}/${id}`);
+    };
+
+    useNuiEvent('mask_shop', 'SelectCategory', ({ id, items }) => {
+        selectCategory(id, items);
     });
 
     if (!catalog || !catalog.shop_categories) {
@@ -32,15 +37,21 @@ export const MaskShopMenu: FunctionComponent<MenuMaskShopStateProps> = ({ catalo
     return (
         <Menu type={MenuType.MaskShop}>
             <MainMenu>
-                <MenuTitle banner={banner}>Magasin de masques</MenuTitle>
+                <MenuTitle banner={banner}>Magasin de masque</MenuTitle>
                 <MenuContent>
                     {catalog.shop_categories
-                        .map(cat => cat.categories)
+                        .map(cat => cat.category)
                         .map(category => (
                             <MenuItemButton
                                 key={category.id}
                                 onConfirm={async () => {
-                                    await fetchNui(NuiEvent.ShopMaskSelectCategory, category.id);
+                                    const result: Result<any, never> = await fetchNui(
+                                        NuiEvent.ShopMaskSelectCategory,
+                                        category.id
+                                    );
+                                    if (isOk(result)) {
+                                        selectCategory(category.id, result.ok);
+                                    }
                                 }}
                             >
                                 {category.name}
@@ -49,36 +60,38 @@ export const MaskShopMenu: FunctionComponent<MenuMaskShopStateProps> = ({ catalo
                 </MenuContent>
             </MainMenu>
             {catalog.shop_categories
-                .map(cat => cat.categories)
+                .map(cat => cat.category)
                 .map(category => (
                     <SubMenu id={category.id} key={category.id}>
                         <MenuTitle banner={banner}>{category.name}</MenuTitle>
                         <MenuContent>
-                            {items.map(item => {
-                                let label = item.name;
-                                switch (item.stock) {
-                                    case 0:
-                                        label += ' (Rupture de stock)';
-                                        break;
-                                    case 1:
-                                        label += ' (Dernier exemplaire)';
-                                        break;
-                                }
-                                return (
-                                    <MenuItemButton
-                                        key={item.id}
-                                        disabled={item.stock === 0}
-                                        onSelected={async () => {
-                                            await fetchNui(NuiEvent.ShopMaskPreview, JSON.parse(item.data));
-                                        }}
-                                        onConfirm={async () => {
-                                            await fetchNui(NuiEvent.ShopMaskBuy, item.id);
-                                        }}
-                                    >
-                                        {label}
-                                    </MenuItemButton>
-                                );
-                            })}
+                            {items
+                                .sort((a, b) => a.label.localeCompare(b.label))
+                                .map(item => {
+                                    let label = item.label;
+                                    switch (item.stock) {
+                                        case 0:
+                                            label += ' (Rupture de stock)';
+                                            break;
+                                        case 1:
+                                            label += ' (Dernier exemplaire)';
+                                            break;
+                                    }
+                                    return (
+                                        <MenuItemButton
+                                            key={item.id}
+                                            disabled={item.stock === 0}
+                                            onSelected={async () => {
+                                                await fetchNui(NuiEvent.ShopMaskPreview, JSON.parse(item.data));
+                                            }}
+                                            onConfirm={async () => {
+                                                await fetchNui(NuiEvent.ShopMaskBuy, item.id);
+                                            }}
+                                        >
+                                            {label}
+                                        </MenuItemButton>
+                                    );
+                                })}
                         </MenuContent>
                     </SubMenu>
                 ))}
