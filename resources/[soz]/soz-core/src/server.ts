@@ -36,8 +36,7 @@ async function bootstrap() {
         AdminModule,
         VoipModule,
         JobModule,
-        BennysModule,
-        StorageModule
+        BennysModule
     );
 
     await app.stop();

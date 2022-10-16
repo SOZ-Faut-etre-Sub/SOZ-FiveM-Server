@@ -10,7 +10,7 @@ local function getCloakroomTargetOption(job, storage)
             return PlayerData.job.onduty
         end,
         action = function()
-            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, 'jobs:client:' .. job .. ':OpenCloakroomMenu')
+            TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "jobs:client:" .. job .. ":OpenCloakroomMenu")
         end,
     }
 end
@@ -65,5 +65,5 @@ Config.Storages["garbage_cloakroom"] = {
     minZ = 32.01,
     maxZ = 35.01,
     heading = 355,
-    targetOption = getCloakroomTargetOption('garbage', 'garbage_cloakroom'),
+    targetOption = getCloakroomTargetOption("garbage", "garbage_cloakroom"),
 }
