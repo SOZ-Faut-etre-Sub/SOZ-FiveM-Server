@@ -7,7 +7,7 @@ export class VehiclePlayerRepository {
     private prismaService: PrismaService;
 
     public async find(id: number) {
-        return this.prismaService.PlayerVehicle.findUnique({
+        return this.prismaService.playerVehicle.findUnique({
             where: {
                 id,
             },

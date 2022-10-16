@@ -97,7 +97,7 @@ export class BennysOrderProvider {
 
     @Exportable('deleteTestVehicles')
     async deleteTestVehicles() {
-        await this.prismaService.player_vehicles.deleteMany({
+        await this.prismaService.playerVehicle.deleteMany({
             where: {
                 plate: {
                     contains: 'ESSAI',
@@ -118,7 +118,7 @@ export class BennysOrderProvider {
         } else if (vehicle.requiredLicence === 'boat') {
             category = 'boat';
         }
-        await this.prismaService.player_vehicles.create({
+        await this.prismaService.playerVehicle.create({
             data: {
                 vehicle: model,
                 hash: GetHashKey(model).toString(),

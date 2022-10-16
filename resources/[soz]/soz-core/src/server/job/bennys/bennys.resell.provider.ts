@@ -48,7 +48,7 @@ export class BennysResellProvider {
             return;
         }
 
-        const playerVehicle = await this.prismaService.player_vehicles.findFirst({
+        const playerVehicle = await this.prismaService.playerVehicle.findFirst({
             where: {
                 plate: plate,
             },
@@ -70,7 +70,7 @@ export class BennysResellProvider {
         if (isOk(cashTransferResult)) {
             this.notifier.notify(source, `Vous avez vendu ce véhicule pour ~g~$${sellPrice.toLocaleString()}~s~.`);
             DeleteEntity(entity);
-            await this.prismaService.player_vehicles.delete({
+            await this.prismaService.playerVehicle.delete({
                 where: {
                     plate: plate,
                 },

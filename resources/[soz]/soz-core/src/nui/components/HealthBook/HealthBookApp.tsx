@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from 'react';
 
-import { healthLevelToLabel, LabelStrategy, stressLevelToLabel } from '../../../shared/health';
+import { healthLevelToLabel, stressLevelToLabel } from '../../../shared/health';
 import { PlayerData } from '../../../shared/player';
 import { useNuiEvent } from '../../hook/nui';
 
