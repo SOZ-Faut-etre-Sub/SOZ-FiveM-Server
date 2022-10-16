@@ -21,6 +21,7 @@ export enum MenuType {
     AdminMenu = 'AdminMenu',
     BahamaUnicornJobMenu = 'baun_job_menu',
     BennysOrderMenu = 'bennys_order_menu',
+    StonkJobMenu = 'stonk_job_menu',
     FightForStyleJobMenu = 'ffs_job_menu',
     FoodJobMenu = 'food_job_menu',
     Demo = 'demo',

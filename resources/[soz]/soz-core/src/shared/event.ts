@@ -183,6 +183,8 @@ export enum NuiEvent {
 
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
 
+    StonkDisplayBlip = 'soz-core:client:job:stonk:display-blip',
+
     BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
     BennysOrder = 'soz-core:client:job:bennys:order',
     BennysGetOrders = 'soz-core:client:job:bennys:get-orders',

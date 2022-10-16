@@ -1,27 +1,5 @@
 StonkConfig = {}
 
-StonkConfig.Collection = {
-    Cooldown = 900000, -- in ms
-    Duration = 5000, -- in ms
-    Range = {min = 5, max = 8},
-    BagItem = "moneybag",
-}
-
-StonkConfig.Resale = {
-    TargetEntities = {-2018598162, -735318549},
-    Quantity = 5,
-    Duration = 5000, -- in ms
-    Price = 80,
-    BankPrice = 240,
-}
-
-StonkConfig.FillIn = {
-    Duration = 3000, -- in ms
-    Amount = 4000,
-}
-
-StonkConfig.Accounts = {FarmAccount = "farm_stonk", BankAccount = "bank_refill", SafeStorage = "safe_cash-transfer"}
-
 StonkConfig.DutyOutfit = {
     [GetHashKey("mp_m_freemode_01")] = {
         Components = {
