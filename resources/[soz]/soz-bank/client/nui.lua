@@ -72,7 +72,7 @@ RegisterNUICallback("doDeposit", function(data, cb)
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
-            openBankScreen(data.account)
+            openBankScreen(data.account, data.isATM)
         end, "player", data.account, amount)
     end
 end)
@@ -151,7 +151,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
-            openBankScreen(data.account)
+            openBankScreen(data.account, data.isATM)
         end, data.account, "player", amount)
     end
 end)
