@@ -11,7 +11,12 @@ export enum RpcEvent {
     INVENTORY_SEARCH = 'soz-core:inventory:search',
 
     JOB_GET_JOBS = 'soz-core:jobs:get-jobs',
+
     PLAYER_GET_HEALTH_BOOK = 'soz-core:player:get-health-book',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
+
+    SHOP_MASK_GET_CATEGORIES = 'soz-core:shop:mask:get-categories',
+    SHOP_MASK_GET_ITEMS = 'soz-core:shop:mask:get-items',
+
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
 }
