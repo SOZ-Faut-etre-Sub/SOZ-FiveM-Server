@@ -40,7 +40,7 @@ end
 
 local function getCloakroomTargetOption(storage)
     return {
-        color = 'baun',
+        color = "baun",
         type = "client",
         label = "Se changer",
         icon = "c:jobs/habiller.png",
@@ -50,7 +50,7 @@ local function getCloakroomTargetOption(storage)
             return PlayerData.job.onduty
         end,
         action = function()
-            TriggerEvent('soz-jobs:client:try-open-cloakroom', storage, 'jobs:client:baun:OpenCloakroomMenu')
+            TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "jobs:client:baun:OpenCloakroomMenu")
         end,
     }
 end

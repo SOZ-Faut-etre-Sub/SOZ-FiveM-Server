@@ -19,7 +19,6 @@ import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
-import { JobModule } from './server/job/job.module';
 
 async function bootstrap() {
     const app = await Application.create(
@@ -37,10 +36,7 @@ async function bootstrap() {
         StreamModule,
         ZEventModule,
         AdminModule,
-<<<<<<< HEAD
         BennysModule,
-=======
->>>>>>> feat(cloakroom): now using a work outfit will consume its storage
         JobModule
     );
 
