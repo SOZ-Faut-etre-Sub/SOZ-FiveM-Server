@@ -1,13 +1,5 @@
 import { ZoneOptions } from '../../client/target/target.factory';
 
-export const BaunConfig = {
-    DURATIONS: {
-        CRAFTING: 4000,
-        RESTOCKING: 4000,
-        HARVESTING: 2000,
-    },
-};
-
 export type BaunCraftProcess = {
     inputs: {
         id: string;
@@ -169,3 +161,15 @@ export const baunCraftProcesses: BaunCraftProcess[] = [
         },
     },
 ];
+
+export const BaunConfig = {
+    Resell: {
+        duration: 2000,
+        reward: 1000,
+    },
+    DURATIONS: {
+        CRAFTING: 4000,
+        RESTOCKING: 4000,
+        HARVESTING: 2000,
+    },
+};
