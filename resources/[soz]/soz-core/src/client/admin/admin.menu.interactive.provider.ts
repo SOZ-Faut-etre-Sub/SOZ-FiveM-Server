@@ -127,8 +127,8 @@ export class AdminMenuInteractiveProvider {
                     const createdBlip = this.QBCore.createBlip('admin:player-blip:' + player.citizenId, {
                         coords: { x: coords[0], y: coords[1], z: coords[2] },
                         heading: player.heading,
-                        name: player.name,
-                        playername: player.name,
+                        name: player.rpFullName,
+                        playername: player.rpFullName,
                         showheading: true,
                         sprite: 1,
                     });
@@ -151,9 +151,9 @@ export class AdminMenuInteractiveProvider {
         players.forEach(player => {
             this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.id));
 
-            let name = player.name;
+            let name = player.rpFullName;
             if (withDetails) {
-                name += ` | ${player.id} | ${player.license}`;
+                name += ` | ${player.name} | ${player.id}`;
             }
             CreateMpGamerTagWithCrewColor(
                 this.multiplayerTags.get(player.citizenId),

@@ -65,9 +65,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="job">
                         ⛑ Gestion métier
                     </MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="skin">
-                        🐕 Modification du style du joueur
-                    </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="skin">🐕 Modification du style du joueur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="vehicle">
                         🚗 Gestion du véhicule
                     </MenuItemSubMenuLink>
