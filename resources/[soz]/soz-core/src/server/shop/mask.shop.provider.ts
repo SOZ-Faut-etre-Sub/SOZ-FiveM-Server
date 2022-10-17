@@ -1,11 +1,14 @@
+import { BankService } from '../../client/bank/bank.service';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { ClothConfig, Outfit } from '../../shared/cloth';
 import { ServerEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
+import { QBCore } from '../qbcore';
 
 @Provider()
 export class MaskShopProvider {
@@ -14,6 +17,12 @@ export class MaskShopProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(BankService)
+    private bankService: BankService;
+
+    @Inject(QBCore)
+    private qbcore: QBCore;
 
     @Rpc(RpcEvent.SHOP_MASK_GET_CATEGORIES)
     async getMasks(): Promise<any> {
@@ -59,15 +68,61 @@ export class MaskShopProvider {
 
     @OnEvent(ServerEvent.SHOP_MASK_BUY)
     public async onShopMaskBuy(source: number, itemId: number) {
-        console.log('onShopMaskBuy', source, itemId);
-        this.notifier.notify(source, `Merci pour votre achat !`);
-
         // Remove the price from the player's wallet
+        const item = await this.prismaService.shop_content.findFirst({
+            where: {
+                id: itemId,
+            },
+        });
+        if (!item) {
+            return;
+        }
+
+        const player = this.qbcore.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        if (!player.Functions.RemoveMoney('money', item.price)) {
+            this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
+            return;
+        }
 
         // Update the stock in the shop_content table
+        await this.prismaService.shop_content.update({
+            where: {
+                id: itemId,
+            },
+            data: {
+                stock: {
+                    decrement: 1,
+                },
+            },
+        });
 
-        // Retrieve the components to apply from the shop_content table
+        // Merge the item's outfit to the cloth config.
+        const clothConfigKey = item.category_id == 19 ? 'NakedClothSet' : 'BaseClothSet';
+        const clothConfig: ClothConfig = player.PlayerData.cloth_config;
+        const currentOutfit: Outfit = clothConfig[clothConfigKey];
+        const outfit: Outfit = JSON.parse(item.data);
 
-        // Apply the components to the player
+        if (outfit.Components) {
+            for (const [component, outfitItem] of Object.entries(outfit.Components)) {
+                currentOutfit.Components[component] = outfitItem;
+            }
+        }
+
+        if (outfit.Props) {
+            for (const [prop, outfitItem] of Object.entries(outfit.Props)) {
+                currentOutfit.Props[prop] = outfitItem;
+            }
+        }
+
+        clothConfig[clothConfigKey] = currentOutfit;
+
+        console.log(clothConfig);
+        // player.Functions.SetClothConfig(clothConfig, false);
+
+        this.notifier.notify(source, `Merci pour votre achat !`);
     }
 }
