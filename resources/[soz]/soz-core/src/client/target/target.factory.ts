@@ -1,17 +1,5 @@
 import { Injectable } from '../../core/decorators/injectable';
-import { Vector3 } from '../../shared/polyzone/vector';
-
-export type ZoneOptions = {
-    name?: string;
-    center: Vector3;
-    length?: number;
-    width?: number;
-    heading?: number;
-    minZ?: number;
-    maxZ?: number;
-    debugPoly?: boolean;
-    data?: any;
-};
+import { Zone } from '../../shared/polyzone/box.zone';
 
 export type TargetOptions = {
     label: string;
@@ -53,7 +41,7 @@ export class TargetFactory {
     private zones: { [id: string]: any } = {};
     private players: { [id: string]: any } = {};
 
-    public createForBoxZone(id: string, zone: ZoneOptions, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+    public createForBoxZone(id: string, zone: Zone, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         zone = {
             length: 1,
             width: 1,

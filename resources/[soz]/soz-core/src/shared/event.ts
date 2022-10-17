@@ -111,6 +111,8 @@ export enum ServerEvent {
 }
 
 export enum ClientEvent {
+    BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
+
     CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
 
     PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
@@ -153,6 +155,7 @@ export enum ClientEvent {
 
     VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
     VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
+    VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }

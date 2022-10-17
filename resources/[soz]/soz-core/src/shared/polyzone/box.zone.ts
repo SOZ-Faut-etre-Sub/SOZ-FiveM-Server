@@ -1,10 +1,25 @@
-import { Point2D, Point3D } from './vector';
+import { Point2D, Point3D, Vector3 } from './vector';
 
 type BoxZoneOptions = {
     minZ?: number;
     maxZ?: number;
     heading?: number;
     data?: any;
+};
+
+export type Zone = {
+    center: Vector3;
+    length?: number;
+    width?: number;
+    heading?: number;
+    minZ?: number;
+    maxZ?: number;
+    debugPoly?: boolean;
+    data?: any;
+};
+
+export type NamedZone = Zone & {
+    name: string;
 };
 
 const rotatePoint = (center: Point2D | Point3D, point: Point2D | Point3D, angleInRad: number): Point2D => {
