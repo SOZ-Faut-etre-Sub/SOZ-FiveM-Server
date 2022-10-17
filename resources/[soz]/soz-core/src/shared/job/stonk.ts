@@ -5,12 +5,12 @@ export type StonkBagType = 'jewelbag' | 'small_moneybag' | 'medium_moneybag' | '
 const resellZones: (ZoneOptions & { bagAccepted: StonkBagType })[] = [
     {
         name: 'Lombank',
-        center: [-864.59, -192.82, 37.7],
-        length: 0.6,
-        width: 6.2,
-        heading: 300,
-        minZ: 36.7,
-        maxZ: 39.65,
+        center: [-880.55, -194.65, 38.38],
+        length: 0.4,
+        width: 2.6,
+        heading: 295,
+        minZ: 37.38,
+        maxZ: 40.78,
         bagAccepted: 'small_moneybag',
     },
     {
