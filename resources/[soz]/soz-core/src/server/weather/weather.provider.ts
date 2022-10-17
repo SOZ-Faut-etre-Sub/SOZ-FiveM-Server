@@ -5,16 +5,17 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
 import { Forecast, Time, Weather } from '../../shared/weather';
 import { Pollution } from '../pollution';
-import { Polluted, SpringAutumn } from './forecast';
+import { Halloween, Polluted, SpringAutumn } from './forecast';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 
 @Provider()
 export class WeatherProvider {
-    private forecast: Forecast = SpringAutumn;
+    private forecast: Forecast = isFeatureEnabled(Feature.Halloween) ? Halloween : SpringAutumn;
 
     private shouldUpdateWeather = true;
 
@@ -51,6 +52,14 @@ export class WeatherProvider {
                 if (currentTime.hour >= 24) {
                     currentTime.hour %= 24;
                 }
+            }
+        }
+
+        if (isFeatureEnabled(Feature.Halloween)) {
+            if (currentTime.hour >= 2 && currentTime.hour < 23) {
+                currentTime.hour = 23;
+                currentTime.minute = 0;
+                currentTime.second = 0;
             }
         }
 
