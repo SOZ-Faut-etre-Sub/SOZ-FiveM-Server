@@ -57,7 +57,7 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 10,
-        display: 'STONK Depository',
+        display: 'STONK Security',
         number: '555-STONK',
         avatar: 'media/society_icon/cash-transfer.webp',
     },
