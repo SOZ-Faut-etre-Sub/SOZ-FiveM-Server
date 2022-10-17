@@ -1,6 +1,6 @@
-import { ZoneOptions } from '../../client/target/target.factory';
+import { NamedZone } from '../polyzone/box.zone';
 
-const orderZone: ZoneOptions & { name: string } = {
+const orderZone: NamedZone = {
     name: 'bennys_order',
     center: [-203.94, -1337.64, 34.89],
     length: 0.15,
@@ -19,7 +19,7 @@ const upgradedSimplifiedMods = {
     modTurbo: 1,
 };
 
-const resellZone: ZoneOptions & { name: string } = {
+const resellZone: NamedZone = {
     name: 'bennys_resell',
     center: [260.77, 2578.32, 45.1],
     length: 5.8,

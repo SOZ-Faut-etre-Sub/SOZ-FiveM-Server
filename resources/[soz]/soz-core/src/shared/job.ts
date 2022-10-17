@@ -1,5 +1,5 @@
-import { ZoneOptions } from '../client/target/target.factory';
 import { ClientEvent } from './event';
+import { Zone } from './polyzone/box.zone';
 
 export enum JobType {
     Unemployed = 'unemployed',
@@ -85,7 +85,7 @@ export type JobGrade = {
     permissions: string[];
 };
 
-export const JobCloakrooms: Partial<Record<JobType, ZoneOptions[]>> = {
+export const JobCloakrooms: Partial<Record<JobType, Zone[]>> = {
     [JobType.Baun]: [
         {
             center: [106.36, -1299.08, 28.77],

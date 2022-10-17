@@ -1,16 +1,41 @@
 import { Command } from '../../core/decorators/command';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
+import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { getVehicleState, setVehicleState, VehicleEntityState } from '../../shared/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
 import { VehicleService } from './vehicle.service';
+
+const DOOR_INDEX_CONFIG = {
+    seat_dside_f: -1,
+    seat_pside_f: 0,
+    seat_dside_r: 1,
+    seat_pside_r: 2,
+    door_dside_f: -1,
+    door_pside_f: 0,
+    door_dside_r: 1,
+    door_pside_r: 2,
+    wheel_lr: [3, 5],
+    wheel_rr: [4, 6],
+};
+
+const VEHICLE_TRUNK_TYPES = {
+    [GetHashKey('tanker')]: 'tanker',
+    [GetHashKey('tanker2')]: 'tanker',
+    [GetHashKey('trailerlogs')]: 'trailerlogs',
+    [GetHashKey('brickade')]: 'brickade',
+    [GetHashKey('brickade1')]: 'brickade',
+    [GetHashKey('trash')]: 'trash',
+};
 
 @Provider()
 export class VehicleLockProvider {
@@ -25,6 +50,8 @@ export class VehicleLockProvider {
 
     @Inject(SoundService)
     private soundService: SoundService;
+
+    private vehicleTrunkOpened: number | null = null;
 
     @Tick(TickInterval.EVERY_FRAME)
     private async checkPlayerCanEnterVehicle() {
@@ -48,6 +75,161 @@ export class VehicleLockProvider {
         } else {
             SetVehicleDoorsLocked(vehicle, 2);
         }
+
+        const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
+        const playerPosition = GetEntityCoords(ped, false) as Vector3;
+        const minDistance = 2.0;
+        let closestDoor = null;
+
+        for (const [door, seatIndex] of Object.entries(DOOR_INDEX_CONFIG)) {
+            let useSeat = false;
+            let availableSeatIndex = seatIndex;
+
+            if (typeof seatIndex === 'number') {
+                useSeat = GetPedInVehicleSeat(vehicle, seatIndex) == 0;
+            } else {
+                availableSeatIndex = maxSeats;
+
+                for (let i = 0; i < maxSeats; i++) {
+                    if (!useSeat && GetPedInVehicleSeat(vehicle, i) == 0) {
+                        useSeat = true;
+                        availableSeatIndex = i;
+                    }
+                }
+            }
+
+            if (availableSeatIndex > maxSeats - 1) {
+                useSeat = false;
+            }
+
+            if (useSeat) {
+                const doorPosition = GetWorldPositionOfEntityBone(
+                    vehicle,
+                    GetEntityBoneIndexByName(vehicle, door)
+                ) as Vector3;
+                const distance = getDistance(playerPosition, doorPosition);
+
+                if (closestDoor === null) {
+                    if (distance <= minDistance) {
+                        closestDoor = {
+                            door,
+                            distance,
+                            doorPosition,
+                            seatIndex: availableSeatIndex,
+                        };
+                    }
+                } else {
+                    if (distance < closestDoor.distance) {
+                        closestDoor = {
+                            door,
+                            distance,
+                            doorPosition,
+                            seatIndex: availableSeatIndex,
+                        };
+                    }
+                }
+            }
+        }
+
+        if (closestDoor !== null) {
+            TaskEnterVehicle(ped, vehicle, -1, closestDoor.seatIndex, 1.0, 1, 0);
+
+            await wait(200);
+
+            let enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
+
+            while (enteringVehicle !== 0) {
+                await wait(200);
+
+                enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
+            }
+        }
+    }
+
+    @Command('soz_vehicle_toggle_vehicle_trunk', {
+        description: 'Ouvrir le coffre du véhicule',
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'G',
+            },
+        ],
+    })
+    async openVehicleTrunk() {
+        const ped = PlayerPedId();
+
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        if (IsPedInAnyVehicle(ped, false)) {
+            this.notifier.notify("Vous ne pouvez pas ouvrir le coffre à l'intérieur du véhicule.", 'error');
+
+            return;
+        }
+
+        const vehicle = this.vehicleService.getClosestVehicle();
+
+        if (!vehicle) {
+            this.notifier.notify('Aucun véhicule à proximité.', 'error');
+
+            return;
+        }
+
+        const vehicleState = getVehicleState(vehicle);
+
+        if (!vehicleState.forced && !player.metadata.godmode && !vehicleState.open) {
+            this.notifier.notify('Véhicule verrouillé.', 'error');
+
+            return;
+        }
+
+        // Not a player vehicle
+        if (!vehicleState.plate) {
+            this.notifier.notify("Ce coffre n'est pas accessible.", 'error');
+
+            return;
+        }
+
+        const vehicleModel = GetEntityModel(vehicle);
+        const vehicleClass = GetVehicleClass(vehicle);
+        const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
+
+        TriggerServerEvent('inventory:server:openInventory', trunkType, vehicleState.plate, {
+            model: vehicleModel,
+            class: vehicleClass,
+            entity: VehToNet(vehicle),
+        });
+
+        this.vehicleTrunkOpened = vehicle;
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    async checkKeepVehicleTrunkOpen() {
+        if (!this.vehicleTrunkOpened) {
+            return;
+        }
+
+        if (DoesEntityExist(this.vehicleTrunkOpened)) {
+            const distance = getDistance(
+                GetEntityCoords(PlayerPedId(), false) as Vector3,
+                GetEntityCoords(this.vehicleTrunkOpened, false) as Vector3
+            );
+
+            if (distance <= 3.0) {
+                return;
+            }
+        }
+
+        TriggerEvent('inventory:client:closeInventory');
+        this.notifier.notify('Le coffre est trop loin.', 'warning');
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_CLOSE_TRUNK)
+    async closeVehicleTrunk() {
+        this.vehicleTrunkOpened = null;
     }
 
     @Command('soz_vehicle_toggle_vehicle_lock', {

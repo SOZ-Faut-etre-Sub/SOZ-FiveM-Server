@@ -4,11 +4,12 @@ import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { StonkConfig } from '../../../shared/job/stonk';
+import { NamedZone } from '../../../shared/polyzone/box.zone';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
-import { TargetFactory, TargetOptions, ZoneOptions } from '../../target/target.factory';
+import { TargetFactory, TargetOptions } from '../../target/target.factory';
 
 @Provider()
 export class StonkDeliveryProvider {
@@ -27,7 +28,7 @@ export class StonkDeliveryProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    private currentDeliverLocation: ZoneOptions | null = null;
+    private currentDeliverLocation: NamedZone | null = null;
 
     @Once(OnceStep.PlayerLoaded)
     onPlayerLoaded() {
@@ -67,7 +68,7 @@ export class StonkDeliveryProvider {
     }
 
     @On(ClientEvent.STONK_DELIVER_LOCATION)
-    async onLocation(location: ZoneOptions) {
+    async onLocation(location: NamedZone) {
         this.currentDeliverLocation = location;
         this.targetFactory.createForBoxZone(location.name, location, [this.deliverAction()]);
         SetNewWaypoint(location.center[0], location.center[1]);

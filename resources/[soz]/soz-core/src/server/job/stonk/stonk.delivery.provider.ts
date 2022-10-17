@@ -1,4 +1,3 @@
-import { ZoneOptions } from '../../../client/target/target.factory';
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -6,6 +5,7 @@ import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { StonkConfig } from '../../../shared/job/stonk';
 import { Monitor } from '../../../shared/monitor';
+import { NamedZone } from '../../../shared/polyzone/box.zone';
 import { BankService } from '../../bank/bank.service';
 import { FieldProvider } from '../../farm/field.provider';
 import { InventoryManager } from '../../item/inventory.manager';
@@ -46,7 +46,7 @@ export class StonkDeliveryProvider {
 
     private fieldIdentifier = 'stonk_delivery';
 
-    private getLiveryLocation(): ZoneOptions {
+    private getLiveryLocation(): NamedZone {
         const locationId = Math.trunc((new Date().getHours() / 4) % StonkConfig.delivery.location.length);
         return StonkConfig.delivery.location[locationId];
     }
@@ -122,7 +122,7 @@ export class StonkDeliveryProvider {
     }
 
     @OnEvent(ServerEvent.STONK_DELIVERY_END)
-    public async onEnd(source: number, location: ZoneOptions) {
+    public async onEnd(source: number, location: NamedZone) {
         const currentLocation = this.getLiveryLocation();
 
         if (location.name !== currentLocation.name) {

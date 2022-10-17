@@ -178,9 +178,9 @@ export class VehicleService {
         this.applyVehicleCondition(vehicle, state.condition);
     }
     public applyVehicleCondition(vehicle: number, condition: VehicleCondition): void {
-        SetVehicleFuelLevel(vehicle, condition.fuelLevel + 0.0);
-        SetVehicleOilLevel(vehicle, condition.oilLevel + 0.0);
-        SetVehicleDirtLevel(vehicle, condition.dirtLevel + 0.0);
+        SetVehicleFuelLevel(vehicle, condition.fuelLevel);
+        SetVehicleOilLevel(vehicle, condition.oilLevel);
+        SetVehicleDirtLevel(vehicle, condition.dirtLevel);
         SetVehicleBodyHealth(vehicle, condition.bodyHealth);
         SetVehicleEngineHealth(vehicle, condition.engineHealth);
         SetVehiclePetrolTankHealth(vehicle, condition.tankHealth);
