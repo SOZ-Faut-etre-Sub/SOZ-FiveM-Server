@@ -1,9 +1,10 @@
 import { Injectable } from '../../core/decorators/injectable';
 import { NuiMethodMap } from '../../shared/nui';
+import { MenuType } from '../../shared/nui/menu';
 
 @Injectable()
 export class NuiDispatch {
-    public isMenuOpen = false;
+    public menuOpened: MenuType | null = null;
 
     dispatch<App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(
         app: App,
@@ -13,11 +14,11 @@ export class NuiDispatch {
         SendNuiMessage(JSON.stringify({ app, method, data }));
     }
 
-    setMenuOpen(isOpen: boolean) {
-        this.isMenuOpen = isOpen;
+    setMenuOpen(menu: MenuType | null) {
+        this.menuOpened = menu;
     }
 
-    isMenuOpened() {
-        return this.isMenuOpen;
+    getMenuOpened(): MenuType | null {
+        return this.menuOpened;
     }
 }

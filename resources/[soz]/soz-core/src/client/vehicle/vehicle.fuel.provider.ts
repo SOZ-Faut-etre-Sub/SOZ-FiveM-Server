@@ -1,9 +1,13 @@
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
-import { getVehicleState, setVehicleState } from '../../shared/vehicle';
+import { VehicleService } from './vehicle.service';
 
 @Provider()
 export class VehicleFuelProvider {
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
+
     @Tick(TickInterval.EVERY_SECOND)
     private async onTick() {
         const ped = PlayerPedId();
@@ -31,16 +35,16 @@ export class VehicleFuelProvider {
         consumedFuel += GetVehicleMaxTraction(vehicle) * 0.0001;
 
         const consumedOil = consumedFuel / 280;
-        const state = getVehicleState(vehicle);
+        const state = this.vehicleService.getVehicleState(vehicle);
 
         const newOil = Math.max(0, state.condition.oilLevel - consumedOil);
         const newFuel = Math.max(0, state.condition.fuelLevel - consumedFuel);
 
-        setVehicleState(vehicle, {
+        this.vehicleService.updateVehicleState(vehicle, {
             condition: {
                 ...state.condition,
-                fuelLevel: newFuel,
                 oilLevel: newOil,
+                fuelLevel: newFuel,
             },
         });
 

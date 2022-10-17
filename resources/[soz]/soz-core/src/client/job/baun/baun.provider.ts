@@ -52,8 +52,9 @@ export class BaunProvider {
 
     @OnEvent(ClientEvent.JOBS_BAUN_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (this.nuiMenu.isOpen()) {
+        if (this.nuiMenu.getOpened() === MenuType.BahamaUnicornJobMenu) {
             this.nuiMenu.closeMenu();
+
             return;
         }
 

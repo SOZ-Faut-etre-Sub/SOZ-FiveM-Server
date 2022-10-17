@@ -53,7 +53,7 @@ export class FoodProvider {
 
     @OnEvent(ClientEvent.JOBS_FOOD_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (this.nuiMenu.isOpen()) {
+        if (this.nuiMenu.getOpened() === MenuType.FoodJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }

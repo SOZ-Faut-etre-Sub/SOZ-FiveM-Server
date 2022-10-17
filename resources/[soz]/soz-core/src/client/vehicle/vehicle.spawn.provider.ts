@@ -2,7 +2,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { setVehicleState, VehicleSpawn } from '../../shared/vehicle';
+import { VehicleSpawn } from '../../shared/vehicle';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
 import { VehicleService } from './vehicle.service';
@@ -51,7 +51,7 @@ export class VehicleSpawnProvider {
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
 
-        setVehicleState(vehicle, vehicleSpawn.state);
+        this.vehicleService.updateVehicleState(vehicle, vehicleSpawn.state);
 
         TriggerServerEvent(ServerEvent.VEHICLE_SPAWNED, spawnId, networkId);
 

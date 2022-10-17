@@ -1,5 +1,6 @@
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
+import { VehicleMenuData } from '../vehicle';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -28,6 +29,7 @@ export enum MenuType {
     BossShop = 'boss_shop',
     MaskShop = 'mask_shop',
     SetHealthState = 'set_health_state',
+    Vehicle = 'vehicle_menu',
     Wardrobe = 'wardrobe',
 }
 
@@ -38,4 +40,5 @@ export interface MenuTypeMap extends Record<MenuType, unknown> {
     [MenuType.Demo]: never;
     [MenuType.SetHealthState]: number;
     [MenuType.Wardrobe]: WardrobeMenuData;
+    [MenuType.Vehicle]: VehicleMenuData;
 }
