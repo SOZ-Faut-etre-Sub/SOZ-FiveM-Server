@@ -13,7 +13,6 @@ local function playAnimation()
 end
 
 local function openBankScreen(account, isATM, bankAtmAccountId, atmType, atmName)
-    print("Opening bank screen", account, isATM, bankAtmAccountId, atmType, atmName)
     QBCore.Functions.TriggerCallback("banking:getBankingInformation", function(banking)
         if banking ~= nil then
             playAnimation()
