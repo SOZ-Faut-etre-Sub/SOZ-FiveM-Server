@@ -1,7 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { Rpc } from '../../core/decorators/rpc';
 import { InventoryItem, InventoryItemMetadata } from '../../shared/item';
-import { RpcEvent } from '../../shared/rpc';
 import { PlayerService } from '../player/player.service';
 
 @Injectable()
