@@ -2,7 +2,7 @@ import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { Component, Outfit, OutfitItem } from '../../shared/cloth';
+import { Outfit } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { MenuType } from '../../shared/nui/menu';
