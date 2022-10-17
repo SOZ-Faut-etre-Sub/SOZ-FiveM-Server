@@ -3,7 +3,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { ClothConfig, Outfit } from '../../shared/cloth';
+import { ClothConfig, Outfit, OutfitItem } from '../../shared/cloth';
 import { ServerEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
@@ -108,20 +108,29 @@ export class MaskShopProvider {
 
         if (outfit.Components) {
             for (const [component, outfitItem] of Object.entries(outfit.Components)) {
-                currentOutfit.Components[component] = outfitItem;
+                currentOutfit.Components[component] = {
+                    Drawable: outfitItem.Drawable || 0,
+                    Texture: outfitItem.Texture || 0,
+                    Palette: outfitItem.Palette || 0,
+                    Index: Number(component),
+                };
             }
         }
 
         if (outfit.Props) {
             for (const [prop, outfitItem] of Object.entries(outfit.Props)) {
-                currentOutfit.Props[prop] = outfitItem;
+                currentOutfit.Props[prop] = {
+                    Drawable: outfitItem.Drawable || 0,
+                    Texture: outfitItem.Texture || 0,
+                    Palette: outfitItem.Palette || 0,
+                    Index: Number(prop),
+                };
             }
         }
 
         clothConfig[clothConfigKey] = currentOutfit;
 
-        console.log(clothConfig);
-        // player.Functions.SetClothConfig(clothConfig, false);
+        player.Functions.SetClothConfig(clothConfig, false);
 
         this.notifier.notify(source, `Merci pour votre achat !`);
     }
