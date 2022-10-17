@@ -75,3 +75,22 @@ export const Polluted: Forecast = {
     HALLOWEEN: { SMOG: 80, FOGGY: 20 },
     LIGHT_SNOW: { SMOG: 80, FOGGY: 20 },
 };
+
+export const Halloween: Forecast = {
+    EXTRASUNNY: {},
+    CLEAR: {},
+    NEUTRAL: { CLEARING: 40, FOGGY: 40, HALLOWEEN: 20 },
+    SMOG: {},
+    FOGGY: { NEUTRAL: 50, THUNDER: 50 },
+    OVERCAST: { FOGGY: 40, RAIN: 40, CLEARING: 20 },
+    CLOUDS: {},
+    CLEARING: { FOGGY: 30, HALLOWEEN: 30, RAIN: 20, THUNDER: 20 },
+    RAIN: { CLEARING: 30, FOGGY: 30, HALLOWEEN: 30, THUNDER: 10 },
+    THUNDER: { HALLOWEEN: 65, FOGGY: 35 },
+    SNOW: {},
+    BLIZZARD: {},
+    SNOWLIGHT: {},
+    XMAS: {},
+    HALLOWEEN: { FOGGY: 40, NEUTRAL: 30, CLEARING: 30 },
+    LIGHT_SNOW: {},
+};

@@ -32,7 +32,7 @@ Config.Dealerships = {
         licence = "car",
         blip = {name = "Concessionnaire Auto", coords = vector3(-45.67, -1098.34, 26.42), sprite = 225, color = 46},
         ped = {
-            model = "s_m_m_autoshop_01",
+            model = (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_m_m_autoshop_01",
             coords = vector4(-56.61, -1096.58, 25.42, 30.0),
             zone = {
                 center = vector3(-55.49, -1096.44, 26.92),
@@ -49,7 +49,7 @@ Config.Dealerships = {
         licence = nil,
         blip = {name = "Concessionnaire Vélo", coords = vector3(-1222.26, -1494.83, 4.34), sprite = 559, color = 46},
         ped = {
-            model = "s_m_m_autoshop_01",
+            model = (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_m_m_autoshop_01",
             coords = vector4(-1222.26, -1494.83, 3.34, 120.0),
             zone = {
                 center = vector3(-1223.7, -1495.49, 4.37),
@@ -66,7 +66,7 @@ Config.Dealerships = {
         licence = "motorcycle",
         blip = {name = "Concessionnaire Moto", coords = vector3(1224.79, 2727.25, 38.0), sprite = 522, color = 46},
         ped = {
-            model = "s_m_m_autoshop_01",
+            model = (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_m_m_autoshop_01",
             coords = vector4(1224.79, 2727.25, 37.0, 180.0),
             zone = {
                 center = vector3(1224.99, 2725.22, 38.0),
@@ -88,7 +88,7 @@ Config.Dealerships = {
             color = 46,
         },
         ped = {
-            model = "s_m_m_autoshop_02",
+            model = (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_m_m_autoshop_02",
             coords = vector4(1743.13, 3307.23, 40.22, 148.91),
             zone = {
                 center = vector3(1732.15, 3308.31, 41.22),

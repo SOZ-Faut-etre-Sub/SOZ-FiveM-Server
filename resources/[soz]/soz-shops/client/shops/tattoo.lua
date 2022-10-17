@@ -226,4 +226,4 @@ function TattooShop:DeleteCam()
 end
 
 --- Exports functions
-ShopContext["tattoo"] = TattooShop:new("Tatoueur", "tattoo", {sprite = 75, color = 1}, "u_m_y_tattoo_01")
+ShopContext["tattoo"] = TattooShop:new("Tatoueur", "tattoo", {sprite = 75, color = 1}, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or  "u_m_y_tattoo_01")

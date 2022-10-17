@@ -98,9 +98,10 @@ CreateThread(function()
                 QBCore.Functions.CreateBlip("bank_" .. bank, {name = "Banque", coords = coords, sprite = 108, color = 2})
             end
         end
+        local model = (GetConvarInt("feature_halloween", 0) == 1 and "u_f_m_drowned_01") or "ig_bankman"
         exports["qb-target"]:SpawnPed({
             {
-                model = "ig_bankman",
+                model = model,
                 coords = coords,
                 minusOne = true,
                 freeze = true,

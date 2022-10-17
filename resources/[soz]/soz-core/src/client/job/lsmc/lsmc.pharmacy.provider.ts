@@ -2,6 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
+import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
@@ -11,8 +12,9 @@ export class LSMCPharmacyProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
+        const model = isFeatureEnabled(Feature.Halloween) ? 'u_f_y_corpse_02' : 's_m_m_doctor_01';
         this.targetFactory.createForPed({
-            model: 's_m_m_doctor_01',
+            model: model,
             coords: { x: 356.64, y: -1419.74, z: 31.51, w: 57.62 },
             invincible: true,
             freeze: true,
