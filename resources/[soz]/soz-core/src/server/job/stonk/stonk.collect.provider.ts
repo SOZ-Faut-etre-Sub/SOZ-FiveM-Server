@@ -100,6 +100,11 @@ export class StonkCollectProvider {
     private canCollect(source: number, brand: string, shop: string, item: StonkBagType): boolean {
         const lastCollect = this.collectBagHistory[shop]?.[source] || 0;
 
+        if (!this.inventoryManager.canCarryItem(source, item, StonkConfig.resell.amount)) {
+            this.notifier.notify(source, `Vous n'avez pas ~r~assez~s~ de place dans vos poches.`);
+            return false;
+        }
+
         return (
             lastCollect + StonkConfig.collection[item].timeout <= new Date().getTime() &&
             Object.values(StonkConfig.collection).some(item => item.takeInAvailableIn.includes(brand))
