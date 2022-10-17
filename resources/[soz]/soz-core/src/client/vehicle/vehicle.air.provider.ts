@@ -35,9 +35,10 @@ export class VehicleAirProvider {
             return;
         }
 
-        const seat = GetPedInVehicleSeat(vehicle, -1);
+        const isDriver = GetPedInVehicleSeat(vehicle, -1) === ped;
+        const isCopilot = GetPedInVehicleSeat(vehicle, 0) === ped;
 
-        if (DoesVehicleAllowRappel(vehicle) && seat !== -1 && seat !== 0) {
+        if (DoesVehicleAllowRappel(vehicle) && !isDriver && !isCopilot) {
             TaskRappelFromHeli(ped, 0x41200000);
         }
     }

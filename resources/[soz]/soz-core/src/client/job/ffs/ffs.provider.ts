@@ -82,7 +82,7 @@ export class FightForStyleProvider {
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (this.nuiMenu.isOpen()) {
+        if (this.nuiMenu.getOpened() === MenuType.FightForStyleJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }

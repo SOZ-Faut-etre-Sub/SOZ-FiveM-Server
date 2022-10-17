@@ -15,6 +15,7 @@ import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { MenuDemo } from './MenuDemo';
 import { MenuSetHealthState } from './MenuSetHealthState';
+import { MenuVehicle } from './MenuVehicule';
 import { MenuWardrobe } from './MenuWardrobe';
 
 export const MenuApp: FunctionComponent = () => {
@@ -61,6 +62,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.BossShop}/*`} element={<BossShopMenu data={menuData} />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />
+            <Route path={`/${MenuType.Vehicle}/*`} element={<MenuVehicle data={menuData} />} />
         </Routes>
     );
 };

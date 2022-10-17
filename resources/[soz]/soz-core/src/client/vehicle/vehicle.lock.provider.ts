@@ -9,7 +9,7 @@ import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
-import { getVehicleState, setVehicleState, VehicleEntityState } from '../../shared/vehicle';
+import { VehicleEntityState } from '../../shared/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
@@ -68,7 +68,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        const vehicleState = getVehicleState(vehicle);
+        const vehicleState = this.vehicleService.getVehicleState(vehicle);
 
         if (vehicleState.forced || player.metadata.godmode || vehicleState.open) {
             SetVehicleDoorsLocked(vehicle, 0);
@@ -178,7 +178,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        const vehicleState = getVehicleState(vehicle);
+        const vehicleState = this.vehicleService.getVehicleState(vehicle);
 
         if (!vehicleState.forced && !player.metadata.godmode && !vehicleState.open) {
             this.notifier.notify('Véhicule verrouillé.', 'error');
@@ -266,7 +266,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        const state = getVehicleState(vehicle);
+        const state = this.vehicleService.getVehicleState(vehicle);
         const hasVehicleKey = await this.hasVehicleKey(player, state);
 
         if (!hasVehicleKey) {
@@ -275,7 +275,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        setVehicleState(vehicle, {
+        this.vehicleService.updateVehicleState(vehicle, {
             open: !state.open,
         });
 

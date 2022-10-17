@@ -24,8 +24,10 @@ export type VehicleEntityState = {
     open: boolean;
     plate: string | null;
     owner: string | null;
+    speedLimit: number | null;
     modification: VehicleModification;
     condition: VehicleCondition;
+    hasRadio: boolean;
 };
 
 export enum VehicleModType {
@@ -175,6 +177,8 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     open: false,
     owner: null,
     plate: null,
+    hasRadio: false,
+    speedLimit: null,
     modification: {
         color1: 0,
         color2: 0,
@@ -260,22 +264,10 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     },
 });
 
-export const getVehicleState = (vehicle: number): StateBagInterface & VehicleEntityState => {
-    const state = Entity(vehicle).state;
-
-    return {
-        ...getDefaultVehicleState(),
-        ...(state.soz || {}),
-    };
-};
-
-export const setVehicleState = (vehicle: number, state: Partial<VehicleEntityState>): void => {
-    Entity(vehicle).state.set(
-        'soz',
-        {
-            ...getVehicleState(vehicle),
-            ...state,
-        },
-        true
-    );
+export type VehicleMenuData = {
+    speedLimit: number;
+    engineOn: boolean;
+    doorStatus: Record<number, boolean>;
+    isDriver: boolean;
+    hasRadio: boolean;
 };

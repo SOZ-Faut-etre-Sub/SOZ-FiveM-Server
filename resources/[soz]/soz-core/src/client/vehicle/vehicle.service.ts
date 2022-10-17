@@ -2,6 +2,7 @@ import { Inject, Injectable } from '../../core/decorators/injectable';
 import { RGBColor } from '../../shared/color';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import {
+    getDefaultVehicleState,
     VehicleCondition,
     VehicleEntityState,
     VehicleModification,
@@ -134,6 +135,21 @@ export class VehicleService {
 
     public getVehicleProperties(vehicle: number): any[] {
         return this.QBCore.getVehicleProperties(vehicle);
+    }
+
+    public getVehicleState(vehicle: number): VehicleEntityState {
+        const state = Entity(vehicle).state;
+
+        return {
+            ...getDefaultVehicleState(),
+            ...state,
+        };
+    }
+
+    public updateVehicleState(vehicle: number, state: Partial<VehicleEntityState>): void {
+        for (const [key, value] of Object.entries(state)) {
+            Entity(vehicle).state.set(key, value, true);
+        }
     }
 
     public getClosestVehicle(maxDistance = 10): number | null {
