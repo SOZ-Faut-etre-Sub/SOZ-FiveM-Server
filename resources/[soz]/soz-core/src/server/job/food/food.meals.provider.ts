@@ -8,7 +8,7 @@ import { Notifier } from '../../notifier';
 
 @Provider()
 export class FoodMealsProvider {
-    private readonly LIMIT_OF_ORDERS = 4;
+    private readonly LIMIT_OF_ORDERS = 5;
 
     private readonly MEAL_BOXES_PER_ORDER = 10;
 
