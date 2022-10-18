@@ -1,17 +1,33 @@
-local function getCloakroomTargetOption(job, storage)
+local function getCloakroomTargetOptions(job, storage)
     return {
-        color = job,
-        type = "client",
-        label = "Se changer",
-        icon = "c:jobs/habiller.png",
-        storage = storage,
-        job = job,
-        canInteract = function()
-            return PlayerData.job.onduty
-        end,
-        action = function()
-            TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "soz-bennys:client:OpenCloakroomMenu")
-        end,
+        {
+            color = job,
+            type = "client",
+            label = "Se changer",
+            icon = "c:jobs/habiller.png",
+            storage = storage,
+            job = job,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            action = function()
+                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "soz-bennys:client:OpenCloakroomMenu")
+            end,
+        },
+        {
+            color = job,
+            type = "client",
+            label = "Vérifier le stock",
+            icon = "c:jobs/check-stock.png",
+            storage = storage,
+            job = job,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            action = function()
+                TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
+            end,
+        }
     }
 end
 
@@ -45,10 +61,10 @@ Config.Storages["bennys_cloakroom"] = {
     label = "Vestiaire - Benny's",
     type = "cloakroom",
     owner = "ffs",
-    position = vector3(-205.29, -1331.31, 34.89),
-    size = vec2(5, 5),
+    position = vector3(-204.44, -1330.74, 34.89),
+    size = vec2(3.0, 2.8),
     minZ = 33.89,
     maxZ = 37.89,
-    heading = 320,
-    targetOption = getCloakroomTargetOption("bennys", "bennys_cloakroom"),
+    heading = 0,
+    targetOptions = { getCloakroomTargetOptions("bennys", "bennys_cloakroom") },
 }
