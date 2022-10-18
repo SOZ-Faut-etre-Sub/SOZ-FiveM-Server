@@ -17,6 +17,7 @@ import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { StonkModule } from './server/job/stonk/stonk.module';
 import { PlayerModule } from './server/player/player.module';
 import { RebootModule } from './server/reboot/reboot.module';
+import { RepositoryModule } from './server/repository/repository.module';
 import { ShopModule } from './server/shop/shop.module';
 import { StoryModule } from './server/story/story.module';
 import { StreamModule } from './server/stream/stream.module';
@@ -29,6 +30,7 @@ async function bootstrap() {
     const app = await Application.create(
         ProviderServerLoader,
         DatabaseModule,
+        RepositoryModule,
         WeatherModule,
         PlayerModule,
         ItemModule,

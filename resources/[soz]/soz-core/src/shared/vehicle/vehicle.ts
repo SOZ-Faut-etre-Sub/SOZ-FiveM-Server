@@ -10,9 +10,7 @@ export type Vehicle = {
     dealership?: DealershipId;
     requiredLicence?: string;
     size: number;
-    jobName?: {
-        [key in JobType]?: string;
-    };
+    jobName?: { [key in JobType]: string };
 };
 
 export enum VehicleCategory {

@@ -100,6 +100,8 @@ export enum ServerEvent {
     LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
     LSMC_REVIVE = 'lsmc:server:revive',
 
+    REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
+
     VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
     VEHICLE_DELETED = 'soz-core:server:vehicle:deleted',
 
@@ -153,6 +155,8 @@ export enum ClientEvent {
 
     PROGRESS_START = 'soz-core:client:progress:start',
 
+    REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
+
     VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
     VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
     VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
@@ -171,6 +175,7 @@ export enum NuiEvent {
     AdminAutoPilot = 'soz-core:client:admin:autopilot',
     AdminChangePlayer = 'soz-core:client:admin:change-player',
     AdminCopyCoords = 'soz-core:client:admin:copy-coords',
+    AdminCreateZone = 'soz-core:client:admin:create-zone',
     AdminGetJobs = 'soz-core:client:admin:get-jobs',
     AdminGetPlayers = 'soz-core:client:admin:get-players',
     AdminGetVehicles = 'soz-core:client:admin:get-vehicles',

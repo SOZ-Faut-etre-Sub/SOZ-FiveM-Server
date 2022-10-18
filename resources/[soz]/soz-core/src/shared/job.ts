@@ -3,7 +3,6 @@ import { Zone } from './polyzone/box.zone';
 
 export enum JobType {
     Unemployed = 'unemployed',
-    FBI = 'fbi',
     Adsl = 'adsl',
     Delivery = 'delivery',
     Religious = 'religious',
@@ -20,8 +19,9 @@ export enum JobType {
     Bennys = 'bennys',
     Upw = 'upw',
     Pawl = 'pawl',
-    Baun = 'baun',
     Ffs = 'ffs',
+    Baun = 'baun',
+    FBI = 'fbi',
 }
 
 export enum JobPermission {

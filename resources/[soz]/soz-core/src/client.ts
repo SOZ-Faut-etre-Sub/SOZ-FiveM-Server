@@ -15,6 +15,7 @@ import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
+import { RepositoryModule } from './client/resources/repository.module';
 import { ShopModule } from './client/shop/shop.module';
 import { StoryModule } from './client/story/story.module';
 import { StreamModule } from './client/stream/stream.module';
@@ -29,6 +30,7 @@ import { ProviderClientLoader } from './core/loader/provider.client.loader';
 async function bootstrap() {
     const app = await Application.create(
         ProviderClientLoader,
+        RepositoryModule,
         PlayerModule,
         WeatherModule,
         ItemModule,

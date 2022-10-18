@@ -68,6 +68,7 @@ export enum OnceStep {
      * Can only be used on the **client**.
      */
     PlayerLoaded = 'playerLoaded',
+    RepositoriesLoaded = 'repositoriesLoaded',
     Stop = 'stop',
 }
 
