@@ -101,20 +101,17 @@ export class AdminMenuInteractiveProvider {
     public async toggleDisplayPlayersOnMap(value: boolean): Promise<void> {
         if (!value) {
             for (const value of Object.values(this.playerBlips)) {
-                this.QBCore.removeBlip(value);
+                RemoveBlip(value);
             }
             clearInterval(this.intervalHandlers.displayPlayersOnMap);
             return;
         }
         this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
-            const players = await emitRpc<FullAdminPlayer[]>(RpcEvent.ADMIN_GET_FULL_PLAYERS);
-            // First clean the left players
-            for (const previousPlayer of this.previousPlayers) {
-                if (!players.find(player => player.citizenId === previousPlayer)) {
-                    RemoveBlip(this.playerBlips.get(previousPlayer));
-                    this.playerBlips.delete(previousPlayer);
-                }
+            for (const value of Object.values(this.playerBlips)) {
+                RemoveBlip(value);
             }
+
+            const players = await emitRpc<FullAdminPlayer[]>(RpcEvent.ADMIN_GET_FULL_PLAYERS);
 
             for (const player of players) {
                 const blipId = this.playerBlips.get(player.citizenId);
