@@ -8,6 +8,7 @@ export class OnceLoader {
         [OnceStep.Start]: [],
         [OnceStep.DatabaseConnected]: [],
         [OnceStep.PlayerLoaded]: [],
+        [OnceStep.RepositoriesLoaded]: [],
         [OnceStep.Stop]: [],
     };
 
@@ -37,6 +38,7 @@ export class OnceLoader {
             [OnceStep.Start]: [],
             [OnceStep.DatabaseConnected]: [],
             [OnceStep.PlayerLoaded]: [],
+            [OnceStep.RepositoriesLoaded]: [],
             [OnceStep.Stop]: [],
         };
     }

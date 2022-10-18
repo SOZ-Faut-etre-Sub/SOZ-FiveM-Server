@@ -28,22 +28,6 @@ export type AdminMenuStateProps = {
 };
 
 export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
-    // const [state, setState] = useState<AdminMenuStateProps['data']['state']>(null);
-    // const [banner, setBanner] = useState<string>(null);
-    // const [permission, setPermission] = useState<SozRole>(null);
-
-    // useEffect(() => {
-    //     if (data && data.state) {
-    //         setState(data.state);
-    //     }
-    //     if (data && data.banner) {
-    //         setBanner(data.banner);
-    //     }
-    //     if (data && data.permission) {
-    //         setPermission(data.permission);
-    //     }
-    // }, [data]);
-
     const updateState = async (namespace: string, key: string, value: any) => {
         data.state[namespace][key] = value;
         await fetchNui(NuiEvent.AdminUpdateState, { namespace, key, value });

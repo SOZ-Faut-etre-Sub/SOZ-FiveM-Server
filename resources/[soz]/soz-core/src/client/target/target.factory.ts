@@ -88,11 +88,6 @@ export class TargetFactory {
             exports['qb-target'].RemoveZone(id);
         }
 
-        for (const id of Object.keys(this.players)) {
-            exports['qb-target'].RemovePlayer(id);
-        }
-
-        //
         exports['qb-target'].DeletePeds();
     }
 

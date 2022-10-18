@@ -84,7 +84,7 @@ export class StonkProvider {
 
     @OnEvent(ClientEvent.JOBS_STONK_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (this.nuiMenu.isOpen()) {
+        if (this.nuiMenu.getOpened() === MenuType.StonkJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }

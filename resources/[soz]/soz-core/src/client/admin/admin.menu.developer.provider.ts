@@ -1,3 +1,4 @@
+import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -7,6 +8,7 @@ import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
+import { NuiMenu } from '../nui/nui.menu';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
@@ -22,7 +24,43 @@ export class AdminMenuDeveloperProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
     private showCoordinatesInterval = null;
+
+    private isCreatingZone = false;
+
+    @OnNuiEvent(NuiEvent.AdminCreateZone)
+    public async createZone(): Promise<void> {
+        if (!this.isCreatingZone) {
+            this.isCreatingZone = true;
+            TriggerEvent('polyzone:pzcreate', 'box', 'create_zone', ['box', 'create_zone', 1, 1]);
+            this.nuiMenu.closeMenu();
+        }
+    }
+    @Command('soz_admin_finish_create_zone', {
+        description: "Valider la création d'une zone",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'E',
+            },
+        ],
+    })
+    public endCreatingZone(): void {
+        if (this.isCreatingZone) {
+            this.isCreatingZone = false;
+            const zone = exports['PolyZone'].EndPolyZone();
+            this.clipboard.copy(
+                `new BoxZone([${zone.center.x}, ${zone.center.y}, ${zone.center.z}], ${zone.length}, ${zone.width}, {
+                    heading: ${zone.heading},
+                    minZ: ${zone.center.z - 1},
+                    maxZ: ${zone.center.z + 2},
+                });`
+            );
+        }
+    }
 
     @OnNuiEvent(NuiEvent.AdminToggleNoClip)
     public async toggleNoClip(): Promise<void> {
@@ -70,10 +108,10 @@ export class AdminMenuDeveloperProvider {
 
         switch (type) {
             case 'coords3':
-                this.clipboard.copy(`vector3(${x}, ${y}, ${z})`);
+                this.clipboard.copy(`[${x}, ${y}, ${z}]`);
                 break;
             case 'coords4':
-                this.clipboard.copy(`vector4(${x}, ${y}, ${z}, ${heading})`);
+                this.clipboard.copy(`[${x}, ${y}, ${z}, ${heading}]`);
                 break;
         }
         this.notifier.notify('Coordonnées copiées dans le presse-papier');

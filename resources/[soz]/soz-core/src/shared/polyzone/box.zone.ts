@@ -1,10 +1,10 @@
 import { Point2D, Point3D, Vector3 } from './vector';
 
-type BoxZoneOptions = {
+type BoxZoneOptions<T> = {
     minZ?: number;
     maxZ?: number;
     heading?: number;
-    data?: any;
+    data?: T;
 };
 
 export type Zone = {
@@ -35,17 +35,18 @@ const rotatePoint = (center: Point2D | Point3D, point: Point2D | Point3D, angleI
     return [newX + center[0], newY + center[1]];
 };
 
-export class BoxZone {
-    private readonly center: Point3D;
-    private readonly length: number;
-    private readonly width: number;
-    private readonly minZ: number;
-    private readonly maxZ: number;
-    private readonly heading: number;
-    private readonly min: Readonly<Point3D>;
-    private readonly max: Readonly<Point3D>;
+export class BoxZone<T = never> {
+    public readonly center: Point3D;
+    public readonly length: number;
+    public readonly width: number;
+    public readonly minZ: number;
+    public readonly maxZ: number;
+    public readonly heading: number;
+    public readonly min: Readonly<Point3D>;
+    public readonly max: Readonly<Point3D>;
+    public readonly data?: T;
 
-    public constructor(center: Point3D, length: number, width: number, options?: BoxZoneOptions) {
+    public constructor(center: Point3D, length: number, width: number, options?: BoxZoneOptions<T>) {
         this.center = center;
         this.length = length;
         this.width = width;
@@ -58,6 +59,10 @@ export class BoxZone {
 
         this.min = [min[0], min[1], center[2] - this.minZ];
         this.max = [max[0], max[1], center[2] + this.maxZ];
+
+        if (options?.data) {
+            this.data = options.data;
+        }
     }
 
     public isPointInside(point: Point3D): boolean {
