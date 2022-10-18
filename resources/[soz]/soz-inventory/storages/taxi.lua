@@ -27,7 +27,7 @@ local function getCloakroomTargetOptions(job, storage)
             action = function()
                 TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
             end,
-        }
+        },
     }
 end
 
