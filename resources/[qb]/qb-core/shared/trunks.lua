@@ -91,7 +91,7 @@ QBShared.Trunks = {
     [GetHashKey('brickade1')] = { slot = 10, weight = 100000 },
 
     -- BAUN
-    [GetHashKey('youga3')] = { slot = 10, weight = 40000 },
+    [GetHashKey('youga3')] = { slot = 10, weight = 200000 },
 
     -- FFS
     [GetHashKey('rumpo4')] = { slot = 10, weight = 200000 },
