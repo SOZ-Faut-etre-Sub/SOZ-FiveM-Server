@@ -50,7 +50,12 @@ export class AdminMenuPlayerProvider {
                 if (!value || value === '') {
                     return Ok(true);
                 }
-                const player = players.find(p => p.name.toLowerCase().includes(value.toLowerCase()));
+                const player = players.find(p => {
+                    return (
+                        p.name.toLowerCase().includes(value.toLowerCase()) ||
+                        p.rpFullName.toLowerCase().includes(value.toLowerCase())
+                    );
+                });
                 if (!player) {
                     return Err('Aucun joueur trouvé.');
                 }
