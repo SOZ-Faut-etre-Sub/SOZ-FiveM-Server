@@ -2,6 +2,7 @@ import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Notifier } from '../notifier';
@@ -83,6 +84,22 @@ export class VehicleMenuProvider {
         this.nuiMenu.closeMenu();
 
         return true;
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    public checkCloseMenu(): void {
+        if (this.nuiMenu.getOpened() !== MenuType.Vehicle) {
+            return;
+        }
+
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (vehicle) {
+            return;
+        }
+
+        this.nuiMenu.closeMenu();
     }
 
     @Command('soz_vehicle_toggle_menu', {

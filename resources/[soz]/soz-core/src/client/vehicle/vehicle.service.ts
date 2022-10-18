@@ -139,11 +139,14 @@ export class VehicleService {
 
     public getVehicleState(vehicle: number): VehicleEntityState {
         const state = Entity(vehicle).state;
+        const defaultState = getDefaultVehicleState();
+        const returnState = {};
 
-        return {
-            ...getDefaultVehicleState(),
-            ...state,
-        };
+        for (const key of Object.keys(defaultState)) {
+            returnState[key] = state[key] || defaultState[key];
+        }
+
+        return returnState as VehicleEntityState;
     }
 
     public updateVehicleState(vehicle: number, state: Partial<VehicleEntityState>): void {
