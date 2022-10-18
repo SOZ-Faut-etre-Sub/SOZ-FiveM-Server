@@ -191,10 +191,10 @@ CreateThread(function()
 end)
 
 local jewelryShop = BoxZone:Create(vector3(-622.65, -230.7, 38.06), 9.8, 7.2, {
-    name="jewelry_zone",
-    heading=37,
-    minZ=37.06,
-    maxZ=40.26
+    name = "jewelry_zone",
+    heading = 37,
+    minZ = 37.06,
+    maxZ = 40.26,
 })
 
 --- Exports shop
