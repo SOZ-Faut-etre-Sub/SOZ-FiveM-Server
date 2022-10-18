@@ -253,7 +253,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                             )
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${componentIndex}_drawable_${index}`}>
+                                    <MenuItemSelectOption value={index} key={`${componentIndex}_drawable_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}
@@ -268,7 +268,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                             {Array(26)
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${componentIndex}_texture_${index}`}>
+                                    <MenuItemSelectOption value={index} key={`${componentIndex}_texture_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}
@@ -301,7 +301,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                                 .fill(0)
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${propIndex}_drawable_${index}`}>
+                                    <MenuItemSelectOption value={index} key={`${propIndex}_drawable_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}
@@ -316,7 +316,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                             {Array(26)
                                 .fill(0)
                                 .map((_, index) => (
-                                    <MenuItemSelectOption key={`${propIndex}_texture_${index}`}>
+                                    <MenuItemSelectOption value={index} key={`${propIndex}_texture_${index}`}>
                                         {index}
                                     </MenuItemSelectOption>
                                 ))}

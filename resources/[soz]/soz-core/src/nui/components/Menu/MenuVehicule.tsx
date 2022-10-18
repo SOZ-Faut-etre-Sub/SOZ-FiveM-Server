@@ -43,8 +43,8 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleSetEngine, value);
     };
 
-    const onSpeedLimit = (value: boolean) => {
-        fetchNui(NuiEvent.VehicleSetEngine, value);
+    const onSpeedLimit = (value: number | null) => {
+        fetchNui(NuiEvent.VehicleSetSpeedLimit, value);
     };
 
     const createOnDoorChange = (doorIndex: number) => {
@@ -67,26 +67,17 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                     {data.isDriver && (
                         <>
                             <MenuItemSelect
-                                onChange={(index, value) => {
+                                onConfirm={(index, value) => {
                                     onSpeedLimit(value);
                                 }}
+                                value={data.speedLimit}
                                 title="Limitateur de vitesse"
                             >
-                                <MenuItemSelectOption value={null} defaultSelected={data.speedLimit === null}>
-                                    Aucune limite de vitesse
-                                </MenuItemSelectOption>
-                                <MenuItemSelectOption value={50} defaultSelected={data.speedLimit === 50}>
-                                    Limiter la vitesse à 50km/h
-                                </MenuItemSelectOption>
-                                <MenuItemSelectOption value={90} defaultSelected={data.speedLimit === 90}>
-                                    Limiter la vitesse à 90km/h
-                                </MenuItemSelectOption>
-                                <MenuItemSelectOption value={110} defaultSelected={data.speedLimit === 110}>
-                                    Limiter la vitesse à 110km/h
-                                </MenuItemSelectOption>
-                                <MenuItemSelectOption value={130} defaultSelected={data.speedLimit === 130}>
-                                    Limiter la vitesse à 130km/h
-                                </MenuItemSelectOption>
+                                <MenuItemSelectOption value={null}>Aucune limite de vitesse</MenuItemSelectOption>
+                                <MenuItemSelectOption value={50}>Limiter la vitesse à 50km/h</MenuItemSelectOption>
+                                <MenuItemSelectOption value={90}>Limiter la vitesse à 90km/h</MenuItemSelectOption>
+                                <MenuItemSelectOption value={110}>Limiter la vitesse à 110km/h</MenuItemSelectOption>
+                                <MenuItemSelectOption value={130}>Limiter la vitesse à 130km/h</MenuItemSelectOption>
                             </MenuItemSelect>
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
                         </>

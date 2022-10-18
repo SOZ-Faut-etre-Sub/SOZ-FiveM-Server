@@ -30,7 +30,6 @@ type MenuDescendant = Descendant & {
 };
 
 type MenuSelectDescendant = Descendant & {
-    defaultSelected: boolean;
     value?: any;
 };
 
@@ -47,10 +46,12 @@ const MenuItemSelectContext = createContext<{
     activeOptionIndex: number;
     setActiveOptionIndex: (number) => void;
     setActiveValue: (any) => void;
+    activeValue: any;
 }>({
     activeOptionIndex: 0,
     setActiveOptionIndex: () => {},
     setActiveValue: () => {},
+    activeValue: null,
 });
 const MenuTypeContext = createContext<MenuType | null>(null);
 
@@ -339,7 +340,7 @@ type MenuSelectControlsProps = PropsWithChildren<{
 }>;
 
 const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChange, children }) => {
-    const { activeOptionIndex, setActiveOptionIndex, setActiveValue } = useContext(MenuItemSelectContext);
+    const { activeOptionIndex, setActiveOptionIndex, setActiveValue, activeValue } = useContext(MenuItemSelectContext);
     const isItemSelected = useContext(MenuSelectedContext);
     const menuItems = useDescendants(MenuItemSelectDescendantContext);
 
@@ -351,19 +352,19 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
     }, [activeOptionIndex]);
 
     useEffect(() => {
-        let defaultSelected = null;
+        let defaultIndex = null;
 
         for (let i = 0; i < menuItems.length; i++) {
-            if (menuItems[i].defaultSelected) {
-                defaultSelected = i;
+            if (menuItems[i].value === activeValue) {
+                defaultIndex = i;
                 break;
             }
         }
 
-        if (defaultSelected !== null) {
-            setActiveOptionIndex(defaultSelected);
+        if (defaultIndex !== null) {
+            setActiveOptionIndex(defaultIndex);
         }
-    }, []);
+    }, [menuItems]);
 
     const goLeft = () => {
         if (activeOptionIndex > 0) {
@@ -422,7 +423,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     onSelected?: () => void;
     onChange?: (index: number, value: any) => void;
     disabled?: boolean;
-    value?: number;
+    value?: any;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -436,22 +437,18 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
-    const [activeValue, setActiveValue] = useState(null);
-
-    useEffect(() => {
-        if (value) {
-            setActiveOptionIndex(value);
-        }
-    }, [value, children]);
+    const [activeValue, setActiveValue] = useState(value);
 
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex, activeValue);
-    }, [activeOptionIndex, onConfirm]);
+    }, [activeOptionIndex, onConfirm, activeValue]);
 
     return (
         <MenuItemContainer onSelected={onSelected} onConfirm={onItemConfirm} disabled={disabled}>
             <DescendantProvider context={MenuItemSelectDescendantContext} items={descendants} set={setDescendants}>
-                <MenuItemSelectContext.Provider value={{ activeOptionIndex, setActiveOptionIndex, setActiveValue }}>
+                <MenuItemSelectContext.Provider
+                    value={{ activeOptionIndex, setActiveOptionIndex, setActiveValue, activeValue }}
+                >
                     <div className="flex justify-between">
                         <h3>{title}</h3>
                         <div>
@@ -468,14 +465,12 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
 
 type MenuItemSelectOptionProps = PropsWithChildren<{
     onSelected?: () => void;
-    defaultSelected?: boolean;
     value?: any;
 }>;
 
 export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> = ({
     children,
     onSelected,
-    defaultSelected,
     value = null,
 }) => {
     const { activeOptionIndex } = useContext(MenuItemSelectContext);
@@ -488,13 +483,11 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
     const descendant = useMemo(() => {
         return {
             element,
-            defaultSelected,
             value,
         };
     }, [element]);
 
     const index = useDescendant(descendant, MenuItemSelectDescendantContext);
-
     const isSelected = index === activeOptionIndex;
 
     useEffect(() => {
