@@ -5,6 +5,9 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function(storageId)
             value = nil,
             select = function()
                 TriggerServerEvent("lsmc:server:SetHazmat", false)
+                if storageId then
+                    TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
+                end
                 TriggerEvent("ems:client:applyDutyClothing", PlayerData.job.id)
             end,
         })

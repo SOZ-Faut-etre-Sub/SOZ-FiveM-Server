@@ -1,17 +1,33 @@
-local function getCloakroomTargetOption(job, storage)
+local function getCloakroomTargetOptions(job, storage)
     return {
-        color = job,
-        type = "client",
-        label = "Se changer",
-        icon = "c:jobs/habiller.png",
-        storage = storage,
-        job = job,
-        canInteract = function()
-            return PlayerData.job.onduty
-        end,
-        action = function()
-            TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "police:client:OpenCloakroomMenu")
-        end,
+        {
+            color = job,
+            type = "client",
+            label = "Se changer",
+            icon = "c:jobs/habiller.png",
+            storage = storage,
+            job = job,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            action = function()
+                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "police:client:OpenCloakroomMenu")
+            end,
+        },
+        {
+            color = job,
+            type = "client",
+            label = "Vérifier le stock",
+            icon = "c:jobs/check-stock.png",
+            storage = storage,
+            job = job,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            action = function()
+                TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
+            end,
+        }
     }
 end
 
@@ -82,7 +98,7 @@ Config.Storages["lspd_male_cloakroom"] = {
     minZ = 75.62,
     maxZ = 78.62,
     heading = 350,
-    targetOption = getCloakroomTargetOption("lspd", "lspd_male_cloakroom"),
+    targetOptions = getCloakroomTargetOptions("lspd", "lspd_male_cloakroom"),
 }
 
 Config.Storages["lspd_female_cloakroom"] = {
@@ -94,5 +110,5 @@ Config.Storages["lspd_female_cloakroom"] = {
     minZ = 75.62,
     maxZ = 78.62,
     heading = 350,
-    targetOption = getCloakroomTargetOption("lspd", "lspd_female_cloakroom"),
+    targetOptions = getCloakroomTargetOptions("lspd", "lspd_female_cloakroom"),
 }

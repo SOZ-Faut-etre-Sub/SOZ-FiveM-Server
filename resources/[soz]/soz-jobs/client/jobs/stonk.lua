@@ -125,6 +125,9 @@ RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function(storageId)
         label = "Tenue de service",
         value = nil,
         select = function()
+            if storageId then
+                TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
+            end
             TriggerEvent("stonk:client:applyDutyClothing")
         end,
     })

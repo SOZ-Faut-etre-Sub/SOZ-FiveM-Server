@@ -1,17 +1,33 @@
-local function getCloakroomTargetOption(job, storage)
+local function getCloakroomTargetOptions(job, storage)
     return {
-        color = job,
-        type = "client",
-        label = "Se changer",
-        icon = "c:jobs/habiller.png",
-        storage = storage,
-        job = job,
-        canInteract = function()
-            return PlayerData.job.onduty
-        end,
-        action = function()
-            TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "jobs:client:fueler:OpenCloakroomMenu")
-        end,
+        {
+            color = job,
+            type = "client",
+            label = "Se changer",
+            icon = "c:jobs/habiller.png",
+            storage = storage,
+            job = job,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            action = function()
+                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "jobs:client:fueler:OpenCloakroomMenu")
+            end,
+        },
+        {
+            color = job,
+            type = "client",
+            label = "Vérifier le stock",
+            icon = "c:jobs/check-stock.png",
+            storage = storage,
+            job = job,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            action = function()
+                TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
+            end,
+        }
     }
 end
 
@@ -73,5 +89,5 @@ Config.Storages["oil_cloakroom"] = {
     minZ = 31.26,
     maxZ = 33.5,
     heading = 316,
-    targetOption = getCloakroomTargetOption("oil", "oil_cloakroom"),
+    targetOptions = getCloakroomTargetOptions("oil", "oil_cloakroom"),
 }

@@ -1,17 +1,33 @@
-local function getCloakroomTargetOption(job, storage)
+local function getCloakroomTargetOptions(job, storage)
     return {
-        color = job,
-        type = "client",
-        label = "Se changer",
-        icon = "c:jobs/habiller.png",
-        storage = storage,
-        job = job,
-        canInteract = function()
-            return PlayerData.job.onduty
-        end,
-        action = function()
-            TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "police:client:OpenCloakroomMenu")
-        end,
+        {
+            color = job,
+            type = "client",
+            label = "Se changer",
+            icon = "c:jobs/habiller.png",
+            storage = storage,
+            job = job,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            action = function()
+                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "police:client:OpenCloakroomMenu")
+            end,
+        },
+        {
+            color = job,
+            type = "client",
+            label = "Vérifier le stock",
+            icon = "c:jobs/check-stock.png",
+            storage = storage,
+            job = job,
+            canInteract = function()
+                return PlayerData.job.onduty
+            end,
+            action = function()
+                TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
+            end,
+        }
     }
 end
 
@@ -84,5 +100,5 @@ Config.Storages["bcso_cloakroom"] = {
     minZ = 33.27,
     maxZ = 35.27,
     heading = 300,
-    targetOption = getCloakroomTargetOption("bcso", "bcso_cloakroom"),
+    targetOptions = getCloakroomTargetOptions("bcso", "bcso_cloakroom"),
 }
