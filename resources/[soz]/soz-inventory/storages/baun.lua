@@ -67,7 +67,7 @@ local function getCloakroomTargetOptions(storage)
             action = function()
                 TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
             end,
-        }
+        },
     }
 end
 
@@ -102,7 +102,7 @@ Config.Storages["baun_bahama_storage"] = {
     heading = 303,
     minZ = 29.32,
     maxZ = 30.12,
-    targetOptions = { getCocktailTargetOption() },
+    targetOptions = {getCocktailTargetOption()},
 }
 
 Config.Storages["baun_unicorn_storage"] = {
@@ -114,7 +114,7 @@ Config.Storages["baun_unicorn_storage"] = {
     heading = 30,
     minZ = 28.27,
     maxZ = 31.07,
-    targetOptions ={ getCocktailTargetOption() },
+    targetOptions = {getCocktailTargetOption()},
 }
 
 Config.Storages["baun_bahama_fridge"] = {
@@ -148,7 +148,7 @@ Config.Storages["baun_unicorn_liquor_storage_1"] = {
     minZ = 28.27,
     maxZ = 29.27,
     heading = 30,
-    targetOptions ={ getTargetOption("baun_unicorn_liquor_storage_1", "liquor_crate") },
+    targetOptions = {getTargetOption("baun_unicorn_liquor_storage_1", "liquor_crate")},
 }
 
 Config.Storages["baun_unicorn_liquor_storage_2"] = {
@@ -160,7 +160,7 @@ Config.Storages["baun_unicorn_liquor_storage_2"] = {
     minZ = 28.27,
     maxZ = 29.27,
     heading = 30,
-    targetOptions ={ getTargetOption("baun_unicorn_liquor_storage_2", "liquor_crate") },
+    targetOptions = {getTargetOption("baun_unicorn_liquor_storage_2", "liquor_crate")},
 }
 
 Config.Storages["baun_unicorn_flavor_storage_1"] = {
@@ -172,7 +172,7 @@ Config.Storages["baun_unicorn_flavor_storage_1"] = {
     minZ = 29.27,
     maxZ = 30.17,
     heading = 30,
-    targetOptions ={ getTargetOption("baun_unicorn_flavor_storage_1", "flavor_crate") },
+    targetOptions = {getTargetOption("baun_unicorn_flavor_storage_1", "flavor_crate")},
 }
 
 Config.Storages["baun_unicorn_furniture_storage_1"] = {
@@ -184,7 +184,7 @@ Config.Storages["baun_unicorn_furniture_storage_1"] = {
     minZ = 29.27,
     maxZ = 29.67,
     heading = 30,
-    targetOptions ={ getTargetOption("baun_unicorn_furniture_storage_1", "furniture_crate") },
+    targetOptions = {getTargetOption("baun_unicorn_furniture_storage_1", "furniture_crate")},
 }
 
 Config.Storages["baun_bahama_fridge_storage_1"] = {
@@ -196,7 +196,7 @@ Config.Storages["baun_bahama_fridge_storage_1"] = {
     minZ = 29.82,
     maxZ = 30.77,
     heading = 303,
-    targetOptions ={ getTargetOption("baun_bahama_fridge_storage_1", "liquor_crate") },
+    targetOptions = {getTargetOption("baun_bahama_fridge_storage_1", "liquor_crate")},
 }
 
 Config.Storages["baun_bahama_fridge_storage_2"] = {
@@ -208,7 +208,7 @@ Config.Storages["baun_bahama_fridge_storage_2"] = {
     minZ = 29.32,
     maxZ = 30.32,
     heading = 32,
-    targetOptions ={ getTargetOption("baun_bahama_fridge_storage_2", "liquor_crate") },
+    targetOptions = {getTargetOption("baun_bahama_fridge_storage_2", "liquor_crate")},
 }
 
 Config.Storages["baun_bahama_flavor_storage_1"] = {
@@ -220,7 +220,7 @@ Config.Storages["baun_bahama_flavor_storage_1"] = {
     minZ = 30.32,
     maxZ = 31.12,
     heading = 302,
-    targetOptions ={ getTargetOption("baun_bahama_flavor_storage_1", "flavor_crate") },
+    targetOptions = {getTargetOption("baun_bahama_flavor_storage_1", "flavor_crate")},
 }
 
 Config.Storages["baun_bahama_flavor_storage_2"] = {
@@ -232,7 +232,7 @@ Config.Storages["baun_bahama_flavor_storage_2"] = {
     minZ = 30.82,
     maxZ = 31.62,
     heading = 34,
-    targetOptions ={ getTargetOption("baun_bahama_flavor_storage_2", "flavor_crate") },
+    targetOptions = {getTargetOption("baun_bahama_flavor_storage_2", "flavor_crate")},
 }
 
 Config.Storages["baun_bahama_furniture_storage_1"] = {
@@ -244,7 +244,7 @@ Config.Storages["baun_bahama_furniture_storage_1"] = {
     minZ = 30.33,
     maxZ = 30.73,
     heading = 38,
-    targetOptions ={ getTargetOption("baun_bahama_furniture_storage_1", "furniture_crate") },
+    targetOptions = {getTargetOption("baun_bahama_furniture_storage_1", "furniture_crate")},
 }
 
 Config.Storages["baun_bahama_furniture_storage_2"] = {
@@ -256,7 +256,7 @@ Config.Storages["baun_bahama_furniture_storage_2"] = {
     minZ = 30.77,
     maxZ = 31.17,
     heading = 301,
-    targetOptions ={ getTargetOption("baun_bahama_furniture_storage_2", "furniture_crate") },
+    targetOptions = {getTargetOption("baun_bahama_furniture_storage_2", "furniture_crate")},
 }
 
 --- Owner is FFS because they deal with the stock, it's normal.

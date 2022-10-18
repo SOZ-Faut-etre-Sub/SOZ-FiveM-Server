@@ -72,7 +72,7 @@ CreateThread(function()
                 storageID = id,
                 storage = storage,
                 job = storage.owner,
-            }
+            },
         }
         if storage.targetOptions then
             for _, option in pairs(storage.targetOptions) do
@@ -85,10 +85,7 @@ CreateThread(function()
             minZ = storage.minZ or (storage.position.z - (storage.offsetDownZ or 1.0)),
             maxZ = storage.maxZ or (storage.position.z + (storage.offsetUpZ or 1.0)),
             debugPoly = storage.debug or false,
-        }, {
-            options = options,
-            distance = 2.5,
-        })
+        }, {options = options, distance = 2.5})
     end
 end)
 

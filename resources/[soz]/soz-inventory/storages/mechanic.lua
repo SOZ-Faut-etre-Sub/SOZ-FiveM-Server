@@ -27,7 +27,7 @@ local function getCloakroomTargetOptions(job, storage)
             action = function()
                 TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
             end,
-        }
+        },
     }
 end
 
@@ -66,5 +66,5 @@ Config.Storages["bennys_cloakroom"] = {
     minZ = 33.89,
     maxZ = 37.89,
     heading = 0,
-    targetOptions = { getCloakroomTargetOptions("bennys", "bennys_cloakroom") },
+    targetOptions = {getCloakroomTargetOptions("bennys", "bennys_cloakroom")},
 }
