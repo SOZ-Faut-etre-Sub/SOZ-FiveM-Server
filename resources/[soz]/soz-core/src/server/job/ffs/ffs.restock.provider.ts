@@ -42,45 +42,23 @@ export class FightForStyleRestockProvider {
         }
 
         this.notifier.notify(source, 'Vous ~g~commencez~s~ à restocker le magasin de vêtements', 'success');
-
-        let amountLeft = item.amount;
-        do {
-            const quantity = Math.min(amountLeft, 10);
-            const hasRestocked = await this.restock(source, amountLeft, brand, garment);
-            if (!hasRestocked) {
-                this.notifier.notify(source, 'Vous avez ~r~arrêter~s~ de restocker le magasin de vêtements');
-                return;
-            }
-            this.notifier.notify(source, `Vous avez restocké ~g~${quantity}~s~ vêtements`, 'success');
-            amountLeft -= quantity;
-        } while (amountLeft > 0);
-
-        this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
-    }
-
-    private async restock(source: number, amount: number, brand: ClothingBrand, garment: Garment | LuxuryGarment) {
-        const { completed } = await this.progressService.progress(
-            source,
-            'restock',
-            'Restockage',
-            FfsConfig.restock.duration * amount,
-            {
-                name: 'base',
-                dictionary: 'amb@prop_human_bum_bin@base',
-                flags: 1,
-            }
-        );
+        const { completed } = await this.progressService.progress(source, 'restock', 'Restockage', 2000 * item.amount, {
+            name: 'base',
+            dictionary: 'amb@prop_human_bum_bin@base',
+            flags: 1,
+        });
 
         if (!completed) {
-            return false;
+            return;
         }
 
-        this.inventoryManager.removeItemFromInventory(source, garment, amount);
+        this.inventoryManager.removeItemFromInventory(source, garment, item.amount);
 
-        exports['soz-shops'].RestockShop(brand, garment, amount);
+        exports['soz-shops'].RestockShop(brand, garment, item.amount);
 
-        const totalAmount = amount * FfsConfig.restock.getRewardFromDeliveredGarment(garment);
+        const totalAmount = item.amount * FfsConfig.restock.getRewardFromDeliveredGarment(garment);
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
-        return true;
+
+        this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
     }
 }
