@@ -90,7 +90,7 @@ export const StonkConfig = {
             takeInAvailableIn: ['jewelry'],
         },
         small_moneybag: {
-            refill_value: 6000,
+            refill_value: 2000,
             society_gain: 360,
             timeout: 10 * 60 * 1000,
             takeInAvailableIn: [
@@ -115,7 +115,7 @@ export const StonkConfig = {
             ],
         },
         big_moneybag: {
-            refill_value: 2000,
+            refill_value: 6000,
             society_gain: 120,
             timeout: 30 * 60 * 1000,
             takeInAvailableIn: ['ponsonbys'],
