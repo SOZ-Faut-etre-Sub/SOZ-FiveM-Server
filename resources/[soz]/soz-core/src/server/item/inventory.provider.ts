@@ -14,9 +14,6 @@ export class InventoryProvider {
 
     @Rpc(RpcEvent.INVENTORY_SEARCH)
     public onSearch(source: number, storageId: string, itemId: string) {
-        console.log('onSearch', storageId, itemId);
-        const search = this.inventoryManager.search(storageId, 'amount', itemId);
-        console.log('search', search);
-        return search;
+        return this.inventoryManager.search(storageId, 'amount', itemId);
     }
 }
