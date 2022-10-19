@@ -8,10 +8,11 @@ import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle 
 type FightForStyleStateProps = {
     data: {
         state: {
-            displayResellJewelbagBlip: number;
-            displayResellBigBagBlip: number;
-            displayResellMediumBagBlip: number;
-            displayResellSmallBagBlip: number;
+            displaySecureContainerTake: boolean;
+            displayResellJewelbagBlip: boolean;
+            displayResellBigBagBlip: boolean;
+            displayResellMediumBagBlip: boolean;
+            displayResellSmallBagBlip: boolean;
         };
         onDuty: boolean;
     };
@@ -54,6 +55,12 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
             <MainMenu>
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
+                    <MenuItemCheckbox
+                        checked={blips['displaySecureContainerTake']}
+                        onChange={value => displayBlip('displaySecureContainerTake', value)}
+                    >
+                        Afficher la récolte des conteneurs sécurisés
+                    </MenuItemCheckbox>
                     <MenuItemCheckbox
                         checked={blips['displayResellJewelbagBlip']}
                         onChange={value => displayBlip('displayResellJewelbagBlip', value)}

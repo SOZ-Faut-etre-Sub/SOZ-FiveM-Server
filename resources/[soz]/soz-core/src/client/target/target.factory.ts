@@ -129,6 +129,10 @@ export class TargetFactory {
         exports['qb-target'].RemoveTargetModel(models, labels);
     }
 
+    public removeBoxZone(id: string) {
+        exports['qb-target'].RemoveZone(id);
+    }
+
     // // @TODO - Implement it when needed
     // public removeTargetEntity(entities: string[], labels: string[]) {}
 }

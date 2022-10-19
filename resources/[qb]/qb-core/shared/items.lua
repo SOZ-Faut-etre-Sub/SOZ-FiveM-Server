@@ -4305,4 +4305,16 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Un sac plein de THUNES.'
     },
+    ['stonk__secure_container'] = {
+        ['name'] = 'stonk__secure_container',
+        ['label'] = 'Conteneur sécurisé STONK',
+        ['weight'] = 50000,
+        ['type'] = 'item',
+        ['image'] = 'moneybag.png',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Ce que contient ce conteneur est très incertain, mais au vu de son poids, il est irréfutable qu’il serait dangereux de le perdre.'
+    },
 }

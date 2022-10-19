@@ -45,6 +45,36 @@ const resellZones: (ZoneOptions & { bagAccepted: StonkBagType })[] = [
     },
 ];
 
+const deliveryZones: ZoneOptions[] = [
+    {
+        name: 'BOLINGBROKE PENITENTIARY',
+        center: [1845.43, 2585.9, 45.67],
+        length: 0.2,
+        width: 1.4,
+        heading: 270,
+        minZ: 43.32,
+        maxZ: 47.32,
+    },
+    {
+        name: 'HUMANE LABS & RESEARCH',
+        center: [3433.04, 3756.55, 30.5],
+        length: 0.4,
+        width: 1.6,
+        heading: 28,
+        minZ: 28.1,
+        maxZ: 32.1,
+    },
+    {
+        name: 'LAGO ZANCUDO',
+        center: [-2304.24, 3426.83, 31.01],
+        length: 0.4,
+        width: 1.4,
+        heading: 230,
+        minZ: 28.66,
+        maxZ: 32.66,
+    },
+];
+
 export const StonkConfig = {
     bankAccount: {
         main: 'cash-transfer',
@@ -95,5 +125,11 @@ export const StonkConfig = {
         duration: 5 * 1000,
         amount: 5,
         zones: resellZones,
+    },
+    delivery: {
+        item: 'stonk__secure_container',
+        duration: 5 * 1000,
+        society_gain: 3000,
+        location: deliveryZones,
     },
 };

@@ -396,6 +396,8 @@ model field {
   identifier String  @unique(map: "identifier") @db.VarChar(64)
   owner      String? @db.VarChar(32)
   data       String? @db.LongText
+
+  @@unique(fields: [identifier, owner], name: "fieldOwner")
 }
 
 model investigation {

@@ -5,6 +5,7 @@ import { unloadContainer } from './core/container';
 import { ProviderServerLoader } from './core/loader/provider.server.loader';
 import { AdminModule } from './server/admin/admin.module';
 import { DatabaseModule } from './server/database/database.module';
+import { FieldModule } from './server/farm/field.module';
 import { ItemModule } from './server/item/item.module';
 import { BaunModule } from './server/job/baun/baun.module';
 import { BennysModule } from './server/job/bennys/bennys.module';
@@ -38,7 +39,8 @@ async function bootstrap() {
         VoipModule,
         JobModule,
         BennysModule,
-        StonkModule
+        StonkModule,
+        FieldModule
     );
 
     await app.stop();

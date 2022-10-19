@@ -28,6 +28,8 @@ export enum ServerEvent {
     STONK_RESELL = 'soz-core:server:job:stonk:resell',
     STONK_COLLECT = 'soz-core:server:job:stonk:collect',
     STONK_FILL_IN = 'soz-core:server:job:stonk:fill-in',
+    STONK_DELIVERY_TAKE = 'soz-core:server:job:stonk:delivery-take',
+    STONK_DELIVERY_END = 'soz-core:server:job:stonk:delivery-end',
 
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
@@ -108,6 +110,8 @@ export enum ClientEvent {
     JOBS_STONK_OPEN_SOCIETY_MENU = 'stonk:client:OpenSocietyMenu',
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
+
+    STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
 
     // Temp event which should be internally used by a service when only soz core
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
