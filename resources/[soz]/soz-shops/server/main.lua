@@ -324,24 +324,31 @@ exports("RestockShop", function(brand, item, amount)
     local category = garmentToCategory(item)
     local sexToRefill = -1667301416
 
-    if math.random() > 0.5 then
-        sexToRefill = 1885233650
-    end
+    local amount = amount
 
-    local shop = ShopsContent[sexToRefill][Shops[brand]]
+    for _ = 1, math.ceil(amount / 10) do
+        local stack = 10
+        if amount < 10 then
+            stack = amount
+        end
+        amount = amount - stack
 
-    if not shop then
-        return false
-    end
+        if math.random() > 0.5 then
+            sexToRefill = 1885233650
+        end
 
-    shop = shop.items[category]
-    if not shop then
-        return false
-    end
+        local shop = ShopsContent[sexToRefill][Shops[brand]]
 
-    local allClothes = getItems(shop.items)
+        if not shop then
+            return false
+        end
 
-    for _ = 1, amount do
+        shop = shop.items[category]
+        if not shop then
+            return false
+        end
+
+        local allClothes = getItems(shop.items)
         local randomClothes = allClothes[math.random(1, #allClothes)]
         local clothesWithSameDrawable = {}
 
@@ -367,15 +374,13 @@ exports("RestockShop", function(brand, item, amount)
         end
 
         local affectedRows = MySQL.update.await("update shop_content set stock = stock + @stock where id IN (@id)",
-                                                {id = clothesWithSameDrawableID, stock = amount})
+                                                {id = clothesWithSameDrawableID, stock = stack})
         if affectedRows > 0 then
             for _, clothe in pairs(clothesWithSameDrawable) do
-                clothe.stock = clothe.stock + amount
+                clothe.stock = clothe.stock + stack
             end
-
-            return true
         end
     end
 
-    return false
+    return true
 end)
