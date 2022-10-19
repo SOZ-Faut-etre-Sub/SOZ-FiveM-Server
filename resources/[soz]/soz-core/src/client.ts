@@ -3,6 +3,7 @@ import './globals';
 
 import { AdminModule } from './client/admin/admin.module';
 import { AnimationModule } from './client/animation/animation.module';
+import { BankModule } from './client/bank/bank.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
@@ -37,7 +38,8 @@ async function bootstrap() {
         ZEventModule,
         AdminModule,
         BennysModule,
-        StonkModule
+        StonkModule,
+        BankModule
     );
 
     await app.stop();
