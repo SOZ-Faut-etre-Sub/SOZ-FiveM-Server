@@ -55,6 +55,50 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
                 field = identifier,
             }, {position = position, amount = 1})
 
+            cb(true)
+            return
+        end
+        cb(false)
+    else
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
+        cb(false)
+    end
+end)
+
+QBCore.Functions.CreateCallback("pawl:server:harvestTreeSap", function(source, cb, identifier, position)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if Player == nil then
+        cb(false)
+        return
+    end
+
+    local field = Fields[identifier]
+    if field == nil then
+        cb(false)
+        return
+    end
+
+    if exports["soz-inventory"]:CanCarryItems(Player.PlayerData.source, Config.Harvest.SecondaryRewardItems) then
+        local harvest = field:TreeExistAtPosition(position)
+        if harvest then
+            local cbSent = false
+            for _, item in pairs(Config.Harvest.SecondaryRewardItems) do
+                if cbSent then
+                    return
+                end
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, item.amount, nil, nil, function(success, reason)
+                    if not success then
+                        cb(false)
+                        cbSent = true
+                    end
+                end)
+            end
+            TriggerEvent("monitor:server:event", "job_pawl_sap_tree", {
+                player_source = Player.PlayerData.source,
+                field = identifier,
+            }, {position = position, amount = 1})
+
+            cb(true)
             return
         end
         cb(false)
