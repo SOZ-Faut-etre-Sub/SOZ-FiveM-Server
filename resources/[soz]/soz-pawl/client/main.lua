@@ -48,7 +48,7 @@ Citizen.CreateThread(function()
                 type = "server",
                 color = "pawl",
                 label = "Démarrer production",
-                icon = "c:inventory/ouvrir_le_stockage.png",
+                icon = "c:pawl/start-prod.png",
                 event = "pawl:server:startProcessingTree",
                 canInteract = function()
                     local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
@@ -60,7 +60,7 @@ Citizen.CreateThread(function()
                 type = "server",
                 color = "pawl",
                 label = "Arrêter production",
-                icon = "c:inventory/ouvrir_le_stockage.png",
+                icon = "c:pawl/stop-prod.png",
                 event = "pawl:server:stopProcessingTree",
                 canInteract = function()
                     local enabled = QBCore.Functions.TriggerRpc("pawl:server:processingTreeIsEnabled")
@@ -72,7 +72,7 @@ Citizen.CreateThread(function()
                 type = "server",
                 color = "pawl",
                 label = "État production",
-                icon = "c:inventory/ouvrir_le_stockage.png",
+                icon = "c:pawl/status-prod.png",
                 event = "pawl:server:statusProcessingTree",
                 canInteract = function()
                     return PlayerData.job.onduty
@@ -89,7 +89,7 @@ Citizen.CreateThread(function()
         craftOptions[#craftOptions + 1] = {
             color = "pawl",
             label = craft.Name,
-            icon = "c:inventory/ouvrir_le_stockage.png",
+            icon = ("c:pawl/craft-%s.png"):format(craftId),
             event = "pawl:client:craft",
             canInteract = function()
                 return PlayerData.job.onduty
