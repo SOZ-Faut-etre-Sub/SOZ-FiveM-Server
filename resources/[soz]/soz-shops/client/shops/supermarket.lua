@@ -49,4 +49,3 @@ ShopContext["robsliquor-north"] = SupermarketShop:new("Superette", "robsliquor-n
 ShopContext["robsliquor-south"] = SupermarketShop:new("Superette", "robsliquor-south", {sprite = 52, color = 2}, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "a_m_m_genfat_01")
 
 ShopContext["zkea"] = SupermarketShop:new("Zkea", "zkea", {sprite = 123, color = 69}, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "ig_brad")
-
