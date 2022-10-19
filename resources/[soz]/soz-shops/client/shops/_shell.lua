@@ -1,8 +1,8 @@
 --- @class ShopShell
 ShopShell = {}
 
-function ShopShell:new(label, brand, blip, ped, zone)
-    return setmetatable({label = label, brand = brand, blip = blip, ped = ped, zone = zone}, {__index = ShopShell})
+function ShopShell:new(label, brand, blip, ped)
+    return setmetatable({label = label, brand = brand, blip = blip, ped = ped}, {__index = ShopShell})
 end
 
 --- Ped functions
@@ -18,6 +18,14 @@ function ShopShell:GetPedAction()
     }
 end
 
+function ShopShell:AddTargetModel()
+    exports["qb-target"]:AddTargetModel({self.ped}, {options = {self:GetPedAction()}, distance = 2.5})
+end
+
+function ShopShell:RemoveTargetModel()
+    exports["qb-target"]:RemoveTargetModel({self.ped})
+end
+
 function ShopShell:SpawnPed(location, ...)
     exports["qb-target"]:SpawnPed({
         {
@@ -30,17 +38,6 @@ function ShopShell:SpawnPed(location, ...)
             scenario = "WORLD_HUMAN_STAND_IMPATIENT",
         },
     })
-    if self.zone then
-        self.zone:onPlayerInOut(function(isInside)
-            if isInside then
-                exports["qb-target"]:AddTargetModel({self.ped}, {options = {self:GetPedAction(), ...}, distance = 2.5})
-            else
-                exports["qb-target"]:RemoveTargetModel(self.ped, "Accéder au magasin")
-            end
-        end)
-    else
-        exports["qb-target"]:AddTargetModel({self.ped}, {options = {self:GetPedAction(), ...}, distance = 2.5})
-    end
 end
 
 --- Shop functions

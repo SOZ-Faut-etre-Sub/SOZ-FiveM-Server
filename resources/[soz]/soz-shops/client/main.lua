@@ -25,6 +25,10 @@ AddEventHandler("locations:zone:enter", function(brand, shop)
         currentShop = shop
         currentShopBrand = brand
 
+        if currentShop then
+            ShopContext[currentShopBrand]:AddTargetModel()
+        end
+
         if brand == "ponsonbys" or brand == "suburban" or brand == "binco" then
             TriggerEvent("soz-core:client:job:ffs:enter-clothing-shop", brand)
         end
@@ -33,6 +37,10 @@ end)
 
 AddEventHandler("locations:zone:exit", function(brand, shop)
     if ShopLocations[brand] then
+        if currentShop then
+            ShopContext[currentShopBrand]:RemoveTargetModel()
+        end
+
         currentShop = nil
         currentShopBrand = nil
         shopMenu:Close()

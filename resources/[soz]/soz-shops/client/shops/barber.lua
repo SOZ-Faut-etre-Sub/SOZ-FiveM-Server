@@ -190,4 +190,4 @@ function BarberShop:GenerateMenu()
 end
 
 --- Exports shop
-ShopContext["barber"] = BarberShop:new("Coiffeur", "barber", {sprite = 71, color = 0}, "s_f_m_fembarber")
+ShopContext["barber"] = BarberShop:new("Coiffeur", "barber", {sprite = 71, color = 0}, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_f_m_fembarber")
