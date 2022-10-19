@@ -191,4 +191,5 @@ CreateThread(function()
 end)
 
 --- Exports shop
-ShopContext["jewelry"] = JewelryShop:new("Bijoutier", "jewelry", {sprite = 617, color = 0 }, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or  "u_m_m_jewelsec_01")
+ShopContext["jewelry"] = JewelryShop:new("Bijoutier", "jewelry", {sprite = 617, color = 0},
+                                         (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "u_m_m_jewelsec_01")

@@ -201,6 +201,9 @@ function ClothingShop:GenerateMenu(skipIntro)
 end
 
 --- Exports shop
-ShopContext["ponsonbys"] = ClothingShop:new("PONSONBYS", "ponsonbys", {sprite = 73, color = 26}, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or  "s_f_m_shop_high")
-ShopContext["suburban"] = ClothingShop:new("SubUrban", "suburban", {sprite = 73, color = 29}, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or  "s_f_y_shop_mid")
-ShopContext["binco"] = ClothingShop:new("Binco", "binco", {sprite = 73, color = 33}, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or  "s_f_y_shop_low")
+ShopContext["ponsonbys"] = ClothingShop:new("PONSONBYS", "ponsonbys", {sprite = 73, color = 26},
+                                            (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_f_m_shop_high")
+ShopContext["suburban"] = ClothingShop:new("SubUrban", "suburban", {sprite = 73, color = 29},
+                                           (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_f_y_shop_mid")
+ShopContext["binco"] = ClothingShop:new("Binco", "binco", {sprite = 73, color = 33},
+                                        (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_f_y_shop_low")

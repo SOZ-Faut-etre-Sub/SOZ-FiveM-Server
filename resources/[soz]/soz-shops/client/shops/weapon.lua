@@ -63,4 +63,5 @@ function WeaponShop:GenerateMenu()
 end
 
 --- Exports shop
-ShopContext["ammunation"] = WeaponShop:new("Ammu-Nation", "ammunation", {sprite = 110, color = 17}, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_m_y_ammucity_01")
+ShopContext["ammunation"] = WeaponShop:new("Ammu-Nation", "ammunation", {sprite = 110, color = 17},
+                                           (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "s_m_y_ammucity_01")
