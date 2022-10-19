@@ -46,7 +46,11 @@ export class FightForStyleRestockProvider {
         let amountLeft = item.amount;
         do {
             const quantity = Math.min(amountLeft, 10);
-            await this.restock(source, amountLeft, brand, garment);
+            const hasRestocked = await this.restock(source, amountLeft, brand, garment);
+            if (!hasRestocked) {
+                this.notifier.notify(source, 'Vous avez ~r~arrêter~s~ de restocker le magasin de vêtements');
+                return;
+            }
             this.notifier.notify(source, `Vous avez restocké ~g~${quantity}~s~ vêtements`, 'success');
             amountLeft -= quantity;
         } while (amountLeft > 0);
@@ -68,7 +72,7 @@ export class FightForStyleRestockProvider {
         );
 
         if (!completed) {
-            return;
+            return false;
         }
 
         this.inventoryManager.removeItemFromInventory(source, garment, amount);
@@ -77,5 +81,6 @@ export class FightForStyleRestockProvider {
 
         const totalAmount = amount * FfsConfig.restock.getRewardFromDeliveredGarment(garment);
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
+        return true;
     }
 }

@@ -57,6 +57,5 @@ export class JobProvider {
             return;
         }
         this.notifier.notify(`Il reste ${result} tenues de travail dans le vestiaire.`);
-        return;
     }
 }
