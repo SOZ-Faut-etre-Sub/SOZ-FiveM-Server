@@ -73,6 +73,10 @@ export class StonkDeliveryProvider {
     }
 
     public async useSecureContainer(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        if (this.playerService.getPlayer(source).job.id !== JobType.CashTransfer) {
+            return;
+        }
+
         TriggerClientEvent(ClientEvent.STONK_DELIVER_LOCATION, source, this.getLiveryLocation());
     }
 
