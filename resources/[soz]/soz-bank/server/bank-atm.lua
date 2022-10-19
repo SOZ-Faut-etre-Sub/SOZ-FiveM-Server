@@ -35,6 +35,10 @@ local function GetAtmAccountName(atmType, atmCoordsHash, coords)
     local atmAccount = nil
     local atmIdentifier = string.format("atm_%s_%s", atmType, atmCoordsHash)
 
+    if atmType == "ent" then
+        return atmIdentifier
+    end
+
     if Config.AtmLocations[atmIdentifier] ~= nil then
         atmAccount = Config.AtmLocations[atmIdentifier].accountId
     end

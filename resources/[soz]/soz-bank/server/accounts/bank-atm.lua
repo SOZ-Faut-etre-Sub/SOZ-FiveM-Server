@@ -48,8 +48,11 @@ end
 --- @param businessid string
 --- @return string
 function GetTerminalType(businessid, atmType)
-    if atmType then
+    if atmType ~= nil then
         return atmType
+    end
+    if string.match(businessid, "atm_ent_%w+") then
+        return string.match(string.match(businessid, "_%w+_"), "%w+")
     end
     return string.match(string.match(businessid, "%a+%d"), "%a+")
 end
