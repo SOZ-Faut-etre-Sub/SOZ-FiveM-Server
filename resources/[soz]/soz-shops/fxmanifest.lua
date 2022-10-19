@@ -5,6 +5,9 @@ lua54 "yes"
 shared_scripts {"config/*.lua", "config/datasource/*.json"}
 
 client_scripts {
+    "@PolyZone/client.lua",
+    "@PolyZone/BoxZone.lua",
+    "@PolyZone/ComboZone.lua",
     "@menuv/menuv.lua",
     "@soz-character/client/skin/clothing.lua",
     "@soz-character/client/skin/menu/menu.lua",

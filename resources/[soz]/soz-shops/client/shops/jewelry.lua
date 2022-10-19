@@ -190,13 +190,5 @@ CreateThread(function()
     end
 end)
 
-local jewelryShop = BoxZone:Create(vector3(-622.65, -230.7, 38.06), 9.8, 7.2, {
-    name = "jewelry_zone",
-    heading = 37,
-    minZ = 37.06,
-    maxZ = 40.26,
-})
-
 --- Exports shop
-ShopContext["jewelry"] = JewelryShop:new("Bijoutier", "jewelry", {sprite = 617, color = 0},
-                                         (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or "u_m_m_jewelsec_01", jewelryShop)
+ShopContext["jewelry"] = JewelryShop:new("Bijoutier", "jewelry", {sprite = 617, color = 0 }, (GetConvarInt("feature_halloween", 0) == 1 and "u_m_y_zombie_01") or  "u_m_m_jewelsec_01")
