@@ -77,7 +77,7 @@ export class FieldProvider {
             }
         });
     }
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_MINUTE)
     public async saveTick() {
         for (const field of this.fields) {
             const fieldData = JSON.stringify({ ...field, identifier: undefined, owner: undefined });
