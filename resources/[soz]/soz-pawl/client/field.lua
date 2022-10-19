@@ -13,7 +13,7 @@ local function TreeInteraction(identifier, position)
             {
                 color = "pawl",
                 label = "Récolter",
-                icon = "c:inventory/ouvrir_le_stockage.png",
+                icon = "c:pawl/harvest.png",
                 event = "pawl:client:harvestTree",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
@@ -29,7 +29,7 @@ local function TreeInteraction(identifier, position)
             {
                 color = "pawl",
                 label = "Récolter la sève",
-                icon = "c:inventory/ouvrir_le_stockage.png",
+                icon = "c:pawl/harvest.png",
                 event = "pawl:client:harvestTreeSap",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
