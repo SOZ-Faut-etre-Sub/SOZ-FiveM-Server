@@ -31,7 +31,7 @@ export const Conversations = (): any => {
         return conversations
             .filter(c => c.masked === false)
             .filter(c => messages.some(m => m.conversation_id === c.conversation_id))
-            .filter(c => c?.display?.match(regExp) || c?.phoneNumber?.match(regExp) || '');
+            .filter(c => getDisplayByNumber(c?.phoneNumber)?.match(regExp) || c?.phoneNumber?.match(regExp) || '');
     }, [conversations, searchValue]);
 
     const { getDisplayByNumber, getPictureByNumber } = useContact();
