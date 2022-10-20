@@ -1,11 +1,10 @@
 import { JobType } from '../job';
-import { BoxZone } from '../polyzone/box.zone';
+import { BoxZone, Zone } from '../polyzone/box.zone';
 
 export enum GarageType {
     Public = 'public',
     Private = 'private',
     Job = 'job',
-    Gang = 'gang',
     Depot = 'depot',
     House = 'house',
 }
@@ -30,6 +29,6 @@ export type Garage = {
     type: GarageType;
     category: GarageCategory;
     job?: JobType;
-    zone: BoxZone;
-    parkingPlaces: BoxZone<GarageParkingPlaceData>[];
+    zone: Zone;
+    parkingPlaces: Zone<GarageParkingPlaceData>[];
 };

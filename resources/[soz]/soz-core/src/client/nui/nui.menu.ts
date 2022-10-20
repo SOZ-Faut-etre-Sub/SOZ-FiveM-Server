@@ -9,11 +9,11 @@ export class NuiMenu {
     @Inject(NuiDispatch)
     private dispatcher: NuiDispatch;
 
-    public openMenu<K extends keyof MenuTypeMap>(menuType: K, data?: MenuTypeMap[K]) {
+    public openMenu<K extends keyof MenuTypeMap>(menuType: K, data?: MenuTypeMap[K], subMenuId?: string) {
         this.dispatcher.setMenuOpen(menuType);
         exports['menuv'].SendNUIMessage({ action: 'KEY_CLOSE_ALL' });
 
-        this.dispatcher.dispatch('menu', 'SetMenuType', { menuType, data });
+        this.dispatcher.dispatch('menu', 'SetMenuType', { menuType, data, subMenuId });
     }
 
     @OnEvent(ClientEvent.CORE_CLOSE_MENU)

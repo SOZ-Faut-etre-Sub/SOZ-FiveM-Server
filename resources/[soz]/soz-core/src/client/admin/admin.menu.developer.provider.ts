@@ -3,12 +3,14 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { MenuType } from '../../shared/nui/menu';
 import { Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
+import { AdminMenuProvider } from './admin.menu.provider';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
@@ -26,6 +28,9 @@ export class AdminMenuDeveloperProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(AdminMenuProvider)
+    private adminMenuProvider: AdminMenuProvider;
 
     private showCoordinatesInterval = null;
 
@@ -48,7 +53,7 @@ export class AdminMenuDeveloperProvider {
             },
         ],
     })
-    public endCreatingZone(): void {
+    public async endCreatingZone() {
         if (this.isCreatingZone) {
             this.isCreatingZone = false;
             const zone = exports['PolyZone'].EndPolyZone();
@@ -59,6 +64,7 @@ export class AdminMenuDeveloperProvider {
                     maxZ: ${zone.center.z + 2},
                 });`
             );
+            await this.adminMenuProvider.openAdminMenu('developer');
         }
     }
 

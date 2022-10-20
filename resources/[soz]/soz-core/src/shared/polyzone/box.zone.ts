@@ -1,13 +1,11 @@
+import { PolygonZone, PolygonZoneOptions } from './polygon.zone';
 import { Point2D, Point3D, Vector3 } from './vector';
 
-type BoxZoneOptions<T> = {
-    minZ?: number;
-    maxZ?: number;
+type BoxZoneOptions<T> = PolygonZoneOptions<T> & {
     heading?: number;
-    data?: T;
 };
 
-export type Zone = {
+export type Zone<T = never> = {
     center: Vector3;
     length?: number;
     width?: number;
@@ -15,10 +13,10 @@ export type Zone = {
     minZ?: number;
     maxZ?: number;
     debugPoly?: boolean;
-    data?: any;
+    data?: T;
 };
 
-export type NamedZone = Zone & {
+export type NamedZone<T = never> = Zone<T> & {
     name: string;
 };
 
@@ -35,56 +33,37 @@ const rotatePoint = (center: Point2D | Point3D, point: Point2D | Point3D, angleI
     return [newX + center[0], newY + center[1]];
 };
 
-export class BoxZone<T = never> {
+export class BoxZone<T = never> extends PolygonZone<T> {
     public readonly center: Point3D;
     public readonly length: number;
     public readonly width: number;
-    public readonly minZ: number;
-    public readonly maxZ: number;
     public readonly heading: number;
-    public readonly min: Readonly<Point3D>;
-    public readonly max: Readonly<Point3D>;
-    public readonly data?: T;
+
+    public static fromZone<T>(zone: Zone<T>): BoxZone<T> {
+        return new BoxZone(zone.center, zone.length, zone.width, {
+            minZ: zone.minZ,
+            maxZ: zone.maxZ,
+            data: zone.data,
+            heading: zone.heading,
+        });
+    }
 
     public constructor(center: Point3D, length: number, width: number, options?: BoxZoneOptions<T>) {
+        const points = [];
+        const heading = options?.heading || 0;
+        const angleInRad = (heading * Math.PI) / 180;
+
+        points.push(rotatePoint(center, [center[0] - width / 2, center[1] - length / 2], angleInRad));
+        points.push(rotatePoint(center, [center[0] - width / 2, center[1] + length / 2], angleInRad));
+        points.push(rotatePoint(center, [center[0] + width / 2, center[1] + length / 2], angleInRad));
+        points.push(rotatePoint(center, [center[0] + width / 2, center[1] - length / 2], angleInRad));
+        points.push(rotatePoint(center, [center[0] - width / 2, center[1] - length / 2], angleInRad));
+
+        super(points, options);
+
         this.center = center;
         this.length = length;
         this.width = width;
-        this.minZ = options?.minZ || center[2] - 1;
-        this.maxZ = options?.maxZ || center[2] + 2;
-        this.heading = ((options?.heading || 0) * Math.PI) / 180;
-
-        const min = [center[0] - width / 2, center[1] - length / 2] as Point2D;
-        const max = [center[0] + width / 2, center[1] + length / 2] as Point2D;
-
-        this.min = [min[0], min[1], center[2] - this.minZ];
-        this.max = [max[0], max[1], center[2] + this.maxZ];
-
-        if (options?.data) {
-            this.data = options.data;
-        }
-    }
-
-    public isPointInside(point: Point3D): boolean {
-        if (this.heading !== 0) {
-            const rotatedPoint = rotatePoint(this.center, point, -this.heading);
-
-            point = [rotatedPoint[0], rotatedPoint[1], point[2]];
-        }
-
-        return (
-            point[0] >= this.min[0] &&
-            point[0] <= this.max[0] &&
-            point[1] >= this.min[1] &&
-            point[1] <= this.max[1] &&
-            point[2] >= this.min[2] &&
-            point[2] <= this.max[2]
-        );
-    }
-
-    public draw() {
-        DrawBox(this.min[0], this.min[1], this.min[2], this.max[0], this.max[1], this.max[2], 0, 255, 0, 80);
-        DrawLine(this.min[0], this.min[1], this.min[2], this.min[0], this.min[1], this.max[2], 255, 0, 255, 255);
-        DrawLine(this.max[0], this.max[1], this.min[2], this.max[0], this.max[1], this.max[2], 255, 0, 255, 255);
+        this.heading = heading;
     }
 }

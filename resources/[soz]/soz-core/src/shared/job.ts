@@ -85,7 +85,14 @@ export type JobGrade = {
     permissions: string[];
 };
 
-export const JobCloakrooms: Partial<Record<JobType, Zone[]>> = {
+export type JobCloakroomZoneData = {
+    id: string;
+    event: string;
+    job: JobType;
+    storage: string;
+};
+
+export const JobCloakrooms: Partial<Record<JobType, Zone<JobCloakroomZoneData>[]>> = {
     [JobType.Baun]: [
         {
             center: [106.36, -1299.08, 28.77],
