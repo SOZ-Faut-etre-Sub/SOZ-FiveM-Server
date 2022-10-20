@@ -51,8 +51,19 @@ export const useAvailability = () => {
 };
 
 export const useTime = () => {
-    const state = useSelector((state: RootState) => state.phone);
-    return state.time;
+    const [date, setDate] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setDate(new Date());
+        }, 60 * 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const hour = date.getHours().toString().padStart(2, '0');
+    const minute = date.getMinutes().toString().padStart(2, '0');
+
+    return { hour, minute };
 };
 
 export const useCallModal = () => {
