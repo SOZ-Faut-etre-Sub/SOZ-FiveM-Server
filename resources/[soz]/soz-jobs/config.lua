@@ -52,7 +52,7 @@ SozJobCore.Jobs = {
         label = "ADSL",
         platePrefix = "ADSL",
         temporary = {
-            payout = 6,
+            payout = 12,
             vehicule_position = {x = 500.79, y = -105.88, z = 62.07, w = 253.78},
             points = {
                 {x = 406.88, y = -968.05, z = 29.45, sx = 1.8, sy = 1.2, heading = 358, minZ = 27.8, maxZ = 30.4},
@@ -72,7 +72,7 @@ SozJobCore.Jobs = {
         label = "Fougère Prime",
         platePrefix = "FOUG",
         temporary = {
-            payout = 5,
+            payout = 10,
             vehicule_position = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52},
             points = {
                 {x = 859.15, y = -531.95, z = 57.33, sx = 1, sy = 1, heading = 0, minZ = 56.08, maxZ = 58.08},
@@ -89,7 +89,7 @@ SozJobCore.Jobs = {
         label = "InfoChat",
         platePrefix = "INFO",
         temporary = {
-            payout = 6,
+            payout = 12,
             vehicule_position = {x = -763.69, y = -39.26, z = 37.69, w = 119.87},
             points = {
                 {x = -1517.37, y = -433.94, z = 63.06, sx = 45.4, sy = 53.8, heading = 49, minZ = 34.46, maxZ = 43.46},
@@ -104,7 +104,7 @@ SozJobCore.Jobs = {
         label = "DeMetal Company",
         platePrefix = "DEMC",
         temporary = {
-            payout = 1,
+            payout = 2,
             vehicule_position = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67},
             points = {
                 {x = -454.83, y = -1678.6, z = 19.03, sx = 4.2, sy = 2.4, heading = 336, minZ = 17.83, maxZ = 19.83},
@@ -562,17 +562,17 @@ SozJobCore.Jobs = {
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},
 }
 
-SozJobCore.adsl_payout = 6
+SozJobCore.adsl_payout = 12
 SozJobCore.adsl_vehicule = {x = 500.79, y = -105.88, z = 62.07, w = 253.78}
 
-SozJobCore.livraison_payout = 5
+SozJobCore.livraison_payout = 10
 SozJobCore.livraison_vehicule = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52}
 
-SozJobCore.religion_payout = 6
+SozJobCore.religion_payout = 12
 SozJobCore.religion_vehicule = {x = -763.69, y = -39.26, z = 37.69, w = 119.87}
 SozJobCore.religion_prayers_range = {min = 3, max = 6}
 
-SozJobCore.metal_payout = 1
+SozJobCore.metal_payout = 2
 SozJobCore.metal_vehicule = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67}
 
 SozJobCore.adsl = {
