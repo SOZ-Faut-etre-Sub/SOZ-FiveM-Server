@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
-import { StonkBagType, StonkConfig } from '../../../shared/job/stonk';
+import { StonkConfig } from '../../../shared/job/stonk';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
