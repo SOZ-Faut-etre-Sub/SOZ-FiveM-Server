@@ -1,4 +1,4 @@
-RegisterNetEvent("taxi:client:OpenCloakroomMenu", function()
+RegisterNetEvent("taxi:client:OpenCloakroomMenu", function(storageId)
     TaxiJob.Functions.Menu.GenerateMenu(PlayerData.job.id, function(menu)
         menu:AddButton({
             label = "Tenue civile",
@@ -8,7 +8,7 @@ RegisterNetEvent("taxi:client:OpenCloakroomMenu", function()
                     disableMovement = true,
                     disableCombat = true,
                 }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil, false)
                 end)
             end,
         })
@@ -26,7 +26,10 @@ RegisterNetEvent("taxi:client:OpenCloakroomMenu", function()
                         anim = "male_shower_towel_dry_to_get_dressed",
                         flags = 16,
                     }, {}, {}, function() -- Done
-                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
+                        if storageId then
+                            TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
+                        end
+                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin, true)
                     end)
                 end,
             })

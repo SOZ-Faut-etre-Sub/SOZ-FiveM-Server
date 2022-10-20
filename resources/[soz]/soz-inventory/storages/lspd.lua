@@ -55,3 +55,27 @@ Config.Storages["lspd_ammo"] = {
     heading = 350,
     offsetUpZ = 2.0,
 }
+
+Config.Storages["lspd_male_cloakroom"] = {
+    label = "Vestiaire pour hommes - LSPD",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(626.93, 2.18, 76.63),
+    size = vec2(7.0, 8.4),
+    minZ = 75.62,
+    maxZ = 78.62,
+    heading = 350,
+    targetOptions = getCloakroomTargetOptions("lspd", "lspd_male_cloakroom", "police:client:OpenCloakroomMenu"),
+}
+
+Config.Storages["lspd_female_cloakroom"] = {
+    label = "Vestiaire pour femmes - LSPD",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(624.58, -5.48, 76.63),
+    size = vec2(6.8, 6.4),
+    minZ = 75.62,
+    maxZ = 78.62,
+    heading = 350,
+    targetOptions = getCloakroomTargetOptions("lspd", "lspd_female_cloakroom", "police:client:OpenCloakroomMenu"),
+}

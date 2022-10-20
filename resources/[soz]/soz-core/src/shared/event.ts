@@ -25,6 +25,8 @@ export enum ServerEvent {
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
 
+    JOBS_USE_WORK_CLOTHES = 'soz-core:server:job:use-work-clothes',
+
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_BUY_ITEM = 'soz-core:server:job:lsmc:buy-item',
@@ -52,6 +54,8 @@ export enum ServerEvent {
     PLAYER_APPEARANCE_REMOVE_TEMP_OUTFIT = 'soz-core:server:appearance:remove-temp-outfit',
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
+
+    STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
 
     // not core
     ADMIN_ADD_VEHICLE = 'admin:vehicle:addVehicle',
@@ -101,6 +105,8 @@ export enum ClientEvent {
     JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
     JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
     JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
+    JOBS_TRY_OPEN_CLOAKROOM = 'soz-jobs:client:try-open-cloakroom',
+    JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',

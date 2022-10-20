@@ -13,6 +13,7 @@ Config.StorageCapacity = {
     ["seizure"] = {slot = 100, weight = 10000000},
     ["storage"] = {slot = 100, weight = 10000000},
     ["storage_tank"] = {slot = 10, weight = 10000000},
+    ["cloakroom"] = {slot = 10, weight = 1000000},
     --- houses
     ["house_stash"] = {slot = 10, weight = 100000},
     ["house_fridge"] = {slot = 10, weight = 100000},

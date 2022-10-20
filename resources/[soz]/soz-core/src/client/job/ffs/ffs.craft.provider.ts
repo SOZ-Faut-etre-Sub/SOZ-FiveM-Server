@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { InventoryItem } from '../../../shared/item';
-import { CraftProcess, FfsConfig } from '../../../shared/job/ffs';
+import { FfsConfig, Process } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
@@ -29,7 +29,7 @@ export class FightForStyleCraftProvider {
         const { craftProcesses, luxuryCraftProcesses, shoesCraftProcesses } = FfsConfig.craft.processes;
 
         const targets: TargetOptions[] = craftProcesses.map(craftProcess => {
-            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            const method: (craft: Process, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
             return method(craftProcess, 'c:/ffs/craft.png');
         });
 
@@ -38,7 +38,7 @@ export class FightForStyleCraftProvider {
         });
 
         const luxuryTargets: TargetOptions[] = luxuryCraftProcesses.map(craftProcess => {
-            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            const method: (craft: Process, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
             return method(craftProcess, 'c:/ffs/craft.png');
         });
 
@@ -47,7 +47,7 @@ export class FightForStyleCraftProvider {
         });
 
         const shoesTargets: TargetOptions[] = shoesCraftProcesses.map(craftProcess => {
-            const method: (craft: CraftProcess, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
+            const method: (craft: Process, icon: string) => TargetOptions = this.craftProcessToTarget.bind(this);
             return method(craftProcess, 'c:/ffs/craft_shoes.png');
         });
 
@@ -56,7 +56,7 @@ export class FightForStyleCraftProvider {
         });
     }
 
-    private craftProcessToTarget(craftProcess: CraftProcess, icon: string): TargetOptions {
+    private craftProcessToTarget(craftProcess: Process, icon: string): TargetOptions {
         return {
             label: craftProcess.label,
             icon,
@@ -67,7 +67,7 @@ export class FightForStyleCraftProvider {
             canInteract: () => {
                 for (const input of craftProcess.inputs) {
                     const predicate = (item: InventoryItem) => {
-                        return item.name === input.fabric && item.amount >= input.amount;
+                        return item.name === input.id && item.amount >= input.amount;
                     };
                     if (!this.inventoryManager.findItem(predicate)) {
                         return false;

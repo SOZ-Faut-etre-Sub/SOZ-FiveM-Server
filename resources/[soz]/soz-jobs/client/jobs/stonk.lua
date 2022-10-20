@@ -5,8 +5,6 @@ StonkJob.Menus = {}
 StonkJob.Permissions = {}
 StonkJob.CollectedShops = {} -- In-memory, player-based save
 
-local playerInsideCloakroomZone = false
-
 Citizen.CreateThread(function()
     -- BLIP
     QBCore.Functions.CreateBlip("stonk-dep", {
@@ -44,51 +42,6 @@ Citizen.CreateThread(function()
                 event = "QBCore:ToggleDuty",
                 canInteract = function()
                     return PlayerData.job.onduty
-                end,
-            },
-        },
-    })
-
-    -- CLOAKROOM
-    local cloakroomZone = BoxZone:Create(vector3(-22.5, -707.5, 45.0), 4.25, 8.5, {
-        name = "stonk-cloakroom",
-        heading = 295.0,
-    })
-    cloakroomZone:onPlayerInOut(function(isInside)
-        playerInsideCloakroomZone = isInside
-    end)
-    exports["qb-target"]:AddBoxZone("stonk:cloakroomL", vector2(-24.1, -708.6), 0.8, 8.0, {
-        heading = 295.0,
-        minZ = 45.0,
-        maxZ = 47.2,
-    }, {
-        options = {
-            {
-                targeticon = "fas fa-box",
-                icon = "fas fa-tshirt",
-                event = "jobs:client:stonk:OpenCloakroomMenu",
-                label = "Se changer",
-                job = "cash-transfer",
-                canInteract = function()
-                    return playerInsideCloakroomZone and PlayerData.job.onduty
-                end,
-            },
-        },
-    })
-    exports["qb-target"]:AddBoxZone("stonk:cloakroomR", vector2(-20.75, -706.325), 0.8, 8.0, {
-        heading = 295.0,
-        minZ = 45.0,
-        maxZ = 47.2,
-    }, {
-        options = {
-            {
-                targeticon = "fas fa-box",
-                icon = "fas fa-tshirt",
-                event = "jobs:client:stonk:OpenCloakroomMenu",
-                label = "Se changer",
-                job = "cash-transfer",
-                canInteract = function()
-                    return playerInsideCloakroomZone and PlayerData.job.onduty
                 end,
             },
         },
@@ -162,16 +115,19 @@ StonkJob.Functions.Menu.MenuAccessIsValid = function(job)
     return false
 end
 
-RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function()
+RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function(storageId)
     --- @type Menu
     local menu = StonkJob.Menus["cash-transfer"].menu
 
-    SozJobCore.Functions.OpenCloakroomMenu(menu, StonkConfig.Cloakroom)
+    SozJobCore.Functions.OpenCloakroomMenu(menu, StonkConfig.Cloakroom, storageId)
 
     menu:AddButton({
         label = "Tenue de service",
         value = nil,
         select = function()
+            if storageId then
+                TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
+            end
             TriggerEvent("stonk:client:applyDutyClothing")
         end,
     })
@@ -384,6 +340,6 @@ RegisterNetEvent("stonk:client:applyDutyClothing", function()
         disableMovement = true,
         disableCombat = true,
     }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig)
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig, true)
     end)
 end)
