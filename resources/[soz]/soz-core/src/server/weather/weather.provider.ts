@@ -70,8 +70,10 @@ export class WeatherProvider {
     async updateWeather() {
         await wait((Math.random() * 5 + 10) * 60 * 1000);
 
+        const defaultWeather = isFeatureEnabled(Feature.Halloween) ? 'NEUTRAL' : 'OVERCAST';
+
         if (this.shouldUpdateWeather) {
-            GlobalState.weather = this.getNextForecast(GlobalState.weather || 'OVERCAST');
+            GlobalState.weather = this.getNextForecast(GlobalState.weather || defaultWeather);
         }
     }
 
@@ -91,6 +93,11 @@ export class WeatherProvider {
         }
 
         GlobalState.weather = weatherString;
+    }
+
+    @Command('block_weather', { role: 'admin' })
+    blockWeatherCommand(source: number, status?: string): void {
+        this.shouldUpdateWeather = status !== 'on' && status !== 'true';
     }
 
     @Command('time', { role: 'admin' })
