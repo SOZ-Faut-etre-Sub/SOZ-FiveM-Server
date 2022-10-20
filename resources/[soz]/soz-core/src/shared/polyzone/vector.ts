@@ -6,6 +6,8 @@ export type Point3D = Vector3;
 
 export type Vector4 = [number, number, number, number];
 
+export type Polygon2D = Point2D[];
+
 export const getDistance = (a: Vector2 | Vector3 | Vector4, b: Vector2 | Vector3 | Vector4) => {
     const x = a[0] - b[0];
     const y = a[1] - b[1];

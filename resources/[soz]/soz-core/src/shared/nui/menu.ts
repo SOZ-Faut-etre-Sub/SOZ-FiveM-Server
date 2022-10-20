@@ -16,6 +16,7 @@ export interface NuiMenuMethodMap {
 export type SetMenuType = {
     menuType: MenuType;
     data: any;
+    subMenuId?: string;
 };
 
 export enum MenuType {

@@ -22,12 +22,12 @@ export class TickLoader {
                         clearTick(tick);
                         return;
                     }
-
-                    if (interval > 0) {
-                        await wait(interval);
-                    }
                 } catch (error) {
                     console.error(`Error in ${provider.toString()}:${methodName}`, error);
+                }
+
+                if (interval > 0) {
+                    await wait(interval);
                 }
             });
 

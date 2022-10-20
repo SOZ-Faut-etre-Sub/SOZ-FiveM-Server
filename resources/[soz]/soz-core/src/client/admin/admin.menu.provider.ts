@@ -58,7 +58,7 @@ export class AdminMenuProvider {
             },
         ],
     })
-    public async openAdminMenu() {
+    public async openAdminMenu(subMenuId?: string): Promise<void> {
         const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcEvent.ADMIN_IS_ALLOWED);
         if (!isAllowed) {
             return;
@@ -73,10 +73,14 @@ export class AdminMenuProvider {
         this.menuState.skin.clothConfig = this.clothingService.getClothSet();
         this.menuState.skin.maxOptions = this.clothingService.getMaxOptions();
 
-        this.nuiMenu.openMenu<MenuType.AdminMenu>(MenuType.AdminMenu, {
-            banner,
-            permission: permission as SozRole,
-            state: this.menuState,
-        });
+        this.nuiMenu.openMenu<MenuType.AdminMenu>(
+            MenuType.AdminMenu,
+            {
+                banner,
+                permission: permission as SozRole,
+                state: this.menuState,
+            },
+            subMenuId
+        );
     }
 }

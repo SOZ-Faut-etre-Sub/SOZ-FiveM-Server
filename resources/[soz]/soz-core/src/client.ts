@@ -22,6 +22,7 @@ import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
 import { VehicleModule } from './client/vehicle/vehicle.module';
 import { WeatherModule } from './client/weather/weather.module';
+import { WorldModule } from './client/world/world.module';
 import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
@@ -31,6 +32,7 @@ async function bootstrap() {
     const app = await Application.create(
         ProviderClientLoader,
         RepositoryModule,
+        WorldModule,
         PlayerModule,
         WeatherModule,
         ItemModule,

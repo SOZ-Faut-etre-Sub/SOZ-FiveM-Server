@@ -37,8 +37,18 @@ const MenuRouter: FunctionComponent = () => {
         }
     }, [location]);
 
-    useMenuNuiEvent('SetMenuType', ({ menuType, data }) => {
-        navigate(menuType ? `/${menuType}` : '/');
+    useMenuNuiEvent('SetMenuType', ({ menuType, data, subMenuId }) => {
+        let path = `/`;
+
+        if (menuType) {
+            path = `/${menuType}`;
+
+            if (subMenuId) {
+                path = `${path}/${subMenuId}`;
+            }
+        }
+
+        navigate(path);
         setMenuData(data);
     });
 
