@@ -64,7 +64,7 @@ RegisterNetEvent("pawl:client:OpenSocietyMenu", function()
     end
 end)
 
-RegisterNetEvent("pawl:client:OpenCloakroomMenu", function()
+RegisterNetEvent("pawl:client:OpenCloakroomMenu", function(storageId)
     societyMenu:ClearItems()
 
     societyMenu:AddButton({
@@ -89,6 +89,9 @@ RegisterNetEvent("pawl:client:OpenCloakroomMenu", function()
                     disableMovement = true,
                     disableCombat = true,
                 }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+                    if storageId then
+                        TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
+                    end
                     TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
                 end)
             end,

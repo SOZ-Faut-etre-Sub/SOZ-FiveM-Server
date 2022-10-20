@@ -10,6 +10,7 @@ export type ZoneOptions = {
     minZ?: number;
     maxZ?: number;
     debugPoly?: boolean;
+    data?: any;
 };
 
 export type TargetOptions = {

@@ -41,33 +41,33 @@ export class FightForStyleTransformProvider {
 
         this.inventoryManager.removeItemFromInventory(
             source,
-            transformationProcess.input,
-            transformationProcess.inputAmount
+            transformationProcess.inputs[0].id,
+            transformationProcess.inputs[0].amount
         );
 
         this.inventoryManager.addItemToInventory(
             source,
-            transformationProcess.output,
-            transformationProcess.outputAmount
+            transformationProcess.output.id,
+            transformationProcess.output.amount
         );
 
         return true;
     }
 
-    private canCraft(source: number, fabricMaterial: FabricMaterial): boolean {
+    private canProcess(source: number, fabricMaterial: FabricMaterial): boolean {
         const transformProcess = FfsConfig.transform.processes[fabricMaterial];
         return this.inventoryManager.canSwapItem(
             source,
-            transformProcess.input,
-            transformProcess.inputAmount,
-            transformProcess.output,
-            transformProcess.outputAmount
+            transformProcess.inputs[0].id,
+            transformProcess.inputs[0].amount,
+            transformProcess.output.id,
+            transformProcess.output.amount
         );
     }
 
     @OnEvent(ServerEvent.FFS_TRANSFORM)
     public async onTransform(source: number, fabricMaterial: FabricMaterial) {
-        if (!this.canCraft(source, fabricMaterial)) {
+        if (!this.canProcess(source, fabricMaterial)) {
             this.notifier.notify(source, 'Vos poches sont pleines.', 'error');
             return;
         }
@@ -76,14 +76,14 @@ export class FightForStyleTransformProvider {
         while (
             this.inventoryManager.canSwapItem(
                 source,
-                transformProcess.input,
-                transformProcess.inputAmount,
-                transformProcess.output,
-                transformProcess.outputAmount
+                transformProcess.inputs[0].id,
+                transformProcess.inputs[0].amount,
+                transformProcess.output.id,
+                transformProcess.output.amount
             )
         ) {
-            const item = this.inventoryManager.getFirstItemInventory(source, transformProcess.input);
-            if (!item || item.amount < transformProcess.inputAmount) {
+            const item = this.inventoryManager.getFirstItemInventory(source, transformProcess.inputs[0].id);
+            if (!item || item.amount < transformProcess.inputs[0].amount) {
                 break;
             }
 

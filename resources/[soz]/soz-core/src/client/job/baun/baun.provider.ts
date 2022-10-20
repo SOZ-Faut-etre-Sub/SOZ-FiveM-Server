@@ -10,6 +10,7 @@ import { InventoryManager } from '../../item/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
+import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
 export class BaunProvider {
@@ -27,6 +28,9 @@ export class BaunProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
 
     private state = {
         displayLiquorBlip: false,

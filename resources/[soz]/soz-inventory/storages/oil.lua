@@ -46,3 +46,15 @@ Config.Storages["oil_tank_2"] = {
     heading = 45,
     offsetUpZ = 3.5,
 }
+
+Config.Storages["oil_cloakroom"] = {
+    label = "Vestiaire - MTP",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(-231.78, 6078.43, 32.26),
+    size = vec2(3.55, 3.9),
+    minZ = 31.26,
+    maxZ = 33.5,
+    heading = 316,
+    targetOptions = getCloakroomTargetOptions("oil", "oil_cloakroom", "jobs:client:fueler:OpenCloakroomMenu"),
+}

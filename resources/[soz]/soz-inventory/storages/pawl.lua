@@ -76,3 +76,15 @@ Config.Storages["pawl_boss_storage"] = {
     heading = 340,
     offsetUpZ = 0.0,
 }
+
+Config.Storages["pawl_cloakroom"] = {
+    label = "Vestiaire - PAWL",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(-532.21, 5308.37, 76.37),
+    size = vec2(0.6, 7.2),
+    minZ = 75.37,
+    maxZ = 78.37,
+    heading = 250,
+    targetOptions = getCloakroomTargetOptions("pawl", "pawl_cloakroom", "pawl:client:OpenCloakroomMenu"),
+}

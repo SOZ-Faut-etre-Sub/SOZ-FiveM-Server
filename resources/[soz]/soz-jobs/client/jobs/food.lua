@@ -58,23 +58,6 @@ local function SpawnFieldZones()
 end
 
 local function SpawnJobZones()
-    -- CLOAKROOM
-    exports["qb-target"]:AddBoxZone("food:cloakroom", vector2(-1866.8, 2059.98), 0.5, 1.5, {
-        heading = 340.76,
-        minZ = 140.0,
-        maxZ = 142.5,
-    }, {
-        options = {
-            {
-                targeticon = "fas fa-box",
-                icon = "fas fa-tshirt",
-                event = "jobs:client:food:OpenCloakroomMenu",
-                label = "Se changer",
-                job = "food",
-            },
-        },
-    })
-
     -- BOSS SHOP
     exports["qb-target"]:AddBoxZone("food:shop", vector2(-1881.68, 2058.03), 0.8, 2.15, {
         name = "food:shop",
@@ -207,8 +190,8 @@ end)
 ---
 --- MENUS
 ---
-RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(FoodJob.Menu, FoodConfig.Cloakroom)
+RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(FoodJob.Menu, FoodConfig.Cloakroom, storageId)
 end)
 
 ---

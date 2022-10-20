@@ -22,3 +22,15 @@ Config.Storages["bennys_fridge"] = {
     position = vector3(-204.2, -1340.54, 34.89),
     size = vec2(2.0, 2.0),
 }
+
+Config.Storages["bennys_cloakroom"] = {
+    label = "Vestiaire - Benny's",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(-204.44, -1330.74, 34.89),
+    size = vec2(3.0, 2.8),
+    minZ = 33.89,
+    maxZ = 37.89,
+    heading = 0,
+    targetOptions = {getCloakroomTargetOptions("bennys", "bennys_cloakroom", "soz-bennys:client:OpenCloakroomMenu")},
+}

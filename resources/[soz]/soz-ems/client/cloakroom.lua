@@ -1,10 +1,13 @@
-RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
+RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function(storageId)
     EmsJob.Functions.Menu.GenerateMenu(PlayerData.job.id, function(menu)
         menu:AddButton({
             label = "Tenue de service",
             value = nil,
             select = function()
                 TriggerServerEvent("lsmc:server:SetHazmat", false)
+                if storageId then
+                    TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
+                end
                 TriggerEvent("ems:client:applyDutyClothing", PlayerData.job.id)
             end,
         })
@@ -18,7 +21,7 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
                     disableMovement = true,
                     disableCombat = true,
                 }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+                    TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil, false)
                 end)
             end,
         })
@@ -28,11 +31,6 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
                 label = name,
                 value = nil,
                 select = function()
-                    if string.match(name, "hazmat") then
-                        TriggerServerEvent("lsmc:server:SetHazmat", true)
-                    else
-                        TriggerServerEvent("lsmc:server:SetHazmat", false)
-                    end
                     QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
                         disableMovement = true,
                         disableCombat = true,
@@ -41,7 +39,15 @@ RegisterNetEvent("lsmc:client:OpenCloakroomMenu", function()
                         anim = "male_shower_towel_dry_to_get_dressed",
                         flags = 16,
                     }, {}, {}, function() -- Done
-                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
+                        if string.match(name, "hazmat") then
+                            TriggerServerEvent("lsmc:server:SetHazmat", true)
+                        else
+                            TriggerServerEvent("lsmc:server:SetHazmat", false)
+                        end
+                        if storageId then
+                            TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
+                        end
+                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin, true)
                     end)
                 end,
             })
@@ -68,7 +74,7 @@ RegisterNetEvent("ems:client:applyDutyClothing", function(clotheType)
         disableMovement = true,
         disableCombat = true,
     }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig)
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig, true)
     end)
 end)
 
