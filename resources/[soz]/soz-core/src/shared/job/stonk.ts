@@ -5,7 +5,7 @@ export type StonkBagType = 'jewelbag' | 'small_moneybag' | 'medium_moneybag' | '
 const resellZones: (ZoneOptions & { bagAccepted: StonkBagType })[] = [
     {
         name: 'Lombank',
-        center: [-880.55, -194.65, 38.38],
+        center: [-880.35, -194.65, 38.38],
         length: 0.4,
         width: 2.6,
         heading: 295,
@@ -128,7 +128,7 @@ export const StonkConfig = {
     },
     delivery: {
         item: 'stonk__secure_container',
-        duration: 5 * 1000,
+        duration: 45 * 1000,
         society_gain: 3000,
         location: deliveryZones,
     },
