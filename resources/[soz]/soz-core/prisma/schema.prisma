@@ -405,6 +405,11 @@ model investigation {
   title                  String                   @db.VarChar(128)
   closed                 Boolean?                 @default(false)
   granted                String?                  @db.LongText
+  granted_services       String?                  @db.LongText
+  granted_jobgrade       String?                  @db.LongText
+  supervisors            String?                  @db.LongText
+  concerned_people       String?                  @db.LongText
+  in_charge              String?                  @db.LongText
   created_at             DateTime?                @default(now()) @db.Timestamp(0)
   updated_at             DateTime?                @default(now()) @db.Timestamp(0)
   investigation_revision investigation_revision[]
