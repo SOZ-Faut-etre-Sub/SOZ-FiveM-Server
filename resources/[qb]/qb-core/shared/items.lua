@@ -4197,6 +4197,18 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = "Ça moule pas trop j'espère ?"
     },
+    work_clothes = {
+        name = 'work_clothes',
+        label = 'Tenue de travail',
+        pluralLabel = 'Tenues de travail',
+        weight = 1000,
+        type = 'outfit',
+        unique = false,
+        useable = false,
+        shouldClose = false,
+        combinable = nil,
+        description = 'Il faut bien porter quelque chose quand on bosse, non ?'
+    },
     -- ZEVENT 2022
     ['zevent2022_popcorn'] = {
         ['name'] = 'zevent2022_popcorn',

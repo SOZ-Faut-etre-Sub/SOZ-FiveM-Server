@@ -10,19 +10,6 @@ CreateThread(function()
         maxZ = 24.32,
     }, {options = SozJobCore.Functions.GetDutyActions("news"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("news:cloakroom", vector3(-568.22, -935.54, 33.76), 0.65, 3.75,
-                                    {name = "news:cloakroom", heading = 90, minZ = 32.76, maxZ = 35.76}, {
-        options = {
-            {
-                label = "S'habiller",
-                icon = "c:jobs/habiller.png",
-                event = "jobs:client:news:OpenCloakroomMenu",
-                job = "news",
-            },
-        },
-        distance = 2.5,
-    })
-
     exports["qb-target"]:AddTargetModel(removalObject, {
         options = {
             {
@@ -66,8 +53,8 @@ CreateThread(function()
 end)
 
 --- Events
-RegisterNetEvent("jobs:client:news:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, NewsConfig.Cloakroom)
+RegisterNetEvent("jobs:client:news:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, NewsConfig.Cloakroom, storageId)
 end)
 
 RegisterNetEvent("jobs:client:news:SellNewspaper", function()

@@ -22,9 +22,6 @@ export const phone = createModel<RootModel>()({
         SET_CONFIG(state, payload: IPhoneSettings) {
             return { ...state, config: payload };
         },
-        SET_TIME(state, payload: string) {
-            return { ...state, time: payload };
-        },
         SET_CALL_MODAL(state, payload: boolean) {
             return { ...state, callModal: payload };
         },
@@ -42,9 +39,6 @@ export const phone = createModel<RootModel>()({
         async updateConfig(payload: IPhoneSettings) {
             localStorage.setItem('soz_settings', JSON.stringify(payload));
             dispatch.phone.SET_CONFIG(payload);
-        },
-        async setTime(payload: string) {
-            dispatch.phone.SET_TIME(payload);
         },
         async setCallModal(payload: boolean) {
             dispatch.phone.SET_CALL_MODAL(payload);

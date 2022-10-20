@@ -9,19 +9,6 @@ CreateThread(function()
                                     {name = "garbage:cloakroom", heading = 59, minZ = 32.70, maxZ = 33.30},
                                     {options = SozJobCore.Functions.GetDutyActions("garbage"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("garbage:cloakroom", vector3(-596.23, -1616.31, 33.01), 0.8, 10.8,
-                                    {name = "garbage:cloakroom", heading = 355, minZ = 32.01, maxZ = 35.01}, {
-        options = {
-            {
-                label = "S'habiller",
-                icon = "c:jobs/habiller.png",
-                event = "jobs:client:garbage:OpenCloakroomMenu",
-                job = "garbage",
-            },
-        },
-        distance = 2.5,
-    })
-
     local props = QBCore.Functions.TriggerRpc("core:server:getProps")
     for _, prop in pairs(props) do
         if prop.model == binModel then
@@ -104,8 +91,8 @@ RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
     end
 end)
 
-RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, GarbageConfig.Cloakroom)
+RegisterNetEvent("jobs:client:garbage:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, GarbageConfig.Cloakroom, storageId)
 end)
 
 --- Threads

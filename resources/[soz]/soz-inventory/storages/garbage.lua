@@ -38,3 +38,15 @@ Config.Storages["garbage_boss_storage"] = {
     heading = 355,
     offsetUpZ = 1.5,
 }
+
+Config.Storages["garbage_cloakroom"] = {
+    label = "Vestiaire - BlueBird",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(-596.23, -1616.31, 33.01),
+    size = vec2(0.8, 10.8),
+    minZ = 32.01,
+    maxZ = 35.01,
+    heading = 355,
+    targetOptions = getCloakroomTargetOptions("garbage", "garbage_cloakroom", "jobs:client:garbage:OpenCloakroomMenu"),
+}

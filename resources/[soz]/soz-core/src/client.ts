@@ -9,6 +9,7 @@ import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
+import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { NuiModule } from './client/nui/nui.module';
@@ -39,7 +40,8 @@ async function bootstrap() {
         AdminModule,
         BennysModule,
         StonkModule,
-        BankModule
+        BankModule,
+        JobModule
     );
 
     await app.stop();

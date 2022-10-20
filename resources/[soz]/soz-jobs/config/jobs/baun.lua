@@ -6,26 +6,6 @@ BaunConfig.Blips = {
 }
 
 BaunConfig.Cloakroom = {
-    Zones = {
-        {
-            center = vector3(106.36, -1299.08, 28.77),
-            length = 0.4,
-            width = 2.3,
-            options = {name = "baun:unicorn:cloakroom1", heading = 30, minZ = 27.82, maxZ = 30.27},
-        },
-        {
-            center = vector3(109.05, -1304.24, 28.77),
-            length = 2.25,
-            width = 0.4,
-            options = {name = "baun:unicorn:cloakroom2", heading = 30, minZ = 27.87, maxZ = 30.27},
-        },
-        {
-            center = vector3(-1381.38, -602.26, 30.32),
-            length = 2.0,
-            width = 6.4,
-            options = {name = "baun:bahama:cloakroom1", heading = 303, minZ = 29.92, maxZ = 31.92},
-        },
-    },
     Clothes = {
         [GetHashKey("mp_m_freemode_01")] = {
             ["Tenue de travail"] = {

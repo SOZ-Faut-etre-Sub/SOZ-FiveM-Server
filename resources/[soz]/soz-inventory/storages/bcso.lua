@@ -57,3 +57,15 @@ Config.Storages["bcso_ammo"] = {
     heading = 30.0,
     offsetUpZ = 2.0,
 }
+
+Config.Storages["bcso_cloakroom"] = {
+    label = "Vestiaire - BCSO",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(1847.27, 3693.85, 34.27),
+    size = vec2(8.0, 3.6),
+    minZ = 33.27,
+    maxZ = 35.27,
+    heading = 300,
+    targetOptions = getCloakroomTargetOptions("bcso", "bcso_cloakroom", "police:client:OpenCloakroomMenu"),
+}

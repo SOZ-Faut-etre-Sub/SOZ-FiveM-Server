@@ -8,6 +8,8 @@ export enum RpcEvent {
     BENNYS_CANCEL_ORDER = 'soz-core:server:job:bennys:cancel-order',
     BENNYS_ORDER_VEHICLE = 'soz-core:server:job:bennys:order-vehicle',
 
+    INVENTORY_SEARCH = 'soz-core:inventory:search',
+
     JOB_GET_JOBS = 'soz-core:jobs:get-jobs',
     PLAYER_GET_HEALTH_BOOK = 'soz-core:player:get-health-book',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',

@@ -64,26 +64,28 @@ end)
 
 CreateThread(function()
     for id, storage in pairs(Config.Storages) do
+        local options = {
+            {
+                label = "Ouvrir",
+                icon = "c:inventory/ouvrir_le_stockage.png",
+                event = "inventory:client:qTargetOpenInventory",
+                storageID = id,
+                storage = storage,
+                job = storage.owner,
+            },
+        }
+        if storage.targetOptions then
+            for _, option in pairs(storage.targetOptions) do
+                table.insert(options, option)
+            end
+        end
         exports["qb-target"]:AddBoxZone("storage:" .. id, storage.position, storage.size and storage.size.x or 1.0, storage.size and storage.size.y or 1.0, {
             name = "storage:" .. id,
             heading = storage.heading or 0.0,
             minZ = storage.minZ or (storage.position.z - (storage.offsetDownZ or 1.0)),
             maxZ = storage.maxZ or (storage.position.z + (storage.offsetUpZ or 1.0)),
             debugPoly = storage.debug or false,
-        }, {
-            options = {
-                {
-                    label = "Ouvrir",
-                    icon = "c:inventory/ouvrir_le_stockage.png",
-                    event = "inventory:client:qTargetOpenInventory",
-                    storageID = id,
-                    storage = storage,
-                    job = storage.owner,
-                },
-                storage.targetOption,
-            },
-            distance = 2.5,
-        })
+        }, {options = options, distance = 2.5})
     end
 end)
 

@@ -124,19 +124,6 @@ CreateThread(function()
         maxZ = 33.4,
     }, {options = SozJobCore.Functions.GetDutyActions("oil"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("fueler:cloakroom", vector3(-231.78, 6078.43, 32.26), 3.55, 3.9,
-                                    {name = "fueler:cloakroom", heading = 316, minZ = 31.26, maxZ = 33.5}, {
-        options = {
-            {
-                label = "S'habiller",
-                icon = "c:jobs/habiller.png",
-                event = "jobs:client:fueler:OpenCloakroomMenu",
-                job = "oil",
-            },
-        },
-        distance = 2.5,
-    })
-
     exports["qb-target"]:AddBoxZone("mtp:fuel_craft", vector3(-251.12, 6081.49, 32.28), 0.95, 2.85,
                                     {name = "fuel_craft", heading = 45, minZ = 31.28, maxZ = 33.28}, {
         options = {
@@ -313,8 +300,8 @@ AddEventHandler("locations:zone:exit", function(zone, _, isAKeroseneStation)
 end)
 
 --- Events
-RegisterNetEvent("jobs:client:fueler:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, FuelerConfig.Cloakroom)
+RegisterNetEvent("jobs:client:fueler:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, FuelerConfig.Cloakroom, storageId)
 end)
 
 RegisterNetEvent("jobs:client:fueler:OpenFuelStationPriceMenu", function()

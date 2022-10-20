@@ -32,6 +32,6 @@ RegisterNetEvent("police:client:setupArmor", function(armorType)
         disableMovement = true,
         disableCombat = true,
     }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", {Components = {[9] = armour}, Props = {}})
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", {Components = {[9] = armour}, Props = {}}, false)
     end)
 end)
