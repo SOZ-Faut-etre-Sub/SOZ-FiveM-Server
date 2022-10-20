@@ -20,11 +20,6 @@ export const useDebugService = () => {
                 data: true,
             },
             {
-                app: 'PHONE',
-                method: PhoneEvents.SET_TIME,
-                data: dayjs().format('hh:mm'),
-            },
-            {
                 app: 'SIMCARD',
                 method: PhoneEvents.SET_NUMBER,
                 data: '111-1134',
