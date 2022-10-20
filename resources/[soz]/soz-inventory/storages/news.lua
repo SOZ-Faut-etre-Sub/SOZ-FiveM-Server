@@ -23,3 +23,15 @@ Config.Storages["news_boss_storage"] = {
     position = vector3(-572.00, -939.91, 28.82),
     size = vec2(1.0, 2.5),
 }
+
+Config.Storages["news_cloakroom"] = {
+    label = "Vestiaire - Twitch News",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(-568.22, -935.54, 33.76),
+    size = vec2(0.65, 3.75),
+    minZ = 32.76,
+    maxZ = 35.76,
+    heading = 90,
+    targetOptions = getCloakroomTargetOptions("news", "news_cloakroom", "jobs:client:news:OpenCloakroomMenu"),
+}

@@ -27,3 +27,27 @@ Config.Storages["upw_boss_storage"] = {
     size = vec2(0.6, 2.55),
     heading = 4,
 }
+
+Config.Storages["upw_cloakroom_1"] = {
+    label = "Vestiaire - UPW",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(585.13, 2747.34, 41.86),
+    size = vec2(1.2, 4.4),
+    minZ = 40.86,
+    maxZ = 43.86,
+    heading = 4,
+    targetOptions = getCloakroomTargetOptions("upw", "upw_cloakroom_1", "upw:client:OpenCloakroomMenu"),
+}
+
+Config.Storages["upw_cloakroom_2"] = {
+    label = "Vestiaire - UPW",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(577.8, 2747.03, 41.86),
+    size = vec2(1.0, 5.0),
+    minZ = 40.86,
+    maxZ = 43.86,
+    heading = 4,
+    targetOptions = getCloakroomTargetOptions("upw", "upw_cloakroom_2", "upw:client:OpenCloakroomMenu"),
+}

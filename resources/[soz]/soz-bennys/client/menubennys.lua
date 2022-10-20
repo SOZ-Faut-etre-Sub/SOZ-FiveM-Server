@@ -998,13 +998,6 @@ end
 -- POLYZONES --
 ---------------
 
-Changemecha = BoxZone:Create(vector3(-205.29, -1331.31, 34.89), 5, 5, {
-    name = "Changemecha_z",
-    heading = 0,
-    minZ = 33.89,
-    maxZ = 37.89,
-})
-
 Dutymecha = BoxZone:Create(vector3(-204.9, -1337.93, 34.89), 5, 4, {
     name = "Dutymecha_z",
     heading = 0,
@@ -1039,30 +1032,6 @@ StaffBennys = BoxZone:Create(vector3(-1666.83, -3149.29, 13.99), 9, 6, {
     minZ = 12.3,
     maxZ = 27,
 })
-
-Changemecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, _)
-    if isPointInside then
-        exports["qb-target"]:AddTargetModel(-2094907124, {
-            options = {
-                {
-                    type = "client",
-                    event = "soz-bennys:client:OpenCloakroomMenu",
-                    icon = "fas fa-tshirt",
-                    label = "Se changer",
-                    action = function()
-                        TriggerEvent("soz-bennys:client:OpenCloakroomMenu")
-                    end,
-                    job = "bennys",
-                },
-            },
-            distance = 2.5,
-        })
-    else
-        if OnDuty == true and PlayerJob.id == "bennys" then
-            exports["qb-target"]:RemoveTargetModel(-2094907124, "Se changer")
-        end
-    end
-end)
 
 Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, _)
     if isPointInside then

@@ -2,11 +2,11 @@ Config.Storages["ffs_storage"] = {
     label = "Stockage Fight For Style",
     type = "storage",
     owner = "ffs",
-    position = vector3(720.16, -973.66, 30.4),
-    size = vec2(3.0, 1.4),
+    position = vector3(710.75, -962.72, 30.4),
+    size = vec2(1.4, 0.8),
     heading = 0,
     minZ = 29.4,
-    maxZ = 31.4,
+    maxZ = 30.65,
 }
 
 Config.Storages["ffs_boss_storage"] = {
@@ -29,4 +29,16 @@ Config.Storages["ffs_fridge"] = {
     heading = 0,
     minZ = 29.4,
     maxZ = 31.4,
+}
+
+Config.Storages["ffs_cloakroom"] = {
+    label = "Vestiaire - FFS",
+    type = "cloakroom",
+    owner = "ffs",
+    position = vector3(706.41, -959.03, 30.4),
+    size = vec2(0.5, 4.25),
+    minZ = 29.4,
+    maxZ = 31.6,
+    heading = 0,
+    targetOptions = getCloakroomTargetOptions("ffs", "ffs_cloakroom", "jobs:client:ffs:OpenCloakroomMenu"),
 }

@@ -320,6 +320,7 @@ function Inventory.Search(inv, search, item, metadata)
     end
     return false
 end
+exports("Search", Inventory.Search)
 
 QBCore.Functions.CreateCallback("inventory:server:GetInventoryItems", function(source, cb)
     cb(Inventory(source).items)

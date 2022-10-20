@@ -77,20 +77,3 @@ function CreateTerminalZone(identifier, data, facility)
 
     return CreateZone(identifier, "terminal", data)
 end
-
-function CreateCloakroomZone()
-    exports["qb-target"]:AddBoxZone("upw:cloakroom1", vector3(585.13, 2747.34, 41.86), 1.2, 4.4,
-                                    {name = "upw:cloakroom1", heading = 4, minZ = 40.86, maxZ = 43.86}, {
-        options = {
-            {label = "S'habiller", icon = "c:jobs/habiller.png", event = "upw:client:OpenCloakroomMenu", job = "upw"},
-        },
-        distance = 2.5,
-    })
-    exports["qb-target"]:AddBoxZone("upw:cloakroom2", vector3(577.8, 2747.03, 41.86), 1.0, 5.0,
-                                    {name = "upw:cloakroom2", heading = 4, minZ = 40.86, maxZ = 43.86}, {
-        options = {
-            {label = "S'habiller", icon = "c:jobs/habiller.png", event = "upw:client:OpenCloakroomMenu", job = "upw"},
-        },
-        distance = 2.5,
-    })
-end

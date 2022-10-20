@@ -4,6 +4,7 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
     local sourceInv = Inventory(source)
     local targetInv = GetOrCreateInventory(storageType, invID, ctx)
 
+    print("inventory:server:openInventory", storageType, invID, json.encode(Player.PlayerData))
     if Inventory.AccessGranted(targetInv, Player.PlayerData.source) then
         targetInv.users[Player.PlayerData.source] = true
 

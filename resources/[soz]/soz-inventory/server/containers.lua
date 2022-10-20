@@ -8,6 +8,7 @@ local playerHaveJob = function(player, owner)
 end
 
 local playerHaveJobAndDuty = function(player, owner)
+    print("Check player have job and duty: ", player.PlayerData.job.id, owner, player.PlayerData.job.onduty)
     return player.PlayerData.job.id == owner and player.PlayerData.job.onduty
 end
 
@@ -133,6 +134,13 @@ Container["boss_storage"] = InventoryContainer:new({
         return SozJobCore.Functions.HasPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyPrivateStorage)
     end,
 })
+
+Container["cloakroom"] = InventoryContainer:new({
+    type = "cloakroom",
+    allowedTypes = {"outfit"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+})
+
 --- Todo: convert to storage type : storage
 Container["organ"] = InventoryContainer:new({
     type = "organ",

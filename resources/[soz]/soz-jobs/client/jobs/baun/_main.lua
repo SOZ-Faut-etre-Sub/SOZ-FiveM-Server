@@ -8,18 +8,9 @@ BaunJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_baun", "soz", "baun:menu")
 BaunJob.Harvest = {}
 BaunJob.CraftZones = {}
 
-RegisterNetEvent("jobs:client:baun:OpenCloakroomMenu", function()
-    SozJobCore.Functions.OpenCloakroomMenu(BaunJob.Menu, BaunConfig.Cloakroom.Clothes)
+RegisterNetEvent("jobs:client:baun:OpenCloakroomMenu", function(storageId)
+    SozJobCore.Functions.OpenCloakroomMenu(BaunJob.Menu, BaunConfig.Cloakroom.Clothes, storageId)
 end)
-
-local function getItem(items, itemId)
-    for _, item in ipairs(items) do
-        if item.name == itemId then
-            return item
-        end
-    end
-    return {amount = 0}
-end
 
 AddEventHandler("onClientResourceStart", function(resourceName)
     if (GetCurrentResourceName() == resourceName and GetConvarInt("feature_msb_baun", 0) == 1) then
@@ -29,23 +20,6 @@ AddEventHandler("onClientResourceStart", function(resourceName)
                 coords = config.Coords,
                 sprite = config.Icon,
                 scale = config.Scale,
-            })
-        end
-
-        for _, zone in pairs(BaunConfig.Cloakroom.Zones) do
-            exports["qb-target"]:AddBoxZone(zone.options.name, zone.center, zone.length, zone.width, zone.options, {
-                options = {
-                    {
-                        label = "S'habiller",
-                        icon = "c:jobs/habiller.png",
-                        event = "jobs:client:baun:OpenCloakroomMenu",
-                        job = "baun",
-                        canInteract = function()
-                            return PlayerData.job.onduty
-                        end,
-                    },
-                },
-                distance = 2.5,
             })
         end
 
@@ -60,7 +34,7 @@ AddEventHandler("onClientResourceStop", function(resourceName)
 end)
 
 RegisterNetEvent("soz-jobs:client:baun:createCocktailBox", function()
-    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createCocktailBox", function(success, reason)
+    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createCocktailBox", function()
     end)
 end)
 
