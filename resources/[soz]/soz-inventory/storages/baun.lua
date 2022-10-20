@@ -38,39 +38,6 @@ local function getCocktailTargetOption()
     }
 end
 
-local function getCloakroomTargetOptions(storage)
-    return {
-        {
-            color = "baun",
-            type = "client",
-            label = "Se changer",
-            icon = "c:jobs/habiller.png",
-            storage = storage,
-            job = "baun",
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            action = function()
-                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, "jobs:client:baun:OpenCloakroomMenu")
-            end,
-        },
-        {
-            color = "baun",
-            type = "client",
-            label = "Vérifier le stock",
-            icon = "c:jobs/check-stock.png",
-            storage = storage,
-            job = "baun",
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            action = function()
-                TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
-            end,
-        },
-    }
-end
-
 Config.Storages["baun_bahama_boss_storage"] = {
     label = "Stockage Patron Bahama Mamas",
     type = "boss_storage",
@@ -269,7 +236,7 @@ Config.Storages["baun_unicorn_cloakroom_1"] = {
     minZ = 27.82,
     maxZ = 30.27,
     heading = 30,
-    targetOptions = getCloakroomTargetOptions("baun_unicorn_cloakroom_1"),
+    targetOptions = getCloakroomTargetOptions("baun", "baun_unicorn_cloakroom_1", "jobs:client:baun:OpenCloakroomMenu"),
 }
 
 Config.Storages["baun_unicorn_cloakroom_2"] = {
@@ -281,7 +248,7 @@ Config.Storages["baun_unicorn_cloakroom_2"] = {
     minZ = 27.87,
     maxZ = 30.27,
     heading = 30,
-    targetOptions = getCloakroomTargetOptions("baun_unicorn_cloakroom_2"),
+    targetOptions = getCloakroomTargetOptions("baun", "baun_unicorn_cloakroom_2", "jobs:client:baun:OpenCloakroomMenu"),
 }
 
 Config.Storages["baun_bahama_cloakroom_1"] = {
@@ -293,5 +260,5 @@ Config.Storages["baun_bahama_cloakroom_1"] = {
     minZ = 29.92,
     maxZ = 31.92,
     heading = 303,
-    targetOptions = getCloakroomTargetOptions("baun_bahama_cloakroom_1"),
+    targetOptions = getCloakroomTargetOptions("baun", "baun_bahama_cloakroom_1", "jobs:client:baun:OpenCloakroomMenu"),
 }
