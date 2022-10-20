@@ -13,10 +13,30 @@ local function TreeInteraction(identifier, position)
             {
                 color = "pawl",
                 label = "Récolter",
-                icon = "c:inventory/ouvrir_le_stockage.png",
+                icon = "c:pawl/harvest.png",
                 event = "pawl:client:harvestTree",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
+                    return PlayerData.job.onduty
+                end,
+                job = "pawl",
+                blackoutGlobal = true,
+                blackoutJob = "pawl",
+                --- metadata
+                identifier = identifier,
+                position = position,
+            },
+            {
+                color = "pawl",
+                label = "Récolter la sève",
+                icon = "c:pawl/harvest.png",
+                event = "pawl:client:harvestTreeSap",
+                item = Config.Harvest.RequiredWeapon,
+                canInteract = function()
+                    if GetGameTimer() - (Config.Field.List[identifier][table.concat(position, "-")] or 0) <= Config.Field.RefillDelay / 1000 then
+                        return false
+                    end
+
                     return PlayerData.job.onduty
                 end,
                 job = "pawl",
@@ -57,6 +77,38 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
             exports["soz-hud"]:DrawNotification("Vous avez ~g~découpé~s~ l’arbre.")
         else
             exports["soz-hud"]:DrawNotification("Vous avez ~r~raté~s~ la découpe de l’arbre.")
+        end
+    end
+
+    RemoveWeaponFromPed(ped, HatchetWeapon)
+end)
+
+RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
+    local ped = PlayerPedId()
+
+    local HatchetWeapon = GetHashKey(Config.Harvest.RequiredWeapon)
+    GiveWeaponToPed(ped, HatchetWeapon, 1, false, true)
+    SetCurrentPedWeapon(ped, HatchetWeapon, true)
+
+    Wait(3000)
+
+    exports["soz-hud"]:DrawNotification("Vous êtes en train de ~g~récolter de la sève~s~.")
+    local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous récoltez...", Config.Harvest.SapDuration, false, true,
+                                                        {disableMovement = true, disableCombat = true},
+                                                        {
+        animDict = "melee@large_wpn@streamed_core",
+        anim = "plyr_rear_takedown_bat_r_facehit",
+        flags = 17,
+    }, {}, {})
+
+    if success then
+        local sapTree = QBCore.Functions.TriggerRpc("pawl:server:harvestTreeSap", data.identifier, data.position)
+        if sapTree then
+            Config.Field.List[data.identifier][table.concat(data.position, "-")] = GetGameTimer()
+
+            exports["soz-hud"]:DrawNotification("Vous avez ~g~récolté~s~ de la sève.")
+        else
+            exports["soz-hud"]:DrawNotification("Vous avez ~r~raté~s~ la récolte de la sève.")
         end
     end
 
