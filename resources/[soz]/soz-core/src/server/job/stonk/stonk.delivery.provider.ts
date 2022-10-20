@@ -3,7 +3,6 @@ import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
-import { CommonItem, InventoryItem } from '../../../shared/item';
 import { JobType } from '../../../shared/job';
 import { StonkConfig } from '../../../shared/job/stonk';
 import { Monitor } from '../../../shared/monitor';
@@ -72,7 +71,7 @@ export class StonkDeliveryProvider {
         this.itemService.setItemUseCallback(StonkConfig.delivery.item, this.useSecureContainer.bind(this));
     }
 
-    public async useSecureContainer(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+    public async useSecureContainer(source: number) {
         if (this.playerService.getPlayer(source).job.id !== JobType.CashTransfer) {
             return;
         }
