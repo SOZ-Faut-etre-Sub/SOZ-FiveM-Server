@@ -1,36 +1,3 @@
-local function getCloakroomTargetOptions(job, storage)
-    return {
-        {
-            color = job,
-            type = "client",
-            label = "Se changer",
-            icon = "c:jobs/habiller.png",
-            storage = storage,
-            job = job,
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            action = function()
-                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, job .. ":client:OpenCloakroomMenu")
-            end,
-        },
-        {
-            color = job,
-            type = "client",
-            label = "Vérifier le stock",
-            icon = "c:jobs/check-stock.png",
-            storage = storage,
-            job = job,
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            action = function()
-                TriggerEvent("soz-jobs:client:check-cloakroom-storage", storage)
-            end,
-        },
-    }
-end
-
 Config.Storages["pawl_log_storage"] = {
     label = "Stockage Pipe And Wooden Leg",
     type = "log_storage",
@@ -119,5 +86,5 @@ Config.Storages["pawl_cloakroom"] = {
     minZ = 75.37,
     maxZ = 78.37,
     heading = 250,
-    targetOptions = getCloakroomTargetOptions("pawl", "pawl_cloakroom"),
+    targetOptions = getCloakroomTargetOptions("pawl", "pawl_cloakroom", "pawl:client:OpenCloakroomMenu"),
 }
