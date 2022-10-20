@@ -98,6 +98,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
     local amount = tonumber(data.amount)
     local terminalType = QBCore.Functions.TriggerRpc("banking:server:GetTerminalType", data.bankAtmAccount, data.atmType)
     local terminalConfig = Config.BankAtmDefault[terminalType]
+    local lastUse
 
     if terminalConfig.maxWithdrawal then
         if amount > terminalConfig.maxWithdrawal then
@@ -105,7 +106,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
             return
         end
 
-        local lastUse = UsedBankAtm[data.atmName or data.bankAtmAccount]
+        lastUse = UsedBankAtm[data.atmName or data.bankAtmAccount]
         if lastUse ~= nil then
             local amountAvailableForWithdraw = terminalConfig.maxWithdrawal - lastUse.amountWithdrawn
             local remainingTime = terminalConfig.limit + lastUse.lastUsed - GetGameTimer()
@@ -132,7 +133,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
                 end
             end
             return p:resolve(result)
-        end, data.bankAtmAccount, amount)
+        end, data.atmName or data.bankAtmAccount, amount)
         local hasEnoughLiquidity = Citizen.Await(p)
         if not hasEnoughLiquidity then
             return
