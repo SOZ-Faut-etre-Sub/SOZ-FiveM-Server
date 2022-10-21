@@ -74,7 +74,7 @@ export class StonkProvider {
         this.blipFactory.hide('displayResellSmallBagBlip', true);
 
         this.blipFactory.create('displaySecureContainerTake', {
-            name: 'Point de récupération des conteneurs sécurisés',
+            name: 'Secure Unit',
             coords: { x: 914.39, y: -1269.36, z: 24.57 },
             sprite: 605,
             scale: 0.6,

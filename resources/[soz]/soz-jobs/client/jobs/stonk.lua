@@ -48,17 +48,6 @@ Citizen.CreateThread(function()
 end)
 
 --- Events
-RegisterNetEvent("stonk:client:OpenSocietyMenu", function()
-    StonkJob.Functions.Menu.GenerateJobMenu(PlayerData.job.id)
-end)
-
-StonkJob.Functions.Menu.MenuAccessIsValid = function(job)
-    if PlayerData.job.id == "cash-transfer" then
-        return true
-    end
-    return false
-end
-
 RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function(storageId)
     --- @type Menu
     local menu = StonkJob.Menus["cash-transfer"].menu
