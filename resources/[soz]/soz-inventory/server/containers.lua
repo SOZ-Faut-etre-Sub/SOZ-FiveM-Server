@@ -114,7 +114,7 @@ Container["trash"] = InventoryContainer:new({
 
 Container["storage"] = InventoryContainer:new({
     type = "storage",
-    allowedTypes = {"item", "drug", "oil_and_item"},
+    allowedTypes = {"item", "drug", "oil_and_item", "outfit"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 --- Todo: convert to storage type : storage
