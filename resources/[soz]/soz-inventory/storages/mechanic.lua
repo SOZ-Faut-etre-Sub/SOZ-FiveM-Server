@@ -32,5 +32,5 @@ Config.Storages["bennys_cloakroom"] = {
     minZ = 33.89,
     maxZ = 37.89,
     heading = 0,
-    targetOptions = {getCloakroomTargetOptions("bennys", "bennys_cloakroom", "soz-bennys:client:OpenCloakroomMenu")},
+    targetOptions = getCloakroomTargetOptions("bennys", "bennys_cloakroom", "soz-bennys:client:OpenCloakroomMenu"),
 }

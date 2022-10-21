@@ -62,6 +62,7 @@ Container["trunk"] = InventoryContainer:new({
         "liquor",
         "furniture",
         "flavor",
+        "outfit",
     },
 })
 
@@ -82,6 +83,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "liquor",
         "furniture",
         "flavor",
+        "outfit",
     },
 })
 
@@ -106,6 +108,7 @@ Container["trash"] = InventoryContainer:new({
         "flavor",
         "furniture",
         "liquor",
+        "outfit",
     },
 })
 
