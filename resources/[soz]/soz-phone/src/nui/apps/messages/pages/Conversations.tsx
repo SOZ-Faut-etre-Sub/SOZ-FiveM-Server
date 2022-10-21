@@ -25,6 +25,8 @@ export const Conversations = (): any => {
     const messages = useSelector((state: RootState) => state.simCard.messages);
     const [searchValue, setSearchValue] = useState<string>('');
 
+    const { getDisplayByNumber, getPictureByNumber } = useContact();
+
     const filteredConversations = useMemo(() => {
         const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
 
@@ -33,8 +35,6 @@ export const Conversations = (): any => {
             .filter(c => messages.some(m => m.conversation_id === c.conversation_id))
             .filter(c => getDisplayByNumber(c?.phoneNumber)?.match(regExp) || c?.phoneNumber?.match(regExp) || '');
     }, [conversations, searchValue]);
-
-    const { getDisplayByNumber, getPictureByNumber } = useContact();
 
     return (
         <>
