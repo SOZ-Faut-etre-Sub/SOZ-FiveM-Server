@@ -20,13 +20,6 @@ PoliceJob.Functions.GetCloakroomAction = function(job)
             label = "Ouvrir mon casier",
             job = job,
         },
-        {
-            targeticon = "fas fa-box",
-            icon = "fas fa-tshirt",
-            event = "police:client:OpenCloakroomMenu",
-            label = "Se changer",
-            job = job,
-        },
     }
 end
 
