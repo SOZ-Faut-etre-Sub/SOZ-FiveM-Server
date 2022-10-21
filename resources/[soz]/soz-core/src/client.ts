@@ -15,6 +15,7 @@ import { StonkModule } from './client/job/stonk/stonk.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
 import { ShopModule } from './client/shop/shop.module';
+import { StoryModule } from './client/story/story.module';
 import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
 import { WeatherModule } from './client/weather/weather.module';
@@ -43,7 +44,8 @@ async function bootstrap() {
         StonkModule,
         BankModule,
         JobModule,
-        ShopModule
+        ShopModule,
+        StoryModule
     );
 
     await app.stop();

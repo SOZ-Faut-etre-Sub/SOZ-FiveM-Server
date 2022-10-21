@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 
 import { useNuiEvent } from '../hook/nui';
+import { AudioApp } from './Audio/AudioApp';
 import { HealthBookApp } from './HealthBook/HealthBookApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
@@ -24,6 +25,7 @@ export const App: FunctionComponent = () => {
             <MenuApp />
             <HealthBookApp />
             <InputApp />
+            <AudioApp />
         </div>
     );
 };
