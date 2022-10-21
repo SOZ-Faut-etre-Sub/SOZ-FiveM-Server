@@ -782,6 +782,12 @@ local function SpawnPed(data)
 					spawnedped = CreatePed(0, v.model, v.coords.x, v.coords.y, v.coords.z, v.coords.w or 0.0, v.networked or false, true)
 				end
 
+				if v.components then
+					for componentId, component in pairs(v.components) do
+						SetPedComponentVariation(spawnedped, tonumber(componentId), component[1], component[2] or 0, component[3] or 0);
+					end
+				end
+
 				if v.freeze then
 					FreezeEntityPosition(spawnedped, true)
 				end
@@ -840,6 +846,12 @@ local function SpawnPed(data)
 				spawnedped = CreatePed(0, data.model, data.coords.x, data.coords.y, data.coords.z - 1.0, data.coords.w, data.networked or false, true)
 			else
 				spawnedped = CreatePed(0, data.model, data.coords.x, data.coords.y, data.coords.z, data.coords.w, data.networked or false, true)
+			end
+
+			if data.components then
+				for componentId, component in pairs(data.components) do
+					SetPedComponentVariation(spawnedped, tonumber(componentId), component[1], component[2] or 0, component[3] or 0);
+				end
 			end
 
 			if data.freeze then

@@ -19,4 +19,6 @@ export enum RpcEvent {
     SHOP_MASK_GET_ITEMS = 'soz-core:shop:mask:get-items',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
+
+    STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween',
 }

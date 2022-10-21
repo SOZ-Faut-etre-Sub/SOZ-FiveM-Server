@@ -17,6 +17,7 @@ import { StonkModule } from './server/job/stonk/stonk.module';
 import { PlayerModule } from './server/player/player.module';
 import { RebootModule } from './server/reboot/reboot.module';
 import { ShopModule } from './server/shop/shop.module';
+import { StoryModule } from './server/story/story.module';
 import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
 import { VoipModule } from './server/voip/voip.module';
@@ -44,7 +45,8 @@ async function bootstrap() {
         StonkModule,
         FieldModule,
         ShopModule,
-        RebootModule
+        RebootModule,
+        StoryModule
     );
 
     await app.stop();
