@@ -59,7 +59,7 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
                         checked={blips['displaySecureContainerTake']}
                         onChange={value => displayBlip('displaySecureContainerTake', value)}
                     >
-                        Afficher la récolte des conteneurs sécurisés
+                        Afficher "Secure Unit"
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
                         checked={blips['displayResellJewelbagBlip']}
