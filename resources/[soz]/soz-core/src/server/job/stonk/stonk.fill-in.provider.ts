@@ -170,6 +170,10 @@ export class StonkFillInProvider {
             fillInAmount = StonkConfig.resell.amount;
         }
 
+        if (fillInAmount > items.amount) {
+            fillInAmount = items.amount;
+        }
+
         const removeRequest = this.inventoryManager.removeItemFromInventory(source, item, fillInAmount);
 
         return [removeRequest, fillInAmount];
