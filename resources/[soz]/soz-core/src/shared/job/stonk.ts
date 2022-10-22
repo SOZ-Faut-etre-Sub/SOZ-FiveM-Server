@@ -122,6 +122,7 @@ export const StonkConfig = {
         },
     },
     resell: {
+        collectionDuration: 15 * 1000,
         duration: 5 * 1000,
         amount: 5,
         zones: resellZones,
