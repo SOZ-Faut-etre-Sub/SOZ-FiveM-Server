@@ -436,6 +436,7 @@ model player_records_history {
   author_citizenid       String                   @db.VarChar(255)
   type                   String                   @db.VarChar(128)
   content                String?                  @db.LongText
+  isDeleted              Boolean?                 @default(false)
   created_at             DateTime?                @default(now()) @db.Timestamp(0)
   updated_at             DateTime?                @default(now()) @db.Timestamp(0)
   concerned_player       player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_target", name: "records_history_player")
