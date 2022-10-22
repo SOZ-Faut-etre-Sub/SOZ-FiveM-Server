@@ -124,7 +124,7 @@ export class StonkFillInProvider {
     }
 
     private numberOfItemsRequired(item: StonkBagType, currentBalance: number, maxBalance: number): number {
-        return Math.ceil((maxBalance - currentBalance) / StonkConfig.collection[item].refill_value);
+        return Math.floor((maxBalance - currentBalance) / StonkConfig.collection[item].refill_value);
     }
 
     private canFillIn(source: number, item: StonkBagType, currentBalance: number, maxBalance: number): boolean {
