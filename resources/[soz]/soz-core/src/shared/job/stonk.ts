@@ -85,13 +85,13 @@ export const StonkConfig = {
     collection: {
         jewelbag: {
             refill_value: null,
-            society_gain: 720,
+            society_gain: 800,
             timeout: 24 * 60 * 60 * 1000,
             takeInAvailableIn: ['jewelry'],
         },
         small_moneybag: {
-            refill_value: 2000,
-            society_gain: 360,
+            refill_value: 3000,
+            society_gain: 60,
             timeout: 10 * 60 * 1000,
             takeInAvailableIn: [
                 'binco',
@@ -103,8 +103,8 @@ export const StonkConfig = {
             ],
         },
         medium_moneybag: {
-            refill_value: 4000,
-            society_gain: 240,
+            refill_value: 5000,
+            society_gain: 120,
             timeout: 20 * 60 * 1000,
             takeInAvailableIn: [
                 'suburban',
@@ -115,13 +115,14 @@ export const StonkConfig = {
             ],
         },
         big_moneybag: {
-            refill_value: 6000,
-            society_gain: 120,
+            refill_value: 8000,
+            society_gain: 240,
             timeout: 30 * 60 * 1000,
             takeInAvailableIn: ['ponsonbys'],
         },
     },
     resell: {
+        collectionDuration: 15 * 1000,
         duration: 5 * 1000,
         amount: 5,
         zones: resellZones,
@@ -129,7 +130,7 @@ export const StonkConfig = {
     delivery: {
         item: 'stonk__secure_container',
         duration: 45 * 1000,
-        society_gain: 3000,
+        society_gain: 4000,
         location: deliveryZones,
     },
 };

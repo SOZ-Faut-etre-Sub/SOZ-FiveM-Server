@@ -122,22 +122,22 @@ RegisterNUICallback("doWithdraw", function(data, cb)
                 end
             end
         end
+    end
 
-        local p = promise.new()
-        QBCore.Functions.TriggerCallback("banking:server:hasEnoughLiquidity", function(result, reason)
-            if not result then
-                if reason == "invalid_liquidity" then
-                    exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
-                else
-                    exports["soz-hud"]:DrawNotification(Config.ErrorMessage["unknown"], "error")
-                end
+    local p = promise.new()
+    QBCore.Functions.TriggerCallback("banking:server:hasEnoughLiquidity", function(result, reason)
+        if not result then
+            if reason == "invalid_liquidity" then
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+            else
+                exports["soz-hud"]:DrawNotification(Config.ErrorMessage["unknown"], "error")
             end
-            return p:resolve(result)
-        end, data.atmName or data.bankAtmAccount, amount)
-        local hasEnoughLiquidity = Citizen.Await(p)
-        if not hasEnoughLiquidity then
-            return
         end
+        return p:resolve(result)
+    end, data.atmName or data.bankAtmAccount, amount)
+    local hasEnoughLiquidity = Citizen.Await(p)
+    if not hasEnoughLiquidity then
+        return
     end
 
     if amount ~= nil and amount > 0 then
