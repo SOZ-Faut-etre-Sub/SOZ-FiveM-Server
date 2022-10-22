@@ -1,20 +1,31 @@
 import { Transition } from '@headlessui/react';
 import cn from 'classnames';
 import React, { FunctionComponent, memo, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useConfig, useTime } from '../../hooks/usePhone';
-import { useCall } from '../../hooks/useSimCard';
+import { useCallModal, useConfig, useTime } from '../../hooks/usePhone';
+import { useCall as useCurrentCall } from '../../hooks/useSimCard';
+import { useApp } from '../../os/apps/hooks/useApps';
+import { useCall } from '../../os/call/hooks/useCall';
 import { NotificationItem } from '../../os/notifications/components/NotificationItem';
 import { useNotifications } from '../../os/notifications/hooks/useNotifications';
 import { BatteryIcon } from '../assets/battery';
 import { CellIcon } from '../assets/cell';
 
 export const TopHeaderBar: FunctionComponent = memo(() => {
+    const [t] = useTranslation();
+    const navigate = useNavigate();
+
     const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } = useNotifications();
 
     const { pathname } = useLocation();
-    const currentCall = useCall();
+    const currentCall = useCurrentCall();
+    const { call } = useCall();
+
+    const callModal = useCallModal();
+    const { icon: DialerIcon } = useApp('dialer');
+
     const config = useConfig();
     const time = useTime();
 
@@ -49,6 +60,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
             >
                 <div className="flex justify-center font-semibold text-center truncate">
                     <p className="mr-4">{time}</p>
+                    {callModal && <DialerIcon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />}
                     {icons.map(notifIcon => {
                         const Icon = notifIcon.icon;
                         return <Icon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />;
@@ -78,6 +90,24 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                 <div className="h-full bg-black bg-opacity-60 backdrop-blur text-white flex flex-col items-center">
                     <div className="my-20 font-light text-6xl">{time}</div>
                     <ul className="divide-y divide-gray-600 w-4/5 overflow-y-scroll">
+                        {callModal && (
+                            <NotificationItem
+                                app="dialer"
+                                title={t('DIALER.MESSAGES.CURRENT_CALL_TITLE')}
+                                content={
+                                    call &&
+                                    t('DIALER.MESSAGES.CURRENT_CALL_WITH', {
+                                        transmitter: call.transmitter,
+                                    })
+                                }
+                                onClick={() => {
+                                    navigate('/call');
+                                }}
+                                notificationIcon={() => <DialerIcon className="h-5 w-5 rounded-md" />}
+                                onClose={() => {}}
+                                onClickClose={() => {}}
+                            />
+                        )}
                         {notifications.map((notification, idx) => (
                             <NotificationItem
                                 key={idx}
