@@ -16,7 +16,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     const { pathname } = useLocation();
     const currentCall = useCall();
     const config = useConfig();
-    const { hour, minute } = useTime();
+    const time = useTime();
 
     useEffect(() => {
         if (notifications.length === 0) {
@@ -48,9 +48,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                 }}
             >
                 <div className="flex justify-center font-semibold text-center truncate">
-                    <p className="mr-4">
-                        {hour}:{minute}
-                    </p>
+                    <p className="mr-4">{time}</p>
                     {icons.map(notifIcon => {
                         const Icon = notifIcon.icon;
                         return <Icon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />;
@@ -78,9 +76,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                 leaveTo="-translate-y-full"
             >
                 <div className="h-full bg-black bg-opacity-60 backdrop-blur text-white flex flex-col items-center">
-                    <div className="my-20 font-light text-6xl">
-                        {hour}:{minute}
-                    </div>
+                    <div className="my-20 font-light text-6xl">{time}</div>
                     <ul className="divide-y divide-gray-600 w-4/5 overflow-y-scroll">
                         {notifications.map((notification, idx) => (
                             <NotificationItem
