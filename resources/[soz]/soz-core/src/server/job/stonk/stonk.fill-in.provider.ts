@@ -113,6 +113,8 @@ export class StonkFillInProvider {
                     });
                 }
 
+                currentBalance += StonkConfig.collection[item].refill_value * fillAmount;
+
                 this.notifier.notify(source, `Vous avez rempli ${fillAmount} ~g~${outputItemLabel}~s~.`);
             } else {
                 this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de remplir.');
