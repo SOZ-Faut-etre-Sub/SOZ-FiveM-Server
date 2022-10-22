@@ -116,7 +116,7 @@ export class StonkCollectProvider {
             source,
             'stonk_collect',
             'Vous collectez...',
-            StonkConfig.resell.duration,
+            StonkConfig.resell.collectionDuration,
             {
                 dictionary: 'anim@mp_radio@garage@low',
                 name: 'action_a',

@@ -113,6 +113,8 @@ export class StonkFillInProvider {
                     });
                 }
 
+                currentBalance += StonkConfig.collection[item].refill_value * fillAmount;
+
                 this.notifier.notify(source, `Vous avez rempli ${fillAmount} ~g~${outputItemLabel}~s~.`);
             } else {
                 this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de remplir.');
@@ -122,7 +124,7 @@ export class StonkFillInProvider {
     }
 
     private numberOfItemsRequired(item: StonkBagType, currentBalance: number, maxBalance: number): number {
-        return Math.ceil((maxBalance - currentBalance) / StonkConfig.collection[item].refill_value);
+        return Math.floor((maxBalance - currentBalance) / StonkConfig.collection[item].refill_value);
     }
 
     private canFillIn(source: number, item: StonkBagType, currentBalance: number, maxBalance: number): boolean {

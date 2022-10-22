@@ -50,7 +50,7 @@ QBShared.Trunks = {
     [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
 
     -- STONKS
-    [GetHashKey('stockade')] = { slot = 10, weight = 200000 },
+    [GetHashKey('stockade')] = { slot = 10, weight = 600000 },
     [GetHashKey('baller8')] = { slot = 10, weight = 80000 },
 
     -- Twitch News

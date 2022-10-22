@@ -47,7 +47,7 @@ export class StonkDeliveryProvider {
     private fieldIdentifier = 'stonk_delivery';
 
     private getLiveryLocation(): ZoneOptions {
-        const locationId = Math.ceil((new Date().getHours() / 4) % StonkConfig.delivery.location.length);
+        const locationId = Math.trunc((new Date().getHours() / 4) % StonkConfig.delivery.location.length);
         return StonkConfig.delivery.location[locationId];
     }
     @Once(OnceStep.Start)
