@@ -9,6 +9,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
+import { useCallModal } from '../../hooks/usePhone';
+import { CallModal } from '../../os/call/components/CallModal';
 import { NavBarButton, NavBarContainer } from '../../ui/components/NavBar';
 import { useBackground } from '../../ui/hooks/useBackground';
 import { ContactList } from '../contacts/pages/ContactList';
@@ -20,6 +22,12 @@ export const DialerApp: React.FC = () => {
     const { pathname } = useLocation();
     const [t] = useTranslation();
     const backgroundClass = useBackground();
+
+    const callModal = useCallModal();
+
+    if (callModal) {
+        return <CallModal />;
+    }
 
     return (
         <FullPageWithHeader className={backgroundClass}>
