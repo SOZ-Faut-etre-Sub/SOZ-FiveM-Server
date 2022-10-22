@@ -276,6 +276,8 @@ model player {
   features         String?            @default("[]") @db.Text
   player_cloth_set player_cloth_set[]
   player_vehicles  player_vehicles[]
+  records_history_player  player_records_history[] @relation("records_history_player")
+  records_history_author player_records_history[] @relation("records_history_author")
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -426,6 +428,20 @@ model investigation_revision {
   investigation   investigation? @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_investigation")
 
   @@index([investigationId], map: "fk_investigation")
+}
+
+model player_records_history {
+  id                     Int                      @id @unique(map: "playerrecordshistory_id_uindex") @default(autoincrement())
+  citizenid              String                   @db.VarChar(255)
+  author_citizenid       String                   @db.VarChar(255)
+  type                   String                   @db.VarChar(128)
+  content                String?                  @db.LongText
+  created_at             DateTime?                @default(now()) @db.Timestamp(0)
+  updated_at             DateTime?                @default(now()) @db.Timestamp(0)
+  concerned_player       player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_target", name: "records_history_player")
+  author                 player @relation(fields: [author_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_author", name: "records_history_author")
+
+  @@index([citizenid], map: "citizenid")
 }
 
 model shop {
