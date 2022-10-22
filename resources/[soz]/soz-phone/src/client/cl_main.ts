@@ -66,10 +66,12 @@ const getCurrentGameTime = () => {
 
 export const showPhone = async (): Promise<void> => {
     global.isPhoneOpen = true;
+    const time = getCurrentGameTime();
     await animationService.openPhone(); // Animation starts before the phone is open
     emitNet(PhoneEvents.FETCH_CREDENTIALS);
     SetCursorLocation(0.9, 0.922); //Experimental
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
+    sendMessage('PHONE', PhoneEvents.SET_TIME, time);
     SetNuiFocus(true, true);
     SetNuiFocusKeepInput(true);
     emit('phone:client:disableControlActions', true);
@@ -212,8 +214,7 @@ setTick(async () => {
     await Delay(1000);
 });
 
-// Will update the phone's time even while its open
-// setInterval(() => {
-//   const time = getCurrentGameTime()
-//   sendMessage('PHONE', 'setTime', time)
-// }, 2000);
+setInterval(() => {
+    const time = getCurrentGameTime();
+    sendMessage('PHONE', PhoneEvents.SET_TIME, time);
+}, 2000);
