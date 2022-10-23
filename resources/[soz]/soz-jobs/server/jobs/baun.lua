@@ -142,7 +142,10 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
             local amount = item.amount > cocktailsToRemove and cocktailsToRemove or item.amount
             cocktailsToRemove = cocktailsToRemove - amount
 
-            table.insert(playerCocktails, item)
+            local tempItem = item
+            tempItem.amount = amount
+
+            table.insert(playerCocktails, tempItem)
 
             if cocktailsToRemove == 0 then
                 break

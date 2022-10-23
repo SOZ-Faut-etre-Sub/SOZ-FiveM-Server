@@ -65,7 +65,22 @@ export class BaunCraftProvider {
         }
 
         for (const input of craftProcess.inputs) {
-            this.inventoryManager.removeItemFromInventory(source, input.id, input.amount);
+            const predicate = (item: InventoryItem) => {
+                return item.name == input.id && item.amount >= input.amount && !this.itemService.isItemExpired(item);
+            };
+            const item = this.inventoryManager.findItem(source, predicate);
+            if (item) {
+                this.inventoryManager.removeItemFromInventory(
+                    source,
+                    item.name,
+                    input.amount,
+                    item.metadata,
+                    item.slot
+                );
+            } else {
+                this.notifier.notify(source, `Vous n'avez pas les matériaux nécessaires pour confectionner.`, 'error');
+                return false;
+            }
         }
         this.inventoryManager.addItemToInventory(source, craftProcess.output.id, craftProcess.output.amount);
         return true;
