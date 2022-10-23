@@ -3,7 +3,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { ClothConfig, Outfit, OutfitItem } from '../../shared/cloth';
+import { ClothConfig, Outfit } from '../../shared/cloth';
 import { ServerEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
