@@ -41,7 +41,7 @@ export class ResourceLoader {
         RemoveAnimSet(name);
     }
 
-    async loadModel(name: string): Promise<void> {
+    async loadModel(name: number): Promise<void> {
         if (!HasModelLoaded(name)) {
             RequestModel(name);
 

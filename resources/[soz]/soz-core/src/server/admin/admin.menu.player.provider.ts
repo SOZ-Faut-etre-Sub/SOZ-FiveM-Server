@@ -75,4 +75,12 @@ export class AdminMenuPlayerProvider {
         TriggerClientEvent(ClientEvent.CHARACTER_REQUEST_CHARACTER_WIZARD, target);
         this.notifier.notify(source, 'Le skin du joueur a été reset.');
     }
+
+    @OnEvent(ServerEvent.ADMIN_RESET_HALLOWEEN)
+    public async onResetHalloween(source: number, target: number) {
+        this.playerService.setPlayerMetadata(target, 'halloween2022', {
+            scenario1: null,
+        });
+        this.notifier.notify(source, `La progression du joueur a été réinitialisée.`, 'info');
+    }
 }

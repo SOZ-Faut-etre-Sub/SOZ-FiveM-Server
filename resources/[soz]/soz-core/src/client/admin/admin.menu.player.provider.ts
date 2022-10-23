@@ -142,6 +142,11 @@ export class AdminMenuPlayerProvider {
         this.notifier.notify(`Le skin du joueur ~g~${player.name}~s~ a été réinitialisé.`, 'info');
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetHalloween)
+    public async handleResetHalloween(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_RESET_HALLOWEEN, player.id);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetAttribute)
     public async handleSetAttribute({
         player,

@@ -31,7 +31,6 @@ export type TargetOptions = {
 export type PedOptions = {
     spawnNow?: boolean;
     model: string;
-    components?: { [key: number]: [number, number, number] };
     coords: { x: number; y: number; z: number; w: number };
     minusOne?: boolean;
     freeze?: boolean;

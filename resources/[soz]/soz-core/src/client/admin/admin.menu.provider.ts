@@ -50,7 +50,14 @@ export class AdminMenuProvider {
         this.menuState[namespace][key] = value;
     }
 
-    @Command('admin')
+    @Command('admin', {
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'F9',
+            },
+        ],
+    })
     public async openAdminMenu() {
         const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcEvent.ADMIN_IS_ALLOWED);
         if (!isAllowed) {
