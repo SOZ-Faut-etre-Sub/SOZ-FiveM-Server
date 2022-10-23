@@ -1,6 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { VehicleSpawn } from '../../shared/vehicle';
 import { PlayerService } from '../player/player.service';
@@ -51,7 +52,11 @@ export class VehicleSpawnProvider {
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
 
+        await wait(0);
+
+        console.log(vehicleSpawn.state);
         this.vehicleService.updateVehicleState(vehicle, vehicleSpawn.state);
+        console.log(this.vehicleService.getVehicleState(vehicle));
 
         TriggerServerEvent(ServerEvent.VEHICLE_SPAWNED, spawnId, networkId);
 
@@ -59,6 +64,10 @@ export class VehicleSpawnProvider {
 
         if (vehicleSpawn.warp) {
             TaskWarpPedIntoVehicle(ped, vehicle, -1);
+        }
+
+        if (vehicleSpawn.modification) {
+            this.vehicleService.applyVehicleModification(vehicle, vehicleSpawn.modification);
         }
 
         this.vehicleService.syncVehicle(vehicle, vehicleSpawn.state);

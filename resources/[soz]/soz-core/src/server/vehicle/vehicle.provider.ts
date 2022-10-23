@@ -5,6 +5,7 @@ import { ServerEvent } from '../../shared/event';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
+import { VehicleService } from './vehicle.service';
 
 @Provider()
 export class VehicleProvider {
@@ -17,13 +18,8 @@ export class VehicleProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    private async generatePlate(): Promise<string> {
-        let plate;
-        do {
-            plate = Math.random().toString(36).slice(2, 10).toUpperCase();
-        } while (await this.prismaService.playerVehicle.findFirst({ where: { plate: plate } }));
-        return plate;
-    }
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
 
     @OnEvent(ServerEvent.ADMIN_ADD_VEHICLE)
     public async addVehicle(source: number, model: string, name: string, mods: any[]) {
@@ -35,7 +31,7 @@ export class VehicleProvider {
                 vehicle: name,
                 hash: GetHashKey(model).toString(),
                 mods: JSON.stringify(mods),
-                plate: await this.generatePlate(),
+                plate: await this.vehicleService.generatePlate(),
                 garage: 'airportpublic',
                 state: 1,
                 boughttime: Math.floor(new Date().getTime() / 1000),

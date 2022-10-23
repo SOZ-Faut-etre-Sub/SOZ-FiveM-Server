@@ -155,7 +155,7 @@ export class VehicleService {
         }
     }
 
-    public getClosestVehicle(maxDistance = 10): number | null {
+    public getClosestVehicle(maxDistance = 10, filter?: (vehicle: number) => boolean): number | null {
         const currentPed = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(currentPed, false);
 
@@ -174,6 +174,10 @@ export class VehicleService {
             const distance = getDistance(playerCoords, vehicleCoords);
 
             if (closestDistance === null || distance < closestDistance) {
+                if (filter && !filter(vehicle)) {
+                    continue;
+                }
+
                 closestVehicle = vehicle;
                 closestDistance = distance;
             }
@@ -193,7 +197,6 @@ export class VehicleService {
             SetVehicleNumberPlateText(vehicle, state.plate);
         }
 
-        this.applyVehicleModification(vehicle, state.modification);
         this.applyVehicleCondition(vehicle, state.condition);
     }
     public applyVehicleCondition(vehicle: number, condition: VehicleCondition): void {
@@ -233,7 +236,7 @@ export class VehicleService {
         }
     }
 
-    public getVehicleCondition(vehicle: number): VehicleCondition {
+    public getVehicleCondition(vehicle: number): Partial<VehicleCondition> {
         const tireHealth = {};
         const tireBurstState = {};
         const tireBurstCompletely = {};
@@ -261,9 +264,6 @@ export class VehicleService {
         }
 
         return {
-            fuelLevel: GetVehicleFuelLevel(vehicle),
-            oilLevel: GetVehicleOilLevel(vehicle),
-            dirtLevel: GetVehicleDirtLevel(vehicle),
             bodyHealth: GetVehicleBodyHealth(vehicle),
             engineHealth: GetVehicleEngineHealth(vehicle),
             tankHealth: GetVehiclePetrolTankHealth(vehicle),

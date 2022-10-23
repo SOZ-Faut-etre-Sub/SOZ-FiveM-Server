@@ -80,7 +80,7 @@ export class AdminMenuProvider {
                 permission: permission as SozRole,
                 state: this.menuState,
             },
-            subMenuId
+            { subMenuId }
         );
     }
 }

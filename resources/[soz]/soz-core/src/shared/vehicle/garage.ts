@@ -1,5 +1,6 @@
 import { JobType } from '../job';
 import { BoxZone, Zone } from '../polyzone/box.zone';
+import { PlayerVehicle } from './vehicle';
 
 export enum GarageType {
     Public = 'public',
@@ -26,9 +27,23 @@ export type GarageParkingPlaceData = {
 
 export type Garage = {
     name: string;
+    legacyId?: string;
     type: GarageType;
     category: GarageCategory;
     job?: JobType;
     zone: Zone;
     parkingPlaces: Zone<GarageParkingPlaceData>[];
+};
+
+export type GarageVehicle = {
+    vehicle: PlayerVehicle;
+    price: number | null;
+    name: string | null;
+};
+
+export type GarageMenuData = {
+    vehicles: GarageVehicle[];
+    garage: Garage;
+    free_places: number | null;
+    id: string;
 };

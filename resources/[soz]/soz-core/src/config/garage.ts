@@ -5,6 +5,7 @@ import { Garage, GarageCategory, GarageType } from '../shared/vehicle/garage';
 export const GarageList: Record<string, Garage> = {
     motel: {
         name: 'Motel Parking',
+        legacyId: 'motelgarage',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([279.6615905761719, -348.95648193359375, 44.939395904541016], 0.8, 1, {
@@ -47,6 +48,7 @@ export const GarageList: Record<string, Garage> = {
     },
     spanish_avenue: {
         name: 'Spanish Avenue Parking',
+        legacyId: 'spanishave',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([-1180.13232421875, -724.5946655273438, 20.72418212890625], 0.8, 1, {
@@ -89,6 +91,7 @@ export const GarageList: Record<string, Garage> = {
     },
     great_ocean: {
         name: 'Great Ocean Parking',
+        legacyId: 'greatoceanp',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([1466.4776611328125, 6547.7509765625, 14.575380325317383], 1, 0.8, {
@@ -141,6 +144,7 @@ export const GarageList: Record<string, Garage> = {
     },
     sandy_shore: {
         name: 'Sandy Shores Parking',
+        legacyId: 'sandyshores',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([1508.1689453125, 3764.2041015625, 33.99585723876953], 0.8, 1, {
@@ -193,6 +197,7 @@ export const GarageList: Record<string, Garage> = {
     },
     airport_private: {
         name: 'Airport Private Parking',
+        legacyId: 'airportprivate',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([-985.0497436523438, -2690.776123046875, 13.830677032470703], 1.2, 1.4, {
@@ -235,6 +240,7 @@ export const GarageList: Record<string, Garage> = {
     },
     airport_public_air: {
         name: 'Airport Public Air Parking',
+        legacyId: 'airport_air',
         type: GarageType.Public,
         category: GarageCategory.Air,
         zone: new BoxZone([-1160.5179443359375, -2854.087646484375, 13.946089744567871], 1, 0.8, {
@@ -262,6 +268,7 @@ export const GarageList: Record<string, Garage> = {
     },
     chumash: {
         name: 'Chumash Parking',
+        legacyId: 'chumashp',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([-3132.887451171875, 1105.3194580078125, 20.640737533569336], 1, 0.8, {
@@ -304,6 +311,7 @@ export const GarageList: Record<string, Garage> = {
     },
     stadium: {
         name: 'Stadium Parking',
+        legacyId: 'stadiump',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([-75.52303314208984, -2006.92431640625, 18.016948699951172], 1.2, 1, {
@@ -346,6 +354,7 @@ export const GarageList: Record<string, Garage> = {
     },
     diamond: {
         name: 'Diamond Parking',
+        legacyId: 'diamondp',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([889.802490234375, -0.5692340731620789, 78.76500701904297], 0.8, 1, {
@@ -398,6 +407,7 @@ export const GarageList: Record<string, Garage> = {
     },
     laguna: {
         name: 'Laguna Parking',
+        legacyId: 'lagunapi',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([363.34515380859375, 296.7437744140625, 103.4406509399414], 1, 0.8, {
@@ -440,6 +450,7 @@ export const GarageList: Record<string, Garage> = {
     },
     beach: {
         name: 'Beach Parking',
+        legacyId: 'beachp',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([-1176.115478515625, -1503.5909423828125, 4.379672050476074], 0.8, 1, {
@@ -482,6 +493,7 @@ export const GarageList: Record<string, Garage> = {
     },
     the_motor_hotel: {
         name: 'The Motor Hotel Parking',
+        legacyId: 'themotorhotel',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([1134.453857421875, 2664.171142578125, 38.00752639770508], 1, 0.8, {
@@ -524,6 +536,7 @@ export const GarageList: Record<string, Garage> = {
     },
     marina_drive: {
         name: 'Marina Drive Parking',
+        legacyId: 'marinadrive',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([953.9990234375, 3608.52490234375, 32.83208465576172], 1, 0.8, {
@@ -551,6 +564,7 @@ export const GarageList: Record<string, Garage> = {
     },
     shambles: {
         name: 'Shambles Parking',
+        legacyId: 'shambles',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([999.439270019531, -2362.814453125, 30.509550094604492], 1, 1, {
@@ -603,6 +617,7 @@ export const GarageList: Record<string, Garage> = {
     },
     pillbox: {
         name: 'Pillbox Garage Parking',
+        legacyId: 'pillboxgarage',
         type: GarageType.Private,
         category: GarageCategory.Car,
         zone: new BoxZone([214.87327575683594, -806.9600830078125, 30.8114013671875], 0.8, 1, {
@@ -655,6 +670,7 @@ export const GarageList: Record<string, Garage> = {
     },
     airport_public: {
         name: 'Airport Public Parking',
+        legacyId: 'airportpublic',
         type: GarageType.Public,
         category: GarageCategory.Car,
         zone: new BoxZone([-612.579833984375, -2235.7978515625, 6.004300594329834], 0.8, 1, {
@@ -717,6 +733,7 @@ export const GarageList: Record<string, Garage> = {
     },
     bell_farms: {
         name: 'Bell Farms Parking',
+        legacyId: 'haanparking',
         type: GarageType.Public,
         category: GarageCategory.Car,
         zone: new BoxZone([88.14032745361328, 6390.654296875, 31.225772857666016], 1, 0.8, {
@@ -779,6 +796,7 @@ export const GarageList: Record<string, Garage> = {
     },
     marina_drive_air: {
         name: 'Marina Drive Air Parking',
+        legacyId: 'marina_air',
         type: GarageType.Public,
         category: GarageCategory.Air,
         zone: new BoxZone([-727.0758666992188, -1493.579345703125, 5.000543117523193], 1, 0.8, {
@@ -821,6 +839,7 @@ export const GarageList: Record<string, Garage> = {
     },
     sandy_shores_air: {
         name: 'Sandy Shores Air Parking',
+        legacyId: 'sandy_air',
         type: GarageType.Public,
         category: GarageCategory.Air,
         zone: new BoxZone([1758.961181640625, 3230.338134765625, 42.231048583984375], 0.8, 1, {
@@ -838,12 +857,13 @@ export const GarageList: Record<string, Garage> = {
     },
     pound: {
         name: 'Fourrière',
+        legacyId: 'fourriere',
         type: GarageType.Depot,
         category: GarageCategory.Car,
-        zone: new BoxZone([487.82843017578125, -1319.199462890625, 29.241870880126953], 0.6000000000000001, 0.8, {
-            heading: 20,
-            minZ: 28.241870880126953,
-            maxZ: 31.241870880126953,
+        zone: new BoxZone([487.822998046875, -1319.3245849609375, 29.242542266845703], 0.6000000000000001, 0.8, {
+            heading: 16,
+            minZ: 28.242542266845703,
+            maxZ: 31.242542266845703,
         }),
         parkingPlaces: [
             new BoxZone([502.05, -1336.41, 29.33], 6, 4, {
@@ -873,10 +893,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.LSPD,
         category: GarageCategory.Car,
-        zone: new BoxZone([598.88, 5.57, 69.61], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([598.88, 5.57, 69.61], 1.0, 1.0, {
+            heading: 341.51,
+            minZ: 68.61,
+            maxZ: 72.61,
         }),
         parkingPlaces: [
             new BoxZone([594.66, 3.26, 70.63], 6.8, 4.0, {
@@ -926,10 +946,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.LSPD,
         category: GarageCategory.Air,
-        zone: new BoxZone([585.1, 2.81, 102.23], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([585.1, 2.81, 102.23], 1.0, 1.0, {
+            heading: 211.84,
+            minZ: 101.23,
+            maxZ: 104.23,
         }),
         parkingPlaces: [
             new BoxZone([579.96, 12.19, 103.23], 11.0, 10.6, {
@@ -944,10 +964,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.LSMC,
         category: GarageCategory.Car,
-        zone: new BoxZone([412.22, -1416.05, 28.38], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([412.22, -1416.05, 28.38], 1.0, 1.0, {
+            heading: 323.72,
+            minZ: 27.38,
+            maxZ: 30.38,
         }),
         parkingPlaces: [
             new BoxZone([404.68, -1438.12, 29.43], 9.2, 3.4, { heading: 30, minZ: 28.33, maxZ: 32.53 }),
@@ -964,10 +984,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.LSMC,
         category: GarageCategory.Air,
-        zone: new BoxZone([311.98, -1451.68, 45.51], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([311.98, -1451.68, 45.51], 1.0, 1.0, {
+            heading: 319.69,
+            minZ: 44.51,
+            maxZ: 48.51,
         }),
         parkingPlaces: [
             new BoxZone([313.29, -1464.94, 46.51], 10.8, 10.8, {
@@ -987,10 +1007,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.BCSO,
         category: GarageCategory.Car,
-        zone: new BoxZone([1861.0, 3683.01, 32.83], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([1861.0, 3683.01, 32.83], 1.0, 1.0, {
+            heading: 30.94,
+            minZ: 31.83,
+            maxZ: 34.83,
         }),
         parkingPlaces: [
             new BoxZone([1866.81, 3681.9, 33.7], 6.0, 2.4, {
@@ -1005,10 +1025,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.BCSO,
         category: GarageCategory.Air,
-        zone: new BoxZone([1814.08, 3724.05, 32.67], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([1814.08, 3724.05, 32.67], 1.0, 1.0, {
+            heading: 26.91,
+            minZ: 31.67,
+            maxZ: 34.67,
         }),
         parkingPlaces: [
             new BoxZone([1802.57, 3719.3, 35.65], 10.6, 10.6, {
@@ -1023,10 +1043,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Bennys,
         category: GarageCategory.Car,
-        zone: new BoxZone([-172.5, -1295.65, 30.13], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-172.5, -1295.65, 30.13], 1.0, 1.0, {
+            heading: 0.0,
+            minZ: 29.13,
+            maxZ: 32.13,
         }),
         parkingPlaces: [
             new BoxZone([-163.52, -1299.59, 31.22], 12, 4, {
@@ -1041,15 +1061,27 @@ export const GarageList: Record<string, Garage> = {
             }),
         ],
     },
+    bennys_luxury: {
+        name: 'Bennys - Concessionnaire',
+        type: GarageType.Job,
+        job: JobType.Bennys,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-178.45, -1312.36, 30.3], 1.0, 1.0, {
+            heading: 271.79,
+            minZ: 29.3,
+            maxZ: 32.3,
+        }),
+        parkingPlaces: [],
+    },
     bennys_air: {
         name: 'Bennys Air Parking',
         type: GarageType.Job,
         job: JobType.Bennys,
         category: GarageCategory.Air,
-        zone: new BoxZone([-147.64, -1282.43, 46.9], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-147.64, -1282.43, 46.9], 1.0, 1.0, {
+            heading: 356.22,
+            minZ: 45.9,
+            maxZ: 48.9,
         }),
         parkingPlaces: [
             new BoxZone([-145.89, -1272.41, 49.57], 14.8, 14.4, {
@@ -1064,10 +1096,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.CashTransfer,
         category: GarageCategory.Car,
-        zone: new BoxZone([-6.51, -662.66, 32.48], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-6.51, -662.66, 32.48], 1.0, 1.0, {
+            heading: 185,
+            minZ: 31.48,
+            maxZ: 34.48,
         }),
         parkingPlaces: [
             new BoxZone([-4.85, -670.38, 31.94], 12, 6, {
@@ -1092,10 +1124,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Garbage,
         category: GarageCategory.Car,
-        zone: new BoxZone([-589.74, -1568.28, 25.75], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-589.74, -1568.28, 25.75], 1.0, 1.0, {
+            heading: 318.84,
+            minZ: 24.75,
+            maxZ: 27.75,
         }),
         parkingPlaces: [
             new BoxZone([-594.71, -1574.21, 26.75], 12.0, 5.0, {
@@ -1115,10 +1147,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Food,
         category: GarageCategory.Car,
-        zone: new BoxZone([-1923.05, 2060.66, 139.83], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-1923.05, 2060.66, 139.83], 1.0, 1.0, {
+            heading: 77,
+            minZ: 138.83,
+            maxZ: 142.83,
         }),
         parkingPlaces: [
             new BoxZone([-1920.27, 2048.6, 140.64], 8, 4, {
@@ -1143,10 +1175,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.News,
         category: GarageCategory.Car,
-        zone: new BoxZone([-539.4, -877.38, 24.24], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-539.4, -877.38, 24.24], 1.0, 1.0, {
+            heading: 353.76,
+            minZ: 23.24,
+            maxZ: 26.24,
         }),
         parkingPlaces: [
             new BoxZone([-532.88, -881.37, 25.31], 8.4, 4.2, { heading: 0, minZ: 24.29, maxZ: 27.29 }),
@@ -1158,10 +1190,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.News,
         category: GarageCategory.Air,
-        zone: new BoxZone([-592.72, -928.48, 35.83], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-592.72, -928.48, 35.83], 1.0, 1.0, {
+            heading: 93.08,
+            minZ: 34.83,
+            maxZ: 38.83,
         }),
         parkingPlaces: [
             new BoxZone([-583.27, -930.71, 36.83], 10.2, 10, {
@@ -1176,10 +1208,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Oil,
         category: GarageCategory.Car,
-        zone: new BoxZone([-276.89, 6017.69, 31.02], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-276.89, 6017.69, 31.02], 1.0, 1.0, {
+            heading: 226.23,
+            minZ: 30.02,
+            maxZ: 34.02,
         }),
         parkingPlaces: [
             new BoxZone([-285.17, 6018.65, 31.47], 18.0, 6.6, {
@@ -1199,10 +1231,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Taxi,
         category: GarageCategory.Car,
-        zone: new BoxZone([904.43, -168.09, 73.09], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([904.43, -168.09, 73.09], 1.0, 1.0, {
+            heading: 61.18,
+            minZ: 72.09,
+            maxZ: 74.09,
         }),
         parkingPlaces: [
             new BoxZone([911.33, -162.69, 74.13], 6.2, 3.2, { heading: 15, minZ: 72.69, maxZ: 76.53 }),
@@ -1216,10 +1248,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Taxi,
         category: GarageCategory.Air,
-        zone: new BoxZone([879.44, -151.68, 77.33], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([879.44, -151.68, 77.33], 1.0, 1.0, {
+            heading: 90.27,
+            minZ: 76.33,
+            maxZ: 79.33,
         }),
         parkingPlaces: [
             new BoxZone([872.11, -144.57, 79.69], 13.6, 13.8, {
@@ -1234,10 +1266,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Pawl,
         category: GarageCategory.Car,
-        zone: new BoxZone([-605.01, 5289.27, 69.46], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-605.01, 5289.27, 69.46], 1.0, 1.0, {
+            heading: 136.16,
+            minZ: 68.46,
+            maxZ: 72.46,
         }),
         parkingPlaces: [
             new BoxZone([-598.99, 5295.01, 70.21], 17.2, 5.0, {
@@ -1262,10 +1294,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Upw,
         category: GarageCategory.Car,
-        zone: new BoxZone([585.89, 2835.33, 41.16], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([585.89, 2835.33, 41.16], 1.0, 1.0, {
+            heading: 3.67,
+            minZ: 40.16,
+            maxZ: 44.16,
         }),
         parkingPlaces: [
             new BoxZone([580.15, 2827.72, 42.05], 12.2, 4, {
@@ -1335,10 +1367,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Baun,
         category: GarageCategory.Car,
-        zone: new BoxZone([-1391.21, -643.47, 27.67], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-1391.21, -643.47, 27.67], 1.0, 1.0, {
+            heading: 295.25,
+            minZ: 26.67,
+            maxZ: 29.67,
         }),
         parkingPlaces: [
             new BoxZone([-1395.8, -654.34, 28.67], 6.0, 3.2, {
@@ -1372,10 +1404,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Baun,
         category: GarageCategory.Car,
-        zone: new BoxZone([148.33, -1289.93, 28.18], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([148.33, -1289.93, 28.18], 1.0, 1.0, {
+            heading: 120,
+            minZ: 27.18,
+            maxZ: 31.18,
         }),
         parkingPlaces: [
             new BoxZone([145.19, -1287.47, 29.07], 5.0, 2.8, {
@@ -1433,10 +1465,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.FBI,
         category: GarageCategory.Car,
-        zone: new BoxZone([158.72, -706.1, 32.13], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([158.72, -706.1, 32.13], 1.0, 1.0, {
+            heading: 160.37,
+            minZ: 31.13,
+            maxZ: 34.13,
         }),
         parkingPlaces: [
             new BoxZone([174.53, -709.93, 33.13], 5.8, 3.4, {
@@ -1494,10 +1526,10 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Ffs,
         category: GarageCategory.Car,
-        zone: new BoxZone([750.75, -974.89, 23.83], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([750.75, -974.89, 23.83], 1.0, 1.0, {
+            heading: 90,
+            minZ: 22.83,
+            maxZ: 26.83,
         }),
         parkingPlaces: [
             new BoxZone([745.0, -966.3, 24.87], 10.0, 5.2, {

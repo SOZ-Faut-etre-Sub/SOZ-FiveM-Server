@@ -4,10 +4,16 @@ import PCancelable from 'p-cancelable';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { uuidv4 } from '../../core/utils';
+import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector4 } from '../../shared/polyzone/vector';
-import { getDefaultVehicleState, VehicleSpawn } from '../../shared/vehicle';
+import {
+    getDefaultVehicleCondition,
+    getDefaultVehicleModification,
+    getDefaultVehicleState,
+    VehicleModification,
+    VehicleSpawn,
+} from '../../shared/vehicle';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -22,32 +28,39 @@ export class VehicleSpawner {
     private spawning: Record<string, (netId: number) => void> = {};
     private deleting: Record<string, () => void> = {};
 
-    public async spawnPlayerVehicle(source: number, vehicle: PlayerVehicle): Promise<boolean> {
+    public async spawnPlayerVehicle(source: number, vehicle: PlayerVehicle, position: Vector4): Promise<null | number> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
-            return false;
+            return null;
         }
 
-        const position = GetEntityCoords(GetPlayerPed(source)) as Vector4;
+        const state = {
+            ...getDefaultVehicleState(),
+            condition: {
+                ...getDefaultVehicleCondition(),
+                ...JSON.parse(vehicle.condition),
+            },
+            plate: vehicle.plate,
+            id: vehicle.id,
+            open: true,
+            owner: player.citizenid,
+        };
 
         return this.spawn(source, {
             model: parseInt(vehicle.hash, 10),
             position,
-            warp: true,
-            state: {
-                ...getDefaultVehicleState(),
-                open: true,
-                owner: player.citizenid,
-            },
+            warp: false,
+            modification: { ...getDefaultVehicleModification(), ...(JSON.parse(vehicle.mods) as VehicleModification) },
+            state,
         });
     }
 
-    public async spawnTemporaryVehicle(source: number, model: string): Promise<boolean> {
+    public async spawnTemporaryVehicle(source: number, model: string): Promise<null | number> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
-            return false;
+            return null;
         }
 
         const position = GetEntityCoords(GetPlayerPed(source)) as Vector4;
@@ -67,7 +80,7 @@ export class VehicleSpawner {
         });
     }
 
-    private async spawn(player: number, vehicle: VehicleSpawn): Promise<boolean> {
+    private async spawn(player: number, vehicle: VehicleSpawn): Promise<number | null> {
         const spawnId = uuidv4();
         const promise = new PCancelable<number>(resolve => {
             this.spawning[spawnId] = resolve;
@@ -86,13 +99,17 @@ export class VehicleSpawner {
 
         try {
             const netId = await promise;
+
+            // Set vehicle state here (also on client), as if it's spawn too quickly
+            const entityId = NetworkGetEntityFromNetworkId(netId);
+            this.vehicleStateService.updateVehicleState(entityId, vehicle.state);
             this.vehicleStateService.registerSpawned(netId);
 
-            return true;
+            return netId;
         } catch (e) {
             console.error('Failed to spawn vehicle', e);
 
-            return false;
+            return null;
         } finally {
             delete this.spawning[spawnId];
         }
