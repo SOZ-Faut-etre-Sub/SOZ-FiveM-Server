@@ -1,5 +1,6 @@
 export enum ServerEvent {
     ADMIN_RESET_SKIN = 'soz-core:server:admin:reset-skin',
+    ADMIN_RESET_HALLOWEEN = 'soz-core:server:admin:reset-halloween',
     ADMIN_SET_AIO = 'soz-core:server:admin:set-aio',
     ADMIN_SET_METADATA = 'soz-core:server:admin:set-metadata',
     ADMIN_SET_STAMINA = 'soz-core:server:admin:set-stamina',
@@ -164,6 +165,7 @@ export enum NuiEvent {
     AdminMenuPlayerHandleSetAttribute = 'soz-core:client:admin:handle-set-attribute',
     AdminMenuPlayerHandleTeleportOption = 'soz-core:client:admin:handle-teleport-option',
     AdminMenuPlayerHandleVocalOption = 'soz-core:client:admin:handle-vocal-option',
+    AdminMenuPlayerHandleResetHalloween = 'soz-core:client:admin:handle-reset-halloween',
     AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
     AdminSetGodMode = 'soz-core:client:admin:set-god-mode',
     AdminSetJob = 'soz-core:client:admin:set-job',

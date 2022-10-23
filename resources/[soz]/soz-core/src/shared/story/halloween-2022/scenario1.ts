@@ -3,7 +3,27 @@ import { Story } from '../story';
 export const Halloween2022Scenario1: Story = {
     name: 'Le mystérieu meurtre',
     dialog: {
-        'part-1': {
+        part1: {
+            audio: '',
+            text: [
+                'Au secours, aidez-nous !... Oh, quelqu’un ! S’il vous plaît, faites quelque chose !',
+                'On se baladait avec mon compagnon sur la plage,',
+                'quand tout un coup, une silhouette s’est jetée sur nous !',
+                'Elle l’a poignardé 42 fois ! Je ne sais pas quoi faire…',
+                'Cette chose est partie vers les poubelles du bâtiment en face de nous !',
+            ],
+        },
+        part2: {
+            audio: '',
+            text: [
+                'Vous avez trouvé un couteau ensanglanté ? Oh mais c’est affreux…',
+                'Que vais-je faire, mon pauvre compagnon… ',
+                "S'il vous plait, essayez de retrouver notre agresseur !",
+                "Observez bien le couteau, un indice devrait vous aider afin de savoir d'où il provient.",
+                'De mon côté, je vais appeler les services de police, merci beaucoup de votre assistance !',
+            ],
+        },
+        part3: {
             audio: 'audio/halloween-2022/Liam_1.1_-_Premier_dialogue_.mp3',
             text: [
                 'Toi ! Où est-ce que tu as trouvé ce couteau ?!',
@@ -12,5 +32,104 @@ export const Halloween2022Scenario1: Story = {
                 'Va me trouver un cercueil, si tu veux pas que je te plante toi aussi !',
             ],
         },
+        part4: {
+            audio: '',
+            text: [
+                'Tu te fous de ma gueule ? Un cercueil miniature ?!',
+                'Casse-toi avant que je ne perde patience.',
+                "Et n'essaie pas d’en parler au commissariat le plus proche !",
+                'Je ne risque absolument rien dans cette ville.',
+            ],
+        },
+        part5: {
+            audio: '',
+            text: [
+                'Oh mon capitaine…. Oh ! Je ne vous avais pas remarqué. Que me racontez-vous ?',
+                'Un crime a eu lieu sur la plage ?',
+                'J’en suis bien navré, mais je ne peux pas vous aider pour le moment…',
+                'Mon capitaine m’a demandé de trouver de la nourriture pour notre Iench…',
+                'Tiens, aller chercher sa nourriture dans sa niche à Stab City,',
+                'et je pourrais vous aider à résoudre cette affaire !',
+            ],
+        },
+        part6: {
+            audio: '',
+            text: [
+                'Oooooh, ma nourriture pour Iench ! Merci beaucoup ! Mon capitaine va être content.',
+                'Je vous avais promis de vous aider, mais moi aussi j’ai faim maintenant…',
+                'Allez me chercher une Soupe à la citrouille chez Château Marius,',
+                'et je vous promet qu’ensuite je vous aiderai !',
+            ],
+        },
+        part7: {
+            audio: '',
+            text: [
+                'Une bonne soupe à la citrouille ! Merci beaucoup.',
+                'Ne vous inquiétez pas, l’élite du LSPD va vous aider et nous mettrons ce bandit en cellule.',
+                'Tenez ceci pour vous remercier de votre coopération.',
+            ],
+        },
     },
+    zones: [
+        {
+            name: 'trash1',
+            part: 'part1',
+            label: 'Chercher',
+            icon: 'fas fa-search',
+            center: [-1674.71, -1010.77, 7.38],
+            length: 1,
+            width: 2,
+            heading: 293,
+            minZ: 3.58,
+            maxZ: 7.58,
+        },
+        {
+            name: 'trash2',
+            part: 'part1',
+            label: 'Chercher',
+            icon: 'fas fa-search',
+            center: [-1687.82, -1001.29, 7.39],
+            length: 2,
+            width: 1,
+            heading: 320,
+            minZ: 3.79,
+            maxZ: 7.79,
+        },
+        {
+            name: 'trash3',
+            part: 'part1',
+            label: 'Chercher',
+            icon: 'fas fa-search',
+            center: [-1674.97, -992.8, 7.38],
+            length: 1,
+            width: 2,
+            heading: 320,
+            minZ: 4.18,
+            maxZ: 8.18,
+        },
+        {
+            name: 'trash4',
+            part: 'part1',
+            label: 'Chercher',
+            icon: 'fas fa-search',
+            center: [-1666.59, -999.77, 7.39],
+            length: 1,
+            width: 2,
+            heading: 320,
+            minZ: 4.39,
+            maxZ: 8.39,
+        },
+        {
+            name: 'doghouse',
+            part: 'part5',
+            label: 'Chercher',
+            icon: 'fas fa-search',
+            center: [43.25, 3740.21, 39.56],
+            length: 1.2,
+            width: 1.4,
+            heading: 11,
+            minZ: 36.16,
+            maxZ: 40.16,
+        },
+    ],
 };

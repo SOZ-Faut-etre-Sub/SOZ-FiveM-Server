@@ -297,6 +297,14 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             <MenuItemSelectOption key={'aio_min_option'}>Min</MenuItemSelectOption>
                             <MenuItemSelectOption key={'aio_max_option'}>Max</MenuItemSelectOption>
                         </MenuItemSelect>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetHalloween, player);
+                            }}
+                        >
+                            Réinitialiser la progression sur l'évent Halloween
+                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}

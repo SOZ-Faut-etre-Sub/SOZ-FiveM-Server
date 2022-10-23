@@ -4329,4 +4329,65 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Ce que contient ce conteneur est très incertain, mais au vu de son poids, il est irréfutable qu’il serait dangereux de le perdre.'
     },
+    --- Halloween
+    ['halloween2022_story'] = {
+        ['name'] = 'halloween2022_story',
+        ['label'] = 'Trophée d’Halloween',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2022.'
+    },
+    ['bloody_knife'] = {
+        ['name'] = 'bloody_knife',
+        ['label'] = 'Couteau ensanglanté',
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Un insigne indique qu’il provient des canaux de vespucci… Etrange…'
+    },
+    ['small_coffin'] = {
+        ['name'] = 'small_coffin',
+        ['label'] = 'Cercueil miniature',
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = ''
+    },
+    ['bag_kibble'] = {
+        ['name'] = 'bag_kibble',
+        ['label'] = 'Croquette pour Iench',
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Wouaf wouaf wouaf wouaf !'
+    },
+    ['pumpkin'] = {
+        ['name'] = 'pumpkin',
+        ['label'] = 'Citrouille',
+        ['weight'] = 5000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = ''
+    },
+    ['pumpkin_soup'] = {
+        ['name'] = 'pumpkin_soup',
+        ['label'] = 'Soupe à la citrouille',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = ''
+    },
 }

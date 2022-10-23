@@ -3,6 +3,7 @@ import { ClothConfig } from './cloth';
 import { Disease } from './disease';
 import { InventoryItem } from './item';
 import { JobType } from './job';
+import { Halloween2022 } from './story/halloween2022';
 
 export type QBCorePlayer = {
     Functions: {
@@ -112,4 +113,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     // Typing is intentionally in that way so that you could program future items that gives clothes.
     isWearingItem: 'zevent2022_tshirt' | null;
     gym_subscription_expire_at: number | null;
+    halloween2022: Halloween2022 | null;
 };

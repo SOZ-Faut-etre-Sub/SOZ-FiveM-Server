@@ -8,14 +8,38 @@ export class StoryService {
     @Inject(AudioService)
     private audioService: AudioService;
 
-    public async launchDialog(dialog: Dialog) {
+    private camera: number | null = null;
+
+    public async launchDialog(dialog: Dialog, useCamera = false, x?: number, y?: number, z?: number, w?: number) {
+        if (x && y && z && w) {
+            TaskGoStraightToCoord(PlayerPedId(), x, y, z, 1.0, 1000, w, 0.0);
+            await wait(1300);
+        }
+
+        if (useCamera) {
+            this.camera = CreateCam('DEFAULT_SCRIPTED_CAMERA', true);
+
+            SetCamCoord(this.camera, x, y, z);
+            SetCamActive(this.camera, true);
+
+            const [cx, cy, cz] = GetOffsetFromEntityInWorldCoords(PlayerPedId(), -2.0, 1.0, 0.0);
+            SetCamCoord(this.camera, cx, cy, cz);
+            SetCamRot(this.camera, 0, 0, w-90.0, 0);
+            RenderScriptCams(true, true, 800, true, true);
+        }
+
         await this.audioService.playAudio(dialog.audio);
         await this.drawTextDialog(dialog.text);
+
+        if (DoesCamExist(this.camera)) {
+            RenderScriptCams(false, false, 0, true, false);
+            DestroyCam(this.camera, false);
+        }
     }
 
     private async drawTextDialog(text: string[]) {
         for (const line of text) {
-            const textDuration = line.length * 3;
+            const textDuration = 100;
 
             for (let i = 0; i < textDuration; i++) {
                 SetTextScale(0.5, 0.5);
