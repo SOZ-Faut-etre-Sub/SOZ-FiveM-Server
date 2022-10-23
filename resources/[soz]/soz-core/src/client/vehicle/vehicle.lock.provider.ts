@@ -53,6 +53,31 @@ export class VehicleLockProvider {
 
     private vehicleTrunkOpened: number | null = null;
 
+    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
+    @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
+    public onEnterLeaveVehicle() {
+        const model = GetEntityModel(PlayerPedId());
+
+        if (model === GetHashKey('mp_m_freemode_01') || model === GetHashKey('mp_f_freemode_01')) {
+            TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+        }
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    private async checkLeaveVehicleWithEngineOn() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (vehicle && IsControlPressed(2, 75) && !IsEntityDead(ped)) {
+            await wait(150);
+
+            if (vehicle && IsControlPressed(2, 75) && !IsEntityDead(ped)) {
+                SetVehicleEngineOn(vehicle, true, true, false);
+                TaskLeaveVehicle(ped, vehicle, 0);
+            }
+        }
+    }
+
     @Tick(TickInterval.EVERY_FRAME)
     private async checkPlayerCanEnterVehicle() {
         const player = this.playerService.getPlayer();

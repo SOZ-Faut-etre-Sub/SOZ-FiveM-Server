@@ -135,7 +135,8 @@ export class AdminMenuDeveloperProvider {
                 return Ok(true);
             }
         );
-        if (!citizenId) {
+
+        if (citizenId) {
             TriggerServerEvent(ServerEvent.ADMIN_CHANGE_PLAYER, citizenId);
         }
     }

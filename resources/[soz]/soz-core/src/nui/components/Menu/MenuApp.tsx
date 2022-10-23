@@ -14,6 +14,7 @@ import { BossShopMenu } from '../Shop/BossShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { MenuDemo } from './MenuDemo';
+import { MenuGarage } from './MenuGarage';
 import { MenuSetHealthState } from './MenuSetHealthState';
 import { MenuVehicle } from './MenuVehicule';
 import { MenuWardrobe } from './MenuWardrobe';
@@ -73,6 +74,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />
             <Route path={`/${MenuType.Vehicle}/*`} element={<MenuVehicle data={menuData} />} />
+            <Route path={`/${MenuType.Garage}/*`} element={<MenuGarage data={menuData} />} />
         </Routes>
     );
 };

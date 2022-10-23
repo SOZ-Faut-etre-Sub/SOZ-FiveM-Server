@@ -1,6 +1,7 @@
 import { Module } from '../../core/decorators/module';
+import { ObjectFactory } from './object.factory';
 
 @Module({
-    providers: [],
+    providers: [ObjectFactory],
 })
 export class WorldModule {}

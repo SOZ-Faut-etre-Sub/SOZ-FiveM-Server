@@ -1,23 +1,54 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
 import { MenuType, MenuTypeMap } from '../../shared/nui/menu';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { NuiDispatch } from './nui.dispatch';
 
-@Injectable()
+type MenuPosition = {
+    position: Vector3;
+    distance: number;
+};
+
+type OpenMenuConfig = {
+    subMenuId?: string;
+    position?: MenuPosition;
+};
+
+@Provider()
 export class NuiMenu {
     @Inject(NuiDispatch)
     private dispatcher: NuiDispatch;
 
-    public openMenu<K extends keyof MenuTypeMap>(menuType: K, data?: MenuTypeMap[K], subMenuId?: string) {
+    private menuPosition: MenuPosition | null = null;
+
+    public openMenu<K extends keyof MenuTypeMap>(menuType: K, data?: MenuTypeMap[K], config?: OpenMenuConfig) {
         this.dispatcher.setMenuOpen(menuType);
         exports['menuv'].SendNUIMessage({ action: 'KEY_CLOSE_ALL' });
 
-        this.dispatcher.dispatch('menu', 'SetMenuType', { menuType, data, subMenuId });
+        this.menuPosition = config?.position;
+        this.dispatcher.dispatch('menu', 'SetMenuType', { menuType, data, subMenuId: config?.subMenuId });
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    public closeMenuIfTooFar() {
+        if (!this.menuPosition) {
+            return;
+        }
+
+        const playerPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
+        const distance = getDistance(playerPosition, this.menuPosition.position);
+
+        if (distance > this.menuPosition.distance) {
+            this.closeMenu();
+        }
     }
 
     @OnEvent(ClientEvent.CORE_CLOSE_MENU)
     public closeMenu() {
+        this.menuPosition = null;
         this.dispatcher.setMenuOpen(null);
         this.dispatcher.dispatch('menu', 'CloseMenu');
     }

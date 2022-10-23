@@ -1,21 +1,25 @@
 import { Module } from '../../core/decorators/module';
 import { VehicleAirProvider } from './vehicle.air.provider';
+import { VehicleCarWashProvider } from './vehicle.carwash.provider';
+import { VehicleConditionProvider } from './vehicle.condition.provider';
+import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
 import { VehicleLockProvider } from './vehicle.lock.provider';
 import { VehicleMenuProvider } from './vehicle.menu.provider';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleSpawnProvider } from './vehicle.spawn.provider';
-import { VehicleStateProvider } from './vehicle.state.provider';
 
 @Module({
     providers: [
-        VehicleLockProvider,
-        VehicleSeatbeltProvider,
         VehicleAirProvider,
-        VehicleMenuProvider,
-        VehicleSpawnProvider,
-        VehicleStateProvider,
+        VehicleCarWashProvider,
+        VehicleConditionProvider,
+        VehicleFuelProvider,
         VehicleGarageProvider,
+        VehicleLockProvider,
+        VehicleMenuProvider,
+        VehicleSeatbeltProvider,
+        VehicleSpawnProvider,
     ],
 })
 export class VehicleModule {}

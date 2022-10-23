@@ -104,6 +104,10 @@ export enum ServerEvent {
 
     VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
     VEHICLE_DELETED = 'soz-core:server:vehicle:deleted',
+    VEHICLE_GARAGE_STORE = 'soz-core:server:vehicle:garage:store',
+    VEHICLE_GARAGE_RETRIEVE = 'soz-core:server:vehicle:garage:retrieve',
+    VEHICLE_SET_DEAD = 'soz-core:server:vehicle:set-dead',
+    VEHICLE_WASH = 'soz-core:server:vehicle:wash',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
@@ -114,6 +118,7 @@ export enum ServerEvent {
 
 export enum ClientEvent {
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
+    BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
 
     CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
 
@@ -160,6 +165,8 @@ export enum ClientEvent {
     VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
     VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
     VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
+    VEHICLE_CHECK_CONDITION = 'soz-core:client:vehicle:check-condition',
+    VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }
@@ -251,4 +258,9 @@ export enum NuiEvent {
     VehicleSetSpeedLimit = 'soz-core:nui:vehicle:set-speed-limit',
     VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
     VehicleHandleRadio = 'soz-core:nui:vehicle:handle-radio',
+
+    VehicleGarageTakeOut = 'soz-core:client:vehicle:garage:take-out',
+    VehicleGarageStore = 'soz-core:client:vehicle:garage:store',
+    VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
+    VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
 }

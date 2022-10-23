@@ -13,4 +13,12 @@ export class VehicleService {
             },
         });
     }
+
+    public async generatePlate(): Promise<string> {
+        let plate;
+        do {
+            plate = Math.random().toString(36).slice(2, 10).toUpperCase();
+        } while (await this.prismaService.playerVehicle.findFirst({ where: { plate: plate } }));
+        return plate;
+    }
 }

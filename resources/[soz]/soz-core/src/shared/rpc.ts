@@ -25,6 +25,8 @@ export enum RpcEvent {
 
     REPOSITORY_GET_DATA = 'soz-core:repository:get-data',
 
+    VEHICLE_GARAGE_GET_VEHICLES = 'soz-core:vehicle:garage:get-vehicles',
+    VEHICLE_GARAGE_GET_FREE_PLACES = 'soz-core:vehicle:garage:get-free-places',
     VEHICLE_HAS_KEY = 'soz-core:vehicle:has-key',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',

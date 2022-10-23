@@ -1,21 +1,12 @@
 import { RGBColor } from './color';
 import { Vector4 } from './polyzone/vector';
 
-export type VehicleProperty = 'modEngine' | 'modBrakes' | 'modTransmission' | 'modArmor' | 'modTurbo';
-
-export type VehicleProperties = {
-    [key in VehicleProperty]: number;
-};
-
-export type VehicleState = {
-    model: string;
-};
-
 export type VehicleSpawn = {
     model: number;
     position: Vector4;
     warp: boolean;
     state: VehicleEntityState;
+    modification?: VehicleModification;
 };
 
 export type VehicleEntityState = {
@@ -25,7 +16,8 @@ export type VehicleEntityState = {
     plate: string | null;
     owner: string | null;
     speedLimit: number | null;
-    modification: VehicleModification;
+
+    deadInWater: boolean;
     condition: VehicleCondition;
     hasRadio: boolean;
 };
@@ -171,6 +163,91 @@ export type VehicleCondition = {
     windowStatus: { [key: number]: boolean };
 };
 
+export const getDefaultVehicleCondition = (): VehicleCondition => ({
+    bodyHealth: 1000,
+    doorStatus: {},
+    dirtLevel: 0,
+    engineHealth: 1000,
+    fuelLevel: 100,
+    oilLevel: 100,
+    tireBurstCompletely: {},
+    tireBurstState: {},
+    tireHealth: {},
+    tankHealth: 1000,
+    windowStatus: {},
+});
+
+export const getDefaultVehicleModification = (): VehicleModification => ({
+    color1: 0,
+    color2: 0,
+    dashboardColor: 0,
+    extras: {},
+    headlightColor: 0,
+    interiorColor: 0,
+    liveryRoof: 0,
+    modAerials: 0,
+    modAirFilter: 0,
+    modAPlate: 0,
+    modArchCover: 0,
+    modArmor: 0,
+    modBackWheels: 0,
+    modBrakes: 0,
+    modCustomTiresF: false,
+    modCustomTiresR: false,
+    modDashboard: 0,
+    modDial: 0,
+    modDoorSpeaker: 0,
+    modEngine: 0,
+    modEngineBlock: 0,
+    modExhaust: 0,
+    modFender: 0,
+    modFrame: 0,
+    modFrontBumper: 0,
+    modFrontWheels: 0,
+    modGrille: 0,
+    modHood: 0,
+    modHorns: 0,
+    modHydrolic: 0,
+    modKit17: 0,
+    modKit19: 0,
+    modKit21: 0,
+    modKit47: 0,
+    modKit49: 0,
+    modLivery: 0,
+    modOrnaments: 0,
+    modPlateHolder: 0,
+    modRearBumper: 0,
+    modRightFender: 0,
+    modRoof: 0,
+    modShifterLeavers: 0,
+    modSmokeEnabled: false,
+    modSeats: 0,
+    modSideSkirt: 0,
+    modSpeakers: 0,
+    modSpoilers: 0,
+    modSteeringWheel: 0,
+    modStruts: 0,
+    modSuspension: 0,
+    modTank: 0,
+    modTransmission: 0,
+    modTrimA: 0,
+    modTrimB: 0,
+    modTrunk: 0,
+    modTurbo: false,
+    modVanityPlate: 0,
+    modWindows: 0,
+    modXenon: false,
+    neonColor: [0, 0, 0],
+    neonEnabled: {},
+    pearlescentColor: 0,
+    plateIndex: 0,
+    tyreSmokeColor: [0, 0, 0],
+    wheelColor: 0,
+    wheels: 0,
+    windowTint: 0,
+    xenonColor: 0,
+});
+
 export const getDefaultVehicleState = (): VehicleEntityState => ({
     id: null,
     forced: false,
@@ -179,89 +256,8 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     plate: null,
     hasRadio: false,
     speedLimit: null,
-    modification: {
-        color1: 0,
-        color2: 0,
-        dashboardColor: 0,
-        extras: {},
-        headlightColor: 0,
-        interiorColor: 0,
-        liveryRoof: 0,
-        modAerials: 0,
-        modAirFilter: 0,
-        modAPlate: 0,
-        modArchCover: 0,
-        modArmor: 0,
-        modBackWheels: 0,
-        modBrakes: 0,
-        modCustomTiresF: false,
-        modCustomTiresR: false,
-        modDashboard: 0,
-        modDial: 0,
-        modDoorSpeaker: 0,
-        modEngine: 0,
-        modEngineBlock: 0,
-        modExhaust: 0,
-        modFender: 0,
-        modFrame: 0,
-        modFrontBumper: 0,
-        modFrontWheels: 0,
-        modGrille: 0,
-        modHood: 0,
-        modHorns: 0,
-        modHydrolic: 0,
-        modKit17: 0,
-        modKit19: 0,
-        modKit21: 0,
-        modKit47: 0,
-        modKit49: 0,
-        modLivery: 0,
-        modOrnaments: 0,
-        modPlateHolder: 0,
-        modRearBumper: 0,
-        modRightFender: 0,
-        modRoof: 0,
-        modShifterLeavers: 0,
-        modSmokeEnabled: false,
-        modSeats: 0,
-        modSideSkirt: 0,
-        modSpeakers: 0,
-        modSpoilers: 0,
-        modSteeringWheel: 0,
-        modStruts: 0,
-        modSuspension: 0,
-        modTank: 0,
-        modTransmission: 0,
-        modTrimA: 0,
-        modTrimB: 0,
-        modTrunk: 0,
-        modTurbo: false,
-        modVanityPlate: 0,
-        modWindows: 0,
-        modXenon: false,
-        neonColor: [0, 0, 0],
-        neonEnabled: {},
-        pearlescentColor: 0,
-        plateIndex: 0,
-        tyreSmokeColor: [0, 0, 0],
-        wheelColor: 0,
-        wheels: 0,
-        windowTint: 0,
-        xenonColor: 0,
-    },
-    condition: {
-        bodyHealth: 1000,
-        doorStatus: {},
-        dirtLevel: 0,
-        engineHealth: 1000,
-        fuelLevel: 100,
-        oilLevel: 100,
-        tireBurstCompletely: {},
-        tireBurstState: {},
-        tireHealth: {},
-        tankHealth: 1000,
-        windowStatus: {},
-    },
+    deadInWater: false,
+    condition: getDefaultVehicleCondition(),
 });
 
 export type VehicleMenuData = {
