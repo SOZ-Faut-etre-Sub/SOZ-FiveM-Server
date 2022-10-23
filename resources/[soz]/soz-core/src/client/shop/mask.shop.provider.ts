@@ -47,12 +47,14 @@ export class MaskShopProvider {
     public async resetSkin() {
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
+        FreezeEntityPosition(PlayerPedId(), false);
     }
 
     public async onShopMaskOpenMenu() {
         const categories = await emitRpc(RpcEvent.SHOP_MASK_GET_CATEGORIES);
 
         this.nuiMenu.openMenu(MenuType.MaskShop, categories);
+        FreezeEntityPosition(PlayerPedId(), true);
     }
 
     @OnNuiEvent(NuiEvent.ShopMaskSelectCategory)
