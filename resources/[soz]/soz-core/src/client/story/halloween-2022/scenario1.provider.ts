@@ -2,6 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
+import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { RpcEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario1 } from '../../../shared/story/halloween-2022/scenario1';
 import { Dialog, ScenarioState } from '../../../shared/story/story';
@@ -38,6 +39,10 @@ export class Halloween2022Scenario1Provider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
+        if (!isFeatureEnabled(Feature.Halloween2022)) {
+            return;
+        }
+
         // Dead ped
         const deadMen = await this.pedFactory.createPed({
             model: 'a_m_y_beach_03',

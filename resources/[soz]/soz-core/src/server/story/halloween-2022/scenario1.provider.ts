@@ -1,6 +1,7 @@
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Rpc } from '../../../core/decorators/rpc';
+import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { RpcEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario1 } from '../../../shared/story/halloween-2022/scenario1';
 import { Dialog, ScenarioState } from '../../../shared/story/story';
@@ -23,6 +24,10 @@ export class Halloween2022Scenario1Provider {
 
     @Rpc(RpcEvent.STORY_HALLOWEEN_SCENARIO1)
     public onScenario1(source: number, zoneName?: string): Dialog | null {
+        if (!isFeatureEnabled(Feature.Halloween2022)) {
+            return;
+        }
+
         const player = this.playerService.getPlayer(source);
 
         const parts = Object.entries(player.metadata.halloween2022?.scenario1 ?? {}).find(
