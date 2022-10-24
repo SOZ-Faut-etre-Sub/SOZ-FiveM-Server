@@ -27,8 +27,6 @@ export class PlayerProvider {
     onPlayerLoaded(player: any) {
         this.permissions.addPlayerRole(player.PlayerData.source, player.PlayerData.role);
         this.serverStateService.addPlayer(player.PlayerData);
-
-
     }
 
     @On('QBCore:Server:PlayerUnload', false)

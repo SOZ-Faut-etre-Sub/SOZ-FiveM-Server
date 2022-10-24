@@ -11,7 +11,7 @@ import { EntityFactory } from '../../factory/entity.factory';
 import { PedFactory } from '../../factory/ped.factory';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
-import { TargetFactory, TargetOptions, ZoneOptions } from '../../target/target.factory';
+import { TargetFactory, TargetOptions } from '../../target/target.factory';
 import { StoryService } from '../story.service';
 
 @Provider()
