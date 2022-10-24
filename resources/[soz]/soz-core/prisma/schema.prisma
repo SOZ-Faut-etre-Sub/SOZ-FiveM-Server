@@ -445,6 +445,20 @@ model player_records_history {
   @@index([citizenid], map: "citizenid")
 }
 
+
+model police_fines {
+  id                     Int                      @id @unique(map: "policefines_id_uindex") @default(autoincrement())
+  label                  String                   @db.VarChar(255)
+  description            String                   @db.LongText
+  price_min              Int
+  price_max              Int
+  category               Int
+  created_at             DateTime?                @default(now()) @db.Timestamp(0)
+  updated_at             DateTime?                @default(now()) @db.Timestamp(0)
+
+  @@index([id], map: "id")
+}
+
 model shop {
   id              Int               @id @default(autoincrement())
   name            String            @db.VarChar(255)
