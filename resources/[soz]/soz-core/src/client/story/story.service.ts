@@ -24,7 +24,7 @@ export class StoryService {
 
             const [cx, cy, cz] = GetOffsetFromEntityInWorldCoords(PlayerPedId(), -2.0, 1.0, 0.0);
             SetCamCoord(this.camera, cx, cy, cz);
-            SetCamRot(this.camera, 0, 0, w-90.0, 0);
+            SetCamRot(this.camera, 0, 0, w - 90.0, 0);
             RenderScriptCams(true, true, 800, true, true);
         }
 

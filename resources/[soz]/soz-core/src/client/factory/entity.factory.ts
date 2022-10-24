@@ -5,7 +5,7 @@ import { Injectable } from '../../core/decorators/injectable';
 export class EntityFactory {
     private entities: { [id: number]: any } = {};
 
-    public async createEntity(model: string|number, x: number, y: number, z: number): Promise<number> {
+    public async createEntity(model: string | number, x: number, y: number, z: number): Promise<number> {
         const hash = typeof model === 'string' ? GetHashKey(model) : model;
 
         const entity = CreateObjectNoOffset(hash, x, y, z, false, false, false);
@@ -15,7 +15,15 @@ export class EntityFactory {
         return entity;
     }
 
-    public async createEntityWithRotation(model: string|number, x: number, y: number, z: number, rx: number, ry: number, rz: number): Promise<number> {
+    public async createEntityWithRotation(
+        model: string | number,
+        x: number,
+        y: number,
+        z: number,
+        rx: number,
+        ry: number,
+        rz: number
+    ): Promise<number> {
         const entity = await this.createEntity(model, x, y, z);
         SetEntityRotation(entity, rx, ry, rz, 2, true);
         return entity;

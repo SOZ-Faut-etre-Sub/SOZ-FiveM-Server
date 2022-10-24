@@ -8,7 +8,7 @@ export type Dialog = {
 export type Story = {
     name: string;
     dialog: { [key: string]: Dialog };
-    zones: (ZoneOptions & {part: string, label: string, icon: string})[];
+    zones: (ZoneOptions & { part: string; label: string; icon: string })[];
 };
 
 export enum ScenarioState {
