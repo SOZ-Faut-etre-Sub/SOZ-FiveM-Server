@@ -39,6 +39,7 @@ export class Halloween2022Scenario1Provider {
             case 'init':
                 this.playerService.setPlayerMetadata(source, 'halloween2022', {
                     scenario1: { part1: ScenarioState.Running },
+                    scenario2: player.metadata.halloween2022.scenario2,
                 });
                 return Halloween2022Scenario1.dialog['part1'];
             case 'part1':
@@ -57,6 +58,7 @@ export class Halloween2022Scenario1Provider {
                                 part1: ScenarioState.Finished,
                                 part2: ScenarioState.Running,
                             },
+                            scenario2: player.metadata.halloween2022.scenario2,
                         });
                     } else {
                         this.notifier.notify(source, `Tu n’as pas assez de place dans ton inventaire.`, 'error');
@@ -77,6 +79,7 @@ export class Halloween2022Scenario1Provider {
                         part2: ScenarioState.Finished,
                         part3: ScenarioState.Running,
                     },
+                    scenario2: player.metadata.halloween2022.scenario2,
                 });
                 return Halloween2022Scenario1.dialog['part2'];
             case 'part3':
@@ -88,6 +91,7 @@ export class Halloween2022Scenario1Provider {
                             part3: ScenarioState.Finished,
                             part4: ScenarioState.Running,
                         },
+                        scenario2: player.metadata.halloween2022.scenario2,
                     });
                     return Halloween2022Scenario1.dialog['part3'];
                 }
@@ -97,10 +101,11 @@ export class Halloween2022Scenario1Provider {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...(player.metadata.halloween2022 ?? {}),
                         scenario1: {
-                            ...(player.metadata.halloween2022.scenario1 ?? {}),
+                            ...player.metadata.halloween2022.scenario1,
                             part4: ScenarioState.Finished,
                             part5: ScenarioState.Running,
                         },
+                        scenario2: player.metadata.halloween2022.scenario2,
                     });
                     return Halloween2022Scenario1.dialog['part4'];
                 }
@@ -117,10 +122,11 @@ export class Halloween2022Scenario1Provider {
                         this.playerService.setPlayerMetadata(source, 'halloween2022', {
                             ...(player.metadata.halloween2022 ?? {}),
                             scenario1: {
-                                ...(player.metadata.halloween2022.scenario1 ?? {}),
+                                ...player.metadata.halloween2022.scenario1,
                                 part5: ScenarioState.Finished,
                                 part6: ScenarioState.Running,
                             },
+                            scenario2: player.metadata.halloween2022.scenario2,
                         });
                         return;
                     } else {
@@ -141,6 +147,7 @@ export class Halloween2022Scenario1Provider {
                             part6: ScenarioState.Finished,
                             part7: ScenarioState.Running,
                         },
+                        scenario2: player.metadata.halloween2022.scenario2,
                     });
                     return Halloween2022Scenario1.dialog['part6'];
                 }
@@ -153,10 +160,11 @@ export class Halloween2022Scenario1Provider {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
                         ...(player.metadata.halloween2022 ?? {}),
                         scenario1: { ...player.metadata.halloween2022.scenario1, part7: ScenarioState.Finished },
+                        scenario2: player.metadata.halloween2022.scenario2,
                     });
-                    return;
+                    return Halloween2022Scenario1.dialog['part7'];
                 }
-                return Halloween2022Scenario1.dialog['part7'];
+                return;
         }
     }
 }

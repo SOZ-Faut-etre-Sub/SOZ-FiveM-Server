@@ -13,10 +13,11 @@ export class StoryService {
     public async launchDialog(dialog: Dialog, useCamera = false, x?: number, y?: number, z?: number, w?: number) {
         if (x && y && z && w) {
             TaskGoStraightToCoord(PlayerPedId(), x, y, z, 1.0, 1000, w, 0.0);
-            await wait(1000);
+            await wait(2000);
         }
 
         if (useCamera) {
+            FreezeEntityPosition(PlayerPedId(), true);
             await wait(1000);
             this.camera = CreateCam('DEFAULT_SCRIPTED_CAMERA', true);
 
@@ -27,6 +28,7 @@ export class StoryService {
             SetCamCoord(this.camera, cx, cy, cz);
             SetCamRot(this.camera, 0, 0, w - 90.0, 0);
             RenderScriptCams(true, true, 500, true, true);
+            FreezeEntityPosition(PlayerPedId(), false);
         }
 
         await this.audioService.playAudio(dialog.audio);

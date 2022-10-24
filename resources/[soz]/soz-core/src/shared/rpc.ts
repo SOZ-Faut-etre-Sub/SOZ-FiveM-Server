@@ -20,5 +20,6 @@ export enum RpcEvent {
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
 
-    STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween',
+    STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween1',
+    STORY_HALLOWEEN_SCENARIO2 = 'soz-story:server:halloween2',
 }
