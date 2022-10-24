@@ -76,7 +76,7 @@ end)
 
 AddEventHandler("baseevents:leftVehicle", function()
     local model = GetEntityModel(source)
-    if model == 'mp_m_freemode_01' or model == 'mp_f_freemode_01' then
+    if model == "mp_m_freemode_01" or model == "mp_f_freemode_01" then
         TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
     end
 end)
