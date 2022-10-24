@@ -106,7 +106,6 @@ export class Halloween2022Scenario1Provider {
                     label: 'Parler',
                     icon: 'fas fa-comment',
                     canInteract: () => {
-                        console.log(this.playerService.getPlayer().metadata.halloween2022);
                         return (
                             this.playerService.getPlayer().metadata.halloween2022?.scenario1?.['part1'] <
                                 ScenarioState.Running ||

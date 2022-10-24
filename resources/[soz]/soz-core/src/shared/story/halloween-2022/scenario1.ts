@@ -24,7 +24,7 @@ export const Halloween2022Scenario1: Story = {
             ],
         },
         part3: {
-            audio: 'audio/halloween-2022/Liam_1.1_-_Premier_dialogue_.mp3',
+            audio: 'audio/halloween-2022/scenario1/part3.mp3',
             text: [
                 'Toi ! Où est-ce que tu as trouvé ce couteau ?!',
                 'Je pensais pourtant l’avoir bien caché..',
@@ -33,7 +33,7 @@ export const Halloween2022Scenario1: Story = {
             ],
         },
         part4: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario1/part4.mp3',
             text: [
                 'Tu te fous de ma gueule ? Un cercueil miniature ?!',
                 'Casse-toi avant que je ne perde patience.',
@@ -42,7 +42,7 @@ export const Halloween2022Scenario1: Story = {
             ],
         },
         part5: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario1/part5.mp3',
             text: [
                 'Oh mon capitaine…. Oh ! Je ne vous avais pas remarqué. Que me racontez-vous ?',
                 'Un crime a eu lieu sur la plage ?',
@@ -53,7 +53,7 @@ export const Halloween2022Scenario1: Story = {
             ],
         },
         part6: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario1/part6.mp3',
             text: [
                 'Oooooh, ma nourriture pour Iench ! Merci beaucoup ! Mon capitaine va être content.',
                 'Je vous avais promis de vous aider, mais moi aussi j’ai faim maintenant…',
@@ -62,7 +62,7 @@ export const Halloween2022Scenario1: Story = {
             ],
         },
         part7: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario1/part7.mp3',
             text: [
                 'Une bonne soupe à la citrouille ! Merci beaucoup.',
                 'Ne vous inquiétez pas, l’élite du LSPD va vous aider et nous mettrons ce bandit en cellule.',
