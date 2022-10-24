@@ -68,9 +68,15 @@ CreateThread(function()
 end)
 
 AddEventHandler("baseevents:enteredVehicle", function()
-    TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+    local model = GetEntityModel(source)
+    if model == 'mp_m_freemode_01' or model == 'mp_f_freemode_01' then
+        TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+    end
 end)
 
 AddEventHandler("baseevents:leftVehicle", function()
-    TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+    local model = GetEntityModel(source)
+    if model == 'mp_m_freemode_01' or model == 'mp_f_freemode_01' then
+        TriggerEvent("soz-character:Client:ApplyCurrentClothConfig")
+    end
 end)
