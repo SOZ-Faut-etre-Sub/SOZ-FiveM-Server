@@ -1,5 +1,5 @@
 import { Injectable } from '../../core/decorators/injectable';
-import { getDefaultVehicleState, VehicleEntityState } from '../../shared/vehicle';
+import { getDefaultVehicleState, VehicleEntityState } from '../../shared/vehicle/vehicle';
 
 @Injectable()
 export class VehicleStateService {

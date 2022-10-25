@@ -229,11 +229,7 @@ export class VehicleGarageProvider {
                 return false;
             }
 
-            if (GetVehicleType(vehicle) !== 'trailer') {
-                return false;
-            }
-
-            return true;
+            return GetVehicleType(vehicle) === 'trailer';
         });
 
         if (!vehicle) {
@@ -251,6 +247,7 @@ export class VehicleGarageProvider {
     public async showPlacesGarages({ id, garage }) {
         // @TODO
     }
+
     @OnNuiEvent(NuiEvent.VehicleGarageTakeOut)
     public async takeOutVehicle({ id, garage, vehicle }: { id: number; garage: Garage; vehicle: number }) {
         const garageWithFreePlaces: Garage = { ...garage, parkingPlaces: [] };

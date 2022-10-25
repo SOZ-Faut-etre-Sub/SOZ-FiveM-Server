@@ -13,7 +13,7 @@ import {
     getDefaultVehicleState,
     VehicleModification,
     VehicleSpawn,
-} from '../../shared/vehicle';
+} from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
 

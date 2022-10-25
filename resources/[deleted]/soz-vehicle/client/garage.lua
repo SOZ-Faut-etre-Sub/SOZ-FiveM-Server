@@ -33,18 +33,6 @@ AddEventHandler("soz-garage:client:GenerateHousingZoneAndPlace", function()
 end)
 
 
-AddEventHandler("gameEventTriggered", function(name, args)
-    if name == "CEventNetworkEntityDamage" then
-        local entity = args[1]
-        local owner = NetworkGetEntityOwner(entity)
-        if Entity(entity).state.condition and owner == PlayerId() then
-            local newcondition = exports["soz-vehicle"]:PropertiesToCondition(QBCore.Functions.GetVehicleProperties(entity))
-            Entity(entity).state:set("condition", json.encode(newcondition), true)
-        end
-    end
-end)
-
-
 RegisterNetEvent("soz-garage:client:UpdateVehicleMods", function(vehNetId, mods)
     QBCore.Functions.SetVehicleProperties(NetToVeh(vehNetId), mods)
 end)

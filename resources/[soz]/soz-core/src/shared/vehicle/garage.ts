@@ -1,6 +1,6 @@
 import { JobType } from '../job';
-import { BoxZone, Zone } from '../polyzone/box.zone';
-import { PlayerVehicle } from './vehicle';
+import { Zone } from '../polyzone/box.zone';
+import { PlayerVehicle } from './player.vehicle';
 
 export enum GarageType {
     Public = 'public',

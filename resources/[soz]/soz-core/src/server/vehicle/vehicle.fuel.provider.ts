@@ -8,7 +8,6 @@ import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
-import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
