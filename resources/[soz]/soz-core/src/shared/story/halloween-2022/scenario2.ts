@@ -4,7 +4,7 @@ export const Halloween2022Scenario2: Story = {
     name: 'L’homme au phare',
     dialog: {
         part1: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario2/part1.mp3',
             text: [
                 'Ooooh, bonsoir jeunes gens. Une nuit bien sombre, n’est-ce pas ?',
                 'Laissez moi vous conter une petite histoire. Vous n’allez pas le regretter !',
@@ -21,7 +21,7 @@ export const Halloween2022Scenario2: Story = {
             ],
         },
         part2: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario2/part2.mp3',
             text: [
                 'Mon chéri, mon homme, mon amour… Je suis désolé…',
                 'Je t’ai forcé à rester sur cette île pour qu’on continue à construire notre doux foyer…',
@@ -31,7 +31,7 @@ export const Halloween2022Scenario2: Story = {
             ],
         },
         part3: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario2/part3.mp3',
             text: [
                 'Je ne savais pas quoi faire… La mer était si déchaînée ! Je t’ai vu te faire emporter !',
                 'Je suis désolé, je n’ai rien pu faire !.. J’aimerais tant te rejoindre…',
@@ -39,7 +39,7 @@ export const Halloween2022Scenario2: Story = {
             ],
         },
         part4: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario2/part4.mp3',
             text: [
                 'Salaud ! Je l’aimais ! Tu as voulu te débarrasser de moi !',
                 'Quand la mer s’est déchaînée, tu en as profité pour me jeter à l’eau !',
@@ -49,7 +49,7 @@ export const Halloween2022Scenario2: Story = {
             ],
         },
         part6: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario2/part6.mp3',
             text: [
                 'Mais quelle histoire ! J’ai bien l’impression que vous avez résolu cette légende.',
                 'La vérité est bien différente de ce que j’ai pu entendre, oh oh oh.',
