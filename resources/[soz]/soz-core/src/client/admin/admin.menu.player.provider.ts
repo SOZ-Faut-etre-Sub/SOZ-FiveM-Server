@@ -143,8 +143,16 @@ export class AdminMenuPlayerProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetHalloween)
-    public async handleResetHalloween(player: AdminPlayer): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_RESET_HALLOWEEN, player.id);
+    public async handleResetHalloween({
+        player,
+        year,
+        scenario,
+    }: {
+        player: AdminPlayer;
+        year: '2022';
+        scenario: 'scenario1' | 'scenario2';
+    }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_RESET_HALLOWEEN, player.id, year, scenario);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetAttribute)

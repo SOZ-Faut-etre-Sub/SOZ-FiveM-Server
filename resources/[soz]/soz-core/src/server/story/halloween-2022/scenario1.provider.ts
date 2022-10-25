@@ -133,9 +133,7 @@ export class Halloween2022Scenario1Provider {
                         this.notifier.notify(source, `Tu n’as pas assez de place dans ton inventaire.`, 'error');
                         return;
                     }
-                    // } else {
-                    //     this.notifier.notify(source, `???`, 'info');
-                    //     return;
+                    return;
                 }
                 return Halloween2022Scenario1.dialog['part5'];
             case 'part6':

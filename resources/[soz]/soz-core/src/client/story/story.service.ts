@@ -14,21 +14,21 @@ export class StoryService {
         if (x && y && z && w) {
             TaskGoStraightToCoord(PlayerPedId(), x, y, z, 1.0, 1000, w, 0.0);
             await wait(2000);
+            SetEntityHeading(PlayerPedId(), w);
         }
+        FreezeEntityPosition(PlayerPedId(), true);
 
         if (useCamera) {
-            FreezeEntityPosition(PlayerPedId(), true);
             await wait(1000);
             this.camera = CreateCam('DEFAULT_SCRIPTED_CAMERA', true);
 
             SetCamCoord(this.camera, x, y, z);
             SetCamActive(this.camera, true);
 
-            const [cx, cy, cz] = GetOffsetFromEntityInWorldCoords(PlayerPedId(), -2.0, 1.0, 0.0);
+            const [cx, cy, cz] = GetOffsetFromEntityInWorldCoords(PlayerPedId(), -2.0, 0.5, 0.0);
             SetCamCoord(this.camera, cx, cy, cz);
             SetCamRot(this.camera, 0, 0, w - 90.0, 0);
             RenderScriptCams(true, true, 500, true, true);
-            FreezeEntityPosition(PlayerPedId(), false);
         }
 
         await this.audioService.playAudio(dialog.audio);
@@ -38,6 +38,8 @@ export class StoryService {
             RenderScriptCams(false, false, 0, true, false);
             DestroyCam(this.camera, false);
         }
+
+        FreezeEntityPosition(PlayerPedId(), false);
     }
 
     private async drawTextDialog(text: string[]) {

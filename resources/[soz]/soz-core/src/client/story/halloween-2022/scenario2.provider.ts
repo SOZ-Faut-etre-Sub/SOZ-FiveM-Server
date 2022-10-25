@@ -84,6 +84,22 @@ export class Halloween2022Scenario2Provider {
                         }
                     },
                 },
+                {
+                    label: 'Parler',
+                    icon: 'fas fa-comment',
+                    canInteract: () => {
+                        return (
+                            this.playerService.getPlayer().metadata.halloween2022?.scenario2?.['part6'] ===
+                            ScenarioState.Running
+                        );
+                    },
+                    action: async () => {
+                        const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO2, 'part6');
+                        if (dialog) {
+                            await this.storyService.launchDialog(dialog, true, 3315.31, 5179.02, 19.61, 56.34);
+                        }
+                    },
+                },
             ]
         );
 
@@ -98,6 +114,37 @@ export class Halloween2022Scenario2Provider {
             0
         );
         await this.entityFactory.createEntity(GetHashKey('prop_idol_case'), -2166.61, 5197.96, 15.88);
+
+        const dialogInteraction = (part: string): TargetOptions => {
+            return {
+                label: 'Inspecter',
+                icon: 'fas fa-search',
+                canInteract: () => {
+                    return (
+                        this.playerService.getPlayer().metadata.halloween2022?.scenario2?.[part] ===
+                        ScenarioState.Running
+                    );
+                },
+                action: async () => {
+                    const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO2, part);
+                    if (dialog) {
+                        await this.storyService.launchDialog(dialog);
+                    }
+                },
+            };
+        };
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario2:part2',
+            {
+                center: [3739.34, 4903.36, 17.49],
+                length: 1,
+                width: 1,
+                heading: 0,
+                minZ: 17,
+                maxZ: 18,
+            },
+            [dialogInteraction('part2'), dialogInteraction('part3')]
+        );
 
         this.targetFactory.createForBoxZone(
             'halloween2022:scenario2:part4',
@@ -115,14 +162,14 @@ export class Halloween2022Scenario2Provider {
                     icon: 'fas fa-comment',
                     canInteract: () => {
                         return (
-                            this.playerService.getPlayer().metadata.halloween2022?.scenario2?.['part4'] <
+                            this.playerService.getPlayer().metadata.halloween2022?.scenario2?.['part4'] ===
                             ScenarioState.Running
                         );
                     },
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO2, 'part4');
                         if (dialog) {
-                            await this.storyService.launchDialog(dialog, true, 2782.31, -1534.07, 1.58, 335.85);
+                            await this.storyService.launchDialog(dialog, true, 2782.43, -1534.0, 1.59, 339.11);
                         }
                     },
                 },

@@ -48,7 +48,7 @@ export const Halloween2022Scenario2: Story = {
                 'Jamais tu l’aurais trouvé !',
             ],
         },
-        part5: {
+        part6: {
             audio: '',
             text: [
                 'Mais quelle histoire ! J’ai bien l’impression que vous avez résolu cette légende.',
@@ -60,16 +60,16 @@ export const Halloween2022Scenario2: Story = {
     },
     zones: [
         {
-            name: 'hand',
-            part: 'part1',
+            name: 'relic',
+            part: 'part5',
             label: 'Chercher',
             icon: 'fas fa-search',
-            center: [3739.34, 4903.36, 17.49],
-            length: 1,
-            width: 1,
-            heading: 0,
-            minZ: 17,
-            maxZ: 18,
+            center: [-2166.59, 5198.18, 16.88],
+            length: 0.5,
+            width: 0.5,
+            heading: 181,
+            minZ: 12.48,
+            maxZ: 16.48,
         },
     ],
 };

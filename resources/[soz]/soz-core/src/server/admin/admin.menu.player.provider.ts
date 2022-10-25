@@ -77,10 +77,15 @@ export class AdminMenuPlayerProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_RESET_HALLOWEEN)
-    public async onResetHalloween(source: number, target: number) {
-        this.playerService.setPlayerMetadata(target, 'halloween2022', {
-            scenario1: null,
+    public async onResetHalloween(source: number, target: number, year: '2022', scenario: 'scenario1' | 'scenario2') {
+        this.playerService.setPlayerMetadata(target, `halloween2022`, {
+            ...this.playerService.getPlayer(target).metadata.halloween2022,
+            [scenario]: null,
         });
-        this.notifier.notify(source, `La progression du joueur a été réinitialisée.`, 'info');
+        this.notifier.notify(
+            source,
+            `La progression du joueur ~b~Halloween ${year} (${scenario})~s~ a été réinitialisée.`,
+            'info'
+        );
     }
 }
