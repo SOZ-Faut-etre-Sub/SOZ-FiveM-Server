@@ -4005,6 +4005,28 @@ QBShared.Items = {
             ['alcohol'] = 8,
         },
     },
+    ['horror_cauldron'] = {
+        ['name'] = "horror_cauldron",
+        ['label'] = "Chaudron de l’épouvante",
+        ['weight'] = 1600,
+        ['type'] = "cocktail",
+        ['unique'] = false,
+        ['useable'] = true,
+        ['expiresIn'] = 240, -- in minutes
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 10,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 1,
+            ['protein'] = 0,
+            ['alcohol'] = 20,
+        },
+    },
     cocktail_box = {
         name = 'cocktail_box',
         label = "Assortiment de cocktails",
@@ -4340,6 +4362,16 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2022.'
     },
+    ['old_relic'] = {
+        ['name'] = 'old_relic',
+        ['label'] = 'Ancienne relique',
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Une ancienne relique ? Je devrais la ramener au vieux monsieur pour lui raconter la vraie histoire !'
+    },
     ['bloody_knife'] = {
         ['name'] = 'bloody_knife',
         ['label'] = 'Couteau ensanglanté',
@@ -4385,7 +4417,7 @@ QBShared.Items = {
         ['label'] = 'Soupe à la citrouille',
         ['weight'] = 1000,
         ['type'] = 'item',
-        ['unique'] = true,
+        ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = ''
