@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
 import { PrismaService } from '../database/prisma.service';
 
-@Injectable()
+@Provider()
 export class VehicleService {
     @Inject(PrismaService)
     private prismaService: PrismaService;

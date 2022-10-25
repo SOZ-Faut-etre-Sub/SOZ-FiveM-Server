@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
+import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { VehicleRepository } from './vehicle.repository';
@@ -18,6 +19,9 @@ export class RepositoryProvider {
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
 
+    @Inject(FuelStationRepository)
+    private fuelStationRepository: FuelStationRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -27,6 +31,7 @@ export class RepositoryProvider {
             this.garageRepository.load(),
             this.jobGradeRepository.load(),
             this.vehicleRepository.load(),
+            this.fuelStationRepository.load(),
         ]);
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
@@ -43,6 +48,9 @@ export class RepositoryProvider {
                 break;
             case 'vehicle':
                 this.vehicleRepository.update(data);
+                break;
+            case 'fuelStation':
+                this.fuelStationRepository.update(data);
                 break;
         }
     }

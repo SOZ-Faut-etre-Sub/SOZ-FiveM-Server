@@ -81,18 +81,15 @@ export class VehicleGarageProvider {
             ids.push(garage.legacyId);
         }
 
-        let state = PlayerVehicleState.InGarage;
-
-        if (garage.type === GarageType.Depot) {
-            state = PlayerVehicleState.InPound;
-        }
-
-        if (garage.type === GarageType.Job) {
-            state = PlayerVehicleState.InJobGarage;
-        }
-
         const where: Prisma.PlayerVehicleWhereInput = {
-            AND: [{ garage: { in: ids }, state }],
+            AND: [
+                {
+                    garage: { in: ids },
+                    state: {
+                        in: [PlayerVehicleState.InGarage, PlayerVehicleState.InPound, PlayerVehicleState.InJobGarage],
+                    },
+                },
+            ],
         };
 
         if (
@@ -221,6 +218,7 @@ export class VehicleGarageProvider {
                         state: PlayerVehicleState.InGarage,
                         condition: JSON.stringify(vehicleState.condition),
                         garage: id,
+                        parkingtime: Math.floor(Date.now() / 1000),
                     },
                 });
             }
@@ -237,99 +235,98 @@ export class VehicleGarageProvider {
             return;
         }
 
-        const locked = await this.lockService.lock(`vehicle:${vehicleId}`, async () => {
-            const vehicle = await this.prismaService.playerVehicle.findUnique({
-                where: { id: vehicleId },
-            });
+        await this.lockService.lock(
+            `vehicle:${vehicleId}`,
+            async () => {
+                const vehicle = await this.prismaService.playerVehicle.findUnique({
+                    where: { id: vehicleId },
+                });
 
-            if (!vehicle) {
-                this.notifier.notify(source, "Ce véhicule n'existe pas", 'error');
-
-                return;
-            }
-
-            if (vehicle.citizenid !== player.citizenid) {
-                if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-                    this.notifier.notify(source, 'Ce véhicule ne vous appartient pas.', 'error');
+                if (!vehicle) {
+                    this.notifier.notify(source, "Ce véhicule n'existe pas", 'error');
 
                     return;
                 }
 
-                if (garage.type === GarageType.Job && player.job.id !== garage.job) {
-                    this.notifier.notify(source, 'Vous ne pouvez pas sortir un véhicule de ce garage.', 'error');
+                if (vehicle.citizenid !== player.citizenid) {
+                    if (garage.type === GarageType.Private || garage.type === GarageType.House) {
+                        this.notifier.notify(source, 'Ce véhicule ne vous appartient pas.', 'error');
+
+                        return;
+                    }
+
+                    if (garage.type === GarageType.Job && player.job.id !== garage.job) {
+                        this.notifier.notify(source, 'Vous ne pouvez pas sortir un véhicule de ce garage.', 'error');
+
+                        return;
+                    }
+
+                    if (
+                        (garage.type === GarageType.Depot || garage.type === GarageType.Public) &&
+                        (vehicle.job !== player.job.id ||
+                            !this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyTakeOutPound))
+                    ) {
+                        this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
+
+                        return;
+                    }
+                }
+
+                // Simplify here, in the long term we should check if the vehicle is in the garage only (other state will be deleted)
+                if (
+                    vehicle.state !== PlayerVehicleState.InGarage &&
+                    vehicle.state !== PlayerVehicleState.InJobGarage &&
+                    vehicle.state !== PlayerVehicleState.InPound
+                ) {
+                    this.notifier.notify(source, 'Ce véhicule est déjà sorti.', 'error');
+
+                    return;
+                }
+
+                if (garage.parkingPlaces.length === 0) {
+                    this.notifier.notify(source, 'Aucune place de parking disponible.', 'error');
+
+                    return;
+                }
+
+                const parkingPlace = getRandomItem(garage.parkingPlaces);
+
+                let price = null;
+
+                if (garage.type === GarageType.Depot) {
+                    price = 10000;
+                }
+
+                if (garage.type === GarageType.Private) {
+                    const hours = Math.floor((Date.now() / 1000 - vehicle.parkingtime) / 3600);
+                    price = Math.min(200, hours * 20);
+                }
+
+                if (price !== null && !this.playerMoneyService.remove(source, price)) {
+                    this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
 
                     return;
                 }
 
                 if (
-                    (garage.type === GarageType.Depot || garage.type === GarageType.Public) &&
-                    (vehicle.job !== player.job.id ||
-                        !this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyTakeOutPound))
+                    await this.vehicleSpawner.spawnPlayerVehicle(source, vehicle, [
+                        ...parkingPlace.center,
+                        parkingPlace.heading,
+                    ])
                 ) {
-                    this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
+                    await this.prismaService.playerVehicle.update({
+                        where: { id: vehicle.id },
+                        data: {
+                            state: PlayerVehicleState.Out,
+                        },
+                    });
 
-                    return;
+                    this.vehicleStateService.addVehicleKey(vehicle.plate, player.citizenid);
+
+                    this.notifier.notify(source, 'Vous avez sorti votre véhicule.', 'success');
                 }
-            }
-
-            // Simplify here, in the long term we should check if the vehicle is in the garage only (other state will be deleted)
-            if (
-                vehicle.state !== PlayerVehicleState.InGarage &&
-                vehicle.state !== PlayerVehicleState.InJobGarage &&
-                vehicle.state !== PlayerVehicleState.InPound
-            ) {
-                this.notifier.notify(source, 'Ce véhicule est déjà sorti.', 'error');
-
-                return;
-            }
-
-            if (garage.parkingPlaces.length === 0) {
-                this.notifier.notify(source, 'Aucune place de parking disponible.', 'error');
-
-                return;
-            }
-
-            const parkingPlace = getRandomItem(garage.parkingPlaces);
-
-            let price = null;
-
-            if (garage.type === GarageType.Depot) {
-                price = 10000;
-            }
-
-            if (garage.type === GarageType.Private) {
-                const hours = Math.floor((Date.now() / 1000 - vehicle.parkingtime) / 3600);
-                price = Math.min(200, hours * 20);
-            }
-
-            if (price !== null && !this.playerMoneyService.remove(source, price)) {
-                this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
-
-                return;
-            }
-
-            if (
-                await this.vehicleSpawner.spawnPlayerVehicle(source, vehicle, [
-                    ...parkingPlace.center,
-                    parkingPlace.heading,
-                ])
-            ) {
-                await this.prismaService.playerVehicle.update({
-                    where: { id: vehicle.id },
-                    data: {
-                        state: PlayerVehicleState.Out,
-                        parkingtime: undefined,
-                    },
-                });
-
-                this.vehicleStateService.addVehicleKey(vehicle.plate, player.citizenid);
-
-                this.notifier.notify(source, 'Vous avez sorti votre véhicule.', 'success');
-            }
-        });
-
-        if (locked) {
-            this.notifier.notify(source, 'Une autre action est en cours sur ce véhicule.', 'error');
-        }
+            },
+            1000
+        );
     }
 }

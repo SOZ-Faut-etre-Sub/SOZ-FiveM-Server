@@ -3,10 +3,7 @@ local pedInSameVehicleLast = false
 local vehicle
 local lastVehicle
 local vehicleClass
-local fCollisionDamageMult = 0.0
-local fDeformationDamageMult = 0.0
 local fEngineDamageMult = 0.0
-local fBrakeForce = 1.0
 local healthEngineLast = 1000.0
 local healthEngineCurrent = 1000.0
 local healthEngineNew = 1000.0
@@ -77,31 +74,6 @@ local function isPedDrivingAVehicle()
     return false
 end
 
-local function tireBurstLottery()
-    local tireBurstNumber = math.random(tireBurstMaxNumber)
-    if tireBurstNumber == tireBurstLuckyNumber then
-        -- We won the lottery, lets burst a tire.
-        if GetVehicleTyresCanBurst(vehicle) == false then
-            return
-        end
-        local numWheels = GetVehicleNumberOfWheels(vehicle)
-        local affectedTire
-        if numWheels == 2 then
-            affectedTire = (math.random(2) - 1) * 4 -- wheel 0 or 4
-        elseif numWheels == 4 then
-            affectedTire = (math.random(4) - 1)
-            if affectedTire > 1 then
-                affectedTire = affectedTire + 2
-            end -- 0, 1, 4, 5
-        elseif numWheels == 6 then
-            affectedTire = (math.random(6) - 1)
-        else
-            affectedTire = 0
-        end
-        SetVehicleTyreBurst(vehicle, affectedTire, false, 1000.0)
-        tireBurstLuckyNumber = math.random(tireBurstMaxNumber) -- Select a new number to hit, just in case some numbers occur more often than others
-    end
-end
 
 -- Events
 
@@ -272,27 +244,9 @@ CreateThread(function()
             else
                 -- Just got in the vehicle. Damage can not be multiplied this round
                 -- Set vehicle handling data
-                fDeformationDamageMult = GetVehicleHandlingFloat(vehicle, "CHandlingData", "fDeformationDamageMult")
-                fBrakeForce = GetVehicleHandlingFloat(vehicle, "CHandlingData", "fBrakeForce")
-                local newFDeformationDamageMult = fDeformationDamageMult ^ cfg.deformationExponent -- Pull the handling file value closer to 1
-                if cfg.deformationMultiplier ~= -1 then
-                    SetVehicleHandlingFloat(vehicle, "CHandlingData", "fDeformationDamageMult", newFDeformationDamageMult * cfg.deformationMultiplier)
-                end -- Multiply by our factor
-                if cfg.weaponsDamageMultiplier ~= -1 then
-                    SetVehicleHandlingFloat(vehicle, "CHandlingData", "fWeaponDamageMult", cfg.weaponsDamageMultiplier / cfg.damageFactorBody)
-                end -- Set weaponsDamageMultiplier and compensate for damageFactorBody
 
                 -- Get the CollisionDamageMultiplier
-                fCollisionDamageMult = GetVehicleHandlingFloat(vehicle, "CHandlingData", "fCollisionDamageMult")
                 -- Modify it by pulling all number a towards 1.0
-                local newFCollisionDamageMultiplier = fCollisionDamageMult ^ cfg.collisionDamageExponent -- Pull the handling file value closer to 1
-                SetVehicleHandlingFloat(vehicle, "CHandlingData", "fCollisionDamageMult", newFCollisionDamageMultiplier)
-
-                -- Get the EngineDamageMultiplier
-                fEngineDamageMult = GetVehicleHandlingFloat(vehicle, "CHandlingData", "fEngineDamageMult")
-                -- Modify it by pulling all number a towards 1.0
-                local newFEngineDamageMult = fEngineDamageMult ^ cfg.engineDamageExponent -- Pull the handling file value closer to 1
-                SetVehicleHandlingFloat(vehicle, "CHandlingData", "fEngineDamageMult", newFEngineDamageMult)
 
                 -- If body damage catastrophic, reset somewhat so we can get new damage to multiply
                 if healthBodyCurrent < cfg.cascadingFailureThreshold then
@@ -323,22 +277,10 @@ CreateThread(function()
             healthBodyLast = healthBodyNew
             healthPetrolTankLast = healthPetrolTankNew
             lastVehicle = vehicle
-            if cfg.randomTireBurstInterval ~= 0 and GetEntitySpeed(vehicle) > 10 then
-                tireBurstLottery()
-            end
         else
             if pedInSameVehicleLast == true then
                 -- We just got out of the vehicle
                 lastVehicle = GetVehiclePedIsIn(ped, true)
-                if cfg.deformationMultiplier ~= -1 then
-                    SetVehicleHandlingFloat(lastVehicle, "CHandlingData", "fDeformationDamageMult", fDeformationDamageMult)
-                end -- Restore deformation multiplier
-                SetVehicleHandlingFloat(lastVehicle, "CHandlingData", "fBrakeForce", fBrakeForce) -- Restore Brake Force multiplier
-                if cfg.weaponsDamageMultiplier ~= -1 then
-                    SetVehicleHandlingFloat(lastVehicle, "CHandlingData", "fWeaponDamageMult", cfg.weaponsDamageMultiplier)
-                end -- Since we are out of the vehicle, we should no longer compensate for bodyDamageFactor
-                SetVehicleHandlingFloat(lastVehicle, "CHandlingData", "fCollisionDamageMult", fCollisionDamageMult) -- Restore the original CollisionDamageMultiplier
-                SetVehicleHandlingFloat(lastVehicle, "CHandlingData", "fEngineDamageMult", fEngineDamageMult) -- Restore the original EngineDamageMultiplier
             end
             pedInSameVehicleLast = false
         end

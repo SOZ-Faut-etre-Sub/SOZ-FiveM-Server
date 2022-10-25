@@ -17,6 +17,13 @@ import {
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
 
+type ClosestVehicle = {
+    vehicleNetworkId: number;
+    vehicleEntityId: number;
+    distance: number;
+    isInside: boolean;
+};
+
 @Provider()
 export class VehicleSpawner {
     @Inject(VehicleStateService)
@@ -27,6 +34,53 @@ export class VehicleSpawner {
 
     private spawning: Record<string, (netId: number) => void> = {};
     private deleting: Record<string, () => void> = {};
+
+    private closestVehicleResolver: Record<string, (closestVehicle: null | ClosestVehicle) => void> = {};
+
+    public async getClosestVehicle(source: number): Promise<null | ClosestVehicle> {
+        let reject: (reason?: any) => void;
+        const id = uuidv4();
+        const promise = new Promise<null | ClosestVehicle>((res, rej) => {
+            this.closestVehicleResolver[id] = res;
+            reject = rej;
+        });
+
+        setTimeout(() => {
+            if (this.closestVehicleResolver[id]) {
+                reject(new Error('timeout error when acquiring vehicle'));
+            }
+        }, 10000);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_GET_CLOSEST, source, id);
+
+        return promise;
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_SET_CLOSEST)
+    private onVehicleClosest(
+        source: number,
+        id: string,
+        vehicleNetworkId: number,
+        distance: number,
+        isInside: boolean
+    ) {
+        if (this.closestVehicleResolver[id]) {
+            if (vehicleNetworkId) {
+                const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+                this.closestVehicleResolver[id]({
+                    vehicleNetworkId,
+                    vehicleEntityId: entityId,
+                    distance,
+                    isInside,
+                });
+            } else {
+                this.closestVehicleResolver[id](null);
+            }
+
+            delete this.closestVehicleResolver[id];
+        }
+    }
 
     public async spawnPlayerVehicle(source: number, vehicle: PlayerVehicle, position: Vector4): Promise<null | number> {
         const player = this.playerService.getPlayer(source);
@@ -100,8 +154,17 @@ export class VehicleSpawner {
         try {
             const netId = await promise;
 
-            // Set vehicle state here (also on client), as if it's spawn too quickly
-            const entityId = NetworkGetEntityFromNetworkId(netId);
+            // await some frame to be nice with state bag
+            // @see https://github.com/citizenfx/fivem/pull/1382
+            await wait(200);
+
+            let entityId = NetworkGetEntityFromNetworkId(netId);
+
+            while (!entityId || !DoesEntityExist(entityId)) {
+                entityId = NetworkGetEntityFromNetworkId(netId);
+                await wait(0);
+            }
+
             this.vehicleStateService.updateVehicleState(entityId, vehicle.state);
             this.vehicleStateService.registerSpawned(netId);
 

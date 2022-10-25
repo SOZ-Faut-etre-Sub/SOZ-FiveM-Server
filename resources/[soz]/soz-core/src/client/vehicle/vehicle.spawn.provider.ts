@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { VehicleSpawn } from '../../shared/vehicle';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
@@ -18,6 +19,22 @@ export class VehicleSpawnProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @OnEvent(ClientEvent.VEHICLE_GET_CLOSEST)
+    getClosestVehicle(responseId: string) {
+        const vehicle = this.vehicleService.getClosestVehicle();
+        const vehicleNetworkId = vehicle ? NetworkGetNetworkIdFromEntity(vehicle) : 0;
+        const isInside = vehicle && GetVehiclePedIsIn(PlayerPedId(), false) === vehicle;
+        let distance = 0;
+
+        if (vehicle) {
+            const coords = GetEntityCoords(PlayerPedId()) as Vector3;
+            const vehicleCoords = GetEntityCoords(vehicle) as Vector3;
+            distance = getDistance(coords, vehicleCoords);
+        }
+
+        TriggerServerEvent(ServerEvent.VEHICLE_SET_CLOSEST, responseId, vehicleNetworkId, distance, isInside);
+    }
 
     @OnEvent(ClientEvent.VEHICLE_SPAWN)
     async spawnVehicle(spawnId: string, vehicleSpawn: VehicleSpawn) {
@@ -51,12 +68,6 @@ export class VehicleSpawnProvider {
         SetVehicleHasBeenOwnedByPlayer(vehicle, true);
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
-
-        await wait(0);
-
-        console.log(vehicleSpawn.state);
-        this.vehicleService.updateVehicleState(vehicle, vehicleSpawn.state);
-        console.log(this.vehicleService.getVehicleState(vehicle));
 
         TriggerServerEvent(ServerEvent.VEHICLE_SPAWNED, spawnId, networkId);
 
