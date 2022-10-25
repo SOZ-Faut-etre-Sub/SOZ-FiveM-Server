@@ -46,7 +46,7 @@ export class Halloween2022Scenario1Provider {
         // Dead ped
         const deadMen = await this.pedFactory.createPed({
             model: 'a_m_y_beach_03',
-            coords: { x: -1716.98, y: -1041.03, z: 1.65, w: 283.16 },
+            coords: { x: -1647.19, y: -1064.16, z: 2.61, w: 236.37 },
             invincible: true,
             freeze: true,
             blockevents: true,
@@ -59,30 +59,41 @@ export class Halloween2022Scenario1Provider {
         StopPedSpeaking(deadMen, true);
 
         const bloodSplat = GetHashKey('p_bloodsplat_s');
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1719.62488, -1034.48584, 2.23335576, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1717.69128, -1035.88, 2.062668, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1714.09424, -1038.44836, 1.95063758, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1719.10022, -1016.77509, 4.26320028, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1721.7, -1029.92712, 2.78294444, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1721.63391, -1019.234, 3.66569352, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1715.86377, -1011.25995, 4.540203, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1710.52051, -1005.37756, 5.11429453, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1694.07471, -1003.33044, 6.02541971, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1679.32959, -1003.33044, 6.40163374, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1674.80273, -997.8394, 6.4378376, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1669.81653, -1000.61646, 7.586046, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1676.42847, -1009.72607, 6.378428, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1674.731, -1004.18481, 6.37831354, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1680.83826, -1006.7431, 6.409776, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1683.85754, -1004.70605, 6.41418552, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1681.60046, -997.1614, 6.411218, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1681.60046, -996.0692, 6.39597273, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1677.32019, -991.263367, 6.4082365, -90, 0, 0);
-        await this.entityFactory.createEntityWithRotation(bloodSplat, -1670.02234, -997.4489, 6.411445, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1646.25757, -1064.36438, 2.6638186, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1647.35852, -1063.73352, 2.64695525, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1645.56287, -1065.12939, 2.6638186, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1648.121, -1062.38074, 2.66395855, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1647.05994, -1062.966, 2.67473316, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1648.14258, -1060.35327, 2.73919225, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1651.67261, -1052.12891, 3.274258, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1657.9292, -1044.782, 3.634825, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1659.82935, -1035.595, 4.06299, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1664.64844, -1024.19043, 4.814108, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1664.58313, -1015.53925, 5.845688, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1669.036, -1014.68164, 6.389642, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1674.94, -1010.77234, 6.38943672, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1681.92737, -1005.78162, 6.38943958, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1688.15674, -1002.40308, 6.38970375, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1695.74109, -1004.34619, 5.947353, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1703.8894, -1005.40729, 5.49293756, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1706.9325, -997.9151, 5.27463055, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1712.2428, -1007.50745, 4.825735, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1719.37512, -1015.68396, 4.282266, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1721.3269, -1012.11725, 4.25680876, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1675.69714, -1006.41467, 6.389439, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1670.80945, -1002.8764, 6.389439, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1666.76184, -1002.06677, 6.42044, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1670.2074, -997.432, 6.42044, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1673.96985, -993.7691, 6.420377, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1675.687, -989.1524, 6.42038059, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1673.25647, -983.6904, 6.42038059, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1668.5083, -979.465454, 6.378703, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1671.886, -1005.33789, 6.389439, -90, 0, 0);
+        await this.entityFactory.createEntityWithRotation(bloodSplat, -1670.94226, -1007.039, 7.41958427, -90, 0, 0);
 
         await this.pedFactory.createPed({
             model: 'a_f_y_beach_01',
-            coords: { x: -1716.52, y: -1040.02, z: 1.62, w: 180.66 },
+            coords: { x: -1647.89, y: -1064.41, z: 2.58, w: 296.46 },
             invincible: true,
             freeze: true,
             blockevents: true,
@@ -94,12 +105,12 @@ export class Halloween2022Scenario1Provider {
         this.targetFactory.createForBoxZone(
             'halloween2022:part1',
             {
-                center: [-1716.52, -1040.02, 1.62],
+                center: [-1647.89, -1064.41, 2.58],
                 length: 1.5,
                 width: 1.5,
-                heading: 180,
-                minZ: 0,
-                maxZ: 3,
+                heading: 296,
+                minZ: 2,
+                maxZ: 4,
             },
             [
                 {
@@ -115,7 +126,7 @@ export class Halloween2022Scenario1Provider {
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO1, 'diag1');
                         if (dialog) {
-                            await this.storyService.launchDialog(dialog, true, -1716.69, -1041.68, 2.68, 356.2);
+                            await this.storyService.launchDialog(dialog, true, -1646.24, -1063.64, 3.67, 143.07);
                         }
                     },
                 },
@@ -131,7 +142,7 @@ export class Halloween2022Scenario1Provider {
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO1, 'part2');
                         if (dialog) {
-                            await this.storyService.launchDialog(dialog, true, -1716.69, -1041.68, 2.68, 356.2);
+                            await this.storyService.launchDialog(dialog, true, -1646.24, -1063.64, 3.67, 143.07);
                         }
                     },
                 },
@@ -175,6 +186,7 @@ export class Halloween2022Scenario1Provider {
                 label: 'Parler',
                 icon: 'fas fa-comment',
                 canInteract: () => {
+                    console.log(this.playerService.getPlayer().metadata.halloween2022);
                     return (
                         this.playerService.getPlayer().metadata.halloween2022?.scenario1?.[part] ===
                         ScenarioState.Running
