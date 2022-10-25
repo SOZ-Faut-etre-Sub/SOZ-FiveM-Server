@@ -3,7 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { PlayerVehicleState } from '../../shared/vehicle/vehicle';
+import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';

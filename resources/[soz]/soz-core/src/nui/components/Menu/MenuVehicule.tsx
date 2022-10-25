@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
-import { VehicleMenuData } from '../../../shared/vehicle';
+import { VehicleMenuData } from '../../../shared/vehicle/vehicle';
 import { fetchNui } from '../../fetch';
 import {
     MainMenu,

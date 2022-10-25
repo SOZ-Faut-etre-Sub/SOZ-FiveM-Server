@@ -7,20 +7,54 @@ import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
-import { VehicleCondition } from '../../shared/vehicle';
+import { VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
 import { VehicleService } from './vehicle.service';
 
-type LastVehicleStatus = {
+type VehicleStatus = {
     engineHealth: number;
     bodyHealth: number;
     tankHealth: number;
     vehicle: number;
 };
 
+const ENGINE_DAMAGE_MULTIPLIER = 3.0;
+const BODY_DAMAGE_MULTIPLIER = 6.0;
+const TANK_DAMAGE_MULTIPLIER = 10.0;
+
+const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
+const ENGINE_MIN_HEALTH = 100.0;
+
+const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
+    [VehicleClass.Compacts]: 0.8,
+    [VehicleClass.Sedans]: 0.8,
+    [VehicleClass.SUVs]: 0.8,
+    [VehicleClass.Coupes]: 0.76,
+    [VehicleClass.Muscle]: 0.8,
+    [VehicleClass.SportsClassics]: 0.76,
+    [VehicleClass.Sports]: 0.76,
+    [VehicleClass.Super]: 0.76,
+    [VehicleClass.Motorcycles]: 0.216,
+    [VehicleClass.OffRoad]: 0.56,
+    [VehicleClass.Industrial]: 0.2,
+    [VehicleClass.Utility]: 0.28,
+    [VehicleClass.Vans]: 0.68,
+    [VehicleClass.Cycles]: 0.8,
+    [VehicleClass.Boats]: 0.32,
+    [VehicleClass.Helicopters]: 0.56,
+    [VehicleClass.Planes]: 0.56,
+    [VehicleClass.Service]: 0.6,
+    [VehicleClass.Emergency]: 0.68,
+    [VehicleClass.Military]: 0.536,
+    [VehicleClass.Commercial]: 0.344,
+    [VehicleClass.Trains]: 0.8,
+};
+
 @Provider()
 export class VehicleConditionProvider {
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    private currentVehicleStatus: VehicleStatus | null = null;
 
     @StateBagHandler('condition', null)
     private async onVehicleConditionChange(bag: string, key: string, value: VehicleCondition) {
@@ -67,7 +101,7 @@ export class VehicleConditionProvider {
     }
 
     @OnEvent(ClientEvent.VEHICLE_CHECK_CONDITION)
-    private async checkCondition(vehicleNetworkId: number) {
+    public async checkCondition(vehicleNetworkId: number) {
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!vehicle) {
@@ -80,9 +114,6 @@ export class VehicleConditionProvider {
 
         // Check dead status
         this.checkVehicleWater(vehicle);
-
-        // Update vehicle damage
-        this.updateVehicleDamage(vehicle);
 
         const state = this.vehicleService.getVehicleState(vehicle);
 
@@ -153,20 +184,109 @@ export class VehicleConditionProvider {
         }
     }
 
-    private updateVehicleDamage(vehicle: number) {
-        /**
-         * [vie en cours]
-         *
-         * [vie delta] = [vie last frame] - [vie en cours]
-         * [vie delta scaled] = [vie delta] * global factor * class factor
-         *
-         *
-         * -> get max degats parmi les 3 possibilités
-         *
-         * -> scale down si trop de dégats ou si seuile critique
-         *
-         * [nouvelle vie] = [vie last frame] - [delta final]
-         */
-        return {};
+    @Tick(0)
+    public async preventVehicleFlip() {
+        if (!this.currentVehicleStatus) {
+            return;
+        }
+
+        const roll = GetEntityRoll(this.currentVehicleStatus.vehicle);
+
+        if ((roll > 75.0 || roll < -75.0) && GetEntitySpeed(this.currentVehicleStatus.vehicle) < 2) {
+            DisableControlAction(2, 59, true);
+            DisableControlAction(2, 60, true);
+        }
+    }
+
+    @Tick(0)
+    public async setVehiclePower() {
+        if (!this.currentVehicleStatus) {
+            return;
+        }
+
+        if (this.currentVehicleStatus.engineHealth < ENGINE_MIN_HEALTH + 1.0) {
+            SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, 0.05);
+        }
+
+        if (this.currentVehicleStatus.engineHealth < 500.0) {
+            const power = this.currentVehicleStatus.engineHealth / 500.0;
+
+            SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, power);
+        }
+    }
+
+    @Tick(50)
+    public updateVehicleDamage() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            this.currentVehicleStatus = null;
+
+            return;
+        }
+
+        if (!NetworkHasControlOfEntity(vehicle)) {
+            this.currentVehicleStatus = null;
+
+            return;
+        }
+
+        const lastVehicleStatus = this.currentVehicleStatus;
+        this.currentVehicleStatus = {
+            engineHealth: GetVehicleEngineHealth(vehicle),
+            bodyHealth: GetVehicleBodyHealth(vehicle),
+            tankHealth: GetVehiclePetrolTankHealth(vehicle),
+            vehicle,
+        };
+
+        if (!lastVehicleStatus || lastVehicleStatus.vehicle !== vehicle) {
+            return;
+        }
+
+        let engineHealthDiff = lastVehicleStatus.engineHealth - this.currentVehicleStatus.engineHealth;
+        let bodyHealthDiff = lastVehicleStatus.bodyHealth - this.currentVehicleStatus.bodyHealth;
+        let tankHealthDiff = lastVehicleStatus.tankHealth - this.currentVehicleStatus.tankHealth;
+
+        if (engineHealthDiff <= 0 && bodyHealthDiff <= 0 && tankHealthDiff <= 0) {
+            return;
+        }
+
+        const vehicleClass = GetVehicleClass(vehicle);
+
+        if (engineHealthDiff > 0) {
+            engineHealthDiff *= ENGINE_DAMAGE_MULTIPLIER * VEHICLE_CLASS_DAMAGE_MULTIPLIER[vehicleClass];
+        }
+
+        if (this.currentVehicleStatus.engineHealth < ENGINE_THRESHOLD_AUTO_DEGRADE) {
+            engineHealthDiff += 0.2;
+        }
+
+        if (bodyHealthDiff > 0) {
+            bodyHealthDiff *= BODY_DAMAGE_MULTIPLIER * VEHICLE_CLASS_DAMAGE_MULTIPLIER[vehicleClass];
+        }
+
+        if (tankHealthDiff > 0) {
+            tankHealthDiff *= TANK_DAMAGE_MULTIPLIER * VEHICLE_CLASS_DAMAGE_MULTIPLIER[vehicleClass];
+        }
+
+        // set new health, only if diff is significant
+        if (engineHealthDiff > 0.1 && this.currentVehicleStatus.engineHealth > ENGINE_MIN_HEALTH) {
+            this.currentVehicleStatus.engineHealth = Math.max(
+                ENGINE_MIN_HEALTH,
+                lastVehicleStatus.engineHealth - engineHealthDiff
+            );
+            SetVehicleEngineHealth(vehicle, this.currentVehicleStatus.engineHealth);
+        }
+
+        if (bodyHealthDiff > 0.1) {
+            this.currentVehicleStatus.bodyHealth = lastVehicleStatus.bodyHealth - bodyHealthDiff;
+            SetVehicleBodyHealth(vehicle, this.currentVehicleStatus.bodyHealth);
+        }
+
+        if (tankHealthDiff > 0.1) {
+            this.currentVehicleStatus.tankHealth = lastVehicleStatus.tankHealth - tankHealthDiff;
+            SetVehiclePetrolTankHealth(vehicle, this.currentVehicleStatus.tankHealth);
+        }
     }
 }

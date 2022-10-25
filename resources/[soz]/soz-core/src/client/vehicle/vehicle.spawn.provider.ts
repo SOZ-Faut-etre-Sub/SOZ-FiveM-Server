@@ -1,10 +1,9 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
-import { VehicleSpawn } from '../../shared/vehicle';
+import { VehicleSpawn } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
 import { VehicleService } from './vehicle.service';

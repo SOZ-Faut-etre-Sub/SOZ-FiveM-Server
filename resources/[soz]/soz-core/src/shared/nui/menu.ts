@@ -1,7 +1,7 @@
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
-import { VehicleMenuData } from '../vehicle';
 import { GarageMenuData } from '../vehicle/garage';
+import { VehicleMenuData } from '../vehicle/vehicle';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -22,17 +22,19 @@ export type SetMenuType = {
 
 export enum MenuType {
     AdminMenu = 'AdminMenu',
-    BahamaUnicornJobMenu = 'baun_job_menu',
-    BennysOrderMenu = 'bennys_order_menu',
-    StonkJobMenu = 'stonk_job_menu',
-    FightForStyleJobMenu = 'ffs_job_menu',
-    FoodJobMenu = 'food_job_menu',
+    BahamaUnicornJobMenu = 'baun_job',
+    BennysOrderMenu = 'bennys_order',
     Demo = 'demo',
     BossShop = 'boss_shop',
     MaskShop = 'mask_shop',
-    SetHealthState = 'set_health_state',
-    Vehicle = 'vehicle_menu',
+    FightForStyleJobMenu = 'ffs_job',
+    FoodJobMenu = 'food_job_menu',
     Garage = 'garage_menu',
+    SetHealthState = 'set_health_state',
+    StonkJobMenu = 'stonk_job',
+    Vehicle = 'vehicle',
+    VehicleCustom = 'vehicle_custom',
+    VehicleDealership = 'vehicle_dealership',
     Wardrobe = 'wardrobe',
 }
 

@@ -8,7 +8,7 @@ import {
     VehicleModification,
     VehicleModificationMod,
     VehicleModType,
-} from '../../shared/vehicle';
+} from '../../shared/vehicle/vehicle';
 import { Qbcore } from '../qbcore';
 
 type VehicleModificationModSync<T extends keyof VehicleModificationMod> = {
