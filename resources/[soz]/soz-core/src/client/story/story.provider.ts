@@ -1,16 +1,25 @@
-import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
-import { Dialog } from '../../shared/story/story';
+import { Dialog, ScenarioState, Story } from '../../shared/story/story';
 import { AudioService } from '../nui/audio.service';
+import { PlayerService } from '../player/player.service';
+import { TargetOptions } from '../target/target.factory';
 
-@Injectable()
-export class StoryService {
+@Provider()
+export class StoryProvider {
     @Inject(AudioService)
     private audioService: AudioService;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     private camera: number | null = null;
+    private inCinematic = false;
 
     public async launchDialog(dialog: Dialog, useCamera = false, x?: number, y?: number, z?: number, w?: number) {
+        this.inCinematic = true;
         if (x && y && z && w) {
             TaskGoStraightToCoord(PlayerPedId(), x, y, z, 1.0, 1000, w, 0.0);
             await wait(2000);
@@ -40,6 +49,28 @@ export class StoryService {
         }
 
         FreezeEntityPosition(PlayerPedId(), false);
+        this.inCinematic = false;
+    }
+
+    public canInteractForPart(story: string, scenario: string, part: number): boolean {
+        const currentScenario = this.playerService.getPlayer().metadata[story]?.[scenario];
+
+        if (part === 1) {
+            return currentScenario?.[`part${part}`] < ScenarioState.Running || currentScenario === undefined;
+        }
+
+        return currentScenario?.[`part${part}`] === ScenarioState.Running;
+    }
+
+    public replayTarget(story: Story, part: number): TargetOptions {
+        return {
+            label: 'Ré-écouter',
+            icon: 'fas fa-comments-dots',
+            canInteract: () => this.canInteractForPart('halloween2022', 'scenario2', part + 1),
+            action: async () => {
+                await this.launchDialog(story.dialog[`part${part}`]);
+            },
+        };
     }
 
     private async drawTextDialog(text: string[]) {
@@ -61,6 +92,13 @@ export class StoryService {
 
                 await wait(0);
             }
+        }
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    private async onTick() {
+        if (this.inCinematic) {
+            DisableAllControlActions(0);
         }
     }
 }
