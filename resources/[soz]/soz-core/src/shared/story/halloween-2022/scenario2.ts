@@ -61,7 +61,7 @@ export const Halloween2022Scenario2: Story = {
     zones: [
         {
             name: 'relic',
-            part: 'part5',
+            part: 5,
             label: 'Chercher',
             icon: 'fas fa-search',
             center: [-2166.59, 5198.18, 16.88],
@@ -71,5 +71,10 @@ export const Halloween2022Scenario2: Story = {
             minZ: 12.48,
             maxZ: 16.48,
         },
+    ],
+    props: [
+        { model: 'prop_hand_toilet', coords: [3739.34, 4903.36, 17.49], rotation: [0, 0, 0] },
+        { model: 'prop_water_corpse_01', coords: [2782.97, -1532.91, 0.84], rotation: [-90, -70, 0] },
+        { model: 'prop_idol_case', coords: [-2166.61, 5197.96, 15.88], rotation: [0, 0, 0] },
     ],
 };

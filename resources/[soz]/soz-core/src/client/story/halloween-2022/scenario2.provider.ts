@@ -4,16 +4,15 @@ import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { RpcEvent } from '../../../shared/rpc';
-import { Halloween2022Scenario1 } from '../../../shared/story/halloween-2022/scenario1';
 import { Halloween2022Scenario2 } from '../../../shared/story/halloween-2022/scenario2';
-import { Dialog, ScenarioState } from '../../../shared/story/story';
+import { Dialog } from '../../../shared/story/story';
 import { AnimationService } from '../../animation/animation.service';
 import { EntityFactory } from '../../factory/entity.factory';
 import { PedFactory } from '../../factory/ped.factory';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory, TargetOptions } from '../../target/target.factory';
-import { StoryService } from '../story.service';
+import { StoryProvider } from '../story.provider';
 
 @Provider()
 export class Halloween2022Scenario2Provider {
@@ -26,8 +25,8 @@ export class Halloween2022Scenario2Provider {
     @Inject(EntityFactory)
     private entityFactory: EntityFactory;
 
-    @Inject(StoryService)
-    private storyService: StoryService;
+    @Inject(StoryProvider)
+    private storyService: StoryProvider;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -44,7 +43,15 @@ export class Halloween2022Scenario2Provider {
             return;
         }
 
-        // povers
+        await this.createOldPed();
+        await this.createFeetZone();
+        await this.createDeadZone();
+
+        await this.createActionZones();
+        await this.spawnProps();
+    }
+
+    private async createOldPed(): Promise<void> {
         await this.pedFactory.createPed({
             model: 'ig_old_man2',
             coords: { x: 3314.16, y: 5179.72, z: 18.68, w: 240.04 },
@@ -70,13 +77,7 @@ export class Halloween2022Scenario2Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
-                    canInteract: () => {
-                        return (
-                            this.playerService.getPlayer().metadata.halloween2022?.scenario2?.['part1'] <
-                                ScenarioState.Running ||
-                            this.playerService.getPlayer().metadata.halloween2022?.scenario2 === undefined
-                        );
-                    },
+                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', 1),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO2, 'diag1');
                         if (dialog) {
@@ -87,12 +88,7 @@ export class Halloween2022Scenario2Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
-                    canInteract: () => {
-                        return (
-                            this.playerService.getPlayer().metadata.halloween2022?.scenario2?.['part6'] ===
-                            ScenarioState.Running
-                        );
-                    },
+                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', 6),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO2, 'part6');
                         if (dialog) {
@@ -100,39 +96,13 @@ export class Halloween2022Scenario2Provider {
                         }
                     },
                 },
+                this.storyService.replayTarget(Halloween2022Scenario2, 1),
+                this.storyService.replayTarget(Halloween2022Scenario2, 6),
             ]
         );
+    }
 
-        await this.entityFactory.createEntity(GetHashKey('prop_hand_toilet'), 3739.34, 4903.36, 17.49);
-        await this.entityFactory.createEntityWithRotation(
-            GetHashKey('prop_water_corpse_01'),
-            2782.97,
-            -1532.91,
-            0.84,
-            -90,
-            -70,
-            0
-        );
-        await this.entityFactory.createEntity(GetHashKey('prop_idol_case'), -2166.61, 5197.96, 15.88);
-
-        const dialogInteraction = (part: string): TargetOptions => {
-            return {
-                label: 'Inspecter',
-                icon: 'fas fa-search',
-                canInteract: () => {
-                    return (
-                        this.playerService.getPlayer().metadata.halloween2022?.scenario2?.[part] ===
-                        ScenarioState.Running
-                    );
-                },
-                action: async () => {
-                    const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO2, part);
-                    if (dialog) {
-                        await this.storyService.launchDialog(dialog);
-                    }
-                },
-            };
-        };
+    private async createFeetZone(): Promise<void> {
         this.targetFactory.createForBoxZone(
             'halloween2022:scenario2:part2',
             {
@@ -143,9 +113,15 @@ export class Halloween2022Scenario2Provider {
                 minZ: 17,
                 maxZ: 18,
             },
-            [dialogInteraction('part2'), dialogInteraction('part3')]
+            [
+                this.interactionFeet(2),
+                this.interactionFeet(3),
+                this.storyService.replayTarget(Halloween2022Scenario2, 2),
+                this.storyService.replayTarget(Halloween2022Scenario2, 3),
+            ]
         );
-
+    }
+    private async createDeadZone(): Promise<void> {
         this.targetFactory.createForBoxZone(
             'halloween2022:scenario2:part4',
             {
@@ -160,12 +136,7 @@ export class Halloween2022Scenario2Provider {
                 {
                     label: 'Inspecter',
                     icon: 'fas fa-comment',
-                    canInteract: () => {
-                        return (
-                            this.playerService.getPlayer().metadata.halloween2022?.scenario2?.['part4'] ===
-                            ScenarioState.Running
-                        );
-                    },
+                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', 4),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO2, 'part4');
                         if (dialog) {
@@ -173,20 +144,38 @@ export class Halloween2022Scenario2Provider {
                         }
                     },
                 },
+                this.storyService.replayTarget(Halloween2022Scenario2, 4),
             ]
         );
+    }
 
+    private interactionFeet(part: number): TargetOptions {
+        return {
+            label: 'Inspecter',
+            icon: 'fas fa-search',
+            canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', part),
+            action: async () => {
+                const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO2, `part${part}`);
+                if (dialog) {
+                    await this.storyService.launchDialog(dialog);
+                }
+            },
+        };
+    }
+
+    private async spawnProps() {
+        for (const prop of Halloween2022Scenario2.props) {
+            await this.entityFactory.createEntityWithRotation(GetHashKey(prop.model), ...prop.coords, ...prop.rotation);
+        }
+    }
+
+    private async createActionZones() {
         Halloween2022Scenario2.zones.forEach(zone => {
             this.targetFactory.createForBoxZone(zone.name, zone, [
                 {
                     label: zone.label,
                     icon: zone.icon,
-                    canInteract: () => {
-                        return (
-                            this.playerService.getPlayer().metadata.halloween2022?.scenario2?.[zone.part] ===
-                            ScenarioState.Running
-                        );
-                    },
+                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', zone.part),
                     action: async () => {
                         const animationPromise = this.animationService.playAnimation({
                             base: {
