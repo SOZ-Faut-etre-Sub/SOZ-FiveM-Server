@@ -10,6 +10,13 @@ import { getRandomInt } from '../../shared/random';
 import { VehicleCondition } from '../../shared/vehicle';
 import { VehicleService } from './vehicle.service';
 
+type LastVehicleStatus = {
+    engineHealth: number;
+    bodyHealth: number;
+    tankHealth: number;
+    vehicle: number;
+};
+
 @Provider()
 export class VehicleConditionProvider {
     @Inject(VehicleService)
@@ -35,7 +42,7 @@ export class VehicleConditionProvider {
             value.bodyHealth;
 
         if (healthDiff > 300) {
-            const waitTime =
+            let waitTime =
                 (previousState.condition.engineHealth / value.engineHealth +
                     previousState.condition.bodyHealth / value.bodyHealth) *
                 getRandomInt(150, 200);
@@ -51,6 +58,7 @@ export class VehicleConditionProvider {
                     }
 
                     await wait(1);
+                    waitTime--;
                 }
                 SetVehicleUndriveable(vehicle, false);
                 SetVehicleEngineOn(vehicle, true, false, true);
@@ -72,6 +80,9 @@ export class VehicleConditionProvider {
 
         // Check dead status
         this.checkVehicleWater(vehicle);
+
+        // Update vehicle damage
+        this.updateVehicleDamage(vehicle);
 
         const state = this.vehicleService.getVehicleState(vehicle);
 
@@ -140,5 +151,22 @@ export class VehicleConditionProvider {
 
             TriggerServerEvent(ServerEvent.VEHICLE_SET_DEAD, vehicle);
         }
+    }
+
+    private updateVehicleDamage(vehicle: number) {
+        /**
+         * [vie en cours]
+         *
+         * [vie delta] = [vie last frame] - [vie en cours]
+         * [vie delta scaled] = [vie delta] * global factor * class factor
+         *
+         *
+         * -> get max degats parmi les 3 possibilités
+         *
+         * -> scale down si trop de dégats ou si seuile critique
+         *
+         * [nouvelle vie] = [vie last frame] - [delta final]
+         */
+        return {};
     }
 }

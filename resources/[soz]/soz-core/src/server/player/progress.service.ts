@@ -32,7 +32,7 @@ export class ProgressService {
 
                 promiseReject('progress timeout after ' + duration * 2 + 'ms');
             }
-        }, duration * 2);
+        }, duration + 10000);
 
         TriggerClientEvent(ClientEvent.PROGRESS_START, player, id, name, label, duration, animation, options);
 

@@ -5,6 +5,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
+import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { Repository } from './repository';
@@ -24,6 +25,9 @@ export class RepositoryProvider {
     @Inject(JobGradeRepository)
     private jobGradeRepository: JobGradeRepository;
 
+    @Inject(FuelStationRepository)
+    private fuelStationRepository: FuelStationRepository;
+
     private repositories: Record<string, Repository<any>> = {};
 
     @Once(OnceStep.DatabaseConnected)
@@ -31,6 +35,7 @@ export class RepositoryProvider {
         this.repositories['garage'] = this.garageRepository;
         this.repositories['vehicle'] = this.vehicleRepository;
         this.repositories['jobGrade'] = this.jobGradeRepository;
+        this.repositories['fuelStation'] = this.fuelStationRepository;
 
         for (const repositoryName of Object.keys(this.repositories)) {
             await this.repositories[repositoryName].init();

@@ -95,7 +95,11 @@ export class TargetFactory {
         exports['qb-target'].SpawnPed(ped);
     }
 
-    public createForModel(models: string[], targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+    public createForModel(
+        models: string[] | number[] | string | number,
+        targets: TargetOptions[],
+        distance = DEFAULT_DISTANCE
+    ) {
         exports['qb-target'].AddTargetModel(models, {
             options: targets,
             distance: distance,

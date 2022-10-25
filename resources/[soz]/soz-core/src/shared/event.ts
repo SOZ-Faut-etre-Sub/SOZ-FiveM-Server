@@ -102,12 +102,14 @@ export enum ServerEvent {
 
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
+    VEHICLE_SET_CLOSEST = 'soz-core:server:vehicle:set-closest',
     VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
     VEHICLE_DELETED = 'soz-core:server:vehicle:deleted',
     VEHICLE_GARAGE_STORE = 'soz-core:server:vehicle:garage:store',
     VEHICLE_GARAGE_RETRIEVE = 'soz-core:server:vehicle:garage:retrieve',
     VEHICLE_SET_DEAD = 'soz-core:server:vehicle:set-dead',
     VEHICLE_WASH = 'soz-core:server:vehicle:wash',
+    VEHICLE_FUEL_START = 'soz-core:server:vehicle:fuel:start',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
@@ -163,10 +165,13 @@ export enum ClientEvent {
     REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
 
     VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
+
+    VEHICLE_GET_CLOSEST = 'soz-core:client:vehicle:get-closest',
     VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
     VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
     VEHICLE_CHECK_CONDITION = 'soz-core:client:vehicle:check-condition',
     VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
+    VEHICLE_FUEL_STOP = 'soz-core:client:vehicle:fuel:stop',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }
