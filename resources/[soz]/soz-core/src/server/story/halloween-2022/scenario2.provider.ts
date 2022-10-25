@@ -39,14 +39,13 @@ export class Halloween2022Scenario2Provider {
         switch (currentPart) {
             case 'part1':
                 this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                    scenario1: player.metadata.halloween2022.scenario1,
+                    ...player.metadata.halloween2022,
                     scenario2: { part1: ScenarioState.Finished, part2: ScenarioState.Running },
                 });
                 return Halloween2022Scenario2.dialog['part1'];
             case 'part2':
                 this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                    ...(player.metadata.halloween2022 ?? {}),
-                    scenario1: player.metadata.halloween2022.scenario1,
+                    ...player.metadata.halloween2022,
                     scenario2: {
                         ...player.metadata.halloween2022.scenario2,
                         part2: ScenarioState.Finished,
@@ -57,8 +56,7 @@ export class Halloween2022Scenario2Provider {
             case 'part3':
                 if (this.inventoryManager.removeItemFromInventory(source, 'horror_cauldron', 1)) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                        ...(player.metadata.halloween2022 ?? {}),
-                        scenario1: player.metadata.halloween2022.scenario1,
+                        ...player.metadata.halloween2022,
                         scenario2: {
                             ...player.metadata.halloween2022.scenario2,
                             part3: ScenarioState.Finished,
@@ -70,8 +68,7 @@ export class Halloween2022Scenario2Provider {
                 return;
             case 'part4':
                 this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                    ...(player.metadata.halloween2022 ?? {}),
-                    scenario1: player.metadata.halloween2022.scenario1,
+                    ...player.metadata.halloween2022,
                     scenario2: {
                         ...player.metadata.halloween2022.scenario2,
                         part4: ScenarioState.Finished,
@@ -88,8 +85,7 @@ export class Halloween2022Scenario2Provider {
                         'success'
                     );
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                        ...(player.metadata.halloween2022 ?? {}),
-                        scenario1: player.metadata.halloween2022.scenario1,
+                        ...player.metadata.halloween2022,
                         scenario2: {
                             ...player.metadata.halloween2022.scenario2,
                             part5: ScenarioState.Finished,
@@ -106,8 +102,7 @@ export class Halloween2022Scenario2Provider {
                     this.inventoryManager.addItemToInventory(source, 'halloween2022_story', 1);
 
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                        ...(player.metadata.halloween2022 ?? {}),
-                        scenario1: player.metadata.halloween2022.scenario1,
+                        ...player.metadata.halloween2022,
                         scenario2: { ...player.metadata.halloween2022.scenario2, part6: ScenarioState.Finished },
                     });
                     return Halloween2022Scenario2.dialog['part6'];

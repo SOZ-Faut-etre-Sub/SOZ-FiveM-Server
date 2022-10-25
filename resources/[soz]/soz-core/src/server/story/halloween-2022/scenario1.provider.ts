@@ -38,8 +38,8 @@ export class Halloween2022Scenario1Provider {
         switch (currentPart) {
             case 'init':
                 this.playerService.setPlayerMetadata(source, 'halloween2022', {
+                    ...player.metadata.halloween2022,
                     scenario1: { part1: ScenarioState.Running },
-                    scenario2: player.metadata.halloween2022.scenario2,
                 });
                 return Halloween2022Scenario1.dialog['part1'];
             case 'part1':
@@ -52,13 +52,12 @@ export class Halloween2022Scenario1Provider {
                             'success'
                         );
                         this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                            ...(player.metadata.halloween2022 ?? {}),
+                            ...player.metadata.halloween2022,
                             scenario1: {
                                 ...player.metadata.halloween2022.scenario1,
                                 part1: ScenarioState.Finished,
                                 part2: ScenarioState.Running,
                             },
-                            scenario2: player.metadata.halloween2022.scenario2,
                         });
                     } else {
                         this.notifier.notify(source, `Tu n’as pas assez de place dans ton inventaire.`, 'error');
@@ -73,25 +72,23 @@ export class Halloween2022Scenario1Provider {
                 return;
             case 'part2':
                 this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                    ...(player.metadata.halloween2022 ?? {}),
+                    ...player.metadata.halloween2022,
                     scenario1: {
                         ...player.metadata.halloween2022.scenario1,
                         part2: ScenarioState.Finished,
                         part3: ScenarioState.Running,
                     },
-                    scenario2: player.metadata.halloween2022.scenario2,
                 });
                 return Halloween2022Scenario1.dialog['part2'];
             case 'part3':
                 if (this.inventoryManager.removeItemFromInventory(source, 'bloody_knife', 1)) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                        ...(player.metadata.halloween2022 ?? {}),
+                        ...player.metadata.halloween2022,
                         scenario1: {
                             ...player.metadata.halloween2022.scenario1,
                             part3: ScenarioState.Finished,
                             part4: ScenarioState.Running,
                         },
-                        scenario2: player.metadata.halloween2022.scenario2,
                     });
                     return Halloween2022Scenario1.dialog['part3'];
                 }
@@ -99,13 +96,12 @@ export class Halloween2022Scenario1Provider {
             case 'part4':
                 if (this.inventoryManager.removeItemFromInventory(source, 'small_coffin', 1)) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                        ...(player.metadata.halloween2022 ?? {}),
+                        ...player.metadata.halloween2022,
                         scenario1: {
                             ...player.metadata.halloween2022.scenario1,
                             part4: ScenarioState.Finished,
                             part5: ScenarioState.Running,
                         },
-                        scenario2: player.metadata.halloween2022.scenario2,
                     });
                     return Halloween2022Scenario1.dialog['part4'];
                 }
@@ -120,13 +116,12 @@ export class Halloween2022Scenario1Provider {
                             'success'
                         );
                         this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                            ...(player.metadata.halloween2022 ?? {}),
+                            ...player.metadata.halloween2022,
                             scenario1: {
                                 ...player.metadata.halloween2022.scenario1,
                                 part5: ScenarioState.Finished,
                                 part6: ScenarioState.Running,
                             },
-                            scenario2: player.metadata.halloween2022.scenario2,
                         });
                         return;
                     } else {
@@ -139,13 +134,12 @@ export class Halloween2022Scenario1Provider {
             case 'part6':
                 if (this.inventoryManager.removeItemFromInventory(source, 'bag_kibble', 1)) {
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                        ...(player.metadata.halloween2022 ?? {}),
+                        ...player.metadata.halloween2022,
                         scenario1: {
                             ...player.metadata.halloween2022.scenario1,
                             part6: ScenarioState.Finished,
                             part7: ScenarioState.Running,
                         },
-                        scenario2: player.metadata.halloween2022.scenario2,
                     });
                     return Halloween2022Scenario1.dialog['part6'];
                 }
@@ -156,9 +150,8 @@ export class Halloween2022Scenario1Provider {
                     this.inventoryManager.addItemToInventory(source, 'halloween2022_story', 1);
 
                     this.playerService.setPlayerMetadata(source, 'halloween2022', {
-                        ...(player.metadata.halloween2022 ?? {}),
+                        ...player.metadata.halloween2022,
                         scenario1: { ...player.metadata.halloween2022.scenario1, part7: ScenarioState.Finished },
-                        scenario2: player.metadata.halloween2022.scenario2,
                     });
                     return Halloween2022Scenario1.dialog['part7'];
                 }
