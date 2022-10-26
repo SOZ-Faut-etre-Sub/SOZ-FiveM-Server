@@ -97,6 +97,8 @@ export enum ServerEvent {
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
+
+    HALLOWEEN2022_HUNT = 'halloween2022:server:hunt',
 }
 
 export enum ClientEvent {
