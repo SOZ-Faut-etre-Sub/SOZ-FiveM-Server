@@ -24,7 +24,7 @@ export class VehicleCarWashProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
-    private carWashZone: MultiZone = new MultiZone([
+    private carWashZone = new MultiZone([
         new BoxZone([-699.68, -933.16, 19.01], 12, 6, {
             heading: 0,
             minZ: 18.01,
@@ -73,7 +73,7 @@ export class VehicleCarWashProvider {
         ]);
 
         for (const index in this.carWashZone.zones) {
-            const zone = this.carWashZone.zones[index] as BoxZone;
+            const zone = this.carWashZone.zones[index];
 
             this.blipFactory.create(`carwash_${index}`, {
                 sprite: 100,

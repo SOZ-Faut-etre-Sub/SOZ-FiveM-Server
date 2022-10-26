@@ -419,39 +419,6 @@ AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
     end)
 end)
 
-local lszones = {
-    BoxZone:Create(vector3(-339.46, -136.73, 39.01), 10, 10, {
-        name = "Vehiclecustom1_z",
-        heading = 70,
-        minZ = 38.01,
-        maxZ = 42.01,
-    }),
-    BoxZone:Create(vector3(-1154.88, -2005.4, 13.18), 10, 10, {
-        name = "Vehiclecustom2_z",
-        heading = 45,
-        minZ = 12.18,
-        maxZ = 16.18,
-    }),
-    BoxZone:Create(vector3(731.87, -1087.88, 22.17), 10, 10, {
-        name = "Vehiclecustom3_z",
-        heading = 0,
-        minZ = 21.17,
-        maxZ = 25.17,
-    }),
-    BoxZone:Create(vector3(110.98, 6627.06, 31.89), 10, 10, {
-        name = "Vehiclecustom4_z",
-        heading = 45,
-        minZ = 30.89,
-        maxZ = 34.89,
-    }),
-    BoxZone:Create(vector3(1175.88, 2640.3, 37.79), 10, 10, {
-        name = "Vehiclecustom5_z",
-        heading = 45,
-        minZ = 36.79,
-        maxZ = 40.79,
-    }),
-}
-
 Insidecustom = false
 for int = 1, 5 do
     lszones[int]:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)

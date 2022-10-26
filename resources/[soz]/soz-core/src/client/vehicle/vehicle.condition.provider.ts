@@ -17,8 +17,8 @@ type VehicleStatus = {
     vehicle: number;
 };
 
-const ENGINE_DAMAGE_MULTIPLIER = 3.0;
-const BODY_DAMAGE_MULTIPLIER = 6.0;
+const ENGINE_DAMAGE_MULTIPLIER = 10.0;
+const BODY_DAMAGE_MULTIPLIER = 10.0;
 const TANK_DAMAGE_MULTIPLIER = 10.0;
 
 const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
@@ -206,13 +206,14 @@ export class VehicleConditionProvider {
 
         if (this.currentVehicleStatus.engineHealth < ENGINE_MIN_HEALTH + 1.0) {
             SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, 0.05);
-        }
-
-        if (this.currentVehicleStatus.engineHealth < 500.0) {
+        } else if (this.currentVehicleStatus.engineHealth < 500.0) {
             const power = this.currentVehicleStatus.engineHealth / 500.0;
 
             SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, power);
+        } else {
+            SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, 1.0);
         }
+        SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, 1.0);
     }
 
     @Tick(50)
@@ -248,10 +249,6 @@ export class VehicleConditionProvider {
         let bodyHealthDiff = lastVehicleStatus.bodyHealth - this.currentVehicleStatus.bodyHealth;
         let tankHealthDiff = lastVehicleStatus.tankHealth - this.currentVehicleStatus.tankHealth;
 
-        if (engineHealthDiff <= 0 && bodyHealthDiff <= 0 && tankHealthDiff <= 0) {
-            return;
-        }
-
         const vehicleClass = GetVehicleClass(vehicle);
 
         if (engineHealthDiff > 0) {
@@ -271,7 +268,7 @@ export class VehicleConditionProvider {
         }
 
         // set new health, only if diff is significant
-        if (engineHealthDiff > 0.1 && this.currentVehicleStatus.engineHealth > ENGINE_MIN_HEALTH) {
+        if (engineHealthDiff > 0.1) {
             this.currentVehicleStatus.engineHealth = Math.max(
                 ENGINE_MIN_HEALTH,
                 lastVehicleStatus.engineHealth - engineHealthDiff

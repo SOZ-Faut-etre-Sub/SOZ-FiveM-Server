@@ -1,10 +1,10 @@
 import { PolygonZone } from './polygon.zone';
 import { Point3D } from './vector';
 
-export class MultiZone {
-    public zones: PolygonZone[];
+export class MultiZone<T extends PolygonZone> {
+    public zones: T[];
 
-    public constructor(zones: PolygonZone[]) {
+    public constructor(zones: T[]) {
         this.zones = zones;
     }
 
