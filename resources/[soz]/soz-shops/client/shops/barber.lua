@@ -120,6 +120,11 @@ function BarberShop:GenerateMenu()
                 value = PlayerData.skin.Makeup.FullMakeupDefaultColor,
             }):On("change", function(_, value)
                 playerUpdater.Makeup.FullMakeupDefaultColor = value
+                if value then
+                    SetPedHeadOverlayColor(ped, 4, 0, 0, 0)
+                else
+                    SetPedHeadOverlayColor(ped, 4, 2, playerUpdater.Makeup.FullMakeupColor or PlayerData.skin.Makeup.FullMakeupColor or 0, 0)
+                end
             end)
             CreateColorSliderList(shopMenu, "Couleur principale", PlayerData.skin.Makeup.FullMakeupPrimaryColor, Config.CharacterComponentColors.Makeup,
                                   function(value)
