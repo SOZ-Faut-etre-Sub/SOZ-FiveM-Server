@@ -4,7 +4,7 @@ export const Halloween2022Scenario1: Story = {
     name: 'Le mystérieu meurtre',
     dialog: {
         part1: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario1/part1.mp3',
             text: [
                 'Au secours, aidez-nous !... Oh, quelqu’un ! S’il vous plaît, faites quelque chose !',
                 'On se baladait avec mon compagnon sur la plage,',
@@ -14,7 +14,7 @@ export const Halloween2022Scenario1: Story = {
             ],
         },
         part2: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario1/part2.mp3',
             text: [
                 'Vous avez trouvé un couteau ensanglanté ? Oh mais c’est affreux…',
                 'Que vais-je faire, mon pauvre compagnon… ',
