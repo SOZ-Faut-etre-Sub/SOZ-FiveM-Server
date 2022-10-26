@@ -92,7 +92,11 @@ export class WeatherProvider {
             return;
         }
 
-        GlobalState.weather = weatherString;
+        this.setWeather(weatherString);
+    }
+
+    public setWeather(weather: Weather): void {
+        GlobalState.weather = weather;
     }
 
     @Command('block_weather', { role: 'admin' })

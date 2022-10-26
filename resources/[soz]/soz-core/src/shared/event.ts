@@ -15,6 +15,8 @@ export enum ServerEvent {
     BENNYS_SELL_VEHICLE = 'soz-core:server:job:bennys:sell-vehicle',
     BENNYS_SET_SPECIAL_VEHICLES = 'soz-core:server:bennys:set-special-vehicles',
 
+    FIVEM_PLAYER_CONNECTING = 'playerConnecting',
+
     FOOD_CRAFT = 'soz-core:server:job:food:craft',
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
