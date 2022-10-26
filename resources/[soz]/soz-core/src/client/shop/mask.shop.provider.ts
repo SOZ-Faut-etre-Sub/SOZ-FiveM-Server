@@ -119,6 +119,7 @@ export class MaskShopProvider {
                             false,
                             false
                         );
+                        SetEntityHeading(PlayerPedId(), 316.75);
                         this.cameraService.setupCamera(this.CAMERA_POSITION, this.CAMERA_TARGET);
                         await this.onShopMaskOpenMenu();
                     },

@@ -88,7 +88,10 @@ export const MaskShopMenu: FunctionComponent<MenuMaskShopStateProps> = ({ catalo
                                                 await fetchNui(NuiEvent.ShopMaskBuy, item.id);
                                             }}
                                         >
-                                            {label}
+                                            <div className="flex justify-between items-center">
+                                                <span>{label}</span>
+                                                <span className="mr-1">${item.price}</span>
+                                            </div>
                                         </MenuItemButton>
                                     );
                                 })}
