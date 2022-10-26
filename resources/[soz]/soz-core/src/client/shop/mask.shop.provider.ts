@@ -6,8 +6,10 @@ import { Outfit } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { MenuType } from '../../shared/nui/menu';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { Ok, Result } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
+import { CameraService } from '../camera';
 import { ClothingService } from '../clothing/clothing.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
@@ -35,6 +37,15 @@ export class MaskShopProvider {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
+    @Inject(CameraService)
+    private cameraService: CameraService;
+
+    private readonly PLAYER_POSITION: Vector3 = [-1337.08, -1279.66, 3.85];
+
+    private readonly CAMERA_TARGET: Vector3 = [-1337.08, -1279.66, 5.05];
+
+    private readonly CAMERA_POSITION: Vector3 = [-1336.26, -1278.35, 5.65];
+
     @OnNuiEvent(NuiEvent.ShopMaskPreview)
     public async previewOutfit(outfit: Outfit) {
         for (const [componentIndex, component] of Object.entries(outfit.Components)) {
@@ -45,6 +56,7 @@ export class MaskShopProvider {
 
     @OnNuiEvent(NuiEvent.MenuClosed)
     public async resetSkin() {
+        this.cameraService.deleteCamera();
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         FreezeEntityPosition(PlayerPedId(), false);
@@ -97,6 +109,17 @@ export class MaskShopProvider {
                     icon: 'c:shop/mask.png',
                     blackoutGlobal: true,
                     action: async () => {
+                        SetEntityCoords(
+                            PlayerPedId(),
+                            this.PLAYER_POSITION[0],
+                            this.PLAYER_POSITION[1],
+                            this.PLAYER_POSITION[2],
+                            false,
+                            false,
+                            false,
+                            false
+                        );
+                        this.cameraService.setupCamera(this.CAMERA_POSITION, this.CAMERA_TARGET);
                         await this.onShopMaskOpenMenu();
                     },
                 },
