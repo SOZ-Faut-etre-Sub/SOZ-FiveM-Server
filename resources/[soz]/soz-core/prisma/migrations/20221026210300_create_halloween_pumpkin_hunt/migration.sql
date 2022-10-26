@@ -2,7 +2,7 @@
 CREATE TABLE `halloween_pumpkin_hunt` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `citizenid` VARCHAR(50) NOT NULL,
-    `coords` TEXT NOT NULL,
+    `coords` VARCHAR(45) NOT NULL,
     `hunted_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
     INDEX `citizenid`(`citizenid`),
