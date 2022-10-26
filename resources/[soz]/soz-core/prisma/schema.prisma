@@ -206,7 +206,7 @@ model phone_messages_conversations {
   conversation_id        String   @db.VarChar(128)
   participant_identifier String   @db.VarChar(8)
   label                  String?  @default("") @db.VarChar(60)
-  unread                 Int @default(0)
+  unread                 Int      @default(0)
   masked                 Boolean  @default(false)
   createdAt              DateTime @default(now()) @db.Timestamp(0)
   updatedAt              DateTime @default(now()) @db.Timestamp(0)
@@ -278,6 +278,7 @@ model player {
   player_vehicles  player_vehicles[]
   records_history_player  player_records_history[] @relation("records_history_player")
   records_history_author player_records_history[] @relation("records_history_author")
+  halloween_pumpkin_hunt halloween_pumpkin_hunt[]
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -355,15 +356,15 @@ model upw_facility {
 }
 
 model vehicles {
-  model            String  @id @db.VarChar(50)
-  hash             Int?
-  name             String  @db.VarChar(255)
-  price            Int
-  category         String? @db.VarChar(50)
-  dealershipId    String? @db.VarChar(10) @map("dealership_id")
-  requiredLicence String? @db.VarChar(10) @map("required_licence")
-  size             Int?    @default(1)
-  jobName         String? @db.Text @map("job_name")
+  model           String  @id @db.VarChar(50)
+  hash            Int?
+  name            String  @db.VarChar(255)
+  price           Int
+  category        String? @db.VarChar(50)
+  dealershipId    String? @map("dealership_id") @db.VarChar(10)
+  requiredLicence String? @map("required_licence") @db.VarChar(10)
+  size            Int?    @default(1)
+  jobName         String? @map("job_name") @db.Text
 
   @@index([category])
   @@index([dealershipId], map: "vehicles_dealership_idx")
@@ -499,4 +500,13 @@ enum bank_accounts_account_type {
   safestorages
   offshore
   bank_atm      @map("bank-atm")
+}
+
+model halloween_pumpkin_hunt {
+  id        Int      @id @default(autoincrement())
+  citizenid String   @db.VarChar(50)
+  coords    String   @db.Text
+  hunted_at DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([citizenid], map: "citizenid")
 }
