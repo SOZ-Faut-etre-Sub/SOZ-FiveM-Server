@@ -7,6 +7,7 @@ import { RpcEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario1 } from '../../../shared/story/halloween-2022/scenario1';
 import { Dialog } from '../../../shared/story/story';
 import { AnimationService } from '../../animation/animation.service';
+import { BlipFactory } from '../../blip';
 import { EntityFactory } from '../../factory/entity.factory';
 import { PedFactory } from '../../factory/ped.factory';
 import { PlayerService } from '../../player/player.service';
@@ -37,11 +38,22 @@ export class Halloween2022Scenario1Provider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
         if (!isFeatureEnabled(Feature.Halloween2022)) {
             return;
         }
+
+        this.blipFactory.create('halloween_scenario1', {
+            name: 'Activité suspecte',
+            coords: { x: -1647.19, y: -1064.16, z: 2.61 },
+            sprite: 484,
+            scale: 0.5,
+            color: 44,
+        });
 
         await this.createDeadPed();
         await this.createMainPed();
