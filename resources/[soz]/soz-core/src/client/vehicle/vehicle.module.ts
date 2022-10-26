@@ -2,6 +2,7 @@ import { Module } from '../../core/decorators/module';
 import { VehicleAirProvider } from './vehicle.air.provider';
 import { VehicleCarWashProvider } from './vehicle.carwash.provider';
 import { VehicleConditionProvider } from './vehicle.condition.provider';
+import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
 import { VehicleLockProvider } from './vehicle.lock.provider';
@@ -14,6 +15,7 @@ import { VehicleSpawnProvider } from './vehicle.spawn.provider';
         VehicleAirProvider,
         VehicleCarWashProvider,
         VehicleConditionProvider,
+        VehicleCustomProvider,
         VehicleFuelProvider,
         VehicleGarageProvider,
         VehicleLockProvider,

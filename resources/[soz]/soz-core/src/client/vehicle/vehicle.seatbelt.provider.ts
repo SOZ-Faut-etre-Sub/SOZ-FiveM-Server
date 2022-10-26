@@ -106,7 +106,7 @@ export class VehicleSeatbeltProvider {
         const acceleration = (vehicleSpeed - this.lastVehicleSpeed) / 0.5;
         const gStrength = Math.abs(acceleration / 9.81);
 
-        if ((gStrength > 2.5 && !this.isSeatbeltOn) || gStrength > 5.0) {
+        if ((gStrength > 3.5 && !this.isSeatbeltOn) || gStrength > 7.0) {
             await this.ejectPlayer(ped, vehicle, this.lastVehicleVelocity);
         }
 
