@@ -150,7 +150,7 @@ export class AdminMenuPlayerProvider {
     }: {
         player: AdminPlayer;
         year: '2022';
-        scenario: 'scenario1' | 'scenario2';
+        scenario: 'scenario1' | 'scenario2' | 'scenario3' | 'scenario4';
     }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_RESET_HALLOWEEN, player.id, year, scenario);
     }

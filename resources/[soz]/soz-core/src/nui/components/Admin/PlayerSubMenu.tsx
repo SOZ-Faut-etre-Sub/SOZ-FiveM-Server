@@ -62,6 +62,13 @@ export const DISEASE_OPTIONS = [
     { label: 'Soigner', value: false },
 ];
 
+const SCENARIO_OPTIONS = [
+    { label: 'Scenario 1', value: 'scenario1' },
+    { label: 'Scenario 2', value: 'scenario2' },
+    { label: 'Scenario 3', value: 'scenario3' },
+    { label: 'Scenario 4', value: 'scenario4' },
+];
+
 export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission }) => {
     const [players, setPlayers] = useState<AdminPlayer[]>([]);
     const [searchFilter, setSearchFilter] = useState<string>('');
@@ -303,12 +310,15 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleResetHalloween, {
                                     player,
                                     year: '2022',
-                                    scenario: selectedIndex === 0 ? 'scenario1' : 'scenario2',
+                                    scenario: SCENARIO_OPTIONS[selectedIndex].value,
                                 });
                             }}
                         >
-                            <MenuItemSelectOption key={'scenario1'}>Scénario 1</MenuItemSelectOption>
-                            <MenuItemSelectOption key={'scenario2'}>Scénario 2</MenuItemSelectOption>
+                            {SCENARIO_OPTIONS.map(option => (
+                                <MenuItemSelectOption key={'scenario_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
+                            ))}
                         </MenuItemSelect>
                     </MenuContent>
                 </SubMenu>
