@@ -61,6 +61,12 @@ export class HuntProvider {
             },
         });
 
+        const pumpkinFound = await this.prismaService.halloween_pumpkin_hunt.count({
+            where: {
+                citizenid: player.citizenid,
+            },
+        });
+
         if (pumpkin.length > 0) {
             this.notifier.notify(source, 'Vous avez déjà fouillé cette citrouille', 'info');
             return;
@@ -95,7 +101,7 @@ export class HuntProvider {
             },
         });
 
-        this.notifier.notify(source, 'Vous avez fouillé cette citrouille');
+        this.notifier.notify(source, `Vous avez fouillé ~b~${pumpkinFound + 1}~s~ citrouille(s)`, 'success');
         const loot = doLooting(this.loots);
 
         if (loot.type === 'item') {
