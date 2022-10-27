@@ -1,4 +1,4 @@
-import { On, Once, OnceStep } from '../../../core/decorators/event';
+import { On } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
@@ -47,7 +47,7 @@ export class HuntProvider {
 
     @On(ServerEvent.HALLOWEEN2022_HUNT)
     public async onScenario1(source: number, position: Vector3) {
-        if (!isFeatureEnabled(Feature.Halloween2022)) {
+        if (!isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 
