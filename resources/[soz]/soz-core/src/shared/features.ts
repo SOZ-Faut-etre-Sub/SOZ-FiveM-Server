@@ -19,7 +19,7 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: true,
     },
     [Feature.HalloweenReboot]: {
-        production: false,
+        production: true,
         development: true,
         test: true,
     },
