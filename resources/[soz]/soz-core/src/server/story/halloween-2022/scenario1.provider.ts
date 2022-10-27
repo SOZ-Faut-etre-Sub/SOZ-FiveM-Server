@@ -24,7 +24,7 @@ export class Halloween2022Scenario1Provider {
 
     @Rpc(RpcEvent.STORY_HALLOWEEN_SCENARIO1)
     public onScenario1(source: number, zoneName?: string): Dialog | null {
-        if (!isFeatureEnabled(Feature.Halloween2022)) {
+        if (!isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 

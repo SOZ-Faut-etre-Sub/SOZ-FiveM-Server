@@ -12,7 +12,7 @@ export class HuntProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween2022)) {
+        if (!isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 
