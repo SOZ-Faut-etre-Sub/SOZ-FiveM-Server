@@ -4382,12 +4382,23 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['description'] = 'Un insigne indique qu’il provient des canaux de vespucci… Etrange…'
     },
+    --- PAWL
     ['small_coffin'] = {
         ['name'] = 'small_coffin',
         ['label'] = 'Cercueil miniature',
         ['weight'] = 10000,
         ['type'] = 'item',
         ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = ''
+    },
+    ['witch_broom'] = {
+        ['name'] = 'witch_broom',
+        ['label'] = 'Balais de sorcière',
+        ['weight'] = 4000,
+        ['type'] = 'item',
+        ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = ''
