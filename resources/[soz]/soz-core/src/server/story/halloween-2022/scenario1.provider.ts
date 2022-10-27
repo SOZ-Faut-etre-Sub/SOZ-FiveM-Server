@@ -112,7 +112,7 @@ export class Halloween2022Scenario1Provider {
                         this.inventoryManager.addItemToInventory(source, 'bag_kibble', 1);
                         this.notifier.notify(
                             source,
-                            `Oh bordel… C’est niche est dégueulasse ! Pourquoi il a déposé son sac à croquette directement dans la niche ?!`,
+                            `Oh bordel... Cette niche est dégueulasse ! Pourquoi il a déposé son sac de croquettes directement dans la niche ?!`,
                             'success'
                         );
                         this.playerService.setPlayerMetadata(source, 'halloween2022', {
