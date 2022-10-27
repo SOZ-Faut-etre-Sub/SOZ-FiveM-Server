@@ -43,7 +43,7 @@ export class Halloween2022Scenario2Provider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween)) {
+        if (!isFeatureEnabled(Feature.HalloweenScenario2)) {
             return;
         }
 
