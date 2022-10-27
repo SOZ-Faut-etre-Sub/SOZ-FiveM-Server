@@ -4,6 +4,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { ServerEvent } from '../../shared/event';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
 import { WeatherProvider } from '../weather/weather.provider';
@@ -22,7 +23,7 @@ export class RebootProvider {
     private weatherProvider: WeatherProvider;
 
     @OnEvent(ServerEvent.FIVEM_PLAYER_CONNECTING)
-    public onPlayerConnecting(name, setKickReason, deferrals) {
+    public onPlayerConnecting(source, name, setKickReason, deferrals) {
         deferrals.defer();
 
         if (this.isClosed) {
@@ -71,7 +72,7 @@ export class RebootProvider {
         });
 
         exports['soz-bank'].saveAccounts();
-        exports['soz-vehicle'].saveUpw();
+        exports['soz-upw'].saveUpw();
         exports['soz-vehicle'].finishAuctions();
 
         await this.prismaService.player_vehicles.deleteMany({
@@ -99,13 +100,49 @@ export class RebootProvider {
         await wait(2 * 60 * 1000);
 
         GlobalState.blackout = true;
-        await wait(2 * 60 * 1000);
 
-        TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'system/reboot', 0.05);
-        await wait(30 * 1000);
+        if (isFeatureEnabled(Feature.HalloweenReboot)) {
+            GlobalState.time = { hour: 0, minute: 0, second: 0 };
+            this.weatherProvider.setWeather('HALLOWEEN');
+            await wait(60 * 1000);
 
-        TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'system/reboot', 0.05);
-        await wait(30 * 1000);
+            GlobalState.time = { hour: 0, minute: 0, second: 0 };
+            this.weatherProvider.setWeather('HALLOWEEN');
+
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 1.0);
+            await wait(20 * 1000);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 1.0);
+            await wait(20 * 1000);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 1.0);
+            await wait(20 * 1000);
+
+            GlobalState.time = { hour: 0, minute: 0, second: 0 };
+            this.weatherProvider.setWeather('HALLOWEEN');
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_witch', 0.8);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'system/reboot', 0.05);
+            await wait(10 * 1000);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_evil', 0.8);
+            await wait(10 * 1000);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_witch', 0.8);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_evil', 0.8);
+            await wait(10 * 1000);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'system/reboot', 0.05);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_evil', 0.8);
+            await wait(10 * 1000);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_evil', 0.8);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_witch', 0.8);
+            await wait(10 * 1000);
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_evil', 0.8);
+            await wait(10 * 1000);
+        } else {
+            await wait(2 * 60 * 1000);
+
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'system/reboot', 0.05);
+            await wait(30 * 1000);
+
+            TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'system/reboot', 0.05);
+            await wait(30 * 1000);
+        }
 
         await this.reboot();
     }
