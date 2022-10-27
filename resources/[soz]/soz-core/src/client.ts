@@ -14,6 +14,7 @@ import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
+import { ShopModule } from './client/shop/shop.module';
 import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
 import { WeatherModule } from './client/weather/weather.module';
@@ -41,7 +42,8 @@ async function bootstrap() {
         BennysModule,
         StonkModule,
         BankModule,
-        JobModule
+        JobModule,
+        ShopModule
     );
 
     await app.stop();
