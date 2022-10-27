@@ -21,7 +21,7 @@ export class HuntProvider {
             [
                 {
                     label: 'Fouiller',
-                    icon: 'fas fa-pumpkin',
+                    icon: 'fas fa-search',
                     action: async entity => TriggerServerEvent(ServerEvent.HALLOWEEN2022_HUNT, GetEntityCoords(entity)),
                 },
             ]
