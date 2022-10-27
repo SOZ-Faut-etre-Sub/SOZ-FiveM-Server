@@ -5,6 +5,7 @@ import { NuiClipboardMethodMap } from './clipboard';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiHealthBookMethodMap } from './health_book';
 import { NuiInputMethodMap } from './input';
+import { NuiMaskShopMethodMap } from './mask_shop';
 import { NuiMenuMethodMap } from './menu';
 
 export interface NuiGlobalMethodMap {
@@ -19,6 +20,7 @@ export interface NuiMethodMap {
     bennys_order_menu: NuiBennysOrderMenuMethodMap;
     health_book: NuiHealthBookMethodMap;
     ffs_recipe_book: NuiFfsRecipeBookMethodMap;
+    mask_shop: NuiMaskShopMethodMap;
     admin_skin_submenu: NuiAdminSkinSubMenuMethodMap;
     admin_player_submenu: NuiAdminPlayerSubMenuMethodMap;
 }

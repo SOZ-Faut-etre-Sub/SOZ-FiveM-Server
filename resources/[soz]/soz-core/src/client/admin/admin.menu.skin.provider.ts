@@ -135,12 +135,14 @@ export class AdminMenuSkinProvider {
     public async onSkinSave() {
         const clothSet = this.clothingService.getClothSet();
 
-        const Components: OutfitItem[] = Object.entries(clothSet.Components)
-            .sort(([a], [b]) => Number(a) - Number(b))
-            .map(([componentIndex, component]) => ({
-                ...component,
-                component: componentIndex,
-            }));
+        const Components: Record<Component, OutfitItem> = Object.fromEntries(
+            Object.entries(clothSet.Components)
+                .sort(([a], [b]) => Number(a) - Number(b))
+                .map(
+                    ([componentIndex, component]) =>
+                        [componentIndex, { ...component, Index: Number(componentIndex) }] as [string, OutfitItem]
+                )
+        ) as Record<Component, OutfitItem>;
 
         const Props = Object.fromEntries(
             Object.entries(clothSet.Props)
