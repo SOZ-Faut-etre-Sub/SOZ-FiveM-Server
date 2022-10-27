@@ -67,7 +67,6 @@ export class StoryProvider {
     }
 
     public replayTarget(story: Story, scenario: string, part: number): TargetOptions {
-        console.log('replayTarget', part);
         return {
             label: 'Ré-écouter',
             icon: 'fas fa-comment-dots',

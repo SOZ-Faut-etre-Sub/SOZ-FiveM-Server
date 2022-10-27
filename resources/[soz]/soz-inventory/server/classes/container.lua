@@ -110,15 +110,12 @@ function InventoryContainer:CanPlayerUseInventory(owner, playerId)
     local Player = QBCore.Functions.GetPlayer(tonumber(playerId))
 
     if not self.inventoryPermissionCallback then
-        print("no inventoryPermissionCallback")
         return true
     end
 
     if Player then
-        print("Have player, so check inventoryPermissionCallback")
         return self.inventoryPermissionCallback(Player, owner)
     else
-        print("no player")
         return false
     end
 end
