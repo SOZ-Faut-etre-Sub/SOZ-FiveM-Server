@@ -4445,6 +4445,27 @@ QBShared.Items = {
             ['health'] = 20,
         },
     },
+    --- BAUN
+    ['surprise_candie'] = {
+        ['name'] = 'surprise_candie',
+        ['label'] = 'Bonbon surprise',
+        ['weight'] = 1000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = '',
+        ['nutrition'] = {
+            ['hunger'] = 15,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 5,
+        },
+    },
     ---
     ['bag_kibble'] = {
         ['name'] = 'bag_kibble',

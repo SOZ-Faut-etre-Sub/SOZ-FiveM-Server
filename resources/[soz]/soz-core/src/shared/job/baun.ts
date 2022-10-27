@@ -174,6 +174,20 @@ export const baunCraftProcesses: BaunCraftProcess[] = [
             amount: 1,
         },
     },
+    {
+        inputs: [
+            { id: 'vodka', amount: 1 },
+            { id: 'gin', amount: 1 },
+            { id: 'tequila', amount: 1 },
+            { id: 'whisky', amount: 1 },
+            { id: 'cognac', amount: 1 },
+            { id: 'rhum', amount: 1 },
+        ],
+        output: {
+            id: 'surprise_candie',
+            amount: 1,
+        },
+    },
 ];
 
 export const BaunConfig = {
