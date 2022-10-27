@@ -4487,15 +4487,45 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['description'] = 'Légume de saison.'
     },
+    ['stuffed_pumpkin'] = {
+        ['name'] = 'stuffed_pumpkin',
+        ['label'] = 'Citrouille farcie',
+        ['weight'] = 1500,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'C\'est pas une dinde...',
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+    },
     ['pumpkin_soup'] = {
         ['name'] = 'pumpkin_soup',
         ['label'] = 'Soupe à la citrouille',
         ['weight'] = 1000,
-        ['type'] = 'item',
+        ['type'] = 'food',
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'La bonne soupe de chez Mamie'
+        ['description'] = 'La bonne soupe de chez Mamie',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 50,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
     },
     --- Divers
     ['head_of_your_dead'] = {

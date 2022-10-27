@@ -190,6 +190,13 @@ const sausageProcesses: FoodCraftProcess[] = [
         ],
         output: { id: 'sausage5', amount: 4 },
     },
+    {
+        inputs: [
+            { id: 'pumpkin', amount: 1 },
+            { id: 'viande', amount: 2 },
+        ],
+        output: { id: 'stuffed_pumpkin', amount: 1 },
+    },
 ];
 
 export const FoodConfig = {
