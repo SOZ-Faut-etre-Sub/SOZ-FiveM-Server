@@ -44,7 +44,7 @@ export class LSMCHalloweenProvider {
 
         this.targetFactory.createForAllPlayer([
             {
-                label: 'Récupérer le butin',
+                label: 'Un fil qui dépasse...',
                 color: 'lsmc',
                 job: 'lsmc',
                 canInteract: () => {
