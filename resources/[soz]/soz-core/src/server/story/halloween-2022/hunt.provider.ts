@@ -1,13 +1,15 @@
-import { On } from '../../../core/decorators/event';
+import { On, Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { doLooting, Loot } from '../../../shared/loot';
 import { Vector3 } from '../../../shared/polyzone/vector';
-import { Notifier } from '../../notifier';
-import { PlayerService } from '../../player/player.service';
 import { PrismaService } from '../../database/prisma.service';
-import { StonkConfig } from '../../../shared/job/stonk';
+import { InventoryManager } from '../../item/inventory.manager';
+import { Notifier } from '../../notifier';
+import { PlayerMoneyService } from '../../player/player.money.service';
+import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
 
 @Provider()
@@ -18,11 +20,30 @@ export class HuntProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(PlayerMoneyService)
+    private playerMoneyService: PlayerMoneyService;
+
     @Inject(Notifier)
     private notifier: Notifier;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    private loots: Loot[] = [
+        { type: 'item', value: 'batrachian_eye', chance: 10 },
+        { type: 'item', value: 'zombie_hand', chance: 10 },
+        { type: 'item', value: 'surprise_candie', chance: 10 },
+        { type: 'item', value: 'head_of_your_dead', chance: 10 },
+        { type: 'item', value: 'horror_moon', chance: 10 },
+        { type: 'item', value: 'unopenable_gift', chance: 10 },
+        { type: 'item', value: 'fake_birthday_cake', chance: 10 },
+        { type: 'money', value: 150, chance: 10 },
+        { type: 'item', value: 'naked_brain', chance: 10 },
+        { type: 'item', value: 'halloween_shopping_bag', chance: 10 },
+    ];
 
     @On(ServerEvent.HALLOWEEN2022_HUNT)
     public async onScenario1(source: number, position: Vector3) {
@@ -73,6 +94,20 @@ export class HuntProvider {
                 hunted_at: new Date(),
             },
         });
+
         this.notifier.notify(source, 'Vous avez fouillé cette citrouille');
+        const loot = doLooting(this.loots);
+
+        if (loot.type === 'item') {
+            if (this.inventoryManager.canCarryItem(source, loot.value.toString(), 1)) {
+                this.inventoryManager.addItemToInventory(source, loot.value as string, 1);
+                return this.notifier.notify(source, 'Vous avez trouvé un objet', 'success');
+            } else {
+                return this.notifier.notify(source, "Vous n'avez pas assez de place dans votre inventaire", 'error');
+            }
+        } else if (loot.type === 'money') {
+            this.playerMoneyService.add(source, loot.value as number);
+            return this.notifier.notify(source, "Vous avez trouvé de l'argent", 'success');
+        }
     }
 }
