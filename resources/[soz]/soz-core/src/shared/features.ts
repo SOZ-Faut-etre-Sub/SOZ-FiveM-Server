@@ -1,6 +1,10 @@
 export enum Feature {
     MyBodySummer = 'MyBodySummer',
     Halloween = 'Halloween',
+    HalloweenScenario1 = 'HalloweenScenario1',
+    HalloweenScenario2 = 'HalloweenScenario2',
+    HalloweenScenario3 = 'HalloweenScenario3',
+    HalloweenScenario4 = 'HalloweenScenario4',
     ChainsOfJustice = 'ChainsOfJustice',
     HalloweenReboot = 'HalloweenNight',
 }
@@ -14,6 +18,26 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: true,
     },
     [Feature.Halloween]: {
+        production: false,
+        development: true,
+        test: true,
+    },
+    [Feature.HalloweenScenario1]: {
+        production: false,
+        development: true,
+        test: true,
+    },
+    [Feature.HalloweenScenario2]: {
+        production: false,
+        development: true,
+        test: true,
+    },
+    [Feature.HalloweenScenario3]: {
+        production: false,
+        development: true,
+        test: true,
+    },
+    [Feature.HalloweenScenario4]: {
         production: false,
         development: true,
         test: true,
