@@ -10,6 +10,7 @@ export type QBCorePlayer = {
         SetMetaData: (key: string, val: any) => void;
         Save: () => void;
         UpdateMaxWeight: () => void;
+        AddMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
     };
