@@ -56,7 +56,7 @@ export class StoryProvider {
         const currentScenario = this.playerService.getPlayer().metadata[story]?.[scenario];
 
         if (part === 1) {
-            return currentScenario?.[`part${part}`] < ScenarioState.Running || currentScenario === undefined;
+            return currentScenario?.[`part${part}`] <= ScenarioState.Running || currentScenario === undefined;
         }
 
         return currentScenario?.[`part${part}`] === ScenarioState.Running;
@@ -65,8 +65,8 @@ export class StoryProvider {
     public replayTarget(story: Story, part: number): TargetOptions {
         return {
             label: 'Ré-écouter',
-            icon: 'fas fa-comments-dots',
-            canInteract: () => this.canInteractForPart('halloween2022', 'scenario2', part + 1),
+            icon: 'fas fa-comment-dots',
+            canInteract: () => this.canInteractForPart('halloween2022', 'scenario2', part - 1),
             action: async () => {
                 await this.launchDialog(story.dialog[`part${part}`]);
             },
