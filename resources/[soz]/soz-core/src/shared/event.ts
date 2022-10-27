@@ -139,6 +139,8 @@ export enum ClientEvent {
 
     PROGRESS_START = 'soz-core:client:progress:start',
 
+    LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
+
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }
 

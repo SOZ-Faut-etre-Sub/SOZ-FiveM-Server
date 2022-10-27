@@ -1,7 +1,7 @@
 import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { CommonItem, InventoryItem } from '../../shared/item';
 import { Notifier } from '../notifier';
 import { PlayerDiseaseProvider } from '../player/player.disease.provider';
@@ -194,7 +194,7 @@ export class ItemHealthProvider {
             return;
         }
 
-        SetEntityHealth(GetPlayerPed(source), GetEntityHealth(GetPlayerPed(source)) + 20);
+        TriggerClientEvent(ClientEvent.LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP, source);
     }
 
     @Once()
