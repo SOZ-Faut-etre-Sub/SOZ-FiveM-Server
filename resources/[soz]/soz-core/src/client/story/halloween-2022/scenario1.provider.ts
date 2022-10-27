@@ -51,7 +51,7 @@ export class Halloween2022Scenario1Provider {
             name: 'Activité suspecte',
             coords: { x: -1647.19, y: -1064.16, z: 2.61 },
             sprite: 484,
-            scale: 0.5,
+            scale: 1.0,
             color: 44,
         });
 
@@ -108,7 +108,7 @@ export class Halloween2022Scenario1Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
-                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', 1),
+                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario1', 0),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO1, 'diag1');
                         if (dialog) {
@@ -127,8 +127,8 @@ export class Halloween2022Scenario1Provider {
                         }
                     },
                 },
-                this.storyService.replayTarget(Halloween2022Scenario1, 1),
-                this.storyService.replayTarget(Halloween2022Scenario1, 2),
+                this.storyService.replayTarget(Halloween2022Scenario1, 'scenario1', 1),
+                this.storyService.replayTarget(Halloween2022Scenario1, 'scenario1', 2),
             ]
         );
     }
@@ -136,33 +136,11 @@ export class Halloween2022Scenario1Provider {
     // Gang
     private async createGangPed(): Promise<void> {
         await this.pedFactory.createPed({
-            model: 'mp_m_freemode_01',
+            model: 'u_m_y_gunvend_01',
             coords: { x: -1021.85, y: -1020.17, z: 1.15, w: 32.55 },
-            components: {
-                // 0: [29, 44, 0],
-                // 1: [46, 0, 0],
-                2: [9, 17, 4],
-                3: [12, 0, 0],
-                4: [26, 11, 0],
-                5: [0, 0, 0],
-                6: [21, 4, 0],
-                7: [0, 0, 0],
-                8: [33, 3, 0],
-                9: [0, 0, 0],
-                10: [0, 0, 0],
-                11: [292, 6, 0],
-                // "13":5,
-                // "12":26,
-                // "22":33,
-                // "32":92,
-                // "210":0,
-                // "310":5,
-            },
             invincible: true,
             freeze: true,
             blockevents: true,
-            // animDict: 'amb@medic@standing@kneel@idle_a',
-            // anim: 'idle_a',
             flag: 1,
         });
 
@@ -179,8 +157,8 @@ export class Halloween2022Scenario1Provider {
             [
                 this.interactionPedGang(3),
                 this.interactionPedGang(4),
-                this.storyService.replayTarget(Halloween2022Scenario1, 3),
-                this.storyService.replayTarget(Halloween2022Scenario1, 4),
+                this.storyService.replayTarget(Halloween2022Scenario1, 'scenario1', 3),
+                this.storyService.replayTarget(Halloween2022Scenario1, 'scenario1', 4),
             ]
         );
     }
@@ -202,31 +180,11 @@ export class Halloween2022Scenario1Provider {
     // Police
     private async createPolicePed(): Promise<void> {
         await this.pedFactory.createPed({
-            model: 'mp_m_freemode_01',
+            model: 's_m_y_cop_01',
             coords: { x: -1108.03, y: -844.75, z: 18.32, w: 129.27 },
-            components: {
-                // 0: [43, 26, 0],
-                // 1: [121, 0, 0],
-                2: [43, 64, 0],
-                3: [22, 0, 0],
-                4: [35, 0, 0],
-                5: [0, 0, 0],
-                6: [24, 0, 0],
-                7: [0, 0, 0],
-                8: [42, 0, 0],
-                9: [0, 0, 0],
-                10: [0, 0, 0],
-                11: [118, 0, 0],
-                // "13":1,
-                // "12":19,
-                // "22":29,
-                // "32":99,
-            },
             invincible: true,
             freeze: true,
             blockevents: true,
-            // animDict: 'amb@medic@standing@kneel@idle_a',
-            // anim: 'idle_a',
             flag: 1,
         });
 
@@ -244,9 +202,9 @@ export class Halloween2022Scenario1Provider {
                 this.interactionPedPolice(5),
                 this.interactionPedPolice(6),
                 this.interactionPedPolice(7),
-                this.storyService.replayTarget(Halloween2022Scenario1, 5),
-                this.storyService.replayTarget(Halloween2022Scenario1, 6),
-                this.storyService.replayTarget(Halloween2022Scenario1, 7),
+                this.storyService.replayTarget(Halloween2022Scenario1, 'scenario1', 5),
+                this.storyService.replayTarget(Halloween2022Scenario1, 'scenario1', 6),
+                this.storyService.replayTarget(Halloween2022Scenario1, 'scenario1', 7),
             ]
         );
     }

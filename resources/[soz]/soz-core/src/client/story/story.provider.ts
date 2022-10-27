@@ -55,18 +55,23 @@ export class StoryProvider {
     public canInteractForPart(story: string, scenario: string, part: number): boolean {
         const currentScenario = this.playerService.getPlayer().metadata[story]?.[scenario];
 
-        if (part === 1) {
+        if (part === 0) {
+            return currentScenario === undefined;
+        }
+
+        if (part === 0 || part === 1) {
             return currentScenario?.[`part${part}`] <= ScenarioState.Running || currentScenario === undefined;
         }
 
         return currentScenario?.[`part${part}`] === ScenarioState.Running;
     }
 
-    public replayTarget(story: Story, part: number): TargetOptions {
+    public replayTarget(story: Story, scenario: string, part: number): TargetOptions {
+        console.log('replayTarget', part);
         return {
             label: 'Ré-écouter',
             icon: 'fas fa-comment-dots',
-            canInteract: () => this.canInteractForPart('halloween2022', 'scenario2', part - 1),
+            canInteract: () => this.canInteractForPart('halloween2022', scenario, part + 1),
             action: async () => {
                 await this.launchDialog(story.dialog[`part${part}`]);
             },

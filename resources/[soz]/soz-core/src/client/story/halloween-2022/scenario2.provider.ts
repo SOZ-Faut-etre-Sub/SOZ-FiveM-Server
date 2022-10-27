@@ -51,7 +51,7 @@ export class Halloween2022Scenario2Provider {
             name: 'Activité suspecte',
             coords: { x: 3314.16, y: 5179.72, z: 18.68 },
             sprite: 484,
-            scale: 0.5,
+            scale: 1.0,
             color: 44,
         });
 
@@ -108,8 +108,8 @@ export class Halloween2022Scenario2Provider {
                         }
                     },
                 },
-                this.storyService.replayTarget(Halloween2022Scenario2, 1),
-                this.storyService.replayTarget(Halloween2022Scenario2, 6),
+                this.storyService.replayTarget(Halloween2022Scenario2, 'scenario2', 1),
+                this.storyService.replayTarget(Halloween2022Scenario2, 'scenario2', 6),
             ]
         );
     }
@@ -128,8 +128,8 @@ export class Halloween2022Scenario2Provider {
             [
                 this.interactionFeet(2),
                 this.interactionFeet(3),
-                this.storyService.replayTarget(Halloween2022Scenario2, 2),
-                this.storyService.replayTarget(Halloween2022Scenario2, 3),
+                this.storyService.replayTarget(Halloween2022Scenario2, 'scenario2', 2),
+                this.storyService.replayTarget(Halloween2022Scenario2, 'scenario2', 3),
             ]
         );
     }
@@ -156,7 +156,7 @@ export class Halloween2022Scenario2Provider {
                         }
                     },
                 },
-                this.storyService.replayTarget(Halloween2022Scenario2, 4),
+                this.storyService.replayTarget(Halloween2022Scenario2, 'scenario2', 4),
             ]
         );
     }
