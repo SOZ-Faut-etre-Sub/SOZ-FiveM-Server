@@ -99,6 +99,7 @@ export enum ServerEvent {
     VOIP_MUTE = 'voip:server:player:mute',
 
     HALLOWEEN2022_HUNT = 'halloween2022:server:hunt',
+    LSMC_HALLOWEEN_LOOT_PLAYER = 'lsmc:halloween:lootPlayer',
 }
 
 export enum ClientEvent {
