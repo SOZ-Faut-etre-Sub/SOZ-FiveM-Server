@@ -194,7 +194,7 @@ export class ItemHealthProvider {
             return;
         }
 
-        SetEntityHealth(source, GetEntityHealth(source) + 20);
+        SetEntityHealth(GetPlayerPed(source), GetEntityHealth(GetPlayerPed(source)) + 20);
     }
 
     @Once()
