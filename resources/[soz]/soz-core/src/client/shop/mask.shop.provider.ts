@@ -46,6 +46,8 @@ export class MaskShopProvider {
 
     private readonly CAMERA_POSITION: Vector3 = [-1336.26, -1278.35, 5.65];
 
+    private hasMenuBeenOpenedAtLeastOnce = false;
+
     @OnNuiEvent(NuiEvent.ShopMaskPreview)
     public async previewOutfit(outfit: Outfit) {
         for (const [componentIndex, component] of Object.entries(outfit.Components)) {
@@ -56,6 +58,9 @@ export class MaskShopProvider {
 
     @OnNuiEvent(NuiEvent.MenuClosed)
     public async resetSkin() {
+        if (!this.hasMenuBeenOpenedAtLeastOnce) {
+            return;
+        }
         this.cameraService.deleteCamera();
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
@@ -66,6 +71,7 @@ export class MaskShopProvider {
         const categories = await emitRpc(RpcEvent.SHOP_MASK_GET_CATEGORIES);
 
         this.nuiMenu.openMenu(MenuType.MaskShop, categories);
+        this.hasMenuBeenOpenedAtLeastOnce = true;
         FreezeEntityPosition(PlayerPedId(), true);
     }
 
