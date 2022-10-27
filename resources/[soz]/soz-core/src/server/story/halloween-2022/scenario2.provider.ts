@@ -23,8 +23,8 @@ export class Halloween2022Scenario2Provider {
     private inventoryManager: InventoryManager;
 
     @Rpc(RpcEvent.STORY_HALLOWEEN_SCENARIO2)
-    public onScenario2(source: number, zoneName?: string): Dialog | null {
-        if (!isFeatureEnabled(Feature.Halloween2022)) {
+    public onScenario2(source: number): Dialog | null {
+        if (!isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 
