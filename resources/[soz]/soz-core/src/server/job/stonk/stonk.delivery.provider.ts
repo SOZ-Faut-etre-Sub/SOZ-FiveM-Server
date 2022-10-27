@@ -59,7 +59,7 @@ export class StonkDeliveryProvider {
             capacity: 0,
             maxCapacity: 8,
             refill: {
-                delay: 24 * 60 * 60 * 1000,
+                delay: 60 * 60 * 1000,
                 amount: 1,
             },
             harvest: {
