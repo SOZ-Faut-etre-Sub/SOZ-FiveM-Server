@@ -4403,6 +4403,49 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['description'] = ''
     },
+    --- LSMC
+    ['batrachian_eye'] = {
+        ['name'] = 'batrachian_eye',
+        ['label'] = 'Œil de batracien',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = ''
+    },
+    ['zombie_hand'] = {
+        ['name'] = 'zombie_hand',
+        ['label'] = 'Balais de sorcière',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = ''
+    },
+    ['horrific_lollipop'] = {
+        ['name'] = 'horrific_lollipop',
+        ['label'] = 'Sucette horrifique',
+        ['weight'] = 200,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = '',
+        ['nutrition'] = {
+            ['hunger'] = 10,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+            ['health'] = 20,
+        },
+    },
+    ---
     ['bag_kibble'] = {
         ['name'] = 'bag_kibble',
         ['label'] = 'Croquette pour Iench',

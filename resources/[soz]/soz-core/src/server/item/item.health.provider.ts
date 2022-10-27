@@ -175,10 +175,33 @@ export class ItemHealthProvider {
         }
     }
 
+    public useHorrificLollipop(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (
+            !this.inventoryManager.removeItemFromInventory(
+                source,
+                item.name,
+                1,
+                inventoryItem.metadata,
+                inventoryItem.slot
+            )
+        ) {
+            return;
+        }
+
+        SetEntityHealth(source, GetEntityHealth(source) + 20);
+    }
+
     @Once()
     public onStart() {
         this.item.setItemUseCallback('flask_pee_empty', this.useFlaskPee.bind(this));
         this.item.setItemUseCallback('antidepressant', this.useAntidepressant.bind(this));
         this.item.setItemUseCallback('antiacide', this.useAntiacide.bind(this));
+        this.item.setItemUseCallback('horrific_lollipop', this.useHorrificLollipop.bind(this));
     }
 }
