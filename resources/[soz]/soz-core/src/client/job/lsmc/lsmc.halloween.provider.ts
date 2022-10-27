@@ -38,7 +38,7 @@ export class LSMCHalloweenProvider {
 
     @Once()
     public onStart() {
-        if (!isFeatureEnabled(Feature.Halloween2022)) {
+        if (!isFeatureEnabled(Feature.Halloween)) {
             return;
         }
 
