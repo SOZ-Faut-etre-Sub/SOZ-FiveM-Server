@@ -2,7 +2,7 @@
 ShopShell = {}
 
 function ShopShell:new(label, brand, blip, ped)
-    return setmetatable({label = label, brand = brand, blip = blip, ped = ped}, {__index = ShopShell})
+    return setmetatable({label = label, brand = brand, blip = blip, ped = ped, target = {}}, {__index = ShopShell})
 end
 
 --- Ped functions
@@ -19,14 +19,17 @@ function ShopShell:GetPedAction()
 end
 
 function ShopShell:AddTargetModel()
-    exports["qb-target"]:AddTargetModel({self.ped}, {options = {self:GetPedAction()}, distance = 2.5})
+    exports["qb-target"]:AddTargetModel({self.ped}, {options = {self:GetPedAction(), self.target}, distance = 2.5})
 end
 
 function ShopShell:RemoveTargetModel()
     exports["qb-target"]:RemoveTargetModel({self.ped})
 end
 
-function ShopShell:SpawnPed(location, ...)
+function ShopShell:SpawnPed(location, target)
+    if target then
+        self.target = target
+    end
     exports["qb-target"]:SpawnPed({
         {
             model = self.ped,
