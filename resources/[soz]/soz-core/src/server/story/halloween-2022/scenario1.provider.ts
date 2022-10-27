@@ -9,7 +9,7 @@ import { InventoryManager } from '../../item/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 
-const DEFAULT_PART = 'init';
+const DEFAULT_PART = 'part0';
 
 @Provider()
 export class Halloween2022Scenario1Provider {
@@ -36,7 +36,7 @@ export class Halloween2022Scenario1Provider {
         const currentPart = parts ? parts[0] : DEFAULT_PART;
 
         switch (currentPart) {
-            case 'init':
+            case 'part0':
                 this.playerService.setPlayerMetadata(source, 'halloween2022', {
                     ...player.metadata.halloween2022,
                     scenario1: { part1: ScenarioState.Running },
