@@ -12,18 +12,27 @@ export enum Feature {
 export type Environment = 'development' | 'production' | 'test';
 
 const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
+    [Feature.ChainsOfJustice]: {
+        development: true,
+        test: true,
+    },
     [Feature.MyBodySummer]: {
         production: true,
         development: true,
         test: true,
     },
     [Feature.Halloween]: {
-        production: false,
+        production: true,
+        development: true,
+        test: true,
+    },
+    [Feature.HalloweenReboot]: {
+        production: true,
         development: true,
         test: true,
     },
     [Feature.HalloweenScenario1]: {
-        production: false,
+        production: true,
         development: true,
         test: true,
     },
@@ -39,15 +48,6 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
     },
     [Feature.HalloweenScenario4]: {
         production: false,
-        development: true,
-        test: true,
-    },
-    [Feature.HalloweenReboot]: {
-        production: true,
-        development: true,
-        test: true,
-    },
-    [Feature.ChainsOfJustice]: {
         development: true,
         test: true,
     },
