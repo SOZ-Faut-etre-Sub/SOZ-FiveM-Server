@@ -51,7 +51,7 @@ export class Halloween2022Scenario1Provider {
             name: 'Activité suspecte',
             coords: { x: -1647.19, y: -1064.16, z: 2.61 },
             sprite: 484,
-            scale: 1.0,
+            scale: 0.99,
             color: 44,
         });
 
