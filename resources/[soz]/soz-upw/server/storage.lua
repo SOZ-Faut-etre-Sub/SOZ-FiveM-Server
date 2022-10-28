@@ -110,7 +110,6 @@ end)
 --
 function StartConsumptionLoop()
     Citizen.CreateThread(function()
-        consumptionLoopRunning = true
         GlobalState.job_energy = GlobalState.job_energy or {}
 
         while consumptionLoopRunning do
