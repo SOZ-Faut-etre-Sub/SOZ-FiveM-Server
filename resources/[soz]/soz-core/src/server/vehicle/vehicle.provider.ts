@@ -24,6 +24,11 @@ export class VehicleProvider {
     @OnEvent(ServerEvent.ADMIN_ADD_VEHICLE)
     public async addVehicle(source: number, model: string, name: string, mods: any[]) {
         const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
         await this.prismaService.playerVehicle.create({
             data: {
                 license: player.license,

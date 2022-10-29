@@ -12,7 +12,7 @@ export const getDistance = (a: Vector2 | Vector3 | Vector4, b: Vector2 | Vector3
     const x = a[0] - b[0];
     const y = a[1] - b[1];
 
-    if (a.length >= 3 && b.length >= 3) {
+    if (a.length >= 3 && b.length >= 3 && a[2] !== undefined && b[2] !== undefined) {
         const z = a[2] - b[2];
 
         return Math.sqrt(x * x + y * y + z * z);

@@ -1,5 +1,5 @@
 import { PolygonZone, PolygonZoneOptions } from './polygon.zone';
-import { Point2D, Point3D, Vector3 } from './vector';
+import { Point2D, Point3D, Vector2, Vector3 } from './vector';
 
 type BoxZoneOptions<T> = PolygonZoneOptions<T> & {
     heading?: number;
@@ -40,7 +40,7 @@ export class BoxZone<T = never> extends PolygonZone<T> {
     public readonly heading: number;
 
     public static fromZone<T>(zone: Zone<T>): BoxZone<T> {
-        return new BoxZone(zone.center, zone.length, zone.width, {
+        return new BoxZone(zone.center, zone.length || 1, zone.width || 1, {
             minZ: zone.minZ,
             maxZ: zone.maxZ,
             data: zone.data,
@@ -49,7 +49,7 @@ export class BoxZone<T = never> extends PolygonZone<T> {
     }
 
     public constructor(center: Point3D, length: number, width: number, options?: BoxZoneOptions<T>) {
-        const points = [];
+        const points: Vector2[] = [];
         const heading = options?.heading || 0;
         const angleInRad = (heading * Math.PI) / 180;
 
