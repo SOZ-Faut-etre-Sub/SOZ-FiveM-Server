@@ -22,4 +22,6 @@ export enum RpcEvent {
 
     STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween1',
     STORY_HALLOWEEN_SCENARIO2 = 'soz-story:server:halloween2',
+    STORY_HALLOWEEN_SCENARIO3 = 'soz-story:server:halloween3',
+    STORY_HALLOWEEN_SCENARIO4 = 'soz-story:server:halloween4',
 }
