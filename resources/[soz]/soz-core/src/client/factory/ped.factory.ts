@@ -12,7 +12,7 @@ export type Ped = {
     hair?: { [key: string]: number };
     makeup?: { [key: string]: number };
     modelCustomization?: { [key: string]: number };
-    tattoos?: {collection: number, overlay: number}[];
+    tattoos?: { collection: number; overlay: number }[];
     freeze?: boolean;
     invincible?: boolean;
     blockevents?: boolean;
@@ -96,7 +96,19 @@ export class PedFactory {
         }
 
         if (ped.modelCustomization) {
-            SetPedHeadBlendData(pedId, ped.modelCustomization.Father, ped.modelCustomization.Mother, 0, ped.modelCustomization.Father, ped.modelCustomization.Mother, 0, ped.modelCustomization.ShapeMix, ped.modelCustomization.SkinMix, 0, false);
+            SetPedHeadBlendData(
+                pedId,
+                ped.modelCustomization.Father,
+                ped.modelCustomization.Mother,
+                0,
+                ped.modelCustomization.Father,
+                ped.modelCustomization.Mother,
+                0,
+                ped.modelCustomization.ShapeMix,
+                ped.modelCustomization.SkinMix,
+                0,
+                false
+            );
         }
 
         if (ped.face) {
@@ -129,7 +141,6 @@ export class PedFactory {
             SetPedHeadOverlay(pedId, 5, ped.makeup.BlushType, ped.makeup.BlushOpacity || 1.0);
             SetPedHeadOverlayColor(pedId, 5, 2, ped.makeup.BlushColor, 0);
             SetPedHeadOverlay(pedId, 4, ped.makeup.FullMakeupType, ped.makeup.FullMakeupOpacity || 1.0);
-
         }
 
         if (ped.freeze) {
