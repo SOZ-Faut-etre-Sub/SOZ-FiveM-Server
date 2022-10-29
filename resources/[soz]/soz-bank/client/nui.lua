@@ -12,6 +12,13 @@ local function playAnimation()
     end
 end
 
+local function getATMOrBankAccount(atm, bank)
+    if string.match(atm, "atm_ent_%w+") then
+        return atm
+    end
+    return bank
+end
+
 local function openBankScreen(account, isATM, bankAtmAccountId, atmType, atmName)
     QBCore.Functions.TriggerCallback("banking:getBankingInformation", function(banking)
         if banking ~= nil then
@@ -134,7 +141,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
             end
         end
         return p:resolve(result)
-    end, data.atmName or data.bankAtmAccount, amount)
+    end, getATMOrBankAccount(data.atmName, data.bankAtmAccount), amount)
     local hasEnoughLiquidity = Citizen.Await(p)
     if not hasEnoughLiquidity then
         return
