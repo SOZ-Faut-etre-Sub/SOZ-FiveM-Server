@@ -18,4 +18,11 @@ export type Halloween2022 = {
         part5?: ScenarioState;
         part6?: ScenarioState;
     };
+    scenario3: {
+        part1?: ScenarioState;
+        part2?: ScenarioState;
+        part3?: ScenarioState;
+        part4?: ScenarioState;
+        part5?: ScenarioState;
+    };
 };
