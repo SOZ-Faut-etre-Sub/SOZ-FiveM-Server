@@ -46,7 +46,7 @@ export class AfkProvider {
     async verificationLoop() {
         const player = this.playerService.getPlayer();
 
-        if (!player || !LocalPlayer.state.isLoggedIn || player.metadata.godmode || GlobalState.disableAFK) {
+        if (!player || player.metadata.godmode || GlobalState.disableAFK) {
             return;
         }
 
@@ -113,7 +113,7 @@ export class AfkProvider {
         const player = this.playerService.getPlayer();
         const currentPosition: Vector3 = [0, 0, 0];
 
-        if (!player || !LocalPlayer.state.isLoggedIn || player.metadata.godmode || GlobalState.disableAFK) {
+        if (!player || player.metadata.godmode || GlobalState.disableAFK) {
             return;
         }
 
