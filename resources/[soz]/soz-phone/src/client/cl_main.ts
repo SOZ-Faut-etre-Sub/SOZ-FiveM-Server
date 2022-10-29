@@ -217,4 +217,4 @@ setTick(async () => {
 setInterval(() => {
     const time = getCurrentGameTime();
     sendMessage('PHONE', PhoneEvents.SET_TIME, time);
-}, 2000);
+}, 4000);
