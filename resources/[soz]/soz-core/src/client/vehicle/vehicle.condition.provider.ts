@@ -58,7 +58,19 @@ export class VehicleConditionProvider {
 
     @StateBagHandler('condition', null)
     private async onVehicleConditionChange(bag: string, key: string, value: VehicleCondition) {
-        const vehicle = NetworkGetEntityFromNetworkId(parseInt(bag));
+        const split = bag.split(':');
+
+        if (!split[1]) {
+            return;
+        }
+
+        const vehicleId = parseInt(split[1]);
+
+        if (!vehicleId) {
+            return;
+        }
+
+        const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
 
         if (!vehicle) {
             return;
@@ -213,7 +225,6 @@ export class VehicleConditionProvider {
         } else {
             SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, 1.0);
         }
-        SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, 1.0);
     }
 
     @Tick(50)

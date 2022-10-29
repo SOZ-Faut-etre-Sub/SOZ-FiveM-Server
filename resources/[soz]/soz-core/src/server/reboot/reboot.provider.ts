@@ -47,7 +47,7 @@ export class RebootProvider {
 
         exports['soz-inventory'].saveInventories();
 
-        await this.prismaService.player_vehicles.updateMany({
+        await this.prismaService.playerVehicle.updateMany({
             where: {
                 state: 0,
             },
@@ -61,7 +61,7 @@ export class RebootProvider {
             },
         });
 
-        await this.prismaService.player_vehicles.updateMany({
+        await this.prismaService.playerVehicle.updateMany({
             where: {
                 life_counter: -1,
             },
@@ -75,7 +75,7 @@ export class RebootProvider {
         exports['soz-upw'].saveUpw();
         exports['soz-vehicle'].finishAuctions();
 
-        await this.prismaService.player_vehicles.deleteMany({
+        await this.prismaService.playerVehicle.deleteMany({
             where: {
                 plate: {
                     contains: 'ESSAI',

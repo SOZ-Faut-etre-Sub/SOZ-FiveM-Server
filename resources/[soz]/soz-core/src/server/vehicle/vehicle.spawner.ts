@@ -93,7 +93,7 @@ export class VehicleSpawner {
             ...getDefaultVehicleState(),
             condition: {
                 ...getDefaultVehicleCondition(),
-                ...JSON.parse(vehicle.condition),
+                ...JSON.parse(vehicle.condition || '{}'),
             },
             plate: vehicle.plate,
             id: vehicle.id,
@@ -101,11 +101,20 @@ export class VehicleSpawner {
             owner: player.citizenid,
         };
 
+        const hash = parseInt(vehicle.hash || '0', 10);
+
+        if (!hash) {
+            return null;
+        }
+
         return this.spawn(source, {
-            model: parseInt(vehicle.hash, 10),
+            model: hash,
             position,
             warp: false,
-            modification: { ...getDefaultVehicleModification(), ...(JSON.parse(vehicle.mods) as VehicleModification) },
+            modification: {
+                ...getDefaultVehicleModification(),
+                ...(JSON.parse(vehicle.mods || '{}') as VehicleModification),
+            },
             state,
         });
     }

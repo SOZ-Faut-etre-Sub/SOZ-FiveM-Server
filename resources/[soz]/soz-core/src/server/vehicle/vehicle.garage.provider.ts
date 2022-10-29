@@ -10,7 +10,11 @@ import { getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
-import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicle/vehicle';
+import {
+    getDefaultVehicleCondition,
+    getDefaultVehicleModification,
+    VehicleCategory,
+} from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { JobService } from '../job.service';
 import { LockService } from '../lock.service';
@@ -121,9 +125,9 @@ export class VehicleGarageProvider {
                 id: vehicle.id,
                 license: vehicle.license,
                 citizenid: vehicle.citizenid,
-                model: parseInt(vehicle.hash, 10),
+                model: parseInt(vehicle.hash || '0', 10),
                 modelName: vehicle.vehicle,
-                modification: JSON.parse(vehicle.mods),
+                modification: vehicle.mods ? JSON.parse(vehicle.mods) : getDefaultVehicleModification(),
                 condition: vehicle.condition ? JSON.parse(vehicle.condition) : getDefaultVehicleCondition(),
                 plate: vehicle.plate,
                 garage: vehicle.garage,
@@ -132,7 +136,7 @@ export class VehicleGarageProvider {
                 state: vehicle.state,
             };
 
-            let price = null;
+            let price: number | null = null;
 
             if (garage.type === GarageType.Depot) {
                 price = 10000;
@@ -291,7 +295,7 @@ export class VehicleGarageProvider {
 
                 const parkingPlace = getRandomItem(garage.parkingPlaces);
 
-                let price = null;
+                let price = 0;
 
                 if (garage.type === GarageType.Depot) {
                     price = 10000;
@@ -302,7 +306,7 @@ export class VehicleGarageProvider {
                     price = Math.min(200, hours * 20);
                 }
 
-                if (price !== null && !this.playerMoneyService.remove(source, price)) {
+                if (price !== 0 && !this.playerMoneyService.remove(source, price)) {
                     this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
 
                     return;
@@ -311,7 +315,7 @@ export class VehicleGarageProvider {
                 if (
                     await this.vehicleSpawner.spawnPlayerVehicle(source, vehicle, [
                         ...parkingPlace.center,
-                        parkingPlace.heading,
+                        parkingPlace.heading || 0,
                     ])
                 ) {
                     await this.prismaService.playerVehicle.update({
