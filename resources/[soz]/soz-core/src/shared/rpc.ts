@@ -27,6 +27,8 @@ export enum RpcEvent {
 
     VEHICLE_CUSTOM_GET_MODS = 'soz-core:vehicle:custom:get-mods',
     VEHICLE_CUSTOM_SET_MODS = 'soz-core:vehicle:custom:set-mods',
+    VEHICLE_DEALERSHIP_GET_LIST = 'soz-core:vehicle:dealership:get-list',
+    VEHICLE_DEALERSHIP_BUY = 'soz-core:vehicle:dealership:buy',
     VEHICLE_GARAGE_GET_VEHICLES = 'soz-core:vehicle:garage:get-vehicles',
     VEHICLE_GARAGE_GET_FREE_PLACES = 'soz-core:vehicle:garage:get-free-places',
     VEHICLE_HAS_KEY = 'soz-core:vehicle:has-key',

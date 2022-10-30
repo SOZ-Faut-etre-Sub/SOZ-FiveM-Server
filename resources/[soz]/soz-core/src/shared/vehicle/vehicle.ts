@@ -1,7 +1,15 @@
+import { DealershipConfigItem } from '../../config/dealership';
 import { RGBColor } from '../color';
 import { JobType } from '../job';
 import { Vector4 } from '../polyzone/vector';
 import { DealershipId } from './dealership';
+
+export enum LicenceType {
+    Car = 'car',
+    Moto = 'moto',
+    Boat = 'boat',
+    Heli = 'heli',
+}
 
 export type Vehicle = {
     model: string;
@@ -13,6 +21,7 @@ export type Vehicle = {
     requiredLicence?: string;
     size: number;
     jobName?: { [key in JobType]: string };
+    stock: number;
 };
 
 export type VehicleSpawn = {
@@ -253,7 +262,7 @@ export const VehicleLsCustomBaseConfig: Partial<Record<keyof VehicleModification
         prefix: 'Niveau ',
     },
     modTurbo: {
-        priceByLevels: [0.2],
+        priceByLevels: [0, 0.2],
         label: 'Amélioration Turbo',
         mod: VehicleModType.Turbo,
         prefix: 'Niveau ',
@@ -391,6 +400,11 @@ export type VehicleMenuData = {
 
 export type VehicleDealershipMenuData = {
     name: string;
+    dealership: DealershipConfigItem;
+    categories: {
+        name: string;
+        vehicles: Vehicle[];
+    }[];
 };
 
 export type VehicleCustomMenuData = {

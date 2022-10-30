@@ -66,12 +66,6 @@ model concess_entreprise {
   liverytype Int
 }
 
-model concess_storage {
-  model    String  @id @db.VarChar(50)
-  stock    Int
-  category String? @db.VarChar(60)
-}
-
 model fuel_storage {
   id       Int     @id @default(autoincrement())
   station  String  @db.VarChar(15)
@@ -355,7 +349,7 @@ model upw_facility {
   data       String? @db.LongText
 }
 
-model vehicles {
+model Vehicle {
   model           String  @id @db.VarChar(50)
   hash            Int?
   name            String  @db.VarChar(255)
@@ -365,9 +359,11 @@ model vehicles {
   requiredLicence String? @map("required_licence") @db.VarChar(10)
   size            Int?    @default(1)
   jobName         String? @map("job_name") @db.Text
+  stock           Int?    @default(0)
 
   @@index([category])
   @@index([dealershipId], map: "vehicles_dealership_idx")
+  @@map("vehicles")
 }
 
 model player_purchases {
