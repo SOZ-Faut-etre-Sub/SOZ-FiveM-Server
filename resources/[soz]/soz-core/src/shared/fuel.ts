@@ -21,6 +21,6 @@ export type FuelStation = {
     type: FuelStationType;
     fuel: FuelType;
     stock: number;
-    price: number;
-    job?: JobType;
+    price: number | null;
+    job: JobType | null;
 };

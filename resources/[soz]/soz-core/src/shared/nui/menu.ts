@@ -1,7 +1,7 @@
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
 import { GarageMenuData } from '../vehicle/garage';
-import { VehicleMenuData } from '../vehicle/vehicle';
+import { VehicleCustomMenuData, VehicleMenuData } from '../vehicle/vehicle';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -41,10 +41,11 @@ export enum MenuType {
 export interface MenuTypeMap extends Record<MenuType, unknown> {
     [MenuType.AdminMenu]: AdminMenuStateProps['data'];
     [MenuType.BahamaUnicornJobMenu]: any;
-    [MenuType.FightForStyleJobMenu]: any;
     [MenuType.Demo]: never;
-    [MenuType.SetHealthState]: number;
-    [MenuType.Wardrobe]: WardrobeMenuData;
-    [MenuType.Vehicle]: VehicleMenuData;
+    [MenuType.FightForStyleJobMenu]: any;
     [MenuType.Garage]: GarageMenuData;
+    [MenuType.SetHealthState]: number;
+    [MenuType.Vehicle]: VehicleMenuData;
+    [MenuType.VehicleCustom]: VehicleCustomMenuData;
+    [MenuType.Wardrobe]: WardrobeMenuData;
 }

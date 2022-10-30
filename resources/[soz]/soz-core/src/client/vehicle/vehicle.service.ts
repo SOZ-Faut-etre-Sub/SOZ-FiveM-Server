@@ -167,7 +167,7 @@ export class VehicleService {
         const playerCoords = GetEntityCoords(currentPed, false) as Vector3;
 
         let closestVehicle = null;
-        let closestDistance = null;
+        let closestDistance: number | null = null;
 
         for (const vehicle of vehicles) {
             const vehicleCoords = GetEntityCoords(vehicle, false) as Vector3;
@@ -183,7 +183,7 @@ export class VehicleService {
             }
         }
 
-        if (closestDistance > maxDistance) {
+        if (!closestDistance || closestDistance > maxDistance) {
             return null;
         }
 
@@ -199,6 +199,7 @@ export class VehicleService {
 
         this.applyVehicleCondition(vehicle, state.condition);
     }
+
     public applyVehicleCondition(vehicle: number, condition: VehicleCondition): void {
         SetVehicleFuelLevel(vehicle, condition.fuelLevel);
         SetVehicleOilLevel(vehicle, condition.oilLevel);

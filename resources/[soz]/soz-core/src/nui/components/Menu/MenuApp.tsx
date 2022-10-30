@@ -16,7 +16,8 @@ import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { MenuDemo } from './MenuDemo';
 import { MenuGarage } from './MenuGarage';
 import { MenuSetHealthState } from './MenuSetHealthState';
-import { MenuVehicle } from './MenuVehicule';
+import { MenuVehicle } from './MenuVehicle';
+import { MenuVehicleCustom } from './MenuVehicleCustom';
 import { MenuWardrobe } from './MenuWardrobe';
 
 export const MenuApp: FunctionComponent = () => {
@@ -31,12 +32,16 @@ const MenuRouter: FunctionComponent = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [menuData, setMenuData] = useState(null);
+    const [menuType, setMenuType] = useState<MenuType>(null);
 
     useEffect(() => {
-        if (location.pathname === '/') {
-            fetchNui(NuiEvent.MenuClosed, {});
+        if (location.pathname === '/' && menuType !== null && menuData !== null) {
+            fetchNui(NuiEvent.MenuClosed, {
+                menuType,
+                menuData,
+            });
         }
-    }, [location]);
+    }, [location, menuType, menuData]);
 
     useMenuNuiEvent('SetMenuType', ({ menuType, data, subMenuId }) => {
         let path = `/`;
@@ -51,6 +56,7 @@ const MenuRouter: FunctionComponent = () => {
 
         navigate(path);
         setMenuData(data);
+        setMenuType(menuType);
     });
 
     useMenuNuiEvent('CloseMenu', () => {
@@ -74,6 +80,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />
             <Route path={`/${MenuType.Vehicle}/*`} element={<MenuVehicle data={menuData} />} />
+            <Route path={`/${MenuType.VehicleCustom}/*`} element={<MenuVehicleCustom data={menuData} />} />
             <Route path={`/${MenuType.Garage}/*`} element={<MenuGarage data={menuData} />} />
         </Routes>
     );

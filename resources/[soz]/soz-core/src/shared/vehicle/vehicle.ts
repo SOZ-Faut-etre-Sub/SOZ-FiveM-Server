@@ -202,6 +202,64 @@ export type VehicleCondition = {
     windowStatus: { [key: number]: boolean };
 };
 
+export type VehicleLsCustomLevel = {
+    price: number;
+    name: string;
+};
+
+export type VehicleLsCustomCategory = {
+    label: string;
+    levels: VehicleLsCustomLevel[];
+};
+
+export type VehicleLsCustom = Partial<Record<keyof VehicleModification, VehicleLsCustomCategory>>;
+
+type VehicleLsCustomBaseConfigItem = {
+    priceByLevels: number[];
+    label: string;
+    mod: VehicleModType;
+    prefix?: string;
+};
+
+export const VehicleLsCustomBaseConfig: Partial<Record<keyof VehicleModification, VehicleLsCustomBaseConfigItem>> = {
+    modEngine: {
+        priceByLevels: [0, 0.1, 0.15, 0.2, 0.25, 0.3],
+        label: 'Amélioration Moteur',
+        mod: VehicleModType.Engine,
+        prefix: 'Niveau ',
+    },
+    modBrakes: {
+        priceByLevels: [0, 0.08, 0.1, 0.12, 0.14, 0.16],
+        label: 'Amélioration Freins',
+        mod: VehicleModType.Brakes,
+        prefix: 'Niveau ',
+    },
+    modTransmission: {
+        priceByLevels: [0, 0.08, 0.11, 0.14, 0.17, 0.2],
+        label: 'Amélioration Transmission',
+        mod: VehicleModType.Gearbox,
+        prefix: 'Niveau ',
+    },
+    modSuspension: {
+        priceByLevels: [0, 0.06, 0.09, 0.12, 0.15, 0.18],
+        label: 'Amélioration Suspension',
+        mod: VehicleModType.Suspension,
+        prefix: 'Niveau ',
+    },
+    modArmor: {
+        priceByLevels: [0, 0.25, 0.35, 0.45, 0.55, 0.65],
+        label: 'Amélioration Blindage',
+        mod: VehicleModType.Armor,
+        prefix: 'Niveau ',
+    },
+    modTurbo: {
+        priceByLevels: [0.2],
+        label: 'Amélioration Turbo',
+        mod: VehicleModType.Turbo,
+        prefix: 'Niveau ',
+    },
+};
+
 export const getDefaultVehicleCondition = (): VehicleCondition => ({
     bodyHealth: 1000,
     doorStatus: {},
@@ -299,6 +357,30 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     condition: getDefaultVehicleCondition(),
 });
 
+export const getVehicleCustomPrice = (
+    custom: VehicleLsCustom,
+    currentModification: VehicleModification,
+    newModification: VehicleModification
+): number => {
+    let price = 0;
+
+    for (const key in custom) {
+        const category = custom[key];
+        const currentLevel = currentModification[key];
+
+        const newLevel = newModification[key];
+        if (currentLevel !== newLevel) {
+            const level = category.levels[newLevel];
+
+            if (level) {
+                price += level.price;
+            }
+        }
+    }
+
+    return price;
+};
+
 export type VehicleMenuData = {
     speedLimit: number;
     engineOn: boolean;
@@ -313,6 +395,8 @@ export type VehicleDealershipMenuData = {
 
 export type VehicleCustomMenuData = {
     vehicle: number;
+    custom: VehicleLsCustom;
+    currentModification: VehicleModification;
 };
 
 export enum VehicleCategory {

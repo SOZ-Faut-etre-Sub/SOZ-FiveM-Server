@@ -68,7 +68,7 @@ export class FuelStationRepository extends Repository<Record<string, FuelStation
                     job: station.owner ? (station.owner as JobType) : null,
                 };
             } catch (e) {
-                console.error('error', e);
+                console.error('cannot load station: ', station.station, e);
                 continue;
             }
         }

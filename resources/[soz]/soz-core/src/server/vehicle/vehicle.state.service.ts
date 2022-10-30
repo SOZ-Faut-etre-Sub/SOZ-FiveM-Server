@@ -7,8 +7,8 @@ export class VehicleStateService {
 
     private vehicleKeys: Record<string, Set<string>> = {};
 
-    public getVehicleState(vehicle: number): VehicleEntityState {
-        const state = Entity(vehicle).state;
+    public getVehicleState(vehicleEntityId: number): VehicleEntityState {
+        const state = Entity(vehicleEntityId).state;
         const defaultState = getDefaultVehicleState();
         const returnState = {};
 
