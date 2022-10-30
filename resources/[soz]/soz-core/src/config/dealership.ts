@@ -22,7 +22,8 @@ export type DealershipConfigItem = {
         position: Vector4;
         camera: Vector3;
     };
-    daysBeforeNextPurchase: number;
+    daysBeforeNextPurchase?: number;
+    garageName: string;
 };
 
 export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
@@ -40,6 +41,7 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
             camera: [-53.69, -1094.83, 27.0],
         },
         daysBeforeNextPurchase: 7,
+        garageName: 'airport_public',
     },
     [DealershipType.Cycle]: {
         position: [-1222.26, -1494.83, 3.34, 120.0],
@@ -53,7 +55,7 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
             position: [-1221.96, -1498.45, 4.35, 210.0],
             camera: [-1222.6, -1501.34, 5.37],
         },
-        daysBeforeNextPurchase: 7,
+        garageName: 'airport_public',
     },
     [DealershipType.Moto]: {
         licence: LicenceType.Moto,
@@ -69,6 +71,7 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
             camera: [1224.5, 2701.63, 39.0],
         },
         daysBeforeNextPurchase: 7,
+        garageName: 'bell_farms',
     },
     [DealershipType.Air]: {
         licence: LicenceType.Heli,
@@ -84,6 +87,7 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
             camera: [1733.07, 3303.82, 42.22],
         },
         daysBeforeNextPurchase: 7,
+        garageName: 'sandy_shores_air',
     },
     [DealershipType.Boat]: {
         licence: LicenceType.Boat,
@@ -99,5 +103,6 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
             camera: [-871.61, -1342.65, 8.44],
         },
         daysBeforeNextPurchase: 7,
+        garageName: 'marina_boat',
     },
 };

@@ -1,5 +1,6 @@
-import { Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Zone } from '../../shared/polyzone/box.zone';
+import { PedFactory } from '../factory/ped.factory';
 
 export type TargetOptions = {
     label: string;
@@ -40,6 +41,9 @@ const DEFAULT_DISTANCE = 2.5;
 export class TargetFactory {
     private zones: { [id: string]: any } = {};
     private players: { [id: string]: any } = {};
+
+    @Inject(PedFactory)
+    private pedFactory: PedFactory;
 
     public createForBoxZone(id: string, zone: Zone, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         zone = {
@@ -91,8 +95,22 @@ export class TargetFactory {
         exports['qb-target'].DeletePeds();
     }
 
-    public createForPed(ped: PedOptions) {
-        exports['qb-target'].SpawnPed(ped);
+    public async createForPed(ped: PedOptions) {
+        const id = await this.pedFactory.createPed(ped);
+
+        this.createForBoxZone(
+            `entity_${id}`,
+            {
+                center: [ped.coords.x, ped.coords.y, ped.coords.z],
+                heading: ped.coords.w,
+                debugPoly: true,
+                width: 0.8,
+                length: 0.8,
+                minZ: ped.coords.z - 1,
+                maxZ: ped.coords.z + 2,
+            },
+            ped.target.options
+        );
     }
 
     public createForModel(

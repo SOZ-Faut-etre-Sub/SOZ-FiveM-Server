@@ -5,6 +5,7 @@ import { AdminModule } from './client/admin/admin.module';
 import { AfkModule } from './client/afk/afk.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
+import { FactoryModule } from './client/factory/factory.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
@@ -53,7 +54,8 @@ async function bootstrap() {
         ShopModule,
         StoryModule,
         AfkModule,
-        VehicleModule
+        VehicleModule,
+        FactoryModule
     );
 
     await app.stop();

@@ -1,5 +1,6 @@
 import { Once, OnceStep } from '../../core/decorators/event';
-import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
 import { ResourceLoader } from '../resources/resource.loader';
 
 export type Ped = {
@@ -61,7 +62,7 @@ export enum PedHeadOverlay {
     AddBodyBlemishes = 12,
 }
 
-@Injectable()
+@Provider()
 export class PedFactory {
     private peds: { [id: number]: any } = {};
 

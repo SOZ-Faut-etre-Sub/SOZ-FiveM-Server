@@ -13,7 +13,7 @@ export class AdminMenuVehicleProvider {
 
     @Rpc(RpcEvent.ADMIN_GET_VEHICLES)
     public async getVehicles(): Promise<Vehicle[]> {
-        return (await this.prismaService.vehicles.findMany())
+        return (await this.prismaService.vehicle.findMany())
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(v => ({
                 ...v,

@@ -8,7 +8,7 @@ export class VehicleService {
     private prismaService: PrismaService;
 
     public getVehicle(hash: number) {
-        return this.prismaService.vehicles.findFirst({
+        return this.prismaService.vehicle.findFirst({
             where: {
                 hash,
             },

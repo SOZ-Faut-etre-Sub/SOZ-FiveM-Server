@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { RGBColor } from '../../shared/color';
-import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import {
     getDefaultVehicleState,
     VehicleCondition,
@@ -128,6 +128,11 @@ const SetVehicleModMap: Record<
     } as VehicleModificationModSync<'modSmokeEnabled'>,
 };
 
+type ClosestVehicleConfig = {
+    maxDistance?: number;
+    position?: Vector3 | Vector4 | null;
+};
+
 @Injectable()
 export class VehicleService {
     @Inject(Qbcore)
@@ -155,23 +160,28 @@ export class VehicleService {
         }
     }
 
-    public getClosestVehicle(maxDistance = 10, filter?: (vehicle: number) => boolean): number | null {
+    public getClosestVehicle(config?: ClosestVehicleConfig, filter?: (vehicle: number) => boolean): number | null {
+        const maxDistance = config?.maxDistance || 10.0;
         const currentPed = PlayerPedId();
-        const vehicle = GetVehiclePedIsIn(currentPed, false);
 
-        if (vehicle) {
-            return vehicle;
+        // Only check current ped vehicle if no position is provided
+        if (!config?.position) {
+            const vehicle = GetVehiclePedIsIn(currentPed, false);
+
+            if (vehicle) {
+                return vehicle;
+            }
         }
 
         const vehicles = GetGamePool('CVehicle');
-        const playerCoords = GetEntityCoords(currentPed, false) as Vector3;
+        const position = config?.position || (GetEntityCoords(currentPed, false) as Vector3);
 
         let closestVehicle = null;
         let closestDistance: number | null = null;
 
         for (const vehicle of vehicles) {
             const vehicleCoords = GetEntityCoords(vehicle, false) as Vector3;
-            const distance = getDistance(playerCoords, vehicleCoords);
+            const distance = getDistance(position, vehicleCoords);
 
             if (closestDistance === null || distance < closestDistance) {
                 if (filter && !filter(vehicle)) {

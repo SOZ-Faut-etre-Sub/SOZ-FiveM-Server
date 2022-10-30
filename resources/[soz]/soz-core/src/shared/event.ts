@@ -262,6 +262,9 @@ export enum NuiEvent {
     VehicleCustomApply = 'soz-core:nui:vehicle:custom:apply',
     VehicleCustomConfirmModification = 'soz-core:nui:vehicle:custom:confirm-modification',
 
+    VehicleDealershipShowVehicle = 'soz-core:client:vehicle:dealership:show-vehicle',
+    VehicleDealershipBuyVehicle = 'soz-core:client:vehicle:dealership:buy-vehicle',
+
     VehicleSetEngine = 'soz-core:nui:vehicle:set-engine',
     VehicleSetSpeedLimit = 'soz-core:nui:vehicle:set-speed-limit',
     VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
