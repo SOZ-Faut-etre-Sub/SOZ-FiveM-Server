@@ -34,7 +34,7 @@ export class NuiMenu {
 
     @Tick(TickInterval.EVERY_SECOND)
     public closeMenuIfTooFar() {
-        if (!this.menuPosition) {
+        if (!this.menuPosition || this.getOpened() === null) {
             return;
         }
 
@@ -48,6 +48,10 @@ export class NuiMenu {
 
     @OnEvent(ClientEvent.CORE_CLOSE_MENU)
     public closeMenu() {
+        if (this.getOpened() === null) {
+            return;
+        }
+
         this.menuPosition = null;
         this.dispatcher.setMenuOpen(null);
         this.dispatcher.dispatch('menu', 'CloseMenu');
