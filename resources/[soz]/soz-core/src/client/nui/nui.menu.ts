@@ -28,7 +28,7 @@ export class NuiMenu {
         this.dispatcher.setMenuOpen(menuType);
         exports['menuv'].SendNUIMessage({ action: 'KEY_CLOSE_ALL' });
 
-        this.menuPosition = config?.position;
+        this.menuPosition = config?.position || null;
         this.dispatcher.dispatch('menu', 'SetMenuType', { menuType, data, subMenuId: config?.subMenuId });
     }
 

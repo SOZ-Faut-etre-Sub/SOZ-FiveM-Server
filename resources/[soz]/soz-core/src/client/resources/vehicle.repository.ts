@@ -18,4 +18,8 @@ export class VehicleRepository {
     public get(): Vehicle[] {
         return this.vehicles;
     }
+
+    public getByModelHash(hash: number): Vehicle | null {
+        return this.vehicles.find(vehicle => vehicle.hash === hash) || null;
+    }
 }

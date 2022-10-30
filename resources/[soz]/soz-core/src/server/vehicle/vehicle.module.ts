@@ -1,6 +1,7 @@
 import { Module } from '../../core/decorators/module';
 import { VehicleAdminProvider } from '../admin/vehicle.admin.provider';
 import { VehicleCommandProvider } from './vehicle.command.provider';
+import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
 import { VehicleLockProvider } from './vehicle.lock.provider';
@@ -13,6 +14,7 @@ import { VehicleStateProvider } from './vehicle.state.provider';
     providers: [
         VehicleAdminProvider,
         VehicleCommandProvider,
+        VehicleCustomProvider,
         VehicleFuelProvider,
         VehicleGarageProvider,
         VehicleLockProvider,

@@ -1,12 +1,28 @@
-import { Once, OnceStep } from '../../core/decorators/event';
+import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { emitRpc } from '../../core/rpc';
+import { NuiEvent } from '../../shared/event';
+import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { MultiZone } from '../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
+import { RpcEvent } from '../../shared/rpc';
+import {
+    getVehicleCustomPrice,
+    VehicleCustomMenuData,
+    VehicleLsCustom,
+    VehicleLsCustomBaseConfig,
+    VehicleLsCustomLevel,
+    VehicleModification,
+} from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
+import { Notifier } from '../notifier';
+import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { VehicleRepository } from '../resources/vehicle.repository';
 import { TargetFactory } from '../target/target.factory';
+import { VehicleService } from './vehicle.service';
 
 @Provider()
 export class VehicleCustomProvider {
@@ -18,6 +34,18 @@ export class VehicleCustomProvider {
 
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
+
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
+
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
 
     private lsCustomZone = new MultiZone([
         new BoxZone([-339.46, -136.73, 39.01], 10, 10, {
@@ -69,6 +97,9 @@ export class VehicleCustomProvider {
                 icon: 'c:mechanic/Ameliorer.png',
                 label: 'Améliorer sa voiture',
                 blackoutGlobal: true,
+                action: vehicle => {
+                    this.upgradeVehicle(vehicle);
+                },
                 canInteract: () => {
                     const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
 
@@ -76,5 +107,116 @@ export class VehicleCustomProvider {
                 },
             },
         ]);
+    }
+
+    @OnNuiEvent<{ menuType: MenuType; menuData: VehicleCustomMenuData }>(NuiEvent.MenuClosed)
+    public async onMenuClose({ menuType, menuData }) {
+        if (menuType !== MenuType.VehicleCustom) {
+            return;
+        }
+
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(menuData.vehicle);
+        const vehicleCurrentModification = await emitRpc<VehicleModification>(
+            RpcEvent.VEHICLE_CUSTOM_GET_MODS,
+            vehicleNetworkId
+        );
+
+        this.vehicleService.applyVehicleModification(menuData.vehicle, vehicleCurrentModification);
+    }
+
+    @OnNuiEvent<{ vehicleEntityId: number; vehicleModification: VehicleModification }>(NuiEvent.VehicleCustomApply)
+    public async applyVehicleModification({ vehicleEntityId, vehicleModification }): Promise<void> {
+        this.vehicleService.applyVehicleModification(vehicleEntityId, vehicleModification);
+    }
+
+    @OnNuiEvent<{ vehicleEntityId: number; vehicleModification: Partial<VehicleModification> }>(
+        NuiEvent.VehicleCustomConfirmModification
+    )
+    public async confirmVehicleCustom({ vehicleEntityId, vehicleModification }): Promise<void> {
+        const vehicleLsCustom = this.buildVehicleLsCustomConfig(vehicleEntityId);
+
+        if (!vehicleLsCustom) {
+            this.notifier.notify('Vous ne pouvez pas améliorer cette voiture', 'error');
+            this.nuiMenu.closeMenu();
+
+            return;
+        }
+
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+        const vehicleCurrentModification = await emitRpc<VehicleModification>(
+            RpcEvent.VEHICLE_CUSTOM_GET_MODS,
+            vehicleNetworkId
+        );
+
+        const price = getVehicleCustomPrice(vehicleLsCustom, vehicleCurrentModification, vehicleModification);
+        const newVehicleModification = await emitRpc<VehicleModification>(
+            RpcEvent.VEHICLE_CUSTOM_SET_MODS,
+            vehicleNetworkId,
+            vehicleModification,
+            price
+        );
+
+        this.vehicleService.applyVehicleModification(vehicleEntityId, newVehicleModification);
+        this.nuiMenu.closeMenu();
+    }
+
+    public async upgradeVehicle(vehicleEntityId: number) {
+        const vehicleLsCustom = this.buildVehicleLsCustomConfig(vehicleEntityId);
+
+        if (!vehicleLsCustom) {
+            this.notifier.notify('Vous ne pouvez pas améliorer cette voiture', 'error');
+
+            return;
+        }
+
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+        const vehicleModification = await emitRpc<VehicleModification>(
+            RpcEvent.VEHICLE_CUSTOM_GET_MODS,
+            vehicleNetworkId
+        );
+
+        this.nuiMenu.openMenu(MenuType.VehicleCustom, {
+            vehicle: vehicleEntityId,
+            custom: vehicleLsCustom,
+            currentModification: vehicleModification,
+        });
+    }
+
+    private buildVehicleLsCustomConfig(vehicleEntityId: number): VehicleLsCustom | null {
+        const custom = {};
+        const model = GetEntityModel(vehicleEntityId);
+        const vehicle = this.vehicleRepository.getByModelHash(model);
+
+        if (!vehicle) {
+            return null;
+        }
+
+        for (const [modType, config] of Object.entries(VehicleLsCustomBaseConfig)) {
+            const maxLevels = Math.min(config.priceByLevels.length, GetNumVehicleMods(vehicleEntityId, config.mod));
+            const levels: VehicleLsCustomLevel[] = [];
+
+            for (let i = 0; i < maxLevels; i++) {
+                const modTextLabel = GetModTextLabel(vehicleEntityId, config.mod, i);
+                let modName = GetLabelText(modTextLabel);
+
+                if (modName === 'NULL') {
+                    modName = (config.prefix ? config.prefix : config.label) + ' ' + i;
+                }
+
+                levels.push({
+                    price: config.priceByLevels[i] * vehicle.price,
+                    name: modName,
+                });
+            }
+
+            if (levels.length > 0) {
+                custom[modType] = {
+                    label: config.label,
+                    levels,
+                };
+            }
+        }
+
+        return custom;
     }
 }

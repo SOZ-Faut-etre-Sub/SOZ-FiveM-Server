@@ -18,13 +18,10 @@ export class VehicleCommandProvider {
     }
     @Command('dv', { role: ['staff', 'admin'], description: 'Delete Vehicle (Admin Only)' })
     async deleteCarCommand(source: number) {
-        const ped = GetPlayerPed(source);
-        const vehicle = GetVehiclePedIsIn(ped, false);
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
-        if (vehicle !== 0) {
-            const networkId = NetworkGetNetworkIdFromEntity(vehicle);
-
-            await this.vehicleSpawner.delete(networkId);
+        if (closestVehicle !== null) {
+            await this.vehicleSpawner.delete(closestVehicle.vehicleNetworkId);
         }
     }
 }

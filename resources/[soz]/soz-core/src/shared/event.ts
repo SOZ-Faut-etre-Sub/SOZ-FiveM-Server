@@ -259,6 +259,9 @@ export enum NuiEvent {
     ShopMaskPreview = 'soz-core:client:shop:mask:preview',
     ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
 
+    VehicleCustomApply = 'soz-core:nui:vehicle:custom:apply',
+    VehicleCustomConfirmModification = 'soz-core:nui:vehicle:custom:confirm-modification',
+
     VehicleSetEngine = 'soz-core:nui:vehicle:set-engine',
     VehicleSetSpeedLimit = 'soz-core:nui:vehicle:set-speed-limit',
     VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
