@@ -400,6 +400,7 @@ export type VehicleMenuData = {
 
 export type VehicleDealershipMenuData = {
     name: string;
+    dealershipId: string;
     dealership: DealershipConfigItem;
     categories: {
         name: string;

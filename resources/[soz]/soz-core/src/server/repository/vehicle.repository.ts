@@ -10,7 +10,7 @@ export class VehicleRepository extends Repository<Vehicle[]> {
     private prismaService: PrismaService;
 
     protected async load(): Promise<Vehicle[]> {
-        return (await this.prismaService.vehicles.findMany())
+        return (await this.prismaService.vehicle.findMany())
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(v => ({
                 ...v,

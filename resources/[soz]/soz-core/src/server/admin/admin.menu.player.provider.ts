@@ -1,6 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { AdminPlayer } from '../../shared/admin/admin';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerMetadata } from '../../shared/player';
 import { Notifier } from '../notifier';
@@ -15,44 +16,44 @@ export class AdminMenuPlayerProvider {
     private notifier: Notifier;
 
     @OnEvent(ServerEvent.ADMIN_SET_METADATA)
-    public onSetHealthMetadata(source: number, target: number, key: keyof PlayerMetadata, value: number) {
-        this.playerService.setPlayerMetadata(target, key, value);
+    public onSetHealthMetadata(source: number, player: AdminPlayer, key: keyof PlayerMetadata, value: number) {
+        this.playerService.setPlayerMetadata(player.id, key, value);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_STAMINA)
-    public onSetStamina(source: number, target: number, value: number) {
-        this.playerService.setPlayerMetadata(target, 'last_max_stamina_update', new Date().toUTCString());
-        this.playerService.incrementMetadata(target, 'max_stamina', value, 60, 150);
+    public onSetStamina(source: number, player: AdminPlayer, value: number) {
+        this.playerService.setPlayerMetadata(player.id, 'last_max_stamina_update', new Date().toUTCString());
+        this.playerService.setPlayerMetadata(player.id, 'max_stamina', value);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_STRESS_LEVEL)
-    public onSetStressLevel(source: number, target: number, value: number) {
-        this.playerService.setPlayerMetadata(target, 'last_stress_level_update', new Date().toUTCString());
-        this.playerService.incrementMetadata(target, 'stress_level', value, 0, 100);
+    public onSetStressLevel(source: number, player: AdminPlayer, value: number) {
+        this.playerService.setPlayerMetadata(player.id, 'last_stress_level_update', new Date().toUTCString());
+        this.playerService.setPlayerMetadata(player.id, 'stress_level', value);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_STRENGTH)
-    public onSetStrength(source: number, target: number, value: number) {
-        this.playerService.setPlayerMetadata(target, 'last_strength_update', new Date().toUTCString());
-        this.playerService.incrementMetadata(target, 'strength', value, 60, 150);
-        this.playerService.updatePlayerMaxWeight(target);
+    public onSetStrength(source: number, player: AdminPlayer, value: number) {
+        this.playerService.setPlayerMetadata(player.id, 'last_strength_update', new Date().toUTCString());
+        this.playerService.setPlayerMetadata(player.id, 'strength', value);
+        this.playerService.updatePlayerMaxWeight(player.id);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_AIO)
-    public onSetAIO(source: number, target: number, value: 'min' | 'max') {
-        this.onSetStamina(source, target, value === 'min' ? -1000 : 1000);
-        this.onSetStressLevel(source, target, value === 'min' ? -1000 : 1000);
-        this.onSetStrength(source, target, value === 'min' ? -1000 : 1000);
+    public onSetAIO(source: number, player: AdminPlayer, value: 'min' | 'max') {
+        this.onSetStamina(source, player, value === 'min' ? -1000 : 1000);
+        this.onSetStressLevel(source, player, value === 'min' ? -1000 : 1000);
+        this.onSetStrength(source, player, value === 'min' ? -1000 : 1000);
 
         const nutritionValue = value === 'min' ? 0 : 25;
-        this.playerService.incrementMetadata(target, 'fiber', nutritionValue, 0, 25);
-        this.playerService.incrementMetadata(target, 'sugar', nutritionValue, 0, 25);
-        this.playerService.incrementMetadata(target, 'protein', nutritionValue, 0, 25);
-        this.playerService.incrementMetadata(target, 'lipid', nutritionValue, 0, 25);
+        this.playerService.setPlayerMetadata(player.id, 'fiber', nutritionValue);
+        this.playerService.setPlayerMetadata(player.id, 'sugar', nutritionValue);
+        this.playerService.setPlayerMetadata(player.id, 'protein', nutritionValue);
+        this.playerService.setPlayerMetadata(player.id, 'lipid', nutritionValue);
         const newHealthLevel = this.playerService.incrementMetadata(
-            target,
+            player.id,
             'health_level',
-            value === 'min' ? 0 : 100,
+            value === 'min' ? -100 : 100,
             0,
             100
         );
@@ -66,7 +67,7 @@ export class AdminMenuPlayerProvider {
                 maxHealth = 160;
             }
 
-            this.playerService.setPlayerMetadata(target, 'max_health', maxHealth);
+            this.playerService.setPlayerMetadata(player.id, 'max_health', maxHealth);
         }
     }
 

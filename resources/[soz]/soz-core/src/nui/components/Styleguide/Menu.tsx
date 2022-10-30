@@ -26,7 +26,7 @@ import { MenuType } from '../../../shared/nui/menu';
 import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useBackspace, useEnter } from '../../hook/control';
 
 type MenuDescendant = Descendant & {
-    disabled: boolean;
+    selectable: boolean;
 };
 
 type MenuSelectDescendant = Descendant & {
@@ -145,7 +145,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
             if (newIndex === activeIndex) {
                 break;
             }
-        } while (menuItems[newIndex] && menuItems[newIndex].disabled);
+        } while (menuItems[newIndex] && !menuItems[newIndex].selectable);
 
         setActiveIndex(newIndex);
     });
@@ -163,7 +163,7 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
             if (newIndex === activeIndex) {
                 break;
             }
-        } while (menuItems[newIndex] && menuItems[newIndex].disabled);
+        } while (menuItems[newIndex] && !menuItems[newIndex].selectable);
 
         setActiveIndex(newIndex);
     });
@@ -179,9 +179,16 @@ type MenuItemProps = PropsWithChildren<{
     onConfirm?: () => void;
     onSelected?: () => void;
     disabled?: boolean;
+    selectable?: boolean;
 }>;
 
-const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfirm, onSelected, disabled = false }) => {
+const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
+    children,
+    onConfirm,
+    onSelected,
+    disabled = false,
+    selectable = null,
+}) => {
     const { activeIndex } = useContext(MenuContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
@@ -192,7 +199,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({ children, onConfi
     const descendant = useMemo(() => {
         return {
             element,
-            disabled,
+            selectable: selectable === null ? !disabled : selectable,
         };
     }, [element]);
 
@@ -251,6 +258,7 @@ type MenuItemButtonProps = PropsWithChildren<{
     onConfirm?: () => void;
     onSelected?: () => void;
     disabled?: boolean;
+    selectable?: boolean;
 }>;
 
 export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
@@ -258,9 +266,15 @@ export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
     onConfirm,
     onSelected,
     disabled = false,
+    selectable = null,
 }) => {
     return (
-        <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm} disabled={disabled}>
+        <MenuItemContainer
+            onSelected={onSelected}
+            onConfirm={onConfirm}
+            disabled={disabled}
+            selectable={selectable === null ? !disabled : selectable}
+        >
             {children}
         </MenuItemContainer>
     );

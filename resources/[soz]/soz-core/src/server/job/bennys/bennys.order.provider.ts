@@ -42,7 +42,6 @@ export class BennysOrderProvider {
 
     @Rpc(RpcEvent.BENNYS_GET_ORDERS)
     public getOrders(): BennysOrder[] {
-        console.log(Array.from(this.ordersInProgress.values()));
         return Array.from(this.ordersInProgress.values());
     }
 
@@ -59,7 +58,7 @@ export class BennysOrderProvider {
 
     @Rpc(RpcEvent.BENNYS_ORDER_VEHICLE)
     public async onOrderVehicle(source: number, model: string) {
-        const vehicle = await this.prismaService.vehicles.findFirst({
+        const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 model,
                 NOT: {
@@ -107,7 +106,7 @@ export class BennysOrderProvider {
     }
 
     private async addVehicle(model: string) {
-        const vehicle = await this.prismaService.vehicles.findFirst({
+        const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 model,
             },

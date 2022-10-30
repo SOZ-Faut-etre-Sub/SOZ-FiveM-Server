@@ -222,7 +222,7 @@ export class VehicleGarageProvider {
 
     @OnNuiEvent(NuiEvent.VehicleGarageStoreTrailer)
     public async storeVehicleTrailer({ id, garage }) {
-        const vehicle = this.vehicleService.getClosestVehicle(10, vehicle => {
+        const vehicle = this.vehicleService.getClosestVehicle({ maxDistance: 10 }, vehicle => {
             const vehicleState = this.vehicleService.getVehicleState(vehicle);
 
             if (!vehicleState.id) {
@@ -244,7 +244,7 @@ export class VehicleGarageProvider {
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageShowPlaces)
-    public async showPlacesGarages({ id, garage }) {
+    public async showPlacesGarages() {
         // @TODO
     }
 

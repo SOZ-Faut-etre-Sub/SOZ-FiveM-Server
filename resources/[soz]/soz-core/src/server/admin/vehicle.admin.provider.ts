@@ -26,7 +26,7 @@ export class VehicleAdminProvider {
         if (!this.permissionService.isAdmin(source)) {
             return;
         }
-        const vehicle = await this.prisma.vehicles.findFirst({
+        const vehicle = await this.prisma.vehicle.findFirst({
             where: {
                 model: modelName,
             },
@@ -41,7 +41,7 @@ export class VehicleAdminProvider {
         if (!this.permissionService.isAdmin(source)) {
             return;
         }
-        await this.prisma.vehicles.update({
+        await this.prisma.vehicle.update({
             data: {
                 price: price,
             },

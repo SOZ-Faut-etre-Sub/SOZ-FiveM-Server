@@ -9,7 +9,7 @@
         "resolveJsonModule": true,
         "jsx": "react-jsx",
         "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
     },
     "include": [
         "src/**/*"

@@ -37,7 +37,7 @@ export class BennysResellProvider {
             return;
         }
 
-        const vehicle = await this.prismaService.vehicles.findFirst({
+        const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 hash: hash,
             },
@@ -83,6 +83,7 @@ export class BennysResellProvider {
                     item_id: vehicle.model,
                 },
             });
+
             if (player_purchase) {
                 await this.prismaService.player_purchases.delete({
                     where: {
@@ -90,7 +91,8 @@ export class BennysResellProvider {
                     },
                 });
             }
-            await this.prismaService.concess_storage.update({
+
+            await this.prismaService.vehicle.update({
                 where: {
                     model: vehicle.model,
                 },
