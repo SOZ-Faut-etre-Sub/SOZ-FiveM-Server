@@ -4,16 +4,17 @@ export const Halloween2022Scenario4: Story = {
     name: 'Halloween 2022 Scenario 4',
     dialog: {
         part1: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario4/part1.mp3',
             text: [
                 'Hop hop hop ! Où est-ce que vous allez comme ça ?',
                 'Désolé, tant que vous n’avez pas votre autorisation,',
                 'je ne peux pas vous expliquer la situation.',
                 'Essayez d’aller jusqu’aux bureaux de Paleto, ils devraient pouvoir vous en délivrer une !',
             ],
+            timing: [250, 200, 200, 550],
         },
         part2: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario4/part2.mp3',
             text: [
                 'Vous voulez enquêter sur l’université ?',
                 'Écoutez, tout cela me dépasse… Cette histoire, le FBI qui s’en mêle,',
@@ -21,9 +22,10 @@ export const Halloween2022Scenario4: Story = {
                 'Prenez cette autorisation, et retournez voir l’Agent.',
                 'Moi, je me casse d’ici, je n’en peux plus.',
             ],
+            timing: [150, 500, 200, 250, 200],
         },
         part3: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario4/part3.mp3',
             text: [
                 'Vous avez obtenu une autorisation ?',
                 'Voilà qu’on file une affaire aussi importante à des amateurs...',
@@ -33,27 +35,34 @@ export const Halloween2022Scenario4: Story = {
                 'Cela fait déjà plusieurs heures que nous avons encerclé le bâtiment,',
                 "et jusqu'à maintenant, aucune trace de ce foutu Alien.",
                 "On ne peut pas perdre plus de temps. S'il est encore là, il faut qu'on le trouve.",
-                'Donc maintenant, vous allez me fouiller de fond en comble cette université, et mettre la main dessus !',
+                'Donc maintenant, vous allez me fouiller de fond en comble cette université,',
+                'et mettre la main dessus !',
             ],
+            timing: [200, 300, 200, 350, 180, 270, 275, 400, 350, 150],
         },
         part4: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario4/part4.mp3',
             text: [
                 "Au premier abord, ce que vous venez d'entendre vous semble totalement incompréhensible.",
-                'Pourtant, d’une façon inconnue, votre esprit arrive à traduire ce qu’il essaie de vous communiquer.',
+                'Pourtant, d’une façon inconnue,',
+                'votre esprit arrive à traduire ce qu’il essaie de vous communiquer.',
                 'Venu en ami, il ne désire pas faire de mal à qui que ce soit.',
                 "D'une manière plutôt floue, vous percevez une porte, dans un tunnel près du Mont Chiliad.",
                 "S'y rendre vous permettra certainement d'avoir des réponses.",
             ],
+            timing: [950, 200, 400, 380, 500, 350],
         },
         part5: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario4/part5.mp3',
             text: [
                 'En observant de plus près la porte, vous remarquez sur sa droite un ingénieux dispositif.',
-                'Un emplacement vide vous fait rapidement comprendre qu’il vous manque quelque chose pour pouvoir y entrer.',
-                'Cherchant désespérément un indice, vous constatez un écriteau mentionnant les mots  “Camp, Est, Peace”.',
+                'Un emplacement vide vous fait rapidement comprendre',
+                'qu’il vous manque quelque chose pour pouvoir y entrer.',
+                'Cherchant désespérément un indice, vous constatez',
+                'un écriteau mentionnant les mots “Camp, Est, Peace”.',
                 'Peut-être est-ce un indice où vous devriez vous rendre ?',
             ],
+            timing: [600, 300, 300, 300, 300, 300],
         },
         part6: {
             audio: '',
@@ -61,7 +70,21 @@ export const Halloween2022Scenario4: Story = {
         },
         part7: {
             audio: '',
-            text: [],
+            text: [
+                'Oooh, mais qui voilà en personne.',
+                "C'est donc vous, notre nouveau détective,",
+                'qui avez été en mesure de résoudre toutes les énigmes récentes.',
+                'Vos exploits retentissent partout à San Andréas, votre nom se fait connaître, le saviez-vous ?',
+                'Meurtre, fausse légende et disparition inquiétante,',
+                'vous avez surmonté de nombreux obstacles pour venir ici.',
+                "Votre présence sur l'île a grandi en importance,",
+                'je ne peux que vous remercier de votre dévouement.',
+                'De nouvelles aventures vous attendent !',
+                'Peut-être pas immédiatement, mais prochainement.',
+                "Il est certain que nous aurons l'occasion de nous voir à nouveau,",
+                "d'ici là, je vous souhaite bonne chance.",
+            ],
+            timing: [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200],
         },
     },
     zones: [
