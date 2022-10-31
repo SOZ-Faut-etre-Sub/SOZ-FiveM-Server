@@ -4,6 +4,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
 import { wait } from '../../../core/utils';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
+import { Vector4 } from '../../../shared/polyzone/vector';
 import { RpcEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario4 } from '../../../shared/story/halloween-2022/scenario4';
 import { Dialog } from '../../../shared/story/story';
@@ -11,6 +12,7 @@ import { AnimationService } from '../../animation/animation.service';
 import { BlipFactory } from '../../blip';
 import { EntityFactory } from '../../factory/entity.factory';
 import { PedFactory } from '../../factory/ped.factory';
+import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
@@ -42,6 +44,9 @@ export class Halloween2022Scenario4Provider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
         if (!isFeatureEnabled(Feature.HalloweenScenario4)) {
@@ -56,34 +61,108 @@ export class Halloween2022Scenario4Provider {
             color: 44,
         });
 
+        await this.createPedsFiB();
         await this.createPedDOA();
         await this.createPedSheriffNord();
         await this.createPedSheriffSud();
         await this.createPedAlien();
-        await this.createPedZator();
+        await this.createPedZerator();
 
         await this.createTeleport();
         await this.createActionZones();
 
         // Caméo de la mort
-        await this.createPedNariieL();
+        await this.createPedNariieL(); // TODO: text
         await this.createPedDraglock();
         await this.createPedPoulpito();
         await this.createPedSniteur();
         await this.createPedKaemy();
         await this.createPedBrouznouf();
         await this.createPedFrozennide();
-        await this.createPedMcFloy();
-        await this.createPedBlaqq();
+        await this.createPedMcFloy(); // TODO: text
+        await this.createPedBlaqq(); // TODO: text
         await this.createPedRigonkmalk();
-        await this.createPedOneiluj();
-        await this.createPedLasbou();
+        await this.createPedOneiluj(); // TODO: text
+        await this.createPedLasbou(); // TODO: text
         await this.createPedTheSeds();
-        await this.createPedDaelbhas();
+        await this.createPedDaelbhas(); // TODO: text
         await this.createPedOjymas();
         await this.createPedPano();
         await this.createPedVik();
         await this.createPedDream();
+    }
+
+    private async createPedsFiB() {
+        const fouille: Vector4[] = [
+            [-1573.73, 235.5, 57.86, 206.71],
+            [-1583.82, 230.14, 57.68, 201.9],
+            [-1597.93, 226.24, 58.08, 22.25],
+            [-1608.43, 215.36, 58.54, 300.42],
+            [-1606.05, 202.7, 58.47, 196.14],
+            [-1600.59, 192.86, 58.62, 347.58],
+            [-1585.05, 179.3, 57.85, 17.96],
+            [-1540.47, 194.23, 56.66, 36.78],
+            [-1545.4, 207.17, 57.45, 104.08],
+        ];
+        const note: Vector4[] = [
+            [-1550.64, 223.89, 58.41, 170.91],
+            [-1561.6, 242.77, 58.32, 116.78],
+            [-1599.46, 173.12, 58.38, 118.45],
+            [-1538.55, 207.38, 57.6, 176.55],
+            [-1558.36, 185.4, 56.73, 27.86],
+            [-1578.28, 179.26, 57.31, 11.41],
+            [-1588.57, 172.13, 57.83, 35.92],
+            [-1612.77, 201.39, 58.98, 345.66],
+            [-1609.14, 226.78, 58.54, 279.46],
+            [-1572.5, 252.25, 57.96, 129.37],
+        ];
+        const circuler: Vector4[] = [
+            [-1547.12, 174.65, 56.5, 54.38],
+            [-1575.72, 181.3, 57.19, 206.81],
+            [-1609.79, 161.37, 59.0, 255.96],
+            [-1630.16, 184.11, 59.81, 296.74],
+            [-1630.81, 210.06, 59.64, 64.52],
+            [-1624.34, 236.33, 58.87, 35.62],
+            [-1585.21, 253.64, 57.94, 357.98],
+            [-1532.5, 231.37, 60.16, 332.79],
+        ];
+
+        for (const coords of note) {
+            await this.pedFactory.createPed({
+                model: 'u_m_m_doa_01',
+                coords: { x: coords[0], y: coords[1], z: coords[2], w: coords[3] },
+                invincible: true,
+                freeze: true,
+                blockevents: true,
+                scenario: 'WORLD_HUMAN_CLIPBOARD',
+                flag: 1,
+            });
+        }
+
+        for (const coords of circuler) {
+            await this.pedFactory.createPed({
+                model: 'u_m_m_doa_01',
+                coords: { x: coords[0], y: coords[1], z: coords[2], w: coords[3] },
+                invincible: true,
+                freeze: true,
+                blockevents: true,
+                scenario: 'WORLD_HUMAN_CAR_PARK_ATTENDANT',
+                flag: 1,
+            });
+        }
+
+        for (const coords of fouille) {
+            await this.pedFactory.createPed({
+                model: 'u_m_m_doa_01',
+                coords: { x: coords[0], y: coords[1], z: coords[2], w: coords[3] },
+                invincible: true,
+                freeze: true,
+                blockevents: true,
+                animDict: 'missfbi4prepp1',
+                anim: '_bag_pickup_garbage_man',
+                flag: 1,
+            });
+        }
     }
 
     private async createPedDOA() {
@@ -240,8 +319,10 @@ export class Halloween2022Scenario4Provider {
         );
     }
 
-    private async createPedZator() {
-        await this.pedFactory.createPed({
+    private async createPedZerator() {
+        const MONEY_CASE_HASH = GetHashKey('WEAPON_BRIEFCASE');
+
+        const ped = await this.pedFactory.createPed({
             model: 'ig_milton',
             coords: { x: 2067.85, y: 2993.18, z: -64.5, w: 143.49 },
             invincible: true,
@@ -275,6 +356,9 @@ export class Halloween2022Scenario4Provider {
                 this.storyService.replayTarget(Halloween2022Scenario4, 'scenario4', 7),
             ]
         );
+
+        GiveWeaponToPed(ped, MONEY_CASE_HASH, 1, false, true);
+        SetCurrentPedWeapon(ped, MONEY_CASE_HASH, true);
     }
 
     private async createTeleport() {
@@ -364,15 +448,17 @@ export class Halloween2022Scenario4Provider {
                         if (completed) {
                             const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO4, zone.name);
                             if (dialog) {
+                                this.animationService.stop();
+                                await animationPromise;
                                 await this.storyService.launchDialog(dialog);
                             }
                         }
 
                         this.animationService.stop();
-
                         await animationPromise;
                     },
                 },
+                this.storyService.replayTarget(Halloween2022Scenario4, 'scenario4', zone.part),
             ]);
         });
     }
@@ -469,6 +555,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'base_a_m_y_vinewood_01',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedNariieL',
+            {
+                center: [2059.96, 2985.01, -62.9],
+                length: 1,
+                width: 1,
+                heading: 144,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'NariieL',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedKaemy() {
@@ -592,6 +702,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_a_male3',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedKaemy',
+            {
+                center: [2041.26, 2933.92, -62.9],
+                length: 1,
+                width: 1,
+                heading: 77,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Kaemy',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "J'ai trouvé 106 citrouilles, mais on m'a tout de même refusé l'installation d'une chaise électrique pour vous torturer... C't'un drame lo",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedTheSeds() {
@@ -751,6 +885,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'single_team_loop_boss',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedTheSeds',
+            {
+                center: [2132.94, 2924.91, -62.9],
+                length: 1,
+                width: 1,
+                heading: 234,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'TheSeds',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "J'suis encore en retard dans mes corrections... Hein, quoi? Oui, je viendrai tester plus tard... Mais pas besoin, l'évent a été fantastique, non?",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedVik() {
@@ -860,6 +1018,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_a_male3',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedVik',
+            {
+                center: [2055.13, 2941.55, -62.9],
+                length: 1,
+                width: 1,
+                heading: 356,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Vik',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "Jamais vu autant de monde avoir des hallucinations... Ok ok j'ai fais 2-3 crises cardiaques mais c'était bien fun.",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedDraglock() {
@@ -997,6 +1179,27 @@ export class Halloween2022Scenario4Provider {
             anim: 'single_team_loop_boss',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedDraglock',
+            {
+                center: [2062.58, 2982.98, -62.9],
+                length: 1,
+                width: 1,
+                heading: 143,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Draglock',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify('Huuuuuuum', 'info');
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedPoulpito() {
@@ -1128,6 +1331,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'base',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedPoulpito',
+            {
+                center: [2038.65, 2934.75, -62.9],
+                length: 1,
+                width: 1,
+                heading: 304,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Poulpito',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "Si seulement j'avais pu prendre le flacon d'ADN de poulpe au labo ... plusieurs bras pour inventorier les citrouilles ça n'aurait pas été du luxe !  10h de boulot !",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedSniteur() {
@@ -1235,6 +1462,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_a_male1',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedSniteur',
+            {
+                center: [2039.78, 2937.18, -62.9],
+                length: 1,
+                width: 1,
+                heading: 161,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Sniteur ',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            'Hmm... Tu veux quoi ? On a passé des heures dessus. Donc tu as intérêt à nous laisser 5 étoiles où je te retrouve et je te coule dans le lac.',
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedBrouznouf() {
@@ -1325,6 +1576,27 @@ export class Halloween2022Scenario4Provider {
             anim: 'idle',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedBrouznouf',
+            {
+                center: [2051.49, 2987.67, -62.9],
+                length: 1,
+                width: 1,
+                heading: 166,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Brouznouf',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify("Il parait qu'il y a un fantôme qui sort son téléphone au BCSO ?", 'info');
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedFrozennide() {
@@ -1407,6 +1679,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'idle',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedFrozennide',
+            {
+                center: [2050.93 + 0.3, 2984.02 + 0.45, -62.4 - 0.5],
+                length: 1.5,
+                width: 1.5,
+                heading: 329,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Frozennide',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            'Je ne suis pas souvent en ville, mais à chaque fois que je viens, il pleut... bref...',
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedMcFloy() {
@@ -1494,6 +1790,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'idle',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedMcFloy',
+            {
+                center: [2052.05 + 0.27, 2983.15 + 0.45, -62.4 - 0.5],
+                length: 1,
+                width: 1,
+                heading: 334,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'McFloy',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedBlaqq() {
@@ -1576,6 +1896,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'idle',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedBlaqq',
+            {
+                center: [2048.51 + 0.5, 2981.56, -62.39 - 0.5],
+                length: 1,
+                width: 1,
+                heading: 283,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'BlaqqEndWhyT',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedRigonkmalk() {
@@ -1662,6 +2006,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'idle',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedRigonkmalk',
+            {
+                center: [2050.135 + 0.3, 2980.486 + 0.45, -62.29 - 0.65],
+                length: 1.5,
+                width: 1.5,
+                heading: 334,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Rigonkmalk',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "Mon entreprise de BTP Sancto&Co est quand même pas mal quand on a besoin d'un nouvel intérieur non ? Je prend du retard je pense, à plus !",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedOneiluj() {
@@ -1746,6 +2114,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_b_male3',
             flag: 49,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedOneiluj',
+            {
+                center: [2091.11, 2932.34, -62.9],
+                length: 1,
+                width: 1,
+                heading: 270,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Oneiluj',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedLasbou() {
@@ -1755,14 +2147,15 @@ export class Halloween2022Scenario4Provider {
             modelCustomization: { SkinMix: 0.5, ShapeMix: 0.5, Mother: 26, Father: 43 },
             components: {
                 1: [0, 0, 0],
-                3: [4, 0, 0],
-                4: [1, 1, 0],
-                7: [0, 0, 0],
-                6: [4, 0, 0],
+                3: [11, 0, 0],
+                4: [35, 0, 0],
+                5: [52, 0, 0],
+                6: [51, 0, 0],
+                7: [8, 0, 0],
+                8: [56, 0, 0],
                 9: [0, 0, 0],
-                8: [15, 0, 0],
-                11: [306, 13, 0],
-                10: [0, 0, 0],
+                10: [44, 5, 0],
+                11: [190, 0, 0],
             },
             props: {},
             face: {
@@ -1828,6 +2221,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_b_male1',
             flag: 49,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedLasbou',
+            {
+                center: [2093.17, 2932.41, -62.9],
+                length: 1,
+                width: 1,
+                heading: 79,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Lasbou',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedDaelbhas() {
@@ -1914,6 +2331,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_a_male3',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedDaelbhas',
+            {
+                center: [2108.63, 2943.6, -62.9],
+                length: 1,
+                width: 1,
+                heading: 78,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Daelbhas',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedOjymas() {
@@ -2001,6 +2442,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_a_male2',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedOjymas',
+            {
+                center: [2103.28, 2944.7, -62.9],
+                length: 1,
+                width: 1,
+                heading: 258,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Ojymas',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "Alors si je compte trois potions par try, puis pour huit joueurs ça me ferait... Hein ? Hé, j'espère que t'as kiffé l'event !",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedPano() {
@@ -2087,6 +2552,30 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_a_male1',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedPano',
+            {
+                center: [2053.91, 2942.04, -62.9],
+                length: 1,
+                width: 1,
+                heading: 357,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'Pano',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "J'ai pas les 100 citrouilles avec une carte et le no clip. PS: Pello n'est pas mort, ce n'est donc pas un fantôme.",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private async createPedDream() {
@@ -2169,5 +2658,29 @@ export class Halloween2022Scenario4Provider {
             anim: 'stand_talk_loop_b_male2',
             flag: 1,
         });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedDream',
+            {
+                center: [2056.4, 2941.29, -62.9],
+                length: 1,
+                width: 1,
+                heading: 12,
+                minZ: -64,
+                maxZ: -61,
+            },
+            [
+                {
+                    label: 'DreamXZE',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify(
+                            "Heureusement que l'alien faisait juste son footing pour rester en forme et qu'il n'avait pas faim...",
+                            'info'
+                        );
+                    },
+                },
+            ]
+        );
     }
 }
