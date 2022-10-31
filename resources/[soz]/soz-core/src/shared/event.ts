@@ -105,6 +105,7 @@ export enum ServerEvent {
 export enum ClientEvent {
     CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
 
+    PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
     FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
