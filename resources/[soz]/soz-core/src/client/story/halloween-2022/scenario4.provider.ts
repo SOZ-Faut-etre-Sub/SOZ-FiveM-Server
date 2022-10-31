@@ -72,7 +72,7 @@ export class Halloween2022Scenario4Provider {
         await this.createActionZones();
 
         // Caméo de la mort
-        await this.createPedNariieL(); // TODO: text
+        await this.createPedNariieL();
         await this.createPedDraglock();
         await this.createPedPoulpito();
         await this.createPedSniteur();
@@ -82,10 +82,10 @@ export class Halloween2022Scenario4Provider {
         await this.createPedMcFloy(); // TODO: text
         await this.createPedBlaqq(); // TODO: text
         await this.createPedRigonkmalk();
-        await this.createPedOneiluj(); // TODO: text
-        await this.createPedLasbou(); // TODO: text
+        await this.createPedOneiluj();
+        await this.createPedLasbou();
         await this.createPedTheSeds();
-        await this.createPedDaelbhas(); // TODO: text
+        await this.createPedDaelbhas();
         await this.createPedOjymas();
         await this.createPedPano();
         await this.createPedVik();
@@ -571,10 +571,7 @@ export class Halloween2022Scenario4Provider {
                     label: 'NariieL',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify(
-                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
-                            'info'
-                        );
+                        this.notifier.notify('Reste doux.', 'info');
                     },
                 },
             ]
@@ -2131,7 +2128,7 @@ export class Halloween2022Scenario4Provider {
                     icon: 'fas fa-question',
                     action: async () => {
                         this.notifier.notify(
-                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            "En tant que fier  Sheriff du BCSO, je n'ai résolu aucune enquête.",
                             'info'
                         );
                     },
@@ -2237,10 +2234,7 @@ export class Halloween2022Scenario4Provider {
                     label: 'Lasbou',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify(
-                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
-                            'info'
-                        );
+                        this.notifier.notify('Minou minou ? GRAOU GRAOU !', 'info');
                     },
                 },
             ]
@@ -2348,7 +2342,7 @@ export class Halloween2022Scenario4Provider {
                     icon: 'fas fa-question',
                     action: async () => {
                         this.notifier.notify(
-                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            "Moi, à une époque, je voulais faire vœu de pauvreté... Mais avec le pognon que j'rentrais, j'arrivais pas à concilier les deux.",
                             'info'
                         );
                     },
