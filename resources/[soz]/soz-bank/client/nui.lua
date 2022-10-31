@@ -13,7 +13,7 @@ local function playAnimation()
 end
 
 local function getATMOrBankAccount(atm, bank)
-    if string.match(atm, "atm_ent_%w+") then
+    if atm and string.match(atm, "atm_ent_%w+") then
         return atm
     end
     return bank
