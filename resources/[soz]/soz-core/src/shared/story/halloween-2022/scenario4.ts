@@ -69,7 +69,7 @@ export const Halloween2022Scenario4: Story = {
             text: [],
         },
         part7: {
-            audio: '',
+            audio: 'audio/halloween-2022/scenario4/part7.mp3',
             text: [
                 'Oooh, mais qui voilà en personne.',
                 "C'est donc vous, notre nouveau détective,",
@@ -84,7 +84,7 @@ export const Halloween2022Scenario4: Story = {
                 "Il est certain que nous aurons l'occasion de nous voir à nouveau,",
                 "d'ici là, je vous souhaite bonne chance.",
             ],
-            timing: [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200],
+            timing: [180, 200, 300, 450, 300, 250, 300, 250, 200, 300, 300, 200],
         },
     },
     zones: [
