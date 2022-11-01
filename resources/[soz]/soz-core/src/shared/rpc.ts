@@ -12,6 +12,9 @@ export enum RpcEvent {
 
     JOB_GET_JOBS = 'soz-core:jobs:get-jobs',
 
+    OIL_GET_STATION = 'soz-core:job:oil:get-station',
+    OIL_GET_STATION_PRICES = 'soz-core:job:oil:get-station-prices',
+
     PLAYER_GET_HEALTH_BOOK = 'soz-core:player:get-health-book',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
 
@@ -27,7 +30,10 @@ export enum RpcEvent {
 
     VEHICLE_CUSTOM_GET_MODS = 'soz-core:vehicle:custom:get-mods',
     VEHICLE_CUSTOM_SET_MODS = 'soz-core:vehicle:custom:set-mods',
+    VEHICLE_DEALERSHIP_AUCTION_BID = 'soz-core:vehicle:dealership:auction:bid',
+    VEHICLE_DEALERSHIP_GET_AUCTIONS = 'soz-core:vehicle:dealership:get-auctions',
     VEHICLE_DEALERSHIP_GET_LIST = 'soz-core:vehicle:dealership:get-list',
+    VEHICLE_DEALERSHIP_GET_LIST_JOB = 'soz-core:vehicle:dealership:get-list-job',
     VEHICLE_DEALERSHIP_BUY = 'soz-core:vehicle:dealership:buy',
     VEHICLE_GARAGE_GET_VEHICLES = 'soz-core:vehicle:garage:get-vehicles',
     VEHICLE_GARAGE_GET_FREE_PLACES = 'soz-core:vehicle:garage:get-free-places',

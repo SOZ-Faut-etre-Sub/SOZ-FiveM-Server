@@ -45,6 +45,10 @@ export enum ServerEvent {
     LSMC_HEALTH_CHECK = 'soz-core:server:job:lsmc:health-check',
     LSMC_SET_HEALTH_BOOK = 'soz-core:server:job:lsmc:set-health-book',
 
+    OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
+    OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
+    OIL_SET_STATION_PRICE = 'soz-core:server:oil:set-station-price',
+
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
     PLAYER_INCREASE_STAMINA = 'soz-core:server:player:increase-stamina',
     PLAYER_INCREASE_STRENGTH = 'soz-core:server:player:increase-strength',
@@ -146,6 +150,10 @@ export enum ClientEvent {
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
     LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
 
+    OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
+    OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
+    OIL_UPDATE_STATION_PRICE = 'soz-core:client:oil:update-station-price',
+
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
 
     // Temp event which should be internally used by a service when only soz core
@@ -164,14 +172,14 @@ export enum ClientEvent {
 
     REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
 
-    VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
-
-    VEHICLE_GET_CLOSEST = 'soz-core:client:vehicle:get-closest',
-    VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
-    VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
     VEHICLE_CHECK_CONDITION = 'soz-core:client:vehicle:check-condition',
-    VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
+    VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
+    VEHICLE_DEALERSHIP_AUCTION_UPDATE = 'soz-core:client:vehicle:dealership:auction:update',
+    VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
     VEHICLE_FUEL_STOP = 'soz-core:client:vehicle:fuel:stop',
+    VEHICLE_GET_CLOSEST = 'soz-core:client:vehicle:get-closest',
+    VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
+    VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }
@@ -251,6 +259,7 @@ export enum NuiEvent {
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
     MenuClosed = 'menu_closed',
+    OilAskStationPrice = 'soz-core:client:job:oil:ask-station-price',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
@@ -258,6 +267,8 @@ export enum NuiEvent {
     BossShopBuy = 'soz-core:client:shop:boss:buy',
     ShopMaskPreview = 'soz-core:client:shop:mask:preview',
     ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
+
+    VehicleAuctionBid = 'soz-core:client:vehicle:auction:bid',
 
     VehicleCustomApply = 'soz-core:nui:vehicle:custom:apply',
     VehicleCustomConfirmModification = 'soz-core:nui:vehicle:custom:confirm-modification',

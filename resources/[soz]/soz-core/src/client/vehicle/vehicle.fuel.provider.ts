@@ -105,7 +105,15 @@ export class VehicleFuelProvider {
                 label: "Remplir la station d'essence",
                 color: JobType.Oil,
                 icon: 'c:fuel/pistolet.png',
-                event: 'jobs:client:fueler:StartStationRefill',
+                action: entity => {
+                    const station = this.getStationForEntity(entity);
+
+                    if (!station) {
+                        return false;
+                    }
+
+                    TriggerEvent(ClientEvent.OIL_REFILL_ESSENCE_STATION, station.id);
+                },
                 canInteract: (entity: number) => {
                     const player = this.playerService.getPlayer();
 
@@ -113,7 +121,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    if (!LocalPlayer.state.hasTankerPipe || !player.job.onduty) {
+                    if (!LocalPlayer.state.tankerPipe || !player.job.onduty) {
                         return false;
                     }
 
@@ -133,7 +141,15 @@ export class VehicleFuelProvider {
                 label: 'Remplir la station de kérosène',
                 color: JobType.Oil,
                 icon: 'c:fuel/pistolet.png',
-                event: 'jobs:client:fueler:StartKeroseneStationRefill',
+                action: entity => {
+                    const station = this.getStationForEntity(entity);
+
+                    if (!station) {
+                        return false;
+                    }
+
+                    TriggerEvent(ClientEvent.OIL_REFILL_KEROSENE_STATION, station.id);
+                },
                 canInteract: (entity: number) => {
                     const player = this.playerService.getPlayer();
 

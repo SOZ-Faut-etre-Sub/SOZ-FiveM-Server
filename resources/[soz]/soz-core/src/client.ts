@@ -13,6 +13,7 @@ import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
 import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
+import { OilModule } from './client/job/oil/oil.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
@@ -55,7 +56,8 @@ async function bootstrap() {
         StoryModule,
         AfkModule,
         VehicleModule,
-        FactoryModule
+        FactoryModule,
+        OilModule
     );
 
     await app.stop();
