@@ -58,17 +58,17 @@ export class FightForStyleRestockProvider {
             case ClothingBrand.PONSONBYS:
                 return {
                     garments: Object.values(LuxuryGarment),
-                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_m_shop_high',
+                    pedModel: 's_f_m_shop_high',
                 };
             case ClothingBrand.SUBURBAN:
                 return {
                     garments: Object.values(Garment),
-                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_y_shop_mid',
+                    pedModel: 's_f_y_shop_mid',
                 };
             case ClothingBrand.BINCO:
                 return {
                     garments: Object.values(Garment),
-                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_y_shop_low',
+                    pedModel: 's_f_y_shop_low',
                 };
         }
     }
