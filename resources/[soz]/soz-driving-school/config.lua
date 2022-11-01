@@ -10,14 +10,7 @@ Config.BlipScale = 0.8
 Config.PlayerDefaultLocation = vector4(-806.57, -1344.53, 5.50, 150.0)
 
 Config.Peds = {
-    ["instructor"] = {
-        modelHash = "cs_manuel",
-        x = 0.0,
-        y = 0.0,
-        z = 0.0,
-        rotation = 0.0,
-        networkSync = true,
-    },
+    ["instructor"] = {modelHash = "cs_manuel", x = 0.0, y = 0.0, z = 0.0, rotation = 0.0, networkSync = true},
     ["secretary"] = {
         modelHash = "u_f_y_princess",
         x = -815.99,
