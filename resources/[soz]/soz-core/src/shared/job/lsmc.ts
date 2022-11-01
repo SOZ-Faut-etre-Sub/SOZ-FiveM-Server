@@ -5,5 +5,4 @@ export const PHARMACY_PRICES = {
     painkiller: 150,
     antiacide: 150,
     heal: 400,
-    horrific_lollipop: 15,
 };
