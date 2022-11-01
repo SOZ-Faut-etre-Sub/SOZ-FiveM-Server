@@ -12,7 +12,7 @@ export class LSMCPharmacyProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
-        const model = isFeatureEnabled(Feature.Halloween) ? 'u_f_y_corpse_02' : 's_m_m_doctor_01';
+        const model = 's_m_m_doctor_01';
         this.targetFactory.createForPed({
             model: model,
             coords: { x: 356.64, y: -1419.74, z: 31.51, w: 57.62 },
@@ -51,13 +51,6 @@ export class LSMCPharmacyProvider {
                         icon: 'c:/ems/painkiller.png',
                         action: () => {
                             TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'painkiller');
-                        },
-                    },
-                    {
-                        label: 'Acheter une sucettes horrifique',
-                        icon: 'c:/ems/painkiller.png',
-                        action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'horrific_lollipop');
                         },
                     },
                     {
