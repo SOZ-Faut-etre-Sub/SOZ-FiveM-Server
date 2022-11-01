@@ -28,7 +28,7 @@ export class BennysEstimateProvider {
                 canInteract: () => {
                     return (
                         this.playerService.isOnDuty() &&
-                        this.QBCore.hasJobPermission('bennys', JobPermission.Bennys_Estimate)
+                        this.QBCore.hasJobPermission('bennys', JobPermission.BennysEstimate)
                     );
                 },
                 action: async vehicle => {

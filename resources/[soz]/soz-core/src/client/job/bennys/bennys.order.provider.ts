@@ -97,7 +97,7 @@ export class BennysOrderProvider {
                 canInteract: () => {
                     return (
                         this.playerService.isOnDuty() &&
-                        this.QBCore.hasJobPermission('bennys', JobPermission.Bennys_Order)
+                        this.QBCore.hasJobPermission('bennys', JobPermission.BennysOrder)
                     );
                 },
                 action: async () => {

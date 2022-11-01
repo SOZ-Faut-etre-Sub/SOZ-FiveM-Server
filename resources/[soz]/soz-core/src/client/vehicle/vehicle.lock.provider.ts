@@ -211,18 +211,12 @@ export class VehicleLockProvider {
             return;
         }
 
-        // Not a player vehicle
-        if (!vehicleState.plate) {
-            this.notifier.notify("Ce coffre n'est pas accessible.", 'error');
-
-            return;
-        }
-
+        const plate = vehicleState.plate || GetVehicleNumberPlateText(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
         const vehicleClass = GetVehicleClass(vehicle);
         const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
 
-        TriggerServerEvent('inventory:server:openInventory', trunkType, vehicleState.plate, {
+        TriggerServerEvent('inventory:server:openInventory', trunkType, plate, {
             model: vehicleModel,
             class: vehicleClass,
             entity: VehToNet(vehicle),

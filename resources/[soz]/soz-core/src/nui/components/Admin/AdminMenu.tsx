@@ -14,7 +14,7 @@ import { SkinSubMenu, SkinSubMenuProps } from './SkinSubMenu';
 import { VehicleSubMenu } from './VehicleSubMenu';
 
 export type AdminMenuStateProps = {
-    data: {
+    data?: {
         banner: string;
         permission: SozRole;
         state: {
@@ -33,7 +33,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
         await fetchNui(NuiEvent.AdminUpdateState, { namespace, key, value });
     };
 
-    if (!data.state) {
+    if (!data || !data.state) {
         return null;
     }
 

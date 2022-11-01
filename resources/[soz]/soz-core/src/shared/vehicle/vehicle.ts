@@ -33,6 +33,7 @@ export type VehicleEntityState = {
     plate: string | null;
     owner: string | null;
     speedLimit: number | null;
+    isPlayerVehicle: boolean;
 
     deadInWater: boolean;
     condition: VehicleCondition;
@@ -357,6 +358,7 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     hasRadio: false,
     speedLimit: null,
     deadInWater: false,
+    isPlayerVehicle: false,
     condition: getDefaultVehicleCondition(),
 });
 

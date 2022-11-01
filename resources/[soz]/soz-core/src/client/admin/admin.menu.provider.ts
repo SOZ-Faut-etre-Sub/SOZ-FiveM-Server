@@ -63,6 +63,7 @@ export class AdminMenuProvider {
         if (!isAllowed) {
             return;
         }
+
         if (this.nuiMenu.getOpened() === MenuType.AdminMenu) {
             this.nuiMenu.closeMenu();
 

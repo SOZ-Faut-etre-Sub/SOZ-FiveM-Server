@@ -8,6 +8,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
+import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
@@ -132,7 +133,7 @@ export class VehicleGarageProvider {
             if (targets.length > 0) {
                 this.targetFactory.createForBoxZone(
                     `garage_enter_${garageIdentifier}`,
-                    { ...garage.zone, debugPoly: true },
+                    { ...garage.zone },
                     targets,
                     2.5
                 );
@@ -222,14 +223,14 @@ export class VehicleGarageProvider {
 
     @OnNuiEvent(NuiEvent.VehicleGarageStoreTrailer)
     public async storeVehicleTrailer({ id, garage }) {
-        const vehicle = this.vehicleService.getClosestVehicle({ maxDistance: 10 }, vehicle => {
+        const vehicle = this.vehicleService.getClosestVehicle({ maxDistance: 25 }, vehicle => {
             const vehicleState = this.vehicleService.getVehicleState(vehicle);
 
             if (!vehicleState.id) {
                 return false;
             }
 
-            return GetVehicleType(vehicle) === 'trailer';
+            return GetVehicleClass(vehicle) === VehicleClass.Utility;
         });
 
         if (!vehicle) {
@@ -258,7 +259,7 @@ export class VehicleGarageProvider {
                     parkingPlace.center[0],
                     parkingPlace.center[1],
                     parkingPlace.center[2],
-                    0.5,
+                    0.1,
                     false,
                     true,
                     true,
