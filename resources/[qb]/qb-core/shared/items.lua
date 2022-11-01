@@ -1023,13 +1023,13 @@ QBShared.Items = {
     -- Miscellaneous
     ['weapon_petrolcan'] = {
         ['name'] = 'weapon_petrolcan',
-        ['label'] = 'Jus de Cadavre', -- Bidon d\'essence
+        ['label'] = 'Bidon d\'essence',
         ['weight'] = 1000,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_PETROLCAN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = '10 ans d\'âge...' -- De quoi faire le plein de ta caisse !
+        ['description'] = 'De quoi faire le plein de ta caisse !'
     },
     ['weapon_fireextinguisher'] = {
         ['name'] = 'weapon_fireextinguisher',

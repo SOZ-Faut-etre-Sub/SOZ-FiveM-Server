@@ -54,13 +54,6 @@ export class LSMCPharmacyProvider {
                         },
                     },
                     {
-                        label: 'Acheter une sucettes horrifique',
-                        icon: 'c:/ems/painkiller.png',
-                        action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'horrific_lollipop');
-                        },
-                    },
-                    {
                         label: 'Soins médicaux',
                         icon: 'c:/ems/heal.png',
                         action: () => {
