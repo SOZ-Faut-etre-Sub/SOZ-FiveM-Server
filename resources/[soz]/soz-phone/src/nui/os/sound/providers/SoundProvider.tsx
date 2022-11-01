@@ -47,6 +47,7 @@ export const SoundProvider: React.FC<PropsWithChildren> = ({ children }) => {
                 loop,
                 volume,
                 autoplay,
+                html5: true,
             });
 
             soundRefs.current.set(url, { howl: instance, volume });
