@@ -41,7 +41,7 @@ export class StoryProvider {
         }
 
         await this.audioService.playAudio(dialog.audio);
-        await this.drawTextDialog(dialog.text);
+        await this.drawTextDialog(dialog.text, dialog.timing);
 
         if (DoesCamExist(this.camera)) {
             RenderScriptCams(false, false, 0, true, false);
@@ -77,9 +77,13 @@ export class StoryProvider {
         };
     }
 
-    private async drawTextDialog(text: string[]) {
+    private async drawTextDialog(text: string[], timing?: number[]) {
         for (const line of text) {
-            const textDuration = line.length * 5;
+            let textDuration = line.length * 5;
+
+            if (timing) {
+                textDuration = timing[text.indexOf(line)];
+            }
 
             for (let i = 0; i < textDuration; i++) {
                 SetTextScale(0.5, 0.5);

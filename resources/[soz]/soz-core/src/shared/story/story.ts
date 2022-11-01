@@ -4,6 +4,7 @@ import { Vector3 } from '../polyzone/vector';
 export type Dialog = {
     audio: string;
     text: string[];
+    timing?: number[];
 };
 
 export type StoryObject = {
