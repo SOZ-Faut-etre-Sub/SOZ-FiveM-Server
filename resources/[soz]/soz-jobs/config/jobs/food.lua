@@ -171,12 +171,6 @@ FoodConfig.Fields = {
         refillDelay = 60000, -- in ms
         item = "grape4",
     },
-    ["pumpkin"] = {
-        prodRange = {min = 400, max = 600},
-        harvestRange = {min = 3, max = 5},
-        refillDelay = 60000, -- in ms
-        item = "pumpkin",
-    },
 }
 FoodConfig.RefillLoopDelay = 60000 -- in ms
 
@@ -308,12 +302,6 @@ FoodConfig.Zones = {
         vector3(-1952.49, 1839.34, 180.56),
         vector3(-1946.66, 1822.47, 172.59),
         vector3(-1838.28, 1900.16, 145.2),
-    },
-    ["pumpkin1"] = {
-        vector3(1981.73, 4864.48, 44.46),
-        vector3(1945.55, 4828.09, 45.08),
-        vector3(1926.67, 4847.17, 45.86),
-        vector3(1961.70, 4884.33, 44.81),
     },
 }
 
