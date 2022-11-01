@@ -74,4 +74,8 @@ export class ProgressService {
 
         return promise;
     }
+
+    public isDoingAction(): boolean {
+        return exports['progressbar'].IsDoingAction();
+    }
 }
