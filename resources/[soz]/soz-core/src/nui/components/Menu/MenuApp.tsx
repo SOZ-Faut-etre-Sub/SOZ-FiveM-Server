@@ -17,6 +17,7 @@ import { MenuDemo } from './MenuDemo';
 import { MenuGarage } from './MenuGarage';
 import { MenuSetHealthState } from './MenuSetHealthState';
 import { MenuVehicle } from './MenuVehicle';
+import { MenuVehicleAuction } from './MenuVehicleAuction';
 import { MenuVehicleCustom } from './MenuVehicleCustom';
 import { MenuVehicleDealership } from './MenuVehicleDealership';
 import { MenuWardrobe } from './MenuWardrobe';
@@ -81,6 +82,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />
             <Route path={`/${MenuType.Vehicle}/*`} element={<MenuVehicle data={menuData} />} />
+            <Route path={`/${MenuType.VehicleAuction}/*`} element={<MenuVehicleAuction data={menuData} />} />
             <Route path={`/${MenuType.VehicleCustom}/*`} element={<MenuVehicleCustom data={menuData} />} />
             <Route path={`/${MenuType.VehicleDealership}/*`} element={<MenuVehicleDealership data={menuData} />} />
             <Route path={`/${MenuType.Garage}/*`} element={<MenuGarage data={menuData} />} />

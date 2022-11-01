@@ -1,15 +1,9 @@
-import { DealershipConfigItem } from '../../config/dealership';
+import { DealershipConfigItem, DealershipType } from '../../config/dealership';
 import { RGBColor } from '../color';
 import { JobType } from '../job';
 import { Vector4 } from '../polyzone/vector';
+import { AuctionVehicle } from './auction';
 import { DealershipId } from './dealership';
-
-export enum LicenceType {
-    Car = 'car',
-    Moto = 'moto',
-    Boat = 'boat',
-    Heli = 'heli',
-}
 
 export type Vehicle = {
     model: string;
@@ -398,14 +392,16 @@ export type VehicleMenuData = {
     hasRadio: boolean;
 };
 
+export type VehicleAuctionMenuData = {
+    name: string;
+    auction: AuctionVehicle;
+};
+
 export type VehicleDealershipMenuData = {
     name: string;
-    dealershipId: string;
-    dealership: DealershipConfigItem;
-    categories: {
-        name: string;
-        vehicles: Vehicle[];
-    }[];
+    dealershipId: DealershipType;
+    dealership?: DealershipConfigItem;
+    vehicles: Vehicle[];
 };
 
 export type VehicleCustomMenuData = {

@@ -1,5 +1,6 @@
+import { PlayerLicenceType } from '../shared/player';
+import { BoxZone } from '../shared/polyzone/box.zone';
 import { Vector3, Vector4 } from '../shared/polyzone/vector';
-import { LicenceType } from '../shared/vehicle/vehicle';
 
 export enum DealershipType {
     Pdm = 'pdm',
@@ -7,10 +8,11 @@ export enum DealershipType {
     Moto = 'moto',
     Air = 'air',
     Boat = 'boat',
+    Job = 'job',
+    Luxury = 'luxury',
 }
 
 export type DealershipConfigItem = {
-    licence?: LicenceType;
     position: Vector4;
     blip: {
         name: string;
@@ -26,9 +28,43 @@ export type DealershipConfigItem = {
     garageName: string;
 };
 
-export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
+export const DealershipJob = {
+    position: [858.72, -3204.44, 4.99, 180.0],
+    parkingPlaces: [
+        new BoxZone([827.31, -3210.51, 5.9], 8, 6, {
+            heading: 180,
+            minZ: 4.9,
+            maxZ: 8.9,
+            data: {
+                indexGarage: 'business_dealership',
+                vehicleTypes: { car: true, bike: true, motorcycle: true, truck: true },
+            },
+        }),
+        new BoxZone([834.94, -3210.88, 5.9], 8, 6, {
+            heading: 180,
+            minZ: 4.9,
+            maxZ: 8.9,
+            data: {
+                indexGarage: 'business_dealership',
+                vehicleTypes: { car: true, bike: true, motorcycle: true, truck: true },
+            },
+        }),
+        new BoxZone([807.41, -3208.19, 5.9], 12.8, 10.4, {
+            heading: 46,
+            minZ: 4.9,
+            maxZ: 9.9,
+            data: { indexGarage: 'business_dealership', vehicleTypes: { heli: true } },
+        }),
+    ],
+    blip: {
+        name: 'Concessionnaire Entreprise',
+        sprite: 821,
+    },
+    ped: 's_f_m_shop_high',
+};
+
+export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigItem>> = {
     [DealershipType.Pdm]: {
-        licence: LicenceType.Car,
         position: [-56.61, -1096.58, 25.42, 30.0],
         blip: {
             name: 'Concessionnaire Auto',
@@ -58,7 +94,6 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
         garageName: 'airport_public',
     },
     [DealershipType.Moto]: {
-        licence: LicenceType.Moto,
         position: [1224.79, 2727.25, 37.0, 180.0],
         blip: {
             name: 'Concessionnaire Moto',
@@ -74,7 +109,6 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
         garageName: 'bell_farms',
     },
     [DealershipType.Air]: {
-        licence: LicenceType.Heli,
         position: [1743.13, 3307.23, 40.22, 148.91],
         blip: {
             name: 'Concessionnaire Hélicoptère',
@@ -90,7 +124,6 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
         garageName: 'sandy_shores_air',
     },
     [DealershipType.Boat]: {
-        licence: LicenceType.Boat,
         position: [-847.93, -1312.15, 4.0, 296.25],
         blip: {
             name: 'Concessionnaire Maritime',
@@ -106,3 +139,22 @@ export const DealershipConfig: Record<DealershipType, DealershipConfigItem> = {
         garageName: 'marina_boat',
     },
 };
+
+export const AuctionZones = [
+    {
+        position: [-790.36, -236.13, 36.73, 169.0],
+        window: new BoxZone([-794.13, -237.8, 37.06], 7.8, 1.2, {
+            heading: 30,
+            minZ: 36.46,
+            maxZ: 39.66,
+        }),
+    },
+    {
+        position: [-786.35, -243.06, 36.73, 72.89],
+        window: new BoxZone([-790.19, -244.75, 37.08], 6.0, 1.2, {
+            heading: 30,
+            minZ: 36.48,
+            maxZ: 39.68,
+        }),
+    },
+];

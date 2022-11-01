@@ -83,8 +83,16 @@ export class AdminMenuVehicleProvider {
     @OnNuiEvent(NuiEvent.AdminMenuVehicleRefill)
     public async onAdminMenuVehicleRefill() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+
         if (vehicle) {
-            exports['soz-vehicle'].SetFuel(vehicle, 100.0);
+            const state = this.vehicleService.getVehicleState(vehicle);
+
+            this.vehicleService.updateVehicleState(vehicle, {
+                condition: {
+                    ...state.condition,
+                    fuelLevel: 100.0,
+                },
+            });
         }
     }
 

@@ -5,7 +5,7 @@ export class LockService {
     private acquiredMap: Map<string, boolean> = new Map<string, boolean>();
     private waitingMap: Map<string, (() => void)[]> = new Map<string, (() => void)[]>();
 
-    public async lock<T>(key: string, action: () => T, timeout?: number): Promise<T> {
+    public async lock<T>(key: string, action: () => Promise<T>, timeout?: number): Promise<T> {
         await this.acquire(key, timeout);
 
         try {

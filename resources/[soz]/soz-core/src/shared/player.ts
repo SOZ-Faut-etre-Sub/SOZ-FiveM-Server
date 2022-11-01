@@ -45,6 +45,7 @@ export type Skin = {
 export type PlayerCharInfo = {
     firstname: string;
     lastname: string;
+    account: string;
 };
 
 export type PlayerJob = {
@@ -82,6 +83,18 @@ export type PlayerServerState = {
     };
 };
 
+export enum PlayerLicenceType {
+    Car = 'car',
+    Truck = 'truck',
+    Moto = 'moto',
+    Boat = 'boat',
+    Heli = 'heli',
+    Weapon = 'weapon',
+    Fishing = 'fishing',
+    Hunting = 'hunting',
+    Rescuer = 'rescuer',
+}
+
 export type PlayerMetadata = PlayerHealthBook & {
     godmode: boolean;
     isdead: boolean;
@@ -116,4 +129,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     isWearingItem: 'zevent2022_tshirt' | null;
     gym_subscription_expire_at: number | null;
     halloween2022: Halloween2022 | null;
+    licences: Partial<Record<PlayerLicenceType, number>>;
 };

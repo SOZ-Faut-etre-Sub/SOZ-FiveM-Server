@@ -230,7 +230,6 @@ function SetupDrivingSchoolExam(licenseType, spawnPoint)
         TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", Config.VehiclePlateText)
         SetVehicleDoorsLockedForPlayer(vehicle, playerPed, false)
         SetVehRadioStation(vehicle, "OFF")
-        exports["soz-vehicle"]:SetFuel(vehicle, 100.0)
 
         -- Unload models
         SetModelAsNoLongerNeeded(iData.modelHash)

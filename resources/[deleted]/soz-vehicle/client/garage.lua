@@ -32,11 +32,6 @@ AddEventHandler("soz-garage:client:GenerateHousingZoneAndPlace", function()
     end
 end)
 
-
-RegisterNetEvent("soz-garage:client:UpdateVehicleMods", function(vehNetId, mods)
-    QBCore.Functions.SetVehicleProperties(NetToVeh(vehNetId), mods)
-end)
-
 RegisterNetEvent("soz-garage:client:PutInDepot", function(entity)
     local plate = QBCore.Functions.GetPlate(entity)
     local isVehicleOwned = QBCore.Functions.TriggerRpc("soz-garage:server:IsVehicleOwned", plate)
