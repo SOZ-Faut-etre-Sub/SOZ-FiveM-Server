@@ -67,6 +67,8 @@ export enum ServerEvent {
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
 
+    AFK_KICK = 'soz-core:server:afk:kick',
+
     // not core
     ADMIN_ADD_VEHICLE = 'admin:vehicle:addVehicle',
     ADMIN_CHANGE_PLAYER = 'admin:server:ChangePlayer',
