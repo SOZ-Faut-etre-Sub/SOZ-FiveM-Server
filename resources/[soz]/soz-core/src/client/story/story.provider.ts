@@ -81,7 +81,7 @@ export class StoryProvider {
         for (const line of text) {
             let textDuration = line.length * 5;
 
-            if (timing) {
+            if (timing && timing.length > 0) {
                 textDuration = timing[text.indexOf(line)];
             }
 
