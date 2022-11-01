@@ -2,8 +2,8 @@ import { Command } from '../../core/decorators/command';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { wait } from '../../core/utils';
-import { ServerEvent } from '../../shared/event';
+import { uuidv4, wait } from '../../core/utils';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
@@ -90,12 +90,14 @@ export class RebootProvider {
     private async thunder() {
         this.weatherProvider.setWeatherUpdate(false);
 
+        this.sendRebootMessage(15);
         this.weatherProvider.setWeather('CLEARING');
         await wait(5 * 60 * 1000);
 
         this.weatherProvider.setWeather('RAIN');
         await wait(5 * 60 * 1000);
 
+        this.sendRebootMessage(5);
         this.weatherProvider.setWeather('THUNDER');
         await wait(2 * 60 * 1000);
 
@@ -145,5 +147,17 @@ export class RebootProvider {
         }
 
         await this.reboot();
+    }
+
+    private sendRebootMessage(minutes: number) {
+        emit(
+            ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
+            `${ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST}:${uuidv4()}`,
+            {
+                type: 'fbi',
+                message: `Une tempête est en cours de formation, elle devrait frapper le coeur de San Andreas d'ici ${minutes} minutes. Veuillez vous abriter.`,
+                reporter: 'Irma',
+            }
+        );
     }
 }
