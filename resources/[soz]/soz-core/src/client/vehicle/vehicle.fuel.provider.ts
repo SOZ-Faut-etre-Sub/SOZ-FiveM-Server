@@ -2,12 +2,14 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
+import { RpcEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -16,6 +18,7 @@ import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../resources/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
+import { ObjectFactory } from '../world/object.factory';
 import { VehicleService } from './vehicle.service';
 
 type StationZone = {
@@ -60,13 +63,22 @@ export class VehicleFuelProvider {
     @Inject(SoundService)
     private soundService: SoundService;
 
+    @Inject(ObjectFactory)
+    private objectFFactory: ObjectFactory;
+
     private stationsByModel: Record<number, StationZone[]> = {};
 
     private currentStationPistol: CurrentStationPistol | null = null;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoryLoaded() {
-        const stations = this.fuelStationRepository.get();
+        let stations = this.fuelStationRepository.get();
+
+        while (!stations) {
+            await wait(100);
+            stations = this.fuelStationRepository.get();
+        }
+
         const models: number[] = [];
         this.stationsByModel = {};
 
@@ -85,18 +97,24 @@ export class VehicleFuelProvider {
                 });
             }
 
+            if (station.type === FuelStationType.Private || station.fuel === FuelType.Kerosene) {
+                this.objectFFactory.create(station.model, station.position, true);
+            }
+
             if (!this.stationsByModel[station.model]) {
                 this.stationsByModel[station.model] = [];
                 models.push(station.model);
             }
 
+            const zone = new BoxZone(station.zone.center, station.zone.length, station.zone.width, {
+                heading: station.zone.heading,
+                minZ: station.zone.minZ - 2.0,
+                maxZ: station.zone.maxZ + 2.0,
+            });
+
             this.stationsByModel[station.model].push({
                 station,
-                zone: new BoxZone(station.zone.center, station.zone.length, station.zone.width, {
-                    heading: station.zone.heading,
-                    minZ: station.zone.minZ,
-                    maxZ: station.zone.maxZ,
-                }),
+                zone,
             });
         }
 
@@ -112,7 +130,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    TriggerEvent(ClientEvent.OIL_REFILL_ESSENCE_STATION, station.id);
+                    TriggerEvent(ClientEvent.OIL_REFILL_ESSENCE_STATION, entity, station.id);
                 },
                 canInteract: (entity: number) => {
                     const player = this.playerService.getPlayer();
@@ -121,7 +139,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    if (!LocalPlayer.state.tankerPipe || !player.job.onduty) {
+                    if (!LocalPlayer.state.tankerEntity || !player.job.onduty) {
                         return false;
                     }
 
@@ -148,7 +166,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    TriggerEvent(ClientEvent.OIL_REFILL_KEROSENE_STATION, station.id);
+                    TriggerEvent(ClientEvent.OIL_REFILL_KEROSENE_STATION, entity, station.id);
                 },
                 canInteract: (entity: number) => {
                     const player = this.playerService.getPlayer();
@@ -467,6 +485,8 @@ export class VehicleFuelProvider {
             return;
         }
 
+        const refreshStation = await emitRpc<FuelStation>(RpcEvent.OIL_GET_STATION, station.id);
+
         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
         await wait(500);
 
@@ -484,7 +504,7 @@ export class VehicleFuelProvider {
         );
 
         if (completed) {
-            this.notifier.notify(`Status de la cuve: ~b~${station.stock}L`, 'success');
+            this.notifier.notify(`Status de la cuve: ~b~${refreshStation.stock}L`, 'success');
         }
     }
 

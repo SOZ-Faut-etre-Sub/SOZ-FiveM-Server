@@ -103,7 +103,6 @@ export class TargetFactory {
             {
                 center: [ped.coords.x, ped.coords.y, ped.coords.z],
                 heading: ped.coords.w,
-                debugPoly: true,
                 width: 0.8,
                 length: 0.8,
                 minZ: ped.coords.z - 1,

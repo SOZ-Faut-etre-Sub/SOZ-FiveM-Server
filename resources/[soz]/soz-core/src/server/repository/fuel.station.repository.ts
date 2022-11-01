@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { PrismaService } from '../database/prisma.service';
 import { Repository } from './repository';
 
@@ -42,10 +42,15 @@ export class FuelStationRepository extends Repository<Record<string, FuelStation
 
         for (const station of stations) {
             try {
-                const stationPosition = JSON.parse(station.position) as { x: number; y: number; z: number };
+                const stationPosition = JSON.parse(station.position) as { x: number; y: number; z: number; w?: number };
                 const stationZone = JSON.parse(station.zone) as DatabaseZone;
 
-                const position = [stationPosition.x, stationPosition.y, stationPosition.z] as Vector3;
+                const position = [
+                    stationPosition.x,
+                    stationPosition.y,
+                    stationPosition.z,
+                    stationPosition.w || 0,
+                ] as Vector4;
                 const zone = {
                     center: [stationZone.position.x, stationZone.position.y, stationZone.position.z] as Vector3,
                     length: stationZone.length,

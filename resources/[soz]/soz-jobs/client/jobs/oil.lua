@@ -27,14 +27,18 @@ local function playerHasItem(item, amount)
 end
 
 local CreateTankerAction = function()
-    exports["qb-target"]:AddTargetModel({"tanker"}, {
+    exports["qb-target"]:AddGlobalVehicle({
         options = {
             {
                 event = "jobs:client:fueler:PrepareTankerRefill",
                 icon = "c:fuel/pistolet.png",
                 label = "Connecter le Tanker",
                 color = "oil",
-                canInteract = function()
+                canInteract = function(entity)
+                    if GetEntityModel(entity) ~= GetHashKey("tanker") and GetEntityModel(entity) ~= GetHashKey("tanker2") then
+                        return false
+                    end
+
                     return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
                 end,
                 job = "oil",
@@ -46,7 +50,11 @@ local CreateTankerAction = function()
                 icon = "c:fuel/pistolet.png",
                 label = "Déconnecter le Tanker",
                 color = "oil",
-                canInteract = function()
+                canInteract = function(entity)
+                    if GetEntityModel(entity) ~= GetHashKey("tanker") and GetEntityModel(entity) ~= GetHashKey("tanker2") then
+                        return false
+                    end
+
                     return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
                 end,
                 job = "oil",
@@ -78,7 +86,6 @@ local function SpawnFieldZones()
         })
         fieldZone:onPlayerInOut(function(isInside)
             if isInside and PlayerData.job.id == SozJobCore.JobType.Oil and PlayerData.job.onduty then
-                CreateTankerAction()
                 exports["qb-target"]:AddTargetModel({"p_oil_pjack_01_s", "p_oil_pjack_02_s", "p_oil_pjack_03_s"}, {
                     options = {
                         {
@@ -117,6 +124,8 @@ end
 
 --- Targets
 CreateThread(function()
+    CreateTankerAction()
+
     exports["qb-target"]:AddBoxZone("mtp:duty", vector3(-246.62, 6090.77, 32.25), 0.15, 1.2, {
         name = "mtp:duty",
         heading = 45,
@@ -219,9 +228,6 @@ end)
 
 --- Targets Locations
 AddEventHandler("locations:zone:enter", function(zone, station, isAKeroseneStation)
-    if zone == "fueler_petrol_refinery" or (zone == "fueler_petrol_station" and not isAKeroseneStation) or zone == "fueler_petrol_resell" then
-        CreateTankerAction()
-    end
     if zone == "fueler_petrol_refinery" then
         local refineryActions = {
             {

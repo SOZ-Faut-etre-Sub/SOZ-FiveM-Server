@@ -95,6 +95,7 @@ export class VehicleSpawner {
                 ...getDefaultVehicleCondition(),
                 ...JSON.parse(vehicle.condition || '{}'),
             },
+            isPlayerVehicle: true,
             plate: vehicle.plate,
             id: vehicle.id,
             open: true,
@@ -137,6 +138,7 @@ export class VehicleSpawner {
             warp: true,
             state: {
                 ...getDefaultVehicleState(),
+                isPlayerVehicle: true,
                 owner: player.citizenid,
                 open: true,
             },

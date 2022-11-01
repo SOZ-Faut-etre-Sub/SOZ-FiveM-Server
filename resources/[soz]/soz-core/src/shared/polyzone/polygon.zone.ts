@@ -17,6 +17,13 @@ export class PolygonZone<T = never> {
         this.points = points;
         this.minZ = options?.minZ;
         this.maxZ = options?.maxZ;
+
+        if (this.maxZ < this.minZ) {
+            const minZ = this.minZ;
+            this.minZ = this.maxZ;
+            this.maxZ = minZ;
+        }
+
         this.data = options?.data;
     }
 

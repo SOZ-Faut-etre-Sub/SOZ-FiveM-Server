@@ -54,6 +54,12 @@ export class OilStationProvider {
             return;
         }
 
+        if (station.stock >= 2000) {
+            this.notifier.notify('La station est déjà pleine.', 'error');
+
+            return;
+        }
+
         const ped = PlayerPedId();
         TaskTurnPedToFaceEntity(ped, entity, 1000);
         await wait(500);
@@ -78,6 +84,10 @@ export class OilStationProvider {
                 return Ok(true);
             }
         );
+
+        if (!refill) {
+            return;
+        }
 
         TriggerServerEvent(ServerEvent.OIL_REFILL_ESSENCE_STATION, stationId, parseInt(refill), vehicleNetworkId);
     }

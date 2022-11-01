@@ -5,7 +5,7 @@ import { Rpc } from '../../../core/decorators/rpc';
 import { ServerEvent } from '../../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../../shared/fuel';
 import { JobPermission, JobType } from '../../../shared/job';
-import { Vector3 } from '../../../shared/polyzone/vector';
+import { Vector3, Vector4 } from '../../../shared/polyzone/vector';
 import { RpcEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../item/inventory.manager';
@@ -54,10 +54,10 @@ export class OilStationProvider {
             return null;
         }
 
-        const stationPosition = JSON.parse(station.position) as { x: number; y: number; z: number };
+        const stationPosition = JSON.parse(station.position) as { x: number; y: number; z: number; w?: number };
         const stationZone = JSON.parse(station.zone);
 
-        const position = [stationPosition.x, stationPosition.y, stationPosition.z] as Vector3;
+        const position = [stationPosition.x, stationPosition.y, stationPosition.z, stationPosition.w || 0] as Vector4;
         const zone = {
             center: [stationZone.position.x, stationZone.position.y, stationZone.position.z] as Vector3,
             length: stationZone.length,
@@ -144,7 +144,7 @@ export class OilStationProvider {
         }
 
         const itemCount = Math.ceil(amount / 10);
-        const availableCount = this.inventoryManager.getItem(`trunk_` + state.plate, 'essence');
+        const availableCount = this.inventoryManager.getItemCount(`trunk_` + state.plate, 'essence');
 
         if (itemCount > availableCount) {
             this.notifier.notify(source, "Vous n'avez pas assez d'essence dans la citerne.");
@@ -174,8 +174,9 @@ export class OilStationProvider {
 
         const refilled = Math.ceil(amount * progress);
         const itemUsed = Math.ceil(refilled / 10);
+        const plate = state.plate || GetVehicleNumberPlateText(vehicleEntityId);
 
-        if (!this.inventoryManager.removeItemFromInventory(`trunk_` + state.plate, 'essence', itemUsed)) {
+        if (!this.inventoryManager.removeItemFromInventory(`trunk_` + plate, 'essence', itemUsed)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'essence dans la citerne.");
 
             return;
@@ -202,7 +203,7 @@ export class OilStationProvider {
     @OnEvent(ServerEvent.OIL_REFILL_KEROSENE_STATION)
     public async refillKeroseneStation(source: number, stationId: number, amount: number): Promise<void> {
         const itemCount = Math.ceil(amount / 10);
-        const availableCount = this.inventoryManager.getItem(source, 'kerosene');
+        const availableCount = this.inventoryManager.getItemCount(source, 'kerosene');
 
         if (itemCount > availableCount) {
             this.notifier.notify(source, "Vous n'avez pas assez de kérosène.");
@@ -228,7 +229,7 @@ export class OilStationProvider {
             }
         );
 
-        const refilled = Math.ceil(amount * progress);
+        const refilled = Math.floor(amount * progress);
         const itemUsed = Math.ceil(refilled / 10);
 
         if (!this.inventoryManager.removeItemFromInventory(source, 'kerosene', itemUsed)) {
@@ -237,7 +238,7 @@ export class OilStationProvider {
             return;
         }
 
-        await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', refilled * 0.5);
+        await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', refilled * 3);
 
         this.notifier.notify(source, `Vous avez ~g~ajouté~s~ ${refilled}L de kérosène dans la station.`);
 

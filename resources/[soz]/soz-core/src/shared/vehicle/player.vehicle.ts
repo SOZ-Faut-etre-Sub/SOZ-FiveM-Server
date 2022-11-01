@@ -9,6 +9,7 @@ export enum PlayerVehicleState {
     Missing = 4,
     Destroyed = 5,
 }
+
 export type PlayerVehicle = {
     id: number;
     license: string;
