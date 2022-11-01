@@ -7,6 +7,15 @@ DegradationLevel = Config.Degradation.Level.Green
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
+
+    -- Fields
+    for identifier, _ in pairs(Config.Field.List) do
+        local field = QBCore.Functions.TriggerRpc("pawl:server:getFieldData", identifier)
+        TriggerEvent("pawl:client:syncField", identifier, field)
+    end
+
+    -- Degradation
+    DegradationLevel = QBCore.Functions.TriggerRpc("pawl:server:getDegradationLevel")
 end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
@@ -23,15 +32,6 @@ Citizen.CreateThread(function()
             scale = Config.Blip.Scale,
         })
     end
-
-    -- Fields
-    for identifier, _ in pairs(Config.Field.List) do
-        local field = QBCore.Functions.TriggerRpc("pawl:server:getFieldData", identifier)
-        TriggerEvent("pawl:client:syncField", identifier, field)
-    end
-
-    -- Degradation
-    DegradationLevel = QBCore.Functions.TriggerRpc("pawl:server:getDegradationLevel")
 
     -- Processing
     exports["qb-target"]:RemoveZone("pawl:processing:tree_trunk")
