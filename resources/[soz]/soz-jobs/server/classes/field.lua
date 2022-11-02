@@ -1,6 +1,6 @@
 Field = {}
 
-function Field:new(identifier, item, capacity, maxCapacity, refillDelay, harvest)
+function Field:new(identifier, item, capacity, maxCapacity, refillDelay, harvest, upwBoost)
     self.__index = self
 
     if type(maxCapacity) == "table" then
@@ -14,6 +14,7 @@ function Field:new(identifier, item, capacity, maxCapacity, refillDelay, harvest
         maxCapacity = maxCapacity,
         refillDelay = refillDelay,
         harvest = harvest or 1,
+        upwBoost = upwBoost or true,
     }, self)
 end
 
@@ -47,10 +48,12 @@ function Field:Harvest()
     end
 
     -- Production is boosted on LOW pollution level
-    local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
-    if pollutionLevel == QBCore.Shared.Pollution.Level.Low then
-        min = min + 1
-        max = max + 2
+    if self.upwBoost then
+        local pollutionLevel = exports["soz-upw"]:GetPollutionLevel()
+        if pollutionLevel == QBCore.Shared.Pollution.Level.Low then
+            min = min + 1
+            max = max + 2
+        end
     end
 
     local quantity = math.random(min, max)
