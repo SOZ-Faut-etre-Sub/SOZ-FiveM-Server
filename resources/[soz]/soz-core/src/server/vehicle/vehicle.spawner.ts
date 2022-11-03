@@ -7,13 +7,8 @@ import { Provider } from '../../core/decorators/provider';
 import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector4 } from '../../shared/polyzone/vector';
-import {
-    getDefaultVehicleCondition,
-    getDefaultVehicleModification,
-    getDefaultVehicleState,
-    VehicleModification,
-    VehicleSpawn,
-} from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleModification, VehicleConfiguration } from '../../shared/vehicle/modification';
+import { getDefaultVehicleCondition, getDefaultVehicleState, VehicleSpawn } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -114,7 +109,7 @@ export class VehicleSpawner {
             warp: false,
             modification: {
                 ...getDefaultVehicleModification(),
-                ...(JSON.parse(vehicle.mods || '{}') as VehicleModification),
+                ...(JSON.parse(vehicle.mods || '{}') as VehicleConfiguration),
             },
             state,
         });

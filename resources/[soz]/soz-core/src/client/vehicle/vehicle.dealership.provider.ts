@@ -11,7 +11,7 @@ import { getRandomItem } from '../../shared/random';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
-import { Vehicle, VehicleCategory, VehicleDealershipMenuData } from '../../shared/vehicle/vehicle';
+import { Vehicle, VehicleDealershipMenuData } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { JobPermissionService } from '../job/job.permission.service';
 import { Notifier } from '../notifier';

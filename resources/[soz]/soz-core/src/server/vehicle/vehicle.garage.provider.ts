@@ -9,12 +9,9 @@ import { JobPermission, JobType } from '../../shared/job';
 import { getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
+import { getDefaultVehicleModification } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
-import {
-    getDefaultVehicleCondition,
-    getDefaultVehicleModification,
-    VehicleCategory,
-} from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { JobService } from '../job.service';
 import { LockService } from '../lock.service';

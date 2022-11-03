@@ -1005,73 +1005,12 @@ Dutymecha = BoxZone:Create(vector3(-204.9, -1337.93, 34.89), 5, 4, {
     maxZ = 37.89,
 })
 
-local repairSpots = {
-    BoxZone:Create(vector3(-222.49, -1323.6, 30.89), 9, 6, {
-        name = "Vehiclemecha1_z",
-        heading = 90,
-        minZ = 29.89,
-        maxZ = 33.89,
-    }),
-    BoxZone:Create(vector3(-222.62, -1330.24, 30.89), 9, 6, {
-        name = "Vehiclemecha2_z",
-        heading = 90,
-        minZ = 29.89,
-        maxZ = 33.89,
-    }),
-    BoxZone:Create(vector3(-168.78, -1252.58, 31.3), 6.2, 13.6, {
-        name = "bennys_repair_slot2",
-        heading = 0,
-        minZ = 30.3,
-        maxZ = 35.3,
-    }),
-}
-
 StaffBennys = BoxZone:Create(vector3(-1666.83, -3149.29, 13.99), 9, 6, {
     name = "staff_bennys",
     heading = 240,
     minZ = 12.3,
     maxZ = 27,
 })
-
-Dutymecha:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, _)
-    if isPointInside then
-        exports["qb-target"]:AddTargetModel(-1830645735, {
-            options = {
-                {
-                    type = "client",
-                    event = "QBCore:ToggleDuty",
-                    icon = "fas fa-sign-in-alt",
-                    label = "Prendre son service",
-                    action = function(entity)
-                        TriggerServerEvent("QBCore:ToggleDuty")
-                    end,
-                    canInteract = function()
-                        return not OnDuty
-                    end,
-                    job = "bennys",
-                },
-                {
-                    type = "client",
-                    event = "QBCore:ToggleDuty",
-                    icon = "fas fa-sign-in-alt",
-                    label = "Finir son service",
-                    action = function(entity)
-                        TriggerServerEvent("QBCore:ToggleDuty")
-                    end,
-                    canInteract = function()
-                        return OnDuty
-                    end,
-                    job = "bennys",
-                },
-            },
-            distance = 2.5,
-        })
-    else
-        if PlayerJob.id == "bennys" then
-            exports["qb-target"]:RemoveTargetModel(-1830645735, "Prendre son service")
-        end
-    end
-end)
 
 local InsideWorkshop = false
 

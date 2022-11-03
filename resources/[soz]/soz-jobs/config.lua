@@ -418,7 +418,6 @@ SozJobCore.Jobs = {
         label = "Benny's",
         platePrefix = "BENY",
         grades = {},
-        menuCallback = "bennys:client:OpenSocietyMenu",
         canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},

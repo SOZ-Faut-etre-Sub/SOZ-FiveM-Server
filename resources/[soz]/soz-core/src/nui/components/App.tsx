@@ -2,12 +2,15 @@ import '../styles/index.scss';
 
 import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
+import { Provider } from 'react-redux';
 
 import { useNuiEvent } from '../hook/nui';
+import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
 import { HealthBookApp } from './HealthBook/HealthBookApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
+import { PlayerApp } from './Player/PlayerApp';
 
 export const App: FunctionComponent = () => {
     const [hide, setHide] = useState(false);
@@ -21,11 +24,14 @@ export const App: FunctionComponent = () => {
     });
 
     return (
-        <div className={classes}>
-            <MenuApp />
-            <HealthBookApp />
-            <InputApp />
-            <AudioApp />
-        </div>
+        <Provider store={store}>
+            <div className={classes}>
+                <MenuApp />
+                <HealthBookApp />
+                <InputApp />
+                <AudioApp />
+                <PlayerApp />
+            </div>
+        </Provider>
     );
 };

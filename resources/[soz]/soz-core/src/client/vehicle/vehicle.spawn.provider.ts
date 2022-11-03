@@ -77,7 +77,7 @@ export class VehicleSpawnProvider {
         }
 
         if (vehicleSpawn.modification) {
-            this.vehicleService.applyVehicleModification(vehicle, vehicleSpawn.modification);
+            this.vehicleService.applyVehicleConfiguration(vehicle, vehicleSpawn.modification);
         }
 
         this.vehicleService.syncVehicle(vehicle, vehicleSpawn.state);

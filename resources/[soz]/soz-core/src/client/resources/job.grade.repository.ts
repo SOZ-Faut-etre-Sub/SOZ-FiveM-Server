@@ -15,6 +15,10 @@ export class JobGradeRepository {
         this.jobGrades = jobGrades;
     }
 
+    public getJobGrade(job: string, grade: number): JobGrade | null {
+        return this.jobGrades.find(x => x.jobId === job && x.id === grade) ?? null;
+    }
+
     public get(): JobGrade[] {
         return this.jobGrades;
     }

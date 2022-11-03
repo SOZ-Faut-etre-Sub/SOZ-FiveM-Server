@@ -2,7 +2,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { RpcEvent } from '../../shared/rpc';
-import { getDefaultVehicleModification, VehicleModification } from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleModification, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -23,7 +23,7 @@ export class VehicleCustomProvider {
     private notifier: Notifier;
 
     @Rpc(RpcEvent.VEHICLE_CUSTOM_SET_MODS)
-    public async setMods(source: number, vehicleNetworkId: number, mods: VehicleModification, price: number | null) {
+    public async setMods(source: number, vehicleNetworkId: number, mods: VehicleConfiguration, price: number | null) {
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(entityId);
 
@@ -64,7 +64,7 @@ export class VehicleCustomProvider {
     }
 
     @Rpc(RpcEvent.VEHICLE_CUSTOM_GET_MODS)
-    public async getMods(source: number, vehicleNetworkId: number): Promise<VehicleModification> {
+    public async getMods(source: number, vehicleNetworkId: number): Promise<VehicleConfiguration> {
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(entityId);
 

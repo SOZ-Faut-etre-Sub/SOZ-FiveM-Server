@@ -4,10 +4,10 @@ import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import {
     getVehicleCustomPrice,
+    VehicleConfiguration,
     VehicleCustomMenuData,
     VehicleLsCustomCategory,
-    VehicleModification,
-} from '../../../shared/vehicle/vehicle';
+} from '../../../shared/vehicle/modification';
 import { fetchNui } from '../../fetch';
 import {
     MainMenu,
@@ -24,38 +24,38 @@ type MenuVehicleCustomProps = {
 };
 
 export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ data }) => {
-    const [modification, setModification] = useState<VehicleModification | null>(null);
+    const [configuration, setConfiguration] = useState<VehicleConfiguration | null>(null);
 
     useEffect(() => {
-        if (data?.currentModification) {
-            setModification(data.currentModification);
+        if (data?.currentConfiguration) {
+            setConfiguration(data.currentConfiguration);
         }
     }, [data]);
 
     useEffect(() => {
-        if (modification && data) {
+        if (configuration && data) {
             fetchNui(NuiEvent.VehicleCustomApply, {
                 vehicleEntityId: data.vehicle,
-                vehicleModification: modification,
+                vehicleConfiguration: configuration,
             });
         }
-    }, [modification]);
+    }, [configuration]);
 
     if (!data) {
         return null;
     }
 
-    const price = modification ? getVehicleCustomPrice(data.custom, data.currentModification, modification) : 0;
-    const onChange = <T extends keyof VehicleModification>(key: T, value: VehicleModification[T]) => {
-        setModification({
-            ...modification,
+    const price = configuration ? getVehicleCustomPrice(data.custom, data.currentConfiguration, configuration) : 0;
+    const onChange = <T extends keyof VehicleConfiguration>(key: T, value: VehicleConfiguration[T]) => {
+        setConfiguration({
+            ...configuration,
             [key]: value,
         });
     };
     const onConfirm = () => {
         fetchNui(NuiEvent.VehicleCustomConfirmModification, {
             vehicleEntityId: data.vehicle,
-            vehicleModification: modification,
+            vehicleConfiguration: configuration,
         });
     };
 
@@ -70,10 +70,10 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                         return (
                             <MenuItemSelect
                                 onChange={(index, value) => {
-                                    onChange(key as keyof VehicleModification, value);
+                                    onChange(key as keyof VehicleConfiguration, value);
                                 }}
                                 key={key}
-                                value={data.currentModification[key]}
+                                value={data.currentConfiguration[key]}
                                 title={category.label}
                             >
                                 {category.levels.map((level, index) => {

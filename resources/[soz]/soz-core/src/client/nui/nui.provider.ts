@@ -13,6 +13,16 @@ export class NuiProvider {
 
     private state: Record<string, FocusInput> = {};
 
+    @OnNuiEvent(NuiEvent.TriggerServerEvent)
+    public async onTriggerServerEvent({ event, args }) {
+        TriggerServerEvent(event, ...args);
+    }
+
+    @OnNuiEvent(NuiEvent.TriggerClientEvent)
+    public async onTriggerClientEvent({ event, args }) {
+        TriggerEvent(event, ...args);
+    }
+
     @OnNuiEvent(NuiEvent.SetFocusInput)
     public async onSetFocusInput(data: SetFocusInput) {
         if (data.focus) {
