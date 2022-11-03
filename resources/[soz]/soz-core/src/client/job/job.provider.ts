@@ -1,63 +1,119 @@
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { JobBlips, JobBossShop, JobMenu } from '../../config/job';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { emitRpc } from '../../core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { BossShop, JobPermission, JobType } from '../../shared/job';
+import { MenuType } from '../../shared/nui/menu';
 import { Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
-import { InventoryManager } from '../item/inventory.manager';
-import { Notifier } from '../notifier';
+import { BlipFactory } from '../blip';
+import { ItemService } from '../item/item.service';
+import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { ProgressService } from '../progress.service';
+import { TargetFactory } from '../target/target.factory';
+import { JobPermissionService } from './job.permission.service';
 
 @Provider()
 export class JobProvider {
-    @Inject(Notifier)
-    private notifier: Notifier;
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
+
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
+    @Inject(JobPermissionService)
+    private jobPermissionService: JobPermissionService;
 
-    @Inject(ProgressService)
-    private progressService: ProgressService;
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
 
-    @OnEvent(ClientEvent.JOBS_TRY_OPEN_CLOAKROOM)
-    public async onTryOpenCloakroom(storageId: string, event: string) {
-        const result = await emitRpc(RpcEvent.INVENTORY_SEARCH, storageId, 'work_clothes');
-        if (!result) {
-            this.notifier.notify(`Il n'y a pas de tenue de travail dans le vestiaire.`, 'error');
-            return;
+    @Inject(ItemService)
+    private itemService: ItemService;
+
+    @Once(OnceStep.PlayerLoaded)
+    public async onStart() {
+        for (const [job, blips] of Object.entries(JobBlips)) {
+            for (const blipIndex in blips) {
+                const blip = blips[blipIndex];
+                this.blipFactory.create(`job_${job}_${blipIndex}`, blip);
+            }
         }
 
-        // Keep propagating the storageId as we need to remove a work_clothes item
-        // from it only when selecting the appropriate button on the cloakroom menu.
-        TriggerEvent(event, storageId);
+        for (const [job, shop] of Object.entries(JobBossShop)) {
+            this.targetFactory.createForBoxZone(`boss_shop_${job}`, shop.zone, [
+                {
+                    label: 'Récupérer du matériel',
+                    icon: 'fas fa-briefcase',
+                    color: job,
+                    job,
+                    action: () => {
+                        this.openBossShop(job as JobType, shop);
+                    },
+                    canInteract: () => {
+                        return this.jobPermissionService.hasPermission(job as JobType, JobPermission.SocietyShop);
+                    },
+                },
+            ]);
+        }
     }
 
-    @OnEvent(ClientEvent.JOBS_CHECK_CLOAKROOM_STORAGE)
-    public async onCheckCloakroomStorage(storageId: string) {
-        const { completed } = await this.progressService.progress(
-            'check-cloakroom',
-            'Vérification du vestiaire',
-            5000,
+    @OnEvent(ClientEvent.JOB_OPEN_MENU)
+    public async toggleJobMenu(job: JobType) {
+        const menuType = JobMenu[job];
+
+        if (!menuType) {
+            return;
+        }
+
+        if (this.nuiMenu.getOpened() === menuType) {
+            this.nuiMenu.closeMenu();
+        } else {
+            this.nuiMenu.openMenu(menuType);
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.JobBossShopBuyItem)
+    public async buyBossShopItem({ job, item }) {
+        TriggerServerEvent(ServerEvent.JOB_BOSS_SHOP_BUY_ITEM, job, item);
+
+        this.nuiMenu.closeMenu();
+    }
+
+    public openBossShop(job: JobType, shop: BossShop) {
+        const items = [];
+
+        for (const item of shop.items) {
+            const itemInfo = this.itemService.getItem(item.name);
+
+            if (!itemInfo) {
+                continue;
+            }
+
+            items.push({
+                ...item,
+                label: itemInfo.label,
+            });
+        }
+
+        this.nuiMenu.openMenu(
+            MenuType.BossShop,
             {
-                name: 'think_01_amy_skater_01',
-                dictionary: 'anim@amb@board_room@whiteboard@',
-                flags: 1,
+                job,
+                shop: {
+                    ...shop,
+                    items,
+                },
+            },
+            {
+                position: {
+                    position: shop.zone.center,
+                    distance: 3.0,
+                },
             }
         );
-        if (!completed) {
-            return;
-        }
-        const result = await emitRpc(RpcEvent.INVENTORY_SEARCH, storageId, 'work_clothes');
-        if (!result) {
-            this.notifier.notify(`Il n'y a pas de tenue de travail dans le vestiaire.`, 'error');
-            return;
-        }
-        this.notifier.notify(`Il reste ${result} tenues de travail dans le vestiaire.`);
     }
 
     @OnNuiEvent(NuiEvent.JobPlaceProps)

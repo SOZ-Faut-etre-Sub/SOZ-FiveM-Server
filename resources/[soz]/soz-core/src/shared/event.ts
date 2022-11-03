@@ -15,6 +15,8 @@ export enum ServerEvent {
     BENNYS_ESTIMATE_VEHICLE = 'soz-core:server:job:bennys:estimate-vehicle',
     BENNYS_SELL_VEHICLE = 'soz-core:server:job:bennys:sell-vehicle',
     BENNYS_SET_SPECIAL_VEHICLES = 'soz-core:server:bennys:set-special-vehicles',
+    BENNYS_REPAIR_VEHICLE = 'soz-core:server:job:bennys:repair-vehicle',
+    BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
 
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 
@@ -36,6 +38,7 @@ export enum ServerEvent {
 
     JOBS_USE_WORK_CLOTHES = 'soz-core:server:job:use-work-clothes',
     JOBS_PLACE_PROPS = 'job:server:placeProps',
+    JOB_BOSS_SHOP_BUY_ITEM = 'soz-core:server:job:boss-shop:buy-item',
 
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
@@ -126,6 +129,8 @@ export enum ClientEvent {
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
 
+    BENNYS_OPEN_CLOAKROOM = 'soz-core:client:job:bennys:open-cloakroom',
+
     CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
 
     PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
@@ -145,6 +150,7 @@ export enum ClientEvent {
     JOBS_STONK_OPEN_SOCIETY_MENU = 'stonk:client:OpenSocietyMenu',
     JOBS_TRY_OPEN_CLOAKROOM = 'soz-jobs:client:try-open-cloakroom',
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
+    JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
@@ -179,6 +185,7 @@ export enum ClientEvent {
     VEHICLE_FUEL_STOP = 'soz-core:client:vehicle:fuel:stop',
     VEHICLE_GET_CLOSEST = 'soz-core:client:vehicle:get-closest',
     VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
+    VEHICLE_SYNC_CONDITION = 'soz-core:client:vehicle:sync-condition',
     VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
@@ -259,7 +266,8 @@ export enum NuiEvent {
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
     MenuClosed = 'menu_closed',
-    OilAskStationPrice = 'soz-core:client:job:oil:ask-station-price',
+    JobBossShopBuyItem = 'soz-core:nui:job:boss-shop:buy-item',
+    OilAskStationPrice = 'soz-core:nui:job:oil:ask-station-price',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
@@ -267,6 +275,9 @@ export enum NuiEvent {
     BossShopBuy = 'soz-core:client:shop:boss:buy',
     ShopMaskPreview = 'soz-core:client:shop:mask:preview',
     ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
+
+    TriggerServerEvent = 'soz-core:nui:trigger-server-event',
+    TriggerClientEvent = 'soz-core:nui:trigger-client-event',
 
     VehicleAuctionBid = 'soz-core:client:vehicle:auction:bid',
 

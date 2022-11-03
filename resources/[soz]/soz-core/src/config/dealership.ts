@@ -1,4 +1,3 @@
-import { PlayerLicenceType } from '../shared/player';
 import { BoxZone } from '../shared/polyzone/box.zone';
 import { Vector3, Vector4 } from '../shared/polyzone/vector';
 

@@ -2,7 +2,7 @@ import { SozRole } from '../core/permissions';
 import { ClothConfig } from './cloth';
 import { Disease } from './disease';
 import { InventoryItem } from './item';
-import { JobGrade, JobType } from './job';
+import { JobType } from './job';
 import { Halloween2022 } from './story/halloween2022';
 
 export type QBCorePlayer = {
@@ -51,7 +51,7 @@ export type PlayerCharInfo = {
 export type PlayerJob = {
     onduty: boolean;
     id: JobType;
-    grade: JobGrade;
+    grade: number;
 };
 
 export type PlayerHealthBook = {

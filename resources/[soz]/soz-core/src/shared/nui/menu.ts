@@ -1,13 +1,10 @@
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
-import { FuelStation, FuelType } from '../fuel';
+import { FuelType } from '../fuel';
+import { BossShopMenu } from '../job';
 import { GarageMenuData } from '../vehicle/garage';
-import {
-    VehicleAuctionMenuData,
-    VehicleCustomMenuData,
-    VehicleDealershipMenuData,
-    VehicleMenuData,
-} from '../vehicle/vehicle';
+import { BennysUpgradeVehicleMenuData, VehicleCustomMenuData } from '../vehicle/modification';
+import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -30,12 +27,15 @@ export enum MenuType {
     AdminMenu = 'AdminMenu',
     BahamaUnicornJobMenu = 'baun_job',
     BennysOrderMenu = 'bennys_order',
+    BennysUpgradeVehicle = 'bennys_upgrade_vehicle',
+    BossShop = 'job_boss_shop',
     Demo = 'demo',
     BossShop = 'boss_shop',
     MaskShop = 'mask_shop',
     FightForStyleJobMenu = 'ffs_job',
     FoodJobMenu = 'food_job_menu',
     Garage = 'garage_menu',
+    JobBennys = 'job_bennys',
     OilSetStationPrice = 'oil_set_station_price',
     SetHealthState = 'set_health_state',
     StonkJobMenu = 'stonk_job',
@@ -49,9 +49,12 @@ export enum MenuType {
 export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.AdminMenu]: AdminMenuStateProps['data'];
     [MenuType.BahamaUnicornJobMenu]: any;
+    [MenuType.BennysOrderMenu]: BennysUpgradeVehicleMenuData;
+    [MenuType.BossShop]: BossShopMenu;
     [MenuType.Demo]: never;
     [MenuType.FightForStyleJobMenu]: any;
     [MenuType.Garage]: GarageMenuData;
+    [MenuType.JobBennys]: never;
     [MenuType.OilSetStationPrice]: Record<FuelType, number>;
     [MenuType.SetHealthState]: number;
     [MenuType.Vehicle]: VehicleMenuData;

@@ -1,5 +1,6 @@
 import { JobType } from '../job';
-import { VehicleCategory, VehicleCondition, VehicleModification } from './vehicle';
+import { VehicleConfiguration } from './modification';
+import { VehicleCategory, VehicleCondition } from './vehicle';
 
 export enum PlayerVehicleState {
     Out = 0,
@@ -16,7 +17,7 @@ export type PlayerVehicle = {
     citizenid: string;
     model: number;
     modelName: string;
-    modification: VehicleModification;
+    modification: VehicleConfiguration;
     condition: VehicleCondition;
     plate: string;
     garage: string;

@@ -10,18 +10,19 @@ import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import {
     getVehicleCustomPrice,
+    VehicleConfiguration,
     VehicleCustomMenuData,
     VehicleLsCustom,
     VehicleLsCustomBaseConfig,
     VehicleLsCustomLevel,
-    VehicleModification,
-} from '../../shared/vehicle/vehicle';
+} from '../../shared/vehicle/modification';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { VehicleRepository } from '../resources/vehicle.repository';
 import { TargetFactory } from '../target/target.factory';
+import { VehicleModificationService } from './vehicle.modification.service';
 import { VehicleService } from './vehicle.service';
 
 @Provider()
@@ -46,6 +47,9 @@ export class VehicleCustomProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(VehicleModificationService)
+    private vehicleModificationService: VehicleModificationService;
 
     private lsCustomZone = new MultiZone([
         new BoxZone([-339.46, -136.73, 39.01], 10, 10, {
@@ -106,7 +110,21 @@ export class VehicleCustomProvider {
                     return this.lsCustomZone.isPointInside(position);
                 },
             },
+            {
+                icon: 'c:mechanic/Ameliorer.png',
+                label: 'Debug voiture',
+                action: vehicle => {
+                    this.debugVehicle(vehicle);
+                },
+                canInteract: () => {
+                    return true;
+                },
+            },
         ]);
+    }
+
+    public debugVehicle(vehicle: number): void {
+        this.vehicleModificationService.debug(vehicle);
     }
 
     @OnNuiEvent<{ menuType: MenuType; menuData: VehicleCustomMenuData }>(NuiEvent.MenuClosed)
@@ -116,23 +134,23 @@ export class VehicleCustomProvider {
         }
 
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(menuData.vehicle);
-        const vehicleCurrentModification = await emitRpc<VehicleModification>(
+        const vehicleCurrentConfiguration = await emitRpc<VehicleConfiguration>(
             RpcEvent.VEHICLE_CUSTOM_GET_MODS,
             vehicleNetworkId
         );
 
-        this.vehicleService.applyVehicleModification(menuData.vehicle, vehicleCurrentModification);
+        this.vehicleService.applyVehicleConfiguration(menuData.vehicle, vehicleCurrentConfiguration);
     }
 
-    @OnNuiEvent<{ vehicleEntityId: number; vehicleModification: VehicleModification }>(NuiEvent.VehicleCustomApply)
-    public async applyVehicleModification({ vehicleEntityId, vehicleModification }): Promise<void> {
-        this.vehicleService.applyVehicleModification(vehicleEntityId, vehicleModification);
+    @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: VehicleConfiguration }>(NuiEvent.VehicleCustomApply)
+    public async applyVehicleModification({ vehicleEntityId, vehicleConfiguration }): Promise<void> {
+        this.vehicleService.applyVehicleConfiguration(vehicleEntityId, vehicleConfiguration);
     }
 
-    @OnNuiEvent<{ vehicleEntityId: number; vehicleModification: Partial<VehicleModification> }>(
+    @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: Partial<VehicleConfiguration> }>(
         NuiEvent.VehicleCustomConfirmModification
     )
-    public async confirmVehicleCustom({ vehicleEntityId, vehicleModification }): Promise<void> {
+    public async confirmVehicleCustom({ vehicleEntityId, vehicleConfiguration }): Promise<void> {
         const vehicleLsCustom = this.buildVehicleLsCustomConfig(vehicleEntityId);
 
         if (!vehicleLsCustom) {
@@ -143,20 +161,20 @@ export class VehicleCustomProvider {
         }
 
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-        const vehicleCurrentModification = await emitRpc<VehicleModification>(
+        const vehicleCurrentConfiguration = await emitRpc<VehicleConfiguration>(
             RpcEvent.VEHICLE_CUSTOM_GET_MODS,
             vehicleNetworkId
         );
 
-        const price = getVehicleCustomPrice(vehicleLsCustom, vehicleCurrentModification, vehicleModification);
-        const newVehicleModification = await emitRpc<VehicleModification>(
+        const price = getVehicleCustomPrice(vehicleLsCustom, vehicleCurrentConfiguration, vehicleConfiguration);
+        const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
             RpcEvent.VEHICLE_CUSTOM_SET_MODS,
             vehicleNetworkId,
-            vehicleModification,
+            vehicleConfiguration,
             price
         );
 
-        this.vehicleService.applyVehicleModification(vehicleEntityId, newVehicleModification);
+        this.vehicleService.applyVehicleConfiguration(vehicleEntityId, newVehicleConfiguration);
         this.nuiMenu.closeMenu();
     }
 
@@ -170,7 +188,7 @@ export class VehicleCustomProvider {
         }
 
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-        const vehicleModification = await emitRpc<VehicleModification>(
+        const vehicleConfiguration = await emitRpc<VehicleConfiguration>(
             RpcEvent.VEHICLE_CUSTOM_GET_MODS,
             vehicleNetworkId
         );
@@ -178,7 +196,7 @@ export class VehicleCustomProvider {
         this.nuiMenu.openMenu(MenuType.VehicleCustom, {
             vehicle: vehicleEntityId,
             custom: vehicleLsCustom,
-            currentModification: vehicleModification,
+            currentConfiguration: vehicleConfiguration,
         });
     }
 

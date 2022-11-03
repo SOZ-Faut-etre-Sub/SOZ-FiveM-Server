@@ -13,6 +13,8 @@ import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { BossShopMenu } from '../Shop/BossShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
+import { MenuBennys } from './Job/MenuBennys';
+import { MenuBossShop } from './MenuBossShop';
 import { MenuDemo } from './MenuDemo';
 import { MenuGarage } from './MenuGarage';
 import { MenuSetHealthState } from './MenuSetHealthState';
@@ -77,6 +79,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu data={menuData} />} />
             <Route path={`/${MenuType.StonkJobMenu}/*`} element={<StonkJobMenu data={menuData} />} />
             <Route path={`/${MenuType.FoodJobMenu}/*`} element={<FoodJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.BossShop}/*`} element={<MenuBossShop data={menuData} />} />
             <Route path={`/${MenuType.MaskShop}/*`} element={<MaskShopMenu catalog={menuData} />} />
             <Route path={`/${MenuType.BossShop}/*`} element={<BossShopMenu data={menuData} />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
@@ -86,6 +89,8 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.VehicleCustom}/*`} element={<MenuVehicleCustom data={menuData} />} />
             <Route path={`/${MenuType.VehicleDealership}/*`} element={<MenuVehicleDealership data={menuData} />} />
             <Route path={`/${MenuType.Garage}/*`} element={<MenuGarage data={menuData} />} />
+
+            <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys />} />
         </Routes>
     );
 };

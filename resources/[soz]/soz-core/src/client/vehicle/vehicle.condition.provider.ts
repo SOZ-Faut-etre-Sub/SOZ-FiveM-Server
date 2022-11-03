@@ -112,6 +112,27 @@ export class VehicleConditionProvider {
         }
     }
 
+    @OnEvent(ClientEvent.VEHICLE_SYNC_CONDITION)
+    private async onVehicleSyncCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
+        const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+        if (!NetworkHasControlOfEntity(vehicle)) {
+            return;
+        }
+
+        const state = this.vehicleService.getVehicleState(vehicle);
+        const newCondition = {
+            ...state.condition,
+            ...condition,
+        };
+
+        this.vehicleService.updateVehicleState(vehicle, {
+            condition: newCondition,
+        });
+
+        this.vehicleService.applyVehicleCondition(vehicle, newCondition);
+    }
+
     @OnEvent(ClientEvent.VEHICLE_CHECK_CONDITION)
     public async checkCondition(vehicleNetworkId: number) {
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);

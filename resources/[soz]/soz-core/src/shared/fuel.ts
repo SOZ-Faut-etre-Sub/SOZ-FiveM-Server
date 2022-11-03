@@ -1,6 +1,6 @@
 import { JobType } from './job';
 import { Zone } from './polyzone/box.zone';
-import { Vector3, Vector4 } from './polyzone/vector';
+import { Vector4 } from './polyzone/vector';
 
 export enum FuelType {
     Essence = 'essence',

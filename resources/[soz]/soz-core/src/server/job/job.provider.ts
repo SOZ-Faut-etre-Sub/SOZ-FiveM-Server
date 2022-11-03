@@ -4,11 +4,13 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
-import { Job } from '../../shared/job';
+import { BossShopItem, Job, JobType } from '../../shared/job';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../item/inventory.manager';
 import { ItemService } from '../item/item.service';
+import { Notifier } from '../notifier';
+import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
 
 @Provider()
@@ -27,6 +29,12 @@ export class JobProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(PlayerMoneyService)
+    private playerMoneyService: PlayerMoneyService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @Rpc(RpcEvent.JOB_GET_JOBS)
     public async getJobs(): Promise<Job[]> {
@@ -67,5 +75,31 @@ export class JobProvider {
     @OnEvent(ServerEvent.JOBS_USE_WORK_CLOTHES)
     public async useWorkClothes(source: number, storageId: string) {
         this.inventoryManager.removeItemFromInventory(storageId, 'work_clothes', 1);
+    }
+
+    @OnEvent(ServerEvent.JOB_BOSS_SHOP_BUY_ITEM)
+    public async buyBossShopItem(source: number, job: JobType, item: BossShopItem) {
+        if (!this.playerMoneyService.remove(source, item.price)) {
+            this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
+
+            return;
+        }
+
+        const itemInfo = this.itemService.getItem(item.name);
+
+        if (!itemInfo) {
+            this.notifier.notify(source, "L'objet n'existe pas.", 'error');
+
+            return;
+        }
+
+        if (!this.inventoryManager.addItemToInventory(source, item.name, item.amount, item.metadata || {}, null)) {
+            return;
+        }
+
+        this.notifier.notify(
+            source,
+            `Vous venez d'acheter ~b~${item.amount} ${itemInfo.label}~s~ pour  ~g~$${item.price}.`
+        );
     }
 }
