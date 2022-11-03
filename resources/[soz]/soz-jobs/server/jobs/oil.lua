@@ -5,7 +5,7 @@ local MAX_PEOPLE_BY_TANKER = 2
 
 -- Create Fields
 for name, data in pairs(FuelerConfig.Fields) do
-    Fields[name] = Field:new(name, data.item, data.prodRange.max, data.prodRange, data.refillDelay, itemToRefill)
+    Fields[name] = Field:new(name, data.item, data.prodRange.max, data.prodRange, data.refillDelay, itemToRefill, false)
     Fields[name]:StartRefillLoop(data.refillDelay)
 end
 
