@@ -139,29 +139,6 @@ local Elevators = {
         downTo = "fbi:0",
         spawnPoint = vector4(135.99, -761.77, 242.15, 161.57),
     },
-    --- Bunker
-    ["bunker:0"] = {
-        name = "Bunker:Elevator0",
-        label = "Surface",
-        buttons = vector2(598.52, 5556.91),
-        size = vector2(18.4, 15.6),
-        heading = 343,
-        z = {min = 715.56, max = 716.16},
-        upTo = nil,
-        downTo = "bunker:-1",
-        spawnPoint = vector4(604.61, 5556.50, 716.76, 37.74),
-    },
-    ["bunker:-1"] = {
-        name = "Bunker:Elevator-1",
-        label = "Sous-Sol",
-        buttons = vector2(896.9, -3245.8),
-        size = vector2(0.4, 5.2),
-        heading = 271,
-        z = {min = -99.27, max = -94.07},
-        upTo = "bunker:0",
-        downTo = nil,
-        spawnPoint = vector4(894.74, -3245.37, -98.26, 91.46),
-    },
     --- Admin
     ["admin:0"] = {
         name = "Admin:Elevator0",

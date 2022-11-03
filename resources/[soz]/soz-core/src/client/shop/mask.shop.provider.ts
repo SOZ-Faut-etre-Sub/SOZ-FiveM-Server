@@ -89,10 +89,6 @@ export class MaskShopProvider {
 
     @Once(OnceStep.PlayerLoaded)
     onPlayerLoaded() {
-        if (!isFeatureEnabled(Feature.Halloween)) {
-            return;
-        }
-
         this.qbCore.createBlip('shops:mask', {
             name: 'Magasin de masques',
             coords: { x: -1336.88, y: -1279.65, z: 4.85 },
