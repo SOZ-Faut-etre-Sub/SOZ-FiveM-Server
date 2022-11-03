@@ -84,7 +84,7 @@ export class AfkProvider {
                 }
             );
 
-            if (word.toLowerCase() === afkWord) {
+            if (word?.toLowerCase() === afkWord) {
                 this.afkAttempts = 1;
                 this.afkTimer = AFK_SECONDS_UNTIL_KICK;
 
