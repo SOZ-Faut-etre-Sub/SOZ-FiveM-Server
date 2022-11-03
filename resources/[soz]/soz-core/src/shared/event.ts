@@ -51,6 +51,7 @@ export enum ServerEvent {
     PLAYER_SET_CURRENT_DISEASE = 'soz-core:server:server:set-current-disease',
     PLAYER_INCREASE_RUN_TIME = 'soz-core:server:player:health:increase-run-time',
     PLAYER_DO_YOGA = 'soz-core:server:player:do-yoga',
+    PLAYER_SET_CURRENT_WALKSTYLE = 'soz-core:server:player:set-current-walkstyle',
 
     PLAYER_NUTRITION_LOOP = 'soz-core:server:player:nutrition:loop',
     PLAYER_NUTRITION_CHECK = 'soz-core:server:player:nutrition:check',
@@ -140,6 +141,8 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     PLAYER_REQUEST_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
     PLAYER_UPDATE = 'soz-core:client:player:update',
+    PLAYER_UPDATE_WALK_STYLE = 'soz-core:client:player:update-walk-style',
+    PLAYER_REFRESH_WALK_STYLE = 'soz-core:client:player:refresh-walk-style',
 
     PROGRESS_START = 'soz-core:client:progress:start',
 
