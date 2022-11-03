@@ -39,10 +39,9 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
         SetPedIsDrunk(PlayerPedId(), false)
         PlayWalking("move_m@drunk@slightlydrunk")
     else
-        ResetPedMovementClipset(PlayerPedId())
         ShakeGameplayCam("DRUNK_SHAKE", 0.0)
         SetPedIsDrunk(PlayerPedId(), false)
-        TriggerEvent("personal:client:ApplyWalkStyle")
+        TriggerEvent("soz-core:client:player:refresh-walk-style")
     end
 end)
 

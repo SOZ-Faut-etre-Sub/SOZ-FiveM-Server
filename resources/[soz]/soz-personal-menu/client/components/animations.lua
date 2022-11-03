@@ -112,26 +112,6 @@ local PlayEmote = function(animation)
     end
 end
 
-local PlayWalking = function(animation)
-    RequestAnimSet(animation)
-    while not HasAnimSetLoaded(animation) do
-        Wait(1)
-    end
-
-    SetPedMovementClipset(PlayerPedId(), animation, 0.2)
-    RemoveAnimSet(animation)
-end
-
-local forceApplyWalkStyle = function()
-    ResetPedMovementClipset(PlayerPedId())
-    Wait(1000)
-    local walk = PlayerData.metadata.walk
-
-    if walk then
-        PlayWalking(walk)
-    end
-end
-
 GenerateAnimationList = function(menu, category, content)
     if type(category) ~= "number" then
         local categoryID = menu.UUID .. category
@@ -188,8 +168,7 @@ GenerateWalksList = function(menu, category, content)
     menu:AddButton({
         label = content.name,
         select = function()
-            PlayWalking(content.walk)
-            TriggerServerEvent("QBCore:Server:SetMetaData", "walk", content.walk)
+            TriggerServerEvent("soz-core:server:player:set-current-walkstyle", content.walk)
         end,
     })
 
@@ -245,8 +224,7 @@ CreateThread(function()
     allWalksMenu:AddButton({
         label = "Démarche par défaut",
         select = function()
-            ResetPedMovementClipset(PlayerPedId())
-            TriggerServerEvent("QBCore:Server:SetMetaData", "walk", "")
+            TriggerServerEvent("soz-core:server:player:set-current-walkstyle", "")
         end,
     })
     for category, content in pairs(Config.WalkStyle) do
@@ -281,24 +259,10 @@ CreateThread(function()
 end)
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
-    local walk = QBCore.Functions.GetPlayerData().metadata.walk
-
-    if walk then
-        PlayWalking(walk)
-    end
-
     local mood = QBCore.Functions.GetPlayerData().metadata.mood
     if mood then
         SetFacialIdleAnimOverride(PlayerPedId(), mood, 0)
     end
-end)
-
-RegisterNetEvent("soz_ems:client:Revive", function()
-    forceApplyWalkStyle()
-end)
-
-RegisterNetEvent("personal:client:ApplyWalkStyle", function()
-    forceApplyWalkStyle()
 end)
 
 Citizen.CreateThread(function()

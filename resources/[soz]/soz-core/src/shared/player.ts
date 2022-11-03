@@ -109,6 +109,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     last_max_stamina_update: string | null;
     last_stress_level_update: string | null;
     last_exercise_completed: number | null;
+    walk: string | null;
     disease: Disease | null;
     last_disease_at: number | null;
     // Typing is intentionally in that way so that you could program future items that gives clothes.
