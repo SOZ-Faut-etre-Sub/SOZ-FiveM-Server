@@ -11,6 +11,7 @@ import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
+import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 
 enum StressLooseType {
     VehicleAbove160,
@@ -61,6 +62,9 @@ export class PlayerStressProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(PlayerWalkstyleProvider)
+    private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
     private isStressUpdated = false;
     private wasDead = false;
@@ -250,13 +254,14 @@ export class PlayerStressProvider {
         const playerPed = PlayerPedId();
 
         if (this.slowMode) {
-            RequestAnimSet('move_m@casual@a');
-            SetPedMovementClipset(playerPed, 'move_m@casual@a', 0.0);
+            await this.playerWalkstyleProvider.applyWalkStyle('move_m@casual@a');
+            DisableControlAction(0, 21, true); // disable sprint
+            DisableControlAction(0, 22, true); // disable jump
+        } else {
+            await this.playerWalkstyleProvider.refresh();
         }
 
         if (this.invalidMode) {
-            DisableControlAction(0, 21, true); // disable sprint
-            DisableControlAction(0, 22, true); // disable jump
             DisableControlAction(0, 24, true); // Attack
             DisableControlAction(0, 25, true); // Aim
             DisableControlAction(2, 36, true); // Disable going stealth
