@@ -64,6 +64,11 @@ export class AnimationService {
     }
 
     private handleCallEndAnimation(playerPed: number) {
+        if (!global.isPhoneOpen) {
+            this.handleCloseAnimation(playerPed);
+            return;
+        }
+
         if (IsPedInAnyVehicle(playerPed, true)) {
             this.handleCallEndVehicleAnim(playerPed);
         } else {
