@@ -1,8 +1,9 @@
-import { OnEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { InventoryManager } from '../item/inventory.manager';
 import { Notifier } from '../notifier';
@@ -57,5 +58,11 @@ export class JobProvider {
             return;
         }
         this.notifier.notify(`Il reste ${result} tenues de travail dans le vestiaire.`);
+    }
+
+    @OnNuiEvent(NuiEvent.JobPlaceProps)
+    public async onPlaceProps(props: { item: string; props: string }) {
+        TriggerServerEvent(ServerEvent.JOBS_PLACE_PROPS, props.item, props.props);
+        return Ok(true);
     }
 }

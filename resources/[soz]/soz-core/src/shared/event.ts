@@ -35,6 +35,7 @@ export enum ServerEvent {
     STONK_DELIVERY_END = 'soz-core:server:job:stonk:delivery-end',
 
     JOBS_USE_WORK_CLOTHES = 'soz-core:server:job:use-work-clothes',
+    JOBS_PLACE_PROPS = 'job:server:placeProps',
 
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
@@ -208,6 +209,8 @@ export enum NuiEvent {
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
 
     StonkDisplayBlip = 'soz-core:client:job:stonk:display-blip',
+
+    JobPlaceProps = 'soz-core:client:job:place-props',
 
     BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
     BennysOrder = 'soz-core:client:job:bennys:order',
