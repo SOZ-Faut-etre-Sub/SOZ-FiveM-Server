@@ -54,7 +54,8 @@ CreateThread(function()
             event = "banking:openSocietyBankScreen",
             blackoutGlobal = true,
             canInteract = function(entity, distance, data)
-                return SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and isInsideEntrepriseBankZone
+                return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.SocietyBankAccount) and
+                           isInsideEntrepriseBankZone
             end,
         },
     }
