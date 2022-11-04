@@ -22,6 +22,7 @@ import {
 } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
+import { RGBColor } from '../../../shared/color';
 import { MenuType } from '../../../shared/nui/menu';
 import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useBackspace, useEnter } from '../../hook/control';
 
@@ -46,12 +47,16 @@ const MenuItemSelectContext = createContext<{
     activeOptionIndex: number;
     setActiveOptionIndex: (number) => void;
     setActiveValue: (any) => void;
+    setDescription: (description: string | null) => void;
     activeValue: any;
+    distance: number;
 }>({
     activeOptionIndex: 0,
     setActiveOptionIndex: () => {},
     setActiveValue: () => {},
+    setDescription: () => {},
     activeValue: null,
+    distance: 0,
 });
 const MenuTypeContext = createContext<MenuType | null>(null);
 
@@ -438,6 +443,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     onChange?: (index: number, value: any) => void;
     disabled?: boolean;
     value?: any;
+    distance?: number;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -447,11 +453,13 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     onChange,
     title,
     disabled = false,
+    distance = 0,
     value = null,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
     const [activeValue, setActiveValue] = useState(value);
+    const [description, setDescription] = useState(null);
 
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex, activeValue);
@@ -461,14 +469,22 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
         <MenuItemContainer onSelected={onSelected} onConfirm={onItemConfirm} disabled={disabled}>
             <DescendantProvider context={MenuItemSelectDescendantContext} items={descendants} set={setDescendants}>
                 <MenuItemSelectContext.Provider
-                    value={{ activeOptionIndex, setActiveOptionIndex, setActiveValue, activeValue }}
+                    value={{
+                        activeOptionIndex,
+                        setDescription,
+                        setActiveOptionIndex,
+                        setActiveValue,
+                        activeValue,
+                        distance,
+                    }}
                 >
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center">
                         <h3>{title}</h3>
                         <div>
                             <MenuSelectControls onChange={onChange}>
-                                <ul>{children}</ul>
+                                <ul className="flex">{children}</ul>
                             </MenuSelectControls>
+                            {description && <p className="mt-1 text-sm text-center text-gray-100">{description}</p>}
                         </div>
                     </div>
                 </MenuItemSelectContext.Provider>
@@ -477,17 +493,12 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     );
 };
 
-type MenuItemSelectOptionProps = PropsWithChildren<{
-    onSelected?: () => void;
-    value?: any;
-}>;
-
-export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> = ({
-    children,
-    onSelected,
-    value = null,
-}) => {
-    const { activeOptionIndex } = useContext(MenuItemSelectContext);
+const useSelectOption = (
+    value?: any,
+    onSelected?: () => void,
+    description?: string
+): [(value) => void, boolean, boolean] => {
+    const { activeOptionIndex, distance, setDescription } = useContext(MenuItemSelectContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
     const handleRefSet = useCallback(refValue => {
@@ -502,22 +513,77 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
     }, [element]);
 
     const index = useDescendant(descendant, MenuItemSelectDescendantContext);
-    const isSelected = index === activeOptionIndex;
+    const distanceOfIndex = Math.abs(index - activeOptionIndex);
+    const show = distanceOfIndex <= distance;
+    const isSelected = distanceOfIndex === 0;
 
     useEffect(() => {
         if (isSelected) {
             onSelected && onSelected();
+            setDescription(description);
         }
     }, [isSelected]);
+
+    return [handleRefSet, show, isSelected];
+};
+
+type MenuItemSelectOptionProps = PropsWithChildren<{
+    onSelected?: () => void;
+    value?: any;
+    description?: string;
+}>;
+
+export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> = ({
+    children,
+    onSelected,
+    value = null,
+    description = null,
+}) => {
+    const [handleRefSet, show] = useSelectOption(value, onSelected, description);
 
     return (
         <li
             ref={handleRefSet}
             className={cn({
-                hidden: !isSelected,
+                hidden: !show,
             })}
         >
             {children}
+        </li>
+    );
+};
+
+type MenuItemSelectOptionColorProps = {
+    onSelected?: () => void;
+    value?: any;
+    label?: string;
+    color: RGBColor;
+    description?: string;
+};
+
+export const MenuItemSelectOptionColor: FunctionComponent<MenuItemSelectOptionColorProps> = ({
+    onSelected,
+    color,
+    value = null,
+    description = null,
+}) => {
+    const [handleRefSet, show, isSelected] = useSelectOption(value, onSelected, description);
+    const colorClassname = cn('h-5 w-5 rounded-full', {
+        'border-2 border-white': isSelected,
+        'border-2 border-black/50': !isSelected,
+    });
+
+    return (
+        <li
+            ref={handleRefSet}
+            className={cn('mr-1', {
+                hidden: !show,
+            })}
+        >
+            <div
+                className={colorClassname}
+                style={{ backgroundColor: `rgb(${color[0]}, ${color[1]}, ${color[2]} )` }}
+            />
         </li>
     );
 };
