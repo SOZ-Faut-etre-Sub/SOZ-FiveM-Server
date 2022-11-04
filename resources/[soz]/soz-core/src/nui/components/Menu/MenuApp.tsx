@@ -14,6 +14,7 @@ import { BossShopMenu } from '../Shop/BossShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
+import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
 import { MenuBossShop } from './MenuBossShop';
 import { MenuDemo } from './MenuDemo';
 import { MenuGarage } from './MenuGarage';
@@ -91,6 +92,10 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.Garage}/*`} element={<MenuGarage data={menuData} />} />
 
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys />} />
+            <Route
+                path={`/${MenuType.BennysUpgradeVehicle}/*`}
+                element={<MenuBennysUpgradeVehicle data={menuData} />}
+            />
         </Routes>
     );
 };

@@ -97,6 +97,8 @@ export const createModificationHelperList = (
                 return;
             }
 
+            console.log('apply', type, value);
+
             SetVehicleMod(vehicleEntityId, type, value as number, false);
         },
         getUpgradeChoice: (vehicleEntityId: number): VehicleUpgradeChoice | null => {
@@ -266,7 +268,10 @@ export class VehicleModificationService {
             const choice = helper.getUpgradeChoice(vehicle);
 
             if (choice) {
-                options.modification[key] = choice;
+                options.modification[key] = {
+                    label: key,
+                    choice,
+                };
             }
         }
 
@@ -377,7 +382,7 @@ export class VehicleModificationService {
         }
 
         for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
-            value.apply(vehicle, configuration[key] || null);
+            value.apply(vehicle, configuration.modification[key]);
         }
     }
 }
