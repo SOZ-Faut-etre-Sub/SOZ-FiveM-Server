@@ -170,11 +170,28 @@ export enum VehicleColor {
     BrushedGold,
 }
 
+export enum VehicleXenonColor {
+    Default = 255,
+    White = 0,
+    Blue = 1,
+    ElectricBlue = 2,
+    MintGreen = 3,
+    LimeGreen = 4,
+    Yellow = 5,
+    GoldenShower = 6,
+    Orange = 7,
+    Red = 8,
+    PonyPink = 9,
+    HotPink = 10,
+    Purple = 11,
+    Blacklight = 12,
+}
+
 export type VehicleBodyColor = {
     primary: VehicleColor | RGBColor;
     secondary: VehicleColor | RGBColor;
-    pearlescent: VehicleColor;
-    rim: VehicleColor;
+    pearlescent: VehicleColor | null;
+    rim: VehicleColor | null;
 };
 
 export type WheelMod = {
@@ -183,11 +200,11 @@ export type WheelMod = {
 };
 
 export enum VehicleLicensePlateStyle {
-    BlueOnWhite1 = 3,
     BlueOnWhite2 = 0,
-    BlueOnWhite3 = 4,
     YellowOnBlack = 1,
     YellowOnBlue = 2,
+    BlueOnWhite1 = 3,
+    BlueOnWhite3 = 4,
     NorthYankton = 5,
 }
 
@@ -283,15 +300,14 @@ export type VehicleModification = {
 export type VehicleConfiguration = {
     color?: VehicleBodyColor;
     dashboardColor?: VehicleColor;
-    headlightColor?: VehicleColor;
     interiorColor?: VehicleColor;
     liveryRoof?: number;
     neon?: VehicleNeon;
-    plateType?: VehicleLicensePlateType;
+    plateStyle?: number;
     tyreSmokeColor?: RGBColor;
     wheelType?: VehicleWheelType;
     windowTint?: VehicleWindowTint;
-    xenonColor?: VehicleColor;
+    xenonColor?: VehicleXenonColor;
     livery?: number;
     // extras: Record<number, boolean>; // Temporary disables
     modification: VehicleModification;
@@ -397,6 +413,7 @@ export type VehicleUpgradeOption<T> = {
 
 export type VehicleUpgradeOptions = {
     livery?: VehicleUpgradeChoiceList;
+    liveryRoof?: VehicleUpgradeChoiceList;
     modification: Partial<Record<keyof VehicleModification, VehicleUpgradeOption<VehicleUpgradeChoice>>>;
 };
 
@@ -1035,6 +1052,65 @@ export const VehicleColorChoices: Record<VehicleColor, VehicleColorChoiceItem> =
     },
 };
 
+export const VehicleXenonColorChoices: Record<VehicleXenonColor, VehicleColorChoiceItem> = {
+    [VehicleXenonColor.Default]: {
+        label: 'Défaut',
+        color: [0, 0, 0],
+    },
+    [VehicleXenonColor.White]: {
+        label: 'Blanc',
+        color: [255, 255, 255],
+    },
+    [VehicleXenonColor.Blue]: {
+        label: 'Bleu',
+        color: [71, 87, 143],
+    },
+    [VehicleXenonColor.ElectricBlue]: {
+        label: 'Bleu éléctrique',
+        color: [34, 46, 70],
+    },
+    [VehicleXenonColor.MintGreen]: {
+        label: 'Vert menthe',
+        color: [29, 90, 63],
+    },
+    [VehicleXenonColor.LimeGreen]: {
+        label: 'Vert citron',
+        color: [102, 184, 31],
+    },
+    [VehicleXenonColor.Yellow]: {
+        label: 'Jaune',
+        color: [255, 201, 31],
+    },
+    [VehicleXenonColor.GoldenShower]: {
+        label: 'Jaune pisse',
+        color: [101, 63, 35],
+    },
+    [VehicleXenonColor.Orange]: {
+        label: 'Orange',
+        color: [246, 174, 32],
+    },
+    [VehicleXenonColor.Red]: {
+        label: 'Rouge',
+        color: [192, 14, 26],
+    },
+    [VehicleXenonColor.PonyPink]: {
+        label: 'Rose licrone',
+        color: [253, 214, 205],
+    },
+    [VehicleXenonColor.HotPink]: {
+        label: 'Rose pétant',
+        color: [242, 31, 153],
+    },
+    [VehicleXenonColor.Purple]: {
+        label: 'Violet',
+        color: [98, 18, 118],
+    },
+    [VehicleXenonColor.Blacklight]: {
+        label: 'Lumière noire',
+        color: [200, 200, 200],
+    },
+};
+
 export const VehicleLsCustomBaseConfig: Partial<Record<keyof VehicleModification, VehicleLsCustomBaseConfigItem>> = {
     engine: {
         priceByLevels: [0, 0.1, 0.15, 0.2, 0.25, 0.3],
@@ -1080,7 +1156,7 @@ export const getDefaultVehicleModification = (): VehicleConfiguration => ({
         pearlescent: null,
         rim: null,
     },
-    plateType: VehicleLicensePlateType.FrontAndRearPlates,
+    plateStyle: VehicleLicensePlateStyle.BlueOnWhite1,
     modification: {},
 });
 

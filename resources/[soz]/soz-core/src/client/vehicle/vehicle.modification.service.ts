@@ -97,8 +97,6 @@ export const createModificationHelperList = (
                 return;
             }
 
-            console.log('apply', type, value);
-
             SetVehicleMod(vehicleEntityId, type, value as number, false);
         },
         getUpgradeChoice: (vehicleEntityId: number): VehicleUpgradeChoice | null => {
@@ -215,7 +213,7 @@ export class VehicleModificationService {
     public debug(vehicle: number) {
         console.log('debugVehicle', vehicle);
         const options = this.createOptions(vehicle);
-        console.log('options', options);
+        console.log('options roof', options);
     }
 
     public createOptions(vehicle: number): VehicleUpgradeOptions {
@@ -229,7 +227,12 @@ export class VehicleModificationService {
         };
 
         if (GetNumVehicleMods(vehicle, VehicleModType.Livery) > 0) {
-            const choices = [];
+            const choices = [
+                {
+                    label: GetLabelText('CMOD_DEF_0'),
+                    value: null,
+                },
+            ];
 
             for (let i = 0; i < GetNumVehicleMods(vehicle, VehicleModType.Livery); i++) {
                 const modValueName = GetModTextLabel(vehicle, VehicleModType.Livery, i);
@@ -246,7 +249,12 @@ export class VehicleModificationService {
                 type: 'list',
             };
         } else if (GetVehicleLiveryCount(vehicle) > 0) {
-            const choices = [];
+            const choices = [
+                {
+                    label: GetLabelText('CMOD_DEF_0'),
+                    value: null,
+                },
+            ];
 
             for (let i = 0; i < GetVehicleLiveryCount(vehicle); i++) {
                 const modValueName = GetLiveryName(vehicle, i);
@@ -259,6 +267,25 @@ export class VehicleModificationService {
             }
 
             options.livery = {
+                items: choices,
+                type: 'list',
+            };
+        }
+
+        if (GetVehicleRoofLiveryCount(vehicle) > 0) {
+            const choices = [];
+
+            for (let i = 0; i < GetVehicleRoofLiveryCount(vehicle); i++) {
+                const modValueName = GetLiveryName(vehicle, i);
+                const modValueNameString = GetLabelText(modValueName);
+
+                choices.push({
+                    label: modValueNameString,
+                    value: i,
+                });
+            }
+
+            options.liveryRoof = {
                 items: choices,
                 type: 'list',
             };
@@ -311,24 +338,20 @@ export class VehicleModificationService {
                 );
             }
 
-            if (configuration.color.pearlescent || configuration.color.rim === 0) {
-                SetVehicleExtraColours(vehicle, configuration.color.pearlescent || -1, configuration.color.rim || -1);
+            if (configuration.color.pearlescent !== null || configuration.color.rim !== null) {
+                SetVehicleExtraColours(vehicle, configuration.color.pearlescent ?? 0, configuration.color.rim ?? 0);
             }
         }
 
-        if (configuration.dashboardColor) {
+        if (configuration.dashboardColor !== null) {
             SetVehicleDashboardColour(vehicle, configuration.dashboardColor);
         }
 
-        if (configuration.headlightColor) {
-            SetVehicleHeadlightsColour(vehicle, configuration.headlightColor);
-        }
-
-        if (configuration.interiorColor) {
+        if (configuration.interiorColor !== null) {
             SetVehicleInteriorColour(vehicle, configuration.interiorColor);
         }
 
-        if (configuration.liveryRoof) {
+        if (configuration.liveryRoof !== null) {
             SetVehicleRoofLivery(vehicle, configuration.liveryRoof);
         }
 
@@ -350,8 +373,8 @@ export class VehicleModificationService {
             DisableVehicleNeonLights(vehicle, true);
         }
 
-        if (configuration.plateType) {
-            SetVehicleNumberPlateTextIndex(vehicle, configuration.plateType);
+        if (configuration.plateStyle !== null) {
+            SetVehicleNumberPlateTextIndex(vehicle, configuration.plateStyle);
         }
 
         if (configuration.tyreSmokeColor) {
@@ -363,22 +386,25 @@ export class VehicleModificationService {
             );
         }
 
-        if (configuration.wheelType) {
+        if (configuration.wheelType !== null) {
             SetVehicleWheelType(vehicle, configuration.wheelType);
         }
 
         SetVehicleWindowTint(vehicle, configuration.windowTint || 0);
 
-        if (configuration.xenonColor) {
+        if (configuration.xenonColor !== null) {
             SetVehicleXenonLightsColour(vehicle, configuration.xenonColor);
         }
 
-        if (configuration.livery) {
+        if (configuration.livery !== null && configuration.livery !== undefined) {
             if (GetNumVehicleMods(vehicle, VehicleModType.Livery) > 0) {
                 SetVehicleMod(vehicle, VehicleModType.Livery, configuration.livery, false);
             } else {
                 SetVehicleLivery(vehicle, configuration.livery);
             }
+        } else {
+            RemoveVehicleMod(vehicle, VehicleModType.Livery);
+            SetVehicleLivery(vehicle, -1);
         }
 
         for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
