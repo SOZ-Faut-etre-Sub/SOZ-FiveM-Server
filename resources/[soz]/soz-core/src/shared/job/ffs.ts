@@ -370,7 +370,7 @@ const shoesCraftProcesses: Process[] = [
         inputs: [
             {
                 id: FabricMaterial.LEATHER,
-                amount: 3,
+                amount: 1,
             },
             {
                 id: FabricMaterial.LATEX,
@@ -387,7 +387,7 @@ const shoesCraftProcesses: Process[] = [
         inputs: [
             {
                 id: FabricMaterial.LEATHER,
-                amount: 6,
+                amount: 2,
             },
             {
                 id: FabricMaterial.LATEX,
@@ -405,18 +405,18 @@ const getRewardFromDeliveredGarment = (garment: Garment | LuxuryGarment): number
     switch (garment) {
         case Garment.TOP:
         case Garment.PANT:
-            return 24;
+            return 50;
         case Garment.UNDERWEAR:
-            return 10;
+            return 20;
         case Garment.SHOES:
-            return 15;
+            return 40;
         case LuxuryGarment.TOP:
         case LuxuryGarment.PANT:
-            return 48;
+            return 100;
         case LuxuryGarment.UNDERWEAR:
-            return 20;
+            return 40;
         case LuxuryGarment.SHOES:
-            return 30;
+            return 80;
     }
 };
 
