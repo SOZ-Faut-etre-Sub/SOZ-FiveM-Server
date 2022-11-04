@@ -143,7 +143,7 @@ export class VehicleCustomProvider {
     }
 
     @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: VehicleConfiguration }>(NuiEvent.VehicleCustomApply)
-    public async applyVehicleModification({ vehicleEntityId, vehicleConfiguration }): Promise<void> {
+    public async applyVehicleConfiguration({ vehicleEntityId, vehicleConfiguration }): Promise<void> {
         this.vehicleService.applyVehicleConfiguration(vehicleEntityId, vehicleConfiguration);
     }
 

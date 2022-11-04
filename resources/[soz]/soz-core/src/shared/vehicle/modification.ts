@@ -254,8 +254,8 @@ export type VehicleModification = {
     turbo?: boolean;
     tyreSmoke?: boolean;
     xenonHeadlights?: boolean;
-    wheelFront?: WheelMod;
-    wheelRear?: WheelMod;
+    wheelFront?: number;
+    wheelRear?: number;
     plateHolder?: number;
     vanityPlate?: string;
     trimDesign?: number;
