@@ -7,8 +7,146 @@ import {
     VehicleNeonLight,
     VehicleUpgradeChoice,
     VehicleUpgradeOptions,
+    VehicleWheelType,
 } from '../../shared/vehicle/modification';
+import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { ResourceLoader } from '../resources/resource.loader';
+
+const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
+    [VehicleModType.Spoiler]: 'Aileron',
+    [VehicleModType.BumperFront]: 'Pare-chocs avant',
+    [VehicleModType.SideSkirt]: 'Bas de caisse',
+    [VehicleModType.Hood]: 'Capot',
+    [VehicleModType.TyreSmoke]: 'Fumée de pneu',
+    [VehicleModType.XenonHeadlights]: 'Phares au xénon',
+};
+
+export const getModTypeName = (vehicleEntityId: number, mod: VehicleModType): string => {
+    const model = GetEntityModel(vehicleEntityId);
+
+    switch (mod) {
+        case VehicleModType.Armor:
+            return GetLabelText('CMOD_MOD_ARM');
+        case VehicleModType.Brakes:
+            return GetLabelText('CMOD_MOD_BRA');
+        case VehicleModType.Engine:
+            return GetLabelText('CMOD_MOD_ENG');
+        case VehicleModType.Suspension:
+            return GetLabelText('CMOD_MOD_SUS');
+        case VehicleModType.Transmission:
+            return GetLabelText('CMOD_MOD_TRN');
+        case VehicleModType.Horn:
+            return GetLabelText('CMOD_MOD_HRN');
+        case VehicleModType.WheelFront:
+            if (!IsThisModelABike(model) && IsThisModelABicycle(model)) {
+                const label = GetLabelText('CMOD_MOD_WHEM');
+
+                if (label === '') {
+                    return 'Roues';
+                }
+
+                return label;
+            }
+
+            return GetLabelText('CMOD_WHE0_0');
+        case VehicleModType.WheelRear:
+            return GetLabelText('CMM_MOD_S0');
+        case VehicleModType.VanityPlate:
+            return GetLabelText('CMM_MOD_S1');
+        case VehicleModType.TrimDesign:
+            if (model === GetHashKey('SultanRS')) {
+                return GetLabelText('CMOD_MOD_S2b');
+            }
+            return GetLabelText('CMOD_MOD_S2');
+        case VehicleModType.Ornament:
+            return GetLabelText('CMM_MOD_S3');
+        case VehicleModType.Dashboard:
+            return GetLabelText('CMM_MOD_S4');
+        case VehicleModType.DialDesign:
+            return GetLabelText('CMM_MOD_S5');
+        case VehicleModType.DoorSpeaker:
+            return GetLabelText('CMM_MOD_S6');
+        case VehicleModType.Seat:
+            return GetLabelText('CMM_MOD_S7');
+        case VehicleModType.SteeringWheel:
+            return GetLabelText('CMM_MOD_S8');
+        case VehicleModType.ColumnShifterLevers:
+            return GetLabelText('CMM_MOD_S9');
+        case VehicleModType.Plaques:
+            return GetLabelText('CMM_MOD_S10');
+        case VehicleModType.Speakers:
+            return GetLabelText('CMM_MOD_S11');
+        case VehicleModType.Trunk:
+            return GetLabelText('CMM_MOD_S12');
+        case VehicleModType.Hydraulics:
+            return GetLabelText('CMM_MOD_S13');
+        case VehicleModType.EngineBlock:
+            return GetLabelText('CMM_MOD_S14');
+        case VehicleModType.AirFilter:
+            if (model === GetHashKey('SultanRS')) {
+                return GetLabelText('CMOD_MOD_S15b');
+            }
+            return GetLabelText('CMOD_MOD_S15');
+        case VehicleModType.Struts:
+            if (model === GetHashKey('SultanRS') || model === GetHashKey('Banshee2')) {
+                return GetLabelText('CMOD_MOD_S16b');
+            }
+            return GetLabelText('CMOD_MOD_S16');
+        case VehicleModType.ArchCover:
+            if (model === GetHashKey('SultanRS')) {
+                return GetLabelText('CMOD_MOD_S17b');
+            }
+            return GetLabelText('CMOD_MOD_S17');
+        case VehicleModType.Aerials:
+            if (model === GetHashKey('SultanRS')) {
+                return GetLabelText('CMOD_MOD_S18b');
+            }
+
+            if (model === GetHashKey('BType3')) {
+                return GetLabelText('CMOD_MOD_S18c');
+            }
+
+            return GetLabelText('CMOD_MOD_S18');
+        case VehicleModType.Trim:
+            if (model === GetHashKey('SultanRS')) {
+                return GetLabelText('CMOD_MOD_S19b');
+            }
+
+            if (model === GetHashKey('BType3')) {
+                return GetLabelText('CMOD_MOD_S19c');
+            }
+
+            if (model === GetHashKey('Virgo2')) {
+                return GetLabelText('CMOD_MOD_S19d');
+            }
+
+            return GetLabelText('CMOD_MOD_S19');
+        case VehicleModType.Tank:
+            if (model === GetHashKey('SlamVan3')) {
+                return GetLabelText('CMOD_MOD_S27');
+            }
+            return GetLabelText('CMOD_MOD_S20');
+        case VehicleModType.Windows:
+            if (model === GetHashKey('BType3')) {
+                return GetLabelText('CMM_MOD_S21b');
+            }
+            return GetLabelText('CMM_MOD_S21');
+        case VehicleModType.Livery:
+            return GetLabelText('CMM_MOD_S23');
+    }
+
+    const name = GetModSlotName(vehicleEntityId, mod);
+
+    if (DoesTextLabelExist(name)) {
+        return GetLabelText(name);
+    }
+
+    if (ModTypeLabels[mod]) {
+        return ModTypeLabels[mod];
+    }
+
+    return VehicleModType[mod];
+};
 
 export const getModName = (vehicleEntityId: number, mod: VehicleModType, value: number, modCount: number): string => {
     const model = GetEntityModel(vehicleEntityId);
@@ -82,22 +220,51 @@ export const getModName = (vehicleEntityId: number, mod: VehicleModType, value: 
 };
 
 type VehicleModificationHelper<T extends keyof VehicleModification, V extends VehicleModification[T]> = {
-    apply: (vehicleEntityId: number, value: V) => void;
+    apply: (vehicleEntityId: number, value: V, configuration: VehicleConfiguration) => void;
     getUpgradeChoice: (vehicleEntityId: number) => VehicleUpgradeChoice | null;
+    getModTypeName: (vehicleEntityId: number) => string;
+    get: (vehicleEntityId: number) => V;
 };
 
 export const createModificationHelperList = (
     type: VehicleModType
 ): VehicleModificationHelper<Partial<keyof VehicleModification>, number> => {
     return {
-        apply: (vehicleEntityId: number, value?: number): void => {
+        apply: (vehicleEntityId: number, value: number, configuration: VehicleConfiguration): void => {
+            if (type === VehicleModType.WheelRear) {
+                return;
+            }
+
             if (value === null || value === undefined) {
                 RemoveVehicleMod(vehicleEntityId, type);
 
                 return;
             }
 
-            SetVehicleMod(vehicleEntityId, type, value as number, false);
+            let custom = false;
+
+            if (type === VehicleModType.WheelFront && configuration.customWheelFront) {
+                custom = true;
+            }
+
+            SetVehicleMod(vehicleEntityId, type, value as number, custom);
+
+            if (type === VehicleModType.WheelFront && GetVehicleClass(vehicleEntityId) === VehicleClass.Motorcycles) {
+                SetVehicleMod(vehicleEntityId, VehicleModType.WheelRear, value as number, custom);
+            }
+        },
+        getModTypeName: (vehicleEntityId: number): string => {
+            const name = getModTypeName(vehicleEntityId, type);
+
+            if (name !== 'NULL' && name !== '') {
+                return name;
+            }
+
+            if (ModTypeLabels[type]) {
+                return ModTypeLabels[type];
+            }
+
+            return VehicleModType[type];
         },
         getUpgradeChoice: (vehicleEntityId: number): VehicleUpgradeChoice | null => {
             const modCount = GetNumVehicleMods(vehicleEntityId, type);
@@ -125,6 +292,9 @@ export const createModificationHelperList = (
                 type: 'list',
             };
         },
+        get: (vehicleEntityId: number): number => {
+            return GetVehicleMod(vehicleEntityId, type);
+        },
     };
 };
 
@@ -145,10 +315,26 @@ export const createModificationHelperToggle = (
                 ToggleVehicleMod(vehicleEntityId, type, false);
             }
         },
+        getModTypeName: (vehicleEntityId: number): string => {
+            const name = getModTypeName(vehicleEntityId, type);
+
+            if (name !== 'NULL' && name !== '') {
+                return name;
+            }
+
+            if (ModTypeLabels[type]) {
+                return ModTypeLabels[type];
+            }
+
+            return VehicleModType[type];
+        },
         getUpgradeChoice: (): VehicleUpgradeChoice => {
             return {
                 type: 'toggle',
             };
+        },
+        get: (vehicleEntityId: number): boolean => {
+            return IsToggleModOn(vehicleEntityId, type);
         },
     };
 };
@@ -210,12 +396,6 @@ export class VehicleModificationService {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
-    public debug(vehicle: number) {
-        console.log('debugVehicle', vehicle);
-        const options = this.createOptions(vehicle);
-        console.log('options roof', options);
-    }
-
     public createOptions(vehicle: number): VehicleUpgradeOptions {
         if (!HasThisAdditionalTextLoaded('mod_mnu', 10)) {
             ClearAdditionalText(10, true);
@@ -224,6 +404,7 @@ export class VehicleModificationService {
 
         const options: VehicleUpgradeOptions = {
             modification: {},
+            wheelType: {},
         };
 
         if (GetNumVehicleMods(vehicle, VehicleModType.Livery) > 0) {
@@ -296,16 +477,28 @@ export class VehicleModificationService {
 
             if (choice) {
                 options.modification[key] = {
-                    label: key,
+                    label: helper.getModTypeName(vehicle),
                     choice,
                 };
             }
         }
 
+        if (GetVehicleClass(vehicle) === VehicleClass.Motorcycles) {
+            options.wheelType[VehicleWheelType.BikeWheels] = 'Motorcycles';
+        } else {
+            options.wheelType[VehicleWheelType.Sport] = 'Sport';
+            options.wheelType[VehicleWheelType.Muscle] = 'Muscle';
+            options.wheelType[VehicleWheelType.Lowrider] = 'Lowrider';
+            options.wheelType[VehicleWheelType.SUV] = 'SUV';
+            options.wheelType[VehicleWheelType.Offroad] = 'Offroad';
+            options.wheelType[VehicleWheelType.Tuner] = 'Tuner';
+            options.wheelType[VehicleWheelType.HighEnd] = 'HighEnd';
+        }
+
         return options;
     }
 
-    public applyVehicleModification(vehicle: number, configuration: VehicleConfiguration): void {
+    public applyVehicleConfiguration(vehicle: number, configuration: VehicleConfiguration): void {
         SetVehicleModKit(vehicle, 0);
 
         if (configuration.color) {
@@ -369,6 +562,15 @@ export class VehicleModificationService {
                 VehicleNeonLight.Right,
                 configuration.neon.light[VehicleNeonLight.Right]
             );
+
+            if (configuration.neon.color) {
+                SetVehicleNeonLightsColour(
+                    vehicle,
+                    configuration.neon.color[0],
+                    configuration.neon.color[1],
+                    configuration.neon.color[2]
+                );
+            }
         } else {
             DisableVehicleNeonLights(vehicle, true);
         }
@@ -390,6 +592,10 @@ export class VehicleModificationService {
             SetVehicleWheelType(vehicle, configuration.wheelType);
         }
 
+        if (GetVehicleClass(vehicle) === VehicleClass.Motorcycles) {
+            SetVehicleWheelType(vehicle, VehicleWheelType.BikeWheels);
+        }
+
         SetVehicleWindowTint(vehicle, configuration.windowTint || 0);
 
         if (configuration.xenonColor !== null) {
@@ -408,7 +614,56 @@ export class VehicleModificationService {
         }
 
         for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
-            value.apply(vehicle, configuration.modification[key]);
+            value.apply(vehicle, configuration.modification[key], configuration);
         }
+    }
+
+    public getVehicleConfiguration(vehicle: number): VehicleConfiguration {
+        const [primaryColor, secondaryColor] = GetVehicleColours(vehicle);
+        const [pearlescentColor, wheelColor] = GetVehicleExtraColours(vehicle);
+
+        let livery = null;
+
+        if (GetNumVehicleMods(vehicle, VehicleModType.Livery) > 0) {
+            livery = GetVehicleMod(vehicle, VehicleModType.Livery);
+        } else if (GetVehicleLiveryCount(vehicle) > 0) {
+            livery = GetVehicleLivery(vehicle);
+        }
+
+        const modification = {};
+
+        for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
+            modification[key] = value.get(vehicle);
+        }
+
+        return {
+            color: {
+                primary: primaryColor,
+                secondary: secondaryColor,
+                pearlescent: pearlescentColor,
+                rim: wheelColor,
+            },
+            dashboardColor: GetVehicleDashboardColour(vehicle),
+            interiorColor: GetVehicleInteriorColour(vehicle),
+            livery,
+            wheelType: GetVehicleWheelType(vehicle),
+            windowTint: GetVehicleWindowTint(vehicle),
+            xenonColor: GetVehicleXenonLightsColour(vehicle),
+            liveryRoof: GetVehicleRoofLivery(vehicle),
+            plateStyle: GetVehicleNumberPlateTextIndex(vehicle),
+            neon: {
+                light: {
+                    [VehicleNeonLight.Back]: IsVehicleNeonLightEnabled(vehicle, VehicleNeonLight.Back),
+                    [VehicleNeonLight.Front]: IsVehicleNeonLightEnabled(vehicle, VehicleNeonLight.Front),
+                    [VehicleNeonLight.Left]: IsVehicleNeonLightEnabled(vehicle, VehicleNeonLight.Left),
+                    [VehicleNeonLight.Right]: IsVehicleNeonLightEnabled(vehicle, VehicleNeonLight.Right),
+                },
+                color: GetVehicleNeonLightsColour(vehicle),
+            },
+            tyreSmokeColor: GetVehicleTyreSmokeColor(vehicle),
+            customWheelFront: GetVehicleModVariation(vehicle, VehicleModType.WheelFront),
+            customWheelRear: GetVehicleModVariation(vehicle, VehicleModType.WheelRear),
+            modification,
+        };
     }
 }

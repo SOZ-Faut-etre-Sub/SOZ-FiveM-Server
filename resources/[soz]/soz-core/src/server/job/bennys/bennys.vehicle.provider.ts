@@ -67,7 +67,7 @@ export class BennysVehicleProvider {
             tireBurstCompletely: {},
             tireBurstState: {},
             doorStatus: {},
-            windowsStatus: {},
+            windowStatus: {},
         });
     }
 

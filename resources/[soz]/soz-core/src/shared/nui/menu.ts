@@ -3,7 +3,7 @@ import { WardrobeMenuData } from '../cloth';
 import { FuelType } from '../fuel';
 import { BossShopMenu } from '../job';
 import { GarageMenuData } from '../vehicle/garage';
-import { BennysUpgradeVehicleMenuData, VehicleCustomMenuData } from '../vehicle/modification';
+import { VehicleCustomMenuData } from '../vehicle/modification';
 import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
 
 export interface NuiMenuMethodMap {
@@ -49,7 +49,7 @@ export enum MenuType {
 export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.AdminMenu]: AdminMenuStateProps['data'];
     [MenuType.BahamaUnicornJobMenu]: any;
-    [MenuType.BennysOrderMenu]: BennysUpgradeVehicleMenuData;
+    [MenuType.BennysOrderMenu]: VehicleCustomMenuData;
     [MenuType.BossShop]: BossShopMenu;
     [MenuType.Demo]: never;
     [MenuType.FightForStyleJobMenu]: any;

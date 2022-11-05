@@ -8,13 +8,13 @@ export const JobBlips: Partial<Record<JobType, Blip[]>> = {
         {
             name: "Benny's",
             sprite: 227,
-            scale: 1.0,
+            scale: 0.9,
             coords: { x: -211.91, y: -1323.98, z: 30.89 },
         },
         {
             name: 'Casse',
             sprite: 653,
-            scale: 1.0,
+            scale: 0.9,
             coords: { x: -162.15, y: -1302.58, z: 31.32 },
         },
     ],

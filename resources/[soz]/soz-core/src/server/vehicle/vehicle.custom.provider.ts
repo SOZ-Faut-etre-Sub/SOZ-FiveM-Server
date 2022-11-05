@@ -28,8 +28,7 @@ export class VehicleCustomProvider {
         const state = this.vehicleStateService.getVehicleState(entityId);
 
         if (!state.id) {
-            this.notifier.notify(source, 'Vous ne pouvez pas modifier un vehicule non existant', 'error');
-            return getDefaultVehicleModification();
+            return mods;
         }
 
         const playerVehicle = await this.prismaService.playerVehicle.findUnique({
@@ -42,7 +41,7 @@ export class VehicleCustomProvider {
             return getDefaultVehicleModification();
         }
 
-        if (!this.playerMoneyService.remove(source, price)) {
+        if (price && !this.playerMoneyService.remove(source, price)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
 
             return {
@@ -59,6 +58,12 @@ export class VehicleCustomProvider {
                 mods: JSON.stringify(mods),
             },
         });
+
+        if (price) {
+            this.notifier.notify(source, `Vous avez payé $${price} pour modifier votre véhicule.`);
+        } else {
+            this.notifier.notify(source, 'Le véhicule a été modifié');
+        }
 
         return mods;
     }

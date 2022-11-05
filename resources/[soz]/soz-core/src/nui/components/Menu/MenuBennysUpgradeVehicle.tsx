@@ -1,17 +1,20 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, memo, useEffect, useMemo, useState } from 'react';
 
 import { RGBColor } from '../../../shared/color';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import {
-    BennysUpgradeVehicleMenuData,
     VehicleColor,
+    VehicleColorCategory,
     VehicleColorChoiceItem,
     VehicleColorChoices,
     VehicleConfiguration,
+    VehicleCustomMenuData,
     VehicleModification,
+    VehicleModificationPricing,
     VehicleNeonLight,
     VehicleUpgradeOptions,
+    VehicleWheelType,
     VehicleXenonColor,
     VehicleXenonColorChoices,
 } from '../../../shared/vehicle/modification';
@@ -35,6 +38,7 @@ type MenuItemVehicleModificationProps = {
     modKey: keyof VehicleModification;
     config: VehicleConfiguration;
     set: (configuration: VehicleConfiguration) => void;
+    vehiclePrice?: number;
 };
 
 export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModificationProps> = ({
@@ -42,8 +46,12 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
     modKey,
     set,
     config,
+    vehiclePrice,
 }) => {
     const option = options.modification[modKey];
+    const initialValue = useMemo(() => {
+        return config.modification[modKey];
+    }, []);
 
     if (!option) {
         return null;
@@ -74,6 +82,10 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
                 {option.choice.items.map((choice, index) => (
                     <MenuItemSelectOption key={index} value={choice.value}>
                         {choice.label}
+                        {choice.value === initialValue && ' (installé)'}
+                        {vehiclePrice &&
+                            choice.value !== initialValue &&
+                            `($${vehiclePrice * VehicleModificationPricing[modKey].priceByLevels[choice.value] || 0})`}
                     </MenuItemSelectOption>
                 ))}
             </MenuItemSelect>
@@ -83,7 +95,7 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
     if (option.choice.type === 'toggle') {
         return (
             <MenuItemCheckbox
-                checked={config[modKey]}
+                checked={config.modification[modKey] as boolean}
                 onChange={checked =>
                     set({
                         ...config,
@@ -98,7 +110,7 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
 };
 
 type MenuBennysUpgradeVehicleProps = {
-    data?: BennysUpgradeVehicleMenuData;
+    data?: VehicleCustomMenuData;
 };
 
 type MenuItemSelectVehicleColorProps<T extends number> = {
@@ -106,12 +118,14 @@ type MenuItemSelectVehicleColorProps<T extends number> = {
     title: string;
     onChange?: (color: T) => void;
     onConfirm?: (color: T) => void;
+    useCategory?: boolean;
     choices?: Partial<Record<T, VehicleColorChoiceItem>>;
 };
 
 export const MenuItemSelectVehicleColor: FunctionComponent<
     MenuItemSelectVehicleColorProps<VehicleColor | VehicleXenonColor>
-> = ({ value, onChange, onConfirm, title, choices = VehicleColorChoices }) => {
+> = ({ value, useCategory, onChange, onConfirm, title, choices = VehicleColorChoices }) => {
+    const [category, setCategory] = useState<VehicleColorCategory | null>(choices[value]?.category ?? null);
     const innerOnChange = (index, color) => {
         if (onChange) {
             onChange(color);
@@ -124,22 +138,73 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
         }
     };
 
-    return (
-        <MenuItemSelect distance={3} title={title} value={value} onChange={innerOnChange} onConfirm={innerOnConfirm}>
-            {Object.keys(choices).map((colorString, index) => {
-                const option = choices[colorString];
-                const value = parseInt(colorString);
+    if (!useCategory) {
+        return (
+            <MenuItemSelect
+                title={title}
+                distance={3}
+                value={value}
+                onChange={innerOnChange}
+                onConfirm={innerOnConfirm}
+            >
+                {Object.keys(choices).map((colorString, index) => {
+                    const option = choices[colorString];
+                    const value = parseInt(colorString) as VehicleColor;
 
-                return (
-                    <MenuItemSelectOptionColor
-                        color={option.color}
-                        description={option.label}
-                        value={value}
-                        key={index}
-                    />
-                );
-            })}
-        </MenuItemSelect>
+                    return (
+                        <MenuItemSelectOptionColor
+                            key={index}
+                            color={option.color}
+                            description={option.label}
+                            value={value}
+                        />
+                    );
+                })}
+            </MenuItemSelect>
+        );
+    }
+
+    const colorList = Object.keys(choices)
+        .filter(color => choices[color].category === category)
+        .map(colorString => parseInt(colorString) as VehicleColor);
+
+    return (
+        <>
+            <MenuItemSelect
+                onChange={(index, value) => {
+                    setCategory(value);
+                }}
+                value={category}
+                title={`Type ${title.toLowerCase()}`}
+            >
+                <MenuItemSelectOption value={VehicleColorCategory.Classic}>Classique</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Metallic}>Métallique</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Matte}>Matte</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Pearly}>Nacré</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Metal}>Métal</MenuItemSelectOption>
+            </MenuItemSelect>
+            <MenuItemSelect
+                distance={3}
+                title={title}
+                value={value}
+                onChange={innerOnChange}
+                onConfirm={innerOnConfirm}
+                keyDescendant={category}
+            >
+                {colorList.map((color, index) => {
+                    const option = choices[color.toString()];
+
+                    return (
+                        <MenuItemSelectOptionColor
+                            color={option.color}
+                            description={option.label}
+                            value={color}
+                            key={index}
+                        />
+                    );
+                })}
+            </MenuItemSelect>
+        </>
     );
 };
 
@@ -188,6 +253,7 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
 
 export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicleProps> = ({ data }) => {
     const [config, setConfig] = useState<VehicleConfiguration | null>(null);
+    const [options, setOptions] = useState<VehicleUpgradeOptions | null>(null);
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -195,20 +261,31 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
         }
     }, [data]);
 
+    const applyCustom = async (vehicle: number, config: VehicleConfiguration) => {
+        const newOptions = await fetchNui(NuiEvent.VehicleCustomApply, {
+            vehicleEntityId: data.vehicle,
+            vehicleConfiguration: config,
+        });
+
+        setOptions(newOptions as VehicleUpgradeOptions);
+    };
+
     useEffect(() => {
         if (config && data) {
-            fetchNui(NuiEvent.VehicleCustomApply, {
-                vehicleEntityId: data.vehicle,
-                vehicleConfiguration: config,
-            });
+            applyCustom(data.vehicle, config);
         }
     }, [config]);
 
-    if (!data) {
+    useEffect(() => {
+        if (data) {
+            setOptions(data.options);
+        }
+    }, [data]);
+
+    if (!data || !options) {
         return null;
     }
 
-    const options = data.options;
     const onConfirm = () => {
         fetchNui(NuiEvent.VehicleCustomConfirmModification, {
             vehicleEntityId: data.vehicle,
@@ -255,6 +332,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelectVehicleColor
                         value={config?.color?.primary as VehicleColor}
                         title="Couleur principal"
+                        useCategory={true}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -265,6 +343,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelectVehicleColor
                         value={config?.color?.secondary as VehicleColor}
                         title="Couleur secondaire"
+                        useCategory={true}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -275,6 +354,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelectVehicleColor
                         value={config?.color?.pearlescent as VehicleColor}
                         title="Nacre"
+                        useCategory={true}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -313,7 +393,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemVehicleModification modKey="frame" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification modKey="grille" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification modKey="hood" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="fender" options={options} config={config} set={setConfig} />
+                    {/*<MenuItemVehicleModification modKey="fender" options={options} config={config} set={setConfig} />*/}
                     <MenuItemVehicleModification
                         modKey="fenderRight"
                         options={options}
@@ -362,45 +442,49 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
             <SubMenu id="wheel">
                 <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Roues</MenuTitle>
                 <MenuContent>
-                    <MenuItemVehicleModification modKey="tyreSmoke" options={options} config={config} set={setConfig} />
-                    <MenuItemSelectVehicleRGBColor
-                        title="Couleur de fumée des roues"
-                        value={config.tyreSmokeColor}
-                        onChange={color => {
-                            setConfig({
-                                ...config,
-                                tyreSmokeColor: color,
-                            });
-                        }}
-                    />
-                    <MenuItemSelect
-                        title="Type de roue"
-                        value={config?.wheelType}
-                        onChange={(index, value) => {
-                            setConfig({
-                                ...config,
-                                wheelType: value,
-                            });
-                        }}
-                    >
-                        <MenuItemSelectOption value={0}>Sport</MenuItemSelectOption>
-                        <MenuItemSelectOption value={1}>Muscle</MenuItemSelectOption>
-                        <MenuItemSelectOption value={2}>Lowrider</MenuItemSelectOption>
-                        <MenuItemSelectOption value={3}>SUV</MenuItemSelectOption>
-                        <MenuItemSelectOption value={4}>Offroad</MenuItemSelectOption>
-                        <MenuItemSelectOption value={5}>Tuner</MenuItemSelectOption>
-                        <MenuItemSelectOption value={6}>Bike Wheels</MenuItemSelectOption>
-                        <MenuItemSelectOption value={7}>High End</MenuItemSelectOption>
-                    </MenuItemSelect>
+                    {Object.keys(options.wheelType).length > 1 && (
+                        <MenuItemSelect
+                            title="Type de roue"
+                            value={config?.wheelType}
+                            onChange={(index, value) => {
+                                setConfig({
+                                    ...config,
+                                    wheelType: value,
+                                });
+                            }}
+                        >
+                            {Object.keys(options.wheelType).map((key, index) => {
+                                const value = parseInt(key) as VehicleWheelType;
+                                const label = options.wheelType[key];
+
+                                return (
+                                    <MenuItemSelectOption key={index} value={value}>
+                                        {label}
+                                    </MenuItemSelectOption>
+                                );
+                            })}
+                        </MenuItemSelect>
+                    )}
                     <MenuItemVehicleModification
                         modKey="wheelFront"
                         options={options}
                         config={config}
                         set={setConfig}
                     />
-                    <MenuItemVehicleModification modKey="wheelRear" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="struts" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="archCover" options={options} config={config} set={setConfig} />
+                    {options?.modification?.wheelFront?.choice?.type === 'list' &&
+                        options?.modification?.wheelFront?.choice?.items?.length > 0 && (
+                            <MenuItemCheckbox
+                                checked={config?.customWheelFront}
+                                onChange={checked => {
+                                    setConfig({
+                                        ...config,
+                                        customWheelFront: checked,
+                                    });
+                                }}
+                            >
+                                Pneu custom
+                            </MenuItemCheckbox>
+                        )}
                     <MenuItemSelectVehicleColor
                         value={config?.color?.rim as VehicleColor}
                         title="Couleur des jantes"
@@ -411,6 +495,19 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                             });
                         }}
                     />
+                    <MenuItemVehicleModification modKey="tyreSmoke" options={options} config={config} set={setConfig} />
+                    <MenuItemSelectVehicleRGBColor
+                        title="Couleur de fumée des roues"
+                        value={config?.tyreSmokeColor}
+                        onChange={color => {
+                            setConfig({
+                                ...config,
+                                tyreSmokeColor: color,
+                            });
+                        }}
+                    />
+                    <MenuItemVehicleModification modKey="struts" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification modKey="archCover" options={options} config={config} set={setConfig} />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="exterior">
@@ -429,8 +526,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         <MenuItemSelectOption value={0}>Bleu sur blanc</MenuItemSelectOption>
                         <MenuItemSelectOption value={1}>Jaune sur noir</MenuItemSelectOption>
                         <MenuItemSelectOption value={2}>Jaune sur bleu</MenuItemSelectOption>
-                        <MenuItemSelectOption value={3}>Blue sur blanc 2</MenuItemSelectOption>
-                        <MenuItemSelectOption value={4}>Blue sur blanc 3</MenuItemSelectOption>
+                        <MenuItemSelectOption value={3}>Bleu sur blanc 2</MenuItemSelectOption>
+                        <MenuItemSelectOption value={4}>Bleu sur blanc 3</MenuItemSelectOption>
                         <MenuItemSelectOption value={5}>Yankton</MenuItemSelectOption>
                     </MenuItemSelect>
                     <MenuItemSelect
@@ -529,9 +626,9 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                             setConfig({
                                 ...config,
                                 neon: {
-                                    ...config.neon,
+                                    ...config?.neon,
                                     light: {
-                                        ...config.neon.light,
+                                        ...config?.neon?.light,
                                         [VehicleNeonLight.Front]: value,
                                     },
                                 },
@@ -546,9 +643,9 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                             setConfig({
                                 ...config,
                                 neon: {
-                                    ...config.neon,
+                                    ...config?.neon,
                                     light: {
-                                        ...config.neon.light,
+                                        ...config?.neon?.light,
                                         [VehicleNeonLight.Back]: value,
                                     },
                                 },
@@ -563,9 +660,9 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                             setConfig({
                                 ...config,
                                 neon: {
-                                    ...config.neon,
+                                    ...config?.neon,
                                     light: {
-                                        ...config.neon.light,
+                                        ...config?.neon?.light,
                                         [VehicleNeonLight.Right]: value,
                                     },
                                 },
@@ -580,9 +677,9 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                             setConfig({
                                 ...config,
                                 neon: {
-                                    ...config.neon,
+                                    ...config?.neon,
                                     light: {
-                                        ...config.neon.light,
+                                        ...config?.neon?.light,
                                         [VehicleNeonLight.Left]: value,
                                     },
                                 },
@@ -593,16 +690,22 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     </MenuItemCheckbox>
                     <MenuItemSelectVehicleRGBColor
                         title="Couleur des néons"
-                        value={config.neon?.color}
+                        value={config?.neon?.color}
                         onChange={color => {
+                            if (!color) {
+                                return;
+                            }
+
                             setConfig({
                                 ...config,
                                 neon: {
-                                    ...config.neon,
+                                    light: {},
+                                    ...config?.neon,
                                     color,
                                 },
                             });
                         }}
+                        choices={Object.values(VehicleXenonColorChoices)}
                     />
                     <MenuItemVehicleModification
                         modKey="xenonHeadlights"

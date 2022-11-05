@@ -9,6 +9,7 @@ import { groupBy } from '../../shared/utils/array';
 import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
 import { VehicleService } from '../vehicle/vehicle.service';
 
 @Provider()
@@ -21,6 +22,9 @@ export class AdminMenuVehicleProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(VehicleModificationService)
+    private vehicleModificationService: VehicleModificationService;
 
     @OnNuiEvent(NuiEvent.AdminGetVehicles)
     public async getVehicles() {
@@ -99,11 +103,11 @@ export class AdminMenuVehicleProvider {
     @OnNuiEvent(NuiEvent.AdminMenuVehicleSave)
     public async onAdminMenuVehicleSave() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-        const mods = this.vehicleService.getVehicleProperties(vehicle);
+        const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
         const vehicleName = GetDisplayNameFromVehicleModel(vehicleModel);
 
-        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, mods);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, configuration);
         return Ok(true);
     }
 

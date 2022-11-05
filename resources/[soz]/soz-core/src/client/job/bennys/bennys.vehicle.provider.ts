@@ -169,11 +169,16 @@ export class BennysVehicleProvider {
 
     public async upgradeVehicle(vehicleEntityId: number) {
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-        const vehicleConfiguration = await emitRpc<VehicleConfiguration>(
-            RpcEvent.VEHICLE_CUSTOM_GET_MODS,
-            vehicleNetworkId
-        );
+        const state = this.vehicleService.getVehicleState(vehicleEntityId);
+        let vehicleConfiguration = this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
+
+        if (state.id) {
+            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+            vehicleConfiguration = await emitRpc<VehicleConfiguration>(
+                RpcEvent.VEHICLE_CUSTOM_GET_MODS,
+                vehicleNetworkId
+            );
+        }
 
         this.nuiMenu.openMenu(MenuType.BennysUpgradeVehicle, {
             vehicle: vehicleEntityId,
