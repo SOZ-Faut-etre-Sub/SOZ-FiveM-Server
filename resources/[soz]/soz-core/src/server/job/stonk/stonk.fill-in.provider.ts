@@ -89,13 +89,13 @@ export class StonkFillInProvider {
 
                 const transfer = await this.bankService.transferBankMoney(
                     StonkConfig.bankAccount.bankRefill,
-                    `bank_${bank}`,
+                    bank.includes('atm') ? bank : `bank_${bank}`,
                     StonkConfig.collection[item].refill_value * fillAmount
                 );
                 if (!transfer) {
                     this.monitor.log('ERROR', 'Failed to transfer money to safe', {
                         account_source: StonkConfig.bankAccount.bankRefill,
-                        account_destination: `bank_${bank}`,
+                        account_destination: bank.includes('atm') ? bank : `bank_${bank}`,
                         amount: StonkConfig.collection[item].refill_value * fillAmount,
                     });
                 }
