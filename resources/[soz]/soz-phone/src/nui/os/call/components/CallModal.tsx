@@ -1,9 +1,11 @@
 import { AppContent } from '@ui/components/AppContent';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { useRingtoneSound } from '../../sound/hooks/useRingtoneSound';
 import { useCall } from '../hooks/useCall';
+import { useDialingSound } from '../hooks/useDialingSound';
 import CallContactContainer from './CallContactContainer';
 import { CallControls } from './CallControls';
 import { CallTimer } from './CallTimer';
@@ -11,6 +13,25 @@ import RingingText from './RingingText';
 
 export const CallModal: React.FC = () => {
     const { call } = useCall();
+    const { play, stop } = useRingtoneSound();
+    const { startDialTone, endDialTone } = useDialingSound();
+
+    useEffect(() => {
+        if (!call) return;
+
+        if (!call.is_accepted) {
+            if (call.isTransmitter) {
+                startDialTone();
+            } else {
+                play();
+            }
+        }
+
+        return () => {
+            endDialTone();
+            stop();
+        };
+    }, [call, play, stop, startDialTone, endDialTone]);
 
     if (!call) return null;
 
