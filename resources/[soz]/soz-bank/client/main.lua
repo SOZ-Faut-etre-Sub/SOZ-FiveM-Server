@@ -114,6 +114,35 @@ CreateThread(function()
         })
     end
 
+    local function atmRefillAction(atmType, item)
+        return {
+            label = "Remplir avec " .. QBCore.Shared.Items[item].label,
+            icon = "c:stonk/remplir.png",
+            blackoutGlobal = true,
+            blackoutJob = "cash-transfer",
+            canInteract = function(entity)
+                if atmType ~= "ent" then
+                    return false
+                end
+
+                local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getAtmMoney", atmType, GetEntityCoords(entity))
+                if currentMoney < Config.BankAtmDefault[atmType].maxMoney then
+                    return PlayerData.job.onduty
+                end
+
+                return false
+            end,
+            action = function(entity)
+                local currentMoney = QBCore.Functions.TriggerRpc("banking:server:getAtmMoney", atmType, GetEntityCoords(entity))
+                local atm = QBCore.Functions.TriggerRpc("banking:server:getAtmAccount", atmType, GetEntityCoords(entity))
+                local maxMoney = Config.BankAtmDefault[atmType].maxMoney
+
+                TriggerServerEvent("soz-core:server:job:stonk:fill-in", atm.account, item, currentMoney, maxMoney)
+            end,
+            item = item,
+        }
+    end
+
     for model, atmType in pairs(Config.ATMModels) do
         exports["qb-target"]:AddTargetModel(model, {
             options = {
@@ -123,6 +152,9 @@ CreateThread(function()
                     label = "Compte Personnel",
                     atmType = atmType,
                 },
+                atmRefillAction(atmType, "small_moneybag"),
+                atmRefillAction(atmType, "medium_moneybag"),
+                atmRefillAction(atmType, "big_moneybag"),
             },
             distance = 1.0,
         })
