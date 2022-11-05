@@ -51,4 +51,9 @@ export class PlayerWalkstyleProvider {
             await this.applyWalkStyle(player.metadata.walk);
         }
     }
+
+    @OnEvent(ClientEvent.PLAYER_UPDATE)
+    async onPlayerUpdate(): Promise<void> {
+        await this.refresh();
+    }
 }
