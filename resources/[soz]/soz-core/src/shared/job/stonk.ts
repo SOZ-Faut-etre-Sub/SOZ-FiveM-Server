@@ -85,7 +85,7 @@ export const StonkConfig = {
     collection: {
         jewelbag: {
             refill_value: null,
-            society_gain: 800,
+            society_gain: 960,
             timeout: 24 * 60 * 60 * 1000,
             takeInAvailableIn: ['jewelry'],
         },
@@ -130,7 +130,7 @@ export const StonkConfig = {
     delivery: {
         item: 'stonk__secure_container',
         duration: 45 * 1000,
-        society_gain: 4000,
+        society_gain: 6000,
         location: deliveryZones,
     },
 };
