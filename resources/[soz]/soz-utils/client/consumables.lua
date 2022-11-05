@@ -16,6 +16,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     elseif PlayerData.metadata["drug"] <= 0 and AnimpostfxIsRunning("DrugsMichaelAliensFight") then
         AnimpostfxStopAndDoUnk("DrugsMichaelAliensFight")
         AnimpostfxStopAndDoUnk("DrugsMichaelAliensFightIn")
+        TriggerEvent("soz-core:client:player:refresh-walk-style")
     end
 
     if PlayerData.metadata["alcohol"] > 0 and not AnimpostfxIsRunning("DrugsTrevorClownsFight") then
@@ -24,24 +25,24 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     elseif PlayerData.metadata["alcohol"] <= 0 and AnimpostfxIsRunning("DrugsTrevorClownsFight") then
         AnimpostfxStopAndDoUnk("DrugsTrevorClownsFight")
         AnimpostfxStopAndDoUnk("DrugsTrevorClownsFightIn")
+        TriggerEvent("soz-core:client:player:refresh-walk-style")
     end
 
     if PlayerData.metadata["alcohol"] > 80 or PlayerData.metadata["drug"] > 80 then
         ShakeGameplayCam("DRUNK_SHAKE", 1.0)
         SetPedIsDrunk(PlayerPedId(), true)
-        PlayWalking("move_m@drunk@verydrunk")
+        TriggerEvent("soz-core:client:player:update-walk-style", "move_m@drunk@verydrunk")
     elseif PlayerData.metadata["alcohol"] > 40 or PlayerData.metadata["drug"] > 40 then
         ShakeGameplayCam("DRUNK_SHAKE", 0.5)
         SetPedIsDrunk(PlayerPedId(), true)
-        PlayWalking("move_m@drunk@moderatedrunk")
+        TriggerEvent("soz-core:client:player:update-walk-style", "move_m@drunk@moderatedrunk")
     elseif PlayerData.metadata["alcohol"] > 0 or PlayerData.metadata["drug"] > 0 then
         ShakeGameplayCam("DRUNK_SHAKE", 0.0)
         SetPedIsDrunk(PlayerPedId(), false)
-        PlayWalking("move_m@drunk@slightlydrunk")
+        TriggerEvent("soz-core:client:player:update-walk-style", "move_m@drunk@slightlydrunk")
     else
         ShakeGameplayCam("DRUNK_SHAKE", 0.0)
         SetPedIsDrunk(PlayerPedId(), false)
-        TriggerEvent("soz-core:client:player:refresh-walk-style")
     end
 end)
 

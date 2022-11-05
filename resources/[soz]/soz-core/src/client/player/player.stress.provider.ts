@@ -257,8 +257,6 @@ export class PlayerStressProvider {
             await this.playerWalkstyleProvider.applyWalkStyle('move_m@casual@a');
             DisableControlAction(0, 21, true); // disable sprint
             DisableControlAction(0, 22, true); // disable jump
-        } else {
-            await this.playerWalkstyleProvider.refresh();
         }
 
         if (this.invalidMode) {
