@@ -6,21 +6,21 @@ interface useDialingSoundValue {
     endDialTone: () => void;
 }
 
-const DIAL_TONE_URL = 'media/misc/Outgoing-Dial-Effect.ogg';
+const DIAL_TONE_URL = 'media/misc/Outgoing-Dial-Effect.mp3';
 
 export const useDialingSound = (): useDialingSoundValue => {
     const sound = useSoundProvider();
 
     useEffect(() => {
         if (!sound.isMounted(DIAL_TONE_URL)) {
-            sound.mount(DIAL_TONE_URL, 0.3, true);
+            sound.mount(DIAL_TONE_URL, 0.1, true);
             return;
         }
-        sound.volume(DIAL_TONE_URL, 0.3);
+        sound.volume(DIAL_TONE_URL, 0.1);
     }, [sound]);
 
     const startDialTone = useCallback(() => {
-        sound.play(DIAL_TONE_URL, 0.3, true);
+        sound.play(DIAL_TONE_URL, 0.1, true);
     }, [sound]);
 
     const endDialTone = useCallback(() => {
