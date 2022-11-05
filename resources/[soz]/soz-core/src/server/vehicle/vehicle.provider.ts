@@ -34,7 +34,7 @@ export class VehicleProvider {
                 license: player.license,
                 citizenid: player.citizenid,
                 vehicle: name,
-                hash: GetHashKey(model).toString(),
+                hash: model.toString(),
                 mods: JSON.stringify(mods),
                 plate: await this.vehicleService.generatePlate(),
                 garage: 'airportpublic',

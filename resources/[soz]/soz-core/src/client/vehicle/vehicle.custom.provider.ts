@@ -12,9 +12,7 @@ import {
     getVehicleCustomPrice,
     VehicleConfiguration,
     VehicleCustomMenuData,
-    VehicleLsCustom,
-    VehicleLsCustomBaseConfig,
-    VehicleLsCustomLevel,
+    VehicleUpgradeOptions,
 } from '../../shared/vehicle/modification';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -139,26 +137,22 @@ export class VehicleCustomProvider {
             vehicleNetworkId
         );
 
-        this.vehicleService.applyVehicleConfiguration(menuData.vehicle, vehicleCurrentConfiguration);
+        this.vehicleModificationService.applyVehicleConfiguration(menuData.vehicle, vehicleCurrentConfiguration);
     }
 
     @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: VehicleConfiguration }>(NuiEvent.VehicleCustomApply)
-    public async applyVehicleConfiguration({ vehicleEntityId, vehicleConfiguration }): Promise<void> {
-        this.vehicleService.applyVehicleConfiguration(vehicleEntityId, vehicleConfiguration);
+    public async applyVehicleConfiguration({ vehicleEntityId, vehicleConfiguration }): Promise<VehicleUpgradeOptions> {
+        this.vehicleModificationService.applyVehicleConfiguration(vehicleEntityId, vehicleConfiguration);
+
+        return this.vehicleModificationService.createOptions(vehicleEntityId);
     }
 
     @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: Partial<VehicleConfiguration> }>(
         NuiEvent.VehicleCustomConfirmModification
     )
-    public async confirmVehicleCustom({ vehicleEntityId, vehicleConfiguration }): Promise<void> {
-        const vehicleLsCustom = this.buildVehicleLsCustomConfig(vehicleEntityId);
-
-        if (!vehicleLsCustom) {
-            this.notifier.notify('Vous ne pouvez pas améliorer cette voiture', 'error');
-            this.nuiMenu.closeMenu();
-
-            return;
-        }
+    public async confirmVehicleCustom({ vehicleEntityId, vehicleConfiguration, usePricing }): Promise<void> {
+        const options = this.vehicleModificationService.createOptions(vehicleEntityId);
+        const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
 
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
         const vehicleCurrentConfiguration = await emitRpc<VehicleConfiguration>(
@@ -166,7 +160,12 @@ export class VehicleCustomProvider {
             vehicleNetworkId
         );
 
-        const price = getVehicleCustomPrice(vehicleLsCustom, vehicleCurrentConfiguration, vehicleConfiguration);
+        let price = 0;
+
+        if (usePricing && vehicle) {
+            price = getVehicleCustomPrice(vehicle.price, options, vehicleCurrentConfiguration, vehicleConfiguration);
+        }
+
         const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
             RpcEvent.VEHICLE_CUSTOM_SET_MODS,
             vehicleNetworkId,
@@ -179,62 +178,34 @@ export class VehicleCustomProvider {
     }
 
     public async upgradeVehicle(vehicleEntityId: number) {
-        const vehicleLsCustom = this.buildVehicleLsCustomConfig(vehicleEntityId);
+        const options = this.vehicleModificationService.createOptions(vehicleEntityId);
+        const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
 
-        if (!vehicleLsCustom) {
-            this.notifier.notify('Vous ne pouvez pas améliorer cette voiture', 'error');
+        if (!vehicle) {
+            this.notifier.notify(
+                "Cette voiture n'est pas enregistré auprès des autorités et ne peut donc pas être modifiée, veuillez prendre contact avec les autorités.",
+                'error'
+            );
 
             return;
         }
 
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-        const vehicleConfiguration = await emitRpc<VehicleConfiguration>(
-            RpcEvent.VEHICLE_CUSTOM_GET_MODS,
-            vehicleNetworkId
-        );
+        const state = this.vehicleService.getVehicleState(vehicleEntityId);
+        let vehicleConfiguration = this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
+
+        if (state.id) {
+            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+            vehicleConfiguration = await emitRpc<VehicleConfiguration>(
+                RpcEvent.VEHICLE_CUSTOM_GET_MODS,
+                vehicleNetworkId
+            );
+        }
 
         this.nuiMenu.openMenu(MenuType.VehicleCustom, {
             vehicle: vehicleEntityId,
-            custom: vehicleLsCustom,
+            vehiclePrice: vehicle.price,
+            options,
             currentConfiguration: vehicleConfiguration,
         });
-    }
-
-    private buildVehicleLsCustomConfig(vehicleEntityId: number): VehicleLsCustom | null {
-        const custom = {};
-        const model = GetEntityModel(vehicleEntityId);
-        const vehicle = this.vehicleRepository.getByModelHash(model);
-
-        if (!vehicle) {
-            return null;
-        }
-
-        for (const [modType, config] of Object.entries(VehicleLsCustomBaseConfig)) {
-            const maxLevels = Math.min(config.priceByLevels.length, GetNumVehicleMods(vehicleEntityId, config.mod));
-            const levels: VehicleLsCustomLevel[] = [];
-
-            for (let i = 0; i < maxLevels; i++) {
-                const modTextLabel = GetModTextLabel(vehicleEntityId, config.mod, i);
-                let modName = GetLabelText(modTextLabel);
-
-                if (modName === 'NULL') {
-                    modName = (config.prefix ? config.prefix : config.label) + ' ' + i;
-                }
-
-                levels.push({
-                    price: config.priceByLevels[i] * vehicle.price,
-                    name: modName,
-                });
-            }
-
-            if (levels.length > 0) {
-                custom[modType] = {
-                    label: config.label,
-                    levels,
-                };
-            }
-        }
-
-        return custom;
     }
 }

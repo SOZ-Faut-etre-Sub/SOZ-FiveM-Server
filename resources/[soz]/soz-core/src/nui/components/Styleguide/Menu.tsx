@@ -16,6 +16,7 @@ import {
     useCallback,
     useContext,
     useEffect,
+    useLayoutEffect,
     useMemo,
     useRef,
     useState,
@@ -368,9 +369,9 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
 
         onChange && onChange(activeOptionIndex, menuItem?.value);
         setActiveValue(menuItem?.value);
-    }, [activeOptionIndex]);
+    }, [activeOptionIndex, menuItems]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let defaultIndex = null;
 
         for (let i = 0; i < menuItems.length; i++) {
@@ -382,6 +383,8 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
 
         if (defaultIndex !== null) {
             setActiveOptionIndex(defaultIndex);
+        } else {
+            setActiveOptionIndex(0);
         }
     }, [menuItems]);
 
@@ -444,6 +447,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     disabled?: boolean;
     value?: any;
     distance?: number;
+    keyDescendant?: string | null;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -455,6 +459,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     disabled = false,
     distance = 0,
     value = null,
+    keyDescendant = null,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
@@ -467,7 +472,12 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
 
     return (
         <MenuItemContainer onSelected={onSelected} onConfirm={onItemConfirm} disabled={disabled}>
-            <DescendantProvider context={MenuItemSelectDescendantContext} items={descendants} set={setDescendants}>
+            <DescendantProvider
+                key={keyDescendant}
+                context={MenuItemSelectDescendantContext}
+                items={descendants}
+                set={setDescendants}
+            >
                 <MenuItemSelectContext.Provider
                     value={{
                         activeOptionIndex,

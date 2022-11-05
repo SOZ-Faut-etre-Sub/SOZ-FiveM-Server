@@ -156,7 +156,7 @@ export class VehicleService {
         }
 
         for (let i = 0; i < 8; i++) {
-            windowStatus[i] = IsVehicleWindowIntact(vehicle, i);
+            windowStatus[i] = !IsVehicleWindowIntact(vehicle, i);
         }
 
         for (let i = 0; i < 6; i++) {
@@ -176,6 +176,6 @@ export class VehicleService {
     }
 
     public applyVehicleConfiguration(vehicle: number, modification: VehicleConfiguration): void {
-        this.vehicleModificationService.applyVehicleModification(vehicle, modification);
+        this.vehicleModificationService.applyVehicleConfiguration(vehicle, modification);
     }
 }

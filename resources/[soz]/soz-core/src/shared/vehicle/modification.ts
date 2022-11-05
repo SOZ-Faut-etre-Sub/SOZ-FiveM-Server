@@ -310,6 +310,8 @@ export type VehicleConfiguration = {
     xenonColor?: VehicleXenonColor;
     livery?: number;
     // extras: Record<number, boolean>; // Temporary disables
+    customWheelFront?: boolean;
+    customWheelRear?: boolean;
     modification: VehicleModification;
 };
 
@@ -380,9 +382,6 @@ export type VehicleLsCustom = Partial<Record<keyof VehicleConfiguration, Vehicle
 
 type VehicleLsCustomBaseConfigItem = {
     priceByLevels: number[];
-    label: string;
-    mod: VehicleModType;
-    prefix?: string;
 };
 
 export type VehicleUpgradeChoiceItem = {
@@ -390,9 +389,18 @@ export type VehicleUpgradeChoiceItem = {
     value: number | null;
 };
 
+export enum VehicleColorCategory {
+    Classic = 'classic',
+    Metallic = 'metallic',
+    Pearly = 'pearly',
+    Matte = 'matte',
+    Metal = 'metal',
+}
+
 export type VehicleColorChoiceItem = {
     label: string;
     color: RGBColor;
+    category?: VehicleColorCategory;
 };
 
 export type VehicleUpgradeChoiceList = {
@@ -414,6 +422,7 @@ export type VehicleUpgradeOption<T> = {
 export type VehicleUpgradeOptions = {
     livery?: VehicleUpgradeChoiceList;
     liveryRoof?: VehicleUpgradeChoiceList;
+    wheelType: Partial<Record<VehicleWheelType, string>>;
     modification: Partial<Record<keyof VehicleModification, VehicleUpgradeOption<VehicleUpgradeChoice>>>;
 };
 
@@ -421,634 +430,792 @@ export const VehicleColorChoices: Record<VehicleColor, VehicleColorChoiceItem> =
     [VehicleColor.MetallicBlack]: {
         label: 'Metallic Black',
         color: [13, 17, 22],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicGraphiteBlack]: {
         label: 'Metallic Graphite Black',
         color: [28, 29, 33],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBlackSteel]: {
         label: 'Metallic Black Steel',
         color: [50, 56, 61],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicDarkSilver]: {
         label: 'Metallic Dark Silver',
         color: [69, 75, 79],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicSilver]: {
         label: 'Metallic Silver',
         color: [153, 157, 160],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBlueSilver]: {
         label: 'Metallic Blue Silver',
         color: [194, 196, 198],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicSteelGray]: {
         label: 'Metallic Steel Gray',
         color: [151, 154, 151],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicShadowSilver]: {
         label: 'Metallic Shadow Silver',
         color: [99, 115, 128],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicStoneSilver]: {
         label: 'Metallic Stone Silver',
         color: [99, 98, 92],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicMidnightSilver]: {
         label: 'Metallic Midnight Silver',
         color: [60, 63, 71],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicGunMetal]: {
         label: 'Metallic Gun Metal',
         color: [68, 78, 84],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicAnthraciteGray]: {
         label: 'Metallic Anthracite Gray',
         color: [29, 33, 41],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MatteBlack]: {
         label: 'Matte Black',
         color: [19, 24, 31],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteGray]: {
         label: 'Matte Gray',
         color: [38, 40, 42],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteLightGray]: {
         label: 'Matte Light Gray',
         color: [81, 85, 84],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.UtilBlack]: {
         label: 'Util Black',
         color: [21, 25, 33],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilBlackPoly]: {
         label: 'Util Black Poly',
         color: [30, 36, 41],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilDarksilver]: {
         label: 'Util Darksilver',
         color: [51, 58, 60],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilSilver]: {
         label: 'Util Silver',
         color: [140, 144, 149],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilGunMetal]: {
         label: 'Util Gun Metal',
         color: [57, 67, 77],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilShadowSilver]: {
         label: 'Util Shadow Silver',
         color: [80, 98, 114],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.WornBlack]: {
         label: 'Worn Black',
         color: [30, 35, 47],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornGraphite]: {
         label: 'Worn Graphite',
         color: [54, 58, 63],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornSilverGray]: {
         label: 'Worn Silver Gray',
         color: [160, 161, 153],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornSilver]: {
         label: 'Worn Silver',
         color: [211, 211, 211],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornBlueSilver]: {
         label: 'Worn Blue Silver',
         color: [183, 191, 202],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornShadowSilver]: {
         label: 'Worn Shadow Silver',
         color: [119, 135, 148],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.MetallicOrange]: {
         label: 'Metallic Orange',
         color: [255, 128, 0],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicRed]: {
         label: 'Metallic Red',
         color: [192, 14, 26],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicTorinoRed]: {
         label: 'Metallic Torino Red',
         color: [218, 25, 24],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicFormulaRed]: {
         label: 'Metallic Formula Red',
         color: [182, 17, 27],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBlazeRed]: {
         label: 'Metallic Blaze Red',
         color: [165, 30, 35],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicGracefulRed]: {
         label: 'Metallic Graceful Red',
         color: [123, 26, 34],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicGarnetRed]: {
         label: 'Metallic Garnet Red',
         color: [142, 27, 31],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicDesertRed]: {
         label: 'Metallic Desert Red',
         color: [111, 24, 24],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicCabernetRed]: {
         label: 'Metallic Cabernet Red',
         color: [73, 17, 29],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicCandyRed]: {
         label: 'Metallic Candy Red',
         color: [182, 15, 37],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicSunriseOrange]: {
         label: 'Metallic Sunrise Orange',
         color: [212, 74, 23],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicClassicGold]: {
         label: 'Metallic Classic Gold',
         color: [194, 148, 79],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MatteRed]: {
         label: 'Matte Red',
         color: [207, 31, 33],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteDarkRed]: {
         label: 'Matte Dark Red',
         color: [115, 32, 33],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteOrange]: {
         label: 'Matte Orange',
         color: [242, 125, 32],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteYellow]: {
         label: 'Matte Yellow',
         color: [255, 201, 31],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.UtilRed]: {
         label: 'Util Red',
         color: [156, 16, 22],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilBrightRed]: {
         label: 'Util Bright Red',
         color: [222, 15, 24],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilGarnetRed]: {
         label: 'Util Garnet Red',
         color: [143, 30, 23],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.WornRed]: {
         label: 'Worn Red',
         color: [169, 71, 68],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornGoldenRed]: {
         label: 'Worn Golden Red',
         color: [177, 108, 81],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornDarkRed]: {
         label: 'Worn Dark Red',
         color: [55, 28, 37],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.MetallicDarkGreen]: {
         label: 'Metallic Dark Green',
         color: [19, 36, 40],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicRacingGreen]: {
         label: 'Metallic Racing Green',
         color: [18, 46, 43],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicSeaGreen]: {
         label: 'Metallic Sea Green',
         color: [18, 56, 60],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicOliveGreen]: {
         label: 'Metallic Olive Green',
         color: [49, 66, 63],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicGreen]: {
         label: 'Metallic Green',
         color: [21, 92, 45],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicGasolineBlueGreen]: {
         label: 'Metallic Gasoline Blue Green',
         color: [27, 103, 112],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MatteLimeGreen]: {
         label: 'Matte Lime Green',
         color: [102, 184, 31],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.UtilDarkGreen]: {
         label: 'Util Dark Green',
         color: [34, 56, 62],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilGreen]: {
         label: 'Util Green',
         color: [29, 90, 63],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.WornDarkGreen]: {
         label: 'Worn Dark Green',
         color: [45, 66, 63],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornGreen]: {
         label: 'Worn Green',
         color: [69, 89, 75],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornSeaWash]: {
         label: 'Worn Sea Wash',
         color: [101, 134, 127],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.MetallicMidnightBlue]: {
         label: 'Metallic Midnight Blue',
         color: [34, 46, 70],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicDarkBlue]: {
         label: 'Metallic Dark Blue',
         color: [35, 49, 85],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicSaxonyBlue]: {
         label: 'Metallic Saxony Blue',
         color: [48, 76, 126],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBlue]: {
         label: 'Metallic Blue',
         color: [71, 87, 143],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicMarinerBlue]: {
         label: 'Metallic Mariner Blue',
         color: [99, 123, 167],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicHarborBlue]: {
         label: 'Metallic Harbor Blue',
         color: [57, 71, 98],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicDiamondBlue]: {
         label: 'Metallic Diamond Blue',
         color: [214, 231, 241],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicSurfBlue]: {
         label: 'Metallic Surf Blue',
         color: [118, 175, 190],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicNauticalBlue]: {
         label: 'Metallic Nautical Blue',
         color: [52, 94, 114],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBrightBlue]: {
         label: 'Metallic Bright Blue',
         color: [11, 156, 241],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicPurpleBlue]: {
         label: 'Metallic Purple Blue',
         color: [47, 45, 82],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicSpinnakerBlue]: {
         label: 'Metallic Spinnaker Blue',
         color: [40, 44, 77],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicUltraBlue]: {
         label: 'Metallic Ultra Blue',
         color: [35, 84, 161],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.UtilDarkBlue]: {
         label: 'Util Dark Blue',
         color: [17, 37, 82],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilMidnightBlue]: {
         label: 'Util Midnight Blue',
         color: [27, 32, 62],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilBlue]: {
         label: 'Util Blue',
         color: [39, 81, 144],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilSeaFoamBlue]: {
         label: 'Util Sea Foam Blue',
         color: [96, 133, 146],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilLightningBlue]: {
         label: 'Uil Lightning Blue',
         color: [36, 70, 168],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilMauiBluePoly]: {
         label: 'Util Maui Blue Poly',
         color: [66, 113, 225],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilBrightBlue]: {
         label: 'Util Bright Blue',
         color: [59, 57, 224],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.MatteDarkBlue]: {
         label: 'Matte Dark Blue',
         color: [31, 40, 82],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteBlue]: {
         label: 'Matte Blue',
         color: [37, 58, 167],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteMidnightBlue]: {
         label: 'Matte Midnight Blue',
         color: [28, 53, 81],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.WornDarkBlue]: {
         label: 'Worn Dark Blue',
         color: [76, 95, 129],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornBlue]: {
         label: 'Worn Blue',
         color: [88, 104, 142],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornLightBlue]: {
         label: 'Worn Light Blue',
         color: [116, 181, 216],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.MetallicTaxiYellow]: {
         label: 'Metallic Taxi Yellow',
         color: [255, 207, 32],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicRaceYellow]: {
         label: 'Metallic Race Yellow',
         color: [251, 226, 18],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBronze]: {
         label: 'Metallic Bronze',
         color: [145, 101, 50],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicYellowBird]: {
         label: 'Metallic Yellow Bird',
         color: [224, 225, 61],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicLime]: {
         label: 'Metallic Lime',
         color: [152, 210, 35],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicChampagne]: {
         label: 'Metallic Champagne',
         color: [155, 140, 120],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicPuebloBeige]: {
         label: 'Metallic Pueblo Beige',
         color: [80, 50, 24],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicDarkIvory]: {
         label: 'Metallic Dark Ivory',
         color: [71, 63, 43],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicChocoBrown]: {
         label: 'Metallic Choco Brown',
         color: [34, 27, 25],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicGoldenBrown]: {
         label: 'Metallic Golden Brown',
         color: [101, 63, 35],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicLightBrown]: {
         label: 'Metallic Light Brown',
         color: [119, 92, 62],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicStrawBeige]: {
         label: 'Metallic Straw Beige',
         color: [172, 153, 117],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicMossBrown]: {
         label: 'Metallic Moss Brown',
         color: [108, 107, 75],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBistonBrown]: {
         label: 'Metallic Biston Brown',
         color: [64, 46, 43],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBeechwood]: {
         label: 'Metallic Beechwood',
         color: [164, 150, 95],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicDarkBeechwood]: {
         label: 'Metallic Dark Beechwood',
         color: [70, 35, 26],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicChocoOrange]: {
         label: 'Metallic Choco Orange',
         color: [117, 43, 25],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBeachSand]: {
         label: 'Metallic Beach Sand',
         color: [191, 174, 123],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicSunBleechedSand]: {
         label: 'Metallic Sun Bleeched Sand',
         color: [223, 213, 178],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicCream]: {
         label: 'Metallic Cream',
         color: [247, 237, 213],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.UtilBrown]: {
         label: 'Util Brown',
         color: [58, 42, 27],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilMediumBrown]: {
         label: 'Util Medium Brown',
         color: [120, 95, 51],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.UtilLightBrown]: {
         label: 'Util Light Brown',
         color: [181, 160, 121],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.MetallicWhite]: {
         label: 'Metallic White',
         color: [255, 255, 246],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicFrostWhite]: {
         label: 'Metallic Frost White',
         color: [234, 234, 234],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.WornHoneyBeige]: {
         label: 'Worn Honey Beige',
         color: [176, 171, 148],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornBrown]: {
         label: 'Worn Brown',
         color: [69, 56, 49],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornDarkBrown]: {
         label: 'Worn Dark Brown',
         color: [42, 40, 43],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornStrawBeige]: {
         label: 'Worn Straw Beige',
         color: [114, 108, 87],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.BrushedSteel]: {
         label: 'Brushed Steel',
         color: [106, 116, 124],
+        category: VehicleColorCategory.Metal,
     },
     [VehicleColor.BrushedBlackSteel]: {
         label: 'Brushed Black Steel',
         color: [53, 65, 88],
+        category: VehicleColorCategory.Metal,
     },
     [VehicleColor.BrushedAluminium]: {
         label: 'Brushed Aluminium',
         color: [155, 160, 168],
+        category: VehicleColorCategory.Metal,
     },
     [VehicleColor.Chrome]: {
         label: 'Chrome',
         color: [88, 112, 161],
+        category: VehicleColorCategory.Metal,
     },
     [VehicleColor.WornOffWhite]: {
         label: 'Worn Off White',
         color: [234, 230, 222],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.UtilOffWhite]: {
         label: 'Util Off White',
         color: [223, 221, 208],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.WornOrange]: {
         label: 'Worn Orange',
         color: [242, 173, 46],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornLightOrange]: {
         label: 'Worn Light Orange',
         color: [249, 164, 88],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.MetallicSecuricorGreen]: {
         label: 'Metallic Securicor Green',
         color: [131, 197, 102],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.WornTaxiYellow]: {
         label: 'Worn Taxi Yellow',
         color: [241, 204, 64],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.PoliceCarBlue]: {
         label: 'Police Car Blue',
         color: [76, 195, 218],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MatteGreen]: {
         label: 'Matte Green',
         color: [78, 100, 67],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteBrown]: {
         label: 'Matte Brown',
         color: [188, 172, 143],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteWhite]: {
         label: 'Matte White',
         color: [252, 249, 241],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.WornWhite]: {
         label: 'Worn White',
         color: [255, 255, 251],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.WornOliveArmyGreen]: {
         label: 'Worn Olive Army Green',
         color: [129, 132, 76],
+        category: VehicleColorCategory.Classic,
     },
     [VehicleColor.PureWhite]: {
         label: 'Pure White',
         color: [255, 255, 255],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.HotPink]: {
         label: 'Hot Pink',
         color: [242, 31, 153],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.SalmonPink]: {
         label: 'Salmon Pink',
         color: [253, 214, 205],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicVermillionPink]: {
         label: 'Metallic Vermillion Pink',
         color: [223, 88, 145],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.Orange]: {
         label: 'Orange',
         color: [246, 174, 32],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.Green]: {
         label: 'Green',
         color: [176, 238, 110],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.Blue]: {
         label: 'Blue',
         color: [8, 233, 250],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicBlackBlue]: {
         label: 'Metallic Black Blue',
         color: [10, 12, 23],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.MetallicBlackPurple]: {
         label: 'Metallic Black Purple',
         color: [12, 13, 24],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.MetallicBlackRed]: {
         label: 'Metallic Black Red',
         color: [14, 13, 20],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.HunterGreen]: {
         label: 'Hunter Green',
         color: [159, 158, 138],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicPurple]: {
         label: 'Metallic Purple',
         color: [98, 18, 118],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MetallicVDarkBlue]: {
         label: 'Metallic V Dark Blue',
         color: [11, 20, 33],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.ModShopBlack1]: {
         label: 'Modshop Black 1',
         color: [17, 20, 26],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.MattePurple]: {
         label: 'Matte Purple',
         color: [107, 31, 123],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteDarkPurple]: {
         label: 'Matte Dark Purple',
         color: [30, 29, 34],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MetallicLavaRed]: {
         label: 'Metallic Lava Red',
         color: [188, 25, 23],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.MatteForestGreen]: {
         label: 'Matte Forest Green',
         color: [45, 54, 42],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteOliveDrab]: {
         label: 'Matte Olive Drab',
         color: [105, 103, 72],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteDesertBrown]: {
         label: 'Matte Desert Brown',
         color: [122, 108, 85],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteDesertTan]: {
         label: 'Matte Desert Tan',
         color: [195, 180, 146],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.MatteFoliageGreen]: {
         label: 'Matte Foliage Green',
         color: [90, 99, 82],
+        category: VehicleColorCategory.Matte,
     },
     [VehicleColor.DefaultAlloyColor]: {
         label: 'Default Alloy Color',
         color: [129, 130, 127],
+        category: VehicleColorCategory.Pearly,
     },
     [VehicleColor.EpsilonBlue]: {
         label: 'Epsilon Blue',
         color: [175, 214, 228],
+        category: VehicleColorCategory.Metallic,
     },
     [VehicleColor.PureGold]: {
         label: 'Pure Gold',
         color: [122, 100, 64],
+        category: VehicleColorCategory.Metal,
     },
     [VehicleColor.BrushedGold]: {
         label: 'Brush Gold',
         color: [127, 106, 72],
+        category: VehicleColorCategory.Metal,
     },
 };
 
@@ -1059,93 +1226,76 @@ export const VehicleXenonColorChoices: Record<VehicleXenonColor, VehicleColorCho
     },
     [VehicleXenonColor.White]: {
         label: 'Blanc',
-        color: [255, 255, 255],
+        color: [222, 222, 255],
     },
     [VehicleXenonColor.Blue]: {
         label: 'Bleu',
-        color: [71, 87, 143],
+        color: [2, 21, 143],
     },
     [VehicleXenonColor.ElectricBlue]: {
         label: 'Bleu éléctrique',
-        color: [34, 46, 70],
+        color: [3, 83, 255],
     },
     [VehicleXenonColor.MintGreen]: {
         label: 'Vert menthe',
-        color: [29, 90, 63],
+        color: [0, 255, 140],
     },
     [VehicleXenonColor.LimeGreen]: {
         label: 'Vert citron',
-        color: [102, 184, 31],
+        color: [94, 255, 1],
     },
     [VehicleXenonColor.Yellow]: {
         label: 'Jaune',
-        color: [255, 201, 31],
+        color: [255, 255, 0],
     },
     [VehicleXenonColor.GoldenShower]: {
         label: 'Jaune pisse',
-        color: [101, 63, 35],
+        color: [255, 150, 0],
     },
     [VehicleXenonColor.Orange]: {
         label: 'Orange',
-        color: [246, 174, 32],
+        color: [255, 62, 0],
     },
     [VehicleXenonColor.Red]: {
         label: 'Rouge',
-        color: [192, 14, 26],
+        color: [255, 1, 1],
     },
     [VehicleXenonColor.PonyPink]: {
-        label: 'Rose licrone',
-        color: [253, 214, 205],
+        label: 'Rose licorne',
+        color: [255, 50, 100],
     },
     [VehicleXenonColor.HotPink]: {
         label: 'Rose pétant',
-        color: [242, 31, 153],
+        color: [255, 5, 190],
     },
     [VehicleXenonColor.Purple]: {
         label: 'Violet',
-        color: [98, 18, 118],
+        color: [35, 1, 255],
     },
     [VehicleXenonColor.Blacklight]: {
         label: 'Lumière noire',
-        color: [200, 200, 200],
+        color: [15, 3, 255],
     },
 };
 
-export const VehicleLsCustomBaseConfig: Partial<Record<keyof VehicleModification, VehicleLsCustomBaseConfigItem>> = {
+export const VehicleModificationPricing: Partial<Record<keyof VehicleModification, VehicleLsCustomBaseConfigItem>> = {
     engine: {
         priceByLevels: [0, 0.1, 0.15, 0.2, 0.25, 0.3],
-        label: 'Amélioration Moteur',
-        mod: VehicleModType.Engine,
-        prefix: 'Niveau ',
     },
     brakes: {
         priceByLevels: [0, 0.08, 0.1, 0.12, 0.14, 0.16],
-        label: 'Amélioration Freins',
-        mod: VehicleModType.Brakes,
-        prefix: 'Niveau ',
     },
     transmission: {
         priceByLevels: [0, 0.08, 0.11, 0.14, 0.17, 0.2],
-        label: 'Amélioration Transmission',
-        mod: VehicleModType.Transmission,
-        prefix: 'Niveau ',
     },
     suspension: {
         priceByLevels: [0, 0.06, 0.09, 0.12, 0.15, 0.18],
-        label: 'Amélioration Suspension',
-        mod: VehicleModType.Suspension,
-        prefix: 'Niveau ',
     },
     armor: {
         priceByLevels: [0, 0.25, 0.35, 0.45, 0.55, 0.65],
-        label: 'Amélioration Blindage',
-        mod: VehicleModType.Armor,
-        prefix: 'Niveau ',
     },
     turbo: {
         priceByLevels: [0, 0.2],
-        label: 'Amélioration Turbo',
-        mod: VehicleModType.Turbo,
     },
 };
 
@@ -1161,22 +1311,23 @@ export const getDefaultVehicleModification = (): VehicleConfiguration => ({
 });
 
 export const getVehicleCustomPrice = (
-    custom: VehicleLsCustom,
+    vehiclePrice: number,
+    options: VehicleUpgradeOptions,
     currentModification: VehicleConfiguration,
     newModification: VehicleConfiguration
 ): number => {
     let price = 0;
 
-    for (const key in custom) {
-        const category = custom[key];
-        const currentLevel = currentModification[key];
+    for (const key of Object.keys(VehicleModificationPricing)) {
+        const category = VehicleModificationPricing[key];
+        const currentLevel = currentModification.modification[key];
+        const newLevel = newModification.modification[key];
 
-        const newLevel = newModification[key];
         if (currentLevel !== newLevel) {
-            const level = category.levels[newLevel];
+            const level = category.priceByLevels[newLevel];
 
             if (level) {
-                price += level.price;
+                price = price + vehiclePrice * level;
             }
         }
     }
@@ -1186,12 +1337,7 @@ export const getVehicleCustomPrice = (
 
 export type VehicleCustomMenuData = {
     vehicle: number;
-    custom: VehicleLsCustom;
-    currentConfiguration: VehicleConfiguration;
-};
-
-export type BennysUpgradeVehicleMenuData = {
-    vehicle: number;
+    vehiclePrice?: number;
     options: VehicleUpgradeOptions;
     currentConfiguration: VehicleConfiguration;
 };

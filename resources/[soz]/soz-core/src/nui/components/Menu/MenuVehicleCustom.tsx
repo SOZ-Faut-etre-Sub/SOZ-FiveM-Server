@@ -18,6 +18,7 @@ import {
     MenuItemSelectOption,
     MenuTitle,
 } from '../Styleguide/Menu';
+import { MenuItemVehicleModification } from './MenuBennysUpgradeVehicle';
 
 type MenuVehicleCustomProps = {
     data?: VehicleCustomMenuData;
@@ -41,21 +42,19 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
         }
     }, [configuration]);
 
-    if (!data) {
+    if (!data || !configuration) {
         return null;
     }
 
-    const price = configuration ? getVehicleCustomPrice(data.custom, data.currentConfiguration, configuration) : 0;
-    const onChange = <T extends keyof VehicleConfiguration>(key: T, value: VehicleConfiguration[T]) => {
-        setConfiguration({
-            ...configuration,
-            [key]: value,
-        });
-    };
+    const price = configuration
+        ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, configuration)
+        : 0;
+
     const onConfirm = () => {
         fetchNui(NuiEvent.VehicleCustomConfirmModification, {
             vehicleEntityId: data.vehicle,
             vehicleConfiguration: configuration,
+            usePricing: true,
         });
     };
 
@@ -64,28 +63,48 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
             <MainMenu>
                 <MenuTitle banner="https://nui-img/soz/menu_shop_lscustoms">LS Customs</MenuTitle>
                 <MenuContent>
-                    {Object.keys(data.custom).map(key => {
-                        const category: VehicleLsCustomCategory = data.custom[key];
-
-                        return (
-                            <MenuItemSelect
-                                onChange={(index, value) => {
-                                    onChange(key as keyof VehicleConfiguration, value);
-                                }}
-                                key={key}
-                                value={data.currentConfiguration[key]}
-                                title={category.label}
-                            >
-                                {category.levels.map((level, index) => {
-                                    return (
-                                        <MenuItemSelectOption value={index} key={index}>
-                                            {level.name}: ${level.price}
-                                        </MenuItemSelectOption>
-                                    );
-                                })}
-                            </MenuItemSelect>
-                        );
-                    })}
+                    <MenuItemVehicleModification
+                        config={configuration}
+                        modKey="engine"
+                        vehiclePrice={data.vehiclePrice}
+                        set={setConfiguration}
+                        options={data.options}
+                    />
+                    <MenuItemVehicleModification
+                        config={configuration}
+                        modKey="brakes"
+                        vehiclePrice={data.vehiclePrice}
+                        set={setConfiguration}
+                        options={data.options}
+                    />
+                    <MenuItemVehicleModification
+                        config={configuration}
+                        modKey="transmission"
+                        vehiclePrice={data.vehiclePrice}
+                        set={setConfiguration}
+                        options={data.options}
+                    />
+                    <MenuItemVehicleModification
+                        config={configuration}
+                        modKey="suspension"
+                        vehiclePrice={data.vehiclePrice}
+                        set={setConfiguration}
+                        options={data.options}
+                    />
+                    <MenuItemVehicleModification
+                        config={configuration}
+                        modKey="armor"
+                        vehiclePrice={data.vehiclePrice}
+                        set={setConfiguration}
+                        options={data.options}
+                    />
+                    <MenuItemVehicleModification
+                        config={configuration}
+                        modKey="turbo"
+                        vehiclePrice={data.vehiclePrice}
+                        set={setConfiguration}
+                        options={data.options}
+                    />
                     <MenuItemButton onConfirm={() => onConfirm()}>Confirmer les changements: ${price}</MenuItemButton>
                 </MenuContent>
             </MainMenu>
