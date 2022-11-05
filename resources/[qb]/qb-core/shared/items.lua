@@ -4354,10 +4354,10 @@ QBShared.Items = {
     --- Halloween
     ['halloween2022_story'] = {
         ['name'] = 'halloween2022_story',
-        ['label'] = 'Trophée d’Halloween',
+        ['label'] = 'Trophée d’Halloween 2022',
         ['weight'] = 1000,
         ['type'] = 'item',
-        ['unique'] = true,
+        ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2022.'
