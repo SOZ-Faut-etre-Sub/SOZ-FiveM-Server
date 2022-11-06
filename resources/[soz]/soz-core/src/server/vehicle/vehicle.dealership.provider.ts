@@ -191,12 +191,25 @@ export class VehicleDealershipProvider {
                     return false;
                 }
 
+                const previousCitizenId = auction.bestBid?.citizenId;
+
                 this.auctions[name].bestBid = {
                     citizenId: player.citizenid,
                     account: player.charinfo.account,
                     price,
                     name: player.charinfo.firstname + ' ' + player.charinfo.lastname,
                 };
+
+                this.notifier.notify(source, `Vous avez fait une enchère à hauteur de $${price}.`, 'error');
+
+                if (previousCitizenId) {
+                    const player = this.playerService.getPlayerByCitizenId(previousCitizenId);
+
+                    if (player) {
+                        this.notifier.notify(player.source, `Votre enchère a été dépassée.`, 'error');
+                    }
+                }
+                TriggerClientEvent(ClientEvent.VEHICLE_DEALERSHIP_AUCTION_UPDATE, -1, this.auctions);
 
                 return true;
             },

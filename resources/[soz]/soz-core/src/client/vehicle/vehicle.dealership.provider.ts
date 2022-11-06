@@ -150,13 +150,6 @@ export class VehicleDealershipProvider {
         this.auctionVehicles = await emitRpc<Record<string, AuctionVehicle>>(RpcEvent.VEHICLE_DEALERSHIP_GET_AUCTIONS);
 
         for (const [name, auction] of Object.entries(this.auctionVehicles)) {
-            this.blipFactory.create(`dealership_auction_${name}`, {
-                name: 'Enchères',
-                coords: { x: auction.position[0], y: auction.position[1], z: auction.position[2] },
-                sprite: 225,
-                color: 1,
-            });
-
             await this.resourceLoader.loadModel(auction.vehicle.hash);
 
             const createdVehicle = CreateVehicle(

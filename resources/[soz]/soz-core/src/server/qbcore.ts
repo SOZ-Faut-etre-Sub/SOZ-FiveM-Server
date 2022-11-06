@@ -40,6 +40,10 @@ export class QBCore {
         return filteredItems;
     }
 
+    public getPlayerByCitizenId(citizenId: string): QBCorePlayer | null {
+        return this.QBCore.Functions.GetPlayerByCitizenId(citizenId);
+    }
+
     public getPlayer(source: number): QBCorePlayer {
         return this.QBCore.Functions.GetPlayer(source);
     }

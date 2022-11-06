@@ -527,8 +527,8 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.084;
-        const consumedOil = consumedFuel / 280;
+        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 10;
+        const consumedOil = consumedFuel / 20;
 
         const state = this.vehicleService.getVehicleState(vehicle);
 

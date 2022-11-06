@@ -9,10 +9,11 @@ import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
-import { VehicleEntityState } from '../../shared/vehicle/vehicle';
+import { VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
+import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleService } from './vehicle.service';
 
 const DOOR_INDEX_CONFIG = {
@@ -51,6 +52,9 @@ export class VehicleLockProvider {
     @Inject(SoundService)
     private soundService: SoundService;
 
+    @Inject(VehicleSeatbeltProvider)
+    private seatbeltProvider: VehicleSeatbeltProvider;
+
     private vehicleTrunkOpened: number | null = null;
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
@@ -67,13 +71,25 @@ export class VehicleLockProvider {
     private async checkLeaveVehicleWithEngineOn() {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
+        const wasPlayerDriving = GetPedInVehicleSeat(vehicle, -1) === ped;
+
+        if (!wasPlayerDriving) {
+            return;
+        }
+
+        if (this.seatbeltProvider.isSeatbeltOnForPlayer()) {
+            return;
+        }
 
         if (vehicle && IsControlPressed(2, 75) && !IsEntityDead(ped)) {
+            SetVehicleEngineOn(vehicle, true, true, false);
             await wait(150);
 
             if (vehicle && IsControlPressed(2, 75) && !IsEntityDead(ped)) {
                 SetVehicleEngineOn(vehicle, true, true, false);
                 TaskLeaveVehicle(ped, vehicle, 0);
+            } else {
+                SetVehicleEngineOn(vehicle, false, true, false);
             }
         }
     }
@@ -96,9 +112,9 @@ export class VehicleLockProvider {
         const vehicleState = this.vehicleService.getVehicleState(vehicle);
 
         if (vehicleState.forced || player.metadata.godmode || vehicleState.open) {
-            SetVehicleDoorsLocked(vehicle, 0);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
         } else {
-            SetVehicleDoorsLocked(vehicle, 2);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
         }
 
         const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
