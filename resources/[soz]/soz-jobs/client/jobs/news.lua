@@ -43,13 +43,6 @@ CreateThread(function()
         },
         distance = 2.5,
     })
-
-    exports["qb-target"]:AddBoxZone("news:shop", vector3(-567.59, -922.01, 28.82), 0.4, 2.8, {
-        name = "news:shop",
-        heading = 0,
-        minZ = 27.82,
-        maxZ = 30.82,
-    }, {options = SozJobCore.Functions.GetBossShopActions("news", "news:client:bossShop"), distance = 2.5})
 end)
 
 --- Events
@@ -176,26 +169,6 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
     })
 
     societyMenu:Open()
-end)
-
-RegisterNetEvent("news:client:bossShop", function()
-    if not SozJobCore.Functions.HasPermission("news", SozJobCore.JobPermission.SocietyShop) then
-        return
-    end
-
-    shopMenu:ClearItems()
-    for itemID, item in pairs(NewsConfig.BossShop) do
-        shopMenu:AddButton({
-            label = item.amount .. "x " .. QBCore.Shared.Items[item.name].label,
-            rightLabel = "$" .. item.price,
-            value = itemID,
-            select = function(btn)
-                TriggerServerEvent("jobs:shop:server:buy", btn.Value)
-            end,
-        })
-    end
-
-    shopMenu:Open()
 end)
 
 --- Threads
