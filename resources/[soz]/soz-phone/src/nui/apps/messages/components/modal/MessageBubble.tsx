@@ -7,6 +7,7 @@ import React from 'react';
 
 import { useConfig } from '../../../../hooks/usePhone';
 import { usePhoneNumber } from '../../../../hooks/useSimCard';
+import Emoji from '../../../../ui/components/Emoji';
 
 const isImage = url => {
     return /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg|gif)/g.test(url);
@@ -56,7 +57,15 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                     </span>
                 )}
                 {!isImage(message.message) && !isPosition(message.message) && (
-                    <p className="break-words text-ellipsis w-full">{message.message}</p>
+                    <p className="flex items-center break-words text-ellipsis w-full">
+                        {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map(text => {
+                            if (text.includes(':')) {
+                                return <Emoji emoji={text} />;
+                            }
+
+                            return text;
+                        })}
+                    </p>
                 )}
             </div>
         </div>
