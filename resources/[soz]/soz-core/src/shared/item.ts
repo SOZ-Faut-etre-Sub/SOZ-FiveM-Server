@@ -135,11 +135,17 @@ export type CocktailItem = BaseItem & {
     animation?: AnimationItem;
 };
 
+export type WeaponAttachment = {
+    label: string;
+    component: string;
+};
+
 export type InventoryItemMetadata = {
     label?: string;
     type?: string;
     serial?: string;
     ammo?: number;
+    attachments?: WeaponAttachment[];
     expiration?: string;
     player?: number;
 };

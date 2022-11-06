@@ -1,5 +1,3 @@
-shopMenu = MenuV:CreateMenu(nil, nil, "menu_shop_society", "soz", "job:shop:menu")
-
 function DisplayFieldHealth(newVisibility, field, health)
     if newVisibility then
         SendNUIMessage({

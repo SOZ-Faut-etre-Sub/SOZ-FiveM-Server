@@ -223,30 +223,6 @@ QBCore.Functions.CreateCallback("police:server:DeleteWantedPlayer", function(sou
 end)
 
 --- Other
-RegisterNetEvent("police:server:buy", function(weaponID)
-    local player = QBCore.Functions.GetPlayer(source)
-
-    if not Config.WeaponShop[player.PlayerData.job.id] then
-        return
-    end
-
-    local item = Config.WeaponShop[player.PlayerData.job.id][weaponID]
-
-    if player.Functions.RemoveMoney("money", item.price) then
-        TriggerEvent("monitor:server:event", "shop_buy", {player_source = player.PlayerData.source, shop_type = "job"},
-                     {item_name = item.name, amount = item.price})
-
-        exports["soz-inventory"]:AddItem(player.PlayerData.source, item.name, item.amount, item.metadata, nil, function(success, reason)
-            if success then
-                TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
-                                   ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(item.amount, QBCore.Shared.Items[item.name].label, item.price))
-            end
-        end)
-    else
-        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
-    end
-end)
-
 AddEventHandler("entityCreating", function(handle)
     local entityModel = GetEntityModel(handle)
 
