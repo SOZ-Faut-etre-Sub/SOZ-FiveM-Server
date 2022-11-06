@@ -33,7 +33,7 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                 if (isOk(result)) {
                     const jobs = result.ok;
                     setJobs(jobs);
-                    setGrades(jobs[0].grades);
+                    setGrades(jobs[0]?.grades);
                 }
             });
         }

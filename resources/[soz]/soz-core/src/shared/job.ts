@@ -1,5 +1,6 @@
 import { ClientEvent } from './event';
 import { Zone } from './polyzone/box.zone';
+import { ShopProduct } from './shop';
 
 export enum JobType {
     Unemployed = 'unemployed',
@@ -90,22 +91,4 @@ export type JobCloakroomZoneData = {
     event: string;
     job: JobType;
     storage: string;
-};
-
-export type BossShop = {
-    zone: Zone;
-    items: BossShopItem[];
-};
-
-export type BossShopItem = {
-    name: string;
-    price: number;
-    amount: number;
-    metadata?: any;
-    label?: string;
-};
-
-export type BossShopMenu = {
-    job: JobType;
-    shop: BossShop;
 };

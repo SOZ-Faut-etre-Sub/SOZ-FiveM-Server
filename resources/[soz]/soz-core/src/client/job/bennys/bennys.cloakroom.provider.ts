@@ -237,7 +237,8 @@ export class BennysCloakroomProvider {
             return;
         }
 
-        const jobGrade = await this.jobGradeRepository.getJobGrade(player.job.id, player.job.grade);
+        const grade = typeof player.job.grade === 'number' ? player.job.grade : parseInt(player.job.grade, 10);
+        const jobGrade = await this.jobGradeRepository.getJobGrade(player.job.id, grade);
 
         if (!jobGrade) {
             return;

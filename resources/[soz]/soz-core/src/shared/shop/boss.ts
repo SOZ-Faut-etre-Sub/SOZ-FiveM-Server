@@ -1,7 +1,7 @@
 import { JobType } from '../job';
 import { ShopConfig } from '../shop';
 
-export const BossShop: (ShopConfig & { job: string })[] = [
+export const BossShop: (ShopConfig & { job: JobType })[] = [
     {
         name: 'pawl',
         job: JobType.Pawl,
