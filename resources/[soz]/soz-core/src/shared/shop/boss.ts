@@ -34,4 +34,27 @@ export const BossShop: (ShopConfig & { job: string })[] = [
             { id: 'pistol_ammo', type: 'weapon_ammo', price: 10 },
         ],
     },
+    {
+        name: 'news',
+        job: 'news',
+        zone: {
+            center: [-567.59, -922.01, 28.82],
+            length: 0.4,
+            width: 2.8,
+            heading: 0,
+            minZ: 27.82,
+            maxZ: 30.82,
+        },
+        targets: [],
+        products: [
+            { id: 'armor', type: 'item', metadata: { label: 'Twitch News', type: 'news' }, price: 150 },
+            { id: 'n_fix_camera', type: 'item', price: 250 },
+            { id: 'n_fix_greenscreen', type: 'item', price: 150 },
+            { id: 'n_fix_light', type: 'item', price: 80 },
+            { id: 'n_fix_mic', type: 'item', price: 60 },
+            { id: 'n_mic', type: 'item', price: 50 },
+            { id: 'n_camera', type: 'item', price: 250 },
+            { id: 'n_bmic', type: 'item', price: 100 },
+        ],
+    },
 ];
