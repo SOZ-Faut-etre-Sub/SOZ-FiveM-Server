@@ -6,6 +6,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
 import { JobPermission, JobType } from '../../shared/job';
+import { PlayerData } from '../../shared/player';
 import { getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
@@ -75,8 +76,13 @@ export class VehicleGarageProvider {
         if (!player) {
             return [];
         }
+        const ids = [];
 
-        const ids = [id];
+        if (garage.type === GarageType.House) {
+            ids.push(`property_${id}`);
+        } else {
+            ids.push(id);
+        }
 
         if (garage.legacyId) {
             ids.push(garage.legacyId);
@@ -92,6 +98,14 @@ export class VehicleGarageProvider {
                 },
             ],
         };
+
+        if (garage.type === GarageType.House) {
+            const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            where.AND.push({ citizenid: { in: [...citizenIds] } });
+        }
 
         if (
             garage.type === GarageType.Depot ||
@@ -179,11 +193,13 @@ export class VehicleGarageProvider {
             return;
         }
 
+        const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
+
         if (
             (garage.type === GarageType.Private ||
                 garage.type === GarageType.Public ||
                 garage.type === GarageType.House) &&
-            vehicle.citizenid !== player.citizenid
+            !citizenIds.has(vehicle.citizenid)
         ) {
             this.notifier.notify(
                 source,
@@ -200,6 +216,10 @@ export class VehicleGarageProvider {
             this.notifier.notify(source, 'Vous ne pouvez pas ranger ce véhicule dans ce garage.', 'error');
 
             return;
+        }
+
+        if (garage.type === GarageType.House) {
+            id = `property_${id}`;
         }
 
         const freePlaces = await this.getFreePlaces(source, id, garage);
@@ -249,7 +269,9 @@ export class VehicleGarageProvider {
                     return;
                 }
 
-                if (vehicle.citizenid !== player.citizenid) {
+                const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
+
+                if (!citizenIds.has(vehicle.citizenid)) {
                     if (garage.type === GarageType.Private || garage.type === GarageType.House) {
                         this.notifier.notify(source, 'Ce véhicule ne vous appartient pas.', 'error');
 
@@ -329,5 +351,36 @@ export class VehicleGarageProvider {
             },
             1000
         );
+    }
+
+    private async getCitizenIdsForGarage(player: PlayerData, garage: Garage, propertyId: string): Promise<Set<string>> {
+        const citizenIds = new Set<string>();
+        citizenIds.add(player.citizenid);
+
+        if (garage.type === GarageType.House) {
+            const property = await this.prismaService.housing_property.findUnique({
+                where: {
+                    identifier: propertyId,
+                },
+            });
+
+            if (property) {
+                const appartements = await this.prismaService.housing_apartment.findMany({
+                    where: {
+                        AND: [
+                            { property_id: property.id },
+                            { OR: [{ owner: player.citizenid }, { roommate: player.citizenid }] },
+                        ],
+                    },
+                });
+
+                for (const appartement of appartements) {
+                    citizenIds.add(appartement.owner);
+                    citizenIds.add(appartement.roommate);
+                }
+            }
+        }
+
+        return citizenIds;
     }
 }

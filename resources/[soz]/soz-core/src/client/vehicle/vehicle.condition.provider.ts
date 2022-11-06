@@ -17,9 +17,11 @@ type VehicleStatus = {
     vehicle: number;
 };
 
-const ENGINE_DAMAGE_MULTIPLIER = 4.0;
-const BODY_DAMAGE_MULTIPLIER = 4.0;
-const TANK_DAMAGE_MULTIPLIER = 4.0;
+const ENGINE_DAMAGE_MULTIPLIER = 5.0;
+const BODY_DAMAGE_MULTIPLIER = 5.0;
+const TANK_DAMAGE_MULTIPLIER = 5.0;
+
+const STOP_ENGINE_THRESHOLD = 150;
 
 const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
 const ENGINE_MIN_HEALTH = 100.0;
@@ -87,7 +89,7 @@ export class VehicleConditionProvider {
             value.engineHealth -
             value.bodyHealth;
 
-        if (healthDiff > 300) {
+        if (healthDiff > STOP_ENGINE_THRESHOLD) {
             const waitTime = Math.min(
                 (previousState.condition.engineHealth / value.engineHealth +
                     previousState.condition.bodyHealth / value.bodyHealth) *

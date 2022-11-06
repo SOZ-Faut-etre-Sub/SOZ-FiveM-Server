@@ -1,10 +1,12 @@
-import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { wait } from '../../core/utils';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
+import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
@@ -208,7 +210,7 @@ export class VehicleGarageProvider {
         const position = GetEntityCoords(vehicle, true) as Vector3;
         const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
 
-        if (getDistance(position, playerPosition) > 10) {
+        if (getDistance(position, playerPosition) > 20) {
             this.notifier.notify('Vous devez vous rapprocher du parking pour ranger votre véhicule.', 'error');
 
             return;
@@ -245,8 +247,35 @@ export class VehicleGarageProvider {
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageShowPlaces)
-    public async showPlacesGarages() {
-        // @TODO
+    public async showPlacesGarages({ garage }) {
+        const places = [];
+
+        for (const parkingPlace of garage.parkingPlaces) {
+            places.push(BoxZone.fromZone(parkingPlace));
+        }
+
+        const end = GetGameTimer() + 10000;
+
+        while (GetGameTimer() < end) {
+            for (const place of places) {
+                place.draw();
+            }
+
+            await wait(0);
+        }
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_GARAGE_HOUSE_OPEN_MENU)
+    public async openHouseGarageMenu(propertyId: string) {
+        const garage = this.garageRepository.get()[propertyId];
+
+        if (!garage) {
+            this.notifier.notify('Aucun garage trouvé.', 'error');
+
+            return;
+        }
+
+        await this.enterGarage(propertyId, garage);
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageTakeOut)
@@ -286,6 +315,7 @@ export class VehicleGarageProvider {
 
     private async enterGarage(id: string, garage: Garage) {
         const vehicles = await emitRpc<GarageVehicle[]>(RpcEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
+
         let free_places = null;
 
         if (garage.type === GarageType.Private) {

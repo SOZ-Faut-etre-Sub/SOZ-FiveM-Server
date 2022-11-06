@@ -189,6 +189,7 @@ export enum ClientEvent {
     VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
     VEHICLE_SYNC_CONDITION = 'soz-core:client:vehicle:sync-condition',
     VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
+    VEHICLE_GARAGE_HOUSE_OPEN_MENU = 'soz-core:client:vehicle:garage:house:open-menu',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }
