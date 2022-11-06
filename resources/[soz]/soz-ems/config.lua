@@ -166,30 +166,6 @@ Config.PatientClothes = {
     },
 }
 
-Config.BossShop = {
-    ["lsmc"] = {
-        [1] = {name = "outfit", metadata = {label = "LSMC", type = "lsmc"}, price = 100, amount = 1},
-        [2] = {name = "armor", metadata = {label = "LSMC", type = "lsmc"}, price = 150, amount = 1},
-        [3] = {name = "antibiotic", metadata = {}, price = 15, amount = 1},
-        [4] = {name = "painkiller", metadata = {}, price = 15, amount = 1},
-        [5] = {name = "defibrillator", metadata = {}, price = 25, amount = 1},
-        [6] = {name = "empty_bloodbag", metadata = {}, price = 5, amount = 1},
-        [7] = {name = "firstaid", metadata = {}, price = 10, amount = 1},
-        [8] = {name = "pommade", metadata = {}, price = 15, amount = 1},
-        [9] = {name = "tissue", metadata = {}, price = 5, amount = 1},
-        [10] = {name = "weapon_fireextinguisher", metadata = {ammo = 400}, price = 5, amount = 1},
-        [11] = {name = "walkstick", metadata = {}, price = 15, amount = 1},
-        [12] = {name = "poumon", metadata = {}, price = 2000, amount = 1},
-        [13] = {name = "rein", metadata = {}, price = 2000, amount = 1},
-        [14] = {name = "foie", metadata = {}, price = 2000, amount = 1},
-        [15] = {name = "flask_pee_empty", metadata = {}, price = 15, amount = 1},
-        [16] = {name = "flask_blood_empty", metadata = {}, price = 15, amount = 1},
-        [17] = {name = "antidepressant", metadata = {}, price = 15, amount = 1},
-        [18] = {name = "health_book", metadata = {}, price = 30, amount = 1},
-        [19] = {name = "antiacide", metadata = {}, price = 15, amount = 1},
-    },
-}
-
 Config.DiseaseRange = {
     [QBCore.Shared.Pollution.Level.Low] = 2000,
     [QBCore.Shared.Pollution.Level.Neutral] = 1000,

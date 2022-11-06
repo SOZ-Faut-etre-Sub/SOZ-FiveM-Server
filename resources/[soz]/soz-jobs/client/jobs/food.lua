@@ -58,23 +58,6 @@ local function SpawnFieldZones()
 end
 
 local function SpawnJobZones()
-    -- BOSS SHOP
-    exports["qb-target"]:AddBoxZone("food:shop", vector2(-1881.68, 2058.03), 0.8, 2.15, {
-        name = "food:shop",
-        heading = 70.0,
-        minZ = 140.0,
-        maxZ = 143.0,
-    }, {
-        options = SozJobCore.Functions.GetBossShopActions("food", "food:client:bossShop"),
-        distance = 2.5,
-        job = "food",
-        blackoutGlobal = true,
-        blackoutJob = "food",
-        canInteract = function()
-            return PlayerData.job.onduty
-        end,
-    })
-
     -- CRAFTING
     -- CreateObjectNoOffset(GetHashKey("prop_copper_pan"), -1882.63, 2069.25, 141.0, false, false, false)
     -- exports["qb-target"]:AddBoxZone("food:craft", vector2(-1882.67, 2069.31), 0.75, 0.75, {
@@ -431,26 +414,6 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
             exports["soz-hud"]:DrawNotification("L'animal ne respire plus...", "info")
         end
     end)
-end)
-
-RegisterNetEvent("food:client:bossShop", function()
-    if not SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.SocietyShop) then
-        return
-    end
-
-    shopMenu:ClearItems()
-    for itemID, item in pairs(FoodConfig.BossShop) do
-        shopMenu:AddButton({
-            label = item.amount .. "x " .. QBCore.Shared.Items[item.name].label,
-            rightLabel = "$" .. item.price,
-            value = itemID,
-            select = function(btn)
-                TriggerServerEvent("jobs:shop:server:buy", btn.Value)
-            end,
-        })
-    end
-
-    shopMenu:Open()
 end)
 
 -- Resell Port of Los Santos

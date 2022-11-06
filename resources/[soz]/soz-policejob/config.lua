@@ -413,52 +413,6 @@ Config.PrisonerClothes = {
     },
 }
 
-Config.WeaponShop = {
-    ["lspd"] = {
-        [1] = {name = "outfit", metadata = {label = "LSPD", type = "lspd"}, price = 100, amount = 1},
-        [2] = {name = "armor", metadata = {label = "LSPD", type = "lspd"}, price = 150, amount = 1},
-        [3] = {name = "radio", metadata = {}, price = 80, amount = 1},
-        [4] = {name = "handcuffs", metadata = {}, price = 30, amount = 1},
-        [5] = {name = "handcuffs_key", metadata = {}, price = 15, amount = 1},
-        [6] = {name = "cone", metadata = {}, price = 5, amount = 1},
-        [7] = {name = "police_barrier", metadata = {}, price = 5, amount = 1},
-        [8] = {name = "spike", metadata = {}, price = 5, amount = 1},
-        [9] = {name = "weapon_flashlight", metadata = {}, price = 15, amount = 1},
-        [10] = {name = "weapon_nightstick", metadata = {}, price = 25, amount = 1},
-        [11] = {name = "weapon_stungun", metadata = {}, price = 45, amount = 1},
-        [12] = {
-            name = "weapon_pistol_mk2",
-            metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
-            price = 300,
-            amount = 1,
-        },
-        [13] = {name = "pistol_ammo", metadata = {}, price = 10, amount = 1},
-    },
-    ["bcso"] = {
-        [1] = {name = "outfit", metadata = {label = "BCSO", type = "bcso"}, price = 100, amount = 1},
-        [2] = {name = "armor", metadata = {label = "BCSO", type = "bcso"}, price = 150, amount = 1},
-        [3] = {name = "radio", metadata = {}, price = 80, amount = 1},
-        [4] = {name = "handcuffs", metadata = {}, price = 30, amount = 1},
-        [5] = {name = "handcuffs_key", metadata = {}, price = 15, amount = 1},
-        [6] = {name = "cone", metadata = {}, price = 5, amount = 1},
-        [7] = {name = "police_barrier", metadata = {}, price = 5, amount = 1},
-        [8] = {name = "spike", metadata = {}, price = 5, amount = 1},
-        [9] = {name = "weapon_flashlight", metadata = {}, price = 15, amount = 1},
-        [10] = {name = "weapon_nightstick", metadata = {}, price = 25, amount = 1},
-        [11] = {name = "weapon_stungun", metadata = {}, price = 45, amount = 1},
-        [12] = {
-            name = "weapon_revolver_mk2",
-            metadata = {attachments = {{component = "COMPONENT_AT_PI_FLSH", label = "Flashlight"}}},
-            price = 300,
-            amount = 1,
-        },
-        [13] = {name = "pistol_ammo", metadata = {}, price = 10, amount = 1},
-    },
-}
-
-Config.WeaponShop["lspd"][7] = nil
-Config.WeaponShop["bcso"][7] = nil
-
 --- Licenses
 Config.Licenses = {
     ["car"] = {label = "Permis voiture"},

@@ -93,10 +93,3 @@ StonkConfig.Cloakroom = {
         },
     },
 }
-
-StonkConfig.BossShop = {
-    [1] = {name = "outfit", metadata = {label = "STONK", type = "stonk"}, price = 100, amount = 1},
-    [2] = {name = "armor", metadata = {label = "STONK", type = "stonk"}, price = 150, amount = 1},
-    [3] = {name = "weapon_pistol", metadata = {}, price = 300, amount = 1},
-    [4] = {name = "pistol_ammo", metadata = {}, price = 10, amount = 1},
-}

@@ -68,6 +68,7 @@ export enum ServerEvent {
 
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
+    SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
 
     AFK_KICK = 'soz-core:server:afk:kick',
 
@@ -229,6 +230,7 @@ export enum NuiEvent {
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
     ShopMaskBuy = 'soz-core:client:shop:mask:buy',
+    BossShopBuy = 'soz-core:client:shop:boss:buy',
     ShopMaskPreview = 'soz-core:client:shop:mask:preview',
     ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
 }
