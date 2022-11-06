@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-import { OnEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -19,6 +19,7 @@ import { LockService } from '../lock.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
+import { GarageRepository } from '../repository/garage.repository';
 import { VehicleSpawner } from './vehicle.spawner';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -47,6 +48,85 @@ export class VehicleGarageProvider {
 
     @Inject(LockService)
     private lockService: LockService;
+
+    @Inject(GarageRepository)
+    private garageRepository: GarageRepository;
+
+    @Once(OnceStep.DatabaseConnected)
+    public async init(): Promise<void> {
+        await this.prismaService.$executeRawUnsafe(
+            "UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL AND category = 'car'"
+        );
+        await this.prismaService.$executeRawUnsafe(
+            "UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL AND category = 'car'"
+        );
+
+        await this.prismaService.$executeRawUnsafe(
+            "UPDATE player_vehicles SET state = 1, garage = 'airport_air' WHERE state = 0 AND job IS NULL AND category = 'air'"
+        );
+        await this.prismaService.$executeRawUnsafe(
+            "UPDATE player_vehicles SET state = 3, garage = concat(job,'_air') WHERE state = 0 AND job IS NOT NULL AND category = 'air'"
+        );
+
+        await this.prismaService.$executeRawUnsafe("UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil'");
+        await this.prismaService.$executeRawUnsafe(
+            "UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer'"
+        );
+        await this.prismaService.$executeRawUnsafe(
+            "UPDATE player_vehicles SET garage = 'pound' WHERE state = 2 AND garage != 'pound'"
+        );
+
+        const vehicles = await this.prismaService.playerVehicle.findMany({
+            where: {
+                state: { in: [PlayerVehicleState.InGarage, PlayerVehicleState.InPound, PlayerVehicleState.Missing] },
+            },
+        });
+
+        const garages = await this.garageRepository.refresh();
+        const toPound = [];
+        const toVoid = [];
+
+        for (const vehicle of vehicles) {
+            const parkingTime = new Date(vehicle.parkingtime * 1000);
+            const days = Math.floor((Date.now() / 1000 - parkingTime.getTime()) / (24 * 60 * 60));
+            const garage = vehicle.garage
+                ? garages[vehicle.garage] || Object.values(garages).find(g => g.legacyId === vehicle.garage)
+                : null;
+
+            if ((!garage || vehicle.state === PlayerVehicleState.Missing) && vehicle.parkingtime > 2) {
+                toVoid.push(vehicle.id);
+            } else if (garage && garage.type === GarageType.Depot && days > 7) {
+                toVoid.push(vehicle.id);
+            } else if (garage && garage.type !== GarageType.Job && days > 21) {
+                toPound.push(vehicle.id);
+            }
+        }
+
+        if (toVoid.length) {
+            await this.prismaService.playerVehicle.updateMany({
+                where: {
+                    id: { in: toVoid },
+                },
+                data: {
+                    state: PlayerVehicleState.Destroyed,
+                    parkingtime: Math.round(Date.now() / 1000),
+                },
+            });
+        }
+
+        if (toPound.length) {
+            await this.prismaService.playerVehicle.updateMany({
+                where: {
+                    id: { in: toPound },
+                },
+                data: {
+                    state: PlayerVehicleState.InPound,
+                    garage: 'pound',
+                    parkingtime: Math.round(Date.now() / 1000),
+                },
+            });
+        }
+    }
 
     @Rpc(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES)
     public async getFreePlaces(source: number, id: string, garage: Garage): Promise<number | null> {
@@ -376,7 +456,10 @@ export class VehicleGarageProvider {
 
                 for (const appartement of appartements) {
                     citizenIds.add(appartement.owner);
-                    citizenIds.add(appartement.roommate);
+
+                    if (appartement.roommate) {
+                        citizenIds.add(appartement.roommate);
+                    }
                 }
             }
         }
