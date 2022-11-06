@@ -25,6 +25,7 @@ export enum MenuType {
     FightForStyleJobMenu = 'ffs_job_menu',
     FoodJobMenu = 'food_job_menu',
     Demo = 'demo',
+    BossShop = 'boss_shop',
     MaskShop = 'mask_shop',
     SetHealthState = 'set_health_state',
     Wardrobe = 'wardrobe',

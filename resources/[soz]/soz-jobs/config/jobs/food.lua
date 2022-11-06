@@ -2,12 +2,6 @@ FoodConfig = {}
 
 FoodConfig.Blip = {Name = "Château Marius", Icon = 176, Coords = vector2(-1889.54, 2045.27), Scale = 1.0}
 
-FoodConfig.BossShop = {
-    [1] = {name = "weapon_machete", metadata = {}, price = 45, amount = 1},
-    [2] = {name = "weapon_musket", metadata = {}, price = 125, amount = 1},
-    [3] = {name = "shotgun_ammo", metadata = {}, price = 10, amount = 1},
-}
-
 FoodConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         ["Tenue de Direction"] = {

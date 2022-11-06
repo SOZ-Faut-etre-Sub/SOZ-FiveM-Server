@@ -37,14 +37,6 @@ Citizen.CreateThread(function()
             },
         },
     })
-
-    -- BOSS STORAGE
-    exports["qb-target"]:AddBoxZone("stonk:shop", vector2(-15.5, -708.83), 0.6, 2.6, {
-        name = "food:shop",
-        heading = 25.0,
-        minZ = 45.02,
-        maxZ = 48.02,
-    }, {options = SozJobCore.Functions.GetBossShopActions("cash-transfer", "stonk:client:bossShop"), distance = 2.5})
 end)
 
 --- Events
@@ -64,26 +56,6 @@ RegisterNetEvent("jobs:client:stonk:OpenCloakroomMenu", function(storageId)
             TriggerEvent("stonk:client:applyDutyClothing")
         end,
     })
-end)
-
-RegisterNetEvent("stonk:client:bossShop", function()
-    if not SozJobCore.Functions.HasPermission("cash-transfer", SozJobCore.JobPermission.SocietyShop) then
-        return
-    end
-
-    shopMenu:ClearItems()
-    for itemID, item in pairs(StonkConfig.BossShop) do
-        shopMenu:AddButton({
-            label = item.amount .. "x " .. QBCore.Shared.Items[item.name].label,
-            rightLabel = "$" .. item.price,
-            value = itemID,
-            select = function(btn)
-                TriggerServerEvent("jobs:shop:server:buy", btn.Value)
-            end,
-        })
-    end
-
-    shopMenu:Open()
 end)
 
 --- Duty clothings

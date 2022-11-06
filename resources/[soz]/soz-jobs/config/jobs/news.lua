@@ -124,17 +124,6 @@ NewsConfig.Cloakroom = {
     },
 }
 
-NewsConfig.BossShop = {
-    [1] = {name = "armor", metadata = {label = "Twitch News", type = "news"}, price = 150, amount = 1},
-    [2] = {name = "n_fix_camera", metadata = {}, price = 250, amount = 1},
-    [3] = {name = "n_fix_greenscreen", metadata = {}, price = 150, amount = 1},
-    [4] = {name = "n_fix_light", metadata = {}, price = 80, amount = 1},
-    [5] = {name = "n_fix_mic", metadata = {}, price = 60, amount = 1},
-    [6] = {name = "n_mic", metadata = {}, price = 50, amount = 1},
-    [7] = {name = "n_camera", metadata = {}, price = 250, amount = 1},
-    [8] = {name = "n_bmic", metadata = {}, price = 100, amount = 1},
-}
-
 NewsConfig.Deliveries = {
     vec4(-1028.855957, -214.126740, 36.920403, 333.26409912109),
     vec4(-1054.103394, -1320.988403, 4.536674, 66.45777130127),
