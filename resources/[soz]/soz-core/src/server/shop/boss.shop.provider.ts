@@ -57,7 +57,7 @@ export class BossShopProvider {
             return;
         }
 
-        this.inventoryManager.addItemToInventory(source, item.id, 1);
+        this.inventoryManager.addItemToInventory(source, item.id, 1, item.metadata || {});
         this.notifier.notify(
             source,
             `Vous avez acheté ~b~${this.itemService.getItem(item.id).label}~s~ pour ~r~${item.price}$~s~`,
