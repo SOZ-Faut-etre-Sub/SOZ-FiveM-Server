@@ -1,9 +1,10 @@
+import { JobType } from '../job';
 import { ShopConfig } from '../shop';
 
 export const BossShop: (ShopConfig & { job: string })[] = [
     {
         name: 'pawl',
-        job: 'pawl',
+        job: JobType.Pawl,
         zone: {
             center: [-538.07, 5304.91, 76.37],
             length: 0.55,
@@ -17,7 +18,7 @@ export const BossShop: (ShopConfig & { job: string })[] = [
     },
     {
         name: 'stonk',
-        job: 'cash-transfer',
+        job: JobType.CashTransfer,
         zone: {
             center: [-15.5, -708.83, 45.02],
             length: 0.6,
@@ -36,7 +37,7 @@ export const BossShop: (ShopConfig & { job: string })[] = [
     },
     {
         name: 'news',
-        job: 'news',
+        job: JobType.News,
         zone: {
             center: [-567.59, -922.01, 28.82],
             length: 0.4,
@@ -55,11 +56,12 @@ export const BossShop: (ShopConfig & { job: string })[] = [
             { id: 'n_mic', type: 'item', price: 50 },
             { id: 'n_camera', type: 'item', price: 250 },
             { id: 'n_bmic', type: 'item', price: 100 },
+            { id: 'microphone', type: 'item', price: 50 },
         ],
     },
     {
         name: 'food',
-        job: 'food',
+        job: JobType.Food,
         zone: {
             center: [-1881.68, 2058.03, 140.0],
             length: 0.8,
@@ -77,7 +79,7 @@ export const BossShop: (ShopConfig & { job: string })[] = [
     },
     {
         name: 'bennys',
-        job: 'bennys',
+        job: JobType.Bennys,
         zone: {
             center: [-216.94, -1318.97, 30.89],
             length: 0.8,
@@ -96,7 +98,7 @@ export const BossShop: (ShopConfig & { job: string })[] = [
     },
     {
         name: 'lsmc',
-        job: 'lsmc',
+        job: JobType.LSMC,
         zone: {
             center: [309.79, -1417.49, 32.51],
             length: 0.6,
@@ -130,7 +132,7 @@ export const BossShop: (ShopConfig & { job: string })[] = [
     },
     {
         name: 'lspd',
-        job: 'lspd',
+        job: JobType.LSPD,
         zone: {
             center: [620.64, -26.33, 90.51],
             length: 4.0,
@@ -162,7 +164,7 @@ export const BossShop: (ShopConfig & { job: string })[] = [
     },
     {
         name: 'bcso',
-        job: 'bcso',
+        job: JobType.BCSO,
         zone: {
             center: [1858.9, 3689.47, 38.07],
             length: 0.6,
@@ -191,5 +193,19 @@ export const BossShop: (ShopConfig & { job: string })[] = [
             },
             { id: 'pistol_ammo', type: 'weapon_ammo', price: 10 },
         ],
+    },
+    {
+        name: 'baun',
+        job: JobType.Baun,
+        zone: {
+            center: [92.04, -1291.15, 29.27],
+            length: 0.65,
+            width: 1,
+            heading: 300,
+            minZ: 27.87,
+            maxZ: 29.87,
+        },
+        targets: [],
+        products: [{ id: 'microphone', type: 'item', price: 50 }],
     },
 ];
