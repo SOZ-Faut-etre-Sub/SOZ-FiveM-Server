@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { emitRpc } from '../../core/rpc';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { RpcEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import { getDefaultVehicleState, VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
 import { Qbcore } from '../qbcore';
@@ -20,6 +22,21 @@ export class VehicleService {
 
     public getVehicleProperties(vehicle: number): any[] {
         return this.QBCore.getVehicleProperties(vehicle);
+    }
+
+    public async getVehicleConfiguration(vehicleEntityId: number): Promise<VehicleConfiguration> {
+        const state = this.getVehicleState(vehicleEntityId);
+        let vehicleConfiguration = this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
+
+        if (state.id) {
+            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+            vehicleConfiguration = await emitRpc<VehicleConfiguration>(
+                RpcEvent.VEHICLE_CUSTOM_GET_MODS,
+                vehicleNetworkId
+            );
+        }
+
+        return vehicleConfiguration;
     }
 
     public getVehicleState(vehicle: number): VehicleEntityState {

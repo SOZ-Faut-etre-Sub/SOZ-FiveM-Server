@@ -17,9 +17,9 @@ type VehicleStatus = {
     vehicle: number;
 };
 
-const ENGINE_DAMAGE_MULTIPLIER = 10.0;
-const BODY_DAMAGE_MULTIPLIER = 10.0;
-const TANK_DAMAGE_MULTIPLIER = 10.0;
+const ENGINE_DAMAGE_MULTIPLIER = 4.0;
+const BODY_DAMAGE_MULTIPLIER = 4.0;
+const TANK_DAMAGE_MULTIPLIER = 4.0;
 
 const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
 const ENGINE_MIN_HEALTH = 100.0;
@@ -88,24 +88,31 @@ export class VehicleConditionProvider {
             value.bodyHealth;
 
         if (healthDiff > 300) {
-            let waitTime =
+            const waitTime = Math.min(
                 (previousState.condition.engineHealth / value.engineHealth +
                     previousState.condition.bodyHealth / value.bodyHealth) *
-                getRandomInt(150, 200);
+                    getRandomInt(150, 200),
+                5000
+            );
+
+            const end = GetGameTimer() + waitTime;
+
             setTimeout(async () => {
                 SetVehicleUndriveable(vehicle, true);
 
-                while (waitTime > 0) {
-                    DisableControlAction(0, 71, true);
-                    DisableControlAction(0, 72, true);
+                while (GetGameTimer() < end) {
+                    if (IsPedInVehicle(PlayerPedId(), vehicle, false)) {
+                        DisableControlAction(0, 71, true);
+                        DisableControlAction(0, 72, true);
+                    }
 
                     if (GetIsVehicleEngineRunning(vehicle)) {
                         SetVehicleEngineOn(vehicle, false, true, false);
                     }
 
-                    await wait(1);
-                    waitTime--;
+                    await wait(0);
                 }
+
                 SetVehicleUndriveable(vehicle, false);
                 SetVehicleEngineOn(vehicle, true, false, true);
             }, 0);

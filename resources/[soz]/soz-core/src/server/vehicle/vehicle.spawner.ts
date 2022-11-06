@@ -8,7 +8,12 @@ import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector4 } from '../../shared/polyzone/vector';
 import { getDefaultVehicleModification, VehicleConfiguration } from '../../shared/vehicle/modification';
-import { getDefaultVehicleCondition, getDefaultVehicleState, VehicleSpawn } from '../../shared/vehicle/vehicle';
+import {
+    getDefaultVehicleCondition,
+    getDefaultVehicleState,
+    VehicleEntityState,
+    VehicleSpawn,
+} from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -49,6 +54,29 @@ export class VehicleSpawner {
         TriggerClientEvent(ClientEvent.VEHICLE_GET_CLOSEST, source, id);
 
         return promise;
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_SWAP)
+    private async onVehicleSwap(
+        source: number,
+        originalNetworkId: number,
+        newNetworkId: number,
+        state: VehicleEntityState
+    ) {
+        this.vehicleStateService.registerSpawned(newNetworkId);
+
+        await wait(200);
+
+        let entityId = NetworkGetEntityFromNetworkId(newNetworkId);
+
+        while (!entityId || !DoesEntityExist(entityId)) {
+            entityId = NetworkGetEntityFromNetworkId(newNetworkId);
+            await wait(0);
+        }
+
+        this.vehicleStateService.updateVehicleState(entityId, state);
+
+        await this.delete(originalNetworkId);
     }
 
     @OnEvent(ServerEvent.VEHICLE_SET_CLOSEST)
