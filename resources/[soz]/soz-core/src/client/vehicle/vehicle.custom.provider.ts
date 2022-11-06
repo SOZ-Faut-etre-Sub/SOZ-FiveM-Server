@@ -113,17 +113,11 @@ export class VehicleCustomProvider {
 
     @OnNuiEvent<{ menuType: MenuType; menuData: VehicleCustomMenuData }>(NuiEvent.MenuClosed)
     public async onMenuClose({ menuType, menuData }) {
-        if (menuType !== MenuType.VehicleCustom) {
+        if (menuType !== MenuType.VehicleCustom && menuType !== MenuType.BennysUpgradeVehicle) {
             return;
         }
 
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(menuData.vehicle);
-        const vehicleCurrentConfiguration = await emitRpc<VehicleConfiguration>(
-            RpcEvent.VEHICLE_CUSTOM_GET_MODS,
-            vehicleNetworkId
-        );
-
-        this.vehicleModificationService.applyVehicleConfiguration(menuData.vehicle, vehicleCurrentConfiguration);
+        this.vehicleModificationService.applyVehicleConfiguration(menuData.vehicle, menuData.originalConfiguration);
     }
 
     @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: VehicleConfiguration }>(NuiEvent.VehicleCustomApply)
@@ -136,26 +130,27 @@ export class VehicleCustomProvider {
     @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: Partial<VehicleConfiguration> }>(
         NuiEvent.VehicleCustomConfirmModification
     )
-    public async confirmVehicleCustom({ vehicleEntityId, vehicleConfiguration, usePricing }): Promise<void> {
+    public async confirmVehicleCustom({
+        vehicleEntityId,
+        vehicleConfiguration,
+        originalConfiguration,
+        usePricing,
+    }): Promise<void> {
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
         const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
-
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-        const vehicleCurrentConfiguration = await emitRpc<VehicleConfiguration>(
-            RpcEvent.VEHICLE_CUSTOM_GET_MODS,
-            vehicleNetworkId
-        );
 
         let price = 0;
 
         if (usePricing && vehicle) {
-            price = getVehicleCustomPrice(vehicle.price, options, vehicleCurrentConfiguration, vehicleConfiguration);
+            price = getVehicleCustomPrice(vehicle.price, options, originalConfiguration, vehicleConfiguration);
         }
 
         const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
             RpcEvent.VEHICLE_CUSTOM_SET_MODS,
             vehicleNetworkId,
             vehicleConfiguration,
+            originalConfiguration,
             price
         );
 
@@ -182,6 +177,7 @@ export class VehicleCustomProvider {
             vehicle: vehicleEntityId,
             vehiclePrice: vehicle.price,
             options,
+            originalConfiguration: { ...vehicleConfiguration },
             currentConfiguration: vehicleConfiguration,
         });
     }

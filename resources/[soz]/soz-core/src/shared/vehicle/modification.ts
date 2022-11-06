@@ -382,6 +382,7 @@ export type VehicleLsCustom = Partial<Record<keyof VehicleConfiguration, Vehicle
 
 type VehicleLsCustomBaseConfigItem = {
     priceByLevels: number[];
+    type: 'list' | 'toggle';
 };
 
 export type VehicleUpgradeChoiceItem = {
@@ -1280,22 +1281,28 @@ export const VehicleXenonColorChoices: Record<VehicleXenonColor, VehicleColorCho
 
 export const VehicleModificationPricing: Partial<Record<keyof VehicleModification, VehicleLsCustomBaseConfigItem>> = {
     engine: {
-        priceByLevels: [0, 0.1, 0.15, 0.2, 0.25, 0.3],
+        priceByLevels: [0.1, 0.15, 0.2, 0.25, 0.3],
+        type: 'list',
     },
     brakes: {
-        priceByLevels: [0, 0.08, 0.1, 0.12, 0.14, 0.16],
+        priceByLevels: [0.08, 0.1, 0.12, 0.14, 0.16],
+        type: 'list',
     },
     transmission: {
-        priceByLevels: [0, 0.08, 0.11, 0.14, 0.17, 0.2],
+        priceByLevels: [0.08, 0.11, 0.14, 0.17, 0.2],
+        type: 'list',
     },
     suspension: {
-        priceByLevels: [0, 0.06, 0.09, 0.12, 0.15, 0.18],
+        priceByLevels: [0.06, 0.09, 0.12, 0.15, 0.18],
+        type: 'list',
     },
     armor: {
-        priceByLevels: [0, 0.25, 0.35, 0.45, 0.55, 0.65],
+        priceByLevels: [0.25, 0.35, 0.45, 0.55, 0.65],
+        type: 'list',
     },
     turbo: {
         priceByLevels: [0, 0.2],
+        type: 'toggle',
     },
 };
 
@@ -1320,14 +1327,32 @@ export const getVehicleCustomPrice = (
 
     for (const key of Object.keys(VehicleModificationPricing)) {
         const category = VehicleModificationPricing[key];
-        const currentLevel = currentModification.modification[key];
-        const newLevel = newModification.modification[key];
 
-        if (currentLevel !== newLevel) {
-            const level = category.priceByLevels[newLevel];
+        console.log(JSON.stringify(category));
 
-            if (level) {
-                price = price + vehiclePrice * level;
+        if (category.type === 'list') {
+            const currentLevel = currentModification.modification[key];
+            const newLevel = newModification.modification[key];
+
+            if (currentLevel !== newLevel) {
+                const level = category.priceByLevels[newLevel];
+
+                if (level) {
+                    price = price + vehiclePrice * level;
+                }
+            }
+        }
+
+        if (category.type === 'toggle') {
+            const hasCurrent = currentModification.modification[key];
+            const hasNew = newModification.modification[key];
+
+            if (hasCurrent !== hasNew) {
+                if (hasNew) {
+                    price = price + vehiclePrice * category.priceByLevels[1];
+                } else {
+                    price = price + vehiclePrice * category.priceByLevels[0];
+                }
             }
         }
     }
@@ -1339,6 +1364,7 @@ export type VehicleCustomMenuData = {
     vehicle: number;
     vehiclePrice?: number;
     options: VehicleUpgradeOptions;
+    originalConfiguration: VehicleConfiguration;
     currentConfiguration: VehicleConfiguration;
 };
 

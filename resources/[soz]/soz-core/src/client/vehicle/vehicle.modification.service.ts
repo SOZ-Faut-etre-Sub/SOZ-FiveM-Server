@@ -185,19 +185,19 @@ export const getModName = (vehicleEntityId: number, mod: VehicleModType, value: 
 
     switch (mod) {
         case VehicleModType.Armor:
-            return GetLabelText('CMOD_ARM_' + value.toString());
+            return GetLabelText('CMOD_ARM_' + (value + 1).toString());
         case VehicleModType.Brakes:
-            return GetLabelText('CMOD_BRA_' + value.toString());
+            return GetLabelText('CMOD_BRA_' + (value + 1).toString());
         case VehicleModType.Engine:
             if (value === -1) {
                 return GetLabelText('CMOD_ENG_0');
             }
 
-            return GetLabelText('CMOD_ENG_' + value.toString());
+            return GetLabelText('CMOD_ENG_' + (value + 1).toString());
         case VehicleModType.Suspension:
-            return GetLabelText('CMOD_SUS_' + value.toString());
+            return GetLabelText('CMOD_SUS_' + (value + 1).toString());
         case VehicleModType.Transmission:
-            return GetLabelText('CMOD_GBX_' + value.toString());
+            return GetLabelText('CMOD_GBX_' + (value + 1).toString());
     }
 
     if (value > -1) {
@@ -278,7 +278,7 @@ export const createModificationHelperList = (
                     label: GetLabelText('CMOD_DEF_0'),
                     value: null,
                 },
-            ]; //
+            ];
 
             for (let i = 0; i < modCount; i++) {
                 choices.push({

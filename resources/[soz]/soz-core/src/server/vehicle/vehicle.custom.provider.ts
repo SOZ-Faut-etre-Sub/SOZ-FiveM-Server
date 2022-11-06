@@ -23,44 +23,43 @@ export class VehicleCustomProvider {
     private notifier: Notifier;
 
     @Rpc(RpcEvent.VEHICLE_CUSTOM_SET_MODS)
-    public async setMods(source: number, vehicleNetworkId: number, mods: VehicleConfiguration, price: number | null) {
+    public async setMods(
+        source: number,
+        vehicleNetworkId: number,
+        mods: VehicleConfiguration,
+        originalConfiguration: VehicleConfiguration,
+        price: number | null
+    ) {
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(entityId);
 
-        if (!state.id) {
-            return mods;
-        }
-
-        const playerVehicle = await this.prismaService.playerVehicle.findUnique({
-            where: {
-                id: state.id,
-            },
-        });
-
-        if (!playerVehicle) {
-            return getDefaultVehicleModification();
-        }
+        const playerVehicle = state.id
+            ? await this.prismaService.playerVehicle.findUnique({
+                  where: {
+                      id: state.id,
+                  },
+              })
+            : null;
 
         if (price && !this.playerMoneyService.remove(source, price)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
 
-            return {
-                ...getDefaultVehicleModification(),
-                ...JSON.parse(playerVehicle.mods || '{}'),
-            };
+            return originalConfiguration;
         }
 
-        await this.prismaService.playerVehicle.update({
-            where: {
-                id: playerVehicle.id,
-            },
-            data: {
-                mods: JSON.stringify(mods),
-            },
-        });
+        if (playerVehicle) {
+            await this.prismaService.playerVehicle.update({
+                where: {
+                    id: playerVehicle.id,
+                },
+                data: {
+                    mods: JSON.stringify(mods),
+                },
+            });
+        }
 
         if (price) {
-            this.notifier.notify(source, `Vous avez payé $${price} pour modifier votre véhicule.`);
+            this.notifier.notify(source, `Vous avez payé $${price.toFixed(0)} pour modifier votre véhicule.`);
         } else {
             this.notifier.notify(source, 'Le véhicule a été modifié');
         }
