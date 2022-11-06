@@ -1,7 +1,6 @@
-RegisterNetEvent("inventory:client:openPlayerKeyInventory", function(keyType)
+RegisterNetEvent("inventory:client:openPlayerKeyInventory", function(vehicleKeys)
     local playerKeys = {}
 
-    local vehicleKeys = QBCore.Functions.TriggerRpc("vehiclekeys:server:GetPlayerKeys")
     for _, plate in pairs(vehicleKeys) do
         playerKeys[#playerKeys + 1] = {
             type = "key",
@@ -39,7 +38,7 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
         TriggerEvent("inventory:client:StoreWeapon")
 
         if data.target == "vehicle_key" then
-            TriggerServerEvent("vehiclekeys:server:GiveVehicleKeys", data.plate, playerHit)
+            TriggerServerEvent("soz-core:server:vehicle:give-key", data.plate, playerHit)
         elseif data.target == "apartment_access" then
             TriggerServerEvent("housing:server:GiveTemporaryAccess", data.propertyId, data.apartmentId, playerHit)
         end

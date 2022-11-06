@@ -119,6 +119,8 @@ export enum ServerEvent {
     VEHICLE_SET_DEAD = 'soz-core:server:vehicle:set-dead',
     VEHICLE_WASH = 'soz-core:server:vehicle:wash',
     VEHICLE_FUEL_START = 'soz-core:server:vehicle:fuel:start',
+    VEHICLE_OPEN_KEYS = 'soz-core:server:vehicle:open-keys',
+    VEHICLE_GIVE_KEY = 'soz-core:server:vehicle:give-key',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
