@@ -76,6 +76,25 @@ export const BossShop: (ShopConfig & { job: string })[] = [
         ],
     },
     {
+        name: 'bennys',
+        job: 'bennys',
+        zone: {
+            center: [-216.94, -1318.97, 30.89],
+            length: 0.8,
+            width: 1.6,
+            heading: 90,
+            minZ: 29.89,
+            maxZ: 32.89,
+        },
+        targets: [],
+        products: [
+            { id: 'repairkit', type: 'item', price: 50 },
+            { id: 'cleaningkit', type: 'item', price: 20 },
+            { id: 'diagnostic_pad', type: 'item', price: 260 },
+            { id: 'oil_jerrycan', type: 'item', price: 20 },
+        ],
+    },
+    {
         name: 'lsmc',
         job: 'lsmc',
         zone: {
