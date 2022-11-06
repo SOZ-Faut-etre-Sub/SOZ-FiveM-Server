@@ -219,18 +219,6 @@ RegisterNetEvent("phone:camera:exit", function()
     setHudDisplay(true)
 end)
 
---- Loops
-function GetOil(vehicle)
-    return Entity(vehicle).state.oilLevel or GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume")
-end
-
-function GetOilForHud(vehicle)
-    if GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume") == 0 then
-        return 100
-    end
-    return (GetOil(vehicle) / GetVehicleHandlingFloat(vehicle, "CHandlingData", "fOilVolume")) * 100
-end
-
 CreateThread(function()
     DisplayRadar(false)
     while true do
@@ -251,15 +239,15 @@ CreateThread(function()
                     actualspeed = 0
                 end
 
-                local vehicleClass = GetVehicleClass(vehicle)
+                local condition = Entity(vehicle).state.condition or {}
 
                 setVehicleData({
                     speed = math.ceil(actualspeed * Config.SpeedMultiplier),
-                    fuel = Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle),
-                    hasFuel = GetVehicleClass(vehicle) < 23,
+                    fuel = condition.fuelLevel or GetVehicleFuelLevel(vehicle),
+                    hasFuel = class < 23,
                     engine = math.ceil(GetVehicleEngineHealth(vehicle)),
-                    oil = GetOilForHud(vehicle),
-                    lock = GetVehicleDoorLockStatus(vehicle),
+                    oil = condition.oilLevel or 100,
+                    lock = not Entity(vehicle).state.open,
                     haveSeatbelt = class ~= 8 and class ~= 13 and class ~= 14,
                     haveLight = haveLight,
                     lightsOn = lightsOn,

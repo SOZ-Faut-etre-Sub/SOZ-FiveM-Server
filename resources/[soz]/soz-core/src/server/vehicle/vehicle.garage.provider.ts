@@ -20,6 +20,7 @@ import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
 import { GarageRepository } from '../repository/garage.repository';
+import { VehicleRepository } from '../repository/vehicle.repository';
 import { VehicleSpawner } from './vehicle.spawner';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -51,6 +52,9 @@ export class VehicleGarageProvider {
 
     @Inject(GarageRepository)
     private garageRepository: GarageRepository;
+
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
 
     @Once(OnceStep.DatabaseConnected)
     public async init(): Promise<void> {
@@ -206,12 +210,12 @@ export class VehicleGarageProvider {
             where.AND.push({ OR: or });
         }
 
-        const vehicles = await this.prismaService.playerVehicle.findMany({
+        const playerVehicles = await this.prismaService.playerVehicle.findMany({
             where,
         });
 
         const timestamp = Math.floor(Date.now() / 1000);
-        return vehicles.map(vehicle => {
+        return playerVehicles.map(vehicle => {
             const playerVehicle = {
                 id: vehicle.id,
                 license: vehicle.license,
@@ -230,7 +234,9 @@ export class VehicleGarageProvider {
             let price: number | null = null;
 
             if (garage.type === GarageType.Depot) {
-                price = 10000;
+                const vehiclePrice = this.vehicleRepository.findByModel(playerVehicle.modelName)?.price || 0;
+
+                price = Math.round(vehiclePrice * 0.15);
             }
 
             if (garage.type === GarageType.Private) {
