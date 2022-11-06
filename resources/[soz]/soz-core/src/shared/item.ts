@@ -138,8 +138,9 @@ export type CocktailItem = BaseItem & {
 export type InventoryItemMetadata = {
     label?: string;
     type?: string;
-    expiration?: string;
     serial?: string;
+    ammo?: number;
+    expiration?: string;
     player?: number;
 };
 
