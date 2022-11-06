@@ -33,11 +33,11 @@ function MotorIndicator(props: {motor: number, oil: number}) {
     )
 }
 
-function LockIndicator(props: {state: number}) {
+function LockIndicator(props: {state: boolean}) {
     return (
         <KeyIcon className={cn(style.icon, {
-            [style.hidden]: props.state === 2,
-            [style.red]: props.state === 1,
+            [style.hidden]: props.state,
+            [style.red]: !props.state,
         })} style={{marginRight: '.5rem'}} />
     )
 }

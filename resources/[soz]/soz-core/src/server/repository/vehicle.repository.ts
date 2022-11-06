@@ -17,4 +17,8 @@ export class VehicleRepository extends Repository<Vehicle[]> {
                 jobName: JSON.parse(v.jobName) as { [key in JobType]: string },
             }));
     }
+
+    public findByModel(model: string): Vehicle | null {
+        return this.get().find(v => v.model === model) ?? null;
+    }
 }

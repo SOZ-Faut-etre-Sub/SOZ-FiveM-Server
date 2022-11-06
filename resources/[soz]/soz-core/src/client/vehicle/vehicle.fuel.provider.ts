@@ -527,7 +527,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 10;
+        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.164;
         const consumedOil = consumedFuel / 20;
 
         const state = this.vehicleService.getVehicleState(vehicle);
@@ -543,7 +543,13 @@ export class VehicleFuelProvider {
             },
         });
 
-        SetVehicleOilLevel(vehicle, newOil);
+        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
+
+        if (maxOilVolume) {
+            const realOilLevel = (newOil * maxOilVolume) / 100;
+            SetVehicleOilLevel(vehicle, realOilLevel);
+        }
+
         SetVehicleFuelLevel(vehicle, newFuel);
 
         if (newOil <= 0.1) {
