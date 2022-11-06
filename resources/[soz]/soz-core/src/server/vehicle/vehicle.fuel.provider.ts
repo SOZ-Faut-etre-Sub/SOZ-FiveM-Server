@@ -87,7 +87,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const duration = reservedFuel * 300;
+        const duration = Math.max(reservedFuel * 300, 5000);
 
         const { progress } = await this.progressService.progress(
             source,

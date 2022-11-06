@@ -164,7 +164,7 @@ export const getModName = (vehicleEntityId: number, mod: VehicleModType, value: 
             return HornLabelList[value].label;
         }
 
-        return '';
+        return `Klaxon ${value}`;
     }
 
     if (mod === VehicleModType.WheelFront || mod === VehicleModType.WheelRear) {
@@ -210,7 +210,7 @@ export const getModName = (vehicleEntityId: number, mod: VehicleModType, value: 
         const modValueNameString = GetLabelText(modValueName);
 
         if (modValueNameString === 'NULL' || modValueNameString === '') {
-            return value.toString();
+            return getModTypeName(vehicleEntityId, mod) + ' ' + value.toString();
         }
 
         return modValueNameString;

@@ -1071,7 +1071,13 @@ export const GarageList: Record<string, Garage> = {
             minZ: 29.3,
             maxZ: 32.3,
         }),
-        parkingPlaces: [],
+        parkingPlaces: [
+            new BoxZone([-182.37, -1316.29, 31.3], 8.0, 3.8, {
+                heading: 0,
+                minZ: 30.3,
+                maxZ: 33.3,
+            }),
+        ],
     },
     bennys_air: {
         name: 'Bennys Air Parking',
