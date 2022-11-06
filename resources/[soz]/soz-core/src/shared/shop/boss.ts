@@ -57,4 +57,22 @@ export const BossShop: (ShopConfig & { job: string })[] = [
             { id: 'n_bmic', type: 'item', price: 100 },
         ],
     },
+    {
+        name: 'food',
+        job: 'food',
+        zone: {
+            center: [-1881.68, 2058.03, 140.0],
+            length: 0.8,
+            width: 2.15,
+            heading: 70,
+            minZ: 140.0,
+            maxZ: 143.0,
+        },
+        targets: [],
+        products: [
+            { id: 'weapon_machete', type: 'weapon', price: 45 },
+            { id: 'weapon_musket', type: 'weapon', price: 125 },
+            { id: 'shotgun_ammo', type: 'weapon_ammo', price: 10 },
+        ],
+    },
 ];
