@@ -93,8 +93,8 @@ export class VehicleConditionProvider {
             const waitTime = Math.min(
                 (previousState.condition.engineHealth / value.engineHealth +
                     previousState.condition.bodyHealth / value.bodyHealth) *
-                    getRandomInt(150, 200),
-                5000
+                    getRandomInt(300, 400),
+                10000
             );
 
             const end = GetGameTimer() + waitTime;
