@@ -101,9 +101,13 @@ Citizen.CreateThread(function()
         }
     end
 
-    exports["qb-target"]:RemoveZone("pawl:crafting")
-    exports["qb-target"]:AddBoxZone("pawl:crafting", vector3(-533.23, 5293.28, 74.2), 1.8, 1.0,
-                                    {name = "pawl:crafting", heading = 0, minZ = 73.2, maxZ = 76.0, debugPoly = false}, {
+    exports["qb-target"]:AddBoxZone("pawl:crafting1", vector3(-523.25, 5288.06, 74.21), 1.0, 1.8,
+                                    {name = "pawl:crafting1", heading = 75, minZ = 73.21, maxZ = 75.86}, {
+        options = craftOptions,
+        distance = 2.5,
+    })
+    exports["qb-target"]:AddBoxZone("pawl:crafting2", vector3(-524.71, 5283.68, 74.17), 1.0, 1.8,
+                                    {name = "pawl:crafting2", heading = 235, minZ = 73.21, maxZ = 75.86}, {
         options = craftOptions,
         distance = 2.5,
     })
