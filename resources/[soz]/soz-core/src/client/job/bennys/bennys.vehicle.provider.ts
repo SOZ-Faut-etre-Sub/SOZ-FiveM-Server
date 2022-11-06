@@ -1,8 +1,8 @@
-import { Once, OnceStep } from '../../../core/decorators/event';
+import { Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
-import { ServerEvent } from '../../../shared/event';
+import { NuiEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
@@ -10,7 +10,7 @@ import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { MultiZone } from '../../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { RpcEvent } from '../../../shared/rpc';
-import { VehicleConfiguration } from '../../../shared/vehicle/modification';
+import { VehicleConfiguration, VehicleCustomMenuData } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
@@ -183,6 +183,7 @@ export class BennysVehicleProvider {
         this.nuiMenu.openMenu(MenuType.BennysUpgradeVehicle, {
             vehicle: vehicleEntityId,
             options,
+            originalConfiguration: vehicleConfiguration,
             currentConfiguration: vehicleConfiguration,
         });
     }

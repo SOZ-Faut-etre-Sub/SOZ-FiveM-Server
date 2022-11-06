@@ -50,7 +50,7 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
 }) => {
     const option = options.modification[modKey];
     const initialValue = useMemo(() => {
-        return config.modification[modKey];
+        return config.modification[modKey] === undefined ? null : config.modification[modKey];
     }, []);
 
     if (!option) {
@@ -79,20 +79,34 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
                     }
                 }}
             >
-                {option.choice.items.map((choice, index) => (
-                    <MenuItemSelectOption key={index} value={choice.value}>
-                        {choice.label}
-                        {choice.value === initialValue && ' (installé)'}
-                        {vehiclePrice &&
-                            choice.value !== initialValue &&
-                            `($${vehiclePrice * VehicleModificationPricing[modKey].priceByLevels[choice.value] || 0})`}
-                    </MenuItemSelectOption>
-                ))}
+                {option.choice.items.map((choice, index) => {
+                    let price = null;
+
+                    if (vehiclePrice && choice.value !== initialValue) {
+                        price = vehiclePrice * VehicleModificationPricing[modKey].priceByLevels[choice.value] || 0;
+                    }
+
+                    return (
+                        <MenuItemSelectOption key={index} value={choice.value}>
+                            {choice.label}
+                            {choice.value === initialValue && ' (installé)'}
+                            {price !== null && ` (${price.toFixed(0)} $)`}
+                        </MenuItemSelectOption>
+                    );
+                })}
             </MenuItemSelect>
         );
     }
 
     if (option.choice.type === 'toggle') {
+        let price = null;
+
+        if (vehiclePrice && config.modification[modKey] !== initialValue) {
+            price =
+                vehiclePrice * VehicleModificationPricing[modKey].priceByLevels[config.modification[modKey] ? 1 : 0] ||
+                0;
+        }
+
         return (
             <MenuItemCheckbox
                 checked={config.modification[modKey] as boolean}
@@ -104,6 +118,8 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
                 }
             >
                 {option.label}
+                {config.modification[modKey] === initialValue && ' (installé)'}
+                {price !== null && ` (${price.toFixed(0)} $)`}
             </MenuItemCheckbox>
         );
     }
@@ -180,7 +196,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                 <MenuItemSelectOption value={VehicleColorCategory.Classic}>Classique</MenuItemSelectOption>
                 <MenuItemSelectOption value={VehicleColorCategory.Metallic}>Métallique</MenuItemSelectOption>
                 <MenuItemSelectOption value={VehicleColorCategory.Matte}>Matte</MenuItemSelectOption>
-                <MenuItemSelectOption value={VehicleColorCategory.Pearly}>Nacré</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Pearly}>Brilliante</MenuItemSelectOption>
                 <MenuItemSelectOption value={VehicleColorCategory.Metal}>Métal</MenuItemSelectOption>
             </MenuItemSelect>
             <MenuItemSelect
@@ -289,6 +305,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     const onConfirm = () => {
         fetchNui(NuiEvent.VehicleCustomConfirmModification, {
             vehicleEntityId: data.vehicle,
+            originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: config,
         });
     };
@@ -300,7 +317,6 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 <MenuContent>
                     <MenuItemSubMenuLink id="colors">Couleur et aspects</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="body">Carrosserie</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="engine">Moteur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="wheel">Roues</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="interior">Intérieur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="exterior">Exterieur</MenuItemSubMenuLink>
@@ -410,33 +426,6 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     />
                     <MenuItemVehicleModification modKey="airFilter" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification modKey="tank" options={options} config={config} set={setConfig} />
-                </MenuContent>
-            </SubMenu>
-            <SubMenu id="engine">
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Moteur</MenuTitle>
-                <MenuContent>
-                    <MenuItemVehicleModification modKey="engine" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="brakes" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification
-                        modKey="transmission"
-                        options={options}
-                        config={config}
-                        set={setConfig}
-                    />
-                    <MenuItemVehicleModification
-                        modKey="suspension"
-                        options={options}
-                        config={config}
-                        set={setConfig}
-                    />
-                    <MenuItemVehicleModification modKey="armor" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="turbo" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification
-                        modKey="hydraulics"
-                        options={options}
-                        config={config}
-                        set={setConfig}
-                    />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="wheel">

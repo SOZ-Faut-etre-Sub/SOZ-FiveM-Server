@@ -39,9 +39,14 @@ const MenuDescendantContext = createDescendantContext<MenuDescendant>('MenuDesce
 const MenuItemSelectDescendantContext = createDescendantContext<MenuSelectDescendant>(
     'MenuItemSelectDescendantContext'
 );
-const MenuContext = createContext<{ activeIndex: number; setActiveIndex: (number) => void }>({
+const MenuContext = createContext<{
+    activeIndex: number;
+    setActiveIndex: (number: number) => void;
+    setDescription: (desc: string) => void;
+}>({
     activeIndex: 0,
     setActiveIndex: () => {},
+    setDescription: () => {},
 });
 const MenuSelectedContext = createContext<boolean>(false);
 const MenuItemSelectContext = createContext<{
@@ -119,14 +124,18 @@ export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = (
 export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeIndex, setActiveIndex] = useState(0);
+    const [description, setDescription] = useState<string | null>(null);
 
     return (
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
-            <MenuContext.Provider value={{ activeIndex, setActiveIndex }}>
+            <MenuContext.Provider value={{ activeIndex, setActiveIndex, setDescription }}>
                 <MenuControls>
                     <ul className="p-2 bg-black/50 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {children}
                     </ul>
+                    {description && (
+                        <div className="mt-2 p-2 bg-black/50 rounded-b-lg max-h-[10vh] text-white">{description}</div>
+                    )}
                 </MenuControls>
             </MenuContext.Provider>
         </DescendantProvider>
@@ -186,6 +195,7 @@ type MenuItemProps = PropsWithChildren<{
     onSelected?: () => void;
     disabled?: boolean;
     selectable?: boolean;
+    description?: string;
 }>;
 
 const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
@@ -194,8 +204,9 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     onSelected,
     disabled = false,
     selectable = null,
+    description = null,
 }) => {
-    const { activeIndex } = useContext(MenuContext);
+    const { activeIndex, setDescription } = useContext(MenuContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
     const handleRefSet = useCallback(refValue => {
@@ -216,6 +227,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     useEffect(() => {
         if (isSelected) {
             onSelected && onSelected();
+            setDescription(description);
 
             if (ref) {
                 ref.current.scrollIntoView();
@@ -464,7 +476,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
     const [activeValue, setActiveValue] = useState(value);
-    const [description, setDescription] = useState(null);
+    const { setDescription } = useContext(MenuContext);
 
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex, activeValue);
@@ -494,7 +506,6 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                             <MenuSelectControls onChange={onChange}>
                                 <ul className="flex">{children}</ul>
                             </MenuSelectControls>
-                            {description && <p className="mt-1 text-sm text-center text-gray-100">{description}</p>}
                         </div>
                     </div>
                 </MenuItemSelectContext.Provider>

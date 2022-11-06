@@ -6,18 +6,9 @@ import {
     getVehicleCustomPrice,
     VehicleConfiguration,
     VehicleCustomMenuData,
-    VehicleLsCustomCategory,
 } from '../../../shared/vehicle/modification';
 import { fetchNui } from '../../fetch';
-import {
-    MainMenu,
-    Menu,
-    MenuContent,
-    MenuItemButton,
-    MenuItemSelect,
-    MenuItemSelectOption,
-    MenuTitle,
-} from '../Styleguide/Menu';
+import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
 import { MenuItemVehicleModification } from './MenuBennysUpgradeVehicle';
 
 type MenuVehicleCustomProps = {
@@ -53,6 +44,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const onConfirm = () => {
         fetchNui(NuiEvent.VehicleCustomConfirmModification, {
             vehicleEntityId: data.vehicle,
+            originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: configuration,
             usePricing: true,
         });
@@ -105,7 +97,12 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                         set={setConfiguration}
                         options={data.options}
                     />
-                    <MenuItemButton onConfirm={() => onConfirm()}>Confirmer les changements: ${price}</MenuItemButton>
+                    <MenuItemButton onConfirm={() => onConfirm()}>
+                        <div className="flex w-full justify-between items-center">
+                            <span>Confirmer les changements</span>
+                            <span>${price.toFixed(0)}</span>
+                        </div>
+                    </MenuItemButton>
                 </MenuContent>
             </MainMenu>
         </Menu>

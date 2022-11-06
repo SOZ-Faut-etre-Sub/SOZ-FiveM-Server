@@ -49,7 +49,8 @@ export enum MenuType {
 export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.AdminMenu]: AdminMenuStateProps['data'];
     [MenuType.BahamaUnicornJobMenu]: any;
-    [MenuType.BennysOrderMenu]: VehicleCustomMenuData;
+    [MenuType.BennysUpgradeVehicle]: VehicleCustomMenuData;
+    [MenuType.BennysOrderMenu]: any;
     [MenuType.BossShop]: BossShopMenu;
     [MenuType.Demo]: never;
     [MenuType.FightForStyleJobMenu]: any;
