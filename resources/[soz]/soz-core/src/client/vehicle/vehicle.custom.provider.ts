@@ -108,21 +108,7 @@ export class VehicleCustomProvider {
                     return this.lsCustomZone.isPointInside(position);
                 },
             },
-            {
-                icon: 'c:mechanic/Ameliorer.png',
-                label: 'Debug voiture',
-                action: vehicle => {
-                    this.debugVehicle(vehicle);
-                },
-                canInteract: () => {
-                    return true;
-                },
-            },
         ]);
-    }
-
-    public debugVehicle(vehicle: number): void {
-        this.vehicleModificationService.debug(vehicle);
     }
 
     @OnNuiEvent<{ menuType: MenuType; menuData: VehicleCustomMenuData }>(NuiEvent.MenuClosed)
@@ -190,16 +176,7 @@ export class VehicleCustomProvider {
             return;
         }
 
-        const state = this.vehicleService.getVehicleState(vehicleEntityId);
-        let vehicleConfiguration = this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
-
-        if (state.id) {
-            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-            vehicleConfiguration = await emitRpc<VehicleConfiguration>(
-                RpcEvent.VEHICLE_CUSTOM_GET_MODS,
-                vehicleNetworkId
-            );
-        }
+        const vehicleConfiguration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
 
         this.nuiMenu.openMenu(MenuType.VehicleCustom, {
             vehicle: vehicleEntityId,

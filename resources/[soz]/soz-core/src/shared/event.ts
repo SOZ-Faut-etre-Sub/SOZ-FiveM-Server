@@ -17,6 +17,7 @@ export enum ServerEvent {
     BENNYS_SET_SPECIAL_VEHICLES = 'soz-core:server:bennys:set-special-vehicles',
     BENNYS_REPAIR_VEHICLE = 'soz-core:server:job:bennys:repair-vehicle',
     BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
+    BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
 
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 
@@ -111,6 +112,7 @@ export enum ServerEvent {
 
     VEHICLE_SET_CLOSEST = 'soz-core:server:vehicle:set-closest',
     VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
+    VEHICLE_SWAP = 'soz-core:server:vehicle:swaped',
     VEHICLE_DELETED = 'soz-core:server:vehicle:deleted',
     VEHICLE_GARAGE_STORE = 'soz-core:server:vehicle:garage:store',
     VEHICLE_GARAGE_RETRIEVE = 'soz-core:server:vehicle:garage:retrieve',
