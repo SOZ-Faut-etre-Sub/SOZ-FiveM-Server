@@ -115,25 +115,6 @@ Citizen.CreateThread(function()
         minZ = 76.12,
         maxZ = 76.77,
     }, {options = SozJobCore.Functions.GetDutyActions("pawl"), distance = 2.5})
-
-    exports["qb-target"]:AddBoxZone("pawl:bossShop", vector3(-538.07, 5304.91, 76.37), 0.55, 0.65,
-                                    {name = "pawl:bossShop", heading = 340, minZ = 75.37, maxZ = 77.37}, {
-        options = {
-            {
-                label = "Récupérer du matériel",
-                icon = "fas fa-briefcase",
-                action = function()
-                    TriggerEvent("jobs:client:bossShop", "PawlConfig")
-                end,
-                canInteract = function()
-                    return SozJobCore.Functions.HasPermission("pawl", SozJobCore.JobPermission.SocietyShop)
-                end,
-                job = "pawl",
-                blackoutGlobal = true,
-            },
-        },
-        distance = 2.5,
-    })
 end)
 
 RegisterNetEvent("pawl:client:craft", function(data)
