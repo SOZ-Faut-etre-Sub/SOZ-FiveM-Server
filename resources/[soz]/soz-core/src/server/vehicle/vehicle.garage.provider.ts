@@ -264,6 +264,14 @@ export class VehicleGarageProvider {
         const vehicleState = this.vehicleStateService.getVehicleState(vehicleEntityId);
 
         if (!vehicleState.id) {
+            if (garage.type === GarageType.Depot) {
+                if (await this.vehicleSpawner.delete(vehicleNetworkId)) {
+                    this.notifier.notify(source, 'Le véhicule a été mis en fourrière.', 'success');
+
+                    return;
+                }
+            }
+
             this.notifier.notify(source, 'Ce véhicule ne vous appartient pas.', 'error');
 
             return;
@@ -330,7 +338,11 @@ export class VehicleGarageProvider {
                 });
             }
 
-            this.notifier.notify(source, 'Votre véhicule a été rangé.', 'success');
+            if (garage.type === GarageType.Depot) {
+                this.notifier.notify(source, 'Le véhicule a été mis en fourrière.', 'success');
+            } else {
+                this.notifier.notify(source, 'Le véhicule a été rangé dans le garage.', 'success');
+            }
         }
     }
 

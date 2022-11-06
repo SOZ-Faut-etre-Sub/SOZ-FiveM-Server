@@ -1,8 +1,8 @@
-import { Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
-import { NuiEvent, ServerEvent } from '../../../shared/event';
+import { ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
@@ -10,7 +10,7 @@ import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { MultiZone } from '../../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { RpcEvent } from '../../../shared/rpc';
-import { VehicleConfiguration, VehicleCustomMenuData } from '../../../shared/vehicle/modification';
+import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
@@ -241,11 +241,11 @@ export class BennysVehicleProvider {
         this.notifier.notify(
             `
 Diagnostic du véhicule ${plate} :<br /><br />
-Moteur : ${state.condition.engineHealth}<br />
-Carrosserie : ${state.condition.bodyHealth}<br />
-Réservoir : ${state.condition.tankHealth}<br />
-Essence : ${state.condition.fuelLevel}%<br />
-Huile : ${state.condition.oilLevel}%
+Moteur : ${state.condition.engineHealth.toFixed(0)}<br />
+Carrosserie : ${state.condition.bodyHealth.toFixed(0)}<br />
+Réservoir : ${state.condition.tankHealth.toFixed(0)}<br />
+Essence : ${state.condition.fuelLevel.toFixed(2)}%<br />
+Huile : ${state.condition.oilLevel.toFixed(2)}%
 `
         );
     }

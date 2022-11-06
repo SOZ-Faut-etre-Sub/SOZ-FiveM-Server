@@ -44,7 +44,7 @@ export class BennysFlatbedProvider {
                 action: (entity: number) => {
                     this.attachVehicle(entity);
                 },
-                canInteract: (entity: number) => {
+                canInteract: () => {
                     const player = this.playerService.getPlayer();
 
                     if (!player) {
@@ -65,6 +65,14 @@ export class BennysFlatbedProvider {
                 },
                 canInteract: entity => {
                     if (GetEntityModel(entity) !== GetHashKey('flatbed4')) {
+                        return false;
+                    }
+
+                    if (this.currentFlatbed !== null) {
+                        return false;
+                    }
+
+                    if (Entity(entity).state.flatbedAttachedVehicle) {
                         return false;
                     }
 

@@ -61,7 +61,7 @@ export class AnimationService {
             : GetAnimDuration(animation.dictionary, animation.name);
 
         const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 1;
-        const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : -1;
+        const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : 1;
         const flags = animationOptionsToFlags(animation.options || {});
         const playbackRate = animation.playbackRate ? animation.playbackRate : 0.0;
         const lockX = animation.lockX ? animation.lockX : false;

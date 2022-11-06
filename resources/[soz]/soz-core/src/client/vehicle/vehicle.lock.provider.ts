@@ -10,6 +10,7 @@ import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
+import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
@@ -54,6 +55,9 @@ export class VehicleLockProvider {
 
     @Inject(VehicleSeatbeltProvider)
     private seatbeltProvider: VehicleSeatbeltProvider;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     private vehicleTrunkOpened: number | null = null;
 
@@ -309,6 +313,21 @@ export class VehicleLockProvider {
 
             return;
         }
+
+        await this.animationService.playAnimation({
+            base: {
+                dictionary: 'anim@mp_player_intmenu@key_fob@',
+                name: 'fob_click',
+                blendInSpeed: 3.0,
+                blendOutSpeed: 3.0,
+                duration: 750,
+                options: {
+                    repeat: true,
+                    onlyUpperBody: true,
+                    enablePlayerControl: true,
+                },
+            },
+        });
 
         this.vehicleService.updateVehicleState(vehicle, {
             open: !state.open,

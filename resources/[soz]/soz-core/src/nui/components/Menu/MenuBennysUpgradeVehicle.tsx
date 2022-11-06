@@ -1,4 +1,4 @@
-import { FunctionComponent, memo, useEffect, useMemo, useState } from 'react';
+import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 
 import { RGBColor } from '../../../shared/color';
 import { NuiEvent } from '../../../shared/event';

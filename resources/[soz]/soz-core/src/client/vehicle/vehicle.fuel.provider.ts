@@ -226,7 +226,7 @@ export class VehicleFuelProvider {
             },
             {
                 icon: 'c:fuel/pistolet.png',
-                label: 'Pistolet',
+                label: 'Prendre le pistolet',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -249,6 +249,45 @@ export class VehicleFuelProvider {
 
                     if (station.type === FuelStationType.Public) {
                         return true;
+                    }
+
+                    if (this.currentStationPistol && this.currentStationPistol.entity) {
+                        return false;
+                    }
+
+                    return player.job.id === station.job && player.job.onduty;
+                },
+                blackoutGlobal: true,
+            },
+            {
+                icon: 'c:fuel/pistolet.png',
+                label: 'Déposer le pistolet',
+                action: (entity: number) => {
+                    this.toggleStationPistol(entity);
+                },
+                canInteract: (entity: number) => {
+                    if (GetEntityHealth(entity) <= 0) {
+                        return false;
+                    }
+
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    const station = this.getStationForEntity(entity);
+
+                    if (!station) {
+                        return false;
+                    }
+
+                    if (station.type === FuelStationType.Public) {
+                        return true;
+                    }
+
+                    if (!this.currentStationPistol || !this.currentStationPistol.entity) {
+                        return false;
                     }
 
                     return player.job.id === station.job && player.job.onduty;
@@ -291,18 +330,21 @@ export class VehicleFuelProvider {
 
         if ((IsThisModelAHeli(model) || IsThisModelAPlane(model)) && station.fuel === FuelType.Essence) {
             this.notifier.notify("~r~Vous ne pouvez pas remplir ce véhicule avec de l'essence.", 'error');
+            await this.disableStationPistol();
 
             return;
         }
 
         if (!IsThisModelAHeli(model) && !IsThisModelAPlane(model) && station.fuel === FuelType.Kerosene) {
             this.notifier.notify('~r~Vous ne pouvez pas remplir ce véhicule avec du kérosene.', 'error');
+            await this.disableStationPistol();
 
             return;
         }
 
         if (station.stock <= 0) {
             this.notifier.notify("La station ne contient pas assez d'essence.", 'error');
+            await this.disableStationPistol();
 
             return;
         }
@@ -311,6 +353,7 @@ export class VehicleFuelProvider {
 
         if (vehicleState.condition.fuelLevel > 99.0) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
+            await this.disableStationPistol();
 
             return;
         }
@@ -322,9 +365,11 @@ export class VehicleFuelProvider {
     }
 
     @OnEvent(ClientEvent.VEHICLE_FUEL_STOP)
-    private onVehicleFuelStop() {
+    private async onVehicleFuelStop() {
         if (this.currentStationPistol) {
             this.currentStationPistol.filling = false;
+
+            await this.disableStationPistol();
         }
     }
 
@@ -527,7 +572,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.164;
+        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.14;
         const consumedOil = consumedFuel / 20;
 
         const state = this.vehicleService.getVehicleState(vehicle);
