@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { Vector3 } from '../../shared/polyzone/vector';
+import { VehicleLockStatus } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
@@ -27,6 +28,10 @@ export class VehicleSeatbeltProvider {
     private lastVehicleSpeed = 0;
     private lastVehiclePosition: Vector3 | null = null;
     private lastVehicleVelocity: Vector3 | null = null;
+
+    public isSeatbeltOnForPlayer() {
+        return this.isSeatbeltOn;
+    }
 
     @Command('soz_vehicle_toggle_vehicle_seatbelt', {
         description: 'Mettre/Enlever la ceinture de sécurité',
@@ -75,6 +80,12 @@ export class VehicleSeatbeltProvider {
             this.soundService.play('seatbelt/buckle', 0.2);
         }
 
+        if (this.isSeatbeltOn) {
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.StickPlayerInside);
+        } else {
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.None);
+        }
+
         TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
     }
 
@@ -87,6 +98,7 @@ export class VehicleSeatbeltProvider {
             this.lastVehicleSpeed = 0;
             this.lastVehiclePosition = null;
             this.isSeatbeltOn = false;
+            TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
 
             return;
         }
@@ -128,5 +140,8 @@ export class VehicleSeatbeltProvider {
         const newHealth = Math.max(0, Math.round(GetEntityHealth(ped) - ejectionSpeed * 3));
 
         SetEntityHealth(ped, newHealth);
+
+        this.isSeatbeltOn = false;
+        TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
     }
 }
