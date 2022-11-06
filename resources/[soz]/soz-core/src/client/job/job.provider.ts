@@ -1,10 +1,9 @@
-import { JobBlips, JobBossShop, JobMenu } from '../../config/job';
+import { JobBlips, JobMenu } from '../../config/job';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
-import { BossShop, JobPermission, JobType } from '../../shared/job';
-import { MenuType } from '../../shared/nui/menu';
+import { JobType } from '../../shared/job';
 import { Ok } from '../../shared/result';
 import { BlipFactory } from '../blip';
 import { ItemService } from '../item/item.service';
@@ -41,23 +40,6 @@ export class JobProvider {
                 this.blipFactory.create(`job_${job}_${blipIndex}`, blip);
             }
         }
-
-        for (const [job, shop] of Object.entries(JobBossShop)) {
-            this.targetFactory.createForBoxZone(`boss_shop_${job}`, shop.zone, [
-                {
-                    label: 'Récupérer du matériel',
-                    icon: 'fas fa-briefcase',
-                    color: job,
-                    job,
-                    action: () => {
-                        this.openBossShop(job as JobType, shop);
-                    },
-                    canInteract: () => {
-                        return this.jobPermissionService.hasPermission(job as JobType, JobPermission.SocietyShop);
-                    },
-                },
-            ]);
-        }
     }
 
     @OnEvent(ClientEvent.JOB_OPEN_MENU)
@@ -73,47 +55,6 @@ export class JobProvider {
         } else {
             this.nuiMenu.openMenu(menuType);
         }
-    }
-
-    @OnNuiEvent(NuiEvent.JobBossShopBuyItem)
-    public async buyBossShopItem({ job, item }) {
-        TriggerServerEvent(ServerEvent.JOB_BOSS_SHOP_BUY_ITEM, job, item);
-
-        this.nuiMenu.closeMenu();
-    }
-
-    public openBossShop(job: JobType, shop: BossShop) {
-        const items = [];
-
-        for (const item of shop.items) {
-            const itemInfo = this.itemService.getItem(item.name);
-
-            if (!itemInfo) {
-                continue;
-            }
-
-            items.push({
-                ...item,
-                label: itemInfo.label,
-            });
-        }
-
-        this.nuiMenu.openMenu(
-            MenuType.BossShop,
-            {
-                job,
-                shop: {
-                    ...shop,
-                    items,
-                },
-            },
-            {
-                position: {
-                    position: shop.zone.center,
-                    distance: 3.0,
-                },
-            }
-        );
     }
 
     @OnNuiEvent(NuiEvent.JobPlaceProps)

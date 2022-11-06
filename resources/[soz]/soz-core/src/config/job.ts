@@ -1,5 +1,5 @@
 import { Blip } from '../shared/blip';
-import { BossShop, JobCloakroomZoneData, JobType } from '../shared/job';
+import { JobCloakroomZoneData, JobType } from '../shared/job';
 import { MenuType } from '../shared/nui/menu';
 import { Zone } from '../shared/polyzone/box.zone';
 
@@ -18,25 +18,6 @@ export const JobBlips: Partial<Record<JobType, Blip[]>> = {
             coords: { x: 2405.98, y: 3127.11, z: 48.17 },
         },
     ],
-};
-
-export const JobBossShop: Partial<Record<JobType, BossShop>> = {
-    [JobType.Bennys]: {
-        zone: {
-            center: [-216.94, -1318.97, 30.89],
-            width: 0.8,
-            length: 1.6,
-            heading: 90,
-            minZ: 29.89,
-            maxZ: 32.89,
-        },
-        items: [
-            { name: 'repairkit', price: 50, amount: 1 },
-            { name: 'cleaningkit', price: 20, amount: 1 },
-            { name: 'diagnostic_pad', price: 260, amount: 1 },
-            { name: 'oil_jerrycan', price: 20, amount: 1 },
-        ],
-    },
 };
 
 export const JobMenu: Partial<Record<JobType, MenuType>> = {

@@ -2,7 +2,7 @@ import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
-import { JobPermission } from '../../shared/job';
+import { JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { ShopProduct } from '../../shared/shop';
 import { BossShop } from '../../shared/shop/boss';
@@ -25,7 +25,7 @@ export class BossShopProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    public async onOpenMenu(job: string, products: ShopProduct[]) {
+    public async onOpenMenu(job: JobType, products: ShopProduct[]) {
         const hydratedProducts = products.map(product => ({ ...product, item: this.itemService.getItem(product.id) }));
 
         this.nuiMenu.openMenu(MenuType.BossShop, { job, products: hydratedProducts });

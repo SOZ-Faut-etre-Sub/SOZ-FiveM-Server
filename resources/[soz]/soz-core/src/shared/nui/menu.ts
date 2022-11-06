@@ -1,7 +1,7 @@
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
 import { FuelType } from '../fuel';
-import { BossShopMenu } from '../job';
+import { BossShopMenu } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
 import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
@@ -28,7 +28,6 @@ export enum MenuType {
     BahamaUnicornJobMenu = 'baun_job',
     BennysOrderMenu = 'bennys_order',
     BennysUpgradeVehicle = 'bennys_upgrade_vehicle',
-    BossShop = 'job_boss_shop',
     Demo = 'demo',
     BossShop = 'boss_shop',
     MaskShop = 'mask_shop',
