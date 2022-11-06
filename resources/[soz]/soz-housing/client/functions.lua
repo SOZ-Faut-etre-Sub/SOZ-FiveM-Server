@@ -74,6 +74,6 @@ Housing.Functions.TargetInteraction = function(name, config, interactions)
         heading = config.heading,
         minZ = config.minZ,
         maxZ = config.maxZ,
-        debugPoly = true,
+        debugPoly = false,
     }, {options = interactions, distance = 2.5})
 end

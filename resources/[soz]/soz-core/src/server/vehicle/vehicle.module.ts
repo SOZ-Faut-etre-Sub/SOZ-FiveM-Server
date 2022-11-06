@@ -5,6 +5,7 @@ import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleDealershipProvider } from './vehicle.dealership.provider';
 import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
+import { VehicleKeysProvider } from './vehicle.keys.provider';
 import { VehicleLockProvider } from './vehicle.lock.provider';
 import { VehicleProvider } from './vehicle.provider';
 import { VehicleService } from './vehicle.service';
@@ -19,6 +20,7 @@ import { VehicleStateProvider } from './vehicle.state.provider';
         VehicleDealershipProvider,
         VehicleFuelProvider,
         VehicleGarageProvider,
+        VehicleKeysProvider,
         VehicleLockProvider,
         VehicleProvider,
         VehicleService,
