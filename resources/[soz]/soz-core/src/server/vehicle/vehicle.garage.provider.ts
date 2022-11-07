@@ -160,6 +160,7 @@ export class VehicleGarageProvider {
         if (!player) {
             return [];
         }
+
         const ids = [];
 
         if (garage.type === GarageType.House) {

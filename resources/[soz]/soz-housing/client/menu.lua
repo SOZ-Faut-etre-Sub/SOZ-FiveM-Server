@@ -113,6 +113,13 @@ AddEventHandler("housing:client:ShowGarageMenu", function(propertyId)
     end
 end)
 
+AddEventHandler("housing:client:GarageStoreVehicle", function(propertyId)
+    local property = Properties[propertyId]
+    if property then
+        TriggerEvent("soz-core:client:vehicle:garage:house:store", property:GetIdentifier())
+    end
+end)
+
 RegisterNetEvent("housing:client:ShowAddRoommateMenu", function(propertyId)
     local property = Properties[propertyId]
     local apartments = property:GetOwnedApartmentsForCitizenId(PlayerData.citizenid)

@@ -68,6 +68,16 @@ Housing.Functions.Components.SetupEntryInteraction = function(propertyId, proper
             end,
         },
         {
+            label = "Ranger mon véhicule",
+            icon = "c:housing/garage.png",
+            canInteract = function()
+                return property:HasGarage() and property:HasRentedApartmentForCitizenId(PlayerData.citizenid) and not Housing.Functions.IsInsideApartment()
+            end,
+            action = function()
+                TriggerEvent("housing:client:GarageStoreVehicle", propertyId)
+            end,
+        },
+        {
             label = "Ajouter Colocataire",
             blackoutGlobal = true,
             icon = "c:jobs/enroll.png",

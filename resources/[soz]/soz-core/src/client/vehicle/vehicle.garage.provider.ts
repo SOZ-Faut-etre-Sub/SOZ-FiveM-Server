@@ -26,6 +26,8 @@ type BlipConfig = {
     color: number;
 };
 
+const DISTANCE_STORE_VEHICLE_THRESHOLD = 20;
+
 const BlipConfigMap: Partial<Record<GarageType, Partial<Record<GarageCategory, BlipConfig | null>>>> = {
     [GarageType.Private]: {
         [GarageCategory.Car]: { name: 'Parking Privé', sprite: 357, color: 5 },
@@ -89,13 +91,15 @@ export class VehicleGarageProvider {
 
             const targets = [];
 
-            targets.push({
-                label: 'Ranger mon véhicule',
-                icon: 'c:garage/ParkingPublic.png',
-                action: () => {
-                    this.storeVehicle(garageIdentifier, garage);
-                },
-            });
+            if (garage.type !== GarageType.House) {
+                targets.push({
+                    label: 'Ranger mon véhicule',
+                    icon: 'c:garage/ParkingPublic.png',
+                    action: () => {
+                        this.storeVehicle(garageIdentifier, garage);
+                    },
+                });
+            }
 
             if (garage.type === GarageType.Public) {
                 targets.push({
@@ -218,7 +222,7 @@ export class VehicleGarageProvider {
             const garage = this.pounds[garageIdentifier];
             const distance = getDistance(playerPosition, garage.zone.center);
 
-            if (distance < 10) {
+            if (distance < DISTANCE_STORE_VEHICLE_THRESHOLD) {
                 return [garageIdentifier, garage];
             }
         }
@@ -236,9 +240,23 @@ export class VehicleGarageProvider {
         }
 
         const position = GetEntityCoords(vehicle, true) as Vector3;
-        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        let isNear = false;
 
-        if (getDistance(position, playerPosition) > 20) {
+        if (getDistance(position, garage.zone.center) <= DISTANCE_STORE_VEHICLE_THRESHOLD) {
+            isNear = true;
+        }
+
+        if (!isNear) {
+            for (const place of garage.parkingPlaces) {
+                if (getDistance(position, garage.zone.center) <= DISTANCE_STORE_VEHICLE_THRESHOLD) {
+                    isNear = true;
+
+                    break;
+                }
+            }
+        }
+
+        if (!isNear) {
             this.notifier.notify('Vous devez vous rapprocher du parking pour ranger votre véhicule.', 'error');
 
             return;
@@ -303,6 +321,19 @@ export class VehicleGarageProvider {
         }
 
         await this.enterGarage(propertyId, garage);
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_GARAGE_HOUSE_STORE)
+    public async storeVehicleInHouse(propertyId: string) {
+        const garage = this.garageRepository.get()[propertyId];
+
+        if (!garage) {
+            this.notifier.notify('Aucun garage trouvé.', 'error');
+
+            return;
+        }
+
+        await this.storeVehicle(propertyId, garage);
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageTakeOut)
