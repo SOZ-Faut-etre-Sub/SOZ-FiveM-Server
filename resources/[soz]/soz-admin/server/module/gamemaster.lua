@@ -34,11 +34,13 @@ RegisterNetEvent("admin:gamemaster:unCuff", function()
 end)
 
 RegisterNetEvent("admin:gamemaster:godmode", function(val)
-    if not SozAdmin.Functions.IsPlayerAdmin(source) then
+    local playerSource = source
+
+    if not SozAdmin.Functions.IsPlayerAdmin(playerSource) then
         return
     end
 
-    SetEntityInvincible(GetPlayerPed(source), val)
-    local player = QBCore.Functions.GetPlayer(source)
+    SetPlayerInvincible(playerSource, val)
+    local player = QBCore.Functions.GetPlayer(playerSource)
     player.Functions.SetMetaData("godmode", val)
 end)

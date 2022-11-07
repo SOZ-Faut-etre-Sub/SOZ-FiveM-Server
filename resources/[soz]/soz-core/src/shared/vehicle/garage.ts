@@ -6,6 +6,7 @@ export enum GarageType {
     Public = 'public',
     Private = 'private',
     Job = 'job',
+    JobLuxury = 'job_luxury',
     Depot = 'depot',
     House = 'house',
 }

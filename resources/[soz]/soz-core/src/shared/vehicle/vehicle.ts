@@ -19,7 +19,8 @@ export type Vehicle = {
 };
 
 export type VehicleSpawn = {
-    model: number;
+    hash: number;
+    model: string;
     position: Vector4;
     warp: boolean;
     state: VehicleEntityState;

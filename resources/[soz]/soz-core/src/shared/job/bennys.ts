@@ -1,4 +1,5 @@
 import { NamedZone } from '../polyzone/box.zone';
+import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../vehicle/modification';
 
 const orderZone: NamedZone = {
     name: 'bennys_order',
@@ -11,12 +12,15 @@ const orderZone: NamedZone = {
     debugPoly: false,
 };
 
-const upgradedSimplifiedMods = {
-    modArmor: 4,
-    modBrakes: 2,
-    modEngine: 3,
-    modTransmission: 2,
-    modTurbo: 1,
+const defaultUpgradeConfiguration: VehicleConfiguration = {
+    ...getDefaultVehicleConfiguration(),
+    modification: {
+        armor: 4,
+        brakes: 2,
+        engine: 3,
+        transmission: 2,
+        turbo: true,
+    },
 };
 
 const resellZone: NamedZone = {
@@ -33,9 +37,7 @@ export const BennysConfig = {
     Estimate: {
         duration: 5000,
     },
-    Mods: {
-        upgradedSimplifiedMods,
-    },
+    UpgradeConfiguration: defaultUpgradeConfiguration,
     Order: {
         zone: orderZone,
         waitingTime: 60, // In minutes

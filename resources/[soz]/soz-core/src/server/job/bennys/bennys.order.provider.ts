@@ -7,6 +7,7 @@ import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { uuidv4 } from '../../../core/utils';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
 import { RpcEvent } from '../../../shared/rpc';
+import { getDefaultVehicleCondition } from '../../../shared/vehicle/vehicle';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -121,8 +122,8 @@ export class BennysOrderProvider {
             data: {
                 vehicle: model,
                 hash: GetHashKey(model).toString(),
-                mods: JSON.stringify(BennysConfig.Mods.upgradedSimplifiedMods),
-                condition: '{}',
+                mods: JSON.stringify(BennysConfig.UpgradeConfiguration),
+                condition: JSON.stringify(getDefaultVehicleCondition()),
                 plate: 'ESSAI ' + (this.orderedVehicle + 1),
                 garage: 'bennys_luxury',
                 job: 'bennys',

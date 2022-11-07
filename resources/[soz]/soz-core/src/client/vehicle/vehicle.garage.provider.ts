@@ -89,6 +89,14 @@ export class VehicleGarageProvider {
 
             const targets = [];
 
+            targets.push({
+                label: 'Ranger mon véhicule',
+                icon: 'c:garage/ParkingPublic.png',
+                action: () => {
+                    this.storeVehicle(garageIdentifier, garage);
+                },
+            });
+
             if (garage.type === GarageType.Public) {
                 targets.push({
                     label: 'Accéder au parking public',
@@ -123,8 +131,29 @@ export class VehicleGarageProvider {
 
             if (garage.type === GarageType.Job) {
                 this.objectFactory.create(jobGaragePayStation, [...garage.zone.center, garage.zone.heading], true);
+
                 targets.push({
                     label: 'Accéder au parking entreprise',
+                    icon: 'c:garage/GarageEntreprise.png',
+                    action: () => {
+                        this.enterGarage(garageIdentifier, garage);
+                    },
+                });
+
+                targets.push({
+                    label: 'Ranger remorque',
+                    icon: 'c:garage/ParkingPublic.png',
+                    action: () => {
+                        this.storeVehicleTrailer(garageIdentifier, garage);
+                    },
+                });
+            }
+
+            if (garage.type === GarageType.JobLuxury) {
+                this.objectFactory.create(jobGaragePayStation, [...garage.zone.center, garage.zone.heading], true);
+
+                targets.push({
+                    label: 'Accéder au parking entreprise luxe',
                     icon: 'c:garage/GarageEntreprise.png',
                     action: () => {
                         this.enterGarage(garageIdentifier, garage);
@@ -197,8 +226,7 @@ export class VehicleGarageProvider {
         return null;
     }
 
-    @OnNuiEvent(NuiEvent.VehicleGarageStore)
-    public async storeVehicle({ id, garage }) {
+    public async storeVehicle(id: string, garage: Garage) {
         const vehicle = GetPlayersLastVehicle();
 
         if (!vehicle) {
@@ -223,8 +251,7 @@ export class VehicleGarageProvider {
         this.nuiMenu.closeMenu();
     }
 
-    @OnNuiEvent(NuiEvent.VehicleGarageStoreTrailer)
-    public async storeVehicleTrailer({ id, garage }) {
+    public async storeVehicleTrailer(id: string, garage: Garage) {
         const vehicle = this.vehicleService.getClosestVehicle({ maxDistance: 25 }, vehicle => {
             const vehicleState = this.vehicleService.getVehicleState(vehicle);
 

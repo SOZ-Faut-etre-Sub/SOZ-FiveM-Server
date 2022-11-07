@@ -28,7 +28,6 @@ export class PlayerQbcoreProvider {
 
     @On('QBCore:Player:SetPlayerData')
     playerUpdate(playerData: PlayerData): void {
-        console.log(playerData.job.grade);
         this.playerService.setPlayer(playerData);
     }
 

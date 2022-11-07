@@ -15,6 +15,7 @@ export class NuiProvider {
 
     @OnNuiEvent(NuiEvent.TriggerServerEvent)
     public async onTriggerServerEvent({ event, args }) {
+        console.log('onTriggerServerEvent', event, args);
         TriggerServerEvent(event, ...args);
     }
 

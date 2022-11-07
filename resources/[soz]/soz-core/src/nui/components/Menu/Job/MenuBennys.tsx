@@ -16,12 +16,14 @@ import {
 export const MenuBennys: FunctionComponent = () => {
     const player = usePlayer();
 
-    if (!player.job.onduty) {
+    if (!player?.job.onduty) {
         return (
             <Menu type={MenuType.JobBennys}>
                 <MainMenu>
                     <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Services Bennys</MenuTitle>
-                    <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
+                    <MenuContent>
+                        <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
+                    </MenuContent>
                 </MainMenu>
             </Menu>
         );

@@ -39,7 +39,6 @@ export enum ServerEvent {
 
     JOBS_USE_WORK_CLOTHES = 'soz-core:server:job:use-work-clothes',
     JOBS_PLACE_PROPS = 'job:server:placeProps',
-    JOB_BOSS_SHOP_BUY_ITEM = 'soz-core:server:job:boss-shop:buy-item',
 
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',

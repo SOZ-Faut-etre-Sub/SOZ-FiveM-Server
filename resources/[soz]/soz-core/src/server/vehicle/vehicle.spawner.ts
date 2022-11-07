@@ -7,7 +7,7 @@ import { Provider } from '../../core/decorators/provider';
 import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector4 } from '../../shared/polyzone/vector';
-import { getDefaultVehicleModification, VehicleConfiguration } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import {
     getDefaultVehicleCondition,
     getDefaultVehicleState,
@@ -132,11 +132,12 @@ export class VehicleSpawner {
         }
 
         return this.spawn(source, {
-            model: hash,
+            hash,
+            model: vehicle.vehicle,
             position,
             warp: false,
             modification: {
-                ...getDefaultVehicleModification(),
+                ...getDefaultVehicleConfiguration(),
                 ...(JSON.parse(vehicle.mods || '{}') as VehicleConfiguration),
             },
             state,
@@ -156,7 +157,8 @@ export class VehicleSpawner {
         const modelHash = GetHashKey(model);
 
         return this.spawn(source, {
-            model: modelHash,
+            hash: modelHash,
+            model,
             position,
             warp: true,
             state: {
