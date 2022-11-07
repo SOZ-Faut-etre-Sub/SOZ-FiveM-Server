@@ -93,11 +93,20 @@ export class VehicleGarageProvider {
         for (const vehicle of vehicles) {
             const parkingTime = new Date(vehicle.parkingtime * 1000);
             const days = Math.floor((Date.now() / 1000 - parkingTime.getTime()) / (24 * 60 * 60));
-            const garage = vehicle.garage
-                ? garages[vehicle.garage] || Object.values(garages).find(g => g.legacyId === vehicle.garage)
+
+            let garageId = vehicle.garage;
+
+            if (garageId && garageId.startsWith('property_')) {
+                garageId = garageId.substring(9);
+            }
+
+            const garage = garageId
+                ? garages[garageId] || Object.values(garages).find(g => g.legacyId === garageId)
                 : null;
 
-            if ((!garage || vehicle.state === PlayerVehicleState.Missing) && vehicle.parkingtime > 2) {
+            if (!garage && vehicle.state !== PlayerVehicleState.Missing) {
+                toPound.push(vehicle.id);
+            } else if (vehicle.state === PlayerVehicleState.Missing && days > 2) {
                 toVoid.push(vehicle.id);
             } else if (garage && garage.type === GarageType.Depot && days > 7) {
                 toVoid.push(vehicle.id);
