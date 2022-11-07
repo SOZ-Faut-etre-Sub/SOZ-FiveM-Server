@@ -318,6 +318,14 @@ export class VehicleGarageProvider {
             this.notifier.notify(source, 'Vous ne pouvez pas ranger ce véhicule dans ce garage.', 'error');
 
             return;
+        } else if (garage.type === GarageType.House && vehicle.job !== null) {
+            this.notifier.notify(
+                source,
+                'Vous ne pouvez pas ranger un véhicule de votre entreprise chez vous.',
+                'error'
+            );
+
+            return;
         }
 
         if (garage.type === GarageType.House) {
