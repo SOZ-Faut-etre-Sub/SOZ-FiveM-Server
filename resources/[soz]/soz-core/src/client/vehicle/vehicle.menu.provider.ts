@@ -8,6 +8,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleService } from './vehicle.service';
 
 @Provider()
@@ -23,6 +24,9 @@ export class VehicleMenuProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(VehicleCustomProvider)
+    private vehicleCustomProvider: VehicleCustomProvider;
 
     @OnNuiEvent<boolean, boolean>(NuiEvent.VehicleSetEngine)
     async setVehicleEngine(engineOn: boolean) {
@@ -82,6 +86,22 @@ export class VehicleMenuProvider {
         TriggerEvent('talk:cibi:use');
 
         this.nuiMenu.closeMenu();
+
+        return true;
+    }
+
+    @OnNuiEvent(NuiEvent.VehicleOpenLSCustom)
+    async handleVehicleLSCustom() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            return false;
+        }
+
+        this.nuiMenu.closeMenu();
+
+        await this.vehicleCustomProvider.upgradeVehicle(vehicle);
 
         return true;
     }
@@ -150,6 +170,7 @@ export class VehicleMenuProvider {
             speedLimit: vehicleState.speedLimit,
             doorStatus,
             hasRadio: vehicleState.hasRadio,
+            insideLSCustom: this.vehicleCustomProvider.isPedInsideCustomZone(),
         });
     }
 }

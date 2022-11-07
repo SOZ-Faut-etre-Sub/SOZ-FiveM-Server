@@ -13,6 +13,7 @@ type MenuPosition = {
 };
 
 type OpenMenuConfig = {
+    useMouse?: boolean;
     subMenuId?: string;
     position?: MenuPosition;
 };
@@ -29,7 +30,12 @@ export class NuiMenu {
         exports['menuv'].SendNUIMessage({ action: 'KEY_CLOSE_ALL' });
 
         this.menuPosition = config?.position || null;
-        this.dispatcher.dispatch('menu', 'SetMenuType', { menuType, data, subMenuId: config?.subMenuId });
+        this.dispatcher.dispatch('menu', 'SetMenuType', {
+            menuType,
+            data,
+            useMouse: config?.useMouse || false,
+            subMenuId: config?.subMenuId,
+        });
     }
 
     @Tick(TickInterval.EVERY_SECOND)

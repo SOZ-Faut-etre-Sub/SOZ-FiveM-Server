@@ -44,12 +44,15 @@ export class NuiProvider {
     private computeFocusInput() {
         let keyboard = false;
         let cursor = false;
+        let keepInput = true;
 
         for (const focus of Object.values(this.state)) {
             keyboard = keyboard || focus.keyboard;
             cursor = cursor || focus.cursor;
+            keepInput = keepInput && focus.keepInput;
         }
 
         SetNuiFocus(keyboard, cursor);
+        SetNuiFocusKeepInput(keepInput);
     }
 }

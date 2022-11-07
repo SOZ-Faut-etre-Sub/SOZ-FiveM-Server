@@ -1,6 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { FfsRecipe } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { CraftList } from '../Shared/CraftList';
@@ -16,20 +17,6 @@ import {
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
-
-export type FfsRecipe = {
-    canCraft: boolean;
-    label: string;
-    inputs: {
-        label: string;
-        hasRequiredAmount: boolean;
-        amount: number;
-    }[];
-    output: {
-        label: string;
-        amount: number;
-    };
-};
 
 type FightForStyleStateProps = {
     data: {

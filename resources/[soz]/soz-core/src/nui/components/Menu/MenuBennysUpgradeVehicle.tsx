@@ -25,6 +25,7 @@ import {
     MenuContent,
     MenuItemButton,
     MenuItemCheckbox,
+    MenuItemGoBack,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSelectOptionColor,
@@ -39,6 +40,7 @@ type MenuItemVehicleModificationProps = {
     config: VehicleConfiguration;
     set: (configuration: VehicleConfiguration) => void;
     vehiclePrice?: number;
+    useHelperText?: boolean;
 };
 
 export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModificationProps> = ({
@@ -87,7 +89,7 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
                     }
 
                     return (
-                        <MenuItemSelectOption key={index} value={choice.value}>
+                        <MenuItemSelectOption key={index} value={choice.value} helper={choice.label}>
                             {choice.label}
                             {choice.value === initialValue && ' (installé)'}
                             {price !== null && ` (${price.toFixed(0)} $)`}
@@ -171,7 +173,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                         <MenuItemSelectOptionColor
                             key={index}
                             color={option.color}
-                            description={option.label}
+                            label={option.label}
                             value={value}
                         />
                     );
@@ -213,7 +215,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                     return (
                         <MenuItemSelectOptionColor
                             color={option.color}
-                            description={option.label}
+                            label={option.label}
                             value={color}
                             key={index}
                         />
@@ -257,7 +259,7 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
                 return (
                     <MenuItemSelectOptionColor
                         color={option.color}
-                        description={option.label}
+                        label={option.label}
                         value={option.color}
                         key={index}
                     />
@@ -321,7 +323,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSubMenuLink id="interior">Intérieur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="exterior">Exterieur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="light">Lumières</MenuItemSubMenuLink>
-                    <MenuItemButton onConfirm={() => onConfirm()}>Confirmer les changements</MenuItemButton>
+                    <MenuItemButton onConfirm={() => onConfirm()}>✅ Confirmer les changements</MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="colors">
@@ -386,6 +388,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     />
                     <MenuItemVehicleModification modKey="plaques" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification modKey="speakers" options={options} config={config} set={setConfig} />
+                    <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="body">
@@ -426,6 +429,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     />
                     <MenuItemVehicleModification modKey="airFilter" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification modKey="tank" options={options} config={config} set={setConfig} />
+                    <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="wheel">
@@ -497,6 +501,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     />
                     <MenuItemVehicleModification modKey="struts" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification modKey="archCover" options={options} config={config} set={setConfig} />
+                    <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="exterior">
@@ -552,6 +557,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemVehicleModification modKey="aerials" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification modKey="trim" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification modKey="windows" options={options} config={config} set={setConfig} />
+                    <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="interior">
@@ -604,6 +610,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                             });
                         }}
                     />
+                    <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="light">
@@ -713,6 +720,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         }}
                         choices={VehicleXenonColorChoices}
                     />
+                    <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
         </Menu>

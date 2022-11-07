@@ -1,6 +1,5 @@
 import { Blip } from '../shared/blip';
 import { JobCloakroomZoneData, JobType } from '../shared/job';
-import { MenuType } from '../shared/nui/menu';
 import { Zone } from '../shared/polyzone/box.zone';
 
 export const JobBlips: Partial<Record<JobType, Blip[]>> = {
@@ -18,10 +17,6 @@ export const JobBlips: Partial<Record<JobType, Blip[]>> = {
             coords: { x: 2405.98, y: 3127.11, z: 48.17 },
         },
     ],
-};
-
-export const JobMenu: Partial<Record<JobType, MenuType>> = {
-    [JobType.Bennys]: MenuType.JobBennys,
 };
 
 export const JobCloakrooms: Partial<Record<JobType, Zone<JobCloakroomZoneData>[]>> = {

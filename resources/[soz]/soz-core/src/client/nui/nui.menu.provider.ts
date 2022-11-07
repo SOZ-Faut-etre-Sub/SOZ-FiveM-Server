@@ -10,6 +10,19 @@ export class NuiMenuProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
+    @Command('soz_menu_toggle_focus', {
+        description: 'Active ou désasctive la souris dans le menu',
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'LCONTROL',
+            },
+        ],
+    })
+    onMenuFocus(): void {
+        this.nuiDispatch.dispatch('menu', 'ToggleFocus'); //
+    }
+
     @Command('soz_menu_up', {
         description: 'Haut dans un menu',
         keys: [

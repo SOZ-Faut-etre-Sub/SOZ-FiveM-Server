@@ -1,6 +1,7 @@
 export type FocusInput = {
     keyboard: boolean;
     cursor: boolean;
+    keepInput: boolean;
 };
 
 export type SetFocusInput = {

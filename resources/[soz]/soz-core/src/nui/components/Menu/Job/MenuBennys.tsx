@@ -1,20 +1,32 @@
 import { FunctionComponent } from 'react';
 
+import { NuiEvent } from '../../../../shared/event';
 import { MenuType } from '../../../../shared/nui/menu';
-import { triggerServerEvent } from '../../../fetch';
+import { fetchNui, triggerServerEvent } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
 import {
     MainMenu,
     Menu,
     MenuContent,
+    MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemText,
     MenuTitle,
 } from '../../Styleguide/Menu';
 
-export const MenuBennys: FunctionComponent = () => {
+type MenuBennysProps = {
+    data: {
+        insideUpgradeZone: boolean;
+    };
+};
+
+export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
     const player = usePlayer();
+
+    if (!data) {
+        return null;
+    }
 
     if (!player?.job.onduty) {
         return (
@@ -31,6 +43,10 @@ export const MenuBennys: FunctionComponent = () => {
 
     const onConfirm = (item, props) => {
         triggerServerEvent('job:server:placeProps', item, props);
+    };
+
+    const onUpgradeVehicle = () => {
+        fetchNui(NuiEvent.BennysUpgradeVehicle);
     };
 
     return (
@@ -51,6 +67,9 @@ export const MenuBennys: FunctionComponent = () => {
                             Cone de circulation
                         </MenuItemSelectOption>
                     </MenuItemSelect>
+                    {data.insideUpgradeZone && (
+                        <MenuItemButton onConfirm={onUpgradeVehicle}>Améliorer véhicule</MenuItemButton>
+                    )}
                 </MenuContent>
             </MainMenu>
         </Menu>

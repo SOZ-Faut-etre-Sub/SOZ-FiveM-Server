@@ -1,5 +1,19 @@
 import { NamedZone } from '../polyzone/box.zone';
 
+export type FfsRecipe = {
+    canCraft: boolean;
+    label: string;
+    inputs: {
+        label: string;
+        hasRequiredAmount: boolean;
+        amount: number;
+    }[];
+    output: {
+        label: string;
+        amount: number;
+    };
+};
+
 export enum SewingRawMaterial {
     COTTON_BALE = 'cotton_bale',
     REFINED_PETROLEUM = 'petroleum_refined',

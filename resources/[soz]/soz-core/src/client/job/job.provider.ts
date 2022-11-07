@@ -1,9 +1,8 @@
-import { JobBlips, JobMenu } from '../../config/job';
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { JobBlips } from '../../config/job';
+import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
-import { JobType } from '../../shared/job';
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Ok } from '../../shared/result';
 import { BlipFactory } from '../blip';
 import { ItemService } from '../item/item.service';
@@ -39,21 +38,6 @@ export class JobProvider {
                 const blip = blips[blipIndex];
                 this.blipFactory.create(`job_${job}_${blipIndex}`, blip);
             }
-        }
-    }
-
-    @OnEvent(ClientEvent.JOB_OPEN_MENU)
-    public async toggleJobMenu(job: JobType) {
-        const menuType = JobMenu[job];
-
-        if (!menuType) {
-            return;
-        }
-
-        if (this.nuiMenu.getOpened() === menuType) {
-            this.nuiMenu.closeMenu();
-        } else {
-            this.nuiMenu.openMenu(menuType);
         }
     }
 

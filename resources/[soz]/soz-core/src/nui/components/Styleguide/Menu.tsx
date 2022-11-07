@@ -13,6 +13,7 @@ import {
     createContext,
     FunctionComponent,
     PropsWithChildren,
+    ReactNode,
     useCallback,
     useContext,
     useEffect,
@@ -33,6 +34,7 @@ type MenuDescendant = Descendant & {
 
 type MenuSelectDescendant = Descendant & {
     value?: any;
+    helper?: ReactNode;
 };
 
 const MenuDescendantContext = createDescendantContext<MenuDescendant>('MenuDescendantContext');
@@ -130,7 +132,7 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
             <MenuContext.Provider value={{ activeIndex, setActiveIndex, setDescription }}>
                 <MenuControls>
-                    <ul className="p-2 bg-black/50 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                    <ul className="bg-black/50 py-1 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {children}
                     </ul>
                     {description && (
@@ -196,6 +198,7 @@ type MenuItemProps = PropsWithChildren<{
     disabled?: boolean;
     selectable?: boolean;
     description?: string;
+    className?: string;
 }>;
 
 const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
@@ -205,8 +208,9 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     disabled = false,
     selectable = null,
     description = null,
+    className = null,
 }) => {
-    const { activeIndex, setDescription } = useContext(MenuContext);
+    const { activeIndex, setDescription, setActiveIndex } = useContext(MenuContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
     const handleRefSet = useCallback(refValue => {
@@ -255,10 +259,18 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
         onConfirm && onConfirm();
     };
 
+    const onOver = () => {
+        if (disabled) {
+            return;
+        }
+
+        setActiveIndex(index);
+    };
+
     return (
         <li
             ref={handleRefSet}
-            className={cn('p-1 pl-2 my-0.5 hover:bg-white/10 rounded', {
+            className={cn(className, 'px-4 py-1 pl-2 my-0.5 hover:bg-white/10 rounded', {
                 'bg-white/10': isSelected,
                 'text-white/50': disabled,
                 'text-white': !disabled,
@@ -266,6 +278,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
                 'cursor-pointer': !disabled,
             })}
             onClick={onClick}
+            onMouseEnter={onOver}
         >
             <MenuSelectedContext.Provider value={isSelected}>{children}</MenuSelectedContext.Provider>
         </li>
@@ -367,6 +380,16 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     );
 };
 
+export const MenuItemGoBack: FunctionComponent = () => {
+    const navigate = useNavigate();
+
+    return (
+        <MenuItemContainer className="border-t-2 mt-2 border-white/50" onConfirm={() => navigate(-1)}>
+            🔙 Revenir au menu précédent
+        </MenuItemContainer>
+    );
+};
+
 type MenuSelectControlsProps = PropsWithChildren<{
     onChange?: (index: number, value?: any) => void;
 }>;
@@ -429,7 +452,7 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
     });
 
     return (
-        <div className="flex items-center">
+        <div className="flex items-center w-full justify-between">
             <ChevronLeftIcon
                 onClick={event => {
                     goLeft();
@@ -438,7 +461,7 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
                 }}
                 className="h-5 w-5 p-0.5 mr-2 bg-black/20 rounded-full"
             />
-            <div>{children}</div>
+            <div className="overflow-hidden">{children}</div>
             <ChevronRightIcon
                 onClick={event => {
                     goRight();
@@ -500,13 +523,16 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                         distance,
                     }}
                 >
-                    <div className="flex justify-between items-center">
-                        <h3>{title}</h3>
-                        <div>
-                            <MenuSelectControls onChange={onChange}>
-                                <ul className="flex">{children}</ul>
-                            </MenuSelectControls>
+                    <div className="w-full">
+                        <div className="flex justify-between items-center">
+                            <h3 className="w-[40%] pr-2 truncate">{title}</h3>
+                            <div className="w-[60%]">
+                                <MenuSelectControls onChange={onChange}>
+                                    <ul className="flex">{children}</ul>
+                                </MenuSelectControls>
+                            </div>
                         </div>
+                        <MenuItemSelectHelper />
                     </div>
                 </MenuItemSelectContext.Provider>
             </DescendantProvider>
@@ -514,22 +540,111 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     );
 };
 
+export default function useOnScreen(ref) {
+    const [isIntersecting, setIntersecting] = useState(false);
+
+    const observer = new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting));
+
+    useEffect(() => {
+        observer.observe(ref.current);
+        // Remove the observer as soon as the component is unmounted
+        return () => {
+            observer.disconnect();
+        };
+    }, [ref]);
+
+    return isIntersecting;
+}
+
+type MenuItemSelectHelperItemProps = PropsWithChildren<{
+    index: number;
+}>;
+
+export const MenuItemSelectHelperItem: FunctionComponent<MenuItemSelectHelperItemProps> = ({ children, index }) => {
+    const { activeOptionIndex, setActiveOptionIndex } = useContext(MenuItemSelectContext);
+    const ref = useRef(null);
+    const onScreen = useOnScreen(ref);
+    const classes = cn('px-2 py-0', {
+        'bg-white/10': index === activeOptionIndex,
+    });
+
+    useEffect(() => {
+        if (index === activeOptionIndex && ref && !onScreen) {
+            ref.current.scrollIntoView();
+        }
+    }, [activeOptionIndex, index, ref]);
+
+    return (
+        <li
+            ref={ref}
+            onMouseEnter={() => {
+                setActiveOptionIndex(index);
+            }}
+            onClick={() => {
+                setActiveOptionIndex(index);
+            }}
+            className={classes}
+            key={index}
+        >
+            {children}
+        </li>
+    );
+};
+
+export const MenuItemSelectHelper: FunctionComponent = () => {
+    const isItemSelected = useContext(MenuSelectedContext);
+    const menuItems = useDescendants(MenuItemSelectDescendantContext);
+    const helperCount = menuItems.filter(item => item.helper !== null).length;
+    const helpers = menuItems.map(item => item.helper);
+    const [clicked, setClicked] = useState(false);
+
+    useEffect(() => {
+        return () => {
+            setClicked(false);
+        };
+    }, [isItemSelected]);
+
+    if (!isItemSelected || helperCount <= 0 || clicked) {
+        return null;
+    }
+
+    return (
+        <div className="absolute -right-3 translate-x-full top-0 w-1/5 min-w-[24rem] bg-black/50 rounded-b-lg max-h-[40vh]">
+            <ul
+                onClick={() => setClicked(true)}
+                className="bg-black/50 py-2 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+            >
+                {helpers.map((helper, index) => {
+                    return (
+                        <MenuItemSelectHelperItem key={index} index={index}>
+                            {helper}
+                        </MenuItemSelectHelperItem>
+                    );
+                })}
+            </ul>
+        </div>
+    );
+};
+
 const useSelectOption = (
     value?: any,
     onSelected?: () => void,
-    description?: string
-): [(value) => void, boolean, boolean] => {
-    const { activeOptionIndex, distance, setDescription } = useContext(MenuItemSelectContext);
+    description?: string,
+    helper?: ReactNode
+): [(value) => void, boolean, boolean, (value) => void] => {
+    const { activeOptionIndex, distance, setDescription, setActiveOptionIndex } = useContext(MenuItemSelectContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
     const handleRefSet = useCallback(refValue => {
         ref.current = refValue;
         setElement(refValue);
     }, []);
+
     const descendant = useMemo(() => {
         return {
             element,
             value,
+            helper,
         };
     }, [element]);
 
@@ -537,6 +652,9 @@ const useSelectOption = (
     const distanceOfIndex = Math.abs(index - activeOptionIndex);
     const show = distanceOfIndex <= distance;
     const isSelected = distanceOfIndex === 0;
+    const onClick = useCallback(() => {
+        setActiveOptionIndex(index);
+    }, [setActiveOptionIndex, index]);
 
     useEffect(() => {
         if (isSelected) {
@@ -545,13 +663,14 @@ const useSelectOption = (
         }
     }, [isSelected]);
 
-    return [handleRefSet, show, isSelected];
+    return [handleRefSet, show, isSelected, onClick];
 };
 
 type MenuItemSelectOptionProps = PropsWithChildren<{
     onSelected?: () => void;
     value?: any;
     description?: string;
+    helper?: ReactNode;
 }>;
 
 export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> = ({
@@ -559,18 +678,40 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
     onSelected,
     value = null,
     description = null,
+    helper = null,
 }) => {
-    const [handleRefSet, show] = useSelectOption(value, onSelected, description);
+    const [handleRefSet, show, , onClick] = useSelectOption(value, onSelected, description, helper);
 
     return (
         <li
             ref={handleRefSet}
-            className={cn({
+            className={cn('truncate', {
                 hidden: !show,
             })}
+            onClick={onClick}
         >
             {children}
         </li>
+    );
+};
+
+type MenuItemSelectOptionColorHelperProps = {
+    label: string;
+    color: RGBColor;
+};
+
+export const MenuItemSelectOptionColorHelper: FunctionComponent<MenuItemSelectOptionColorHelperProps> = ({
+    label,
+    color,
+}) => {
+    return (
+        <div className="flex justify-between items-center">
+            <span>{label}</span>
+            <div
+                className="flex-grow h-4 ml-2"
+                style={{ backgroundColor: `rgb(${color[0]}, ${color[1]}, ${color[2]} )` }}
+            />
+        </div>
     );
 };
 
@@ -587,9 +728,11 @@ export const MenuItemSelectOptionColor: FunctionComponent<MenuItemSelectOptionCo
     color,
     value = null,
     description = null,
+    label = null,
 }) => {
-    const [handleRefSet, show, isSelected] = useSelectOption(value, onSelected, description);
-    const colorClassname = cn('h-5 w-5 rounded-full', {
+    const helper = <MenuItemSelectOptionColorHelper label={label} color={color} />;
+    const [handleRefSet, show, isSelected, onClick] = useSelectOption(value, onSelected, description, helper);
+    const colorClassname = cn('h-5 w-5 rounded-full hover:border-white', {
         'border-2 border-white': isSelected,
         'border-2 border-black/50': !isSelected,
     });
@@ -600,6 +743,7 @@ export const MenuItemSelectOptionColor: FunctionComponent<MenuItemSelectOptionCo
             className={cn('mr-1', {
                 hidden: !show,
             })}
+            onClick={onClick}
         >
             <div
                 className={colorClassname}

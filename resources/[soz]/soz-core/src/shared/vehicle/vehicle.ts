@@ -155,6 +155,7 @@ export type VehicleMenuData = {
     doorStatus: Record<number, boolean>;
     isDriver: boolean;
     hasRadio: boolean;
+    insideLSCustom: boolean;
 };
 
 export type VehicleAuctionMenuData = {

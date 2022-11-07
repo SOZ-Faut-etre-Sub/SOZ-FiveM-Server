@@ -2,7 +2,6 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
-import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { Garment, LuxuryGarment } from '../../../shared/job/ffs';
 import { ClothingBrand } from '../../../shared/shop';
 import { InventoryManager } from '../../item/inventory.manager';

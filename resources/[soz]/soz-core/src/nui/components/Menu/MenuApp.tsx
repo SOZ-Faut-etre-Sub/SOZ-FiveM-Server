@@ -4,7 +4,8 @@ import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-rou
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import { useMenuNuiEvent } from '../../hook/nui';
+import { useControl } from '../../hook/control';
+import { useMenuNuiEvent, useNuiFocus } from '../../hook/nui';
 import { AdminMenu } from '../Admin/AdminMenu';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
@@ -37,6 +38,13 @@ const MenuRouter: FunctionComponent = () => {
     const navigate = useNavigate();
     const [menuData, setMenuData] = useState(null);
     const [menuType, setMenuType] = useState<MenuType>(null);
+    const [useFocus, setFocus] = useState(false);
+
+    useNuiFocus(useFocus, useFocus, !useFocus);
+
+    useControl(() => {
+        setFocus(!useFocus);
+    });
 
     useEffect(() => {
         if (location.pathname === '/' && menuType !== null && menuData !== null) {
@@ -44,6 +52,9 @@ const MenuRouter: FunctionComponent = () => {
                 menuType,
                 menuData,
             });
+            setMenuType(null);
+            setMenuData(null);
+            setFocus(false);
         }
     }, [location, menuType, menuData]);
 
@@ -61,6 +72,7 @@ const MenuRouter: FunctionComponent = () => {
         navigate(path);
         setMenuData(data);
         setMenuType(menuType);
+        setFocus(false);
     });
 
     useMenuNuiEvent('CloseMenu', () => {
@@ -89,7 +101,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.VehicleDealership}/*`} element={<MenuVehicleDealership data={menuData} />} />
             <Route path={`/${MenuType.Garage}/*`} element={<MenuGarage data={menuData} />} />
 
-            <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys />} />
+            <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route
                 path={`/${MenuType.BennysUpgradeVehicle}/*`}
                 element={<MenuBennysUpgradeVehicle data={menuData} />}
