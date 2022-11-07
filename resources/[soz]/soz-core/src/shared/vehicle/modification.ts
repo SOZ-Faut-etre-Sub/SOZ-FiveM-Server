@@ -1328,8 +1328,6 @@ export const getVehicleCustomPrice = (
     for (const key of Object.keys(VehicleModificationPricing)) {
         const category = VehicleModificationPricing[key];
 
-        console.log(JSON.stringify(category));
-
         if (category.type === 'list') {
             const currentLevel = currentModification.modification[key];
             const newLevel = newModification.modification[key];
