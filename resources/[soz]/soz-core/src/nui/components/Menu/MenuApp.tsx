@@ -43,7 +43,9 @@ const MenuRouter: FunctionComponent = () => {
     useNuiFocus(useFocus, useFocus, !useFocus);
 
     useControl(() => {
-        setFocus(!useFocus);
+        if (menuType !== null) {
+            setFocus(!useFocus);
+        }
     });
 
     useEffect(() => {
@@ -79,7 +81,9 @@ const MenuRouter: FunctionComponent = () => {
         if (location.pathname !== '/') {
             navigate('/');
         }
+        setMenuType(null);
         setMenuData(null);
+        setFocus(false);
     });
 
     return (

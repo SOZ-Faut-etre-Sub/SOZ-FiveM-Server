@@ -15,7 +15,7 @@ export class NuiMenuProvider {
         keys: [
             {
                 mapper: 'keyboard',
-                key: 'LCONTROL',
+                key: 'RCONTROL',
             },
         ],
     })
