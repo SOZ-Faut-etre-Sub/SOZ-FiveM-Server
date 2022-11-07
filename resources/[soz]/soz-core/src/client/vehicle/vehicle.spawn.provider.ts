@@ -43,8 +43,20 @@ export class VehicleSpawnProvider {
             return;
         }
 
-        if (!IsModelInCdimage(vehicleSpawn.model) || !IsModelAVehicle(vehicleSpawn.model)) {
-            return;
+        let hash = vehicleSpawn.hash;
+
+        if (!IsModelInCdimage(hash) || !IsModelAVehicle(hash)) {
+            hash = GetHashKey(vehicleSpawn.model);
+
+            if (!IsModelInCdimage(hash) || !IsModelAVehicle(hash)) {
+                console.log(
+                    'could not load model with given hash or model name',
+                    vehicleSpawn.model,
+                    vehicleSpawn.hash
+                );
+
+                return;
+            }
         }
 
         await this.resourceLoader.loadModel(vehicleSpawn.model);

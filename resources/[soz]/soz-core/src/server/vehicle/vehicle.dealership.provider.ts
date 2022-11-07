@@ -8,13 +8,12 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
-import { BennysConfig } from '../../shared/job/bennys';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItems } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
-import { getDefaultVehicleModification } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, Vehicle } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
@@ -98,9 +97,21 @@ export class VehicleDealershipProvider {
                 bestBid: null,
             };
 
+            const configuration = getDefaultVehicleConfiguration();
+            const plate = 'LUXE ' + (parseInt(index) + 1);
+
+            configuration.modification = {
+                ...configuration.modification,
+                armor: 4,
+                brakes: 2,
+                engine: 3,
+                transmission: 2,
+                turbo: true,
+            };
+
             await this.prismaService.playerVehicle.upsert({
                 create: {
-                    plate: 'LUXE ' + (index + 1),
+                    plate,
                     hash: vehicle.hash.toString(),
                     vehicle: vehicle.model,
                     garage: 'bennys_luxury',
@@ -110,10 +121,7 @@ export class VehicleDealershipProvider {
                     fuel: 100,
                     engine: 1000,
                     body: 1000,
-                    mods: JSON.stringify({
-                        ...getDefaultVehicleModification(),
-                        ...BennysConfig.Mods.upgradedSimplifiedMods,
-                    }),
+                    mods: JSON.stringify(configuration),
                     condition: JSON.stringify(getDefaultVehicleCondition()),
                 },
                 update: {
@@ -121,14 +129,11 @@ export class VehicleDealershipProvider {
                     hash: vehicle.hash.toString(),
                     garage: 'bennys_luxury',
                     state: PlayerVehicleState.InGarage,
-                    mods: JSON.stringify({
-                        ...getDefaultVehicleModification(),
-                        ...BennysConfig.Mods.upgradedSimplifiedMods,
-                    }),
+                    mods: JSON.stringify(configuration),
                     condition: JSON.stringify(getDefaultVehicleCondition()),
                 },
                 where: {
-                    plate: 'LUXE ' + (index + 1),
+                    plate,
                 },
             });
         }
@@ -242,7 +247,7 @@ export class VehicleDealershipProvider {
                     citizenid: player.citizenid,
                     vehicle: auction.vehicle.model,
                     hash: auction.vehicle.hash.toString(),
-                    mods: JSON.stringify(getDefaultVehicleModification()),
+                    mods: JSON.stringify(getDefaultVehicleConfiguration()),
                     condition: JSON.stringify(getDefaultVehicleCondition()),
                     garage: 'airportpublic',
                     plate,
@@ -419,7 +424,7 @@ export class VehicleDealershipProvider {
                         vehicle: vehicle.model,
                         hash: vehicle.hash.toString(),
                         mods: JSON.stringify({
-                            ...getDefaultVehicleModification(),
+                            ...getDefaultVehicleConfiguration(),
                             modLivery: livery,
                         }),
                         condition: JSON.stringify(getDefaultVehicleCondition()),

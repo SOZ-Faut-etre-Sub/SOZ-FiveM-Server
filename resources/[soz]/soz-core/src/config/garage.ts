@@ -1063,7 +1063,7 @@ export const GarageList: Record<string, Garage> = {
     },
     bennys_luxury: {
         name: 'Bennys - Concessionnaire',
-        type: GarageType.Job,
+        type: GarageType.JobLuxury,
         job: JobType.Bennys,
         category: GarageCategory.Car,
         zone: new BoxZone([-178.45, -1312.36, 30.3], 1.0, 1.0, {

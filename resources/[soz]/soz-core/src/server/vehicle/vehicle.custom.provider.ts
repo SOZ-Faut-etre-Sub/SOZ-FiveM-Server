@@ -2,7 +2,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { RpcEvent } from '../../shared/rpc';
-import { getDefaultVehicleModification, VehicleConfiguration } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -73,7 +73,7 @@ export class VehicleCustomProvider {
         const state = this.vehicleStateService.getVehicleState(entityId);
 
         if (!state.id) {
-            return getDefaultVehicleModification();
+            return getDefaultVehicleConfiguration();
         }
 
         const playerVehicle = await this.prismaService.playerVehicle.findUnique({
@@ -83,11 +83,11 @@ export class VehicleCustomProvider {
         });
 
         if (!playerVehicle) {
-            return getDefaultVehicleModification();
+            return getDefaultVehicleConfiguration();
         }
 
         return {
-            ...getDefaultVehicleModification(),
+            ...getDefaultVehicleConfiguration(),
             ...JSON.parse(playerVehicle.mods || '{}'),
         };
     }

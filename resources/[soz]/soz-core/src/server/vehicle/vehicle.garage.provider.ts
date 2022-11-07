@@ -10,7 +10,7 @@ import { PlayerData } from '../../shared/player';
 import { getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
-import { getDefaultVehicleModification } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
@@ -222,7 +222,7 @@ export class VehicleGarageProvider {
                 citizenid: vehicle.citizenid,
                 model: parseInt(vehicle.hash || '0', 10),
                 modelName: vehicle.vehicle,
-                modification: vehicle.mods ? JSON.parse(vehicle.mods) : getDefaultVehicleModification(),
+                modification: vehicle.mods ? JSON.parse(vehicle.mods) : getDefaultVehicleConfiguration(),
                 condition: vehicle.condition ? JSON.parse(vehicle.condition) : getDefaultVehicleCondition(),
                 plate: vehicle.plate,
                 garage: vehicle.garage,
@@ -310,6 +310,13 @@ export class VehicleGarageProvider {
             this.notifier.notify(source, 'Vous ne pouvez pas ranger ce véhicule dans ce garage.', 'error');
 
             return;
+        } else if (
+            garage.type === GarageType.JobLuxury &&
+            (garage.job !== player.job.id || (!vehicle.plate.startsWith('LUXE') && !vehicle.plate.startsWith('ESSAI')))
+        ) {
+            this.notifier.notify(source, 'Vous ne pouvez pas ranger ce véhicule dans ce garage.', 'error');
+
+            return;
         }
 
         if (garage.type === GarageType.House) {
@@ -376,7 +383,10 @@ export class VehicleGarageProvider {
                         return;
                     }
 
-                    if (garage.type === GarageType.Job && player.job.id !== garage.job) {
+                    if (
+                        (garage.type === GarageType.Job || garage.type === GarageType.JobLuxury) &&
+                        player.job.id !== garage.job
+                    ) {
                         this.notifier.notify(source, 'Vous ne pouvez pas sortir un véhicule de ce garage.', 'error');
 
                         return;
@@ -445,6 +455,12 @@ export class VehicleGarageProvider {
                     this.vehicleStateService.addVehicleKey(vehicle.plate, player.citizenid);
 
                     this.notifier.notify(source, 'Vous avez sorti votre véhicule.', 'success');
+                } else {
+                    this.notifier.notify(
+                        source,
+                        'Une erreur est survenue lors du spawn du véhicule, veuillez ressayer.',
+                        'error'
+                    );
                 }
             },
             1000

@@ -1,6 +1,4 @@
 import { ClientEvent } from './event';
-import { Zone } from './polyzone/box.zone';
-import { ShopProduct } from './shop';
 
 export enum JobType {
     Unemployed = 'unemployed',
