@@ -48,13 +48,13 @@ export const MockConversationMessages: Message[] = [
     {
         id: 3,
         author: '555-3333',
-        message: 'Hello',
+        message: 'Hello :)',
         conversation_id: '555-1111+555-3333',
     },
     {
         id: 4,
         author: '555-2222',
-        message: 'Hello Rocky :melting_face: and :blush: nice :innocent: ',
+        message: 'Hello Rocky :melting_face: and :blush: nice :innocent: :) :) :):):)',
         conversation_id: '555-1111+555-2222',
     },
     {
