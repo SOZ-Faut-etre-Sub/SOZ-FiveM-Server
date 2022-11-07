@@ -35,16 +35,20 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         return null;
     }
 
-    // const onConfirm = (name: string | null) => {
-    //     fetchNui(NuiEvent.SetWardrobeOutfit, name ? wardrobe.wardrobe[name] || null : null);
-    // };
-
     const onVehicleEngineChange = (value: boolean) => {
         fetchNui(NuiEvent.VehicleSetEngine, value);
     };
 
     const onSpeedLimit = (value: number | null) => {
         fetchNui(NuiEvent.VehicleSetSpeedLimit, value);
+    };
+
+    const onRadioLongRange = () => {
+        fetchNui(NuiEvent.VehicleHandleRadio);
+    };
+
+    const onOpenLSCustom = () => {
+        fetchNui(NuiEvent.VehicleOpenLSCustom);
     };
 
     const createOnDoorChange = (doorIndex: number) => {
@@ -63,7 +67,9 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                             Moteur allumé
                         </MenuItemCheckbox>
                     )}
-                    {data.hasRadio && <MenuItemButton>Radio longue portée</MenuItemButton>}
+                    {data.hasRadio && (
+                        <MenuItemButton onConfirm={() => onRadioLongRange()}>Radio longue portée</MenuItemButton>
+                    )}
                     {data.isDriver && (
                         <>
                             <MenuItemSelect
@@ -81,6 +87,9 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                             </MenuItemSelect>
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
                         </>
+                    )}
+                    {data.insideLSCustom && (
+                        <MenuItemButton onConfirm={() => onOpenLSCustom()}>LS Custom</MenuItemButton>
                     )}
                 </MenuContent>
             </MainMenu>

@@ -93,22 +93,12 @@ export class VehicleCustomProvider {
                 name: 'LS Custom',
             });
         }
+    }
 
-        this.targetFactory.createForAllVehicle([
-            {
-                icon: 'c:mechanic/Ameliorer.png',
-                label: 'Améliorer sa voiture',
-                blackoutGlobal: true,
-                action: vehicle => {
-                    this.upgradeVehicle(vehicle);
-                },
-                canInteract: () => {
-                    const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+    public isPedInsideCustomZone(): boolean {
+        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
 
-                    return this.lsCustomZone.isPointInside(position);
-                },
-            },
-        ]);
+        return this.lsCustomZone.isPointInside(position);
     }
 
     @OnNuiEvent<{ menuType: MenuType; menuData: VehicleCustomMenuData }>(NuiEvent.MenuClosed)
@@ -116,6 +106,8 @@ export class VehicleCustomProvider {
         if (menuType !== MenuType.VehicleCustom && menuType !== MenuType.BennysUpgradeVehicle) {
             return;
         }
+
+        SetVehicleUndriveable(menuData.vehicle, false);
 
         this.vehicleModificationService.applyVehicleConfiguration(menuData.vehicle, menuData.originalConfiguration);
     }
@@ -154,6 +146,8 @@ export class VehicleCustomProvider {
             price
         );
 
+        SetVehicleUndriveable(vehicleEntityId, false);
+
         this.vehicleService.applyVehicleConfiguration(vehicleEntityId, newVehicleConfiguration);
         this.nuiMenu.closeMenu();
     }
@@ -172,6 +166,8 @@ export class VehicleCustomProvider {
         }
 
         const vehicleConfiguration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
+
+        SetVehicleUndriveable(vehicleEntityId, true);
 
         this.nuiMenu.openMenu(MenuType.VehicleCustom, {
             vehicle: vehicleEntityId,

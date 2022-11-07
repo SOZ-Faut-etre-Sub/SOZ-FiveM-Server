@@ -15,11 +15,13 @@ export interface NuiMenuMethodMap {
     CloseMenu: never;
     Enter: never;
     SetMenuType: SetMenuType;
+    ToggleFocus: never;
 }
 
 export type SetMenuType = {
     menuType: MenuType;
     data: any;
+    useMouse?: boolean;
     subMenuId?: string;
 };
 
@@ -54,7 +56,9 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.Demo]: never;
     [MenuType.FightForStyleJobMenu]: any;
     [MenuType.Garage]: GarageMenuData;
-    [MenuType.JobBennys]: never;
+    [MenuType.JobBennys]: {
+        insideUpgradeZone: boolean;
+    };
     [MenuType.OilSetStationPrice]: Record<FuelType, number>;
     [MenuType.SetHealthState]: number;
     [MenuType.Vehicle]: VehicleMenuData;

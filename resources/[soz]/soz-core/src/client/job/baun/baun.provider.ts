@@ -1,9 +1,8 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { BaunRecipe } from '../../../nui/components/BahamaUnicorn/BahamaUnicornJobMenu';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
-import { BaunCraftProcess, baunCraftProcesses } from '../../../shared/job/baun';
+import { BaunCraftProcess, baunCraftProcesses, BaunRecipe } from '../../../shared/job/baun';
 import { MenuType } from '../../../shared/nui/menu';
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../item/inventory.manager';

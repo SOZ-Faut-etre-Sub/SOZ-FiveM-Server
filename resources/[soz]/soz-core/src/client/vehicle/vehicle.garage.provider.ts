@@ -248,7 +248,7 @@ export class VehicleGarageProvider {
 
         if (!isNear) {
             for (const place of garage.parkingPlaces) {
-                if (getDistance(position, garage.zone.center) <= DISTANCE_STORE_VEHICLE_THRESHOLD) {
+                if (getDistance(position, place.center) <= DISTANCE_STORE_VEHICLE_THRESHOLD) {
                     isNear = true;
 
                     break;

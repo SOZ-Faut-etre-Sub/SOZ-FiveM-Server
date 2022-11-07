@@ -1,5 +1,18 @@
 import { NamedZone } from '../polyzone/box.zone';
 
+export type BaunRecipe = {
+    canCraft: boolean;
+    inputs: {
+        label: string;
+        hasRequiredAmount: boolean;
+        amount: number;
+    }[];
+    output: {
+        label: string;
+        amount: number;
+    };
+};
+
 export type BaunCraftProcess = {
     inputs: {
         id: string;

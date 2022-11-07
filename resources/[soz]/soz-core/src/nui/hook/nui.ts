@@ -122,7 +122,7 @@ export const useNuiFetch = <I, R>(event: NuiEvent): UseNuiResponse<I, R> => {
  * @param keyboard {boolean} if keyboard should be focus
  * @param cursor {boolean} if cursor should be focus
  */
-export const useNuiFocus = (keyboard: boolean, cursor: boolean) => {
+export const useNuiFocus = (keyboard: boolean, cursor: boolean, keepInput: boolean) => {
     useEffect(() => {
         const id = uuidv4();
 
@@ -131,6 +131,7 @@ export const useNuiFocus = (keyboard: boolean, cursor: boolean) => {
             focus: {
                 keyboard,
                 cursor,
+                keepInput,
             },
         });
 
@@ -139,5 +140,5 @@ export const useNuiFocus = (keyboard: boolean, cursor: boolean) => {
                 id,
             });
         };
-    }, [keyboard, cursor]);
+    }, [keyboard, cursor, keepInput]);
 };

@@ -1,10 +1,9 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { FoodRecipe } from '../../../nui/components/Food/FoodJobMenu';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { InventoryItem } from '../../../shared/item';
-import { FoodConfig, FoodCraftProcess } from '../../../shared/job/food';
+import { FoodConfig, FoodCraftProcess, FoodRecipe } from '../../../shared/job/food';
 import { MenuType } from '../../../shared/nui/menu';
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../item/inventory.manager';

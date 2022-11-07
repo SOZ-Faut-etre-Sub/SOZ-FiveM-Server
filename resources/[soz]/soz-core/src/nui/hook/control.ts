@@ -34,6 +34,11 @@ const useMenuControlNuiEvent = <M extends keyof NuiMethodMap['menu']>(
     });
 };
 
+export const useControl = (onKeyPress?: () => void) => {
+    useMenuControlNuiEvent('ToggleFocus', onKeyPress);
+    useKeyPress('Control', onKeyPress);
+};
+
 export const useBackspace = (onKeyPress?: () => void) => {
     useMenuControlNuiEvent('Backspace', onKeyPress);
     useKeyPress('Backspace', onKeyPress);

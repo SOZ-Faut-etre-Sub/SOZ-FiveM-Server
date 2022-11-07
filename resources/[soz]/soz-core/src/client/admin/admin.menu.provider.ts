@@ -4,7 +4,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { SozRole } from '../../core/permissions';
 import { emitRpc } from '../../core/rpc';
-import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
+import { AdminMenuData } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { RpcEvent } from '../../shared/rpc';
@@ -19,7 +19,7 @@ export class AdminMenuProvider {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
-    private menuState: AdminMenuStateProps['data']['state'] = {
+    private menuState: AdminMenuData['state'] = {
         gameMaster: {
             godMode: false,
             invisible: false,

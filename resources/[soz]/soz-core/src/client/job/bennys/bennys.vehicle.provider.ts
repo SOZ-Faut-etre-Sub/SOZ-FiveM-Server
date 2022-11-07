@@ -1,8 +1,8 @@
-import { Once, OnceStep } from '../../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
-import { ServerEvent } from '../../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
@@ -141,30 +141,13 @@ export class BennysVehicleProvider {
                     return player.job.onduty && player.job.id === JobType.Bennys;
                 },
             },
-            {
-                icon: 'c:mechanic/Modifier.png',
-                label: 'Modifier',
-                color: JobType.Bennys,
-                blackoutGlobal: true,
-                blackoutJob: JobType.Bennys,
-                action: this.upgradeVehicle.bind(this),
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-
-                    if (!player) {
-                        return false;
-                    }
-
-                    const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-
-                    return (
-                        player.job.onduty &&
-                        player.job.id === JobType.Bennys &&
-                        this.upgradeZone.isPointInside(position)
-                    );
-                },
-            },
         ]);
+    }
+
+    public isInsideUpgradeZone(): boolean {
+        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+
+        return this.upgradeZone.isPointInside(position);
     }
 
     public async upgradeVehicle(vehicleEntityId: number) {
@@ -180,12 +163,21 @@ export class BennysVehicleProvider {
             );
         }
 
-        this.nuiMenu.openMenu(MenuType.BennysUpgradeVehicle, {
-            vehicle: vehicleEntityId,
-            options,
-            originalConfiguration: vehicleConfiguration,
-            currentConfiguration: vehicleConfiguration,
-        });
+        SetVehicleUndriveable(vehicleEntityId, true);
+        SetVehicleLights(vehicleEntityId, 2);
+
+        this.nuiMenu.openMenu(
+            MenuType.BennysUpgradeVehicle,
+            {
+                vehicle: vehicleEntityId,
+                options,
+                originalConfiguration: vehicleConfiguration,
+                currentConfiguration: vehicleConfiguration,
+            },
+            {
+                useMouse: true,
+            }
+        );
     }
 
     public async repairVehicle(vehicle: number) {
@@ -198,6 +190,36 @@ export class BennysVehicleProvider {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         TriggerServerEvent(ServerEvent.BENNYS_WASH_VEHICLE, vehicleNetworkId);
+    }
+
+    @OnNuiEvent(NuiEvent.BennysUpgradeVehicle)
+    public async onUpgradeVehicle() {
+        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+
+        this.nuiMenu.closeMenu();
+
+        if (vehicle) {
+            await this.upgradeVehicle(vehicle);
+        }
+
+        return true;
+    }
+
+    @OnEvent(ClientEvent.JOB_OPEN_MENU)
+    public async toggleJobMenu(job: JobType) {
+        if (job !== JobType.Bennys) {
+            return;
+        }
+
+        const inVehicle = IsPedInAnyVehicle(PlayerPedId(), false);
+
+        if (this.nuiMenu.getOpened() === MenuType.JobBennys) {
+            this.nuiMenu.closeMenu();
+        } else {
+            this.nuiMenu.openMenu(MenuType.JobBennys, {
+                insideUpgradeZone: inVehicle && this.isInsideUpgradeZone(),
+            });
+        }
     }
 
     public async analyzeVehicle(vehicle: number) {

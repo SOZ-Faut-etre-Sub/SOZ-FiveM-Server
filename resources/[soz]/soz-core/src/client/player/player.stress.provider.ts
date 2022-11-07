@@ -251,8 +251,6 @@ export class PlayerStressProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     async onEachFrame(): Promise<void> {
-        const playerPed = PlayerPedId();
-
         if (this.slowMode) {
             await this.playerWalkstyleProvider.applyWalkStyle('move_m@casual@a');
             DisableControlAction(0, 21, true); // disable sprint

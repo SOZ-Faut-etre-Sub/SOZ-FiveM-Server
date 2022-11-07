@@ -264,6 +264,7 @@ export enum NuiEvent {
     BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
     BennysOrder = 'soz-core:client:job:bennys:order',
     BennysGetOrders = 'soz-core:client:job:bennys:get-orders',
+    BennysUpgradeVehicle = 'soz-core:nui:job:bennys:upgrade-vehicle',
 
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     FoodDisplayBlip = 'soz-core:client:job:food:display-blip',
@@ -294,6 +295,7 @@ export enum NuiEvent {
 
     VehicleSetEngine = 'soz-core:nui:vehicle:set-engine',
     VehicleSetSpeedLimit = 'soz-core:nui:vehicle:set-speed-limit',
+    VehicleOpenLSCustom = 'soz-core:nui:vehicle:open-ls-custom',
     VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
     VehicleHandleRadio = 'soz-core:nui:vehicle:handle-radio',
 
