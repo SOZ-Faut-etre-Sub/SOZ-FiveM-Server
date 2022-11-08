@@ -54,8 +54,6 @@ export class VehicleStateProvider {
                 state: PlayerVehicleState.Destroyed,
             },
         });
-
-        // @TODO Monitoring
     }
 
     @OnEvent(ServerEvent.VEHICLE_WASH)

@@ -201,7 +201,7 @@ export class VehicleConditionProvider {
         }
     }
 
-    private checkVehicleWater(vehicle: number) {
+    private async checkVehicleWater(vehicle: number) {
         const hash = GetEntityModel(vehicle);
 
         if (!IsThisModelABike(hash) && !IsThisModelACar(hash) && !IsThisModelAQuadbike(hash)) {
@@ -211,16 +211,19 @@ export class VehicleConditionProvider {
         const state = this.vehicleService.getVehicleState(vehicle);
 
         if (state.deadInWater) {
+            SetVehicleEngineOn(vehicle, false, true, false);
+            SetVehicleUndriveable(vehicle, true);
+
             return;
         }
 
-        const vehiclePosition = GetEntityCoords(vehicle, false) as Vector3;
-        const [inWater, waterHeight] = GetWaterHeight(vehiclePosition[0], vehiclePosition[1], vehiclePosition[2]);
+        const isDead = IsEntityDead(vehicle);
+        // use next value when giving reason
+        // const isInWater = IsEntityInWater(vehicle);
 
-        if (inWater && waterHeight > vehiclePosition[2]) {
-            this.vehicleService.updateVehicleState(vehicle, {
-                deadInWater: true,
-            });
+        if (isDead) {
+            SetVehicleEngineOn(vehicle, false, true, false);
+            SetVehicleUndriveable(vehicle, true);
 
             TriggerServerEvent(ServerEvent.VEHICLE_SET_DEAD, vehicle);
         }

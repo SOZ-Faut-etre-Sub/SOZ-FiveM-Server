@@ -10,6 +10,7 @@ import { JobType } from '../../shared/job';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
+import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -32,6 +33,10 @@ type CurrentStationPistol = {
     entity: number;
     station: string;
     filling: boolean;
+};
+
+const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
+    [VehicleClass.Helicopters]: 10.0,
 };
 
 @Provider()
@@ -572,7 +577,8 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.14;
+        const multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
+        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.14 * multiplier;
         const consumedOil = consumedFuel / 20;
 
         const state = this.vehicleService.getVehicleState(vehicle);
