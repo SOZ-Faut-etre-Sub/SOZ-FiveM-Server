@@ -3,8 +3,10 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { emitRpc } from '../../core/rpc';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
+import { RpcEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -158,6 +160,7 @@ export class VehicleMenuProvider {
             return;
         }
 
+        const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcEvent.ADMIN_IS_ALLOWED);
         const doorStatus = {};
 
         for (let i = 0; i < 6; i++) {
@@ -171,6 +174,7 @@ export class VehicleMenuProvider {
             doorStatus,
             hasRadio: vehicleState.hasRadio,
             insideLSCustom: this.vehicleCustomProvider.isPedInsideCustomZone(),
+            permission: isAllowed ? permission : null,
         });
     }
 }
