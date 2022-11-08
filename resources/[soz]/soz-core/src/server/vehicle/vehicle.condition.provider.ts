@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../item/inventory.manager';
@@ -239,6 +240,21 @@ export class VehicleConditionProvider {
             }
         } else {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
+        }
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_ROUTE_EJECTION)
+    public onVehicleRouteEjection(
+        source: number,
+        vehicleId: number,
+        strength: number,
+        velocity: Vector3,
+        players: number[]
+    ) {
+        console.log('VEHICLE_ROUTE_EJECTION', source, vehicleId, strength, velocity, players);
+
+        for (const player of players) {
+            TriggerClientEvent(ClientEvent.VEHICLE_ROUTE_EJECTION, player, vehicleId, strength, velocity);
         }
     }
 }
