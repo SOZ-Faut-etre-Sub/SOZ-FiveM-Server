@@ -7,6 +7,7 @@ import {
     CallHistoryItem,
     EndCallDTO,
     InitializeCallDTO,
+    MuteCallDTO,
     StartCallEventData,
     TransmitterNumDTO,
 } from '../../../typings/call';
@@ -58,6 +59,11 @@ RegisterNuiCB<TransmitterNumDTO>(CallEvents.ACCEPT_CALL, (data, cb) => {
 
 onNetTyped<ActiveCall>(CallEvents.WAS_ACCEPTED, callData => {
     callService.handleCallAccepted(callData);
+});
+
+RegisterNuiCB<MuteCallDTO>(CallEvents.MUTE_PLAYER_CALL, (data, cb) => {
+    emitNetTyped<MuteCallDTO>(CallEvents.MUTE_PLAYER_CALL, data);
+    cb({});
 });
 
 // Rejected call

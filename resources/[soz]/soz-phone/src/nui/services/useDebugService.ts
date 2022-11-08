@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
-import { BankEvents } from '../../../typings/app/bank';
 import { PhoneEvents } from '../../../typings/phone';
 import { SettingsEvents } from '../../../typings/settings';
 import InjectDebugData from '../os/debug/InjectDebugData';
@@ -43,8 +42,8 @@ export const useDebugService = () => {
                 app: 'CALL',
                 method: CallEvents.SET_CALLER,
                 data: {
-                    accepted: true,
-                    isTransmitter: false,
+                    is_accepted: true,
+                    isTransmitter: true,
                     transmitter: '603-275-8373',
                     receiver: '603-275-4747',
                     active: true,
