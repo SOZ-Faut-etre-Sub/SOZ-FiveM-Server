@@ -24,6 +24,10 @@ const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.XenonHeadlights]: 'Phares au xénon',
 };
 
+const ModExclusion: Record<number, VehicleModType[]> = {
+    [GetHashKey('sentinel')]: [VehicleModType.ColumnShifterLevers, VehicleModType.Speakers],
+};
+
 export const getModTypeName = (vehicleEntityId: number, mod: VehicleModType): string => {
     const model = GetEntityModel(vehicleEntityId);
 
@@ -282,6 +286,12 @@ export const createModificationHelperList = (
             return VehicleModType[type];
         },
         getUpgradeChoice: (vehicleEntityId: number): VehicleUpgradeChoice | null => {
+            const model = GetEntityModel(vehicleEntityId);
+
+            if (ModExclusion[model] && ModExclusion[model].includes(type)) {
+                return null;
+            }
+
             const modCount = GetNumVehicleMods(vehicleEntityId, type);
 
             if (modCount === 0) {
