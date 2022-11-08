@@ -3,7 +3,7 @@ local function OpenSocietyMenu()
         return
     end
 
-    local event = 'soz-core:client:job:open-menu'
+    local event = "soz-core:client:job:open-menu"
 
     if SozJobCore.Jobs[PlayerData.job.id].menuCallback then
         event = SozJobCore.Jobs[PlayerData.job.id].menuCallback
