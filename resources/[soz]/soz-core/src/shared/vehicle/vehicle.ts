@@ -76,6 +76,7 @@ export type VehicleCondition = {
     bodyHealth: number;
     engineHealth: number;
     tankHealth: number;
+    tireTemporaryRepairDistance: { [key: number]: number };
     tireHealth: { [key: number]: number };
     tireBurstCompletely: { [key: number]: boolean };
     tireBurstState: { [key: number]: boolean };
@@ -129,6 +130,7 @@ export const getDefaultVehicleCondition = (): VehicleCondition => ({
     engineHealth: 1000,
     fuelLevel: 100,
     oilLevel: 100,
+    tireTemporaryRepairDistance: {},
     tireBurstCompletely: {},
     tireBurstState: {},
     tireHealth: {},

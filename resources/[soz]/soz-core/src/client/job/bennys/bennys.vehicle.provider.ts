@@ -90,15 +90,98 @@ export class BennysVehicleProvider {
         this.targetFactory.createForAllVehicle([
             {
                 icon: 'c:mechanic/reparer.png',
-                label: 'Réparer',
+                label: 'Réparer moteur',
                 color: 'bennys',
-                action: this.repairVehicle.bind(this),
+                action: this.repairVehicleEngine.bind(this),
                 blackoutGlobal: true,
                 blackoutJob: 'bennys',
-                canInteract: () => {
+                canInteract: entity => {
                     const player = this.playerService.getPlayer();
 
                     if (!player) {
+                        return false;
+                    }
+
+                    if (IsEntityDead(entity)) {
+                        return false;
+                    }
+
+                    if (!this.isInsideUpgradeZone()) {
+                        return false;
+                    }
+
+                    return player.job.onduty && player.job.id === JobType.Bennys;
+                },
+            },
+            {
+                icon: 'c:mechanic/reparer.png',
+                label: 'Réparer carrosserie',
+                color: 'bennys',
+                action: this.repairVehicleBody.bind(this),
+                blackoutGlobal: true,
+                blackoutJob: 'bennys',
+                canInteract: entity => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    if (IsEntityDead(entity)) {
+                        return false;
+                    }
+
+                    if (!this.isInsideUpgradeZone()) {
+                        return false;
+                    }
+
+                    return player.job.onduty && player.job.id === JobType.Bennys;
+                },
+            },
+            {
+                icon: 'c:mechanic/reparer.png',
+                label: 'Réparer réservoir',
+                color: 'bennys',
+                action: this.repairVehicleTank.bind(this),
+                blackoutGlobal: true,
+                blackoutJob: 'bennys',
+                canInteract: entity => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    if (IsEntityDead(entity)) {
+                        return false;
+                    }
+
+                    if (!this.isInsideUpgradeZone()) {
+                        return false;
+                    }
+
+                    return player.job.onduty && player.job.id === JobType.Bennys;
+                },
+            },
+            {
+                icon: 'c:mechanic/reparer.png',
+                label: 'Changements de roues',
+                color: 'bennys',
+                action: this.repairVehicleWheel.bind(this),
+                blackoutGlobal: true,
+                blackoutJob: 'bennys',
+                canInteract: entity => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    if (IsEntityDead(entity)) {
+                        return false;
+                    }
+
+                    if (!this.isInsideUpgradeZone()) {
                         return false;
                     }
 
@@ -116,6 +199,10 @@ export class BennysVehicleProvider {
                     const player = this.playerService.getPlayer();
 
                     if (!player) {
+                        return false;
+                    }
+
+                    if (!this.isInsideUpgradeZone()) {
                         return false;
                     }
 
@@ -180,10 +267,28 @@ export class BennysVehicleProvider {
         );
     }
 
-    public async repairVehicle(vehicle: number) {
+    public async repairVehicleEngine(vehicle: number) {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        TriggerServerEvent(ServerEvent.BENNYS_REPAIR_VEHICLE, vehicleNetworkId);
+        TriggerServerEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_ENGINE, vehicleNetworkId);
+    }
+
+    public async repairVehicleBody(vehicle: number) {
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+
+        TriggerServerEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_BODY, vehicleNetworkId);
+    }
+
+    public async repairVehicleTank(vehicle: number) {
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+
+        TriggerServerEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_TANK, vehicleNetworkId);
+    }
+
+    public async repairVehicleWheel(vehicle: number) {
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+
+        TriggerServerEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_WHEEL, vehicleNetworkId);
     }
 
     public async washVehicle(vehicle: number) {

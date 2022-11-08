@@ -25,12 +25,98 @@ export class BennysVehicleProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE)
-    public async onRepairVehicle(source: number, vehicleNetworkId: number) {
+    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_ENGINE)
+    public async onRepairVehicleEngine(source: number, vehicleNetworkId: number) {
         const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(vehicleEntity);
-        const repairTime = (2000 - state.condition.engineHealth - state.condition.bodyHealth) * 30;
+        const repairTime = (1100 - state.condition.engineHealth) * 30;
 
+        if (!(await this.doRepairVehicle(source, repairTime))) {
+            return;
+        }
+
+        const owner = NetworkGetEntityOwner(vehicleEntity);
+
+        this.notifier.notify(source, `Le moteur a été réparé.`);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+            engineHealth: 1000,
+        });
+    }
+
+    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_BODY)
+    public async onRepairVehicleEngineBody(source: number, vehicleNetworkId: number) {
+        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const repairTime = (1100 - state.condition.bodyHealth) * 30;
+
+        if (!(await this.doRepairVehicle(source, repairTime))) {
+            return;
+        }
+
+        const owner = NetworkGetEntityOwner(vehicleEntity);
+
+        this.notifier.notify(source, `La carrosserie a été réparé.`);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+            bodyHealth: 1000,
+            doorStatus: {},
+            windowStatus: {},
+        });
+    }
+
+    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_TANK)
+    public async onRepairVehicleEngineTank(source: number, vehicleNetworkId: number) {
+        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const repairTime = (1100 - state.condition.tankHealth) * 30;
+
+        if (!(await this.doRepairVehicle(source, repairTime))) {
+            return;
+        }
+
+        const owner = NetworkGetEntityOwner(vehicleEntity);
+
+        this.notifier.notify(source, `Le réservoir d'essence a été réparé.`);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+            tankHealth: 1000,
+        });
+    }
+
+    @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_WHEEL)
+    public async onRepairVehicleEngineWheel(source: number, vehicleNetworkId: number) {
+        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        let repairTime = 100;
+
+        for (const wheelIndexStr of Object.keys(state.condition.tireHealth)) {
+            const wheelIndex = parseInt(wheelIndexStr);
+            const health = state.condition.tireBurstCompletely[wheelIndex] ? 0 : state.condition.tireHealth[wheelIndex];
+            repairTime += 1000 - health;
+        }
+
+        console.log(state.condition);
+
+        repairTime *= 30;
+
+        if (!(await this.doRepairVehicle(source, repairTime))) {
+            return;
+        }
+
+        const owner = NetworkGetEntityOwner(vehicleEntity);
+
+        this.notifier.notify(source, `Les roues ont été réparées.`);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+            tireTemporaryRepairDistance: {},
+            tireHealth: {},
+            tireBurstCompletely: {},
+            tireBurstState: {},
+        });
+    }
+
+    private async doRepairVehicle(source: number, repairTime: number) {
         const { completed } = await this.progressService.progress(
             source,
             'repairing_vehicle',
@@ -55,20 +141,10 @@ export class BennysVehicleProvider {
         if (!completed) {
             this.notifier.notify(source, 'Vous avez interrompu la réparation du véhicule.');
 
-            return;
+            return false;
         }
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
-            engineHealth: 1000,
-            bodyHealth: 1000,
-            tankHealth: 1000,
-            tireHealth: {},
-            tireBurstCompletely: {},
-            tireBurstState: {},
-            doorStatus: {},
-            windowStatus: {},
-        });
+        return true;
     }
 
     @OnEvent(ServerEvent.BENNYS_WASH_VEHICLE)
@@ -95,6 +171,8 @@ export class BennysVehicleProvider {
 
             return;
         }
+
+        this.notifier.notify(source, `Le véhicule est bien lavé.`);
 
         const owner = NetworkGetEntityOwner(vehicleEntity);
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {

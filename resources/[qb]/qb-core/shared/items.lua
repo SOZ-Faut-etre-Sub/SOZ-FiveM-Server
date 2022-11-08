@@ -2525,7 +2525,7 @@ QBShared.Items = {
         ['weight'] = 5000,
         ['type'] = 'item',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Une belle boîte à outils avec des trucs pour réparer votre véhicule.'
@@ -2536,10 +2536,21 @@ QBShared.Items = {
         ['weight'] = 200,
         ['type'] = 'item',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Pour redonner une nouvelle jeunesse à votre voiture !'
+    },
+    ['wheel_kit'] = {
+        ['name'] = 'wheel_kit',
+        ['label'] = 'Kit anti-crevaison',
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pour éviter de se retrouver à pieds.'
     },
     -- Medication
     ['firstaid'] = {

@@ -195,11 +195,11 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                 value={category}
                 title={`Type ${title.toLowerCase()}`}
             >
-                <MenuItemSelectOption value={VehicleColorCategory.Classic}>Classique</MenuItemSelectOption>
-                <MenuItemSelectOption value={VehicleColorCategory.Metallic}>Métallique</MenuItemSelectOption>
-                <MenuItemSelectOption value={VehicleColorCategory.Matte}>Matte</MenuItemSelectOption>
-                <MenuItemSelectOption value={VehicleColorCategory.Pearly}>Brilliante</MenuItemSelectOption>
-                <MenuItemSelectOption value={VehicleColorCategory.Metal}>Métal</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Metallic}>Méttalisé</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Classic}>Délavé</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Matte}>Mat</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Pearly}>Brillante</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Metal}>Métal & Chrome</MenuItemSelectOption>
             </MenuItemSelect>
             <MenuItemSelect
                 distance={3}
@@ -337,7 +337,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                                     livery: value,
                                 });
                             }}
-                            title="Version"
+                            title="Sticker"
                             value={config?.livery}
                         >
                             {options.livery.items.map((livery, index) => (
