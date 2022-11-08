@@ -57,9 +57,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                     </span>
                 )}
                 {!isImage(message.message) && !isPosition(message.message) && (
-                    <p className="flex items-center break-words text-ellipsis w-full">
+                    <p className="break-words text-ellipsis w-full">
                         {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map(text => {
-                            if (text.includes(':')) {
+                            if (text.startsWith(':') && text.endsWith(':')) {
                                 return <Emoji emoji={text} />;
                             }
 
