@@ -176,17 +176,25 @@ export class VehicleLockProvider {
             }
         }
 
+        const start = GetGameTimer();
+
         if (closestDoor !== null) {
             TaskEnterVehicle(ped, vehicle, -1, closestDoor.seatIndex, 1.0, 1, 0);
 
             await wait(200);
 
             let enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
+            let time = GetGameTimer() - start;
 
-            while (enteringVehicle !== 0) {
+            while (enteringVehicle !== 0 && time < 10000) {
                 await wait(200);
+                time = GetGameTimer() - start;
 
                 enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
+            }
+
+            if (enteringVehicle !== 0) {
+                ClearPedTasksImmediately(ped);
             }
         }
     }
