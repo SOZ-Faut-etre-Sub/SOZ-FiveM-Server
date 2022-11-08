@@ -225,7 +225,7 @@ export class VehicleLockProvider {
 
         const vehicle = this.vehicleService.getClosestVehicle();
 
-        if (!vehicle) {
+        if (!vehicle || !IsEntityAVehicle(vehicle)) {
             this.notifier.notify('Aucun véhicule à proximité.', 'error');
 
             return;
@@ -270,6 +270,7 @@ export class VehicleLockProvider {
             }
         }
 
+        this.vehicleTrunkOpened = null;
         TriggerEvent('inventory:client:closeInventory');
         this.notifier.notify('Le coffre est trop loin.', 'warning');
     }
