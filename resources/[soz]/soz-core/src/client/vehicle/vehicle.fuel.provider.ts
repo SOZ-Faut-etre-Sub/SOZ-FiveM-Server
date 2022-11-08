@@ -333,6 +333,13 @@ export class VehicleFuelProvider {
 
         const model = GetEntityModel(vehicle);
 
+        if (IsThisModelABicycle(model)) {
+            this.notifier.notify("~r~Ce véhicule fonctionne uniquement à l'huile de coude", 'error');
+            await this.disableStationPistol();
+
+            return;
+        }
+
         if ((IsThisModelAHeli(model) || IsThisModelAPlane(model)) && station.fuel === FuelType.Essence) {
             this.notifier.notify("~r~Vous ne pouvez pas remplir ce véhicule avec de l'essence.", 'error');
             await this.disableStationPistol();
@@ -567,6 +574,10 @@ export class VehicleFuelProvider {
             return;
         }
 
+        if (!IsEntityAVehicle(vehicle)) {
+            return;
+        }
+
         if (!IsVehicleEngineOn(vehicle)) {
             return;
         }
@@ -574,6 +585,12 @@ export class VehicleFuelProvider {
         const owner = NetworkGetEntityOwner(vehicle);
 
         if (owner !== PlayerId()) {
+            return;
+        }
+
+        const model = GetEntityModel(vehicle);
+
+        if (IsThisModelABicycle(model)) {
             return;
         }
 
