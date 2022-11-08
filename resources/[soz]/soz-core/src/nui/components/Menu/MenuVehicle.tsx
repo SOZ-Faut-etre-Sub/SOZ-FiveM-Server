@@ -51,6 +51,10 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleOpenLSCustom);
     };
 
+    const onOpenBennysUpgrade = () => {
+        fetchNui(NuiEvent.BennysUpgradeVehicle);
+    };
+
     const createOnDoorChange = (doorIndex: number) => {
         return async value => {
             await fetchNui(NuiEvent.VehicleSetDoorOpen, { doorIndex, open: value });
@@ -90,6 +94,11 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                     )}
                     {data.insideLSCustom && (
                         <MenuItemButton onConfirm={() => onOpenLSCustom()}>LS Custom</MenuItemButton>
+                    )}
+                    {data.permission !== null && (
+                        <MenuItemButton onConfirm={() => onOpenBennysUpgrade()}>
+                            (Admin) Améliorer le véhicule
+                        </MenuItemButton>
                     )}
                 </MenuContent>
             </MainMenu>
