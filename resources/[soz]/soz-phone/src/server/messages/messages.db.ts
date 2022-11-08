@@ -20,8 +20,8 @@ export class _MessagesDB {
         );
 
         await exports.oxmysql.update_async(
-            'UPDATE phone_messages_conversations SET masked = 0, updatedAt = current_timestamp(), unread = unread + 1 WHERE conversation_id = ?',
-            [conversationId]
+            'UPDATE phone_messages_conversations SET masked = 0, updatedAt = current_timestamp(), unread = unread + 1 WHERE conversation_id = ? AND participant_identifier = ?',
+            [conversationId, author]
         );
 
         return id;
@@ -133,7 +133,7 @@ export class _MessagesDB {
      */
     async setMessageRead(conversation_id: string, identifier: string) {
         await exports.oxmysql.query_async(
-            `UPDATE phone_messages_conversations SET unread = 0 WHERE conversation_id = ? AND user_identifier = ?`,
+            `UPDATE phone_messages_conversations SET unread = 0 WHERE conversation_id = ? AND NOT participant_identifier = ?`,
             [conversation_id, identifier]
         );
     }
