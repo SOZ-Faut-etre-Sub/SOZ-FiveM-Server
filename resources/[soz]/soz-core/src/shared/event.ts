@@ -127,6 +127,7 @@ export enum ServerEvent {
     VEHICLE_FUEL_START = 'soz-core:server:vehicle:fuel:start',
     VEHICLE_OPEN_KEYS = 'soz-core:server:vehicle:open-keys',
     VEHICLE_GIVE_KEY = 'soz-core:server:vehicle:give-key',
+    VEHICLE_ROUTE_EJECTION = 'soz-core:server:vehicle:route-ejection',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
@@ -199,6 +200,7 @@ export enum ClientEvent {
     VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
     VEHICLE_GARAGE_HOUSE_OPEN_MENU = 'soz-core:client:vehicle:garage:house:open-menu',
     VEHICLE_GARAGE_HOUSE_STORE = 'soz-core:client:vehicle:garage:house:store',
+    VEHICLE_ROUTE_EJECTION = 'soz-core:client:vehicle:route-ejection',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }

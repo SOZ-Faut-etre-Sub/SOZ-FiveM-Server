@@ -1,14 +1,19 @@
 import { Command } from '../../core/decorators/command';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { VehicleLockStatus } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
 import { VehicleService } from './vehicle.service';
+
+const THRESHOLD_G_STRENGTH_HARD = 7.0;
+const THRESHOLD_G_STRENGTH_SOFT = 3.5;
 
 @Provider()
 export class VehicleSeatbeltProvider {
@@ -103,6 +108,13 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
+        if (!NetworkGetEntityIsNetworked(vehicle)) {
+            this.lastVehicleSpeed = 0;
+            this.lastVehiclePosition = null;
+
+            return;
+        }
+
         const vehicleSpeed = GetEntitySpeed(vehicle);
         const vehiclePosition = GetEntityCoords(vehicle, false) as Vector3;
         const vehicleVelocity = GetEntityVelocity(vehicle) as Vector3;
@@ -117,14 +129,51 @@ export class VehicleSeatbeltProvider {
 
         const acceleration = (vehicleSpeed - this.lastVehicleSpeed) / 0.5;
         const gStrength = Math.abs(acceleration / 9.81);
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        if ((gStrength > 3.5 && !this.isSeatbeltOn) || gStrength > 7.0) {
-            await this.ejectPlayer(ped, vehicle, this.lastVehicleVelocity);
+        if (gStrength > THRESHOLD_G_STRENGTH_SOFT) {
+            TriggerServerEvent(
+                ServerEvent.VEHICLE_ROUTE_EJECTION,
+                vehicleNetworkId,
+                gStrength,
+                this.lastVehicleVelocity,
+                this.getPlayersInVehicle(vehicle)
+            );
         }
 
         this.lastVehicleVelocity = vehicleVelocity;
         this.lastVehiclePosition = vehiclePosition;
         this.lastVehicleSpeed = vehicleSpeed;
+    }
+
+    private getPlayersInVehicle(vehicle: number): number[] {
+        const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
+        const players = [];
+
+        for (let i = -1; i < maxSeats - 1; i++) {
+            const ped = GetPedInVehicleSeat(vehicle, i);
+
+            if (ped && IsPedAPlayer(ped)) {
+                players.push(GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped)));
+            }
+        }
+
+        return players;
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_ROUTE_EJECTION)
+    async handleVehicleEjection(vehicleNetworkId: number, gStrength: number, velocity: Vector3) {
+        const vehicleEjection = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const ped = PlayerPedId();
+        const vehiclePedIsIn = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicleEjection || vehicleEjection !== vehiclePedIsIn) {
+            return;
+        }
+
+        if (gStrength > THRESHOLD_G_STRENGTH_HARD || (!this.isSeatbeltOn && gStrength > THRESHOLD_G_STRENGTH_SOFT)) {
+            await this.ejectPlayer(ped, vehicleEjection, velocity);
+        }
     }
 
     private async ejectPlayer(ped: number, vehicle: number, velocity: Vector3) {
