@@ -10,7 +10,7 @@ import { ClientEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
 import { Monitor } from '../../shared/monitor';
 import { Zone } from '../../shared/polyzone/box.zone';
-import { toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItems } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
