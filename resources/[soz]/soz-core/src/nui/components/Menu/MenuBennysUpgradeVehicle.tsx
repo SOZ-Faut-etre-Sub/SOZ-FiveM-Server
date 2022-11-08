@@ -195,7 +195,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                 value={category}
                 title={`Type ${title.toLowerCase()}`}
             >
-                <MenuItemSelectOption value={VehicleColorCategory.Metallic}>Méttalisé</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Metallic}>Métallisé</MenuItemSelectOption>
                 <MenuItemSelectOption value={VehicleColorCategory.Classic}>Délavé</MenuItemSelectOption>
                 <MenuItemSelectOption value={VehicleColorCategory.Matte}>Mat</MenuItemSelectOption>
                 <MenuItemSelectOption value={VehicleColorCategory.Pearly}>Brillante</MenuItemSelectOption>

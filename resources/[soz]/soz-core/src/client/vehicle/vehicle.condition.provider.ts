@@ -27,7 +27,7 @@ const STOP_ENGINE_THRESHOLD = 50;
 const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
 const ENGINE_MIN_HEALTH = 100.0;
 
-const TIRE_TEMPORARY_REPAIR_DISTANCE = 1000.0;
+const TIRE_TEMPORARY_REPAIR_DISTANCE = 10000.0;
 
 const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
     [VehicleClass.Compacts]: 0.8,
@@ -85,7 +85,7 @@ export class VehicleConditionProvider {
             {
                 icon: 'c:mechanic/reparer.png',
                 label: 'Réparer (kit)',
-                item: 'cleaningkit',
+                item: 'repairkit',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 
@@ -126,6 +126,10 @@ export class VehicleConditionProvider {
         }
 
         const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
+
+        if (!IsEntityAVehicle(vehicle)) {
+            return;
+        }
 
         if (!vehicle) {
             return;
@@ -178,6 +182,10 @@ export class VehicleConditionProvider {
     private async onVehicleSyncCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
+        if (!IsEntityAVehicle(vehicle)) {
+            return;
+        }
+
         if (!NetworkHasControlOfEntity(vehicle)) {
             return;
         }
@@ -200,6 +208,10 @@ export class VehicleConditionProvider {
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!vehicle) {
+            return;
+        }
+
+        if (!IsEntityAVehicle(vehicle)) {
             return;
         }
 
