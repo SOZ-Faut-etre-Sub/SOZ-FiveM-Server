@@ -135,10 +135,10 @@ export class VehicleLockProvider {
             } else {
                 availableSeatIndex = maxSeats;
 
-                for (let i = 0; i < maxSeats; i++) {
-                    if (!useSeat && GetPedInVehicleSeat(vehicle, i) == 0) {
+                for (const seat of seatIndex) {
+                    if (!useSeat && GetPedInVehicleSeat(vehicle, seat) == 0) {
                         useSeat = true;
-                        availableSeatIndex = i;
+                        availableSeatIndex = seat;
                     }
                 }
             }

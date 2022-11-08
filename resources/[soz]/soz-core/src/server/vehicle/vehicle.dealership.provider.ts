@@ -295,6 +295,7 @@ export class VehicleDealershipProvider {
                 job: job,
             },
         });
+        console.log(jobVehicles);
         const vehicles = await this.prismaService.vehicle.findMany({
             where: {
                 model: {
@@ -314,7 +315,7 @@ export class VehicleDealershipProvider {
                 stock: 100,
                 // Use price for job
                 price: jobVehicle.price,
-                name: jobName[job] ? jobName[job] : vehicle.name,
+                name: jobName && jobName[job] ? jobName[job] : vehicle.name,
             };
         });
     }

@@ -139,11 +139,19 @@ export class BennysFlatbedProvider {
 
         // Here we are in a case where we owned the flatbed but not the attached vehicle
         // Duplicate the vehicle and attach it to the flatbed while destroying the original
-        const attachedState = this.vehicleService.getVehicleState(attachedVehicle);
-        const plate = attachedState.plate || GetVehicleNumberPlateText(attachedVehicle);
-        const configuration = await this.vehicleService.getVehicleConfiguration(attachedVehicle);
-        const vehiclePosition = GetEntityCoords(attachedVehicle, true) as Vector4;
-        const model = GetEntityModel(attachedVehicle);
+        const [vehicleDuplicate, duplicateNetworkId] = await this.duplicateVehicle(attachedVehicle);
+
+        this.attachVehicleToFlatbed(vehicle, vehicleDuplicate);
+        Entity(vehicle).state.flatbedAttachedVehicle = duplicateNetworkId;
+    }
+
+    public async duplicateVehicle(vehicleEntityId: number) {
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+        const vehicleState = this.vehicleService.getVehicleState(vehicleEntityId);
+        const plate = vehicleState.plate || GetVehicleNumberPlateText(vehicleEntityId);
+        const configuration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
+        const vehiclePosition = GetEntityCoords(vehicleEntityId, true) as Vector4;
+        const model = GetEntityModel(vehicleEntityId);
 
         const vehicleDuplicate = CreateVehicle(
             model,
@@ -162,16 +170,14 @@ export class BennysFlatbedProvider {
         SetVehicleHasBeenOwnedByPlayer(vehicleDuplicate, true);
         SetVehicleNeedsToBeHotwired(vehicleDuplicate, false);
         SetVehRadioStation(vehicleDuplicate, 'OFF');
-        CopyVehicleDamages(attachedVehicle, vehicleDuplicate);
+        CopyVehicleDamages(vehicleEntityId, vehicleDuplicate);
 
         this.vehicleService.applyVehicleConfiguration(vehicleDuplicate, configuration);
-        this.vehicleService.syncVehicle(vehicleDuplicate, attachedState);
-        SetVehicleNumberPlateText(vehicle, plate);
+        this.vehicleService.syncVehicle(vehicleDuplicate, vehicleState);
+        SetVehicleNumberPlateText(vehicleDuplicate, plate);
+        TriggerServerEvent(ServerEvent.VEHICLE_SWAP, vehicleNetworkId, duplicateNetworkId, vehicleState);
 
-        this.attachVehicleToFlatbed(vehicle, vehicleDuplicate);
-        Entity(vehicle).state.flatbedAttachedVehicle = duplicateNetworkId;
-
-        TriggerServerEvent(ServerEvent.VEHICLE_SWAP, attachedNetworkId, duplicateNetworkId, attachedState);
+        return [vehicleDuplicate, duplicateNetworkId];
     }
 
     public detachVehicle(flatbed: number) {
@@ -203,7 +209,7 @@ export class BennysFlatbedProvider {
         this.notifier.notify('Le véhicule a été détaché du flatbed.');
     }
 
-    public attachVehicle(vehicle: number) {
+    public async attachVehicle(vehicle: number) {
         if (vehicle === this.currentFlatbed) {
             this.notifier.notify('Vous ne pouvez pas attacher le flatbed à lui-même.', 'error');
 
@@ -222,20 +228,21 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        this.attachVehicleToFlatbed(this.currentFlatbed, vehicle);
+        const [vehicleDuplicate, vehicleDuplicateNetworkId] = await this.duplicateVehicle(vehicle);
+
+        this.attachVehicleToFlatbed(this.currentFlatbed, vehicleDuplicate);
 
         this.soundService.play('seatbelt/buckle', 0.2);
         this.notifier.notify('Le véhicule a été attaché au flatbed.');
 
         const vehicleFlatbedNetworkId = NetworkGetNetworkIdFromEntity(this.currentFlatbed);
-        const vehicleAttachedNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         this.currentFlatbed = null;
 
         TriggerServerEvent(
             ServerEvent.BENNYS_FLATBED_ATTACH_VEHICLE,
             vehicleFlatbedNetworkId,
-            vehicleAttachedNetworkId
+            vehicleDuplicateNetworkId
         );
     }
 
