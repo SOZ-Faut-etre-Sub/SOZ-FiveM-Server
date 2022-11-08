@@ -76,7 +76,7 @@ export const NoteForm: React.FC = () => {
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
             >
-                <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                     <Menu.Item>
                         <Button
                             className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"

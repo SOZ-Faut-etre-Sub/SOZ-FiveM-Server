@@ -19,7 +19,7 @@ export const TextField = forwardRef<HTMLInputElement, any>((props, ref) => {
             ref={ref}
             {...props}
             className={cn('w-full rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none', props.className, {
-                'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
+                'bg-ios-700 text-white': config.theme.value === 'dark',
                 'bg-gray-300 text-black': config.theme.value === 'light',
             })}
             onFocus={e => {
@@ -48,7 +48,7 @@ export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => {
                 'w-full h-full resize-none my-4 rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none',
                 props.className,
                 {
-                    'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
+                    'bg-ios-700 text-white': config.theme.value === 'dark',
                     'bg-gray-300 text-black': config.theme.value === 'light',
                 }
             )}

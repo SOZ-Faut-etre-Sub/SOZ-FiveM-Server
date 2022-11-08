@@ -139,7 +139,7 @@ const ContactsInfoPage: React.FC = () => {
                                     className={cn(
                                         'flex flex-col justify-center items-center text-red-500 rounded-xl p-3 cursor-pointer',
                                         {
-                                            'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                            'bg-ios-700': config.theme.value === 'dark',
                                             'bg-white': config.theme.value === 'light',
                                         }
                                     )}
@@ -159,7 +159,7 @@ const ContactsInfoPage: React.FC = () => {
                     <div className="mt-6">
                         <div
                             className={cn('rounded-lg my-2', {
-                                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                'bg-ios-700': config.theme.value === 'dark',
                                 'bg-ios-50': config.theme.value === 'light',
                             })}
                         >
@@ -172,14 +172,14 @@ const ContactsInfoPage: React.FC = () => {
                         </div>
                         <div
                             className={cn('rounded-lg my-2', {
-                                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                                'bg-ios-700': config.theme.value === 'dark',
                                 'bg-ios-50': config.theme.value === 'light',
                             })}
                         >
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
                             <NumberFormat
                                 className={cn('w-full rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none', {
-                                    'bg-[#1C1C1E] text-white': config.theme.value === 'dark',
+                                    'bg-ios-700 text-white': config.theme.value === 'dark',
                                     'bg-gray-300 text-black': config.theme.value === 'light',
                                 })}
                                 format="###-####"

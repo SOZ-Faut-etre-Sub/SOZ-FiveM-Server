@@ -56,7 +56,7 @@ export const ContactList: React.FC = () => {
                         <div key={letter} className="relative">
                             <div
                                 className={cn('sticky top-0 pt-4 px-6 py-1 text-sm font-medium', {
-                                    'bg-black text-gray-400': config.theme.value === 'dark',
+                                    'bg-ios-800 text-gray-400': config.theme.value === 'dark',
                                     'bg-ios-50 text-gray-600': config.theme.value === 'light',
                                 })}
                             >
@@ -74,14 +74,14 @@ export const ContactList: React.FC = () => {
                                         <li
                                             key={contact.id}
                                             className={cn('w-full cursor-pointer', {
-                                                'bg-black': config.theme.value === 'dark',
+                                                'bg-ios-800': config.theme.value === 'dark',
                                                 'bg-ios-50': config.theme.value === 'light',
                                             })}
                                             onClick={() => openContactInfo(contact.id)}
                                         >
                                             <div
                                                 className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                                    'hover:bg-gray-900': config.theme.value === 'dark',
+                                                    'hover:bg-ios-600': config.theme.value === 'dark',
                                                     'hover:bg-gray-200': config.theme.value === 'light',
                                                 })}
                                             >

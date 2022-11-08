@@ -4,7 +4,7 @@ export const Alert: React.FC<any> = forwardRef((props, ref) => {
     return (
         <div
             ref={ref}
-            className="flex items-center mx-10 px-4 py-2 bg-black bg-opacity-70 text-gray-300 shadow-md rounded-lg "
+            className="flex items-center mx-10 px-4 py-2 bg-ios-800 bg-opacity-70 text-gray-300 shadow-md rounded-lg "
             {...props}
         >
             <div

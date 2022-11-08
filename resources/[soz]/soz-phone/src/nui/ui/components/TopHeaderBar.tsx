@@ -44,9 +44,9 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
             }
             return 'text-white';
         } else if (pathname.includes('/camera')) {
-            return 'bg-black text-white';
+            return 'bg-ios-800 text-white';
         } else {
-            return config.theme.value === 'dark' ? 'bg-black text-white' : 'bg-ios-50 text-black';
+            return config.theme.value === 'dark' ? 'bg-ios-800 text-white' : 'bg-ios-50 text-black';
         }
     };
 
@@ -87,7 +87,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                 leaveFrom="translate-y-0"
                 leaveTo="-translate-y-full"
             >
-                <div className="h-full bg-black bg-opacity-60 backdrop-blur text-white flex flex-col items-center">
+                <div className="h-full bg-ios-800 bg-opacity-60 backdrop-blur text-white flex flex-col items-center">
                     <div className="my-20 font-light text-6xl">{time}</div>
                     <ul className="divide-y divide-gray-600 w-4/5 overflow-y-scroll">
                         {callModal && (

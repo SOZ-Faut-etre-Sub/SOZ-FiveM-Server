@@ -39,7 +39,7 @@ export function PictureModal({ open, setOpen, children }) {
                                 className={cn(
                                     'relative transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 w-full max-w-[90%] sm:p-6',
                                     {
-                                        'bg-black': config.theme.value === 'dark',
+                                        'bg-ios-800': config.theme.value === 'dark',
                                         'bg-ios-50': config.theme.value === 'light',
                                     }
                                 )}
@@ -50,7 +50,7 @@ export function PictureModal({ open, setOpen, children }) {
                                         className={cn(
                                             'rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
                                             {
-                                                'bg-black': config.theme.value === 'dark',
+                                                'bg-ios-800': config.theme.value === 'dark',
                                                 'bg-ios-50': config.theme.value === 'light',
                                             }
                                         )}

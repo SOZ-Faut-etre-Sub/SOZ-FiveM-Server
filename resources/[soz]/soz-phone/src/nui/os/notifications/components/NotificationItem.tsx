@@ -20,7 +20,7 @@ export const NotificationItem = ({
 
     return (
         <li
-            className={`cursor-pointer py-2 px-4 flex justify-between items-center hover:bg-black hover:bg-opacity-25 text-white text-sm`}
+            className={`cursor-pointer py-2 px-4 flex justify-between items-center hover:bg-ios-800 hover:bg-opacity-25 text-white text-sm`}
             onClick={e => {
                 if (onClick) {
                     onClick(notification);

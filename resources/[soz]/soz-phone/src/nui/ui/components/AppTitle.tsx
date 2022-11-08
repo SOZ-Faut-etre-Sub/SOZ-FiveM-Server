@@ -21,7 +21,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
     return (
         <div
             className={cn('px-5 transition-all duration-300 ease-in-out pb-2', {
-                'bg-black': config.theme.value === 'dark' || pathname.includes('/camera'),
+                'bg-ios-800': config.theme.value === 'dark' || pathname.includes('/camera'),
                 'bg-ios-50': config.theme.value === 'light' && !pathname.includes('/camera'),
             })}
         >

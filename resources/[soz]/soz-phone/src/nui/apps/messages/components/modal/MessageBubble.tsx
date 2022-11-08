@@ -44,7 +44,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         if (isMine) {
             return 'bg-[#32CA5B] text-white';
         } else {
-            return config.theme.value === 'dark' ? 'bg-[#26252A] text-white' : 'bg-[#E9E9EB] text-dark';
+            return config.theme.value === 'dark' ? 'bg-ios-700 text-white' : 'bg-[#E9E9EB] text-dark';
         }
     };
 

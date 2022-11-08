@@ -67,15 +67,15 @@ const MessagesList = (): any => {
                     <Menu
                         key={message.id}
                         as="li"
-                        className={cn('w-full rounded-md shadow', {
-                            'bg-gray-900': config.theme.value === 'dark',
+                        className={cn('w-full rounded-md shadow border-none', {
+                            'bg-ios-700': config.theme.value === 'dark',
                             'bg-white': config.theme.value === 'light',
                         })}
                     >
                         <Menu.Button className="w-full">
                             <div
-                                className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                    'hover:bg-gray-800': config.theme.value === 'dark',
+                                className={cn('relative px-6 py-2 flex items-center space-x-3 rounded-md', {
+                                    'hover:bg-ios-600': config.theme.value === 'dark',
                                     'hover:bg-gray-300': config.theme.value === 'light',
                                 })}
                             >
@@ -113,7 +113,7 @@ const MessagesList = (): any => {
                             leaveTo="transform scale-95 opacity-0"
                             className="absolute z-30 right-0"
                         >
-                            <Menu.Items className="w-56 mt-2 origin-top-right bg-gray-900 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                            <Menu.Items className="w-56 mt-2 origin-top-right bg-ios-600 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                                 {message.isTaken ? (
                                     !message.isDone && (
                                         <Button

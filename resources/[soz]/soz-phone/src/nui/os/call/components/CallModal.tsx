@@ -36,7 +36,7 @@ export const CallModal: React.FC = () => {
     if (!call) return null;
 
     return (
-        <FullPageWithHeader className="bg-black bg-opacity-30 backdrop-blur">
+        <FullPageWithHeader className="bg-ios-800 bg-opacity-30 backdrop-blur">
             <AppWrapper>
                 <AppContent>
                     <CallContactContainer />

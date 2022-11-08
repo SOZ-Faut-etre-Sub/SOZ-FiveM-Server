@@ -18,7 +18,7 @@ const DialogForm: React.FC<DialogFormProps> = ({ children, handleClose, onSubmit
     return (
         <div
             className={cn('text-center rounded-[.8rem] mx-10', {
-                'bg-black bg-opacity-75 text-white': config.theme.value === 'dark',
+                'bg-ios-800 bg-opacity-75 text-white': config.theme.value === 'dark',
                 'bg-white bg-opacity-75 text-black': config.theme.value === 'light',
             })}
         >
