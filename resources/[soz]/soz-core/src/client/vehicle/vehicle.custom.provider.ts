@@ -132,11 +132,23 @@ export class VehicleCustomProvider {
         const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
-        let price = 0;
+        if (usePricing && (!vehicle || !vehicle.price)) {
+            this.notifier.notify(
+                "Cette voiture n'est pas enregistré auprès des autorités et ne peut donc pas être modifiée, veuillez prendre contact avec les autorités.",
+                'error'
+            );
 
-        if (usePricing && vehicle) {
-            price = getVehicleCustomPrice(vehicle.price, options, originalConfiguration, vehicleConfiguration);
+            SetVehicleUndriveable(vehicleEntityId, false);
+
+            this.vehicleService.applyVehicleConfiguration(vehicleEntityId, originalConfiguration);
+            this.nuiMenu.closeMenu();
+
+            return;
         }
+
+        const price = usePricing
+            ? getVehicleCustomPrice(vehicle.price, options, originalConfiguration, vehicleConfiguration)
+            : 0;
 
         const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
             RpcEvent.VEHICLE_CUSTOM_SET_MODS,
@@ -156,7 +168,7 @@ export class VehicleCustomProvider {
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
         const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
 
-        if (!vehicle) {
+        if (!vehicle || !vehicle.price) {
             this.notifier.notify(
                 "Cette voiture n'est pas enregistré auprès des autorités et ne peut donc pas être modifiée, veuillez prendre contact avec les autorités.",
                 'error'
