@@ -744,8 +744,8 @@ export const MenuItemSelectOptionBox: FunctionComponent<MenuItemSelectOptionProp
             ref={handleRefSet}
             className={cn('border-2 rounded-sm p-2 truncate mr-2', {
                 hidden: !show,
-                'border-lime-600': selected,
-                'border-white/10': !selected,
+                'border-white': selected,
+                'border-white/20': !selected,
                 'text-white': isInitialValue,
                 'text-white/50': !isInitialValue,
             })}
