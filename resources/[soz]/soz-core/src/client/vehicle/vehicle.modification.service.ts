@@ -15,8 +15,11 @@ import { ResourceLoader } from '../resources/resource.loader';
 const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.Spoiler]: 'Aileron',
     [VehicleModType.BumperFront]: 'Pare-chocs avant',
+    [VehicleModType.BumperRear]: 'Pare-chocs arrière',
+    [VehicleModType.Exhaust]: "Pot d'échappement",
     [VehicleModType.SideSkirt]: 'Bas de caisse',
     [VehicleModType.Hood]: 'Capot',
+    [VehicleModType.Roof]: 'Toit',
     [VehicleModType.TyreSmoke]: 'Fumée de pneu',
     [VehicleModType.XenonHeadlights]: 'Phares au xénon',
 };
@@ -133,6 +136,18 @@ export const getModTypeName = (vehicleEntityId: number, mod: VehicleModType): st
             return GetLabelText('CMM_MOD_S21');
         case VehicleModType.Livery:
             return GetLabelText('CMM_MOD_S23');
+
+        case VehicleModType.BumperFront:
+            if (model === GetHashKey('toros')) {
+                return ModTypeLabels[VehicleModType.Spoiler];
+            }
+            break;
+
+        case VehicleModType.Spoiler:
+            if (model === GetHashKey('toros')) {
+                return ModTypeLabels[VehicleModType.BumperFront];
+            }
+            break;
     }
 
     const name = GetModSlotName(vehicleEntityId, mod);

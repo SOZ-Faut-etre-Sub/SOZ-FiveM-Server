@@ -299,6 +299,10 @@ export class VehicleLockProvider {
             return;
         }
 
+        if (player.metadata.ishandcuffed || player.metadata.isdead) {
+            return;
+        }
+
         const vehicle = this.vehicleService.getClosestVehicle();
 
         if (!vehicle) {
