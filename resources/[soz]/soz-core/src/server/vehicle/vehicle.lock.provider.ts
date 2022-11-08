@@ -1,6 +1,8 @@
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { ServerEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { PlayerService } from '../player/player.service';
 import { VehiclePlayerRepository } from './vehicle.player.repository';
@@ -32,5 +34,16 @@ export class VehicleLockProvider {
         }
 
         return this.vehicleStateService.hasVehicleKey(vehicle.plate, player.citizenid);
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_FORCE_OPEN)
+    async onForceOpen(source: number, vehicleNetworkId: number) {
+        const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const state = this.vehicleStateService.getVehicleState(vehicleEntityId);
+
+        this.vehicleStateService.updateVehicleState(vehicleEntityId, {
+            ...state,
+            forced: true,
+        });
     }
 }

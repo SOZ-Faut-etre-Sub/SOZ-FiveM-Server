@@ -1,13 +1,14 @@
-import { OnEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { StateBagHandler } from '../../core/decorators/state';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
 import { VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
+import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
 
 type VehicleStatus = {
@@ -25,6 +26,8 @@ const STOP_ENGINE_THRESHOLD = 50;
 
 const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
 const ENGINE_MIN_HEALTH = 100.0;
+
+const TIRE_TEMPORARY_REPAIR_DISTANCE = 1000.0;
 
 const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
     [VehicleClass.Compacts]: 0.8,
@@ -56,7 +59,57 @@ export class VehicleConditionProvider {
     @Inject(VehicleService)
     private vehicleService: VehicleService;
 
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
+
     private currentVehicleStatus: VehicleStatus | null = null;
+
+    private currentVehiclePosition: Vector3 | null = null;
+
+    @Once(OnceStep.PlayerLoaded)
+    public async init() {
+        this.targetFactory.createForAllVehicle([
+            {
+                icon: 'c:mechanic/nettoyer.png',
+                label: 'Laver (kit)',
+                item: 'cleaningkit',
+                action: entity => {
+                    const networkId = NetworkGetNetworkIdFromEntity(entity);
+
+                    TriggerServerEvent(ServerEvent.VEHICLE_USE_CLEANING_KIT, networkId);
+                },
+                canInteract: () => {
+                    return true;
+                },
+            },
+            {
+                icon: 'c:mechanic/reparer.png',
+                label: 'Réparer (kit)',
+                item: 'cleaningkit',
+                action: entity => {
+                    const networkId = NetworkGetNetworkIdFromEntity(entity);
+
+                    TriggerServerEvent(ServerEvent.VEHICLE_USE_REPAIR_KIT, networkId);
+                },
+                canInteract: () => {
+                    return true;
+                },
+            },
+            {
+                icon: 'c:mechanic/reparer.png',
+                label: 'Anti crevaison (kit)',
+                item: 'wheel_kit',
+                action: entity => {
+                    const networkId = NetworkGetNetworkIdFromEntity(entity);
+
+                    TriggerServerEvent(ServerEvent.VEHICLE_USE_WHEEL_KIT, networkId);
+                },
+                canInteract: () => {
+                    return true;
+                },
+            },
+        ]);
+    }
 
     @StateBagHandler('condition', null)
     private async onVehicleConditionChange(bag: string, key: string, value: VehicleCondition) {
@@ -329,5 +382,60 @@ export class VehicleConditionProvider {
             this.currentVehicleStatus.tankHealth = lastVehicleStatus.tankHealth - tankHealthDiff;
             SetVehiclePetrolTankHealth(vehicle, this.currentVehicleStatus.tankHealth);
         }
+    }
+
+    @Tick(500)
+    public checkVehicleTireRepair() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            this.currentVehiclePosition = null;
+
+            return;
+        }
+
+        if (!NetworkHasControlOfEntity(vehicle)) {
+            this.currentVehiclePosition = null;
+
+            return;
+        }
+
+        const state = this.vehicleService.getVehicleState(vehicle);
+        const keys = Object.keys(state.condition.tireTemporaryRepairDistance).map(key => parseInt(key, 10));
+
+        if (keys.length === 0) {
+            this.currentVehiclePosition = null;
+
+            return;
+        }
+
+        const lastVehiclePosition = this.currentVehiclePosition;
+        this.currentVehiclePosition = GetEntityCoords(vehicle, true) as Vector3;
+
+        if (lastVehiclePosition === null) {
+            return;
+        }
+
+        const diffDistance = getDistance(lastVehiclePosition, this.currentVehiclePosition);
+        const newCondition = {
+            ...state.condition,
+        };
+
+        for (const tireKey of keys) {
+            const distance = newCondition.tireTemporaryRepairDistance[tireKey] + diffDistance;
+
+            if (distance < TIRE_TEMPORARY_REPAIR_DISTANCE) {
+                newCondition.tireTemporaryRepairDistance[tireKey] = distance;
+            } else {
+                delete newCondition.tireTemporaryRepairDistance[tireKey];
+                newCondition.tireBurstCompletely[tireKey] = true;
+            }
+        }
+
+        this.vehicleService.updateVehicleState(vehicle, {
+            condition: newCondition,
+        });
+        this.vehicleService.applyVehicleCondition(vehicle, newCondition);
     }
 }

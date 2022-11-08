@@ -15,7 +15,10 @@ export enum ServerEvent {
     BENNYS_ESTIMATE_VEHICLE = 'soz-core:server:job:bennys:estimate-vehicle',
     BENNYS_SELL_VEHICLE = 'soz-core:server:job:bennys:sell-vehicle',
     BENNYS_SET_SPECIAL_VEHICLES = 'soz-core:server:bennys:set-special-vehicles',
-    BENNYS_REPAIR_VEHICLE = 'soz-core:server:job:bennys:repair-vehicle',
+    BENNYS_REPAIR_VEHICLE_ENGINE = 'soz-core:server:job:bennys:repair-vehicle-engine',
+    BENNYS_REPAIR_VEHICLE_BODY = 'soz-core:server:job:bennys:repair-vehicle-body',
+    BENNYS_REPAIR_VEHICLE_TANK = 'soz-core:server:job:bennys:repair-vehicle-tank',
+    BENNYS_REPAIR_VEHICLE_WHEEL = 'soz-core:server:job:bennys:repair-vehicle-wheel',
     BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
     BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
 
@@ -109,6 +112,10 @@ export enum ServerEvent {
 
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
+    VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
+    VEHICLE_USE_CLEANING_KIT = 'soz-core:server:vehicle:use-cleaning-kit',
+    VEHICLE_USE_WHEEL_KIT = 'soz-core:server:vehicle:use-wheel-kit',
+    VEHICLE_FORCE_OPEN = 'soz-core:server:vehicle:force-open',
     VEHICLE_SET_CLOSEST = 'soz-core:server:vehicle:set-closest',
     VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
     VEHICLE_SWAP = 'soz-core:server:vehicle:swaped',

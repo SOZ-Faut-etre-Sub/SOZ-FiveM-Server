@@ -2,7 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { JobPermission } from '../../../shared/job';
+import { JobPermission, JobType } from '../../../shared/job';
 import { PlayerService } from '../../player/player.service';
 import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
@@ -24,7 +24,8 @@ export class BennysEstimateProvider {
             {
                 label: 'Estimer',
                 icon: 'c:/mechanic/estimate.png',
-                job: 'bennys',
+                job: JobType.Bennys,
+                color: JobType.Bennys,
                 canInteract: () => {
                     return (
                         this.playerService.isOnDuty() &&

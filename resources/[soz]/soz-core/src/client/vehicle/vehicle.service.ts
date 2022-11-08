@@ -124,19 +124,19 @@ export class VehicleService {
             SetVehicleDeformationFixed(vehicle);
         }
 
-        for (const [key, value] of Object.entries(condition.tireHealth)) {
-            SetVehicleWheelHealth(vehicle, parseInt(key, 10), value);
+        const wheelNumber = GetVehicleNumberOfWheels(vehicle);
+
+        for (let i = 0; i < wheelNumber; i++) {
+            SetVehicleWheelHealth(vehicle, i, condition.tireHealth[i] || 1000.0);
         }
 
-        for (const [key, value] of Object.entries(condition.tireBurstState)) {
-            if (value) {
-                SetVehicleTyreBurst(vehicle, parseInt(key, 10), false, 1000);
-            }
-        }
-
-        for (const [key, value] of Object.entries(condition.tireBurstCompletely)) {
-            if (value) {
-                SetVehicleTyreBurst(vehicle, parseInt(key, 10), true, 1000);
+        for (let i = 0; i < wheelNumber; i++) {
+            if (condition.tireBurstCompletely[i]) {
+                SetVehicleTyreBurst(vehicle, i, true, 1000.0);
+            } else if (condition.tireBurstState[i]) {
+                SetVehicleTyreBurst(vehicle, i, false, condition.tireHealth[i] || 1000.0);
+            } else {
+                SetVehicleTyreFixed(vehicle, i);
             }
         }
 
@@ -159,16 +159,17 @@ export class VehicleService {
         const tireBurstCompletely = {};
         const windowStatus = {};
         const doorStatus = {};
+        const wheelNumber = GetVehicleNumberOfWheels(vehicle);
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < wheelNumber; i++) {
             tireHealth[i] = GetVehicleWheelHealth(vehicle, i);
         }
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < wheelNumber; i++) {
             tireBurstState[i] = IsVehicleTyreBurst(vehicle, i, false);
         }
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < wheelNumber; i++) {
             tireBurstCompletely[i] = IsVehicleTyreBurst(vehicle, i, true);
         }
 
