@@ -153,7 +153,7 @@ class _MessagesService {
                         conversation_id: messageData.conversationId,
                         phoneNumber: participantId,
                         updatedAt: new Date().getTime(),
-                        unread: 1,
+                        unread: 0,
                     });
                 }
             }
