@@ -50,7 +50,7 @@ export const HomeApp: FunctionComponent = () => {
                     <Grid
                         rows={1}
                         className={cn('bg-opacity-25 rounded-[20px] p-1.5', {
-                            'bg-black': config.theme.value === 'dark',
+                            'bg-ios-800': config.theme.value === 'dark',
                             'bg-ios-50': config.theme.value === 'light',
                         })}
                     >

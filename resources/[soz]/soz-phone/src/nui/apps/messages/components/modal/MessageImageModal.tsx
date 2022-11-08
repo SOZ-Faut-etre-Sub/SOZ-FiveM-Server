@@ -53,7 +53,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
             >
-                <ul className="absolute z-30 left-5 bottom-0 w-80 mt-2 origin-bottom-left bg-black bg-opacity-80 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                <ul className="absolute z-30 left-5 bottom-0 w-80 mt-2 origin-bottom-left bg-ios-800 bg-opacity-80 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                     <li>
                         <Button
                             className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-400"

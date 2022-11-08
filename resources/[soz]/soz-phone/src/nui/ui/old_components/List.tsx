@@ -9,7 +9,7 @@ export const List = ({ ...props }) => {
     return (
         <div
             className={cn('mx-2 my-4 shadow overflow-y-auto rounded-[.8rem]', {
-                'bg-[#1C1C1E]': config.theme.value === 'dark',
+                'bg-ios-700': config.theme.value === 'dark',
                 'bg-white': config.theme.value === 'light',
             })}
         >

@@ -20,7 +20,7 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
         return (
             <li
                 className={cn('w-full my-3 rounded shadow border-l-4', {
-                    'bg-[#1C1C1E]': config.theme.value === 'dark',
+                    'bg-ios-700': config.theme.value === 'dark',
                     'bg-white': config.theme.value === 'light',
                     'border-[#3336E1]': isLSPDMessage(type),
                     'border-[#2d5547]': isBCSOMessage(type),

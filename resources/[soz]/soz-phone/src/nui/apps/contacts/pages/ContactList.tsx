@@ -82,7 +82,7 @@ export const ContactList: React.FC = () => {
                         <div key={letter} className="relative">
                             <div
                                 className={cn('sticky top-0 pt-4 px-6 py-1 text-sm font-medium', {
-                                    'bg-black text-gray-400': config.theme.value === 'dark',
+                                    'bg-ios-800 text-gray-400': config.theme.value === 'dark',
                                     'bg-ios-50 text-gray-600': config.theme.value === 'light',
                                 })}
                             >
@@ -101,14 +101,14 @@ export const ContactList: React.FC = () => {
                                             key={contact.id}
                                             as="li"
                                             className={cn('w-full cursor-pointer', {
-                                                'bg-black': config.theme.value === 'dark',
+                                                'bg-ios-800': config.theme.value === 'dark',
                                                 'bg-ios-50': config.theme.value === 'light',
                                             })}
                                         >
                                             <Menu.Button className="w-full">
                                                 <div
                                                     className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                                        'hover:bg-gray-900': config.theme.value === 'dark',
+                                                        'hover:bg-ios-600': config.theme.value === 'dark',
                                                         'hover:bg-gray-200': config.theme.value === 'light',
                                                     })}
                                                 >
@@ -137,7 +137,7 @@ export const ContactList: React.FC = () => {
                                                 leaveTo="transform scale-95 opacity-0"
                                                 className="absolute z-50 right-0 w-56"
                                             >
-                                                <Menu.Items className="mt-2 origin-top-right bg-black bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                                                <Menu.Items className="mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
                                                     <Menu.Item>
                                                         <Button
                                                             className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"

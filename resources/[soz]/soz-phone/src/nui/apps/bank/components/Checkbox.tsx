@@ -26,7 +26,7 @@ export const Checkbox = memo(({ title, enabled }: Props) => {
                     'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200',
                     {
                         'bg-indigo-600': enabled,
-                        'bg-gray-700': !enabled && config.theme.value === 'dark',
+                        'bg-ios-700': !enabled && config.theme.value === 'dark',
                         'bg-gray-300': !enabled && config.theme.value === 'light',
                     }
                 )}
