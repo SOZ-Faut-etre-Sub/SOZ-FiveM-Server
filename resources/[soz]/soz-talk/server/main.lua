@@ -26,6 +26,7 @@ AddEventHandler("entityCreating", function(handle)
     local entityModel = GetEntityModel(handle)
 
     if Config.AllowedRadioInVehicle[entityModel] then
+        print("ADD RADIO");
         Entity(handle).state:set("hasRadio", true, true)
 
         Entity(handle).state:set("radioInUse", false, true)

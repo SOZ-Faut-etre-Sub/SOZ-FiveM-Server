@@ -149,8 +149,9 @@ export class VehicleMenuProvider {
         }
 
         const vehicleState = this.vehicleService.getVehicleState(vehicle);
+        const hasRadio = Entity(vehicle).state.hasRadio || false;
 
-        if (isCopilot && !vehicleState.hasRadio) {
+        if (isCopilot && !hasRadio) {
             return;
         }
 
@@ -172,7 +173,7 @@ export class VehicleMenuProvider {
             engineOn: GetIsVehicleEngineRunning(vehicle),
             speedLimit: vehicleState.speedLimit,
             doorStatus,
-            hasRadio: vehicleState.hasRadio,
+            hasRadio,
             insideLSCustom: this.vehicleCustomProvider.isPedInsideCustomZone(),
             permission: isAllowed ? permission : null,
         });

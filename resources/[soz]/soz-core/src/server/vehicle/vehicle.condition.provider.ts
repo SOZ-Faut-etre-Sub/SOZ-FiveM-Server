@@ -3,7 +3,8 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { Monitor } from '../../shared/monitor';
+import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../item/inventory.manager';
@@ -31,6 +32,9 @@ export class VehicleConditionProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Tick(TickInterval.EVERY_SECOND)
     public updateVehiclesCondition() {
@@ -200,8 +204,8 @@ export class VehicleConditionProvider {
     }
 
     @OnEvent(ServerEvent.VEHICLE_SET_DEAD)
-    public onVehicleDead(source: number, vehicleId: number) {
-        this.prismaService.playerVehicle.update({
+    public async onVehicleDead(source: number, vehicleId: number, reason: string) {
+        const vehicle = await this.prismaService.playerVehicle.update({
             where: {
                 id: vehicleId,
             },
@@ -209,6 +213,18 @@ export class VehicleConditionProvider {
                 state: PlayerVehicleState.Destroyed,
             },
         });
+
+        this.monitor.publish(
+            'vehicle_destroy',
+            {
+                player_source: source,
+                vehicle_plate: vehicle.plate,
+            },
+            {
+                reason,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 
     @OnEvent(ServerEvent.VEHICLE_WASH)
@@ -251,8 +267,6 @@ export class VehicleConditionProvider {
         velocity: Vector3,
         players: number[]
     ) {
-        console.log('VEHICLE_ROUTE_EJECTION', source, vehicleId, strength, velocity, players);
-
         for (const player of players) {
             TriggerClientEvent(ClientEvent.VEHICLE_ROUTE_EJECTION, player, vehicleId, strength, velocity);
         }

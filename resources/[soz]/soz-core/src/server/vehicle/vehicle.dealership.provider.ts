@@ -8,12 +8,13 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
+import { Monitor } from '../../shared/monitor';
 import { Zone } from '../../shared/polyzone/box.zone';
-import { Vector4 } from '../../shared/polyzone/vector';
+import { toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItems } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
-import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, Vehicle } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
@@ -46,6 +47,9 @@ export class VehicleDealershipProvider {
 
     @Inject(LockService)
     private lockService: LockService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private auctions: Record<string, AuctionVehicle> = {};
 
@@ -409,7 +413,7 @@ export class VehicleDealershipProvider {
                         },
                     });
 
-                    livery = vehicleJob?.liverytype || 0;
+                    livery = vehicleJob?.liverytype || null;
                 }
 
                 const plate =
@@ -418,16 +422,18 @@ export class VehicleDealershipProvider {
                         : await this.vehicleService.generatePlate();
                 const nowInSeconds = Math.round(Date.now() / 1000);
 
+                const configuration: VehicleConfiguration = {
+                    ...getDefaultVehicleConfiguration(),
+                    livery,
+                };
+
                 const playerVehicle = await this.prismaService.playerVehicle.create({
                     data: {
                         license: player.license,
                         citizenid: player.citizenid,
                         vehicle: vehicle.model,
                         hash: vehicle.hash.toString(),
-                        mods: JSON.stringify({
-                            ...getDefaultVehicleConfiguration(),
-                            modLivery: livery,
-                        }),
+                        mods: JSON.stringify(configuration),
                         condition: JSON.stringify(getDefaultVehicleCondition()),
                         garage: dealershipId !== DealershipType.Job && dealership ? dealership.garageName : null,
                         plate,
@@ -440,6 +446,19 @@ export class VehicleDealershipProvider {
                         parkingtime: nowInSeconds,
                     },
                 });
+
+                this.monitor.publish(
+                    'vehicle_buy',
+                    {
+                        player_source: source,
+                        buy_type: dealershipId === DealershipType.Job ? 'job' : 'citizen',
+                    },
+                    {
+                        price: vehicle.price,
+                        vehicle_model: vehicle.model,
+                        vehicle_plate: playerVehicle.plate,
+                    }
+                );
 
                 await this.prismaService.player_purchases.create({
                     data: {
