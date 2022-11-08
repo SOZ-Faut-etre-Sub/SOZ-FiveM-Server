@@ -58,6 +58,7 @@ const MenuItemSelectContext = createContext<{
     setDescription: (description: string | null) => void;
     activeValue: any;
     distance: number;
+    showAllOptions: boolean;
 }>({
     activeOptionIndex: 0,
     setActiveOptionIndex: () => {},
@@ -65,6 +66,7 @@ const MenuItemSelectContext = createContext<{
     setDescription: () => {},
     activeValue: null,
     distance: 0,
+    showAllOptions: false,
 });
 const MenuTypeContext = createContext<MenuType | null>(null);
 
@@ -290,6 +292,7 @@ type MenuItemButtonProps = PropsWithChildren<{
     onSelected?: () => void;
     disabled?: boolean;
     selectable?: boolean;
+    className?: string;
 }>;
 
 export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
@@ -298,6 +301,7 @@ export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
     onSelected,
     disabled = false,
     selectable = null,
+    className = null,
 }) => {
     return (
         <MenuItemContainer
@@ -305,6 +309,7 @@ export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
             onConfirm={onConfirm}
             disabled={disabled}
             selectable={selectable === null ? !disabled : selectable}
+            className={className}
         >
             {children}
         </MenuItemContainer>
@@ -395,7 +400,8 @@ type MenuSelectControlsProps = PropsWithChildren<{
 }>;
 
 const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChange, children }) => {
-    const { activeOptionIndex, setActiveOptionIndex, setActiveValue, activeValue } = useContext(MenuItemSelectContext);
+    const { activeOptionIndex, setActiveOptionIndex, setActiveValue, activeValue, showAllOptions } =
+        useContext(MenuItemSelectContext);
     const isItemSelected = useContext(MenuSelectedContext);
     const menuItems = useDescendants(MenuItemSelectDescendantContext);
 
@@ -453,29 +459,33 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
 
     return (
         <div className="flex items-center w-full justify-between">
-            <ChevronLeftIcon
-                onClick={event => {
-                    goLeft();
+            {!showAllOptions && (
+                <ChevronLeftIcon
+                    onClick={event => {
+                        goLeft();
 
-                    event.stopPropagation();
-                }}
-                className="h-5 w-5 p-0.5 mr-2 bg-black/20 rounded-full"
-            />
+                        event.stopPropagation();
+                    }}
+                    className="h-5 w-5 p-0.5 mr-2 bg-black/20 rounded-full"
+                />
+            )}
             <div className="overflow-hidden">{children}</div>
-            <ChevronRightIcon
-                onClick={event => {
-                    goRight();
+            {!showAllOptions && (
+                <ChevronRightIcon
+                    onClick={event => {
+                        goRight();
 
-                    event.stopPropagation();
-                }}
-                className="h-5 w-5 p-0.5 ml-2 bg-black/20 rounded-full"
-            />
+                        event.stopPropagation();
+                    }}
+                    className="h-5 w-5 p-0.5 ml-2 bg-black/20 rounded-full"
+                />
+            )}
         </div>
     );
 };
 
 type MenuItemSelectProps = PropsWithChildren<{
-    title: string;
+    title: string | ReactNode;
     onConfirm?: (index: number, value: any | undefined) => void;
     onSelected?: () => void;
     onChange?: (index: number, value: any) => void;
@@ -483,6 +493,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     value?: any;
     distance?: number;
     keyDescendant?: string | null;
+    showAllOptions?: boolean;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -495,6 +506,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     distance = 0,
     value = null,
     keyDescendant = null,
+    showAllOptions = false,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
@@ -504,6 +516,19 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex, activeValue);
     }, [activeOptionIndex, onConfirm, activeValue]);
+
+    const classNameContainer = cn('flex items-center', {
+        'justify-between': !showAllOptions,
+    });
+
+    const classNameTitle = cn('pr-2 truncate', {
+        'w-[40%]': !showAllOptions,
+    });
+
+    const classNameList = cn({
+        'w-[60%]': !showAllOptions,
+        'ml-4': showAllOptions,
+    });
 
     return (
         <MenuItemContainer onSelected={onSelected} onConfirm={onItemConfirm} disabled={disabled}>
@@ -521,12 +546,13 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                         setActiveValue,
                         activeValue,
                         distance,
+                        showAllOptions,
                     }}
                 >
                     <div className="w-full">
-                        <div className="flex justify-between items-center">
-                            <h3 className="w-[40%] pr-2 truncate">{title}</h3>
-                            <div className="w-[60%]">
+                        <div className={classNameContainer}>
+                            <h3 className={classNameTitle}>{title}</h3>
+                            <div className={classNameList}>
                                 <MenuSelectControls onChange={onChange}>
                                     <ul className="flex">{children}</ul>
                                 </MenuSelectControls>
@@ -631,8 +657,9 @@ const useSelectOption = (
     onSelected?: () => void,
     description?: string,
     helper?: ReactNode
-): [(value) => void, boolean, boolean, (value) => void] => {
-    const { activeOptionIndex, distance, setDescription, setActiveOptionIndex } = useContext(MenuItemSelectContext);
+): [(value) => void, boolean, boolean, (value) => void, boolean] => {
+    const { activeOptionIndex, distance, setDescription, setActiveOptionIndex, showAllOptions, activeValue } =
+        useContext(MenuItemSelectContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
     const handleRefSet = useCallback(refValue => {
@@ -647,10 +674,13 @@ const useSelectOption = (
             helper,
         };
     }, [element]);
+    const isInitialValue = useMemo(() => {
+        return activeValue === value;
+    }, []);
 
     const index = useDescendant(descendant, MenuItemSelectDescendantContext);
     const distanceOfIndex = Math.abs(index - activeOptionIndex);
-    const show = distanceOfIndex <= distance;
+    const show = showAllOptions || distanceOfIndex <= distance;
     const isSelected = distanceOfIndex === 0;
     const onClick = useCallback(() => {
         setActiveOptionIndex(index);
@@ -663,7 +693,7 @@ const useSelectOption = (
         }
     }, [isSelected]);
 
-    return [handleRefSet, show, isSelected, onClick];
+    return [handleRefSet, show, isSelected, onClick, isInitialValue];
 };
 
 type MenuItemSelectOptionProps = PropsWithChildren<{
@@ -687,6 +717,37 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
             ref={handleRefSet}
             className={cn('truncate', {
                 hidden: !show,
+            })}
+            onClick={onClick}
+        >
+            {children}
+        </li>
+    );
+};
+
+export const MenuItemSelectOptionBox: FunctionComponent<MenuItemSelectOptionProps> = ({
+    children,
+    onSelected,
+    value = null,
+    description = null,
+    helper = null,
+}) => {
+    const [handleRefSet, show, selected, onClick, isInitialValue] = useSelectOption(
+        value,
+        onSelected,
+        description,
+        helper
+    );
+
+    return (
+        <li
+            ref={handleRefSet}
+            className={cn('border-2 rounded-sm p-2 truncate mr-2', {
+                hidden: !show,
+                'border-lime-600': selected,
+                'border-white/10': !selected,
+                'text-white': isInitialValue,
+                'text-white/50': !isInitialValue,
             })}
             onClick={onClick}
         >

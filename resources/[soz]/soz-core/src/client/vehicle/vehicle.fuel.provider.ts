@@ -36,7 +36,7 @@ type CurrentStationPistol = {
 };
 
 const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
-    [VehicleClass.Helicopters]: 4.5,
+    [VehicleClass.Helicopters]: 3.8,
 };
 
 @Provider()

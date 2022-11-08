@@ -6,10 +6,60 @@ import {
     getVehicleCustomPrice,
     VehicleConfiguration,
     VehicleCustomMenuData,
+    VehicleModification,
+    VehicleUpgradeChoice,
+    VehicleUpgradeOption,
 } from '../../../shared/vehicle/modification';
 import { fetchNui } from '../../fetch';
-import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
-import { MenuItemVehicleModification } from './MenuBennysUpgradeVehicle';
+import {
+    MainMenu,
+    Menu,
+    MenuContent,
+    MenuItemButton,
+    MenuItemSelect,
+    MenuItemSelectOptionBox,
+    MenuTitle,
+} from '../Styleguide/Menu';
+
+type MenuItemSelectVehicleCustomLevelProps = {
+    image: string;
+    option: VehicleUpgradeOption<VehicleUpgradeChoice>;
+    value: any;
+    onChange: (value: any) => void;
+    title: string;
+};
+
+export const MenuItemSelectVehicleCustomLevel: FunctionComponent<MenuItemSelectVehicleCustomLevelProps> = ({
+    image,
+    value,
+    option,
+    onChange,
+    title,
+}) => {
+    if (!option || option.choice.type === 'toggle') {
+        return null;
+    }
+
+    return (
+        <MenuItemSelect
+            showAllOptions
+            value={value === -1 ? null : value}
+            onChange={(index, value) => onChange(value)}
+            title={
+                <div className="flex items-center w-[9.3em]">
+                    <img alt={image} className="ml-4 w-8 h-8" src={`/public/images/vehicle/${image}.png`} />
+                    <h3 className="ml-2 uppercase">{title}</h3>
+                </div>
+            }
+        >
+            {option.choice.items.map((option, index) => (
+                <MenuItemSelectOptionBox key={index} value={option.value}>
+                    {index === 0 ? 'Origine' : index}
+                </MenuItemSelectOptionBox>
+            ))}
+        </MenuItemSelect>
+    );
+};
 
 type MenuVehicleCustomProps = {
     data?: VehicleCustomMenuData;
@@ -50,54 +100,71 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
         });
     };
 
+    const createOnChange = (key: keyof VehicleModification) => (value: any) => {
+        setConfiguration({
+            ...configuration,
+            modification: {
+                ...configuration.modification,
+                [key]: value,
+            },
+        });
+    };
+
     return (
         <Menu type={MenuType.VehicleCustom}>
             <MainMenu>
                 <MenuTitle banner="https://nui-img/soz/menu_shop_lscustoms">LS Customs</MenuTitle>
                 <MenuContent>
-                    <MenuItemVehicleModification
-                        config={configuration}
-                        modKey="engine"
-                        vehiclePrice={data.vehiclePrice}
-                        set={setConfiguration}
-                        options={data.options}
+                    <MenuItemSelectVehicleCustomLevel
+                        value={configuration.modification.engine}
+                        option={data.options.modification.engine}
+                        image="engine"
+                        title="Moteur"
+                        onChange={createOnChange('engine')}
                     />
-                    <MenuItemVehicleModification
-                        config={configuration}
-                        modKey="brakes"
-                        vehiclePrice={data.vehiclePrice}
-                        set={setConfiguration}
-                        options={data.options}
+                    <MenuItemSelectVehicleCustomLevel
+                        value={configuration.modification.brakes}
+                        option={data.options.modification.brakes}
+                        image="frein"
+                        title="Freins"
+                        onChange={createOnChange('brakes')}
                     />
-                    <MenuItemVehicleModification
-                        config={configuration}
-                        modKey="transmission"
-                        vehiclePrice={data.vehiclePrice}
-                        set={setConfiguration}
-                        options={data.options}
+                    <MenuItemSelectVehicleCustomLevel
+                        value={configuration.modification.transmission}
+                        option={data.options.modification.transmission}
+                        image="transmission"
+                        title="Transmission"
+                        onChange={createOnChange('transmission')}
                     />
-                    <MenuItemVehicleModification
-                        config={configuration}
-                        modKey="suspension"
-                        vehiclePrice={data.vehiclePrice}
-                        set={setConfiguration}
-                        options={data.options}
+                    <MenuItemSelectVehicleCustomLevel
+                        value={configuration.modification.suspension}
+                        option={data.options.modification.suspension}
+                        image="suspenssion"
+                        title="Suspension"
+                        onChange={createOnChange('suspension')}
                     />
-                    <MenuItemVehicleModification
-                        config={configuration}
-                        modKey="armor"
-                        vehiclePrice={data.vehiclePrice}
-                        set={setConfiguration}
-                        options={data.options}
+                    <MenuItemSelectVehicleCustomLevel
+                        value={configuration.modification.armor}
+                        option={data.options.modification.armor}
+                        image="blindage"
+                        title="Blindage"
+                        onChange={createOnChange('armor')}
                     />
-                    <MenuItemVehicleModification
-                        config={configuration}
-                        modKey="turbo"
-                        vehiclePrice={data.vehiclePrice}
-                        set={setConfiguration}
-                        options={data.options}
-                    />
-                    <MenuItemButton onConfirm={() => onConfirm()}>
+                    <MenuItemSelect
+                        value={!!configuration.modification.turbo}
+                        showAllOptions
+                        onChange={(index, value) => createOnChange('turbo')(value)}
+                        title={
+                            <div className="flex items-center w-[9.3rem]">
+                                <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.png" />
+                                <h3 className="ml-2 uppercase">Turbo</h3>
+                            </div>
+                        }
+                    >
+                        <MenuItemSelectOptionBox value={false}>Désactivé</MenuItemSelectOptionBox>
+                        <MenuItemSelectOptionBox value={true}>Activé</MenuItemSelectOptionBox>
+                    </MenuItemSelect>
+                    <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer les changements</span>
                             <span>${price.toFixed(0)}</span>
