@@ -150,7 +150,7 @@ export class VehicleSeatbeltProvider {
         const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
         const players = [];
 
-        for (let i = -1; i < maxSeats - 1; i++) {
+        for (let i = -1; i < maxSeats; i++) {
             const ped = GetPedInVehicleSeat(vehicle, i);
 
             if (ped && IsPedAPlayer(ped)) {
