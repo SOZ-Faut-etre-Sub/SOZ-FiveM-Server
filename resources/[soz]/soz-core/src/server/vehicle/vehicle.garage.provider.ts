@@ -6,7 +6,9 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
 import { JobPermission, JobType } from '../../shared/job';
+import { Monitor } from '../../shared/monitor';
 import { PlayerData } from '../../shared/player';
+import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
@@ -55,6 +57,9 @@ export class VehicleGarageProvider {
 
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Once(OnceStep.DatabaseConnected)
     public async init(): Promise<void> {
@@ -350,6 +355,20 @@ export class VehicleGarageProvider {
         }
 
         if (await this.vehicleSpawner.delete(vehicleNetworkId)) {
+            this.monitor.publish(
+                'vehicle_garage_in',
+                {
+                    player_source: source,
+                    vehicle_plate: vehicle.plate,
+                },
+                {
+                    garage: id,
+                    garage_type: garage.type,
+                    condition: vehicleState.condition,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                }
+            );
+
             // Only sync if vehicle was in correct state otherwise, do not update
             if (vehicle.state === PlayerVehicleState.Out) {
                 await this.prismaService.playerVehicle.update({
@@ -471,6 +490,21 @@ export class VehicleGarageProvider {
                     });
 
                     this.vehicleStateService.addVehicleKey(vehicle.plate, player.citizenid);
+
+                    this.monitor.publish(
+                        'vehicle_garage_out',
+                        {
+                            player_source: source,
+                            vehicle_plate: vehicle.plate,
+                        },
+                        {
+                            garage: id,
+                            garage_type: garage.type,
+                            price,
+                            condition: JSON.parse(vehicle.condition),
+                            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                        }
+                    );
 
                     this.notifier.notify(source, 'Vous avez sorti votre véhicule.', 'success');
                 } else {

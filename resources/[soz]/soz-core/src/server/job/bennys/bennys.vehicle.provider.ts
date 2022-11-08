@@ -2,6 +2,8 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
+import { Monitor } from '../../../shared/monitor';
+import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
@@ -25,6 +27,9 @@ export class BennysVehicleProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_ENGINE)
     public async onRepairVehicleEngine(source: number, vehicleNetworkId: number) {
         const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
@@ -42,6 +47,18 @@ export class BennysVehicleProvider {
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
             engineHealth: 1000,
         });
+
+        this.monitor.publish(
+            'job_bennys_repair_vehicle',
+            {
+                player_source: source,
+                repair_type: 'engine',
+            },
+            {
+                vehicle_plate: state.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_BODY)
@@ -63,6 +80,18 @@ export class BennysVehicleProvider {
             doorStatus: {},
             windowStatus: {},
         });
+
+        this.monitor.publish(
+            'job_bennys_repair_vehicle',
+            {
+                player_source: source,
+                repair_type: 'body',
+            },
+            {
+                vehicle_plate: state.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_TANK)
@@ -82,6 +111,18 @@ export class BennysVehicleProvider {
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
             tankHealth: 1000,
         });
+
+        this.monitor.publish(
+            'job_bennys_repair_vehicle',
+            {
+                player_source: source,
+                repair_type: 'tank',
+            },
+            {
+                vehicle_plate: state.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_WHEEL)
@@ -95,8 +136,6 @@ export class BennysVehicleProvider {
             const health = state.condition.tireBurstCompletely[wheelIndex] ? 0 : state.condition.tireHealth[wheelIndex];
             repairTime += 1000 - health;
         }
-
-        console.log(state.condition);
 
         repairTime *= 30;
 
@@ -114,6 +153,18 @@ export class BennysVehicleProvider {
             tireBurstCompletely: {},
             tireBurstState: {},
         });
+
+        this.monitor.publish(
+            'job_bennys_repair_vehicle',
+            {
+                player_source: source,
+                repair_type: 'wheel',
+            },
+            {
+                vehicle_plate: state.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 
     private async doRepairVehicle(source: number, repairTime: number) {
@@ -150,6 +201,7 @@ export class BennysVehicleProvider {
     @OnEvent(ServerEvent.BENNYS_WASH_VEHICLE)
     public async onWashVehicle(source: number, vehicleNetworkId: number) {
         const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
         const { completed } = await this.progressService.progress(
             source,
             'cleaning_vehicle',
@@ -178,5 +230,16 @@ export class BennysVehicleProvider {
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
             dirtLevel: 0,
         });
+
+        this.monitor.publish(
+            'job_bennys_clean_vehicle',
+            {
+                player_source: source,
+            },
+            {
+                vehicle_plate: state.plate,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 }

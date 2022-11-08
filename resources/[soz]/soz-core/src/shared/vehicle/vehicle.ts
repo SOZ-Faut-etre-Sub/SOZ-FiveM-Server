@@ -95,7 +95,6 @@ export type VehicleEntityState = {
 
     deadInWater: boolean;
     condition: VehicleCondition;
-    hasRadio: boolean;
 };
 
 export enum VehicleClass {
@@ -144,7 +143,6 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     open: false,
     owner: null,
     plate: null,
-    hasRadio: false,
     speedLimit: null,
     deadInWater: false,
     isPlayerVehicle: false,
