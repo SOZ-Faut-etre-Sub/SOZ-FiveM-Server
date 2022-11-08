@@ -43,6 +43,10 @@ RegisterNetEvent("voip:client:call:end", function()
     CallModuleInstance:stopCall()
 end)
 
+RegisterNetEvent("voip:client:call:setMute", function(state)
+    CallModuleInstance:setMutePlayer(source, state)
+end)
+
 RegisterNetEvent("voip:client:radio:transmission:start", function(frequency, serverId, coords, kind)
     if PrimaryLongRadioModuleInstance:onTransmissionStarted(frequency, serverId, coords, kind) then
         PlayRemoteRadioClick(kind, true, Config.volumeRadioPrimaryLong)

@@ -35,6 +35,13 @@ export const simCard = createModel<RootModel>()({
         SET_CALL(state, payload: ActiveCall) {
             return { ...state, call: payload };
         },
+        SET_CALL_MUTE(state, payload: boolean) {
+            if (!state.call) {
+                return state;
+            }
+
+            return { ...state, call: { ...state.call, muted: payload } };
+        },
         SET_CALL_HISTORY(state, payload: CallHistoryItem[]) {
             return { ...state, callHistory: payload };
         },
@@ -119,6 +126,9 @@ export const simCard = createModel<RootModel>()({
     effects: dispatch => ({
         async setCall(payload: ActiveCall) {
             dispatch.simCard.SET_CALL(payload);
+        },
+        async setCallMute(payload: boolean) {
+            dispatch.simCard.SET_CALL_MUTE(payload);
         },
         async setCallHistory(payload: CallHistoryItem[]) {
             dispatch.simCard.SET_CALL_HISTORY(payload);
