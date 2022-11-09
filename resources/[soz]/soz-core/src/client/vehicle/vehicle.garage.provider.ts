@@ -1,9 +1,11 @@
+import { DealershipType } from '../../config/dealership';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -77,6 +79,11 @@ export class VehicleGarageProvider {
 
         for (const garageIdentifier of Object.keys(garageList)) {
             const garage = garageList[garageIdentifier];
+
+            if (!isFeatureEnabled(Feature.Boat) && garage.category === GarageCategory.Sea) {
+                continue;
+            }
+
             const blipConfig = BlipConfigMap[garage.type]?.[garage.category] ?? null;
 
             if (blipConfig) {

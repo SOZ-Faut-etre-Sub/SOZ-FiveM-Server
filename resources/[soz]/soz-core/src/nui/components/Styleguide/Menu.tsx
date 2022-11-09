@@ -99,7 +99,7 @@ export const MainMenu: FunctionComponent<PropsWithChildren> = ({ children }) => 
 };
 
 export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    return <div className="absolute left-8 top-8 w-1/5 min-w-[24rem]">{children}</div>;
+    return <div className="absolute left-8 top-8 w-1/5 min-w-[24rem] select-none">{children}</div>;
 };
 
 export type MenuTitleProps = {

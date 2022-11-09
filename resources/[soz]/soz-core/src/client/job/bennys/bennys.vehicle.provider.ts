@@ -89,7 +89,7 @@ export class BennysVehicleProvider {
 
         this.targetFactory.createForAllVehicle([
             {
-                icon: 'c:mechanic/reparer.png',
+                icon: 'c:mechanic/repair_engine.png',
                 label: 'Réparer moteur',
                 color: 'bennys',
                 action: this.repairVehicleEngine.bind(this),
@@ -139,7 +139,7 @@ export class BennysVehicleProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer.png',
+                icon: 'c:mechanic/repair_tank.png',
                 label: 'Réparer réservoir',
                 color: 'bennys',
                 action: this.repairVehicleTank.bind(this),
@@ -164,7 +164,7 @@ export class BennysVehicleProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer.png',
+                icon: 'c:mechanic/repair_wheel.png',
                 label: 'Changements de roues',
                 color: 'bennys',
                 action: this.repairVehicleWheel.bind(this),
