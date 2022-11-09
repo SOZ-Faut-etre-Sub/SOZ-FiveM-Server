@@ -20,7 +20,7 @@ function ModuleCall:setMutePlayer(callerId, state)
     end
 
     -- Inverse the state because the event is called "setMute" but we want to know if the player is transmitting
-    self.transmitting = state ~= true
+    self.transmitting = not state
 end
 
 function ModuleCall:getSpeakers()
