@@ -111,18 +111,20 @@ export class VehicleService {
         SetVehicleFuelLevel(vehicle, condition.fuelLevel);
         SetVehicleOilLevel(vehicle, condition.oilLevel);
         SetVehicleDirtLevel(vehicle, condition.dirtLevel);
-        SetVehicleBodyHealth(vehicle, condition.bodyHealth);
-        SetVehicleEngineHealth(vehicle, condition.engineHealth);
-        SetVehiclePetrolTankHealth(vehicle, condition.tankHealth);
 
         if (condition.dirtLevel < 0.1) {
             WashDecalsFromVehicle(vehicle, 1.0);
         }
 
+        SetVehicleBodyHealth(vehicle, condition.bodyHealth);
+
         if (condition.bodyHealth > 999.99) {
             SetVehicleFixed(vehicle);
             SetVehicleDeformationFixed(vehicle);
         }
+
+        SetVehicleEngineHealth(vehicle, condition.engineHealth);
+        SetVehiclePetrolTankHealth(vehicle, condition.tankHealth);
 
         const wheelNumber = GetVehicleNumberOfWheels(vehicle);
 

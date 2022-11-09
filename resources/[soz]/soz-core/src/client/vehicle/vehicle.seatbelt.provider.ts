@@ -171,7 +171,7 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
-        if (gStrength > THRESHOLD_G_STRENGTH_HARD || (!this.isSeatbeltOn && gStrength > THRESHOLD_G_STRENGTH_SOFT)) {
+        if (!this.isSeatbeltOn && gStrength > THRESHOLD_G_STRENGTH_SOFT) {
             await this.ejectPlayer(ped, vehicleEjection, velocity);
         }
     }

@@ -5,6 +5,7 @@ import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { VehicleStateService } from '../../server/vehicle/vehicle.state.service';
 import { ClientEvent, NuiEvent } from '../../shared/event';
+import { Feature, isFeatureEnabled } from '../../shared/features';
 import { JobPermission } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { getRandomItem } from '../../shared/random';
@@ -61,6 +62,10 @@ export class VehicleDealershipProvider {
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
         for (const [dealership, config] of Object.entries(DealershipConfig)) {
+            if (!isFeatureEnabled(Feature.Boat) && dealership === DealershipType.Boat) {
+                continue;
+            }
+
             this.blipFactory.create(`dealership_${dealership}`, {
                 name: config.blip.name,
                 sprite: config.blip.sprite,
@@ -77,6 +82,7 @@ export class VehicleDealershipProvider {
                 invincible: true,
                 freeze: true,
                 spawnNow: true,
+                blockevents: true,
                 coords: {
                     x: config.position[0],
                     y: config.position[1],

@@ -22,7 +22,7 @@ const ENGINE_DAMAGE_MULTIPLIER = 5.0;
 const BODY_DAMAGE_MULTIPLIER = 5.0;
 const TANK_DAMAGE_MULTIPLIER = 5.0;
 
-const STOP_ENGINE_THRESHOLD = 50;
+const STOP_ENGINE_THRESHOLD = 120;
 
 const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
 const ENGINE_MIN_HEALTH = 100.0;
@@ -96,7 +96,7 @@ export class VehicleConditionProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer.png',
+                icon: 'c:mechanic/repair_wheel.png',
                 label: 'Anti crevaison (kit)',
                 item: 'wheel_kit',
                 action: entity => {
@@ -150,7 +150,7 @@ export class VehicleConditionProvider {
             const waitTime = Math.min(
                 (previousState.condition.engineHealth / value.engineHealth +
                     previousState.condition.bodyHealth / value.bodyHealth) *
-                    getRandomInt(300, 400),
+                    getRandomInt(1000, 2000),
                 10000
             );
 

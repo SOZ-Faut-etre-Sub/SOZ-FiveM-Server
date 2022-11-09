@@ -256,7 +256,7 @@ export class VehicleFuelProvider {
                         return true;
                     }
 
-                    if (this.currentStationPistol && this.currentStationPistol.entity) {
+                    if (this.currentStationPistol) {
                         return false;
                     }
 
@@ -291,7 +291,7 @@ export class VehicleFuelProvider {
                         return true;
                     }
 
-                    if (!this.currentStationPistol || !this.currentStationPistol.entity) {
+                    if (!this.currentStationPistol) {
                         return false;
                     }
 

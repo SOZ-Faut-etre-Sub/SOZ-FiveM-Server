@@ -63,8 +63,8 @@ export class VehicleConditionProvider {
 
         const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(vehicleEntity);
-        const repairTime =
-            (3100 - state.condition.engineHealth - state.condition.bodyHealth - state.condition.tankHealth) * 30;
+        const damageDiff = 2000 - state.condition.engineHealth - state.condition.tankHealth;
+        const repairTime = (damageDiff * 20000) / 2000 + 10000; // Between 10s and 30s
 
         if (!(await this.doRepairVehicle(source, repairTime))) {
             return;
@@ -76,7 +76,6 @@ export class VehicleConditionProvider {
 
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
             engineHealth: 1000,
-            bodyHealth: 1000,
             tankHealth: 1000,
             doorStatus: {},
             windowStatus: {},
@@ -96,7 +95,7 @@ export class VehicleConditionProvider {
             source,
             'cleaning_vehicle',
             'Nettoyage du véhicule...',
-            10000,
+            5000,
             {
                 task: 'WORLD_HUMAN_MAID_CLEAN',
             },
@@ -135,7 +134,7 @@ export class VehicleConditionProvider {
                 state.condition.tireBurstCompletely[wheelIndex] || state.condition.tireBurstState[wheelIndex];
 
             if (isBurst) {
-                repairTime += 20000;
+                repairTime += 10000;
             }
 
             tireTemporaryRepairDistance[wheelIndex] = 0;
