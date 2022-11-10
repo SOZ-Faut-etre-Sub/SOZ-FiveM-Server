@@ -8,6 +8,7 @@ import {
     CallHistoryItem,
     EndCallDTO,
     InitializeCallDTO,
+    MuteCallDTO,
 } from '../../../typings/call';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
@@ -198,6 +199,16 @@ class CallsService {
             channelId,
             startedAt: new Date().getTime() / 1000,
         });
+    }
+
+    async handleMuteCall(src: number, data: MuteCallDTO): Promise<void> {
+        const targetCallItem = this.callMap.get(data.transmitterNumber);
+
+        emitNet(
+            'voip:client:call:setMute',
+            data.isTransmitter ? targetCallItem.receiverSource : targetCallItem.transmitterSource,
+            data.muted
+        );
     }
 
     async handleFetchCalls(reqObj: PromiseRequest<void>, resp: PromiseEventResp<CallHistoryItem[]>): Promise<void> {
