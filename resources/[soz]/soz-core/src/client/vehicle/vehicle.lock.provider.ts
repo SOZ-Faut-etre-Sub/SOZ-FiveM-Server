@@ -131,7 +131,8 @@ export class VehicleLockProvider {
             let availableSeatIndex = seatIndex;
 
             if (typeof seatIndex === 'number') {
-                useSeat = GetPedInVehicleSeat(vehicle, seatIndex) == 0;
+                const ped = GetPedInVehicleSeat(vehicle, seatIndex);
+                useSeat = ped == 0 || !IsPedAPlayer(ped);
             } else {
                 availableSeatIndex = maxSeats;
 
