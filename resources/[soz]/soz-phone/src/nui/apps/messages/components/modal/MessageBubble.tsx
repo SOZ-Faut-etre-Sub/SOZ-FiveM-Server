@@ -62,12 +62,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                     </span>
                 )}
                 {!isImage(message.message) && !isPosition(message.message) && (
-                    <Menu.Button
-                        className={cn('left-0 h-full w-full', {
-                            'text-left': !isMine,
-                            'text-right': isMine,
-                        })}
-                    >
+                    <Menu.Button className="left-0 h-full w-full text-left">
                         <p className="break-words text-ellipsis w-full select-text">
                             {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map(text => {
                                 if (text.startsWith(':') && text.endsWith(':')) {
