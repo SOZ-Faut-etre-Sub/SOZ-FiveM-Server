@@ -41,6 +41,11 @@ const DialerKeyboard: React.FC = () => {
     const removeOne = () => setValue('number', watch('number').toString().slice(0, -1));
 
     const handleCall = () => {
+        const number = watch('number').toString();
+        if (number.length !== 8) {
+            return;
+        }
+
         initializeCall(watch('number').toString());
     };
 
