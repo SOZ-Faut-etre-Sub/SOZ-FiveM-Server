@@ -165,7 +165,7 @@ export class ItemHealthProvider {
 
         if (player.metadata.disease === 'dyspepsie') {
             this.diseaseService.setPlayerDisease(source, false);
-            this.notifier.notify(source, 'Vous vous sentez moins balonner.', 'success');
+            this.notifier.notify(source, 'Vous vous sentez moins ballonné.', 'success');
         } else {
             this.notifier.notify(
                 source,
