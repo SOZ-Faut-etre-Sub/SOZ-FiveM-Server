@@ -536,6 +536,20 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         config={config}
                         set={setConfig}
                     />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="struts"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="archCover"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
@@ -615,20 +629,6 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                                 tyreSmokeColor: color,
                             });
                         }}
-                    />
-                    <MenuItemVehicleModification
-                        initialConfig={data?.originalConfiguration}
-                        modKey="struts"
-                        options={options}
-                        config={config}
-                        set={setConfig}
-                    />
-                    <MenuItemVehicleModification
-                        initialConfig={data?.originalConfiguration}
-                        modKey="archCover"
-                        options={options}
-                        config={config}
-                        set={setConfig}
                     />
                     <MenuItemGoBack />
                 </MenuContent>

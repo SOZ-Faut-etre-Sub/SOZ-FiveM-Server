@@ -16,6 +16,7 @@ export type Vehicle = {
     size: number;
     jobName?: { [key in JobType]: string };
     stock: number;
+    maxStock: number;
 };
 
 export type VehicleSpawn = {
@@ -92,6 +93,7 @@ export type VehicleEntityState = {
     owner: string | null;
     speedLimit: number | null;
     isPlayerVehicle: boolean;
+    yoloMode: boolean;
 
     deadInWater: boolean;
     condition: VehicleCondition;
@@ -146,6 +148,7 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     speedLimit: null,
     deadInWater: false,
     isPlayerVehicle: false,
+    yoloMode: false,
     condition: getDefaultVehicleCondition(),
 });
 
@@ -169,6 +172,32 @@ export type VehicleDealershipMenuData = {
     dealershipId: DealershipType;
     dealership?: DealershipConfigItem;
     vehicles: Vehicle[];
+};
+
+export const VehicleMaxStock: Record<keyof typeof VehicleCategory, number> = {
+    Boats: 0,
+    Commercial: 0,
+    Compacts: 8,
+    Coupes: 6,
+    Cycles: 100,
+    Emergency: 0,
+    Helicopters: 3,
+    Industrial: 0,
+    Military: 0,
+    Motorcycles: 6,
+    'Off-road': 4,
+    Planes: 0,
+    Sedans: 6,
+    Service: 0,
+    Suvs: 4,
+    Super: 0,
+    Sports: 0,
+    Sportsclassics: 0,
+    Trains: 0,
+    Utility: 0,
+    Vans: 6,
+    Openwheel: 0,
+    Muscle: 3,
 };
 
 export enum VehicleCategory {

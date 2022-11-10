@@ -151,10 +151,10 @@ export class OilStationProvider {
             {
                 title: 'Nouveau prix :',
                 maxCharacters: 5,
-                defaultValue: price.toString(),
+                defaultValue: price.toFixed(2).toString(),
             },
             (input: string) => {
-                const value = parseInt(input);
+                const value = parseFloat(input);
 
                 if (isNaN(value) || value < 0) {
                     return Err('Veuillez entrer un nombre positif');
@@ -164,7 +164,11 @@ export class OilStationProvider {
             }
         );
 
-        const newPrice = parseInt(priceStr);
+        if (!priceStr) {
+            return;
+        }
+
+        const newPrice = parseFloat(priceStr);
 
         TriggerServerEvent(ServerEvent.OIL_SET_STATION_PRICE, newPrice, type);
 

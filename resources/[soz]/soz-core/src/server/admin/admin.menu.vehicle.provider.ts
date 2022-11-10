@@ -3,7 +3,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { JobType } from '../../shared/job';
 import { RpcEvent } from '../../shared/rpc';
-import { Vehicle } from '../../shared/vehicle/vehicle';
+import { Vehicle, VehicleMaxStock } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 
 @Provider()
@@ -18,6 +18,7 @@ export class AdminMenuVehicleProvider {
             .map(v => ({
                 ...v,
                 jobName: JSON.parse(v.jobName) as { [key in JobType]: string },
+                maxStock: VehicleMaxStock[v.category],
             }));
     }
 }

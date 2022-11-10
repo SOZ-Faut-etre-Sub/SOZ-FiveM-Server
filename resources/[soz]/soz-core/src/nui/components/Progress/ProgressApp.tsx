@@ -45,7 +45,7 @@ export const ProgressApp: FunctionComponent = () => {
     }
 
     return (
-        <div className="fixed flex bottom-14 text-center left-0 right-0 text-lime-500 text-xl mx-auto items-center">
+        <div className="fixed flex bottom-10 text-center left-0 right-0 text-lime-500 text-xl mx-auto items-center">
             <div className="flex bg-black/50 p-2 rounded items-center mx-auto">
                 <div>{progress.label}</div>
                 {progress.units.map((unit, index) => (
