@@ -4,13 +4,14 @@ import cn from 'classnames';
 import React, { Fragment } from 'react';
 import { createPortal } from 'react-dom';
 
-import { useConfig } from '../../../../hooks/usePhone';
+import { useConfig, useVisibility } from '../../../../hooks/usePhone';
 
 export function PictureModal({ open, setOpen, children }) {
     const config = useConfig();
+    const { visibility } = useVisibility();
 
     return createPortal(
-        <Transition.Root show={open} as={Fragment}>
+        <Transition.Root show={open && visibility} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
                 <Transition.Child
                     as={Fragment}
