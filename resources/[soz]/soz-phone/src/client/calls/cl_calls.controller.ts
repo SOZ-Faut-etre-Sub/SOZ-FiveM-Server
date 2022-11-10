@@ -27,12 +27,12 @@ export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCal
 
     try {
         const serverRes = await ClUtils.emitNetPromise<ServerPromiseResp<ActiveCall>>(CallEvents.INITIALIZE_CALL, data);
-
-        animationService.startPhoneCall();
         // If something went wrong lets inform the client
         if (serverRes.status !== 'ok') {
             return cb(serverRes);
         }
+
+        animationService.startPhoneCall();
         const { transmitter, isTransmitter, receiver, isUnavailable } = serverRes.data;
         // Start the process of giving NUI feedback by opening NUI modal
         callService.handleStartCall(transmitter, receiver, isTransmitter, isUnavailable);
