@@ -109,7 +109,14 @@ export class VehicleService {
 
     public applyVehicleCondition(vehicle: number, condition: VehicleCondition): void {
         SetVehicleFuelLevel(vehicle, condition.fuelLevel);
-        SetVehicleOilLevel(vehicle, condition.oilLevel);
+
+        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
+
+        if (maxOilVolume) {
+            const realOilLevel = (condition.oilLevel * maxOilVolume) / 100;
+            SetVehicleOilLevel(vehicle, realOilLevel);
+        }
+
         SetVehicleDirtLevel(vehicle, condition.dirtLevel);
 
         if (condition.dirtLevel < 0.1) {

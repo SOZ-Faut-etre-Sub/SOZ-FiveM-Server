@@ -256,12 +256,12 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    if (station.type === FuelStationType.Public) {
-                        return true;
-                    }
-
                     if (this.currentStationPistol) {
                         return false;
+                    }
+
+                    if (station.type === FuelStationType.Public) {
+                        return true;
                     }
 
                     return player.job.id === station.job && player.job.onduty;

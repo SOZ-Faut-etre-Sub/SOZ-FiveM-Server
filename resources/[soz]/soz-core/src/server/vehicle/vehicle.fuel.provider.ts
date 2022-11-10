@@ -87,7 +87,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const duration = Math.max(reservedFuel * 300, 5000);
+        const duration = Math.max(reservedFuel * 600, 5000);
 
         TriggerClientEvent(ClientEvent.VEHICLE_FUEL_START, source, duration, reservedFuel, station.price);
 

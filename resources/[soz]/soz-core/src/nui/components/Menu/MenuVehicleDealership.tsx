@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -109,6 +110,15 @@ const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, on
     return (
         <>
             {vehicles.map((vehicle, index) => {
+                const classNameText = cn({
+                    'text-orange-400': vehicle.stock < vehicle.maxStock / 4 && vehicle.stock > 1,
+                    'text-yellow-400':
+                        vehicle.stock >= vehicle.maxStock / 4 &&
+                        vehicle.stock < vehicle.maxStock / 2 &&
+                        vehicle.stock > 1,
+                    'text-red-400': vehicle.stock === 1,
+                });
+
                 return (
                     <MenuItemButton
                         key={index}
@@ -116,9 +126,10 @@ const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, on
                         onConfirm={() => onConfirm(vehicle)}
                         disabled={vehicle.stock === 0}
                         selectable={true}
+                        description={vehicle.stock === 0 && 'Plus de stock pour ce véhicule.'}
                     >
                         <div className="pr-2 flex items-center justify-between">
-                            <span>{vehicle.name} </span>
+                            <span className={classNameText}>{vehicle.name} </span>
                             <span>💸 ${vehicle.price}</span>
                         </div>
                     </MenuItemButton>

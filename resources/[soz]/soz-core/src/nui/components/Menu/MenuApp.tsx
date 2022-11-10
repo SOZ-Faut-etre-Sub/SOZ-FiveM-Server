@@ -18,6 +18,7 @@ import { MenuBennys } from './Job/MenuBennys';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
 import { MenuDemo } from './MenuDemo';
 import { MenuGarage } from './MenuGarage';
+import { MenuOilSetPrice } from './MenuOilSetPrice';
 import { MenuSetHealthState } from './MenuSetHealthState';
 import { MenuVehicle } from './MenuVehicle';
 import { MenuVehicleAuction } from './MenuVehicleAuction';
@@ -104,6 +105,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.VehicleCustom}/*`} element={<MenuVehicleCustom data={menuData} />} />
             <Route path={`/${MenuType.VehicleDealership}/*`} element={<MenuVehicleDealership data={menuData} />} />
             <Route path={`/${MenuType.Garage}/*`} element={<MenuGarage data={menuData} />} />
+            <Route path={`/${MenuType.OilSetStationPrice}/*`} element={<MenuOilSetPrice data={menuData} />} />
 
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route

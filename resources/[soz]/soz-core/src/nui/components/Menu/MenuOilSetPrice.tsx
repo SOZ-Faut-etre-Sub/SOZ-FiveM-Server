@@ -30,13 +30,13 @@ export const MenuOilSetPrice: FunctionComponent<MenuOilSetPriceProps> = ({ data 
                     <MenuItemButton onConfirm={() => onConfirm(FuelType.Essence, data.essence)}>
                         <div className="pr-2 flex items-center justify-between">
                             <span>Station essence</span>
-                            <span>💸 ${data.essence}</span>
+                            <span>💸 ${data?.essence?.toFixed(2)}</span>
                         </div>
                     </MenuItemButton>
                     <MenuItemButton onConfirm={() => onConfirm(FuelType.Kerosene, data.kerosene)}>
                         <div className="pr-2 flex items-center justify-between">
                             <span>Station kérosène</span>
-                            <span>💸 ${data.kerosene}</span>
+                            <span>💸 ${data.kerosene?.toFixed(2)}</span>
                         </div>
                     </MenuItemButton>
                 </MenuContent>

@@ -301,6 +301,7 @@ type MenuItemButtonProps = PropsWithChildren<{
     disabled?: boolean;
     selectable?: boolean;
     className?: string;
+    description?: string;
 }>;
 
 export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
@@ -310,6 +311,7 @@ export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
     disabled = false,
     selectable = null,
     className = null,
+    description = null,
 }) => {
     return (
         <MenuItemContainer
@@ -318,6 +320,7 @@ export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
             disabled={disabled}
             selectable={selectable === null ? !disabled : selectable}
             className={className}
+            description={description}
         >
             {children}
         </MenuItemContainer>

@@ -16,7 +16,7 @@ import { RpcEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
-import { getDefaultVehicleCondition, Vehicle } from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleCondition, Vehicle, VehicleMaxStock } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { LockService } from '../lock.service';
 import { Notifier } from '../notifier';
@@ -95,7 +95,10 @@ export class VehicleDealershipProvider {
             };
 
             this.auctions[selectedVehicles[index].model] = {
-                vehicle,
+                vehicle: {
+                    ...vehicle,
+                    maxStock: VehicleMaxStock[vehicle.category] || 0,
+                },
                 position: auctionZone.position as Vector4,
                 windows: auctionZone.window,
                 bestBid: null,
@@ -288,6 +291,7 @@ export class VehicleDealershipProvider {
             return {
                 ...vehicle,
                 jobName: JSON.parse(vehicle.jobName),
+                maxStock: VehicleMaxStock[vehicle.category] || 0,
             };
         });
     }
@@ -319,6 +323,7 @@ export class VehicleDealershipProvider {
                 stock: 100,
                 // Use price for job
                 price: jobVehicle.price,
+                maxStock: VehicleMaxStock[vehicle.category] || 0,
                 name: jobName && jobName[job] ? jobName[job] : vehicle.name,
             };
         });
