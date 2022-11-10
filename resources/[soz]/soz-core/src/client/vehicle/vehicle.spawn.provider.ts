@@ -49,7 +49,7 @@ export class VehicleSpawnProvider {
             hash = GetHashKey(vehicleSpawn.model);
 
             if (!IsModelInCdimage(hash) || !IsModelAVehicle(hash)) {
-                console.log(
+                console.error(
                     'could not load model with given hash or model name',
                     vehicleSpawn.model,
                     vehicleSpawn.hash
@@ -69,7 +69,7 @@ export class VehicleSpawnProvider {
             vehicleSpawn.position[2],
             vehicleSpawn.position[3],
             true,
-            false
+            true
         );
 
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);

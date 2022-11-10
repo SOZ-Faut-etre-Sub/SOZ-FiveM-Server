@@ -68,3 +68,8 @@ export const useEnter = (onKeyPress?: () => void) => {
     useMenuControlNuiEvent('Enter', onKeyPress);
     useKeyPress('Enter', onKeyPress);
 };
+
+export const useReset = (onKeyPress: () => void) => {
+    useMenuControlNuiEvent('ResetMenu', onKeyPress);
+    useKeyPress('R', onKeyPress);
+};

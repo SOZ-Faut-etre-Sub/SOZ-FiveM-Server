@@ -299,7 +299,7 @@ export class VehicleDealershipProvider {
                 job: job,
             },
         });
-        console.log(jobVehicles);
+
         const vehicles = await this.prismaService.vehicle.findMany({
             where: {
                 model: {

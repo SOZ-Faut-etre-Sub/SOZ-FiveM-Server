@@ -350,6 +350,7 @@ export class VehicleLockProvider {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
         }
 
         SetVehicleLights(vehicle, 2);

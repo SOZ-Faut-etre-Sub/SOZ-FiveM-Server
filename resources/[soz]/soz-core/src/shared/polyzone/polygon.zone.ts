@@ -1,3 +1,4 @@
+import { RGBColor } from '../color';
 import { Point3D, Vector2 } from './vector';
 
 export type PolygonZoneOptions<T> = {
@@ -66,7 +67,7 @@ export class PolygonZone<T = never> {
         return count % 2 !== 0;
     }
 
-    public draw() {
+    public draw(wallColor: RGBColor, alpha: number): void {
         const minZ = this.minZ || -10000;
         const maxZ = this.maxZ || 10000;
         const sides = this.points.length;
@@ -84,14 +85,70 @@ export class PolygonZone<T = never> {
                 },
             };
 
-            DrawLine(side.a.x, side.a.y, minZ, side.b.x, side.b.y, minZ, 255, 0, 0, 255);
-            DrawLine(side.a.x, side.a.y, maxZ, side.b.x, side.b.y, maxZ, 255, 0, 0, 255);
-            DrawLine(side.a.x, side.a.y, minZ, side.a.x, side.a.y, maxZ, 255, 0, 0, 255);
+            DrawLine(side.a.x, side.a.y, minZ, side.b.x, side.b.y, minZ, 255, 0, 0, 150);
+            DrawLine(side.a.x, side.a.y, maxZ, side.b.x, side.b.y, maxZ, 255, 0, 0, 150);
+            DrawLine(side.a.x, side.a.y, minZ, side.a.x, side.a.y, maxZ, 255, 0, 0, 150);
 
-            DrawPoly(side.a.x, side.a.y, minZ, side.b.x, side.b.y, minZ, side.a.x, side.a.y, maxZ, 0, 230, 0, 150);
-            DrawPoly(side.b.x, side.b.y, minZ, side.a.x, side.a.y, minZ, side.a.x, side.a.y, maxZ, 0, 230, 0, 150);
-            DrawPoly(side.b.x, side.b.y, maxZ, side.b.x, side.b.y, minZ, side.a.x, side.a.y, maxZ, 0, 230, 0, 150);
-            DrawPoly(side.b.x, side.b.y, minZ, side.b.x, side.b.y, maxZ, side.a.x, side.a.y, maxZ, 0, 230, 0, 150);
+            DrawPoly(
+                side.a.x,
+                side.a.y,
+                minZ,
+                side.b.x,
+                side.b.y,
+                minZ,
+                side.a.x,
+                side.a.y,
+                maxZ,
+                wallColor[0],
+                wallColor[1],
+                wallColor[2],
+                alpha
+            );
+            DrawPoly(
+                side.b.x,
+                side.b.y,
+                minZ,
+                side.a.x,
+                side.a.y,
+                minZ,
+                side.a.x,
+                side.a.y,
+                maxZ,
+                wallColor[0],
+                wallColor[1],
+                wallColor[2],
+                alpha
+            );
+            DrawPoly(
+                side.b.x,
+                side.b.y,
+                maxZ,
+                side.b.x,
+                side.b.y,
+                minZ,
+                side.a.x,
+                side.a.y,
+                maxZ,
+                wallColor[0],
+                wallColor[1],
+                wallColor[2],
+                alpha
+            );
+            DrawPoly(
+                side.b.x,
+                side.b.y,
+                minZ,
+                side.b.x,
+                side.b.y,
+                maxZ,
+                side.a.x,
+                side.a.y,
+                maxZ,
+                wallColor[0],
+                wallColor[1],
+                wallColor[2],
+                alpha
+            );
         }
     }
 }

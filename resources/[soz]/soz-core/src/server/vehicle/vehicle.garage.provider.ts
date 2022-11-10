@@ -187,6 +187,10 @@ export class VehicleGarageProvider {
             ids.push(garage.legacyId);
         }
 
+        if (garage.type === GarageType.Job && garage.job !== player.job.id) {
+            return [];
+        }
+
         const where: Prisma.PlayerVehicleWhereInput = {
             AND: [
                 {
@@ -233,6 +237,7 @@ export class VehicleGarageProvider {
         return playerVehicles.map(vehicle => {
             const playerVehicle = {
                 id: vehicle.id,
+                label: vehicle.label,
                 license: vehicle.license,
                 citizenid: vehicle.citizenid,
                 model: parseInt(vehicle.hash || '0', 10),
@@ -267,6 +272,72 @@ export class VehicleGarageProvider {
         });
     }
 
+    private async checkCanManageVehicle(player: PlayerData, id: string, garage: Garage, vehicleId: number) {
+        const vehicle = await this.prismaService.playerVehicle.findUnique({
+            where: { id: vehicleId },
+        });
+
+        if (!vehicle) {
+            return null;
+        }
+
+        const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
+
+        if (
+            (garage.type === GarageType.Private ||
+                garage.type === GarageType.Public ||
+                garage.type === GarageType.House) &&
+            !citizenIds.has(vehicle.citizenid)
+        ) {
+            return null;
+        } else if (garage.type === GarageType.Job && garage.job !== player.job.id) {
+            return null;
+        } else if (garage.type === GarageType.Depot && player.job.id !== JobType.Bennys) {
+            return null;
+        } else if (
+            garage.type === GarageType.JobLuxury &&
+            (garage.job !== player.job.id || (!vehicle.plate.startsWith('LUXE') && !vehicle.plate.startsWith('ESSAI')))
+        ) {
+            return null;
+        } else if (garage.type === GarageType.House && vehicle.job !== null) {
+            return null;
+        }
+
+        return vehicle;
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_GARAGE_RENAME)
+    public async renameGarage(
+        source: number,
+        id: string,
+        garage: Garage,
+        vehicleId: number,
+        name: string
+    ): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const vehicle = await this.checkCanManageVehicle(player, id, garage, vehicleId);
+
+        if (!vehicle) {
+            this.notifier.notify(source, `Vous ne pouvez pas renommer ce véhicule.`, 'error');
+
+            return;
+        }
+
+        await this.prismaService.playerVehicle.update({
+            where: { id: vehicle.id },
+            data: {
+                label: name,
+            },
+        });
+
+        this.notifier.notify(source, `Le véhicule a été renommé en : ${name}.`, 'error');
+    }
+
     @OnEvent(ServerEvent.VEHICLE_GARAGE_STORE)
     public async storeVehicle(source: number, id: string, garage: Garage, vehicleNetworkId: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
@@ -292,50 +363,12 @@ export class VehicleGarageProvider {
             return;
         }
 
-        const vehicle = await this.prismaService.playerVehicle.findUnique({
-            where: { id: vehicleState.id },
-        });
+        const vehicle = await this.checkCanManageVehicle(player, id, garage, vehicleState.id);
 
         if (!vehicle) {
-            this.notifier.notify(source, 'Ce véhicule ne figure pas dans les registres.', 'error');
-
-            return;
-        }
-
-        const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
-
-        if (
-            (garage.type === GarageType.Private ||
-                garage.type === GarageType.Public ||
-                garage.type === GarageType.House) &&
-            !citizenIds.has(vehicle.citizenid)
-        ) {
             this.notifier.notify(
                 source,
-                "Vous ne pouvez pas ranger ce véhicule car vous n'etes pas la personne sur la carte grise.",
-                'error'
-            );
-
-            return;
-        } else if (garage.type === GarageType.Job && garage.job !== player.job.id) {
-            this.notifier.notify(source, 'Vous ne pouvez pas ranger ce véhicule dans ce garage.', 'error');
-
-            return;
-        } else if (garage.type === GarageType.Depot && player.job.id !== JobType.Bennys) {
-            this.notifier.notify(source, 'Vous ne pouvez pas ranger ce véhicule dans ce garage.', 'error');
-
-            return;
-        } else if (
-            garage.type === GarageType.JobLuxury &&
-            (garage.job !== player.job.id || (!vehicle.plate.startsWith('LUXE') && !vehicle.plate.startsWith('ESSAI')))
-        ) {
-            this.notifier.notify(source, 'Vous ne pouvez pas ranger ce véhicule dans ce garage.', 'error');
-
-            return;
-        } else if (garage.type === GarageType.House && vehicle.job !== null) {
-            this.notifier.notify(
-                source,
-                'Vous ne pouvez pas ranger un véhicule de votre entreprise chez vous.',
+                `Vous ne pouvez pas ranger ce véhicule dans le garage ${garage.name}.`,
                 'error'
             );
 
@@ -521,7 +554,6 @@ export class VehicleGarageProvider {
 
     private async getCitizenIdsForGarage(player: PlayerData, garage: Garage, propertyId: string): Promise<Set<string>> {
         const citizenIds = new Set<string>();
-        citizenIds.add(player.citizenid);
 
         if (garage.type === GarageType.House) {
             const property = await this.prismaService.housing_property.findUnique({
@@ -548,6 +580,8 @@ export class VehicleGarageProvider {
                     }
                 }
             }
+        } else {
+            citizenIds.add(player.citizenid);
         }
 
         return citizenIds;

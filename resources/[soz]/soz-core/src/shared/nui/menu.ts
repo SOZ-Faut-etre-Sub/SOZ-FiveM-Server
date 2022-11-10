@@ -13,6 +13,7 @@ export interface NuiMenuMethodMap {
     ArrowUp: never;
     Backspace: never;
     CloseMenu: never;
+    ResetMenu: never;
     Enter: never;
     SetMenuType: SetMenuType;
     ToggleFocus: never;

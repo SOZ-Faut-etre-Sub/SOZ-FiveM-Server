@@ -13,6 +13,7 @@ export enum PlayerVehicleState {
 
 export type PlayerVehicle = {
     id: number;
+    label?: string;
     license: string;
     citizenid: string;
     model: number;

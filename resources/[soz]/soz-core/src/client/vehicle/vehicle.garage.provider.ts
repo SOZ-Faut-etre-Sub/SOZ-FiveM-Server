@@ -1,4 +1,3 @@
-import { DealershipType } from '../../config/dealership';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -10,11 +9,13 @@ import { JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
 import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
+import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { GarageRepository } from '../resources/garage.repository';
@@ -69,6 +70,9 @@ export class VehicleGarageProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(InputService)
+    private inputService: InputService;
+
     private pounds: Record<string, Garage> = {};
 
     @Once(OnceStep.RepositoriesLoaded)
@@ -97,16 +101,6 @@ export class VehicleGarageProvider {
             }
 
             const targets = [];
-
-            if (garage.type !== GarageType.House) {
-                targets.push({
-                    label: 'Ranger mon véhicule',
-                    icon: 'c:garage/ParkingPublic.png',
-                    action: () => {
-                        this.storeVehicle(garageIdentifier, garage);
-                    },
-                });
-            }
 
             if (garage.type === GarageType.Public) {
                 targets.push({
@@ -149,14 +143,7 @@ export class VehicleGarageProvider {
                     action: () => {
                         this.enterGarage(garageIdentifier, garage);
                     },
-                });
-
-                targets.push({
-                    label: 'Ranger remorque',
-                    icon: 'c:garage/ParkingPublic.png',
-                    action: () => {
-                        this.storeVehicleTrailer(garageIdentifier, garage);
-                    },
+                    job: garage.job,
                 });
             }
 
@@ -237,7 +224,8 @@ export class VehicleGarageProvider {
         return null;
     }
 
-    public async storeVehicle(id: string, garage: Garage) {
+    @OnNuiEvent(NuiEvent.VehicleGarageStore)
+    public async storeVehicle({ id, garage }) {
         const vehicle = GetPlayersLastVehicle();
 
         if (!vehicle) {
@@ -276,30 +264,26 @@ export class VehicleGarageProvider {
         this.nuiMenu.closeMenu();
     }
 
-    public async storeVehicleTrailer(id: string, garage: Garage) {
+    @OnNuiEvent(NuiEvent.VehicleGarageStoreTrailer)
+    public async storeVehicleTrailer({ id, garage }) {
         const vehicle = this.vehicleService.getClosestVehicle({ maxDistance: 25 }, vehicle => {
             const vehicleState = this.vehicleService.getVehicleState(vehicle);
-
             if (!vehicleState.id) {
                 return false;
             }
-
             return GetVehicleClass(vehicle) === VehicleClass.Utility;
         });
-
         if (!vehicle) {
             this.notifier.notify('Aucune remorque à proximité.', 'error');
-
             return;
         }
-
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
         TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId);
         this.nuiMenu.closeMenu();
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageShowPlaces)
-    public async showPlacesGarages({ garage }) {
+    public async showPlacesGarages({ garage }: { garage: Garage }) {
         const places = [];
 
         for (const parkingPlace of garage.parkingPlaces) {
@@ -310,7 +294,7 @@ export class VehicleGarageProvider {
 
         while (GetGameTimer() < end) {
             for (const place of places) {
-                place.draw();
+                place.draw([150, 150, 0], 150);
             }
 
             await wait(0);
@@ -330,17 +314,34 @@ export class VehicleGarageProvider {
         await this.enterGarage(propertyId, garage);
     }
 
-    @OnEvent(ClientEvent.VEHICLE_GARAGE_HOUSE_STORE)
-    public async storeVehicleInHouse(propertyId: string) {
-        const garage = this.garageRepository.get()[propertyId];
+    @OnNuiEvent(NuiEvent.VehicleGarageSetName)
+    public async renameVehicle({ id, garage, vehicle }: { id: number; garage: Garage; vehicle: number }) {
+        const input = await this.inputService.askInput(
+            {
+                title: 'Nom du véhicule',
+                defaultValue: '',
+                maxCharacters: 30,
+            },
+            input => {
+                if (input.length < 5) {
+                    return Err('Le nom doit faire au moins 5 caractères.');
+                }
 
-        if (!garage) {
-            this.notifier.notify('Aucun garage trouvé.', 'error');
+                if (input.length > 30) {
+                    return Err('Le nom doit faire au plus 30 caractères.');
+                }
 
+                return Ok(true);
+            }
+        );
+
+        if (!input) {
             return;
         }
 
-        await this.storeVehicle(propertyId, garage);
+        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_RENAME, id, garage, vehicle, input);
+
+        this.nuiMenu.closeMenu();
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageTakeOut)

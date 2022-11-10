@@ -9,6 +9,7 @@ import { NuiInputMethodMap } from './input';
 import { NuiMaskShopMethodMap } from './mask_shop';
 import { NuiMenuMethodMap } from './menu';
 import { NuiPLayerMethodMap } from './player';
+import { NuiProgressMethodMap } from './progress';
 
 export interface NuiGlobalMethodMap {
     PauseMenuActive: boolean;
@@ -27,6 +28,7 @@ export interface NuiMethodMap {
     mask_shop: NuiMaskShopMethodMap;
     menu: NuiMenuMethodMap;
     player: NuiPLayerMethodMap;
+    progress: NuiProgressMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

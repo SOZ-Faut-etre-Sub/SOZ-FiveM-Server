@@ -26,7 +26,15 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { RGBColor } from '../../../shared/color';
 import { MenuType } from '../../../shared/nui/menu';
-import { useArrowDown, useArrowLeft, useArrowRight, useArrowUp, useBackspace, useEnter } from '../../hook/control';
+import {
+    useArrowDown,
+    useArrowLeft,
+    useArrowRight,
+    useArrowUp,
+    useBackspace,
+    useEnter,
+    useReset,
+} from '../../hook/control';
 
 type MenuDescendant = Descendant & {
     selectable: boolean;
@@ -397,13 +405,27 @@ export const MenuItemGoBack: FunctionComponent = () => {
 
 type MenuSelectControlsProps = PropsWithChildren<{
     onChange?: (index: number, value?: any) => void;
+    initialValue?: any;
 }>;
 
-const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChange, children }) => {
+const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChange, children, initialValue }) => {
     const { activeOptionIndex, setActiveOptionIndex, setActiveValue, activeValue, showAllOptions } =
         useContext(MenuItemSelectContext);
+    const initialValueRef = useRef(initialValue);
     const isItemSelected = useContext(MenuSelectedContext);
     const menuItems = useDescendants(MenuItemSelectDescendantContext);
+
+    useReset(() => {
+        if (isItemSelected) {
+            for (const index in menuItems) {
+                const menuItem = menuItems[index];
+
+                if (menuItem.value === initialValueRef.current) {
+                    setActiveOptionIndex(parseInt(index, 10));
+                }
+            }
+        }
+    });
 
     useEffect(() => {
         const menuItem = menuItems[activeOptionIndex];
@@ -494,6 +516,8 @@ type MenuItemSelectProps = PropsWithChildren<{
     distance?: number;
     keyDescendant?: string | null;
     showAllOptions?: boolean;
+    initialValue?: any;
+    titleWidth?: number;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -507,6 +531,8 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     value = null,
     keyDescendant = null,
     showAllOptions = false,
+    initialValue,
+    titleWidth = 40,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
@@ -521,12 +547,9 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
         'justify-between': !showAllOptions,
     });
 
-    const classNameTitle = cn('pr-2 truncate', {
-        'w-[40%]': !showAllOptions,
-    });
+    const classNameTitle = cn('pr-2 truncate');
 
     const classNameList = cn({
-        'w-[60%]': !showAllOptions,
         'ml-4': showAllOptions,
     });
 
@@ -551,9 +574,21 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                 >
                     <div className="w-full">
                         <div className={classNameContainer}>
-                            <h3 className={classNameTitle}>{title}</h3>
-                            <div className={classNameList}>
-                                <MenuSelectControls onChange={onChange}>
+                            <h3
+                                className={classNameTitle}
+                                style={{
+                                    width: showAllOptions ? 'auto' : `${titleWidth}%`,
+                                }}
+                            >
+                                {title}
+                            </h3>
+                            <div
+                                className={classNameList}
+                                style={{
+                                    width: showAllOptions ? 'auto' : `${100 - titleWidth}%`,
+                                }}
+                            >
+                                <MenuSelectControls onChange={onChange} initialValue={initialValue}>
                                     <ul className="flex">{children}</ul>
                                 </MenuSelectControls>
                             </div>

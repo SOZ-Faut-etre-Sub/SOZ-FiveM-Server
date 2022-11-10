@@ -41,6 +41,7 @@ type MenuItemVehicleModificationProps = {
     set: (configuration: VehicleConfiguration) => void;
     vehiclePrice?: number;
     useHelperText?: boolean;
+    initialConfig?: VehicleConfiguration;
 };
 
 export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModificationProps> = ({
@@ -49,6 +50,7 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
     set,
     config,
     vehiclePrice,
+    initialConfig,
 }) => {
     const option = options.modification[modKey];
     const initialValue = useMemo(() => {
@@ -64,6 +66,7 @@ export const MenuItemVehicleModification: FunctionComponent<MenuItemVehicleModif
             <MenuItemSelect
                 title={option.label}
                 value={config.modification[modKey]}
+                initialValue={initialConfig?.modification[modKey] || null}
                 onChange={(index, value) => {
                     if (value === null) {
                         const newModification = { ...config.modification };
@@ -138,11 +141,22 @@ type MenuItemSelectVehicleColorProps<T extends number> = {
     onConfirm?: (color: T) => void;
     useCategory?: boolean;
     choices?: Partial<Record<T, VehicleColorChoiceItem>>;
+    firstIsNone?: boolean;
+    initialValue?: T;
 };
 
 export const MenuItemSelectVehicleColor: FunctionComponent<
     MenuItemSelectVehicleColorProps<VehicleColor | VehicleXenonColor>
-> = ({ value, useCategory, onChange, onConfirm, title, choices = VehicleColorChoices }) => {
+> = ({
+    value,
+    useCategory,
+    onChange,
+    onConfirm,
+    title,
+    choices = VehicleColorChoices,
+    firstIsNone = false,
+    initialValue,
+}) => {
     const [category, setCategory] = useState<VehicleColorCategory | null>(choices[value]?.category ?? null);
     const innerOnChange = (index, color) => {
         if (onChange) {
@@ -164,6 +178,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                 value={value}
                 onChange={innerOnChange}
                 onConfirm={innerOnConfirm}
+                initialValue={initialValue}
             >
                 {Object.keys(choices).map((colorString, index) => {
                     const option = choices[colorString];
@@ -173,7 +188,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                         <MenuItemSelectOptionColor
                             key={index}
                             color={option.color}
-                            label={option.label}
+                            label={firstIsNone && value === 0 ? 'Aucun' : option.label}
                             value={value}
                         />
                     );
@@ -181,6 +196,8 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
             </MenuItemSelect>
         );
     }
+
+    const initialCategory = choices[initialValue]?.category ?? null;
 
     const colorList = Object.keys(choices)
         .filter(color => choices[color].category === category)
@@ -193,6 +210,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                     setCategory(value);
                 }}
                 value={category}
+                initialValue={initialCategory}
                 title={`Type ${title.toLowerCase()}`}
             >
                 <MenuItemSelectOption value={VehicleColorCategory.Metallic}>Métallisé</MenuItemSelectOption>
@@ -208,6 +226,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                 onChange={innerOnChange}
                 onConfirm={innerOnConfirm}
                 keyDescendant={category}
+                initialValue={initialValue || 0}
             >
                 {colorList.map((color, index) => {
                     const option = choices[color.toString()];
@@ -232,6 +251,7 @@ type MenuItemSelectVehicleRGBColorProps = {
     onChange?: (color: RGBColor) => void;
     onConfirm?: (color: RGBColor) => void;
     choices?: VehicleColorChoiceItem[];
+    initialValue?: RGBColor;
 };
 
 export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehicleRGBColorProps> = ({
@@ -240,6 +260,7 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
     onConfirm,
     title,
     choices = Object.values(VehicleColorChoices),
+    initialValue,
 }) => {
     const innerOnChange = (index, color) => {
         if (onChange) {
@@ -254,7 +275,14 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
     };
 
     return (
-        <MenuItemSelect distance={3} title={title} value={value} onChange={innerOnChange} onConfirm={innerOnConfirm}>
+        <MenuItemSelect
+            distance={3}
+            title={title}
+            value={value}
+            onChange={innerOnChange}
+            onConfirm={innerOnConfirm}
+            initialValue={initialValue}
+        >
             {choices.map((option, index) => {
                 return (
                     <MenuItemSelectOptionColor
@@ -351,6 +379,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         value={config?.color?.primary as VehicleColor}
                         title="Couleur principal"
                         useCategory={true}
+                        initialValue={data.originalConfiguration?.color?.primary as VehicleColor}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -362,6 +391,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         value={config?.color?.secondary as VehicleColor}
                         title="Couleur secondaire"
                         useCategory={true}
+                        initialValue={data.originalConfiguration?.color?.secondary as VehicleColor}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -372,7 +402,8 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelectVehicleColor
                         value={config?.color?.pearlescent as VehicleColor}
                         title="Nacre"
-                        useCategory={true}
+                        firstIsNone={true}
+                        initialValue={data.originalConfiguration?.color?.pearlescent as VehicleColor}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -383,52 +414,128 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemVehicleModification
                         modKey="trimDesign"
                         options={options}
+                        initialConfig={data?.originalConfiguration}
                         config={config}
                         set={setConfig}
                     />
-                    <MenuItemVehicleModification modKey="plaques" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="speakers" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="plaques"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="speakers"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="body">
                 <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Carrosserie</MenuTitle>
                 <MenuContent>
-                    <MenuItemVehicleModification modKey="spoiler" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="spoiler"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemVehicleModification
                         modKey="bumperFront"
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
                     <MenuItemVehicleModification
                         modKey="bumperRear"
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
-                    <MenuItemVehicleModification modKey="sideSkirt" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="exhaust" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="frame" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="grille" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="hood" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="sideSkirt"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="exhaust"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="frame"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="grille"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="hood"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     {/*<MenuItemVehicleModification modKey="fender" options={options} config={config} set={setConfig} />*/}
                     <MenuItemVehicleModification
                         modKey="fenderRight"
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
-                    <MenuItemVehicleModification modKey="roof" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="trunk" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="roof"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="trunk"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemVehicleModification
                         modKey="engineBlock"
                         options={options}
                         config={config}
                         set={setConfig}
                     />
-                    <MenuItemVehicleModification modKey="airFilter" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="tank" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="airFilter"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="tank"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
@@ -439,6 +546,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         <MenuItemSelect
                             title="Type de roue"
                             value={config?.wheelType}
+                            initialValue={data.originalConfiguration?.wheelType}
                             onChange={(index, value) => {
                                 setConfig({
                                     ...config,
@@ -463,6 +571,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
                     {options?.modification?.wheelFront?.choice?.type === 'list' &&
                         options?.modification?.wheelFront?.choice?.items?.length > 0 && (
@@ -481,6 +590,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelectVehicleColor
                         value={config?.color?.rim as VehicleColor}
                         title="Couleur des jantes"
+                        initialValue={data.originalConfiguration?.color?.rim as VehicleColor}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -488,10 +598,17 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                             });
                         }}
                     />
-                    <MenuItemVehicleModification modKey="tyreSmoke" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="tyreSmoke"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemSelectVehicleRGBColor
                         title="Couleur de fumée des roues"
                         value={config?.tyreSmokeColor}
+                        initialValue={data.originalConfiguration?.tyreSmokeColor}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -499,8 +616,20 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                             });
                         }}
                     />
-                    <MenuItemVehicleModification modKey="struts" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="archCover" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="struts"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="archCover"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
@@ -510,6 +639,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelect
                         title="Style plaque d'immatriculation"
                         value={config?.plateStyle}
+                        initialValue={data.originalConfiguration?.plateStyle}
                         onChange={(index, value) => {
                             setConfig({
                                 ...config,
@@ -527,6 +657,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelect
                         title="Teinte vitre"
                         value={config?.windowTint}
+                        initialValue={data.originalConfiguration?.windowTint}
                         onChange={(index, value) => {
                             setConfig({
                                 ...config,
@@ -546,53 +677,102 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
                     <MenuItemVehicleModification
                         modKey="vanityPlate"
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
-                    <MenuItemVehicleModification modKey="ornament" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="aerials" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="trim" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="windows" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="ornament"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="aerials"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="trim"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="windows"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>
             <SubMenu id="interior">
                 <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Intérieur</MenuTitle>
                 <MenuContent>
-                    <MenuItemVehicleModification modKey="horn" options={options} config={config} set={setConfig} />
-                    <MenuItemVehicleModification modKey="dashboard" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="horn"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="dashboard"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemVehicleModification
                         modKey="dialDesign"
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
                     <MenuItemVehicleModification
                         modKey="doorSpeaker"
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
-                    <MenuItemVehicleModification modKey="seat" options={options} config={config} set={setConfig} />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="seat"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
                     <MenuItemVehicleModification
                         modKey="steeringWheel"
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
                     <MenuItemVehicleModification
                         modKey="columnShifterLevers"
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
                     <MenuItemSelectVehicleColor
                         value={config?.interiorColor as VehicleColor}
                         title="Couleur intérieur"
+                        initialValue={data.originalConfiguration?.interiorColor as VehicleColor}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -603,6 +783,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelectVehicleColor
                         value={config?.dashboardColor as VehicleColor}
                         title="Couleur du tableau de bord"
+                        initialValue={data.originalConfiguration?.dashboardColor as VehicleColor}
                         onChange={color => {
                             setConfig({
                                 ...config,
@@ -687,6 +868,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSelectVehicleRGBColor
                         title="Couleur des néons"
                         value={config?.neon?.color}
+                        initialValue={data.originalConfiguration?.neon?.color}
                         onChange={color => {
                             if (!color) {
                                 return;
@@ -708,10 +890,12 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         options={options}
                         config={config}
                         set={setConfig}
+                        initialConfig={data?.originalConfiguration}
                     />
                     <MenuItemSelectVehicleColor
                         value={config?.xenonColor as VehicleXenonColor}
                         title="Couleur xénon"
+                        initialValue={data.originalConfiguration?.xenonColor as VehicleXenonColor}
                         onChange={color => {
                             setConfig({
                                 ...config,

@@ -308,6 +308,7 @@ model PlayerVehicle {
   hash            String? @db.VarChar(50)
   mods            String? @db.LongText
   condition       String? @db.LongText
+  label           String? @db.VarChar(50)
   plate           String  @unique(map: "UK_playervehicles_plate") @db.VarChar(15)
   fakeplate       String? @db.VarChar(50)
   garage          String? @db.VarChar(50)
