@@ -46,6 +46,10 @@ export type ProgressOptions = {
     disableCombat: boolean;
     firstProp: ProgressProp;
     secondProp: ProgressProp;
+    headingEntity?: {
+        entity: number;
+        heading: number;
+    };
 };
 
 export type ProgressAnimation = {

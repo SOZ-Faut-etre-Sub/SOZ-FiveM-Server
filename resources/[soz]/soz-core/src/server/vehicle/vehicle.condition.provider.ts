@@ -126,7 +126,7 @@ export class VehicleConditionProvider {
         const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(vehicleEntity);
         const tireTemporaryRepairDistance = {};
-        let repairTime = 0;
+        let repairTime = 10000;
 
         for (const wheelIndexStr of Object.keys(state.condition.tireHealth)) {
             const wheelIndex = parseInt(wheelIndexStr);
@@ -152,7 +152,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        if (!(await this.doRepairVehicle(source, repairTime))) {
+        if (!(await this.doRepairVehicle(source, repairTime, 'car_bomb_device'))) {
             return;
         }
 
@@ -171,14 +171,14 @@ export class VehicleConditionProvider {
         });
     }
 
-    private async doRepairVehicle(source: number, repairTime: number) {
+    private async doRepairVehicle(source: number, repairTime: number, animationName = 'car_bomb_mechanic') {
         const { completed } = await this.progressService.progress(
             source,
             'repairing_vehicle',
             'Réparation du véhicule...',
             repairTime,
             {
-                name: 'car_bomb_mechanic',
+                name: animationName,
                 dictionary: 'mp_car_bomb',
                 options: {
                     onlyUpperBody: true,

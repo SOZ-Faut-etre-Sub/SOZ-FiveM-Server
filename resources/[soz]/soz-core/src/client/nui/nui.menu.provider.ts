@@ -114,6 +114,19 @@ export class NuiMenuProvider {
         this.nuiDispatch.dispatch('menu', 'CloseMenu');
     }
 
+    @Command('soz_menu_reset', {
+        description: 'Reset une option du menu',
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'R',
+            },
+        ],
+    })
+    onMenuReset(): void {
+        this.nuiDispatch.dispatch('menu', 'ResetMenu');
+    }
+
     @OnNuiEvent(NuiEvent.MenuClosed)
     public async onMenuClosed() {
         this.nuiDispatch.setMenuOpen(null);

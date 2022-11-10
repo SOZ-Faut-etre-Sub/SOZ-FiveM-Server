@@ -11,6 +11,7 @@ import { HealthBookApp } from './HealthBook/HealthBookApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PlayerApp } from './Player/PlayerApp';
+import { ProgressApp } from './Progress/ProgressApp';
 
 export const App: FunctionComponent = () => {
     const [hide, setHide] = useState(false);
@@ -31,6 +32,7 @@ export const App: FunctionComponent = () => {
                 <InputApp />
                 <AudioApp />
                 <PlayerApp />
+                <ProgressApp />
             </div>
         </Provider>
     );

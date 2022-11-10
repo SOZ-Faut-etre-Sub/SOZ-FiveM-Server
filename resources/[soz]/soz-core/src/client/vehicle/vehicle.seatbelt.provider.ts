@@ -12,7 +12,6 @@ import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
 import { VehicleService } from './vehicle.service';
 
-const THRESHOLD_G_STRENGTH_HARD = 7.0;
 const THRESHOLD_G_STRENGTH_SOFT = 3.5;
 
 @Provider()

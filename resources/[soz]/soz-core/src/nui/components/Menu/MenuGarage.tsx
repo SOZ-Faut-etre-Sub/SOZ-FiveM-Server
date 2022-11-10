@@ -4,7 +4,17 @@ import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { GarageMenuData, GarageType } from '../../../shared/vehicle/garage';
 import { fetchNui } from '../../fetch';
-import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
+import {
+    MainMenu,
+    Menu,
+    MenuContent,
+    MenuItemButton,
+    MenuItemSelect,
+    MenuItemSelectOption,
+    MenuItemSubMenuLink,
+    MenuTitle,
+    SubMenu,
+} from '../Styleguide/Menu';
 
 type MenuGarageProps = {
     data?: GarageMenuData;
@@ -24,8 +34,16 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         return null;
     }
 
-    const vehicleTakeOut = (id: number) => {
-        fetchNui(NuiEvent.VehicleGarageTakeOut, { id: data.id, garage: data.garage, vehicle: id });
+    const vehicleShowPlaces = () => {
+        fetchNui(NuiEvent.VehicleGarageShowPlaces, { id: data.id, garage: data.garage });
+    };
+
+    const vehicleStore = () => {
+        fetchNui(NuiEvent.VehicleGarageStore, { id: data.id, garage: data.garage });
+    };
+
+    const vehicleStoreTrailer = () => {
+        fetchNui(NuiEvent.VehicleGarageStoreTrailer, { id: data.id, garage: data.garage });
     };
 
     return (
@@ -36,7 +54,74 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                     {data?.garage.type === GarageType.Private && ` | Places libres (${data?.free_places}) / 38`}
                 </MenuTitle>
                 <MenuContent>
-                    {data.vehicles.length === 0 && <MenuItemButton disabled>Aucun véhicule</MenuItemButton>}
+                    <MenuItemSubMenuLink id="vehicles">Les véhicules</MenuItemSubMenuLink>
+                    <MenuItemButton onConfirm={vehicleStore}>Ranger mon véhicule</MenuItemButton>
+                    {data.garage.type === GarageType.Job && (
+                        <MenuItemButton onConfirm={vehicleStoreTrailer}>Ranger ma remorque</MenuItemButton>
+                    )}
+                    {data.garage.type === GarageType.House && (
+                        <MenuItemButton onConfirm={vehicleShowPlaces}>Voir ma place de parking</MenuItemButton>
+                    )}
+                </MenuContent>
+            </MainMenu>
+            <SubMenu id="vehicles">
+                <MenuTitle banner={BannerMap[data?.garage.type]}>
+                    {data?.garage.name}
+                    {data?.garage.type === GarageType.Private && ` | Places libres (${data?.free_places}) / 38`}
+                </MenuTitle>
+                <VehicleList data={data} />
+            </SubMenu>
+        </Menu>
+    );
+};
+
+export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
+    if (!data) {
+        return null;
+    }
+
+    const vehicleTakeOut = (id: number) => {
+        fetchNui(NuiEvent.VehicleGarageTakeOut, { id: data.id, garage: data.garage, vehicle: id });
+    };
+
+    const vehicleSetName = (id: number) => {
+        fetchNui(NuiEvent.VehicleGarageSetName, { id: data.id, garage: data.garage, vehicle: id });
+    };
+
+    return (
+        <MenuContent>
+            {data.vehicles.length === 0 && <MenuItemButton disabled>Aucun véhicule</MenuItemButton>}
+            {(data.garage.type === GarageType.Job || data.garage.type === GarageType.House) && (
+                <>
+                    {data.vehicles.map(garageVehicle => {
+                        const name = garageVehicle.vehicle.label
+                            ? `${garageVehicle.vehicle.label} | ${garageVehicle.vehicle.plate}`
+                            : `${garageVehicle.name} | ${garageVehicle.vehicle.plate}`;
+
+                        return (
+                            <MenuItemSelect
+                                onConfirm={(idnex, value) => {
+                                    if (value === 'take_out') {
+                                        vehicleTakeOut(garageVehicle.vehicle.id);
+                                    }
+
+                                    if (value === 'set_name') {
+                                        vehicleSetName(garageVehicle.vehicle.id);
+                                    }
+                                }}
+                                key={garageVehicle.vehicle.id}
+                                title={name}
+                                titleWidth={60}
+                            >
+                                <MenuItemSelectOption value="take_out">Sortir</MenuItemSelectOption>
+                                <MenuItemSelectOption value="set_name">Renommer</MenuItemSelectOption>
+                            </MenuItemSelect>
+                        );
+                    })}
+                </>
+            )}
+            {data.garage.type !== GarageType.Job && data.garage.type !== GarageType.House && (
+                <>
                     {data.vehicles.map(garageVehicle => (
                         <MenuItemButton
                             onConfirm={() => vehicleTakeOut(garageVehicle.vehicle.id)}
@@ -46,8 +131,8 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                             {garageVehicle.price > 0 && ` - Coût: $${garageVehicle.price}`}
                         </MenuItemButton>
                     ))}
-                </MenuContent>
-            </MainMenu>
-        </Menu>
+                </>
+            )}
+        </MenuContent>
     );
 };

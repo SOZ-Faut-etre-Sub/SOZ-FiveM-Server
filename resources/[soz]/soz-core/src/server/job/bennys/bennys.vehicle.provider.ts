@@ -4,6 +4,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { Monitor } from '../../../shared/monitor';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
+import { ProgressAnimation, ProgressOptions } from '../../../shared/progress';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
@@ -132,7 +133,7 @@ export class BennysVehicleProvider {
     public async onRepairVehicleEngineWheel(source: number, vehicleNetworkId: number) {
         const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(vehicleEntity);
-        let repairTime = 1000;
+        let repairTime = 10000;
 
         for (const wheelIndexStr of Object.keys(state.condition.tireHealth)) {
             const wheelIndex = parseInt(wheelIndexStr);
@@ -146,7 +147,21 @@ export class BennysVehicleProvider {
             }
         }
 
-        if (!(await this.doRepairVehicle(source, repairTime))) {
+        if (
+            !(await this.doRepairVehicle(
+                source,
+                repairTime,
+                {
+                    task: 'WORLD_HUMAN_VEHICLE_MECHANIC',
+                },
+                {
+                    headingEntity: {
+                        entity: vehicleNetworkId,
+                        heading: 180,
+                    },
+                }
+            ))
+        ) {
             return;
         }
 
@@ -174,25 +189,35 @@ export class BennysVehicleProvider {
         );
     }
 
-    private async doRepairVehicle(source: number, repairTime: number) {
-        const { completed } = await this.progressService.progress(
-            source,
-            'repairing_vehicle',
-            'Réparation du véhicule...',
-            repairTime,
-            {
+    private async doRepairVehicle(
+        source: number,
+        repairTime: number,
+        animation: ProgressAnimation = null,
+        options: Partial<ProgressOptions> = null
+    ) {
+        if (!animation) {
+            animation = {
                 name: 'car_bomb_mechanic',
                 dictionary: 'mp_car_bomb',
                 options: {
                     onlyUpperBody: true,
                     repeat: true,
                 },
-            },
+            };
+        }
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'repairing_vehicle',
+            'Réparation du véhicule...',
+            repairTime,
+            animation,
             {
                 disableMovement: true,
                 disableCarMovement: true,
                 disableMouse: false,
                 disableCombat: true,
+                ...options,
             }
         );
 

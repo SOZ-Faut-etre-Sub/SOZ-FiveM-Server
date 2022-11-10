@@ -121,7 +121,7 @@ export class VehicleSpawner {
             isPlayerVehicle: true,
             plate: vehicle.plate,
             id: vehicle.id,
-            open: true,
+            open: false,
             owner: player.citizenid,
         };
 

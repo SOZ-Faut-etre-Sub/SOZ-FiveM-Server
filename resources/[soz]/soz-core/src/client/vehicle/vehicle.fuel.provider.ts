@@ -14,6 +14,7 @@ import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../resources/fuel.station.repository';
@@ -70,6 +71,9 @@ export class VehicleFuelProvider {
 
     @Inject(ObjectFactory)
     private objectFFactory: ObjectFactory;
+
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
 
     private stationsByModel: Record<number, StationZone[]> = {};
 
@@ -287,12 +291,12 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    if (station.type === FuelStationType.Public) {
-                        return true;
-                    }
-
                     if (!this.currentStationPistol) {
                         return false;
+                    }
+
+                    if (station.type === FuelStationType.Public) {
+                        return true;
                     }
 
                     return player.job.id === station.job && player.job.onduty;
@@ -376,8 +380,32 @@ export class VehicleFuelProvider {
         TriggerServerEvent(ServerEvent.VEHICLE_FUEL_START, vehicleNetworkId, station.id);
     }
 
+    @OnEvent(ClientEvent.VEHICLE_FUEL_START)
+    private async onVehicleFuelStart(duration: number, amount: number, price: number) {
+        const maxPrice = amount * price;
+
+        this.nuiDispatch.dispatch('progress', 'Start', {
+            label: 'Remplissage du véhicule',
+            duration,
+            units: [
+                {
+                    unit: 'L',
+                    start: 0,
+                    end: amount,
+                },
+                {
+                    unit: '$',
+                    start: 0,
+                    end: maxPrice,
+                },
+            ],
+        });
+    }
+
     @OnEvent(ClientEvent.VEHICLE_FUEL_STOP)
     private async onVehicleFuelStop() {
+        this.nuiDispatch.dispatch('progress', 'Stop');
+
         if (this.currentStationPistol) {
             this.currentStationPistol.filling = false;
 

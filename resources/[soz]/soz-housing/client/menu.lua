@@ -113,10 +113,10 @@ AddEventHandler("housing:client:ShowGarageMenu", function(propertyId)
     end
 end)
 
-AddEventHandler("housing:client:GarageStoreVehicle", function(propertyId)
+AddEventHandler("housing:client:ShowGarageParking", function(propertyId)
     local property = Properties[propertyId]
     if property then
-        TriggerEvent("soz-core:client:vehicle:garage:house:store", property:GetIdentifier())
+        TriggerEvent("soz-core:client:vehicle:garage:house:show-parking", property:GetIdentifier())
     end
 end)
 
