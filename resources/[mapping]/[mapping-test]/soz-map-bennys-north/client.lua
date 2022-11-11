@@ -1,7 +1,7 @@
 Citizen.CreateThread(function()
     RequestIpl("soz_bennys_north_milo_")
 
-    local InteriorId = GetInteriorAtCoords(1913.56555, 3079.32568, 45.4842529)
+    local InteriorId = GetInteriorAtCoords(1902.619995, 3079.169922, 45.956402)
 
     --  Walls
     --ActivateInteriorEntitySet(InteriorId, "walls_01")
