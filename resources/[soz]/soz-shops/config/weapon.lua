@@ -4,6 +4,9 @@ Config.Products["ammunation"] = {
     [3] = {name = "weapon_golfclub", type = "weapon", price = 450, amount = 250},
     [4] = {name = "weapon_knuckle", type = "weapon", price = 100, amount = 250},
     [5] = {name = "weapon_poolcue", type = "weapon", price = 200, amount = 250},
+    [6] = {name = "weapon_stungun", type = "weapon", requiredLicense = true, price = 2500, amount = 250},
+    [7] = {name = "weapon_pistol", type = "weapon", requiredLicense = true, price = 7500, amount = 250},
+    [8] = {name = "pistol_ammo", type = "weapon", requiredLicense = true, price = 500, amount = 1000},
 }
 
 Config.Locations["ammunation"] = {
