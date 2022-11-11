@@ -290,11 +290,11 @@ export class VehicleGarageProvider {
             places.push(BoxZone.fromZone(parkingPlace));
         }
 
-        const end = GetGameTimer() + 10000;
+        const end = GetGameTimer() + 15000;
 
         while (GetGameTimer() < end) {
             for (const place of places) {
-                place.draw([150, 150, 0], 150);
+                DrawLightWithRange(place.center[0], place.center[1], place.center[2], 54, 193, 110, 3.0, 80.0);
             }
 
             await wait(0);
