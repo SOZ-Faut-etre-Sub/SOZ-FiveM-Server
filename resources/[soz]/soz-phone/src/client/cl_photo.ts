@@ -17,6 +17,14 @@ function CellFrontCamActivate(activate: boolean) {
 }
 
 RegisterNuiCB<void>(PhotoEvents.ENTER_CAMERA, async (_, cb) => {
+    if (!global.isPhoneOpen) {
+        await animationService.closeCamera();
+        await animationService.closePhone();
+        disableMouseControl = false;
+        SetNuiFocus(false, false);
+        return;
+    }
+
     await animationService.openCamera();
     emit('phone:client:disableControlActions', false);
 
