@@ -2,11 +2,15 @@ import { Command } from '../../core/decorators/command';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { VehicleSpawner } from './vehicle.spawner';
+import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
 export class VehicleCommandProvider {
     @Inject(VehicleSpawner)
     private vehicleSpawner: VehicleSpawner;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Command('car', { role: ['staff', 'admin'], description: 'Spawn Vehicle (Admin Only)' })
     async createCarCommand(source: number, model: string) {
@@ -22,6 +26,18 @@ export class VehicleCommandProvider {
 
         if (closestVehicle !== null) {
             await this.vehicleSpawner.delete(closestVehicle.vehicleNetworkId);
+        }
+    }
+
+    @Command('yolo', { role: ['admin'], description: 'Delete Vehicle (Admin Only)' })
+    async yoloCommand(source: number) {
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
+        const state = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+
+        if (state) {
+            this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
+                yoloMode: !state.yoloMode,
+            });
         }
     }
 }

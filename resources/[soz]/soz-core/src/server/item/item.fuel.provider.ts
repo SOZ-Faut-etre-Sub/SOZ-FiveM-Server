@@ -228,7 +228,7 @@ export class ItemFuelProvider {
     @Once()
     public onStart() {
         this.item.setItemUseCallback('essence_jerrycan', this.useEssenceJerrycan.bind(this));
-        this.item.setItemUseCallback('kerosene_jerrycan', this.useOilJerrycan.bind(this));
-        this.item.setItemUseCallback('oil_jerrycan', this.useKeroseneJerrycan.bind(this));
+        this.item.setItemUseCallback('kerosene_jerrycan', this.useKeroseneJerrycan.bind(this));
+        this.item.setItemUseCallback('oil_jerrycan', this.useOilJerrycan.bind(this));
     }
 }

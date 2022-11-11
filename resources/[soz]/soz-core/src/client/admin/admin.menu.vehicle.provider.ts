@@ -69,6 +69,7 @@ export class AdminMenuVehicleProvider {
             SetVehicleFixed(vehicle);
             SetVehicleBodyHealth(vehicle, 1000);
             SetVehicleEngineHealth(vehicle, 1000);
+            SetVehiclePetrolTankHealth(vehicle, 1000);
             SetVehicleDeformationFixed(vehicle);
         }
         return Ok(true);

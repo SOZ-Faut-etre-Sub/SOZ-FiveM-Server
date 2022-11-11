@@ -54,6 +54,9 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
             <MainMenu>
                 <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Services Bennys</MenuTitle>
                 <MenuContent>
+                    {data.insideUpgradeZone && (
+                        <MenuItemButton onConfirm={onUpgradeVehicle}>🔧 Améliorer le véhicule</MenuItemButton>
+                    )}
                     <MenuItemSelect
                         onConfirm={(index, value) => onConfirm(value.item, value.props)}
                         title="🚧 Poser un objet"
@@ -67,9 +70,6 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
                             Cone de circulation
                         </MenuItemSelectOption>
                     </MenuItemSelect>
-                    {data.insideUpgradeZone && (
-                        <MenuItemButton onConfirm={onUpgradeVehicle}>Améliorer véhicule</MenuItemButton>
-                    )}
                 </MenuContent>
             </MainMenu>
         </Menu>

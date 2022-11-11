@@ -6,7 +6,13 @@ import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
-import { getRandomInt } from '../../shared/random';
+import { getRandomEnumValue, getRandomInt } from '../../shared/random';
+import {
+    VehicleColor,
+    VehicleModType,
+    VehicleXenonColor,
+    VehicleXenonColorChoices,
+} from '../../shared/vehicle/modification';
 import { VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
@@ -109,6 +115,47 @@ export class VehicleConditionProvider {
                 },
             },
         ]);
+    }
+
+    @Tick(100)
+    public checkYoloMode() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            return;
+        }
+
+        if (!NetworkHasControlOfEntity(vehicle)) {
+            return;
+        }
+
+        const state = this.vehicleService.getVehicleState(vehicle);
+
+        if (!state.yoloMode) {
+            return;
+        }
+
+        const color = getRandomEnumValue(VehicleXenonColor);
+        const color2 = VehicleXenonColorChoices[getRandomEnumValue(VehicleXenonColor)];
+        const color3 = VehicleXenonColorChoices[getRandomEnumValue(VehicleXenonColor)];
+        // const color4 = getRandomEnumValue(VehicleColor);
+        // const color5 = getRandomEnumValue(VehicleColor);
+        // const color6 = getRandomEnumValue(VehicleColor);
+        // const color7 = getRandomEnumValue(VehicleColor);
+        ToggleVehicleMod(vehicle, VehicleModType.XenonHeadlights, true);
+        ToggleVehicleMod(vehicle, VehicleModType.TyreSmoke, true);
+        SetVehicleXenonLightsColour(vehicle, color);
+
+        DisableVehicleNeonLights(vehicle, false);
+        SetVehicleNeonLightEnabled(vehicle, 0, true);
+        SetVehicleNeonLightEnabled(vehicle, 1, true);
+        SetVehicleNeonLightEnabled(vehicle, 2, true);
+        SetVehicleNeonLightEnabled(vehicle, 3, true);
+        SetVehicleNeonLightsColour(vehicle, color2.color[0], color2.color[1], color2.color[2]);
+        SetVehicleTyreSmokeColor(vehicle, color3.color[0], color3.color[1], color3.color[2]);
+        // SetVehicleColours(vehicle, color4, color5);
+        // SetVehicleExtraColours(vehicle, color6, color7);
     }
 
     @StateBagHandler('condition', null)
