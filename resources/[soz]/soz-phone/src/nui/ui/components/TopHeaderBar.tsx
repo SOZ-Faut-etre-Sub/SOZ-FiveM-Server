@@ -97,7 +97,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                                 content={
                                     call &&
                                     t('DIALER.MESSAGES.CURRENT_CALL_WITH', {
-                                        transmitter: call.transmitter,
+                                        transmitter: call.isTransmitter ? call.receiver : call.transmitter,
                                     })
                                 }
                                 onClick={() => {
