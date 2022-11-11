@@ -237,6 +237,11 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 Player.Functions.SetClothConfig(clothConfig, false)
                 TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un habit pour ~g~$%s"):format(price))
             else
+                if Config.Products[brand][product].requiredLicense and not Player.PlayerData.metadata["licences"]["weapon"] then
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas le permis de port d'arme", "error")
+                    return
+                end
+
                 exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, amount, nil, nil, function(success, reason)
                     if success then
                         Config.Products[brand][product].amount = Config.Products[brand][product].amount - amount

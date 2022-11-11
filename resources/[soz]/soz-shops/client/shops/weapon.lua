@@ -13,16 +13,16 @@ end
 
 function WeaponShop:FilterItems()
     local items = {}
-    local playerJob = QBCore.Functions.GetPlayerData().job.id
+    local playerData = QBCore.Functions.GetPlayerData()
 
-    for _, product in pairs(self:getShopProducts()) do
-        if not product.requiredJob then
-            items[#items + 1] = product
+    for id, product in pairs(self:getShopProducts()) do
+        if not product.requiredJob and not product.requiredLicense then
+            items[id] = product
         else
-            for _, job in ipairs(product.requiredJob) do
-                if playerJob == job then
-                    items[#items + 1] = product
-                end
+            if product.requiredLicense and playerData.metadata["licences"]["weapon"] == true then
+                items[id] = product
+            elseif product.requiredJob and product.requiredJob == playerData.job.id then
+                items[id] = product
             end
         end
     end
