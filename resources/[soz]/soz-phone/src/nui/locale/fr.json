@@ -17,7 +17,6 @@
         "INCOMING": "Appel entrant"
       },
       "FEEDBACK": {
-        "UNAVAILABLE": "Le numéro est actuellement indisponible",
         "ERROR_MYSELF": "Vous ne pouvez pas vous appeler vous-même !",
         "ERROR": "Une erreur est survenue lors de cet appel"
       }
