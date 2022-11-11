@@ -84,15 +84,17 @@ export const DialerHistory: React.FC = () => {
                                             />
                                         </div>
                                         <div className="flex flex-1 min-w-0 cursor-pointer">
-                                            {!call.is_accepted ? (
-                                                <PhoneMissedCallIcon className="h-5 w-5 text-red-500 mr-3" />
-                                            ) : call.transmitter === myNumber ? (
-                                                <PhoneOutgoingIcon className="h-5 w-5 text-green-500 mr-3" />
-                                            ) : (
-                                                <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3" />
-                                            )}
+                                            <div className="shrink self-center">
+                                                {!call.is_accepted ? (
+                                                    <PhoneMissedCallIcon className="h-5 w-5 text-red-500 mr-3" />
+                                                ) : call.transmitter === myNumber ? (
+                                                    <PhoneOutgoingIcon className="h-5 w-5 text-green-500 mr-3" />
+                                                ) : (
+                                                    <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3" />
+                                                )}
+                                            </div>
                                             <p
-                                                className={cn('text-left text-sm font-medium', {
+                                                className={cn('text-left text-sm font-medium truncate', {
                                                     'text-gray-100': config.theme.value === 'dark',
                                                     'text-gray-600': config.theme.value === 'light',
                                                 })}
