@@ -20,7 +20,6 @@ export const useDialingSound = (): useDialingSoundValue => {
     }, [sound]);
 
     const startDialTone = useCallback(() => {
-        if (sound.playing(DIAL_TONE_URL)) return;
         sound.play(DIAL_TONE_URL, 0.1, true);
     }, [sound]);
 

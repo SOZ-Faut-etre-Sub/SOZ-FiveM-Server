@@ -29,8 +29,6 @@ export const useRingtoneSound = () => {
     return {
         play: () => {
             if (!isPhoneAvailable) return;
-            if (sound.playing(options.sound)) return;
-
             sound.play(options.sound, options.volume, true);
         },
         stop: () => sound.stop(options.sound),
