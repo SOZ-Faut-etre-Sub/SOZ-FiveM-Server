@@ -18,6 +18,10 @@ export class CallService {
         });
     }
 
+    hasAnActiveCall() {
+        return this.currentCallData !== null;
+    }
+
     isInCall() {
         return this.currentCall !== 0;
     }
@@ -41,7 +45,10 @@ export class CallService {
 
     handleStartCall(transmitter: string, receiver: string, isTransmitter: boolean, isUnavailable: boolean) {
         // If we're already in a call we want to automatically reject
-        if (this.isCallAccepted()) return emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
+        if (this.hasAnActiveCall() || this.isInCall()) {
+            emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
+            return;
+        }
 
         // We set -1 to notify that comminucation is about to be etablished. So i'll respond 'BUSY_LINE'
         this.currentCall = -1;

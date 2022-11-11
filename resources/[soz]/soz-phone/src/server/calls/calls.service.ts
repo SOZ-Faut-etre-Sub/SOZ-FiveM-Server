@@ -40,13 +40,13 @@ class CallsService {
         // Create initial call data
         const transmittingPlayer = PlayerService.getPlayer(reqObj.source);
         const transmitterNumber = transmittingPlayer.getPhoneNumber();
-        const receiverIdentifier = await PlayerService.getIdentifierFromPhoneNumber(reqObj.data.receiverNumber, true);
+        const receiverIdentifier = await PlayerService.getIdentifierFromPhoneNumber(reqObj.data.receiverNumber, false);
 
         // If not online we immediately let the caller know that is an invalid
         // number
         if (!receiverIdentifier) {
             return resp({
-                status: 'ok',
+                status: 'error',
                 data: {
                     transmitter: transmitterNumber,
                     isTransmitter: true,
@@ -260,8 +260,10 @@ class CallsService {
         // Just in case currentCall for some reason at this point is falsy
         // lets protect against that
         if (currentCall) {
-            emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
             emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
+            if (currentCall.is_accepted) {
+                emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
+            }
         }
         // player who is calling (transmitter)
         resp({ status: 'ok' });
