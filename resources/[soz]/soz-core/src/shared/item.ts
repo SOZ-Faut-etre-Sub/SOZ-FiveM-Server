@@ -143,11 +143,13 @@ export type WeaponAttachment = {
 export type InventoryItemMetadata = {
     label?: string;
     type?: string;
-    serial?: string;
-    ammo?: number;
-    attachments?: WeaponAttachment[];
     expiration?: string;
     player?: number;
+    // Weapom
+    serial?: string;
+    health?: number;
+    ammo?: number;
+    attachments?: WeaponAttachment[];
 };
 
 export type InventoryItem = {

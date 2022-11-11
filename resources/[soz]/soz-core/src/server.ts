@@ -24,6 +24,7 @@ import { StoryModule } from './server/story/story.module';
 import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
 import { VoipModule } from './server/voip/voip.module';
+import { WeaponModule } from './server/weapon/weapon.module';
 import { WeatherModule } from './server/weather/weather.module';
 import { ZEventModule } from './server/zevent/zevent.module';
 
@@ -52,7 +53,8 @@ async function bootstrap() {
         RebootModule,
         StoryModule,
         AfkModule,
-        OilModule
+        OilModule,
+        WeaponModule
     );
 
     await app.stop();
