@@ -40,4 +40,6 @@ export enum RpcEvent {
     VEHICLE_HAS_KEY = 'soz-core:vehicle:has-key',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
+
+    WEAPON_USE_AMMO = 'soz-core:server:weapon:useAmmo',
 }

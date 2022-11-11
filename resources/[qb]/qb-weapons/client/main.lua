@@ -23,41 +23,7 @@ end)
 
 -- Functions
 
-local function DrawText3Ds(x, y, z, text)
-	SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(x,y,z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
-end
-
 -- Events
-
-RegisterNetEvent("weapons:client:SyncRepairShops", function(NewData, key)
-    Config.WeaponRepairPoints[key].IsRepairing = NewData.IsRepairing
-    Config.WeaponRepairPoints[key].RepairingData = NewData.RepairingData
-end)
-
-RegisterNetEvent("addAttachment", function(component)
-    local ped = PlayerPedId()
-    local weapon = GetSelectedPedWeapon(ped)
-    local WeaponData = QBCore.Shared.Weapons[weapon]
-    GiveWeaponComponentToPed(ped, GetHashKey(WeaponData.name), GetHashKey(component))
-end)
-
-RegisterNetEvent('weapons:client:EquipTint', function(tint)
-    local player = PlayerPedId()
-    local weapon = GetSelectedPedWeapon(player)
-    SetPedWeaponTintIndex(player, weapon, tint)
-end)
-
 RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)
     if data ~= false then
         CurrentWeaponData = data
@@ -75,61 +41,7 @@ RegisterNetEvent('weapons:client:SetWeaponQuality', function(amount)
     end
 end)
 
-RegisterNetEvent('weapon:client:AddAmmo', function(type, amount, itemData)
-    local ped = PlayerPedId()
-    local weapon = GetSelectedPedWeapon(ped)
-    if CurrentWeaponData then
-        if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and QBCore.Shared.Weapons[weapon]["ammotype"] == type:upper() then
-            local total = GetAmmoInPedWeapon(ped, weapon)
-            local _, maxAmmo = GetMaxAmmo(ped, weapon)
-            if total < maxAmmo then
-                TaskReloadWeapon(ped)
-                QBCore.Functions.Progressbar("taking_bullets", "S'équipe d'un chargeur", 2000, false, true, {
-                    disableMovement = false,
-                    disableCarMovement = false,
-                    disableMouse = false,
-                    disableCombat = true,
-                }, {}, {}, {}, function() -- Done
-                    if QBCore.Shared.Weapons[weapon] then
-                        AddAmmoToPed(ped,weapon,amount)
-                        TriggerServerEvent("weapons:server:AddWeaponAmmo", CurrentWeaponData, total + amount)
-                        TriggerServerEvent('QBCore:Server:RemoveItem', itemData.name, 1, itemData.slot)
-                    end
-                end)
-            else
-                exports["soz-hud"]:DrawNotification("Capacité maximum du chargeur atteint", "error")
-            end
-        else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas d'arme", "error")
-        end
-    else
-        exports["soz-hud"]:DrawNotification("Vous n'avez pas d'arme", "error")
-    end
-end)
-
-RegisterNetEvent("weapons:client:EquipAttachment", function(ItemData, attachment)
-    local ped = PlayerPedId()
-    local weapon = GetSelectedPedWeapon(ped)
-    local WeaponData = QBCore.Shared.Weapons[weapon]
-    if weapon ~= 'WEAPON_UNARMED' then
-        WeaponData.name = WeaponData.name:upper()
-        if WeaponAttachments[WeaponData.name] then
-            if WeaponAttachments[WeaponData.name][attachment]['item'] == ItemData.name then
-                TriggerServerEvent("weapons:server:EquipAttachment", ItemData, CurrentWeaponData, WeaponAttachments[WeaponData.name][attachment])
-            else
-                exports["soz-hud"]:DrawNotification("~r~This weapon does not support this attachment.")
-            end
-        end
-    else
-        exports["soz-hud"]:DrawNotification("~r~You dont have a weapon in your hand.")
-    end
-end)
-
 -- Threads
-CreateThread(function()
-    SetWeaponsNoAutoswap(true)
-end)
-
 CreateThread(function()
     while true do
         local ped = PlayerPedId()

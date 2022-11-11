@@ -141,6 +141,8 @@ export enum ServerEvent {
     HALLOWEEN2022_HUNT = 'halloween2022:server:hunt',
     LSMC_HALLOWEEN_LOOT_PLAYER = 'lsmc:halloween:lootPlayer',
     VEHICLE_FREE_JOB_SPAWN = 'soz-core:server:vehicle:free-job-spawn',
+
+    WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
 }
 
 export enum ClientEvent {
@@ -213,6 +215,9 @@ export enum ClientEvent {
     VEHICLE_ROUTE_EJECTION = 'soz-core:client:vehicle:route-ejection',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
+
+    WEAPON_USE_WEAPON = 'soz-core:client:weapon:use-weapon',
+    WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
 }
 
 export enum GameEvent {

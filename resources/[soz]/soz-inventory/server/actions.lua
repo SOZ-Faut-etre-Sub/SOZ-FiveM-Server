@@ -22,16 +22,10 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
         return
     end
 
+    itemData.slot = slot
+
     if itemData.type == "weapon" then
-        if itemData.metadata.quality ~= nil then
-            if itemData.metadata.quality > 0 then
-                TriggerClientEvent("inventory:client:UseWeapon", Player.PlayerData.source, itemData, true)
-            else
-                TriggerClientEvent("inventory:client:UseWeapon", Player.PlayerData.source, itemData, false)
-            end
-        else
-            TriggerClientEvent("inventory:client:UseWeapon", Player.PlayerData.source, itemData, true)
-        end
+        TriggerClientEvent("soz-core:client:weapon:use-weapon", Player.PlayerData.source, itemData)
     elseif itemData.useable then
         if itemData and itemData.amount > 0 then
             if QBCore.Functions.CanUseItem(itemData.name) then

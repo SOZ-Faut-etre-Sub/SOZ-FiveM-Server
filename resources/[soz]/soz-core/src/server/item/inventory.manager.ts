@@ -72,6 +72,14 @@ export class InventoryManager {
         return this.sozInventory.GetItem(inventory, itemId, metadata, true);
     }
 
+    public getSlot(source: number, slot: number): InventoryItem | null {
+        return this.sozInventory.GetSlot(source, slot);
+    }
+
+    public updateMetadata(source: number, slot: number, metadata: InventoryItemMetadata): void {
+        return this.sozInventory.SetMetadata(source, slot, metadata);
+    }
+
     public search(
         source: number | string,
         searchType: 'slots' | 'amount',
