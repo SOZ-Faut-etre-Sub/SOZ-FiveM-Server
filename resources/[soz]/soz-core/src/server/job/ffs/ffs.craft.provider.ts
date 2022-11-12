@@ -59,7 +59,13 @@ export class FightForStyleCraftProvider {
                 return false;
             }
         }
-        return true;
+        return this.inventoryManager.canSwapItem(
+            source,
+            craftProcess.inputs[0].id,
+            craftProcess.inputs[0].amount,
+            craftProcess.output.id,
+            craftProcess.output.amount
+        );
     }
 
     private async doCraft(source: number, craftProcess: Process) {
