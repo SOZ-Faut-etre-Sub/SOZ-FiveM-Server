@@ -1,4 +1,3 @@
-import { Command } from '../../core/decorators/command';
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -8,7 +7,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
-import { WeaponAmmo, WeaponName, Weapons } from '../../shared/weapon';
+import { WeaponAmmo, WeaponName } from '../../shared/weapon';
 import { ProgressService } from '../progress.service';
 import { WeaponService } from './weapon.service';
 
