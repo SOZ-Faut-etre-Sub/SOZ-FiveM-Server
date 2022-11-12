@@ -46,6 +46,19 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleGarageStoreTrailer, { id: data.id, garage: data.garage });
     };
 
+    if (data.garage.type === GarageType.Depot) {
+        return (
+            <Menu type={MenuType.Garage}>
+                <MainMenu>
+                    <MenuTitle banner={BannerMap[data?.garage.type]}>{data?.garage.name}</MenuTitle>
+                    <MenuContent>
+                        <VehicleList data={data} />
+                    </MenuContent>
+                </MainMenu>
+            </Menu>
+        );
+    }
+
     return (
         <Menu type={MenuType.Garage}>
             <MainMenu>

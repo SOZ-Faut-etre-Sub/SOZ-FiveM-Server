@@ -8,6 +8,8 @@ export enum ServerEvent {
     ADMIN_SET_STRESS_LEVEL = 'soz-core:server:admin:set-stress-level',
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
+    ADMIN_VEHICLE_SPAWN = 'soz-core:server:admin:vehicle:spawn',
+    ADMIN_VEHICLE_DELETE = 'soz-core:server:admin:vehicle:delete',
 
     BAUN_CRAFT = 'soz-core:server:job:baun:craft',
     BAUN_RESELL = 'soz-core:server:job:baun:resell',

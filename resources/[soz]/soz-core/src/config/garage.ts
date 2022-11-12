@@ -860,31 +860,41 @@ export const GarageList: Record<string, Garage> = {
         legacyId: 'fourriere',
         type: GarageType.Depot,
         category: GarageCategory.Car,
-        zone: new BoxZone([487.822998046875, -1319.3245849609375, 29.242542266845703], 0.6000000000000001, 0.8, {
-            heading: 16,
-            minZ: 28.242542266845703,
-            maxZ: 31.242542266845703,
+        zone: new BoxZone([403.12, -1625.36, 28.29], 1, 1, {
+            heading: 51,
+            minZ: 27.29,
+            maxZ: 31.29,
         }),
         parkingPlaces: [
-            new BoxZone([502.05, -1336.41, 29.33], 6, 4, {
-                heading: 0,
-                minZ: 28.33,
-                maxZ: 32.33,
+            new BoxZone([397.43, -1642.97, 29.29], 7, 3, {
+                heading: 320,
+                minZ: 28.29,
+                maxZ: 31.29,
             }),
-            new BoxZone([497.44, -1336.5, 29.34], 6, 4, {
-                heading: 0,
-                minZ: 28.34,
-                maxZ: 32.34,
+            new BoxZone([399.41, -1645.39, 29.29], 7.0, 2.8, {
+                heading: 320.0,
+                minZ: 28.29,
+                maxZ: 29.292,
             }),
-            new BoxZone([481.31, -1334.2, 29.33], 6, 4, {
-                heading: 230,
-                minZ: 28.33,
-                maxZ: 32.33,
+            new BoxZone([401.85, -1647.56, 29.29], 6.2, 3.2, {
+                heading: 320.0,
+                minZ: 28.29,
+                maxZ: 29.292,
             }),
-            new BoxZone([488.13, -1366.4, 29.25], 6, 4, {
-                heading: 180,
-                minZ: 28.25,
-                maxZ: 32.25,
+            new BoxZone([403.85, -1649.97, 29.29], 6.2, 2.6, {
+                heading: 320.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+            }),
+            new BoxZone([420.01, -1638.96, 29.29], 1.6, 1.0, {
+                heading: 88.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+            }),
+            new BoxZone([408.78, -1653.71, 29.29], 1.0, 1.0, {
+                heading: 321.0,
+                minZ: 28.29,
+                maxZ: 29.292,
             }),
         ],
     },

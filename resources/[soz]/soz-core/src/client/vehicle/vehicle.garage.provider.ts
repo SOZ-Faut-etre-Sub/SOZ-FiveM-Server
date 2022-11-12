@@ -123,6 +123,8 @@ export class VehicleGarageProvider {
             }
 
             if (garage.type === GarageType.Depot) {
+                this.objectFactory.create(jobGaragePayStation, [...garage.zone.center, garage.zone.heading], true);
+
                 targets.push({
                     label: 'Accéder à la fourrière',
                     icon: 'c:garage/Fourriere.png',
@@ -156,6 +158,7 @@ export class VehicleGarageProvider {
                     action: () => {
                         this.enterGarage(garageIdentifier, garage);
                     },
+                    job: garage.job,
                 });
             }
 
