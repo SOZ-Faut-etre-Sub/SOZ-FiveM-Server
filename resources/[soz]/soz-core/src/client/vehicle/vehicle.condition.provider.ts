@@ -7,12 +7,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomEnumValue, getRandomInt } from '../../shared/random';
-import {
-    VehicleColor,
-    VehicleModType,
-    VehicleXenonColor,
-    VehicleXenonColorChoices,
-} from '../../shared/vehicle/modification';
+import { VehicleModType, VehicleXenonColor, VehicleXenonColorChoices } from '../../shared/vehicle/modification';
 import { VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
