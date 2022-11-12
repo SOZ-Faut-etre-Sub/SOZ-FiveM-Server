@@ -57,7 +57,7 @@ export class AdminMenuVehicleProvider {
                 }
             ));
         if (input !== null) {
-            TriggerServerEvent(ServerEvent.QBCORE_CALL_COMMAND, 'car', [input]);
+            TriggerServerEvent(ServerEvent.ADMIN_VEHICLE_SPAWN, input);
         }
         return Ok(true);
     }
@@ -160,6 +160,6 @@ export class AdminMenuVehicleProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleDelete)
     public async onAdminMenuVehicleDelete() {
-        TriggerServerEvent(ServerEvent.QBCORE_CALL_COMMAND, 'dv');
+        TriggerServerEvent(ServerEvent.ADMIN_VEHICLE_DELETE);
     }
 }

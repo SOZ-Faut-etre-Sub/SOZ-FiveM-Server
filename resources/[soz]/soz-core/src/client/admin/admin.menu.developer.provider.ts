@@ -57,10 +57,12 @@ export class AdminMenuDeveloperProvider {
             this.isCreatingZone = false;
             const zone = exports['PolyZone'].EndPolyZone();
             this.clipboard.copy(
-                `new BoxZone([${zone.center.x}, ${zone.center.y}, ${zone.center.z}], ${zone.length}, ${zone.width}, {
-                    heading: ${zone.heading},
-                    minZ: ${zone.center.z - 1},
-                    maxZ: ${zone.center.z + 2},
+                `new BoxZone([${zone.center.x.toFixed(2)}, ${zone.center.y.toFixed(2)}, ${zone.center.z.toFixed(
+                    2
+                )}], ${zone.length.toFixed(2)}, ${zone.width.toFixed(2)}, {
+                    heading: ${zone.heading.toFixed(2)},
+                    minZ: ${zone.center.z.toFixed(2) - 1},
+                    maxZ: ${zone.center.z.toFixed(2) + 2},
                 });`
             );
             await this.adminMenuProvider.openAdminMenu('developer');
