@@ -10,7 +10,6 @@
 
     <script src="nui://game/ui/jquery.js" defer></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" defer></script>
-    <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js" defer></script>
     <script src="qb-banking.js" defer></script>
 
     <title>Banking</title>
@@ -33,7 +32,6 @@
                                 <a class="nav-link m-1" id="bankingWithdraw-tab" data-toggle="pill" href="#bankingWithdraw" role="tab" aria-controls="bankingWithdraw" aria-selected="false" style="color: white">Retrait</a>
                                 <a class="nav-link m-1" id="bankingDeposit-tab" data-toggle="pill" href="#bankingDeposit" role="tab" aria-controls="bankingDeposit" aria-selected="false" style="color: white">Dépôt</a>
                                 <a class="nav-link m-1" id="bankingTransfer-tab" data-toggle="pill" href="#bankingTransfer" role="tab" aria-controls="bankingTransfer" aria-selected="false" style="color: white">Transfert</a>
-<!--                                <a class="nav-link m-1" id="bankingStatement-tab" data-toggle="pill" href="#bankingStatement" role="tab" aria-controls="bankingStatement" aria-selected="false" style= "color: white">Historique</a>-->
                                 <a class="nav-link m-1" id="bankingOffShore-tab" style="display:none; color: white;" data-toggle="pill" href="#bankingOffShore" role="tab" aria-controls="bankingOffShore" aria-selected="false">Compte OffShore</a>
                                 <a class="nav-link m-1" id="bankingActions-tab" data-toggle="pill" href="#bankingActions" role="tab" aria-controls="bankingActions" aria-selected="false" style="color: white">Option du compte</a>
                             </div>
@@ -272,36 +270,6 @@
                             <div class="row">
                                 <div class="col-12 text-center" style="position: relative; top: 20px;">
                                     <button class="btn" id="initiateTransfer" style="background-color: #28a745; color: white">Transférer</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="bankingStatement" role="tabpanel" aria-labelledby="bankingStatement-tab">
-                        <div class="container-fluid p-2" style="position: relative; top: 54px;">
-                            <div class="row">
-                                <div class="col-12 title">
-                                    <h3 style="font-size: 35px;">Historique des transactions</h3>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <table id="currentStatement" class="display" style="width:100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Date</th>
-                                                        <th>Description</th>
-                                                        <th class="text-center">Retiré</th>
-                                                        <th class="text-center">Dépôt</th>
-                                                        <th class="text-center">Compte</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="currentStatementContents">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
