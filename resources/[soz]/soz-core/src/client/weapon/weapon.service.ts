@@ -41,12 +41,20 @@ export class WeaponService {
             return;
         }
         const recoil = this.getWeaponConfig(this.currentWeapon.name)?.recoil ?? 0;
+        const recoilHorizontal = Math.random() * 0.5 * (Math.round(Math.random()) ? 1 : -1);
         const weaponHealth = this.currentWeapon.metadata.health > 0 ? this.currentWeapon.metadata.health : 1;
-        const recoilMalus =
+
+        const recoilY =
             recoil + GlobalWeaponConfig.RecoilOnUsedWeapon * (1 - weaponHealth / GlobalWeaponConfig.MaxHealth);
+        const recoilX =
+            recoilHorizontal +
+            GlobalWeaponConfig.RecoilOnUsedWeapon * (1 - weaponHealth / GlobalWeaponConfig.MaxHealth);
 
         const pitch = GetGameplayCamRelativePitch();
-        SetGameplayCamRelativePitch(pitch + recoilMalus, 1.0);
+        const heading = GetGameplayCamRelativeHeading();
+
+        SetGameplayCamRelativePitch(pitch + recoilY, 1.0);
+        SetGameplayCamRelativeHeading(heading + recoilX);
     }
 
     getWeaponConfig(weaponName: string): WeaponConfig | null {
