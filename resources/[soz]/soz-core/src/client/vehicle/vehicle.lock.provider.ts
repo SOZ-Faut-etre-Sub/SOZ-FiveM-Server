@@ -218,9 +218,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (IsPedInAnyVehicle(ped, false)) {
-            this.notifier.notify("Vous ne pouvez pas ouvrir le coffre à l'intérieur du véhicule.", 'error');
-
+        if (player.metadata.isdead || player.metadata.ishandcuffed || IsPedInAnyVehicle(ped, false)) {
             return;
         }
 

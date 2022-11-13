@@ -24,7 +24,7 @@ type MenuBennysProps = {
 export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
     const player = usePlayer();
 
-    if (!data) {
+    if (!data || !player) {
         return null;
     }
 

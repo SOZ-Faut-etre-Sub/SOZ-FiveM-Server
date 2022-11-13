@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
-import { GarageCategory, GarageMenuData, GarageType } from '../../../shared/vehicle/garage';
+import { GarageMenuData, GarageType } from '../../../shared/vehicle/garage';
 import { fetchNui } from '../../fetch';
 import {
     MainMenu,
@@ -69,7 +69,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                 <MenuContent>
                     <MenuItemSubMenuLink id="vehicles">Les véhicules</MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={vehicleStore}>Ranger mon véhicule</MenuItemButton>
-                    {data.garage.type === GarageType.Job && data.garage.category === GarageCategory.Car && (
+                    {data.garage.allowTrailers && (
                         <MenuItemButton onConfirm={vehicleStoreTrailer}>Ranger ma remorque</MenuItemButton>
                     )}
                     {data.garage.type === GarageType.House && (

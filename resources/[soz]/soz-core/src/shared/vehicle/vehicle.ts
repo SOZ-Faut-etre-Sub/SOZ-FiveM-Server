@@ -95,7 +95,7 @@ export type VehicleEntityState = {
     isPlayerVehicle: boolean;
     yoloMode: boolean;
 
-    deadInWater: boolean;
+    dead: boolean;
     condition: VehicleCondition;
 };
 
@@ -146,7 +146,7 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     owner: null,
     plate: null,
     speedLimit: null,
-    deadInWater: false,
+    dead: false,
     isPlayerVehicle: false,
     yoloMode: false,
     condition: getDefaultVehicleCondition(),

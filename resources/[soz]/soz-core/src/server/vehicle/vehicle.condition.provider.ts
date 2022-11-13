@@ -203,10 +203,25 @@ export class VehicleConditionProvider {
     }
 
     @OnEvent(ServerEvent.VEHICLE_SET_DEAD)
-    public async onVehicleDead(source: number, vehicleId: number, reason: string) {
+    public async onVehicleDead(source: number, vehicleNetworkId: number, reason: string) {
+        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+
+        if (state.dead || !state.isPlayerVehicle) {
+            return;
+        }
+
+        this.vehicleStateService.updateVehicleState(vehicleEntity, {
+            dead: true,
+        });
+
+        if (!state.id) {
+            return;
+        }
+
         const vehicle = await this.prismaService.playerVehicle.update({
             where: {
-                id: vehicleId,
+                id: state.id,
             },
             data: {
                 state: PlayerVehicleState.Destroyed,
