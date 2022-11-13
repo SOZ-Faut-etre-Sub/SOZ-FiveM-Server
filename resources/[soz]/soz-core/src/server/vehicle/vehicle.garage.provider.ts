@@ -11,7 +11,7 @@ import { PlayerData } from '../../shared/player';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
-import { Garage, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
+import { Garage, GarageType, GarageVehicle, PlaceCapacity } from '../../shared/vehicle/garage';
 import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicle/vehicle';
@@ -434,19 +434,23 @@ export class VehicleGarageProvider {
         await this.lockService.lock(
             `vehicle:${vehicleId}`,
             async () => {
-                const vehicle = await this.prismaService.playerVehicle.findUnique({
+                const playerVehicle = await this.prismaService.playerVehicle.findUnique({
                     where: { id: vehicleId },
                 });
 
-                if (!vehicle) {
+                if (!playerVehicle) {
                     this.notifier.notify(source, "Ce véhicule n'existe pas", 'error');
 
                     return;
                 }
 
+                const vehicle = this.vehicleRepository.findByModel(playerVehicle.vehicle);
+                const capacity = vehicle ? vehicle.size : PlaceCapacity.Small;
+                const vehiclePrice = vehicle ? vehicle.price : 0;
+
                 const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
 
-                if (!citizenIds.has(vehicle.citizenid)) {
+                if (!citizenIds.has(playerVehicle.citizenid)) {
                     if (garage.type === GarageType.Private || garage.type === GarageType.House) {
                         this.notifier.notify(source, 'Ce véhicule ne vous appartient pas.', 'error');
 
@@ -464,7 +468,7 @@ export class VehicleGarageProvider {
 
                     if (
                         (garage.type === GarageType.Depot || garage.type === GarageType.Public) &&
-                        (vehicle.job !== player.job.id ||
+                        (playerVehicle.job !== player.job.id ||
                             !this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyTakeOutPound))
                     ) {
                         this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
@@ -475,31 +479,37 @@ export class VehicleGarageProvider {
 
                 // Simplify here, in the long term we should check if the vehicle is in the garage only (other state will be deleted)
                 if (
-                    vehicle.state !== PlayerVehicleState.InGarage &&
-                    vehicle.state !== PlayerVehicleState.InJobGarage &&
-                    vehicle.state !== PlayerVehicleState.InPound
+                    playerVehicle.state !== PlayerVehicleState.InGarage &&
+                    playerVehicle.state !== PlayerVehicleState.InJobGarage &&
+                    playerVehicle.state !== PlayerVehicleState.InPound
                 ) {
                     this.notifier.notify(source, 'Ce véhicule est déjà sorti.', 'error');
 
                     return;
                 }
 
-                if (garage.parkingPlaces.length === 0) {
+                const parkingPlaces = garage.parkingPlaces.filter(place => {
+                    const placeCapacities = place.data?.capacity || [PlaceCapacity.Small, PlaceCapacity.Medium];
+
+                    return placeCapacities.includes(capacity);
+                });
+
+                if (parkingPlaces.length === 0) {
                     this.notifier.notify(source, 'Aucune place de parking disponible.', 'error');
 
                     return;
                 }
 
-                const parkingPlace = getRandomItem(garage.parkingPlaces);
+                const parkingPlace = getRandomItem(parkingPlaces);
 
                 let price = 0;
 
                 if (garage.type === GarageType.Depot) {
-                    price = 10000;
+                    price = vehiclePrice * 0.15;
                 }
 
                 if (garage.type === GarageType.Private) {
-                    const hours = Math.floor((Date.now() / 1000 - vehicle.parkingtime) / 3600);
+                    const hours = Math.floor((Date.now() / 1000 - playerVehicle.parkingtime) / 3600);
                     price = Math.min(200, hours * 20);
                 }
 
@@ -510,31 +520,31 @@ export class VehicleGarageProvider {
                 }
 
                 if (
-                    await this.vehicleSpawner.spawnPlayerVehicle(source, vehicle, [
+                    await this.vehicleSpawner.spawnPlayerVehicle(source, playerVehicle, [
                         ...parkingPlace.center,
                         parkingPlace.heading || 0,
                     ])
                 ) {
                     await this.prismaService.playerVehicle.update({
-                        where: { id: vehicle.id },
+                        where: { id: playerVehicle.id },
                         data: {
                             state: PlayerVehicleState.Out,
                         },
                     });
 
-                    this.vehicleStateService.addVehicleKey(vehicle.plate, player.citizenid);
+                    this.vehicleStateService.addVehicleKey(playerVehicle.plate, player.citizenid);
 
                     this.monitor.publish(
                         'vehicle_garage_out',
                         {
                             player_source: source,
-                            vehicle_plate: vehicle.plate,
+                            vehicle_plate: playerVehicle.plate,
                         },
                         {
                             garage: id,
                             garage_type: garage.type,
                             price,
-                            condition: JSON.parse(vehicle.condition),
+                            condition: JSON.parse(playerVehicle.condition),
                             position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
                         }
                     );

@@ -262,7 +262,7 @@ export class VehicleConditionProvider {
         }
 
         // Check dead status
-        this.checkVehicleWater(vehicle);
+        await this.checkVehicleWater(vehicle);
 
         const state = this.vehicleService.getVehicleState(vehicle);
 
@@ -309,30 +309,29 @@ export class VehicleConditionProvider {
     }
 
     private async checkVehicleWater(vehicle: number) {
-        const hash = GetEntityModel(vehicle);
-
-        if (!IsThisModelABike(hash) && !IsThisModelACar(hash) && !IsThisModelAQuadbike(hash)) {
-            return;
-        }
-
         const state = this.vehicleService.getVehicleState(vehicle);
 
-        if (state.deadInWater) {
-            SetVehicleEngineOn(vehicle, false, true, false);
-            SetVehicleUndriveable(vehicle, true);
-
+        if (!state.isPlayerVehicle || state.dead) {
             return;
         }
 
         const isDead = IsEntityDead(vehicle);
-        // use next value when giving reason
-        // const isInWater = IsEntityInWater(vehicle);
 
         if (isDead) {
+            let reason = 'unknown';
+
+            if (IsEntityInWater(vehicle)) {
+                reason = 'water';
+            } else if (IsEntityOnFire(vehicle)) {
+                reason = 'fire';
+            }
+
             SetVehicleEngineOn(vehicle, false, true, false);
             SetVehicleUndriveable(vehicle, true);
 
-            TriggerServerEvent(ServerEvent.VEHICLE_SET_DEAD, vehicle);
+            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_DEAD, vehicleNetworkId, reason);
         }
     }
 

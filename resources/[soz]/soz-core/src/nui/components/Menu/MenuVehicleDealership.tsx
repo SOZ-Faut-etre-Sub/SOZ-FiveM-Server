@@ -119,6 +119,14 @@ const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, on
                     'text-red-400': vehicle.stock === 1,
                 });
 
+                let description = `Acheter ${vehicle.name}`;
+
+                if (vehicle.stock === 0) {
+                    description = `❌ HORS STOCK de ${vehicle.name}`;
+                } else if (vehicle.stock < vehicle.maxStock / 2) {
+                    description = `⚠ Stock limité de ${vehicle.name}`;
+                }
+
                 return (
                     <MenuItemButton
                         key={index}
@@ -126,7 +134,7 @@ const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, on
                         onConfirm={() => onConfirm(vehicle)}
                         disabled={vehicle.stock === 0}
                         selectable={true}
-                        description={vehicle.stock === 0 && 'Plus de stock pour ce véhicule.'}
+                        description={description}
                     >
                         <div className="pr-2 flex items-center justify-between">
                             <span className={classNameText}>{vehicle.name} </span>

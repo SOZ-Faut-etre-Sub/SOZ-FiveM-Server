@@ -1,6 +1,6 @@
 import { JobType } from '../shared/job';
 import { BoxZone } from '../shared/polyzone/box.zone';
-import { Garage, GarageCategory, GarageType } from '../shared/vehicle/garage';
+import { Garage, GarageCategory, GarageType, PlaceCapacity } from '../shared/vehicle/garage';
 
 export const GarageList: Record<string, Garage> = {
     motel: {
@@ -896,6 +896,14 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 28.29,
                 maxZ: 29.292,
             }),
+            new BoxZone([408.99, -1639.23, 29.29], 1.0, 1.0, {
+                heading: 230.0,
+                minZ: 28.29,
+                maxZ: 29.292,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
         ],
     },
     lspd: {
@@ -1053,6 +1061,7 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Bennys,
         category: GarageCategory.Car,
+        allowTrailers: true,
         zone: new BoxZone([-172.5, -1295.65, 30.13], 1.0, 1.0, {
             heading: 0.0,
             minZ: 29.13,
@@ -1224,6 +1233,7 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Oil,
         category: GarageCategory.Car,
+        allowTrailers: true,
         zone: new BoxZone([-276.89, 6017.69, 31.02], 1.0, 1.0, {
             heading: 226.23,
             minZ: 30.02,
@@ -1282,6 +1292,7 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.Pawl,
         category: GarageCategory.Car,
+        allowTrailers: true,
         zone: new BoxZone([-605.01, 5289.27, 69.46], 1.0, 1.0, {
             heading: 136.16,
             minZ: 68.46,

@@ -21,10 +21,10 @@ export class ProgressService {
         };
 
         if (options.headingEntity) {
-            TaskTurnPedToFaceEntity(PlayerPedId(), options.headingEntity.entity, 1);
+            TaskTurnPedToFaceEntity(PlayerPedId(), options.headingEntity.entity, 1000);
+            await wait(1000);
 
             if (options.headingEntity.heading !== 0) {
-                await wait(100);
                 const heading = GetEntityHeading(PlayerPedId());
                 SetEntityHeading(PlayerPedId(), (heading + options.headingEntity.heading) % 360);
             }

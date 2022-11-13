@@ -33,6 +33,7 @@ export type Garage = {
     category: GarageCategory;
     job?: JobType;
     zone: Zone;
+    allowTrailers?: boolean;
     parkingPlaces: Zone<GarageParkingPlaceData>[];
 };
 

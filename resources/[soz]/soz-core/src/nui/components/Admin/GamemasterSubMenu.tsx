@@ -35,6 +35,10 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
     const isAdmin = permission === 'admin';
     const player = usePlayer();
 
+    if (!player) {
+        return null;
+    }
+
     return (
         <SubMenu id="game_master">
             <MenuTitle banner={banner}>Dieu ? C'est toi ?</MenuTitle>

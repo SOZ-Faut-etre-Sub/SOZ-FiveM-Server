@@ -152,7 +152,11 @@ export class BennysVehicleProvider {
                 source,
                 repairTime,
                 {
-                    task: 'WORLD_HUMAN_VEHICLE_MECHANIC',
+                    dictionary: 'amb@world_human_vehicle_mechanic@male@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
                 },
                 {
                     headingEntity: {

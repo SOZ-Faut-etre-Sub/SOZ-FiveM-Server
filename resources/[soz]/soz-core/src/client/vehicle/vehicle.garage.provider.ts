@@ -29,7 +29,7 @@ type BlipConfig = {
     color: number;
 };
 
-const DISTANCE_STORE_VEHICLE_THRESHOLD = 20;
+const DISTANCE_STORE_VEHICLE_THRESHOLD = 30;
 
 const BlipConfigMap: Partial<Record<GarageType, Partial<Record<GarageCategory, BlipConfig | null>>>> = {
     [GarageType.Private]: {
@@ -176,19 +176,17 @@ export class VehicleGarageProvider {
             {
                 label: 'Fourriérer',
                 icon: 'c:mechanic/CarFourriere.png',
-                action: entity => {
+                action: async entity => {
                     const closestPound = this.getClosestPound();
-                    const networkId = NetworkGetNetworkIdFromEntity(entity);
 
                     if (!closestPound) {
                         return false;
                     }
 
-                    TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, closestPound[0], closestPound[1], networkId);
+                    await this.doStoreVehicle(closestPound[0], closestPound[1], entity);
                 },
                 blackoutGlobal: true,
                 blackoutJob: JobType.Bennys,
-                job: JobType.Bennys,
                 canInteract: (): boolean => {
                     const player = this.playerService.getPlayer();
 
@@ -260,9 +258,7 @@ export class VehicleGarageProvider {
             return;
         }
 
-        const networkId = NetworkGetNetworkIdFromEntity(vehicle);
-
-        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId);
+        await this.doStoreVehicle(id, garage, vehicle);
 
         this.nuiMenu.closeMenu();
     }
@@ -276,13 +272,27 @@ export class VehicleGarageProvider {
             }
             return GetVehicleClass(vehicle) === VehicleClass.Utility;
         });
+
         if (!vehicle) {
             this.notifier.notify('Aucune remorque à proximité.', 'error');
             return;
         }
-        const networkId = NetworkGetNetworkIdFromEntity(vehicle);
-        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId);
+
+        await this.doStoreVehicle(id, garage, vehicle);
+
         this.nuiMenu.closeMenu();
+    }
+
+    public async doStoreVehicle(id: string, garage: Garage, vehicle: number) {
+        if (IsVehicleAttachedToTrailer(vehicle)) {
+            DetachVehicleFromTrailer(vehicle);
+
+            await wait(500);
+        }
+
+        const networkId = NetworkGetNetworkIdFromEntity(vehicle);
+
+        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId);
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageShowPlaces)
