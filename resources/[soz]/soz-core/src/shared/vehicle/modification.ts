@@ -1310,8 +1310,8 @@ export const getDefaultVehicleConfiguration = (): VehicleConfiguration => ({
     color: {
         primary: 0,
         secondary: 0,
-        pearlescent: null,
-        rim: null,
+        pearlescent: 0,
+        rim: 0,
     },
     plateStyle: VehicleLicensePlateStyle.BlueOnWhite1,
     modification: {},

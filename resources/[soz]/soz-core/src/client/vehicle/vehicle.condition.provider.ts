@@ -65,7 +65,7 @@ export class VehicleConditionProvider {
 
     private currentVehicleStatus: VehicleStatus | null = null;
 
-    private currentVehiclePosition: Vector3 | null = null;
+    private currentVehiclePositionForTemporaryTire: Vector3 | null = null;
 
     @Once(OnceStep.PlayerLoaded)
     public async init() {
@@ -134,10 +134,6 @@ export class VehicleConditionProvider {
         const color = getRandomEnumValue(VehicleXenonColor);
         const color2 = VehicleXenonColorChoices[getRandomEnumValue(VehicleXenonColor)];
         const color3 = VehicleXenonColorChoices[getRandomEnumValue(VehicleXenonColor)];
-        // const color4 = getRandomEnumValue(VehicleColor);
-        // const color5 = getRandomEnumValue(VehicleColor);
-        // const color6 = getRandomEnumValue(VehicleColor);
-        // const color7 = getRandomEnumValue(VehicleColor);
         ToggleVehicleMod(vehicle, VehicleModType.XenonHeadlights, true);
         ToggleVehicleMod(vehicle, VehicleModType.TyreSmoke, true);
         SetVehicleXenonLightsColour(vehicle, color);
@@ -265,14 +261,21 @@ export class VehicleConditionProvider {
         await this.checkVehicleWater(vehicle);
 
         const state = this.vehicleService.getVehicleState(vehicle);
-
-        // Check vehicle condition
         const newCondition = {
             ...state.condition,
             ...this.vehicleService.getVehicleCondition(vehicle),
         };
 
+        const lastPosition = state.lastPosition;
+        const currentPosition = GetEntityCoords(vehicle, true) as Vector3;
+
+        if (lastPosition) {
+            newCondition.mileage += getDistance(lastPosition, currentPosition);
+        }
+
+        // Check vehicle condition
         this.vehicleService.updateVehicleState(vehicle, {
+            lastPosition: currentPosition,
             condition: newCondition,
         });
     }
@@ -443,13 +446,13 @@ export class VehicleConditionProvider {
         const vehicle = GetVehiclePedIsIn(ped, false);
 
         if (!vehicle) {
-            this.currentVehiclePosition = null;
+            this.currentVehiclePositionForTemporaryTire = null;
 
             return;
         }
 
         if (!NetworkHasControlOfEntity(vehicle)) {
-            this.currentVehiclePosition = null;
+            this.currentVehiclePositionForTemporaryTire = null;
 
             return;
         }
@@ -458,19 +461,19 @@ export class VehicleConditionProvider {
         const keys = Object.keys(state.condition.tireTemporaryRepairDistance).map(key => parseInt(key, 10));
 
         if (keys.length === 0) {
-            this.currentVehiclePosition = null;
+            this.currentVehiclePositionForTemporaryTire = null;
 
             return;
         }
 
-        const lastVehiclePosition = this.currentVehiclePosition;
-        this.currentVehiclePosition = GetEntityCoords(vehicle, true) as Vector3;
+        const lastVehiclePosition = this.currentVehiclePositionForTemporaryTire;
+        this.currentVehiclePositionForTemporaryTire = GetEntityCoords(vehicle, true) as Vector3;
 
         if (lastVehiclePosition === null) {
             return;
         }
 
-        const diffDistance = getDistance(lastVehiclePosition, this.currentVehiclePosition);
+        const diffDistance = getDistance(lastVehiclePosition, this.currentVehiclePositionForTemporaryTire);
         const newCondition = {
             ...state.condition,
         };

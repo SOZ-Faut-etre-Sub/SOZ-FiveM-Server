@@ -377,7 +377,8 @@ Moteur : ${state.condition.engineHealth.toFixed(0)}<br />
 Carrosserie : ${state.condition.bodyHealth.toFixed(0)}<br />
 Réservoir : ${state.condition.tankHealth.toFixed(0)}<br />
 Essence : ${state.condition.fuelLevel.toFixed(2)}%<br />
-Huile : ${state.condition.oilLevel.toFixed(2)}%
+Huile : ${state.condition.oilLevel.toFixed(2)}%<br />
+Kilométrage : ${((state.condition.mileage || 0) / 1000).toFixed(2)}km
 `
         );
     }
