@@ -521,6 +521,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     showAllOptions?: boolean;
     initialValue?: any;
     titleWidth?: number;
+    description?: string;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -536,6 +537,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     showAllOptions = false,
     initialValue,
     titleWidth = 40,
+    description = null,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
@@ -556,8 +558,24 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
         'ml-4': showAllOptions,
     });
 
+    const itemSetDescription = useCallback(
+        itemDescription => {
+            if (itemDescription) {
+                setDescription(itemDescription);
+            } else {
+                setDescription(description);
+            }
+        },
+        [description, setDescription]
+    );
+
     return (
-        <MenuItemContainer onSelected={onSelected} onConfirm={onItemConfirm} disabled={disabled}>
+        <MenuItemContainer
+            onSelected={onSelected}
+            onConfirm={onItemConfirm}
+            disabled={disabled}
+            description={description}
+        >
             <DescendantProvider
                 key={keyDescendant}
                 context={MenuItemSelectDescendantContext}
@@ -567,7 +585,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                 <MenuItemSelectContext.Provider
                     value={{
                         activeOptionIndex,
-                        setDescription,
+                        setDescription: itemSetDescription,
                         setActiveOptionIndex,
                         setActiveValue,
                         activeValue,

@@ -125,6 +125,9 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
                                 key={garageVehicle.vehicle.id}
                                 title={name}
                                 titleWidth={60}
+                                description={`Kilométrage: ${(
+                                    (garageVehicle.vehicle.condition.mileage || 0) / 1000
+                                ).toFixed(2)}km`}
                             >
                                 <MenuItemSelectOption value="take_out">Sortir</MenuItemSelectOption>
                                 <MenuItemSelectOption value="set_name">Renommer</MenuItemSelectOption>
@@ -135,15 +138,20 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
             )}
             {data.garage.type !== GarageType.Job && data.garage.type !== GarageType.House && (
                 <>
-                    {data.vehicles.map(garageVehicle => (
-                        <MenuItemButton
-                            onConfirm={() => vehicleTakeOut(garageVehicle.vehicle.id)}
-                            key={garageVehicle.vehicle.id}
-                        >
-                            {garageVehicle.name} | {garageVehicle.vehicle.plate}
-                            {garageVehicle.price > 0 && ` - Coût: $${garageVehicle.price}`}
-                        </MenuItemButton>
-                    ))}
+                    {data.vehicles.map(garageVehicle => {
+                        const name = garageVehicle.vehicle.label
+                            ? `${garageVehicle.vehicle.label} | ${garageVehicle.vehicle.plate}`
+                            : `${garageVehicle.name} | ${garageVehicle.vehicle.plate}`;
+                        return (
+                            <MenuItemButton
+                                onConfirm={() => vehicleTakeOut(garageVehicle.vehicle.id)}
+                                key={garageVehicle.vehicle.id}
+                            >
+                                {name}
+                                {garageVehicle.price > 0 && ` - Coût: $${garageVehicle.price}`}
+                            </MenuItemButton>
+                        );
+                    })}
                 </>
             )}
         </MenuContent>

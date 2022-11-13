@@ -1,6 +1,6 @@
 import { DealershipConfigItem, DealershipType } from '../../config/dealership';
 import { JobType } from '../job';
-import { Vector4 } from '../polyzone/vector';
+import { Vector3, Vector4 } from '../polyzone/vector';
 import { AuctionVehicle } from './auction';
 import { DealershipId } from './dealership';
 import { VehicleConfiguration } from './modification';
@@ -83,6 +83,7 @@ export type VehicleCondition = {
     tireBurstState: { [key: number]: boolean };
     doorStatus: { [key: number]: boolean };
     windowStatus: { [key: number]: boolean };
+    mileage: number;
 };
 
 export type VehicleEntityState = {
@@ -94,6 +95,7 @@ export type VehicleEntityState = {
     speedLimit: number | null;
     isPlayerVehicle: boolean;
     yoloMode: boolean;
+    lastPosition: Vector3 | null;
 
     dead: boolean;
     condition: VehicleCondition;
@@ -137,6 +139,7 @@ export const getDefaultVehicleCondition = (): VehicleCondition => ({
     tireHealth: {},
     tankHealth: 1000,
     windowStatus: {},
+    mileage: 0,
 });
 
 export const getDefaultVehicleState = (): VehicleEntityState => ({
@@ -149,6 +152,7 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     dead: false,
     isPlayerVehicle: false,
     yoloMode: false,
+    lastPosition: null,
     condition: getDefaultVehicleCondition(),
 });
 
