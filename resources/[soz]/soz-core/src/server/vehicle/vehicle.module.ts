@@ -8,6 +8,7 @@ import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
 import { VehicleKeysProvider } from './vehicle.keys.provider';
 import { VehicleLockProvider } from './vehicle.lock.provider';
+import { VehicleMigrationProvider } from './vehicle.migration.provider';
 import { VehicleProvider } from './vehicle.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleSpawner } from './vehicle.spawner';
@@ -23,6 +24,7 @@ import { VehicleSpawner } from './vehicle.spawner';
         VehicleGarageProvider,
         VehicleKeysProvider,
         VehicleLockProvider,
+        VehicleMigrationProvider,
         VehicleProvider,
         VehicleService,
         VehicleSpawner,

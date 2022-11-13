@@ -855,6 +855,41 @@ export const GarageList: Record<string, Garage> = {
             }),
         ],
     },
+    pound_paleto: {
+        name: 'Fourrière',
+        type: GarageType.Depot,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-217.29, 6215.21, 30.49], 1.0, 1.0, {
+            heading: 45.0,
+            minZ: 29.49,
+            maxZ: 31.492,
+        }),
+        parkingPlaces: [
+            new BoxZone([-207.12, 6218.89, 31.49], 1.0, 1.0, {
+                heading: 225.0,
+                minZ: 30.49,
+                maxZ: 31.492,
+            }),
+            new BoxZone([-205.35, 6222.03, 31.49], 1.0, 1.0, {
+                heading: 225.0,
+                minZ: 30.49,
+                maxZ: 31.492,
+            }),
+            new BoxZone([-203.09, 6224.81, 31.49], 1.0, 1.0, {
+                heading: 225.0,
+                minZ: 30.49,
+                maxZ: 31.492,
+            }),
+            new BoxZone([-195.7, 6218.94, 31.49], 1.0, 1.0, {
+                heading: 135.0,
+                minZ: 30.49,
+                maxZ: 31.492,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
     pound: {
         name: 'Fourrière',
         legacyId: 'fourriere',
@@ -1249,6 +1284,9 @@ export const GarageList: Record<string, Garage> = {
                 heading: 315,
                 minZ: 30.47,
                 maxZ: 33.47,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
             }),
         ],
     },

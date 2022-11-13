@@ -29,7 +29,7 @@ type BlipConfig = {
     color: number;
 };
 
-const DISTANCE_STORE_VEHICLE_THRESHOLD = 30;
+const DISTANCE_STORE_VEHICLE_THRESHOLD = 20;
 
 const BlipConfigMap: Partial<Record<GarageType, Partial<Record<GarageCategory, BlipConfig | null>>>> = {
     [GarageType.Private]: {
@@ -219,6 +219,14 @@ export class VehicleGarageProvider {
 
             if (distance < DISTANCE_STORE_VEHICLE_THRESHOLD) {
                 return [garageIdentifier, garage];
+            }
+
+            for (const place of garage.parkingPlaces) {
+                const distance = getDistance(playerPosition, place.center);
+
+                if (distance < DISTANCE_STORE_VEHICLE_THRESHOLD) {
+                    return [garageIdentifier, garage];
+                }
             }
         }
 
