@@ -74,11 +74,11 @@ export const simCard = createModel<RootModel>()({
                 return state;
             }
 
-            return { ...state, conversations: [payload, ...state.conversations] };
+            return { ...state, conversations: [{ ...payload, unread: 1 }, ...state.conversations] };
         },
         UPDATE_CONVERSATION(state, payload: MessageConversation) {
             if (!state.conversations.find(conversation => conversation.conversation_id === payload.conversation_id)) {
-                return { ...state, conversations: [payload, ...state.conversations] };
+                return { ...state, conversations: [{ ...payload, unread: 1 }, ...state.conversations] };
             }
 
             return {
