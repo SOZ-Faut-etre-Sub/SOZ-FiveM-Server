@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
     print(IsInteriorEntitySetActive(InteriorId, "walls_02"))
 
     --  Furnishing
-    ActivateInteriorEntitySet(InteriorId, "furnishings_01")
+    --ActivateInteriorEntitySet(InteriorId, "furnishings_01")
     ActivateInteriorEntitySet(InteriorId, "furnishings_02")
 
     --  Decorative
