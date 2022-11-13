@@ -17,20 +17,38 @@ export class BankMoneyCaseProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    private hasMoneyCase(): boolean {
-        return GetSelectedPedWeapon(PlayerPedId()) == MONEY_CASE_HASH;
-    }
-
-    private getPlayerMoney(): number {
+    private shouldDisplayMoneyCase(): boolean {
         if (this.playerService.getPlayer() === null) {
-            return 0;
+            return false;
+        }
+
+        if (LocalPlayer.state.adminDisableMoneyCase) {
+            return false;
         }
 
         if (this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item, 1)) {
-            return MONEY_CASE_TRIGGER;
+            return true;
         }
 
-        return Object.values(this.playerService.getPlayer().money).reduce((a, b) => a + b);
+        const player = PlayerPedId();
+        const isPhoneVisible = exports['soz-phone'].isPhoneVisible();
+        const getVehicleTryingToEnter = GetVehiclePedIsTryingToEnter(player);
+        const isInsideVehicle = IsPedInVehicle(player, GetVehiclePedIsIn(player, false), true);
+
+        if (isPhoneVisible || isInsideVehicle) {
+            return false;
+        }
+
+        if (getVehicleTryingToEnter !== 0) {
+            TriggerEvent('inventory:client:StoreWeapon');
+            return false;
+        }
+
+        return Object.values(this.playerService.getPlayer().money).reduce((a, b) => a + b) >= MONEY_CASE_TRIGGER;
+    }
+
+    private hasMoneyCase(): boolean {
+        return GetSelectedPedWeapon(PlayerPedId()) == MONEY_CASE_HASH;
     }
 
     private addMoneyCase(): void {
@@ -45,11 +63,7 @@ export class BankMoneyCaseProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     public async onCheckTick() {
-        if (!LocalPlayer.state.isLoggedIn || LocalPlayer.state.adminDisableMoneyCase) {
-            return;
-        }
-
-        if (this.getPlayerMoney() >= MONEY_CASE_TRIGGER) {
+        if (this.shouldDisplayMoneyCase()) {
             if (!this.hasMoneyCase()) {
                 this.addMoneyCase();
             }
@@ -62,28 +76,7 @@ export class BankMoneyCaseProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     public async onTick() {
-        const player = PlayerPedId();
-        const isPhoneVisible = exports['soz-phone'].isPhoneVisible();
-        const getVehicleTryingToEnter = GetVehiclePedIsTryingToEnter(player);
-        const isInsideVehicle = IsPedInVehicle(player, GetVehiclePedIsIn(player, false), true);
-
         if (!this.hasMoneyCase()) {
-            return;
-        }
-
-        if (isPhoneVisible || isInsideVehicle) {
-            this.removeMoneyCase();
-            return;
-        }
-
-        if (getVehicleTryingToEnter !== 0 || isPhoneVisible) {
-            await wait(500);
-            TriggerEvent('inventory:client:StoreWeapon');
-            return;
-        }
-
-        if (LocalPlayer.state.adminDisableMoneyCase) {
-            this.removeMoneyCase();
             return;
         }
 

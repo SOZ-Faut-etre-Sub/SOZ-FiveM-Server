@@ -3,7 +3,6 @@ import { PlayerData } from 'qbcore.js';
 import config from '../../config.json';
 import { PhoneEvents } from '../../typings/phone';
 import { SettingsEvents } from '../../typings/settings';
-import { Delay } from '../utils/fivem';
 import { sendMessage } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
 import { callService } from './calls/cl_calls.controller';
@@ -41,10 +40,7 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
 });
 
 RegisterKeyMapping(config.general.toggleCommand, 'Afficher le téléphone', 'keyboard', config.general.toggleKey);
-
-setTimeout(() => {
-    emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
-}, 1000);
+emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
 
 const getCurrentGameTime = () => {
     let hour: string | number = GetClockHours();
@@ -186,7 +182,7 @@ RegisterNuiCB<{ keepGameFocus: boolean }>(PhoneEvents.TOGGLE_KEYS, async ({ keep
     cb({});
 });
 
-setTick(async () => {
+setInterval(async () => {
     const ped = PlayerPedId();
 
     const isSwimming = IsPedSwimming(ped);
@@ -210,9 +206,7 @@ setTick(async () => {
         await hidePhone();
         callService.handleEndCall();
     }
-
-    await Delay(1000);
-});
+}, 1000);
 
 setInterval(() => {
     const time = getCurrentGameTime();

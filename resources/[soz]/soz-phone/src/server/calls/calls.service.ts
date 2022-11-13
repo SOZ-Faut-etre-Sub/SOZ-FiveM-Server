@@ -40,7 +40,7 @@ class CallsService {
         // Create initial call data
         const transmittingPlayer = PlayerService.getPlayer(reqObj.source);
         const transmitterNumber = transmittingPlayer.getPhoneNumber();
-        const receiverIdentifier = await PlayerService.getIdentifierFromPhoneNumber(reqObj.data.receiverNumber, false);
+        const receiverIdentifier = await PlayerService.getIdentifierFromPhoneNumber(reqObj.data.receiverNumber, true);
 
         // If not online we immediately let the caller know that is an invalid
         // number
