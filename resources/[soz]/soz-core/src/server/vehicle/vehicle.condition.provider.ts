@@ -5,6 +5,7 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Monitor } from '../../shared/monitor';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
+import { ProgressAnimation, ProgressOptions } from '../../shared/progress';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../item/inventory.manager';
@@ -152,7 +153,25 @@ export class VehicleConditionProvider {
             return;
         }
 
-        if (!(await this.doRepairVehicle(source, repairTime, 'car_bomb_device'))) {
+        if (
+            !(await this.doRepairVehicle(
+                source,
+                repairTime,
+                {
+                    dictionary: 'amb@world_human_vehicle_mechanic@male@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+                {
+                    headingEntity: {
+                        entity: vehicleNetworkId,
+                        heading: 180,
+                    },
+                }
+            ))
+        ) {
             return;
         }
 
@@ -171,25 +190,35 @@ export class VehicleConditionProvider {
         });
     }
 
-    private async doRepairVehicle(source: number, repairTime: number, animationName = 'car_bomb_mechanic') {
-        const { completed } = await this.progressService.progress(
-            source,
-            'repairing_vehicle',
-            'Réparation du véhicule...',
-            repairTime,
-            {
-                name: animationName,
+    private async doRepairVehicle(
+        source: number,
+        repairTime: number,
+        animation: ProgressAnimation = null,
+        options: Partial<ProgressOptions> = null
+    ) {
+        if (!animation) {
+            animation = {
+                name: 'car_bomb_mechanic',
                 dictionary: 'mp_car_bomb',
                 options: {
                     onlyUpperBody: true,
                     repeat: true,
                 },
-            },
+            };
+        }
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'repairing_vehicle',
+            'Réparation du véhicule...',
+            repairTime,
+            animation,
             {
                 disableMovement: true,
                 disableCarMovement: true,
                 disableMouse: false,
                 disableCombat: true,
+                ...options,
             }
         );
 

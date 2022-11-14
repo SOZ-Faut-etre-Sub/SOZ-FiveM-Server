@@ -477,6 +477,7 @@ export class VehicleConditionProvider {
         const newCondition = {
             ...state.condition,
         };
+        let applyCondition = false;
 
         for (const tireKey of keys) {
             const distance = newCondition.tireTemporaryRepairDistance[tireKey] + diffDistance;
@@ -486,12 +487,16 @@ export class VehicleConditionProvider {
             } else {
                 delete newCondition.tireTemporaryRepairDistance[tireKey];
                 newCondition.tireBurstCompletely[tireKey] = true;
+                applyCondition = true;
             }
         }
 
         this.vehicleService.updateVehicleState(vehicle, {
             condition: newCondition,
         });
-        this.vehicleService.applyVehicleCondition(vehicle, newCondition);
+
+        if (applyCondition) {
+            this.vehicleService.applyVehicleCondition(vehicle, newCondition);
+        }
     }
 }

@@ -6,6 +6,7 @@ import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { useControl } from '../../hook/control';
 import { useMenuNuiEvent, useNuiFocus } from '../../hook/nui';
+import { usePrevious } from '../../hook/previous';
 import { AdminMenu } from '../Admin/AdminMenu';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
@@ -36,8 +37,8 @@ export const MenuApp: FunctionComponent = () => {
 
 const MenuRouter: FunctionComponent = () => {
     const location = useLocation();
+    const prevData = usePrevious(location.state);
     const navigate = useNavigate();
-    const [menuData, setMenuData] = useState(null);
     const [menuType, setMenuType] = useState<MenuType>(null);
     const [useFocus, setFocus] = useState(false);
 
@@ -50,16 +51,15 @@ const MenuRouter: FunctionComponent = () => {
     });
 
     useEffect(() => {
-        if (location.pathname === '/' && menuType !== null && menuData !== null) {
+        if (location.pathname === '/' && menuType !== null && prevData !== null) {
             fetchNui(NuiEvent.MenuClosed, {
                 menuType,
-                menuData,
+                prevData,
             });
             setMenuType(null);
-            setMenuData(null);
             setFocus(false);
         }
-    }, [location, menuType, menuData]);
+    }, [location, menuType, prevData]);
 
     useMenuNuiEvent('SetMenuType', ({ menuType, data, subMenuId }) => {
         let path = `/`;
@@ -72,20 +72,24 @@ const MenuRouter: FunctionComponent = () => {
             }
         }
 
-        navigate(path);
-        setMenuData(data);
+        navigate(path, {
+            state: data,
+        });
         setMenuType(menuType);
         setFocus(false);
     });
 
     useMenuNuiEvent('CloseMenu', () => {
         if (location.pathname !== '/') {
-            navigate('/');
+            navigate('/', {
+                state: null,
+            });
         }
         setMenuType(null);
-        setMenuData(null);
         setFocus(false);
     });
+
+    const menuData = location.state as any;
 
     return (
         <Routes>
