@@ -22,7 +22,7 @@ import {
     useRef,
     useState,
 } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { RGBColor } from '../../../shared/color';
 import { MenuType } from '../../../shared/nui/menu';
@@ -386,11 +386,20 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     onSelected,
     disabled = false,
 }) => {
+    const location = useLocation();
     const type = useContext(MenuTypeContext);
     const navigate = useNavigate();
 
     return (
-        <MenuItemContainer onSelected={onSelected} onConfirm={() => navigate(`/${type}/${id}`)} disabled={disabled}>
+        <MenuItemContainer
+            onSelected={onSelected}
+            onConfirm={() =>
+                navigate(`/${type}/${id}`, {
+                    state: location.state,
+                })
+            }
+            disabled={disabled}
+        >
             {children}
         </MenuItemContainer>
     );

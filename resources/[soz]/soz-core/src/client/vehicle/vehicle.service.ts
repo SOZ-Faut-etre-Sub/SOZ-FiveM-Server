@@ -108,6 +108,7 @@ export class VehicleService {
     }
 
     public applyVehicleCondition(vehicle: number, condition: VehicleCondition): void {
+        console.log('applyVehicleCondition', vehicle, condition);
         SetVehicleFuelLevel(vehicle, condition.fuelLevel);
 
         const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
@@ -133,7 +134,7 @@ export class VehicleService {
         SetVehicleEngineHealth(vehicle, condition.engineHealth);
         SetVehiclePetrolTankHealth(vehicle, condition.tankHealth);
 
-        const wheelNumber = GetVehicleNumberOfWheels(vehicle);
+        const wheelNumber = 6;
 
         for (let i = 0; i < wheelNumber; i++) {
             SetVehicleWheelHealth(vehicle, i, condition.tireHealth[i] || 1000.0);
@@ -168,7 +169,7 @@ export class VehicleService {
         const tireBurstCompletely = {};
         const windowStatus = {};
         const doorStatus = {};
-        const wheelNumber = GetVehicleNumberOfWheels(vehicle);
+        const wheelNumber = 6;
 
         for (let i = 0; i < wheelNumber; i++) {
             tireHealth[i] = GetVehicleWheelHealth(vehicle, i);
