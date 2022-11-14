@@ -4,6 +4,7 @@ import { appBank } from './app/bank';
 import { appNotes } from './app/notes';
 import { appSociety } from './app/society';
 import { appTwitchNews } from './app/twitchNews';
+import { time } from './os/time';
 import { phone } from './phone';
 import { photo } from './photo';
 import { simCard } from './simCard';
@@ -11,6 +12,9 @@ import { simCard } from './simCard';
 export interface RootModel extends Models<RootModel> {
     // Core models
     phone: typeof phone;
+    time: typeof time;
+
+    // System models
     simCard: typeof simCard;
     photo: typeof photo;
 
@@ -21,4 +25,4 @@ export interface RootModel extends Models<RootModel> {
     appSociety: typeof appSociety;
 }
 
-export const models: RootModel = { phone, simCard, photo, appBank, appNotes, appTwitchNews, appSociety };
+export const models: RootModel = { phone, time, simCard, photo, appBank, appNotes, appTwitchNews, appSociety };
