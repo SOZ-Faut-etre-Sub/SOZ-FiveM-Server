@@ -143,6 +143,7 @@ export enum ServerEvent {
     VEHICLE_FREE_JOB_SPAWN = 'soz-core:server:vehicle:free-job-spawn',
 
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
+    WEAPON_GUNSMITH_RENAME = 'soz-core:server:weapon:gunsmith:rename',
 }
 
 export enum ClientEvent {
@@ -218,6 +219,7 @@ export enum ClientEvent {
 
     WEAPON_USE_WEAPON = 'soz-core:client:weapon:use-weapon',
     WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
+    WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
 }
 
 export enum GameEvent {
@@ -328,4 +330,6 @@ export enum NuiEvent {
     VehicleGarageStore = 'soz-core:client:vehicle:garage:store',
     VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
+
+    GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
 }
