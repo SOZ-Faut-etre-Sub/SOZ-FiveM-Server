@@ -12,6 +12,7 @@ import { useAppBankService } from './services/app/useAppBankService';
 import { useAppNotesService } from './services/app/useAppNotesService';
 import { useAppSocietyService } from './services/app/useAppSocietyService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
+import { useTimeService } from './services/os/useTimeService';
 import { useCallService } from './services/useCallService';
 import { useContactService } from './services/useContactService';
 import { useDebugService } from './services/useDebugService';
@@ -28,9 +29,11 @@ function Phone() {
 
     useDebugService();
 
-    usePhoneService();
-
     // Core services
+    usePhoneService();
+    useTimeService();
+
+    // System services
     useKeyboardService();
     useSimCardService();
     useCallService();
