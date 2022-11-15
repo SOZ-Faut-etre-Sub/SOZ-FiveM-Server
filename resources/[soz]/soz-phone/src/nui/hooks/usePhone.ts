@@ -51,8 +51,7 @@ export const useAvailability = () => {
 };
 
 export const useTime = () => {
-    const state = useSelector((state: RootState) => state.phone);
-    return state.time;
+    return useSelector((state: RootState) => state.time);
 };
 
 export const useCallModal = () => {
