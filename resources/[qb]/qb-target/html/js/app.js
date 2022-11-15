@@ -140,17 +140,6 @@ const Targeting = Vue.createApp({
         this.TargetHTML = "";
         let TargetLabel = this.TargetHTML;
         this.CurrentIcon = this.SuccessEyeIcon;
-
-        items.data.sort((a, b) => {
-          if (a.label < b.label) {
-            return -1;
-          }
-          if (a.label > b.label) {
-            return 1;
-          }
-          return 0;
-        });
-
         items.data.forEach(function (item, index) {
           let left = Math.cos(index / items.data.length * Math.PI * 2).toFixed(6);
           let top = Math.sin(index / items.data.length * Math.PI * 2).toFixed(6);
@@ -173,16 +162,6 @@ const Targeting = Vue.createApp({
     ValidTarget(items) {
       this.TargetHTML = "";
       let TargetLabel = this.TargetHTML;
-
-      items.data.sort((a, b) => {
-        if (a.label < b.label) {
-          return -1;
-        }
-        if (a.label > b.label) {
-          return 1;
-        }
-        return 0;
-      });
       items.data.forEach(function (item, index) {
         TargetLabel += generateItem(index, item);
       });
