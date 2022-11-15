@@ -211,4 +211,4 @@ setInterval(async () => {
 setInterval(() => {
     const time = getCurrentGameTime();
     sendMessage('PHONE', PhoneEvents.SET_TIME, time);
-}, 4000);
+}, 2000);
