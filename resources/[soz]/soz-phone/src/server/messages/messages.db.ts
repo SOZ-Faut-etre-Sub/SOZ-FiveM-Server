@@ -140,7 +140,7 @@ export class _MessagesDB {
 
     async setMessageArchived(conversation_id: string, identifier: string) {
         await exports.oxmysql.query_async(
-            `UPDATE phone_messages_conversations SET masked = 1 WHERE conversation_id = ? AND user_identifier = ?`,
+            `UPDATE phone_messages_conversations SET masked = 1 WHERE conversation_id = ? AND participant_identifier = ?`,
             [conversation_id, identifier]
         );
     }
