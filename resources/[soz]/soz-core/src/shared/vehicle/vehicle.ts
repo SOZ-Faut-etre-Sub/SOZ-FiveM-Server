@@ -131,7 +131,7 @@ export const getDefaultVehicleCondition = (): VehicleCondition => ({
     doorStatus: {},
     dirtLevel: 0,
     engineHealth: 1000,
-    fuelLevel: 50,
+    fuelLevel: 100,
     oilLevel: 100,
     tireTemporaryRepairDistance: {},
     tireBurstCompletely: {},

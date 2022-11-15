@@ -351,6 +351,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSubMenuLink id="interior">Intérieur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="exterior">Exterieur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="light">Lumières</MenuItemSubMenuLink>
+                    {data.options.extra.length > 0 && <MenuItemSubMenuLink id="extra">Extras</MenuItemSubMenuLink>}
                     <MenuItemButton onConfirm={() => onConfirm()}>✅ Confirmer les changements</MenuItemButton>
                 </MenuContent>
             </MainMenu>
@@ -904,6 +905,29 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         }}
                         choices={VehicleXenonColorChoices}
                     />
+                    <MenuItemGoBack />
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id="extra">
+                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Extras</MenuTitle>
+                <MenuContent>
+                    {options.extra?.map((extra, index) => (
+                        <MenuItemCheckbox
+                            key={index}
+                            checked={config.extra[extra]}
+                            onChange={() => {
+                                setConfig({
+                                    ...config,
+                                    extra: {
+                                        ...config.extra,
+                                        [extra]: !config.extra[extra],
+                                    },
+                                });
+                            }}
+                        >
+                            Extra {extra}
+                        </MenuItemCheckbox>
+                    ))}
                     <MenuItemGoBack />
                 </MenuContent>
             </SubMenu>

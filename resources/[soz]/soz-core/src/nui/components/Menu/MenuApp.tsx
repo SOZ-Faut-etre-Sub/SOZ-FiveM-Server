@@ -54,7 +54,7 @@ const MenuRouter: FunctionComponent = () => {
         if (location.pathname === '/' && menuType !== null && prevData !== null) {
             fetchNui(NuiEvent.MenuClosed, {
                 menuType,
-                prevData,
+                menuData: prevData,
             });
             setMenuType(null);
             setFocus(false);

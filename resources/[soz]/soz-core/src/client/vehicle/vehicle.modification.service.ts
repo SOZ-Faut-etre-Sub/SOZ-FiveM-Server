@@ -430,6 +430,7 @@ export class VehicleModificationService {
         const options: VehicleUpgradeOptions = {
             modification: {},
             wheelType: {},
+            extra: [],
         };
 
         if (GetNumVehicleMods(vehicle, VehicleModType.Livery) > 0) {
@@ -518,6 +519,12 @@ export class VehicleModificationService {
             options.wheelType[VehicleWheelType.Offroad] = 'Offroad';
             options.wheelType[VehicleWheelType.Tuner] = 'Tuner';
             options.wheelType[VehicleWheelType.HighEnd] = 'HighEnd';
+        }
+
+        for (let i = 1; i < 14; i++) {
+            if (DoesExtraExist(vehicle, i)) {
+                options.extra.push(i);
+            }
         }
 
         return options;
@@ -641,6 +648,12 @@ export class VehicleModificationService {
         for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
             value.apply(vehicle, configuration.modification[key], configuration);
         }
+
+        for (const extraStr of Object.keys(configuration.extra)) {
+            const extra = parseInt(extraStr, 10);
+
+            SetVehicleExtra(vehicle, extra, !configuration.extra[extra]);
+        }
     }
 
     public getVehicleConfiguration(vehicle: number): VehicleConfiguration {
@@ -659,6 +672,14 @@ export class VehicleModificationService {
 
         for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
             modification[key] = value.get(vehicle);
+        }
+
+        const extra = {};
+
+        for (let i = 1; i < 14; i++) {
+            if (DoesExtraExist(vehicle, i)) {
+                extra[i] = IsVehicleExtraTurnedOn(vehicle, i);
+            }
         }
 
         return {
@@ -689,6 +710,7 @@ export class VehicleModificationService {
             customWheelFront: GetVehicleModVariation(vehicle, VehicleModType.WheelFront),
             customWheelRear: GetVehicleModVariation(vehicle, VehicleModType.WheelRear),
             modification,
+            extra,
         };
     }
 }
