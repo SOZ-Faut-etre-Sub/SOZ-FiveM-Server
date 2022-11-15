@@ -261,7 +261,7 @@ class CallsService {
         // lets protect against that
         if (currentCall) {
             emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
-            if (currentCall.is_accepted) {
+            if (currentCall.is_accepted || targetCall === undefined) {
                 emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
             }
         }
