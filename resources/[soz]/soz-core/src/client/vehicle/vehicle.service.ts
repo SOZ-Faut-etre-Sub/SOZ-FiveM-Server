@@ -108,7 +108,6 @@ export class VehicleService {
     }
 
     public applyVehicleCondition(vehicle: number, condition: VehicleCondition): void {
-        console.log('applyVehicleCondition', vehicle, condition);
         SetVehicleFuelLevel(vehicle, condition.fuelLevel);
 
         const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');

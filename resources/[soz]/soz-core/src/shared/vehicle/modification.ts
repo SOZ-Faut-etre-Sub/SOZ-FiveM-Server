@@ -313,6 +313,7 @@ export type VehicleConfiguration = {
     customWheelFront?: boolean;
     customWheelRear?: boolean;
     modification: VehicleModification;
+    extra: Record<number, boolean>;
 };
 
 export enum VehicleModType {
@@ -425,6 +426,7 @@ export type VehicleUpgradeOptions = {
     liveryRoof?: VehicleUpgradeChoiceList;
     wheelType: Partial<Record<VehicleWheelType, string>>;
     modification: Partial<Record<keyof VehicleModification, VehicleUpgradeOption<VehicleUpgradeChoice>>>;
+    extra: number[];
 };
 
 export const VehicleColorChoices: Record<VehicleColor, VehicleColorChoiceItem> = {
@@ -1315,6 +1317,7 @@ export const getDefaultVehicleConfiguration = (): VehicleConfiguration => ({
     },
     plateStyle: VehicleLicensePlateStyle.BlueOnWhite1,
     modification: {},
+    extra: {},
 });
 
 export const getVehicleCustomPrice = (
