@@ -173,17 +173,16 @@ class _SocietyService {
             resp({ status: 'ok', data: message });
 
             const societyMessage = await this.contactsDB.getMessage(reqObj.data.id);
-            if (societyMessage[0]) {
-                const player = await PlayerService.getPlayersFromNumber(
-                    societyMessage[0].source_phone.replace('#', '')
-                );
+            if (societyMessage) {
+                const player = await PlayerService.getPlayersFromNumber(societyMessage.source_phone.replace('#', ''));
                 if (player) {
-                    if (reqObj.data.take && !reqObj.data.done) {
+                    if (societyMessage.isTaken && !societyMessage.isDone) {
                         emitNet(
                             'hud:client:DrawNotification',
                             player.source,
                             "Votre ~b~appel~s~ vient d'être pris !",
-                            'info'
+                            'info',
+                            10000
                         );
                     }
                 }
