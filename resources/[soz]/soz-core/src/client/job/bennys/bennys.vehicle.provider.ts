@@ -1,6 +1,7 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
+import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { emitRpc } from '../../../core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
@@ -327,6 +328,22 @@ export class BennysVehicleProvider {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         TriggerServerEvent(ServerEvent.BENNYS_WASH_VEHICLE, vehicleNetworkId);
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    public checkCloseMenu(): void {
+        if (this.nuiMenu.getOpened() !== MenuType.BennysUpgradeVehicle) {
+            return;
+        }
+
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (vehicle) {
+            return;
+        }
+
+        this.nuiMenu.closeMenu();
     }
 
     @OnNuiEvent(NuiEvent.BennysUpgradeVehicle)
