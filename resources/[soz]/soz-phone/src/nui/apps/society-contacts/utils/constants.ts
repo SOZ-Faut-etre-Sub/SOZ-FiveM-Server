@@ -63,9 +63,9 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 11,
-        display: "Benny's",
-        number: '555-BENNYS',
-        avatar: 'media/society_icon/bennys.webp',
+        display: 'New Gahray',
+        number: '555-NEWGAHRAY',
+        avatar: 'media/society_icon/newgahray.webp',
     },
     {
         id: 12,
