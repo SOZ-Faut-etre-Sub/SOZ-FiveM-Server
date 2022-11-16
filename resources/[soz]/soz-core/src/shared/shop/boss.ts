@@ -98,6 +98,26 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         ],
     },
     {
+        name: 'bennys_north',
+        job: JobType.Bennys,
+        zone: {
+            center: [1898.44, 3077.56, 46.92],
+            length: 1.2,
+            width: 3.0,
+            heading: 330.0,
+            minZ: 45.92,
+            maxZ: 46.922,
+        },
+        targets: [],
+        products: [
+            { id: 'repairkit', type: 'item', price: 200 },
+            { id: 'cleaningkit', type: 'item', price: 40 },
+            { id: 'wheel_kit', type: 'item', price: 80 },
+            { id: 'diagnostic_pad', type: 'item', price: 260 },
+            { id: 'oil_jerrycan', type: 'item', price: 20 },
+        ],
+    },
+    {
         name: 'lsmc',
         job: JobType.LSMC,
         zone: {
