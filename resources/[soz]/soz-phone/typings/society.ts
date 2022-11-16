@@ -68,7 +68,7 @@ export const SocietyNumberList: SocietyNumber = {
     food: '555-MARIUS',
     oil: '555-MTP',
     'cash-transfer': '555-STONK',
-    bennys: '555-BENNYS',
+    bennys: '555-NEWGAHRAY',
     upw: '555-UPW',
     pawl: '555-PAWL',
     baun: '555-BAUN',
