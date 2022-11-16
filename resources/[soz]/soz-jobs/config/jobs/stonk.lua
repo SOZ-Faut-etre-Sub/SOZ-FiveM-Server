@@ -30,7 +30,7 @@ StonkConfig.DutyOutfit = {
         Props = {[0] = {Drawable = 10, Texture = 2, Palette = 0}},
     },
 }
-
+-- Prise de service nord
 StonkConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         ["Tenue VIP"] = {

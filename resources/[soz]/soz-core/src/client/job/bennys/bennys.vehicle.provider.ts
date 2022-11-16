@@ -63,11 +63,26 @@ export class BennysVehicleProvider {
             minZ: 48.57,
             maxZ: 51.57,
         }),
+        new BoxZone([1913.98, 3088.9, 46.92], 8.8, 6.2, {
+            heading: 330.0,
+            minZ: 45.92,
+            maxZ: 46.922,
+        }),
+        new BoxZone([1905.86, 3081.09, 46.92], 6.0, 8.0, {
+            heading: 330.0,
+            minZ: 45.92,
+            maxZ: 46.922,
+        }),
+        new BoxZone([1915.46, 3107.86, 46.81], 5.6, 12.4, {
+            heading: 330.0,
+            minZ: 45.81,
+            maxZ: 46.812,
+        }),
     ]);
 
     @Once(OnceStep.PlayerLoaded)
     public onStart() {
-        this.targetFactory.createForModel(-1830645735, [
+        const dutyTargets = [
             {
                 icon: 'fas fa-sign-in-alt',
                 label: 'Prendre son service',
@@ -90,7 +105,19 @@ export class BennysVehicleProvider {
                 },
                 job: JobType.Bennys,
             },
-        ]);
+        ];
+
+        this.targetFactory.createForModel(-1830645735, dutyTargets);
+
+        this.targetFactory.createForBoxZone(
+            'bennys_duty_north',
+            new BoxZone([1908.09, 3090.02, 46.93], 2.8, 0.8, {
+                heading: 330.0,
+                minZ: 45.93,
+                maxZ: 46.932,
+            }),
+            dutyTargets
+        );
 
         this.targetFactory.createForAllVehicle([
             {

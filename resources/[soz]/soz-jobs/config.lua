@@ -415,7 +415,7 @@ SozJobCore.Jobs = {
         },
     },
     [SozJobCore.JobType.Bennys] = {
-        label = "Benny's",
+        label = "New Gahray",
         platePrefix = "BENY",
         grades = {},
         canInvoice = true,
