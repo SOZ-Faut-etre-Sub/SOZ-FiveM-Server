@@ -123,7 +123,7 @@ export class VehicleSeatbeltProvider {
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
-    private async onBaseEnteredVehicle(vehicle) {
+    private async onBaseEnteredVehicle() {
         this.isSeatbeltOn = false;
         TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
         SetPedConfigFlag(PlayerPedId(), 184, true);
