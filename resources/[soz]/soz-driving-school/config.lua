@@ -235,7 +235,7 @@ Config.Checkpoints = {
         x = -262.13,
         y = -1310.05,
         z = 29.65,
-        message = "Benny's ! J'ai le sentiment que tu vas passer beaucoup de temps ici !",
+        message = "New Gahray ! J'ai le sentiment que tu vas passer beaucoup de temps ici !",
         licenses = {"car", "truck", "motorcycle"},
     },
     {

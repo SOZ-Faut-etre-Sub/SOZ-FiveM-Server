@@ -1092,7 +1092,7 @@ export const GarageList: Record<string, Garage> = {
         ],
     },
     bennys: {
-        name: 'Bennys Parking',
+        name: 'New Gahray Parking - Ville',
         type: GarageType.Job,
         job: JobType.Bennys,
         category: GarageCategory.Car,
@@ -1112,6 +1112,25 @@ export const GarageList: Record<string, Garage> = {
                 heading: 90,
                 minZ: 30.3,
                 maxZ: 34.3,
+            }),
+        ],
+    },
+    bennys_north: {
+        name: 'New Gahray Parking - Sandy Shores',
+        type: GarageType.Job,
+        job: JobType.Bennys,
+        category: GarageCategory.Car,
+        allowTrailers: true,
+        zone: new BoxZone([1896.74, 3066.37, 45.92], 1.0, 1.0, {
+            heading: 329.0,
+            minZ: 44.92,
+            maxZ: 47.922,
+        }),
+        parkingPlaces: [
+            new BoxZone([1890.77, 3063.2, 46.92], 1.0, 1.0, {
+                heading: 60.0,
+                minZ: 45.92,
+                maxZ: 46.922,
             }),
         ],
     },
