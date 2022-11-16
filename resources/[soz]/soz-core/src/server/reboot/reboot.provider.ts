@@ -7,6 +7,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
+import { VehicleDealershipProvider } from '../vehicle/vehicle.dealership.provider';
 import { WeatherProvider } from '../weather/weather.provider';
 
 @Provider()
@@ -21,6 +22,9 @@ export class RebootProvider {
 
     @Inject(WeatherProvider)
     private weatherProvider: WeatherProvider;
+
+    @Inject(VehicleDealershipProvider)
+    private vehicleDealershipProvider: VehicleDealershipProvider;
 
     @OnEvent(ServerEvent.FIVEM_PLAYER_CONNECTING)
     public onPlayerConnecting(source, name, setKickReason, deferrals) {
@@ -47,7 +51,7 @@ export class RebootProvider {
 
         exports['soz-inventory'].saveInventories();
 
-        await this.prismaService.player_vehicles.updateMany({
+        await this.prismaService.playerVehicle.updateMany({
             where: {
                 state: 0,
             },
@@ -61,7 +65,7 @@ export class RebootProvider {
             },
         });
 
-        await this.prismaService.player_vehicles.updateMany({
+        await this.prismaService.playerVehicle.updateMany({
             where: {
                 life_counter: -1,
             },
@@ -73,9 +77,10 @@ export class RebootProvider {
 
         exports['soz-bank'].saveAccounts();
         exports['soz-upw'].saveUpw();
-        exports['soz-vehicle'].finishAuctions();
 
-        await this.prismaService.player_vehicles.deleteMany({
+        await this.vehicleDealershipProvider.finishAuctions();
+
+        await this.prismaService.playerVehicle.deleteMany({
             where: {
                 plate: {
                     contains: 'ESSAI',

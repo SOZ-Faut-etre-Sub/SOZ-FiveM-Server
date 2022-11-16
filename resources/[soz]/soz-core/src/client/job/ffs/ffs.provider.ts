@@ -1,9 +1,8 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { FfsRecipe } from '../../../nui/components/FightForStyle/FightForStyleJobMenu';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
-import { FfsConfig, Process } from '../../../shared/job/ffs';
+import { FfsConfig, FfsRecipe, Process } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../item/inventory.manager';
@@ -82,7 +81,7 @@ export class FightForStyleProvider {
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_SOCIETY_MENU)
     public onOpenSocietyMenu() {
-        if (this.nuiMenu.isOpen()) {
+        if (this.nuiMenu.getOpened() === MenuType.FightForStyleJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }

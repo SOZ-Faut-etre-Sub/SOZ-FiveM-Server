@@ -1,8 +1,8 @@
-import { ZoneOptions } from '../../client/target/target.factory';
+import { NamedZone } from '../polyzone/box.zone';
 
 export type StonkBagType = 'jewelbag' | 'small_moneybag' | 'medium_moneybag' | 'big_moneybag';
 
-const resellZones: (ZoneOptions & { bagAccepted: StonkBagType })[] = [
+const resellZones: (NamedZone & { bagAccepted: StonkBagType })[] = [
     {
         name: 'Lombank',
         center: [-880.35, -194.65, 38.38],
@@ -45,7 +45,7 @@ const resellZones: (ZoneOptions & { bagAccepted: StonkBagType })[] = [
     },
 ];
 
-const deliveryZones: ZoneOptions[] = [
+const deliveryZones: NamedZone[] = [
     {
         name: 'BOLINGBROKE PENITENTIARY',
         center: [1845.43, 2585.9, 45.67],

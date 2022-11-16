@@ -1,17 +1,6 @@
-import { Injectable } from '../../core/decorators/injectable';
-import { Vector3 } from '../../shared/polyzone/vector';
-
-export type ZoneOptions = {
-    name?: string;
-    center: Vector3;
-    length?: number;
-    width?: number;
-    heading?: number;
-    minZ?: number;
-    maxZ?: number;
-    debugPoly?: boolean;
-    data?: any;
-};
+import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Zone } from '../../shared/polyzone/box.zone';
+import { PedFactory } from '../factory/ped.factory';
 
 export type TargetOptions = {
     label: string;
@@ -53,7 +42,10 @@ export class TargetFactory {
     private zones: { [id: string]: any } = {};
     private players: { [id: string]: any } = {};
 
-    public createForBoxZone(id: string, zone: ZoneOptions, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+    @Inject(PedFactory)
+    private pedFactory: PedFactory;
+
+    public createForBoxZone(id: string, zone: Zone, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         zone = {
             length: 1,
             width: 1,
@@ -100,19 +92,31 @@ export class TargetFactory {
             exports['qb-target'].RemoveZone(id);
         }
 
-        for (const id of Object.keys(this.players)) {
-            exports['qb-target'].RemovePlayer(id);
-        }
-
-        //
         exports['qb-target'].DeletePeds();
     }
 
-    public createForPed(ped: PedOptions) {
-        exports['qb-target'].SpawnPed(ped);
+    public async createForPed(ped: PedOptions) {
+        const id = await this.pedFactory.createPed(ped);
+
+        this.createForBoxZone(
+            `entity_${id}`,
+            {
+                center: [ped.coords.x, ped.coords.y, ped.coords.z],
+                heading: ped.coords.w,
+                width: 0.8,
+                length: 0.8,
+                minZ: ped.coords.z - 1,
+                maxZ: ped.coords.z + 2,
+            },
+            ped.target.options
+        );
     }
 
-    public createForModel(models: string[], targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+    public createForModel(
+        models: string[] | number[] | string | number,
+        targets: TargetOptions[],
+        distance = DEFAULT_DISTANCE
+    ) {
         exports['qb-target'].AddTargetModel(models, {
             options: targets,
             distance: distance,

@@ -33,7 +33,7 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                 if (isOk(result)) {
                     const jobs = result.ok;
                     setJobs(jobs);
-                    setGrades(jobs[0].grades);
+                    setGrades(jobs[0]?.grades);
                 }
             });
         }
@@ -74,8 +74,10 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                         await fetchNui(NuiEvent.AdminSetJob, { jobId: job.id, jobGrade: 0 });
                     }}
                 >
-                    {jobs.map(job => (
-                        <MenuItemSelectOption key={'job_' + job.id}>{job.label}</MenuItemSelectOption>
+                    {jobs.map((job, index) => (
+                        <MenuItemSelectOption value={index} key={'job_' + job.id}>
+                            {job.label}
+                        </MenuItemSelectOption>
                     ))}
                 </MenuItemSelect>
                 <MenuItemSelect
@@ -89,8 +91,8 @@ export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner, state, 
                         await updateState('job', 'currentJobGradeIndex', selectedIndex);
                     }}
                 >
-                    {grades.map(grade => (
-                        <MenuItemSelectOption key={'grade_' + state.currentJobIndex + '_' + grade.id}>
+                    {grades.map((grade, index) => (
+                        <MenuItemSelectOption value={index} key={'grade_' + state.currentJobIndex + '_' + grade.id}>
                             {grade.name}
                         </MenuItemSelectOption>
                     ))}

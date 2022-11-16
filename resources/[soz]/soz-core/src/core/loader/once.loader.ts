@@ -8,6 +8,7 @@ export class OnceLoader {
         [OnceStep.Start]: [],
         [OnceStep.DatabaseConnected]: [],
         [OnceStep.PlayerLoaded]: [],
+        [OnceStep.RepositoriesLoaded]: [],
         [OnceStep.Stop]: [],
     };
 
@@ -15,7 +16,7 @@ export class OnceLoader {
         const promises = [];
 
         for (const method of this.methods[step]) {
-            promises.push(method(...args));
+            promises.push(method(step, ...args));
         }
 
         await Promise.all(promises);
@@ -27,8 +28,18 @@ export class OnceLoader {
         for (const methodName of Object.keys(eventMethodList)) {
             const onceStep = eventMethodList[methodName];
             const method = provider[methodName].bind(provider);
+            const decoratedMethod = async (step: OnceStep, ...args) => {
+                try {
+                    await method(...args);
+                } catch (e) {
+                    console.error(
+                        `Error on executing step ${step}, in method ${methodName} of provider ${provider.constructor.name}`,
+                        e
+                    );
+                }
+            };
 
-            this.methods[onceStep].push(method);
+            this.methods[onceStep].push(decoratedMethod);
         }
     }
 
@@ -37,6 +48,7 @@ export class OnceLoader {
             [OnceStep.Start]: [],
             [OnceStep.DatabaseConnected]: [],
             [OnceStep.PlayerLoaded]: [],
+            [OnceStep.RepositoriesLoaded]: [],
             [OnceStep.Stop]: [],
         };
     }

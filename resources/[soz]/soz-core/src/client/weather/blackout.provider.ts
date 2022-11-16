@@ -24,13 +24,13 @@ export class BlackoutProvider {
     }
 
     @StateBagHandler('blackout', 'global')
-    onBlackoutChange(_name, _key, value: boolean): void {
+    async onBlackoutChange(_name, _key, value: boolean) {
         this.blackout = value;
         this.handleBlackoutChange();
     }
 
     @StateBagHandler('blackout_level', 'global')
-    onBlackoutLevelChange(_name, _key, value: number): void {
+    async onBlackoutLevelChange(_name: string, _key: string, value: number) {
         this.blackoutLevel = value;
         this.handleBlackoutChange();
     }

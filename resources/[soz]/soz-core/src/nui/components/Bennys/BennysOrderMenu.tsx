@@ -48,7 +48,14 @@ export const BennysOrderMenu: FunctionComponent = () => {
                                     }}
                                     key={order.uuid}
                                 >
-                                    ❌ {order.model.toUpperCase() + ' - ' + remainingMinutes} minutes
+                                    {remainingMinutes > 0 && (
+                                        <span>❌ {order.model.toUpperCase() + ' - ' + remainingMinutes} minutes</span>
+                                    )}
+                                    {remainingMinutes <= 0 && (
+                                        <span>
+                                            ❌ {order.model.toUpperCase() + ' - ' + 'Arrive dans quelques instants'}
+                                        </span>
+                                    )}
                                 </MenuItemButton>
                             );
                         })}

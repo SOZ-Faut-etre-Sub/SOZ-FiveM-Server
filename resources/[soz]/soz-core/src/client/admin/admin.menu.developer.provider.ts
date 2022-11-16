@@ -1,3 +1,4 @@
+import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -7,6 +8,8 @@ import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
+import { NuiMenu } from '../nui/nui.menu';
+import { AdminMenuProvider } from './admin.menu.provider';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
@@ -22,7 +25,49 @@ export class AdminMenuDeveloperProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
+    @Inject(AdminMenuProvider)
+    private adminMenuProvider: AdminMenuProvider;
+
     private showCoordinatesInterval = null;
+
+    private isCreatingZone = false;
+
+    @OnNuiEvent(NuiEvent.AdminCreateZone)
+    public async createZone(): Promise<void> {
+        if (!this.isCreatingZone) {
+            this.isCreatingZone = true;
+            TriggerEvent('polyzone:pzcreate', 'box', 'create_zone', ['box', 'create_zone', 1, 1]);
+            this.nuiMenu.closeMenu();
+        }
+    }
+    @Command('soz_admin_finish_create_zone', {
+        description: "Valider la création d'une zone",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'E',
+            },
+        ],
+    })
+    public async endCreatingZone() {
+        if (this.isCreatingZone) {
+            this.isCreatingZone = false;
+            const zone = exports['PolyZone'].EndPolyZone();
+            this.clipboard.copy(
+                `new BoxZone([${zone.center.x.toFixed(2)}, ${zone.center.y.toFixed(2)}, ${zone.center.z.toFixed(
+                    2
+                )}], ${zone.length.toFixed(2)}, ${zone.width.toFixed(2)}, {
+                    heading: ${zone.heading.toFixed(2)},
+                    minZ: ${zone.center.z.toFixed(2) - 1},
+                    maxZ: ${zone.center.z.toFixed(2) + 2},
+                });`
+            );
+            await this.adminMenuProvider.openAdminMenu('developer');
+        }
+    }
 
     @OnNuiEvent(NuiEvent.AdminToggleNoClip)
     public async toggleNoClip(): Promise<void> {
@@ -70,10 +115,10 @@ export class AdminMenuDeveloperProvider {
 
         switch (type) {
             case 'coords3':
-                this.clipboard.copy(`vector3(${x}, ${y}, ${z})`);
+                this.clipboard.copy(`[${x}, ${y}, ${z}]`);
                 break;
             case 'coords4':
-                this.clipboard.copy(`vector4(${x}, ${y}, ${z}, ${heading})`);
+                this.clipboard.copy(`[${x}, ${y}, ${z}, ${heading}]`);
                 break;
         }
         this.notifier.notify('Coordonnées copiées dans le presse-papier');
@@ -91,7 +136,8 @@ export class AdminMenuDeveloperProvider {
                 return Ok(true);
             }
         );
-        if (!citizenId) {
+
+        if (citizenId) {
             TriggerServerEvent(ServerEvent.ADMIN_CHANGE_PLAYER, citizenId);
         }
     }

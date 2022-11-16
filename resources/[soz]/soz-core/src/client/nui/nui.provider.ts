@@ -13,6 +13,16 @@ export class NuiProvider {
 
     private state: Record<string, FocusInput> = {};
 
+    @OnNuiEvent(NuiEvent.TriggerServerEvent)
+    public async onTriggerServerEvent({ event, args }) {
+        TriggerServerEvent(event, ...args);
+    }
+
+    @OnNuiEvent(NuiEvent.TriggerClientEvent)
+    public async onTriggerClientEvent({ event, args }) {
+        TriggerEvent(event, ...args);
+    }
+
     @OnNuiEvent(NuiEvent.SetFocusInput)
     public async onSetFocusInput(data: SetFocusInput) {
         if (data.focus) {
@@ -34,12 +44,15 @@ export class NuiProvider {
     private computeFocusInput() {
         let keyboard = false;
         let cursor = false;
+        let keepInput = true;
 
         for (const focus of Object.values(this.state)) {
             keyboard = keyboard || focus.keyboard;
             cursor = cursor || focus.cursor;
+            keepInput = keepInput && focus.keepInput;
         }
 
         SetNuiFocus(keyboard, cursor);
+        SetNuiFocusKeepInput(keepInput);
     }
 }

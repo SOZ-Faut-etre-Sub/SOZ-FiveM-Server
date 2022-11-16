@@ -1,55 +1,29 @@
 import { FunctionComponent } from 'react';
 
-import { SozRole } from '../../../core/permissions';
+import { AdminMenuData } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { MainMenu, Menu, MenuContent, MenuItemSubMenuLink, MenuTitle } from '../Styleguide/Menu';
-import { DeveloperSubMenu, DeveloperSubMenuProps } from './DeveloperSubMenu';
-import { GameMasterSubMenu, GameMasterSubMenuProps } from './GamemasterSubMenu';
-import { InteractiveSubMenu, InteractiveSubMenuProps } from './InteractiveSubMenu';
-import { JobSubMenu, JobSubMenuProps } from './JobSubMenu';
+import { DeveloperSubMenu } from './DeveloperSubMenu';
+import { GameMasterSubMenu } from './GamemasterSubMenu';
+import { InteractiveSubMenu } from './InteractiveSubMenu';
+import { JobSubMenu } from './JobSubMenu';
 import { PlayerSubMenu } from './PlayerSubMenu';
-import { SkinSubMenu, SkinSubMenuProps } from './SkinSubMenu';
+import { SkinSubMenu } from './SkinSubMenu';
 import { VehicleSubMenu } from './VehicleSubMenu';
 
 export type AdminMenuStateProps = {
-    data: {
-        banner: string;
-        permission: SozRole;
-        state: {
-            gameMaster: GameMasterSubMenuProps['state'];
-            interactive: InteractiveSubMenuProps['state'];
-            job: JobSubMenuProps['state'];
-            skin: SkinSubMenuProps['state'];
-            developer: DeveloperSubMenuProps['state'];
-        };
-    };
+    data?: AdminMenuData;
 };
 
 export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
-    // const [state, setState] = useState<AdminMenuStateProps['data']['state']>(null);
-    // const [banner, setBanner] = useState<string>(null);
-    // const [permission, setPermission] = useState<SozRole>(null);
-
-    // useEffect(() => {
-    //     if (data && data.state) {
-    //         setState(data.state);
-    //     }
-    //     if (data && data.banner) {
-    //         setBanner(data.banner);
-    //     }
-    //     if (data && data.permission) {
-    //         setPermission(data.permission);
-    //     }
-    // }, [data]);
-
     const updateState = async (namespace: string, key: string, value: any) => {
         data.state[namespace][key] = value;
         await fetchNui(NuiEvent.AdminUpdateState, { namespace, key, value });
     };
 
-    if (!data.state) {
+    if (!data || !data.state) {
         return null;
     }
 

@@ -9,6 +9,7 @@ import { groupBy } from '../../shared/utils/array';
 import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
 import { VehicleService } from '../vehicle/vehicle.service';
 
 @Provider()
@@ -21,6 +22,9 @@ export class AdminMenuVehicleProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(VehicleModificationService)
+    private vehicleModificationService: VehicleModificationService;
 
     @OnNuiEvent(NuiEvent.AdminGetVehicles)
     public async getVehicles() {
@@ -53,7 +57,7 @@ export class AdminMenuVehicleProvider {
                 }
             ));
         if (input !== null) {
-            TriggerServerEvent(ServerEvent.QBCORE_CALL_COMMAND, 'car', [input]);
+            TriggerServerEvent(ServerEvent.ADMIN_VEHICLE_SPAWN, input);
         }
         return Ok(true);
     }
@@ -65,6 +69,7 @@ export class AdminMenuVehicleProvider {
             SetVehicleFixed(vehicle);
             SetVehicleBodyHealth(vehicle, 1000);
             SetVehicleEngineHealth(vehicle, 1000);
+            SetVehiclePetrolTankHealth(vehicle, 1000);
             SetVehicleDeformationFixed(vehicle);
         }
         return Ok(true);
@@ -83,19 +88,27 @@ export class AdminMenuVehicleProvider {
     @OnNuiEvent(NuiEvent.AdminMenuVehicleRefill)
     public async onAdminMenuVehicleRefill() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+
         if (vehicle) {
-            exports['soz-vehicle'].SetFuel(vehicle, 100.0);
+            const state = this.vehicleService.getVehicleState(vehicle);
+
+            this.vehicleService.updateVehicleState(vehicle, {
+                condition: {
+                    ...state.condition,
+                    fuelLevel: 100.0,
+                },
+            });
         }
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleSave)
     public async onAdminMenuVehicleSave() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-        const mods = this.vehicleService.getVehicleProperties(vehicle);
+        const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
         const vehicleName = GetDisplayNameFromVehicleModel(vehicleModel);
 
-        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, mods);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, configuration);
         return Ok(true);
     }
 
@@ -147,6 +160,6 @@ export class AdminMenuVehicleProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleDelete)
     public async onAdminMenuVehicleDelete() {
-        TriggerServerEvent(ServerEvent.QBCORE_CALL_COMMAND, 'dv');
+        TriggerServerEvent(ServerEvent.ADMIN_VEHICLE_DELETE);
     }
 }

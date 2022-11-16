@@ -8,6 +8,8 @@ export enum ServerEvent {
     ADMIN_SET_STRESS_LEVEL = 'soz-core:server:admin:set-stress-level',
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
+    ADMIN_VEHICLE_SPAWN = 'soz-core:server:admin:vehicle:spawn',
+    ADMIN_VEHICLE_DELETE = 'soz-core:server:admin:vehicle:delete',
 
     BAUN_CRAFT = 'soz-core:server:job:baun:craft',
     BAUN_RESELL = 'soz-core:server:job:baun:resell',
@@ -15,6 +17,12 @@ export enum ServerEvent {
     BENNYS_ESTIMATE_VEHICLE = 'soz-core:server:job:bennys:estimate-vehicle',
     BENNYS_SELL_VEHICLE = 'soz-core:server:job:bennys:sell-vehicle',
     BENNYS_SET_SPECIAL_VEHICLES = 'soz-core:server:bennys:set-special-vehicles',
+    BENNYS_REPAIR_VEHICLE_ENGINE = 'soz-core:server:job:bennys:repair-vehicle-engine',
+    BENNYS_REPAIR_VEHICLE_BODY = 'soz-core:server:job:bennys:repair-vehicle-body',
+    BENNYS_REPAIR_VEHICLE_TANK = 'soz-core:server:job:bennys:repair-vehicle-tank',
+    BENNYS_REPAIR_VEHICLE_WHEEL = 'soz-core:server:job:bennys:repair-vehicle-wheel',
+    BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
+    BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
 
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 
@@ -44,6 +52,10 @@ export enum ServerEvent {
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',
     LSMC_HEALTH_CHECK = 'soz-core:server:job:lsmc:health-check',
     LSMC_SET_HEALTH_BOOK = 'soz-core:server:job:lsmc:set-health-book',
+
+    OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
+    OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
+    OIL_SET_STATION_PRICE = 'soz-core:server:oil:set-station-price',
 
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
     PLAYER_INCREASE_STAMINA = 'soz-core:server:player:increase-stamina',
@@ -100,6 +112,26 @@ export enum ServerEvent {
     LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
     LSMC_REVIVE = 'lsmc:server:revive',
 
+    REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
+
+    VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
+    VEHICLE_USE_CLEANING_KIT = 'soz-core:server:vehicle:use-cleaning-kit',
+    VEHICLE_USE_WHEEL_KIT = 'soz-core:server:vehicle:use-wheel-kit',
+    VEHICLE_FORCE_OPEN = 'soz-core:server:vehicle:force-open',
+    VEHICLE_SET_CLOSEST = 'soz-core:server:vehicle:set-closest',
+    VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
+    VEHICLE_SWAP = 'soz-core:server:vehicle:swaped',
+    VEHICLE_DELETED = 'soz-core:server:vehicle:deleted',
+    VEHICLE_GARAGE_STORE = 'soz-core:server:vehicle:garage:store',
+    VEHICLE_GARAGE_RETRIEVE = 'soz-core:server:vehicle:garage:retrieve',
+    VEHICLE_GARAGE_RENAME = 'soz-core:server:vehicle:garage:rename',
+    VEHICLE_SET_DEAD = 'soz-core:server:vehicle:set-dead',
+    VEHICLE_WASH = 'soz-core:server:vehicle:wash',
+    VEHICLE_FUEL_START = 'soz-core:server:vehicle:fuel:start',
+    VEHICLE_OPEN_KEYS = 'soz-core:server:vehicle:open-keys',
+    VEHICLE_GIVE_KEY = 'soz-core:server:vehicle:give-key',
+    VEHICLE_ROUTE_EJECTION = 'soz-core:server:vehicle:route-ejection',
+
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
 
@@ -108,6 +140,11 @@ export enum ServerEvent {
 }
 
 export enum ClientEvent {
+    BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
+    BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
+
+    BENNYS_OPEN_CLOAKROOM = 'soz-core:client:job:bennys:open-cloakroom',
+
     CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
 
     PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
@@ -127,9 +164,15 @@ export enum ClientEvent {
     JOBS_STONK_OPEN_SOCIETY_MENU = 'stonk:client:OpenSocietyMenu',
     JOBS_TRY_OPEN_CLOAKROOM = 'soz-jobs:client:try-open-cloakroom',
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
+    JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
+    LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
+
+    OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
+    OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
+    OIL_UPDATE_STATION_PRICE = 'soz-core:client:oil:update-station-price',
 
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
 
@@ -147,7 +190,21 @@ export enum ClientEvent {
 
     PROGRESS_START = 'soz-core:client:progress:start',
 
-    LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
+    REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
+
+    VEHICLE_CHECK_CONDITION = 'soz-core:client:vehicle:check-condition',
+    VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
+    VEHICLE_DEALERSHIP_AUCTION_UPDATE = 'soz-core:client:vehicle:dealership:auction:update',
+    VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
+    VEHICLE_FUEL_START = 'soz-core:client:vehicle:fuel:start',
+    VEHICLE_FUEL_STOP = 'soz-core:client:vehicle:fuel:stop',
+    VEHICLE_GET_CLOSEST = 'soz-core:client:vehicle:get-closest',
+    VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
+    VEHICLE_SYNC_CONDITION = 'soz-core:client:vehicle:sync-condition',
+    VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
+    VEHICLE_GARAGE_HOUSE_OPEN_MENU = 'soz-core:client:vehicle:garage:house:open-menu',
+    VEHICLE_GARAGE_HOUSE_SHOW_PARKING = 'soz-core:client:vehicle:garage:house:show-parking',
+    VEHICLE_ROUTE_EJECTION = 'soz-core:client:vehicle:route-ejection',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 }
@@ -163,6 +220,7 @@ export enum NuiEvent {
     AdminAutoPilot = 'soz-core:client:admin:autopilot',
     AdminChangePlayer = 'soz-core:client:admin:change-player',
     AdminCopyCoords = 'soz-core:client:admin:copy-coords',
+    AdminCreateZone = 'soz-core:client:admin:create-zone',
     AdminGetJobs = 'soz-core:client:admin:get-jobs',
     AdminGetPlayers = 'soz-core:client:admin:get-players',
     AdminGetVehicles = 'soz-core:client:admin:get-vehicles',
@@ -219,6 +277,7 @@ export enum NuiEvent {
     BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
     BennysOrder = 'soz-core:client:job:bennys:order',
     BennysGetOrders = 'soz-core:client:job:bennys:get-orders',
+    BennysUpgradeVehicle = 'soz-core:nui:job:bennys:upgrade-vehicle',
 
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     FoodDisplayBlip = 'soz-core:client:job:food:display-blip',
@@ -226,6 +285,8 @@ export enum NuiEvent {
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
     MenuClosed = 'menu_closed',
+    JobBossShopBuyItem = 'soz-core:nui:job:boss-shop:buy-item',
+    OilAskStationPrice = 'soz-core:nui:job:oil:ask-station-price',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
@@ -233,4 +294,27 @@ export enum NuiEvent {
     BossShopBuy = 'soz-core:client:shop:boss:buy',
     ShopMaskPreview = 'soz-core:client:shop:mask:preview',
     ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
+
+    TriggerServerEvent = 'soz-core:nui:trigger-server-event',
+    TriggerClientEvent = 'soz-core:nui:trigger-client-event',
+
+    VehicleAuctionBid = 'soz-core:client:vehicle:auction:bid',
+
+    VehicleCustomApply = 'soz-core:nui:vehicle:custom:apply',
+    VehicleCustomConfirmModification = 'soz-core:nui:vehicle:custom:confirm-modification',
+
+    VehicleDealershipShowVehicle = 'soz-core:client:vehicle:dealership:show-vehicle',
+    VehicleDealershipBuyVehicle = 'soz-core:client:vehicle:dealership:buy-vehicle',
+
+    VehicleSetEngine = 'soz-core:nui:vehicle:set-engine',
+    VehicleSetSpeedLimit = 'soz-core:nui:vehicle:set-speed-limit',
+    VehicleOpenLSCustom = 'soz-core:nui:vehicle:open-ls-custom',
+    VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
+    VehicleHandleRadio = 'soz-core:nui:vehicle:handle-radio',
+
+    VehicleGarageTakeOut = 'soz-core:client:vehicle:garage:take-out',
+    VehicleGarageSetName = 'soz-core:client:vehicle:garage:set-name',
+    VehicleGarageStore = 'soz-core:client:vehicle:garage:store',
+    VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
+    VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
 }

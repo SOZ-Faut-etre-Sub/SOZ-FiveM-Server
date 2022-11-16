@@ -7,6 +7,7 @@ import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { uuidv4 } from '../../../core/utils';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
 import { RpcEvent } from '../../../shared/rpc';
+import { getDefaultVehicleCondition } from '../../../shared/vehicle/vehicle';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -42,7 +43,6 @@ export class BennysOrderProvider {
 
     @Rpc(RpcEvent.BENNYS_GET_ORDERS)
     public getOrders(): BennysOrder[] {
-        console.log(Array.from(this.ordersInProgress.values()));
         return Array.from(this.ordersInProgress.values());
     }
 
@@ -59,7 +59,7 @@ export class BennysOrderProvider {
 
     @Rpc(RpcEvent.BENNYS_ORDER_VEHICLE)
     public async onOrderVehicle(source: number, model: string) {
-        const vehicle = await this.prismaService.vehicles.findFirst({
+        const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 model,
                 NOT: {
@@ -97,7 +97,7 @@ export class BennysOrderProvider {
 
     @Exportable('deleteTestVehicles')
     async deleteTestVehicles() {
-        await this.prismaService.player_vehicles.deleteMany({
+        await this.prismaService.playerVehicle.deleteMany({
             where: {
                 plate: {
                     contains: 'ESSAI',
@@ -107,7 +107,7 @@ export class BennysOrderProvider {
     }
 
     private async addVehicle(model: string) {
-        const vehicle = await this.prismaService.vehicles.findFirst({
+        const vehicle = await this.prismaService.vehicle.findFirst({
             where: {
                 model,
             },
@@ -118,12 +118,12 @@ export class BennysOrderProvider {
         } else if (vehicle.requiredLicence === 'boat') {
             category = 'boat';
         }
-        await this.prismaService.player_vehicles.create({
+        await this.prismaService.playerVehicle.create({
             data: {
                 vehicle: model,
                 hash: GetHashKey(model).toString(),
-                mods: JSON.stringify(BennysConfig.Mods.upgradedSimplifiedMods),
-                condition: '{}',
+                mods: JSON.stringify(BennysConfig.UpgradeConfiguration),
+                condition: JSON.stringify(getDefaultVehicleCondition()),
                 plate: 'ESSAI ' + (this.orderedVehicle + 1),
                 garage: 'bennys_luxury',
                 job: 'bennys',

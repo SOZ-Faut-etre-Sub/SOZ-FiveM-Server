@@ -9,6 +9,16 @@ export class PlayerService {
     @Inject(QBCore)
     private QBCore: QBCore;
 
+    public getPlayerByCitizenId(citizenId: string): PlayerData | null {
+        const player = this.QBCore.getPlayerByCitizenId(citizenId);
+
+        if (player) {
+            return player.PlayerData;
+        }
+
+        return null;
+    }
+
     public getPlayerWeapon(source: number): any | null {
         const state = Player(source).state;
 

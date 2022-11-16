@@ -1,4 +1,17 @@
-import { ZoneOptions } from '../../client/target/target.factory';
+import { NamedZone } from '../polyzone/box.zone';
+
+export type FoodRecipe = {
+    canCraft: boolean;
+    inputs: {
+        label: string;
+        hasRequiredAmount: boolean;
+        amount: number;
+    }[];
+    output: {
+        label: string;
+        amount: number;
+    };
+};
 
 export type FoodCraftProcess = {
     inputs: {
@@ -11,7 +24,7 @@ export type FoodCraftProcess = {
     };
 };
 
-const wineCraftZones: (ZoneOptions & { name: string })[] = [
+const wineCraftZones: NamedZone[] = [
     {
         name: 'food_craft_wine',
         center: [-1887.97, 2063.92, 141.0],
@@ -72,7 +85,7 @@ const juiceProcesses: FoodCraftProcess[] = [
     },
 ];
 
-const cheeseCraftZones: (ZoneOptions & { name: string })[] = [
+const cheeseCraftZones: NamedZone[] = [
     {
         name: 'food_craft_cheese',
         center: [-1882.53, 2069.2, 141.0],
@@ -123,7 +136,7 @@ const cheeseProcesses: FoodCraftProcess[] = [
     },
 ];
 
-const sausageCraftZones: (ZoneOptions & { name: string })[] = [
+const sausageCraftZones: NamedZone[] = [
     {
         name: 'food_craft_sausage',
         center: [-1880.22, 2068.34, 141.0],

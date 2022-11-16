@@ -1,9 +1,10 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { BaunRecipe } from '../../../shared/job/baun';
+import { FoodRecipe } from '../../../shared/job/food';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import { FoodRecipe } from '../Food/FoodJobMenu';
 import { CraftList } from '../Shared/CraftList';
 import {
     MainMenu,
@@ -17,19 +18,6 @@ import {
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
-
-export type BaunRecipe = {
-    canCraft: boolean;
-    inputs: {
-        label: string;
-        hasRequiredAmount: boolean;
-        amount: number;
-    }[];
-    output: {
-        label: string;
-        amount: number;
-    };
-};
 
 type BahamaUnicornStateProps = {
     data: {

@@ -23,6 +23,10 @@ export class ProgressProvider {
         animation: ProgressAnimation,
         options: ProgressOptions
     ): Promise<void> {
+        if (options.headingEntity) {
+            options.headingEntity.entity = NetworkGetEntityFromNetworkId(options.headingEntity.entity);
+        }
+
         const result = await this.progressService.progress(name, label, duration, animation, options);
 
         TriggerServerEvent(ServerEvent.PROGRESS_FINISH, id, result);

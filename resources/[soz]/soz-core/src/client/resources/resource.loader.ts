@@ -51,7 +51,7 @@ export class ResourceLoader {
         }
     }
 
-    unloadModel(name: string): void {
+    unloadModel(name: string | number): void {
         SetModelAsNoLongerNeeded(name);
     }
 }

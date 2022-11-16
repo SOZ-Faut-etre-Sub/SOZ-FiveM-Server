@@ -4,6 +4,7 @@ import { SozRole } from '../../../core/permissions';
 import { LICENCES, MONEY_OPTIONS } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
+import { usePlayer } from '../../hook/data';
 import {
     MenuContent,
     MenuItemButton,
@@ -32,6 +33,11 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
     updateState,
 }) => {
     const isAdmin = permission === 'admin';
+    const player = usePlayer();
+
+    if (!player) {
+        return null;
+    }
 
     return (
         <SubMenu id="game_master">
@@ -105,7 +111,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     🏎️ Auto-pilote
                 </MenuItemButton>
                 <MenuItemCheckbox
-                    checked={state.godMode}
+                    checked={player.metadata.godmode}
                     disabled={!isAdmin}
                     onChange={async value => {
                         updateState('gameMaster', 'godMode', value);

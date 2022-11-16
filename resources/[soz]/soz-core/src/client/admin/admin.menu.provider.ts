@@ -4,7 +4,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { SozRole } from '../../core/permissions';
 import { emitRpc } from '../../core/rpc';
-import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
+import { AdminMenuData } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { RpcEvent } from '../../shared/rpc';
@@ -19,7 +19,7 @@ export class AdminMenuProvider {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
-    private menuState: AdminMenuStateProps['data']['state'] = {
+    private menuState: AdminMenuData['state'] = {
         gameMaster: {
             godMode: false,
             invisible: false,
@@ -58,13 +58,15 @@ export class AdminMenuProvider {
             },
         ],
     })
-    public async openAdminMenu() {
+    public async openAdminMenu(subMenuId?: string): Promise<void> {
         const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcEvent.ADMIN_IS_ALLOWED);
         if (!isAllowed) {
             return;
         }
-        if (this.nuiMenu.isOpen()) {
+
+        if (this.nuiMenu.getOpened() === MenuType.AdminMenu) {
             this.nuiMenu.closeMenu();
+
             return;
         }
 
@@ -72,10 +74,14 @@ export class AdminMenuProvider {
         this.menuState.skin.clothConfig = this.clothingService.getClothSet();
         this.menuState.skin.maxOptions = this.clothingService.getMaxOptions();
 
-        this.nuiMenu.openMenu<MenuType.AdminMenu>(MenuType.AdminMenu, {
-            banner,
-            permission: permission as SozRole,
-            state: this.menuState,
-        });
+        this.nuiMenu.openMenu<MenuType.AdminMenu>(
+            MenuType.AdminMenu,
+            {
+                banner,
+                permission: permission as SozRole,
+                state: this.menuState,
+            },
+            { subMenuId }
+        );
     }
 }

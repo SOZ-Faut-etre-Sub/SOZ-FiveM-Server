@@ -57,7 +57,7 @@ RegisterNUICallback("closeNUI", function(data, cb)
     if data.target then
         TriggerServerEvent("inventory:server:closeInventory", data.target)
         if string.find(data.target, "trunk") or data.target == "target" then
-            TriggerEvent("soz-vehicle:client:CloseTrunk")
+            TriggerEvent("soz-core:client:vehicle:close-trunk")
         end
     end
 end)

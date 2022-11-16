@@ -1,7 +1,8 @@
 import { Module } from '../../core/decorators/module';
+import { JobCloakroomProvider } from './job.cloakroom.provider';
 import { JobProvider } from './job.provider';
 
 @Module({
-    providers: [JobProvider],
+    providers: [JobCloakroomProvider, JobProvider],
 })
 export class JobModule {}

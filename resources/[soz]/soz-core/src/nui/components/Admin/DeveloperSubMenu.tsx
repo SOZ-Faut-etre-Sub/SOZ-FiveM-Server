@@ -73,6 +73,13 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                 >
                     Redonner la faim/soif
                 </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminCreateZone);
+                    }}
+                >
+                    Créer une zone
+                </MenuItemButton>
             </MenuContent>
         </SubMenu>
     );
