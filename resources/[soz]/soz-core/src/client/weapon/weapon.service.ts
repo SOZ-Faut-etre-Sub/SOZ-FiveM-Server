@@ -1,6 +1,6 @@
 import { Injectable } from '../../core/decorators/injectable';
 import { InventoryItem } from '../../shared/item';
-import { GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapon';
+import { GlobalWeaponConfig, WeaponConfig, WeaponName, Weapons } from '../../shared/weapons/weapon';
 
 @Injectable()
 export class WeaponService {
@@ -21,6 +21,10 @@ export class WeaponService {
         SetPedAmmo(player, weaponHash, ammo);
         SetCurrentPedWeapon(player, weaponHash, true);
 
+        if (weapon.metadata.tint) {
+            SetPedWeaponTintIndex(player, weaponHash, weapon.metadata.tint);
+        }
+
         if (weapon.metadata.attachments) {
             weapon.metadata.attachments.forEach(attachment => {
                 GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment.component));
@@ -32,7 +36,7 @@ export class WeaponService {
         const player = PlayerPedId();
         this.currentWeapon = null;
 
-        SetCurrentPedWeapon(player, Weapons.WEAPON_UNARMED.hash, true);
+        SetCurrentPedWeapon(player, GetHashKey(WeaponName.UNARMED), true);
         RemoveAllPedWeapons(player, true);
     }
 

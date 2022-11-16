@@ -1,3 +1,5 @@
+import { WeaponMk2TintColor, WeaponTintColor } from './weapons/tint';
+
 export type ItemType =
     | 'item'
     | 'weapon'
@@ -149,6 +151,7 @@ export type InventoryItemMetadata = {
     serial?: string;
     health?: number;
     ammo?: number;
+    tint?: WeaponTintColor | WeaponMk2TintColor;
     attachments?: WeaponAttachment[];
 };
 

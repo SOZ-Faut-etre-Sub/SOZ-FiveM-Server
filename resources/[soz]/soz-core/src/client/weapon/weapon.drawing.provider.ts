@@ -5,7 +5,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
-import { WeaponOnBack, Weapons } from '../../shared/weapon';
+import { WeaponOnBack, Weapons } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 import { WeaponService } from './weapon.service';
 
@@ -23,7 +23,12 @@ export class WeaponDrawingProvider {
 
     private async updateWeaponDrawList(playerItem: Record<string, InventoryItem> | InventoryItem[]) {
         const weaponToDraw = Object.values(playerItem)
-            .filter(item => item.type === 'weapon' && Weapons[item.name.toUpperCase()]?.drawOnBack)
+            .filter(
+                item =>
+                    item.type === 'weapon' &&
+                    Weapons[item.name.toUpperCase()] &&
+                    Weapons[item.name.toUpperCase()].drawOnBack
+            )
             .map(item => Weapons[item.name.toUpperCase()].drawOnBack);
 
         if (weaponToDraw.map(w => w.model) !== this.weaponsToDraw.map(w => w.model)) {
@@ -117,7 +122,7 @@ export class WeaponDrawingProvider {
         await wait(500);
 
         const weapon = this.weaponService.getCurrentWeapon();
-        const weaponModel = Weapons[usedWeapon.name.toUpperCase()].drawOnBack?.model;
+        const weaponModel = Weapons[usedWeapon.name.toUpperCase()]?.drawOnBack?.model;
         if (weaponModel) {
             if (this.weaponAttached[weaponModel]) {
                 SetEntityAlpha(this.weaponAttached[weaponModel], weapon ? 0 : 255, false);

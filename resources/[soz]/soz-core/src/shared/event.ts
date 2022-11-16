@@ -144,6 +144,7 @@ export enum ServerEvent {
 
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
     WEAPON_GUNSMITH_RENAME = 'soz-core:server:weapon:gunsmith:rename',
+    WEAPON_GUNSMITH_APPLY_TINT = 'soz-core:server:weapon:gunsmith:apply-tint',
 }
 
 export enum ClientEvent {
@@ -332,4 +333,6 @@ export enum NuiEvent {
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
 
     GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
+    GunSmithPreviewTint = 'soz-core:client:job:gunsmith:preview-tint',
+    GunSmithApplyTint = 'soz-core:client:job:gunsmith:apply-tint',
 }

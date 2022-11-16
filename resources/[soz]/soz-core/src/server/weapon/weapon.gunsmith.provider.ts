@@ -28,4 +28,18 @@ export class WeaponGunsmithProvider {
 
         this.inventoryManager.updateMetadata(source, slot, { label: label.replace(WEAPON_NAME_REGEX, '') });
     }
+
+    @OnEvent(ServerEvent.WEAPON_GUNSMITH_APPLY_TINT)
+    async applyTint(source: number, slot: number, tint: number) {
+        const weapon = this.inventoryManager.getSlot(source, slot);
+        if (!weapon) {
+            return;
+        }
+
+        if (weapon.type !== 'weapon') {
+            return;
+        }
+
+        this.inventoryManager.updateMetadata(source, slot, { tint: Number(tint) });
+    }
 }
