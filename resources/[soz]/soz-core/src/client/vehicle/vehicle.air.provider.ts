@@ -1,7 +1,18 @@
 import { Command } from '../../core/decorators/command';
 import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
+import { VehicleClass } from '../../shared/vehicle/vehicle';
+
+const ALLOWED_AIR_CONTROL: VehicleClass[] = [
+    VehicleClass.Helicopters,
+    VehicleClass.Motorcycles,
+    VehicleClass.Cycles,
+    VehicleClass.Boats,
+    VehicleClass.Planes,
+    VehicleClass.Military,
+];
 
 @Provider()
 export class VehicleAirProvider {
@@ -40,6 +51,30 @@ export class VehicleAirProvider {
 
         if (DoesVehicleAllowRappel(vehicle) && !isDriver && !isCopilot) {
             TaskRappelFromHeli(ped, 0x41200000);
+        }
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    public disableVehicleAirControl(): void {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        const vehicleClass = GetVehicleClass(vehicle);
+
+        if (!vehicle) {
+            return;
+        }
+
+        if (GetPedInVehicleSeat(vehicle, -1) !== ped) {
+            return;
+        }
+
+        if (ALLOWED_AIR_CONTROL.includes(vehicleClass)) {
+            return;
+        }
+
+        if (IsEntityInAir(vehicle) || IsEntityUpsidedown(vehicle)) {
+            DisableControlAction(2, 59, true);
+            DisableControlAction(2, 60, true);
         }
     }
 }

@@ -215,7 +215,7 @@ export class VehicleGarageProvider {
             garage.type === GarageType.Public ||
             garage.type === GarageType.Private
         ) {
-            const or = [{ citizenid: player.citizenid }] as Array<Prisma.PlayerVehicleWhereInput>;
+            const or = [{ citizenid: player.citizenid, job: null }] as Array<Prisma.PlayerVehicleWhereInput>;
 
             if (
                 garage.type !== GarageType.Private &&

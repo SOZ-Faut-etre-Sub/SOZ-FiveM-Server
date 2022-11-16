@@ -179,7 +179,7 @@ export class VehicleConditionProvider {
 
         this.notifier.notify(
             source,
-            'Vos roues sont temporairement réparé, rendez vous rapidement chez un garagiste pour les changer.'
+            'Vos roues sont temporairement réparées, rendez vous rapidement chez un garagiste pour les changer.'
         );
 
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {

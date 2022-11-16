@@ -94,10 +94,10 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                                 <MenuItemSelectOption value={130}>Limiter la vitesse à 130km/h</MenuItemSelectOption>
                             </MenuItemSelect>
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
+                            {data.insideLSCustom && (
+                                <MenuItemButton onConfirm={() => onOpenLSCustom()}>LS Custom</MenuItemButton>
+                            )}
                         </>
-                    )}
-                    {data.insideLSCustom && (
-                        <MenuItemButton onConfirm={() => onOpenLSCustom()}>LS Custom</MenuItemButton>
                     )}
                     {data.permission !== null && (
                         <>

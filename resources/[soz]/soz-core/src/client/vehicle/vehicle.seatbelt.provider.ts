@@ -29,9 +29,36 @@ export class VehicleSeatbeltProvider {
     private soundService: SoundService;
 
     private isSeatbeltOn = false;
+    private isSwitchingSeat = false;
     private lastVehicleSpeed = 0;
     private lastVehiclePosition: Vector3 | null = null;
     private lastVehicleVelocity: Vector3 | null = null;
+
+    private async trySwitchingSeat() {
+        if (this.isSwitchingSeat) {
+            return;
+        }
+
+        if (this.isSeatbeltOn) {
+            return;
+        }
+
+        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+
+        if (!vehicle) {
+            return;
+        }
+
+        if (GetPedInVehicleSeat(vehicle, -1) !== PlayerPedId()) {
+            return;
+        }
+
+        this.isSwitchingSeat = true;
+        SetPedConfigFlag(PlayerPedId(), 184, false);
+        await wait(2000);
+        SetPedConfigFlag(PlayerPedId(), 184, true);
+        this.isSwitchingSeat = false;
+    }
 
     public isSeatbeltOnForPlayer() {
         return this.isSeatbeltOn;
@@ -84,13 +111,25 @@ export class VehicleSeatbeltProvider {
             this.soundService.play('seatbelt/buckle', 0.2);
         }
 
+        TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
+
         if (this.isSeatbeltOn) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.StickPlayerInside);
         } else {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.None);
+            await wait(2000);
+            await this.trySwitchingSeat();
         }
+    }
 
+    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
+    private async onBaseEnteredVehicle(vehicle) {
+        this.isSeatbeltOn = false;
         TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
+        SetPedConfigFlag(PlayerPedId(), 184, true);
+
+        await wait(3000);
+        await this.trySwitchingSeat();
     }
 
     @Tick(500)
