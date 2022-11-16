@@ -1,7 +1,6 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
-import { wait } from '../../core/utils';
 import { StonkConfig } from '../../shared/job/stonk';
 import { InventoryManager } from '../item/inventory.manager';
 import { PlayerService } from '../player/player.service';

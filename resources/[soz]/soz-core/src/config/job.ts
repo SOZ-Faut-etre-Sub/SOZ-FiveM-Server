@@ -5,10 +5,16 @@ import { Zone } from '../shared/polyzone/box.zone';
 export const JobBlips: Partial<Record<JobType, Blip[]>> = {
     [JobType.Bennys]: [
         {
-            name: "Benny's",
+            name: 'New Gahray',
             sprite: 227,
             scale: 0.9,
             coords: { x: -211.91, y: -1323.98, z: 30.89 },
+        },
+        {
+            name: 'New Gahray',
+            sprite: 227,
+            scale: 0.9,
+            coords: { x: 1912.15, y: 3082.26, z: 46.92 },
         },
         {
             name: 'Casse',
