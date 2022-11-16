@@ -7,7 +7,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
-import { WeaponAmmo, WeaponName } from '../../shared/weapon';
+import { WeaponAmmo, WeaponName } from '../../shared/weapons/weapon';
 import { ProgressService } from '../progress.service';
 import { WeaponService } from './weapon.service';
 
