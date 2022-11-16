@@ -74,7 +74,7 @@ export class BennysVehicleProvider {
             minZ: 45.92,
             maxZ: 46.922,
         }),
-        new BoxZone([1915.46, 3107.86, 46.81], 5.6, 12.4, {
+        new BoxZone([1915.46, 3107.86, 46.81], 6.6, 16.4, {
             heading: 330.0,
             minZ: 43.81,
             maxZ: 50.812,
