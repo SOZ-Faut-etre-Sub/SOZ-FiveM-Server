@@ -20,8 +20,6 @@ export class MigrationProvider {
             },
         });
 
-        console.log(underwearLuxeCount);
-
         if (underwearLuxeCount >= 13) {
             return;
         }

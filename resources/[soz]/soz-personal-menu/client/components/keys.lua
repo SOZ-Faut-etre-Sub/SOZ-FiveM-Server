@@ -4,7 +4,7 @@ function KeysEntry(menu)
         value = nil,
         select = function()
             menu:Close()
-            TriggerEvent("inventory:client:openPlayerKeyInventory")
+            TriggerServerEvent("soz-core:server:vehicle:open-keys")
         end,
     })
 end

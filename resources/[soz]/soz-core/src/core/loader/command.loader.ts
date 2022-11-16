@@ -38,7 +38,13 @@ export class CommandLoader {
             this.commands.push(commandMetadata);
 
             if (commandMetadata.role !== null) {
-                this.permissions.allowCommandForRole(commandMetadata.name, commandMetadata.role);
+                if (Array.isArray(commandMetadata.role)) {
+                    for (const role of commandMetadata.role) {
+                        this.permissions.allowCommandForRole(commandMetadata.name, role);
+                    }
+                } else {
+                    this.permissions.allowCommandForRole(commandMetadata.name, commandMetadata.role);
+                }
             }
         }
     }

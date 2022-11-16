@@ -1,4 +1,4 @@
-import { FfsRecipe } from '../../nui/components/FightForStyle/FightForStyleJobMenu';
+import { FfsRecipe } from '../job/ffs';
 
 export interface NuiFfsRecipeBookMethodMap {
     ShowFfsRecipeBook: FfsRecipe[];

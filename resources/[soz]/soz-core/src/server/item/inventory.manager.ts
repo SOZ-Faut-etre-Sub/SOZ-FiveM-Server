@@ -64,8 +64,12 @@ export class InventoryManager {
         }
     }
 
-    public getItem(source: number, itemId: string, metadata?: InventoryItemMetadata): any {
-        return this.sozInventory.GetItem(source, itemId, metadata);
+    public getItem(inventory: number | string, itemId: string, metadata?: InventoryItemMetadata): any {
+        return this.sozInventory.GetItem(inventory, itemId, metadata);
+    }
+
+    public getItemCount(inventory: number | string, itemId: string, metadata: InventoryItemMetadata = null): any {
+        return this.sozInventory.GetItem(inventory, itemId, metadata, true);
     }
 
     public search(

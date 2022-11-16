@@ -12,7 +12,7 @@ export const InputApp: FunctionComponent = () => {
     const [value, setValue] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
 
-    useNuiFocus(askInput !== null, askInput !== null);
+    useNuiFocus(askInput !== null, askInput !== null, askInput === null);
 
     useInputNuiEvent('AskInput', askInput => {
         setAskInput(askInput);

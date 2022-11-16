@@ -1,4 +1,17 @@
-import { ZoneOptions } from '../../client/target/target.factory';
+import { NamedZone } from '../polyzone/box.zone';
+
+export type BaunRecipe = {
+    canCraft: boolean;
+    inputs: {
+        label: string;
+        hasRequiredAmount: boolean;
+        amount: number;
+    }[];
+    output: {
+        label: string;
+        amount: number;
+    };
+};
 
 export type BaunCraftProcess = {
     inputs: {
@@ -11,7 +24,7 @@ export type BaunCraftProcess = {
     };
 };
 
-export const baunCraftZones: (ZoneOptions & { name: string })[] = [
+export const baunCraftZones: NamedZone[] = [
     {
         name: 'baun:unicorn:craft:1',
         center: [130.19, -1280.92, 29.27],

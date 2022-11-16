@@ -18,12 +18,12 @@ export class EstimationService {
 
     public async estimateVehicle(source: number, networkId: number, properties: any): Promise<Result<number, string>> {
         const model = GetEntityModel(NetworkGetEntityFromNetworkId(networkId));
-
-        console.log('model', model);
         const vehicle = await this.vehicleService.getVehicle(model);
+
         if (!vehicle) {
             return Err(`Ce véhicule n'est pas ~r~estimable~s~.`);
         }
+
         const basePrice = vehicle.price;
 
         let price = basePrice;

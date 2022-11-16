@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { SozRole } from '../../../core/permissions';
-import { AdminPlayer } from '../../../shared/admin/admin';
+import { AdminPlayer, HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../../shared/admin/admin';
 import { NuiEvent } from '../../../shared/event';
 import { isOk, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
@@ -25,22 +25,6 @@ export type PlayerSubMenuProps = {
 export interface NuiAdminPlayerSubMenuMethodMap {
     SetSearchFilter: string;
 }
-
-export const HEALTH_OPTIONS = [
-    { label: 'Tuer', value: 'kill' },
-    { label: 'Réanimer', value: 'revive' },
-];
-
-export const MOVEMENT_OPTIONS = [
-    { label: 'Bloquer', value: 'freeze' },
-    { label: 'Débloquer', value: 'unfreeze' },
-];
-
-export const VOCAL_OPTIONS = [
-    { label: 'Status', value: 'status' },
-    { label: 'Muter', value: 'mute' },
-    { label: 'Démuter', value: 'unmute' },
-];
 
 export const TELEPORT_OPTIONS = [
     { label: 'Vers le joueur', value: 'goto' },

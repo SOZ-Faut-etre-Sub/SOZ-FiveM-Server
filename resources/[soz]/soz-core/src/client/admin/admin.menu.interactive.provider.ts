@@ -57,9 +57,10 @@ export class AdminMenuInteractiveProvider {
                         `| VehicleNet: ${NetworkGetNetworkIdFromEntity(vehicle)} ` +
                         `${text} ${GetPlayerServerId(NetworkGetEntityOwner(vehicle))}`;
                     const vehicleInfo =
-                        `Vehicle Engine Health: ${GetVehicleEngineHealth(vehicle).toFixed(2)} ` +
-                        `| Vehicle Body Health: ${GetVehicleBodyHealth(vehicle).toFixed(2)}` +
-                        `| Vehicle Oil: ${GetVehicleOilLevel(vehicle).toFixed(2)}/${GetVehicleHandlingFloat(
+                        `Veh Engine.: ${GetVehicleEngineHealth(vehicle).toFixed(2)} ` +
+                        `| Veh Body: ${GetVehicleBodyHealth(vehicle).toFixed(2)}` +
+                        `| Veh Tank: ${GetVehiclePetrolTankHealth(vehicle).toFixed(2)}` +
+                        `| Veh Oil: ${GetVehicleOilLevel(vehicle).toFixed(2)}/${GetVehicleHandlingFloat(
                             vehicle,
                             'CHandlingData',
                             'fOilVolume'

@@ -1,9 +1,7 @@
-import { ZoneOptions } from '../client/target/target.factory';
 import { ClientEvent } from './event';
 
 export enum JobType {
     Unemployed = 'unemployed',
-    FBI = 'fbi',
     Adsl = 'adsl',
     Delivery = 'delivery',
     Religious = 'religious',
@@ -20,8 +18,9 @@ export enum JobType {
     Bennys = 'bennys',
     Upw = 'upw',
     Pawl = 'pawl',
-    Baun = 'baun',
     Ffs = 'ffs',
+    Baun = 'baun',
+    FBI = 'fbi',
 }
 
 export enum JobPermission {
@@ -39,20 +38,20 @@ export enum JobPermission {
     CashTransfer_FillIn = 'fill-in',
     Food_Harvest = 'harvest',
     Food_Craft = 'craft',
-    Fueler_ChangePrice = 'fueler-change-price',
+    FuelerChangePrice = 'fueler-change-price',
     CriminalRecord = 'criminal-record',
     VehicleRegistrar = 'vehicle-registrar',
     Investigation = 'investigation',
     ManageInvestigation = 'investigation-manage',
-    Baun_Harvest = 'harvest',
-    Baun_Restock = 'restock',
-    Baun_Craft = 'craft',
-    Ffs_Harvest = 'harvest',
-    Ffs_Restock = 'restock',
-    Ffs_Craft = 'craft',
-    Bennys_Estimate = 'estimate',
-    Bennys_Resell = 'resell',
-    Bennys_Order = 'order',
+    BaunHarvest = 'harvest',
+    BaunRestock = 'restock',
+    BaunCraft = 'craft',
+    FfsHarvest = 'harvest',
+    FfsRestock = 'restock',
+    FfsCraft = 'craft',
+    BennysEstimate = 'estimate',
+    BennysResell = 'resell',
+    BennysOrder = 'order',
 }
 
 export type Job = {
@@ -85,65 +84,9 @@ export type JobGrade = {
     permissions: string[];
 };
 
-export const JobCloakrooms: Partial<Record<JobType, ZoneOptions[]>> = {
-    [JobType.Baun]: [
-        {
-            center: [106.36, -1299.08, 28.77],
-            length: 0.4,
-            width: 2.3,
-            minZ: 27.82,
-            maxZ: 30.27,
-            heading: 30,
-            data: {
-                id: 'jobs:baun:cloakroom:unicorn_1',
-                event: 'jobs:client:baun:OpenCloakroomMenu', // Tech debt as it's not homogeneous
-                job: JobType.Baun,
-                storage: 'baun_unicorn_cloakroom_1',
-            },
-        },
-        {
-            center: [109.05, -1304.24, 28.77],
-            length: 2.25,
-            width: 0.4,
-            minZ: 27.87,
-            maxZ: 30.27,
-            heading: 30,
-            data: {
-                id: 'jobs:baun:cloakroom:unicorn_2',
-                event: 'jobs:client:baun:OpenCloakroomMenu', // Tech debt as it's not homogeneous
-                job: JobType.Baun,
-                storage: 'baun_unicorn_cloakroom_2',
-            },
-        },
-        {
-            center: [-1381.38, -602.26, 30.32],
-            length: 2.0,
-            width: 6.4,
-            minZ: 29.92,
-            maxZ: 31.92,
-            heading: 303,
-            data: {
-                id: 'jobs:baun:cloakroom:bahama_1',
-                event: 'jobs:client:baun:OpenCloakroomMenu', // Tech debt as it's not homogeneous
-                job: JobType.Baun,
-                storage: 'baun_bahama_cloakroom_1',
-            },
-        },
-    ],
-    [JobType.Ffs]: [
-        {
-            center: [706.41, -959.03, 30.4],
-            length: 0.5,
-            width: 4.25,
-            minZ: 29.4,
-            maxZ: 31.6,
-            heading: 0,
-            data: {
-                id: 'jobs:ffs:cloakroom',
-                event: 'jobs:client:ffs:OpenCloakroomMenu', // Tech debt as it's not homogeneous
-                job: JobType.Ffs,
-                storage: 'ffs_cloakroom',
-            },
-        },
-    ],
+export type JobCloakroomZoneData = {
+    id: string;
+    event: string;
+    job: JobType;
+    storage: string;
 };

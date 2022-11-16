@@ -1,5 +1,7 @@
-import { TargetOptions, ZoneOptions } from '../client/target/target.factory';
+import { TargetOptions } from '../client/target/target.factory';
 import { InventoryItemMetadata, Item, ItemType } from './item';
+import { JobType } from './job';
+import { Zone } from './polyzone/box.zone';
 
 export enum ClothingBrand {
     PONSONBYS = 'ponsonbys',
@@ -17,7 +19,12 @@ export type ShopProduct = {
 
 export type ShopConfig = {
     name: string;
-    zone: ZoneOptions;
+    zone: Zone;
     targets: TargetOptions[];
+    products: ShopProduct[];
+};
+
+export type BossShopMenu = {
+    job: JobType;
     products: ShopProduct[];
 };

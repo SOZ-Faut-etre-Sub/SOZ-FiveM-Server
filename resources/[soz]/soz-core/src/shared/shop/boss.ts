@@ -1,7 +1,7 @@
 import { JobType } from '../job';
 import { ShopConfig } from '../shop';
 
-export const BossShop: (ShopConfig & { job: string })[] = [
+export const BossShop: (ShopConfig & { job: JobType })[] = [
     {
         name: 'pawl',
         job: JobType.Pawl,
@@ -90,8 +90,9 @@ export const BossShop: (ShopConfig & { job: string })[] = [
         },
         targets: [],
         products: [
-            { id: 'repairkit', type: 'item', price: 50 },
-            { id: 'cleaningkit', type: 'item', price: 20 },
+            { id: 'repairkit', type: 'item', price: 200 },
+            { id: 'cleaningkit', type: 'item', price: 40 },
+            { id: 'wheel_kit', type: 'item', price: 80 },
             { id: 'diagnostic_pad', type: 'item', price: 260 },
             { id: 'oil_jerrycan', type: 'item', price: 20 },
         ],

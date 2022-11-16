@@ -27,7 +27,6 @@ export class FightForStyleRestockProvider {
 
     @Once(OnceStep.DatabaseConnected)
     public async onOnceStart() {
-        exports['soz-monitor'].Log('DEBUG', 'Updating stock of clothing shops to 95% of the current stock');
         await this.prismaService.$queryRaw(
             Prisma.sql`UPDATE shop_content SET shop_content.stock = CEIL(shop_content.stock * 0.95) WHERE shop_content.shop_id IN (1, 2, 3)`
         );

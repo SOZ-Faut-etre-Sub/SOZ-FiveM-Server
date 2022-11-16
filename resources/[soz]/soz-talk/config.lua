@@ -22,6 +22,7 @@ Config.AllowedRadioInVehicle = {
     [GetHashKey("utillitruck4")] = true,
     --- Bennys
     [GetHashKey("flatbed3")] = true,
+    [GetHashKey("flatbed4")] = true,
     [GetHashKey("burito6")] = true,
     --- Twitch News
     [GetHashKey("newsvan")] = true,

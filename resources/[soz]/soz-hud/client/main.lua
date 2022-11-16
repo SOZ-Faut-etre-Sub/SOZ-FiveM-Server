@@ -219,8 +219,6 @@ RegisterNetEvent("phone:camera:exit", function()
     setHudDisplay(true)
 end)
 
---- Loops
-
 CreateThread(function()
     DisplayRadar(false)
     while true do
@@ -240,13 +238,16 @@ CreateThread(function()
                 if actualspeed < 0.09 then
                     actualspeed = 0
                 end
+
+                local condition = Entity(vehicle).state.condition or {}
+
                 setVehicleData({
                     speed = math.ceil(actualspeed * Config.SpeedMultiplier),
-                    fuel = exports["soz-vehicle"]:GetFuel(vehicle),
-                    hasFuel = exports["soz-vehicle"]:HasFuel(vehicle),
+                    fuel = condition.fuelLevel or GetVehicleFuelLevel(vehicle),
+                    hasFuel = class < 23,
                     engine = math.ceil(GetVehicleEngineHealth(vehicle)),
-                    oil = exports["soz-vehicle"]:GetOilForHud(vehicle),
-                    lock = GetVehicleDoorLockStatus(vehicle),
+                    oil = condition.oilLevel or 100,
+                    lock = not Entity(vehicle).state.open,
                     haveSeatbelt = class ~= 8 and class ~= 13 and class ~= 14,
                     haveLight = haveLight,
                     lightsOn = lightsOn,

@@ -9,6 +9,8 @@ import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../item/inventory.manager';
 import { ItemService } from '../item/item.service';
+import { Notifier } from '../notifier';
+import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
 
 @Provider()
@@ -27,6 +29,12 @@ export class JobProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(PlayerMoneyService)
+    private playerMoneyService: PlayerMoneyService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @Rpc(RpcEvent.JOB_GET_JOBS)
     public async getJobs(): Promise<Job[]> {

@@ -1,4 +1,4 @@
-import { NuiEvent } from '../shared/event';
+import { NuiEvent, ServerEvent } from '../shared/event';
 
 export type FetchNuiOptions = {
     timeout: number | false;
@@ -22,4 +22,34 @@ export const fetchNui = async <I, R>(event: NuiEvent, input?: I, options?: Fetch
     }
 
     return (await response.json()) as R;
+};
+
+export const triggerClientEvent = async (event: ServerEvent | string, ...args: any[]): Promise<void> => {
+    const response = await fetch(`https://${GetParentResourceName()}/${NuiEvent.TriggerClientEvent}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+            event: event.toString(),
+            args,
+        }),
+    });
+
+    await response.json();
+};
+
+export const triggerServerEvent = async (event: ServerEvent | string, ...args: any[]): Promise<void> => {
+    const response = await fetch(`https://${GetParentResourceName()}/${NuiEvent.TriggerServerEvent}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+            event: event.toString(),
+            args,
+        }),
+    });
+
+    await response.json();
 };

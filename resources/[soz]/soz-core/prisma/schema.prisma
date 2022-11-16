@@ -66,12 +66,6 @@ model concess_entreprise {
   liverytype Int
 }
 
-model concess_storage {
-  model    String  @id @db.VarChar(50)
-  stock    Int
-  category String? @db.VarChar(60)
-}
-
 model fuel_storage {
   id       Int     @id @default(autoincrement())
   station  String  @db.VarChar(15)
@@ -275,7 +269,7 @@ model player {
   cloth_config           String?                  @db.Text
   features               String?                  @default("[]") @db.Text
   player_cloth_set       player_cloth_set[]
-  player_vehicles        player_vehicles[]
+  player_vehicles        PlayerVehicle[]
   records_history_player player_records_history[] @relation("records_history_player")
   records_history_author player_records_history[] @relation("records_history_author")
 
@@ -306,7 +300,7 @@ model player_outfits {
   @@index([outfitId], map: "outfitId")
 }
 
-model player_vehicles {
+model PlayerVehicle {
   id              Int     @id @default(autoincrement())
   license         String? @db.VarChar(50)
   citizenid       String? @db.VarChar(50)
@@ -314,6 +308,7 @@ model player_vehicles {
   hash            String? @db.VarChar(50)
   mods            String? @db.LongText
   condition       String? @db.LongText
+  label           String? @db.VarChar(50)
   plate           String  @unique(map: "UK_playervehicles_plate") @db.VarChar(15)
   fakeplate       String? @db.VarChar(50)
   garage          String? @db.VarChar(50)
@@ -333,6 +328,7 @@ model player_vehicles {
   @@index([citizenid], map: "citizenid")
   @@index([license], map: "license")
   @@index([plate], map: "plate")
+  @@map("player_vehicles")
 }
 
 model storages {
@@ -354,7 +350,7 @@ model upw_facility {
   data       String? @db.LongText
 }
 
-model vehicles {
+model Vehicle {
   model           String  @id @db.VarChar(50)
   hash            Int?
   name            String  @db.VarChar(255)
@@ -364,9 +360,11 @@ model vehicles {
   requiredLicence String? @map("required_licence") @db.VarChar(10)
   size            Int?    @default(1)
   jobName         String? @map("job_name") @db.Text
+  stock           Int?    @default(0)
 
   @@index([category])
   @@index([dealershipId], map: "vehicles_dealership_idx")
+  @@map("vehicles")
 }
 
 model player_purchases {

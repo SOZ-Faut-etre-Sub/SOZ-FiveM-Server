@@ -47,7 +47,7 @@ export class BennysResellProvider {
                     const point: Vector3 = [coords[0], coords[1], coords[2]];
                     return (
                         this.playerService.isOnDuty() &&
-                        this.QBCore.hasJobPermission('bennys', JobPermission.Bennys_Resell) &&
+                        this.QBCore.hasJobPermission('bennys', JobPermission.BennysResell) &&
                         zone.isPointInside(point)
                     );
                 },

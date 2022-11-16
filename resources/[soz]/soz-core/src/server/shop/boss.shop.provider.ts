@@ -3,6 +3,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
+import { Monitor } from '../../shared/monitor';
 import { BossShop } from '../../shared/shop/boss';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../item/inventory.manager';
@@ -30,6 +31,9 @@ export class BossShopProvider {
     @Inject(QBCore)
     private qbcore: QBCore;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
     @OnEvent(ServerEvent.SHOP_BOSS_BUY)
     public async onShopMaskBuy(source: number, job: string, id: string) {
         const player = this.qbcore.getPlayer(source);
@@ -56,6 +60,21 @@ export class BossShopProvider {
             this.notifier.notify(source, `Vous n'avez pas assez d'argent`, 'error');
             return;
         }
+
+        const itemData = this.itemService.getItem(item.id);
+
+        this.monitor.publish(
+            'boss_shop_buy',
+            {
+                item_id: item.id,
+                player_source: source,
+            },
+            {
+                item_label: itemData.label,
+                quantity: 1,
+                price: item.price,
+            }
+        );
 
         this.inventoryManager.addItemToInventory(source, item.id, 1, item.metadata || {});
         this.notifier.notify(

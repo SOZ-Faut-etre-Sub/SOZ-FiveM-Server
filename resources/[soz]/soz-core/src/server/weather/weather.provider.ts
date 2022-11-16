@@ -123,7 +123,7 @@ export class WeatherProvider {
 
     @Command('blackout_level', { role: 'admin' })
     setBlackoutLevel(source: number, level?: string): void {
-        if (level === 'default') {
+        if (!level || level === 'default') {
             GlobalState.blackout_level = 0;
             GlobalState.blackout_override = false;
         } else {

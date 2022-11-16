@@ -1,4 +1,4 @@
-import { ZoneOptions } from '../../client/target/target.factory';
+import { NamedZone } from '../polyzone/box.zone';
 import { Vector3 } from '../polyzone/vector';
 
 export type Dialog = {
@@ -16,7 +16,7 @@ export type StoryObject = {
 export type Story = {
     name: string;
     dialog: { [key: string]: Dialog };
-    zones?: (ZoneOptions & { part: number; label: string; icon: string })[];
+    zones?: (NamedZone & { part: number; label: string; icon: string })[];
     props?: StoryObject[];
 };
 

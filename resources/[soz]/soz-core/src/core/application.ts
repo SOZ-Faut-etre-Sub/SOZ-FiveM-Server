@@ -51,6 +51,12 @@ export class Application {
         }
 
         this.onStopCallback = this.onStop.bind(this);
+
+        addEventListener('onResourceStop', (resourceName: string) => {
+            if (resourceName === GetCurrentResourceName()) {
+                this.onStopCallback();
+            }
+        });
         addEventListener('soz_core.__internal__.stop_application', this.onStopCallback, false);
 
         this.logger.debug('[soz-core] starting application');

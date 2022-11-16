@@ -1,4 +1,18 @@
-import { ZoneOptions } from '../../client/target/target.factory';
+import { NamedZone } from '../polyzone/box.zone';
+
+export type FfsRecipe = {
+    canCraft: boolean;
+    label: string;
+    inputs: {
+        label: string;
+        hasRequiredAmount: boolean;
+        amount: number;
+    }[];
+    output: {
+        label: string;
+        amount: number;
+    };
+};
 
 export enum SewingRawMaterial {
     COTTON_BALE = 'cotton_bale',
@@ -112,7 +126,7 @@ export type Process = {
     };
 };
 
-const craftZones: (ZoneOptions & { name: string })[] = [
+const craftZones: NamedZone[] = [
     {
         name: 'ffs_craft1',
         center: [713.6, -960.64, 30.4],
@@ -250,7 +264,7 @@ const craftProcesses: Process[] = [
     },
 ];
 
-const luxuryCraftZones: (ZoneOptions & { name: string })[] = [
+const luxuryCraftZones: NamedZone[] = [
     {
         name: 'ffs_luxury_craft1',
         center: [714.32, -972.22, 30.4],
@@ -351,7 +365,7 @@ const luxuryCraftProcesses: Process[] = [
     },
 ];
 
-const shoesCraftZones: (ZoneOptions & { name: string })[] = [
+const shoesCraftZones: NamedZone[] = [
     {
         name: 'ffs_shoes_craft1',
         center: [710.62, -969.53, 30.4],
