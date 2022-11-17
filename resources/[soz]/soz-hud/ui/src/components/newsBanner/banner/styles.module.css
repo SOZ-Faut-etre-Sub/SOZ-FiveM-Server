@@ -27,6 +27,16 @@
     background-size: contain;
 }
 
+.news.reboot_5 {
+    background: url("https://soz.zerator.com/static/images/reboot_5.png") no-repeat;
+    background-size: contain;
+}
+
+.news.reboot_15 {
+    background: url("https://soz.zerator.com/static/images/reboot_15.png") no-repeat;
+    background-size: contain;
+}
+
 .news * {
     padding: 0;
     margin: 0;
