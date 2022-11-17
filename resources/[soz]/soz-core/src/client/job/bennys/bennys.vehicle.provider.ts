@@ -350,8 +350,6 @@ export class BennysVehicleProvider {
     public async onUpgradeVehicle() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
 
-        this.nuiMenu.closeMenu();
-
         if (vehicle) {
             await this.upgradeVehicle(vehicle);
         }

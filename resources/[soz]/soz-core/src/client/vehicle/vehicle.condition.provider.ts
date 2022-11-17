@@ -9,6 +9,7 @@ import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomEnumValue, getRandomInt } from '../../shared/random';
 import { VehicleModType, VehicleXenonColor, VehicleXenonColorChoices } from '../../shared/vehicle/modification';
 import { VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
+import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
 
@@ -62,6 +63,9 @@ export class VehicleConditionProvider {
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
 
     private currentVehicleStatus: VehicleStatus | null = null;
 
@@ -502,7 +506,7 @@ export class VehicleConditionProvider {
 
     @StateBagHandler('indicators', null)
     @StateBagHandler('windows', null)
-    private async onVehicleIndicatorChange(bag: string, key: string, value: VehicleCondition) {
+    private async onVehicleIndicatorChange(bag: string) {
         const split = bag.split(':');
 
         if (!split[1]) {
@@ -547,6 +551,10 @@ export class VehicleConditionProvider {
         const vehicle = GetVehiclePedIsIn(ped, false);
 
         if (!vehicle) {
+            return;
+        }
+
+        if (this.nuiMenu.getOpened() !== null) {
             return;
         }
 
