@@ -499,4 +499,64 @@ export class VehicleConditionProvider {
             this.vehicleService.applyVehicleCondition(vehicle, newCondition);
         }
     }
+
+    @StateBagHandler('indicators', null)
+    private async onVehicleIndicatorChange(bag: string, key: string, value: VehicleCondition) {
+        const split = bag.split(':');
+
+        if (!split[1]) {
+            return;
+        }
+
+        const vehicleId = parseInt(split[1]);
+
+        if (!vehicleId) {
+            return;
+        }
+
+        const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
+
+        if (!vehicle) {
+            return;
+        }
+
+        if (!IsEntityAVehicle(vehicle)) {
+            return;
+        }
+
+        await wait(0);
+
+        const state = this.vehicleService.getVehicleState(vehicle);
+
+        SetVehicleIndicatorLights(vehicle, 0, state.indicators.left);
+        SetVehicleIndicatorLights(vehicle, 1, state.indicators.right);
+    }
+
+    @Tick(0)
+    public async setVehicleIndicators() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            return;
+        }
+
+        if (!NetworkHasControlOfEntity(vehicle)) {
+            return;
+        }
+
+        const toggleLeft = IsControlJustPressed(0, 189);
+        const toggleRight = IsControlJustPressed(0, 190);
+
+        if (toggleLeft || toggleRight) {
+            const state = this.vehicleService.getVehicleState(vehicle);
+
+            this.vehicleService.updateVehicleState(vehicle, {
+                indicators: {
+                    left: toggleLeft ? !state.indicators.left : state.indicators.left,
+                    right: toggleRight ? !state.indicators.right : state.indicators.right,
+                },
+            });
+        }
+    }
 }
