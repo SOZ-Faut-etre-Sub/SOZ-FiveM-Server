@@ -107,6 +107,12 @@ local function SpawnVehicule()
     SetModelAsNoLongerNeeded(model)
     VehPlate = QBCore.Functions.GetPlate(livraison_vehicule)
     TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "faggio3", {
+        SozJobCore.livraison_vehicule.x,
+        SozJobCore.livraison_vehicule.y,
+        SozJobCore.livraison_vehicule.z,
+        SozJobCore.livraison_vehicule.w,
+    })
 end
 
 RegisterNetEvent("jobs:livraison:begin")
@@ -125,7 +131,17 @@ end)
 RegisterNetEvent("jobs:livraison:vehicle")
 AddEventHandler("jobs:livraison:vehicle", function()
     TriggerServerEvent("job:anounce", "Enfourchez votre scooter de service")
-    SpawnVehicule()
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "faggio3", {
+        SozJobCore.livraison_vehicule.x,
+        SozJobCore.livraison_vehicule.y,
+        SozJobCore.livraison_vehicule.z,
+        SozJobCore.livraison_vehicule.w,
+    }, "jobs:livraison:vehicle-spawn")
+end)
+
+RegisterNetEvent("jobs:livraison:vehicle-spawn")
+AddEventHandler("jobs:livraison:vehicle-spawn", function(vehicleNetId)
+    livraison_vehicule = NetworkGetEntityFromNetworkId(vehicleNetId)
     JobVehicle = true
     createblip("Véhicule", "Scooter de sevrice", 225, SozJobCore.livraison_vehicule)
     local player = GetPlayerPed(-1)

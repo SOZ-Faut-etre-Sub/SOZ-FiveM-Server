@@ -80,23 +80,6 @@ AddEventHandler("jobs:metal:fix", function()
     end)
 end)
 
-local function SpawnVehicule()
-    local ModelHash = "scrap"
-    local model = GetHashKey(ModelHash)
-    if not IsModelInCdimage(model) then
-        return
-    end
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-    metal_vehicule = CreateVehicle(model, SozJobCore.metal_vehicule.x, SozJobCore.metal_vehicule.y, SozJobCore.metal_vehicule.z, SozJobCore.metal_vehicule.w,
-                                   true, false)
-    SetModelAsNoLongerNeeded(model)
-    VehPlate = QBCore.Functions.GetPlate(metal_vehicule)
-    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
-end
-
 RegisterNetEvent("jobs:metal:vente")
 AddEventHandler("jobs:metal:vente", function()
     local count = 0
@@ -127,7 +110,18 @@ end)
 RegisterNetEvent("jobs:metal:vehicle")
 AddEventHandler("jobs:metal:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
-    SpawnVehicule()
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "scrap",
+                       {
+        SozJobCore.metal_vehicule.x,
+        SozJobCore.metal_vehicule.y,
+        SozJobCore.metal_vehicule.z,
+        SozJobCore.metal_vehicule.w,
+    }, "jobs:metal:vehicle-spawn")
+end)
+
+RegisterNetEvent("jobs:metal:vehicle-spawn")
+AddEventHandler("jobs:metal:vehicle-spawn", function(vehicleNetId)
+    metal_vehicule = NetworkGetEntityFromNetworkId(vehicleNetId)
     JobVehicle = true
     createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.metal_vehicule)
     local player = GetPlayerPed(-1)

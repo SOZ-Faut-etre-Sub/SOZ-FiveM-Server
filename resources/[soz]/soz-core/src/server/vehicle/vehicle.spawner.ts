@@ -37,6 +37,31 @@ export class VehicleSpawner {
 
     private closestVehicleResolver: Record<string, (closestVehicle: null | ClosestVehicle) => void> = {};
 
+    @OnEvent(ServerEvent.VEHICLE_FREE_JOB_SPAWN)
+    private async onVehicleServerSpawn(source: number, model: string, position: Vector4, event: string) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return null;
+        }
+
+        const modelHash = GetHashKey(model);
+        const vehicleNetId = await this.spawn(source, {
+            hash: modelHash,
+            model,
+            position,
+            warp: false,
+            state: {
+                ...getDefaultVehicleState(),
+                isPlayerVehicle: true,
+                owner: player.citizenid,
+                open: true,
+            },
+        });
+
+        TriggerClientEvent(event, source, vehicleNetId);
+    }
+
     public async getClosestVehicle(source: number): Promise<null | ClosestVehicle> {
         let reject: (reason?: any) => void;
         const id = uuidv4();

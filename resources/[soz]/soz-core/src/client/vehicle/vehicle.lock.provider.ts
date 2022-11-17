@@ -10,7 +10,7 @@ import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
-import { VehicleCondition, VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
+import { VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';

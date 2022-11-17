@@ -4,11 +4,11 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
 import { MenuType, MenuTypeMap } from '../../shared/nui/menu';
-import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { NuiDispatch } from './nui.dispatch';
 
 type MenuPosition = {
-    position: Vector3;
+    position: Vector3 | Vector4;
     distance: number;
 };
 

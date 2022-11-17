@@ -8,7 +8,7 @@ import { ServerEvent } from '../../shared/event';
 import { JobPermission, JobType } from '../../shared/job';
 import { Monitor } from '../../shared/monitor';
 import { PlayerData } from '../../shared/player';
-import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
+import { toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItem } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageType, GarageVehicle, PlaceCapacity } from '../../shared/vehicle/garage';
@@ -523,7 +523,7 @@ export class VehicleGarageProvider {
                     await this.vehicleSpawner.spawnPlayerVehicle(source, playerVehicle, [
                         ...parkingPlace.center,
                         parkingPlace.heading || 0,
-                    ])
+                    ] as Vector4)
                 ) {
                     await this.prismaService.playerVehicle.update({
                         where: { id: playerVehicle.id },
