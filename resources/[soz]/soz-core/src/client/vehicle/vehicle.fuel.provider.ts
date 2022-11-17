@@ -555,7 +555,7 @@ export class VehicleFuelProvider {
             handPosition[0],
             handPosition[1],
             handPosition[2],
-            5.0,
+            10.0,
             true,
             true,
             null,
