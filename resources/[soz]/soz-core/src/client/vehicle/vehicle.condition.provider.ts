@@ -501,6 +501,7 @@ export class VehicleConditionProvider {
     }
 
     @StateBagHandler('indicators', null)
+    @StateBagHandler('windows', null)
     private async onVehicleIndicatorChange(bag: string, key: string, value: VehicleCondition) {
         const split = bag.split(':');
 
@@ -528,8 +529,16 @@ export class VehicleConditionProvider {
 
         const state = this.vehicleService.getVehicleState(vehicle);
 
-        SetVehicleIndicatorLights(vehicle, 0, state.indicators.left);
-        SetVehicleIndicatorLights(vehicle, 1, state.indicators.right);
+        SetVehicleIndicatorLights(vehicle, 0, state.indicators.right);
+        SetVehicleIndicatorLights(vehicle, 1, state.indicators.left);
+
+        if (state.openWindows) {
+            RollUpWindow(vehicle, 0);
+            RollUpWindow(vehicle, 1);
+        } else {
+            RollDownWindow(vehicle, 0);
+            RollDownWindow(vehicle, 1);
+        }
     }
 
     @Tick(0)
@@ -541,14 +550,16 @@ export class VehicleConditionProvider {
             return;
         }
 
-        if (!NetworkHasControlOfEntity(vehicle)) {
+        if (GetPedInVehicleSeat(vehicle, -1) !== ped) {
             return;
         }
 
         const toggleLeft = IsControlJustPressed(0, 189);
         const toggleRight = IsControlJustPressed(0, 190);
+        const toggleWindowsUp = IsControlJustPressed(0, 188);
+        const toggleWindowsDown = IsControlJustPressed(0, 187);
 
-        if (toggleLeft || toggleRight) {
+        if (toggleLeft || toggleRight || toggleWindowsUp || toggleWindowsDown) {
             const state = this.vehicleService.getVehicleState(vehicle);
 
             this.vehicleService.updateVehicleState(vehicle, {
@@ -556,6 +567,7 @@ export class VehicleConditionProvider {
                     left: toggleLeft ? !state.indicators.left : state.indicators.left,
                     right: toggleRight ? !state.indicators.right : state.indicators.right,
                 },
+                openWindows: toggleWindowsUp ? true : toggleWindowsDown ? false : state.openWindows,
             });
         }
     }
