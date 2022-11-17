@@ -106,25 +106,36 @@ export class VehicleFuelProvider {
                 });
             }
 
-            if (station.type === FuelStationType.Private || station.fuel === FuelType.Kerosene) {
-                this.objectFFactory.create(station.model, station.position, true);
-            }
-
             if (!this.stationsByModel[station.model]) {
                 this.stationsByModel[station.model] = [];
                 models.push(station.model);
             }
 
-            const zone = new BoxZone(station.zone.center, station.zone.length, station.zone.width, {
-                heading: station.zone.heading,
-                minZ: station.zone.minZ - 2.0,
-                maxZ: station.zone.maxZ + 2.0,
-            });
+            if (station.type === FuelStationType.Private || station.fuel === FuelType.Kerosene) {
+                this.objectFFactory.create(station.model, station.position, true);
 
-            this.stationsByModel[station.model].push({
-                station,
-                zone,
-            });
+                const zone = new BoxZone(station.position, 2.0, 2.0, {
+                    heading: station.position[3],
+                    minZ: station.zone.minZ - 2.0,
+                    maxZ: station.zone.maxZ + 2.0,
+                });
+
+                this.stationsByModel[station.model].push({
+                    station,
+                    zone,
+                });
+            } else {
+                const zone = new BoxZone(station.zone.center, station.zone.length, station.zone.width, {
+                    heading: station.zone.heading,
+                    minZ: station.zone.minZ - 2.0,
+                    maxZ: station.zone.maxZ + 2.0,
+                });
+
+                this.stationsByModel[station.model].push({
+                    station,
+                    zone,
+                });
+            }
         }
 
         this.targetFactory.createForModel(models, [
