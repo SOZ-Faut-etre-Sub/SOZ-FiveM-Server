@@ -100,6 +100,7 @@ export type VehicleEntityState = {
         left: boolean;
         right: boolean;
     };
+    openWindows: boolean;
 
     dead: boolean;
     condition: VehicleCondition;
@@ -161,6 +162,7 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
         left: false,
         right: false,
     },
+    openWindows: false,
     condition: getDefaultVehicleCondition(),
 });
 
