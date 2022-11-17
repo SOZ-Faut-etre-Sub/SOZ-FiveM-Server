@@ -245,25 +245,35 @@ class CallsService {
         this.callMap.delete(transmitterNumber);
     }
 
+    isPlayerAlreadyInCall(phone: string): boolean {
+        return (
+            this.callMap.find(call => (call.transmitter === phone || call.receiver === phone) && call.is_accepted) !==
+            undefined
+        );
+    }
+
     async handleEndCall(reqObj: PromiseRequest<EndCallDTO>, resp: PromiseEventResp<void>) {
         const transmitterNumber = reqObj.data.transmitterNumber;
         const currentCall = this.callMap.get(transmitterNumber);
-        const targetCall = this.callMap.get(currentCall?.receiver);
+        const transmitterCall = this.callMap.get(currentCall?.transmitter);
 
         if (!currentCall) {
             callLogger.error(`Call with transmitter number ${transmitterNumber} does not exist in current calls map!`);
             return resp({ status: 'error', errorMsg: 'DOES_NOT_EXIST' });
         }
 
-        if (targetCall && targetCall.is_accepted) {
-            return resp({ status: 'ok' });
-        }
-
         // Just in case currentCall for some reason at this point is falsy
         // lets protect against that
         if (currentCall) {
             emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
-            if (currentCall.receiverSource !== 0 && (currentCall.is_accepted || targetCall === undefined)) {
+            if (
+                (currentCall.receiverSource !== 0 &&
+                    currentCall?.identifier === transmitterCall?.identifier &&
+                    currentCall?.is_accepted) ||
+                (currentCall?.identifier === transmitterCall?.identifier &&
+                    currentCall?.is_accepted === false &&
+                    !this.isPlayerAlreadyInCall(transmitterCall?.receiver))
+            ) {
                 emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
             }
         }
