@@ -49,7 +49,7 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) !== PlayerPedId()) {
+        if (GetPedInVehicleSeat(vehicle, 0) !== PlayerPedId()) {
             return;
         }
 
