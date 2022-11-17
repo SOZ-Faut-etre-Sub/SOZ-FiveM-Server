@@ -41,7 +41,7 @@ export const useCall = (): CallHook => {
                 receiverNumber: number,
             }).then(resp => {
                 if (resp.status === 'error') {
-                    if (resp.data.isUnavailable) {
+                    if (resp.data?.isUnavailable) {
                         return addAlert({ message: t('CALLS.FEEDBACK.UNAVAILABLE'), type: 'error' });
                     }
 

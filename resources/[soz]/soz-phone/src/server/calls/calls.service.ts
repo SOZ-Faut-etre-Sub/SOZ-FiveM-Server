@@ -63,6 +63,19 @@ class CallsService {
         // Will be null if the player is offline
         const receivingPlayer = PlayerService.getPlayerFromIdentifier(receiverIdentifier);
 
+        const callObj: ActiveCallRaw = {
+            identifier: callIdentifier,
+            transmitter: transmitterNumber,
+            transmitterSource: transmittingPlayer.source,
+            receiver: reqObj.data.receiverNumber,
+            receiverSource: receivingPlayer?.source || 0,
+            start: startCallTimeUnix.toString(),
+            is_accepted: false,
+        };
+
+        // Now we can add the call to our memory map
+        this.setCallInMap(callObj.transmitter, callObj);
+
         // Now if the player is offline, we send the same resp
         // as before
         if (!receivingPlayer) {
@@ -80,19 +93,6 @@ class CallsService {
 
         callLogger.debug(`Receiving Identifier: ${receiverIdentifier}`);
         callLogger.debug(`Receiving source: ${receivingPlayer.source} `);
-
-        const callObj: ActiveCallRaw = {
-            identifier: callIdentifier,
-            transmitter: transmitterNumber,
-            transmitterSource: transmittingPlayer.source,
-            receiver: reqObj.data.receiverNumber,
-            receiverSource: receivingPlayer.source,
-            start: startCallTimeUnix.toString(),
-            is_accepted: false,
-        };
-
-        // Now we can add the call to our memory map
-        this.setCallInMap(callObj.transmitter, callObj);
 
         try {
             await this.callsDB.saveCall(callObj);
@@ -153,18 +153,20 @@ class CallsService {
         callLogger.debug(`Call with key ${transmitterNumber} was updated to be accepted`);
 
         // player who is being called
-        emitNetTyped<ActiveCall>(
-            CallEvents.WAS_ACCEPTED,
-            {
-                is_accepted: true,
-                transmitter: transmitterNumber,
-                receiver: targetCallItem.receiver,
-                isTransmitter: false,
-                channelId,
-                startedAt: new Date().getTime() / 1000,
-            },
-            targetCallItem.receiverSource
-        );
+        if (targetCallItem.receiverSource !== 0) {
+            emitNetTyped<ActiveCall>(
+                CallEvents.WAS_ACCEPTED,
+                {
+                    is_accepted: true,
+                    transmitter: transmitterNumber,
+                    receiver: targetCallItem.receiver,
+                    isTransmitter: false,
+                    channelId,
+                    startedAt: new Date().getTime() / 1000,
+                },
+                targetCallItem.receiverSource
+            );
+        }
 
         mainLogger.debug(targetCallItem);
 
@@ -261,7 +263,7 @@ class CallsService {
         // lets protect against that
         if (currentCall) {
             emitNet(CallEvents.WAS_ENDED, currentCall.transmitterSource);
-            if (currentCall.is_accepted || targetCall === undefined) {
+            if (currentCall.receiverSource !== 0 && (currentCall.is_accepted || targetCall === undefined)) {
                 emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
             }
         }
