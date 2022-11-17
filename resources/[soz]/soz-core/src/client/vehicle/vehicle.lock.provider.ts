@@ -2,6 +2,7 @@ import { Command } from '../../core/decorators/command';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { StateBagHandler } from '../../core/decorators/state';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
@@ -9,7 +10,7 @@ import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
-import { VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
+import { VehicleCondition, VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -72,7 +73,7 @@ export class VehicleLockProvider {
     }
 
     @Tick(TickInterval.EVERY_FRAME)
-    private async checkLeaveVehicleWithEngineOn() {
+    private async checkVehicleLeave() {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
         const wasPlayerDriving = GetPedInVehicleSeat(vehicle, -1) === ped;
@@ -82,6 +83,7 @@ export class VehicleLockProvider {
         }
 
         if (this.seatbeltProvider.isSeatbeltOnForPlayer()) {
+            DisableControlAction(2, 75, true);
             return;
         }
 
@@ -98,6 +100,41 @@ export class VehicleLockProvider {
         }
     }
 
+    @StateBagHandler('open', null)
+    @StateBagHandler('forced', null)
+    private async onVehicleOpenChange(bag: string) {
+        const split = bag.split(':');
+
+        if (!split[1]) {
+            return;
+        }
+
+        const vehicleId = parseInt(split[1]);
+
+        if (!vehicleId) {
+            return;
+        }
+
+        const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
+
+        if (!vehicle) {
+            return;
+        }
+
+        if (!IsEntityAVehicle(vehicle)) {
+            return;
+        }
+
+        await wait(0);
+        const vehicleState = this.vehicleService.getVehicleState(vehicle);
+
+        if (vehicleState.open || vehicleState.forced) {
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
+        } else {
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
+        }
+    }
+
     @Tick(TickInterval.EVERY_FRAME)
     private async checkPlayerCanEnterVehicle() {
         const player = this.playerService.getPlayer();
@@ -111,14 +148,6 @@ export class VehicleLockProvider {
 
         if (!vehicle) {
             return;
-        }
-
-        const vehicleState = this.vehicleService.getVehicleState(vehicle);
-
-        if (vehicleState.forced || player.metadata.godmode || vehicleState.open) {
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
-        } else {
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
         }
 
         const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
@@ -349,7 +378,6 @@ export class VehicleLockProvider {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
         }
 
         SetVehicleLights(vehicle, 2);

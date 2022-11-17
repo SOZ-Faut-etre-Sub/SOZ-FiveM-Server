@@ -113,10 +113,7 @@ export class VehicleSeatbeltProvider {
 
         TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
 
-        if (this.isSeatbeltOn) {
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.StickPlayerInside);
-        } else {
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.None);
+        if (!this.isSeatbeltOn) {
             await wait(2000);
             await this.trySwitchingSeat();
         }

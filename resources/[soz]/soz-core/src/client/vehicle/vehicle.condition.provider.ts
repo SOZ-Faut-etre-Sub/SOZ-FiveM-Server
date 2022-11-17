@@ -165,11 +165,11 @@ export class VehicleConditionProvider {
 
         const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
 
-        if (!IsEntityAVehicle(vehicle)) {
+        if (!vehicle) {
             return;
         }
 
-        if (!vehicle) {
+        if (!IsEntityAVehicle(vehicle)) {
             return;
         }
 
