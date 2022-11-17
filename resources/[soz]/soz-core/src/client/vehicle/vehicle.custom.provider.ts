@@ -112,13 +112,24 @@ export class VehicleCustomProvider {
             return;
         }
 
-        SetVehicleUndriveable(menuData.vehicle, false);
+        if (menuData.vehicle) {
+            SetVehicleUndriveable(menuData.vehicle, false);
 
-        this.vehicleModificationService.applyVehicleConfiguration(menuData.vehicle, menuData.originalConfiguration);
+            if (menuData.originalConfiguration) {
+                this.vehicleModificationService.applyVehicleConfiguration(
+                    menuData.vehicle,
+                    menuData.originalConfiguration
+                );
+            }
+        }
     }
 
     @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: VehicleConfiguration }>(NuiEvent.VehicleCustomApply)
     public async applyVehicleConfiguration({ vehicleEntityId, vehicleConfiguration }): Promise<VehicleUpgradeOptions> {
+        if (!vehicleEntityId || !vehicleConfiguration) {
+            return null;
+        }
+
         this.vehicleModificationService.applyVehicleConfiguration(vehicleEntityId, vehicleConfiguration);
 
         return this.vehicleModificationService.createOptions(vehicleEntityId);

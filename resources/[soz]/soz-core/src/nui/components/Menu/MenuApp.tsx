@@ -59,6 +59,7 @@ const MenuRouter: FunctionComponent = () => {
 
             fetchNui(NuiEvent.MenuClosed, {
                 menuType,
+                nextMenu: null,
                 menuData: prevData,
             });
         }
@@ -68,6 +69,7 @@ const MenuRouter: FunctionComponent = () => {
 
             fetchNui(NuiEvent.MenuClosed, {
                 menuType: prevMenuType,
+                nextMenu: menuType,
                 menuData: prevData,
             });
         }
