@@ -26,7 +26,7 @@ export class RepositoryProvider {
     private onceLoader: OnceLoader;
 
     @Once(OnceStep.PlayerLoaded)
-    public async onStart() {
+    public async onRepositoryStart() {
         await this.garageRepository.load();
         await this.jobGradeRepository.load();
         await this.vehicleRepository.load();
