@@ -36,7 +36,7 @@ AddEventHandler("police:cloakroom:openStash", function()
 end)
 
 --- Blips
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     for id, station in pairs(Config.Locations["stations"]) do
         if not QBCore.Functions.GetBlip("police_" .. id) then
             QBCore.Functions.CreateBlip("police_" .. id, {

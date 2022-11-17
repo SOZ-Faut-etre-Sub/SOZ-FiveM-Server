@@ -22,7 +22,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     PlayerData = data
 end)
 
-Citizen.CreateThread(function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     -- Blip
     if not QBCore.Functions.GetBlip("job_pawl") then
         QBCore.Functions.CreateBlip("job_pawl", {
