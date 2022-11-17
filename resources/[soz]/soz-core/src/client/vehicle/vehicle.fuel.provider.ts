@@ -37,7 +37,7 @@ type CurrentStationPistol = {
 };
 
 const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
-    [VehicleClass.Helicopters]: 5.32,
+    [VehicleClass.Helicopters]: 6.33,
 };
 
 @Provider()
@@ -634,7 +634,7 @@ export class VehicleFuelProvider {
         }
 
         const multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
-        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.1 * multiplier;
+        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.84 * multiplier;
         const consumedOil = consumedFuel / 20;
 
         const state = this.vehicleService.getVehicleState(vehicle);
