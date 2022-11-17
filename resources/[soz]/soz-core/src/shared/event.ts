@@ -137,6 +137,7 @@ export enum ServerEvent {
 
     HALLOWEEN2022_HUNT = 'halloween2022:server:hunt',
     LSMC_HALLOWEEN_LOOT_PLAYER = 'lsmc:halloween:lootPlayer',
+    VEHICLE_FREE_JOB_SPAWN = 'soz-core:server:vehicle:free-job-spawn',
 }
 
 export enum ClientEvent {

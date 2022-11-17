@@ -6,7 +6,7 @@ type BoxZoneOptions<T> = PolygonZoneOptions<T> & {
 };
 
 export type Zone<T = never> = {
-    center: Vector3;
+    center: Vector3 | Vector4;
     length?: number;
     width?: number;
     heading?: number;

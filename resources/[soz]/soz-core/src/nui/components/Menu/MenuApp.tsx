@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useLayoutEffect, useState } from 'react';
+import { FunctionComponent, useLayoutEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../shared/event';

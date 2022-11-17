@@ -8,7 +8,7 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
-import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
@@ -123,7 +123,11 @@ export class VehicleGarageProvider {
             }
 
             if (garage.type === GarageType.Depot) {
-                this.objectFactory.create(jobGaragePayStation, [...garage.zone.center, garage.zone.heading], true);
+                this.objectFactory.create(
+                    jobGaragePayStation,
+                    [...garage.zone.center, garage.zone.heading] as Vector4,
+                    true
+                );
 
                 targets.push({
                     label: 'Accéder à la fourrière',
@@ -137,7 +141,11 @@ export class VehicleGarageProvider {
             }
 
             if (garage.type === GarageType.Job) {
-                this.objectFactory.create(jobGaragePayStation, [...garage.zone.center, garage.zone.heading], true);
+                this.objectFactory.create(
+                    jobGaragePayStation,
+                    [...garage.zone.center, garage.zone.heading] as Vector4,
+                    true
+                );
 
                 targets.push({
                     label: 'Accéder au parking entreprise',
@@ -150,7 +158,11 @@ export class VehicleGarageProvider {
             }
 
             if (garage.type === GarageType.JobLuxury) {
-                this.objectFactory.create(jobGaragePayStation, [...garage.zone.center, garage.zone.heading], true);
+                this.objectFactory.create(
+                    jobGaragePayStation,
+                    [...garage.zone.center, garage.zone.heading] as Vector4,
+                    true
+                );
 
                 targets.push({
                     label: 'Accéder au parking entreprise luxe',
