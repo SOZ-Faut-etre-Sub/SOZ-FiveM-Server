@@ -2,7 +2,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 local playerInsideZone = false -- Is player inside for for NPC interaction ?
 
-Citizen.CreateThread(function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     -- Blip
     if not QBCore.Functions.GetBlip("driving_school") then
         local blipCoords = Config.Peds.secretary

@@ -11,7 +11,7 @@ local stonkAction = {
     end,
 }
 
-CreateThread(function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     for id, shop in pairs(ShopContext) do
         for shopId, location in pairs(Config.Locations[id]) do
             if not QBCore.Functions.GetBlip("shops_" .. id .. "_" .. shopId) then
