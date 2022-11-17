@@ -161,6 +161,8 @@ model phone_calls {
   end         DateTime @default(dbgenerated("('0000-00-00 00:00:00')")) @db.Timestamp(0)
 
   @@index([identifier], map: "identifier")
+  @@index([transmitter], map: "transmitter")
+  @@index([receiver], map: "receiver")
 }
 
 model phone_contacts {
@@ -170,6 +172,7 @@ model phone_contacts {
   display    String  @default("") @db.VarChar(255)
 
   @@index([identifier], map: "identifier")
+  @@index([number], map: "number")
 }
 
 model phone_gallery {
@@ -192,6 +195,7 @@ model phone_messages {
   updatedAt       DateTime @default(now()) @db.Timestamp(0)
 
   @@index([user_identifier], map: "user_identifier")
+  @@index([conversation_id], map: "conversation_id")
 }
 
 model phone_messages_conversations {
@@ -206,6 +210,8 @@ model phone_messages_conversations {
   updatedAt              DateTime @default(now()) @db.Timestamp(0)
 
   @@index([user_identifier], map: "user_identifier")
+  @@index([conversation_id], map: "conversation_id")
+  @@index([participant_identifier], map: "participant_identifier")
 }
 
 model phone_notes {
@@ -220,6 +226,8 @@ model phone_notes {
 model phone_profile {
   number String  @id @db.VarChar(8)
   avatar String? @db.VarChar(255)
+
+  @@index([number], map: "number")
 }
 
 model phone_society_messages {
@@ -236,6 +244,7 @@ model phone_society_messages {
   updatedAt       DateTime @default(now()) @db.Timestamp(0)
 
   @@index([conversation_id], map: "conversation_id")
+  @@index([source_phone], map: "source_phone")
 }
 
 model phone_twitch_news {
@@ -495,7 +504,7 @@ enum bank_accounts_account_type {
   business
   safestorages
   offshore
-  bank_atm      @map("bank-atm")
+  bank_atm     @map("bank-atm")
 }
 
 model halloween_pumpkin_hunt {
