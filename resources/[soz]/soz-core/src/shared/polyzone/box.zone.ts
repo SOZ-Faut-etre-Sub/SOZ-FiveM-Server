@@ -1,5 +1,5 @@
 import { PolygonZone, PolygonZoneOptions } from './polygon.zone';
-import { Point2D, Point3D, Vector2, Vector3 } from './vector';
+import { Point2D, Point3D, Vector2, Vector3, Vector4 } from './vector';
 
 type BoxZoneOptions<T> = PolygonZoneOptions<T> & {
     heading?: number;
@@ -20,7 +20,7 @@ export type NamedZone<T = never> = Zone<T> & {
     name: string;
 };
 
-const rotatePoint = (center: Point2D | Point3D, point: Point2D | Point3D, angleInRad: number): Point2D => {
+const rotatePoint = (center: Point2D | Point3D | Vector4, point: Point2D | Point3D, angleInRad: number): Point2D => {
     const cos = Math.cos(angleInRad);
     const sin = Math.sin(angleInRad);
 
@@ -34,7 +34,7 @@ const rotatePoint = (center: Point2D | Point3D, point: Point2D | Point3D, angleI
 };
 
 export class BoxZone<T = never> extends PolygonZone<T> {
-    public readonly center: Point3D;
+    public readonly center: Point3D | Vector4;
     public readonly length: number;
     public readonly width: number;
     public readonly heading: number;
@@ -48,7 +48,7 @@ export class BoxZone<T = never> extends PolygonZone<T> {
         });
     }
 
-    public constructor(center: Point3D, length: number, width: number, options?: BoxZoneOptions<T>) {
+    public constructor(center: Point3D | Vector4, length: number, width: number, options?: BoxZoneOptions<T>) {
         const points: Vector2[] = [];
         const heading = options?.heading || 0;
         const angleInRad = (heading * Math.PI) / 180;
