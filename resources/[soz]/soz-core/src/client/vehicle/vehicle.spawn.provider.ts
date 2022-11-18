@@ -1,9 +1,11 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { VehicleSpawn } from '../../shared/vehicle/vehicle';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
 import { VehicleService } from './vehicle.service';
@@ -18,6 +20,9 @@ export class VehicleSpawnProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @OnEvent(ClientEvent.VEHICLE_GET_CLOSEST)
     getClosestVehicle(responseId: string) {
@@ -79,6 +84,7 @@ export class VehicleSpawnProvider {
         SetVehicleHasBeenOwnedByPlayer(vehicle, true);
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
+        SetEntityVisible(vehicle, false, false);
 
         TriggerServerEvent(ServerEvent.VEHICLE_SPAWNED, spawnId, networkId);
 
@@ -93,6 +99,29 @@ export class VehicleSpawnProvider {
         }
 
         this.vehicleService.syncVehicle(vehicle, vehicleSpawn.state);
+        let confirmSpawn = false;
+        let confirmSpawnTry = 0;
+
+        while (!confirmSpawn && confirmSpawnTry < 30) {
+            await wait(500);
+            const state = this.vehicleService.getVehicleState(vehicle);
+
+            if (!state.spawned) {
+                TriggerServerEvent(ServerEvent.VEHICLE_SPAWNED, spawnId, networkId);
+            }
+
+            confirmSpawnTry++;
+            confirmSpawn = state.spawned;
+        }
+
+        if (confirmSpawn) {
+            SetEntityVisible(vehicle, true, false);
+        } else {
+            SetEntityAsMissionEntity(vehicle, true, true);
+            DeleteVehicle(vehicle);
+
+            this.notifier.notify("Le véhicule n'a pas pu être sorti, veuillez ressayer", 'error');
+        }
     }
 
     @OnEvent(ClientEvent.VEHICLE_DELETE)

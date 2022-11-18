@@ -226,8 +226,11 @@ export class VehicleSpawner {
                 await wait(0);
             }
 
-            this.vehicleStateService.updateVehicleState(entityId, vehicle.state);
             this.vehicleStateService.registerSpawned(netId);
+            this.vehicleStateService.updateVehicleState(entityId, {
+                ...vehicle.state,
+                spawned: true,
+            });
 
             return netId;
         } catch (e) {
@@ -242,33 +245,47 @@ export class VehicleSpawner {
     public async delete(netId: number): Promise<boolean> {
         const entityId = NetworkGetEntityFromNetworkId(netId);
         const owner = NetworkGetEntityOwner(entityId);
+        this.vehicleStateService.unregisterSpawned(netId);
         const deletePromise = new PCancelable<void>(resolve => {
             this.deleting[netId] = resolve;
         });
 
-        // Cancel delete after 10 seconds
-        setTimeout(() => {
-            try {
-                deletePromise.cancel();
-            } catch {
-                // do nothing
-            }
-        }, 10000);
+        // Be nice if there was an active check
+        await wait(200);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_DELETE, owner, netId);
+        let deleted = false;
+        let deleteTry = 0;
 
-        try {
+        while (!deleted && deleteTry < 600) {
+            setTimeout(() => {
+                try {
+                    deletePromise.cancel();
+                } catch {
+                    // do nothing
+                }
+            }, 10000);
+
+            TriggerClientEvent(ClientEvent.VEHICLE_DELETE, owner, netId);
             await deletePromise;
 
-            this.vehicleStateService.unregisterSpawned(netId);
+            try {
+                await deletePromise;
+                deleted = true;
+                deleteTry++;
+            } catch (e) {
+                console.error('Failed to delete vehicle with netId', netId, e);
+            }
 
-            return true;
-        } catch (e) {
-            console.error('Failed to delete vehicle', e);
-            return false;
-        } finally {
-            delete this.deleting[netId];
+            // Try to delete entity on server side
+            if (!deleted && DoesEntityExist(entityId)) {
+                DeleteEntity(entityId);
+                deleted = DoesEntityExist(entityId);
+            }
         }
+
+        delete this.deleting[netId];
+
+        return deleted;
     }
 
     @OnEvent(ServerEvent.VEHICLE_SPAWNED)
