@@ -151,17 +151,21 @@ export class RebootProvider {
             await wait(30 * 1000);
         }
 
+        exports['soz-api'].RemoveRebootMessage();
+
         await this.reboot();
     }
 
-    private sendRebootMessage(minutes: number) {
+    private sendRebootMessage(minutes: 5 | 15) {
+        exports['soz-api'].RemoveRebootMessage();
+        exports['soz-api'].AddRebootMessage(minutes);
         emit(
             ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
             `${ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST}:${uuidv4()}`,
             {
-                type: 'fbi',
-                message: `Une tempête est en cours de formation, elle devrait frapper le coeur de San Andreas d'ici ${minutes} minutes. Veuillez vous abriter.`,
-                reporter: 'Irma',
+                type: `reboot_${minutes}`,
+                message: `Un ouragan arrive à toute allure ! Il devrait frapper la coeur de San Andreas d'ici ${minutes} minutes. Veillez ranger vos véhicules et vous abriter ! Votre sécurité est primordiale.`,
+                reporter: 'San Andreas Météo',
             }
         );
     }
