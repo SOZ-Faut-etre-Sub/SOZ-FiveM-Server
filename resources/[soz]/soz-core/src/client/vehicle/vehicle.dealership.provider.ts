@@ -249,6 +249,12 @@ export class VehicleDealershipProvider {
 
         await this.resourceLoader.loadModel(vehicle.hash);
 
+        if (this.lastVehicleShowroom) {
+            this.resourceLoader.unloadModel(vehicle.hash);
+
+            return;
+        }
+
         const vehicleEntity = CreateVehicle(
             vehicle.hash,
             dealership.showroom.position[0],
@@ -258,8 +264,6 @@ export class VehicleDealershipProvider {
             false,
             false
         );
-
-        this.resourceLoader.unloadModel(vehicle.hash);
 
         SetVehicleOnGroundProperly(vehicleEntity);
         SetEntityInvincible(vehicleEntity, true);

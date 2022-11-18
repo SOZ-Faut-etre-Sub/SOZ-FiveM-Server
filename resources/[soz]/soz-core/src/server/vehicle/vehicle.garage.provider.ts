@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { PlayerVehicle, Prisma } from '@prisma/client';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -10,6 +10,7 @@ import { Monitor } from '../../shared/monitor';
 import { PlayerData } from '../../shared/player';
 import { toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItem } from '../../shared/random';
+import { Err, isErr, Ok, Result } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageType, GarageVehicle, PlaceCapacity } from '../../shared/vehicle/garage';
 import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
@@ -272,13 +273,18 @@ export class VehicleGarageProvider {
         });
     }
 
-    private async checkCanManageVehicle(player: PlayerData, id: string, garage: Garage, vehicleId: number) {
+    private async checkCanManageVehicle(
+        player: PlayerData,
+        id: string,
+        garage: Garage,
+        vehicleId: number
+    ): Promise<Result<PlayerVehicle, string>> {
         const vehicle = await this.prismaService.playerVehicle.findUnique({
             where: { id: vehicleId },
         });
 
         if (!vehicle) {
-            return null;
+            return Err("ce véhicule n'existe pas");
         }
 
         const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
@@ -289,21 +295,21 @@ export class VehicleGarageProvider {
                 garage.type === GarageType.House) &&
             !citizenIds.has(vehicle.citizenid)
         ) {
-            return null;
+            return Err("ce véhicule n'est pas à vous");
         } else if (garage.type === GarageType.Job && garage.job !== player.job.id) {
-            return null;
+            return Err("vous n'avez pas accès à ce garage entreprise");
         } else if (garage.type === GarageType.Depot && player.job.id !== JobType.Bennys) {
-            return null;
+            return Err("vous n'avez pas accès à ce garage fourrière");
         } else if (
             garage.type === GarageType.JobLuxury &&
             (garage.job !== player.job.id || (!vehicle.plate.startsWith('LUXE') && !vehicle.plate.startsWith('ESSAI')))
         ) {
-            return null;
+            return Err("vous n'avez pas accès à ce garage luxe ou ce véhicule n'est pas un véhicule de luxe");
         } else if (garage.type === GarageType.House && vehicle.job !== null) {
-            return null;
+            return Err('ce véhicule appartient à une entreprise');
         }
 
-        return vehicle;
+        return Ok(vehicle);
     }
 
     @OnEvent(ServerEvent.VEHICLE_GARAGE_RENAME)
@@ -322,14 +328,14 @@ export class VehicleGarageProvider {
 
         const vehicle = await this.checkCanManageVehicle(player, id, garage, vehicleId);
 
-        if (!vehicle) {
-            this.notifier.notify(source, `Vous ne pouvez pas renommer ce véhicule.`, 'error');
+        if (isErr(vehicle)) {
+            this.notifier.notify(source, `Vous ne pouvez pas renommer ce véhicule: ${vehicle.err}.`, 'error');
 
             return;
         }
 
         await this.prismaService.playerVehicle.update({
-            where: { id: vehicle.id },
+            where: { id: vehicle.ok.id },
             data: {
                 label: name,
             },
@@ -365,10 +371,10 @@ export class VehicleGarageProvider {
 
         const vehicle = await this.checkCanManageVehicle(player, id, garage, vehicleState.id);
 
-        if (!vehicle) {
+        if (isErr(vehicle)) {
             this.notifier.notify(
                 source,
-                `Vous ne pouvez pas ranger ce véhicule dans le garage ${garage.name}.`,
+                `Vous ne pouvez pas ranger ce véhicule dans le garage ${garage.name}: ${vehicle.err}.`,
                 'error'
             );
 
@@ -392,7 +398,7 @@ export class VehicleGarageProvider {
                 'vehicle_garage_in',
                 {
                     player_source: source,
-                    vehicle_plate: vehicle.plate,
+                    vehicle_plate: vehicle.ok.plate,
                 },
                 {
                     garage: id,
@@ -403,9 +409,9 @@ export class VehicleGarageProvider {
             );
 
             // Only sync if vehicle was in correct state otherwise, do not update
-            if (vehicle.state === PlayerVehicleState.Out) {
+            if (vehicle.ok.state === PlayerVehicleState.Out) {
                 await this.prismaService.playerVehicle.update({
-                    where: { id: vehicle.id },
+                    where: { id: vehicle.ok.id },
                     data: {
                         state: PlayerVehicleState.InGarage,
                         condition: JSON.stringify(vehicleState.condition),
