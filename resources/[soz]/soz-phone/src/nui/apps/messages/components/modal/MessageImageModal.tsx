@@ -1,15 +1,14 @@
 import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
-import { Dialog, Transition } from '@headlessui/react';
+import { Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import { LocationMarkerIcon, PhotographIcon } from '@heroicons/react/solid';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { ServerPromiseResp } from '@typings/common';
 import { MessageEvents } from '@typings/messages';
 import { Button } from '@ui/old_components/Button';
-import { PictureResponsive } from '@ui/old_components/PictureResponsive';
 import { fetchNui } from '@utils/fetchNui';
 import qs from 'qs';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -40,6 +39,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
     useEffect(() => {
         if (!image) return;
         sendImageMessage(image);
+        navigate(deleteQueryFromLocation({ pathname, search }, 'image'), { replace: true });
     }, [image]);
 
     return (
