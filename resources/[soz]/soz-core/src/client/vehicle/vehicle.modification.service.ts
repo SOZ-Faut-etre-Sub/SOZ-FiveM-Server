@@ -22,10 +22,11 @@ const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.Roof]: 'Toit',
     [VehicleModType.TyreSmoke]: 'Fumée de pneu',
     [VehicleModType.XenonHeadlights]: 'Phares au xénon',
-    [VehicleModType.AirFilter]: 'Filter à air',
+    [VehicleModType.AirFilter]: 'Filtre à air',
     [VehicleModType.DoorSpeaker]: 'Enceintes de porte',
     [VehicleModType.TrimDesign]: 'Finition A',
     [VehicleModType.PlateHolder]: 'Contour de plaque',
+    [VehicleModType.Fender]: 'Aile',
 };
 
 const ModExclusion: Record<number, VehicleModType[]> = {
@@ -525,7 +526,7 @@ export class VehicleModificationService {
             options.wheelType[VehicleWheelType.HighEnd] = 'HighEnd';
         }
 
-        for (let i = 1; i < 14; i++) {
+        for (let i = 1; i < 15; i++) {
             if (DoesExtraExist(vehicle, i)) {
                 options.extra.push(i);
             }

@@ -1,6 +1,7 @@
 import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { ClientEvent } from '../../shared/event';
 import { CommonItem, InventoryItem } from '../../shared/item';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -90,12 +91,10 @@ export class ItemFuelProvider {
         );
 
         const filledFuel = Math.round(progress * JERRYCAN_FUEL_AMOUNT);
+        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
-        this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
-            condition: {
-                ...vehicleState.condition,
-                fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
-            },
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+            fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
         });
 
         this.notifier.notify(source, "Vous avez ~g~utilisé~s~ un jerrycan d'essence.", 'success');
@@ -156,12 +155,10 @@ export class ItemFuelProvider {
         );
 
         const filledFuel = Math.round(progress * JERRYCAN_FUEL_AMOUNT);
+        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
-        this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
-            condition: {
-                ...vehicleState.condition,
-                fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
-            },
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+            fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
         });
 
         this.notifier.notify(source, 'Vous avez ~g~utilisé~s~ un jerrycan de kérosène.', 'success');
@@ -214,12 +211,10 @@ export class ItemFuelProvider {
         );
 
         const filledOil = Math.round(progress * JERRYCAN_FUEL_AMOUNT);
+        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
-        this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
-            condition: {
-                ...vehicleState.condition,
-                oilLevel: vehicleState.condition.oilLevel + filledOil,
-            },
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+            oilLevel: vehicleState.condition.oilLevel + filledOil,
         });
 
         this.notifier.notify(source, 'Vous avez ~g~utilisé~s~ un jerrycan de kérosène.', 'success');
