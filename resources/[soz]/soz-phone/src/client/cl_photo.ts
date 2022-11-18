@@ -99,9 +99,6 @@ const handleTakePicture = async () => {
     ClearHelp(true);
     await Delay(0);
     const resp = await takePhoto();
-    DestroyMobilePhone();
-    CellCamActivate(false, false);
-    animationService.openPhone();
     emit('phone:client:disableControlActions', true);
     await Delay(200);
 

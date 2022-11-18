@@ -44,7 +44,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
             }
             return 'text-white';
         } else if (pathname.includes('/camera')) {
-            return 'bg-ios-800 text-white';
+            return 'bg-black text-white';
         } else {
             return config.theme.value === 'dark' ? 'bg-ios-800 text-white' : 'bg-ios-50 text-black';
         }
