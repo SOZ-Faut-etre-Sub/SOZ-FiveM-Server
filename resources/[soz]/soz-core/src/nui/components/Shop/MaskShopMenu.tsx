@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
@@ -19,11 +19,14 @@ type MenuMaskShopStateProps = {
 export const MaskShopMenu: FunctionComponent<MenuMaskShopStateProps> = ({ catalog }) => {
     const banner = 'https://nui-img/soz/menu_shop_accessory';
     const navigate = useNavigate();
+    const location = useLocation();
     const [items, setItems] = useState<any[]>([]);
 
     const selectCategory = (id, items) => {
         setItems(items);
-        navigate(`/${MenuType.MaskShop}/${id}`);
+        navigate(`/${MenuType.MaskShop}/${id}`, {
+            state: location.state,
+        });
     };
 
     useNuiEvent('mask_shop', 'SelectCategory', ({ id, items }) => {
