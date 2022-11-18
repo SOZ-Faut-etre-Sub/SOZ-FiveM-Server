@@ -537,11 +537,11 @@ export class VehicleConditionProvider {
         SetVehicleIndicatorLights(vehicle, 1, state.indicators.left);
 
         if (state.openWindows) {
-            RollUpWindow(vehicle, 0);
-            RollUpWindow(vehicle, 1);
-        } else {
             RollDownWindow(vehicle, 0);
             RollDownWindow(vehicle, 1);
+        } else {
+            RollUpWindow(vehicle, 0);
+            RollUpWindow(vehicle, 1);
         }
     }
 
@@ -575,7 +575,7 @@ export class VehicleConditionProvider {
                     left: toggleLeft ? !state.indicators.left : state.indicators.left,
                     right: toggleRight ? !state.indicators.right : state.indicators.right,
                 },
-                openWindows: toggleWindowsUp ? true : toggleWindowsDown ? false : state.openWindows,
+                openWindows: toggleWindowsDown ? true : toggleWindowsUp ? false : state.openWindows,
             });
         }
     }

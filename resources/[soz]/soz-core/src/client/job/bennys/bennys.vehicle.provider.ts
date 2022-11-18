@@ -363,13 +363,15 @@ export class BennysVehicleProvider {
             return;
         }
 
-        const inVehicle = IsPedInAnyVehicle(PlayerPedId(), false);
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        const isDriver = vehicle ? GetPedInVehicleSeat(vehicle, -1) === PlayerPedId() : false;
 
         if (this.nuiMenu.getOpened() === MenuType.JobBennys) {
             this.nuiMenu.closeMenu();
         } else {
             this.nuiMenu.openMenu(MenuType.JobBennys, {
-                insideUpgradeZone: inVehicle && this.isInsideUpgradeZone(),
+                insideUpgradeZone: isDriver && this.isInsideUpgradeZone(),
             });
         }
     }
