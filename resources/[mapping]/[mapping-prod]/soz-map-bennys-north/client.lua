@@ -14,7 +14,7 @@ Citizen.CreateThread(function()
     ActivateInteriorEntitySet(InteriorId, "furnishings_02")
 
     --  Decorative
-    ActivateInteriorEntitySet(InteriorId, "decorative_01")
+    --ActivateInteriorEntitySet(InteriorId, "decorative_01")
     ActivateInteriorEntitySet(InteriorId, "decorative_02")
 
     -- Mod Booth
