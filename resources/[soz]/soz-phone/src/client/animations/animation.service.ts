@@ -111,7 +111,6 @@ export class AnimationService {
     }
 
     async openCamera() {
-        ClearPedTasks(PlayerPedId());
         this.setPhoneState(AnimationState.ON_CAMERA, true);
     }
 
