@@ -10,15 +10,23 @@ export class VehicleMigrationProvider {
 
     @Once(OnceStep.DatabaseConnected)
     async migrate(): Promise<void> {
-        await this.prismaService.vehicle.updateMany({
+        const vehicles = await this.prismaService.playerVehicle.findMany({
             where: {
-                model: {
-                    in: ['dynasty2', 'rumpo4'],
+                plate: {
+                    startsWith: 'BENY',
                 },
             },
-            data: {
-                price: 24000,
-            },
         });
+
+        for (const vehicle of vehicles) {
+            await this.prismaService.playerVehicle.update({
+                where: {
+                    id: vehicle.id,
+                },
+                data: {
+                    plate: vehicle.plate.replace('BENY', 'NEWG'),
+                },
+            });
+        }
     }
 }
