@@ -588,6 +588,11 @@ export class VehicleGarageProvider {
                     },
                 });
 
+                if (appartements.length == 0) {
+                    citizenIds.add(player.citizenid);
+                    console.error('no appartements found for property', propertyId);
+                }
+
                 for (const appartement of appartements) {
                     citizenIds.add(appartement.owner);
 
@@ -595,6 +600,10 @@ export class VehicleGarageProvider {
                         citizenIds.add(appartement.roommate);
                     }
                 }
+            } else {
+                console.error('property not found', propertyId);
+
+                citizenIds.add(player.citizenid);
             }
         } else {
             citizenIds.add(player.citizenid);
