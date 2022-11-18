@@ -139,7 +139,16 @@ end)
 RegisterNetEvent("jobs:religion:vehicle")
 AddEventHandler("jobs:religion:vehicle", function()
     TriggerServerEvent("job:anounce", "Enfourchez votre vélo de service")
-    SpawnVehicule()
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "fixter", {
+        SozJobCore.religion_vehicule.x,
+        SozJobCore.religion_vehicule.y,
+        SozJobCore.religion_vehicule.z,
+        SozJobCore.religion_vehicule.w,
+    }, "jobs:religion:vehicle-spawn")
+end)
+
+RegisterNetEvent("jobs:religion:vehicle-spawn")
+AddEventHandler("jobs:religion:vehicle-spawn", function()
     JobVehicle = true
     createblip("Véhicule", "Vélo de service", 225, SozJobCore.religion_vehicule)
     local player = GetPlayerPed(-1)

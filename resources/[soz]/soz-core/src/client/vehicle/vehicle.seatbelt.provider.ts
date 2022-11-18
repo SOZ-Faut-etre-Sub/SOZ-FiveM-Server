@@ -6,13 +6,16 @@ import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { VehicleLockStatus } from '../../shared/vehicle/vehicle';
+import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
 import { VehicleService } from './vehicle.service';
 
-const THRESHOLD_G_STRENGTH_SOFT = 3.5;
+const THRESHOLD_G_STRENGTH_DEFAULT = 3.5;
+const THRESHOLD_G_STRENGTH_VEHICLE_CLASS: { [key in VehicleClass]?: number } = {
+    [VehicleClass.Motorcycles]: 4.5,
+};
 
 @Provider()
 export class VehicleSeatbeltProvider {
@@ -93,7 +96,11 @@ export class VehicleSeatbeltProvider {
 
         const vehicleClass = GetVehicleClass(vehicle);
 
-        if (vehicleClass === 8 || vehicleClass === 13 || vehicleClass === 14) {
+        if (
+            vehicleClass === VehicleClass.Motorcycles ||
+            vehicleClass === VehicleClass.Cycles ||
+            vehicleClass === VehicleClass.Boats
+        ) {
             return;
         }
 
@@ -113,10 +120,7 @@ export class VehicleSeatbeltProvider {
 
         TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
 
-        if (this.isSeatbeltOn) {
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.StickPlayerInside);
-        } else {
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.None);
+        if (!this.isSeatbeltOn) {
             await wait(2000);
             await this.trySwitchingSeat();
         }
@@ -169,7 +173,7 @@ export class VehicleSeatbeltProvider {
         const gStrength = Math.abs(acceleration / 9.81);
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        if (gStrength > THRESHOLD_G_STRENGTH_SOFT) {
+        if (gStrength > THRESHOLD_G_STRENGTH_DEFAULT) {
             TriggerServerEvent(
                 ServerEvent.VEHICLE_ROUTE_EJECTION,
                 vehicleNetworkId,
@@ -209,7 +213,10 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
-        if (!this.isSeatbeltOn && gStrength > THRESHOLD_G_STRENGTH_SOFT) {
+        const gStrengthEjected =
+            THRESHOLD_G_STRENGTH_VEHICLE_CLASS[GetVehicleClass(vehicleEjection)] || THRESHOLD_G_STRENGTH_DEFAULT;
+
+        if (!this.isSeatbeltOn && gStrength > gStrengthEjected) {
             await this.ejectPlayer(ped, vehicleEjection, velocity);
         }
     }

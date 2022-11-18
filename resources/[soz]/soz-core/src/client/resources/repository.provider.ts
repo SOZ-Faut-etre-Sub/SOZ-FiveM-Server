@@ -25,14 +25,12 @@ export class RepositoryProvider {
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
-    @Once()
-    public async onStart() {
-        await Promise.all([
-            this.garageRepository.load(),
-            this.jobGradeRepository.load(),
-            this.vehicleRepository.load(),
-            this.fuelStationRepository.load(),
-        ]);
+    @Once(OnceStep.PlayerLoaded)
+    public async onRepositoryStart() {
+        await this.garageRepository.load();
+        await this.jobGradeRepository.load();
+        await this.vehicleRepository.load();
+        await this.fuelStationRepository.load();
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }

@@ -22,6 +22,10 @@ const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.Roof]: 'Toit',
     [VehicleModType.TyreSmoke]: 'Fumée de pneu',
     [VehicleModType.XenonHeadlights]: 'Phares au xénon',
+    [VehicleModType.AirFilter]: 'Filter à air',
+    [VehicleModType.DoorSpeaker]: 'Enceintes de porte',
+    [VehicleModType.TrimDesign]: 'Finition A',
+    [VehicleModType.PlateHolder]: 'Contour de plaque',
 };
 
 const ModExclusion: Record<number, VehicleModType[]> = {

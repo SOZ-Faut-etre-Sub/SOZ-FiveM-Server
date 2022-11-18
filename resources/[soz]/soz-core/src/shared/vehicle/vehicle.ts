@@ -88,6 +88,7 @@ export type VehicleCondition = {
 
 export type VehicleEntityState = {
     id: number | null;
+    spawned: boolean;
     forced: boolean;
     open: boolean;
     plate: string | null;
@@ -96,6 +97,11 @@ export type VehicleEntityState = {
     isPlayerVehicle: boolean;
     yoloMode: boolean;
     lastPosition: Vector3 | null;
+    indicators: {
+        left: boolean;
+        right: boolean;
+    };
+    openWindows: boolean;
 
     dead: boolean;
     condition: VehicleCondition;
@@ -153,6 +159,12 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     isPlayerVehicle: false,
     yoloMode: false,
     lastPosition: null,
+    spawned: false,
+    indicators: {
+        left: false,
+        right: false,
+    },
+    openWindows: false,
     condition: getDefaultVehicleCondition(),
 });
 

@@ -54,7 +54,7 @@ export class VehicleFuelProvider {
                     },
                 });
 
-                const maxFuelForMoney = Math.floor(player.money.money / station.price);
+                const maxFuelForMoney = station.price > 0 ? Math.floor(player.money.money / station.price) : fuelToFill;
                 const reservedFuel = Math.min(fuelToFill, station.stock, maxFuelForMoney);
 
                 await this.prismaService.fuel_storage.update({
@@ -111,7 +111,7 @@ export class VehicleFuelProvider {
         const cost = Math.floor(totalFilled * station.price);
         let leftOver = reservedFuel - totalFilled;
 
-        if (!this.playerMoneyService.remove(source, cost)) {
+        if (station.price > 0 && !this.playerMoneyService.remove(source, cost)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
             TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
             leftOver = reservedFuel;

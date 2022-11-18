@@ -313,7 +313,9 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
             vehicleConfiguration: config,
         });
 
-        setOptions(newOptions as VehicleUpgradeOptions);
+        if (newOptions) {
+            setOptions(newOptions as VehicleUpgradeOptions);
+        }
     };
 
     useEffect(() => {
@@ -340,6 +342,12 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
         });
     };
 
+    const createOnDoorChange = (doorIndex: number) => {
+        return async value => {
+            await fetchNui(NuiEvent.VehicleSetDoorOpen, { doorIndex, open: value });
+        };
+    };
+
     return (
         <Menu type={MenuType.BennysUpgradeVehicle}>
             <MainMenu>
@@ -352,6 +360,12 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemSubMenuLink id="exterior">Exterieur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="light">Lumières</MenuItemSubMenuLink>
                     {data.options.extra.length > 0 && <MenuItemSubMenuLink id="extra">Extras</MenuItemSubMenuLink>}
+                    <MenuItemCheckbox onChange={createOnDoorChange(4)} checked={false}>
+                        Ouvrir capot
+                    </MenuItemCheckbox>
+                    <MenuItemCheckbox onChange={createOnDoorChange(5)} checked={false}>
+                        Ouvrir coffre
+                    </MenuItemCheckbox>
                     <MenuItemButton onConfirm={() => onConfirm()}>✅ Confirmer les changements</MenuItemButton>
                 </MenuContent>
             </MainMenu>
@@ -547,6 +561,13 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     <MenuItemVehicleModification
                         initialConfig={data?.originalConfiguration}
                         modKey="archCover"
+                        options={options}
+                        config={config}
+                        set={setConfig}
+                    />
+                    <MenuItemVehicleModification
+                        initialConfig={data?.originalConfiguration}
+                        modKey="hydraulics"
                         options={options}
                         config={config}
                         set={setConfig}

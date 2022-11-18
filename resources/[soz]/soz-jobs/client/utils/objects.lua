@@ -1,4 +1,4 @@
-local removalObject = {"prop_roadcone02a", "prop_cardbordbox_03a"}
+local removalObject = {"prop_roadcone02a"}
 
 local CalculateRef = function(entity)
     local coord = GetEntityCoords(entity)

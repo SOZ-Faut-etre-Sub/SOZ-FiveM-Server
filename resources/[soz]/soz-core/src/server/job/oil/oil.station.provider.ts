@@ -5,7 +5,8 @@ import { Rpc } from '../../../core/decorators/rpc';
 import { ServerEvent } from '../../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../../shared/fuel';
 import { JobPermission, JobType } from '../../../shared/job';
-import { Vector3, Vector4 } from '../../../shared/polyzone/vector';
+import { Monitor } from '../../../shared/monitor';
+import { toVector3Object, Vector3, Vector4 } from '../../../shared/polyzone/vector';
 import { RpcEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../item/inventory.manager';
@@ -41,6 +42,9 @@ export class OilStationProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Rpc(RpcEvent.OIL_GET_STATION)
     public async getStation(source: number, stationId: number): Promise<FuelStation | null> {
@@ -197,6 +201,19 @@ export class OilStationProvider {
             },
         });
 
+        this.monitor.publish(
+            'job_mtp_refill_station',
+            {
+                player_source: source,
+                station: stationId,
+                station_type: 'essence',
+            },
+            {
+                quantity: refilled,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
+
         TriggerClientEvent('jobs:client:fueler:CancelTankerRefill', source);
     }
 
@@ -252,5 +269,18 @@ export class OilStationProvider {
                 },
             },
         });
+
+        this.monitor.publish(
+            'job_mtp_refill_station',
+            {
+                player_source: source,
+                station: stationId,
+                station_type: 'kerosene',
+            },
+            {
+                quantity: refilled,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 }
