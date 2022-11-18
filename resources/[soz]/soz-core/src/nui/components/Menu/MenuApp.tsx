@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useLayoutEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../shared/event';
@@ -40,6 +40,7 @@ const MenuRouter: FunctionComponent = () => {
     const prevData = usePrevious(location.state);
     const navigate = useNavigate();
     const [menuType, setMenuType] = useState<MenuType>(null);
+    const prevMenuType = usePrevious(menuType);
     const [useFocus, setFocus] = useState(false);
 
     useNuiFocus(useFocus, useFocus, !useFocus);
@@ -50,16 +51,29 @@ const MenuRouter: FunctionComponent = () => {
         }
     });
 
-    useEffect(() => {
-        if (location.pathname === '/' && menuType !== null && prevData !== null) {
-            fetchNui(NuiEvent.MenuClosed, {
-                menuType,
-                menuData: prevData,
-            });
+    useLayoutEffect(() => {
+        if (menuType !== null && !location.pathname.startsWith(`/${menuType}`)) {
             setMenuType(null);
             setFocus(false);
+            navigate('/');
+
+            fetchNui(NuiEvent.MenuClosed, {
+                menuType,
+                nextMenu: null,
+                menuData: prevData,
+            });
         }
-    }, [location, menuType, prevData]);
+
+        if (prevMenuType !== null && prevMenuType !== menuType) {
+            setFocus(false);
+
+            fetchNui(NuiEvent.MenuClosed, {
+                menuType: prevMenuType,
+                nextMenu: menuType,
+                menuData: prevData,
+            });
+        }
+    }, [location, menuType]);
 
     useMenuNuiEvent('SetMenuType', ({ menuType, data, subMenuId }) => {
         let path = `/`;

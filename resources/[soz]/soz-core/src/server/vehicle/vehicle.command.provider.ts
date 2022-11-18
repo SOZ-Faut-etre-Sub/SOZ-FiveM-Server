@@ -1,6 +1,7 @@
 import { Command } from '../../core/decorators/command';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { ClientEvent } from '../../shared/event';
 import { VehicleSpawner } from './vehicle.spawner';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -39,5 +40,15 @@ export class VehicleCommandProvider {
                 yoloMode: !state.yoloMode,
             });
         }
+    }
+
+    @Command('dirty', { role: ['admin'], description: 'Set vehicle dirty (Admin Only)' })
+    async dirtyCommand(source: number) {
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
+        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+            dirtLevel: 15.0,
+        });
     }
 }

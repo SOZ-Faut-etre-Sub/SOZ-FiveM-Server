@@ -9,6 +9,7 @@ import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomEnumValue, getRandomInt } from '../../shared/random';
 import { VehicleModType, VehicleXenonColor, VehicleXenonColorChoices } from '../../shared/vehicle/modification';
 import { VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
+import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
 
@@ -62,6 +63,9 @@ export class VehicleConditionProvider {
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
 
     private currentVehicleStatus: VehicleStatus | null = null;
 
@@ -165,11 +169,11 @@ export class VehicleConditionProvider {
 
         const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
 
-        if (!IsEntityAVehicle(vehicle)) {
+        if (!vehicle) {
             return;
         }
 
-        if (!vehicle) {
+        if (!IsEntityAVehicle(vehicle)) {
             return;
         }
 
@@ -497,6 +501,82 @@ export class VehicleConditionProvider {
 
         if (applyCondition) {
             this.vehicleService.applyVehicleCondition(vehicle, newCondition);
+        }
+    }
+
+    @StateBagHandler('indicators', null)
+    @StateBagHandler('windows', null)
+    private async onVehicleIndicatorChange(bag: string) {
+        const split = bag.split(':');
+
+        if (!split[1]) {
+            return;
+        }
+
+        const vehicleId = parseInt(split[1]);
+
+        if (!vehicleId) {
+            return;
+        }
+
+        const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
+
+        if (!vehicle) {
+            return;
+        }
+
+        if (!IsEntityAVehicle(vehicle)) {
+            return;
+        }
+
+        await wait(0);
+
+        const state = this.vehicleService.getVehicleState(vehicle);
+
+        SetVehicleIndicatorLights(vehicle, 0, state.indicators.right);
+        SetVehicleIndicatorLights(vehicle, 1, state.indicators.left);
+
+        if (state.openWindows) {
+            RollUpWindow(vehicle, 0);
+            RollUpWindow(vehicle, 1);
+        } else {
+            RollDownWindow(vehicle, 0);
+            RollDownWindow(vehicle, 1);
+        }
+    }
+
+    @Tick(0)
+    public async setVehicleIndicators() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            return;
+        }
+
+        if (this.nuiMenu.getOpened() !== null) {
+            return;
+        }
+
+        if (GetPedInVehicleSeat(vehicle, -1) !== ped) {
+            return;
+        }
+
+        const toggleLeft = IsControlJustPressed(0, 189);
+        const toggleRight = IsControlJustPressed(0, 190);
+        const toggleWindowsUp = IsControlJustPressed(0, 188);
+        const toggleWindowsDown = IsControlJustPressed(0, 187);
+
+        if (toggleLeft || toggleRight || toggleWindowsUp || toggleWindowsDown) {
+            const state = this.vehicleService.getVehicleState(vehicle);
+
+            this.vehicleService.updateVehicleState(vehicle, {
+                indicators: {
+                    left: toggleLeft ? !state.indicators.left : state.indicators.left,
+                    right: toggleRight ? !state.indicators.right : state.indicators.right,
+                },
+                openWindows: toggleWindowsUp ? true : toggleWindowsDown ? false : state.openWindows,
+            });
         }
     }
 }

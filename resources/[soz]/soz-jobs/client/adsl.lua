@@ -92,20 +92,7 @@ AddEventHandler("jobs:adsl:fix", function()
 end)
 
 local function SpawnVehicule()
-    local ModelHash = "utillitruck3"
-    local model = GetHashKey(ModelHash)
-    if not IsModelInCdimage(model) then
-        return
-    end
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-    adsl_vehicule = CreateVehicle(model, SozJobCore.adsl_vehicule.x, SozJobCore.adsl_vehicule.y, SozJobCore.adsl_vehicule.z, SozJobCore.adsl_vehicule.w, true,
-                                  false)
-    SetModelAsNoLongerNeeded(model)
-    VehPlate = QBCore.Functions.GetPlate(adsl_vehicule)
-    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
+
 end
 
 RegisterNetEvent("jobs:adsl:begin")
@@ -124,7 +111,19 @@ end)
 RegisterNetEvent("jobs:adsl:vehicle")
 AddEventHandler("jobs:adsl:vehicle", function()
     TriggerServerEvent("job:anounce", "Montez dans le véhicule de service")
-    SpawnVehicule()
+    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "utillitruck3",
+                       {
+        SozJobCore.adsl_vehicule.x,
+        SozJobCore.adsl_vehicule.y,
+        SozJobCore.adsl_vehicule.z,
+        SozJobCore.adsl_vehicule.w,
+    }, "jobs:adsl:vehicle-spawn")
+end)
+
+RegisterNetEvent("jobs:adsl:vehicle-spawn")
+AddEventHandler("jobs:adsl:vehicle-spawn", function(vehicleNetId)
+    adsl_vehicule = NetworkGetEntityFromNetworkId(vehicleNetId)
+
     JobVehicle = true
     createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.adsl_vehicule)
     local player = GetPlayerPed(-1)

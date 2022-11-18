@@ -107,6 +107,18 @@ type MenuVehicleListProps = {
 };
 
 const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, onConfirm, onChange }) => {
+    vehicles.sort((a, b) => {
+        if (a.price < b.price) {
+            return -1;
+        }
+
+        if (a.price > b.price) {
+            return 1;
+        }
+
+        return 0;
+    });
+
     return (
         <>
             {vehicles.map((vehicle, index) => {

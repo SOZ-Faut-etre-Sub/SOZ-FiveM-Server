@@ -128,7 +128,7 @@ export class NuiMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.MenuClosed)
-    public async onMenuClosed() {
-        this.nuiDispatch.setMenuOpen(null);
+    public async onMenuClosed({ nextMenu }) {
+        this.nuiDispatch.setMenuOpen(nextMenu || null);
     }
 }
