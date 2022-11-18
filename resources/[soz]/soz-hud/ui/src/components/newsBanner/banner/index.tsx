@@ -23,6 +23,10 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDele
     }, []);
 
     const newsTitle = (type: string) => {
+        if (type.includes('reboot')) {
+            return ''
+        }
+
         if (/(lspd|bcso)/.test(type)) {
             return 'Avis de recherche';
         } else if (type === 'fbi') {
@@ -54,12 +58,16 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDele
                         </p>
                     </p>
                 ) : (
-                    <div className={styles.text}>
-                        <p>{news.message}</p>
-                        <p className={styles.reporter}>
-                            Reporter: <strong>{news.reporter}</strong>
-                        </p>
-                    </div>
+                    <>
+                        {!news.type.includes('reboot') && (
+                            <div className={styles.text}>
+                                <p>{news.message}</p>
+                                <p className={styles.reporter}>
+                                    Reporter: <strong>{news.reporter}</strong>
+                                </p>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>
