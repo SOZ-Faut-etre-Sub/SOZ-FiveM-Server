@@ -87,7 +87,7 @@ export const BankHome = memo(() => {
                     Paramètre de la carte
                 </h2>
 
-                <Checkbox title="Activer les retaits distributeurs" enabled={true} />
+                <Checkbox title="Activer les retraits distributeurs" enabled={true} />
                 <Checkbox title="Paiement en ligne" enabled={false} />
                 <Checkbox title="Stonks Gold+" enabled={false} />
             </div>
