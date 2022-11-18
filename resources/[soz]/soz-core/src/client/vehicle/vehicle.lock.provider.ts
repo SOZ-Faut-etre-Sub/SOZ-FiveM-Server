@@ -132,6 +132,11 @@ export class VehicleLockProvider {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
         } else {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
+
+            if (this.vehicleTrunkOpened === vehicle) {
+                this.vehicleTrunkOpened = null;
+                TriggerEvent('inventory:client:closeInventory');
+            }
         }
     }
 
