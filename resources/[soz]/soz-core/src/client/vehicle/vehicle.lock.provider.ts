@@ -40,6 +40,8 @@ const VEHICLE_TRUNK_TYPES = {
     [GetHashKey('trash')]: 'trash',
 };
 
+const VEHICLE_TRUNK_DISTANCE = 5.0;
+
 @Provider()
 export class VehicleLockProvider {
     @Inject(PlayerService)
@@ -155,6 +157,14 @@ export class VehicleLockProvider {
             return;
         }
 
+        const state = this.vehicleService.getVehicleState(vehicle);
+
+        if (!player.metadata.godmode && !state.open && !state.forced) {
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
+
+            return;
+        }
+
         const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
         const playerPosition = GetEntityCoords(ped, false) as Vector3;
         const minDistance = 2.0;
@@ -256,7 +266,9 @@ export class VehicleLockProvider {
             return;
         }
 
-        const vehicle = this.vehicleService.getClosestVehicle();
+        const vehicle = this.vehicleService.getClosestVehicle({
+            maxDistance: VEHICLE_TRUNK_DISTANCE,
+        });
 
         if (!vehicle || !IsEntityAVehicle(vehicle)) {
             this.notifier.notify('Aucun véhicule à proximité.', 'error');
@@ -268,6 +280,12 @@ export class VehicleLockProvider {
 
         if (!vehicleState.forced && !player.metadata.godmode && !vehicleState.open) {
             this.notifier.notify('Véhicule verrouillé.', 'error');
+
+            return;
+        }
+
+        if (LocalPlayer.state.inv_busy) {
+            this.notifier.notify("Inventaire en cours d'utilisation.", 'warning');
 
             return;
         }
@@ -298,7 +316,7 @@ export class VehicleLockProvider {
                 GetEntityCoords(this.vehicleTrunkOpened, false) as Vector3
             );
 
-            if (distance <= 3.0) {
+            if (distance <= VEHICLE_TRUNK_DISTANCE) {
                 return;
             }
         }
