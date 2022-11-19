@@ -1,4 +1,4 @@
-import { FunctionComponent, useLayoutEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useLayoutEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../shared/event';
@@ -37,11 +37,11 @@ export const MenuApp: FunctionComponent = () => {
 
 const MenuRouter: FunctionComponent = () => {
     const location = useLocation();
-    const state = location.state as { type: MenuType; data: any; closeFromNui?: boolean } | undefined;
-    const menuType = state?.type || null;
-    const menuData = (state?.data as any) || null;
+    const state = location.state as { data: any; skipCloseEvent?: boolean } | undefined;
+    const menuData = state?.data || null;
     const prevData = usePrevious(menuData);
     const navigate = useNavigate();
+    const [menuType, setMenuType] = useState<MenuType>(null);
     const prevMenuType = usePrevious(menuType);
     const [useFocus, setFocus] = useState(false);
 
@@ -55,29 +55,41 @@ const MenuRouter: FunctionComponent = () => {
 
     useLayoutEffect(() => {
         if (menuType !== null && !location.pathname.startsWith(`/${menuType}`)) {
-            setFocus(false);
-            navigate('/', {
-                state: {
-                    data: null,
-                    type: null,
-                },
-            });
-
             fetchNui(NuiEvent.MenuClosed, {
                 menuType,
                 nextMenu: null,
                 menuData: prevData,
+            });
+
+            setMenuType(null);
+            setFocus(false);
+
+            navigate('/', {
+                state: {
+                    skipCloseEvent: true,
+                    data: null,
+                },
             });
         }
 
         if (prevMenuType !== null && prevMenuType !== menuType) {
             setFocus(false);
 
-            if (!state?.closeFromNui) {
+            if (!state?.skipCloseEvent) {
                 fetchNui(NuiEvent.MenuClosed, {
                     menuType: prevMenuType,
                     nextMenu: menuType,
                     menuData: prevData,
+                });
+            }
+
+            if (state?.skipCloseEvent && menuType === null) {
+                navigate('/', {
+                    state: {
+                        data: null,
+                        skipCloseEvent: false,
+                    },
+                    replace: true,
                 });
             }
         }
@@ -97,22 +109,23 @@ const MenuRouter: FunctionComponent = () => {
         navigate(path, {
             state: {
                 data,
-                type: menuType,
             },
         });
+
+        setMenuType(menuType);
         setFocus(false);
     });
 
-    useMenuNuiEvent('CloseMenu', () => {
+    useMenuNuiEvent('CloseMenu', skipCloseEvent => {
         if (location.pathname !== '/') {
             navigate('/', {
                 state: {
                     data: null,
-                    type: null,
-                    closeFromNui: true,
+                    skipCloseEvent,
                 },
             });
         }
+        setMenuType(null);
         setFocus(false);
     });
 

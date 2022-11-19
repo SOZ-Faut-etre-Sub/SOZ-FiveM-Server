@@ -111,7 +111,7 @@ export class NuiMenuProvider {
         ],
     })
     onMenuClose(): void {
-        this.nuiDispatch.dispatch('menu', 'CloseMenu');
+        this.nuiDispatch.dispatch('menu', 'CloseMenu', false);
     }
 
     @Command('soz_menu_reset', {

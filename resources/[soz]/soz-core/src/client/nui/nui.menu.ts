@@ -48,19 +48,19 @@ export class NuiMenu {
         const distance = getDistance(playerPosition, this.menuPosition.position);
 
         if (distance > this.menuPosition.distance) {
-            this.closeMenu();
+            this.closeMenu(false);
         }
     }
 
     @OnEvent(ClientEvent.CORE_CLOSE_MENU)
-    public closeMenu() {
+    public closeMenu(skipCloseEvent = true) {
         if (this.getOpened() === null) {
             return;
         }
 
         this.menuPosition = null;
         this.dispatcher.setMenuOpen(null);
-        this.dispatcher.dispatch('menu', 'CloseMenu');
+        this.dispatcher.dispatch('menu', 'CloseMenu', skipCloseEvent);
     }
 
     getOpened(): MenuType | null {
