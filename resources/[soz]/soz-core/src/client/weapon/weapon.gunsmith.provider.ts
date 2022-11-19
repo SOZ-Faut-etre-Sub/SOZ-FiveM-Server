@@ -5,7 +5,9 @@ import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
-import { WeaponMk2TintColor, WeaponTintColor } from '../../shared/weapons/tint';
+import { WeaponComponentType } from '../../shared/weapons/attachment';
+import { WeaponTintColorChoices } from '../../shared/weapons/tint';
+import { Weapons } from '../../shared/weapons/weapon';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -28,16 +30,28 @@ export class WeaponGunsmithProvider {
     @Command('gunsmith', { role: 'admin' })
     @OnEvent(ClientEvent.WEAPON_OPEN_GUNSMITH)
     async openGunsmith() {
+        const weapons = Object.values(this.playerService.getPlayer().items).filter(item => item.type === 'weapon');
+
         this.nuiMenu.openMenu(MenuType.GunSmith, {
-            weapons: Object.values(this.playerService.getPlayer().items).filter(item => item.type === 'weapon'),
+            weapons: weapons,
+            tints: weapons.map(weapon => {
+                return {
+                    slot: weapon.slot,
+                    tints: weapon.name.includes('mk2') ? WeaponTintColorChoices : WeaponTintColorChoices,
+                };
+            }),
+            attachments: weapons.map(weapon => {
+                return {
+                    slot: weapon.slot,
+                    attachments: this.weaponService.getWeaponConfig(weapon.name).attachments,
+                };
+            }),
         });
     }
 
     @OnNuiEvent(NuiEvent.GunSmithRenameWeapon)
     async renameWeapon({ slot }: { slot: number }) {
-        const weapon = Object.values(this.playerService.getPlayer().items).find(
-            item => item.type === 'weapon' && item.slot === slot
-        );
+        const weapon = this.weaponService.getWeaponFromSlot(slot);
         if (!weapon) {
             return;
         }
@@ -59,24 +73,71 @@ export class WeaponGunsmithProvider {
         TriggerServerEvent(ServerEvent.WEAPON_GUNSMITH_RENAME, weapon.slot, weaponLabel);
     }
 
+    // Tint
     @OnNuiEvent(NuiEvent.GunSmithPreviewTint)
-    async previewTint({ tint }: { tint: number }) {
-        const player = PlayerPedId();
-        const weapon = GetSelectedPedWeapon(player);
+    async previewTint({ slot, tint }: { slot: number; tint: number }) {
+        const weapon = this.weaponService.getWeaponFromSlot(slot);
+        if (!weapon) {
+            return;
+        }
 
-        SetPedWeaponTintIndex(player, weapon, Number(tint));
+        await this.weaponService.clear();
+        await this.weaponService.set(weapon);
+
+        const player = PlayerPedId();
+        const weaponHash = GetSelectedPedWeapon(player);
+
+        SetPedWeaponTintIndex(player, weaponHash, Number(tint));
     }
 
     @OnNuiEvent(NuiEvent.GunSmithApplyTint)
     async applyTint({ slot, tint }: { slot: number; tint: number }) {
-        const weapon = Object.values(this.playerService.getPlayer().items).find(
-            item => item.type === 'weapon' && item.slot === slot
-        );
+        const weapon = this.weaponService.getWeaponFromSlot(slot);
         if (!weapon) {
             return;
         }
 
         TriggerServerEvent(ServerEvent.WEAPON_GUNSMITH_APPLY_TINT, weapon.slot, tint);
-        await this.previewTint({ tint });
+
+        await this.weaponService.clear();
+        await this.weaponService.set(weapon);
+    }
+
+    // Attachment
+    @OnNuiEvent(NuiEvent.GunSmithPreviewAttachment)
+    async previewAttachment({ slot, attachment }: { slot: number; attachment: string }) {
+        const weapon = this.weaponService.getWeaponFromSlot(slot);
+        if (!weapon) {
+            return;
+        }
+
+        await this.weaponService.clear();
+        await this.weaponService.set(weapon);
+
+        const player = PlayerPedId();
+        const weaponHash = GetSelectedPedWeapon(player);
+
+        GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment));
+    }
+
+    @OnNuiEvent(NuiEvent.GunSmithApplyAttachment)
+    async applyAttachment({
+        slot,
+        attachmentType,
+        attachment,
+    }: {
+        slot: number;
+        attachmentType: WeaponComponentType;
+        attachment: string;
+    }) {
+        const weapon = this.weaponService.getWeaponFromSlot(slot);
+        if (!weapon) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.WEAPON_GUNSMITH_APPLY_ATTACHMENT, weapon.slot, attachmentType, attachment);
+
+        await this.weaponService.clear();
+        await this.weaponService.set(weapon);
     }
 }

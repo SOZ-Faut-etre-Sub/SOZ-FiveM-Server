@@ -1,10 +1,20 @@
-import { Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '../../core/decorators/injectable';
 import { InventoryItem } from '../../shared/item';
 import { GlobalWeaponConfig, WeaponConfig, WeaponName, Weapons } from '../../shared/weapons/weapon';
+import { PlayerService } from '../player/player.service';
 
 @Injectable()
 export class WeaponService {
     private currentWeapon: InventoryItem | null = null;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    getWeaponFromSlot(slot: number): InventoryItem | null {
+        return Object.values(this.playerService.getPlayer().items).find(
+            item => item.type === 'weapon' && item.slot === slot
+        );
+    }
 
     getCurrentWeapon(): InventoryItem | null {
         return this.currentWeapon;
@@ -26,8 +36,8 @@ export class WeaponService {
         }
 
         if (weapon.metadata.attachments) {
-            weapon.metadata.attachments.forEach(attachment => {
-                GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment.component));
+            Object.values(weapon.metadata.attachments).forEach(attachment => {
+                GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment));
             });
         }
     }
