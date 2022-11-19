@@ -262,6 +262,13 @@ export const createModificationHelperList = (
             if (value === null || value === undefined) {
                 RemoveVehicleMod(vehicleEntityId, type);
 
+                if (
+                    type === VehicleModType.WheelFront &&
+                    GetVehicleClass(vehicleEntityId) === VehicleClass.Motorcycles
+                ) {
+                    RemoveVehicleMod(vehicleEntityId, VehicleModType.WheelRear);
+                }
+
                 return;
             }
 

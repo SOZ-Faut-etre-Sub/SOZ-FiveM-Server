@@ -287,8 +287,6 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
             }
         >
             {choices.map((option, index) => {
-                console.log(option.color);
-
                 return (
                     <MenuItemSelectOptionColor
                         color={option.color}
@@ -614,20 +612,17 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         set={setConfig}
                         initialConfig={data?.originalConfiguration}
                     />
-                    {options?.modification?.wheelFront?.choice?.type === 'list' &&
-                        options?.modification?.wheelFront?.choice?.items?.length > 0 && (
-                            <MenuItemCheckbox
-                                checked={config?.customWheelFront}
-                                onChange={checked => {
-                                    setConfig({
-                                        ...config,
-                                        customWheelFront: checked,
-                                    });
-                                }}
-                            >
-                                Pneu custom
-                            </MenuItemCheckbox>
-                        )}
+                    <MenuItemCheckbox
+                        checked={config?.customWheelFront}
+                        onChange={checked => {
+                            setConfig({
+                                ...config,
+                                customWheelFront: checked,
+                            });
+                        }}
+                    >
+                        Pneu custom
+                    </MenuItemCheckbox>
                     <MenuItemSelectVehicleColor
                         value={config?.color?.rim as VehicleColor}
                         title="Couleur des jantes"
