@@ -3,7 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { AdminPlayer, HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../shared/admin/admin';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
@@ -152,6 +152,11 @@ export class AdminMenuPlayerProvider {
         scenario: 'scenario1' | 'scenario2' | 'scenario3' | 'scenario4';
     }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_RESET_HALLOWEEN, player.id, year, scenario);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleOpenGunSmith)
+    public async handleOpenGunSmith(): Promise<void> {
+        emit(ClientEvent.WEAPON_OPEN_GUNSMITH);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetAttribute)

@@ -1,4 +1,3 @@
-import { Command } from '../../core/decorators/command';
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -7,7 +6,6 @@ import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { WeaponComponentType } from '../../shared/weapons/attachment';
 import { WeaponTintColorChoices } from '../../shared/weapons/tint';
-import { Weapons } from '../../shared/weapons/weapon';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -27,7 +25,6 @@ export class WeaponGunsmithProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Command('gunsmith', { role: 'admin' })
     @OnEvent(ClientEvent.WEAPON_OPEN_GUNSMITH)
     async openGunsmith() {
         const weapons = Object.values(this.playerService.getPlayer().items).filter(item => item.type === 'weapon');
@@ -47,6 +44,20 @@ export class WeaponGunsmithProvider {
                 };
             }),
         });
+    }
+
+    @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
+    public async resetSkin({ menuType }) {
+        if (menuType !== MenuType.GunSmith) {
+            return;
+        }
+
+        await this.weaponService.clear();
+
+        const weapon = this.weaponService.getCurrentWeapon();
+        if (weapon) {
+            await this.weaponService.set(weapon);
+        }
     }
 
     @OnNuiEvent(NuiEvent.GunSmithRenameWeapon)

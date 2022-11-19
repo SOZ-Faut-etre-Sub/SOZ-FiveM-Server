@@ -252,6 +252,7 @@ export enum NuiEvent {
     AdminMenuPlayerHandleTeleportOption = 'soz-core:client:admin:handle-teleport-option',
     AdminMenuPlayerHandleVocalOption = 'soz-core:client:admin:handle-vocal-option',
     AdminMenuPlayerHandleResetHalloween = 'soz-core:client:admin:handle-reset-halloween',
+    AdminMenuPlayerHandleOpenGunSmith = 'soz-core:client:admin:handle-open-gunsmith',
     AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
     AdminSetGodMode = 'soz-core:client:admin:set-god-mode',
     AdminSetJob = 'soz-core:client:admin:set-job',
