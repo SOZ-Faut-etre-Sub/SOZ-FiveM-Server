@@ -112,10 +112,6 @@ export class VehicleCustomProvider {
             return;
         }
 
-        if (this.nuiMenu.getOpened() === null) {
-            return;
-        }
-
         if (menuData.vehicle) {
             SetVehicleUndriveable(menuData.vehicle, false);
 
