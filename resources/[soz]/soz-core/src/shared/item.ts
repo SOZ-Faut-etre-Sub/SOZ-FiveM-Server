@@ -1,4 +1,5 @@
 import { WeaponMk2TintColor, WeaponTintColor } from './weapons/tint';
+import { WeaponAttachment } from './weapons/weapon';
 
 export type ItemType =
     | 'item'
@@ -135,11 +136,6 @@ export type CocktailItem = BaseItem & {
     type: 'cocktail';
     nutrition: Nutrition;
     animation?: AnimationItem;
-};
-
-export type WeaponAttachment = {
-    label: string;
-    component: string;
 };
 
 export type InventoryItemMetadata = {
