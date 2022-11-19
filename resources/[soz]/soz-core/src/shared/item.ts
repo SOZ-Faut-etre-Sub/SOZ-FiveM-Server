@@ -1,5 +1,5 @@
+import { WeaponComponentType } from './weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from './weapons/tint';
-import { WeaponAttachment } from './weapons/weapon';
 
 export type ItemType =
     | 'item'
@@ -148,7 +148,7 @@ export type InventoryItemMetadata = {
     health?: number;
     ammo?: number;
     tint?: WeaponTintColor | WeaponMk2TintColor;
-    attachments?: WeaponAttachment[];
+    attachments?: Record<WeaponComponentType, string | null>;
 };
 
 export type InventoryItem = {

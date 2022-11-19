@@ -19,4 +19,4 @@ server_scripts {
 ui_page("html/index.html")
 files {"html/index.html", "html/assets/*"}
 
-dependencies {"oxmysql", "qb-core", "qb-weapons", "soz-hud", "menuv", "qb-target"}
+dependencies {"oxmysql", "qb-core", "soz-hud", "menuv", "qb-target"}

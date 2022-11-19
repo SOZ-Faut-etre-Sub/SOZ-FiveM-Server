@@ -4,7 +4,7 @@ import { Inject, Injectable } from '../../core/decorators/injectable';
 import { wait, waitUntil } from '../../core/utils';
 import { Vector4 } from '../../shared/polyzone/vector';
 import { AnimationOptions, animationOptionsToFlags } from '../../shared/progress';
-import { WeaponName, Weapons } from '../../shared/weapons/weapon';
+import { WeaponName } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 
 export type Animation = {

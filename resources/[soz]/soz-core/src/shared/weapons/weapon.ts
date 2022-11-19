@@ -1,4 +1,13 @@
+import { InventoryItem } from '../item';
 import { Vector3 } from '../polyzone/vector';
+import { WeaponAttachment, WeaponComponentType } from './attachment';
+import { WeaponTintColor, WeaponTintColorChoiceItem } from './tint';
+
+export type WeaponsMenuData = {
+    weapons: InventoryItem[];
+    tints: { slot: number; tints: Record<WeaponTintColor, WeaponTintColorChoiceItem> }[];
+    attachments: { slot: number; attachments: WeaponAttachment[] }[];
+};
 
 export const WeaponAmmo = {
     pistol_ammo: 12,
@@ -19,21 +28,6 @@ export type WeaponOnBack = {
     model: number;
     position: Vector3;
     rotation: Vector3;
-};
-
-enum WeaponComponentType {
-    Clip = 'clip',
-    Flashlight = 'flashlight',
-    Suppressor = 'suppressor',
-    Scope = 'scope',
-    Grip = 'grip',
-    Skin = 'skin',
-}
-
-export type WeaponAttachment = {
-    label: string;
-    component: string;
-    type: WeaponComponentType;
 };
 
 export type WeaponConfig = {

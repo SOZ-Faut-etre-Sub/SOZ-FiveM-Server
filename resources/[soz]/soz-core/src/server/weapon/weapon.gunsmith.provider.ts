@@ -2,6 +2,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
+import { WeaponComponentType } from '../../shared/weapons/attachment';
 import { InventoryManager } from '../item/inventory.manager';
 
 const WEAPON_NAME_REGEX = /([^a-z0-9 ._-]+)/gi;
@@ -41,5 +42,32 @@ export class WeaponGunsmithProvider {
         }
 
         this.inventoryManager.updateMetadata(source, slot, { tint: Number(tint) });
+    }
+
+    @OnEvent(ServerEvent.WEAPON_GUNSMITH_APPLY_ATTACHMENT)
+    async applyAttachment(source: number, slot: number, attachmentType: WeaponComponentType, attachment: string) {
+        const weapon = this.inventoryManager.getSlot(source, slot);
+        if (!weapon) {
+            return;
+        }
+
+        if (weapon.type !== 'weapon') {
+            return;
+        }
+
+        if (weapon.metadata.attachments === undefined) {
+            weapon.metadata.attachments = {
+                clip: null,
+                flashlight: null,
+                grip: null,
+                scope: null,
+                skin: null,
+                suppressor: null,
+            };
+        }
+
+        weapon.metadata.attachments[attachmentType] = attachment;
+
+        this.inventoryManager.updateMetadata(source, slot, { attachments: weapon.metadata.attachments });
     }
 }
