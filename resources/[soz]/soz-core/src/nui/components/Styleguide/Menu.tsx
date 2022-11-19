@@ -159,7 +159,14 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
 const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const { activeIndex, setActiveIndex } = useContext(MenuContext);
     const menuItems = useDescendants(MenuDescendantContext);
+    const location = useLocation();
     const navigate = useNavigate();
+    const state = location.state as { activeIndex: number } | undefined;
+
+    useEffect(() => {
+        const index = state?.activeIndex ?? 0;
+        setActiveIndex(index);
+    }, [location]);
 
     useArrowDown(() => {
         let newIndex = activeIndex;
@@ -176,7 +183,13 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
             }
         } while (menuItems[newIndex] && !menuItems[newIndex].selectable);
 
-        setActiveIndex(newIndex);
+        navigate(location.pathname, {
+            state: {
+                ...(state || {}),
+                activeIndex: newIndex,
+            },
+            replace: true,
+        });
     });
 
     useArrowUp(() => {
@@ -194,7 +207,13 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
             }
         } while (menuItems[newIndex] && !menuItems[newIndex].selectable);
 
-        setActiveIndex(newIndex);
+        navigate(location.pathname, {
+            state: {
+                ...(state || {}),
+                activeIndex: newIndex,
+            },
+            replace: true,
+        });
     });
 
     useBackspace(() => {
@@ -391,13 +410,17 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     const location = useLocation();
     const type = useContext(MenuTypeContext);
     const navigate = useNavigate();
+    const state = location.state as { activeIndex: number } | undefined;
 
     return (
         <MenuItemContainer
             onSelected={onSelected}
             onConfirm={() =>
                 navigate(`/${type}/${id}`, {
-                    state: location.state,
+                    state: {
+                        ...(state || {}),
+                        activeIndex: 0,
+                    },
                 })
             }
             disabled={disabled}
