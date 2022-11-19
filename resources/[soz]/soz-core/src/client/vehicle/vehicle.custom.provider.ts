@@ -114,6 +114,7 @@ export class VehicleCustomProvider {
 
         if (menuData.vehicle) {
             SetVehicleUndriveable(menuData.vehicle, false);
+            SetVehicleLights(menuData.vehicle, 0);
 
             if (menuData.originalConfiguration) {
                 this.vehicleModificationService.applyVehicleConfiguration(
