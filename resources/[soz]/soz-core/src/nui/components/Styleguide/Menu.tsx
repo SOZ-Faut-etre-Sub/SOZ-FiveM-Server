@@ -67,6 +67,7 @@ const MenuItemSelectContext = createContext<{
     activeValue: any;
     distance: number;
     showAllOptions: boolean;
+    equalityFn: (a: any, b: any) => boolean;
 }>({
     activeOptionIndex: 0,
     setActiveOptionIndex: () => {},
@@ -75,6 +76,7 @@ const MenuItemSelectContext = createContext<{
     activeValue: null,
     distance: 0,
     showAllOptions: false,
+    equalityFn: (a, b) => a === b,
 });
 const MenuTypeContext = createContext<MenuType | null>(null);
 
@@ -421,7 +423,7 @@ type MenuSelectControlsProps = PropsWithChildren<{
 }>;
 
 const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChange, children, initialValue }) => {
-    const { activeOptionIndex, setActiveOptionIndex, setActiveValue, activeValue, showAllOptions } =
+    const { activeOptionIndex, setActiveOptionIndex, setActiveValue, activeValue, showAllOptions, equalityFn } =
         useContext(MenuItemSelectContext);
     const initialValueRef = useRef(initialValue);
     const isItemSelected = useContext(MenuSelectedContext);
@@ -432,7 +434,7 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
             for (const index in menuItems) {
                 const menuItem = menuItems[index];
 
-                if (menuItem.value === initialValueRef.current) {
+                if (equalityFn(menuItem.value, initialValueRef.current)) {
                     setActiveOptionIndex(parseInt(index, 10));
                 }
             }
@@ -450,7 +452,7 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
         let defaultIndex = null;
 
         for (let i = 0; i < menuItems.length; i++) {
-            if (menuItems[i].value === activeValue) {
+            if (equalityFn(menuItems[i].value, activeValue)) {
                 defaultIndex = i;
                 break;
             }
@@ -531,6 +533,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     initialValue?: any;
     titleWidth?: number;
     description?: string;
+    equalityFn?: (a: any, b: any) => boolean;
 }>;
 
 export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
@@ -547,6 +550,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     initialValue,
     titleWidth = 40,
     description = null,
+    equalityFn = (a, b) => a === b,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
@@ -600,6 +604,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                         activeValue,
                         distance,
                         showAllOptions,
+                        equalityFn,
                     }}
                 >
                     <div className="w-full">

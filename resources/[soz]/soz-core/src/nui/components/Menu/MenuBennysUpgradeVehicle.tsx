@@ -282,8 +282,13 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
             onChange={innerOnChange}
             onConfirm={innerOnConfirm}
             initialValue={initialValue}
+            equalityFn={(a: RGBColor, b: RGBColor) =>
+                a !== null && b !== null && a[0] === b[0] && a[1] === b[1] && a[2] === b[2]
+            }
         >
             {choices.map((option, index) => {
+                console.log(option.color);
+
                 return (
                     <MenuItemSelectOptionColor
                         color={option.color}
