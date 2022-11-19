@@ -220,6 +220,14 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Réinitialiser le skin du joueur
                         </MenuItemButton>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleOpenGunSmith, player);
+                            }}
+                        >
+                            Ouvrir le GunSmith
+                        </MenuItemButton>
                         <MenuItemText>
                             <b>Hygiène de vie</b>
                         </MenuItemText>
