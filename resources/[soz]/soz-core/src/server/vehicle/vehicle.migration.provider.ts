@@ -1,6 +1,7 @@
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { PlaceCapacity } from '../../shared/vehicle/garage';
 import { PrismaService } from '../database/prisma.service';
 
 @Provider()
@@ -10,23 +11,13 @@ export class VehicleMigrationProvider {
 
     @Once(OnceStep.DatabaseConnected)
     async migrate(): Promise<void> {
-        const vehicles = await this.prismaService.playerVehicle.findMany({
+        await this.prismaService.vehicle.updateMany({
             where: {
-                plate: {
-                    startsWith: 'BENY',
-                },
+                model: 'pbus2',
+            },
+            data: {
+                size: PlaceCapacity.Large,
             },
         });
-
-        for (const vehicle of vehicles) {
-            await this.prismaService.playerVehicle.update({
-                where: {
-                    id: vehicle.id,
-                },
-                data: {
-                    plate: vehicle.plate.replace('BENY', 'NEWG'),
-                },
-            });
-        }
     }
 }
