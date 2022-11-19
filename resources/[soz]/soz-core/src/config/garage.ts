@@ -729,6 +729,14 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
+            new BoxZone([-644.74, -2217.8, 6.0], 1.0, 1.0, {
+                heading: 49.0,
+                minZ: 5,
+                maxZ: 6.002,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
         ],
     },
     bell_farms: {
@@ -1496,25 +1504,29 @@ export const GarageList: Record<string, Garage> = {
                 heading: 37,
                 minZ: 27.67,
                 maxZ: 31.67,
-                data: {
-                    capacity: [1, 2],
-                },
             }),
             new BoxZone([-1392.93, -652.27, 28.67], 6.0, 3.2, {
                 heading: 37,
                 minZ: 27.67,
                 maxZ: 31.67,
+            }),
+            new BoxZone([-1415.29, -645.88, 28.67], 1.0, 1.0, {
+                heading: 125.0,
+                minZ: 27.67,
+                maxZ: 30.672,
                 data: {
-                    capacity: [1, 2],
+                    capacity: [PlaceCapacity.Large],
                 },
             }),
-            new BoxZone([-1400.93, -641.8, 28.67], 11.4, 5.2, {
-                heading: 85,
+            new BoxZone([-1415.16, -630.19, 28.67], 7.0, 3.0, {
+                heading: 212.0,
                 minZ: 27.67,
-                maxZ: 31.67,
-                data: {
-                    capacity: [3],
-                },
+                maxZ: 30.672,
+            }),
+            new BoxZone([-1425.1, -635.61, 28.67], 6.2, 3.2, {
+                heading: 213.0,
+                minZ: 27.67,
+                maxZ: 30.672,
             }),
         ],
     },
