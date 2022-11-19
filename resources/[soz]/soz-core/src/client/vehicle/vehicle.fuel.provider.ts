@@ -376,6 +376,22 @@ export class VehicleFuelProvider {
             return;
         }
 
+        const driver = GetPedInVehicleSeat(vehicle, -1);
+
+        if (driver) {
+            this.notifier.notify('Vous ne pouvez pas remplir un véhicule avec un conducteur au volant.', 'error');
+            await this.disableStationPistol();
+
+            return;
+        }
+
+        if (GetIsVehicleEngineRunning(vehicle)) {
+            this.notifier.notify('Vous ne pouvez pas remplir un véhicule avec le moteur allumé.', 'error');
+            await this.disableStationPistol();
+
+            return;
+        }
+
         const vehicleState = this.vehicleService.getVehicleState(vehicle);
 
         if (vehicleState.condition.fuelLevel > 99.0) {
