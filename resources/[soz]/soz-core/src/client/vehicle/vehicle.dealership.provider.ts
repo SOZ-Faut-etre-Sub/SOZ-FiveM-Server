@@ -349,8 +349,9 @@ export class VehicleDealershipProvider {
             position: config.showroom.position,
             maxDistance: 3.0,
         });
+        let vehicleDeleted = 0;
 
-        while (vehicle) {
+        while (vehicle && vehicleDeleted < 10) {
             const state = this.vehicleStateService.getVehicleState(vehicle);
 
             if (state.id) {
@@ -366,6 +367,13 @@ export class VehicleDealershipProvider {
                 position: config.showroom.position,
                 maxDistance: 3.0,
             });
+            vehicleDeleted++;
+        }
+
+        if (vehicle) {
+            this.notifier.notify('Un véhicule est trop proche du showroom.', 'error');
+
+            return;
         }
 
         this.nuiMenu.openMenu(MenuType.VehicleDealership, {
