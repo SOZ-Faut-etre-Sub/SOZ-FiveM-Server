@@ -51,9 +51,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
             <Menu type={MenuType.Garage}>
                 <MainMenu>
                     <MenuTitle banner={BannerMap[data?.garage.type]}>{data?.garage.name}</MenuTitle>
-                    <MenuContent>
-                        <VehicleList data={data} />
-                    </MenuContent>
+                    <VehicleList data={data} />
                 </MainMenu>
             </Menu>
         );
