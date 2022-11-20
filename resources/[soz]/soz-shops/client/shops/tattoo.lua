@@ -61,7 +61,7 @@ function TattooShop:GenerateMenu(skipIntro)
     shopMenu:AddButton({
         icon = "⚠️",
         label = "Se faire retirer les tatouages",
-        description = "Suite a une encres de mauvaise qualité vous pouvez retirer tous vos tatouages.",
+        description = "Suite à une encre de mauvaise qualité, vous pouvez retirer tous vos tatouages.",
         value = nil,
         select = function(item)
             local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
