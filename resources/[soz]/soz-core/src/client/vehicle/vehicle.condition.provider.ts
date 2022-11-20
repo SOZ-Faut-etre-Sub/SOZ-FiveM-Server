@@ -481,8 +481,6 @@ export class VehicleConditionProvider {
 
         const diffDistance = getDistance(lastVehiclePosition.position, this.currentVehiclePositionForMileage.position);
 
-        console.log('mileage add', diffDistance);
-
         const state = this.vehicleService.getVehicleState(vehicle);
         this.vehicleService.updateVehicleState(vehicle, {
             condition: {

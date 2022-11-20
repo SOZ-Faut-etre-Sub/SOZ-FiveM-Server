@@ -105,6 +105,19 @@ export type VehicleEntityState = {
 
     dead: boolean;
     condition: VehicleCondition;
+    hasRadio: boolean;
+    radioInUse: boolean;
+    radioEnabled: boolean;
+    primaryRadio: {
+        frequency: number;
+        volume: number;
+        ear: number;
+    } | null;
+    secondaryRadio: {
+        frequency: number;
+        volume: number;
+        ear: number;
+    } | null;
 };
 
 export enum VehicleClass {
@@ -166,6 +179,11 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     },
     openWindows: false,
     condition: getDefaultVehicleCondition(),
+    hasRadio: false,
+    radioInUse: false,
+    radioEnabled: false,
+    primaryRadio: null,
+    secondaryRadio: null,
 });
 
 export type VehicleMenuData = {
