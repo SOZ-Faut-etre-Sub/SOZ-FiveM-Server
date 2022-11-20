@@ -749,7 +749,8 @@ const useSelectOption = (
     value?: any,
     onSelected?: () => void,
     description?: string,
-    helper?: ReactNode
+    helper?: ReactNode,
+    helperRef?: any
 ): [(value) => void, boolean, boolean, (value) => void, boolean] => {
     const { activeOptionIndex, distance, setDescription, setActiveOptionIndex, showAllOptions, activeValue } =
         useContext(MenuItemSelectContext);
@@ -766,7 +767,7 @@ const useSelectOption = (
             value,
             helper,
         };
-    }, [element]);
+    }, [element, helperRef]);
     const isInitialValue = useMemo(() => {
         return activeValue === value;
     }, []);
@@ -803,7 +804,7 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
     description = null,
     helper = null,
 }) => {
-    const [handleRefSet, show, , onClick] = useSelectOption(value, onSelected, description, helper);
+    const [handleRefSet, show, , onClick] = useSelectOption(value, onSelected, description, helper, helper);
 
     return (
         <li
