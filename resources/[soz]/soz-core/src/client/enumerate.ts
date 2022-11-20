@@ -28,3 +28,7 @@ export function* enumerate<T, I = any>(
 export const GetPedList = () => {
     return enumerate<number>(FindFirstPed, FindNextPed, EndFindPed);
 };
+
+export const GetObjectList = () => {
+    return enumerate<number>(FindFirstObject, FindNextObject, EndFindObject);
+};
