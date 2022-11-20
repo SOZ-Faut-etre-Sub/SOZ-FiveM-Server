@@ -7,6 +7,7 @@ import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
 import { DatabaseModule } from './server/database/database.module';
 import { FieldModule } from './server/farm/field.module';
+import { InventoryModule } from './server/inventory/inventory.module';
 import { ItemModule } from './server/item/item.module';
 import { BaunModule } from './server/job/baun/baun.module';
 import { BennysModule } from './server/job/bennys/bennys.module';
@@ -54,7 +55,8 @@ async function bootstrap() {
         StoryModule,
         AfkModule,
         OilModule,
-        WeaponModule
+        WeaponModule,
+        InventoryModule
     );
 
     await app.stop();

@@ -6,7 +6,7 @@ import { ServerEvent } from '../../shared/event';
 import { Monitor } from '../../shared/monitor';
 import { BossShop } from '../../shared/shop/boss';
 import { PrismaService } from '../database/prisma.service';
-import { InventoryManager } from '../item/inventory.manager';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';

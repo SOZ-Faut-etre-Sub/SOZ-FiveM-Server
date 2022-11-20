@@ -9,7 +9,7 @@ import { Monitor } from '../../../shared/monitor';
 import { toVector3Object, Vector3, Vector4 } from '../../../shared/polyzone/vector';
 import { RpcEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { JobService } from '../../job.service';
 import { Notifier } from '../../notifier';
 import { PlayerMoneyService } from '../../player/player.money.service';

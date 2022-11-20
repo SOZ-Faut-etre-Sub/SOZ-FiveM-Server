@@ -68,7 +68,7 @@ export const MenuGunSmith: FunctionComponent<MenuGunSmithStateProps> = ({ data: 
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
                     {weapons.map((weapon, id) => (
-                        <MenuItemSubMenuLink id={`gunsmith_${id}`}>
+                        <MenuItemSubMenuLink key={`gunsmith_${id}`} id={`gunsmith_${id}`}>
                             {weapon.metadata.label ? weapon.metadata.label + ` (${weapon.label})` : weapon.label}
                         </MenuItemSubMenuLink>
                     ))}

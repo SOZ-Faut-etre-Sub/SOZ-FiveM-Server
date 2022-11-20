@@ -32,6 +32,12 @@ RegisterNUICallback("player/useItem", function(data, cb)
     cb(true)
 end)
 
+RegisterNUICallback("player/setItemUsage", function(data, cb)
+    SetNuiFocus(false, false)
+    TriggerServerEvent("soz-core:server:inventory:set-item-usage", data.shortcut, data.slot)
+    cb(true)
+end)
+
 RegisterNUICallback("player/giveItem", function(data, cb)
     SetNuiFocus(false, false)
 

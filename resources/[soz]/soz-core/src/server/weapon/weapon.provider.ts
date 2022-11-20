@@ -6,7 +6,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
 import { GlobalWeaponConfig, WeaponAmmo } from '../../shared/weapons/weapon';
-import { InventoryManager } from '../item/inventory.manager';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 
