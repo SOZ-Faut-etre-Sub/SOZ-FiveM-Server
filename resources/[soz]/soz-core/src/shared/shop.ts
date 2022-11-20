@@ -13,7 +13,7 @@ export type ShopProduct = {
     id: string;
     type: ItemType;
     item?: Item;
-    metadata?: InventoryItemMetadata;
+    metadata?: Partial<InventoryItemMetadata>;
     price: number;
 };
 
