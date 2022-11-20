@@ -3,11 +3,11 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { CommonItem, InventoryItem } from '../../shared/item';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerDiseaseProvider } from '../player/player.disease.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
-import { InventoryManager } from './inventory.manager';
 import { ItemService } from './item.service';
 
 @Provider()

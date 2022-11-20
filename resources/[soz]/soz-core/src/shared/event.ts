@@ -142,6 +142,9 @@ export enum ServerEvent {
     LSMC_HALLOWEEN_LOOT_PLAYER = 'lsmc:halloween:lootPlayer',
     VEHICLE_FREE_JOB_SPAWN = 'soz-core:server:vehicle:free-job-spawn',
 
+    INVENTORY_USE_ITEM = 'inventory:server:UseItemSlot',
+    INVENTORY_SET_ITEM_SHORTCUT = 'soz-core:server:inventory:set-item-usage',
+
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
     WEAPON_GUNSMITH_RENAME = 'soz-core:server:weapon:gunsmith:rename',
     WEAPON_GUNSMITH_APPLY_TINT = 'soz-core:server:weapon:gunsmith:apply-tint',

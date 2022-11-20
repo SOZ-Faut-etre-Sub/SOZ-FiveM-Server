@@ -3,7 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
 import { WeaponComponentType } from '../../shared/weapons/attachment';
-import { InventoryManager } from '../item/inventory.manager';
+import { InventoryManager } from '../inventory/inventory.manager';
 
 const WEAPON_NAME_REGEX = /([^a-z0-9 ._-]+)/gi;
 

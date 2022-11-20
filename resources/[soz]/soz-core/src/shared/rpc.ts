@@ -41,5 +41,7 @@ export enum RpcEvent {
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
 
+    INVENTORY_GET_ITEM_BY_SHORTCUT = 'soz-core:inventory:get-item-by-shortcut',
+
     WEAPON_USE_AMMO = 'soz-core:server:weapon:useAmmo',
 }

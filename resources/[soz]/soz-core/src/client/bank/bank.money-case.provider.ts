@@ -2,7 +2,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { StonkConfig } from '../../shared/job/stonk';
-import { InventoryManager } from '../item/inventory.manager';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerService } from '../player/player.service';
 
 const MONEY_CASE_TRIGGER = 5000;

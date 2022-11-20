@@ -6,7 +6,7 @@ import { InventoryItem } from '../../../shared/item';
 import { FoodConfig, FoodCraftProcess, FoodRecipe } from '../../../shared/job/food';
 import { MenuType } from '../../../shared/nui/menu';
 import { BlipFactory } from '../../blip';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
