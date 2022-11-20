@@ -30,13 +30,16 @@ export class RepositoryProvider {
 
     private repositories: Record<string, Repository<any>> = {};
 
-    @Once(OnceStep.DatabaseConnected)
-    public async init() {
+    @Once()
+    public setup() {
         this.repositories['garage'] = this.garageRepository;
         this.repositories['vehicle'] = this.vehicleRepository;
         this.repositories['jobGrade'] = this.jobGradeRepository;
         this.repositories['fuelStation'] = this.fuelStationRepository;
+    }
 
+    @Once(OnceStep.DatabaseConnected)
+    public async init() {
         for (const repositoryName of Object.keys(this.repositories)) {
             await this.repositories[repositoryName].init();
         }
@@ -45,7 +48,7 @@ export class RepositoryProvider {
     @Rpc(RpcEvent.REPOSITORY_GET_DATA)
     public async getData(source: number, repositoryName: string): Promise<any> {
         if (this.repositories[repositoryName]) {
-            return this.repositories[repositoryName].get();
+            return await this.repositories[repositoryName].get();
         }
 
         return null;

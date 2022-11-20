@@ -235,7 +235,9 @@ export class VehicleGarageProvider {
         });
 
         const timestamp = Math.floor(Date.now() / 1000);
-        return playerVehicles.map(vehicle => {
+        const playerVehiclesMapped = [];
+
+        for (const vehicle of playerVehicles) {
             const playerVehicle = {
                 id: vehicle.id,
                 label: vehicle.label,
@@ -255,7 +257,7 @@ export class VehicleGarageProvider {
             let price: number | null = null;
 
             if (garage.type === GarageType.Depot) {
-                const vehiclePrice = this.vehicleRepository.findByModel(playerVehicle.modelName)?.price || 0;
+                const vehiclePrice = (await this.vehicleRepository.findByModel(playerVehicle.modelName))?.price || 0;
 
                 price = Math.round(vehiclePrice * 0.15);
             }
@@ -265,12 +267,14 @@ export class VehicleGarageProvider {
                 price = Math.min(200, hours * 20);
             }
 
-            return {
+            playerVehiclesMapped.push({
                 vehicle: playerVehicle,
                 price,
                 name: null,
-            };
-        });
+            });
+        }
+
+        return playerVehiclesMapped;
     }
 
     private async checkCanManageVehicle(
@@ -450,7 +454,7 @@ export class VehicleGarageProvider {
                     return;
                 }
 
-                const vehicle = this.vehicleRepository.findByModel(playerVehicle.vehicle);
+                const vehicle = await this.vehicleRepository.findByModel(playerVehicle.vehicle);
                 const capacity = vehicle ? vehicle.size : PlaceCapacity.Small;
                 const vehiclePrice = vehicle ? vehicle.price : 0;
 

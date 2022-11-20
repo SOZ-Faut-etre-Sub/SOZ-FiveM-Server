@@ -19,7 +19,7 @@ export class VehicleRepository extends Repository<Vehicle[]> {
             }));
     }
 
-    public findByModel(model: string): Vehicle | null {
-        return this.get().find(v => v.model === model) ?? null;
+    public async findByModel(model: string): Promise<Vehicle | null> {
+        return (await this.get()).find(v => v.model === model) ?? null;
     }
 }
