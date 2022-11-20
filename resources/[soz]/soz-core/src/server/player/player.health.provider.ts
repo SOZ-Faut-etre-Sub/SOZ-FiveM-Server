@@ -61,11 +61,11 @@ export class PlayerHealthProvider {
         }
 
         if (player.metadata.organ === 'rein') {
-            hungerDiff -= 4.0;
+            thirstDiff -= 5.0;
         }
 
         if (player.metadata.organ === 'foie') {
-            thirstDiff -= 5.0;
+            hungerDiff -= 4.0;
         }
 
         this.playerService.incrementMetadata(source, 'hunger', hungerDiff, 0, 100);
