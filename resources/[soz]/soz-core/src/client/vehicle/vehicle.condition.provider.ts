@@ -56,6 +56,11 @@ const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
     [VehicleClass.Trains]: 0.8,
 };
 
+type CurrentVehiclePosition = {
+    vehicle: number;
+    position: Vector3;
+};
+
 @Provider()
 export class VehicleConditionProvider {
     @Inject(VehicleService)
@@ -69,7 +74,9 @@ export class VehicleConditionProvider {
 
     private currentVehicleStatus: VehicleStatus | null = null;
 
-    private currentVehiclePositionForTemporaryTire: Vector3 | null = null;
+    private currentVehiclePositionForMileage: CurrentVehiclePosition | null = null;
+
+    private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
     @Once(OnceStep.PlayerLoaded)
     public async init() {
@@ -270,16 +277,8 @@ export class VehicleConditionProvider {
             ...this.vehicleService.getVehicleCondition(vehicle),
         };
 
-        const lastPosition = state.lastPosition;
-        const currentPosition = GetEntityCoords(vehicle, true) as Vector3;
-
-        if (lastPosition) {
-            newCondition.mileage += getDistance(lastPosition, currentPosition);
-        }
-
         // Check vehicle condition
         this.vehicleService.updateVehicleState(vehicle, {
-            lastPosition: currentPosition,
             condition: newCondition,
         });
     }
@@ -445,6 +444,55 @@ export class VehicleConditionProvider {
     }
 
     @Tick(500)
+    public checkVehicleMileage() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            this.currentVehiclePositionForMileage = null;
+
+            return;
+        }
+
+        if (!NetworkHasControlOfEntity(vehicle)) {
+            this.currentVehiclePositionForMileage = null;
+
+            return;
+        }
+
+        if (this.currentVehiclePositionForMileage && this.currentVehiclePositionForMileage.vehicle !== vehicle) {
+            this.currentVehiclePositionForMileage = {
+                vehicle,
+                position: GetEntityCoords(vehicle, true) as Vector3,
+            };
+
+            return;
+        }
+
+        const lastVehiclePosition = this.currentVehiclePositionForMileage;
+        this.currentVehiclePositionForMileage = {
+            vehicle,
+            position: GetEntityCoords(vehicle, true) as Vector3,
+        };
+
+        if (lastVehiclePosition === null) {
+            return;
+        }
+
+        const diffDistance = getDistance(lastVehiclePosition.position, this.currentVehiclePositionForMileage.position);
+
+        console.log('mileage add', diffDistance);
+
+        const state = this.vehicleService.getVehicleState(vehicle);
+        this.vehicleService.updateVehicleState(vehicle, {
+            condition: {
+                ...state.condition,
+                mileage: state.condition.mileage + diffDistance,
+            },
+        });
+    }
+
+    @Tick(500)
     public checkVehicleTireRepair() {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
@@ -470,14 +518,32 @@ export class VehicleConditionProvider {
             return;
         }
 
+        if (
+            this.currentVehiclePositionForTemporaryTire &&
+            this.currentVehiclePositionForTemporaryTire.vehicle !== vehicle
+        ) {
+            this.currentVehiclePositionForTemporaryTire = {
+                vehicle,
+                position: GetEntityCoords(vehicle, true) as Vector3,
+            };
+
+            return;
+        }
+
         const lastVehiclePosition = this.currentVehiclePositionForTemporaryTire;
-        this.currentVehiclePositionForTemporaryTire = GetEntityCoords(vehicle, true) as Vector3;
+        this.currentVehiclePositionForTemporaryTire = {
+            vehicle,
+            position: GetEntityCoords(vehicle, true) as Vector3,
+        };
 
         if (lastVehiclePosition === null) {
             return;
         }
 
-        const diffDistance = getDistance(lastVehiclePosition, this.currentVehiclePositionForTemporaryTire);
+        const diffDistance = getDistance(
+            lastVehiclePosition.position,
+            this.currentVehiclePositionForTemporaryTire.position
+        );
         const newCondition = {
             ...state.condition,
         };
