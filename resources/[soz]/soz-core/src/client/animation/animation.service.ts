@@ -31,9 +31,14 @@ export type AnimationInfo = {
     options?: AnimationOptions;
 };
 
+type PlayOptions = {
+    reset_weapon?: boolean;
+};
+
 type AnimationTask = {
     animation?: Animation;
     scenario?: Scenario;
+    play_options?: PlayOptions;
     reject: (reason: any) => void;
     resolve: (cancelled: boolean) => void;
 };
@@ -116,18 +121,12 @@ export class AnimationService {
         ClearPedTasksImmediately(ped);
         TaskStartScenarioInPlace(ped, scenario.name, 0, true);
 
-        const cancelled = await waitUntil(
+        return waitUntil(
             async () => {
                 return !IsPedUsingScenario(ped, scenario.name);
             },
             scenario.duration ? scenario.duration : -1
         );
-
-        ClearPedTasks(ped);
-        ClearPedSecondaryTask(ped);
-        SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true);
-
-        return cancelled;
     }
 
     public async loop() {
@@ -145,6 +144,11 @@ export class AnimationService {
             });
 
             this.currentAnimation = this.queue.shift();
+
+            const options = this.currentAnimation.play_options || {
+                reset_weapon: true,
+            };
+
             let cancelled = false;
 
             if (this.currentAnimation.animation) {
@@ -176,7 +180,10 @@ export class AnimationService {
 
             const ped = PlayerPedId();
 
-            SetCurrentPedWeapon(ped, GetHashKey(Weapons.UNARMED), true);
+            if (options.reset_weapon) {
+                SetCurrentPedWeapon(ped, GetHashKey(Weapons.UNARMED), true);
+            }
+
             this.currentAnimation.resolve(cancelled);
 
             this.currentAnimation = null;
@@ -195,12 +202,13 @@ export class AnimationService {
         await wait(duration);
     }
 
-    public async playScenario(scenario: Scenario): Promise<boolean> {
+    public async playScenario(scenario: Scenario, options?: PlayOptions): Promise<boolean> {
         const promise = new Promise<boolean>((resolve, reject) => {
             this.queue.push({
                 scenario,
                 reject,
                 resolve,
+                play_options: options,
             });
         });
 
@@ -212,7 +220,7 @@ export class AnimationService {
         return promise;
     }
 
-    public async playAnimation(animation: Animation): Promise<boolean> {
+    public async playAnimation(animation: Animation, options?: PlayOptions): Promise<boolean> {
         if (animation.enter?.dictionary) {
             await this.resourceLoader.loadAnimationDictionary(animation.enter.dictionary);
         }
@@ -230,6 +238,7 @@ export class AnimationService {
                 animation,
                 reject,
                 resolve,
+                play_options: options,
             });
         });
 
