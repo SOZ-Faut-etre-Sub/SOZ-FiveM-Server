@@ -7,16 +7,12 @@ import { RootModel } from '.';
 export const phone = createModel<RootModel>()({
     state: {
         available: false,
-        visible: false,
         config: config.defaultSettings as IPhoneSettings,
         callModal: false,
     },
     reducers: {
         SET_AVAILABILITY(state, payload: boolean) {
             return { ...state, available: payload };
-        },
-        SET_VISIBILITY(state, payload: boolean) {
-            return { ...state, visible: payload };
         },
         SET_CONFIG(state, payload: IPhoneSettings) {
             return { ...state, config: payload };
@@ -28,9 +24,6 @@ export const phone = createModel<RootModel>()({
     effects: dispatch => ({
         async setAvailability(payload: boolean) {
             dispatch.phone.SET_AVAILABILITY(payload);
-        },
-        async setVisibility(payload: boolean) {
-            dispatch.phone.SET_VISIBILITY(payload);
         },
         async setConfig(payload: IPhoneSettings) {
             dispatch.phone.SET_CONFIG(payload);
