@@ -3,7 +3,7 @@ import Picker from '@emoji-mart/react';
 import { EmojiHappyIcon, PaperClipIcon, UploadIcon } from '@heroicons/react/outline';
 import { TextField } from '@ui/old_components/Input';
 import cn from 'classnames';
-import React, { useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useConfig } from '../../../../hooks/usePhone';
@@ -14,9 +14,10 @@ interface IProps {
 
     messageConversationId: string | undefined;
     messageGroupName: string | undefined;
+    autoFocus?: boolean;
 }
 
-const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
+const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddImageClick, autoFocus }) => {
     const [t] = useTranslation();
     const config = useConfig();
     const [message, setMessage] = useState('');
@@ -79,6 +80,7 @@ const MessageInput = ({ messageConversationId, onAddImageClick }: IProps) => {
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 placeholder={t('MESSAGES.NEW_MESSAGE')}
+                autoFocus={autoFocus}
             />
             <button className="bg-[#32CA5B] rounded-full mx-2 " onClick={handleSubmit}>
                 <UploadIcon className="w-5 h-5 mx-2 text-white" />

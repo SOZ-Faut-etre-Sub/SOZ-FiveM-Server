@@ -8,36 +8,22 @@ import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useContact } from '../../../hooks/useContact';
 import { useConfig } from '../../../hooks/usePhone';
-import { RootState } from '../../../store';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
-import { SearchField } from '../../../ui/old_components/SearchField';
+import { SearchField } from '../../../ui/components/SearchField';
 
 export const ContactList: FunctionComponent<{ skipTitle?: boolean }> = ({ skipTitle = false }) => {
     const contactsApp = useApp('contacts');
 
+    const { getFilteredContacts } = useContact();
     const [searchValue, setSearchValue] = useState<string>('');
-    const contacts = useSelector((state: RootState) => state.simCard.contacts);
     const filteredContacts = useMemo(() => {
-        const list = [];
-        const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
-
-        contacts
-            .filter(contact => contact?.display?.match(regExp) || contact.number.match(regExp))
-            .forEach(contact => {
-                const letter = (contact.display ? contact.display[0] : '#').toUpperCase();
-                if (list[letter] === undefined) {
-                    list[letter] = [];
-                }
-                list[letter].push(contact);
-            });
-
-        return list;
-    }, [contacts, searchValue]);
+        return getFilteredContacts(searchValue);
+    }, [getFilteredContacts, searchValue]);
 
     const [t] = useTranslation();
     const navigate = useNavigate();
