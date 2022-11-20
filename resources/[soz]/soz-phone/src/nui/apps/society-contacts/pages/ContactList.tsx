@@ -9,7 +9,7 @@ import { useSociety } from '../../../hooks/app/useSociety';
 import { useConfig } from '../../../hooks/usePhone';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
-import { SearchField } from '../../../ui/old_components/SearchField';
+import { SearchField } from '../../../ui/components/SearchField';
 
 export const ContactList: React.FC = () => {
     const contactsApp = useApp('society-contacts');
