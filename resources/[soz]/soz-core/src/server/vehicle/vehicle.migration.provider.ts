@@ -72,5 +72,13 @@ export class VehicleMigrationProvider {
                 radio: true,
             },
         });
+
+        await this.prismaService.vehicle.deleteMany({
+            where: {
+                model: {
+                    in: ['sanchez01', 'sanchez02', 'carbon'],
+                },
+            },
+        });
     }
 }
