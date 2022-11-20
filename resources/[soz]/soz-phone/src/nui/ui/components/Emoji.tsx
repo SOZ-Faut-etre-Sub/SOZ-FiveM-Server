@@ -9,7 +9,7 @@ function Emoji({ emoji, size = '24px' }) {
         <span className="inline-flex px-0.5">
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
-            <em-emoji set="apple" shortcodes={emoji} size={size} fallback={() => emoji} />
+            <em-emoji set="apple" shortcodes={emoji} size={size} fallback={emoji} />
         </span>
     );
 }
