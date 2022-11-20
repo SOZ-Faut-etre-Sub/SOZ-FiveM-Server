@@ -6,7 +6,7 @@ import { StateBagHandler } from '../../core/decorators/state';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
@@ -398,17 +398,15 @@ export class VehicleLockProvider {
             }
         );
 
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+
         if (state.open) {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, false);
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, true);
         }
-
-        this.vehicleService.updateVehicleState(vehicle, {
-            open: !state.open,
-        });
 
         SetVehicleLights(vehicle, 2);
         await wait(250);
