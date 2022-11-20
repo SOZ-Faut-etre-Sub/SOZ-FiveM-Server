@@ -11,20 +11,21 @@ export const useConfig = () => {
 };
 
 export const useVisibility = () => {
-    const state = useSelector((state: RootState) => state.phone);
+    const visible = useSelector((state: RootState) => state.visibility);
+    const available = useSelector((state: RootState) => state.phone.available);
     //const { currentAlert } = useNotifications();
     const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
     const notificationTimer = useRef<NodeJS.Timeout>();
 
     useEffect(() => {
-        if (state.visible) {
+        if (visible) {
             setNotifVisibility(false);
         }
-    }, [state.visible]);
+    }, [visible]);
 
     useEffect(() => {
-        if (state.available && !state.visible /*&& currentAlert*/) {
+        if (available && !visible /*&& currentAlert*/) {
             setNotifVisibility(true);
             if (notificationTimer.current) {
                 clearTimeout(notificationTimer.current);
@@ -37,10 +38,10 @@ export const useVisibility = () => {
                 setNotifVisibility(false);
             }, DEFAULT_ALERT_HIDE_TIME);
         }
-    }, [/*currentAlert, */ state.visible]);
+    }, [/*currentAlert, */ visible]);
 
     return {
-        visibility: state.visible,
+        visibility: visible,
         notifVisibility: notifVisibility,
     };
 };

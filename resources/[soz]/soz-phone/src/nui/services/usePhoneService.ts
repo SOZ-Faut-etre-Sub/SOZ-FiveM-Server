@@ -33,7 +33,6 @@ export const usePhoneService = () => {
 
     // useNuiEvent('PHONE', PhoneEvents.ADD_SNACKBAR_ALERT, addAlert);
     useNuiEvent('PHONE', PhoneEvents.SET_AVAILABILITY, store.dispatch.phone.setAvailability);
-    useNuiEvent('PHONE', PhoneEvents.SET_VISIBILITY, store.dispatch.phone.setVisibility);
     useNuiEvent('PHONE', PhoneEvents.SET_CONFIG, store.dispatch.phone.setConfig);
     useNuiEvent<string>('PHONE', PhoneEvents.OPEN_APP, handleOpenApp);
 };

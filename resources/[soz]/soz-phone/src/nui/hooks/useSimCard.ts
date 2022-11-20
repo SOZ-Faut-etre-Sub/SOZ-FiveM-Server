@@ -13,8 +13,7 @@ export const usePhoneSocietyNumber = () => {
 };
 
 export const useAvatar = () => {
-    const state = useSelector((state: RootState) => state.simCard);
-    return state.avatar;
+    return useSelector((state: RootState) => state.avatar);
 };
 
 export const useCall = () => {
