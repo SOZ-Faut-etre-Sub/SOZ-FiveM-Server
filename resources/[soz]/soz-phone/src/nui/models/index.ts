@@ -5,17 +5,21 @@ import { appNotes } from './app/notes';
 import { appSociety } from './app/society';
 import { appTwitchNews } from './app/twitchNews';
 import { time } from './os/time';
+import { visibility } from './os/visibility';
 import { phone } from './phone';
 import { photo } from './photo';
+import { avatar } from './sim/avatar';
 import { simCard } from './simCard';
 
 export interface RootModel extends Models<RootModel> {
     // Core models
     phone: typeof phone;
     time: typeof time;
+    visibility: typeof visibility;
 
     // System models
     simCard: typeof simCard;
+    avatar: typeof avatar;
     photo: typeof photo;
 
     // Apps models
@@ -25,4 +29,15 @@ export interface RootModel extends Models<RootModel> {
     appSociety: typeof appSociety;
 }
 
-export const models: RootModel = { phone, time, simCard, photo, appBank, appNotes, appTwitchNews, appSociety };
+export const models: RootModel = {
+    phone,
+    time,
+    visibility,
+    simCard,
+    avatar,
+    photo,
+    appBank,
+    appNotes,
+    appTwitchNews,
+    appSociety,
+};
