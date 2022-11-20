@@ -61,8 +61,8 @@ export class AdminMenuDeveloperProvider {
                     2
                 )}], ${zone.length.toFixed(2)}, ${zone.width.toFixed(2)}, {
                     heading: ${zone.heading.toFixed(2)},
-                    minZ: ${zone.center.z.toFixed(2) - 1},
-                    maxZ: ${zone.center.z.toFixed(2) + 2},
+                    minZ: ${(zone.center.z - 1.0).toFixed(2)},
+                    maxZ: ${(zone.center.z + 2.0).toFixed(2)},
                 });`
             );
             await this.adminMenuProvider.openAdminMenu('developer');
