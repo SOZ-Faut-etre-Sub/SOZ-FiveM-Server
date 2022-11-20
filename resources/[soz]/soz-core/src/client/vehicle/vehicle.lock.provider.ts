@@ -102,8 +102,8 @@ export class VehicleLockProvider {
         }
     }
 
-    @StateBagHandler('open', null)
     @StateBagHandler('forced', null)
+    @StateBagHandler('open', null)
     private async onVehicleOpenChange(bag: string) {
         const split = bag.split(':');
 
@@ -393,15 +393,17 @@ export class VehicleLockProvider {
             },
         });
 
+        if (state.open) {
+            this.soundService.playAround('vehicle/lock', 5, 0.1);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
+        } else {
+            this.soundService.playAround('vehicle/unlock', 5, 0.1);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
+        }
+
         this.vehicleService.updateVehicleState(vehicle, {
             open: !state.open,
         });
-
-        if (state.open) {
-            this.soundService.playAround('vehicle/lock', 5, 0.1);
-        } else {
-            this.soundService.playAround('vehicle/unlock', 5, 0.1);
-        }
 
         SetVehicleLights(vehicle, 2);
         await wait(250);
