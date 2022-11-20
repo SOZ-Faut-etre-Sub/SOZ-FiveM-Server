@@ -38,7 +38,7 @@ export const useSettingsAPI = () => {
                     });
                 }
 
-                store.dispatch.simCard.SET_AVATAR(url);
+                store.dispatch.avatar.setAvatar(url);
                 addAlert({
                     message: t('SETTINGS.FEEDBACK.UPDATE_SUCCESS'),
                     type: 'success',
