@@ -1164,16 +1164,34 @@ export const GarageList: Record<string, Garage> = {
         job: JobType.Bennys,
         category: GarageCategory.Car,
         allowTrailers: true,
-        zone: new BoxZone([1896.74, 3066.37, 45.92], 1.0, 1.0, {
-            heading: 329.0,
-            minZ: 44.92,
-            maxZ: 47.922,
+        zone: new BoxZone([1881.42, 3083.29, 45.91], 1.0, 1.0, {
+            heading: 240.0,
+            minZ: 44.91,
+            maxZ: 48.912,
         }),
         parkingPlaces: [
-            new BoxZone([1890.77, 3063.2, 46.92], 1.0, 1.0, {
+            new BoxZone([1878.49, 3091.52, 46.9], 1.0, 1.0, {
                 heading: 60.0,
+                minZ: 45.9,
+                maxZ: 48.902,
+            }),
+            new BoxZone([1879.6, 3094.81, 46.86], 1.0, 1.0, {
+                heading: 60.0,
+                minZ: 45.86,
+                maxZ: 48.862,
+            }),
+            new BoxZone([1876.27, 3088.79, 46.91], 1.0, 1.0, {
+                heading: 60.0,
+                minZ: 45.91,
+                maxZ: 48.912,
+            }),
+            new BoxZone([1877.29, 3068.94, 46.92], 1.0, 1.0, {
+                heading: 242.0,
                 minZ: 45.92,
-                maxZ: 46.922,
+                maxZ: 48.922,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
             }),
         ],
     },
