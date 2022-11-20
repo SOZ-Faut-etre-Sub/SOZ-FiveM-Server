@@ -50,13 +50,12 @@ export class PlayerWardrobe {
         return true;
     }
 
-    @OnEvent(ClientEvent.CORE_CLOSE_MENU)
+    @OnNuiEvent(NuiEvent.MenuClosed)
     public async onCloseMenu() {
         if (this.currentOutfitResolve) {
             this.currentOutfitResolve({ outfit: null, canceled: true });
         }
 
-        this.nuiMenu.closeMenu();
         this.currentOutfitResolve = null;
     }
 }
