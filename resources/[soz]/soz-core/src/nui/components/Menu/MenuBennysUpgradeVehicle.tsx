@@ -512,7 +512,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                         config={config}
                         set={setConfig}
                     />
-                    {/*<MenuItemVehicleModification modKey="fender" options={options} config={config} set={setConfig} />*/}
+                    <MenuItemVehicleModification modKey="fender" options={options} config={config} set={setConfig} />
                     <MenuItemVehicleModification
                         modKey="fenderRight"
                         options={options}

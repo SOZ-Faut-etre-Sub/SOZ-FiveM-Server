@@ -391,7 +391,7 @@ const VehicleModificationHelpers: VehicleModificationHelperType<keyof VehicleMod
     grille: createModificationHelperList(VehicleModType.Grille),
     hood: createModificationHelperList(VehicleModType.Hood),
     fender: createModificationHelperList(VehicleModType.Fender),
-    fenderRight: createModificationHelperList(VehicleModType.Fender),
+    fenderRight: createModificationHelperList(VehicleModType.FenderRight),
     roof: createModificationHelperList(VehicleModType.Roof),
     engine: createModificationHelperList(VehicleModType.Engine),
     brakes: createModificationHelperList(VehicleModType.Brakes),
