@@ -14,6 +14,7 @@ import {
     VehicleEntityState,
     VehicleSpawn,
 } from '../../shared/vehicle/vehicle';
+import { PrismaService } from '../database/prisma.service';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -24,6 +25,50 @@ type ClosestVehicle = {
     isInside: boolean;
 };
 
+const VEHICLE_HAS_RADIO = [
+    'ambulance',
+    'ambcar',
+    'firetruk',
+    'mule6',
+    'taco1',
+    'dynasty2',
+    'trash',
+    'stockade',
+    'baller8',
+    'packer2',
+    'utillitruck4',
+    'flatbed3',
+    'flatbed4',
+    'burito6',
+    'newsvan',
+    'frogger3',
+    'police',
+    'police2',
+    'police3',
+    'police4',
+    'police5',
+    'police6',
+    'policeb2',
+    'sheriff',
+    'sheriff2',
+    'sheriff3',
+    'sheriff4',
+    'sheriffb',
+    'maverick2',
+    'pbus',
+    'polmav',
+    'fbi',
+    'fbi2',
+    'cogfbi',
+    'paragonfbi',
+    'sadler1',
+    'hauler1',
+    'brickade1',
+    'boxville',
+    'youga3',
+    'rumpo4',
+];
+
 @Provider()
 export class VehicleSpawner {
     @Inject(VehicleStateService)
@@ -31,6 +76,9 @@ export class VehicleSpawner {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
 
     private spawning: Record<string, (netId: number) => void> = {};
     private deleting: Record<string, () => void> = {};
@@ -201,6 +249,8 @@ export class VehicleSpawner {
             this.spawning[spawnId] = resolve;
         });
 
+        const radio = VEHICLE_HAS_RADIO.includes(vehicle.model);
+
         // Cancel spawn after 10 seconds
         setTimeout(() => {
             try {
@@ -230,6 +280,23 @@ export class VehicleSpawner {
             this.vehicleStateService.updateVehicleState(entityId, {
                 ...vehicle.state,
                 spawned: true,
+                hasRadio: radio,
+                radioInUse: false,
+                radioEnabled: false,
+                primaryRadio: radio
+                    ? {
+                          frequency: 0.0,
+                          volume: 100,
+                          ear: 1,
+                      }
+                    : null,
+                secondaryRadio: radio
+                    ? {
+                          frequency: 0.0,
+                          volume: 100,
+                          ear: 1,
+                      }
+                    : null,
             });
 
             return netId;

@@ -370,6 +370,7 @@ model Vehicle {
   size            Int?    @default(1)
   jobName         String? @map("job_name") @db.Text
   stock           Int?    @default(0)
+  radio           Boolean @default(false)
 
   @@index([category])
   @@index([dealershipId], map: "vehicles_dealership_idx")
