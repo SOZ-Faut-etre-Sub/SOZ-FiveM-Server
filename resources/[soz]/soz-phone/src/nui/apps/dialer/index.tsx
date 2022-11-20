@@ -46,7 +46,7 @@ export const DialerApp: React.FC = () => {
                     <AppContent scrollable={false} className="pb-20">
                         <Routes>
                             <Route index element={<DialerHistory />} />
-                            <Route path="contacts" element={<ContactList />} />
+                            <Route path="contacts" element={<ContactList skipTitle />} />
                             <Route path="dial" element={<DialerKeyboard />} />
                         </Routes>
                     </AppContent>

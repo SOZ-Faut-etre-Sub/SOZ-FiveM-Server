@@ -6,7 +6,7 @@ import { useCall } from '@os/call/hooks/useCall';
 import { AppContent } from '@ui/components/AppContent';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
-import React, { useMemo, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -17,7 +17,7 @@ import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { SearchField } from '../../../ui/old_components/SearchField';
 
-export const ContactList: React.FC = () => {
+export const ContactList: FunctionComponent<{ skipTitle?: boolean }> = ({ skipTitle = false }) => {
     const contactsApp = useApp('contacts');
 
     const [searchValue, setSearchValue] = useState<string>('');
@@ -60,16 +60,18 @@ export const ContactList: React.FC = () => {
 
     return (
         <>
-            <AppTitle
-                app={contactsApp}
-                action={
-                    !pathname.match(pathTemplate) && (
-                        <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => navigate('/contacts/-1')} />
-                    )
-                }
-            >
-                <div />
-            </AppTitle>
+            {!skipTitle && (
+                <AppTitle
+                    app={contactsApp}
+                    action={
+                        !pathname.match(pathTemplate) && (
+                            <PlusIcon className="h-6 w-6 cursor-pointer" onClick={() => navigate('/contacts/-1')} />
+                        )
+                    }
+                >
+                    <div />
+                </AppTitle>
+            )}
             <AppContent aria-label="Directory">
                 <SearchField
                     placeholder={t('CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
