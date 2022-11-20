@@ -36,13 +36,20 @@ export class VehicleLockProvider {
         return this.vehicleStateService.hasVehicleKey(vehicle.plate, player.citizenid);
     }
 
+    @OnEvent(ServerEvent.VEHICLE_SET_OPEN)
+    async onOpen(source: number, vehicleNetworkId: number, open: boolean) {
+        const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+        this.vehicleStateService.updateVehicleState(vehicleEntityId, {
+            open,
+        });
+    }
+
     @OnEvent(ServerEvent.VEHICLE_FORCE_OPEN)
     async onForceOpen(source: number, vehicleNetworkId: number) {
         const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntityId);
 
         this.vehicleStateService.updateVehicleState(vehicleEntityId, {
-            ...state,
             forced: true,
         });
     }

@@ -118,6 +118,7 @@ export enum ServerEvent {
     VEHICLE_USE_CLEANING_KIT = 'soz-core:server:vehicle:use-cleaning-kit',
     VEHICLE_USE_WHEEL_KIT = 'soz-core:server:vehicle:use-wheel-kit',
     VEHICLE_FORCE_OPEN = 'soz-core:server:vehicle:force-open',
+    VEHICLE_SET_OPEN = 'soz-core:server:vehicle:set-open',
     VEHICLE_SET_CLOSEST = 'soz-core:server:vehicle:set-closest',
     VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
     VEHICLE_SWAP = 'soz-core:server:vehicle:swaped',
