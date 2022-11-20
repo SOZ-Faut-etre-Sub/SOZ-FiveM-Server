@@ -378,20 +378,25 @@ export class VehicleLockProvider {
             return;
         }
 
-        await this.animationService.playAnimation({
-            base: {
-                dictionary: 'anim@mp_player_intmenu@key_fob@',
-                name: 'fob_click',
-                blendInSpeed: 3.0,
-                blendOutSpeed: 3.0,
-                duration: 750,
-                options: {
-                    repeat: true,
-                    onlyUpperBody: true,
-                    enablePlayerControl: true,
+        await this.animationService.playAnimation(
+            {
+                base: {
+                    dictionary: 'anim@mp_player_intmenu@key_fob@',
+                    name: 'fob_click',
+                    blendInSpeed: 3.0,
+                    blendOutSpeed: 3.0,
+                    duration: 750,
+                    options: {
+                        repeat: true,
+                        onlyUpperBody: true,
+                        enablePlayerControl: true,
+                    },
                 },
             },
-        });
+            {
+                reset_weapon: false,
+            }
+        );
 
         if (state.open) {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
