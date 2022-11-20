@@ -185,7 +185,7 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
     end
 end)
 
-QBCore.Functions.CreateUseableItem("meal_box", function(source)
+QBCore.Functions.CreateUseableItem("meal_box", function(source, item)
     if exports["soz-inventory"]:CanCarryItems(source, {
         {name = "meal_box", amount = -1},
         {name = "vegan_meal", amount = 5},
@@ -193,11 +193,11 @@ QBCore.Functions.CreateUseableItem("meal_box", function(source)
         {name = "meat_festival", amount = 5},
         {name = "royal_vegetables", amount = 5},
     }) then
-        exports["soz-inventory"]:RemoveItem(source, "meal_box", 1, nil)
-        exports["soz-inventory"]:AddItem(source, "vegan_meal", 5, nil)
-        exports["soz-inventory"]:AddItem(source, "onigiri_assortment", 5, nil)
-        exports["soz-inventory"]:AddItem(source, "meat_festival", 5, nil)
-        exports["soz-inventory"]:AddItem(source, "royal_vegetables", 5, nil)
+        exports["soz-inventory"]:RemoveItem(source, "meal_box", 1)
+        exports["soz-inventory"]:AddItem(source, "vegan_meal", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, "onigiri_assortment", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, "meat_festival", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, "royal_vegetables", 5, item.metadata)
     else
         TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont trop pleines pour ouvrir la caisse.", "error")
     end
