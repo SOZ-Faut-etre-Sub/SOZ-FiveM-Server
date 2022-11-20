@@ -3,32 +3,41 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useConfig } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
+import { SearchField } from '../../../ui/old_components/SearchField';
 import { useMessageAPI } from '../hooks/useMessageAPI';
 
 export const NewConversation = () => {
+    const [t] = useTranslation();
     const { phoneNumber } = useParams<{ phoneNumber?: string }>();
     const navigate = useNavigate();
     const config = useConfig();
 
+    const [searchValue, setSearchValue] = useState<string>('');
     const contacts = useSelector((state: RootState) => state.simCard.contacts);
     const filteredContacts = useMemo(() => {
         const list = [];
-        contacts.forEach(contact => {
-            if (list[contact.display[0]] === undefined) {
-                list[contact.display[0]] = [];
-            }
-            list[contact.display[0]].push(contact);
-        });
+        const regExp = new RegExp(searchValue.replace(/[^a-zA-Z\d]/g, ''), 'gi');
+
+        contacts
+            .filter(contact => contact?.display?.match(regExp) || contact.number.match(regExp))
+            .forEach(contact => {
+                const letter = (contact.display ? contact.display[0] : '#').toUpperCase();
+                if (list[letter] === undefined) {
+                    list[letter] = [];
+                }
+                list[letter].push(contact);
+            });
 
         return list;
-    }, [contacts]);
+    }, [contacts, searchValue]);
 
     const { addConversation } = useMessageAPI();
 
@@ -50,6 +59,11 @@ export const NewConversation = () => {
                 </Button>
             </AppTitle>
             <AppContent>
+                <SearchField
+                    placeholder={t('CONTACTS.PLACEHOLDER_SEARCH_CONTACTS')}
+                    onChange={e => setSearchValue(e.target.value)}
+                    value={searchValue}
+                />
                 <nav className="h-[740px] pb-10 overflow-y-auto" aria-label="Directory">
                     {Object.keys(filteredContacts)
                         .sort()
