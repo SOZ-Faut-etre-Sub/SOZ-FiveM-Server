@@ -61,30 +61,6 @@ SetHttpHandler(function(req, res)
         return;
     end
 
-    -- Destroy vehicle
-    if req.path == "/vehicle-destroy" and req.method == "POST" then
-        local data = readJson(req);
-        local plate = data.plate
-
-        TriggerEvent("qb-garage:server:setVehicleDestroy", plate)
-
-        res.send("Vehicule destroyed.")
-
-        return;
-    end
-
-    -- Put vehicle into pound
-    if req.path == "/vehicle-pound" and req.method == "POST" then
-        local data = readJson(req);
-        local plate = data.plate
-
-        TriggerEvent("qb-garage:server:setVehicleInPound", plate)
-
-        res.send("Vehicule in pound.")
-
-        return;
-    end
-
     if req.path == "/phone/message-create" and req.method == "POST" then
         local jsonV = readJson(req)
 
