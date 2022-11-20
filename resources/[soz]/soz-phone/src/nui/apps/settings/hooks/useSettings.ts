@@ -14,6 +14,7 @@ export interface IPhoneSettings {
     frame: SettingOption;
     theme: SettingOption;
     zoom: SettingOption;
+    textZoom: SettingOption;
     streamerMode: boolean;
     ringtone: SettingOption;
     ringtoneVol: number;

@@ -1,3 +1,4 @@
+import { ChatAltIcon } from '@heroicons/react/outline';
 import {
     AdjustmentsIcon,
     BellIcon,
@@ -64,14 +65,14 @@ export const SettingsHome = () => {
 
         store.dispatch.phone.updateConfig({ ...config, [key]: value });
     };
-    // const frames = phoneConfig.frames.map(
-    //     MapSettingItem(config.frame, (val: SettingOption) => handleSettingChange('frame', val)),
-    // );
     const themes = phoneConfig.themes.map(
         MapSettingItem(config.theme, (val: SettingOption) => handleSettingChange('theme', val))
     );
     const zoomOptions = phoneConfig.zoomOptions.map(
         MapSettingItem(config.zoom, (val: SettingOption) => handleSettingChange('zoom', val))
+    );
+    const textZoomOptions = phoneConfig.textZoomOptions.map(
+        MapSettingItem(config.textZoom, (val: SettingOption) => handleSettingChange('textZoom', val))
     );
     const ringtones = phoneConfig.ringtones.map(
         MapSettingItem(config.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val))
@@ -198,6 +199,15 @@ export const SettingsHome = () => {
                         options={zoomOptions}
                         onClick={openMenu}
                         icon={<AdjustmentsIcon />}
+                        color="bg-[#5756CE]"
+                    />
+
+                    <SettingItem
+                        label={t('SETTINGS.OPTIONS.TEXT_ZOOM')}
+                        value={config.textZoom.label}
+                        options={textZoomOptions}
+                        onClick={openMenu}
+                        icon={<ChatAltIcon />}
                         color="bg-[#5756CE]"
                     />
                 </List>

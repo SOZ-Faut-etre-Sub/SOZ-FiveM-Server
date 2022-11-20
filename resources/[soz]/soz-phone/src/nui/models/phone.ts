@@ -47,7 +47,7 @@ export const phone = createModel<RootModel>()({
             let phoneConfig = config.defaultSettings;
             const saved = localStorage.getItem('soz_settings');
             if (saved) {
-                phoneConfig = JSON.parse(saved);
+                phoneConfig = { ...phoneConfig, ...JSON.parse(saved) };
             }
 
             dispatch.phone.SET_CONFIG(phoneConfig);

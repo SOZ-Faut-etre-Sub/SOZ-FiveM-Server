@@ -63,7 +63,14 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                 )}
                 {!isImage(message.message) && !isPosition(message.message) && (
                     <Menu.Button className="left-0 h-full w-full text-left">
-                        <p className="break-words text-ellipsis w-full select-text">
+                        <p
+                            className={cn('break-words text-ellipsis w-full select-text', {
+                                'text-base': config.textZoom.value === 1.0,
+                                'text-lg': config.textZoom.value === 1.2,
+                                'text-xl': config.textZoom.value === 1.4,
+                                'text-2xl': config.textZoom.value === 1.6,
+                            })}
+                        >
                             {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map(text => {
                                 if (text.startsWith(':') && text.endsWith(':')) {
                                     return <Emoji emoji={text} />;
