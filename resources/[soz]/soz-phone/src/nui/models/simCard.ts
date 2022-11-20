@@ -15,7 +15,6 @@ export const simCard = createModel<RootModel>()({
     state: {
         number: null,
         societyNumber: null,
-        avatar: null,
         call: null as ActiveCall,
         callHistory: [] as CallHistoryItem[],
         contacts: [] as Contact[],
@@ -28,9 +27,6 @@ export const simCard = createModel<RootModel>()({
         },
         SET_SOCIETY_NUMBER: (state, payload) => {
             return { ...state, societyNumber: payload };
-        },
-        SET_AVATAR: (state, payload) => {
-            return { ...state, avatar: payload };
         },
         SET_CALL(state, payload: ActiveCall) {
             return { ...state, call: payload };

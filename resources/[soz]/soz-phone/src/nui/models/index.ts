@@ -8,6 +8,7 @@ import { time } from './os/time';
 import { visibility } from './os/visibility';
 import { phone } from './phone';
 import { photo } from './photo';
+import { avatar } from './sim/avatar';
 import { simCard } from './simCard';
 
 export interface RootModel extends Models<RootModel> {
@@ -18,6 +19,7 @@ export interface RootModel extends Models<RootModel> {
 
     // System models
     simCard: typeof simCard;
+    avatar: typeof avatar;
     photo: typeof photo;
 
     // Apps models
@@ -32,6 +34,7 @@ export const models: RootModel = {
     time,
     visibility,
     simCard,
+    avatar,
     photo,
     appBank,
     appNotes,
