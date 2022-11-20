@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/outline';
 import { AppContent } from '@ui/components/AppContent';
-import { SearchField } from '@ui/old_components/SearchField';
+import { SearchField } from '@ui/components/SearchField';
 import cn from 'classnames';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
