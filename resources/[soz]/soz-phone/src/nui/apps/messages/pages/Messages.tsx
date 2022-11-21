@@ -143,7 +143,6 @@ export const Messages = () => {
                         messageGroupName={conversation?.display || conversation.phoneNumber}
                         messageConversationId={conversation.conversation_id}
                         onAddImageClick={() => setImageModalOpen(true)}
-                        autoFocus
                     />
                 </AppContent>
             </AppWrapper>
