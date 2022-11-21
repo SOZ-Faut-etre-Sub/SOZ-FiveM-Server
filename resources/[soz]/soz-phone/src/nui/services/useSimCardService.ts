@@ -23,6 +23,7 @@ export const useSimCardService = () => {
 
     useEffect(() => {
         store.dispatch.simCard.loadCallHistory();
+        store.dispatch.avatar.loadAvatar();
     }, []);
 
     useNuiEvent('DIALER', CallEvents.ADD_CALL, store.dispatch.simCard.loadCallHistory);
@@ -38,5 +39,5 @@ export const useSimCardService = () => {
             store.dispatch.simCard.SET_SOCIETY_NUMBER(number);
         }
     });
-    useNuiEvent('AVATAR', SettingsEvents.SET_AVATAR, store.dispatch.avatar.setAvatar);
+    useNuiEvent('AVATAR', SettingsEvents.UPDATE_PICTURE, store.dispatch.avatar.setAvatar);
 };

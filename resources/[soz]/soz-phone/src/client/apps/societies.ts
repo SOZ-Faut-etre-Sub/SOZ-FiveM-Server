@@ -12,6 +12,10 @@ onNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, (result: SocietyMessage) => {
     sendMessage(apps.SOCIETY_MESSAGES, SocietyEvents.CREATE_MESSAGE_BROADCAST, result);
 });
 
+onNet(SocietyEvents.UPDATE_SOCIETY_MESSAGE_SUCCESS, (result: SocietyMessage) => {
+    sendMessage(apps.SOCIETY_MESSAGES, SocietyEvents.UPDATE_SOCIETY_MESSAGE_SUCCESS, result);
+});
+
 onNet(SocietyEvents.RESET_SOCIETY_MESSAGES, () => {
     sendMessage(apps.SOCIETY_MESSAGES, SocietyEvents.RESET_SOCIETY_MESSAGES, null);
 });

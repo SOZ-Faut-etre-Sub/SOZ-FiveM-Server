@@ -15,7 +15,7 @@ export async function getConsolidatedMessageGroups(identifier: string): Promise<
             mapping[groupId] = {
                 unread: conversation.unread,
                 masked: conversation.masked,
-                phoneNumber: conversation.phone_number,
+                phoneNumber: conversation.participant_identifier,
                 display: conversation.display,
                 avatar: conversation.avatar,
                 conversation_id: conversation.conversation_id,

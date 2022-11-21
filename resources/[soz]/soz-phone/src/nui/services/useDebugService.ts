@@ -35,7 +35,7 @@ export const useDebugService = () => {
             },
             {
                 app: 'AVATAR',
-                method: SettingsEvents.SET_AVATAR,
+                method: SettingsEvents.GET_AVATAR,
                 data: 'https://beta.iodine.gg/teUcY.jpeg',
             },
             /*{

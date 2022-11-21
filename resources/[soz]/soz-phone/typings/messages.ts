@@ -29,7 +29,6 @@ export interface UnformattedMessageConversation {
     conversation_id: string;
     user_identifier: string;
     participant_identifier: string;
-    phone_number: string;
     avatar?: string;
     display?: string;
     updatedAt: number;

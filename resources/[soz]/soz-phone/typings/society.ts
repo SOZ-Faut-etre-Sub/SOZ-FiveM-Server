@@ -42,6 +42,7 @@ export enum SocietiesDatabaseLimits {
 
 export enum SocietyEvents {
     UPDATE_SOCIETY_MESSAGE = 'phone:updateSocietyMessage',
+    UPDATE_SOCIETY_MESSAGE_SUCCESS = 'phone:updateSocietyMessageSuccess',
     SEND_SOCIETY_MESSAGE = 'phone:sendSocietyMessage',
     FETCH_SOCIETY_MESSAGES = 'phone:fetchSocietyMessage',
     RESET_SOCIETY_MESSAGES = 'phone:resetSocietyMessage',

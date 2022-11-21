@@ -190,7 +190,7 @@ class _SocietyService {
 
             const players = await PlayerService.getPlayersFromSocietyNumber(identifier);
             players.forEach(player => {
-                emitNet(SocietyEvents.RESET_SOCIETY_MESSAGES, player.source, null);
+                emitNet(SocietyEvents.UPDATE_SOCIETY_MESSAGE_SUCCESS, player.source, societyMessage);
             });
         } catch (e) {
             societiesLogger.error(`Error in handleAddSociety, ${e.toString()}`);
