@@ -92,7 +92,6 @@ RegisterCommand(
     async () => {
         if (global.isPhoneDisabled) return;
         if (cityIsInBlackOut()) return;
-        if (IsPedRagdoll(PlayerPedId())) return;
 
         await togglePhone();
     },
@@ -199,10 +198,6 @@ setInterval(async () => {
     }
 
     if (global.isPhoneOpen && cityIsInBlackOut()) {
-        await hidePhone();
-        callService.handleEndCall();
-    }
-    if (global.isPhoneOpen && IsPedRagdoll(ped)) {
         await hidePhone();
         callService.handleEndCall();
     }
