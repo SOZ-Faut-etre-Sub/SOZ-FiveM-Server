@@ -36,18 +36,19 @@ export class _MessagesDB {
     async getMessageConversations(phoneNumber: string): Promise<UnformattedMessageConversation[]> {
         return await exports.oxmysql.query_async(
             `SELECT DISTINCT phone_messages_conversations.unread,
-                            phone_messages_conversations.conversation_id,
-                            phone_messages_conversations.masked,
-                            phone_messages_conversations.user_identifier,
-                            phone_messages_conversations.participant_identifier,
-                            phone_profile.avatar,
-                            unix_timestamp(phone_messages_conversations.updatedAt)*1000 as updatedAt
-            FROM phone_messages_conversations
-                     LEFT OUTER JOIN phone_profile
-                                     ON phone_profile.number = phone_messages_conversations.participant_identifier
-            WHERE participant_identifier = ? AND updatedAt >= DATE_SUB(NOW(), INTERVAL 14 DAY)
-            ORDER BY phone_messages_conversations.updatedAt DESC
-        `,
+                             phone_messages_conversations.conversation_id,
+                             phone_messages_conversations.masked,
+                             phone_messages_conversations.user_identifier,
+                             phone_messages_conversations.participant_identifier,
+                             phone_profile.avatar,
+                             unix_timestamp(phone_messages_conversations.updatedAt)*1000 as updatedAt
+             FROM (SELECT conversation_id FROM phone_messages_conversations WHERE phone_messages_conversations.participant_identifier = ?) AS t
+                      LEFT OUTER JOIN phone_messages_conversations
+                                      ON phone_messages_conversations.conversation_id = t.conversation_id
+                      LEFT OUTER JOIN phone_profile
+                                      ON phone_profile.number = phone_messages_conversations.participant_identifier
+             WHERE updatedAt >= DATE_SUB(NOW(), INTERVAL 14 DAY)
+             ORDER BY phone_messages_conversations.updatedAt DESC`,
             [phoneNumber]
         );
     }
