@@ -311,7 +311,7 @@ export class VehicleSpawner {
 
     public async delete(netId: number): Promise<boolean> {
         const entityId = NetworkGetEntityFromNetworkId(netId);
-        const owner = NetworkGetEntityOwner(entityId);
+        let owner = NetworkGetEntityOwner(entityId);
         this.vehicleStateService.unregisterSpawned(netId);
         const deletePromise = new PCancelable<void>(resolve => {
             this.deleting[netId] = resolve;
@@ -324,6 +324,9 @@ export class VehicleSpawner {
         let deleteTry = 0;
 
         while (!deleted && deleteTry < 600) {
+            // Maybe owner change during delete
+            owner = NetworkGetEntityOwner(entityId);
+
             setTimeout(() => {
                 try {
                     deletePromise.cancel();
