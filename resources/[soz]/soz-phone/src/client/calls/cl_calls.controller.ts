@@ -23,7 +23,10 @@ import { CallService } from './cl_calls.service';
 export const callService = new CallService();
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
-    if (callService.isInCall()) return;
+    if (callService.isInCall()) {
+        cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
+        return;
+    }
 
     try {
         const serverRes = await ClUtils.emitNetPromise<ServerPromiseResp<ActiveCall>>(CallEvents.INITIALIZE_CALL, data);
