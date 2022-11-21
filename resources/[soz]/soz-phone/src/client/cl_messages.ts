@@ -15,10 +15,11 @@ RegisterNuiProxy(MessageEvents.SEND_MESSAGE);
 RegisterNuiProxy(MessageEvents.SET_MESSAGE_READ);
 RegisterNuiProxy(MessageEvents.SET_CONVERSATION_ARCHIVED);
 
-RegisterNuiCB<void>(MessageEvents.SET_WAYPOINT, async (position: any) => {
+RegisterNuiCB<void>(MessageEvents.SET_WAYPOINT, async (position: any, cb) => {
     if (position['x'] !== 0 && position['y'] !== 0) {
         SetNewWaypoint(parseInt(position['x']), parseInt(position['y']));
     }
+    cb();
 });
 
 RegisterNuiCB<void>(MessageEvents.GET_POSITION, async (position: any, cb) => {
