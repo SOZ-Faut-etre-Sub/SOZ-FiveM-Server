@@ -28,7 +28,7 @@ import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
-import { MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
+import { MapAudioSettingItem, MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
 import { Button } from '../../../ui/old_components/Button';
 import { IContextMenuOption } from '../../../ui/old_components/ContextMenu';
 import { List } from '../../../ui/old_components/List';
@@ -75,13 +75,21 @@ export const SettingsHome = () => {
         MapSettingItem(config.textZoom, (val: SettingOption) => handleSettingChange('textZoom', val))
     );
     const ringtones = phoneConfig.ringtones.map(
-        MapSettingItem(config.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val))
+        MapAudioSettingItem(config.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val), 'ringtones')
     );
     const notifications = phoneConfig.notiSounds.map(
-        MapSettingItem(config.notiSound, (val: SettingOption) => handleSettingChange('notiSound', val))
+        MapAudioSettingItem(
+            config.notiSound,
+            (val: SettingOption) => handleSettingChange('notiSound', val),
+            'notifications'
+        )
     );
     const societyNotifications = phoneConfig.notiSounds.map(
-        MapSettingItem(config.notiSound, (val: SettingOption) => handleSettingChange('societyNotification', val))
+        MapAudioSettingItem(
+            config.notiSound,
+            (val: SettingOption) => handleSettingChange('societyNotification', val),
+            'notifications'
+        )
     );
 
     const handleResetOptions = () => {
