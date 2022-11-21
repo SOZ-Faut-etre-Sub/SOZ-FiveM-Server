@@ -281,6 +281,7 @@ model player {
   player_vehicles        PlayerVehicle[]
   records_history_player player_records_history[] @relation("records_history_player")
   records_history_author player_records_history[] @relation("records_history_author")
+  records_history_deletor player_records_history[] @relation("records_history_deletor")
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -442,13 +443,16 @@ model player_records_history {
   id               Int       @id @unique(map: "playerrecordshistory_id_uindex") @default(autoincrement())
   citizenid        String    @db.VarChar(255)
   author_citizenid String    @db.VarChar(255)
+  delete_citizenid String?    @db.VarChar(255)
   type             String    @db.VarChar(128)
   content          String?   @db.LongText
   isDeleted        Boolean?  @default(false)
   created_at       DateTime? @default(now()) @db.Timestamp(0)
   updated_at       DateTime? @default(now()) @db.Timestamp(0)
+  deleted_at       DateTime? @db.Timestamp(0)
   concerned_player player    @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_target", name: "records_history_player")
   author           player    @relation(fields: [author_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_author", name: "records_history_author")
+  deletor          player?    @relation(fields: [delete_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_deletor", name: "records_history_deletor")
 
   @@index([citizenid], map: "citizenid")
 }
