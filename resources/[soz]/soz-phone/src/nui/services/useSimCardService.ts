@@ -30,12 +30,12 @@ export const useSimCardService = () => {
 
     useNuiEvent('SIMCARD', PhoneEvents.SET_NUMBER, number => {
         if (store.getState().simCard.number !== number) {
-            store.dispatch.simCard.SET_NUMBER;
+            store.dispatch.simCard.SET_NUMBER(number);
         }
     });
     useNuiEvent('SOCIETY_SIMCARD', PhoneEvents.SET_SOCIETY_NUMBER, number => {
-        if (store.getState().simCard.number !== number) {
-            store.dispatch.simCard.SET_SOCIETY_NUMBER;
+        if (store.getState().simCard.societyNumber !== number) {
+            store.dispatch.simCard.SET_SOCIETY_NUMBER(number);
         }
     });
     useNuiEvent('AVATAR', SettingsEvents.SET_AVATAR, store.dispatch.avatar.setAvatar);
