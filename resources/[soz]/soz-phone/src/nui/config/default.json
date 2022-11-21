@@ -118,7 +118,7 @@
       "value": "online"
     },
     {
-      "label": "99kr",
+      "label": "Weweweeeee",
       "value": "99kr"
     }
   ],
@@ -157,8 +157,13 @@
       "label": "Online",
       "value": "online"
     },
+    "societyNotification": {
+      "label": "Online",
+      "value": "online"
+    },
     "ringtoneVol": 50,
-    "notiSoundVol": 50
+    "notiSoundVol": 50,
+    "societyNotificationVol": 50
   },
   "themes": [
     {
