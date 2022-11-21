@@ -92,7 +92,6 @@ RegisterCommand(
     async () => {
         if (global.isPhoneDisabled) return;
         if (cityIsInBlackOut()) return;
-        if (IsPedRagdoll(PlayerPedId())) return;
 
         await togglePhone();
     },
