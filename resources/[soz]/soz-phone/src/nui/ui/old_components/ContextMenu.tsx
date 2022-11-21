@@ -6,6 +6,7 @@ import { Button } from '@ui/old_components/Button';
 import { ItemIcon } from '@ui/old_components/ItemIcon';
 import React from 'react';
 
+import { useSoundProvider } from '../../os/sound/hooks/useSoundProvider';
 import { AppContent } from '../components/AppContent';
 import { useBackground } from '../hooks/useBackground';
 import { List } from './List';
@@ -19,6 +20,7 @@ export interface IContextMenuOption {
     selected?: boolean;
     icon?: JSX.Element;
     key?: string;
+    soundPreview?: boolean;
 }
 
 interface ContextMenuProps {
@@ -29,6 +31,7 @@ interface ContextMenuProps {
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options }) => {
     const backgroundClass = useBackground();
+    const sound = useSoundProvider();
 
     return (
         <Transition
@@ -61,6 +64,16 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
                                 onClick={e => {
                                     option.onClick(e, option);
                                     onClose();
+                                }}
+                                onMouseEnter={() => {
+                                    if (option.soundPreview) {
+                                        sound.play(`/media/${option.soundPreview}/${option.key}.mp3`, 0.1, false);
+                                    }
+                                }}
+                                onMouseLeave={() => {
+                                    if (option.soundPreview) {
+                                        sound.stop(`/media/${option.soundPreview}/${option.key}.mp3`);
+                                    }
                                 }}
                             >
                                 <ItemIcon color="transparent" icon={option.icon} />
