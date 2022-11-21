@@ -26,9 +26,8 @@ function MotorIndicator(props: {motor: number, oil: number}) {
                 [style.red]: props.motor < 101,
             })} />
             <OilIcon className={cn(style.icon, style.motor, {
-                [style.hidden]: props.oil >= 80,
-                [style.orange]: props.oil > 20,
-                [style.red]: props.oil <= 20,
+                [style.hidden]: props.oil > 10,
+                [style.red]: props.oil <= 10,
             })} />
         </>
     )
