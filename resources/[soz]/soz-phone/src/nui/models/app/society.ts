@@ -21,7 +21,6 @@ export const appSociety = createModel<RootModel>()({
             return { ...state, messages: [payload, ...state.messages] };
         },
         update: (state, payload) => {
-            console.log('update', payload);
             return {
                 ...state,
                 messages: state.messages.map(message => (message.id === payload.id ? payload : message)),
