@@ -20,6 +20,12 @@ export const appSociety = createModel<RootModel>()({
         add: (state, payload) => {
             return { ...state, messages: [payload, ...state.messages] };
         },
+        update: (state, payload) => {
+            return {
+                ...state,
+                messages: state.messages.map(message => (message.id === payload.id ? payload : message)),
+            };
+        },
     },
     effects: dispatch => ({
         async setSocietyMessages(payload: SocietyMessage[]) {
@@ -27,6 +33,9 @@ export const appSociety = createModel<RootModel>()({
         },
         async appendSocietyMessages(payload: SocietyMessage) {
             dispatch.appSociety.add(payload);
+        },
+        async updateSocietyMessages(payload: SocietyMessage) {
+            dispatch.appSociety.update(payload);
         },
         // loader
         async loadSocietyMessages() {
