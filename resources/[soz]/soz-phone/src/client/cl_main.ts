@@ -202,10 +202,6 @@ setInterval(async () => {
         await hidePhone();
         callService.handleEndCall();
     }
-    if (global.isPhoneOpen && IsPedRagdoll(ped)) {
-        await hidePhone();
-        callService.handleEndCall();
-    }
 }, 1000);
 
 setInterval(() => {
