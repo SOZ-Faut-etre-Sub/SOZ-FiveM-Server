@@ -118,7 +118,9 @@ export class VehicleSpawnProvider {
             SetEntityVisible(vehicle, true, false);
         } else {
             SetEntityAsMissionEntity(vehicle, true, true);
+            SetEntityAsNoLongerNeeded(vehicle);
             DeleteVehicle(vehicle);
+            DeleteEntity(vehicle);
 
             this.notifier.notify("Le véhicule n'a pas pu être sorti, veuillez ressayer", 'error');
         }
@@ -127,10 +129,18 @@ export class VehicleSpawnProvider {
     @OnEvent(ClientEvent.VEHICLE_DELETE)
     async deleteVehicle(netId: number) {
         const vehicle = NetworkGetEntityFromNetworkId(netId);
+        let tryCount = 0;
+
+        while (!NetworkRequestControlOfEntity(vehicle) && !NetworkRequestControlOfNetworkId(netId) && tryCount < 10) {
+            await wait(100);
+            tryCount++;
+        }
 
         if (DoesEntityExist(vehicle)) {
             SetEntityAsMissionEntity(vehicle, true, true);
+            SetEntityAsNoLongerNeeded(vehicle);
             DeleteVehicle(vehicle);
+            DeleteEntity(vehicle);
 
             TriggerServerEvent(ServerEvent.VEHICLE_DELETED, netId);
         }

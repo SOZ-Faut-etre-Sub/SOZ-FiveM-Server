@@ -1,8 +1,8 @@
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Outfit, WardrobeConfig } from '../../shared/cloth';
-import { ClientEvent, NuiEvent } from '../../shared/event';
+import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { NuiMenu } from '../nui/nui.menu';
 
