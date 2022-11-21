@@ -175,12 +175,6 @@ export class ItemFuelProvider {
 
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
 
-        if (vehicleState.condition.oilLevel >= 70) {
-            this.notifier.notify(source, "Vous avez ~r~trop d'huile~s~ pour utiliser un jerrycan.", 'error');
-
-            return;
-        }
-
         if (
             !this.inventoryManager.removeItemFromInventory(
                 source,
@@ -210,11 +204,11 @@ export class ItemFuelProvider {
             }
         );
 
-        const filledOil = Math.round(progress * JERRYCAN_FUEL_AMOUNT);
+        const filledOil = Math.round(progress * (100 - vehicleState.condition.oilLevel));
         const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
-            oilLevel: vehicleState.condition.oilLevel + filledOil,
+            oilLevel: Math.min(vehicleState.condition.oilLevel + filledOil, 100),
         });
 
         this.notifier.notify(source, 'Vous avez ~g~utilisé~s~ un jerrycan de kérosène.', 'success');

@@ -651,7 +651,7 @@ export class VehicleFuelProvider {
 
         const multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
         const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.084 * multiplier;
-        const consumedOil = consumedFuel / 20;
+        const consumedOil = consumedFuel / 12;
 
         const state = this.vehicleService.getVehicleState(vehicle);
 
