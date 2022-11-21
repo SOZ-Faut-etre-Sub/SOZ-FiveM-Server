@@ -231,6 +231,10 @@ export class VehicleConditionProvider {
     private async onVehicleSyncCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
+        if (!vehicle) {
+            return;
+        }
+
         if (!IsEntityAVehicle(vehicle)) {
             return;
         }
