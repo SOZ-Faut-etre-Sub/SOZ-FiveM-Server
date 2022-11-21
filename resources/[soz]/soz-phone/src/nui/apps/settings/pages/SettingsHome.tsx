@@ -80,6 +80,9 @@ export const SettingsHome = () => {
     const notifications = phoneConfig.notiSounds.map(
         MapSettingItem(config.notiSound, (val: SettingOption) => handleSettingChange('notiSound', val))
     );
+    const societyNotifications = phoneConfig.notiSounds.map(
+        MapSettingItem(config.notiSound, (val: SettingOption) => handleSettingChange('societyNotification', val))
+    );
 
     const handleResetOptions = () => {
         store.dispatch.phone.updateConfig(phoneConfig.defaultSettings);
@@ -173,6 +176,23 @@ export const SettingsHome = () => {
                         iconEnd={<VolumeUpIcon />}
                         value={config.notiSoundVol}
                         onCommit={e => handleSettingChange('notiSoundVol', parseInt(e.target.value))}
+                    />
+                </List>
+                <List>
+                    <SettingItem
+                        label={t('SETTINGS.OPTIONS.SOCIETY_NOTIFICATION')}
+                        value={config.societyNotification.label}
+                        options={societyNotifications}
+                        onClick={openMenu}
+                        icon={<BellIcon />}
+                        color="bg-[#3d71ea]"
+                    />
+                    <SettingItemSlider
+                        label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
+                        iconStart={<VolumeOffIcon />}
+                        iconEnd={<VolumeUpIcon />}
+                        value={config.societyNotificationVol}
+                        onCommit={e => handleSettingChange('societyNotificationsVol', parseInt(e.target.value))}
                     />
                 </List>
                 <List>
