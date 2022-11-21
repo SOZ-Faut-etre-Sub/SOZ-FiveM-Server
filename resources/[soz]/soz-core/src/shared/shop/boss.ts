@@ -94,7 +94,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'cleaningkit', type: 'item', price: 40 },
             { id: 'wheel_kit', type: 'item', price: 80 },
             { id: 'diagnostic_pad', type: 'item', price: 260 },
-            { id: 'oil_jerrycan', type: 'item', price: 20 },
+            { id: 'oil_jerrycan', type: 'item', price: 100 },
         ],
     },
     {
@@ -114,7 +114,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'cleaningkit', type: 'item', price: 40 },
             { id: 'wheel_kit', type: 'item', price: 80 },
             { id: 'diagnostic_pad', type: 'item', price: 260 },
-            { id: 'oil_jerrycan', type: 'item', price: 20 },
+            { id: 'oil_jerrycan', type: 'item', price: 100 },
         ],
     },
     {
