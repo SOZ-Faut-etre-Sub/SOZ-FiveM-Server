@@ -31,7 +31,6 @@ export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange, place
                         'bg-ios-700': config.theme.value === 'dark',
                         'bg-gray-300': config.theme.value === 'light',
                     })}
-                    autoFocus
                 />
             </div>
         </div>
