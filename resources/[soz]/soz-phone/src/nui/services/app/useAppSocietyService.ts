@@ -33,5 +33,10 @@ export const useAppSocietyService = () => {
     };
 
     useNuiEvent('SOCIETY_MESSAGES', SocietyEvents.CREATE_MESSAGE_BROADCAST, handleMessageBroadcast);
+    useNuiEvent(
+        'SOCIETY_MESSAGES',
+        SocietyEvents.UPDATE_SOCIETY_MESSAGE_SUCCESS,
+        store.dispatch.appSociety.updateSocietyMessages
+    );
     useNuiEvent('SOCIETY_MESSAGES', SocietyEvents.RESET_SOCIETY_MESSAGES, handleResetMessages);
 };
