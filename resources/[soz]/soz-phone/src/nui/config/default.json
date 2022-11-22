@@ -120,6 +120,26 @@
     {
       "label": "Weweweeeee",
       "value": "99kr"
+    },
+    {
+      "label": "Old",
+      "value": "old"
+    },
+    {
+      "label": "Pouloum",
+      "value": "pouloum"
+    },
+    {
+      "label": "Toudoum",
+      "value": "toudoum"
+    },
+    {
+      "label": "Toutouloum",
+      "value": "toutouloum"
+    },
+    {
+      "label": "UwU",
+      "value": "uwu"
     }
   ],
   "defaultSettings": {

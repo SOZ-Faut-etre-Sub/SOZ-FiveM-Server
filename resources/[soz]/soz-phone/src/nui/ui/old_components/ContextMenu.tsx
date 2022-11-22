@@ -67,12 +67,12 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
                                 }}
                                 onMouseEnter={() => {
                                     if (option.soundPreview) {
-                                        sound.play(`/media/${option.soundPreview}/${option.key}.mp3`, 0.1, false);
+                                        sound.play(`media/${option.soundPreview}/${option.key}.mp3`, 0.1, false);
                                     }
                                 }}
                                 onMouseLeave={() => {
                                     if (option.soundPreview) {
-                                        sound.stop(`/media/${option.soundPreview}/${option.key}.mp3`);
+                                        sound.stop(`media/${option.soundPreview}/${option.key}.mp3`);
                                     }
                                 }}
                             >

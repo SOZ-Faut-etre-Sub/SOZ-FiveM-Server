@@ -200,7 +200,7 @@ export const SettingsHome = () => {
                         iconStart={<VolumeOffIcon />}
                         iconEnd={<VolumeUpIcon />}
                         value={config.societyNotificationVol}
-                        onCommit={e => handleSettingChange('societyNotificationsVol', parseInt(e.target.value))}
+                        onCommit={e => handleSettingChange('societyNotificationVol', parseInt(e.target.value))}
                     />
                 </List>
                 <List>

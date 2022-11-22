@@ -4,6 +4,7 @@ import { getNotificationPath, getRingtonePath } from '../../../apps/settings/uti
 const getPath = {
     ringtone: getRingtonePath,
     notiSound: getNotificationPath,
+    societyNotification: getNotificationPath,
 };
 
 /**
