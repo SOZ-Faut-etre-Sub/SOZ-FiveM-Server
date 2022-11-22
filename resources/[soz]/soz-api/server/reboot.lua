@@ -20,5 +20,5 @@ exports("RemoveRebootMessage", function()
         if status ~= 201 then
             exports["soz-monitor"]:Log("ERROR", "error when removing reboot message, status: " .. status .. ", body: " .. tostring(text), {})
         end
-    end, "POST", nil, {["Authorization"] = authorization, ["Content-Type"] = "application/json"})
+    end, "POST", json.encode({}), {["Authorization"] = authorization, ["Content-Type"] = "application/json"})
 end)
