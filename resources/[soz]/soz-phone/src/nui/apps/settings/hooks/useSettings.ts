@@ -20,6 +20,8 @@ export interface IPhoneSettings {
     ringtoneVol: number;
     notiSound: SettingOption;
     notiSoundVol: number;
+    societyNotification: SettingOption;
+    societyNotificationVol: number;
 }
 
 export const useSettingsAPI = () => {

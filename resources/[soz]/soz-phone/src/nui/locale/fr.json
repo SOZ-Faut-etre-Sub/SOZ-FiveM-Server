@@ -51,7 +51,8 @@
         },
         "RINGTONE": "Sonnerie",
         "RINGTONE_VOLUME": "Volume de la sonnerie",
-        "NOTIFICATION": "Notification",
+        "NOTIFICATION": "Notification Messagerie",
+        "SOCIETY_NOTIFICATION": "Notification Répondeur",
         "NOTIFICATION_VOLUME": "Volume des notifications",
         "NOTIFICATION_FILTER": "Filtres des notifications"
       },

@@ -38,7 +38,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
                 <div
                     className={cn('truncate', {
                         'col-span-4 text-left': !children && !action,
-                        'col-span-2 text-center': children && action,
+                        'col-span-2 text-center': children,
                     })}
                 >
                     {title ? title : t(app.nameLocale)}
