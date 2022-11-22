@@ -8,7 +8,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomEnumValue, getRandomInt } from '../../shared/random';
 import { VehicleModType, VehicleXenonColor, VehicleXenonColorChoices } from '../../shared/vehicle/modification';
-import { VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
+import { VehicleClass, VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
@@ -176,7 +176,7 @@ export class VehicleConditionProvider {
 
         const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
 
-        if (!vehicle) {
+        if (!vehicle || !DoesEntityExist(vehicle)) {
             return;
         }
 
@@ -231,7 +231,7 @@ export class VehicleConditionProvider {
     private async onVehicleSyncCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
-        if (!vehicle) {
+        if (!vehicle || !DoesEntityExist(vehicle)) {
             return;
         }
 
@@ -260,7 +260,7 @@ export class VehicleConditionProvider {
     public async checkCondition(vehicleNetworkId: number) {
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
-        if (!vehicle) {
+        if (!vehicle || !DoesEntityExist(vehicle)) {
             return;
         }
 
@@ -273,9 +273,10 @@ export class VehicleConditionProvider {
         }
 
         // Check dead status
-        await this.checkVehicleWater(vehicle);
-
         const state = this.vehicleService.getVehicleState(vehicle);
+
+        this.checkVehicleWater(vehicle, state);
+
         const newCondition = {
             ...state.condition,
             ...this.vehicleService.getVehicleCondition(vehicle),
@@ -318,9 +319,7 @@ export class VehicleConditionProvider {
         }
     }
 
-    private async checkVehicleWater(vehicle: number) {
-        const state = this.vehicleService.getVehicleState(vehicle);
-
+    private checkVehicleWater(vehicle: number, state: VehicleEntityState) {
         if (!state.isPlayerVehicle || state.dead) {
             return;
         }
@@ -589,7 +588,7 @@ export class VehicleConditionProvider {
 
         const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
 
-        if (!vehicle) {
+        if (!vehicle || !DoesEntityExist(vehicle)) {
             return;
         }
 
