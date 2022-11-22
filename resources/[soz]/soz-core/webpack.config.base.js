@@ -17,7 +17,6 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
     }
 
     return {
-        devtool: isProduction ? false : 'eval-cheap-source-map',
         target: target,
         entry,
         output: {
@@ -50,15 +49,27 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
                                     tsx: true,
                                     decorators: true,
                                 },
-                                target: 'es2016',
+                                target: 'es2020',
                                 transform: {
                                     react: {
                                         runtime: 'automatic',
                                         development: !isProduction,
                                         refresh: !isProduction,
                                     },
+                                    optimizer: {
+                                        simplify: true,
+                                        globals: {
+                                            vars: {
+                                                ...variables,
+                                                SOZ_CORE_IS_PRODUCTION: JSON.stringify(isProduction),
+                                            },
+                                        },
+                                    },
                                 },
+                                keepClassNames: true,
                             },
+                            sourceMaps: !isProduction,
+                            minify: isProduction,
                         },
                     },
                 },
