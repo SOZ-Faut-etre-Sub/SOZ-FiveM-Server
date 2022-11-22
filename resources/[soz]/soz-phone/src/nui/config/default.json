@@ -110,6 +110,18 @@
     {
       "label": "Pixel",
       "value": "pixel"
+    },
+    {
+      "label": "Nostalgie",
+      "value": "faily"
+    },
+    {
+      "label": "Fantaisie",
+      "value": "fantaisie"
+    },
+    {
+      "label": "Thriller",
+      "value": "thriller"
     }
   ],
   "notiSounds": [
