@@ -4,12 +4,17 @@ import { getNotificationPath, getRingtonePath } from '../../../apps/settings/uti
 const getPath = {
     ringtone: getRingtonePath,
     notiSound: getNotificationPath,
+    societyNotification: getNotificationPath,
 };
 
 /**
  * Gets the configuration for SoundProvider based on settings and apps
  */
-export const getSoundSettings = (type: 'ringtone' | 'notiSound', settings: IPhoneSettings, app?: string) => {
+export const getSoundSettings = (
+    type: 'ringtone' | 'notiSound' | 'societyNotification',
+    settings: IPhoneSettings,
+    app?: string
+) => {
     try {
         return app
             ? {

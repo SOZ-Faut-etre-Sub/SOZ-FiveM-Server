@@ -158,7 +158,11 @@ export function NotificationsProvider({ children }) {
         }
 
         if (n.sound) {
-            const { sound, volume } = getSoundSettings('notiSound', settings, n.app);
+            const { sound, volume } = getSoundSettings(
+                n.app === 'society-messages' ? 'societyNotification' : 'notiSound',
+                settings,
+                n.app
+            );
             mount(sound, volume, false).then(({ url }) => setAlerts(curr => [...curr, [n, cb, url]]));
             return;
         }

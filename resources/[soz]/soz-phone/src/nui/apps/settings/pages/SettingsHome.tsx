@@ -28,7 +28,7 @@ import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
-import { MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
+import { MapAudioSettingItem, MapSettingItem, SettingOption, useContextMenu } from '../../../ui/hooks/useContextMenu';
 import { Button } from '../../../ui/old_components/Button';
 import { IContextMenuOption } from '../../../ui/old_components/ContextMenu';
 import { List } from '../../../ui/old_components/List';
@@ -75,10 +75,21 @@ export const SettingsHome = () => {
         MapSettingItem(config.textZoom, (val: SettingOption) => handleSettingChange('textZoom', val))
     );
     const ringtones = phoneConfig.ringtones.map(
-        MapSettingItem(config.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val))
+        MapAudioSettingItem(config.ringtone, (val: SettingOption) => handleSettingChange('ringtone', val), 'ringtones')
     );
     const notifications = phoneConfig.notiSounds.map(
-        MapSettingItem(config.notiSound, (val: SettingOption) => handleSettingChange('notiSound', val))
+        MapAudioSettingItem(
+            config.notiSound,
+            (val: SettingOption) => handleSettingChange('notiSound', val),
+            'notifications'
+        )
+    );
+    const societyNotifications = phoneConfig.notiSounds.map(
+        MapAudioSettingItem(
+            config.notiSound,
+            (val: SettingOption) => handleSettingChange('societyNotification', val),
+            'notifications'
+        )
     );
 
     const handleResetOptions = () => {
@@ -173,6 +184,23 @@ export const SettingsHome = () => {
                         iconEnd={<VolumeUpIcon />}
                         value={config.notiSoundVol}
                         onCommit={e => handleSettingChange('notiSoundVol', parseInt(e.target.value))}
+                    />
+                </List>
+                <List>
+                    <SettingItem
+                        label={t('SETTINGS.OPTIONS.SOCIETY_NOTIFICATION')}
+                        value={config.societyNotification.label}
+                        options={societyNotifications}
+                        onClick={openMenu}
+                        icon={<BellIcon />}
+                        color="bg-[#3d71ea]"
+                    />
+                    <SettingItemSlider
+                        label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
+                        iconStart={<VolumeOffIcon />}
+                        iconEnd={<VolumeUpIcon />}
+                        value={config.societyNotificationVol}
+                        onCommit={e => handleSettingChange('societyNotificationVol', parseInt(e.target.value))}
                     />
                 </List>
                 <List>
