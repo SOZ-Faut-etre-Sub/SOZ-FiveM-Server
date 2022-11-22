@@ -4,6 +4,7 @@ import React, { Fragment, FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { store } from '../../../store';
+import { EndCallIcon } from '../../../ui/assets/endCall';
 import { useCall } from '../hooks/useCall';
 
 export const CallControls: FunctionComponent = () => {
@@ -42,8 +43,8 @@ export const CallControls: FunctionComponent = () => {
         <div className="absolute bottom-40 inset-x-0 flex justify-around">
             {callInProgress ? (
                 <Fragment>
-                    <PhoneIcon
-                        className="h-20 w-20 rotate-[140deg] text-white p-4 bg-red-500 rounded-full cursor-pointer"
+                    <EndCallIcon
+                        className="h-20 w-20 text-white p-4 bg-red-500 rounded-full cursor-pointer"
                         onClick={handleEndCall}
                     />
                     <MicrophoneIcon
@@ -56,8 +57,8 @@ export const CallControls: FunctionComponent = () => {
                 </Fragment>
             ) : (
                 <Fragment>
-                    <PhoneIcon
-                        className="h-20 w-20 rotate-[140deg] text-white p-4 bg-red-500 rounded-full cursor-pointer"
+                    <EndCallIcon
+                        className="h-20 w-20 text-white p-4 bg-red-500 rounded-full cursor-pointer"
                         onClick={handleRejectCall}
                     />
                     <PhoneIcon
