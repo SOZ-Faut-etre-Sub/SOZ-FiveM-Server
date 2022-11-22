@@ -12,7 +12,7 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
         }),
     ];
 
-    if (!isProduction) {
+    if (!isProduction && target !== 'node') {
         plugins.push(new ReactRefreshWebpackPlugin());
     }
 
