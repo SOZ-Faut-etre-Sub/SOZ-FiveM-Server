@@ -24,7 +24,12 @@ export class VehicleService {
     public async generatePlate(): Promise<string> {
         let plate;
         do {
-            plate = Math.random().toString(36).slice(2, 10).toUpperCase();
+            const firstPart = getRandomInt(0, 9).toString(10);
+            const secondPart = Math.random().toString(36).slice(2, 4).toUpperCase();
+            const thirdPart = getRandomInt(100, 999).toString(10);
+            const fourthPart = Math.random().toString(36).slice(2, 4).toUpperCase();
+
+            plate = firstPart + secondPart + thirdPart + fourthPart;
         } while (await this.prismaService.playerVehicle.findFirst({ where: { plate: plate } }));
         return plate;
     }
