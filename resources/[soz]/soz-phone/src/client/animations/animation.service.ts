@@ -85,17 +85,17 @@ export class AnimationService {
     }
 
     async openPhone(): Promise<void> {
-        newPhoneProp();
         if (!this.onCall) {
+            newPhoneProp();
             this.handleOpenAnimation(PlayerPedId());
         }
         this.setPhoneState(AnimationState.PHONE_OPEN, true);
     }
 
     async closePhone(): Promise<void> {
-        removePhoneProp();
         this.setPhoneState(AnimationState.PHONE_OPEN, false);
         if (!this.onCall) {
+            removePhoneProp();
             this.handleCloseAnimation(PlayerPedId());
         }
     }
