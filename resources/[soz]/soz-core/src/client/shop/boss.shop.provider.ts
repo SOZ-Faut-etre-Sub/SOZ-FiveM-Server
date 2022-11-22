@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
+import { Zone } from '../../shared/polyzone/box.zone';
 import { ShopProduct } from '../../shared/shop';
 import { BossShop } from '../../shared/shop/boss';
 import { ItemService } from '../item/item.service';
@@ -25,10 +26,19 @@ export class BossShopProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    public async onOpenMenu(job: JobType, products: ShopProduct[]) {
+    public async onOpenMenu(job: JobType, products: ShopProduct[], zone: Zone) {
         const hydratedProducts = products.map(product => ({ ...product, item: this.itemService.getItem(product.id) }));
 
-        this.nuiMenu.openMenu(MenuType.BossShop, { job, products: hydratedProducts });
+        this.nuiMenu.openMenu(
+            MenuType.BossShop,
+            { job, products: hydratedProducts },
+            {
+                position: {
+                    position: zone.center,
+                    distance: 5.0,
+                },
+            }
+        );
     }
 
     @OnNuiEvent(NuiEvent.BossShopBuy)
@@ -51,7 +61,7 @@ export class BossShopProvider {
                         canInteract: () => {
                             return this.qbCore.hasJobPermission(shop.job, JobPermission.SocietyShop);
                         },
-                        action: this.onOpenMenu.bind(this, shop.job, shop.products),
+                        action: this.onOpenMenu.bind(this, shop.job, shop.products, shop.zone),
                     },
                 ],
                 2.5
