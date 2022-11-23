@@ -6,6 +6,7 @@ import { Message, MessageEvents } from '@typings/messages';
 import { PictureReveal } from '@ui/old_components/PictureReveal';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
+import dayjs from 'dayjs';
 import React from 'react';
 
 import { useConfig } from '../../../../hooks/usePhone';
@@ -29,6 +30,7 @@ interface MessageBubbleProps {
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
     const config = useConfig();
     const myNumber = usePhoneNumber();
+
     const setWaypoint = () => {
         const position = /vec2\((-?[0-9.]+),(-?[0-9.]+)\)/g.exec(message.message);
 
@@ -40,17 +42,21 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
 
     const isMine = message.author === myNumber;
 
-    const messageColor = () => {
-        if (isMine) {
-            return 'bg-[#32CA5B] text-white';
-        } else {
-            return config.theme.value === 'dark' ? 'bg-ios-700 text-white' : 'bg-[#E9E9EB] text-dark';
-        }
-    };
-
     return (
-        <div className={`relative flex ${isMine && 'justify-end'}`}>
-            <Menu as="div" className={`flex justify-between w-3/4 rounded-2xl ${messageColor()} p-3 m-2 text-ellipsis`}>
+        <div
+            className={cn('relative flex', {
+                'flex-row': !isMine,
+                'flex-row-reverse': isMine,
+            })}
+        >
+            <Menu
+                as="div"
+                className={cn('flex justify-between w-3/4 rounded-2xl p-3 m-2 text-ellipsis', {
+                    'bg-[#32CA5B] text-white': isMine,
+                    'bg-ios-700 text-white': !isMine && config.theme.value === 'dark',
+                    'bg-[#E9E9EB] text-dark': !isMine && config.theme.value === 'light',
+                })}
+            >
                 {isImage(message.message) && (
                     <PictureReveal image={message.message}>
                         <img src={message.message} className="rounded-lg" alt="message multimedia" />
@@ -102,6 +108,16 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                     </Menu.Items>
                 </Transition>
             </Menu>
+            <div className="relative flex self-center">
+                <div
+                    className={cn('text-gray-500 text-xs', {
+                        'text-gray-400': !isMine && config.theme.value === 'dark',
+                        'text-gray-500': !isMine && config.theme.value === 'light',
+                    })}
+                >
+                    {dayjs(message.createdAt).format('HH:mm')}
+                </div>
+            </div>
         </div>
     );
 };
