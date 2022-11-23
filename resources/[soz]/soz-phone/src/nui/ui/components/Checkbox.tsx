@@ -48,4 +48,4 @@ export const Checkbox: FunctionComponent<Props> = ({ title, enabled, onClick }) 
 
 Checkbox.defaultProps = {
     enabled: false,
-}
+};
