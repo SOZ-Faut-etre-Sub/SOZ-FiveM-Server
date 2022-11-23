@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
-import { ChatIcon, LocationMarkerIcon, PhoneIncomingIcon, PhoneMissedCallIcon } from '@heroicons/react/solid';
+import { ChatIcon } from '@heroicons/react/solid';
 import { SocietiesDatabaseLimits } from '@typings/society';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSociety } from '../../../hooks/app/useSociety';
+import { Checkbox } from '../../../ui/components/Checkbox';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
@@ -26,6 +27,7 @@ const ContactsInfoPage: React.FC = () => {
     const [t] = useTranslation();
     const [message, setMessage] = useState('');
     const [anonymous, setAnonymous] = useState(false);
+    const [position, setPosition] = useState(true);
 
     const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = e => {
         const inputVal = e.currentTarget.value;
@@ -33,19 +35,15 @@ const ContactsInfoPage: React.FC = () => {
         setMessage(e.target.value);
     };
 
-    const handleAnonymousChange: React.MouseEventHandler<HTMLInputElement> = () => {
-        setAnonymous(s => !s);
-    };
-
     const handleSend = () => {
-        if (message.length > 5) {
+        if (message.length >= 5) {
             sendSocietyMessage({ number: contact.number, message, anonymous, position: false });
             navigate('/society-contacts', { replace: true });
         }
     };
 
     const handleSendWithLocation = () => {
-        if (message.length > 5) {
+        if (message.length >= 5) {
             sendSocietyMessage({ number: contact.number, message, anonymous, position: true });
             navigate('/society-contacts', { replace: true });
         }
@@ -82,29 +80,24 @@ const ContactsInfoPage: React.FC = () => {
                         placeholder={t('SOCIETY_CONTACTS.FORM_MESSAGE')}
                     />
                 </div>
-                <div className="mt-4 grid gap-3 grid-cols-3">
+                <div className="mx-10">
+                    <Checkbox
+                        title="Envoyer avec ma position"
+                        enabled={position}
+                        onClick={() => setPosition(s => !s)}
+                    />
+                    <Checkbox title="Envoi anonyme" enabled={anonymous} onClick={() => setAnonymous(s => !s)} />
+                </div>
+                <div className="mt-2 mx-10">
                     <ActionButton onClick={handleSend} disabled={message.length < 5}>
                         <ChatIcon className="h-6 w-6" />
-                        <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND')}</p>
-                    </ActionButton>
-
-                    <ActionButton onClick={handleAnonymousChange}>
-                        {anonymous ? (
-                            <PhoneMissedCallIcon className="h-6 w-6" />
+                        {message.length < 5 ? (
+                            <p className="text-sm text-center text-gray-500">Votre message est trop court</p>
                         ) : (
-                            <PhoneIncomingIcon className="h-6 w-6" />
+                            <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND')}</p>
                         )}
-                        <p className="text-sm text-center">Rappel {anonymous ? 'interdit' : 'autorisé'}</p>
-                    </ActionButton>
-
-                    <ActionButton onClick={handleSendWithLocation} disabled={message.length < 5}>
-                        <LocationMarkerIcon className="h-6 w-6" />
-                        <p className="text-sm text-center">{t('SOCIETY_CONTACTS.SEND_POSITION')}</p>
                     </ActionButton>
                 </div>
-                {message.length < 5 && (
-                    <p className="text-sm text-center text-red-500 pt-2">Votre message est trop court</p>
-                )}
             </AppContent>
         </Transition>
     );
