@@ -36,7 +36,7 @@ export const CallModal = memo(() => {
     if (!call) return null;
 
     return (
-        <FullPageWithHeader className="bg-ios-800 bg-opacity-30 backdrop-blur">
+        <FullPageWithHeader className="bg-ios-800 bg-opacity-80">
             <AppWrapper>
                 <AppContent>
                     <CallContactContainer />
