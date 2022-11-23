@@ -62,6 +62,9 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ open, onClose, options
                                 key={option.key || option.label}
                                 button
                                 onClick={e => {
+                                    if (option.soundPreview) {
+                                        sound.stop(`media/${option.soundPreview}/${option.key}.mp3`);
+                                    }
                                     option.onClick(e, option);
                                     onClose();
                                 }}
