@@ -14,8 +14,8 @@
       <animConvRoofDictName>null</animConvRoofDictName>
       <animConvRoofName>null</animConvRoofName>
       <animConvRoofWindowsAffected />
-      <ptfxAssetName></ptfxAssetName>
-      <audioNameHash>DOMINATOR_SHERIFF</audioNameHash>
+      <ptfxAssetName />
+      <audioNameHash>dominator_sheriff</audioNameHash>
       <layout>LAYOUT_STD_EXITFIXUP</layout>
       <coverBoundOffsets>SAVESTRA_COVER_OFFSET_INFO</coverBoundOffsets>
       <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
@@ -81,16 +81,13 @@
       <plateType>VPT_BACK_PLATES</plateType>
 	  <dashboardType>VDT_SCHAFTER2</dashboardType>
       <vehicleClass>VC_EMERGENCY</vehicleClass>
-      <wheelType>VWT_SPORT</wheelType>
+      <wheelType>VWT_MUSCLE</wheelType>
       <trailers />
       <additionalTrailers />
-      <drivers>
-        <Item>
-          <driverName>S_M_Y_Sheriff_01</driverName>
-          <npcName />
-        </Item>
-      </drivers>
-      <extraIncludes />
+      <drivers />
+      <extraIncludes>
+          <Item>EXTRA_1 EXTRA_2 EXTRA_4 EXTRA_5 EXTRA_7</Item>
+        </extraIncludes>
       <doorsWithCollisionWhenClosed />
       <driveableDoors />
       <bumpersNeedToCollideWithMap value="false" />
