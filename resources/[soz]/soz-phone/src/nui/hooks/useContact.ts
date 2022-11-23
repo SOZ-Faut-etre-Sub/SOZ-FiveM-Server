@@ -36,7 +36,11 @@ export const useContact = () => {
             const list = [];
 
             contacts
-                .filter(contact => contact?.display?.toLowerCase().includes(search) || contact.number.includes(search))
+                .filter(
+                    contact =>
+                        contact?.display?.toLowerCase().includes(search.toLowerCase()) ||
+                        contact.number.includes(search)
+                )
                 .forEach(contact => {
                     const letter = (contact.display ? contact.display[0] : '#').toUpperCase();
                     if (list[letter] === undefined) {
