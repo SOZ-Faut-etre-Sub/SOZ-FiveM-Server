@@ -7,7 +7,7 @@ import { useConfig } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { BankCard } from '../components/BankCard';
-import { Checkbox } from '../components/Checkbox';
+import { Checkbox } from '../../../ui/components/Checkbox';
 
 export const BankHome = memo(() => {
     const credentials = useSelector((state: RootState) => state.appBank);
