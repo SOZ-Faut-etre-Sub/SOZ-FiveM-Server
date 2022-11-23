@@ -3,6 +3,7 @@ export interface Message {
     message: string;
     conversation_id?: string;
     author: string;
+    createdAt: number;
 }
 
 export interface PreDBMessage {
