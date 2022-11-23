@@ -1,12 +1,13 @@
 import data from '@emoji-mart/data/sets/14/apple.json';
 import Picker from '@emoji-mart/react';
-import { EmojiHappyIcon, PaperClipIcon, UploadIcon } from '@heroicons/react/outline';
-import { TextField } from '@ui/old_components/Input';
+import { EmojiHappyIcon, PaperClipIcon } from '@heroicons/react/outline';
 import cn from 'classnames';
 import React, { FunctionComponent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useConfig } from '../../../../hooks/usePhone';
+import { SendIcon } from '../../../../ui/assets/send';
+import { TextareaField } from '../../../../ui/old_components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
 
 interface IProps {
@@ -32,8 +33,9 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
         }
     };
 
-    const handleKeyPress = async (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyPress = async (event: KeyboardEvent) => {
         if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
             await handleSubmit();
         }
     };
@@ -45,7 +47,7 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
     if (!messageConversationId) return null;
 
     return (
-        <div className="flex">
+        <div className="flex h-14 mt-1 items-center">
             {emojiKeyboard && (
                 <div className="absolute w-full z-10 bottom-[150px] left-[25px] right-0 opacity-90">
                     <Picker
@@ -75,15 +77,18 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
                     })}
                 />
             </button>
-            <TextField
+            <TextareaField
                 onKeyPress={handleKeyPress}
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 placeholder={t('MESSAGES.NEW_MESSAGE')}
                 autoFocus={autoFocus}
             />
-            <button className="bg-[#32CA5B] rounded-full mx-2 " onClick={handleSubmit}>
-                <UploadIcon className="w-5 h-5 mx-2 text-white" />
+            <button
+                className="bg-[#32CA5B] rounded-full h-10 w-10 mx-2 flex align-center justify-center shrink "
+                onClick={handleSubmit}
+            >
+                <SendIcon className="w-5 h-5 m-2 text-white -rotate-45" />
             </button>
         </div>
     );
