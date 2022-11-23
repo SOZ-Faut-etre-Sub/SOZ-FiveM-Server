@@ -1,18 +1,19 @@
 import cn from 'classnames';
-import React, { memo } from 'react';
+import React, { FunctionComponent } from 'react';
 
-import { useConfig } from '../../../hooks/usePhone';
+import { useConfig } from '../../hooks/usePhone';
 
 type Props = {
     title: string;
     enabled: boolean;
+    onClick?: () => void;
 };
 
-export const Checkbox = memo(({ title, enabled }: Props) => {
+export const Checkbox: FunctionComponent<Props> = ({ title, enabled, onClick }) => {
     const config = useConfig();
 
     return (
-        <div className="flex justify-between items-center py-2">
+        <div className="flex justify-between items-center py-2" onClick={onClick}>
             <span
                 className={cn('text-sm font-medium ', {
                     'text-gray-100': config.theme.value === 'dark',
@@ -43,4 +44,8 @@ export const Checkbox = memo(({ title, enabled }: Props) => {
             </button>
         </div>
     );
-});
+};
+
+Checkbox.defaultProps = {
+    enabled: false,
+};
