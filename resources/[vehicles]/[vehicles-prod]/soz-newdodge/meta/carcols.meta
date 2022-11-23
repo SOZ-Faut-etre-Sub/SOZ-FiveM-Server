@@ -2,34 +2,34 @@
 <CVehicleModelInfoVarGlobal>
   <Sirens>
 	  <Item>
-   <id value="5011" />
-   <name>sheriffdodge</name>
-         <timeMultiplier value="1.00000000" />
-      <lightFalloffMax value="70.00000000" />
-      <lightFalloffExponent value="10.00000000" />
-      <lightInnerConeAngle value="2.29061000" />
-      <lightOuterConeAngle value="70.00000000" />
-      <lightOffset value="0.00000000" />
-      <textureName>VehicleLight_sirenlight</textureName>
-      <sequencerBpm value="200" />
-      <leftHeadLight>
+        <id value="5011" />
+        <name>sheriffdodge</name>
+        <timeMultiplier value="1.00000000" />
+        <lightFalloffMax value="70.00000000" />
+        <lightFalloffExponent value="10.00000000" />
+        <lightInnerConeAngle value="2.29061000" />
+        <lightOuterConeAngle value="70.00000000" />
+        <lightOffset value="0.00000000" />
+        <textureName>VehicleLight_sirenlight</textureName>
+        <sequencerBpm value="200" />
+        <leftHeadLight>
         <sequencer value="0" />
-      </leftHeadLight>
-      <rightHeadLight>
+        </leftHeadLight>
+        <rightHeadLight>
         <sequencer value="0" />
-      </rightHeadLight>
-      <leftTailLight>
+        </rightHeadLight>
+        <leftTailLight>
         <sequencer value="1431655765" />
-      </leftTailLight>
-      <rightTailLight>
+        </leftTailLight>
+        <rightTailLight>
         <sequencer value="2863311530" />
-      </rightTailLight>
-      <leftHeadLightMultiples value="1" />
-      <rightHeadLightMultiples value="1" />
-      <leftTailLightMultiples value="2" />
-      <rightTailLightMultiples value="2" />
-      <useRealLights value="true" />
-      <sirens>
+        </rightTailLight>
+        <leftHeadLightMultiples value="1" />
+        <rightHeadLightMultiples value="1" />
+        <leftTailLightMultiples value="2" />
+        <rightTailLightMultiples value="2" />
+        <useRealLights value="true" />
+        <sirens>
         <Item>
           <!--siren1-->
           <rotation>
@@ -771,6 +771,379 @@
           <castShadows value="false" />
         </Item>
       </sirens>
-    </Item>    
+    </Item>
   </Sirens>
+    <Kits>
+        <Item>
+            <kitName>dodge_modkit</kitName>
+            <id value="1010" />
+            <kitType>MKT_SPORT</kitType>
+            <statMods itemType="CVehicleModStat">
+                <Item>
+                    <identifier />
+                    <modifier value="25" />
+                    <audioApply value="1" />
+                    <weight value="20" />
+                    <type>VMT_ENGINE</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="50" />
+                    <audioApply value="1" />
+                    <weight value="20" />
+                    <type>VMT_ENGINE</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="75" />
+                    <audioApply value="1" />
+                    <weight value="20" />
+                    <type>VMT_ENGINE</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="100" />
+                    <audioApply value="1" />
+                    <weight value="20" />
+                    <type>VMT_ENGINE</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="25" />
+                    <audioApply value="1" />
+                    <weight value="5" />
+                    <type>VMT_BRAKES</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="50" />
+                    <audioApply value="1" />
+                    <weight value="5" />
+                    <type>VMT_BRAKES</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="100" />
+                    <audioApply value="1" />
+                    <weight value="5" />
+                    <type>VMT_BRAKES</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="25" />
+                    <audioApply value="1" />
+                    <weight value="5" />
+                    <type>VMT_GEARBOX</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="50" />
+                    <audioApply value="1" />
+                    <weight value="5" />
+                    <type>VMT_GEARBOX</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="100" />
+                    <audioApply value="1" />
+                    <weight value="5" />
+                    <type>VMT_GEARBOX</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="20" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="40" />
+                    <audioApply value="1" />
+                    <weight value="10" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="60" />
+                    <audioApply value="1" />
+                    <weight value="20" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="80" />
+                    <audioApply value="1" />
+                    <weight value="30" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="100" />
+                    <audioApply value="1" />
+                    <weight value="40" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier>hash_622480DC</identifier>
+                    <modifier value="1766676233" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hash_F39227BC</identifier>
+                    <modifier value="-1390777827" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hash_4DF196D6</identifier>
+                    <modifier value="-1751761149" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hash_0305BDAE</identifier>
+                    <modifier value="1732399718" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hash_104C583B</identifier>
+                    <modifier value="2046162893" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hash_5EE9F579</identifier>
+                    <modifier value="-2099967605" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hash_ECF4918C</identifier>
+                    <modifier value="-1786663196" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hash_3B3D2E20</identifier>
+                    <modifier value="-587743761" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hash_25BA0D65</identifier>
+                    <modifier value="632950117" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="2" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_SUSPENSION</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="4" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_SUSPENSION</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="7" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_SUSPENSION</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="10" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_SUSPENSION</type>
+                </Item>
+                <Item>
+                    <identifier>musical_horn_business_1</identifier>
+                    <modifier value="-666433007" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>musical_horn_business_2</identifier>
+                    <modifier value="-402413174" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>musical_horn_business_3</identifier>
+                    <modifier value="-182074418" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>musical_horn_business_4</identifier>
+                    <modifier value="116877169" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>musical_horn_business_5</identifier>
+                    <modifier value="-1609983577" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>musical_horn_business_6</identifier>
+                    <modifier value="-1312277212" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>musical_horn_business_7</identifier>
+                    <modifier value="-1091676304" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>dlc_busi2_c_major_notes_c0</identifier>
+                    <modifier value="771284519" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>dlc_busi2_c_major_notes_d0</identifier>
+                    <modifier value="-1708346067" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>dlc_busi2_c_major_notes_e0</identifier>
+                    <modifier value="283386134" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>dlc_busi2_c_major_notes_f0</identifier>
+                    <modifier value="-410464896" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>dlc_busi2_c_major_notes_g0</identifier>
+                    <modifier value="265723083" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>dlc_busi2_c_major_notes_a0</identifier>
+                    <modifier value="1746883687" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>dlc_busi2_c_major_notes_b0</identifier>
+                    <modifier value="1919870950" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>dlc_busi2_c_major_notes_c1</identifier>
+                    <modifier value="1085277077" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hipster_horn_1</identifier>
+                    <modifier value="444549672" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hipster_horn_2</identifier>
+                    <modifier value="1603064898" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hipster_horn_3</identifier>
+                    <modifier value="240366033" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>hipster_horn_4</identifier>
+                    <modifier value="960137118" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>indep_horn_1</identifier>
+                    <modifier value="-722822506" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>indep_horn_2</identifier>
+                    <modifier value="-493570582" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>indep_horn_3</identifier>
+                    <modifier value="-1451310145" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>indep_horn_4</identifier>
+                    <modifier value="-953155807" />
+                    <audioApply value="1" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+            </statMods>
+            <slotNames itemType="CVehicleKit__sSlotNameOverride">
+                <Item>
+                    <slot>VMT_CHASSIS</slot>
+                    <name>TOP_BODY</name>
+                </Item>
+            </slotNames>
+            <liveryNames />
+        </Item>
+    </Kits>
 </CVehicleModelInfoVarGlobal>
