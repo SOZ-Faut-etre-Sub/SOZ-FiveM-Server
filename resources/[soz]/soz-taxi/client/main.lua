@@ -7,8 +7,8 @@ TaxiJob = {}
 onDuty = false
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
-    QBCore.Functions.CreateBlip("CarlJr Service", {
-        name = "CarlJr Service",
+    QBCore.Functions.CreateBlip("CarlJr Services", {
+        name = "CarlJr Services",
         coords = vector3(903.59, -158.47, 75.21),
         sprite = 198,
         scale = 1.0,

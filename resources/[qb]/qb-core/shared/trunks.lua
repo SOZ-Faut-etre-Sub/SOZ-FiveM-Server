@@ -66,7 +66,7 @@ QBShared.Trunks = {
     [GetHashKey('tanker')] = { slot = 5, weight = 550000 },
     [GetHashKey('utillitruck4')] = { slot = 5, weight = 100000 },
 
-    -- CarlJr Service
+    -- CarlJr Services
     [GetHashKey('dynasty2')] = { slot = 10, weight = 40000 },
 
     -- Benny's
