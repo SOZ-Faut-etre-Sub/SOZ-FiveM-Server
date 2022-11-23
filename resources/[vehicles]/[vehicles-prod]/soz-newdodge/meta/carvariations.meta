@@ -10,7 +10,7 @@
             0
             0
             55
-            0
+            23
           </indices>
           <liveries>
             <Item value="false" />
@@ -25,7 +25,8 @@
         </Item>
       </colors>
       <kits>
-        <Item>1010_dodge_modkit</Item>
+          <Item>0_default_modkit</Item>
+          <Item>1010_dodge_modkit</Item>
       </kits>
       <windowsWithExposedEdges />
       <plateProbabilities>
