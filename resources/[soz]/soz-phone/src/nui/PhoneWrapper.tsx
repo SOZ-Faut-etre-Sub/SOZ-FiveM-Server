@@ -7,10 +7,13 @@ import { useLocation } from 'react-router-dom';
 
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useConfig, useVisibility } from './hooks/usePhone';
+import { useCall } from './os/call/hooks/useCall';
 
 const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
     const settings = useConfig();
     const { pathname } = useLocation();
+
+    const { call } = useCall();
     const { visibility, notifVisibility } = useVisibility();
 
     return (
@@ -27,6 +30,7 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
                     'fixed right-0 bottom-0 w-[500px] h-[1000px] bg-cover origin-bottom-right transition-any ease-in-out duration-300',
                     {
                         'translate-y-0': visibility,
+                        'translate-y-[600px]': !visibility && call,
                         'translate-y-[800px]': !visibility && notifVisibility,
                         'translate-y-[1000px]': !visibility,
                     }
