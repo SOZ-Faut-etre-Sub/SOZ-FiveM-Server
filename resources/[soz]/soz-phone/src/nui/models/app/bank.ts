@@ -23,9 +23,11 @@ export const appBank = createModel<RootModel>()({
                 BankEvents.FIVEM_EVENT_FETCH_BALANCE,
                 undefined,
                 buildRespObj(MockBankAccountData)
-            ).then(credential => {
-                dispatch.appBank.set(credential.data || null);
-            });
+            )
+                .then(credential => {
+                    dispatch.appBank.set(credential.data || null);
+                })
+                .catch(() => console.log('Failed to load bank data'));
         },
     }),
 });

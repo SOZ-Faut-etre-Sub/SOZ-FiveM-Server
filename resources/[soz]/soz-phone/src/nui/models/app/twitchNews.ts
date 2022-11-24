@@ -30,9 +30,11 @@ export const appTwitchNews = createModel<RootModel>()({
                 TwitchNewsEvents.FETCH_NEWS,
                 undefined,
                 buildRespObj(MockTwitchNewsMessages)
-            ).then(news => {
-                dispatch.appTwitchNews.set(news.data.reverse() || []);
-            });
+            )
+                .then(news => {
+                    dispatch.appTwitchNews.set(news.data.reverse() || []);
+                })
+                .catch(() => console.log('Failed to load news'));
         },
     }),
 });

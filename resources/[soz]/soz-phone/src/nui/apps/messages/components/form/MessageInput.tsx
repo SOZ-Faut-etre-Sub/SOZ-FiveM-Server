@@ -88,7 +88,7 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
                 className="bg-[#32CA5B] rounded-full h-10 w-10 mx-2 flex align-center justify-center shrink "
                 onClick={handleSubmit}
             >
-                <SendIcon className="w-5 h-5 m-2 text-white -rotate-45" />
+                <SendIcon className="w-5 h-5 m-2 pt-0.5 text-white -rotate-45" />
             </button>
         </div>
     );
