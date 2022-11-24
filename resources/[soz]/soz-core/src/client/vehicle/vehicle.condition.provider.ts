@@ -174,6 +174,10 @@ export class VehicleConditionProvider {
             return;
         }
 
+        if (!NetworkDoesEntityExistWithNetworkId(vehicleId)) {
+            return;
+        }
+
         const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
 
         if (!vehicle || !DoesEntityExist(vehicle)) {
@@ -229,6 +233,10 @@ export class VehicleConditionProvider {
 
     @OnEvent(ClientEvent.VEHICLE_SYNC_CONDITION)
     private async onVehicleSyncCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
+        if (!NetworkDoesEntityExistWithNetworkId(vehicleNetworkId)) {
+            return;
+        }
+
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!vehicle || !DoesEntityExist(vehicle)) {
@@ -258,6 +266,10 @@ export class VehicleConditionProvider {
 
     @OnEvent(ClientEvent.VEHICLE_CHECK_CONDITION)
     public async checkCondition(vehicleNetworkId: number) {
+        if (!NetworkDoesEntityExistWithNetworkId(vehicleNetworkId)) {
+            return;
+        }
+
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!vehicle || !DoesEntityExist(vehicle)) {
@@ -583,6 +595,10 @@ export class VehicleConditionProvider {
         const vehicleId = parseInt(split[1]);
 
         if (!vehicleId) {
+            return;
+        }
+
+        if (!NetworkDoesEntityExistWithNetworkId(vehicleId)) {
             return;
         }
 

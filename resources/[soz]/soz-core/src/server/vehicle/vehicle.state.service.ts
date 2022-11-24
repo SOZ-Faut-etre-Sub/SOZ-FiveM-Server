@@ -5,7 +5,17 @@ import { getDefaultVehicleState, VehicleEntityState } from '../../shared/vehicle
 export class VehicleStateService {
     private spawned: Set<number> = new Set();
 
+    private lastSpawnData: Record<number, VehicleEntityState> = {};
+
     private vehicleKeys: Record<string, Set<string>> = {};
+
+    public setLastSpawnData(netId: number, data: VehicleEntityState): void {
+        this.lastSpawnData[netId] = data;
+    }
+
+    public getLastSpawnData(netId: number): VehicleEntityState | null {
+        return this.lastSpawnData[netId] || null;
+    }
 
     public getVehicleState(vehicleEntityId: number): VehicleEntityState {
         const state = Entity(vehicleEntityId).state;

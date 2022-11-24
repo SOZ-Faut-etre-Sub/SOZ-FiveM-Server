@@ -14,7 +14,7 @@ import { VehicleService } from './vehicle.service';
 
 const THRESHOLD_G_STRENGTH_DEFAULT = 3.5;
 const THRESHOLD_G_STRENGTH_VEHICLE_CLASS: { [key in VehicleClass]?: number } = {
-    [VehicleClass.Motorcycles]: 4.5,
+    [VehicleClass.Motorcycles]: 7,
 };
 
 @Provider()

@@ -44,11 +44,38 @@ export class VehicleConditionProvider {
 
         for (const netId of netIds) {
             const entityId = NetworkGetEntityFromNetworkId(netId);
+
+            if (!entityId || !DoesEntityExist(entityId)) {
+                const lastState = this.vehicleStateService.getLastSpawnData(netId);
+
+                this.vehicleStateService.unregisterSpawned(netId);
+                this.vehicleStateService.setLastSpawnData(netId, null);
+
+                this.monitor.publish(
+                    'vehicle_despawn',
+                    {
+                        vehicle_id: lastState?.id || null,
+                        vehicle_net_id: netId,
+                        vehicle_plate: lastState?.plate || null,
+                    },
+                    {
+                        owner: lastState?.owner || null,
+                        condition: lastState?.condition || null,
+                        position: toVector3Object(lastState?.lastPosition || [0, 0, 0]),
+                    }
+                );
+
+                continue;
+            }
+
             const owner = NetworkGetEntityOwner(entityId);
 
             if (!owner) {
                 continue;
             }
+
+            const state = this.vehicleStateService.getVehicleState(entityId);
+            this.vehicleStateService.setLastSpawnData(netId, state);
 
             TriggerClientEvent(ClientEvent.VEHICLE_CHECK_CONDITION, owner, netId);
         }
