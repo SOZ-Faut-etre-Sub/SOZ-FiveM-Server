@@ -2,7 +2,7 @@ import { ServerPromiseResp } from '@typings/common';
 import { PhotoEvents } from '@typings/photo';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import React, { memo, PropsWithChildren } from 'react';
+import React, { memo, PropsWithChildren, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
@@ -16,6 +16,14 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
     const { call } = useCall();
     const { visibility, notifVisibility } = useVisibility();
 
+    const wrapperClass = useCallback(() => {
+        if (settings.handsFree && !visibility && !!call) {
+            return 'translate-y-[600px]';
+        }
+
+        return visibility ? 'translate-y-0' : 'translate-y-[1000px]';
+    }, [settings, call, visibility, notifVisibility]);
+
     return (
         <div
             className="relative h-screen w-screen"
@@ -28,12 +36,7 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
             <div
                 className={cn(
                     'fixed right-0 bottom-0 w-[500px] h-[1000px] bg-cover origin-bottom-right transition-any ease-in-out duration-300',
-                    {
-                        'translate-y-0': visibility,
-                        'translate-y-[600px]': !visibility && call,
-                        'translate-y-[800px]': !visibility && notifVisibility,
-                        'translate-y-[1000px]': !visibility,
-                    }
+                    wrapperClass()
                 )}
                 style={{
                     zoom: `${settings.zoom.value}%`,

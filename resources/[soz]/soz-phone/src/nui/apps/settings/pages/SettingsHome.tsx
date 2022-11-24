@@ -3,6 +3,7 @@ import {
     AdjustmentsIcon,
     BellIcon,
     ChevronRightIcon,
+    DeviceMobileIcon,
     EyeOffIcon,
     PencilIcon,
     PhoneIcon,
@@ -150,6 +151,13 @@ export const SettingsHome = () => {
                         value={myNumber}
                         icon={<PhoneIcon />}
                         color="bg-[#65C466]"
+                    />
+                    <SettingSwitch
+                        label={t('SETTINGS.OPTIONS.HAND_FREE')}
+                        icon={<DeviceMobileIcon />}
+                        color="bg-[#ac5de8]"
+                        value={config.handsFree}
+                        onClick={curr => handleSettingChange('handsFree', !curr)}
                     />
                 </List>
                 <List>
