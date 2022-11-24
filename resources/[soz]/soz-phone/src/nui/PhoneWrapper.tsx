@@ -18,7 +18,7 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
 
     const wrapperClass = useCallback(() => {
         if (settings.handsFree && !visibility && !!call) {
-            return 'translate-y-[600px]';
+            return 'translate-y-[650px]';
         }
         if (settings.handsFree && !visibility && notifVisibility) {
             return 'translate-y-[800px]';
