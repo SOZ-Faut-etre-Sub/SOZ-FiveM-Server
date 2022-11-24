@@ -3,6 +3,8 @@ import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import { MessageConversation } from '@typings/messages';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { store } from '../../../store';
+
 const NOTIFICATION_ID = 'messages:broadcast';
 
 export const useMessageNotifications = () => {
@@ -27,7 +29,9 @@ export const useMessageNotifications = () => {
         };
 
         addNotificationAlert(notification, n => {
-            if (!pathname.includes(`/messages/${conversationId}`)) {
+            if (pathname.includes(`/messages/${conversationId}`)) {
+                store.dispatch.simCard.setConversationAsRead(conversationId);
+            } else {
                 removeId(id);
                 addNotification(n);
             }
