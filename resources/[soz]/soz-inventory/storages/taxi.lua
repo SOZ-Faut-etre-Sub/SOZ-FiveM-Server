@@ -1,5 +1,5 @@
 Config.Storages["taxi_fridge"] = {
-    label = "Frigo Carl'jr service",
+    label = "Frigo Carl'jr services",
     type = "fridge",
     owner = "taxi",
     position = vector3(891.46, -173.37, 74.7),
@@ -9,7 +9,7 @@ Config.Storages["taxi_fridge"] = {
 }
 
 Config.Storages["taxi_storage"] = {
-    label = "Stockage Carl'jr service",
+    label = "Stockage Carl'jr services",
     type = "storage",
     owner = "taxi",
     position = vector3(899.6, -169.36, 74.17),
@@ -19,7 +19,7 @@ Config.Storages["taxi_storage"] = {
 }
 
 Config.Storages["taxi_cloakroom"] = {
-    label = "Vestiaire - Carl'jr Service",
+    label = "Vestiaire - Carl'jr Services",
     type = "cloakroom",
     owner = "ffs",
     position = vector3(889.1, -178.53, 74.7),

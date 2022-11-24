@@ -225,7 +225,7 @@ SozJobCore.Jobs = {
         },
     },
     [SozJobCore.JobType.Taxi] = {
-        label = "Carl Jr Service",
+        label = "Carl Jr Services",
         platePrefix = "CARL",
         grades = {},
         menuCallback = "taxi:client:OpenSocietyMenu",
