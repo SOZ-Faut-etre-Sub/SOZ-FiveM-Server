@@ -110,9 +110,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
             </Menu>
             <div className="relative flex self-center">
                 <div
-                    className={cn('text-gray-500 text-xs', {
-                        'text-gray-400': !isMine && config.theme.value === 'dark',
-                        'text-gray-500': !isMine && config.theme.value === 'light',
+                    className={cn('text-xs', {
+                        'text-gray-400': config.theme.value === 'dark',
+                        'text-gray-500': config.theme.value === 'light',
                     })}
                 >
                     {dayjs(message.createdAt).format('HH:mm')}
