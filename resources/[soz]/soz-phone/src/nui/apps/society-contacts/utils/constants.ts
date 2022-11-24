@@ -39,7 +39,7 @@ export const SocietyContactsState: Society[] = [
     },
     {
         id: 7,
-        display: 'Carl Jr Service',
+        display: 'Carl Jr Services',
         number: '555-CARLJR',
         avatar: 'media/society_icon/taxi.webp',
     },
