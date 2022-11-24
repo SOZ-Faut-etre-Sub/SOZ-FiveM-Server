@@ -42,9 +42,11 @@ export const appNotes = createModel<RootModel>()({
                 NotesEvents.FETCH_ALL_NOTES,
                 undefined,
                 buildRespObj(BrowserNotesData)
-            ).then(messages => {
-                dispatch.appNotes.set(messages.data || []);
-            });
+            )
+                .then(messages => {
+                    dispatch.appNotes.set(messages.data || []);
+                })
+                .catch(() => console.log('Failed to load notes'));
         },
     }),
 });

@@ -36,9 +36,11 @@ export const photo = createModel<RootModel>()({
                 PhotoEvents.FETCH_PHOTOS,
                 undefined,
                 buildRespObj(MockPhotoData)
-            ).then(photos => {
-                dispatch.photo.set(photos.data || []);
-            });
+            )
+                .then(photos => {
+                    dispatch.photo.set(photos.data || []);
+                })
+                .catch(() => console.log('Failed to load photos'));
         },
     }),
 });

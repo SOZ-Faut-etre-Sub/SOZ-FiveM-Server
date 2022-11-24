@@ -43,9 +43,11 @@ export const appSociety = createModel<RootModel>()({
                 SocietyEvents.FETCH_SOCIETY_MESSAGES,
                 undefined,
                 buildRespObj(MockSocietyMessages)
-            ).then(messages => {
-                dispatch.appSociety.set(messages.data || []);
-            });
+            )
+                .then(messages => {
+                    dispatch.appSociety.set(messages.data || []);
+                })
+                .catch(() => console.log('Failed to load society messages'));
         },
     }),
 });

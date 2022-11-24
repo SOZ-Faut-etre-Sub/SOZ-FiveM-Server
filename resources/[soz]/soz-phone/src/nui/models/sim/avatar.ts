@@ -18,9 +18,11 @@ export const avatar = createModel<RootModel>()({
         },
         // loader
         async loadAvatar() {
-            fetchNui<ServerPromiseResp<string>>(SettingsEvents.GET_AVATAR).then(avatar => {
-                dispatch.avatar.setAvatar(avatar.data || '');
-            });
+            fetchNui<ServerPromiseResp<string>>(SettingsEvents.GET_AVATAR)
+                .then(avatar => {
+                    dispatch.avatar.setAvatar(avatar.data || '');
+                })
+                .catch(() => console.log('Failed to load avatar'));
         },
     }),
 });

@@ -4,16 +4,16 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
 import { TextareaField, TextField } from '@ui/old_components/Input';
+import cn from 'classnames';
 import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useNotes } from '../../../hooks/app/useNotes';
-import { useNotesAPI } from '../hooks/useNotesAPI';
-import { SaveIcon } from '../../../ui/assets/save';
-import cn from 'classnames';
 import { useConfig } from '../../../hooks/usePhone';
+import { SaveIcon } from '../../../ui/assets/save';
+import { useNotesAPI } from '../hooks/useNotesAPI';
 
 interface IFormInputs {
     title: string;
@@ -70,6 +70,14 @@ export const NoteForm: React.FC = () => {
 
     const NoteActions = (
         <div className="flex">
+            {!isNewNote && (
+                <Button
+                    className="flex items-center w-full text-red-400 py-2 hover:text-red-500"
+                    onClick={handleDeleteNote}
+                >
+                    <TrashIcon className="mr-5 h-5 w-5" />
+                </Button>
+            )}
             <Button
                 className={cn('flex items-center w-full py-2', {
                     'text-ios-100 hover:text-ios-200': config.theme.value === 'dark',
@@ -78,16 +86,8 @@ export const NoteForm: React.FC = () => {
                 disabled={watch('title')?.length <= 0}
                 onClick={isNewNote ? handleNewNote : handleUpdateNote}
             >
-                <SaveIcon className="mx-3 h-5 w-5" />
+                <SaveIcon className="h-5 w-5" />
             </Button>
-            {!isNewNote && (
-                <Button
-                    className="flex items-center w-full text-red-400 py-2 hover:text-red-500"
-                    onClick={handleDeleteNote}
-                >
-                    <TrashIcon className="mx-3 h-5 w-5" />
-                </Button>
-            )}
         </div>
     );
 
