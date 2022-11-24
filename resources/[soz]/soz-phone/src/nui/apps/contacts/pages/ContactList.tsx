@@ -106,7 +106,7 @@ export const ContactList: FunctionComponent<{ skipTitle?: boolean }> = ({ skipTi
                                                     <div className="flex-1 min-w-0 cursor-pointer">
                                                         <span className="absolute inset-0" aria-hidden="true" />
                                                         <p
-                                                            className={cn('text-left text-sm font-medium', {
+                                                            className={cn('text-left text-sm font-medium truncate', {
                                                                 'text-gray-100': config.theme.value === 'dark',
                                                                 'text-gray-600': config.theme.value === 'light',
                                                             })}
