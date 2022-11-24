@@ -115,7 +115,7 @@ export const Messages = () => {
                     action={
                         <div className="flex">
                             <ArchiveIcon
-                                className="h-6 w-6 cursor-pointer"
+                                className="mx-2 h-6 w-6 cursor-pointer"
                                 onClick={() => handleArchiveConversation(conversation.conversation_id)}
                             />
                             {getDisplayByNumber(conversation.phoneNumber) === conversation.phoneNumber && (
