@@ -49,7 +49,7 @@ export const MockConversationMessages: Message[] = [
     },
     {
         id: 3,
-        author: '555-3333',
+        author: '111-1134',
         message: 'Hello :)',
         conversation_id: '555-1111+555-3333',
         createdAt: 1598400000000,
