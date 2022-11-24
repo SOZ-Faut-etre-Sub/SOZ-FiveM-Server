@@ -37,14 +37,7 @@ const ContactsInfoPage: React.FC = () => {
 
     const handleSend = () => {
         if (message.length >= 5) {
-            sendSocietyMessage({ number: contact.number, message, anonymous, position: false });
-            navigate('/society-contacts', { replace: true });
-        }
-    };
-
-    const handleSendWithLocation = () => {
-        if (message.length >= 5) {
-            sendSocietyMessage({ number: contact.number, message, anonymous, position: true });
+            sendSocietyMessage({ number: contact.number, message, anonymous, position });
             navigate('/society-contacts', { replace: true });
         }
     };
