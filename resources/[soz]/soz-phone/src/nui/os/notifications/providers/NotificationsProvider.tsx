@@ -133,8 +133,6 @@ export function NotificationsProvider({ children }) {
                     return;
                 }
 
-                console.log('alert timeout', DEFAULT_ALERT_HIDE_TIME);
-
                 alertTimeout.current = setTimeout(() => {
                     resolve();
                     // If you change or remove the 300 i'll kill your pet - Kidz /s

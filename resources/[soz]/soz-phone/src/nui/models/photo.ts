@@ -40,7 +40,7 @@ export const photo = createModel<RootModel>()({
                 .then(photos => {
                     dispatch.photo.set(photos.data || []);
                 })
-                .catch(() => console.log('Failed to load photos'));
+                .catch(() => console.error('Failed to load photos'));
         },
     }),
 });
