@@ -211,7 +211,7 @@ export class ItemFuelProvider {
             oilLevel: Math.min(vehicleState.condition.oilLevel + filledOil, 100),
         });
 
-        this.notifier.notify(source, 'Vous avez ~g~utilisé~s~ un jerrycan de kérosène.', 'success');
+        this.notifier.notify(source, "Vous avez ~g~utilisé~s~ un bidon d'huile.", 'success');
     }
 
     @Once()
