@@ -19,6 +19,17 @@ export class VehicleLockProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @OnEvent(ServerEvent.PLAYER_UPDATE_HAT_VEHICLE)
+    async onPlayerUpdateHatVehicle(source: number, hat: number, texture: number) {
+        const entity = GetPlayerPed(source);
+
+        if (!entity) {
+            return;
+        }
+
+        SetPedPropIndex(entity, 0, hat, texture, true);
+    }
+
     @Rpc(RpcEvent.VEHICLE_HAS_KEY)
     public async hasVehicleKey(source: number, vehicleId: number): Promise<boolean> {
         const player = this.playerService.getPlayer(source);

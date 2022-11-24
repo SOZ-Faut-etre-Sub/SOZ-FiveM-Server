@@ -42,6 +42,11 @@ const VEHICLE_TRUNK_TYPES = {
 
 const VEHICLE_TRUNK_DISTANCE = 5.0;
 
+type CurrentHat = {
+    hat: number;
+    texture: number;
+};
+
 @Provider()
 export class VehicleLockProvider {
     @Inject(PlayerService)
@@ -64,13 +69,38 @@ export class VehicleLockProvider {
 
     private vehicleTrunkOpened: number | null = null;
 
+    private currentPedHat: CurrentHat | null = null;
+
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public onEnterLeaveVehicle() {
-        const model = GetEntityModel(PlayerPedId());
+        if (!this.currentPedHat) {
+            return;
+        }
+    }
 
-        if (model === GetHashKey('mp_m_freemode_01') || model === GetHashKey('mp_f_freemode_01')) {
-            TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+    @Tick(TickInterval.EVERY_SECOND)
+    public saveCurrentPedHat() {
+        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+        const lastCurrentHat = {
+            ...this.currentPedHat,
+        };
+
+        this.currentPedHat = {
+            hat: GetPedPropIndex(PlayerPedId(), 0),
+            texture: GetPedPropTextureIndex(PlayerPedId(), 0),
+        };
+
+        if (
+            vehicle &&
+            lastCurrentHat &&
+            (lastCurrentHat.hat !== this.currentPedHat.hat || lastCurrentHat.texture !== this.currentPedHat.texture)
+        ) {
+            TriggerServerEvent(
+                ServerEvent.PLAYER_UPDATE_HAT_VEHICLE,
+                this.currentPedHat.hat,
+                this.currentPedHat.texture
+            );
         }
     }
 
