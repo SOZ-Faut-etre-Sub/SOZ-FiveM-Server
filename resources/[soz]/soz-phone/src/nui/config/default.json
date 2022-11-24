@@ -195,7 +195,8 @@
     },
     "ringtoneVol": 50,
     "notiSoundVol": 50,
-    "societyNotificationVol": 50
+    "societyNotificationVol": 50,
+    "handsFree": false
   },
   "themes": [
     {

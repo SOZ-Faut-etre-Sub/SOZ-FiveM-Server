@@ -22,6 +22,7 @@ export interface IPhoneSettings {
     notiSoundVol: number;
     societyNotification: SettingOption;
     societyNotificationVol: number;
+    handsFree: boolean;
 }
 
 export const useSettingsAPI = () => {

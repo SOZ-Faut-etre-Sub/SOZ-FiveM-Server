@@ -42,6 +42,7 @@
           "TITLE": "Mode NSFW",
           "DESCRIPTION": "Masquer les images par défaut"
         },
+        "HAND_FREE": "Kit mains libres",
         "CUSTOM_WALLPAPER": {
           "DIALOG_TITLE": "Fond d'écran personnalisé",
           "DIALOG_CONTENT": "Choisissez un fond d'écran personnalisé en collant l'URL de l'image en dessous!",
