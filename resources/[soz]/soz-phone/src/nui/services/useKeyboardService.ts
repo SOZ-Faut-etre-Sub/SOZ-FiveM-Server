@@ -1,8 +1,9 @@
 import { useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const useKeyboardService = () => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     const onKeyUp = useCallback(
         (event: KeyboardEvent) => {
@@ -14,9 +15,13 @@ export const useKeyboardService = () => {
                 return;
             }
 
+            if (pathname === '/') {
+                return;
+            }
+
             navigate(-1);
         },
-        [navigate]
+        [navigate, pathname]
     );
 
     useEffect(() => {
