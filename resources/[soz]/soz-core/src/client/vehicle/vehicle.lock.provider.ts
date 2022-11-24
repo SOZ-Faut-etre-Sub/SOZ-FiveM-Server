@@ -117,6 +117,10 @@ export class VehicleLockProvider {
             return;
         }
 
+        if (!NetworkDoesEntityExistWithNetworkId(vehicleId)) {
+            return;
+        }
+
         const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
 
         if (!vehicle) {
