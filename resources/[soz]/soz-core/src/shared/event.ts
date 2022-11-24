@@ -64,6 +64,7 @@ export enum ServerEvent {
     PLAYER_INCREASE_RUN_TIME = 'soz-core:server:player:health:increase-run-time',
     PLAYER_DO_YOGA = 'soz-core:server:player:do-yoga',
     PLAYER_SET_CURRENT_WALKSTYLE = 'soz-core:server:player:set-current-walkstyle',
+    PLAYER_UPDATE_HAT_VEHICLE = 'soz-core:server:player:update-hat-vehicle',
 
     PLAYER_NUTRITION_LOOP = 'soz-core:server:player:nutrition:loop',
     PLAYER_NUTRITION_CHECK = 'soz-core:server:player:nutrition:check',
