@@ -38,10 +38,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     const color = () => {
         if (pathname === '/') {
             return 'text-white';
-        } else if (pathname === '/call') {
-            if (currentCall?.is_accepted) {
-                return 'text-white bg-white bg-opacity-30';
-            }
+        } else if (pathname === '/call' || pathname.includes('/phone')) {
             return 'text-white';
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
@@ -87,7 +84,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                 leaveFrom="translate-y-0"
                 leaveTo="-translate-y-full"
             >
-                <div className="h-full bg-ios-800 bg-opacity-60 backdrop-blur text-white flex flex-col items-center">
+                <div className="h-full bg-ios-800 bg-opacity-90 text-white flex flex-col items-center">
                     <div className="my-20 font-light text-6xl">{time}</div>
                     <ul className="divide-y divide-gray-600 w-4/5 overflow-y-scroll">
                         {callModal && (
