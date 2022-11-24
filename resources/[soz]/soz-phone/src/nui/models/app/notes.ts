@@ -46,7 +46,7 @@ export const appNotes = createModel<RootModel>()({
                 .then(messages => {
                     dispatch.appNotes.set(messages.data || []);
                 })
-                .catch(() => console.log('Failed to load notes'));
+                .catch(() => console.error('Failed to load notes'));
         },
     }),
 });

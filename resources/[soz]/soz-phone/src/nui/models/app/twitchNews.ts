@@ -34,7 +34,7 @@ export const appTwitchNews = createModel<RootModel>()({
                 .then(news => {
                     dispatch.appTwitchNews.set(news.data.reverse() || []);
                 })
-                .catch(() => console.log('Failed to load news'));
+                .catch(() => console.error('Failed to load news'));
         },
     }),
 });

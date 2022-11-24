@@ -27,7 +27,7 @@ export const appBank = createModel<RootModel>()({
                 .then(credential => {
                     dispatch.appBank.set(credential.data || null);
                 })
-                .catch(() => console.log('Failed to load bank data'));
+                .catch(() => console.error('Failed to load bank data'));
         },
     }),
 });

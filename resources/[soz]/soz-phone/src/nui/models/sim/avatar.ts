@@ -22,7 +22,7 @@ export const avatar = createModel<RootModel>()({
                 .then(avatar => {
                     dispatch.avatar.setAvatar(avatar.data || '');
                 })
-                .catch(() => console.log('Failed to load avatar'));
+                .catch(() => console.error('Failed to load avatar'));
         },
     }),
 });
