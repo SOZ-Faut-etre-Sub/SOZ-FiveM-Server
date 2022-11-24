@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useNotifications } from '../os/notifications/hooks/useNotifications';
 import { DEFAULT_ALERT_HIDE_TIME } from '../os/notifications/notifications.constants';
 import { RootState } from '../store';
 
@@ -13,7 +14,7 @@ export const useConfig = () => {
 export const useVisibility = () => {
     const visible = useSelector((state: RootState) => state.visibility);
     const available = useSelector((state: RootState) => state.phone.available);
-    //const { currentAlert } = useNotifications();
+    const { currentAlert } = useNotifications();
     const [notifVisibility, setNotifVisibility] = useState<boolean>(false);
 
     const notificationTimer = useRef<NodeJS.Timeout>();
@@ -25,20 +26,20 @@ export const useVisibility = () => {
     }, [visible]);
 
     useEffect(() => {
-        if (available && !visible /*&& currentAlert*/) {
+        if (available && !visible && currentAlert) {
             setNotifVisibility(true);
             if (notificationTimer.current) {
                 clearTimeout(notificationTimer.current);
                 notificationTimer.current = undefined;
             }
-            /*if (currentAlert?.keepWhenPhoneClosed) {
+            if (currentAlert?.keepWhenPhoneClosed) {
                 return;
-            }*/
+            }
             notificationTimer.current = setTimeout(() => {
                 setNotifVisibility(false);
             }, DEFAULT_ALERT_HIDE_TIME);
         }
-    }, [/*currentAlert, */ visible]);
+    }, [currentAlert, visible]);
 
     return {
         visibility: visible,

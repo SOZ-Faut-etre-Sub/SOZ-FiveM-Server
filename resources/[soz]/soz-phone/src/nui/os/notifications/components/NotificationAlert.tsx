@@ -26,7 +26,7 @@ export const NotificationAlert = () => {
             leaveFrom="translate-y-0"
             leaveTo="-translate-y-full"
         >
-            <Alert onClick={e => currentAlert?.onClickAlert(e)} icon={currentAlert?.icon || undefined}>
+            <Alert onClick={e => currentAlert?.onClickAlert(e)} icon={currentAlert?.notificationIcon || undefined}>
                 {isPosition ? 'Destination' : currentAlert?.content}
             </Alert>
         </Transition>

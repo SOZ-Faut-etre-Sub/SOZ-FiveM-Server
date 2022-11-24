@@ -51,13 +51,10 @@ export const NotificationsContext = createContext<{
 }>(null);
 
 export function NotificationsProvider({ children }) {
-    const { visibility: isPhoneOpen } = useVisibility();
-    const isPhoneAvailable = useAvailability();
+    const isPhoneAvailable = useSelector((state: RootState) => state.phone.available);
 
     const settings = useSelector((state: RootState) => state.phone.config);
-
     const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
-
     const [notifications, setNotifications] = useState<INotification[]>([]);
 
     const { mount, play } = useSoundProvider();
@@ -65,12 +62,6 @@ export function NotificationsProvider({ children }) {
     const alertTimeout = useRef<NodeJS.Timeout>();
     const [alerts, setAlerts] = useState<Array<[INotification, (n: INotification) => void, string | undefined]>>([]);
     const [currentAlert, setCurrentAlert] = useState<INotificationAlert>();
-
-    useEffect(() => {
-        if (isPhoneOpen && currentAlert && !currentAlert.keepWhenPhoneClosed) {
-            currentAlert.resolve();
-        }
-    }, [isPhoneOpen, currentAlert]);
 
     const updateNotification = useCallback((idx: number, value: INotification) => {
         setNotifications(all => {
@@ -141,6 +132,8 @@ export function NotificationsProvider({ children }) {
                 if (n.keepWhenPhoneClosed) {
                     return;
                 }
+
+                console.log('alert timeout', DEFAULT_ALERT_HIDE_TIME);
 
                 alertTimeout.current = setTimeout(() => {
                     resolve();

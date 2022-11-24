@@ -72,7 +72,7 @@ export const ContactList: React.FC = () => {
                                     .sort((a, b) => a.display.localeCompare(b.display))
                                     .map(contact => (
                                         <li
-                                            key={contact.id}
+                                            key={contact.number}
                                             className={cn('w-full cursor-pointer', {
                                                 'bg-ios-800': config.theme.value === 'dark',
                                                 'bg-ios-50': config.theme.value === 'light',
