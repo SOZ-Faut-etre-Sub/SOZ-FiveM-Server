@@ -136,6 +136,7 @@ class _MessagesService {
                             conversation_id: messageData.conversationId,
                             author: authorPhoneNumber,
                             id: messageId,
+                            createdAt: new Date().getTime(),
                         });
                         emitNet(MessageEvents.CREATE_MESSAGE_BROADCAST, participantPlayer.source, {
                             conversationName: player.getPhoneNumber(),
@@ -164,6 +165,7 @@ class _MessagesService {
                 conversation_id: messageData.conversationId,
                 author: authorPhoneNumber,
                 id: messageId,
+                createdAt: new Date().getTime(),
             });
         } catch (e) {
             resp({ status: 'error', errorMsg: e.toString() });

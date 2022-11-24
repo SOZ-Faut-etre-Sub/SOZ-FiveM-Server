@@ -168,50 +168,62 @@ export const simCard = createModel<RootModel>()({
                 CallEvents.FETCH_CALLS,
                 undefined,
                 buildRespObj(MockHistoryData)
-            ).then(calls => {
-                dispatch.simCard.SET_CALL_HISTORY(calls.data || []);
-            });
+            )
+                .then(calls => {
+                    dispatch.simCard.SET_CALL_HISTORY(calls.data || []);
+                })
+                .catch(() => console.error('Failed to fetch call history'));
         },
         async loadContacts() {
             fetchNui<ServerPromiseResp<Contact[]>>(
                 ContactEvents.GET_CONTACTS,
                 undefined,
                 buildRespObj(BrowserContactsState)
-            ).then(calls => {
-                dispatch.simCard.SET_CONTACT(calls.data || []);
-            });
+            )
+                .then(calls => {
+                    dispatch.simCard.SET_CONTACT(calls.data || []);
+                })
+                .catch(() => console.error('Failed to fetch contacts'));
         },
         async loadConversations() {
             fetchNui<ServerPromiseResp<MessageConversation[]>>(
                 MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
                 undefined,
                 buildRespObj(MockMessageConversations)
-            ).then(conversations => {
-                dispatch.simCard.SET_CONVERSATIONS(conversations.data || []);
-            });
+            )
+                .then(conversations => {
+                    dispatch.simCard.SET_CONVERSATIONS(conversations.data || []);
+                })
+                .catch(() => console.error('Failed to fetch conversations'));
         },
         async setConversationArchived(conversation_id) {
             fetchNui<ServerPromiseResp<any>>(MessageEvents.SET_CONVERSATION_ARCHIVED, {
                 conversation_id: conversation_id,
-            }).then(() => {
-                dispatch.simCard.SET_CONVERSATION_AS_ARCHIVED(conversation_id);
-            });
+            })
+                .then(() => {
+                    dispatch.simCard.SET_CONVERSATION_AS_ARCHIVED(conversation_id);
+                })
+                .catch(() => console.error('Failed to archive conversation'));
         },
         async setConversationAsRead(conversation_id) {
             fetchNui<ServerPromiseResp<any>>(MessageEvents.SET_MESSAGE_READ, {
                 conversation_id: conversation_id,
-            }).then(() => {
-                dispatch.simCard.SET_CONVERSATION_AS_READ(conversation_id);
-            });
+            })
+                .then(() => {
+                    dispatch.simCard.SET_CONVERSATION_AS_READ(conversation_id);
+                })
+                .catch(() => console.error('Failed to set conversation as read'));
         },
         async loadMessages() {
             fetchNui<ServerPromiseResp<Message[]>>(
                 MessageEvents.FETCH_MESSAGES,
                 undefined,
                 buildRespObj(MockConversationMessages)
-            ).then(messages => {
-                dispatch.simCard.SET_MESSAGES(messages.data || []);
-            });
+            )
+                .then(messages => {
+                    dispatch.simCard.SET_MESSAGES(messages.data || []);
+                })
+                .catch(() => console.error('Failed to fetch messages'));
         },
     }),
 });
