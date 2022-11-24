@@ -78,14 +78,15 @@ export class VehicleLockProvider {
     private async checkVehicleLeave() {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
-        const wasPlayerDriving = GetPedInVehicleSeat(vehicle, -1) === ped;
-
-        if (!wasPlayerDriving) {
-            return;
-        }
 
         if (this.seatbeltProvider.isSeatbeltOnForPlayer()) {
             DisableControlAction(2, 75, true);
+            return;
+        }
+
+        const wasPlayerDriving = GetPedInVehicleSeat(vehicle, -1) === ped;
+
+        if (!wasPlayerDriving) {
             return;
         }
 
