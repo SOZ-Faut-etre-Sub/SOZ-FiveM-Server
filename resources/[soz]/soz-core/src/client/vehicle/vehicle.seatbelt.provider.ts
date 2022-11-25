@@ -149,6 +149,11 @@ export class VehicleSeatbeltProvider {
         await this.trySwitchingSeat();
     }
 
+    @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
+    private onBaseLeaveVehicle() {
+        ClearAllPedVehicleForcedSeatUsage(PlayerPedId());
+    }
+
     @Tick(500)
     async handleVehicleEjectionAndSeatbelt() {
         const ped = PlayerPedId();
