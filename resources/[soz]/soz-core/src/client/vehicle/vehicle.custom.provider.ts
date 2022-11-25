@@ -156,6 +156,7 @@ export class VehicleCustomProvider {
             );
 
             SetVehicleUndriveable(vehicleEntityId, false);
+            SetVehicleLights(vehicleEntityId, 0);
 
             this.vehicleService.applyVehicleConfiguration(vehicleEntityId, originalConfiguration);
             this.nuiMenu.closeMenu();
@@ -176,6 +177,7 @@ export class VehicleCustomProvider {
         );
 
         SetVehicleUndriveable(vehicleEntityId, false);
+        SetVehicleLights(vehicleEntityId, 0);
 
         this.vehicleService.applyVehicleConfiguration(vehicleEntityId, newVehicleConfiguration);
         this.nuiMenu.closeMenu();
