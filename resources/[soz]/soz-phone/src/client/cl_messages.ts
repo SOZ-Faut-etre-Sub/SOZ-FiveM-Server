@@ -19,7 +19,7 @@ RegisterNuiCB<void>(MessageEvents.SET_WAYPOINT, async (position: any, cb) => {
     if (position['x'] !== 0 && position['y'] !== 0) {
         SetNewWaypoint(parseInt(position['x']), parseInt(position['y']));
     }
-    cb();
+    cb({});
 });
 
 RegisterNuiCB<void>(MessageEvents.GET_POSITION, async (position: any, cb) => {
