@@ -438,12 +438,17 @@ export class VehicleConditionProvider {
             tankHealthDiff *= TANK_DAMAGE_MULTIPLIER * VEHICLE_CLASS_DAMAGE_MULTIPLIER[vehicleClass];
         }
 
-        // set new health, only if diff is significant
+        const engineHealthDiffSharing = engineHealthDiff * 0.25;
+        const bodyHealthDiffSharing = bodyHealthDiff * 0.25;
+        const tankHealthDiffSharing = tankHealthDiff * 0.25;
+
+        engineHealthDiff += bodyHealthDiffSharing + tankHealthDiffSharing;
+        bodyHealthDiff += engineHealthDiffSharing + tankHealthDiffSharing;
+        tankHealthDiff += engineHealthDiffSharing + bodyHealthDiffSharing;
+
+        // set new health, only when diff is significant
         if (engineHealthDiff > 0.1) {
-            this.currentVehicleStatus.engineHealth = Math.max(
-                ENGINE_MIN_HEALTH,
-                lastVehicleStatus.engineHealth - engineHealthDiff
-            );
+            this.currentVehicleStatus.engineHealth = lastVehicleStatus.engineHealth - engineHealthDiff;
             SetVehicleEngineHealth(vehicle, this.currentVehicleStatus.engineHealth);
         }
 
