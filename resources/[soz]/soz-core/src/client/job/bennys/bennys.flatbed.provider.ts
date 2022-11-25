@@ -229,6 +229,10 @@ export class BennysFlatbedProvider {
             },
         });
 
+        if (this.currentFlatbedAttach !== null) {
+            return;
+        }
+
         this.soundService.playAround('fuel/start_fuel', 5, 0.3);
 
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
@@ -281,16 +285,17 @@ export class BennysFlatbedProvider {
             false,
             0
         );
-        LoadRopeData(rope, 'ropeFamily3');
-        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
-        AttachRopeToEntity(rope, entity, ropePosition[0], ropePosition[1], ropePosition[2], true);
-        ActivatePhysics(rope);
 
         this.currentFlatbedAttach = {
             rope,
             object,
             entity,
         };
+
+        LoadRopeData(rope, 'ropeFamily3');
+        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
+        AttachRopeToEntity(rope, entity, ropePosition[0], ropePosition[1], ropePosition[2], true);
+        ActivatePhysics(rope);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
