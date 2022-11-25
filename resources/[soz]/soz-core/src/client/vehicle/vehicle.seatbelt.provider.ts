@@ -130,7 +130,20 @@ export class VehicleSeatbeltProvider {
     private async onBaseEnteredVehicle() {
         this.isSeatbeltOn = false;
         TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
-        SetPedConfigFlag(PlayerPedId(), 184, true);
+        const ped = PlayerPedId();
+
+        SetPedConfigFlag(ped, 184, true);
+
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
+
+        for (let i = -1; i < maxSeats; i++) {
+            const seatPed = GetPedInVehicleSeat(vehicle, i);
+
+            if (seatPed === ped) {
+                SetPedVehicleForcedSeatUsage(ped, vehicle, i, 0);
+            }
+        }
 
         await wait(3000);
         await this.trySwitchingSeat();
