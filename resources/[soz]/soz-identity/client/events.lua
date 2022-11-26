@@ -27,6 +27,7 @@ AddEventHandler("soz-identity:client:request-identity-data", function(target, ac
         address = address,
         phone = charinfo.phone,
         pid = PedToNet(PlayerPedId()),
+        created_at = PlayerData.created_at or 0,
     }
 
     if PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") then
@@ -46,11 +47,11 @@ end)
 -- LICENSES
 AddEventHandler("soz-identity:client:request-licenses-data", function(target, action)
     local charinfo = PlayerData.charinfo
-    TriggerServerEvent("soz-identity:server:request-data", target, "licences", action,
-                       {
+    TriggerServerEvent("soz-identity:server:request-data", target, "licences", action, {
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
         licences = PlayerData.metadata["licences"],
+        created_at = PlayerData.created_at or 0,
     })
 end)
 
