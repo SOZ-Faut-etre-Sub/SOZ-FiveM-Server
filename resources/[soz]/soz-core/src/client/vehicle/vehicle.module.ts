@@ -1,6 +1,5 @@
 import { Module } from '../../core/decorators/module';
 import { VehicleAirProvider } from './vehicle.air.provider';
-import { VehicleBarrierProvider } from './vehicle.barrier.provider';
 import { VehicleCarWashProvider } from './vehicle.carwash.provider';
 import { VehicleConditionProvider } from './vehicle.condition.provider';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
@@ -15,7 +14,6 @@ import { VehicleSpawnProvider } from './vehicle.spawn.provider';
 @Module({
     providers: [
         VehicleAirProvider,
-        VehicleBarrierProvider,
         VehicleCarWashProvider,
         VehicleConditionProvider,
         VehicleCustomProvider,
