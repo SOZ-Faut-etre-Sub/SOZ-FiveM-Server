@@ -12,7 +12,7 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
         }),
     ];
 
-    if (!isProduction) {
+    if (!isProduction && target !== 'node') {
         plugins.push(new ReactRefreshWebpackPlugin());
     }
 
@@ -51,7 +51,7 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
                                     tsx: true,
                                     decorators: true,
                                 },
-                                target: 'es2016',
+                                target: 'es2020',
                                 transform: {
                                     react: {
                                         runtime: 'automatic',
@@ -59,7 +59,10 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
                                         refresh: !isProduction,
                                     },
                                 },
+                                keepClassNames: true,
                             },
+                            sourceMaps: !isProduction,
+                            minify: isProduction,
                         },
                     },
                 },
