@@ -33,5 +33,5 @@ export const useKeyboardService = () => {
         window.addEventListener('keyup', onKeyUp);
 
         return () => window.removeEventListener('keyup', onKeyUp);
-    }, [onKeyUp]);
+    }, []);
 };

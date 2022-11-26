@@ -2,12 +2,10 @@ import { PlayerData } from 'qbcore.js';
 
 import config from '../../config.json';
 import { PhoneEvents } from '../../typings/phone';
-import { SettingsEvents } from '../../typings/settings';
 import { sendMessage } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
 import { callService } from './calls/cl_calls.controller';
 import { RegisterNuiCB } from './cl_utils';
-import { ClUtils } from './client';
 import { removePhoneProp } from './functions';
 
 // All main globals that are set and used across files
@@ -19,7 +17,6 @@ global.isPlayerLoaded = false;
 const exps = global.exports;
 
 /* Functions */
-
 function cityIsInBlackOut(): boolean {
     return GlobalState.blackout || GlobalState.blackout_level >= 3;
 }
@@ -40,11 +37,11 @@ onNet(PhoneEvents.SET_PLAYER_LOADED, (state: boolean) => {
 });
 
 RegisterKeyMapping(config.general.toggleCommand, 'Afficher le téléphone', 'keyboard', config.general.toggleKey);
+RegisterCommand(config.general.toggleCommand, togglePhone, false);
 emit('chat:addSuggestion', `${config.general.toggleCommand}`, 'Toggle displaying your cellphone');
 
 const getCurrentGameTime = () => {
     let hour: string | number = GetClockHours();
-
     let minute: string | number = GetClockMinutes();
 
     // Format time if need be
@@ -84,22 +81,6 @@ export const hidePhone = async (): Promise<void> => {
 
 /* * * * * * * * * * * * *
  *
- *  Register Command and Keybinding
- *
- * * * * * * * * * * * * */
-RegisterCommand(
-    config.general.toggleCommand,
-    async () => {
-        if (global.isPhoneDisabled) return;
-        if (cityIsInBlackOut()) return;
-
-        await togglePhone();
-    },
-    false
-);
-
-/* * * * * * * * * * * * *
- *
  *  Misc. Helper Functions
  *
  * * * * * * * * * * * * */
@@ -116,6 +97,9 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 };
 
 async function togglePhone(): Promise<void> {
+    if (global.isPhoneDisabled) return;
+    if (cityIsInBlackOut()) return;
+
     if (config.PhoneAsItem.enabled) {
         const canAccess = await checkExportCanOpen();
         if (!canAccess) {
@@ -156,9 +140,6 @@ onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, !!hasItem);
 });
 
-// DO NOT CHANGE THIS EITHER, PLEASE - CHIP
-// ^ AND WHAT ARE YOU GOING TO DO HUH? - KIDZ
-
 /* * * * * * * * * * * * *
  *
  *  NUI Service Callback Registration
@@ -166,13 +147,10 @@ onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
  * * * * * * * * * * * * */
 RegisterNuiCB<void>(PhoneEvents.CLOSE_PHONE, async (_, cb) => {
     await hidePhone();
-    cb();
+    cb({});
 });
 
-// NOTE: This probably has an edge case when phone is closed for some reason
-// and we need to toggle keep input off
 RegisterNuiCB<{ keepGameFocus: boolean }>(PhoneEvents.TOGGLE_KEYS, async ({ keepGameFocus }, cb) => {
-    // We will only
     if (global.isPhoneOpen) SetNuiFocusKeepInput(keepGameFocus);
     cb({});
 });
