@@ -444,6 +444,7 @@ Config.RadarAllowedVehicle = {
     [GetHashKey("sheriff3")] = true,
     [GetHashKey("sheriff4")] = true,
     [GetHashKey("sheriffb")] = true,
+    [GetHashKey("sheriffdodge")] = true,
     --- LSPD / BCSO
     [GetHashKey("pbus")] = true,
     --- FBI
@@ -468,6 +469,7 @@ Config.RadarInformedVehicle = {
     [GetHashKey("sheriff3")] = true,
     [GetHashKey("sheriff4")] = true,
     [GetHashKey("sheriffb")] = true,
+    [GetHashKey("sheriffdodge")] = true,
 }
 
 --- Fines
