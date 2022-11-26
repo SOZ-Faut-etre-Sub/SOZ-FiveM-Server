@@ -59,6 +59,10 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData = PlayerData or {}
     PlayerData.source = src
     PlayerData.is_default = PlayerData.is_default or 1
+    PlayerData.created_at = PlayerData.created_at or os.time() * 1000
+    if tostring(PlayerData.created_at) == "nan" then
+        PlayerData.created_at = 0
+    end
     PlayerData.citizenid = PlayerData.citizenid or QBCore.Player.CreateCitizenId()
     PlayerData.license = PlayerData.license or QBCore.Functions.GetSozIdentifier(src)
     PlayerData.name = GetPlayerName(src)

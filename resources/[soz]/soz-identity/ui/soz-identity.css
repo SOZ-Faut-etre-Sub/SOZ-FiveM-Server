@@ -64,6 +64,18 @@ body, html {
 #right-col-licenses {
     height: 87%;
 }
+#identity-new-player-badge {
+    position: absolute;
+    top: -35px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-image: url('identity-badge.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+}
 .items {
     display: flex;
     flex-direction: column;
@@ -116,6 +128,10 @@ body, html {
         width: 180px;
         height: 180px;
     }
+    #identity-new-player-badge {
+        top: -35px;
+        right: 12px;
+    }
 }
 @media all and (min-width: 4096px){
     body {
@@ -127,5 +143,11 @@ body, html {
     #left-col-identity img {
         width: 300px;
         height: 300px;
+    }
+    #identity-new-player-badge {
+        top: -60px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
     }
 }
