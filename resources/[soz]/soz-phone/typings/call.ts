@@ -47,7 +47,8 @@ export interface ActiveCallRaw {
     transmitterSource: number;
     receiver: string;
     receiverSource: number;
-    start: string;
+    start: number;
+    end?: number;
     is_accepted: boolean;
 }
 
@@ -58,7 +59,7 @@ export interface CallHistoryItem {
     transmitterSource?: number;
     receiver: string;
     receiverSource?: number;
-    start: string;
+    start: number;
     end?: number;
     is_accepted: boolean;
 }
