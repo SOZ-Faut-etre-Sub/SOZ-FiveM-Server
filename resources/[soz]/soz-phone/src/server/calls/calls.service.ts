@@ -57,7 +57,6 @@ class CallsService {
             });
         }
 
-        const startCallTimeUnix = Math.floor(new Date().getTime() / 1000);
         const callIdentifier = uuidv4();
 
         // Will be null if the player is offline
@@ -69,7 +68,8 @@ class CallsService {
             transmitterSource: transmittingPlayer.source,
             receiver: reqObj.data.receiverNumber,
             receiverSource: receivingPlayer?.source || 0,
-            start: startCallTimeUnix.toString(),
+            start: new Date().getTime() / 1000,
+            end: new Date().getTime() / 1000,
             is_accepted: false,
         };
 
