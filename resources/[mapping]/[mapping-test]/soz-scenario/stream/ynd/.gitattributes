@@ -1,1 +1,0 @@
-*.{ybn,ydr,ymap,ytd,yft,awc,ydd,ymf,ymt,ynd} filter=lfs diff=lfs merge=lfs -text
