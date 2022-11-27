@@ -273,6 +273,7 @@ model player {
   metadata               String                   @db.Text
   inventory              String?                  @db.LongText
   last_updated           DateTime                 @default(now()) @db.Timestamp(0)
+  created_at             DateTime                 @default(now()) @db.Timestamp(0)
   is_default             Int                      @default(0)
   skin                   String?                  @db.Text
   cloth_config           String?                  @db.Text
@@ -286,6 +287,7 @@ model player {
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
   @@index([license], map: "license")
+  @@index([created_at], map: "created_at")
 }
 
 model player_cloth_set {
