@@ -100,7 +100,9 @@
       <trailers />
       <additionalTrailers />
       <drivers />
-      <extraIncludes />
+       <extraIncludes>
+          <Item>EXTRA_1 EXTRA_2 EXTRA_4 EXTRA_5 EXTRA_7</Item>
+        </extraIncludes>
       <doorsWithCollisionWhenClosed>
         <Item>VEH_EXT_BOOT</Item>
       </doorsWithCollisionWhenClosed>
