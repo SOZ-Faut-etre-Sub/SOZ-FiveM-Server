@@ -55,6 +55,7 @@ const VEHICLE_HAS_RADIO = [
     'sheriff4',
     'sheriffb',
     'sheriffdodge',
+    'sheriffcara',
     'maverick2',
     'pbus',
     'polmav',
