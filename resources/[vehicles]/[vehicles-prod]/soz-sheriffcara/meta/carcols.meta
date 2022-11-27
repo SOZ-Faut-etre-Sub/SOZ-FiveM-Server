@@ -1035,40 +1035,6 @@
           <allowBonnetSlide value="true" />
         </Item>
         <Item>
-          <modelName>sheriffcara_roofa</modelName>
-          <modShopLabel>SHERIFFCARA_ROOF_A</modShopLabel>
-          <linkedModels />
-          <turnOffBones>
-            <Item>misc_b</Item>
-          </turnOffBones>
-          <type>VMT_ROOF</type>
-          <bone>chassis</bone>
-          <collisionBone>chassis</collisionBone>
-          <cameraPos>VMCP_DEFAULT</cameraPos>
-          <audioApply value="1.000000" />
-          <weight value="20" />
-          <turnOffExtra value="false" />
-          <disableBonnetCamera value="false" />
-          <allowBonnetSlide value="true" />
-        </Item>
-        <Item>
-          <modelName>sheriffcara_roofb</modelName>
-          <modShopLabel>SHERIFFCARA_ROOF_B</modShopLabel>
-          <linkedModels />
-          <turnOffBones>
-            <Item>misc_b</Item>
-          </turnOffBones>
-          <type>VMT_ROOF</type>
-          <bone>chassis</bone>
-          <collisionBone>chassis</collisionBone>
-          <cameraPos>VMCP_DEFAULT</cameraPos>
-          <audioApply value="1.000000" />
-          <weight value="20" />
-          <turnOffExtra value="false" />
-          <disableBonnetCamera value="false" />
-          <allowBonnetSlide value="true" />
-        </Item>
-        <Item>
           <modelName>sheriffcara_archa</modelName>
           <modShopLabel>SHERIFFCARA_ARCH_A</modShopLabel>
           <linkedModels />
