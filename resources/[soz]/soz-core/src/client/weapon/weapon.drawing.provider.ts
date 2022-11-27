@@ -5,14 +5,14 @@ import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
-import { WeaponOnBack, Weapons } from '../../shared/weapons/weapon';
+import { WeaponDrawPosition, Weapons } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 import { WeaponService } from './weapon.service';
 
 @Provider()
 export class WeaponDrawingProvider {
     private shouldDrawWeapon = true;
-    private weaponsToDraw: WeaponOnBack[] = [];
+    private weaponsToDraw: WeaponDrawPosition[] = [];
     private weaponAttached: Record<string, number> = {};
 
     @Inject(ResourceLoader)
@@ -27,9 +27,9 @@ export class WeaponDrawingProvider {
                 item =>
                     item.type === 'weapon' &&
                     Weapons[item.name.toUpperCase()] &&
-                    Weapons[item.name.toUpperCase()].drawOnBack
+                    Weapons[item.name.toUpperCase()].drawPosition
             )
-            .map(item => Weapons[item.name.toUpperCase()].drawOnBack);
+            .map(item => Weapons[item.name.toUpperCase()].drawPosition);
 
         if (weaponToDraw.map(w => w.model) !== this.weaponsToDraw.map(w => w.model)) {
             await this.undrawWeapon();
@@ -69,7 +69,7 @@ export class WeaponDrawingProvider {
 
             const playerWeapon = this.weaponService.getCurrentWeapon();
             if (playerWeapon) {
-                const weaponModel = Weapons[playerWeapon.name.toUpperCase()].drawOnBack?.model;
+                const weaponModel = Weapons[playerWeapon.name.toUpperCase()].drawPosition?.model;
                 if (weaponModel) {
                     SetEntityAlpha(object, 0, false);
                 }
@@ -122,7 +122,7 @@ export class WeaponDrawingProvider {
         await wait(500);
 
         const weapon = this.weaponService.getCurrentWeapon();
-        const weaponModel = Weapons[usedWeapon.name.toUpperCase()]?.drawOnBack?.model;
+        const weaponModel = Weapons[usedWeapon.name.toUpperCase()]?.drawPosition?.model;
         if (weaponModel) {
             if (this.weaponAttached[weaponModel]) {
                 SetEntityAlpha(this.weaponAttached[weaponModel], weapon ? 0 : 255, false);
