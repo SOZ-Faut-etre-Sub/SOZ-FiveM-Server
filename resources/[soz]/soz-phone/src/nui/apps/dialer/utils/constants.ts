@@ -7,7 +7,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: true,
-        start: '2022-05-11 20:04:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -16,7 +16,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '704-1549',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-15 21:04:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -25,7 +25,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-15 21:10:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -34,7 +34,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-04-01 21:10:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -43,7 +43,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: true,
-        start: '2022-05-01 21:10:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -52,7 +52,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-01 21:10:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -61,7 +61,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-01 21:10:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -70,7 +70,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-01 21:10:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -79,7 +79,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-01 21:10:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -88,7 +88,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '215-8139',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-01 21:10:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -97,7 +97,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '704-1549',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-05-15 21:04:21.0',
+        start: 1610000000000,
         end: null,
     },
     {
@@ -106,7 +106,7 @@ export const MockHistoryData: CallHistoryItem[] = [
         transmitter: '704-1549',
         receiver: '704-1549',
         is_accepted: false,
-        start: '2022-08-22 20:50:21.0',
+        start: 1610000000000,
         end: null,
     },
 ];

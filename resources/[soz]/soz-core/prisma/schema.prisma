@@ -158,7 +158,7 @@ model phone_calls {
   receiver    String   @db.VarChar(8)
   is_accepted Int?     @default(0) @db.TinyInt
   start       DateTime @default(now()) @db.Timestamp(0)
-  end         DateTime @default(dbgenerated("('0000-00-00 00:00:00')")) @db.Timestamp(0)
+  end         DateTime @default(now()) @db.Timestamp(0)
 
   @@index([identifier], map: "identifier")
   @@index([transmitter], map: "transmitter")
