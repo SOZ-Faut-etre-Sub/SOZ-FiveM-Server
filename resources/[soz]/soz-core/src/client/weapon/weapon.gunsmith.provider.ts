@@ -40,7 +40,7 @@ export class WeaponGunsmithProvider {
             attachments: weapons.map(weapon => {
                 return {
                     slot: weapon.slot,
-                    attachments: this.weaponService.getWeaponConfig(weapon.name).attachments,
+                    attachments: this.weaponService.getWeaponConfig(weapon.name)?.attachments ?? [],
                 };
             }),
         });
