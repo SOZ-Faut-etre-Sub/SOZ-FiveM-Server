@@ -66,7 +66,7 @@ export const MenuVehicleDealership: FunctionComponent<MenuVehicleDealershipProps
     return (
         <Menu type={MenuType.VehicleDealership}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_shop_vehicle_car">LS Customs</MenuTitle>
+                <MenuTitle banner="https://nui-img/soz/menu_shop_vehicle_car">Concessionaire</MenuTitle>
                 <MenuContent>
                     {sortedCategories.length > 1 &&
                         sortedCategories.map((category, index) => {
