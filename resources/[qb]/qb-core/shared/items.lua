@@ -1122,6 +1122,183 @@ QBShared.Items = {
         ['description'] = 'Munitions pour fusils de précision.'
     },
 
+    ['ammo_01'] = {
+        ['name'] = 'ammo_01',
+        ['label'] = '9x19 AP',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_02'] = {
+        ['name'] = 'ammo_02',
+        ['label'] = '.357 Magnum',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_03'] = {
+        ['name'] = 'ammo_03',
+        ['label'] = 'Flair',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_04'] = {
+        ['name'] = 'ammo_04',
+        ['label'] = '5.7x28 SB193',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_05'] = {
+        ['name'] = 'ammo_05',
+        ['label'] = '7.62x39 BP',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_06'] = {
+        ['name'] = 'ammo_06',
+        ['label'] = '5.56x45 M995',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_07'] = {
+        ['name'] = 'ammo_07',
+        ['label'] = '7.62x51 M62',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_08'] = {
+        ['name'] = 'ammo_08',
+        ['label'] = '12/70 Buckshot',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_09'] = {
+        ['name'] = 'ammo_09',
+        ['label'] = 'Lead Bullet',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_10'] = {
+        ['name'] = 'ammo_10',
+        ['label'] = '12,7x108 BZT-44M',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_11'] = {
+        ['name'] = 'ammo_11',
+        ['label'] = '85mm PG-7',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_12'] = {
+        ['name'] = 'ammo_12',
+        ['label'] = '40x46mm M381',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_13'] = {
+        ['name'] = 'ammo_13',
+        ['label'] = '85mn Artifice',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_14'] = {
+        ['name'] = 'ammo_14',
+        ['label'] = 'Munition Alien',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_15'] = {
+        ['name'] = 'ammo_15',
+        ['label'] = 'AIM-9X',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_16'] = {
+        ['name'] = 'ammo_16',
+        ['label'] = '.50 BMG',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+
     -- Card ITEMS
     ['lawyerpass'] = {
         ['name'] = 'lawyerpass',
