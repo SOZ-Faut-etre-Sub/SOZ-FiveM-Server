@@ -529,6 +529,37 @@ export class VehicleGarageProvider {
                     return;
                 }
 
+                if (price !== 0) {
+                    this.monitor.publish(
+                        'pay_vehicle_garage_fee',
+                        {
+                            player_source: source,
+                            vehicle_plate: playerVehicle.plate,
+                            garage: id,
+                        },
+                        {
+                            price,
+                        }
+                    );
+                }
+
+                if (price !== 0 && garage.type === GarageType.Depot) {
+                    const bennysFee = Math.round(vehicle.price * 0.02);
+                    await this.playerMoneyService.transfer('farm_bennys', 'safe_bennys', bennysFee);
+
+                    this.monitor.publish(
+                        'pay_vehicle_impound_fee',
+                        {
+                            player_source: source,
+                            vehicle_plate: playerVehicle.plate,
+                            garage: id,
+                        },
+                        {
+                            price: bennysFee,
+                        }
+                    );
+                }
+
                 if (
                     await this.vehicleSpawner.spawnPlayerVehicle(source, playerVehicle, [
                         ...parkingPlace.center,
