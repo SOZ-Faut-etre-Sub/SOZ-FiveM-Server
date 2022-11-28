@@ -138,8 +138,6 @@ export class VehicleSpawner {
         newNetworkId: number,
         state: VehicleEntityState
     ) {
-        this.vehicleStateService.registerSpawned(newNetworkId);
-
         await wait(200);
 
         let entityId = NetworkGetEntityFromNetworkId(newNetworkId);
@@ -150,6 +148,7 @@ export class VehicleSpawner {
         }
 
         this.vehicleStateService.updateVehicleState(entityId, state);
+        this.vehicleStateService.registerSpawned(newNetworkId);
 
         await this.delete(originalNetworkId);
     }
