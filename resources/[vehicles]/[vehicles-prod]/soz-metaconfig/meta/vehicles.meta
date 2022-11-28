@@ -577,7 +577,7 @@
         <Item>
             <modelName>policeb2</modelName>
             <txdName>policeb</txdName>
-            <handlingId>POLICEB</handlingId>
+            <handlingId>MOTOFDO</handlingId>
             <gameName>policeb2</gameName>
             <vehicleMakeName />
             <expressionDictName>null</expressionDictName>
@@ -921,7 +921,7 @@
         <Item>
             <modelName>sheriffb</modelName>
             <txdName>sheriffb</txdName>
-            <handlingId>POLICEB</handlingId>
+            <handlingId>MOTOFDO</handlingId>
             <gameName>sheriffb</gameName>
             <vehicleMakeName />
             <expressionDictName>null</expressionDictName>
