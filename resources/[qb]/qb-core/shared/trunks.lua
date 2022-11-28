@@ -42,6 +42,8 @@ QBShared.Trunks = {
     [GetHashKey('sheriff4')] = { slot = 5, weight = 80000 },
     [GetHashKey('sheriffb')] = { slot = 5, weight = 30000 },
     [GetHashKey('maverick2')] = { slot = 5, weight = 200000 },
+    [GetHashKey('sheriffdodge')] = { slot = 5, weight = 60000 },
+    [GetHashKey('sheriffcara')] = { slot = 15, weight = 100000 },
 
     --- LSMC
     [GetHashKey('ambulance')] = { slot = 5, weight = 100000 },
