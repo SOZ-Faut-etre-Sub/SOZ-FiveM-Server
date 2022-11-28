@@ -5,7 +5,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
-import { GlobalWeaponConfig, WeaponAmmo } from '../../shared/weapons/weapon';
+import { GlobalWeaponConfig, WeaponAmmo, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -50,6 +50,11 @@ export class WeaponProvider {
             return;
         }
 
+        if (ammo.name !== this.getWeaponConfig(weapon.name)?.ammo) {
+            this.notifier.notify(source, 'Vous ne pouvez pas utiliser ces munitions avec cette arme', 'error');
+            return;
+        }
+
         if (weapon.metadata.ammo >= WeaponAmmo[ammo.name] * GlobalWeaponConfig.MaxAmmoRefill) {
             this.notifier.notify(source, 'Vous avez déjà assez de munitions...', 'info');
             return;
@@ -66,11 +71,25 @@ export class WeaponProvider {
 
     @Once(OnceStep.Start)
     public onStart() {
-        this.item.setItemUseCallback('pistol_ammo', this.useAmmo.bind(this));
-        this.item.setItemUseCallback('rifle_ammo', this.useAmmo.bind(this));
-        this.item.setItemUseCallback('smg_ammo', this.useAmmo.bind(this));
-        this.item.setItemUseCallback('shotgun_ammo', this.useAmmo.bind(this));
-        this.item.setItemUseCallback('mg_ammo', this.useAmmo.bind(this));
-        this.item.setItemUseCallback('snp_ammo', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_01', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_02', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_03', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_04', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_05', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_06', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_07', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_08', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_09', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_10', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_11', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_12', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_13', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_14', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_15', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_16', this.useAmmo.bind(this));
+    }
+
+    private getWeaponConfig(weaponName: string): WeaponConfig | null {
+        return Weapons[weaponName.toUpperCase()] ?? null;
     }
 }

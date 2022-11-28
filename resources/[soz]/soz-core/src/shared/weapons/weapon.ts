@@ -10,12 +10,22 @@ export type WeaponsMenuData = {
 };
 
 export const WeaponAmmo = {
-    pistol_ammo: 12,
-    rifle_ammo: 30,
-    smg_ammo: 20,
-    shotgun_ammo: 10,
-    mg_ammo: 30,
-    snp_ammo: 10,
+    ammo_01: 10,
+    ammo_02: 10,
+    ammo_03: 10,
+    ammo_04: 10,
+    ammo_05: 10,
+    ammo_06: 10,
+    ammo_07: 10,
+    ammo_08: 10,
+    ammo_09: 10,
+    ammo_10: 10,
+    ammo_11: 10,
+    ammo_12: 10,
+    ammo_13: 10,
+    ammo_14: 10,
+    ammo_15: 10,
+    ammo_16: 10,
 };
 
 export const GlobalWeaponConfig = {
@@ -39,8 +49,25 @@ export type WeaponDrawPosition = {
 
 export type WeaponConfig = {
     recoil?: number;
+    ammo?:
+        | 'ammo_01'
+        | 'ammo_02'
+        | 'ammo_03'
+        | 'ammo_04'
+        | 'ammo_05'
+        | 'ammo_06'
+        | 'ammo_07'
+        | 'ammo_08'
+        | 'ammo_09'
+        | 'ammo_10'
+        | 'ammo_11'
+        | 'ammo_12'
+        | 'ammo_13'
+        | 'ammo_14'
+        | 'ammo_15'
+        | 'ammo_16';
     drawPosition?: WeaponDrawPosition;
-    attachments: WeaponAttachment[];
+    attachments?: WeaponAttachment[];
 };
 
 export enum WeaponName {
@@ -169,90 +196,46 @@ export enum WeaponName {
 export const Weapons: Record<WeaponName, WeaponConfig> = {
     // Melee
     [WeaponName.BAT]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('w_me_bat'), ...DrawPositions['LMG'] },
     },
     [WeaponName.CROWBAR]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('w_me_crowbar'), ...DrawPositions['LMG'] },
     },
-    [WeaponName.FLASHLIGHT]: {
-        recoil: 0,
-        attachments: [],
-    },
+    [WeaponName.FLASHLIGHT]: {},
     [WeaponName.GOLFCLUB]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('w_me_gclub'), ...DrawPositions['LMG'] },
     },
-    [WeaponName.HAMMER]: {
-        recoil: 0,
-        attachments: [],
-    },
-    [WeaponName.KNUCKLE]: {
-        recoil: 0,
-        attachments: [],
-    },
-    [WeaponName.NIGHTSTICK]: {
-        recoil: 0,
-        attachments: [],
-    },
+    [WeaponName.HAMMER]: {},
+    [WeaponName.KNUCKLE]: {},
+    [WeaponName.NIGHTSTICK]: {},
     [WeaponName.WRENCH]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('prop_tool_wrench'), ...DrawPositions['LMG'] },
     },
     [WeaponName.POOLCUE]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('prop_pool_cue'), ...DrawPositions['LMG'] },
     },
-    [WeaponName.UNARMED]: {
-        recoil: 0,
-        attachments: [],
-    },
-    [WeaponName.DAGGER]: {
-        recoil: 0,
-        attachments: [],
-    },
-    [WeaponName.BOTTE]: {
-        recoil: 0,
-        attachments: [],
-    },
+    [WeaponName.UNARMED]: {},
+    [WeaponName.DAGGER]: {},
+    [WeaponName.BOTTE]: {},
     [WeaponName.HATCHET]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('w_me_hatchet'), ...DrawPositions['LMG'] },
     },
-    [WeaponName.KNIFE]: {
-        recoil: 0,
-        attachments: [],
-    },
+    [WeaponName.KNIFE]: {},
     [WeaponName.MACHETE]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('prop_ld_w_me_machette'), ...DrawPositions['LMG'] },
     },
-    [WeaponName.SWITCHBLADE]: {
-        recoil: 0,
-        attachments: [],
-    },
+    [WeaponName.SWITCHBLADE]: {},
     [WeaponName.BATTLEAXE]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('w_me_battleaxe'), ...DrawPositions['LMG'] },
     },
     [WeaponName.STONE_HATCHET]: {
-        recoil: 0,
-        attachments: [],
         drawPosition: { model: GetHashKey('w_me_stonehatchet'), ...DrawPositions['LMG'] },
     },
 
     // Handguns
     [WeaponName.PISTOL]: {
         recoil: 0.3,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_PISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_PISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -262,6 +245,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.PISTOL_MK2]: {
         recoil: 0.3,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_PISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_PISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -271,6 +255,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.REVOLVER_MK2]: {
         recoil: 0.3,
+        ammo: 'ammo_02',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_REVOLVER_CLIP_01', type: WeaponComponentType.Clip },
         ],
@@ -278,10 +263,10 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.STUNGUN]: {
         recoil: 0.1,
         drawPosition: { model: GetHashKey('w_pi_stungun'), position: [0.173, -0.14, -0.02], rotation: [0, 45, 0] },
-        attachments: [],
     },
     [WeaponName.COMBATPISTOL]: {
         recoil: 0.3,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_COMBATPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_COMBATPISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -291,6 +276,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.APPISTOL]: {
         recoil: 0.3,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_APPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_APPISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -302,6 +288,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.PISTOL50]: {
         recoil: 0.3,
+        ammo: 'ammo_02',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_PISTOL50_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_PISTOL50_CLIP_02', type: WeaponComponentType.Clip },
@@ -312,6 +299,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.SNSPISTOL]: {
         recoil: 0.3,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_SNSPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_SNSPISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -319,6 +307,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.HEAVYPISTOL]: {
         recoil: 0.3,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_HEAVYPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_HEAVYPISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -328,6 +317,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.VINTAGEPISTOL]: {
         recoil: 0.3,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_VINTAGEPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_VINTAGEPISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -336,24 +326,26 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.FLAREGUN]: {
         recoil: 0.3,
-        attachments: [],
+        ammo: 'ammo_03',
     },
     [WeaponName.MARKSMANPISTOL]: {
         recoil: 0.3,
-        attachments: [],
+        ammo: 'ammo_01',
     },
     [WeaponName.REVOLVER]: {
         recoil: 0.3,
+        ammo: 'ammo_02',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_REVOLVER_CLIP_01', type: WeaponComponentType.Clip },
         ],
     },
     [WeaponName.DOUBLEACTION]: {
         recoil: 0.3,
-        attachments: [],
+        ammo: 'ammo_02',
     },
     [WeaponName.SNSPISTOL_MK2]: {
         recoil: 0.3,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_SNSPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_SNSPISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -361,24 +353,24 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.RAYPISTOL]: {
         recoil: 0.3,
-        attachments: [],
     },
     [WeaponName.CERAMICPISTOL]: {
         recoil: 0.3,
-        attachments: [],
+        ammo: 'ammo_01',
     },
     [WeaponName.NAVYREVOLVER]: {
         recoil: 0.3,
-        attachments: [],
+        ammo: 'ammo_02',
     },
     [WeaponName.GADGETPISTOL]: {
         recoil: 0.3,
-        attachments: [],
+        ammo: 'ammo_01',
     },
 
     // SMGs
     [WeaponName.MICROSMG]: {
         recoil: 0.2,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_MICROSMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_MICROSMG_CLIP_02', type: WeaponComponentType.Clip },
@@ -391,6 +383,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.SMG]: {
         recoil: 0.2,
+        ammo: 'ammo_01',
         drawPosition: { model: GetHashKey('w_sb_smg'), ...DrawPositions['SMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_SMG_CLIP_01', type: WeaponComponentType.Clip },
@@ -404,6 +397,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.ASSAULTSMG]: {
         recoil: 0.2,
+        ammo: 'ammo_04',
         drawPosition: { model: GetHashKey('w_sb_assaultsmg'), ...DrawPositions['SMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_ASSAULTSMG_CLIP_01', type: WeaponComponentType.Clip },
@@ -416,6 +410,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.COMBATPDW]: {
         recoil: 0.2,
+        ammo: 'ammo_01',
         drawPosition: { model: GetHashKey('w_sb_pdw'), ...DrawPositions['SMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_COMBATPDW_CLIP_01', type: WeaponComponentType.Clip },
@@ -428,6 +423,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.SMG_MK2]: {
         recoil: 0.2,
+        ammo: 'ammo_04',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_SMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_SMG_CLIP_02', type: WeaponComponentType.Clip },
@@ -440,6 +436,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.MACHINEPISTOL]: {
         recoil: 0.2,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_MACHINEPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_MACHINEPISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -449,6 +446,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.MINISMG]: {
         recoil: 0.2,
+        ammo: 'ammo_01',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_MINISMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_MINISMG_CLIP_02', type: WeaponComponentType.Clip },
@@ -456,13 +454,14 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.RAYCARBINE]: {
         recoil: 0.2,
+        ammo: 'ammo_14',
         drawPosition: { model: GetHashKey('w_sb_assaultsmg'), ...DrawPositions['SMG'] },
-        attachments: [],
     },
 
     // Assault Rifles
     [WeaponName.ASSAULTRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_05',
         drawPosition: { model: GetHashKey('w_ar_assaultrifle'), ...DrawPositions['AR'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_ASSAULTRIFLE_CLIP_01', type: WeaponComponentType.Clip },
@@ -477,11 +476,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.ASSAULTRIFLE_MK2]: {
         recoil: 0.5,
+        ammo: 'ammo_05',
         drawPosition: { model: GetHashKey('w_ar_assaultriflemk2'), ...DrawPositions['AR'] },
-        attachments: [],
     },
     [WeaponName.CARBINERIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_carbinerifle'), ...DrawPositions['AR'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_CARBINERIFLE_CLIP_01', type: WeaponComponentType.Clip },
@@ -497,11 +497,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.CARBINERIFLE_MK2]: {
         recoil: 0.5,
+        ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_carbineriflemk2'), ...DrawPositions['AR'] },
-        attachments: [],
     },
     [WeaponName.ADVANCEDRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_ar_advancedrifle'), ...DrawPositions['AR'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_ADVANCEDRIFLE_CLIP_01', type: WeaponComponentType.Clip },
@@ -514,6 +515,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.SPECIALCARBINE]: {
         recoil: 0.5,
+        ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_specialcarbine'), ...DrawPositions['AR'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_SPECIALCARBINE_CLIP_01', type: WeaponComponentType.Clip },
@@ -527,6 +529,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.BULLPUPRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_bullpuprifle'), ...DrawPositions['AR'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_BULLPUPRIFLE_CLIP_01', type: WeaponComponentType.Clip },
@@ -539,6 +542,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.COMPACTRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_06',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_COMPACTRIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Extended Clip', component: 'COMPONENT_COMPACTRIFLE_CLIP_02', type: WeaponComponentType.Clip },
@@ -547,31 +551,32 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.SPECIALCARBINE_MK2]: {
         recoil: 0.5,
+        ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_specialcarbinemk2'), ...DrawPositions['AR'] },
-        attachments: [],
     },
     [WeaponName.BULLPUPRIFLE_MK2]: {
         recoil: 0.5,
-        attachments: [],
+        ammo: 'ammo_05',
     },
     [WeaponName.MILITARYRIFLE]: {
         recoil: 0.5,
-        attachments: [],
+        ammo: 'ammo_07',
     },
     [WeaponName.HEAVYRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_ar_heavyrifleh'), ...DrawPositions['AR'] },
-        attachments: [],
     },
     [WeaponName.TACTICALRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_carbinerifle_reh'), ...DrawPositions['AR'] },
-        attachments: [],
     },
 
     // Shotguns
     [WeaponName.PUMPSHOTGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_08',
         drawPosition: { model: GetHashKey('w_sg_pumpshotgun'), ...DrawPositions['LMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_PUMPSHOTGUN_CLIP_01', type: WeaponComponentType.Clip },
@@ -583,6 +588,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.SAWNOFFSHOTGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_08',
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_SAWNOFFSHOTGUN_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Skin', component: 'COMPONENT_SAWNOFFSHOTGUN_VARMOD_LUXE', type: WeaponComponentType.Skin },
@@ -590,6 +596,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.ASSAULTSHOTGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_08',
         drawPosition: { model: GetHashKey('w_sg_assaultshotgun'), ...DrawPositions['LMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_ASSAULTSHOTGUN_CLIP_01', type: WeaponComponentType.Clip },
@@ -601,6 +608,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.BULLPUPSHOTGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_08',
         drawPosition: { model: GetHashKey('w_sg_bullpupshotgun'), ...DrawPositions['LMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_BULLPUPSHOTGUN_CLIP_01', type: WeaponComponentType.Clip },
@@ -611,11 +619,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.MUSKET]: {
         recoil: 0.5,
+        ammo: 'ammo_09',
         drawPosition: { model: GetHashKey('w_ar_musket'), ...DrawPositions['LMG'] },
-        attachments: [],
     },
     [WeaponName.HEAVYSHOTGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_08',
         drawPosition: { model: GetHashKey('w_sg_heavyshotgun'), ...DrawPositions['LMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_HEAVYSHOTGUN_CLIP_01', type: WeaponComponentType.Clip },
@@ -628,19 +637,20 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.DBSHOTGUN]: {
         recoil: 0.5,
-        attachments: [],
+        ammo: 'ammo_08',
     },
     [WeaponName.AUTOSHOTGUN]: {
         recoil: 0.5,
-        attachments: [],
+        ammo: 'ammo_08',
     },
     [WeaponName.PUMPSHOTGUN_MK2]: {
         recoil: 0.5,
+        ammo: 'ammo_08',
         drawPosition: { model: GetHashKey('w_sg_pumpshotgunmk2'), ...DrawPositions['LMG'] },
-        attachments: [],
     },
     [WeaponName.COMBATSHOTGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_08',
         drawPosition: { model: GetHashKey('w_sg_pumpshotgunh4'), ...DrawPositions['LMG'] },
         attachments: [
             { label: 'Flashlight', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
@@ -651,6 +661,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     // Machine Guns
     [WeaponName.MG]: {
         recoil: 0.5,
+        ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_mg_mg'), ...DrawPositions['LMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_MG_CLIP_01', type: WeaponComponentType.Clip },
@@ -661,6 +672,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.COMBATMG]: {
         recoil: 0.5,
+        ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_mg_combatmg'), ...DrawPositions['LMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_COMBATMG_CLIP_01', type: WeaponComponentType.Clip },
@@ -672,6 +684,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.GUSENBERG]: {
         recoil: 0.5,
+        ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_sb_gusenberg'), ...DrawPositions['LMG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_GUSENBERG_CLIP_01', type: WeaponComponentType.Clip },
@@ -680,18 +693,20 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.COMBATMG_MK2]: {
         recoil: 0.5,
+        ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_mg_combatmgmk2'), ...DrawPositions['LMG'] },
-        attachments: [],
     },
 
     // Heavy Weapons
     [WeaponName.RPG]: {
         recoil: 0.5,
+        ammo: 'ammo_11',
         drawPosition: { model: GetHashKey('w_lr_rpg'), ...DrawPositions['RPG'] },
         attachments: [{ label: 'Default Clip', component: 'COMPONENT_RPG_CLIP_01', type: WeaponComponentType.Clip }],
     },
     [WeaponName.GRENADELAUNCHER]: {
         recoil: 0.5,
+        ammo: 'ammo_12',
         drawPosition: { model: GetHashKey('w_lr_grenadelauncher'), ...DrawPositions['RPG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_GRENADELAUNCHER_CLIP_01', type: WeaponComponentType.Clip },
@@ -702,46 +717,47 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.GRENADELAUNCHER_SMOKE]: {
         recoil: 0.5,
+        ammo: 'ammo_12',
         drawPosition: { model: GetHashKey('w_lr_grenadelauncher'), ...DrawPositions['RPG'] },
-        attachments: [],
     },
     [WeaponName.MINIGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_mg_minigun'), ...DrawPositions['RPG'] },
-        attachments: [],
     },
     [WeaponName.FIREWORK]: {
         recoil: 0.5,
+        ammo: 'ammo_13',
         drawPosition: { model: GetHashKey('w_lr_firework'), ...DrawPositions['RPG'] },
-        attachments: [],
     },
     [WeaponName.RAILGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_14',
         drawPosition: { model: GetHashKey('w_ar_railgun'), ...DrawPositions['RPG'] },
-        attachments: [],
     },
     [WeaponName.HOMINGLAUNCHER]: {
         recoil: 0.5,
+        ammo: 'ammo_15',
         drawPosition: { model: GetHashKey('w_lr_homing'), ...DrawPositions['RPG'] },
-        attachments: [],
     },
     [WeaponName.COMPACTLAUNCHER]: {
         recoil: 0.5,
-        attachments: [],
+        ammo: 'ammo_12',
     },
     [WeaponName.RAYMINIGUN]: {
         recoil: 0.5,
+        ammo: 'ammo_14',
         drawPosition: { model: GetHashKey('w_mg_sminigun'), ...DrawPositions['RPG'] },
-        attachments: [],
     },
     [WeaponName.EMPLAUNCHER]: {
         recoil: 0.5,
-        attachments: [],
+        ammo: 'ammo_14',
     },
 
     // Sniper
     [WeaponName.SNIPERRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_16',
         drawPosition: { model: GetHashKey('w_sr_sniperrifle'), ...DrawPositions['RPG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_SNIPERRIFLE_CLIP_01', type: WeaponComponentType.Clip },
@@ -753,6 +769,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.HEAVYSNIPER]: {
         recoil: 0.5,
+        ammo: 'ammo_16',
         drawPosition: { model: GetHashKey('w_sr_heavysniper'), ...DrawPositions['RPG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_HEAVYSNIPER_CLIP_01', type: WeaponComponentType.Clip },
@@ -762,6 +779,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.HEAVYSNIPER_MK2]: {
         recoil: 0.5,
+        ammo: 'ammo_16',
         drawPosition: { model: GetHashKey('w_sr_heavysnipermk2'), ...DrawPositions['RPG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_HEAVYSNIPER_CLIP_01', type: WeaponComponentType.Clip },
@@ -771,6 +789,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.MARKSMANRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_sr_marksmanrifle'), ...DrawPositions['RPG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_MARKSMANRIFLE_CLIP_01', type: WeaponComponentType.Clip },
@@ -783,6 +802,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.MARKSMANRIFLE_MK2]: {
         recoil: 0.5,
+        ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_sr_marksmanriflemk2'), ...DrawPositions['RPG'] },
         attachments: [
             { label: 'Default Clip', component: 'COMPONENT_MARKSMANRIFLE_CLIP_01', type: WeaponComponentType.Clip },
@@ -795,24 +815,24 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.PRECISIONRIFLE]: {
         recoil: 0.5,
+        ammo: 'ammo_16',
         drawPosition: { model: GetHashKey('w_sr_precisionrifle_reh'), ...DrawPositions['RPG'] },
-        attachments: [],
     },
 
     // Launcher
-    [WeaponName.GRENADE]: { recoil: 0, attachments: [] },
-    [WeaponName.BZGAS]: { recoil: 0, attachments: [] },
-    [WeaponName.MOLOTOV]: { recoil: 0, attachments: [] },
-    [WeaponName.STICKYBOMB]: { recoil: 0, attachments: [] },
-    [WeaponName.PROXMINE]: { recoil: 0, attachments: [] },
-    [WeaponName.SNOWBALL]: { recoil: 0, attachments: [] },
-    [WeaponName.PIPEBOMB]: { recoil: 0, attachments: [] },
-    [WeaponName.BALL]: { recoil: 0, attachments: [] },
-    [WeaponName.SMOKEGRENADE]: { recoil: 0, attachments: [] },
-    [WeaponName.FLARE]: { recoil: 0, attachments: [] },
+    [WeaponName.GRENADE]: { attachments: [] },
+    [WeaponName.BZGAS]: { attachments: [] },
+    [WeaponName.MOLOTOV]: { attachments: [] },
+    [WeaponName.STICKYBOMB]: { attachments: [] },
+    [WeaponName.PROXMINE]: { attachments: [] },
+    [WeaponName.SNOWBALL]: { attachments: [] },
+    [WeaponName.PIPEBOMB]: { attachments: [] },
+    [WeaponName.BALL]: { attachments: [] },
+    [WeaponName.SMOKEGRENADE]: { attachments: [] },
+    [WeaponName.FLARE]: { attachments: [] },
 
     // Other
-    [WeaponName.PETROLCAN]: { recoil: 0, attachments: [] },
-    [WeaponName.FIREEXTINGUISHER]: { recoil: 0, attachments: [] },
-    [WeaponName.HAZARDCAN]: { recoil: 0, attachments: [] },
+    [WeaponName.PETROLCAN]: { attachments: [] },
+    [WeaponName.FIREEXTINGUISHER]: { attachments: [] },
+    [WeaponName.HAZARDCAN]: { attachments: [] },
 };
