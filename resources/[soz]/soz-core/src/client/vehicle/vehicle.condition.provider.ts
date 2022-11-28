@@ -422,11 +422,19 @@ export class VehicleConditionProvider {
 
         const vehicleClass = GetVehicleClass(vehicle);
 
+        // A reparation was done, do not trigger damage diff here
+        if (engineHealthDiff < 0 || bodyHealthDiff < 0 || tankHealthDiff < 0) {
+            return;
+        }
+
         if (engineHealthDiff > 0) {
             engineHealthDiff *= ENGINE_DAMAGE_MULTIPLIER * VEHICLE_CLASS_DAMAGE_MULTIPLIER[vehicleClass];
         }
 
-        if (this.currentVehicleStatus.engineHealth < ENGINE_THRESHOLD_AUTO_DEGRADE) {
+        if (
+            this.currentVehicleStatus.engineHealth < ENGINE_THRESHOLD_AUTO_DEGRADE &&
+            this.currentVehicleStatus.engineHealth > ENGINE_MIN_HEALTH + 1.0
+        ) {
             engineHealthDiff += 0.2;
         }
 
