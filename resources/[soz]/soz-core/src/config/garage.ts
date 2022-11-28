@@ -1103,16 +1103,36 @@ export const GarageList: Record<string, Garage> = {
         type: GarageType.Job,
         job: JobType.BCSO,
         category: GarageCategory.Car,
-        zone: new BoxZone([1861.0, 3683.01, 32.83], 1.0, 1.0, {
-            heading: 30.94,
-            minZ: 31.83,
-            maxZ: 34.83,
+        zone: new BoxZone([1867.45, 3687.16, 32.83], 1.0, 1.0, {
+            heading: 30.0,
+            minZ: 32.83,
+            maxZ: 35.83,
         }),
         parkingPlaces: [
-            new BoxZone([1866.81, 3681.9, 33.7], 6.0, 2.4, {
-                heading: 300,
-                minZ: 32.23,
-                maxZ: 36.23,
+            new BoxZone([1869.07, 3692.7, 33.73], 6.0, 3.2, {
+                heading: 330.0,
+                minZ: 32.73,
+                maxZ: 35.73,
+            }),
+            new BoxZone([1866.94, 3695.74, 33.65], 5.2, 3.4, {
+                heading: 330.0,
+                minZ: 32.65,
+                maxZ: 35.65,
+            }),
+            new BoxZone([1865.08, 3699.11, 33.73], 6.0, 3.0, {
+                heading: 329.0,
+                minZ: 32.73,
+                maxZ: 35.73,
+            }),
+            new BoxZone([1863.16, 3702.3, 33.6], 5.8, 3.2, {
+                heading: 331.0,
+                minZ: 32.6,
+                maxZ: 35.6,
+            }),
+            new BoxZone([1861.48, 3705.73, 33.47], 6.0, 3.0, {
+                heading: 330.0,
+                minZ: 32.47,
+                maxZ: 35.47,
             }),
         ],
     },
