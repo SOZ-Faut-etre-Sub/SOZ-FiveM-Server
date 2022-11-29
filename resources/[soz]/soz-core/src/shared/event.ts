@@ -143,6 +143,8 @@ export enum ServerEvent {
 }
 
 export enum ClientEvent {
+    ADMIN_OPEN_MENU = 'soz-core:client:admin:openMenu',
+
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
 

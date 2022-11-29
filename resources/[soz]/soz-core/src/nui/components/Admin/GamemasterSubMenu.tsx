@@ -18,20 +18,13 @@ import {
 export type GameMasterSubMenuProps = {
     banner: string;
     permission: SozRole;
-    updateState: (namespace: 'gameMaster', key: keyof GameMasterSubMenuProps['state'], value: any) => void;
     state: {
         moneyCase: boolean;
         invisible: boolean;
-        godMode: boolean;
     };
 };
 
-export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
-    banner,
-    permission,
-    state,
-    updateState,
-}) => {
+export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ banner, permission, state }) => {
     const isAdmin = permission === 'admin';
     const player = usePlayer();
 
@@ -87,7 +80,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     checked={state.moneyCase}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        updateState('gameMaster', 'moneyCase', value);
                         await fetchNui(NuiEvent.AdminToggleMoneyCase, value);
                     }}
                 >
@@ -97,7 +89,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     checked={state.invisible}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        updateState('gameMaster', 'invisible', value);
                         await fetchNui(NuiEvent.AdminSetVisible, !value);
                     }}
                 >
@@ -114,7 +105,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     checked={player.metadata.godmode}
                     disabled={!isAdmin}
                     onChange={async value => {
-                        updateState('gameMaster', 'godMode', value);
                         await fetchNui(NuiEvent.AdminSetGodMode, value);
                     }}
                 >

@@ -35,19 +35,12 @@ export const LICENCES = [
 export type GameMasterSubMenuState = {
     moneyCase: boolean;
     invisible: boolean;
-    godMode: boolean;
 };
 
 export type InteractiveSubMenuState = {
     displayOwners: boolean;
     displayPlayerNames: boolean;
     displayPlayersOnMap: boolean;
-};
-
-export type JobSubMenuState = {
-    currentJobIndex: number;
-    currentJobGradeIndex: number;
-    isOnDuty: boolean;
 };
 
 export type SkinSubMenuState = {
@@ -70,7 +63,6 @@ export type AdminMenuData = {
     state: {
         gameMaster: GameMasterSubMenuState;
         interactive: InteractiveSubMenuState;
-        job: JobSubMenuState;
         skin: SkinSubMenuState;
         developer: DeveloperSubMenuState;
     };

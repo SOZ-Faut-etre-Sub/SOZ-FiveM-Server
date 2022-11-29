@@ -1,15 +1,16 @@
 import { Command } from '../../core/decorators/command';
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { SozRole } from '../../core/permissions';
 import { emitRpc } from '../../core/rpc';
-import { AdminMenuData } from '../../shared/admin/admin';
-import { NuiEvent } from '../../shared/event';
+import { ClientEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { RpcEvent } from '../../shared/rpc';
 import { ClothingService } from '../clothing/clothing.service';
 import { NuiMenu } from '../nui/nui.menu';
+import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
+import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 
 @Provider()
 export class AdminMenuProvider {
@@ -19,37 +20,13 @@ export class AdminMenuProvider {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
-    private menuState: AdminMenuData['state'] = {
-        gameMaster: {
-            godMode: false,
-            invisible: false,
-            moneyCase: true,
-        },
-        interactive: {
-            displayOwners: false,
-            displayPlayerNames: false,
-            displayPlayersOnMap: false,
-        },
-        job: {
-            currentJobIndex: undefined,
-            currentJobGradeIndex: undefined,
-            isOnDuty: false,
-        },
-        skin: {
-            clothConfig: undefined,
-            maxOptions: [],
-        },
-        developer: {
-            noClip: false,
-            displayCoords: false,
-        },
-    };
+    @Inject(AdminMenuInteractiveProvider)
+    private adminMenuInteractiveProvider: AdminMenuInteractiveProvider;
 
-    @OnNuiEvent(NuiEvent.AdminUpdateState)
-    public async updateState({ namespace, key, value }: { namespace: string; key: string; value: any }): Promise<void> {
-        this.menuState[namespace][key] = value;
-    }
+    @Inject(AdminMenuDeveloperProvider)
+    private adminMenuDeveloperProvider: AdminMenuDeveloperProvider;
 
+    @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
         keys: [
             {
@@ -71,15 +48,34 @@ export class AdminMenuProvider {
         }
 
         const banner = 'https://nui-img/soz/menu_admin_' + permission;
-        this.menuState.skin.clothConfig = this.clothingService.getClothSet();
-        this.menuState.skin.maxOptions = this.clothingService.getMaxOptions();
+        const ped = PlayerPedId();
 
         this.nuiMenu.openMenu<MenuType.AdminMenu>(
             MenuType.AdminMenu,
             {
                 banner,
                 permission: permission as SozRole,
-                state: this.menuState,
+                state: {
+                    gameMaster: {
+                        invisible: !IsEntityVisible(ped),
+                        moneyCase: LocalPlayer.state.adminDisableMoneyCase || false,
+                    },
+                    interactive: {
+                        displayOwners: this.adminMenuInteractiveProvider.intervalHandlers.displayOwners !== null,
+                        displayPlayerNames:
+                            this.adminMenuInteractiveProvider.intervalHandlers.displayPlayerNames !== null,
+                        displayPlayersOnMap:
+                            this.adminMenuInteractiveProvider.intervalHandlers.displayPlayersOnMap !== null,
+                    },
+                    skin: {
+                        clothConfig: this.clothingService.getClothSet(),
+                        maxOptions: this.clothingService.getMaxOptions(),
+                    },
+                    developer: {
+                        noClip: this.adminMenuDeveloperProvider.isIsNoClipMode(),
+                        displayCoords: this.adminMenuDeveloperProvider.showCoordinatesInterval !== null,
+                    },
+                },
             },
             { subMenuId }
         );

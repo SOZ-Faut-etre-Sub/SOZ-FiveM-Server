@@ -2,14 +2,13 @@ import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
-import { AdminMenuProvider } from './admin.menu.provider';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
@@ -28,10 +27,7 @@ export class AdminMenuDeveloperProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
-    @Inject(AdminMenuProvider)
-    private adminMenuProvider: AdminMenuProvider;
-
-    private showCoordinatesInterval = null;
+    public showCoordinatesInterval = null;
 
     private isCreatingZone = false;
 
@@ -65,13 +61,18 @@ export class AdminMenuDeveloperProvider {
                     maxZ: ${(zone.center.z + 2.0).toFixed(2)},
                 });`
             );
-            await this.adminMenuProvider.openAdminMenu('developer');
+
+            TriggerEvent(ClientEvent.ADMIN_OPEN_MENU, 'developer');
         }
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleNoClip)
     public async toggleNoClip(): Promise<void> {
         exports['soz-utils'].ToggleNoClipMode();
+    }
+
+    public isIsNoClipMode(): boolean {
+        return exports['soz-utils'].IsNoClipMode();
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleShowCoordinates)

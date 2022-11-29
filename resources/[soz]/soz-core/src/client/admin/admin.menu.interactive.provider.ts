@@ -16,7 +16,7 @@ export class AdminMenuInteractiveProvider {
     @Inject(Qbcore)
     private QBCore: Qbcore;
 
-    private intervalHandlers = {
+    public intervalHandlers = {
         displayOwners: null,
         displayPlayerNames: null,
         displayPlayersOnMap: null,

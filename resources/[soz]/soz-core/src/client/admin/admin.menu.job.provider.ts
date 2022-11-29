@@ -33,7 +33,7 @@ export class AdminMenuJobProvider {
 
         const jobs = await emitRpc<Job[]>(RpcEvent.JOB_GET_JOBS);
         const job = jobs.find(job => job.id === jobId);
-        const grade = job.grades.find(value => value.id === jobGrade) || '';
+        const grade = job.grades.find(value => value.id.toString() === jobGrade.toString()) || '';
 
         this.notifier.notify(
             `Vous êtes maintenant ${grade ? '~g~' + grade.name + '~s~' : ''} chez ~g~${job.label}~s~!`
