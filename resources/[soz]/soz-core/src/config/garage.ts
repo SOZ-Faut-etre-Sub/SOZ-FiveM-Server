@@ -737,6 +737,22 @@ export const GarageList: Record<string, Garage> = {
                     capacity: [PlaceCapacity.Large],
                 },
             }),
+            new BoxZone([-641.07, -2212.31, 6.0], 1.0, 1.0, {
+                heading: 49.0,
+                minZ: 5.0,
+                maxZ: 8.0,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-634.45, -2209.31, 6.0], 1.0, 1.0, {
+                heading: 49.0,
+                minZ: 5.0,
+                maxZ: 8.0,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
         ],
     },
     bell_farms: {
