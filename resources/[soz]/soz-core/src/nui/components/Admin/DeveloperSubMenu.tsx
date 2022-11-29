@@ -14,7 +14,6 @@ import {
 
 export type DeveloperSubMenuProps = {
     banner: string;
-    updateState: (namespace: 'developer', key: keyof DeveloperSubMenuProps['state'], value: any) => void;
     state: {
         noClip: boolean;
         displayCoords: boolean;
@@ -26,15 +25,14 @@ const coordOptions = [
     { label: 'Vector 4', value: 'coords4' },
 ];
 
-export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, state, updateState }) => {
+export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, state }) => {
     return (
         <SubMenu id="developer">
             <MenuTitle banner={banner}>Si véloces ces développeurs</MenuTitle>
             <MenuContent>
                 <MenuItemCheckbox
                     checked={state.noClip}
-                    onChange={async value => {
-                        updateState('developer', 'noClip', value);
+                    onChange={async () => {
                         await fetchNui(NuiEvent.AdminToggleNoClip);
                     }}
                 >
@@ -43,7 +41,6 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                 <MenuItemCheckbox
                     checked={state.displayCoords}
                     onChange={async value => {
-                        updateState('developer', 'displayCoords', value);
                         await fetchNui(NuiEvent.AdminToggleShowCoordinates, value);
                     }}
                 >

@@ -1,9 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { AdminMenuData } from '../../../shared/admin/admin';
-import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
-import { fetchNui } from '../../fetch';
 import { MainMenu, Menu, MenuContent, MenuItemSubMenuLink, MenuTitle } from '../Styleguide/Menu';
 import { DeveloperSubMenu } from './DeveloperSubMenu';
 import { GameMasterSubMenu } from './GamemasterSubMenu';
@@ -18,11 +16,6 @@ export type AdminMenuStateProps = {
 };
 
 export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
-    const updateState = async (namespace: string, key: string, value: any) => {
-        data.state[namespace][key] = value;
-        await fetchNui(NuiEvent.AdminUpdateState, { namespace, key, value });
-    };
-
     if (!data || !data.state) {
         return null;
     }
@@ -47,18 +40,13 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
-            <GameMasterSubMenu
-                banner={data.banner}
-                permission={data.permission}
-                updateState={updateState}
-                state={data.state.gameMaster}
-            />
-            <InteractiveSubMenu banner={data.banner} updateState={updateState} state={data.state.interactive} />
-            <JobSubMenu banner={data.banner} updateState={updateState} state={data.state.job} />
-            <SkinSubMenu banner={data.banner} updateState={updateState} state={data.state.skin} />
+            <GameMasterSubMenu banner={data.banner} permission={data.permission} state={data.state.gameMaster} />
+            <InteractiveSubMenu banner={data.banner} state={data.state.interactive} />
+            <JobSubMenu banner={data.banner} />
+            <SkinSubMenu banner={data.banner} state={data.state.skin} />
             <VehicleSubMenu banner={data.banner} permission={data.permission} />
             <PlayerSubMenu banner={data.banner} permission={data.permission} />
-            <DeveloperSubMenu banner={data.banner} state={data.state.developer} updateState={updateState} />
+            <DeveloperSubMenu banner={data.banner} state={data.state.developer} />
         </Menu>
     );
 };

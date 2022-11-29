@@ -16,7 +16,6 @@ import {
 
 export type SkinSubMenuProps = {
     banner: string;
-    updateState: (namespace: 'skin', key: keyof SkinSubMenuProps['state'], value: any) => void;
     state: {
         clothConfig: Outfit;
         maxOptions: {
@@ -71,7 +70,7 @@ const TRANSLATED_INDEXES: Record<string, string> = {
     RightHand: 'Bras droit',
 };
 
-export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updateState, state }) => {
+export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state }) => {
     const [currentDrawable, setCurrentDrawable] = useState<number>(0);
 
     useNuiEvent(
@@ -116,8 +115,6 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, updat
                 component.Texture = value;
                 break;
         }
-
-        updateState('skin', 'clothConfig', state.clothConfig);
 
         await fetchNui(NuiEvent.AdminMenuSkinChangeComponent, {
             componentIndex,

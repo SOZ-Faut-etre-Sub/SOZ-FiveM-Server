@@ -13,7 +13,6 @@ import {
 
 export type InteractiveSubMenuProps = {
     banner: string;
-    updateState: (namespace: 'interactive', key: keyof InteractiveSubMenuProps['state'], value: any) => void;
     state: {
         displayOwners: boolean;
         displayPlayerNames: boolean;
@@ -21,7 +20,7 @@ export type InteractiveSubMenuProps = {
     };
 };
 
-export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({ banner, state, updateState }) => {
+export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({ banner, state }) => {
     return (
         <SubMenu id="interactive">
             <MenuTitle banner={banner}>Des options à la carte</MenuTitle>
@@ -29,7 +28,6 @@ export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({
                 <MenuItemCheckbox
                     checked={state.displayOwners}
                     onChange={async value => {
-                        updateState('interactive', 'displayOwners', value);
                         await fetchNui(NuiEvent.AdminToggleDisplayOwners, value);
                     }}
                 >
@@ -38,7 +36,6 @@ export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({
                 <MenuItemSelect
                     title={'Afficher les noms des joueurs'}
                     onConfirm={async value => {
-                        updateState('interactive', 'displayPlayerNames', !state.displayPlayerNames);
                         await fetchNui(NuiEvent.AdminToggleDisplayPlayerNames, {
                             value: !state.displayPlayerNames,
                             withDetails: value === 1,
@@ -51,7 +48,6 @@ export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({
                 <MenuItemCheckbox
                     checked={state.displayPlayersOnMap}
                     onChange={async value => {
-                        updateState('interactive', 'displayPlayersOnMap', value);
                         await fetchNui(NuiEvent.AdminToggleDisplayPlayersOnMap, value);
                     }}
                 >
