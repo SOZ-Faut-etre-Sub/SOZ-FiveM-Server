@@ -139,7 +139,7 @@ export class BennysVehicleProvider {
                         return false;
                     }
 
-                    if (!this.isInsideUpgradeZone()) {
+                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
                         return false;
                     }
 
@@ -164,7 +164,7 @@ export class BennysVehicleProvider {
                         return false;
                     }
 
-                    if (!this.isInsideUpgradeZone()) {
+                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
                         return false;
                     }
 
@@ -189,7 +189,7 @@ export class BennysVehicleProvider {
                         return false;
                     }
 
-                    if (!this.isInsideUpgradeZone()) {
+                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
                         return false;
                     }
 
@@ -214,7 +214,7 @@ export class BennysVehicleProvider {
                         return false;
                     }
 
-                    if (!this.isInsideUpgradeZone()) {
+                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
                         return false;
                     }
 
@@ -235,7 +235,7 @@ export class BennysVehicleProvider {
                         return false;
                     }
 
-                    if (!this.isInsideUpgradeZone()) {
+                    if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
                         return false;
                     }
 
@@ -264,10 +264,28 @@ export class BennysVehicleProvider {
         ]);
     }
 
-    public isInsideUpgradeZone(): boolean {
+    public isInsideUpgradeZoneOrNearRepairVehicle(): boolean {
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
 
-        return this.upgradeZone.isPointInside(position);
+        if (this.upgradeZone.isPointInside(position)) {
+            return true;
+        }
+
+        const allowedModel = GetHashKey('burrito6');
+
+        const closestVehicle = this.vehicleService.getClosestVehicle({}, vehicle => {
+            const model = GetEntityModel(vehicle);
+
+            if (model !== allowedModel) {
+                return false;
+            }
+
+            const plate = GetVehicleNumberPlateText(vehicle);
+
+            return plate.startsWith('NEWG');
+        });
+
+        return closestVehicle !== null;
     }
 
     public async upgradeVehicle(vehicleEntityId: number) {
@@ -371,7 +389,7 @@ export class BennysVehicleProvider {
             this.nuiMenu.closeMenu();
         } else {
             this.nuiMenu.openMenu(MenuType.JobBennys, {
-                insideUpgradeZone: isDriver && this.isInsideUpgradeZone(),
+                insideUpgradeZone: isDriver && this.isInsideUpgradeZoneOrNearRepairVehicle(),
             });
         }
     }
