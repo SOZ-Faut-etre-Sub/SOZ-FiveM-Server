@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CHandlingDataMgr>
   <HandlingData>
-  <Item type="CHandlingData">
+    <Item type="CHandlingData">
       <handlingName>motofdo</handlingName>
       <fMass value="250.000000" />
       <fInitialDragCoeff value="9.000000" />
@@ -319,7 +319,7 @@
           <Item type="NULL" />
       </SubHandlingData>
     </Item>
-      <Item type="CHandlingData">
+    <Item type="CHandlingData">
           <handlingName>NEWSVAN</handlingName>
           <fMass value="2500.000000" />
           <fInitialDragCoeff value="6.000000" />
