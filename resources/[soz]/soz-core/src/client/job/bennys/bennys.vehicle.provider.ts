@@ -264,11 +264,15 @@ export class BennysVehicleProvider {
         ]);
     }
 
-    public isInsideUpgradeZoneOrNearRepairVehicle(): boolean {
+    public isInsideUpgradeZoneOrNearRepairVehicle(allowRemoteVehicle = true): boolean {
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
 
         if (this.upgradeZone.isPointInside(position)) {
             return true;
+        }
+
+        if (!allowRemoteVehicle) {
+            return false;
         }
 
         const allowedModel = GetHashKey('burrito6');
@@ -389,7 +393,7 @@ export class BennysVehicleProvider {
             this.nuiMenu.closeMenu();
         } else {
             this.nuiMenu.openMenu(MenuType.JobBennys, {
-                insideUpgradeZone: isDriver && this.isInsideUpgradeZoneOrNearRepairVehicle(),
+                insideUpgradeZone: isDriver && this.isInsideUpgradeZoneOrNearRepairVehicle(false),
             });
         }
     }
