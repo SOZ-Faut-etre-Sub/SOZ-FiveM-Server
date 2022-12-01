@@ -8,6 +8,7 @@ import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
+import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
@@ -40,11 +41,14 @@ const VEHICLE_TRUNK_TYPES = {
     [GetHashKey('trash')]: 'trash',
 };
 
-const VEHICLE_TRUNK_DISTANCE = 5.0;
-
 type CurrentHat = {
     hat: number;
     texture: number;
+};
+
+type TrunkOpened = {
+    vehicle: number;
+    zone: BoxZone;
 };
 
 @Provider()
@@ -67,7 +71,7 @@ export class VehicleLockProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
-    private vehicleTrunkOpened: number | null = null;
+    private vehicleTrunkOpened: TrunkOpened | null = null;
 
     private currentPedHat: CurrentHat | null = null;
 
@@ -170,7 +174,7 @@ export class VehicleLockProvider {
         } else {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
 
-            if (this.vehicleTrunkOpened === vehicle) {
+            if (this.vehicleTrunkOpened && this.vehicleTrunkOpened.vehicle === vehicle) {
                 this.vehicleTrunkOpened = null;
                 TriggerEvent('inventory:client:closeInventory');
             }
@@ -302,11 +306,35 @@ export class VehicleLockProvider {
         }
 
         const vehicle = this.vehicleService.getClosestVehicle({
-            maxDistance: VEHICLE_TRUNK_DISTANCE,
+            maxDistance: 15.0,
         });
 
         if (!vehicle || !IsEntityAVehicle(vehicle)) {
             this.notifier.notify('Aucun véhicule à proximité.', 'error');
+
+            return;
+        }
+
+        const model = GetEntityModel(vehicle);
+        const [min, max] = GetModelDimensions(model) as [Vector3, Vector3];
+        const position = GetEntityCoords(vehicle, false) as Vector3;
+
+        const center = [
+            position[0] + (max[0] + min[0]) / 2,
+            position[1] + (max[1] + min[1]) / 2,
+            position[2] + (max[2] + min[2]) / 2,
+        ] as Vector3;
+
+        const vehicleTrunkZone = new BoxZone(center, max[1] - min[1] + 2.0, max[0] - min[0] + 2.0, {
+            heading: GetEntityHeading(vehicle),
+            minZ: center[2] + min[2],
+            maxZ: center[2] + max[2],
+        });
+
+        const pedPosition = GetEntityCoords(ped, false) as Vector3;
+
+        if (!vehicleTrunkZone.isPointInside(pedPosition)) {
+            this.notifier.notify('Vous devez être à côté du véhicule.', 'error');
 
             return;
         }
@@ -336,7 +364,10 @@ export class VehicleLockProvider {
             entity: VehToNet(vehicle),
         });
 
-        this.vehicleTrunkOpened = vehicle;
+        this.vehicleTrunkOpened = {
+            vehicle,
+            zone: vehicleTrunkZone,
+        };
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -345,13 +376,10 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (DoesEntityExist(this.vehicleTrunkOpened)) {
-            const distance = getDistance(
-                GetEntityCoords(PlayerPedId(), false) as Vector3,
-                GetEntityCoords(this.vehicleTrunkOpened, false) as Vector3
-            );
+        if (DoesEntityExist(this.vehicleTrunkOpened.vehicle)) {
+            const pedPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
 
-            if (distance <= VEHICLE_TRUNK_DISTANCE) {
+            if (this.vehicleTrunkOpened.zone.isPointInside(pedPosition)) {
                 return;
             }
         }
