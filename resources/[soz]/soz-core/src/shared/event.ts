@@ -146,9 +146,6 @@ export enum ServerEvent {
     INVENTORY_SET_ITEM_SHORTCUT = 'soz-core:server:inventory:set-item-usage',
 
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
-    WEAPON_GUNSMITH_RENAME = 'soz-core:server:weapon:gunsmith:rename',
-    WEAPON_GUNSMITH_APPLY_TINT = 'soz-core:server:weapon:gunsmith:apply-tint',
-    WEAPON_GUNSMITH_APPLY_ATTACHMENT = 'soz-core:server:weapon:gunsmith:apply-attachment',
 }
 
 export enum ClientEvent {
@@ -339,7 +336,6 @@ export enum NuiEvent {
 
     GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
     GunSmithPreviewTint = 'soz-core:client:job:gunsmith:preview-tint',
-    GunSmithApplyTint = 'soz-core:client:job:gunsmith:apply-tint',
     GunSmithPreviewAttachment = 'soz-core:client:job:gunsmith:preview-attachment',
-    GunSmithApplyAttachment = 'soz-core:client:job:gunsmith:apply-attachment',
+    GunSmithApplyConfiguration = 'soz-core:client:job:gunsmith:apply-configuration',
 }

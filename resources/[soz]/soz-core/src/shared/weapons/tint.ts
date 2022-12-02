@@ -33,31 +33,31 @@ export const WeaponTintColorChoices: Record<WeaponTintColor, WeaponTintColorChoi
     },
     [WeaponTintColor.Green]: {
         label: 'Vert',
-        color: [0, 255, 0],
+        color: [32, 107, 46],
     },
     [WeaponTintColor.Gold]: {
         label: 'Or',
-        color: [255, 215, 0],
+        color: [202, 232, 35],
     },
     [WeaponTintColor.Pink]: {
         label: 'Rose',
-        color: [255, 192, 203],
+        color: [149, 83, 163],
     },
     [WeaponTintColor.Army]: {
         label: 'Armée',
-        color: [139, 69, 19],
+        color: [176, 136, 79],
     },
     [WeaponTintColor.LSPD]: {
         label: 'LSPD',
-        color: [0, 0, 255],
+        color: [35, 58, 168],
     },
     [WeaponTintColor.Orange]: {
         label: 'Orange',
-        color: [255, 165, 0],
+        color: [143, 85, 27],
     },
     [WeaponTintColor.Platinum]: {
         label: 'Platine',
-        color: [224, 255, 255],
+        color: [152, 202, 227],
     },
 };
 

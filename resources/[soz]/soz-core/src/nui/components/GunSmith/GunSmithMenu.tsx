@@ -1,16 +1,18 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { InventoryItem } from '../../../shared/item';
 import { MenuType } from '../../../shared/nui/menu';
-import { WeaponAttachment, WeaponComponentType } from '../../../shared/weapons/attachment';
-import { WeaponsMenuData } from '../../../shared/weapons/weapon';
+import { WEAPON_CUSTOM_PRICE, WeaponAttachment, WeaponComponentType } from '../../../shared/weapons/attachment';
+import { WeaponTintColor, WeaponTintColorChoiceItem } from '../../../shared/weapons/tint';
+import { WeaponConfiguration, WeaponsMenuData } from '../../../shared/weapons/weapon';
 import { fetchNui } from '../../fetch';
 import {
     MainMenu,
     Menu,
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSelectOptionColor,
@@ -23,38 +25,170 @@ type MenuGunSmithStateProps = {
     data: WeaponsMenuData;
 };
 
+const GunSmithWeaponSubMenu: FunctionComponent<{
+    submenu_id: number;
+    banner: string;
+    weapon: InventoryItem;
+    tint: Record<WeaponTintColor, WeaponTintColorChoiceItem>;
+    attachments: WeaponAttachment[];
+}> = ({ submenu_id, banner, weapon, tint, attachments }) => {
+    const [configuration, setConfiguration] = useState<WeaponConfiguration>({});
+
+    const price = useMemo(() => {
+        let price = 0;
+
+        if (configuration.attachments) {
+            price += Object.values(configuration.attachments).reduce((acc, attachment) => {
+                if (attachment !== null && !Object.values(weapon.metadata.attachments || []).includes(attachment)) {
+                    return acc + WEAPON_CUSTOM_PRICE.attachment;
+                }
+                return acc;
+            }, 0);
+        }
+
+        if (configuration.label) {
+            price += WEAPON_CUSTOM_PRICE.label;
+        }
+
+        if (configuration.repair) {
+            price +=
+                WEAPON_CUSTOM_PRICE.repair *
+                Math.floor(100 - (weapon.metadata.health / weapon.metadata.maxHealth) * 100);
+        }
+
+        if (configuration.tint && configuration.tint !== weapon.metadata.tint) {
+            price += WEAPON_CUSTOM_PRICE.tint;
+        }
+
+        return price;
+    }, [configuration]);
+
+    return (
+        <SubMenu id={`gunsmith_${submenu_id}`}>
+            <MenuTitle banner={banner}>
+                Modifier l'arme {configuration.label ? `(${configuration.label})` : ''}
+            </MenuTitle>
+            <MenuContent>
+                <MenuItemCheckbox
+                    onChange={label => {
+                        setConfiguration(s => ({ ...s, label }));
+                    }}
+                >
+                    Renommer l'arme
+                </MenuItemCheckbox>
+
+                <MenuItemCheckbox
+                    onChange={repair => {
+                        setConfiguration(s => ({ ...s, repair }));
+                    }}
+                >
+                    Réparer l'arme ({((weapon.metadata.health / weapon.metadata.maxHealth) * 100).toFixed(0)}%)
+                </MenuItemCheckbox>
+
+                <MenuItemSelect
+                    title="Tint"
+                    distance={5}
+                    onChange={async (_, tint) => {
+                        await fetchNui(NuiEvent.GunSmithPreviewTint, { slot: weapon.slot, tint: tint });
+                        setConfiguration(s => ({ ...s, tint }));
+                    }}
+                    value={weapon.metadata.tint ?? 0}
+                >
+                    {Object.values(tint).map((tint, index) => (
+                        <MenuItemSelectOptionColor key={index} color={tint.color} label={tint.label} value={index} />
+                    ))}
+                </MenuItemSelect>
+
+                <MenuWeaponComponentSelect
+                    label="Chargeur"
+                    type={WeaponComponentType.Clip}
+                    weapon={weapon}
+                    attachments={attachments}
+                    onUpdate={setConfiguration}
+                />
+                <MenuWeaponComponentSelect
+                    label="Torche"
+                    type={WeaponComponentType.Flashlight}
+                    weapon={weapon}
+                    attachments={attachments}
+                    onUpdate={setConfiguration}
+                />
+                <MenuWeaponComponentSelect
+                    label="Silencieux"
+                    type={WeaponComponentType.Suppressor}
+                    weapon={weapon}
+                    attachments={attachments}
+                    onUpdate={setConfiguration}
+                />
+                <MenuWeaponComponentSelect
+                    label="Viseur"
+                    type={WeaponComponentType.Scope}
+                    weapon={weapon}
+                    attachments={attachments}
+                    onUpdate={setConfiguration}
+                />
+                <MenuWeaponComponentSelect
+                    label="Poignée"
+                    type={WeaponComponentType.Grip}
+                    weapon={weapon}
+                    attachments={attachments}
+                    onUpdate={setConfiguration}
+                />
+                <MenuWeaponComponentSelect
+                    label="Apparence"
+                    type={WeaponComponentType.Skin}
+                    weapon={weapon}
+                    attachments={attachments}
+                    onUpdate={setConfiguration}
+                />
+
+                <MenuItemButton
+                    className="border-t border-white/50"
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.GunSmithApplyConfiguration, {
+                            slot: weapon.slot,
+                            ...configuration,
+                        }).catch(e => console.error(e));
+                    }}
+                >
+                    <div className="flex w-full justify-between items-center">
+                        <span>Confirmer les changements</span>
+                        <span>${price.toFixed(0)}</span>
+                    </div>
+                </MenuItemButton>
+            </MenuContent>
+        </SubMenu>
+    );
+};
+
 const MenuWeaponComponentSelect: FunctionComponent<{
     label: string;
     type: WeaponComponentType;
     weapon: InventoryItem;
-    attachments: { slot: number; attachments: WeaponAttachment[] }[];
-}> = ({ label, type, weapon, attachments }) => {
-    const attachmentList = attachments.find(t => t.slot === weapon.slot).attachments.filter(a => a.type === type);
-
+    attachments: WeaponAttachment[];
+    onUpdate?: (s) => void;
+}> = ({ onUpdate, label, type, weapon, attachments }) => {
     return (
         <MenuItemSelect
             title={label}
-            onConfirm={async (_, attachment) => {
-                await fetchNui(NuiEvent.GunSmithApplyAttachment, {
-                    slot: weapon.slot,
-                    attachmentType: type,
-                    attachment: attachment,
-                });
-            }}
             onChange={async (_, attachment) => {
                 await fetchNui(NuiEvent.GunSmithPreviewAttachment, {
                     slot: weapon.slot,
                     attachment: attachment,
                 });
+                onUpdate?.(s => ({ ...s, attachments: { ...s.attachments, [type]: attachment } }));
             }}
+            value={weapon.metadata.attachments[type] ?? 0}
         >
             <MenuItemSelectOption value={null}>Défaut</MenuItemSelectOption>
 
-            {attachmentList.map((attachment, index) => (
-                <MenuItemSelectOption key={index} value={attachment.component}>
-                    {attachment.label}
-                </MenuItemSelectOption>
-            ))}
+            {attachments
+                .filter(a => a.type === type)
+                .map((attachment, index) => (
+                    <MenuItemSelectOption key={index} value={attachment.component}>
+                        {attachment.label}
+                    </MenuItemSelectOption>
+                ))}
         </MenuItemSelect>
     );
 };
@@ -75,76 +209,14 @@ export const MenuGunSmith: FunctionComponent<MenuGunSmithStateProps> = ({ data: 
                 </MenuContent>
             </MainMenu>
             {weapons.map((weapon, id) => (
-                <SubMenu id={`gunsmith_${id}`}>
-                    <MenuTitle banner={banner}>Modifier l'arme</MenuTitle>
-                    <MenuContent>
-                        <MenuItemButton
-                            key={id}
-                            onConfirm={async () => {
-                                await fetchNui(NuiEvent.GunSmithRenameWeapon, { slot: weapon.slot });
-                            }}
-                        >
-                            Renommer l'arme
-                        </MenuItemButton>
-
-                        <MenuItemSelect
-                            title="Tint"
-                            distance={5}
-                            onConfirm={async (_, tint) => {
-                                await fetchNui(NuiEvent.GunSmithApplyTint, { slot: weapon.slot, tint: tint });
-                            }}
-                            onChange={async (_, tint) => {
-                                await fetchNui(NuiEvent.GunSmithPreviewTint, { slot: weapon.slot, tint: tint });
-                            }}
-                        >
-                            {Object.values(tints.find(t => t.slot === weapon.slot).tints).map((tint, index) => (
-                                <MenuItemSelectOptionColor
-                                    key={index}
-                                    color={tint.color}
-                                    label={tint.label}
-                                    value={index}
-                                />
-                            ))}
-                        </MenuItemSelect>
-
-                        <MenuWeaponComponentSelect
-                            label="Chargeur"
-                            type={WeaponComponentType.Clip}
-                            weapon={weapon}
-                            attachments={attachments}
-                        />
-                        <MenuWeaponComponentSelect
-                            label="Torche"
-                            type={WeaponComponentType.Flashlight}
-                            weapon={weapon}
-                            attachments={attachments}
-                        />
-                        <MenuWeaponComponentSelect
-                            label="Silencieux"
-                            type={WeaponComponentType.Suppressor}
-                            weapon={weapon}
-                            attachments={attachments}
-                        />
-                        <MenuWeaponComponentSelect
-                            label="Viseur"
-                            type={WeaponComponentType.Scope}
-                            weapon={weapon}
-                            attachments={attachments}
-                        />
-                        <MenuWeaponComponentSelect
-                            label="Poignée"
-                            type={WeaponComponentType.Grip}
-                            weapon={weapon}
-                            attachments={attachments}
-                        />
-                        <MenuWeaponComponentSelect
-                            label="Apparence"
-                            type={WeaponComponentType.Skin}
-                            weapon={weapon}
-                            attachments={attachments}
-                        />
-                    </MenuContent>
-                </SubMenu>
+                <GunSmithWeaponSubMenu
+                    key={`gunsmith_${id}`}
+                    submenu_id={id}
+                    banner={banner}
+                    weapon={weapon}
+                    tint={tints.find(t => t.slot === weapon.slot).tints}
+                    attachments={attachments?.find(t => t.slot === weapon.slot)?.attachments || []}
+                />
             ))}
         </Menu>
     );

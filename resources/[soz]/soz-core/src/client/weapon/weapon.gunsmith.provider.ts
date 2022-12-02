@@ -1,11 +1,15 @@
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { emitRpc } from '../../core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
+import { RpcEvent } from '../../shared/rpc';
 import { WeaponComponentType } from '../../shared/weapons/attachment';
 import { WeaponTintColorChoices } from '../../shared/weapons/tint';
+import { WeaponConfiguration } from '../../shared/weapons/weapon';
+import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -24,6 +28,9 @@ export class WeaponGunsmithProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @OnEvent(ClientEvent.WEAPON_OPEN_GUNSMITH)
     async openGunsmith() {
@@ -60,30 +67,6 @@ export class WeaponGunsmithProvider {
         }
     }
 
-    @OnNuiEvent(NuiEvent.GunSmithRenameWeapon)
-    async renameWeapon({ slot }: { slot: number }) {
-        const weapon = this.weaponService.getWeaponFromSlot(slot);
-        if (!weapon) {
-            return;
-        }
-
-        const weaponLabel = await this.inputService.askInput(
-            {
-                title: `Nom de l'arme`,
-                maxCharacters: 30,
-                defaultValue: weapon.metadata.label ?? weapon.label,
-            },
-            value => {
-                if (value.length < 2) {
-                    return Err('Le nom doit faire au moins 2 caractères');
-                }
-                return Ok(true);
-            }
-        );
-
-        TriggerServerEvent(ServerEvent.WEAPON_GUNSMITH_RENAME, weapon.slot, weaponLabel);
-    }
-
     // Tint
     @OnNuiEvent(NuiEvent.GunSmithPreviewTint)
     async previewTint({ slot, tint }: { slot: number; tint: number }) {
@@ -99,19 +82,6 @@ export class WeaponGunsmithProvider {
         const weaponHash = GetSelectedPedWeapon(player);
 
         SetPedWeaponTintIndex(player, weaponHash, Number(tint));
-    }
-
-    @OnNuiEvent(NuiEvent.GunSmithApplyTint)
-    async applyTint({ slot, tint }: { slot: number; tint: number }) {
-        const weapon = this.weaponService.getWeaponFromSlot(slot);
-        if (!weapon) {
-            return;
-        }
-
-        TriggerServerEvent(ServerEvent.WEAPON_GUNSMITH_APPLY_TINT, weapon.slot, tint);
-
-        await this.weaponService.clear();
-        await this.weaponService.set(weapon);
     }
 
     // Attachment
@@ -131,24 +101,70 @@ export class WeaponGunsmithProvider {
         GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment));
     }
 
-    @OnNuiEvent(NuiEvent.GunSmithApplyAttachment)
-    async applyAttachment({
-        slot,
-        attachmentType,
-        attachment,
-    }: {
-        slot: number;
-        attachmentType: WeaponComponentType;
-        attachment: string;
-    }) {
+    @OnNuiEvent(NuiEvent.GunSmithApplyConfiguration)
+    async applyConfiguration({ slot, label, repair, tint, attachments }: WeaponConfiguration & { slot: number }) {
         const weapon = this.weaponService.getWeaponFromSlot(slot);
         if (!weapon) {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.WEAPON_GUNSMITH_APPLY_ATTACHMENT, weapon.slot, attachmentType, attachment);
+        if (label) {
+            const weaponLabel = await this.inputService.askInput(
+                {
+                    title: `Nom de l'arme`,
+                    maxCharacters: 30,
+                    defaultValue: weapon.metadata.label ?? weapon.label,
+                },
+                value => {
+                    if (value.length < 2) {
+                        return Err('Le nom doit faire au moins 2 caractères');
+                    }
+                    return Ok(true);
+                }
+            );
+
+            const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_LABEL, weapon.slot, weaponLabel);
+            if (!applied) {
+                this.notifier.notify("Vous n'avez pas assez d'argent pour renommer cette arme", 'error');
+            }
+        }
+
+        if (repair) {
+            const applied = await emitRpc<boolean>(RpcEvent.WEAPON_REPAIR, weapon.slot);
+            if (!applied) {
+                this.notifier.notify("Vous n'avez pas assez d'argent pour réparer cette arme", 'error');
+            }
+        }
+
+        if (tint !== weapon.metadata.tint) {
+            const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_TINT, weapon.slot, tint);
+            if (!applied) {
+                this.notifier.notify("Vous n'avez pas assez d'argent pour changer la couleur de cette arme", 'error');
+            }
+        }
+
+        if (attachments) {
+            for (const [type, attachment] of Object.entries(attachments)) {
+                if (attachment !== null && attachment !== weapon.metadata?.attachments?.[type]) {
+                    const applied = await emitRpc<boolean>(
+                        RpcEvent.WEAPON_SET_ATTACHMENTS,
+                        weapon.slot,
+                        type,
+                        attachment
+                    );
+                    if (!applied) {
+                        this.notifier.notify(
+                            "Vous n'avez pas assez d'argent pour changer la couleur de cette arme",
+                            'error'
+                        );
+                    }
+                }
+            }
+        }
+
+        this.nuiMenu.closeMenu();
+        this.notifier.notify('Vos modifications ont été appliquées');
 
         await this.weaponService.clear();
-        await this.weaponService.set(weapon);
     }
 }

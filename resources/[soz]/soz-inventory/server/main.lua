@@ -347,6 +347,7 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
                     end
                     if metadata.health == nil then
                         metadata.health = 2000
+                        metadata.maxHealth = 2000
                     end
                 elseif item.expiresIn and metadata.expiration == nil then
                     metadata.expiration = os.date("%Y-%m-%dT%H:%M:00Z", os.time() + (item.expiresIn * 60))

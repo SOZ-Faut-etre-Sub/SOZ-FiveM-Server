@@ -12,3 +12,12 @@ export type WeaponAttachment = {
     component: string;
     type: WeaponComponentType;
 };
+
+export const WEAPON_CUSTOM_PRICE = {
+    label: 1500,
+    repair: 100, // per percentage price
+    tint: 1500,
+    attachment: 4000,
+};
+
+export const REPAIR_HEALTH_REDUCER = 0.95; // 5% health loss
