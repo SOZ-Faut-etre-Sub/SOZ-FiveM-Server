@@ -30,7 +30,7 @@ export const WeaponAmmo = {
 
 export const GlobalWeaponConfig = {
     MaxAmmoRefill: 3,
-    MaxHealth: 200,
+    MaxHealth: 2000,
     RecoilOnUsedWeapon: 5.0,
 };
 
