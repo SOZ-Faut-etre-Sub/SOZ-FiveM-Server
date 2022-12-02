@@ -1,5 +1,5 @@
 import React, {useRef, forwardRef, memo, useState, useEffect, useLayoutEffect, useCallback} from 'react';
-import {IInventoryItem} from "../../types/inventory";
+import { IInventoryItem, WeaponAmmo } from '../../types/inventory';
 import styles from "./styles.module.css";
 
 type InventoryItemProps = {
@@ -97,6 +97,10 @@ const InventoryItem: React.FC<InventoryItemProps> = memo(({
                 {item.metadata !== undefined && item.metadata['expiration'] !== undefined && <>
                     <br/>
                     <span>Date limite : {new Date(item.metadata['expiration']).toLocaleString('fr-FR', {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"})}</span>
+                </>}
+                {WeaponAmmo[item.name] && <>
+                    <br/>
+                    <span>Munition : {WeaponAmmo[item.name]}</span>
                 </>}
             </span>}
 
