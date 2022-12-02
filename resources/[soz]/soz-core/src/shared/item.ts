@@ -146,6 +146,7 @@ export type InventoryItemMetadata = {
     // Weapom
     serial?: string;
     health?: number;
+    maxHealth?: number;
     ammo?: number;
     tint?: WeaponTintColor | WeaponMk2TintColor;
     attachments?: Record<WeaponComponentType, string | null>;
