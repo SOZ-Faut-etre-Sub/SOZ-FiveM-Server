@@ -178,7 +178,7 @@ const MenuWeaponComponentSelect: FunctionComponent<{
                 });
                 onUpdate?.(s => ({ ...s, attachments: { ...s.attachments, [type]: attachment } }));
             }}
-            value={weapon.metadata.attachments[type] ?? 0}
+            value={weapon.metadata?.attachments?.[type] ?? 0}
         >
             <MenuItemSelectOption value={null}>Défaut</MenuItemSelectOption>
 
