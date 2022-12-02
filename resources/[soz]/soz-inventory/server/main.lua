@@ -346,7 +346,7 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
                                                        QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
                     end
                     if metadata.health == nil then
-                        metadata.health = 200
+                        metadata.health = 2000
                     end
                 elseif item.expiresIn and metadata.expiration == nil then
                     metadata.expiration = os.date("%Y-%m-%dT%H:%M:00Z", os.time() + (item.expiresIn * 60))
