@@ -69,12 +69,12 @@ QBCore.Commands.Add('tp', 'TP To Player or Coords (Admin Only)', { { name = 'id/
             TriggerClientEvent('hud:client:DrawNotification', src, 'Format non valide', "error")
         end
     end
-end, 'admin')
+end, 'helper')
 
 QBCore.Commands.Add('tpm', 'TP To Marker (Admin Only)', {}, false, function(source)
     local src = source
     TriggerClientEvent('QBCore:Command:GoToMarker', src)
-end, 'admin')
+end, 'helper')
 
 
 QBCore.Commands.Add('togglepvp', 'Toggle PVP on the server (Admin Only)', {}, false, function(source)
