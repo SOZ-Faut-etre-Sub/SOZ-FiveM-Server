@@ -267,10 +267,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
             { label: 'Chargeur de base', component: 'COMPONENT_REVOLVER_CLIP_01', type: WeaponComponentType.Clip },
         ],
     },
-    [WeaponName.STUNGUN]: {
-        recoil: 0.1,
-        drawPosition: { model: GetHashKey('w_pi_stungun'), position: [0.173, -0.14, -0.02], rotation: [0, 45, 0] },
-    },
+    [WeaponName.STUNGUN]: { recoil: 0.1 },
     [WeaponName.COMBATPISTOL]: {
         recoil: 0.3,
         ammo: 'ammo_01',
