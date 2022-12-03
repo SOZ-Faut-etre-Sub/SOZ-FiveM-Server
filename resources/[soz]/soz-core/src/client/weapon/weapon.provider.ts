@@ -124,7 +124,13 @@ export class WeaponProvider {
 
         if (this.weapon.getCurrentWeapon()) {
             const hash = GetHashKey(this.weapon.getCurrentWeapon().name);
-            const [, weaponHash] = GetCurrentPedWeapon(PlayerPedId(), true);
+            let [, weaponHash] = GetCurrentPedWeapon(ped, true);
+
+            if (weaponHash === GetHashKey('WEAPON_UNARMED')) {
+                await wait(700); // wait animations
+                const [, h] = GetCurrentPedWeapon(ped, true);
+                weaponHash = h;
+            }
             if (weaponHash !== hash) {
                 await this.weapon.clear();
             }
