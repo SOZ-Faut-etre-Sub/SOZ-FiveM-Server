@@ -144,7 +144,7 @@ export class WeaponGunsmithProvider {
 
         if (attachments) {
             for (const [type, attachment] of Object.entries(attachments)) {
-                if (attachment !== null && attachment !== weapon.metadata?.attachments?.[type]) {
+                if (attachment !== weapon.metadata?.attachments?.[type]) {
                     const applied = await emitRpc<boolean>(
                         RpcEvent.WEAPON_SET_ATTACHMENTS,
                         weapon.slot,
