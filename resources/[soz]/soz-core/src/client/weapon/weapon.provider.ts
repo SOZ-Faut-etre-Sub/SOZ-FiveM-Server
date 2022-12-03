@@ -115,5 +115,13 @@ export class WeaponProvider {
         if (this.talkService.isRadioOpen()) {
             await this.weapon.clear();
         }
+
+        if (this.weapon.getCurrentWeapon()) {
+            const hash = GetHashKey(this.weapon.getCurrentWeapon().name);
+            const [, weaponHash] = GetCurrentPedWeapon(PlayerPedId(), true)
+            if (weaponHash !== hash) {
+                await this.weapon.clear()
+            }
+        }
     }
 }
