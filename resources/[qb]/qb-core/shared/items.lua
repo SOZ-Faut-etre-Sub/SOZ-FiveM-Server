@@ -721,6 +721,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Fusil d\'assaut de qualité militaire.'
     },
+    ['weapon_heavyrifle'] = {
+        ['name'] = 'weapon_heavyrifle',
+        ['label'] = 'Fusil lourd',
+        ['weight'] = 4000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_RIFLE',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Fusil d\'assaut lourd de qualité.'
+    },
 
     -- Light Machine Guns
     ['weapon_mg'] = {
@@ -825,6 +835,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Un fusil à lunette.'
     },
+    ['weapon_precisionrifle'] = {
+        ['name'] = 'weapon_precisionrifle',
+        ['label'] = 'Fusil de précision',
+        ['weight'] = 4500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_SNIPER',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Un fusil à lunette.'
+    },
 
     -- Heavy Weapons
     ['weapon_rpg'] = {
@@ -916,6 +936,16 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = true,
         ['description'] = 'Un minigun futuriste, tirant des lasers.'
+    },
+    ['weapon_emplauncher'] = {
+        ['name'] = 'weapon_emplauncher',
+        ['label'] = 'Lanceur EMP',
+        ['weight'] = 6000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_FLARE',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['description'] = 'Un lance-grenades dans un format très compacté.'
     },
 
     -- Throwables
