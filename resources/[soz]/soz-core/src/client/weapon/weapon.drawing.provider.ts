@@ -1,15 +1,12 @@
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
 import { WeaponDrawPosition, Weapons } from '../../shared/weapons/weapon';
-import { PhoneService } from '../phone/phone.service';
 import { ResourceLoader } from '../resources/resource.loader';
-import { TalkService } from '../talk.service';
 import { WeaponService } from './weapon.service';
 
 @Provider()
@@ -23,12 +20,6 @@ export class WeaponDrawingProvider {
 
     @Inject(WeaponService)
     private weaponService: WeaponService;
-
-    @Inject(PhoneService)
-    private phoneService: PhoneService;
-
-    @Inject(TalkService)
-    private talkService: TalkService;
 
     private async updateWeaponDrawList(playerItem: Record<string, InventoryItem> | InventoryItem[]) {
         const weaponToDraw = Object.values(playerItem)
@@ -150,21 +141,6 @@ export class WeaponDrawingProvider {
             if (this.weaponAttached[weaponModel]) {
                 SetEntityAlpha(this.weaponAttached[weaponModel], weapon ? 0 : 255, false);
             }
-        }
-    }
-
-    @Tick(TickInterval.EVERY_SECOND)
-    async onTick() {
-        if (!this.shouldDrawWeapon) {
-            return;
-        }
-
-        if (this.phoneService.isPhoneVisible()) {
-            await this.weaponService.clear();
-        }
-
-        if (this.talkService.isRadioOpen()) {
-            await this.weaponService.clear();
         }
     }
 

@@ -8,7 +8,9 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
 import { WeaponAmmo, WeaponName } from '../../shared/weapons/weapon';
+import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
+import { TalkService } from '../talk.service';
 import { WeaponService } from './weapon.service';
 
 @Provider()
@@ -18,6 +20,12 @@ export class WeaponProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
+
+    @Inject(TalkService)
+    private talkService: TalkService;
 
     @Once(OnceStep.PlayerLoaded)
     async onPlayerLoaded() {
@@ -81,6 +89,10 @@ export class WeaponProvider {
             return;
         }
 
+        if (IsPedArmed(player, 7) && IsPedRagdoll(player)) {
+            DisableControlAction(0, 24, true);
+        }
+
         if (!IsPedShooting(player)) {
             return;
         }
@@ -90,5 +102,16 @@ export class WeaponProvider {
         const sleep = GetWeaponTimeBetweenShots(weapon.name);
         await this.weapon.recoil();
         await wait(sleep);
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    async onCheck() {
+        if (this.phoneService.isPhoneVisible()) {
+            await this.weapon.clear();
+        }
+
+        if (this.talkService.isRadioOpen()) {
+            await this.weapon.clear();
+        }
     }
 }
