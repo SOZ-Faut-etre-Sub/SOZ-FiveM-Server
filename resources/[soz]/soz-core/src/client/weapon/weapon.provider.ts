@@ -8,6 +8,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
 import { WeaponAmmo, WeaponName } from '../../shared/weapons/weapon';
+import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
 import { TalkService } from '../talk.service';
@@ -27,6 +28,9 @@ export class WeaponProvider {
     @Inject(TalkService)
     private talkService: TalkService;
 
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     @Once(OnceStep.PlayerLoaded)
     async onPlayerLoaded() {
         SetWeaponsNoAutoswap(true);
@@ -34,8 +38,6 @@ export class WeaponProvider {
         await this.weapon.clear();
     }
 
-    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
-    @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
     async clearCurrentWeapon() {
         await this.weapon.clear();
@@ -82,6 +84,8 @@ export class WeaponProvider {
     @Tick(TickInterval.EVERY_FRAME)
     async onTick() {
         const player = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(player, false);
+
         const weapon = this.weapon.getCurrentWeapon();
         if (!weapon) {
             return;
@@ -99,6 +103,14 @@ export class WeaponProvider {
             return;
         }
 
+        if (GetPedInVehicleSeat(vehicle, -1) === player && GetEntitySpeed(vehicle) * 3.6 > 50) {
+            this.notifier.notify('Vous allez trop vite pour faire ça.', 'error');
+            DisableControlAction(0, 24, true);
+            await this.weapon.clear();
+
+            return;
+        }
+
         emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot);
 
         const sleep = GetWeaponTimeBetweenShots(weapon.name);
@@ -109,6 +121,9 @@ export class WeaponProvider {
     @Tick(TickInterval.EVERY_SECOND)
     async onCheck() {
         const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        const weapon = this.weapon.getCurrentWeapon()?.name || '';
+        const weaponDrawable = !!this.weapon.getWeaponConfig(weapon)?.drawPosition;
 
         if (this.phoneService.isPhoneVisible()) {
             await this.weapon.clear();
@@ -122,12 +137,16 @@ export class WeaponProvider {
             await this.weapon.clear();
         }
 
+        if (GetPedInVehicleSeat(vehicle, -1) === ped && weaponDrawable) {
+            await this.weapon.clear();
+        }
+
         if (this.weapon.getCurrentWeapon()) {
             const hash = GetHashKey(this.weapon.getCurrentWeapon().name);
             let [, weaponHash] = GetCurrentPedWeapon(ped, true);
 
             if (weaponHash === GetHashKey('WEAPON_UNARMED')) {
-                await wait(700); // wait animations
+                await wait(1000); // wait animations
                 const [, h] = GetCurrentPedWeapon(ped, true);
                 weaponHash = h;
             }
