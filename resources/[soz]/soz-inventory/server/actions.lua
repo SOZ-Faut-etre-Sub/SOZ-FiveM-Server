@@ -22,6 +22,10 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
         return
     end
 
+    if Player.PlayerData.metadata["isdead"] or Player.PlayerData.metadata["ishandcuffed"] or Player.PlayerData.metadata["inlaststand"] then
+        return
+    end
+
     itemData.slot = slot
 
     if itemData.type == "weapon" then
