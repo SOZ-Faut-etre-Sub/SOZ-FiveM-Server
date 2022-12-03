@@ -6,6 +6,7 @@ import { PlayerStressProvider } from './player.stress.provider';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 import { PlayerWardrobe } from './player.wardrobe';
 import { ProgressProvider } from './progress.provider';
+import { PlayerInjuryProvider } from './player.injury.provider';
 
 @Module({
     providers: [
@@ -16,6 +17,7 @@ import { ProgressProvider } from './progress.provider';
         PlayerStressProvider,
         PlayerWardrobe,
         PlayerWalkstyleProvider,
+        PlayerInjuryProvider,
     ],
 })
 export class PlayerModule {}
