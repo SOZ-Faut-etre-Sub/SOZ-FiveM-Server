@@ -192,9 +192,26 @@ Container["bin"] = InventoryDatastore:new({
             ["garbagebag"] = math.random(5, 20),
         }
 
+        local availableWeight = Config.StorageCapacity["bin"].weight
         for item, amount in pairs(items) do
             if amount > 0 then
-                inventory[#inventory + 1] = {slot = #inventory + 1, name = item, type = "item", amount = amount}
+                local itemsWeight = QBCore.Shared.Items[item].weight * amount
+
+                if availableWeight >= itemsWeight then
+                    inventory[#inventory + 1] = {slot = #inventory + 1, name = item, type = "item", amount = amount}
+                    availableWeight = availableWeight - QBCore.Shared.Items[item].weight * amount
+                else
+                    local maxAmount = math.floor(availableWeight / QBCore.Shared.Items[item].weight)
+                    if maxAmount > 0 then
+                        inventory[#inventory + 1] = {
+                            slot = #inventory + 1,
+                            name = item,
+                            type = "item",
+                            amount = maxAmount,
+                        }
+                        availableWeight = availableWeight - QBCore.Shared.Items[item].weight * maxAmount
+                    end
+                end
             end
         end
 
