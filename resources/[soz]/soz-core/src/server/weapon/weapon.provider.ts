@@ -29,8 +29,8 @@ export class WeaponProvider {
         }
 
         this.inventoryManager.updateMetadata(source, weaponSlot, {
-            ammo: weapon.metadata.ammo - 1,
-            health: weapon.metadata.health - 1,
+            ammo: weapon.metadata.ammo > 0 ? weapon.metadata.ammo - 1 : 0,
+            health: weapon.metadata.health > 0 ? weapon.metadata.health - 1 : 0,
         });
     }
 
