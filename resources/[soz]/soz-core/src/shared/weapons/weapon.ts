@@ -45,7 +45,8 @@ export const DrawPositions: Record<string, Omit<WeaponDrawPosition, 'model'>> = 
     AR: { position: [0.173, -0.14, 0.05], rotation: [0, 0, 0] },
     SMG: { position: [0.173, 0.147, -0.02], rotation: [0, 45, 0] },
     RPG: { position: [0.173, -0.14, -0.02], rotation: [0, 0, 0] }, // RPG & Sniper
-    LMG: { position: [0.05, -0.14, -0.15], rotation: [0, 45, 0] }, // Pompe & LMG & Corps à corps
+    LMG: { position: [0.05, -0.14, -0.15], rotation: [0, 45, 0] }, // LMG & Corps à corps
+    PUMP: { position: [0.05, -0.14, -0.15], rotation: [0, -40, 0] }, // Pompe
 };
 
 export type WeaponDrawPosition = {
@@ -597,7 +598,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.PUMPSHOTGUN]: {
         recoil: 0.5,
         ammo: 'ammo_08',
-        drawPosition: { model: GetHashKey('w_sg_pumpshotgun'), ...DrawPositions['LMG'] },
+        drawPosition: { model: GetHashKey('w_sg_pumpshotgun'), ...DrawPositions['PUMP'] },
         attachments: [
             { label: 'Chargeur de base', component: 'COMPONENT_PUMPSHOTGUN_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
@@ -620,7 +621,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.ASSAULTSHOTGUN]: {
         recoil: 0.5,
         ammo: 'ammo_08',
-        drawPosition: { model: GetHashKey('w_sg_assaultshotgun'), ...DrawPositions['LMG'] },
+        drawPosition: { model: GetHashKey('w_sg_assaultshotgun'), ...DrawPositions['PUMP'] },
         attachments: [
             {
                 label: 'Chargeur de base',
@@ -636,7 +637,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.BULLPUPSHOTGUN]: {
         recoil: 0.5,
         ammo: 'ammo_08',
-        drawPosition: { model: GetHashKey('w_sg_bullpupshotgun'), ...DrawPositions['LMG'] },
+        drawPosition: { model: GetHashKey('w_sg_bullpupshotgun'), ...DrawPositions['PUMP'] },
         attachments: [
             {
                 label: 'Chargeur de base',
@@ -651,12 +652,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.MUSKET]: {
         recoil: 0.5,
         ammo: 'ammo_09',
-        drawPosition: { model: GetHashKey('w_ar_musket'), ...DrawPositions['LMG'] },
+        drawPosition: { model: GetHashKey('w_ar_musket'), ...DrawPositions['PUMP'] },
     },
     [WeaponName.HEAVYSHOTGUN]: {
         recoil: 0.5,
         ammo: 'ammo_08',
-        drawPosition: { model: GetHashKey('w_sg_heavyshotgun'), ...DrawPositions['LMG'] },
+        drawPosition: { model: GetHashKey('w_sg_heavyshotgun'), ...DrawPositions['PUMP'] },
         attachments: [
             { label: 'Chargeur de base', component: 'COMPONENT_HEAVYSHOTGUN_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_HEAVYSHOTGUN_CLIP_02', type: WeaponComponentType.Clip },
@@ -681,12 +682,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.PUMPSHOTGUN_MK2]: {
         recoil: 0.5,
         ammo: 'ammo_08',
-        drawPosition: { model: GetHashKey('w_sg_pumpshotgunmk2'), ...DrawPositions['LMG'] },
+        drawPosition: { model: GetHashKey('w_sg_pumpshotgunmk2'), ...DrawPositions['PUMP'] },
     },
     [WeaponName.COMBATSHOTGUN]: {
         recoil: 0.5,
         ammo: 'ammo_08',
-        drawPosition: { model: GetHashKey('w_sg_pumpshotgunh4'), ...DrawPositions['LMG'] },
+        drawPosition: { model: GetHashKey('w_sg_pumpshotgunh4'), ...DrawPositions['PUMP'] },
         attachments: [
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Silencieux', component: 'COMPONENT_AT_AR_SUPP', type: WeaponComponentType.Suppressor },
