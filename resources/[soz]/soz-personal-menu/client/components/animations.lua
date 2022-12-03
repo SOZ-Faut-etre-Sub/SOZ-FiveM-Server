@@ -107,7 +107,17 @@ local PlayEmote = function(animation)
             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
             cleanProps()
         else
-            TaskStartScenarioInPlace(ped, animation[2], -1, true)
+            ClearPedTasksImmediately(ped)
+            Wait(500)
+
+            local x, y, z = table.unpack(GetEntityCoords(ped))
+            local heading = GetEntityHeading(ped)
+
+            if string.find(animation[2], "SEAT") then
+                z = z - 0.5
+            end
+
+            TaskStartScenarioAtPosition(ped, animation[2], x, y, z, heading, -1, true, false)
         end
     end
 end
