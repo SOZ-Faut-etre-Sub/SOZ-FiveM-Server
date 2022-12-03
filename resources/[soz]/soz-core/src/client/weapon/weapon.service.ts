@@ -67,7 +67,7 @@ export class WeaponService {
         const pitch = GetGameplayCamRelativePitch();
         const heading = GetGameplayCamRelativeHeading();
 
-        SetPedAccuracy(PlayerPedId(), (weaponHealth / this.currentWeapon.metadata.maxHealth)*100);
+        SetPedAccuracy(PlayerPedId(), (weaponHealth / this.currentWeapon.metadata.maxHealth) * 100);
 
         SetGameplayCamRelativePitch(pitch + recoilY, 1.0);
         SetGameplayCamRelativeHeading(heading + recoilX);
