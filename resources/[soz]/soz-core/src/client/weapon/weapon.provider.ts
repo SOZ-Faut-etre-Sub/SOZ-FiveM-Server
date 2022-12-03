@@ -26,6 +26,13 @@ export class WeaponProvider {
         await this.weapon.clear();
     }
 
+    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
+    @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
+    @OnEvent(ClientEvent.PLAYER_ON_DEATH)
+    async clearCurrentWeapon() {
+        await this.weapon.clear();
+    }
+
     @OnEvent(ClientEvent.WEAPON_USE_WEAPON)
     async onUseWeapon(weapon: InventoryItem | null) {
         if (weapon.name.toLowerCase() === this.weapon.getCurrentWeapon()?.name.toLowerCase()) {

@@ -161,6 +161,9 @@ export enum ClientEvent {
     PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
+    ADMIN_NOCLIP_ENABLED = 'soz-core:client:admin:noclip:enabled',
+    ADMIN_NOCLIP_DISABLED = 'soz-core:client:admin:noclip:disabled',
+
     FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
     FFS_EXIT_CLOTHING_SHOP = 'soz-core:client:job:ffs:exit-clothing-shop',
 
@@ -168,6 +171,8 @@ export enum ClientEvent {
 
     IDENTITY_HIDE = 'soz-identity:client:hide',
     ITEM_USE = 'soz-core:client:item:use',
+
+    PLAYER_ON_DEATH = 'ems:client:onDeath',
 
     JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
     JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',

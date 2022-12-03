@@ -66,6 +66,7 @@ local function SetNoClip(val)
         TriggerEvent("msgprinter:addMessage", ((isNoClipping and ":airplane: No-clip enabled") or ":rock: No-clip disabled"), GetCurrentResourceName());
         SetUserRadioControlEnabled(not isNoClipping);
         if (isNoClipping) then
+            TriggerEvent("soz-core:client:admin:noclip:enabled")
             TriggerEvent("instructor:add-instruction", {MOVE_LEFT_RIGHT, MOVE_UP_DOWN}, "move", RESSOURCE_NAME);
             TriggerEvent("instructor:add-instruction", {MOVE_UP_KEY, MOVE_DOWN_KEY}, "move up/down", RESSOURCE_NAME);
             TriggerEvent("instructor:add-instruction", {1, 2}, "Turn", RESSOURCE_NAME);
@@ -131,6 +132,7 @@ local function SetNoClip(val)
                 end
             end)
         else
+            TriggerEvent("soz-core:client:admin:noclip:disabled")
             ResetEntityAlpha(noClippingEntity)
             TriggerEvent("instructor:flush", RESSOURCE_NAME);
         end
