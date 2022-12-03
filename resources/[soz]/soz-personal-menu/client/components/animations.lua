@@ -13,12 +13,12 @@ local prop2_net = nil
 function cleanProps()
     if prop_net then
         DetachEntity(prop_net, 0, 0)
-        DeleteEntity(prop_net)
+        DeleteObject(prop_net)
         prop_net = nil
     end
     if prop2_net then
         DetachEntity(prop2_net, 0, 0)
-        DeleteEntity(prop2_net)
+        DeleteObject(prop2_net)
         prop2_net = nil
     end
 end
@@ -57,6 +57,7 @@ local PlayEmote = function(animation)
         end
         if IsEntityPlayingAnim(ped, animation[1], animation[2], 3) then
             StopAnimTask(ped, animation[1], animation[2], 1.0)
+            cleanProps()
         else
             TaskPlayAnim(ped, animation[1], animation[2], 8.0, -8.0, -1, flag, 0, lockPosition, lockPosition, lockPosition)
 
@@ -73,15 +74,14 @@ local PlayEmote = function(animation)
                     Wait(1)
                 end
                 local pCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0)
-                local modelSpawn = CreateObject(GetHashKey(animation[7].model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
-                -- local objectNetId = ObjToNet(modelSpawn)
-                -- SetNetworkIdCanMigrate(objectNetId, false)
+                local modelSpawn = CreateObject(GetHashKey(animation[7].model), pCoords.x, pCoords.y, pCoords.z, true, true, false)
+                SetEntityAsMissionEntity(modelSpawn, true, true)
+                SetNetworkIdCanMigrate(ObjToNet(modelSpawn), false)
 
                 AttachEntityToEntity(modelSpawn, ped, GetPedBoneIndex(ped, animation[7].bone), animation[7].coords[1], animation[7].coords[2],
                                      animation[7].coords[3], animation[7].coords[4], animation[7].coords[5], animation[7].coords[6], true, true, false, true, 0,
                                      true)
                 prop_net = modelSpawn
-                SetModelAsNoLongerNeeded(animation[7].model)
             end
 
             if animation[8] then
@@ -91,21 +91,21 @@ local PlayEmote = function(animation)
                     Wait(1)
                 end
                 local pCoords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0)
-                local modelSpawn = CreateObject(GetHashKey(animation[8].model), pCoords.x, pCoords.y, pCoords.z, true, true, true)
-                -- local objectNetId = ObjToNet(modelSpawn)
-                -- SetNetworkIdCanMigrate(objectNetId, false)
+                local modelSpawn = CreateObject(GetHashKey(animation[8].model), pCoords.x, pCoords.y, pCoords.z, true, true, false)
+                SetEntityAsMissionEntity(modelSpawn, true, true)
+                SetNetworkIdCanMigrate(ObjToNet(modelSpawn), false)
 
                 AttachEntityToEntity(modelSpawn, ped, GetPedBoneIndex(ped, animation[8].bone), animation[8].coords[1], animation[8].coords[2],
                                      animation[8].coords[3], animation[8].coords[4], animation[8].coords[5], animation[8].coords[6], true, true, false, true, 0,
                                      true)
                 prop2_net = modelSpawn
-                SetModelAsNoLongerNeeded(animation[8].model)
             end
         end
     else
         if IsPedUsingScenario(ped, animation[2]) then
             ClearPedTasks(ped)
             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
+            cleanProps()
         else
             TaskStartScenarioInPlace(ped, animation[2], -1, true)
         end

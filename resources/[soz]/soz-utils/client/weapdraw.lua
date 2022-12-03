@@ -111,12 +111,12 @@ CreateThread(function()
                 rot = GetEntityHeading(ped)
 
                 local newWeap = GetSelectedPedWeapon(ped)
-                SetCurrentPedWeapon(ped, currWeapon, true)
                 QBCore.Functions.RequestAnimDict("reaction@intimidation@1h")
                 QBCore.Functions.RequestAnimDict("reaction@intimidation@cop@unarmed")
                 QBCore.Functions.RequestAnimDict("rcmjosh4")
                 QBCore.Functions.RequestAnimDict("weapons@pistol@")
                 if CheckWeapon(newWeap) then
+                    SetCurrentPedWeapon(ped, currWeapon, true)
                     if holstered then
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             -- TaskPlayAnim(ped, "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
@@ -234,7 +234,7 @@ CreateThread(function()
                             canFire = true
                         end
                     end
-                else
+                elseif newWeap == GetHashKey("WEAPON_UNARMED") then
                     if not holstered and CheckWeapon(currWeapon) then
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             canFire = false
