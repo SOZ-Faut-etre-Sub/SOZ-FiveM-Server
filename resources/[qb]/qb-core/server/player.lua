@@ -65,7 +65,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.cid = PlayerData.cid or 1
     PlayerData.money = PlayerData.money or {}
     for moneytype, startamount in pairs(QBCore.Config.Money.MoneyTypes) do
-        PlayerData.money[moneytype] = math.floor(PlayerData.money[moneytype]) or startamount
+        PlayerData.money[moneytype] = math.floor(PlayerData.money[moneytype] or startamount)
     end
     -- Charinfo
     PlayerData.charinfo = PlayerData.charinfo or {}
