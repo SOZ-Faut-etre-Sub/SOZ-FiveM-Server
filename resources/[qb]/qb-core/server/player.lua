@@ -69,7 +69,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.cid = PlayerData.cid or 1
     PlayerData.money = PlayerData.money or {}
     for moneytype, startamount in pairs(QBCore.Config.Money.MoneyTypes) do
-        PlayerData.money[moneytype] = PlayerData.money[moneytype] or startamount
+        PlayerData.money[moneytype] = math.floor(PlayerData.money[moneytype]) or startamount
     end
     -- Charinfo
     PlayerData.charinfo = PlayerData.charinfo or {}
@@ -545,6 +545,10 @@ function QBCore.Player.Save(source)
         PlayerData.metadata["health"] = GetEntityHealth(ped)
         if not PlayerData.metadata["armor"].hidden then
             PlayerData.metadata["armor"].current = GetPedArmour(ped)
+        end
+
+        for moneytype, startamount in pairs(PlayerData.money) do
+            PlayerData.money[moneytype] = math.floor(PlayerData.money[moneytype])
         end
 
         exports.oxmysql:insert('INSERT INTO player (citizenid, cid, license, name, money, charinfo, job, gang, position, metadata, skin, cloth_config, is_default, features) VALUES (:citizenid, :cid, :license, :name, :money, :charinfo, :job, :gang, :position, :metadata, :skin, :cloth_config, :is_default, :features) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo, job = :job, gang = :gang, position = :position, metadata = :metadata, skin = :skin, cloth_config = :cloth_config, is_default = :is_default, features = :features', {
