@@ -10,10 +10,10 @@ local function contains(tbl, value)
         end
     else
         local matched_values = 0
-                local values = 0
+        local values = 0
 
         for _, v1 in pairs(value) do
-                    values = values + 1
+            values = values + 1
 
             for _, v2 in pairs(tbl) do
                 if type(v1) == "table" and type(v2) == "table" then
