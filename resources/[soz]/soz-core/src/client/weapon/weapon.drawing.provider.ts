@@ -46,7 +46,7 @@ export class WeaponDrawingProvider {
 
             await this.resourceLoader.loadModel(weapon.model);
 
-            const object = CreateObject(weapon.model, 1, 1, 1, true, true, true);
+            const object = CreateObject(weapon.model, 1, 1, 1, true, true, false);
             SetEntityAsMissionEntity(object, true, true);
             SetNetworkIdCanMigrate(ObjToNet(object), false);
             AttachEntityToEntity(
@@ -102,13 +102,15 @@ export class WeaponDrawingProvider {
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
-    async onEnteredVehicle() {
+    @OnEvent(ClientEvent.ADMIN_NOCLIP_ENABLED)
+    async undrawWeapons() {
         this.shouldDrawWeapon = false;
         await this.undrawWeapon();
     }
 
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
-    async onLeftVehicle() {
+    @OnEvent(ClientEvent.ADMIN_NOCLIP_DISABLED)
+    async drawWeapons() {
         this.shouldDrawWeapon = true;
         await this.drawWeapon();
     }
