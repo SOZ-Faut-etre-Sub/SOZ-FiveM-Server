@@ -108,6 +108,8 @@ export class WeaponProvider {
 
     @Tick(TickInterval.EVERY_SECOND)
     async onCheck() {
+        const ped = PlayerPedId();
+
         if (this.phoneService.isPhoneVisible()) {
             await this.weapon.clear();
         }
@@ -116,11 +118,15 @@ export class WeaponProvider {
             await this.weapon.clear();
         }
 
+        if (IsEntityPlayingAnim(ped, 'missfbi4prepp1', '_idle_garbage_man', 3)) {
+            await this.weapon.clear();
+        }
+
         if (this.weapon.getCurrentWeapon()) {
             const hash = GetHashKey(this.weapon.getCurrentWeapon().name);
-            const [, weaponHash] = GetCurrentPedWeapon(PlayerPedId(), true)
+            const [, weaponHash] = GetCurrentPedWeapon(PlayerPedId(), true);
             if (weaponHash !== hash) {
-                await this.weapon.clear()
+                await this.weapon.clear();
             }
         }
     }
