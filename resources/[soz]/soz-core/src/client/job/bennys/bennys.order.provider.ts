@@ -101,7 +101,12 @@ export class BennysOrderProvider {
                     );
                 },
                 action: async () => {
-                    this.nuiMenu.openMenu(MenuType.BennysOrderMenu);
+                    this.nuiMenu.openMenu(MenuType.BennysOrderMenu, null, {
+                        position: {
+                            position: orderZone.center,
+                            distance: 5.0,
+                        },
+                    });
                 },
             },
         ]);

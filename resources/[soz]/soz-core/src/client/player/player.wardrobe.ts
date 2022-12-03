@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Outfit, WardrobeConfig } from '../../shared/cloth';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { NuiMenu } from '../nui/nui.menu';
 
 type OutfitSelection = {
@@ -30,10 +31,19 @@ export class PlayerWardrobe {
             this.currentOutfitResolve = resolve;
         });
 
-        this.nuiMenu.openMenu(MenuType.Wardrobe, {
-            wardrobe,
-            allowNullLabel: nullLabel,
-        });
+        this.nuiMenu.openMenu(
+            MenuType.Wardrobe,
+            {
+                wardrobe,
+                allowNullLabel: nullLabel,
+            },
+            {
+                position: {
+                    position: GetEntityCoords(PlayerPedId()) as Vector3,
+                    distance: 5.0,
+                },
+            }
+        );
 
         return promise;
     }
