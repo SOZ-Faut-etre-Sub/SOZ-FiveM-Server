@@ -43,7 +43,7 @@ export const GlobalWeaponConfig = {
 
 export const DrawPositions: Record<string, Omit<WeaponDrawPosition, 'model'>> = {
     AR: { position: [0.173, -0.14, 0.05], rotation: [0, 0, 0] },
-    SMG: { position: [0.173, 0.147, -0.02], rotation: [0, 45, 0] },
+    SMG: { position: [0.23, 0.187, -0.02], rotation: [10, 45, 10] },
     RPG: { position: [0.173, -0.14, -0.02], rotation: [0, 0, 0] }, // RPG & Sniper
     LMG: { position: [0.05, -0.14, -0.15], rotation: [0, 45, 0] }, // LMG & Corps à corps
     PUMP: { position: [0.05, -0.14, -0.15], rotation: [0, -40, 0] }, // Pompe
