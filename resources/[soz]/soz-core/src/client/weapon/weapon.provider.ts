@@ -73,6 +73,8 @@ export class WeaponProvider {
                 }
             );
 
+            TaskReloadWeapon(PlayerPedId(), true);
+
             await this.weapon.set(weapon);
         }
     }
