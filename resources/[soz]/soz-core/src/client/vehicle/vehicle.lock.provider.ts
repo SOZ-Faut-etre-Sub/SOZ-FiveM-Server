@@ -75,12 +75,23 @@ export class VehicleLockProvider {
 
     private currentPedHat: CurrentHat | null = null;
 
+    @Tick()
+    private async checkVehicleTrunk() {
+        if (!this.vehicleTrunkOpened) {
+            return;
+        }
+
+        this.vehicleTrunkOpened.zone.draw([0, 255, 0], 120);
+    }
+
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public onEnterLeaveVehicle() {
         if (!this.currentPedHat) {
             return;
         }
+
+        TriggerServerEvent(ServerEvent.PLAYER_UPDATE_HAT_VEHICLE, this.currentPedHat.hat, this.currentPedHat.texture);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -325,10 +336,10 @@ export class VehicleLockProvider {
             position[2] + (max[2] + min[2]) / 2,
         ] as Vector3;
 
-        const vehicleTrunkZone = new BoxZone(center, max[1] - min[1] + 2.0, max[0] - min[0] + 2.0, {
+        const vehicleTrunkZone = new BoxZone(center, max[1] - min[1] + 3.0, max[0] - min[0] + 3.0, {
             heading: GetEntityHeading(vehicle),
-            minZ: center[2] + min[2],
-            maxZ: center[2] + max[2],
+            minZ: center[2] + min[2] - 3.0,
+            maxZ: center[2] + max[2] + 3.0,
         });
 
         const pedPosition = GetEntityCoords(ped, false) as Vector3;
@@ -378,8 +389,12 @@ export class VehicleLockProvider {
 
         if (DoesEntityExist(this.vehicleTrunkOpened.vehicle)) {
             const pedPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
+            const vehiclePosition = GetEntityCoords(this.vehicleTrunkOpened.vehicle, false) as Vector3;
 
-            if (this.vehicleTrunkOpened.zone.isPointInside(pedPosition)) {
+            if (
+                this.vehicleTrunkOpened.zone.isPointInside(pedPosition) &&
+                this.vehicleTrunkOpened.zone.isPointInside(vehiclePosition)
+            ) {
                 return;
             }
         }
