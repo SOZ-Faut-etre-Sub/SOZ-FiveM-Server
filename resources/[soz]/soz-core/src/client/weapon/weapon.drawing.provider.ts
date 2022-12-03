@@ -135,6 +135,10 @@ export class WeaponDrawingProvider {
 
         await wait(500);
 
+        Object.values(this.weaponAttached).forEach(weapon => {
+            SetEntityAlpha(weapon, 255, false);
+        });
+
         const weapon = this.weaponService.getCurrentWeapon();
         const weaponModel = Weapons[usedWeapon.name.toUpperCase()]?.drawPosition?.model;
         if (weaponModel) {
