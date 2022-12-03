@@ -31,7 +31,7 @@ export class WeaponDrawingProvider {
             )
             .map(item => Weapons[item.name.toUpperCase()].drawPosition);
 
-        if (weaponToDraw.map(w => w.model) !== this.weaponsToDraw.map(w => w.model)) {
+        if (weaponToDraw.map(w => w.model).join('') !== this.weaponsToDraw.map(w => w.model).join('')) {
             await this.undrawWeapon();
             this.weaponsToDraw = weaponToDraw;
             await this.drawWeapon();
@@ -96,6 +96,18 @@ export class WeaponDrawingProvider {
     async onPlayerUpdate(player: PlayerData) {
         if (!this.shouldDrawWeapon) {
             return;
+        }
+
+        const weapon = this.weaponService.getCurrentWeapon();
+
+        if (weapon) {
+            if (
+                !Object.values(player.items)
+                    .map(i => i.name)
+                    .includes(weapon.name)
+            ) {
+                await this.weaponService.clear();
+            }
         }
 
         await this.updateWeaponDrawList(player.items);
