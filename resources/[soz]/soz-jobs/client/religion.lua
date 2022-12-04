@@ -106,23 +106,6 @@ AddEventHandler("jobs:religion:fix", function(ped)
     end)
 end)
 
-local function SpawnVehicule()
-    local ModelHash = "fixter"
-    local model = GetHashKey(ModelHash)
-    if not IsModelInCdimage(model) then
-        return
-    end
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-    religion_vehicule = CreateVehicle(model, SozJobCore.religion_vehicule.x, SozJobCore.religion_vehicule.y, SozJobCore.religion_vehicule.z,
-                                      SozJobCore.religion_vehicule.w, true, false)
-    SetModelAsNoLongerNeeded(model)
-    VehPlate = QBCore.Functions.GetPlate(religion_vehicule)
-    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
-end
-
 RegisterNetEvent("jobs:religion:begin")
 AddEventHandler("jobs:religion:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")

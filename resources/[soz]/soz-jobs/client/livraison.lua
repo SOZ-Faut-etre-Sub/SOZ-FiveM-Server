@@ -92,29 +92,6 @@ AddEventHandler("jobs:livraison:fix", function()
     end)
 end)
 
-local function SpawnVehicule()
-    local ModelHash = "faggio3"
-    local model = GetHashKey(ModelHash)
-    if not IsModelInCdimage(model) then
-        return
-    end
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-    livraison_vehicule = CreateVehicle(model, SozJobCore.livraison_vehicule.x, SozJobCore.livraison_vehicule.y, SozJobCore.livraison_vehicule.z,
-                                       SozJobCore.livraison_vehicule.w, true, false)
-    SetModelAsNoLongerNeeded(model)
-    VehPlate = QBCore.Functions.GetPlate(livraison_vehicule)
-    TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", VehPlate)
-    TriggerServerEvent("soz-core:server:vehicle:free-job-spawn", "faggio3", {
-        SozJobCore.livraison_vehicule.x,
-        SozJobCore.livraison_vehicule.y,
-        SozJobCore.livraison_vehicule.z,
-        SozJobCore.livraison_vehicule.w,
-    })
-end
-
 RegisterNetEvent("jobs:livraison:begin")
 AddEventHandler("jobs:livraison:begin", function()
     TriggerServerEvent("job:anounce", "Prenez la tenue")
