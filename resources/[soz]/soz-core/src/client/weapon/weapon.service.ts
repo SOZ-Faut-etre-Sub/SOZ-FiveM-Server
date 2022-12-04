@@ -54,20 +54,19 @@ export class WeaponService {
         if (!this.currentWeapon) {
             return;
         }
+
         const recoil = this.getWeaponConfig(this.currentWeapon.name)?.recoil ?? 0;
         const recoilHorizontal = Math.random() * 0.5 * (Math.round(Math.random()) ? 1 : -1);
         const weaponHealth = this.currentWeapon.metadata.health > 0 ? this.currentWeapon.metadata.health : 1;
+        const maxWeaponHealth = this.currentWeapon.metadata.maxHealth ?? GlobalWeaponConfig.MaxHealth;
 
-        const recoilY =
-            recoil + GlobalWeaponConfig.RecoilOnUsedWeapon * (1 - weaponHealth / this.currentWeapon.metadata.maxHealth);
-        const recoilX =
-            recoilHorizontal +
-            GlobalWeaponConfig.RecoilOnUsedWeapon * (1 - weaponHealth / this.currentWeapon.metadata.maxHealth);
+        const recoilY = recoil + GlobalWeaponConfig.RecoilOnUsedWeapon * (1 - weaponHealth / maxWeaponHealth);
+        const recoilX = recoilHorizontal + GlobalWeaponConfig.RecoilOnUsedWeapon * (1 - weaponHealth / maxWeaponHealth);
 
         const pitch = GetGameplayCamRelativePitch();
         const heading = GetGameplayCamRelativeHeading();
 
-        SetPedAccuracy(PlayerPedId(), (weaponHealth / this.currentWeapon.metadata.maxHealth) * 100);
+        SetPedAccuracy(PlayerPedId(), (weaponHealth / maxWeaponHealth) * 100);
 
         SetGameplayCamRelativePitch(pitch + recoilY, 1.0);
         SetGameplayCamRelativeHeading(heading + recoilX);

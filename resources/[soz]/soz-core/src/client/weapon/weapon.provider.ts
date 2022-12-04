@@ -58,25 +58,30 @@ export class WeaponProvider {
             return;
         }
 
+        const { completed } = await this.progressService.progress(
+            'weapon_reload',
+            "S'équipe d'un chargeur",
+            this.weapon.getCurrentWeapon().metadata.ammo <= WeaponAmmo[ammoName] ? 8000 : 2000,
+            {},
+            {
+                canCancel: false,
+                disableCombat: true,
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
+
+        TaskReloadWeapon(PlayerPedId(), true);
+
         const weapon = await emitRpc<InventoryItem | null>(
             RpcEvent.WEAPON_USE_AMMO,
             this.weapon.getCurrentWeapon().slot,
             ammoName
         );
+
         if (weapon) {
-            await this.progressService.progress(
-                'weapon_reload',
-                "S'équipe d'un chargeur",
-                weapon.metadata.ammo === WeaponAmmo[ammoName] ? 8000 : 2000,
-                {},
-                {
-                    canCancel: false,
-                    disableCombat: true,
-                }
-            );
-
-            TaskReloadWeapon(PlayerPedId(), true);
-
             await this.weapon.set(weapon);
         }
     }
@@ -112,10 +117,7 @@ export class WeaponProvider {
         }
 
         emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot);
-
-        const sleep = GetWeaponTimeBetweenShots(weapon.name);
         await this.weapon.recoil();
-        await wait(sleep);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -146,7 +148,7 @@ export class WeaponProvider {
             let [, weaponHash] = GetCurrentPedWeapon(ped, true);
 
             if (weaponHash === GetHashKey('WEAPON_UNARMED')) {
-                await wait(1000); // wait animations
+                await wait(5000); // wait animations
                 const [, h] = GetCurrentPedWeapon(ped, true);
                 weaponHash = h;
             }
