@@ -81,7 +81,9 @@ local function BadgeEntity(menu)
                     end
 
                     if pedFound >= 1 then
-                        TriggerServerEvent("vehiclekeys:server:SetVehicleOwner", QBCore.Functions.GetPlate(vehicle))
+                        local vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle)
+
+                        TriggerServerEvent("soz-core:server:vehicle:take-owner", vehicleNetworkId)
                         exports["soz-hud"]:DrawNotification("Vous venez de réquisitionner ce véhicule")
 
                         menu:Close()

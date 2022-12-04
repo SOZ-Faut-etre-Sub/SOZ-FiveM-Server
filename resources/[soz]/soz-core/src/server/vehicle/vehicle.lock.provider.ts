@@ -19,6 +19,24 @@ export class VehicleLockProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @OnEvent(ServerEvent.VEHICLE_TAKE_OWNER)
+    private onVehicleTakeOwner(source: number, vehicleNetworkId: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const plate = GetVehicleNumberPlateText(vehicleEntityId);
+
+        this.vehicleStateService.addVehicleKey(plate, player.citizenid);
+        this.vehicleStateService.updateVehicleState(vehicleEntityId, {
+            open: true,
+            owner: player.citizenid,
+        });
+    }
+
     @OnEvent(ServerEvent.PLAYER_UPDATE_HAT_VEHICLE)
     async onPlayerUpdateHatVehicle(source: number, hat: number, texture: number) {
         const entity = GetPlayerPed(source);

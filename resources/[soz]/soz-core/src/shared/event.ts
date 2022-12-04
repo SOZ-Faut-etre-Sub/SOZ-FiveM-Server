@@ -133,6 +133,7 @@ export enum ServerEvent {
     VEHICLE_OPEN_KEYS = 'soz-core:server:vehicle:open-keys',
     VEHICLE_GIVE_KEY = 'soz-core:server:vehicle:give-key',
     VEHICLE_ROUTE_EJECTION = 'soz-core:server:vehicle:route-ejection',
+    VEHICLE_TAKE_OWNER = 'soz-core:server:vehicle:take-owner',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
