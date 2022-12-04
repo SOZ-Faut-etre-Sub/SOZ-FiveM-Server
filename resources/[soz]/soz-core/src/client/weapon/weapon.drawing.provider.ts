@@ -48,6 +48,7 @@ export class WeaponDrawingProvider {
 
             const object = CreateObject(weapon.model, 1, 1, 1, true, true, false);
             SetEntityAsMissionEntity(object, true, true);
+            SetEntityCollision(object, false, false);
             SetNetworkIdCanMigrate(ObjToNet(object), false);
             AttachEntityToEntity(
                 object,
@@ -71,7 +72,7 @@ export class WeaponDrawingProvider {
             if (playerWeapon) {
                 const weaponModel = Weapons[playerWeapon.name.toUpperCase()].drawPosition?.model;
                 if (weaponModel) {
-                    SetEntityAlpha(object, 0, false);
+                    SetEntityVisible(object, false, false);
                 }
             }
 
@@ -94,6 +95,8 @@ export class WeaponDrawingProvider {
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(player: PlayerData) {
+        await this.updateWeaponDrawList(player.items);
+
         if (!this.shouldDrawWeapon) {
             return;
         }
@@ -109,8 +112,6 @@ export class WeaponDrawingProvider {
                 await this.weaponService.clear();
             }
         }
-
-        await this.updateWeaponDrawList(player.items);
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
@@ -136,14 +137,14 @@ export class WeaponDrawingProvider {
         await wait(500);
 
         Object.values(this.weaponAttached).forEach(weapon => {
-            SetEntityAlpha(weapon, 255, false);
+            SetEntityVisible(weapon, true, false);
         });
 
         const weapon = this.weaponService.getCurrentWeapon();
         const weaponModel = Weapons[usedWeapon.name.toUpperCase()]?.drawPosition?.model;
         if (weaponModel) {
             if (this.weaponAttached[weaponModel]) {
-                SetEntityAlpha(this.weaponAttached[weaponModel], weapon ? 0 : 255, false);
+                SetEntityVisible(this.weaponAttached[weaponModel], !weapon, false);
             }
         }
     }
