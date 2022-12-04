@@ -31,7 +31,9 @@ export const PlayerContainer = () => {
                 <ContainerSlots
                     rows={Math.ceil(playerInventory.items.length / 5)}
                     items={playerInventory.items.map((item, i) => ({...item, id: i}))}
-                    setItems={(s: any) => setPlayerInventory({...playerInventory, items: s}) }
+                    setItems={(s) => {
+                        setPlayerInventory({...playerInventory, items: s})
+                    }}
                 />
             </ContainerWrapper>
         </div>
