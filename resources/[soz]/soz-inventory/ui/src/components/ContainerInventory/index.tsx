@@ -1,19 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
-import { InventoryItem, SortableContainer } from "../InventoryItem";
-import { IInventoryEvent, IInventoryItem } from "../../types/inventory";
+import { /*InventoryItem, */SortableContainer } from "../InventoryItem";
+import { InventoryItem, SozInventoryModel } from '../../types/inventory';
 import { ReactSortable } from "react-sortablejs";
 import styles from "./styles.module.css";
 import cn from "classnames";
 import { closeNUI } from "../../hooks/nui";
+import { debugPlayerInventory } from '../../test/debug';
 
 const ContainerInventory = () => {
     const [display, setDisplay] = useState<boolean>(false);
 
-    const [playerInventory, setPlayerInventory] = useState<IInventoryEvent>({ id: "source", type: "", weight: 0, maxWeight: 0 });
-    const [playerInventoryItems, setPlayerInventoryItems] = useState<IInventoryItem[]>([]);
+    const [playerInventory, setPlayerInventory] = useState<SozInventoryModel>(debugPlayerInventory.playerInventory);
+    const [playerInventoryItems, setPlayerInventoryItems] = useState<InventoryItem[]>([]);
 
-    const [targetInventory, setTargetInventory] = useState<IInventoryEvent>({ id: "target", type: "", weight: 0, maxWeight: 0 });
-    const [targetInventoryItems, setTargetInventoryItems] = useState<IInventoryItem[]>([]);
+    const [targetInventory, setTargetInventory] = useState<SozInventoryModel>(debugPlayerInventory.playerInventory);
+    const [targetInventoryItems, setTargetInventoryItems] = useState<InventoryItem[]>([]);
 
     const getBanner = useCallback((type: string) => {
         let headerImage = type;
@@ -58,8 +59,8 @@ const ContainerInventory = () => {
 
                 setPlayerInventory(sourceInventory);
                 setTargetInventory(targetInventory);
-                setPlayerInventoryItems(sourceInventory.items.map((item: IInventoryItem) => ({ ...item, id: `source_${item.slot}` })));
-                setTargetInventoryItems(targetInventory.items.map((item: IInventoryItem) => ({ ...item, id: `target_${item.slot}` })));
+                setPlayerInventoryItems(sourceInventory.items.map((item: InventoryItem) => ({ ...item, id: `source_${item.slot}` })));
+                setTargetInventoryItems(targetInventory.items.map((item: InventoryItem) => ({ ...item, id: `target_${item.slot}` })));
             });
     }, []);
 
@@ -74,13 +75,13 @@ const ContainerInventory = () => {
 
                     setPlayerInventoryItems(
                         event.data.playerInventory.items
-                            .filter((i: IInventoryEvent) => i !== null)
-                            .map((item: IInventoryItem) => ({ ...item, id: `source_${item.slot}` }))
+                            .filter((i: InventoryItem) => i !== null)
+                            .map((item: InventoryItem) => ({ ...item, id: `source_${item.slot}` }))
                     );
                     setTargetInventoryItems(
                         event.data.targetInventory.items
-                            .filter((i: IInventoryEvent) => i !== null)
-                            .map((item: IInventoryItem) => ({ ...item, id: `target_${item.slot}` }))
+                            .filter((i: InventoryItem) => i !== null)
+                            .map((item: InventoryItem) => ({ ...item, id: `target_${item.slot}` }))
                     );
 
                     setDisplay(true);
@@ -101,16 +102,16 @@ const ContainerInventory = () => {
                         setPlayerInventory(event.data.playerInventory);
                         setPlayerInventoryItems(
                             event.data.playerInventory.items
-                                .filter((i: IInventoryEvent) => i !== null)
-                                .map((item: IInventoryItem) => ({ ...item, id: `source_${item.slot}` }))
+                                .filter((i: InventoryItem) => i !== null)
+                                .map((item: InventoryItem) => ({ ...item, id: `source_${item.slot}` }))
                         );
                     }
                     if (event.data.targetInventory !== undefined) {
                         setTargetInventory(event.data.targetInventory);
                         setTargetInventoryItems(
                             event.data.targetInventory.items
-                                .filter((i: IInventoryEvent) => i !== null)
-                                .map((item: IInventoryItem) => ({ ...item, id: `target_${item.slot}` }))
+                                .filter((i: InventoryItem) => i !== null)
+                                .map((item: InventoryItem) => ({ ...item, id: `target_${item.slot}` }))
                         );
                     }
                 } catch (e: any) {
@@ -188,18 +189,18 @@ const ContainerInventory = () => {
                     forceFallback={true} // FIVEM...
                     tag={SortableContainer}
                     id={playerInventory.id}
-                    list={playerInventoryItems}
-                    setList={setPlayerInventoryItems}
+                    /*list={playerInventoryItems}
+                    setList={setPlayerInventoryItems}*/
                     group="sozInventory"
                     sort={false}
                     animation={150}
                     onEnd={transfertItem}
                 >
-                    {playerInventoryItems
-                        .sort((a, b) => a.label.localeCompare(b.label))
-                        .map((item) => (
-                            <InventoryItem key={item.id} item={item} />
-                        ))}
+                    {/*{playerInventoryItems*/}
+                    {/*    .sort((a, b) => a.label.localeCompare(b.label))*/}
+                    {/*    .map((item) => (*/}
+                    {/*        <InventoryItem key={item.id} item={item} />*/}
+                    {/*    ))}*/}
                 </ReactSortable>
             </section>
 
@@ -215,18 +216,18 @@ const ContainerInventory = () => {
                     forceFallback={true} // FIVEM...
                     tag={SortableContainer}
                     id={targetInventory.id}
-                    list={targetInventoryItems}
-                    setList={setTargetInventoryItems}
+                    /*list={targetInventoryItems}
+                    setList={setTargetInventoryItems}*/
                     group="sozInventory"
                     sort={false}
                     animation={150}
                     onEnd={transfertItem}
                 >
-                    {targetInventoryItems
-                        .sort((a, b) => a.label.localeCompare(b.label))
-                        .map((item) => (
-                            <InventoryItem key={item.id} item={item} />
-                        ))}
+                    {/*{targetInventoryItems*/}
+                    {/*    .sort((a, b) => a.label.localeCompare(b.label))*/}
+                    {/*    .map((item) => (*/}
+                    {/*        <InventoryItem key={item.id} item={item} />*/}
+                    {/*    ))}*/}
                 </ReactSortable>
             </section>
         </main>
