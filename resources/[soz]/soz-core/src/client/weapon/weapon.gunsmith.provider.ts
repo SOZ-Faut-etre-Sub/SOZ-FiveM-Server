@@ -153,7 +153,7 @@ export class WeaponGunsmithProvider {
                     );
                     if (!applied) {
                         this.notifier.notify(
-                            "Vous n'avez pas assez d'argent pour changer la couleur de cette arme",
+                            "Vous n'avez pas assez d'argent pour changer les équipements de cette arme",
                             'error'
                         );
                     }

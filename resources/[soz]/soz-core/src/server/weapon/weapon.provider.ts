@@ -35,6 +35,11 @@ export class WeaponProvider {
     }
 
     private async useAmmo(source: number, item: InventoryItem) {
+        if (Player(source).state.inv_busy) {
+            this.notifier.notify(source, "Inventaire en cours d'utilisation", 'warning');
+            return;
+        }
+
         TriggerClientEvent(ClientEvent.WEAPON_USE_AMMO, source, item.name);
     }
 
@@ -60,12 +65,13 @@ export class WeaponProvider {
             return;
         }
 
-        if (this.inventoryManager.removeItemFromInventory(source, ammo.name, 1, ammo.metadata, ammo.slot)) {
-            this.inventoryManager.updateMetadata(source, weaponSlot, {
-                ammo: (weapon.metadata.ammo || 0) + WeaponAmmo[ammo.name],
-            });
+        if (!this.inventoryManager.removeItemFromInventory(source, ammo.name, 1, ammo.metadata, ammo.slot)) {
+            return;
         }
 
+        this.inventoryManager.updateMetadata(source, weaponSlot, {
+            ammo: (weapon.metadata.ammo || 0) + WeaponAmmo[ammo.name],
+        });
         return this.inventoryManager.getSlot(source, weaponSlot);
     }
 
