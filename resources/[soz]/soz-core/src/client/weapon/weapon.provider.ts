@@ -58,22 +58,7 @@ export class WeaponProvider {
             return;
         }
 
-        const { completed } = await this.progressService.progress(
-            'weapon_reload',
-            "S'équipe d'un chargeur",
-            this.weapon.getCurrentWeapon().metadata.ammo <= WeaponAmmo[ammoName] ? 8000 : 2000,
-            {},
-            {
-                canCancel: false,
-                disableCombat: true,
-            }
-        );
-
-        if (!completed) {
-            return;
-        }
-
-        TaskReloadWeapon(PlayerPedId(), true);
+        LocalPlayer.state.set('inv_busy', true, true);
 
         const weapon = await emitRpc<InventoryItem | null>(
             RpcEvent.WEAPON_USE_AMMO,
@@ -81,9 +66,30 @@ export class WeaponProvider {
             ammoName
         );
 
+        if (!weapon) {
+            LocalPlayer.state.set('inv_busy', false, true);
+            return;
+        }
+
+        console.log(weapon.metadata.ammo, WeaponAmmo[ammoName]);
+
+        await this.progressService.progress(
+            'weapon_reload',
+            "S'équipe d'un chargeur",
+            weapon.metadata.ammo <= WeaponAmmo[ammoName] ? 8000 : 2000,
+            {},
+            {
+                canCancel: false,
+                disableCombat: true,
+            }
+        );
+
+        TaskReloadWeapon(PlayerPedId(), true);
+
         if (weapon) {
             await this.weapon.set(weapon);
         }
+        LocalPlayer.state.set('inv_busy', false, true);
     }
 
     @Tick(TickInterval.EVERY_FRAME)
