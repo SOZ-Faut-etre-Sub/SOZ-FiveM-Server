@@ -1,0 +1,49 @@
+.Card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fafafa;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.Card:hover {
+    background: rgba(20, 161, 63, 0.05);
+    border: 1px solid rgba(20, 161, 63, 0.1);
+}
+
+.Icon {
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.ContextMenu {
+    position: absolute;
+    height: auto;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 90;
+}
+
+.OptionsList {
+    background: rgba(0, 0, 0, .8);
+    padding: .5rem;
+    min-width: 10rem;
+    border-radius: .3rem;
+    box-shadow: 0 0 .3rem rgba(0, 0, 0, .6);
+}
+
+.OptionListItem {
+    padding: .5rem;
+    border-radius: .3rem;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.OptionListItem:hover {
+    background: rgba(255, 255, 255, .15);
+}

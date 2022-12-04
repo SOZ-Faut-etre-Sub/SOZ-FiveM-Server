@@ -1,0 +1,15 @@
+* {
+    user-select: none;
+}
+
+body {
+    font-family: "Inter", "system-ui";
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+#app {
+    position: absolute;
+    inset: 0;
+}

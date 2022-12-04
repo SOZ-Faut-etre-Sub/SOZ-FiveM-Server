@@ -1,10 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './components/app';
-import './style/index.css';
+
+import "inter-ui/inter.css";
+import './index.css';
+
+import KeyInventory from './components/KeyInventory';
+import ContainerInventory from './components/ContainerInventory';
+import { PlayerContainer } from './components/Container/Player/PlayerContainer';
 
 ReactDOM.createRoot(document.getElementById('app')!).render(
     <React.StrictMode>
-        <App />
+        <PlayerContainer />
+        {/*<KeyInventory />*/}
+        {/*<ContainerInventory />*/}
     </React.StrictMode>
 )

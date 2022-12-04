@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useRef, useState} from "react";
-import {InventoryItem, SortableContainer} from "../InventoryItem";
-import {IInventoryEvent, IInventoryItem} from "../../types/inventory";
+import {/*InventoryItem,*/ SortableContainer} from "../InventoryItem";
+import {InventoryItem} from "../../types/inventory";
 import { ReactSortable } from "react-sortablejs";
 import styles from "../PlayerInventory/styles.module.css";
 import cn from "classnames";
@@ -10,7 +10,7 @@ const KeyInventory = () => {
     const [display, setDisplay] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    const [playerInventoryKeys, setPlayerInventoryKeys] = useState<IInventoryItem[]>([]);
+    const [playerInventoryKeys, setPlayerInventoryKeys] = useState<InventoryItem[]>([]);
 
     const transfertItem = useCallback((event: any) => {
         if (event.item.dataset.item === undefined) return
@@ -30,7 +30,7 @@ const KeyInventory = () => {
         if (event.data.action === "openPlayerKeyInventory") {
             if (event.data.keys === undefined) return
 
-            setPlayerInventoryKeys(event.data.keys.filter((i: IInventoryEvent) => i !== null).map((item: IInventoryItem) => ({...item, id: `key_${item.slot}`})));
+            setPlayerInventoryKeys(event.data.keys.filter((i: InventoryItem) => i !== null).map((item: InventoryItem) => ({...item, id: `key_${item.slot}`})));
             setDisplay(true);
         }
     }, [setDisplay, setPlayerInventoryKeys]);
@@ -73,15 +73,15 @@ const KeyInventory = () => {
             <ReactSortable
                 forceFallback={true} // FIVEM...
                 tag={SortableContainer}
-                list={playerInventoryKeys}
-                setList={setPlayerInventoryKeys}
+                /*list={playerInventoryKeys}
+                setList={setPlayerInventoryKeys}*/
                 sort={false}
                 animation={150}
                 onEnd={transfertItem}
             >
-                {playerInventoryKeys.map(item => (
-                    <InventoryItem key={item.id} item={item} />
-                ))}
+                {/*{playerInventoryKeys.map(item => (*/}
+                {/*    <InventoryItem key={item.id} item={item} />*/}
+                {/*))}*/}
             </ReactSortable>
         </main>
     );

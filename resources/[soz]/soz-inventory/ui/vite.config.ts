@@ -16,6 +16,9 @@ export default defineConfig({
             }
         }
     },
+    assetsInclude: [
+        '**/*.jpg',
+    ],
     resolve: {
         alias: [
             {find: '@components', replacement: path.resolve(__dirname, './src/components')},

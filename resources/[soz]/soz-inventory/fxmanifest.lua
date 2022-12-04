@@ -17,6 +17,6 @@ server_scripts {
 }
 
 ui_page("html/index.html")
-files {"html/index.html", "html/assets/*"}
+files {"html/index.html", "html/assets/*", "html/banner/*"}
 
 dependencies {"oxmysql", "qb-core", "soz-hud", "menuv", "qb-target"}

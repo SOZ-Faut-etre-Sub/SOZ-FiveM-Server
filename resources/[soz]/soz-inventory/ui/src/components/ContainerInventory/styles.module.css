@@ -86,7 +86,7 @@
     background-size: cover;
 }
 .player {
-    background: url("../../assets/player.jpg") left no-repeat;
+    background: url("public/banner/player.jpg") left no-repeat;
     background-size: cover;
 }
 .recycler_processing {
