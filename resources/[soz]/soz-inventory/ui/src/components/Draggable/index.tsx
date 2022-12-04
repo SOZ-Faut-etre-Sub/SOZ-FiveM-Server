@@ -1,6 +1,8 @@
-import { FunctionComponent, memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useDraggable } from '@dnd-kit/core';
+import React, { FunctionComponent, memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { InventoryItem } from '../../types/inventory';
 import style from './Item.module.css';
+import {CSS} from '@dnd-kit/utilities';
 
 type Props = {
     item: InventoryItem | undefined;
@@ -13,9 +15,14 @@ type Props = {
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
 
 const Draggable: FunctionComponent<Props> = ({ item, setInContext, interactAction, onItemHover }) => {
-    if (!item) {
-        return <div />
-    }
+    const {attributes, listeners, setNodeRef, transform} = useDraggable({
+        id: item?.slot ?? ''.toString(),
+        data: item,
+    });
+
+    const transformStyle = {
+        transform: CSS.Translate.toString(transform),
+    };
 
     const itemRef = useRef<HTMLDivElement>(null);
     const contextRef = useRef<HTMLDivElement>(null);
@@ -23,6 +30,10 @@ const Draggable: FunctionComponent<Props> = ({ item, setInContext, interactActio
 
     const resetDescription = useCallback(() => onItemHover(null), [onItemHover]);
     const applyDescription = useCallback(() => {
+        if (!item) {
+            return null
+        }
+
         const itemLabel = item?.metadata?.label ? item.metadata.label : item.label;
         let itemExtraLabel = '';
 
@@ -47,7 +58,7 @@ const Draggable: FunctionComponent<Props> = ({ item, setInContext, interactActio
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description}
         `);
-    }, [onItemHover]);
+    }, [item, onItemHover]);
 
     // const onContextMenuReceived = useCallback((event: MouseEvent) => {
     //     if (itemRef.current && itemRef.current.contains(event.target as Node)) {
@@ -93,12 +104,15 @@ const Draggable: FunctionComponent<Props> = ({ item, setInContext, interactActio
     //     };
     // };
 
+    if (!item) {
+        return null
+    }
+
+
     return (
         <>
-            <div
-                ref={itemRef}
+            <div ref={setNodeRef} style={transformStyle} {...listeners} {...attributes}
                 className={style.Card}
-                data-item={JSON.stringify(item)}
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
             >
@@ -133,4 +147,4 @@ const Draggable: FunctionComponent<Props> = ({ item, setInContext, interactActio
     )
 };
 
-export default Draggable;
+export default React.memo(Draggable);
