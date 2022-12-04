@@ -123,40 +123,31 @@ export class WeaponGunsmithProvider {
             );
 
             const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_LABEL, weapon.slot, weaponLabel);
-            if (!applied) {
-                this.notifier.notify("Vous n'avez pas assez d'argent pour renommer cette arme", 'error');
+            if (applied) {
+                this.notifier.notify(`Vous avez renommé votre arme en ~b~${weaponLabel}`);
             }
         }
 
         if (repair) {
             const applied = await emitRpc<boolean>(RpcEvent.WEAPON_REPAIR, weapon.slot);
-            if (!applied) {
-                this.notifier.notify("Vous n'avez pas assez d'argent pour réparer cette arme", 'error');
+            if (applied) {
+                this.notifier.notify(`Vous avez réparé votre arme (~b~${weapon.label}~s~)`);
             }
         }
 
         if (tint !== weapon.metadata.tint) {
             const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_TINT, weapon.slot, tint);
-            if (!applied) {
-                this.notifier.notify("Vous n'avez pas assez d'argent pour changer la couleur de cette arme", 'error');
+            if (applied) {
+                this.notifier.notify(
+                    `Vous avez changé la couleur de votre arme en ~b~${WeaponTintColorChoices[tint].label}`
+                );
             }
         }
 
         if (attachments) {
             for (const [type, attachment] of Object.entries(attachments)) {
                 if (attachment !== weapon.metadata?.attachments?.[type]) {
-                    const applied = await emitRpc<boolean>(
-                        RpcEvent.WEAPON_SET_ATTACHMENTS,
-                        weapon.slot,
-                        type,
-                        attachment
-                    );
-                    if (!applied) {
-                        this.notifier.notify(
-                            "Vous n'avez pas assez d'argent pour changer les équipements de cette arme",
-                            'error'
-                        );
-                    }
+                    await emitRpc<boolean>(RpcEvent.WEAPON_SET_ATTACHMENTS, weapon.slot, type, attachment);
                 }
             }
         }
