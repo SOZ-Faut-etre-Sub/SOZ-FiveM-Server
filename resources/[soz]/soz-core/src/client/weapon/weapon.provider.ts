@@ -12,6 +12,7 @@ import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
 import { TalkService } from '../talk.service';
+import { WeaponDrawingProvider } from './weapon.drawing.provider';
 import { WeaponService } from './weapon.service';
 
 @Provider()
@@ -21,6 +22,9 @@ export class WeaponProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(WeaponDrawingProvider)
+    private weaponDrawingProvider: WeaponDrawingProvider;
 
     @Inject(PhoneService)
     private phoneService: PhoneService;
@@ -135,18 +139,22 @@ export class WeaponProvider {
 
         if (this.phoneService.isPhoneVisible()) {
             await this.weapon.clear();
+            await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
         if (this.talkService.isRadioOpen()) {
             await this.weapon.clear();
+            await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
         if (IsEntityPlayingAnim(ped, 'missfbi4prepp1', '_idle_garbage_man', 3)) {
             await this.weapon.clear();
+            await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
         if (GetPedInVehicleSeat(vehicle, -1) === ped && weaponDrawable) {
             await this.weapon.clear();
+            await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
         if (this.weapon.getCurrentWeapon()) {
@@ -160,6 +168,7 @@ export class WeaponProvider {
             }
             if (weaponHash !== hash) {
                 await this.weapon.clear();
+                await this.weaponDrawingProvider.refreshDrawWeapons();
             }
         }
     }

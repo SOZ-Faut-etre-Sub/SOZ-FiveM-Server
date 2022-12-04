@@ -107,6 +107,8 @@ export class WeaponGunsmithProvider {
             return;
         }
 
+        const customValidated = false;
+
         if (label) {
             const weaponLabel = await this.inputService.askInput(
                 {
@@ -153,7 +155,15 @@ export class WeaponGunsmithProvider {
         }
 
         this.nuiMenu.closeMenu();
-        this.notifier.notify('Vos modifications ont été appliquées');
+
+        if (customValidated) {
+            this.notifier.notify('Vos modifications ont été appliquées');
+        } else {
+            this.notifier.notify(
+                "Une ou plusieurs modifications n'ont pas pu être appliquées par manque d'argent.",
+                'error'
+            );
+        }
 
         await this.weaponService.clear();
     }

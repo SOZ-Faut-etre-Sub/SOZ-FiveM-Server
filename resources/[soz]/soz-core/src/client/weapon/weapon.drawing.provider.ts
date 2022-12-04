@@ -112,6 +112,7 @@ export class WeaponDrawingProvider {
                 await this.weaponService.clear();
             }
         }
+        await this.refreshDrawWeapons();
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
@@ -125,6 +126,11 @@ export class WeaponDrawingProvider {
     @OnEvent(ClientEvent.ADMIN_NOCLIP_DISABLED)
     async drawWeapons() {
         this.shouldDrawWeapon = true;
+        await this.drawWeapon();
+    }
+
+    async refreshDrawWeapons() {
+        await this.undrawWeapon();
         await this.drawWeapon();
     }
 

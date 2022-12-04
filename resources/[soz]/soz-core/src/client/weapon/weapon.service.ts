@@ -2,6 +2,7 @@ import { Inject, Injectable } from '../../core/decorators/injectable';
 import { InventoryItem } from '../../shared/item';
 import { GlobalWeaponConfig, WeaponConfig, WeaponName, Weapons } from '../../shared/weapons/weapon';
 import { PlayerService } from '../player/player.service';
+import { WeaponDrawingProvider } from './weapon.drawing.provider';
 
 @Injectable()
 export class WeaponService {
