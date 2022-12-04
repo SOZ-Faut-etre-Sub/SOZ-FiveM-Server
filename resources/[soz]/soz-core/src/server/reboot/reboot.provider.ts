@@ -49,8 +49,6 @@ export class RebootProvider {
             DropPlayer(source.toString(), 'Le serveur redémarre...');
         }
 
-        exports['soz-inventory'].saveInventories();
-
         await this.prismaService.playerVehicle.updateMany({
             where: {
                 state: 0,
@@ -75,9 +73,6 @@ export class RebootProvider {
             },
         });
 
-        exports['soz-bank'].saveAccounts();
-        exports['soz-upw'].saveUpw();
-
         await this.vehicleDealershipProvider.finishAuctions();
 
         await this.prismaService.playerVehicle.deleteMany({
@@ -87,6 +82,10 @@ export class RebootProvider {
                 },
             },
         });
+
+        exports['soz-bank'].saveAccounts();
+        exports['soz-upw'].saveUpw();
+        exports['soz-inventory'].saveInventories();
     }
 
     @Command('thunder', {
