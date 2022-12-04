@@ -75,15 +75,6 @@ export class VehicleLockProvider {
 
     private currentPedHat: CurrentHat | null = null;
 
-    @Tick()
-    private async checkVehicleTrunk() {
-        if (!this.vehicleTrunkOpened) {
-            return;
-        }
-
-        this.vehicleTrunkOpened.zone.draw([0, 255, 0], 120);
-    }
-
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public onEnterLeaveVehicle() {
