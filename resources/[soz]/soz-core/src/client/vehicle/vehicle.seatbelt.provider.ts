@@ -175,6 +175,16 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
+        const vehicleClass = GetVehicleClass(vehicle);
+
+        if (
+            vehicleClass === VehicleClass.Motorcycles ||
+            vehicleClass === VehicleClass.Cycles ||
+            vehicleClass === VehicleClass.Boats
+        ) {
+            return;
+        }
+
         const vehicleSpeed = GetEntitySpeed(vehicle);
         const vehiclePosition = GetEntityCoords(vehicle, false) as Vector3;
         const vehicleVelocity = GetEntityVelocity(vehicle) as Vector3;
@@ -247,11 +257,6 @@ export class VehicleSeatbeltProvider {
 
         SetPedToRagdoll(ped, 5511, 5511, 0, false, false, false);
         SetEntityVelocity(ped, velocity[0], velocity[1], velocity[2]);
-
-        const ejectionSpeed = Math.abs(GetEntitySpeed(ped));
-        const newHealth = Math.max(0, Math.round(GetEntityHealth(ped) - ejectionSpeed * 3));
-
-        SetEntityHealth(ped, newHealth);
 
         this.isSeatbeltOn = false;
         TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
