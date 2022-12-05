@@ -6,7 +6,7 @@ import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
-import { WeaponTintColorChoices } from '../../shared/weapons/tint';
+import { WeaponMk2TintColorChoices, WeaponTintColorChoices } from '../../shared/weapons/tint';
 import { WeaponConfiguration } from '../../shared/weapons/weapon';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
@@ -40,7 +40,7 @@ export class WeaponGunsmithProvider {
             tints: weapons.map(weapon => {
                 return {
                     slot: weapon.slot,
-                    tints: weapon.name.includes('mk2') ? WeaponTintColorChoices : WeaponTintColorChoices,
+                    tints: weapon.name.includes('mk2') ? WeaponMk2TintColorChoices : WeaponTintColorChoices,
                 };
             }),
             attachments: weapons.map(weapon => {
@@ -107,14 +107,14 @@ export class WeaponGunsmithProvider {
             return;
         }
 
-        const customValidated = false;
+        let customValidated = true;
 
         if (label) {
             const weaponLabel = await this.inputService.askInput(
                 {
                     title: `Nom de l'arme`,
                     maxCharacters: 30,
-                    defaultValue: weapon.metadata.label ?? weapon.label,
+                    defaultValue: weapon.metadata?.label ?? weapon.label,
                 },
                 value => {
                     if (value.length < 2) {
@@ -127,6 +127,8 @@ export class WeaponGunsmithProvider {
             const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_LABEL, weapon.slot, weaponLabel);
             if (applied) {
                 this.notifier.notify(`Vous avez renommé votre arme en ~b~${weaponLabel}`);
+            } else {
+                customValidated = false;
             }
         }
 
@@ -134,6 +136,8 @@ export class WeaponGunsmithProvider {
             const applied = await emitRpc<boolean>(RpcEvent.WEAPON_REPAIR, weapon.slot);
             if (applied) {
                 this.notifier.notify(`Vous avez réparé votre arme (~b~${weapon.label}~s~)`);
+            } else {
+                customValidated = false;
             }
         }
 
@@ -141,15 +145,27 @@ export class WeaponGunsmithProvider {
             const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_TINT, weapon.slot, tint);
             if (applied) {
                 this.notifier.notify(
-                    `Vous avez changé la couleur de votre arme en ~b~${WeaponTintColorChoices[tint].label}`
+                    `Vous avez changé la couleur de votre arme en ~b~${
+                        (weapon.name.includes('mk2') ? WeaponMk2TintColorChoices : WeaponTintColorChoices)[tint].label
+                    }`
                 );
+            } else {
+                customValidated = false;
             }
         }
 
         if (attachments) {
             for (const [type, attachment] of Object.entries(attachments)) {
                 if (attachment !== weapon.metadata?.attachments?.[type]) {
-                    await emitRpc<boolean>(RpcEvent.WEAPON_SET_ATTACHMENTS, weapon.slot, type, attachment);
+                    const applied = await emitRpc<boolean>(
+                        RpcEvent.WEAPON_SET_ATTACHMENTS,
+                        weapon.slot,
+                        type,
+                        attachment
+                    );
+                    if (!applied) {
+                        customValidated = false;
+                    }
                 }
             }
         }
