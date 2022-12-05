@@ -109,7 +109,6 @@ export class WeaponGunsmithProvider {
             return false;
         }
 
-        console.log(WEAPON_CUSTOM_PRICE.attachment);
         if (this.playerMoneyService.remove(source, WEAPON_CUSTOM_PRICE.attachment)) {
             if (weapon.metadata.attachments === undefined) {
                 weapon.metadata.attachments = {

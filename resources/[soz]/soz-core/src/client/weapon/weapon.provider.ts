@@ -75,8 +75,6 @@ export class WeaponProvider {
             return;
         }
 
-        console.log(weapon.metadata.ammo, WeaponAmmo[ammoName]);
-
         await this.progressService.progress(
             'weapon_reload',
             "S'équipe d'un chargeur",
