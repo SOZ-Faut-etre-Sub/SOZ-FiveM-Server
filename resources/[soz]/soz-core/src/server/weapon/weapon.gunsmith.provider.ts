@@ -4,6 +4,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { RpcEvent } from '../../shared/rpc';
 import { REPAIR_HEALTH_REDUCER, WEAPON_CUSTOM_PRICE, WeaponComponentType } from '../../shared/weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from '../../shared/weapons/tint';
+import { GlobalWeaponConfig } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerMoneyService } from '../player/player.money.service';
 
@@ -51,14 +52,22 @@ export class WeaponGunsmithProvider {
             return false;
         }
 
-        const price =
-            WEAPON_CUSTOM_PRICE.repair *
-            Math.floor(100 - (weapon.metadata.health / weapon.metadata.maxHealth) * WEAPON_CUSTOM_PRICE.repair);
+        let maxHealth = weapon.metadata.maxHealth;
+        if (!weapon.metadata.maxHealth) {
+            maxHealth = GlobalWeaponConfig.MaxHealth;
+        }
+
+        let health = weapon.metadata.health;
+        if (!weapon.metadata.health) {
+            health = GlobalWeaponConfig.MaxHealth;
+        }
+
+        const price = WEAPON_CUSTOM_PRICE.repair * Math.floor(100 - (health / maxHealth) * WEAPON_CUSTOM_PRICE.repair);
 
         if (this.playerMoneyService.remove(source, price)) {
-            const maxHealth = weapon.metadata.maxHealth * REPAIR_HEALTH_REDUCER;
+            const heal = maxHealth * REPAIR_HEALTH_REDUCER;
 
-            this.inventoryManager.updateMetadata(source, slot, { maxHealth: maxHealth, health: maxHealth });
+            this.inventoryManager.updateMetadata(source, slot, { maxHealth: heal, health: heal });
             return true;
         }
 
