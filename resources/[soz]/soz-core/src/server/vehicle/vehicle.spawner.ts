@@ -271,10 +271,18 @@ export class VehicleSpawner {
             await wait(200);
 
             let entityId = NetworkGetEntityFromNetworkId(netId);
+            let tries = 0;
 
-            while (!entityId || !DoesEntityExist(entityId)) {
+            while ((!entityId || !DoesEntityExist(entityId)) && tries < 150) {
                 entityId = NetworkGetEntityFromNetworkId(netId);
-                await wait(0);
+                await wait(100);
+                tries += 1;
+            }
+
+            if (!entityId || !DoesEntityExist(entityId)) {
+                console.error('Failed to spawn vehicle while waiting for entity id to exist in server');
+
+                return null;
             }
 
             this.vehicleStateService.registerSpawned(netId);
