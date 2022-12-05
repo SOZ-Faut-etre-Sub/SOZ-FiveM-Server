@@ -58,7 +58,6 @@ export class VehicleAirProvider {
     public disableVehicleAirControl(): void {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
-        const vehicleClass = GetVehicleClass(vehicle);
 
         if (!vehicle) {
             return;
@@ -68,7 +67,15 @@ export class VehicleAirProvider {
             return;
         }
 
+        const vehicleClass = GetVehicleClass(vehicle);
+
         if (ALLOWED_AIR_CONTROL.includes(vehicleClass)) {
+            return;
+        }
+
+        const vehicleModel = GetEntityModel(vehicle);
+
+        if (vehicleModel === GetHashKey('deluxo')) {
             return;
         }
 
