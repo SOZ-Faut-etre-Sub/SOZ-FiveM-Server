@@ -130,4 +130,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     gym_subscription_expire_at: number | null;
     halloween2022: Halloween2022 | null;
     licences: Partial<Record<PlayerLicenceType, number>>;
+    shortcuts: Record<number, Partial<InventoryItem>>;
 };

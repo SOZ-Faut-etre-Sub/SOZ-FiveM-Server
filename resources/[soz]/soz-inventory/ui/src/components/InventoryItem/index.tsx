@@ -1,5 +1,5 @@
 import React, {useRef, forwardRef, memo, useState, useEffect, useLayoutEffect, useCallback} from 'react';
-import {IInventoryItem} from "../../types/inventory";
+import { IInventoryItem, WeaponAmmo } from '../../types/inventory';
 import styles from "./styles.module.css";
 
 type InventoryItemProps = {
@@ -76,10 +76,10 @@ const InventoryItem: React.FC<InventoryItemProps> = memo(({
         return `${amount} ${item.label} ${extraLabel} ${expiration}`
     }
 
-    const createInteractAction = (action: string) => {
+    const createInteractAction = (action: string, shortcut?: number) => {
         return () => {
             setContextData({...contextData, visible: false});
-            interactAction(action, item)
+            interactAction(action, item, shortcut)
         };
     };
 
@@ -98,6 +98,10 @@ const InventoryItem: React.FC<InventoryItemProps> = memo(({
                     <br/>
                     <span>Date limite : {new Date(item.metadata['expiration']).toLocaleString('fr-FR', {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"})}</span>
                 </>}
+                {WeaponAmmo[item.name] && <>
+                    <br/>
+                    <span>Munition : {WeaponAmmo[item.name]}</span>
+                </>}
             </span>}
 
             {contextMenu && (
@@ -107,9 +111,40 @@ const InventoryItem: React.FC<InventoryItemProps> = memo(({
                         {item && (item.useable || item.type === 'weapon') && <li className={styles.optionListItem} onClick={createInteractAction('useItem')}>
                             {item.type === 'weapon' ? 'Équiper' : 'Utiliser'}
                         </li>}
-                        {item && <li className={styles.optionListItem} onClick={createInteractAction('giveItem')}>
-                            Donner
-                        </li>}
+                        {item && (
+                            <>
+                                <li className={styles.optionListItem} onClick={createInteractAction('giveItem')}>
+                                    Donner
+                                </li>
+                                {item.type === 'weapon' && (
+                                    <>
+                                        <li className={styles.optionListItem} onClick={createInteractAction('setItemUsage', 1)}>
+                                            Définir comme arme principale
+                                        </li>
+                                        <li className={styles.optionListItem} onClick={createInteractAction('setItemUsage', 2)}>
+                                            Définir comme arme secondaire
+                                        </li>
+                                    </>
+                                )}
+                                {item.type !== 'weapon' && (
+                                    <>
+                                        <li className={styles.optionListItem}>
+                                            Raccourci d'utilisation
+                                            <div>
+                                                {Array(8).fill(1).map(function (x, i) {
+                                                    const shortcut = i+3 === 10 ? 0 : i+3
+                                                    return (
+                                                        <p className={styles.optionListOption} onClick={createInteractAction('setItemUsage', shortcut)}>
+                                                            {shortcut}
+                                                        </p>
+                                                    );
+                                                })}
+                                            </div>
+                                        </li>
+                                    </>
+                                )}
+                            </>
+                        )}
                         {money ? (<>
                             <li className={styles.optionListItem} onClick={createInteractAction('giveMoney')}>
                                 Donner en propre

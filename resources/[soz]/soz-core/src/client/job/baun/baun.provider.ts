@@ -5,7 +5,7 @@ import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { BaunCraftProcess, baunCraftProcesses, BaunRecipe } from '../../../shared/job/baun';
 import { MenuType } from '../../../shared/nui/menu';
 import { BlipFactory } from '../../blip';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';

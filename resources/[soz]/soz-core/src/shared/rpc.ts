@@ -40,4 +40,12 @@ export enum RpcEvent {
     VEHICLE_HAS_KEY = 'soz-core:vehicle:has-key',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
+
+    INVENTORY_GET_ITEM_BY_SHORTCUT = 'soz-core:inventory:get-item-by-shortcut',
+
+    WEAPON_USE_AMMO = 'soz-core:server:weapon:useAmmo',
+    WEAPON_SET_LABEL = 'soz-core:server:weapon:setLabel',
+    WEAPON_REPAIR = 'soz-core:server:weapon:repair',
+    WEAPON_SET_TINT = 'soz-core:server:weapon:setTint',
+    WEAPON_SET_ATTACHMENTS = 'soz-core:server:weapon:setAttachments',
 }

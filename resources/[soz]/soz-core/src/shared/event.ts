@@ -141,6 +141,11 @@ export enum ServerEvent {
     HALLOWEEN2022_HUNT = 'halloween2022:server:hunt',
     LSMC_HALLOWEEN_LOOT_PLAYER = 'lsmc:halloween:lootPlayer',
     VEHICLE_FREE_JOB_SPAWN = 'soz-core:server:vehicle:free-job-spawn',
+
+    INVENTORY_USE_ITEM = 'inventory:server:UseItemSlot',
+    INVENTORY_SET_ITEM_SHORTCUT = 'soz-core:server:inventory:set-item-usage',
+
+    WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
 }
 
 export enum ClientEvent {
@@ -156,6 +161,9 @@ export enum ClientEvent {
     PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
+    ADMIN_NOCLIP_ENABLED = 'soz-core:client:admin:noclip:enabled',
+    ADMIN_NOCLIP_DISABLED = 'soz-core:client:admin:noclip:disabled',
+
     FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
     FFS_EXIT_CLOTHING_SHOP = 'soz-core:client:job:ffs:exit-clothing-shop',
 
@@ -163,6 +171,8 @@ export enum ClientEvent {
 
     IDENTITY_HIDE = 'soz-identity:client:hide',
     ITEM_USE = 'soz-core:client:item:use',
+
+    PLAYER_ON_DEATH = 'ems:client:onDeath',
 
     JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
     JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
@@ -213,6 +223,10 @@ export enum ClientEvent {
     VEHICLE_ROUTE_EJECTION = 'soz-core:client:vehicle:route-ejection',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
+
+    WEAPON_USE_WEAPON = 'soz-core:client:weapon:use-weapon',
+    WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
+    WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
 }
 
 export enum GameEvent {
@@ -243,6 +257,7 @@ export enum NuiEvent {
     AdminMenuPlayerHandleTeleportOption = 'soz-core:client:admin:handle-teleport-option',
     AdminMenuPlayerHandleVocalOption = 'soz-core:client:admin:handle-vocal-option',
     AdminMenuPlayerHandleResetHalloween = 'soz-core:client:admin:handle-reset-halloween',
+    AdminMenuPlayerHandleOpenGunSmith = 'soz-core:client:admin:handle-open-gunsmith',
     AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
     AdminSetGodMode = 'soz-core:client:admin:set-god-mode',
     AdminSetJob = 'soz-core:client:admin:set-job',
@@ -323,4 +338,9 @@ export enum NuiEvent {
     VehicleGarageStore = 'soz-core:client:vehicle:garage:store',
     VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
+
+    GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
+    GunSmithPreviewTint = 'soz-core:client:job:gunsmith:preview-tint',
+    GunSmithPreviewAttachment = 'soz-core:client:job:gunsmith:preview-attachment',
+    GunSmithApplyConfiguration = 'soz-core:client:job:gunsmith:apply-configuration',
 }

@@ -3,7 +3,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 
 @Provider()

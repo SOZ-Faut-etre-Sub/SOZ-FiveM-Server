@@ -3,9 +3,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { CocktailItem, DrinkItem, FoodItem, InventoryItem, LiquorItem } from '../../shared/item';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
-import { InventoryManager } from './inventory.manager';
 import { ItemService } from './item.service';
 
 const INTOXICATED_MALUS = -5;

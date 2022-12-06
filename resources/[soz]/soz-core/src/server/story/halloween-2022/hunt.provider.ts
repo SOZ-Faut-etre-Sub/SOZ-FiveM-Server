@@ -6,7 +6,7 @@ import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { doLooting, Loot } from '../../../shared/loot';
 import { Vector3 } from '../../../shared/polyzone/vector';
 import { PrismaService } from '../../database/prisma.service';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerMoneyService } from '../../player/player.money.service';
 import { PlayerService } from '../../player/player.service';

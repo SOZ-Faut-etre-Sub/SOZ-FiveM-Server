@@ -36,6 +36,7 @@ local function OnDeath()
 
             TriggerEvent("ems:client:onDeath")
             TriggerServerEvent("ems:server:onDeath")
+            LocalPlayer.state:set("inv_busy", false, true)
 
             local ReasonMort = exports["soz-hud"]:Input("Raison du coma :", 200)
             TriggerServerEvent("lsmc:server:SetMort", ReasonMort)

@@ -4,7 +4,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { FfsConfig, Process } from '../../../shared/job/ffs';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';

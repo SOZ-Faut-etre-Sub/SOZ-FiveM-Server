@@ -4,7 +4,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { healthLevelToLabel, stressLevelToLabel } from '../../../shared/health';
 import { PlayerHealthBook } from '../../../shared/player';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';

@@ -12,6 +12,7 @@ import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
 import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
+import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
 import { BossShopMenu } from '../Shop/BossShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
@@ -142,6 +143,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.BossShop}/*`} element={<BossShopMenu data={menuData} />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />
+            <Route path={`/${MenuType.GunSmith}/*`} element={<MenuGunSmith data={menuData} />} />
             <Route path={`/${MenuType.Vehicle}/*`} element={<MenuVehicle data={menuData} />} />
             <Route path={`/${MenuType.VehicleAuction}/*`} element={<MenuVehicleAuction data={menuData} />} />
             <Route path={`/${MenuType.VehicleCustom}/*`} element={<MenuVehicleCustom data={menuData} />} />

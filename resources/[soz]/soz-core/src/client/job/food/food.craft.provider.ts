@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { FoodConfig, FoodCraftProcess } from '../../../shared/job/food';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory, TargetOptions } from '../../target/target.factory';

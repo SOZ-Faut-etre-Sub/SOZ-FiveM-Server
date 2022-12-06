@@ -5,6 +5,7 @@ import { BossShopMenu } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
 import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
+import { WeaponsMenuData } from '../weapons/weapon';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -46,6 +47,7 @@ export enum MenuType {
     VehicleCustom = 'vehicle_custom',
     VehicleDealership = 'vehicle_dealership',
     Wardrobe = 'wardrobe',
+    GunSmith = 'gunsmith',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -67,4 +69,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.VehicleCustom]: VehicleCustomMenuData;
     [MenuType.VehicleDealership]: VehicleDealershipMenuData;
     [MenuType.Wardrobe]: WardrobeMenuData;
+    [MenuType.GunSmith]: WeaponsMenuData;
 }

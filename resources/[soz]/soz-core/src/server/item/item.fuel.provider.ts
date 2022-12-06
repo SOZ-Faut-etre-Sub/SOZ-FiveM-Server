@@ -3,12 +3,12 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
 import { CommonItem, InventoryItem } from '../../shared/item';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
-import { InventoryManager } from './inventory.manager';
 import { ItemService } from './item.service';
 
 export const JERRYCAN_FUEL_AMOUNT = 30;

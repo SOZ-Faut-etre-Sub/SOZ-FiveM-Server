@@ -8,7 +8,7 @@ import { Monitor } from '../../../shared/monitor';
 import { NamedZone } from '../../../shared/polyzone/box.zone';
 import { BankService } from '../../bank/bank.service';
 import { FieldProvider } from '../../farm/field.provider';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
