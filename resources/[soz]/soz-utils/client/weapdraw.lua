@@ -139,6 +139,7 @@ CreateThread(function()
                 if CheckWeapon(newWeap) then
                     SetCurrentPedWeapon(ped, currWeapon, true)
                     if holstered then
+                        LocalPlayer.state:set("weapon_animation", true, true);
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             -- TaskPlayAnim(ped, "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
                             canFire = false
@@ -172,7 +173,9 @@ CreateThread(function()
                             holstered = false
                             canFire = true
                         end
+                        LocalPlayer.state:set("weapon_animation", false, true);
                     elseif newWeap ~= currWeapon and CheckWeapon(currWeapon) then
+                        LocalPlayer.state:set("weapon_animation", true, true);
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             canFire = false
 
@@ -220,7 +223,9 @@ CreateThread(function()
                             holstered = false
                             canFire = true
                         end
+                        LocalPlayer.state:set("weapon_animation", false, true);
                     else
+                        LocalPlayer.state:set("weapon_animation", true, true);
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
                             currentHoldster = GetPedDrawableVariation(ped, 7)
@@ -254,8 +259,10 @@ CreateThread(function()
                             holstered = false
                             canFire = true
                         end
+                        LocalPlayer.state:set("weapon_animation", false, true);
                     end
                 elseif newWeap == GetHashKey("WEAPON_UNARMED") then
+                    LocalPlayer.state:set("weapon_animation", true, true);
                     if not holstered and CheckWeapon(currWeapon) then
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             canFire = false
@@ -290,6 +297,7 @@ CreateThread(function()
                         canFire = true
                         currWeapon = newWeap
                     end
+                    LocalPlayer.state:set("weapon_animation", false, true);
                 end
             end
         else

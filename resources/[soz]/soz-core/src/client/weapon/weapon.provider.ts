@@ -3,11 +3,10 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
-import { WeaponAmmo, WeaponName } from '../../shared/weapons/weapon';
+import { GlobalWeaponConfig, WeaponName } from '../../shared/weapons/weapon';
 import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
@@ -67,7 +66,8 @@ export class WeaponProvider {
         const weapon = await emitRpc<InventoryItem | null>(
             RpcEvent.WEAPON_USE_AMMO,
             this.weapon.getCurrentWeapon().slot,
-            ammoName
+            ammoName,
+            this.weapon.getMaxAmmoInClip()
         );
 
         if (!weapon) {
@@ -75,10 +75,15 @@ export class WeaponProvider {
             return;
         }
 
+        const player = PlayerPedId();
+        const weaponHash = GetHashKey(weapon.name);
+
+        const isFirstClip = GetPedAmmoTypeFromWeapon(player, weaponHash) <= this.weapon.getMaxAmmoInClip();
+
         await this.progressService.progress(
             'weapon_reload',
             "S'équipe d'un chargeur",
-            weapon.metadata.ammo <= WeaponAmmo[ammoName] ? 8000 : 2000,
+            isFirstClip ? 8000 : 2000,
             {},
             {
                 canCancel: false,
@@ -92,6 +97,10 @@ export class WeaponProvider {
             await this.weapon.set(weapon);
         }
         LocalPlayer.state.set('inv_busy', false, true);
+
+        if (weapon.metadata.ammo < this.weapon.getMaxAmmoInClip() * GlobalWeaponConfig.MaxAmmoRefill) {
+            await this.onUseAmmo(ammoName);
+        }
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -155,12 +164,15 @@ export class WeaponProvider {
             await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
+        if (LocalPlayer.state.weapon_animation === true) {
+            return;
+        }
+
         if (this.weapon.getCurrentWeapon()) {
             const hash = GetHashKey(this.weapon.getCurrentWeapon().name);
             let [, weaponHash] = GetCurrentPedWeapon(ped, true);
 
             if (weaponHash === GetHashKey('WEAPON_UNARMED')) {
-                await wait(5000); // wait animations
                 const [, h] = GetCurrentPedWeapon(ped, true);
                 weaponHash = h;
             }

@@ -51,6 +51,17 @@ export class WeaponService {
         RemoveAllPedWeapons(player, true);
     }
 
+    getMaxAmmoInClip(): number {
+        if (!this.currentWeapon) {
+            return 0;
+        }
+
+        const player = PlayerPedId();
+        const weaponHash = GetSelectedPedWeapon(player);
+
+        return GetMaxAmmoInClip(player, weaponHash, true);
+    }
+
     async recoil() {
         if (!this.currentWeapon) {
             return;
