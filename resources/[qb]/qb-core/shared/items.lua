@@ -721,6 +721,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Fusil d\'assaut de qualité militaire.'
     },
+    ['weapon_heavyrifle'] = {
+        ['name'] = 'weapon_heavyrifle',
+        ['label'] = 'Fusil lourd',
+        ['weight'] = 4000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_RIFLE',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Fusil d\'assaut lourd de qualité.'
+    },
 
     -- Light Machine Guns
     ['weapon_mg'] = {
@@ -825,6 +835,16 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Un fusil à lunette.'
     },
+    ['weapon_precisionrifle'] = {
+        ['name'] = 'weapon_precisionrifle',
+        ['label'] = 'Fusil de précision',
+        ['weight'] = 4500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_SNIPER',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Un fusil à lunette.'
+    },
 
     -- Heavy Weapons
     ['weapon_rpg'] = {
@@ -916,6 +936,16 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = true,
         ['description'] = 'Un minigun futuriste, tirant des lasers.'
+    },
+    ['weapon_emplauncher'] = {
+        ['name'] = 'weapon_emplauncher',
+        ['label'] = 'Lanceur EMP',
+        ['weight'] = 6000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_FLARE',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['description'] = 'Un lance-grenades dans un format très compacté.'
     },
 
     -- Throwables
@@ -1061,7 +1091,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour pistolets.'
@@ -1072,7 +1102,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour fusils automatiques.'
@@ -1083,7 +1113,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour mitraillettes légères.'
@@ -1094,7 +1124,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour fusils à pompe.'
@@ -1105,7 +1135,7 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour mitrailleuses lourdes.'
@@ -1116,10 +1146,187 @@ QBShared.Items = {
         ['weight'] = 500,
         ['type'] = 'weapon_ammo',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Munitions pour fusils de précision.'
+    },
+
+    ['ammo_01'] = {
+        ['name'] = 'ammo_01',
+        ['label'] = '9x19 AP',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_02'] = {
+        ['name'] = 'ammo_02',
+        ['label'] = '.357 Magnum',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_03'] = {
+        ['name'] = 'ammo_03',
+        ['label'] = 'Flair',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_04'] = {
+        ['name'] = 'ammo_04',
+        ['label'] = '5.7x28 SB193',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_05'] = {
+        ['name'] = 'ammo_05',
+        ['label'] = '7.62x39 BP',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_06'] = {
+        ['name'] = 'ammo_06',
+        ['label'] = '5.56x45 M995',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_07'] = {
+        ['name'] = 'ammo_07',
+        ['label'] = '7.62x51 M62',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_08'] = {
+        ['name'] = 'ammo_08',
+        ['label'] = '12/70 Buckshot',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_09'] = {
+        ['name'] = 'ammo_09',
+        ['label'] = 'Lead Bullet',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_10'] = {
+        ['name'] = 'ammo_10',
+        ['label'] = '12,7x108 BZT-44M',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_11'] = {
+        ['name'] = 'ammo_11',
+        ['label'] = '85mm PG-7',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_12'] = {
+        ['name'] = 'ammo_12',
+        ['label'] = '40x46mm M381',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_13'] = {
+        ['name'] = 'ammo_13',
+        ['label'] = '85mn Artifice',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_14'] = {
+        ['name'] = 'ammo_14',
+        ['label'] = 'Munition Alien',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_15'] = {
+        ['name'] = 'ammo_15',
+        ['label'] = 'AIM-9X',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
+    },
+    ['ammo_16'] = {
+        ['name'] = 'ammo_16',
+        ['label'] = '.50 BMG',
+        ['weight'] = 500,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = ''
     },
 
     -- Card ITEMS

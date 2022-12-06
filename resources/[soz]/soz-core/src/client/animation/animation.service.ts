@@ -4,7 +4,7 @@ import { Inject, Injectable } from '../../core/decorators/injectable';
 import { wait, waitUntil } from '../../core/utils';
 import { Vector4 } from '../../shared/polyzone/vector';
 import { AnimationOptions, animationOptionsToFlags } from '../../shared/progress';
-import { Weapons } from '../../shared/weapon';
+import { WeaponName } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 
 export type Animation = {
@@ -181,7 +181,7 @@ export class AnimationService {
             const ped = PlayerPedId();
 
             if (options.reset_weapon) {
-                SetCurrentPedWeapon(ped, GetHashKey(Weapons.UNARMED), true);
+                SetCurrentPedWeapon(ped, GetHashKey(WeaponName.UNARMED), true);
             }
 
             this.currentAnimation.resolve(cancelled);

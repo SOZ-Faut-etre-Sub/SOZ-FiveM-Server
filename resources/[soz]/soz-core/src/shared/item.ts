@@ -1,3 +1,6 @@
+import { WeaponComponentType } from './weapons/attachment';
+import { WeaponMk2TintColor, WeaponTintColor } from './weapons/tint';
+
 export type ItemType =
     | 'item'
     | 'weapon'
@@ -135,19 +138,18 @@ export type CocktailItem = BaseItem & {
     animation?: AnimationItem;
 };
 
-export type WeaponAttachment = {
-    label: string;
-    component: string;
-};
-
 export type InventoryItemMetadata = {
     label?: string;
     type?: string;
-    serial?: string;
-    ammo?: number;
-    attachments?: WeaponAttachment[];
     expiration?: string;
     player?: number;
+    // Weapom
+    serial?: string;
+    health?: number;
+    maxHealth?: number;
+    ammo?: number;
+    tint?: WeaponTintColor | WeaponMk2TintColor;
+    attachments?: Record<WeaponComponentType, string | null>;
 };
 
 export type InventoryItem = {

@@ -5,7 +5,7 @@ import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { StonkConfig } from '../../../shared/job/stonk';
 import { NamedZone } from '../../../shared/polyzone/box.zone';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';

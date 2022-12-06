@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
-import { InventoryManager } from '../item/inventory.manager';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';

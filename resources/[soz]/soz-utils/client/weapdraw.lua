@@ -1,77 +1,98 @@
 local weapons = {
-    "WEAPON_KNIFE",
-    "WEAPON_NIGHTSTICK",
-    "WEAPON_BREAD",
-    "WEAPON_FLASHLIGHT",
-    "WEAPON_HAMMER",
-    "WEAPON_BAT",
-    "WEAPON_GOLFCLUB",
-    "WEAPON_CROWBAR",
-    "WEAPON_KNUCKLE",
-    "WEAPON_BOTTLE",
-    "WEAPON_DAGGER",
-    "WEAPON_HATCHET",
-    "WEAPON_MACHETE",
-    "WEAPON_SWITCHBLADE",
-    "WEAPON_BATTLEAXE",
-    "WEAPON_POOLCUE",
-    "WEAPON_WRENCH",
-    "WEAPON_PISTOL",
-    "WEAPON_PISTOL_MK2",
-    "WEAPON_COMBATPISTOL",
+    "WEAPON_ADVANCEDRIFLE",
     "WEAPON_APPISTOL",
+    "WEAPON_ASSAULTRIFLE",
+    "WEAPON_ASSAULTRIFLE_MK2",
+    "WEAPON_ASSAULTSHOTGUN",
+    "WEAPON_ASSAULTSMG",
+    "WEAPON_AUTOSHOTGUN",
+    "WEAPON_BAT",
+    "WEAPON_BATTLEAXE",
+    "WEAPON_BOTTLE",
+    "WEAPON_BREAD",
+    "WEAPON_BULLPUPRIFLE",
+    "WEAPON_BULLPUPRIFLE_MK2",
+    "WEAPON_BULLPUPSHOTGUN",
+    "WEAPON_BZGAS",
+    "WEAPON_CARBINERIFLE",
+    "WEAPON_CARBINERIFLE_MK2",
+    "WEAPON_CERAMICPISTOL",
+    "WEAPON_COMBATMG",
+    "WEAPON_COMBATMG_MK2",
+    "WEAPON_COMBATPDW",
+    "WEAPON_COMBATPISTOL",
+    "WEAPON_COMBATSHOTGUN",
+    "WEAPON_COMPACTLAUNCHER",
+    "WEAPON_COMPACTRIFLE",
+    "WEAPON_CROWBAR",
+    "WEAPON_DAGGER",
+    "WEAPON_DBSHOTGUN",
+    "WEAPON_DIGISCANNER",
+    "WEAPON_DOUBLEACTION",
+    "WEAPON_EMPLAUNCHER",
+    "WEAPON_FIREWORK",
+    "WEAPON_FLAREGUN",
+    "WEAPON_FLASHLIGHT",
+    "WEAPON_GADGETPISTOL",
+    "WEAPON_GOLFCLUB",
+    "WEAPON_GRENADE",
+    "WEAPON_GRENADELAUNCHER",
+    "WEAPON_GRENADELAUNCHER_SMOKE",
+    "WEAPON_GUSENBERG",
+    "WEAPON_HAMMER",
+    "WEAPON_HATCHET",
+    "WEAPON_HEAVYPISTOL",
+    "WEAPON_HEAVYRIFLE",
+    "WEAPON_HEAVYSHOTGUN",
+    "WEAPON_HEAVYSNIPER",
+    "WEAPON_HEAVYSNIPER_MK2",
+    "WEAPON_HOMINGLAUNCHER",
+    "WEAPON_KNIFE",
+    "WEAPON_KNUCKLE",
+    "WEAPON_MACHETE",
+    "WEAPON_MACHINEPISTOL",
+    "WEAPON_MARKSMANPISTOL",
+    "WEAPON_MARKSMANRIFLE",
+    "WEAPON_MARKSMANRIFLE_MK2",
+    "WEAPON_MG",
+    "WEAPON_MICROSMG",
+    "WEAPON_MILITARYRIFLE",
+    "WEAPON_MINIGUN",
+    "WEAPON_MINISMG",
+    "WEAPON_MOLOTOV",
+    "WEAPON_MUSKET",
+    "WEAPON_NAVYREVOLVER",
+    "WEAPON_NIGHTSTICK",
+    "WEAPON_PIPEBOMB",
+    "WEAPON_PISTOL",
     "WEAPON_PISTOL50",
+    "WEAPON_PISTOL_MK2",
+    "WEAPON_POOLCUE",
+    "WEAPON_PRECISIONRIFLE",
+    "WEAPON_PROXMINE",
+    "WEAPON_PUMPSHOTGUN",
+    "WEAPON_PUMPSHOTGUN_MK2",
+    "WEAPON_RAILGUN",
+    "WEAPON_RAYCARBINE",
+    "WEAPON_RAYPISTOL",
     "WEAPON_REVOLVER",
     "WEAPON_REVOLVER_MK2",
-    "WEAPON_SNSPISTOL",
-    "WEAPON_HEAVYPISTOL",
-    "WEAPON_VINTAGEPISTOL",
-    "WEAPON_MICROSMG",
-    "WEAPON_SMG",
-    "WEAPON_ASSAULTSMG",
-    "WEAPON_MINISMG",
-    "WEAPON_MACHINEPISTOL",
-    "WEAPON_COMBATPDW",
-    "WEAPON_PUMPSHOTGUN",
-    "WEAPON_SAWNOFFSHOTGUN",
-    "WEAPON_ASSAULTSHOTGUN",
-    "WEAPON_BULLPUPSHOTGUN",
-    "WEAPON_HEAVYSHOTGUN",
-    "WEAPON_ASSAULTRIFLE",
-    "WEAPON_CARBINERIFLE",
-    "WEAPON_ADVANCEDRIFLE",
-    "WEAPON_SPECIALCARBINE",
-    "WEAPON_BULLPUPRIFLE",
-    "WEAPON_COMPACTRIFLE",
-    "WEAPON_MG",
-    "WEAPON_COMBATMG",
-    "WEAPON_GUSENBERG",
-    "WEAPON_SNIPERRIFLE",
-    "WEAPON_HEAVYSNIPER",
-    "WEAPON_MARKSMANRIFLE",
-    "WEAPON_GRENADELAUNCHER",
     "WEAPON_RPG",
-    "WEAPON_STINGER",
-    "WEAPON_MINIGUN",
-    "WEAPON_GRENADE",
-    "WEAPON_STICKYBOMB",
+    "WEAPON_SAWNOFFSHOTGUN",
+    "WEAPON_SMG",
+    "WEAPON_SMG_MK2",
     "WEAPON_SMOKEGRENADE",
-    "WEAPON_BZGAS",
-    "WEAPON_MOLOTOV",
-    "WEAPON_DIGISCANNER",
-    "WEAPON_FIREWORK",
-    "WEAPON_MUSKET",
+    "WEAPON_SNIPERRIFLE",
+    "WEAPON_SNSPISTOL",
+    "WEAPON_SNSPISTOL_MK2",
+    "WEAPON_SPECIALCARBINE",
+    "WEAPON_SPECIALCARBINE_MK2",
+    "WEAPON_STICKYBOMB",
+    "WEAPON_STINGER",
     "WEAPON_STUNGUN",
-    "WEAPON_HOMINGLAUNCHER",
-    "WEAPON_PROXMINE",
-    "WEAPON_FLAREGUN",
-    "WEAPON_MARKSMANPISTOL",
-    "WEAPON_RAILGUN",
-    "WEAPON_DBSHOTGUN",
-    "WEAPON_AUTOSHOTGUN",
-    "WEAPON_COMPACTLAUNCHER",
-    "WEAPON_PIPEBOMB",
-    "WEAPON_DOUBLEACTION",
+    "WEAPON_SWITCHBLADE",
+    "WEAPON_VINTAGEPISTOL",
+    "WEAPON_WRENCH",
 }
 
 -- Wheapons that require the Police holster animation
@@ -118,6 +139,7 @@ CreateThread(function()
                 if CheckWeapon(newWeap) then
                     SetCurrentPedWeapon(ped, currWeapon, true)
                     if holstered then
+                        LocalPlayer.state:set("weapon_animation", true, true);
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             -- TaskPlayAnim(ped, "rcmjosh4", "josh_leadout_cop2", 8.0, 2.0, -1, 48, 10, 0, 0, 0 )
                             canFire = false
@@ -151,7 +173,9 @@ CreateThread(function()
                             holstered = false
                             canFire = true
                         end
+                        LocalPlayer.state:set("weapon_animation", false, true);
                     elseif newWeap ~= currWeapon and CheckWeapon(currWeapon) then
+                        LocalPlayer.state:set("weapon_animation", true, true);
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             canFire = false
 
@@ -199,7 +223,9 @@ CreateThread(function()
                             holstered = false
                             canFire = true
                         end
+                        LocalPlayer.state:set("weapon_animation", false, true);
                     else
+                        LocalPlayer.state:set("weapon_animation", true, true);
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
                             currentHoldster = GetPedDrawableVariation(ped, 7)
@@ -233,8 +259,10 @@ CreateThread(function()
                             holstered = false
                             canFire = true
                         end
+                        LocalPlayer.state:set("weapon_animation", false, true);
                     end
                 elseif newWeap == GetHashKey("WEAPON_UNARMED") then
+                    LocalPlayer.state:set("weapon_animation", true, true);
                     if not holstered and CheckWeapon(currWeapon) then
                         if QBCore.Functions.GetPlayerData().job.id == "police" then
                             canFire = false
@@ -269,6 +297,7 @@ CreateThread(function()
                         canFire = true
                         currWeapon = newWeap
                     end
+                    LocalPlayer.state:set("weapon_animation", false, true);
                 end
             end
         else

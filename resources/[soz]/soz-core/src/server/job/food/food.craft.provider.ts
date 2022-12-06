@@ -5,7 +5,7 @@ import { ServerEvent } from '../../../shared/event';
 import { FoodCraftProcess } from '../../../shared/job/food';
 import { Monitor } from '../../../shared/monitor';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';

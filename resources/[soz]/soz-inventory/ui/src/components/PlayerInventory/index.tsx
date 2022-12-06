@@ -16,13 +16,13 @@ const PlayerInventory = () => {
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
     const interactAction = useCallback(
-        (action: string, item: IInventoryItem) => {
+        (action: string, item: IInventoryItem, shortcut: number) => {
             fetch(`https://soz-inventory/player/${action}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8",
                 },
-                body: JSON.stringify(item),
+                body: JSON.stringify({ ...item, shortcut }),
             }).then(() => {
                 setDisplay(false);
             });

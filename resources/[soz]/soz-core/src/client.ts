@@ -6,6 +6,7 @@ import { AfkModule } from './client/afk/afk.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { FactoryModule } from './client/factory/factory.module';
+import { InventoryModule } from './client/inventory/inventory.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
@@ -23,6 +24,7 @@ import { StoryModule } from './client/story/story.module';
 import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
 import { VehicleModule } from './client/vehicle/vehicle.module';
+import { WeaponModule } from './client/weapon/weapon.module';
 import { WeatherModule } from './client/weather/weather.module';
 import { WorldModule } from './client/world/world.module';
 import { ZEventModule } from './client/zevent/zevent.module';
@@ -57,7 +59,9 @@ async function bootstrap() {
         AfkModule,
         VehicleModule,
         FactoryModule,
-        OilModule
+        OilModule,
+        WeaponModule,
+        InventoryModule
     );
 
     await app.stop();

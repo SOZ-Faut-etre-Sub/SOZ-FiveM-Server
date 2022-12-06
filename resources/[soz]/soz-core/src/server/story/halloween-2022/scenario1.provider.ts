@@ -5,7 +5,7 @@ import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { RpcEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario1 } from '../../../shared/story/halloween-2022/scenario1';
 import { Dialog, ScenarioState } from '../../../shared/story/story';
-import { InventoryManager } from '../../item/inventory.manager';
+import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 

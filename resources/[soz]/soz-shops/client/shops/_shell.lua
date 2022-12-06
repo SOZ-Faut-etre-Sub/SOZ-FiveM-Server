@@ -17,9 +17,24 @@ function ShopShell:GetPedAction()
         blackoutGlobal = true,
     }
 end
+function ShopShell:GunSmith()
+    return {
+        event = "soz-core:client:weapon:open-gunsmith",
+        icon = "fas fa-store",
+        label = "Accéder au GunSmith",
+        canInteract = function()
+            return false -- Disable for now
+            -- return self.brand == "ammunation" and currentShop ~= nil and currentShopBrand == self.brand
+        end,
+        blackoutGlobal = true,
+    }
+end
 
 function ShopShell:AddTargetModel()
-    exports["qb-target"]:AddTargetModel({self.ped}, {options = {self:GetPedAction(), self.target}, distance = 2.5})
+    exports["qb-target"]:AddTargetModel({self.ped}, {
+        options = {self:GetPedAction(), self:GunSmith(), self.target},
+        distance = 2.5,
+    })
 end
 
 function ShopShell:RemoveTargetModel()
