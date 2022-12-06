@@ -5,7 +5,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
-import { GlobalWeaponConfig, WeaponAmmo, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
+import { GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -44,7 +44,12 @@ export class WeaponProvider {
     }
 
     @Rpc(RpcEvent.WEAPON_USE_AMMO)
-    async onUseAmmo(source: number, weaponSlot: number, ammoName: string): Promise<InventoryItem | null> {
+    async onUseAmmo(
+        source: number,
+        weaponSlot: number,
+        ammoName: string,
+        ammoInClip: number
+    ): Promise<InventoryItem | null> {
         const weapon = this.inventoryManager.getSlot(source, weaponSlot);
         if (!weapon) {
             return;
@@ -60,7 +65,7 @@ export class WeaponProvider {
             return;
         }
 
-        if (weapon.metadata.ammo + WeaponAmmo[ammo.name] > WeaponAmmo[ammo.name] * GlobalWeaponConfig.MaxAmmoRefill) {
+        if (weapon.metadata.ammo + ammoInClip > ammoInClip * GlobalWeaponConfig.MaxAmmoRefill) {
             this.notifier.notify(source, 'Vous avez déjà assez de munitions...', 'info');
             return;
         }
@@ -70,7 +75,7 @@ export class WeaponProvider {
         }
 
         this.inventoryManager.updateMetadata(source, weaponSlot, {
-            ammo: (weapon.metadata.ammo || 0) + WeaponAmmo[ammo.name],
+            ammo: (weapon.metadata.ammo || 0) + ammoInClip,
         });
         return this.inventoryManager.getSlot(source, weaponSlot);
     }

@@ -75,12 +75,7 @@ export class WeaponGunsmithProvider {
         }
 
         await this.weaponService.clear();
-        await this.weaponService.set(weapon);
-
-        const player = PlayerPedId();
-        const weaponHash = GetSelectedPedWeapon(player);
-
-        SetPedWeaponTintIndex(player, weaponHash, Number(tint));
+        await this.weaponService.set({ ...weapon, metadata: { ...weapon.metadata, tint: Number(tint) } });
     }
 
     // Attachment
