@@ -168,6 +168,8 @@ const MenuWeaponComponentSelect: FunctionComponent<{
     attachments: WeaponAttachment[];
     onUpdate?: (s) => void;
 }> = ({ onUpdate, label, type, weapon, attachments }) => {
+    const options = attachments.filter(a => a.type === type);
+
     return (
         <MenuItemSelect
             title={label}
@@ -179,16 +181,15 @@ const MenuWeaponComponentSelect: FunctionComponent<{
                 onUpdate?.(s => ({ ...s, attachments: { ...s.attachments, [type]: attachment } }));
             }}
             value={weapon.metadata?.attachments?.[type] ?? 0}
+            disabled={options.length === 0}
         >
             <MenuItemSelectOption value={null}>Défaut</MenuItemSelectOption>
 
-            {attachments
-                .filter(a => a.type === type)
-                .map((attachment, index) => (
-                    <MenuItemSelectOption key={index} value={attachment.component}>
-                        {attachment.label}
-                    </MenuItemSelectOption>
-                ))}
+            {options.map((attachment, index) => (
+                <MenuItemSelectOption key={index} value={attachment.component}>
+                    {attachment.label}
+                </MenuItemSelectOption>
+            ))}
         </MenuItemSelect>
     );
 };

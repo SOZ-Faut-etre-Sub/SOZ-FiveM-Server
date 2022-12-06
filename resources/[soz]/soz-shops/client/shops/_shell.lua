@@ -23,7 +23,8 @@ function ShopShell:GunSmith()
         icon = "fas fa-store",
         label = "Accéder au GunSmith",
         canInteract = function()
-            return self.brand == "ammunation" and currentShop ~= nil and currentShopBrand == self.brand
+            return false -- Disable for now
+            -- return self.brand == "ammunation" and currentShop ~= nil and currentShopBrand == self.brand
         end,
         blackoutGlobal = true,
     }

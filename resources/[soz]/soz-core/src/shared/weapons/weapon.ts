@@ -245,7 +245,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_PISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_PISTOL_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Silencieux', component: 'COMPONENT_AT_PI_SUPP', type: WeaponComponentType.Suppressor },
@@ -255,7 +254,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_PISTOL_MK2_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_PISTOL_MK2_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Viseur', component: 'COMPONENT_AT_PI_RAIL', type: WeaponComponentType.Scope },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH_02', type: WeaponComponentType.Flashlight },
@@ -266,7 +264,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.3,
         ammo: 'ammo_02',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_REVOLVER_MK2_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Holo', component: 'COMPONENT_AT_SIGHTS', type: WeaponComponentType.Scope },
             { label: 'Macro', component: 'COMPONENT_AT_SCOPE_MACRO_MK2', type: WeaponComponentType.Scope },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH', type: WeaponComponentType.Flashlight },
@@ -278,7 +275,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_COMBATPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_COMBATPISTOL_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Silencieux', component: 'COMPONENT_AT_PI_SUPP', type: WeaponComponentType.Suppressor },
@@ -288,7 +284,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_APPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_APPISTOL_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Silencieux', component: 'COMPONENT_AT_PI_SUPP', type: WeaponComponentType.Suppressor },
@@ -299,7 +294,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.3,
         ammo: 'ammo_02',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_PISTOL50_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_PISTOL50_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Silencieux', component: 'COMPONENT_AT_AR_SUPP_02', type: WeaponComponentType.Suppressor },
@@ -309,7 +303,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_SNSPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_SNSPISTOL_CLIP_02', type: WeaponComponentType.Clip },
         ],
     },
@@ -317,7 +310,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_HEAVYPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_HEAVYPISTOL_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Silencieux', component: 'COMPONENT_AT_PI_SUPP', type: WeaponComponentType.Suppressor },
@@ -327,7 +319,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_VINTAGEPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_VINTAGEPISTOL_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Silencieux', component: 'COMPONENT_AT_PI_SUPP', type: WeaponComponentType.Suppressor },
         ],
@@ -344,7 +335,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.3,
         ammo: 'ammo_02',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_REVOLVER_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'VIP', component: 'COMPONENT_REVOLVER_VARMOD_BOSS', type: WeaponComponentType.Skin },
             { label: 'Garde du corp', component: 'COMPONENT_REVOLVER_VARMOD_GOON', type: WeaponComponentType.Skin },
         ],
@@ -357,7 +347,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_SNSPISTOL_MK2_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_SNSPISTOL_MK2_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Viseur', component: 'COMPONENT_AT_PI_RAIL_02', type: WeaponComponentType.Scope },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH_03', type: WeaponComponentType.Flashlight },
@@ -385,7 +374,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_MICROSMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_MICROSMG_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_PI_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_MACRO', type: WeaponComponentType.Scope },
@@ -397,7 +385,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_01',
         drawPosition: { model: GetHashKey('w_sb_smg'), ...DrawPositions['SMG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_SMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_SMG_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Très grand chargeur', component: 'COMPONENT_SMG_CLIP_03', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
@@ -410,7 +397,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_04',
         drawPosition: { model: GetHashKey('w_sb_assaultsmg'), ...DrawPositions['SMG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_ASSAULTSMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_ASSAULTSMG_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_MACRO', type: WeaponComponentType.Scope },
@@ -423,7 +409,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_01',
         drawPosition: { model: GetHashKey('w_sb_pdw'), ...DrawPositions['SMG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_COMBATPDW_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_COMBATPDW_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Très grand chargeur', component: 'COMPONENT_COMBATPDW_CLIP_03', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
@@ -435,7 +420,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_04',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_SMG_MK2_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_SMG_MK2_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Holo', component: 'COMPONENT_AT_SIGHTS_SMG', type: WeaponComponentType.Scope },
@@ -448,7 +432,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_MACHINEPISTOL_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_MACHINEPISTOL_CLIP_02', type: WeaponComponentType.Clip },
             {
                 label: 'Très grand chargeur',
@@ -462,7 +445,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_MINISMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_MINISMG_CLIP_02', type: WeaponComponentType.Clip },
         ],
     },
@@ -471,7 +453,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_14',
         drawPosition: { model: GetHashKey('w_sb_assaultsmg'), ...DrawPositions['SMG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_ASSAULTSMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_ASSAULTSMG_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_MACRO', type: WeaponComponentType.Scope },
@@ -485,7 +466,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_05',
         drawPosition: { model: GetHashKey('w_ar_assaultrifle'), ...DrawPositions['AR'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_ASSAULTRIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_ASSAULTRIFLE_CLIP_02', type: WeaponComponentType.Clip },
             {
                 label: 'Très grand chargeur',
@@ -504,11 +484,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         drawPosition: { model: GetHashKey('w_ar_assaultriflemk2'), ...DrawPositions['AR'] },
         attachments: [
             {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_ASSAULTRIFLE_MK2_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
-            {
                 label: 'Grand chargeur',
                 component: 'COMPONENT_ASSAULTRIFLE_MK2_CLIP_02',
                 type: WeaponComponentType.Clip,
@@ -526,7 +501,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_carbinerifle'), ...DrawPositions['AR'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_CARBINERIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_CARBINERIFLE_CLIP_02', type: WeaponComponentType.Clip },
             {
                 label: 'Très grand chargeur',
@@ -545,11 +519,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         drawPosition: { model: GetHashKey('w_ar_carbineriflemk2'), ...DrawPositions['AR'] },
         attachments: [
             {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_CARBINERIFLE_MK2_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
-            {
                 label: 'Grand chargeur',
                 component: 'COMPONENT_CARBINERIFLE_MK2_CLIP_02',
                 type: WeaponComponentType.Clip,
@@ -567,7 +536,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_ar_advancedrifle'), ...DrawPositions['AR'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_ADVANCEDRIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_ADVANCEDRIFLE_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_SMALL', type: WeaponComponentType.Scope },
@@ -579,11 +547,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_specialcarbine'), ...DrawPositions['AR'] },
         attachments: [
-            {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_SPECIALCARBINE_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
             { label: 'Grand chargeur', component: 'COMPONENT_SPECIALCARBINE_CLIP_02', type: WeaponComponentType.Clip },
             {
                 label: 'Très grand chargeur',
@@ -601,7 +564,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_bullpuprifle'), ...DrawPositions['AR'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_BULLPUPRIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_BULLPUPRIFLE_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_SMALL', type: WeaponComponentType.Scope },
@@ -613,7 +575,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.4,
         ammo: 'ammo_06',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_COMPACTRIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_COMPACTRIFLE_CLIP_02', type: WeaponComponentType.Clip },
             {
                 label: 'Très grand chargeur',
@@ -627,11 +588,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_specialcarbinemk2'), ...DrawPositions['AR'] },
         attachments: [
-            {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_SPECIALCARBINE_MK2_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
             {
                 label: 'Grand chargeur',
                 component: 'COMPONENT_SPECIALCARBINE_MK2_CLIP_02',
@@ -650,11 +606,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_05',
         attachments: [
             {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_BULLPUPRIFLE_MK2_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
-            {
                 label: 'Grand chargeur',
                 component: 'COMPONENT_BULLPUPRIFLE_MK2_CLIP_02',
                 type: WeaponComponentType.Clip,
@@ -671,7 +622,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.4,
         ammo: 'ammo_07',
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_MILITARYRIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_MILITARYRIFLE_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_MEDIUM', type: WeaponComponentType.Scope },
@@ -689,7 +639,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_carbinerifle_reh'), ...DrawPositions['AR'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_TACTICALRIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_TACTICALRIFLE_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH_REH', type: WeaponComponentType.Flashlight },
             { label: 'Poignée', component: 'COMPONENT_AT_AR_AFGRIP', type: WeaponComponentType.Grip },
@@ -713,11 +662,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_08',
         drawPosition: { model: GetHashKey('w_sg_assaultshotgun'), ...DrawPositions['PUMP'] },
         attachments: [
-            {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_ASSAULTSHOTGUN_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
             { label: 'Grand chargeur', component: 'COMPONENT_ASSAULTSHOTGUN_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Silencieux', component: 'COMPONENT_AT_AR_SUPP', type: WeaponComponentType.Suppressor },
@@ -744,7 +688,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_08',
         drawPosition: { model: GetHashKey('w_sg_heavyshotgun'), ...DrawPositions['PUMP'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_HEAVYSHOTGUN_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_HEAVYSHOTGUN_CLIP_02', type: WeaponComponentType.Clip },
             {
                 label: 'Très grand chargeur',
@@ -793,7 +736,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_mg_mg'), ...DrawPositions['LMG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_MG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_MG_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_SMALL_02', type: WeaponComponentType.Scope },
         ],
@@ -803,7 +745,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_mg_combatmg'), ...DrawPositions['LMG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_COMBATMG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_COMBATMG_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_MEDIUM', type: WeaponComponentType.Scope },
             { label: 'Poignée', component: 'COMPONENT_AT_AR_AFGRIP', type: WeaponComponentType.Grip },
@@ -814,7 +755,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_sb_gusenberg'), ...DrawPositions['LMG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_GUSENBERG_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_GUSENBERG_CLIP_02', type: WeaponComponentType.Clip },
         ],
     },
@@ -823,7 +763,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_10',
         drawPosition: { model: GetHashKey('w_mg_combatmgmk2'), ...DrawPositions['LMG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_COMBATMG_MK2_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_COMBATMG_MK2_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Grip', component: 'COMPONENT_AT_AR_AFGRIP_02', type: WeaponComponentType.Grip },
             { label: 'Viseur', component: 'COMPONENT_AT_SIGHTS', type: WeaponComponentType.Scope },
@@ -837,20 +776,13 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.4,
         ammo: 'ammo_11',
         drawPosition: { model: GetHashKey('w_lr_rpg'), ...DrawPositions['RPG'] },
-        attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_RPG_CLIP_01', type: WeaponComponentType.Clip },
-        ],
+        attachments: [],
     },
     [WeaponName.GRENADELAUNCHER]: {
         recoil: 0.4,
         ammo: 'ammo_12',
         drawPosition: { model: GetHashKey('w_lr_grenadelauncher'), ...DrawPositions['RPG'] },
         attachments: [
-            {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_GRENADELAUNCHER_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Poignée', component: 'COMPONENT_AT_AR_AFGRIP', type: WeaponComponentType.Grip },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_SMALL', type: WeaponComponentType.Scope },
@@ -920,11 +852,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_16',
         drawPosition: { model: GetHashKey('w_sr_heavysnipermk2'), ...DrawPositions['RPG'] },
         attachments: [
-            {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_HEAVYSNIPER_MK2_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
             { label: 'Grand chargeur', component: 'COMPONENT_HEAVYSNIPER_MK2_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_LARGE_MK2', type: WeaponComponentType.Scope },
             { label: 'Viseur Avancé', component: 'COMPONENT_AT_SCOPE_MAX', type: WeaponComponentType.Scope },
@@ -938,7 +865,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_sr_marksmanrifle'), ...DrawPositions['RPG'] },
         attachments: [
-            { label: 'Chargeur de base', component: 'COMPONENT_MARKSMANRIFLE_CLIP_01', type: WeaponComponentType.Clip },
             { label: 'Grand chargeur', component: 'COMPONENT_MARKSMANRIFLE_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM', type: WeaponComponentType.Scope },
@@ -951,11 +877,6 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_sr_marksmanriflemk2'), ...DrawPositions['RPG'] },
         attachments: [
-            {
-                label: 'Chargeur de base',
-                component: 'COMPONENT_MARKSMANRIFLE_MK2_CLIP_01',
-                type: WeaponComponentType.Clip,
-            },
             {
                 label: 'Grand chargeur',
                 component: 'COMPONENT_MARKSMANRIFLE_MK2_CLIP_02',

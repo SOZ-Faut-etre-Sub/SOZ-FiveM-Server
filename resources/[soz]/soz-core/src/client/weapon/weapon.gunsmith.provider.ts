@@ -35,21 +35,32 @@ export class WeaponGunsmithProvider {
     async openGunsmith() {
         const weapons = Object.values(this.playerService.getPlayer().items).filter(item => item.type === 'weapon');
 
-        this.nuiMenu.openMenu(MenuType.GunSmith, {
-            weapons: weapons,
-            tints: weapons.map(weapon => {
-                return {
-                    slot: weapon.slot,
-                    tints: weapon.name.includes('mk2') ? WeaponMk2TintColorChoices : WeaponTintColorChoices,
-                };
-            }),
-            attachments: weapons.map(weapon => {
-                return {
-                    slot: weapon.slot,
-                    attachments: this.weaponService.getWeaponConfig(weapon.name)?.attachments ?? [],
-                };
-            }),
-        });
+        const coords = GetEntityCoords(PlayerPedId(), true);
+
+        this.nuiMenu.openMenu(
+            MenuType.GunSmith,
+            {
+                weapons: weapons,
+                tints: weapons.map(weapon => {
+                    return {
+                        slot: weapon.slot,
+                        tints: weapon.name.includes('mk2') ? WeaponMk2TintColorChoices : WeaponTintColorChoices,
+                    };
+                }),
+                attachments: weapons.map(weapon => {
+                    return {
+                        slot: weapon.slot,
+                        attachments: this.weaponService.getWeaponConfig(weapon.name)?.attachments ?? [],
+                    };
+                }),
+            },
+            {
+                position: {
+                    position: [coords[0], coords[1], coords[2]],
+                    distance: 5.0,
+                },
+            }
+        );
     }
 
     @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
