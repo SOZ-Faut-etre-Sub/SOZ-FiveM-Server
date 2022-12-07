@@ -9,6 +9,7 @@ import { RpcEvent } from '../../shared/rpc';
 import { WeaponAttachment } from '../../shared/weapons/attachment';
 import { WeaponMk2TintColorChoices, WeaponTintColorChoices } from '../../shared/weapons/tint';
 import { WeaponConfiguration } from '../../shared/weapons/weapon';
+import { AnimationService } from '../animation/animation.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
@@ -35,6 +36,9 @@ export class WeaponGunsmithProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     @OnEvent(ClientEvent.WEAPON_OPEN_GUNSMITH)
     async openGunsmith() {
@@ -73,7 +77,10 @@ export class WeaponGunsmithProvider {
             return;
         }
 
+        this.animationService.stop();
         await this.weaponService.clear();
+
+        LocalPlayer.state.set('weapon_animation', false, true);
 
         const weapon = this.weaponService.getCurrentWeapon();
         if (weapon) {
@@ -89,7 +96,12 @@ export class WeaponGunsmithProvider {
             return;
         }
 
-        if (!this.weaponService.getCurrentWeapon()) {
+        const previewWeapon = this.weaponService.getCurrentWeapon();
+        if (previewWeapon?.name !== weapon.name) {
+            await this.weaponService.clear();
+        }
+
+        if (!previewWeapon) {
             await this.weaponService.set(weapon);
         }
 
@@ -97,6 +109,8 @@ export class WeaponGunsmithProvider {
         const weaponHash = GetSelectedPedWeapon(player);
 
         SetPedWeaponTintIndex(player, weaponHash, Number(tint));
+
+        await this.setupAnimation();
     }
 
     // Attachment
@@ -115,7 +129,13 @@ export class WeaponGunsmithProvider {
             return;
         }
 
-        if (!this.weaponService.getCurrentWeapon()) {
+        const previewWeapon = this.weaponService.getCurrentWeapon();
+        if (previewWeapon?.name !== weapon.name) {
+            await this.weaponService.clear();
+            await this.weaponService.set(weapon);
+        }
+
+        if (!previewWeapon) {
             await this.weaponService.set(weapon);
         }
 
@@ -132,6 +152,8 @@ export class WeaponGunsmithProvider {
                 RemoveWeaponComponentFromPed(player, weaponHash, GetHashKey(currentAttachment.component));
             }
         }
+
+        await this.setupAnimation();
     }
 
     @OnNuiEvent(NuiEvent.GunSmithApplyConfiguration)
@@ -216,5 +238,24 @@ export class WeaponGunsmithProvider {
         }
 
         await this.weaponService.clear();
+    }
+
+    private async setupAnimation() {
+        LocalPlayer.state.set('weapon_animation', true, true);
+        await this.animationService.playAnimation(
+            {
+                base: {
+                    dictionary: 'missbigscore1guard_wait_rifle',
+                    name: 'wait_base',
+                    options: {
+                        enablePlayerControl: true,
+                        repeat: true,
+                    },
+                },
+            },
+            {
+                reset_weapon: false,
+            }
+        );
     }
 }
