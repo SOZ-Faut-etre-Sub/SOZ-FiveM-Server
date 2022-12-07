@@ -116,13 +116,15 @@ export class WeaponGunsmithProvider {
                     flashlight: null,
                     grip: null,
                     scope: null,
-                    skin: null,
                     suppressor: null,
+                    primary_skin: null,
+                    secondary_skin: null,
                 };
             }
-            weapon.metadata.attachments[attachmentType] = attachment;
 
-            this.inventoryManager.updateMetadata(source, slot, { attachments: weapon.metadata.attachments });
+            this.inventoryManager.updateMetadata(source, slot, {
+                attachments: { ...weapon.metadata.attachments, [attachmentType]: attachment },
+            });
             return true;
         }
 

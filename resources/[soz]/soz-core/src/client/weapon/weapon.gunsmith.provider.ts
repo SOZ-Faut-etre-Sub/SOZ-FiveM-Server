@@ -6,6 +6,7 @@ import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
+import { WeaponAttachment } from '../../shared/weapons/attachment';
 import { WeaponMk2TintColorChoices, WeaponTintColorChoices } from '../../shared/weapons/tint';
 import { WeaponConfiguration } from '../../shared/weapons/weapon';
 import { Notifier } from '../notifier';
@@ -85,25 +86,49 @@ export class WeaponGunsmithProvider {
             return;
         }
 
-        await this.weaponService.clear();
-        await this.weaponService.set({ ...weapon, metadata: { ...weapon.metadata, tint: Number(tint) } });
+        if (!this.weaponService.getCurrentWeapon()) {
+            await this.weaponService.set(weapon);
+        }
+
+        const player = PlayerPedId();
+        const weaponHash = GetSelectedPedWeapon(player);
+
+        SetPedWeaponTintIndex(player, weaponHash, Number(tint));
     }
 
     // Attachment
     @OnNuiEvent(NuiEvent.GunSmithPreviewAttachment)
-    async previewAttachment({ slot, attachment }: { slot: number; attachment: string }) {
+    async previewAttachment({
+        slot,
+        attachment,
+        attachmentList,
+    }: {
+        slot: number;
+        attachment: string;
+        attachmentList: WeaponAttachment[];
+    }) {
         const weapon = this.weaponService.getWeaponFromSlot(slot);
         if (!weapon) {
             return;
         }
 
-        await this.weaponService.clear();
-        await this.weaponService.set(weapon);
+        if (!this.weaponService.getCurrentWeapon()) {
+            await this.weaponService.set(weapon);
+        }
 
         const player = PlayerPedId();
         const weaponHash = GetSelectedPedWeapon(player);
 
-        GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment));
+        if (attachment) {
+            GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment));
+        } else {
+            const currentAttachment = attachmentList.find(attachment =>
+                HasPedGotWeaponComponent(player, weaponHash, GetHashKey(attachment.component))
+            );
+            if (currentAttachment) {
+                RemoveWeaponComponentFromPed(player, weaponHash, GetHashKey(currentAttachment.component));
+            }
+        }
     }
 
     @OnNuiEvent(NuiEvent.GunSmithApplyConfiguration)

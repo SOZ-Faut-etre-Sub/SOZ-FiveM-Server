@@ -135,8 +135,15 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                     onUpdate={setConfiguration}
                 />
                 <MenuWeaponComponentSelect
-                    label="Apparence"
-                    type={WeaponComponentType.Skin}
+                    label="Apparence Principale"
+                    type={WeaponComponentType.PrimarySkin}
+                    weapon={weapon}
+                    attachments={attachments}
+                    onUpdate={setConfiguration}
+                />
+                <MenuWeaponComponentSelect
+                    label="Apparence Secondaire"
+                    type={WeaponComponentType.SecondarySkin}
                     weapon={weapon}
                     attachments={attachments}
                     onUpdate={setConfiguration}
@@ -177,6 +184,7 @@ const MenuWeaponComponentSelect: FunctionComponent<{
                 await fetchNui(NuiEvent.GunSmithPreviewAttachment, {
                     slot: weapon.slot,
                     attachment: attachment,
+                    attachmentList: options,
                 });
                 onUpdate?.(s => ({ ...s, attachments: { ...s.attachments, [type]: attachment } }));
             }}
