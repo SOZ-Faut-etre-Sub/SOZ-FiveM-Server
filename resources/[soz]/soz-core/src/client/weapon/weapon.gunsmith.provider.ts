@@ -9,6 +9,7 @@ import { RpcEvent } from '../../shared/rpc';
 import { WeaponAttachment } from '../../shared/weapons/attachment';
 import { WeaponMk2TintColorChoices, WeaponTintColorChoices } from '../../shared/weapons/tint';
 import { WeaponConfiguration } from '../../shared/weapons/weapon';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -29,13 +30,15 @@ export class WeaponGunsmithProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
     @Inject(Notifier)
     private notifier: Notifier;
 
     @OnEvent(ClientEvent.WEAPON_OPEN_GUNSMITH)
     async openGunsmith() {
-        const weapons = Object.values(this.playerService.getPlayer().items).filter(item => item.type === 'weapon');
-
+        const weapons = this.inventoryManager.getItems().filter(item => item.type === 'weapon');
         const coords = GetEntityCoords(PlayerPedId(), true);
 
         this.nuiMenu.openMenu(
@@ -121,7 +124,7 @@ export class WeaponGunsmithProvider {
 
         if (attachment) {
             GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment));
-        } else {
+        } else if (attachment === null) {
             const currentAttachment = attachmentList.find(attachment =>
                 HasPedGotWeaponComponent(player, weaponHash, GetHashKey(attachment.component))
             );
