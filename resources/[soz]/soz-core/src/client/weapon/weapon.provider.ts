@@ -119,17 +119,21 @@ export class WeaponProvider {
 
         if (IsPedArmed(player, 7) && IsPedRagdoll(player)) {
             DisableControlAction(0, 24, true);
-        }
-
-        if (!IsPedShooting(player)) {
             return;
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) === player && GetEntitySpeed(vehicle) * 3.6 > 50) {
-            this.notifier.notify('Vous allez trop vite pour faire ça.', 'error');
+        if (
+            IsPedArmed(player, 7) &&
+            GetPedInVehicleSeat(vehicle, -1) === player &&
+            GetEntitySpeed(vehicle) * 3.6 > 50
+        ) {
             DisableControlAction(0, 24, true);
             await this.weapon.clear();
 
+            return;
+        }
+
+        if (!IsPedShooting(player)) {
             return;
         }
 
