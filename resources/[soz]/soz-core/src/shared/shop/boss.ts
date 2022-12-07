@@ -32,7 +32,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'outfit', type: 'item', metadata: { label: 'STONK', type: 'stonk' }, price: 100 },
             { id: 'armor', type: 'item', metadata: { label: 'STONK', type: 'stonk' }, price: 150 },
             { id: 'weapon_pistol', type: 'weapon', price: 300 },
-            { id: 'pistol_ammo', type: 'weapon_ammo', price: 10 },
         ],
     },
     {
@@ -74,7 +73,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         products: [
             { id: 'weapon_machete', type: 'weapon', price: 45 },
             { id: 'weapon_musket', type: 'weapon', price: 125 },
-            { id: 'shotgun_ammo', type: 'weapon_ammo', price: 10 },
+            { id: 'ammo_09', type: 'weapon_ammo', price: 10 },
         ],
     },
     {
