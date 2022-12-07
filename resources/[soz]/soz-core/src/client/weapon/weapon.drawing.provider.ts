@@ -40,13 +40,16 @@ export class WeaponDrawingProvider {
 
     private async drawWeapon() {
         for (const weapon of this.weaponsToDraw) {
-            if (this.weaponAttached[weapon.model]) {
-                continue;
-            }
+            if (this.weaponAttached[weapon.model]) continue;
 
             await this.resourceLoader.loadModel(weapon.model);
 
+            // Ensure weapon is not already exist if model took to mush time to complete
+            if (this.weaponAttached[weapon.model]) continue;
+
             const object = CreateObject(weapon.model, 1, 1, 1, true, true, false);
+            this.weaponAttached[weapon.model] = object;
+
             SetEntityAsMissionEntity(object, true, true);
             SetEntityCollision(object, false, false);
             SetNetworkIdCanMigrate(ObjToNet(object), false);
@@ -75,13 +78,12 @@ export class WeaponDrawingProvider {
                     SetEntityVisible(object, false, false);
                 }
             }
-
-            this.weaponAttached[weapon.model] = object;
         }
     }
 
     private async undrawWeapon() {
         Object.values(this.weaponAttached).forEach(weapon => {
+            SetEntityAsMissionEntity(weapon, true, true);
             DeleteObject(weapon);
         });
         this.weaponAttached = {};
