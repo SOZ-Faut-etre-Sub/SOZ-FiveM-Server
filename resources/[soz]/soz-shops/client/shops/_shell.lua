@@ -31,7 +31,8 @@ end
 
 function ShopShell:AddTargetModel()
     exports["qb-target"]:AddTargetModel({self.ped}, {
-        options = {self:GetPedAction(), self:GunSmith(), self.target},
+        --options = {self:GetPedAction(), self:GunSmith(), self.target},
+        options = {self:GetPedAction(), self.target},
         distance = 2.5,
     })
 end
