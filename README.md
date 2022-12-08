@@ -9,7 +9,7 @@ Developed especially for the Zerator community.
 
 The server is in development since February 2022, and can be joined by being accepted on the [AllowList](https://soz.zerator.com/) ! 
 
-You can also visit the [Official Discord](https://discord.gg/soz-pas-soz), if you want to follow the development, the RoadMap and the many announcements to come !.
+You can also visit the [Official Discord](https://discord.gg/soz-pas-soz), if you want to follow the development, the RoadMap and the many announcements to come !
 
 *P.S. : Of course like any community server, in order to register, you have to be subscribed to Zerator's twitch channel.*
 
