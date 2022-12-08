@@ -158,6 +158,8 @@ export class VehicleService {
         for (const [key, value] of Object.entries(condition.windowStatus)) {
             if (value) {
                 SmashVehicleWindow(vehicle, parseInt(key, 10));
+            } else {
+                FixVehicleWindow(vehicle, parseInt(key, 10));
             }
         }
     }
