@@ -5,22 +5,22 @@ Developed especially for the Zerator community.
 </p>
 
 ![SOZ - Join the server_](https://user-images.githubusercontent.com/104008465/206221735-bd60fab7-3d0a-4844-b07f-245ee932adbc.png)
-[ZeratoR](https://www.twitch.tv/zerator) is a French Twitch Streamer who created the ZEvent, MANDATORY and many other projects. Following one of them called RPZ, gathering all the French content creators for a temporary two weeks server, we had the idea to offer a server to his community. **Everyone on SOZ is a volunteer, however the project is fully funded by ZeratoR that includes the server and the various licenses.**
+[ZeratoR](https://www.twitch.tv/zerator) is a French Twitch Streamer who created the ZEvent, MANDATORY and many other projects. Following one of them called RPZ, gathering many French content creators for a temporary two weeks server, we had the idea to offer a server to his community. **Everyone on SOZ is a volunteer, however the project is fully funded by ZeratoR that includes the server and the various licenses.**
 
 The server is in development since February 2022, and can be joined by being accepted on the [AllowList](https://soz.zerator.com/) ! 
 
-You can also visit the [Official Discord](https://discord.gg/soz-pas-soz), if you want to follow the development, the RoadMap and the manyannouncements to come !.
+You can also visit the [Official Discord](https://discord.gg/soz-pas-soz), if you want to follow the development, the RoadMap and the many announcements to come !.
 
 *P.S. : Of course like any community server, in order to register, you have to be subscribed to Zerator's twitch channel.*
 
 ![SOZ - Main Obj_](https://user-images.githubusercontent.com/104008465/206219720-ee131373-9da1-4ae6-90cd-9972f97a54f8.png)
-The main goal of SOZ development is to **revamp the various primary mechanics used by players.** This desire to improve the landscape has pushed us to review **the ergonomics of several interactions with a point of honor**, even going so far as to review the primary interactions such as the exchange between players, the use of chests, parking lots, and many other features to improve further more the experience lived by the players.
+The main goal of SOZ development is to **revamp various primary mechanics used by players.** This desire to improve the landscape has pushed us to review **the ergonomics of several interactions with a focus on accessibility**, even going so far as to review the primary interactions such as the exchange between players, the use of chests, parking lots, and many other features to improve further more the experience lived by the players.
 
 In order to make this dream come true, we had to push ourselves to **develop everything we could from scratch**, while making less use of what already exists for free, developed by dedicated developers with the goal of helping the community. **Allowing us to ignore all paid resources.**
 
-The other goal of SOZ is to **offer a "Click & Host Server"**, In all honesty, this is a very challenging  and our V1 will not allow this at the time. **However, we work to improve this point until we can finally offer this to you and your community.**
+The other goal of SOZ is to **offer a "Click & Host Server"**, In all honesty, this is very challenging and our V1 will not allow this at the time. **However, we work to improve this point until we can finally offer it to you and your community.**
 
-Also, we count on the participation of the community. **We may not be the best, but together we can be.** Providing good quality development that can improve all of our servers, this sure is the primary goal of any developer with a community. **By creating SOZ, we want to allow any developer to add what we have created to your respective servers.** And of course during that time, this will help SOZ to grow in order to contribute to the war effort!
+Also, we count on the participation of the community. **We may not be the best, but together we can be.** Providing good quality development that can improve all of our servers, this sure is the primary goal of any developer with a community. **By creating SOZ, we want to allow any developer to add what we have created to your respective servers.** And of course during that time, this path will help SOZ to grow in order to contribute in the war effort!
 
 ⚠️**The server is under development. This means that there are some bugs and that it is far from perfect. It is in constant evolution and many things are subject to change.**
 
@@ -54,12 +54,12 @@ Also, we count on the participation of the community. **We may not be the best, 
 
 *Note : Some mapping are actually deleted from the OpenSource because they're not as our propriety. They will be replaced ASAP. So you need to relocalise some safes and interactions, like the LSPD office.*
 
-![SOZ - Major crédit_](https://user-images.githubusercontent.com/104008465/206219769-003fa5c9-bf78-4458-9543-fd9b415bfb9d.png)
-**We would like to thank all the creators who are offering some of their creations to the community for free. Whether it is on [5Mod](https://fr.gta5-mods.com/) or on the [FiveM](https://forum.cfx.re/c/development/releases/7/l/latest) website.** It is also due to you that all the servers can exist! Thanks to you, you inspired us to make SOZ completely free.
+![SOZ - Major credit_](https://user-images.githubusercontent.com/104008465/206219769-003fa5c9-bf78-4458-9543-fd9b415bfb9d.png)
+**We would like to thank all the creators who are offering some of their creations to the community for free. Whether it is on [5Mod](https://fr.gta5-mods.com/) or on the [FiveM](https://forum.cfx.re/c/development/releases/7/l/latest) website.** It is also due to you that all servers can exist! Thanks to you, you inspired us to make SOZ completely free.
 
 Some of these free components are used on SOZ, such as clothes and female haircuts. Even though this represents only 10% of the development, it is important to note that no, the server is not yet fully independent and homegrown. We strive to replace anything we use that does not come from our own hands as soon as possible, and we thank all those creators from the bottom of our hearts.
 
-All contributors to the project will be notified in a list.
+All contributors to the project will be notified on a list.
 
 ![SOZ - Using the server_](https://user-images.githubusercontent.com/104008465/206203151-701a8669-b4dc-479c-978a-8498b8c6129d.png)
 
