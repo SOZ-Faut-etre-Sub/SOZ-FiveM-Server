@@ -4,7 +4,8 @@ export enum WeaponComponentType {
     Suppressor = 'suppressor',
     Scope = 'scope',
     Grip = 'grip',
-    Skin = 'skin',
+    PrimarySkin = 'primary_skin',
+    SecondarySkin = 'secondary_skin',
 }
 
 export type WeaponAttachment = {

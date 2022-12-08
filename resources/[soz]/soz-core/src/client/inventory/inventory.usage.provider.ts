@@ -16,52 +16,58 @@ export class InventoryUsageProvider {
         TriggerServerEvent(ServerEvent.INVENTORY_USE_ITEM, item.slot);
     }
 
-    @Command('inventory.use.1', { keys: [{ mapper: 'keyboard', key: '1' }] })
+    @Command('inventory.use.1', {
+        description: "Raccourci d'arme principale",
+        keys: [{ mapper: 'keyboard', key: '1' }],
+    })
     async useItem1() {
         await this.useItem(1);
     }
 
-    @Command('inventory.use.2', { keys: [{ mapper: 'keyboard', key: '2' }] })
+    @Command('inventory.use.2', {
+        description: "Raccourci d'arme secondaire",
+        keys: [{ mapper: 'keyboard', key: '2' }],
+    })
     async useItem2() {
         await this.useItem(2);
     }
 
-    @Command('inventory.use.3', { keys: [{ mapper: 'keyboard', key: '3' }] })
+    @Command('inventory.use.3', { description: "Raccourci d'inventaire 03", keys: [{ mapper: 'keyboard', key: '3' }] })
     async useItem3() {
         await this.useItem(3);
     }
 
-    @Command('inventory.use.4', { keys: [{ mapper: 'keyboard', key: '4' }] })
+    @Command('inventory.use.4', { description: "Raccourci d'inventaire 04", keys: [{ mapper: 'keyboard', key: '4' }] })
     async useItem4() {
         await this.useItem(4);
     }
 
-    @Command('inventory.use.5', { keys: [{ mapper: 'keyboard', key: '5' }] })
+    @Command('inventory.use.5', { description: "Raccourci d'inventaire 05", keys: [{ mapper: 'keyboard', key: '5' }] })
     async useItem5() {
         await this.useItem(5);
     }
 
-    @Command('inventory.use.6', { keys: [{ mapper: 'keyboard', key: '6' }] })
+    @Command('inventory.use.6', { description: "Raccourci d'inventaire 06", keys: [{ mapper: 'keyboard', key: '6' }] })
     async useItem6() {
         await this.useItem(6);
     }
 
-    @Command('inventory.use.7', { keys: [{ mapper: 'keyboard', key: '7' }] })
+    @Command('inventory.use.7', { description: "Raccourci d'inventaire 07", keys: [{ mapper: 'keyboard', key: '7' }] })
     async useItem7() {
         await this.useItem(7);
     }
 
-    @Command('inventory.use.8', { keys: [{ mapper: 'keyboard', key: '8' }] })
+    @Command('inventory.use.8', { description: "Raccourci d'inventaire 08", keys: [{ mapper: 'keyboard', key: '8' }] })
     async useItem8() {
         await this.useItem(8);
     }
 
-    @Command('inventory.use.9', { keys: [{ mapper: 'keyboard', key: '9' }] })
+    @Command('inventory.use.9', { description: "Raccourci d'inventaire 09", keys: [{ mapper: 'keyboard', key: '9' }] })
     async useItem9() {
         await this.useItem(9);
     }
 
-    @Command('inventory.use.0', { keys: [{ mapper: 'keyboard', key: '0' }] })
+    @Command('inventory.use.0', { description: "Raccourci d'inventaire 10", keys: [{ mapper: 'keyboard', key: '0' }] })
     async useItem0() {
         await this.useItem(0);
     }
