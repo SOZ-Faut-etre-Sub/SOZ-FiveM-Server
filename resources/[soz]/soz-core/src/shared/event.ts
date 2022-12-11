@@ -134,6 +134,7 @@ export enum ServerEvent {
     VEHICLE_GIVE_KEY = 'soz-core:server:vehicle:give-key',
     VEHICLE_ROUTE_EJECTION = 'soz-core:server:vehicle:route-ejection',
     VEHICLE_TAKE_OWNER = 'soz-core:server:vehicle:take-owner',
+    VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
@@ -221,6 +222,7 @@ export enum ClientEvent {
     VEHICLE_GARAGE_HOUSE_OPEN_MENU = 'soz-core:client:vehicle:garage:house:open-menu',
     VEHICLE_GARAGE_HOUSE_SHOW_PARKING = 'soz-core:client:vehicle:garage:house:show-parking',
     VEHICLE_ROUTE_EJECTION = 'soz-core:client:vehicle:route-ejection',
+    VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 

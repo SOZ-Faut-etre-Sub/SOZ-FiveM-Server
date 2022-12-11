@@ -48,6 +48,7 @@ type CurrentHat = {
 
 type TrunkOpened = {
     vehicle: number;
+    vehicleNetworkId: number;
     zone: BoxZone;
 };
 
@@ -366,15 +367,18 @@ export class VehicleLockProvider {
         const vehicleModel = GetEntityModel(vehicle);
         const vehicleClass = GetVehicleClass(vehicle);
         const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         TriggerServerEvent('inventory:server:openInventory', trunkType, plate, {
             model: vehicleModel,
             class: vehicleClass,
-            entity: VehToNet(vehicle),
+            entity: vehicleNetworkId,
         });
+        TriggerServerEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE, vehicleNetworkId, true);
 
         this.vehicleTrunkOpened = {
             vehicle,
+            vehicleNetworkId,
             zone: vehicleTrunkZone,
         };
     }
@@ -397,14 +401,33 @@ export class VehicleLockProvider {
             }
         }
 
-        this.vehicleTrunkOpened = null;
+        this.closeVehicleTrunk();
         TriggerEvent('inventory:client:closeInventory');
         this.notifier.notify('Le coffre est trop loin.', 'warning');
     }
 
     @OnEvent(ClientEvent.VEHICLE_CLOSE_TRUNK)
-    async closeVehicleTrunk() {
+    closeVehicleTrunk() {
+        if (this.vehicleTrunkOpened) {
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE, this.vehicleTrunkOpened.vehicleNetworkId, false);
+        }
+
         this.vehicleTrunkOpened = null;
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE)
+    async setVehicleTrunkState(vehicleNetworkId: number, state: boolean) {
+        const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+        if (!DoesEntityExist(entityId)) {
+            return;
+        }
+
+        if (state) {
+            SetVehicleDoorOpen(entityId, 5, false, false);
+        } else {
+            SetVehicleDoorShut(entityId, 5, false);
+        }
     }
 
     @Command('soz_vehicle_toggle_vehicle_lock', {
