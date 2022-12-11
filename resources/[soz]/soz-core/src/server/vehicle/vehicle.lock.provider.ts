@@ -19,6 +19,31 @@ export class VehicleLockProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    private trunkOpened: Record<number, Set<number>> = {};
+
+    @OnEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE)
+    async onSetTrunkState(source: number, vehicleNetworkId: number, state: boolean) {
+        const set = this.trunkOpened[vehicleNetworkId] || new Set();
+
+        if (state) {
+            set.add(source);
+        } else {
+            set.delete(source);
+        }
+
+        this.trunkOpened[vehicleNetworkId] = set;
+
+        const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        const owner = NetworkGetEntityOwner(entityId);
+
+        if (set.size > 0) {
+            TriggerClientEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, true);
+        } else {
+            TriggerClientEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, false);
+            delete this.trunkOpened[vehicleNetworkId];
+        }
+    }
+
     @OnEvent(ServerEvent.VEHICLE_TAKE_OWNER)
     private onVehicleTakeOwner(source: number, vehicleNetworkId: number) {
         const player = this.playerService.getPlayer(source);
