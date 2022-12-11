@@ -77,20 +77,27 @@ export class VehicleLockProvider {
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
-    public onEnterLeaveVehicle() {
+    public async onEnterLeaveVehicle() {
         if (!this.currentPedHat) {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.PLAYER_UPDATE_HAT_VEHICLE, this.currentPedHat.hat, this.currentPedHat.texture);
+        const currentPedHat = { ...this.currentPedHat };
+
+        if (currentPedHat.hat === -1) {
+            SetPedConfigFlag(PlayerPedId(), 34, false);
+        } else {
+            SetPedConfigFlag(PlayerPedId(), 34, true);
+        }
+
+        SetPedPropIndex(PlayerPedId(), 0, currentPedHat.hat, currentPedHat.texture, true);
+        TriggerServerEvent(ServerEvent.PLAYER_UPDATE_HAT_VEHICLE, currentPedHat.hat, currentPedHat.texture);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
     public saveCurrentPedHat() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-        const lastCurrentHat = {
-            ...this.currentPedHat,
-        };
+        const lastCurrentHat = this.currentPedHat;
 
         this.currentPedHat = {
             hat: GetPedPropIndex(PlayerPedId(), 0),
