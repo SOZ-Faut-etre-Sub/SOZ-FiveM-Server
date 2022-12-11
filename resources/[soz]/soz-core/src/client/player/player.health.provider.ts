@@ -484,7 +484,7 @@ export class PlayerHealthProvider {
             return;
         }
 
-        if (player.metadata.isdead || player.metadata.disease !== false) {
+        if (player.metadata.isdead || player.metadata.disease) {
             return;
         }
 
