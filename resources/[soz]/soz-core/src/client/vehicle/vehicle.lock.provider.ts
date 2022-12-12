@@ -87,8 +87,6 @@ export class VehicleLockProvider {
 
         if (currentPedHat.hat === -1) {
             SetPedConfigFlag(PlayerPedId(), 34, false);
-        } else {
-            SetPedConfigFlag(PlayerPedId(), 34, true);
         }
 
         SetPedPropIndex(PlayerPedId(), 0, currentPedHat.hat, currentPedHat.texture, true);
