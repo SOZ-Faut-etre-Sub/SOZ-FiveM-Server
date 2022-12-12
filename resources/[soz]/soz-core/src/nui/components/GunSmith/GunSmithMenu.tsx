@@ -98,7 +98,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                             console.error(e)
                         );
                     }}
-                    value={weapon.metadata.tint ?? 0}
+                    value={(weapon.metadata.tint ?? 0).toString()}
                 >
                     {Object.entries(tint).map(([key, tint]) => (
                         <p>

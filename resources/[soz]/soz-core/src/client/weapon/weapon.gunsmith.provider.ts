@@ -45,6 +45,13 @@ export class WeaponGunsmithProvider {
         const weapons = this.inventoryManager.getItems().filter(item => item.type === 'weapon');
         const coords = GetEntityCoords(PlayerPedId(), true);
 
+        if (weapons.length === 0) {
+            this.notifier.notify("Vous n'avez pas d'arme sur vous", 'info');
+            return;
+        }
+
+        await this.weaponService.clear();
+
         this.nuiMenu.openMenu(
             MenuType.GunSmith,
             {
