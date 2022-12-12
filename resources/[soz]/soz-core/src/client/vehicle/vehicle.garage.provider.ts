@@ -75,6 +75,8 @@ export class VehicleGarageProvider {
 
     private pounds: Record<string, Garage> = {};
 
+    private isShowingGaragePlaces = false;
+
     @Once(OnceStep.RepositoriesLoaded)
     public init() {
         const garageList = this.garageRepository.get();
@@ -317,6 +319,11 @@ export class VehicleGarageProvider {
 
     @OnNuiEvent(NuiEvent.VehicleGarageShowPlaces)
     public async showPlacesGarages({ garage }: { garage: Garage }) {
+        if (this.isShowingGaragePlaces) {
+            return null;
+        }
+
+        this.isShowingGaragePlaces = true;
         const places = [];
 
         for (const parkingPlace of garage.parkingPlaces) {
@@ -332,6 +339,8 @@ export class VehicleGarageProvider {
 
             await wait(0);
         }
+
+        this.isShowingGaragePlaces = false;
     }
 
     @OnEvent(ClientEvent.VEHICLE_GARAGE_HOUSE_OPEN_MENU)
