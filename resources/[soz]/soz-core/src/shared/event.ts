@@ -349,6 +349,7 @@ export enum NuiEvent {
 
     GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
     GunSmithPreviewTint = 'soz-core:client:job:gunsmith:preview-tint',
+    GunSmithPreviewAnimation = 'soz-core:client:job:gunsmith:preview-animation',
     GunSmithPreviewAttachment = 'soz-core:client:job:gunsmith:preview-attachment',
     GunSmithApplyConfiguration = 'soz-core:client:job:gunsmith:apply-configuration',
 }
