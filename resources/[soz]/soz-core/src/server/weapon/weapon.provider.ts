@@ -65,7 +65,7 @@ export class WeaponProvider {
             return;
         }
 
-        if (weapon.metadata.ammo + ammoInClip > ammoInClip * GlobalWeaponConfig.MaxAmmoRefill) {
+        if (weapon.metadata.ammo + ammoInClip > ammoInClip * GlobalWeaponConfig.MaxAmmoRefill(weapon.name)) {
             this.notifier.notify(source, 'Vous avez déjà assez de munitions...', 'info');
             return;
         }
