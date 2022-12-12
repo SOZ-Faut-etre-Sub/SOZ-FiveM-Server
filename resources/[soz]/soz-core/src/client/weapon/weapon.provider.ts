@@ -102,7 +102,7 @@ export class WeaponProvider {
         }
         LocalPlayer.state.set('inv_busy', false, true);
 
-        if (weapon.metadata.ammo < this.weapon.getMaxAmmoInClip() * GlobalWeaponConfig.MaxAmmoRefill) {
+        if (weapon.metadata.ammo < this.weapon.getMaxAmmoInClip() * GlobalWeaponConfig.MaxAmmoRefill(weapon.name)) {
             await this.onUseAmmo(ammoName);
         }
     }
