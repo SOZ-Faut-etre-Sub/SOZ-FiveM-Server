@@ -186,7 +186,15 @@ export class OilStationProvider {
             return;
         }
 
-        await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', refilled * 3);
+        const station = await this.prismaService.fuel_storage.findUnique({
+            where: {
+                id: stationId,
+            },
+        });
+
+        if (station && station.type === FuelStationType.Public) {
+            await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', refilled * 3);
+        }
 
         this.notifier.notify(source, `Vous avez ~g~ajouté~s~ ${refilled}L d'essence dans la station.`);
 
@@ -255,7 +263,15 @@ export class OilStationProvider {
             return;
         }
 
-        await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', refilled * 3);
+        const station = await this.prismaService.fuel_storage.findUnique({
+            where: {
+                id: stationId,
+            },
+        });
+
+        if (station && station.type === FuelStationType.Public) {
+            await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', refilled * 3);
+        }
 
         this.notifier.notify(source, `Vous avez ~g~ajouté~s~ ${refilled}L de kérosène dans la station.`);
 

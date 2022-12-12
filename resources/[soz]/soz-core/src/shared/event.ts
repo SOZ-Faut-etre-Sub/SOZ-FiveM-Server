@@ -53,8 +53,8 @@ export enum ServerEvent {
     LSMC_HEALTH_CHECK = 'soz-core:server:job:lsmc:health-check',
     LSMC_SET_HEALTH_BOOK = 'soz-core:server:job:lsmc:set-health-book',
 
-    OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
-    OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
+    OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
+    OIL_REFILL_KEROSENE_STATION = 'soz-core:server:oil:refill-kerosene-station',
     OIL_SET_STATION_PRICE = 'soz-core:server:oil:set-station-price',
 
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
