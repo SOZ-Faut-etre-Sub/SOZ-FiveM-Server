@@ -61,6 +61,10 @@ export class WeaponProvider {
             return;
         }
 
+        if (LocalPlayer.state.inv_busy === true) {
+            return;
+        }
+
         LocalPlayer.state.set('inv_busy', true, true);
 
         const weapon = await emitRpc<InventoryItem | null>(
