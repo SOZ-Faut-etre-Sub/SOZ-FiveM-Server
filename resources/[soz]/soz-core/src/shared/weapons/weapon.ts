@@ -17,7 +17,13 @@ export type WeaponConfiguration = {
 };
 
 export const GlobalWeaponConfig = {
-    MaxAmmoRefill: 3,
+    MaxAmmoRefill: (weapon_name: string) => {
+        if (weapon_name === 'weapon_musket') {
+            return 1;
+        }
+
+        return 3;
+    },
     MaxHealth: 2000,
     RecoilOnUsedWeapon: 2.0,
 };
