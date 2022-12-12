@@ -638,7 +638,7 @@ export class PlayerHealthProvider {
                         return;
                     }
 
-                    await this.progressService.progress(
+                    const { completed } = await this.progressService.progress(
                         'switch_clothes',
                         "Changement d'habits...",
                         5000,
@@ -655,6 +655,10 @@ export class PlayerHealthProvider {
                             disableMovement: true,
                         }
                     );
+
+                    if (!completed) {
+                        return;
+                    }
 
                     if (outfitSelection.outfit) {
                         TriggerServerEvent('soz-character:server:SetPlayerJobClothes', outfitSelection.outfit);
