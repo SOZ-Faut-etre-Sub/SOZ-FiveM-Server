@@ -4,13 +4,20 @@
     align-items: center;
     color: #fafafa;
     pointer-events: all;
+    border-radius: 0.25rem;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
+.Card > img {
+    border-radius: 0.25rem;
+    pointer-events: none;
+}
 
 .Card:hover {
+    position: relative;
     background: rgba(20, 161, 63, 0.05);
     border: 1px solid rgba(20, 161, 63, 0.1);
+    z-index: 100;
 }
 
 .Icon {
@@ -27,11 +34,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 90;
+    z-index: 200;
 }
 
 .OptionsList {
-    background: rgba(0, 0, 0, .8);
+    background: rgba(0, 0, 0, .6);
     padding: .5rem;
     min-width: 10rem;
     border-radius: .3rem;
@@ -43,6 +50,7 @@
     border-radius: .3rem;
     list-style-type: none;
     cursor: pointer;
+    pointer-events: all;
 }
 
 .OptionListItem:hover {
