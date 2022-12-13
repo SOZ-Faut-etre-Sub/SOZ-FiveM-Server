@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SInteriorOrderData>
+  <startFrom value="3580" />
+  <proxies>
+	<Item>cs1_02</Item>
+	<Item>cs1_02_strm_0</Item>
+	<Item>cs1_10</Item>
+	<Item>cs1_occl_09</Item>
+	<Item>cs1_roads_pb</Item>
+	<Item>cs1_roads_pb_critical_0</Item>
+	<Item>cs1_roads_pb_long_1</Item>
+	<Item>cs1_raods_pb_strm_2</Item>
+	<Item>distlodlights_medium001</Item>
+	<Item>hei_cs1_02</Item>
+	<Item>hei_cs1_02_strm_0</Item>
+	<Item>hei_cs1_roads_pb</Item>
+	<Item>hei_cs1_roads_pb_critical_0</Item>
+	<Item>hei_cs1_roads_pb_long_1</Item>
+	<Item>hei_cs1_roads_pb_strm_2</Item>
+	<Item>lodlights_medium001</Item>
+	<Item>mtpetrol</Item>
+	<Item>vw_distlodlights_medium001</Item>
+	<Item>vw_lodlights_medium001</Item>
+  </proxies>
+</SInteriorOrderData>
