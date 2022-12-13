@@ -10,6 +10,7 @@ import { AudioApp } from './Audio/AudioApp';
 import { HealthBookApp } from './HealthBook/HealthBookApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
+import { PanelApp } from './Panel/PanelApp';
 import { PlayerApp } from './Player/PlayerApp';
 import { ProgressApp } from './Progress/ProgressApp';
 
@@ -33,6 +34,7 @@ export const App: FunctionComponent = () => {
                 <AudioApp />
                 <PlayerApp />
                 <ProgressApp />
+                <PanelApp />
             </div>
         </Provider>
     );
