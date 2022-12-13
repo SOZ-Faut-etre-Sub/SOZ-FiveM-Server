@@ -1,19 +1,20 @@
-import { forwardRef, FunctionComponent, useCallback, useEffect, useState } from 'react';
+import { FunctionComponent, useCallback, useState } from 'react';
 import style from './ContainerSlots.module.css';
 import { InventoryItem } from '../../types/inventory';
 import Draggable from '../Draggable';
 import { Droppable } from '../Droppable';
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, rectIntersection } from '@dnd-kit/core';
 
 type Props = {
     columns?: number;
     rows: number;
+    money?: number;
     items: (InventoryItem & {id: number})[]
     setItems: (items: (InventoryItem & {id: number})[]) => void;
-    useSlot0?: boolean
+    action: (action: string, item: InventoryItem) => void;
 }
 
-export const ContainerSlots: FunctionComponent<Props> = ({columns = 5, rows, items, setItems}) => {
+export const ContainerSlots: FunctionComponent<Props> = ({columns = 5, rows, items, action}) => {
     const [description, setDescription] = useState<string|null>('');
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
@@ -29,15 +30,13 @@ export const ContainerSlots: FunctionComponent<Props> = ({columns = 5, rows, ite
 
     return (
         <>
-            <DndContext onDragEnd={event => {
-                // setItems(s => s.map((it, i) => {
-                //         return { ...it, slot: Number(event.active.id) === i ? Number(event.over?.id) : item.slot }
-                //     })
-                //     // items.map((item, i) => {
-                //     //     console.log({ ...item, slot: Number(event.active.id) === i ? Number(event.over?.id) : item.slot })
-                //     //     return { ...item, slot: Number(event.active.id) === i ? Number(event.over?.id) : item.slot }
-                //      )
-
+            <DndContext
+                autoScroll={{
+                    enabled: false
+                }}
+                collisionDetection={rectIntersection}
+                onDragEnd={event => {
+                    console.log(event);
             }
             }>
                 <div
@@ -53,6 +52,7 @@ export const ContainerSlots: FunctionComponent<Props> = ({columns = 5, rows, ite
                                 key={i}
                                 item={items.find(it => (it.slot -1) === i)}
                                 setInContext={createInContext(i)}
+                                interactAction={action}
                                 onItemHover={setDescription}
                             />
                         </Droppable>

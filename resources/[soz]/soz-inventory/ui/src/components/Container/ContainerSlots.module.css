@@ -1,10 +1,11 @@
 .Wrapper {
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     display: grid;
     gap: 0.5rem;
     background: rgba(0, 0, 0, .6);
     padding: .5rem;
+    max-height: 50vh;
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -20,7 +21,6 @@
 }
 
 .Description {
-    overflow: hidden;
     padding: .5rem;
     color: #fefefe;
     margin-top: 0.5rem;
