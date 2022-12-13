@@ -5,13 +5,13 @@ import "inter-ui/inter.css";
 import './index.css';
 
 import KeyInventory from './components/KeyInventory';
-import ContainerInventory from './components/ContainerInventory';
 import { PlayerContainer } from './components/Container/Player/PlayerContainer';
+import { StorageContainer } from './components/Container/Storage/StorageContainer';
 
 ReactDOM.createRoot(document.getElementById('app')!).render(
     <React.StrictMode>
         <PlayerContainer />
+        <StorageContainer />
         {/*<KeyInventory />*/}
-        {/*<ContainerInventory />*/}
     </React.StrictMode>
 )
