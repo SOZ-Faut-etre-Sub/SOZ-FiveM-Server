@@ -15,8 +15,6 @@
     width: 100%;
     aspect-ratio: 1/1;
     border-radius: 0.25rem;
-    background: rgba(0, 0, 0, .2);
-    border: 1px solid rgba(0, 0, 0, .2);
     box-sizing: border-box;
 }
 

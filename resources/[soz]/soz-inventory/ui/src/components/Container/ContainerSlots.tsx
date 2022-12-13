@@ -11,7 +11,7 @@ type Props = {
     money?: number;
     items: (InventoryItem & {id: number})[]
     setItems: (items: (InventoryItem & {id: number})[]) => void;
-    action: (action: string, item: InventoryItem) => void;
+    action?: (action: string, item: InventoryItem) => void;
 }
 
 export const ContainerSlots: FunctionComponent<Props> = ({columns = 5, rows, items, action}) => {

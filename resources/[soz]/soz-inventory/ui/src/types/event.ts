@@ -1,7 +1,8 @@
 import { SozInventoryModel } from './inventory';
 
 export type NuiEventPlayerInventory = {
-    action: 'openPlayerInventory';
+    action: string;
     playerMoney: number;
     playerInventory: SozInventoryModel
+    targetInventory?: SozInventoryModel
 }
