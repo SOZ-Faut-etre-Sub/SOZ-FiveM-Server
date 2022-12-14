@@ -6,13 +6,12 @@
     color: #fafafa;
     pointer-events: all;
     border-radius: 0.25rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .Card > img {
     border-radius: 0.25rem;
     pointer-events: none;
+    aspect-ratio: 1/1;
 }
 
 .Card:hover {

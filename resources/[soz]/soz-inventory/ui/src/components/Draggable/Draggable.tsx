@@ -1,9 +1,8 @@
 import { useDraggable } from '@dnd-kit/core';
-import React, { FunctionComponent, memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 import { InventoryItem } from '../../types/inventory';
 import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
-import { clsx } from 'clsx';
 
 type Props = {
     id: string;
