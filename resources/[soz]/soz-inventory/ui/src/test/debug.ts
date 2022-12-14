@@ -353,7 +353,7 @@ export const debugStorageInventory: NuiEventPlayerInventory = {
     targetInventory: {
         "label": "Arthur Price",
         "users": [],
-        "type": "player",
+        "type": "fridge",
         "time": 1670166782,
         "owner": "TLY79462",
         "weight": 7900,

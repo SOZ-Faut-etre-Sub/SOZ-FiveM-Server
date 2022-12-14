@@ -30,7 +30,6 @@ RegisterNetEvent("inventory:client:requestOpenInventory", function(data)
 end)
 
 RegisterNUICallback("transfertItem", function(data, cb)
-    data.item = json.decode(data.item)
     local amount = data.item.amount
 
     if amount > 1 then

@@ -3,8 +3,11 @@ import React, { FunctionComponent, memo, useCallback, useEffect, useLayoutEffect
 import { InventoryItem } from '../../types/inventory';
 import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
+import { clsx } from 'clsx';
 
 type Props = {
+    id: string;
+    containerName: string;
     item?: InventoryItem;
     money?: number;
     contextMenu?: boolean;
@@ -15,10 +18,13 @@ type Props = {
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
 
-const Draggable: FunctionComponent<Props> = ({ item, money, setInContext, interactAction, onItemHover }) => {
+const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, setInContext, interactAction, onItemHover }) => {
     const {attributes, listeners, setNodeRef, transform} = useDraggable({
-        id: item?.slot ?? ''.toString(),
-        data: item,
+        id: `${id}_${item?.slot ?? ''}`,
+        data: {
+            container: containerName,
+            item
+        },
     });
 
     const transformStyle = {
@@ -58,6 +64,7 @@ const Draggable: FunctionComponent<Props> = ({ item, money, setInContext, intera
         onItemHover(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description}
+            <div><span> </span> <span>${item.illustrator || ''}</span></div>
         `);
     }, [item, onItemHover]);
 
@@ -103,6 +110,9 @@ const Draggable: FunctionComponent<Props> = ({ item, money, setInContext, intera
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
             >
+                <span className={style.Amount}>
+                    {item.amount > 1 && item.amount}
+                </span>
                 <img
                     alt=""
                     className={style.Icon}
