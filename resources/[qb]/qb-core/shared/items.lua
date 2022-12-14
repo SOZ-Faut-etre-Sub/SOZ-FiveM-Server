@@ -21,7 +21,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une large dague, semblable à une épée.'
+        ['description'] = 'Une large dague, semblable à une épée.',
+        ['illustrator'] = '.Erthes',
     },
     ['weapon_bat'] = {
         ['name'] = 'weapon_bat',
@@ -31,7 +32,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Pour claquer ton plus beau home run !'
+        ['description'] = 'Pour claquer ton plus beau home run !',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_bottle'] = {
         ['name'] = 'weapon_bottle',
@@ -41,7 +43,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une bouteille brisée'
+        ['description'] = 'Une bouteille brisée',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_crowbar'] = {
         ['name'] = 'weapon_crowbar',
@@ -51,7 +54,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Barre de métal utilisée pour forcer des portes, ou forcer des crânes.'
+        ['description'] = 'Barre de métal utilisée pour forcer des portes, ou forcer des crânes.',
+        ['illustrator'] = '.Smogogo',
     },
     ['weapon_flashlight'] = {
         ['name'] = 'weapon_flashlight',
@@ -61,7 +65,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Pour voir dans le noir !'
+        ['description'] = 'Pour voir dans le noir !',
+        ['illustrator'] = '.MimiBloops',
     },
     ['weapon_golfclub'] = {
         ['name'] = 'weapon_golfclub',
@@ -71,7 +76,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un club utilisé avant tout pour frapper la balle au golf.'
+        ['description'] = 'Un club utilisé avant tout pour frapper la balle au golf.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_hammer'] = {
         ['name'] = 'weapon_hammer',
@@ -81,7 +87,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Utilisé pour des travaux tels que casser des choses, planter des clous, ou supporter une équipe eSport...'
+        ['description'] = 'Utilisé pour des travaux tels que casser des choses, planter des clous, ou supporter une équipe eSport...',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_hatchet'] = {
         ['name'] = 'weapon_hatchet',
@@ -91,7 +98,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une petite hache tenable à une main.'
+        ['description'] = 'Une petite hache tenable à une main.',
+        ['illustrator'] = '.PsyTeK',
     },
     ['weapon_knuckle'] = {
         ['name'] = 'weapon_knuckle',
@@ -101,7 +109,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un poing en métal.'
+        ['description'] = 'Un poing en métal.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_knife'] = {
         ['name'] = 'weapon_knife',
@@ -111,7 +120,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Instrument composé d\'une lame fixée dans un manche, utilisé pour couper ou comme arme.'
+        ['description'] = 'Instrument composé d\'une lame fixée dans un manche, utilisé pour couper ou comme arme.',
+        ['illustrator'] = '.Smogogo',
     },
     ['weapon_machete'] = {
         ['name'] = 'weapon_machete',
@@ -121,7 +131,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un long couteau, lame assez lourde.'
+        ['description'] = 'Un long couteau, lame assez lourde.',
+        ['illustrator'] = '.Sniteur',
     },
     ['weapon_switchblade'] = {
         ['name'] = 'weapon_switchblade',
@@ -131,7 +142,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un couteau avec une lame rétractable.'
+        ['description'] = 'Un couteau avec une lame rétractable.',
+        ['illustrator'] = '.LuckyG',
     },
     ['weapon_nightstick'] = {
         ['name'] = 'weapon_nightstick',
@@ -141,7 +153,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Arme de prédilection des officiers de police.'
+        ['description'] = 'Arme de prédilection des officiers de police.',
+        ['illustrator'] = '.Omega',
     },
     ['weapon_wrench'] = {
         ['name'] = 'weapon_wrench',
@@ -151,7 +164,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Idéal pour réparer la tuyauterie... ou casser des noix.'
+        ['description'] = 'Idéal pour réparer la tuyauterie... ou casser des noix.',
+        ['illustrator'] = '.LuckyG',
     },
     ['weapon_battleaxe'] = {
         ['name'] = 'weapon_battleaxe',
@@ -161,7 +175,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Hache à une main pour combattre tel un Moyen-Ageux.'
+        ['description'] = 'Hache à une main pour combattre tel un Moyen-Ageux.',
+        ['illustrator'] = '.Smogogo',
     },
     ['weapon_poolcue'] = {
         ['name'] = 'weapon_poolcue',
@@ -171,7 +186,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Utilisée pour jouer au billard, ou taper d\'autres trucs.'
+        ['description'] = 'Utilisée pour jouer au billard, ou taper d\'autres trucs.',
+        ['illustrator'] = '.Hawk',
     },
     ['weapon_briefcase'] = {
         ['name'] = 'weapon_briefcase',
@@ -181,7 +197,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une mallette pour ranger les documents importants.'
+        ['description'] = 'Une mallette pour ranger les documents importants.',
+        ['illustrator'] = '.Smogogo'
     },
     ['weapon_briefcase_02'] = {
         ['name'] = 'weapon_briefcase_02',
@@ -191,7 +208,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Contient sûrement des infos top secrete.'
+        ['description'] = 'Contient sûrement des infos top secrete.',
+        ['illustrator'] = '.Smogogo',
     },
     ['weapon_garbagebag'] = {
         ['name'] = 'weapon_garbagebag',
@@ -201,7 +219,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Pour jeter tout type d\'ordures.'
+        ['description'] = 'Pour jeter tout type d\'ordures.',
+        ['illustrator'] = '.Adrass'
     },
     ['weapon_handcuffs'] = {
         ['name'] = 'weapon_handcuffs',
@@ -211,7 +230,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Menottes pour prisonniers.'
+        ['description'] = 'Menottes pour prisonniers.',
+        ['illustrator'] = '.Hawk',
     },
     ['weapon_bread'] = {
         ['name'] = 'weapon_bread',
@@ -221,7 +241,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Tu veux du pain ?'
+        ['description'] = 'Tu veux du pain ?',
+        ['illustrator'] = '.Kutz',
     },
     ['weapon_stone_hatchet'] = {
         ['name'] = 'weapon_stone_hatchet',
@@ -231,7 +252,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = true,
-        ['description'] = 'Retour à l\'âge de pierre.'
+        ['description'] = 'Retour à l\'âge de pierre.',
+        ['illustrator'] = '.Smogogo',
     },
 
     -- Handguns
@@ -243,7 +265,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un pistolet très maniable, parfait pour assurer sa sécurité.'
+        ['description'] = 'Un pistolet très maniable, parfait pour assurer sa sécurité.',
+        ['illustrator'] = '.Sniteur',
     },
     ['weapon_pistol_mk2'] = {
         ['name'] = 'weapon_pistol_mk2',
@@ -253,7 +276,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une version amélioré du classique pistolet.'
+        ['description'] = 'Une version amélioré du classique pistolet.',
+        ['illustrator'] = '.Sniteur',
     },
     ['weapon_combatpistol'] = {
         ['name'] = 'weapon_combatpistol',
@@ -283,7 +307,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Arme électrique de corps à corps, causant une paralysie.'
+        ['description'] = 'Arme électrique de corps à corps, causant une paralysie.',
+        ['illustrator'] = '.GautSlayer',
     },
     ['weapon_pistol50'] = {
         ['name'] = 'weapon_pistol50',
@@ -363,7 +388,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PISTOL',
         ['unique'] = true,
         ['useable'] = true,
-        ['description'] = 'Un révolver lourd, lourd dégats.'
+        ['description'] = 'Un révolver lourd, lourd dégats.',
+        ['illustrator'] = '.Sniteur',
     },
     ['weapon_doubleaction'] = {
         ['name'] = 'weapon_doubleaction',
@@ -1007,7 +1033,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une boule de neige, à lancer sur tout le monde.'
+        ['description'] = 'Une boule de neige, à lancer sur tout le monde.',
+        ['illustrator'] = '.Kutz',
     },
     ['weapon_pipebomb'] = {
         ['name'] = 'weapon_pipebomb',
@@ -1027,7 +1054,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_BALL',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Lance la à ton pote qui a la batte !'
+        ['description'] = 'Lance la à ton pote qui a la batte !',
+        ['illustrator'] = '.Hawk',
     },
     ['weapon_smokegrenade'] = {
         ['name'] = 'weapon_smokegrenade',
@@ -1059,7 +1087,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PETROLCAN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'De quoi faire le plein de ta caisse !'
+        ['description'] = 'De quoi faire le plein de ta caisse !',
+        ['illustrator'] = '.LeakFlood',
     },
     ['weapon_fireextinguisher'] = {
         ['name'] = 'weapon_fireextinguisher',
@@ -1069,7 +1098,8 @@ QBShared.Items = {
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'De quoi éteindre un feu !'
+        ['description'] = 'De quoi éteindre un feu !',
+        ['illustrator'] = '.TheSeds',
     },
     ['weapon_hazardcan'] = {
         ['name'] = 'weapon_hazardcan',
@@ -1079,7 +1109,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_PETROLCAN',
         ['unique'] = true,
         ['useable'] = true,
-        ['description'] = 'Bidon contenant une substance chimique dangereuse.'
+        ['description'] = 'Bidon contenant une substance chimique dangereuse.',
+        ['illustrator'] = '.Kutz',
     },
 
     -- ITEMS
@@ -1161,7 +1192,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Sniteur',
     },
     ['ammo_02'] = {
         ['name'] = 'ammo_02',
@@ -1172,7 +1204,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Sniteur',
     },
     ['ammo_03'] = {
         ['name'] = 'ammo_03',
@@ -1363,6 +1396,7 @@ QBShared.Items = {
             ['protein'] = 5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah',
     },
     ['twerks_candy'] = {
         ['name'] = 'twerks_candy',
@@ -1405,6 +1439,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['sandwich'] = {
         ['name'] = 'sandwich',
@@ -1427,6 +1462,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.LeakFlood',
     },
 
     -- Drink ITEMS
@@ -1451,6 +1487,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.LeakFlood',
     },
     ['coffee'] = {
         ['name'] = 'coffee',
@@ -1472,6 +1509,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['kurkakola'] = {
         ['name'] = 'kurkakola',
@@ -1493,6 +1531,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Smogogo',
     },
 
     -- Alcohol
@@ -1539,6 +1578,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['grape2'] = {
         ['name'] = 'grape2',
@@ -1561,6 +1601,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['grape3'] = {
         ['name'] = 'grape3',
@@ -1583,6 +1624,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['grape4'] = {
         ['name'] = 'grape4',
@@ -1605,6 +1647,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['wine1'] = {
         ['name'] = 'wine1',
@@ -1629,6 +1672,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 28,
         },
+        ['illustrator'] = '.Omega',
     },
     ['wine2'] = {
         ['name'] = 'wine2',
@@ -1653,6 +1697,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 28,
         },
+        ['illustrator'] = '.Wyron',
     },
     ['wine3'] = {
         ['name'] = 'wine3',
@@ -1677,6 +1722,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 28,
         },
+        ['illustrator'] = '.Wyron',
     },
     ['wine4'] = {
         ['name'] = 'wine4',
@@ -1701,6 +1747,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 28,
         },
+        ['illustrator'] = '.Wyron',
     },
     ['grapejuice1'] = {
         ['name'] = 'grapejuice1',
@@ -1725,6 +1772,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Omega',
     },
     ['grapejuice2'] = {
         ['name'] = 'grapejuice2',
@@ -1749,6 +1797,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['grapejuice3'] = {
         ['name'] = 'grapejuice3',
@@ -1773,6 +1822,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['grapejuice4'] = {
         ['name'] = 'grapejuice4',
@@ -1797,6 +1847,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['grapejuice5'] = {
         ['name'] = 'grapejuice5',
@@ -1821,6 +1872,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['tripe'] = {
         ['name'] = 'tripe',
@@ -1843,6 +1895,7 @@ QBShared.Items = {
             ['protein'] = 20,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['peau'] = {
         ['name'] = 'peau',
@@ -1854,7 +1907,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Bien grillé s\'il vous plaît !'
+        ['description'] = 'Bien grillé s\'il vous plaît !',
+        ['illustrator'] = '.Smogogo',
     },
     ['os'] = {
         ['name'] = 'os',
@@ -1865,7 +1919,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'A ne pas avaler !'
+        ['description'] = 'A ne pas avaler !',
+        ['illustrator'] = '.Kutz',
     },
     ['viscere'] = {
         ['name'] = 'viscere',
@@ -1877,7 +1932,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Un régal si bien assaisonné.'
+        ['description'] = 'Un régal si bien assaisonné.',
+        ['illustrator'] = '.GautSlayer',
     },
     ['viande'] = {
         ['name'] = 'viande',
@@ -1900,6 +1956,7 @@ QBShared.Items = {
             ['protein'] = 30,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks',
     },
     ['langue'] = {
         ['name'] = 'langue',
@@ -1922,6 +1979,7 @@ QBShared.Items = {
             ['protein'] = 30,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Smogogo',
     },
     ['abat'] = {
         ['name'] = 'abat',
@@ -1944,6 +2002,7 @@ QBShared.Items = {
             ['protein'] = 30,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.GautSlayer'
     },
     ['rognon'] = {
         ['name'] = 'rognon',
@@ -1966,6 +2025,7 @@ QBShared.Items = {
             ['protein'] = 30,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Smogogo',
     },
     ['sausage1'] = {
         ['name'] = 'sausage1',
@@ -1990,6 +2050,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['sausage2'] = {
         ['name'] = 'sausage2',
@@ -2014,6 +2075,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['sausage3'] = {
         ['name'] = 'sausage3',
@@ -2038,6 +2100,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat'
     },
     ['sausage4'] = {
         ['name'] = 'sausage4',
@@ -2062,6 +2125,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat',
     },
     ['sausage5'] = {
         ['name'] = 'sausage5',
@@ -2086,6 +2150,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat'
     },
     ['milk'] = {
         ['name'] = 'milk',
@@ -2176,6 +2241,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat'
     },
     ['cheese2'] = {
         ['name'] = 'cheese2',
@@ -2200,6 +2266,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks'
     },
     ['cheese3'] = {
         ['name'] = 'cheese3',
@@ -2224,6 +2291,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks'
     },
     ['cheese4'] = {
         ['name'] = 'cheese4',
@@ -2248,6 +2316,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat'
     },
     ['cheese5'] = {
         ['name'] = 'cheese5',
@@ -2272,6 +2341,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat'
     },
     ['cheese6'] = {
         ['name'] = 'cheese6',
@@ -2296,6 +2366,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks'
     },
     ['cheese7'] = {
         ['name'] = 'cheese7',
@@ -2320,6 +2391,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks'
     },
     ['cheese8'] = {
         ['name'] = 'cheese8',
@@ -2344,6 +2416,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Volkstat'
     },
     ['cheese9'] = {
         ['name'] = 'cheese9',
@@ -2368,6 +2441,7 @@ QBShared.Items = {
             ['protein'] = 0.5,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Freaks'
     },
     ['meal_box'] = {
         ['name'] = 'meal_box',
@@ -2402,6 +2476,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah'
     },
     ['onigiri_assortment'] = {
         ['name'] = 'onigiri_assortment',
@@ -2424,6 +2499,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah'
     },
     ['meat_festival'] = {
         ['name'] = 'meat_festival',
@@ -2446,6 +2522,7 @@ QBShared.Items = {
             ['protein'] = 2,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah'
     },
     ['royal_vegetables'] = {
         ['name'] = 'royal_vegetables',
@@ -2468,6 +2545,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Abolah'
     },
 
     -- Drugs
@@ -2546,7 +2624,8 @@ QBShared.Items = {
                 ['timeOut'] = 5000,
             }
         },
-        ['description'] = 'Papier fabriqué spécifiquement pour envelopper et fumer du tabac ou du cannabis.'
+        ['description'] = 'Papier fabriqué spécifiquement pour envelopper et fumer du tabac ou du cannabis.',
+        ['illustrator'] = '.Erthes',
     },
 
     -- Seed And Weed
@@ -2572,7 +2651,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'RECYCLEZ! - Greta Thunberg 2019.'
+        ['description'] = 'RECYCLEZ! - Greta Thunberg 2019.',
+        ['illustrator'] = '.Darabesque',
     },
     ['metalscrap'] = {
         ['name'] = 'metalscrap',
@@ -2583,7 +2663,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Il doit être possible d\'en faire quelque chose.'
+        ['description'] = 'Il doit être possible d\'en faire quelque chose.',
+        ['illustrator'] = '.Darabesque',
     },
     ['copper'] = {
         ['name'] = 'copper',
@@ -2605,7 +2686,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Conserve les restes plus longtemps !'
+        ['description'] = 'Conserve les restes plus longtemps !',
+        ['illustrator'] = '.Darabesque',
     },
     ['aluminumoxide'] = {
         ['name'] = 'aluminumoxide',
@@ -2660,7 +2742,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Élaboré pour résister à des sollicitations mécaniques et chimiques.'
+        ['description'] = 'Élaboré pour résister à des sollicitations mécaniques et chimiques.',
+        ['illustrator'] = '.Smogogo',
     },
     ['rubber'] = {
         ['name'] = 'rubber',
@@ -2671,7 +2754,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Ça conduit pas l\'électricité.'
+        ['description'] = 'Ça conduit pas l\'électricité.',
+        ['illustrator'] = '.Devychou',
     },
     ['glass'] = {
         ['name'] = 'glass',
@@ -2682,7 +2766,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Très fragile, attention.'
+        ['description'] = 'Très fragile, attention.',
+        ['illustrator'] = '.Kutz',
     },
 
     -- Tools
@@ -2695,7 +2780,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Très utile quand on perd sa clé... Ou pour d\'autres choses...'
+        ['description'] = 'Très utile quand on perd sa clé... Ou pour d\'autres choses...',
+        ['illustrator'] = '.Kutz',
     },
     ['electronickit'] = {
         ['name'] = 'electronickit',
@@ -2712,7 +2798,8 @@ QBShared.Items = {
             reward = 'trojan_usb',
             anim = nil
         },
-        ['description'] = 'Envie de faire de la robotique ?'
+        ['description'] = 'Envie de faire de la robotique ?',
+        ['illustrator'] = '.Tontoncubi',
     },
     ['trojan_usb'] = {
         ['name'] = 'trojan_usb',
@@ -2735,7 +2822,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Une belle boîte à outils avec des trucs pour réparer votre véhicule.'
+        ['description'] = 'Une belle boîte à outils avec des trucs pour réparer votre véhicule.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['cleaningkit'] = {
         ['name'] = 'cleaningkit',
@@ -2746,7 +2834,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour redonner une nouvelle jeunesse à votre voiture !'
+        ['description'] = 'Pour redonner une nouvelle jeunesse à votre voiture !',
+        ['illustrator'] = '.LeakFlood',
     },
     ['wheel_kit'] = {
         ['name'] = 'wheel_kit',
@@ -2757,7 +2846,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour éviter de se retrouver à pieds.'
+        ['description'] = 'Pour éviter de se retrouver à pieds.',
+        ['illustrator'] = '.LeakFlood',
     },
     -- Medication
     ['firstaid'] = {
@@ -2770,7 +2860,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour remettre les gens sur pied.'
+        ['description'] = 'Pour remettre les gens sur pied.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['ifaks'] = {
         ['name'] = 'ifaks',
@@ -2792,7 +2883,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Généralement prescrit pour traiter les maux au dos.'
+        ['description'] = 'Généralement prescrit pour traiter les maux au dos.',
+        ['illustrator'] = '.Smogogo',
     },
     ['antibiotic'] = {
         ['name'] = 'antibiotic',
@@ -2815,7 +2907,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour que les papys puissent taper sur les voitures.'
+        ['description'] = 'Pour que les papys puissent taper sur les voitures.',
+        ['illustrator'] = '.Hawk'
     },
     ['bloodbag'] = {
         ['name'] = 'bloodbag',
@@ -2827,7 +2920,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Utile pour réanimer'
+        ['description'] = 'Utile pour réanimer',
+        ['illustrator'] = '.Smogogo'
     },
     ['empty_bloodbag'] = {
         ['name'] = 'empty_bloodbag',
@@ -2839,7 +2933,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Utile pour faire une prise de sang'
+        ['description'] = 'Utile pour faire une prise de sang',
+        ['illustrator'] = '.Smogogo'
     },
     ['used_bloodbag'] = {
         ['name'] = 'used_bloodbag',
@@ -2851,7 +2946,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Pas très utile pour réanimer.'
+        ['description'] = 'Pas très utile pour réanimer.',
+        ['illustrator'] = '.Pastouke'
     },
     ['tissue'] = {
         ['name'] = 'tissue',
@@ -2863,7 +2959,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "Vous débarrasse de n'importe quel rhume."
+        ['description'] = "Vous débarrasse de n'importe quel rhume.",
+        ['illustrator'] = '.Smogogo'
     },
     ['pommade'] = {
         ['name'] = 'pommade',
@@ -2875,7 +2972,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "Soulage les rougeurs et les irritations."
+        ['description'] = "Soulage les rougeurs et les irritations.",
+        ['illustrator'] = '.LeakFlood'
     },
     ['antiacide'] = {
         ['name'] = 'antiacide',
@@ -2886,7 +2984,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "Dégazifie votre intérieur."
+        ['description'] = "Dégazifie votre intérieur.",
+        ['illustrator'] = '.Smogogo',
     },
     ['defibrillator'] = {
         ['name'] = 'defibrillator',
@@ -2898,7 +2997,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Utile pour réanimer'
+        ['description'] = 'Utile pour réanimer',
+        ['illustrator'] = '.Smogogo'
     },
     ['poumon'] = {
         ['name'] = 'poumon',
@@ -2911,7 +3011,8 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 60,
         ['combinable'] = nil,
-        ['description'] = 'Utile pour respirer.'
+        ['description'] = 'Utile pour respirer.',
+        ['illustrator'] = '.TheSeds'
     },
     ['foie'] = {
         ['name'] = 'foie',
@@ -2924,7 +3025,8 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 60,
         ['combinable'] = nil,
-        ['description'] = 'Attention à la crise.'
+        ['description'] = 'Attention à la crise.',
+        ['illustrator'] = '.TheSeds'
     },
     ['rein'] = {
         ['name'] = 'rein',
@@ -2937,7 +3039,8 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['durability'] = 60,
         ['combinable'] = nil,
-        ['description'] = 'Ca pourrait t\'en couter un.'
+        ['description'] = 'Ca pourrait t\'en couter un.',
+        ['illustrator'] = '.TheSeds'
     },
     ['antidepressant'] = {
         ['name'] = 'antidepressant',
@@ -2949,7 +3052,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Soulage le stress.'
+        ['description'] = 'Soulage le stress.',
+        ['illustrator'] = '.Smogogo'
     },
 
     ['garbagebag'] = {
@@ -2968,7 +3072,8 @@ QBShared.Items = {
         ['type'] = 'item',
         ['unique'] = false,
         ['useable'] = true,
-        ['description'] = 'Une jolie maison !'
+        ['description'] = 'Une jolie maison !',
+        ['illustrator'] = '.Sniteur'
     },
 
     -- Communication
@@ -2981,7 +3086,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Outil qui zert à communiquer.'
+        ['description'] = 'Outil qui zert à communiquer.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['radio'] = {
         ['name'] = 'radio',
@@ -2992,7 +3098,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Alooo ?'
+        ['description'] = 'Alooo ?',
+        ['illustrator'] = '.Sniteur',
     },
     ['megaphone'] = {
         ['name'] = 'megaphone',
@@ -3003,7 +3110,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Peut servir pour parler a une foule... A déjà permis de faire plusieurs exploits mondiaux'
+        ['description'] = 'Peut servir pour parler a une foule... A déjà permis de faire plusieurs exploits mondiaux',
+        ['illustrator'] = '.Sniteur',
     },
     ['microphone'] = {
         ['name'] = 'microphone',
@@ -3014,7 +3122,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Poupipou, il est l\'heure de CHANTER !'
+        ['description'] = 'Poupipou, il est l\'heure de CHANTER !',
+        ['illustrator'] = '.Sniteur',
     },
     ['laptop'] = {
         ['name'] = 'laptop',
@@ -3047,7 +3156,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Trouve ton chemin facilement !'
+        ['description'] = 'Trouve ton chemin facilement !',
+        ['illustrator'] = '.LeakFlood',
     },
     ['compass'] = {
         ['name'] = 'compass',
@@ -3058,7 +3168,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour ne jamais perdre le Nord !'
+        ['description'] = 'Pour ne jamais perdre le Nord !',
+        ['illustrator'] = '.Kutz',
     },
 
     -- Theft and Jewelry
@@ -3071,7 +3182,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Cette montre en Or indique que vous êtes à l\'aise financièrement.'
+        ['description'] = 'Cette montre en Or indique que vous êtes à l\'aise financièrement.',
+        ['illustrator'] = '.Darabesque',
     },
     ['diamond_ring'] = {
         ['name'] = 'diamond_ring',
@@ -3082,7 +3194,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Un bijou magnifique.'
+        ['description'] = 'Un bijou magnifique.',
+        ['illustrator'] = '.Darabesque',
     },
     ['goldchain'] = {
         ['name'] = 'goldchain',
@@ -3093,7 +3206,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'C\'est du vrai or ?'
+        ['description'] = 'C\'est du vrai or ?',
+        ['illustrator'] = '.Darabesque',
     },
     ['10kgoldchain'] = {
         ['name'] = '10kgoldchain',
@@ -3104,7 +3218,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Chaîne en or volée à son propriétaire !'
+        ['description'] = 'Chaîne en or volée à son propriétaire !',
+        ['illustrator'] = '.Darabesque',
     },
     ['goldbar'] = {
         ['name'] = 'goldbar',
@@ -3115,7 +3230,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Ça semble valoir son pesant... d\'or.'
+        ['description'] = 'Ça semble valoir son pesant... d\'or.',
+        ['illustrator'] = '.Darabesque',
     },
 
     -- Cops Tools
@@ -3128,7 +3244,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Il faut parfois se protéger avant de sortir.'
+        ['description'] = 'Il faut parfois se protéger avant de sortir.',
+        ['illustrator'] = '.LeakFlood',
     },
     ['outfit'] = {
         ['name'] = 'outfit',
@@ -3150,7 +3267,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour les criminels. Peut avoir d\'autres utilités...'
+        ['description'] = 'Pour les criminels. Peut avoir d\'autres utilités...',
+        ['illustrator'] = '.Sniteur',
     },
     ['handcuffs_key'] = {
         ['name'] = 'handcuffs_key',
@@ -3161,7 +3279,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour ouvrir des menottes fermées'
+        ['description'] = 'Pour ouvrir des menottes fermées',
+        ['illustrator'] = '.Sniteur',
     },
     ['spike'] = {
         ['name'] = 'spike',
@@ -3172,7 +3291,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Meilleur outil pour réduire la vitesse !'
+        ['description'] = 'Meilleur outil pour réduire la vitesse !',
+        ['illustrator'] = '.Smogogo'
     },
     ['cone'] = {
         ['name'] = 'cone',
@@ -3183,7 +3303,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Rien à voir avec un cône VLC.'
+        ['description'] = 'Rien à voir avec un cône VLC.',
+        ['illustrator'] = '.Sniteur'
     },
     ['police_barrier'] = {
         ['name'] = 'police_barrier',
@@ -3194,7 +3315,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'VOUS NE PASSEREZ PAAAAAAAAAS !'
+        ['description'] = 'VOUS NE PASSEREZ PAAAAAAAAAS !',
+        ['illustrator'] = '.Sniteur'
     },
 
     -- Firework Tools
@@ -3253,7 +3375,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Tout ce qu\'il faut pour aller visiter Nemo'
+        ['description'] = 'Tout ce qu\'il faut pour aller visiter Nemo',
+        ['illustrator'] = '.Kaemy',
     },
 
     -- Other Tools
@@ -3266,7 +3389,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Le ciel est la limite ! Woohoo !'
+        ['description'] = 'Le ciel est la limite ! Woohoo !',
+        ['illustrator'] = '.LeakFlood'
     },
     ['binoculars'] = {
         ['name'] = 'binoculars',
@@ -3277,7 +3401,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour surveiller des oiseaux... Ou espionner des voisins.'
+        ['description'] = 'Pour surveiller des oiseaux... Ou espionner des voisins.',
+        ['illustrator'] = '.Kaemy'
     },
     ['snowball'] = {
         ['name'] = 'snowball',
@@ -3310,7 +3435,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Certificat attestant d\'une preuve.'
+        ['description'] = 'Certificat attestant d\'une preuve.',
+        ['illustrator'] = '.Kutz',
     },
     ['printerdocument'] = {
         ['name'] = 'printerdocument',
@@ -3321,7 +3447,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Un document'
+        ['description'] = 'Un document',
+        ['illustrator'] = '.Smogogo',
     },
     ['newspaper'] = {
         ['name'] = 'newspaper',
@@ -3332,7 +3459,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Peut être utile pour se culturer'
+        ['description'] = 'Peut être utile pour se culturer',
+        ['illustrator'] = '.Omega',
     },
 
     --- News items
@@ -3345,7 +3473,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG',
     },
     ['n_fix_camera'] = {
         ['name'] = 'n_fix_camera',
@@ -3356,7 +3485,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Omega',
     },
     ['n_fix_light'] = {
         ['name'] = 'n_fix_light',
@@ -3367,7 +3497,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG',
     },
     ['n_fix_mic'] = {
         ['name'] = 'n_fix_mic',
@@ -3378,7 +3509,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG'
     },
     ['n_camera'] = {
         ['name'] = 'n_camera',
@@ -3389,7 +3521,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Omega'
     },
     ['n_mic'] = {
         ['name'] = 'n_mic',
@@ -3400,7 +3533,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG'
     },
     ['n_bmic'] = {
         ['name'] = 'n_bmic',
@@ -3411,7 +3545,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.LuckyG'
     },
 
     -- mtp
@@ -3424,7 +3559,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Le pétrole brut est raffiné en toutes sortes de ressources à base de pétrole, telles que le carburant.'
+        ['description'] = 'Le pétrole brut est raffiné en toutes sortes de ressources à base de pétrole, telles que le carburant.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['petroleum_refined'] = {
         ['name'] = 'petroleum_refined',
@@ -3435,7 +3571,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Pétrole brut, conditionné pour le transport ou pour être utilisé comme carburant.'
+        ['description'] = 'Pétrole brut, conditionné pour le transport ou pour être utilisé comme carburant.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['petroleum_residue'] = {
         ['name'] = 'petroleum_residue',
@@ -3446,7 +3583,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du résidus polluants prêt à être livré à BlueBird.'
+        ['description'] = 'Du résidus polluants prêt à être livré à BlueBird.',
+        ['illustrator'] = '.LeakFlood & Renko'
     },
     ['essence'] = {
         ['name'] = 'essence',
@@ -3468,7 +3606,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
+        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['oil_jerrycan'] = {
         ['name'] = 'oil_jerrycan',
@@ -3479,7 +3618,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'De l\'huile servant à remplir les différents véhicules à la main.'
+        ['description'] = 'De l\'huile servant à remplir les différents véhicules à la main.',
+        ['illustrator'] = '.Kutz'
     },
     ['kerosene'] = {
         ['name'] = 'kerosene',
@@ -3490,7 +3630,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.'
+        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['kerosene_jerrycan'] = {
         ['name'] = 'kerosene_jerrycan',
@@ -3501,7 +3642,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.'
+        ['description'] = 'Du carburant conditionné servant à remplir les différents véhicules à la main.',
+        ['illustrator'] = '.LeakFlood'
     },
 
     -- UPW
@@ -3514,7 +3656,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Omega'
     },
     ['energy_cell_fossil'] = {
         ['name'] = 'energy_cell_fossil',
@@ -3525,7 +3668,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Sniteur'
     },
     ['energy_cell_wind'] = {
         ['name'] = 'energy_cell_wind',
@@ -3536,7 +3680,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo & Omega'
     },
     ['seeweed_acid'] = {
         ['name'] = 'seeweed_acid',
@@ -3547,7 +3692,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Darabesque'
     },
 
     -- zkea
@@ -3560,7 +3706,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour retrouver ton chez toi !'
+        ['description'] = 'Pour retrouver ton chez toi !',
+        ['illustrator'] = '.Smogogo',
     },
 
     -- other
@@ -3573,7 +3720,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Bienvenue sur SOZ !'
+        ['description'] = 'Bienvenue sur SOZ !',
+        ['illustrator'] = '.Kutz',
     },
     ['health_book'] = {
         ['name'] = 'health_book',
@@ -3597,7 +3745,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Pour faire des diagnostics sur les véhicules.'
+        ['description'] = 'Pour faire des diagnostics sur les véhicules.',
+        ['illustrator'] = '.Sniteur'
     },
 
     -- PAWL
@@ -3610,7 +3759,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Omega'
     },
     ['wood_plank'] = {
         ['name'] = 'wood_plank',
@@ -3624,6 +3774,7 @@ QBShared.Items = {
         ['description'] = '',
         ['resellPrice'] = 2,
         ['resellZone'] = 'Resell:LSPort:Pawl',
+        ['illustrator'] = '.DrLuck1'
     },
     ['sawdust'] = {
         ['name'] = 'sawdust',
@@ -3634,7 +3785,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Crash'
     },
     ['paper'] = {
         ['name'] = 'paper',
@@ -3645,7 +3797,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.DrLuck1'
     },
     ['cabinet_zkea'] = {
         ['name'] = 'cabinet_zkea',
@@ -3675,7 +3828,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo'
     },
     ['flask_pee_full'] = {
         ['name'] = 'flask_pee_full',
@@ -3686,7 +3840,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo'
     },
     ['flask_blood_empty'] = {
         ['name'] = 'flask_blood_empty',
@@ -3697,7 +3852,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo'
     },
     ['flask_blood_full'] = {
         ['name'] = 'flask_blood_full',
@@ -3708,7 +3864,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo'
     },
     --- Deprecated
     ['milkbucket'] = {
@@ -3721,7 +3878,8 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['durability'] = 14,
         ['combinable'] = nil,
-        ['description'] = 'Bidon archéologique, autrefois utilisé pour produire du lait'
+        ['description'] = 'Bidon archéologique, autrefois utilisé pour produire du lait',
+        ['illustrator'] = '.Sniteur'
     },
     -- BAUN
     liquor_crate = {
@@ -3736,6 +3894,7 @@ QBShared.Items = {
         shouldClose = false,
         combinable = nil,
         description = "Contient des alcools pour cocktail.",
+        illustrator = ".Kutz"
     },
     flavor_crate = {
         name = "flavor_crate",
@@ -3749,6 +3908,7 @@ QBShared.Items = {
         shouldClose = false,
         combinable = nil,
         description = "Contient des saveurs pour cocktail.",
+        illustrator = ".Kutz"
     },
     furniture_crate = {
         name = "furniture_crate",
@@ -3762,6 +3922,7 @@ QBShared.Items = {
         shouldClose = false,
         combinable = nil,
         description = "Contient des fournitures pour cocktail.",
+        illustrator = ".Kutz"
     },
     vodka = {
         name = 'vodka',
@@ -3784,6 +3945,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 16,
         },
+        illustrator = ".Kutz"
     },
     gin = {
         name = 'gin',
@@ -3828,6 +3990,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 16,
         },
+        illustrator = ".Kutz"
     },
     whisky = {
         name = 'whisky',
@@ -3850,6 +4013,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 16,
         },
+        illustrator = ".Kutz"
     },
     cognac = {
         name = 'cognac',
@@ -3872,6 +4036,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 16,
         },
+        illustrator = ".Kutz"
     },
     rhum = {
         name = 'rhum',
@@ -3894,6 +4059,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 16,
         },
+        illustrator = ".Kutz"
     },
     green_lemon = {
         name = "green_lemon",
@@ -3919,7 +4085,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "\"C'est pas là où y'a un festival ?\""
+        description = "C'est pas là où y'a un festival ?",
+        illustrator = ".Kutz"
     },
     ananas_juice = {
         name = "ananas_juice",
@@ -3932,7 +4099,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     coconut_milk = {
         name = "coconut_milk",
@@ -3945,7 +4113,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     cinnamon = {
         name = "cinnamon",
@@ -3957,7 +4126,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     orange_juice = {
         name = "orange_juice",
@@ -3970,7 +4140,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     strawberry_juice = {
         name = "strawberry_juice",
@@ -3983,7 +4154,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     apple_juice = {
         name = "apple_juice",
@@ -3996,7 +4168,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     straw = {
         name = "straw",
@@ -4008,7 +4181,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     ice_cube = {
         name = "ice_cube",
@@ -4020,7 +4194,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Kutz"
     },
     fruit_slice = {
         name = "fruit_slice",
@@ -4033,7 +4208,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Devychou"
     },
     tumbler = {
         name = "tumbler",
@@ -4045,7 +4221,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Très utile pour confectionner un cocktail."
+        description = "Très utile pour confectionner un cocktail.",
+        illustrator = ".Hawk"
     },
     narito = {
         name = "narito",
@@ -4068,6 +4245,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 8,
         },
+        illustrator = ".Kutz"
     },
     lapicolada = {
         name = "lapicolada",
@@ -4090,6 +4268,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 8,
         },
+        illustrator = ".Smogogo"
     },
     sunrayou = {
         name = "sunrayou",
@@ -4112,6 +4291,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 8,
         },
+        illustrator = ".Smogogo"
     },
     ponche = {
         name = "ponche",
@@ -4134,6 +4314,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 8,
         },
+        illustrator = ".Kutz"
     },
     pinkenny = {
         name = "pinkenny",
@@ -4156,6 +4337,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 8,
         },
+        illustrator = ".Smogogo"
     },
     phasmopolitan = {
         name = "phasmopolitan",
@@ -4178,6 +4360,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 8,
         },
+        illustrator = ".Smogogo"
     },
     escalier = {
         name = "escalier",
@@ -4200,6 +4383,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 8,
         },
+        illustrator = ".Kutz"
     },
     whicanelle = {
         name = "whicanelle",
@@ -4222,6 +4406,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 8,
         },
+        illustrator = ".Kutz"
     },
     ['horror_cauldron'] = {
         ['name'] = "horror_cauldron",
@@ -4244,6 +4429,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 20,
         },
+        ['illustrator'] = ".Erthes"
     },
     cocktail_box = {
         name = 'cocktail_box',
@@ -4254,7 +4440,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = "Avec ça tu peux aller en boîte, AHAH."
+        description = "Avec ça tu peux aller en boîte, AHAH.",
+        illustrator = ".Kutz"
     },
     -- Fight For Style
     ['cotton_bale'] = {
@@ -4267,7 +4454,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".Smogogo"
     },
     ['natural_fiber'] = {
         ['name'] = 'natural_fiber',
@@ -4279,7 +4467,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['synthetic_fiber'] = {
         ['name'] = 'synthetic_fiber',
@@ -4291,7 +4480,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['artificial_fiber'] = {
         ['name'] = 'artificial_fiber',
@@ -4303,7 +4493,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['leather'] = {
         ['name'] = 'leather',
@@ -4315,7 +4506,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "S'associe bien avec le latex pour une raison... inconnue."
+        ['description'] = "S'associe bien avec le latex pour une raison... inconnue.",
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['latex'] = {
         ['name'] = 'latex',
@@ -4327,7 +4519,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "S'associe bien avec le cuir pour une raison... inconnue."
+        ['description'] = "S'associe bien avec le cuir pour une raison... inconnue.",
+        ['illustrator'] = ".drako666 & Azur0ra"
     },
     ['sap'] = {
         ['name'] = 'sap',
@@ -4339,7 +4532,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = ".Crash"
     },
     ['garment_top'] = {
         ['name'] = 'garment_top',
@@ -4351,7 +4545,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Ta mamie te trouverait très beau avec ce vêtement mais il n'y a bien qu'elle."
+        ['description'] = "Ta mamie te trouverait très beau avec ce vêtement mais il n'y a bien qu'elle.",
+        ['illustrator'] = '.drako666 & Smogogo'
     },
     ['garment_pant'] = {
         ['name'] = 'garment_pant',
@@ -4363,7 +4558,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Il vaut mieux en avoir une paire.'
+        ['description'] = 'Il vaut mieux en avoir une paire.',
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['garment_shoes'] = {
         ['name'] = 'garment_shoes',
@@ -4375,7 +4571,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Toujours trouver chaussure à son pied.'
+        ['description'] = 'Toujours trouver chaussure à son pied.',
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['garment_underwear'] = {
         ['name'] = 'garment_underwear',
@@ -4387,7 +4584,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Enrobe délicatement vos formes pour les mettre en valeur lors de soirées trop arrosées.'
+        ['description'] = 'Enrobe délicatement vos formes pour les mettre en valeur lors de soirées trop arrosées.',
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['luxury_garment_top'] = {
         ['name'] = 'luxury_garment_top',
@@ -4399,7 +4597,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Fait avec les laines les plus douces de l'île"
+        ['description'] = "Fait avec les laines les plus douces de l'île",
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['luxury_garment_pant'] = {
         ['name'] = 'luxury_garment_pant',
@@ -4411,7 +4610,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Il vaut mieux en avoir une paire... et en or!'
+        ['description'] = 'Il vaut mieux en avoir une paire... et en or!',
+        ['illustrator'] = '.Crash'
     },
     ['luxury_garment_shoes'] = {
         ['name'] = 'luxury_garment_shoes',
@@ -4423,7 +4623,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Avec ça, on se sentirait comme Cendrillon.'
+        ['description'] = 'Avec ça, on se sentirait comme Cendrillon.',
+        ['illustrator'] = '.drako666 & Azur0ra'
     },
     ['luxury_garment_underwear'] = {
         ['name'] = 'luxury_garment_underwear',
@@ -4435,7 +4636,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Ça moule pas trop j'espère ?"
+        ['description'] = "Ça moule pas trop j'espère ?",
+        ['illustrator'] = '.Kutz & Devy'
     },
     work_clothes = {
         name = 'work_clothes',
@@ -4447,7 +4649,8 @@ QBShared.Items = {
         useable = false,
         shouldClose = false,
         combinable = nil,
-        description = 'Il faut bien porter quelque chose quand on bosse, non ?'
+        description = 'Il faut bien porter quelque chose quand on bosse, non ?',
+        illustrator = '.Azur0ra'
     },
     -- ZEVENT 2022
     ['zevent2022_popcorn'] = {
@@ -4519,7 +4722,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Une rolex, un bracelet et des bagues qui brillent'
+        ['description'] = 'Une rolex, un bracelet et des bagues qui brillent',
+        ['illustrator'] = '.MrAruls'
     },
     ['small_moneybag'] = {
         ['name'] = 'small_moneybag',
@@ -4531,7 +4735,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'A peine de quoi payer un café'
+        ['description'] = 'A peine de quoi payer un café',
+        ['illustrator'] = '.Biblys & Smogogo'
     },
     ['medium_moneybag'] = {
         ['name'] = 'medium_moneybag',
@@ -4543,7 +4748,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "A votre avis, combien ça vaut ?"
+        ['description'] = "A votre avis, combien ça vaut ?",
+        ['illustrator'] = '.Biblys & Smogogo'
     },
     ['big_moneybag'] = {
         ['name'] = 'big_moneybag',
@@ -4555,7 +4761,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "De quoi s'acheter un très gros jet. Privé le jet !"
+        ['description'] = "De quoi s'acheter un très gros jet. Privé le jet !",
+        ['illustrator'] = '.Biblys'
     },
     ['stonk__secure_container'] = {
         ['name'] = 'stonk__secure_container',
@@ -4567,7 +4774,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Ce que contient ce conteneur est très incertain, mais au vu de son poids, il est irréfutable qu’il serait dangereux de le perdre.'
+        ['description'] = 'Ce que contient ce conteneur est très incertain, mais au vu de son poids, il est irréfutable qu’il serait dangereux de le perdre.',
+        ['illustrator'] = '.Poulpitor'
     },
     --- Halloween
     ['halloween2022_story'] = {
@@ -4578,7 +4786,8 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2022.'
+        ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2022.',
+        ['illustrator'] = '.Pastouke'
     },
     ['old_relic'] = {
         ['name'] = 'old_relic',
@@ -4588,7 +4797,8 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Une ancienne relique ? Je devrais la ramener au vieux monsieur pour lui raconter la vraie histoire !'
+        ['description'] = 'Une ancienne relique ? Je devrais la ramener au vieux monsieur pour lui raconter la vraie histoire !',
+        ['illustrator'] = '.Smogogo'
     },
     ['bloody_knife'] = {
         ['name'] = 'bloody_knife',
@@ -4598,7 +4808,8 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Un insigne indique qu’il provient des canaux de vespucci… Etrange…'
+        ['description'] = 'Un insigne indique qu’il provient des canaux de vespucci… Etrange…',
+        ['illustrator'] = '.Crash'
     },
     --- PAWL
     ['small_coffin'] = {
@@ -4609,7 +4820,8 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Y\'a dla place dans cette petite boite.'
+        ['description'] = 'Y\'a dla place dans cette petite boite.',
+        ['illustrator'] = '.Crash'
     },
     ['witch_broom'] = {
         ['name'] = 'witch_broom',
@@ -4619,7 +4831,8 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Dérivé du Nimbus 3000, idéal pour nettoyer les nuages.'
+        ['description'] = 'Dérivé du Nimbus 3000, idéal pour nettoyer les nuages.',
+        ['illustrator'] = '.Smogogo'
     },
     --- LSMC
     ['batrachian_eye'] = {
@@ -4630,7 +4843,8 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Jetez y un coup d\'œil'
+        ['description'] = 'Jetez y un coup d\'œil',
+        ['illustrator'] = '.Smogogo'
     },
     ['zombie_hand'] = {
         ['name'] = 'zombie_hand',
@@ -4640,7 +4854,8 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Quand un coup de pouce ne suffit pas !'
+        ['description'] = 'Quand un coup de pouce ne suffit pas !',
+        ['illustrator'] = '.Smogogo'
     },
     ['horrific_lollipop'] = {
         ['name'] = 'horrific_lollipop',
@@ -4662,6 +4877,7 @@ QBShared.Items = {
             ['alcohol'] = 0,
             ['health'] = 20,
         },
+        ['illustrator'] = '.Smogogo'
     },
     --- BAUN
     ['surprise_candie'] = {
@@ -4683,6 +4899,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 5,
         },
+        ['illustrator'] = '.GautSlayer'
     },
     ---
     ['bag_kibble'] = {
@@ -4693,7 +4910,8 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Wouaf wouaf wouaf wouaf !'
+        ['description'] = 'Wouaf wouaf wouaf wouaf !',
+        ['illustrator'] = '.Crash'
     },
     ['pumpkin'] = {
         ['name'] = 'pumpkin',
@@ -4703,7 +4921,8 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = false,
         ['shouldClose'] = true,
-        ['description'] = 'Légume de saison.'
+        ['description'] = 'Légume de saison.',
+        ['illustrator'] = '.Crash'
     },
     ['stuffed_pumpkin'] = {
         ['name'] = 'stuffed_pumpkin',
@@ -4744,6 +4963,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Crash'
     },
     --- Divers
     ['head_of_your_dead'] = {
@@ -4765,6 +4985,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.GautSlayer'
     },
     ['horror_moon'] = {
         ['name'] = 'horror_moon',
@@ -4785,6 +5006,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Crash'
     },
     ['unopenable_gift'] = {
         ['name'] = 'unopenable_gift',
@@ -4795,6 +5017,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Renforcé par Infochat au scotch.',
+        ['illustrator'] = '.GautSlayer'
     },
     ['fake_birthday_cake'] = {
         ['name'] = 'fake_birthday_cake',
@@ -4805,6 +5028,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'The cake is a lie.',
+        ['illustrator'] = '.Smogogo'
     },
     ['naked_brain'] = {
         ['name'] = 'naked_brain',
@@ -4825,6 +5049,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.SuperPG'
     },
     ['halloween_shopping_bag'] = {
         ['name'] = 'halloween_shopping_bag',
@@ -4835,5 +5060,6 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Pour transporter tes horreurs.',
+        ['illustrator'] = '.SuperPG'
     },
 }
