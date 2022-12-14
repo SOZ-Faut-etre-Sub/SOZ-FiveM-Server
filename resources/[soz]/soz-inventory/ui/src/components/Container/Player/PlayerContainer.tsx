@@ -102,6 +102,7 @@ export const PlayerContainer = () => {
                 maxWeight={playerInventory.maxWeight}
             >
                 <ContainerSlots
+                    id="player"
                     rows={Math.ceil(playerInventory.items.length / 5)}
                     money={playerMoney}
                     items={playerInventory.items.map((item, i) => ({...item, id: i}))}

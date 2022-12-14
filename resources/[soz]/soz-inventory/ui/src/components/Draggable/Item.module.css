@@ -1,4 +1,5 @@
 .Card {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,6 +9,7 @@
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
 .Card > img {
     border-radius: 0.25rem;
     pointer-events: none;
@@ -24,6 +26,16 @@
     width: 100%;
     height: 100%;
     opacity: 0.8;
+}
+
+.Amount {
+    position: absolute;
+    bottom: 0.25rem;
+    right: 0.25rem;
+    font-size: 0.75rem;
+    color: #fafafa;
+    z-index: 100;
+    pointer-events: none;
 }
 
 .ContextMenu {

@@ -6,6 +6,7 @@ import { Droppable } from '../Droppable';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
 
 type Props = {
+    id: string;
     columns?: number;
     rows: number;
     money?: number;
@@ -14,7 +15,7 @@ type Props = {
     action?: (action: string, item: InventoryItem) => void;
 }
 
-export const ContainerSlots: FunctionComponent<Props> = ({columns = 5, rows, items, action}) => {
+export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, action}) => {
     const [description, setDescription] = useState<string|null>('');
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
@@ -30,35 +31,27 @@ export const ContainerSlots: FunctionComponent<Props> = ({columns = 5, rows, ite
 
     return (
         <>
-            <DndContext
-                autoScroll={{
-                    enabled: false
+            <div
+                className={style.Wrapper}
+                style={{
+                    gridTemplateColumns: `repeat(${columns}, 1fr)`,
+                    gridTemplateRows: `repeat(${rows+1}, 1fr)`,
                 }}
-                collisionDetection={rectIntersection}
-                onDragEnd={event => {
-                    console.log(event);
-            }
-            }>
-                <div
-                    className={style.Wrapper}
-                    style={{
-                        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-                        gridTemplateRows: `repeat(${rows+1}, 1fr)`,
-                    }}
-                >
-                    {[...Array(columns*(rows+1))].map((_, i) => (
-                        <Droppable key={i} id={(i - 1).toString()}>
-                            <Draggable
-                                key={i}
-                                item={items.find(it => (it.slot -1) === i)}
-                                setInContext={createInContext(i)}
-                                interactAction={action}
-                                onItemHover={setDescription}
-                            />
-                        </Droppable>
-                    ))}
-                </div>
-            </DndContext>
+            >
+                {[...Array(columns*(rows+1))].map((_, i) => (
+                    <Droppable key={i} id={`${id}_${i - 1}`} containerName={id}>
+                        <Draggable
+                            id={`${id}_drag`}
+                            containerName={id}
+                            key={i}
+                            item={items.find(it => (it.slot -1) === i)}
+                            setInContext={createInContext(i)}
+                            interactAction={action}
+                            onItemHover={setDescription}
+                        />
+                    </Droppable>
+                ))}
+            </div>
             {description && (
                 <footer className={style.Description} dangerouslySetInnerHTML={{__html: description}} />
             )}

@@ -2,7 +2,7 @@ export type SozInventoryModel = {
     id: string;
     label: string;
     users: string[];
-    type: 'player';
+    type: string;
     time: number;
     owner: string;
     weight: number;
@@ -29,6 +29,7 @@ export type InventoryItem = {
     amount: number;
     metadata?: InventoryItemMetadata;
     shouldClose?: boolean;
+    illustrator?: string;
 };
 
 export type ItemType =
