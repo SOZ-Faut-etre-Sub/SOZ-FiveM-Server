@@ -109,6 +109,7 @@ function Inventory.Load(id, invType, owner)
                     shouldClose = item.shouldClose,
                     slot = v.slot,
                     combinable = item.combinable,
+                    illustrator = item.illustrator,
                 }
             end
         end

@@ -1,9 +1,8 @@
 import { FunctionComponent, useCallback, useState } from 'react';
 import style from './ContainerSlots.module.css';
 import { InventoryItem } from '../../types/inventory';
-import Draggable from '../Draggable';
-import { Droppable } from '../Droppable';
-import { DndContext, rectIntersection } from '@dnd-kit/core';
+import Draggable from '../Draggable/Draggable';
+import { Droppable } from '../Droppable/Droppable';
 
 type Props = {
     id: string;

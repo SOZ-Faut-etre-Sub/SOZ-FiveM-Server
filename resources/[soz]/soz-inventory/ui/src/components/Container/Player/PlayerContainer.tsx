@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { debugPlayerInventory } from '../../../test/debug';
 import { InventoryItem, SozInventoryModel } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
@@ -7,6 +7,7 @@ import { ContainerSlots } from '../ContainerSlots';
 import playerBanner from '/banner/player.jpg'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
+import { DndContext, rectIntersection } from '@dnd-kit/core';
 
 export const PlayerContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -91,27 +92,35 @@ export const PlayerContainer = () => {
     }
 
     return (
-        <div className={clsx(style.Wrapper, {
-            [style.Show]: display,
-            [style.Hide]: !display,
-        })}>
-            <ContainerWrapper
-                display={true}
-                banner={playerBanner}
-                weight={playerInventory.weight}
-                maxWeight={playerInventory.maxWeight}
-            >
-                <ContainerSlots
-                    id="player"
-                    rows={Math.ceil(playerInventory.items.length / 5)}
-                    money={playerMoney}
-                    items={playerInventory.items.map((item, i) => ({...item, id: i}))}
-                    setItems={(s) => {
-                        setPlayerInventory({...playerInventory, items: s})
-                    }}
-                    action={interactAction}
-                />
-            </ContainerWrapper>
-        </div>
+        <DndContext
+            autoScroll={{
+                enabled: false,
+            }}
+            collisionDetection={rectIntersection}
+            // onDragEnd={transfertItem}
+        >
+            <div className={clsx(style.Wrapper, {
+                [style.Show]: display,
+                [style.Hide]: !display,
+            })}>
+                <ContainerWrapper
+                    display={true}
+                    banner={playerBanner}
+                    weight={playerInventory.weight}
+                    maxWeight={playerInventory.maxWeight}
+                >
+                    <ContainerSlots
+                        id="player"
+                        rows={Math.ceil(playerInventory.items.length / 5)}
+                        money={playerMoney}
+                        items={playerInventory.items.map((item, i) => ({...item, id: i}))}
+                        setItems={(s) => {
+                            setPlayerInventory({...playerInventory, items: s})
+                        }}
+                        action={interactAction}
+                    />
+                </ContainerWrapper>
+            </div>
+        </DndContext>
     )
 }
