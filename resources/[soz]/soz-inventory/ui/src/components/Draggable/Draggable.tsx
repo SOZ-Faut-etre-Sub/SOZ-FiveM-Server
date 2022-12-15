@@ -5,6 +5,7 @@ import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
 import keyIcon from '/key.png';
 import { clsx } from 'clsx';
+import { WeaponAmmo } from '../../types/weapon';
 
 type Props = {
     id: string;
@@ -44,11 +45,13 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
 
         const itemLabel = item?.metadata?.label ? item.metadata.label : item.label;
         let itemExtraLabel = '';
+        let contextExtraLabel = '';
 
         if (item.type === 'weapon') {
             if (item?.metadata?.ammo) {
                 itemExtraLabel += ` [${item.metadata.ammo} munitions]`
             }
+            contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
         } else {
             if (item?.metadata?.expiration) {
                 const currentTime = new Date().getTime();
@@ -65,7 +68,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
         onItemHover(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description ? item.description : ''}
-            <div><span> </span> <span>${item.illustrator || ''}</span></div>
+            <div><span>${contextExtraLabel}</span> <span>${item.illustrator || ''}</span></div>
         `);
     }, [item, onItemHover]);
 
