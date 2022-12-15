@@ -18,7 +18,6 @@
 .Banner {
     display: flex;
     justify-content: flex-end;
-    background-size: cover;
     align-items: flex-end;
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
