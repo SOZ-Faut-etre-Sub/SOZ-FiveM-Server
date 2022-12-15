@@ -18,7 +18,7 @@ export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({d
             })}
         >
             <header className={style.Banner} style={{
-                background: `url("${banner}"), url(/html/banner/default.jpg) left center / cover no-repeat`,
+                background: `url("${banner}") left center / cover no-repeat, url("/html/banner/default.jpg") left center / cover no-repeat`,
                 backgroundSize: 'cover',
             }}>
                 {maxWeight !== -1 && (
