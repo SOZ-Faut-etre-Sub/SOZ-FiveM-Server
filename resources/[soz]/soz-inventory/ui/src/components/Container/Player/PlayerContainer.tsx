@@ -48,6 +48,12 @@ export const PlayerContainer = () => {
                 if (event.data.playerInventory === undefined) return;
 
                 try {
+                    if (typeof event.data.playerInventory === "object") {
+                        event.data.playerInventory.items = Object.values(event.data.playerInventory.items);
+                    }
+
+                    event.data.playerInventory.items = event.data.playerInventory.items.filter((i: InventoryItem) => i !== null)
+
                     setPlayerInventory(event.data.playerInventory);
                     setPlayerMoney(event.data.playerMoney);
 
@@ -92,7 +98,7 @@ export const PlayerContainer = () => {
         window.addEventListener("message", onMessageReceived);
         window.addEventListener("keydown", onKeyDownReceived);
 
-         // onMessageReceived({ data: { ...debugPlayerInventory } } as MessageEvent);
+         onMessageReceived({ data: { ...debugPlayerInventory } } as MessageEvent);
 
         return () => {
             window.removeEventListener("contextmenu", onClickReceived);
