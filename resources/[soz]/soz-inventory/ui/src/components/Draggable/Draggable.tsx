@@ -155,52 +155,54 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                 )}
             </div>
 
-            <div ref={contextRef} className={style.ContextMenu}
-                 style={{display: `${contextData.visible ? 'block' : 'none'}`, left: contextData.posX, top: contextData.posY}}>
-                <div className={style.OptionsList}>
-                    {item && (item.useable || item.type === 'weapon') && <li className={style.OptionListItem} onClick={createInteractAction('useItem')}>
-                        {item.type === 'weapon' ? 'Équiper' : 'Utiliser'}
-                    </li>}
-                    {item && <li className={style.OptionListItem} onClick={createInteractAction('giveItem')}>
-                        Donner
-                    </li>}
-                    {(item && item.type === 'weapon') && (
-                        <>
-                            <li className={style.OptionListItem} onClick={createInteractAction('setItemUsage', 1)}>
-                                Définir comme arme principale
+            {interactAction && (
+                <div ref={contextRef} className={style.ContextMenu}
+                     style={{display: `${contextData.visible ? 'block' : 'none'}`, left: contextData.posX, top: contextData.posY}}>
+                    <div className={style.OptionsList}>
+                        {item && (item.useable || item.type === 'weapon') && <li className={style.OptionListItem} onClick={createInteractAction('useItem')}>
+                            {item.type === 'weapon' ? 'Équiper' : 'Utiliser'}
+                        </li>}
+                        {item && <li className={style.OptionListItem} onClick={createInteractAction('giveItem')}>
+                            Donner
+                        </li>}
+                        {(item && item.type === 'weapon') && (
+                            <>
+                                <li className={style.OptionListItem} onClick={createInteractAction('setItemUsage', 1)}>
+                                    Définir comme arme principale
+                                </li>
+                                <li className={style.OptionListItem} onClick={createInteractAction('setItemUsage', 2)}>
+                                    Définir comme arme secondaire
+                                </li>
+                            </>
+                        )}
+                        {(item && item.type !== 'weapon') && (
+                            <>
+                                <li className={style.OptionListItem}>
+                                    Raccourci d'utilisation
+                                    <div>
+                                        {Array(8).fill(1).map(function (x, i) {
+                                            const shortcut = i+3 === 10 ? 0 : i+3
+                                            return (
+                                                <p className={style.OptionListOption} onClick={createInteractAction('setItemUsage', shortcut)}>
+                                                    {shortcut}
+                                                </p>
+                                            );
+                                        })}
+                                    </div>
+                                </li>
+                            </>
+                        )}
+                        {money && (<>
+                            <li className={style.OptionListItem} onClick={createInteractAction('giveMoney')}>
+                                Donner en propre
                             </li>
-                            <li className={style.OptionListItem} onClick={createInteractAction('setItemUsage', 2)}>
-                                Définir comme arme secondaire
+                            <li className={style.OptionListItem} onClick={createInteractAction('giveMarkedMoney')}>
+                                Donner en sale
                             </li>
-                        </>
-                    )}
-                    {(item && item.type !== 'weapon') && (
-                        <>
-                            <li className={style.OptionListItem}>
-                                Raccourci d'utilisation
-                                <div>
-                                    {Array(8).fill(1).map(function (x, i) {
-                                        const shortcut = i+3 === 10 ? 0 : i+3
-                                        return (
-                                            <p className={style.OptionListOption} onClick={createInteractAction('setItemUsage', shortcut)}>
-                                                {shortcut}
-                                            </p>
-                                        );
-                                    })}
-                                </div>
-                            </li>
-                        </>
-                    )}
-                    {money && (<>
-                        <li className={style.OptionListItem} onClick={createInteractAction('giveMoney')}>
-                            Donner en propre
-                        </li>
-                        <li className={style.OptionListItem} onClick={createInteractAction('giveMarkedMoney')}>
-                            Donner en sale
-                        </li>
-                    </>)}
+                        </>)}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 };
