@@ -10,11 +10,10 @@ type Props = {
     rows: number;
     money?: number;
     items: (InventoryItem & {id: number})[]
-    setItems?: (items: (InventoryItem & {id: number})[]) => void;
     action?: (action: string, item: InventoryItem, shortcut: number) => void;
 }
 
-export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, action}) => {
+export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, money, action}) => {
     const [description, setDescription] = useState<string|null>('');
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
@@ -37,6 +36,13 @@ export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows,
                     gridTemplateRows: `repeat(${rows+1}, 1fr)`,
                 }}
             >
+                {money && (
+                    <Draggable
+                        id={`${null}_drag`}
+                        containerName={"null"}
+                        money={money}
+                    />
+                )}
                 {[...Array(columns*(rows+1))].map((_, i) => (
                     <Droppable key={i} id={`${id}_${i - 1}`} containerName={id}>
                         <Draggable

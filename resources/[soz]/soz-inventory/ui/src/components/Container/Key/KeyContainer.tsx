@@ -87,6 +87,7 @@ export const KeyContainer = () => {
                 <ContainerWrapper
                     display={true}
                     banner={playerBanner}
+                    maxWeight={-1}
                 >
                     <ContainerSlots
                         id="player"

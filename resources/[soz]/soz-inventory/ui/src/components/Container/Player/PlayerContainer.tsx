@@ -9,6 +9,7 @@ import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
 import { useInventoryRow } from '../../../hooks/useInventoryRow';
+import Draggable from '../../Draggable/Draggable';
 
 export const PlayerContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -98,7 +99,7 @@ export const PlayerContainer = () => {
         window.addEventListener("message", onMessageReceived);
         window.addEventListener("keydown", onKeyDownReceived);
 
-         onMessageReceived({ data: { ...debugPlayerInventory } } as MessageEvent);
+        // onMessageReceived({ data: { ...debugPlayerInventory } } as MessageEvent);
 
         return () => {
             window.removeEventListener("contextmenu", onClickReceived);
@@ -138,9 +139,6 @@ export const PlayerContainer = () => {
                         rows={inventoryRow}
                         money={playerMoney}
                         items={playerInventory.items.map((item, i) => ({...item, id: i}))}
-                        setItems={(s) => {
-                            setPlayerInventory({...playerInventory, items: s})
-                        }}
                         action={interactAction}
                     />
                 </ContainerWrapper>

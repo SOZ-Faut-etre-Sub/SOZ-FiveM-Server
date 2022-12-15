@@ -9,7 +9,7 @@ type Props = {
     maxWeight?: number;
 }
 
-export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({display, banner, weight, maxWeight, children}) => {
+export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({display, banner, weight = 1000, maxWeight = 1000, children}) => {
     return (
         <main
             className={clsx(style.Wrapper, {
@@ -18,10 +18,10 @@ export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({d
             })}
         >
             <header className={style.Banner} style={{
-                background: `url("${banner}") left no-repeat`,
-                backgroundSize: 'cover'
+                background: `url("${banner}"), url(/html/banner/default.jpg) left center / cover no-repeat`,
+                backgroundSize: 'cover',
             }}>
-                {weight && maxWeight && (
+                {maxWeight !== -1 && (
                     <span>
                         {weight / 1000}/{maxWeight / 1000} Kg
                     </span>

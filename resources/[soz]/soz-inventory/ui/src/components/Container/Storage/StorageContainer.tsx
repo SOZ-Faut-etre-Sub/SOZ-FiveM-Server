@@ -201,9 +201,6 @@ export const StorageContainer = () => {
                             id='player'
                             rows={playerInventoryRow}
                             items={playerInventory.items.map((item, i) => ({ ...item, id: i }))}
-                            setItems={(s) => {
-                                setPlayerInventory({ ...playerInventory, items: s });
-                            }}
                         />
                     </ContainerWrapper>
                 </div>
@@ -222,9 +219,6 @@ export const StorageContainer = () => {
                             id='storage'
                             rows={targetInventoryRow}
                             items={targetInventory.items.map((item, i) => ({ ...item, id: i }))}
-                            setItems={(s) => {
-                                setPlayerInventory({ ...targetInventory, items: s });
-                            }}
                         />
                     </ContainerWrapper>
                 </div>

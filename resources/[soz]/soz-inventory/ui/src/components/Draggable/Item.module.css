@@ -27,6 +27,12 @@
     height: 4rem;
 }
 
+.Money {
+    aspect-ratio: initial;
+    grid-column: 1 / 6;
+    color: #fafafa;
+}
+
 .Icon {
     width: 100%;
     height: 100%;
