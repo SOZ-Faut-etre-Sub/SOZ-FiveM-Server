@@ -22,9 +22,9 @@
 }
 
 .Money {
-    aspect-ratio: initial;
-    grid-column: 1 / 6;
     color: #fafafa;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.025);
 }
 
 .Icon {
@@ -32,6 +32,7 @@
     height: 100%;
     opacity: 0.8;
 }
+
 
 .Amount {
     position: absolute;
