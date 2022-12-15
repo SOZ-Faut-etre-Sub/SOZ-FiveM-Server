@@ -1,6 +1,5 @@
 .Wrapper {
     /*overflow-y: scroll;*/
-    /*overflow-x: hidden;*/
     display: grid;
     gap: 0.5rem;
     background: rgba(0, 0, 0, .6);

@@ -5,8 +5,8 @@ import style from './ContainerWrapper.module.css';
 type Props = {
     display: boolean;
     banner: string
-    weight: number;
-    maxWeight: number;
+    weight?: number;
+    maxWeight?: number;
 }
 
 export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({display, banner, weight, maxWeight, children}) => {
@@ -21,9 +21,11 @@ export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({d
                 background: `url("${banner}") left no-repeat`,
                 backgroundSize: 'cover'
             }}>
-                <span>
-                    {weight / 1000}/{maxWeight / 1000} Kg
-                </span>
+                {weight && maxWeight && (
+                    <span>
+                        {weight / 1000}/{maxWeight / 1000} Kg
+                    </span>
+                )}
             </header>
 
             {children}

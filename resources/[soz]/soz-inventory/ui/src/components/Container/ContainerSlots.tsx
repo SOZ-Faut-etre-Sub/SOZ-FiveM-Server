@@ -10,7 +10,7 @@ type Props = {
     rows: number;
     money?: number;
     items: (InventoryItem & {id: number})[]
-    setItems: (items: (InventoryItem & {id: number})[]) => void;
+    setItems?: (items: (InventoryItem & {id: number})[]) => void;
     action?: (action: string, item: InventoryItem) => void;
 }
 

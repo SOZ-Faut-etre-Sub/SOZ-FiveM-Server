@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom/client'
 import "inter-ui/inter.css";
 import './index.css';
 
-import KeyInventory from './components/KeyInventory';
 import { PlayerContainer } from './components/Container/Player/PlayerContainer';
 import { StorageContainer } from './components/Container/Storage/StorageContainer';
+import { KeyContainer } from './components/Container/Key/KeyContainer';
 
 ReactDOM.createRoot(document.getElementById('app')!).render(
     <React.StrictMode>
         <PlayerContainer />
         <StorageContainer />
-        {/*<KeyInventory />*/}
+        <KeyContainer />
     </React.StrictMode>
 )

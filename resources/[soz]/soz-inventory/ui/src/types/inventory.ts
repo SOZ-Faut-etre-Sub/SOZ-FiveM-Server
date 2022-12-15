@@ -50,7 +50,8 @@ export type ItemType =
     | 'flavor'
     | 'furniture'
     | 'liquor'
-    | 'outfit';
+    | 'outfit'
+    | 'key';
 
 export type InventoryItemMetadata = {
     label?: string;

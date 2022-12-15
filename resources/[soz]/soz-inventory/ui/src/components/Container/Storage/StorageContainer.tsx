@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { debugStorageInventory } from '../../../test/debug';
-import { InventoryItem, SozInventoryModel } from '../../../types/inventory';
+import { SozInventoryModel } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
 import style from './StorageContainer.module.css';
 import { ContainerSlots } from '../ContainerSlots';
@@ -8,6 +7,7 @@ import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import playerBanner from '/banner/player.jpg';
 import { DndContext, DragEndEvent, rectIntersection } from '@dnd-kit/core';
+import { useInventoryRow } from '../../../hooks/useInventoryRow';
 
 export const StorageContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -155,6 +155,14 @@ export const StorageContainer = () => {
         };
     }, [onMessageReceived, onKeyDownReceived]);
 
+    const playerInventoryRow = useMemo(() => {
+        return useInventoryRow(playerInventory?.items || []);
+    }, [playerInventory]);
+
+    const targetInventoryRow = useMemo(() => {
+        return useInventoryRow(targetInventory?.items || []);
+    }, [targetInventory]);
+
     if (!playerInventory || !targetInventory) {
         return null;
     }
@@ -180,7 +188,7 @@ export const StorageContainer = () => {
                     >
                         <ContainerSlots
                             id='player'
-                            rows={Math.ceil(playerInventory.items.length / 5)}
+                            rows={playerInventoryRow}
                             items={playerInventory.items.map((item, i) => ({ ...item, id: i }))}
                             setItems={(s) => {
                                 setPlayerInventory({ ...playerInventory, items: s });
@@ -201,7 +209,7 @@ export const StorageContainer = () => {
                     >
                         <ContainerSlots
                             id='storage'
-                            rows={Math.ceil(targetInventory.items.length / 5)}
+                            rows={targetInventoryRow}
                             items={targetInventory.items.map((item, i) => ({ ...item, id: i }))}
                             setItems={(s) => {
                                 setPlayerInventory({ ...targetInventory, items: s });

@@ -3,6 +3,7 @@ import React, { FunctionComponent, useCallback, useEffect, useRef, useState } fr
 import { InventoryItem } from '../../types/inventory';
 import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
+import keyIcon from '/key.png';
 
 type Props = {
     id: string;
@@ -62,7 +63,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
 
         onItemHover(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
-            ${item.description}
+            ${item.description ? item.description : ''}
             <div><span> </span> <span>${item.illustrator || ''}</span></div>
         `);
     }, [item, onItemHover]);
@@ -115,7 +116,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                 <img
                     alt=""
                     className={style.Icon}
-                    src={`https://nui-img/soz-items/${item.name}`}
+                    src={item.type === 'key' ? keyIcon : `https://nui-img/soz-items/${item.name}`}
                     onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
                 />
             </div>
