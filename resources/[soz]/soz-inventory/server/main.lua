@@ -695,6 +695,7 @@ function Inventory.SetSlot(inv, item, amount, metadata, slot)
             shouldClose = item.shouldClose,
             slot = slot,
             combinable = item.combinable,
+            illustrator = item.illustrator,
         }
         inv.items[slot].weight = Inventory.SlotWeight(item, inv.items[slot])
     end
