@@ -73,3 +73,19 @@
 .OptionListItem:hover {
     background: rgba(255, 255, 255, .15);
 }
+
+.OptionListOption {
+    display: inline-flex;
+    justify-content: center;
+    background: rgba(255,255,255,.1);
+    margin: 0 0.15rem;
+    padding: 0.1rem;
+    border-radius: 4px;
+    width: 15px;
+    font-variant-numeric: tabular-nums;
+    pointer-events: all;
+}
+
+.OptionListOption:hover {
+    background: rgba(255,255,255,.2);
+}

@@ -18,13 +18,13 @@ export const PlayerContainer = () => {
     const [playerInventory, setPlayerInventory] = useState<SozInventoryModel | null>();
 
     const interactAction = useCallback(
-        (action: string, item: InventoryItem) => {
+        (action: string, item: InventoryItem, shortcut: number) => {
             fetch(`https://soz-inventory/player/${action}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8",
                 },
-                body: JSON.stringify(item),
+                body: JSON.stringify({ ...item, shortcut }),
             }).then(() => {
                 setDisplay(false);
             });

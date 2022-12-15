@@ -96,10 +96,10 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
         }
     }, [onClickReceived, onContextMenuReceived]);
 
-    const createInteractAction = (action: string) => {
+    const createInteractAction = (action: string, shortcut?: number) => {
         return () => {
             setContextData({...contextData, visible: false});
-            interactAction(action, item)
+            interactAction(action, item, shortcut)
         };
     };
 
@@ -140,6 +140,33 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                     {item && <li className={style.OptionListItem} onClick={createInteractAction('giveItem')}>
                         Donner
                     </li>}
+                    {(item && item.type === 'weapon') && (
+                        <>
+                            <li className={style.OptionListItem} onClick={createInteractAction('setItemUsage', 1)}>
+                                Définir comme arme principale
+                            </li>
+                            <li className={style.OptionListItem} onClick={createInteractAction('setItemUsage', 2)}>
+                                Définir comme arme secondaire
+                            </li>
+                        </>
+                    )}
+                    {(item && item.type !== 'weapon') && (
+                        <>
+                            <li className={style.OptionListItem}>
+                                Raccourci d'utilisation
+                                <div>
+                                    {Array(8).fill(1).map(function (x, i) {
+                                        const shortcut = i+3 === 10 ? 0 : i+3
+                                        return (
+                                            <p className={style.OptionListOption} onClick={createInteractAction('setItemUsage', shortcut)}>
+                                                {shortcut}
+                                            </p>
+                                        );
+                                    })}
+                                </div>
+                            </li>
+                        </>
+                    )}
                     {money && (<>
                         <li className={style.OptionListItem} onClick={createInteractAction('giveMoney')}>
                             Donner en propre
