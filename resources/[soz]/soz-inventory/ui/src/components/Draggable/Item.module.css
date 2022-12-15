@@ -21,6 +21,12 @@
     z-index: 100;
 }
 
+.Dragging {
+    position: fixed !important;
+    width: 4rem;
+    height: 4rem;
+}
+
 .Icon {
     width: 100%;
     height: 100%;

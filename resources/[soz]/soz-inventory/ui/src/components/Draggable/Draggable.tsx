@@ -4,6 +4,7 @@ import { InventoryItem } from '../../types/inventory';
 import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
 import keyIcon from '/key.png';
+import { clsx } from 'clsx';
 
 type Props = {
     id: string;
@@ -19,7 +20,7 @@ type Props = {
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
 
 const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, setInContext, interactAction, onItemHover }) => {
-    const {attributes, listeners, setNodeRef, transform} = useDraggable({
+    const {attributes, listeners, setNodeRef, transform, isDragging} = useDraggable({
         id: `${id}_${item?.slot ?? ''}`,
         data: {
             container: containerName,
@@ -27,13 +28,13 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
         },
     });
 
-    const transformStyle = {
-        transform: CSS.Translate.toString(transform),
-    };
-
     const itemRef = useRef<HTMLDivElement>(null);
     const contextRef = useRef<HTMLDivElement>(null);
     const [contextData, setContextData] = useState({visible: false, posX: 0, posY: 0});
+
+    const transformStyle = {
+        transform: CSS.Translate.toString(transform),
+    };
 
     const resetDescription = useCallback(() => onItemHover(null), [onItemHover]);
     const applyDescription = useCallback(() => {
@@ -105,8 +106,14 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
 
     return (
         <div ref={itemRef} >
-            <div ref={setNodeRef} style={transformStyle} {...listeners} {...attributes}
-                className={style.Card}
+            <div
+                ref={setNodeRef}
+                style={transformStyle}
+                {...listeners}
+                {...attributes}
+                className={clsx(style.Card, {
+                    [style.Dragging]: isDragging,
+                })}
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
             >
