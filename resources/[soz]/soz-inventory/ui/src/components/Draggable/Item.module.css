@@ -21,12 +21,6 @@
     z-index: 100;
 }
 
-.Dragging {
-    position: fixed !important;
-    width: 4rem;
-    height: 4rem;
-}
-
 .Money {
     aspect-ratio: initial;
     grid-column: 1 / 6;
