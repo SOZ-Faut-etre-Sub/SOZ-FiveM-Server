@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { SozInventoryModel } from '../../../types/inventory';
+import { InventoryItem, SozInventoryModel } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
 import style from './StorageContainer.module.css';
 import { ContainerSlots } from '../ContainerSlots';
@@ -36,6 +36,17 @@ export const StorageContainer = () => {
                 if (event.data.playerInventory === undefined || event.data.targetInventory === undefined) return;
 
                 try {
+                    if (typeof event.data.playerInventory === "object") {
+                        event.data.playerInventory.items = Object.values(event.data.playerInventory.items);
+                    }
+                    if (typeof event.data.targetInventory === "object") {
+                        event.data.targetInventory.items = Object.values(event.data.targetInventory.items);
+                    }
+
+                    event.data.playerInventory.items = event.data.playerInventory.items.filter((i: InventoryItem) => i !== null)
+                    event.data.targetInventory.items = event.data.targetInventory.items.filter((i: InventoryItem) => i !== null)
+
+
                     setPlayerInventory(event.data.playerInventory);
                     setTargetInventory(event.data.targetInventory);
 
