@@ -15,7 +15,7 @@ type Props = {
     contextMenu?: boolean;
     interactAction?: any;
     setInContext?: (inContext: boolean) => void;
-    onItemHover: (description: string | null) => void;
+    onItemHover?: (description: string | null) => void;
 }
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
@@ -27,6 +27,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
             container: containerName,
             item
         },
+        disabled: !!money,
     });
 
     const itemRef = useRef<HTMLDivElement>(null);
@@ -37,7 +38,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
         transform: CSS.Translate.toString(transform),
     };
 
-    const resetDescription = useCallback(() => onItemHover(null), [onItemHover]);
+    const resetDescription = useCallback(() => onItemHover?.(null), [onItemHover]);
     const applyDescription = useCallback(() => {
         if (!item) {
             return null
@@ -51,7 +52,9 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
             if (item?.metadata?.ammo) {
                 itemExtraLabel += ` [${item.metadata.ammo} munitions]`
             }
-            contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
+            if (WeaponAmmo[item.name]) {
+                contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
+            }
         } else {
             if (item?.metadata?.expiration) {
                 const currentTime = new Date().getTime();
@@ -65,7 +68,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
             }
         }
 
-        onItemHover(`
+        onItemHover?.(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description ? item.description : ''}
             <div><span>${contextExtraLabel}</span> <span>${item.illustrator || ''}</span></div>
@@ -103,12 +106,14 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
         };
     };
 
-    if (!item) {
+    if (!item && !money) {
         return null
     }
 
     return (
-        <div ref={itemRef} >
+        <div ref={itemRef} className={clsx({
+            [style.Money]: !!money,
+        })} >
             <div
                 ref={setNodeRef}
                 style={transformStyle}
@@ -120,15 +125,22 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
             >
-                <span className={style.Amount}>
-                    {item.amount > 1 && item.amount}
-                </span>
-                <img
-                    alt=""
-                    className={style.Icon}
-                    src={item.type === 'key' ? keyIcon : `https://nui-img/soz-items/${item.name}`}
-                    onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
-                />
+                {item && (
+                    <>
+                        <span className={style.Amount}>
+                            {item.amount > 1 && item.amount}
+                        </span>
+                        <img
+                            alt=""
+                            className={style.Icon}
+                            src={item.type === 'key' ? keyIcon : `https://nui-img/soz-items/${item.name}`}
+                            onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
+                        />
+                    </>
+                )}
+                {money && (
+                    <p>Argent: {money}</p>
+                )}
             </div>
 
             <div ref={contextRef} className={style.ContextMenu}
