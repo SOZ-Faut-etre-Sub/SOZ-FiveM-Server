@@ -33,6 +33,8 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
     local hit, _, _, entityHit, entityType, _ = ScreenToWorld()
     SetNuiFocus(false, false)
 
+    print(data)
+
     if hit == 1 and entityType == 1 then
         local playerHit = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entityHit))
         TriggerEvent("inventory:client:StoreWeapon")

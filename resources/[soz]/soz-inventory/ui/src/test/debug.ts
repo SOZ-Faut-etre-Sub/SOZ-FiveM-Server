@@ -522,3 +522,23 @@ export const debugStorageInventory: NuiEventPlayerInventory = {
         ]
     },
 }
+
+export const debugPlayerKeyInventory: NuiEventPlayerInventory = {
+    action: "openPlayerKeyInventory",
+    keys: [
+        {
+            "label": "Véhicule LSPD 502",
+            "target": "vehicle_key",
+            "name": "handcuffs_key",
+            "plate": "LSPD 502",
+            "type": "key"
+        },
+        {
+            "label": "Véhicule LSPD 782",
+            "target": "vehicle_key",
+            "name": "handcuffs_key",
+            "plate": "LSPD 782",
+            "type": "key"
+        }
+    ]
+}

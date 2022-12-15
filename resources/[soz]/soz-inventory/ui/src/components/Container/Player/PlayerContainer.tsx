@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debugPlayerInventory } from '../../../test/debug';
 import { InventoryItem, SozInventoryModel } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
@@ -8,12 +8,13 @@ import playerBanner from '/banner/player.jpg'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
+import { useInventoryRow } from '../../../hooks/useInventoryRow';
 
 export const PlayerContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    const [playerMoney, setPlayerMoney] = useState<number>(debugPlayerInventory.playerMoney);
+    const [playerMoney, setPlayerMoney] = useState<number>(0);
     const [playerInventory, setPlayerInventory] = useState<SozInventoryModel | null>();
 
     const interactAction = useCallback(
@@ -47,9 +48,6 @@ export const PlayerContainer = () => {
                 if (event.data.playerInventory === undefined) return;
 
                 try {
-                    let items = event.data.playerInventory.items;
-                    if (typeof items === "object") items = Object.values(items);
-
                     setPlayerInventory(event.data.playerInventory);
                     setPlayerMoney(event.data.playerMoney);
 
@@ -72,13 +70,35 @@ export const PlayerContainer = () => {
         [display, setDisplay]
     );
 
+    /*const transfertItem = useCallback(
+        (event: any) => {
+            if (event.item.dataset.item === undefined) return;
+
+            const item = JSON.parse(event.item.dataset.item);
+
+            if (inContextMenu[item.id]) {
+                return;
+            }
+
+            fetch(`https://soz-inventory/player/giveItemToTarget`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+                body: event.item.dataset.item,
+            }).then(() => {
+                setDisplay(false);
+            });
+        },
+        [setDisplay, inContextMenu]
+    );*/
 
     useEffect(() => {
         window.addEventListener("contextmenu", onClickReceived);
         window.addEventListener("message", onMessageReceived);
         window.addEventListener("keydown", onKeyDownReceived);
 
-        // onMessageReceived({ data: { ...debugPlayerInventory } } as MessageEvent);
+         // onMessageReceived({ data: { ...debugPlayerInventory } } as MessageEvent);
 
         return () => {
             window.removeEventListener("contextmenu", onClickReceived);
@@ -86,6 +106,10 @@ export const PlayerContainer = () => {
             window.removeEventListener("keydown", onKeyDownReceived);
         };
     }, [onClickReceived, onMessageReceived, onKeyDownReceived]);
+
+    const inventoryRow = useMemo(() => {
+        return useInventoryRow(playerInventory?.items || []);
+    }, [playerInventory]);
 
     if (!playerInventory) {
         return null;
@@ -111,7 +135,7 @@ export const PlayerContainer = () => {
                 >
                     <ContainerSlots
                         id="player"
-                        rows={Math.ceil(playerInventory.items.length / 5)}
+                        rows={inventoryRow}
                         money={playerMoney}
                         items={playerInventory.items.map((item, i) => ({...item, id: i}))}
                         setItems={(s) => {
