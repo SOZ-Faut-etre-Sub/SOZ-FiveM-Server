@@ -70,28 +70,22 @@ export const PlayerContainer = () => {
         [display, setDisplay]
     );
 
-    /*const transfertItem = useCallback(
-        (event: any) => {
-            if (event.item.dataset.item === undefined) return;
-
-            const item = JSON.parse(event.item.dataset.item);
-
-            if (inContextMenu[item.id]) {
-                return;
-            }
+    const transfertItem = useCallback((event: any) => {
+            if (!event.active.data.current) return;
+            if (event.over !== null) return;
 
             fetch(`https://soz-inventory/player/giveItemToTarget`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8",
                 },
-                body: event.item.dataset.item,
+                body: JSON.stringify(event.active.data.current.item),
             }).then(() => {
                 setDisplay(false);
             });
         },
-        [setDisplay, inContextMenu]
-    );*/
+        [setDisplay]
+    );
 
     useEffect(() => {
         window.addEventListener("contextmenu", onClickReceived);
@@ -121,7 +115,7 @@ export const PlayerContainer = () => {
                 enabled: false,
             }}
             collisionDetection={rectIntersection}
-            // onDragEnd={transfertItem}
+            onDragEnd={transfertItem}
         >
             <div className={clsx(style.Wrapper, {
                 [style.Show]: display,
