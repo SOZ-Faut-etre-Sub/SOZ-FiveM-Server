@@ -35,3 +35,8 @@
     align-items: center;
     margin-bottom: 0.5rem;
 }
+
+.Description > div small {
+    font-weight: lighter;
+    font-size: 0.7rem;
+}

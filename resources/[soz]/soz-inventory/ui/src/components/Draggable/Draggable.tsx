@@ -3,7 +3,8 @@ import React, { FunctionComponent, useCallback, useEffect, useRef, useState } fr
 import { InventoryItem } from '../../types/inventory';
 import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
-import keyIcon from '/key.png';
+import keyIcon from '/icon/key.png';
+import moneyIcon from '/icon/money.png';
 import { clsx } from 'clsx';
 import { WeaponAmmo } from '../../types/weapon';
 import { createPortal } from 'react-dom';
@@ -20,6 +21,7 @@ type Props = {
 }
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
+const FORMAT_CURRENCY: Intl.NumberFormatOptions = {style: "currency", currency: 'USD', maximumFractionDigits: 0}
 
 const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, setInContext, interactAction, onItemHover }) => {
     const {attributes, listeners, setNodeRef, transform, isDragging} = useDraggable({
@@ -45,7 +47,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
             return null
         }
 
-        const itemLabel = item?.metadata?.label ? item.metadata.label : item.label;
+        const itemLabel = item?.metadata?.label ? `${item.metadata.label} <small>${item.label}</small>` : item.label;
         let itemExtraLabel = '';
         let contextExtraLabel = '';
 
@@ -151,7 +153,16 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                     </>
                 )}
                 {money && (
-                    <p>Argent: {money}</p>
+                    <>
+                        <span className={style.Amount}>
+                            {money.toLocaleString('en-US', FORMAT_CURRENCY)}
+                        </span>
+                        <img
+                            alt=""
+                            className={style.Icon}
+                            src={moneyIcon}
+                        />
+                    </>
                 )}
             </div>
 

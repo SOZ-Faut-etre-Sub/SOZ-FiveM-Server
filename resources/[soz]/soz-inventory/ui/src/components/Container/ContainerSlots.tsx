@@ -41,6 +41,7 @@ export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows,
                         id={`${null}_drag`}
                         containerName={"null"}
                         money={money}
+                        interactAction={action}
                     />
                 )}
                 {[...Array(columns*(rows+1))].map((_, i) => (
