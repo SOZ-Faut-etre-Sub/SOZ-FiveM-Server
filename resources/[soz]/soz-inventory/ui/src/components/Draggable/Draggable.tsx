@@ -1,4 +1,4 @@
-import { useDraggable } from '@dnd-kit/core';
+import { DragOverlay, useDraggable } from '@dnd-kit/core';
 import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 import { InventoryItem } from '../../types/inventory';
 import style from './Item.module.css';
@@ -6,6 +6,7 @@ import {CSS} from '@dnd-kit/utilities';
 import keyIcon from '/key.png';
 import { clsx } from 'clsx';
 import { WeaponAmmo } from '../../types/weapon';
+import { createPortal } from 'react-dom';
 
 type Props = {
     id: string;
@@ -110,6 +111,19 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
         return null
     }
 
+    if (item && isDragging) {
+        return createPortal(
+            <DragOverlay className={style.Card}>
+                <img
+                alt=""
+                className={style.Icon}
+                src={item.type === 'key' ? keyIcon : `https://nui-img/soz-items/${item.name}`}
+                onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
+            />
+            </DragOverlay>, document.body
+        )
+    }
+
     return (
         <div ref={itemRef} className={clsx({
             [style.Money]: !!money,
@@ -119,9 +133,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                 style={transformStyle}
                 {...listeners}
                 {...attributes}
-                className={clsx(style.Card, {
-                    [style.Dragging]: isDragging,
-                })}
+                className={style.Card}
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
             >
