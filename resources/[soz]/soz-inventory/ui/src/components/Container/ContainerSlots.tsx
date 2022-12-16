@@ -45,7 +45,7 @@ export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows,
                     />
                 )}
                 {[...Array((columns*(rows+1)) - (money ? 1 : 0))].map((_, i) => (
-                    <Droppable key={i} id={`${id}_${i - 1}`} containerName={id}>
+                    <Droppable key={i} id={`${id}_${i - 1}`} containerName={id} slot={i+1}>
                         <Draggable
                             id={`${id}_drag`}
                             containerName={id}

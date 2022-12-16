@@ -76,21 +76,46 @@ export const PlayerContainer = () => {
         [display, setDisplay]
     );
 
-    const transfertItem = useCallback((event: any) => {
+    const handleDragAndDrop = useCallback((event: any) => {
             if (!event.active.data.current) return;
-            if (event.over !== null) return;
 
-            fetch(`https://soz-inventory/player/giveItemToTarget`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json; charset=UTF-8",
-                },
-                body: JSON.stringify(event.active.data.current.item),
-            }).then(() => {
-                setDisplay(false);
-            });
+            if (event.over !== null) { // Do a sort in inventory
+                fetch(`https://soz-inventory/sortItem`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8",
+                    },
+                    body: JSON.stringify({
+                        item: event.active.data.current.item,
+                        slot: event.over.data.current.slot,
+                        inventory: playerInventory?.id,
+                    }),
+                })
+                    .then(res => res.json())
+                    .then((transfer) => {
+                        if (typeof transfer.playerInventory === "object") {
+                            transfer.playerInventory.items = Object.values(transfer.playerInventory.items);
+                        }
+
+                        transfer.playerInventory.items = transfer.playerInventory.items.filter((i: InventoryItem) => i !== null)
+                        setPlayerInventory(transfer.playerInventory);
+                    })
+                    .catch(() => {
+                    console.error("Failed to sort item");
+                });
+            } else {
+                fetch(`https://soz-inventory/player/giveItemToTarget`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8",
+                    },
+                    body: JSON.stringify(event.active.data.current.item),
+                }).then(() => {
+                    setDisplay(false);
+                });
+            }
         },
-        [setDisplay]
+        [playerInventory, setDisplay]
     );
 
     useEffect(() => {
@@ -121,7 +146,7 @@ export const PlayerContainer = () => {
                 enabled: false,
             }}
             collisionDetection={rectIntersection}
-            onDragEnd={transfertItem}
+            onDragEnd={handleDragAndDrop}
         >
             <div className={clsx(style.Wrapper, {
                 [style.Show]: display,

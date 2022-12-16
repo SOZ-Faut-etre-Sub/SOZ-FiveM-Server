@@ -3,9 +3,9 @@ import { useDroppable } from '@dnd-kit/core';
 import style from './Droppable.module.css';
 import { clsx } from 'clsx';
 
-export const Droppable: FunctionComponent<PropsWithChildren<{ id: string; containerName: string }>> = ({ id, containerName, children }) => {
+export const Droppable: FunctionComponent<PropsWithChildren<{ id: string; slot: number; containerName: string }>> = ({ id, slot, containerName, children }) => {
     const { isOver, setNodeRef } = useDroppable({
-        id, data: { container: containerName },
+        id, data: { container: containerName, slot },
     });
 
     return (
