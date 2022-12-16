@@ -560,7 +560,12 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         amount = totalAmount
     end
 
-    if invSource.id ~= invTarget.id then
+    if invSource.id == invTarget.id then
+        if invSource.weight > invTarget.maxWeight then
+            cb(false, "inventory_full")
+            return
+        end
+    else
         if not Inventory.CanCarryItem(invTarget, item, amount, metadata) then
             cb(false, "inventory_full")
             return
