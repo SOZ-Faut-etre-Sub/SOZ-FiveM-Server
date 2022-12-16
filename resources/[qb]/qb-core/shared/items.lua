@@ -3148,6 +3148,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Tablette qui coûte cher.'
     },
+    ['zpad'] = {
+        ['name'] = 'zpad',
+        ['label'] = 'ZPAD PRO 14',
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'ZPAD PRO 14'
+    },
     ['gps'] = {
         ['name'] = 'gps',
         ['label'] = 'GPS',

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { On, Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -22,6 +24,8 @@ export class PlayerProvider {
 
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
+
+    private jwtTokenCache: Record<string, string> = {};
 
     @On('QBCore:Server:PlayerLoaded', false)
     onPlayerLoaded(player: any) {
@@ -49,5 +53,29 @@ export class PlayerProvider {
     @Rpc(RpcEvent.PLAYER_GET_SERVER_STATE)
     public getServerState(source: number): PlayerServerState {
         return this.playerStateService.get(source);
+    }
+
+    @Rpc(RpcEvent.PLAYER_GET_JWT_TOKEN)
+    public async getJwtToken(source: number): Promise<string | null> {
+        const steam = this.QBCore.getSteamIdentifier(source);
+
+        if (this.jwtTokenCache[steam]) {
+            return this.jwtTokenCache[steam];
+        }
+
+        const url = GetConvar('soz_api_endpoint', 'https://api.soz.zerator.com') + '/accounts/create-token/' + steam;
+        const response = await axios.get(url, {
+            auth: {
+                username: GetConvar('soz_api_username', 'admin'),
+                password: GetConvar('soz_api_password', 'admin'),
+            },
+        });
+
+        if (response.status === 200) {
+            this.jwtTokenCache[steam] = response.data.token;
+            return response.data.toString();
+        }
+
+        return null;
     }
 }
