@@ -3063,7 +3063,8 @@ QBShared.Items = {
         ['type'] = 'item',
         ['unique'] = false,
         ['useable'] = false,
-        ['description'] = 'Pour jeter tout type d\'ordures.'
+        ['description'] = 'Pour jeter tout type d\'ordures.',
+        ['illustrator'] = '.Adrass'
     },
     ['cardbord'] = {
         ['name'] = 'cardbord',
