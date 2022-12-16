@@ -493,7 +493,7 @@ end
 RegisterNetEvent("inventory:server:RemoveItem", Inventory.RemoveItem)
 exports("RemoveItem", Inventory.RemoveItem)
 
-function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, slot, cb)
+function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, slot, cb, targetSlot)
     local success, reason = false, nil
     if type(invSource) ~= "table" then
         invSource = Inventory(invSource)
@@ -566,7 +566,7 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
     end
 
     if Inventory.RemoveItem(invSource, item, amount, metadata, slot) then
-        Inventory.AddItem(invTarget, item, amount, metadata, false, function(s, r)
+        Inventory.AddItem(invTarget, item, amount, metadata, targetSlot, function(s, r)
             success, reason = s, r
         end)
 
