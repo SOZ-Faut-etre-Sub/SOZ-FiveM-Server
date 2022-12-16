@@ -30,6 +30,7 @@ export type InventoryItem = {
     metadata?: InventoryItemMetadata;
     shouldClose?: boolean;
     illustrator?: string;
+    disabled?: boolean; // added by inventory on the fly
 };
 
 export type ItemType =

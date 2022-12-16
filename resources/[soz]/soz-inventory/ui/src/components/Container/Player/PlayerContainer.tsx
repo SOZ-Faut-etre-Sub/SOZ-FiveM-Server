@@ -9,7 +9,6 @@ import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
 import { useInventoryRow } from '../../../hooks/useInventoryRow';
-import Draggable from '../../Draggable/Draggable';
 
 export const PlayerContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);

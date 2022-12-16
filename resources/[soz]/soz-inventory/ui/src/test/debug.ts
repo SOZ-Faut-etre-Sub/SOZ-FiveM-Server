@@ -26,7 +26,8 @@ export const debugPlayerInventory: NuiEventPlayerInventory = {
                 "type": "item",
                 "weight": 100,
                 "useable": false,
-                "label": "Carte des habitations"
+                "label": "Carte des habitations",
+                "disabled": true,
             },
             {
                 "description": "Un revolver classique, de quoi se sentir un peu cowboy.",

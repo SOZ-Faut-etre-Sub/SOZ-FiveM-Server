@@ -30,7 +30,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
             container: containerName,
             item
         },
-        disabled: !!money,
+        disabled: !!money || item?.disabled === true,
     });
 
     const itemRef = useRef<HTMLDivElement>(null);
@@ -135,7 +135,9 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                 style={transformStyle}
                 {...listeners}
                 {...attributes}
-                className={style.Card}
+                className={clsx(style.Card, {
+                    [style.Disabled]: item?.disabled === true,
+                })}
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
             >
