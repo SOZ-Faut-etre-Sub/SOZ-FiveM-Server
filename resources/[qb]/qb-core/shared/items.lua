@@ -3732,7 +3732,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Votre guide de santé..'
+        ['description'] = 'Votre guide de santé..',
+        ['illustrator'] = '.NariieL',
     },
 
     -- Benny's
