@@ -93,15 +93,15 @@ export const PlayerContainer = () => {
                 })
                     .then(res => res.json())
                     .then((transfer) => {
-                        if (typeof transfer.playerInventory === "object") {
-                            transfer.playerInventory.items = Object.values(transfer.playerInventory.items);
+                        if (typeof transfer.sourceInventory === "object") {
+                            transfer.sourceInventory.items = Object.values(transfer.sourceInventory.items);
                         }
 
-                        transfer.playerInventory.items = transfer.playerInventory.items.filter((i: InventoryItem) => i !== null)
-                        setPlayerInventory(transfer.playerInventory);
+                        transfer.sourceInventory.items = transfer.sourceInventory.items.filter((i: InventoryItem) => i !== null)
+                        setPlayerInventory(transfer.sourceInventory);
                     })
-                    .catch(() => {
-                    console.error("Failed to sort item");
+                    .catch((e) => {
+                    console.error("Failed to sort item", e);
                 });
             } else {
                 fetch(`https://soz-inventory/player/giveItemToTarget`, {

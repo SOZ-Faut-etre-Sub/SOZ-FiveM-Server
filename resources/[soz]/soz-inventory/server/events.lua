@@ -15,7 +15,7 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem", function(source, cb, inventorySource, inventoryTarget, item, amount, metadata, slot, targetSlot)
-    Inventory.TransfertItem(inventorySource, inventoryTarget, item, amount, metadata, sourceSlot, function(success, reason)
+    Inventory.TransfertItem(inventorySource, inventoryTarget, item, amount, metadata, slot, function(success, reason)
         local sourceInv = Inventory(inventorySource)
         local targetInv = Inventory(inventoryTarget)
 

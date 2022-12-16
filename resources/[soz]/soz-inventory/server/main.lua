@@ -560,9 +560,11 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         amount = totalAmount
     end
 
-    if not Inventory.CanCarryItem(invTarget, item, amount, metadata) then
-        cb(false, "inventory_full")
-        return
+    if invSource.id ~= invTarget.id then
+        if not Inventory.CanCarryItem(invTarget, item, amount, metadata) then
+            cb(false, "inventory_full")
+            return
+        end
     end
 
     if Inventory.RemoveItem(invSource, item, amount, metadata, slot) then
