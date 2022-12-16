@@ -61,6 +61,7 @@ export const showPhone = async (): Promise<void> => {
     global.isPhoneOpen = true;
     const time = getCurrentGameTime();
     await animationService.openPhone(); // Animation starts before the phone is open
+    emitNet(PhoneEvents.FETCH_CREDENTIALS);
     SetCursorLocation(0.9, 0.922); //Experimental
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
     sendMessage('PHONE', PhoneEvents.SET_TIME, time);
@@ -131,7 +132,6 @@ onNet('QBCore:Client:OnPlayerLoaded', async () => {
     sendMessage('PHONE', 'phoneRestart', {});
     const canAccess = await checkExportCanOpen();
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess);
-    emitNet(PhoneEvents.FETCH_CREDENTIALS);
 });
 
 onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
