@@ -188,7 +188,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                                 </li>
                             </>
                         )}
-                        {(item && item.type !== 'weapon') && (
+                        {(item && item.useable && item.type !== 'weapon') && (
                             <>
                                 <li className={style.OptionListItem}>
                                     Raccourci d'utilisation
