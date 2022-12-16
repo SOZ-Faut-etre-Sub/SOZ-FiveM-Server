@@ -262,8 +262,11 @@ function Inventory.FilterItems(inv, invType)
     if invType then
         if inv.items ~= nil then
             for _, v in pairs(inv.items) do
-                if _G.Container[invType]:ItemIsAllowed(v) then
-                    items[#items + 1] = v
+                local insertId = #items + 1
+                items[insertId] = table.deepclone(v)
+
+                if not _G.Container[invType]:ItemIsAllowed(v) then
+                    items[insertId].disabled = true
                 end
             end
         end
