@@ -114,44 +114,76 @@ export const StorageContainer = () => {
         [targetInventory, setDisplay],
     );
 
+    const handleInventoryUpdate = useCallback((apiResponse: {sourceInventory?: SozInventoryModel; targetInventory?: SozInventoryModel}) => {
+        if (!apiResponse.sourceInventory || !apiResponse.targetInventory) return;
+        if (apiResponse.sourceInventory.id === apiResponse.targetInventory.id) return;
+
+        let sourceInventory = apiResponse.sourceInventory;
+        let targetInventory = apiResponse.targetInventory;
+
+        if (apiResponse.targetInventory.type === "player") {
+            sourceInventory = apiResponse.targetInventory;
+            targetInventory = apiResponse.sourceInventory;
+        }
+
+        setPlayerInventory(sourceInventory);
+        setTargetInventory(targetInventory);
+    }, [setPlayerInventory, setTargetInventory])
+
     const transfertItem = useCallback((event: DragEndEvent) => {
         if (!event.active.data.current) return;
         if (!event.over?.data.current) return;
 
         if (event.active.data.current.container === event.over.data.current.container) {
-            return;
+            fetch(`https://soz-inventory/sortItem`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify({
+                    item: event.active.data.current.item,
+                    slot: event.over.data.current.slot,
+                    inventory: event.active.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id,
+                }),
+            })
+                .then(res => res.json())
+                .then((transfer) => {
+                    if (typeof transfer.sourceInventory === "object") {
+                        transfer.sourceInventory.items = Object.values(transfer.sourceInventory.items);
+                    }
+
+                    transfer.sourceInventory.items = transfer.sourceInventory.items.filter((i: InventoryItem) => i !== null)
+
+                    if (event.active.data.current?.container === 'player') {
+                        setPlayerInventory(transfer.sourceInventory);
+                    } else {
+                        setTargetInventory(transfer.sourceInventory);
+                    }
+                })
+                .catch((e) => {
+                    console.error("Failed to sort item", e);
+                });
+
+        } else {
+            const sourceInvId = event.active.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id;
+            const targetInvId = event.over.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id;
+
+             fetch(`https://soz-inventory/transfertItem`, {
+                 method: "POST",
+                 headers: {
+                     "Content-Type": "application/json; charset=UTF-8",
+                 },
+                 body: JSON.stringify({
+                     source: sourceInvId,
+                     target: targetInvId,
+                     item: event.active.data.current.item,
+                     slot: event.over.data.current.slot,
+                 }),
+             })
+                 .then((res) => res.json())
+                 .then((transfert) => handleInventoryUpdate(transfert));
         }
 
-        const sourceInvId = event.active.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id;
-        const targetInvId = event.over.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id;
-
-         fetch(`https://soz-inventory/transfertItem`, {
-             method: "POST",
-             headers: {
-                 "Content-Type": "application/json; charset=UTF-8",
-             },
-             body: JSON.stringify({
-                 source: sourceInvId,
-                 target: targetInvId,
-                 item: event.active.data.current.item,
-             }),
-         })
-             .then((res) => res.json())
-             .then((transfert) => {
-                 if (!transfert.playerInventory && !transfert.targetInventory) return;
-                 if (transfert.sourceInventory.id === transfert.targetInventory.id) return;
-
-                 let sourceInventory = transfert.sourceInventory;
-                 let targetInventory = transfert.targetInventory;
-
-                 if (transfert.targetInventory.type === "player") {
-                     sourceInventory = transfert.targetInventory;
-                     targetInventory = transfert.sourceInventory;
-                 }
-
-                 setPlayerInventory(sourceInventory);
-                 setTargetInventory(targetInventory);
-             });
     }, [playerInventory, targetInventory, setPlayerInventory, setTargetInventory]);
 
     useEffect(() => {
