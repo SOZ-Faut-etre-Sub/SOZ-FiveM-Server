@@ -8,6 +8,7 @@ import { NuiHealthBookMethodMap } from './health_book';
 import { NuiInputMethodMap } from './input';
 import { NuiMaskShopMethodMap } from './mask_shop';
 import { NuiMenuMethodMap } from './menu';
+import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiProgressMethodMap } from './progress';
 
@@ -29,6 +30,7 @@ export interface NuiMethodMap {
     menu: NuiMenuMethodMap;
     player: NuiPLayerMethodMap;
     progress: NuiProgressMethodMap;
+    panel: NuiPanelMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

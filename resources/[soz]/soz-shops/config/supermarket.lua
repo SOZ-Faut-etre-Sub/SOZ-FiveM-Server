@@ -6,6 +6,7 @@ Config.Products["supermarket"] = {
     [5] = {name = "binoculars", price = 8, amount = 2000},
     [6] = {name = "phone", price = 499, amount = 2000},
     [7] = {name = "diving_gear", price = 2600, amount = 2000},
+    [8] = {name = "zpad", price = 2400, amount = 2000},
 }
 
 Config.Products["247supermarket-north"] = Config.Products["supermarket"]

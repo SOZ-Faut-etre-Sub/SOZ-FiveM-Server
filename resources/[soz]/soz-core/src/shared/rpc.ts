@@ -17,6 +17,7 @@ export enum RpcEvent {
 
     PLAYER_GET_HEALTH_BOOK = 'soz-core:player:get-health-book',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
+    PLAYER_GET_JWT_TOKEN = 'soz-core:player:get-jwt-token',
 
     SHOP_MASK_GET_CATEGORIES = 'soz-core:shop:mask:get-categories',
     SHOP_MASK_GET_ITEMS = 'soz-core:shop:mask:get-items',

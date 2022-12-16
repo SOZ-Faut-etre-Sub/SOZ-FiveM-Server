@@ -187,6 +187,10 @@ export enum ClientEvent {
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
     LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
 
+    NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
+
+    NUI_HIDE_PANEL = 'soz-core:client:nui:hide-panel',
+
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
     OIL_UPDATE_STATION_PRICE = 'soz-core:client:oil:update-station-price',
@@ -310,6 +314,8 @@ export enum NuiEvent {
     MenuClosed = 'menu_closed',
     JobBossShopBuyItem = 'soz-core:nui:job:boss-shop:buy-item',
     OilAskStationPrice = 'soz-core:nui:job:oil:ask-station-price',
+
+    PanelClosed = 'soz-core:nui:panel:closed',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 

@@ -1,8 +1,40 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
+
+import { NuiEvent } from '../../../shared/event';
+import { fetchNui } from '../../fetch';
+import { useBackspace } from '../../hook/control';
+import { useNuiEvent, useNuiFocus } from '../../hook/nui';
+import { useOutside } from '../../hook/outside';
+import { usePrevious } from '../../hook/previous';
 
 export const PanelApp: FunctionComponent = () => {
+    const [showPanel, setShowPanel] = useState<string>(null);
+    useNuiFocus(showPanel !== null, showPanel !== null, false);
+    const wasShowPanel = usePrevious(showPanel);
+    const refOutside = useOutside({
+        click: () => setShowPanel(null),
+    });
+
+    useNuiEvent('panel', 'ShowPanel', url => {
+        setShowPanel(url);
+    });
+
+    useBackspace(() => {
+        setShowPanel(null);
+    });
+
+    useEffect(() => {
+        if (!showPanel && wasShowPanel !== null) {
+            fetchNui(NuiEvent.PanelClosed);
+        }
+    }, [showPanel]);
+
+    if (showPanel === null) {
+        return null;
+    }
+
     return (
-        <div className="flex flex-col h-full w-full">
+        <div className="flex flex-col h-full w-full p-40">
             <div
                 style={{
                     height: '97px',
@@ -10,21 +42,24 @@ export const PanelApp: FunctionComponent = () => {
                 className="flex flex-row items-center"
             >
                 <div
-                    style={{ width: '99px', backgroundImage: `url(/images/panel/top-left.png)` }}
-                    className="h-full  z-20"
+                    style={{ width: '99px', backgroundImage: `url(/public/images/panel/top-left.png)` }}
+                    className="h-full z-20"
                 ></div>
-                <div style={{ backgroundImage: `url(/images/panel/top.png)` }} className="grow  h-full  z-20"></div>
                 <div
-                    style={{ width: '103px', backgroundImage: `url(/images/panel/top-right.png)` }}
-                    className="h-full  z-20"
+                    style={{ backgroundImage: `url(/public/images/panel/top.png)` }}
+                    className="grow h-full bg-center z-20"
+                ></div>
+                <div
+                    style={{ width: '103px', backgroundImage: `url(/public/images/panel/top-right.png)` }}
+                    className="h-full z-20"
                 ></div>
             </div>
             <div className="flex flex-row items-center grow">
                 <div
-                    style={{ width: '99px', backgroundImage: `url(/images/panel/left.png)` }}
+                    style={{ width: '99px', backgroundImage: `url(/public/images/panel/left.png)` }}
                     className="h-full bg-center z-20"
                 ></div>
-                <div className="grow h-full relative z-0">
+                <div ref={refOutside} className="grow h-full relative z-0">
                     <div
                         className="absolute z-10"
                         style={{
@@ -36,7 +71,7 @@ export const PanelApp: FunctionComponent = () => {
                         }}
                     >
                         <iframe
-                            src="https://soz.zerator.com"
+                            src={showPanel}
                             style={{
                                 width: '100%',
                                 height: '100%',
@@ -48,7 +83,7 @@ export const PanelApp: FunctionComponent = () => {
                     </div>
                 </div>
                 <div
-                    style={{ width: '103px', backgroundImage: `url(/images/panel/right.png)` }}
+                    style={{ width: '103px', backgroundImage: `url(/public/images/panel/right.png)` }}
                     className="h-full bg-center  z-20"
                 ></div>
             </div>
@@ -59,16 +94,16 @@ export const PanelApp: FunctionComponent = () => {
                 className="flex flex-row items-center  z-20"
             >
                 <div
-                    style={{ width: '99px', backgroundImage: `url(/images/panel/bottom-left.png)` }}
+                    style={{ width: '99px', backgroundImage: `url(/public/images/panel/bottom-left.png)` }}
                     className="h-full  z-20"
                 ></div>
                 <div
-                    style={{ backgroundImage: `url(/images/panel/bottom.png)` }}
-                    className="h-full grow bg-center  z-20"
+                    style={{ backgroundImage: `url(/public/images/panel/bottom.png)` }}
+                    className="h-full grow bg-center z-20"
                 ></div>
                 <div
-                    style={{ width: '103px', backgroundImage: `url(/images/panel/bottom-right.png)` }}
-                    className="h-full  z-20"
+                    style={{ width: '103px', backgroundImage: `url(/public/images/panel/bottom-right.png)` }}
+                    className="h-full z-20"
                 ></div>
             </div>
         </div>

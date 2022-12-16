@@ -58,6 +58,9 @@ export class QBCore {
         return this.QBCore.Functions.HasPermission(source, permission);
     }
 
+    public getSteamIdentifier(source: number): string {
+        return this.QBCore.Functions.GetSozIdentifier(source);
+    }
     public hasJobPermission(
         job: string,
         playerJobId: string,
