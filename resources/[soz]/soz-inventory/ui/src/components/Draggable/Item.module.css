@@ -56,11 +56,11 @@
     align-items: center;
     top: 0.25rem;
     right: 0.25rem;
-    color: #fafafa;
+    color: rgb(185, 208, 255);
     z-index: 100;
     pointer-events: none;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(136, 189, 255, 0.2);
+    background: rgba(136, 189, 255, 0.3);
     padding: 0 0.2rem;
     border-radius: 0.25rem;
     font-size: 0.65rem;
