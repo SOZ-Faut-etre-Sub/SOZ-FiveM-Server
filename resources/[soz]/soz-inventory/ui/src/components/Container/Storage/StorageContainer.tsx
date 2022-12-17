@@ -8,6 +8,7 @@ import { clsx } from 'clsx';
 import playerBanner from '/banner/player.jpg';
 import { DndContext, DragEndEvent, rectIntersection } from '@dnd-kit/core';
 import { useInventoryRow } from '../../../hooks/useInventoryRow';
+import { handleSortInventory } from '../../../hooks/handleSortInventory';
 
 export const StorageContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -247,6 +248,7 @@ export const StorageContainer = () => {
                         banner={targetInventoryBanner}
                         weight={targetInventory.weight}
                         maxWeight={targetInventory.maxWeight}
+                        sortCallback={() => handleSortInventory(targetInventory.id, setTargetInventory)}
                     >
                         <ContainerSlots
                             id='storage'

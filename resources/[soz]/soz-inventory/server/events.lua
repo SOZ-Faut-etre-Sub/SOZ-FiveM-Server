@@ -29,6 +29,14 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
     end, targetSlot, manualFilter)
 end)
 
+QBCore.Functions.CreateCallback("inventory:server:SortInventoryAZ", function(source, cb, inventorySource)
+    Inventory.SortInventoryAZ(inventorySource, function(success, reason)
+        local sourceInv = Inventory(inventorySource)
+
+        cb(success, reason, sourceInv)
+    end)
+end)
+
 RegisterServerEvent("inventory:server:closeInventory", function(invID)
     local targetInv = Inventory(invID)
 
