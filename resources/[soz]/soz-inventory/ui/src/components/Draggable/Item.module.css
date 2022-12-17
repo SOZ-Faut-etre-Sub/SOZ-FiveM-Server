@@ -59,17 +59,12 @@
     color: #fafafa;
     z-index: 100;
     pointer-events: none;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.3);
     padding: 0 0.2rem;
     border-radius: 0.25rem;
     font-size: 0.65rem;
-}
-
-.Shortcut svg {
-    width: 0.65rem;
-    height: 0.65rem;
-    margin-right: 0.15rem;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 1px;
 }
 
 .ContextMenu {
