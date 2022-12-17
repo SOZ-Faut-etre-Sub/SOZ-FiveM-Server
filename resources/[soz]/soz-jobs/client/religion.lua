@@ -115,8 +115,14 @@ end)
 
 RegisterNetEvent("jobs:religion:tenue")
 AddEventHandler("jobs:religion:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
-    JobOutfit = true
+    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", SozJobCore.religion_clothes[PlayerData.skin.Model.Hash])
+        TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
+        JobOutfit = true
+    end)
 end)
 
 RegisterNetEvent("jobs:religion:vehicle")
@@ -207,8 +213,8 @@ AddEventHandler("jobs:religion:start", function()
     TriggerServerEvent("job:anounce", "Balancez vos infos chat aux passants")
 end)
 
-RegisterNetEvent("jobs:religion:end")
-AddEventHandler("jobs:religion:end", function()
+
+local function close()
     TriggerServerEvent("job:set:unemployed")
     local money = SozJobCore.religion_payout * payout_counter
     TriggerServerEvent("job:payout", money)
@@ -223,4 +229,19 @@ AddEventHandler("jobs:religion:end", function()
     JobVehicle = false
     payout_counter = 0
     ResetPrayersState()
+end
+
+RegisterNetEvent("jobs:religion:end")
+AddEventHandler("jobs:religion:end", function()
+    if JobOutfit then
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            close()
+        end)
+    else
+        close()
+    end
 end)
