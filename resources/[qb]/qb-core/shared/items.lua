@@ -2173,6 +2173,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['semi_skimmed_milk'] = {
         ['name'] = 'semi_skimmed_milk',
@@ -2195,6 +2196,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['skimmed_milk'] = {
         ['name'] = 'skimmed_milk',
@@ -2217,6 +2219,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['cheese1'] = {
         ['name'] = 'cheese1',
