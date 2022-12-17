@@ -51,6 +51,8 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         let itemExtraLabel = '';
         let contextExtraLabel = '';
 
+        let illustrator = item.illustrator || ''
+
         if (item.type === 'weapon') {
             if (item?.metadata?.ammo) {
                 itemExtraLabel += ` [${item.metadata.ammo} munitions]`
@@ -71,10 +73,16 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             }
         }
 
+        if (item.illustrator && item.illustrator instanceof Object) {
+            if (item.name === 'outfit' || item.name === 'armor') {
+                illustrator = item.illustrator[item?.metadata?.type || ''] || '';
+            }
+        }
+
         onItemHover?.(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description ? item.description : ''}
-            <div><span>${contextExtraLabel}</span> <span>${item.illustrator || ''}</span></div>
+            <div><span>${contextExtraLabel}</span> <span>${illustrator}</span></div>
         `);
     }, [item, onItemHover]);
 
@@ -109,6 +117,18 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         };
     };
 
+    const itemIcon = useCallback((item: InventoryItem) => {
+        let path = item.name
+
+        if (item.name === 'outfit' || item.name === 'armor') {
+            path += `_${item.metadata?.type}`
+        } else if (item.name === 'cabinet_zkea') {
+            path += `_${item.metadata?.tier}`
+        }
+
+        return `https://nui-img/soz-items/${path}`
+    }, []);
+
     if (!item && !money) {
         return null
     }
@@ -119,7 +139,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 <img
                 alt=""
                 className={style.Icon}
-                src={item.type === 'key' ? keyIcon : `https://nui-img/soz-items/${item.name}`}
+                src={item.type === 'key' ? keyIcon : itemIcon(item)}
                 onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
             />
             </DragOverlay>, document.body
@@ -154,7 +174,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                         <img
                             alt=""
                             className={style.Icon}
-                            src={item.type === 'key' ? keyIcon : `https://nui-img/soz-items/${item.name}`}
+                            src={item.type === 'key' ? keyIcon : itemIcon(item)}
                             onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
                         />
                     </>

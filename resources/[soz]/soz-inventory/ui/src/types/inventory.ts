@@ -29,7 +29,7 @@ export type InventoryItem = {
     amount: number;
     metadata?: InventoryItemMetadata;
     shouldClose?: boolean;
-    illustrator?: string;
+    illustrator?: Record<string, string> | string;
     disabled?: boolean; // added by inventory on the fly
     shortcut?: string | null; // added by inventory on the fly
 };
@@ -60,6 +60,7 @@ export type InventoryItemMetadata = {
     type?: string;
     expiration?: string;
     player?: number;
+    tier?: number;
     // Weapom
     serial?: string;
     health?: number;
