@@ -16,6 +16,7 @@ export const PlayerContainer = () => {
 
     const [playerMoney, setPlayerMoney] = useState<number>(0);
     const [playerInventory, setPlayerInventory] = useState<SozInventoryModel | null>();
+    const [playerShortcuts, setPlayerShortcuts] = useState<Partial<InventoryItem>[]>();
 
     const interactAction = useCallback(
         (action: string, item: InventoryItem, shortcut: number) => {
@@ -56,6 +57,7 @@ export const PlayerContainer = () => {
 
                     setPlayerInventory(event.data.playerInventory);
                     setPlayerMoney(event.data.playerMoney);
+                    setPlayerShortcuts(event.data.playerShortcuts);
 
                     setDisplay(true);
                 } catch (e: any) {
@@ -64,7 +66,7 @@ export const PlayerContainer = () => {
                 }
             }
         },
-        [setDisplay, setPlayerMoney, setPlayerInventory]
+        [setDisplay, setPlayerMoney, setPlayerInventory, setPlayerShortcuts]
     );
 
     const onKeyDownReceived = useCallback(
@@ -118,6 +120,19 @@ export const PlayerContainer = () => {
         [playerInventory, setDisplay]
     );
 
+    const itemShortcut = useCallback((item: InventoryItem) => {
+        if (!item) return null;
+
+        const shortcut = Object.entries(playerShortcuts || {})?.find(([id, s]) => {
+            const itemMetadata = Object.values(item.metadata || {})
+            const shortcutMetadata = Object.values(s?.metadata || {})
+
+            return s.name === item.name && shortcutMetadata.every(m => itemMetadata.includes(m));
+        });
+
+        return shortcut ? shortcut[0] : null;
+    }, [playerShortcuts]);
+
     useEffect(() => {
         window.addEventListener("contextmenu", onClickReceived);
         window.addEventListener("message", onMessageReceived);
@@ -162,7 +177,7 @@ export const PlayerContainer = () => {
                         id="player"
                         rows={inventoryRow}
                         money={playerMoney}
-                        items={playerInventory.items.map((item, i) => ({...item, id: i}))}
+                        items={playerInventory.items.map((item, i) => ({...item, id: i, shortcut: itemShortcut(item)}))}
                         action={interactAction}
                     />
                 </ContainerWrapper>

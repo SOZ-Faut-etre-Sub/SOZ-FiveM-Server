@@ -32,6 +32,12 @@ export class InventoryUsageProvider {
             return;
         }
 
+        Object.entries(player.PlayerData.metadata.shortcuts).forEach(([key, value]) => {
+            if (value.name === item.name && value.metadata.serial === item.metadata.serial) {
+                player.PlayerData.metadata.shortcuts[key] = null;
+            }
+        });
+
         player.PlayerData.metadata.shortcuts[shortcut] = {
             name: item.name,
             metadata: {

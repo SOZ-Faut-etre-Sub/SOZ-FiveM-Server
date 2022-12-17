@@ -15,6 +15,7 @@ RegisterCommand("inventory", function()
                 action = "openPlayerInventory",
                 playerInventory = inventory,
                 playerMoney = PlayerData.money["money"] + PlayerData.money["marked_money"],
+                playerShortcuts = PlayerData.metadata["shortcuts"] or {},
             })
             SetNuiFocus(true, true)
 

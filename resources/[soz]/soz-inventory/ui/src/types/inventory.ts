@@ -31,6 +31,7 @@ export type InventoryItem = {
     shouldClose?: boolean;
     illustrator?: string;
     disabled?: boolean; // added by inventory on the fly
+    shortcut?: string | null; // added by inventory on the fly
 };
 
 export type ItemType =
