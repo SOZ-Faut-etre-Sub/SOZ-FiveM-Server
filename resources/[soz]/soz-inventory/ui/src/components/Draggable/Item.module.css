@@ -59,9 +59,9 @@
     color: #fafafa;
     z-index: 100;
     pointer-events: none;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.1);
-    padding: 0.15rem;
+    padding: 0 0.2rem;
     border-radius: 0.25rem;
     font-size: 0.65rem;
 }
