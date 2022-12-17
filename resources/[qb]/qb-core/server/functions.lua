@@ -38,6 +38,43 @@ function QBCore.Functions.GetSozIdentifier(source)
     return tostring(tonumber(steamHex, 16))
 end
 
+-- This is the default function for getting a player account, change this method to do your own auth system
+function QBCore.Functions.GetUserAccount(source)
+    local steam = QBCore.Functions.GetSozIdentifier(source)
+
+    local status, result = pcall(function()
+        local p = promise.new()
+        local resolved = false
+
+        MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
+            if resolved then
+                return
+            end
+
+            p:resolve(result)
+            resolved = true
+        end)
+
+        Citizen.SetTimeout(1000, function()
+            resolved = true
+
+            p:reject('timeout check last mysql error')
+        end)
+
+        return Citizen.Await(p)
+    end)
+
+    if not status or not result then
+        exports["soz-monitor"]:Log("ERROR", "cannot find account for this user: '" .. json.encode(result) .. "'", {
+            steam = steam,
+        })
+
+        return nil
+    end
+
+    return result
+end
+
 function QBCore.Functions.GetSource(identifier)
     for src, player in pairs(QBCore.Players) do
         local idens = GetPlayerIdentifiers(src)

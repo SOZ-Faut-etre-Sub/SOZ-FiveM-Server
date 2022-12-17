@@ -40,32 +40,11 @@ end)
 
 -- Player Connecting
 
-local function GetUserAccount(steam)
-    local p = promise.new()
-    local resolved = false
-
-    MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
-        if resolved then
-            return
-        end
-
-        p:resolve(result)
-        resolved = true
-    end)
-
-    Citizen.SetTimeout(1000, function()
-        resolved = true
-
-        p:reject('timeout check last mysql error')
-    end)
-
-    return Citizen.Await(p)
-end
-
 local function OnPlayerConnecting(name, setKickReason, deferrals)
     -- @TODO we will validate in another way using steam and a specific queue system, bypass this code ATM
     deferrals.defer()
-    local steam = QBCore.Functions.GetSozIdentifier(source)
+    local src = source
+    local steam = QBCore.Functions.GetSozIdentifier(src)
 
     Wait(0)
 
@@ -84,16 +63,9 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
         end
     end
 
-    local status, result = pcall(function()
-        return GetUserAccount(steam)
-    end)
+    local account = QBCore.Functions.GetUserAccount(src)
 
-    if not status or not result then
-        exports["soz-monitor"]:Log("ERROR", name .. ": cannot find account for this user: '" .. json.encode(result) .. "'", {
-            steam = steam,
-            event = "playerConnecting"
-        })
-
+    if not account then
         if not allowAnonymous then
             deferrals.done('Impossible de recupérer un compte soz valide, veuillez vous rapprocher auprès d\'un administrateur, identifiant steam : ' .. tostring(steam))
 
