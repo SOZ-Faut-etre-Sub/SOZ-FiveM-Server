@@ -234,6 +234,7 @@ export const StorageContainer = () => {
                         <ContainerSlots
                             id='player'
                             rows={playerInventoryRow}
+                            money={-1}
                             items={playerInventory.items.map((item, i) => ({ ...item, id: i }))}
                         />
                     </ContainerWrapper>

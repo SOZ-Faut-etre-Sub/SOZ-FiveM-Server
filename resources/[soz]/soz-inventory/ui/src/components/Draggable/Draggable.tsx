@@ -136,7 +136,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 {...listeners}
                 {...attributes}
                 className={clsx(style.Card, {
-                    [style.Disabled]: item?.disabled === true,
+                    [style.Disabled]: item?.disabled === true || (money && money < 0),
                 })}
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
@@ -162,7 +162,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 {money && (
                     <>
                         <span className={style.Amount}>
-                            {money.toLocaleString('en-US', FORMAT_CURRENCY)}
+                            {money >= 0 && money.toLocaleString('en-US', FORMAT_CURRENCY)}
                         </span>
                         <img
                             alt=""
