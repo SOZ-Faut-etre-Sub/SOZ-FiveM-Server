@@ -613,27 +613,33 @@ function Inventory.SortInventoryAZ(inv, cb)
 
     local inventorySorted = {}
     local sorted = table.deepclone(inv.items)
-    table.sort(sorted, function(a, b)
-        if a == nil or b == nil then
-            return false
+    for i = 1, 2 do
+        inventorySorted = {}
+
+        table.sort(sorted, function(a, b)
+            if a == nil or b == nil then
+                return false
+            end
+
+            if a.label == b.label then
+                return a.amount < b.amount
+            end
+
+            if a.label == b.label and a.amount == b.amount then
+                return table.matches(a.metadata, b.metadata)
+            end
+
+            return a.label < b.label
+        end)
+
+        for s, item in pairs(sorted) do
+            local slot = #inventorySorted + 1
+
+            inventorySorted[slot] = item
+            inventorySorted[slot].slot = slot
         end
 
-        if a.label == b.label then
-            return a.amount < b.amount
-        end
-
-        if a.label == b.label and a.amount == b.amount then
-            return table.matches(a.metadata, b.metadata)
-        end
-
-        return a.label < b.label
-    end)
-
-    for s, item in pairs(sorted) do
-        local slot = #inventorySorted + 1
-
-        inventorySorted[slot] = item
-        inventorySorted[slot].slot = slot
+        sorted = table.deepclone(inventorySorted)
     end
 
     if table.length(inventorySorted) > 0 then
@@ -648,6 +654,8 @@ function Inventory.SortInventoryAZ(inv, cb)
                 TriggerClientEvent("inventory:client:updateTargetStoragesState", player, inv)
             end
         end
+    else
+        success = true
     end
 
     cb(success, reason)
