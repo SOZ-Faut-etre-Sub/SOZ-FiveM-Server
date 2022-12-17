@@ -10,13 +10,15 @@ function QBCore.Player.Login(source, citizenid, newData)
     if src then
         if citizenid then
             local license = QBCore.Functions.GetSozIdentifier(src)
-            local account = exports.oxmysql:singleSync("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", { license })
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
             local apartment = exports.oxmysql:singleSync('SELECT label FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
             local role = GetConvar("soz_anonymous_default_role", "user")
+            local status, account = pcall(function()
+                return exports.oxmysql:singleSync("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", { license })
+            end)
 
-            if account then
-                role = account.role:lower()
+            if status and account then
+                role = account.role
             end
 
             if PlayerData and (license == PlayerData.license or role == 'admin') then
