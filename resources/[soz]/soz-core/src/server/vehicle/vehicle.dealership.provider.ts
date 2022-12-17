@@ -89,12 +89,18 @@ export class VehicleDealershipProvider {
 
         for (const index in AuctionZones) {
             const auctionZone = AuctionZones[index];
+            const selectedVehicle = selectedVehicles[index];
+
+            if (!selectedVehicle) {
+                continue;
+            }
+
             const vehicle = {
-                ...selectedVehicles[index],
-                jobName: JSON.parse(selectedVehicles[index].jobName),
+                ...selectedVehicle,
+                jobName: JSON.parse(selectedVehicle.jobName),
             };
 
-            this.auctions[selectedVehicles[index].model] = {
+            this.auctions[selectedVehicle.model] = {
                 vehicle: {
                     ...vehicle,
                     maxStock: VehicleMaxStock[vehicle.category] || 0,

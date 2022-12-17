@@ -65,7 +65,7 @@ All contributors to the project will be notified on a list.
 
 ### Requirements
  * NodeJS: to compile the code and migrate the database
- * MySQL/MariaDB: to store the data
+ * MariaDB: to store the data
  * Loki: to store the logs (Optional)
  * Prometheus: to store the metrics (Optional)
 
