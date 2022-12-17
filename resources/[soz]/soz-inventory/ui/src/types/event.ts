@@ -5,5 +5,6 @@ export type NuiEventPlayerInventory = {
     playerMoney?: number;
     playerInventory?: SozInventoryModel
     targetInventory?: SozInventoryModel
+    playerShortcuts?: any
     keys?: any;
 }

@@ -174,7 +174,15 @@ export const debugPlayerInventory: NuiEventPlayerInventory = {
                 "label": "Boussole"
             }
         ]
-    }
+    },
+    playerShortcuts: {
+        2: {
+            name: "weapon_revolver",
+            metadata: {
+                serial: "12xaA0fF703OfvJ",
+            }
+        },
+    },
 }
 
 export const debugStorageInventory: NuiEventPlayerInventory = {
