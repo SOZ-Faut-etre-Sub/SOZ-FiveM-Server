@@ -213,7 +213,6 @@ AddEventHandler("jobs:religion:start", function()
     TriggerServerEvent("job:anounce", "Balancez vos infos chat aux passants")
 end)
 
-
 local function close()
     TriggerServerEvent("job:set:unemployed")
     local money = SozJobCore.religion_payout * payout_counter

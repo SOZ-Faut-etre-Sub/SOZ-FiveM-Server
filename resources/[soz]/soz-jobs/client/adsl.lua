@@ -205,7 +205,6 @@ local function close()
     DrawDistance = 0
 end
 
-
 RegisterNetEvent("jobs:adsl:end")
 AddEventHandler("jobs:adsl:end", function()
     if JobOutfit then
