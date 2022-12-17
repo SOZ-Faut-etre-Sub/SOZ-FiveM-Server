@@ -144,6 +144,7 @@ export const StorageContainer = () => {
                     item: event.active.data.current.item,
                     slot: event.over.data.current.slot,
                     inventory: event.active.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id,
+                    manualFilter: event.active.data.current.container === 'player' && targetInventory?.type,
                 }),
             })
                 .then(res => res.json())

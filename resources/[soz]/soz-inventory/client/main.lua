@@ -64,7 +64,7 @@ RegisterNUICallback("sortItem", function(data, cb)
         if not success then
             exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
         end
-    end, data.inventory, data.inventory, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot, data.slot)
+    end, data.inventory, data.inventory, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot, data.slot, data.manualFilter)
 end)
 
 RegisterNUICallback("closeNUI", function(data, cb)
