@@ -614,7 +614,7 @@ function Inventory.SortInventoryAZ(inv, cb)
     local inventorySorted = {}
     local sorted = table.deepclone(inv.items)
     table.sort(sorted, function(a, b)
-        if a == nil or b ==nil then
+        if a == nil or b == nil then
             return false
         end
 

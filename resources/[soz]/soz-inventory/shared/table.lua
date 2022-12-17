@@ -78,5 +78,4 @@ table.length = function(tbl)
     return count
 end
 
-
 return table
