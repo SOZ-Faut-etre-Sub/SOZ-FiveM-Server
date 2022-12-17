@@ -51,20 +51,21 @@ RegisterNUICallback("transfertItem", function(data, cb)
 end)
 
 RegisterNUICallback("sortItem", function(data, cb)
-    local amount = data.item.amount
-
-    if amount > 1 then
-        SetNuiFocus(false, false)
-        amount = exports["soz-hud"]:Input("Quantité", 5, data.item.amount)
-        SetNuiFocus(true, true)
-    end
-
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
         if not success then
             exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
         end
-    end, data.inventory, data.inventory, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot, data.slot)
+    end, data.inventory, data.inventory, data.item.name, data.item.amount, data.item.metadata, data.item.slot, data.slot, data.manualFilter)
+end)
+
+RegisterNUICallback("sortInventoryAZ", function(data, cb)
+    QBCore.Functions.TriggerCallback("inventory:server:SortInventoryAZ", function(success, reason, invSource)
+        cb({status = success, sourceInventory = invSource})
+        if not success then
+            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+        end
+    end, data.inventory)
 end)
 
 RegisterNUICallback("closeNUI", function(data, cb)

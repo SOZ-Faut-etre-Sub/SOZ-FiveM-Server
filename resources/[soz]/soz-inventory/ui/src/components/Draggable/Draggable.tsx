@@ -23,7 +23,7 @@ type Props = {
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
 const FORMAT_CURRENCY: Intl.NumberFormatOptions = {style: "currency", currency: 'USD', maximumFractionDigits: 0}
 
-const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, setInContext, interactAction, onItemHover }) => {
+const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, onItemHover }) => {
     const {attributes, listeners, setNodeRef, transform, isDragging} = useDraggable({
         id: `${id}_${item?.slot ?? ''}`,
         data: {
@@ -51,6 +51,8 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
         let itemExtraLabel = '';
         let contextExtraLabel = '';
 
+        let illustrator = item.illustrator || ''
+
         if (item.type === 'weapon') {
             if (item?.metadata?.ammo) {
                 itemExtraLabel += ` [${item.metadata.ammo} munitions]`
@@ -71,10 +73,16 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
             }
         }
 
+        if (item.illustrator && item.illustrator instanceof Object) {
+            if (item.name === 'outfit' || item.name === 'armor') {
+                illustrator = item.illustrator[item?.metadata?.type || ''] || '';
+            }
+        }
+
         onItemHover?.(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description ? item.description : ''}
-            <div><span>${contextExtraLabel}</span> <span>${item.illustrator || ''}</span></div>
+            <div><span>${contextExtraLabel}</span> <span>${illustrator}</span></div>
         `);
     }, [item, onItemHover]);
 
@@ -109,6 +117,18 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
         };
     };
 
+    const itemIcon = useCallback((item: InventoryItem) => {
+        let path = item.name
+
+        if (item.name === 'outfit' || item.name === 'armor') {
+            path += `_${item.metadata?.type}`
+        } else if (item.name === 'cabinet_zkea') {
+            path += `_${item.metadata?.tier}`
+        }
+
+        return `https://nui-img/soz-items/${path}`
+    }, []);
+
     if (!item && !money) {
         return null
     }
@@ -119,7 +139,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                 <img
                 alt=""
                 className={style.Icon}
-                src={item.type === 'key' ? keyIcon : `https://nui-img/soz-items/${item.name}`}
+                src={item.type === 'key' ? keyIcon : itemIcon(item)}
                 onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
             />
             </DragOverlay>, document.body
@@ -136,7 +156,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                 {...listeners}
                 {...attributes}
                 className={clsx(style.Card, {
-                    [style.Disabled]: item?.disabled === true,
+                    [style.Disabled]: item?.disabled === true || (money && money < 0),
                 })}
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
@@ -146,10 +166,15 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                         <span className={style.Amount}>
                             {item.amount > 1 && item.amount}
                         </span>
+                        {(item?.shortcut) && (
+                            <span className={style.Shortcut}>
+                                {item?.shortcut}
+                            </span>
+                        )}
                         <img
                             alt=""
                             className={style.Icon}
-                            src={item.type === 'key' ? keyIcon : `https://nui-img/soz-items/${item.name}`}
+                            src={item.type === 'key' ? keyIcon : itemIcon(item)}
                             onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
                         />
                     </>
@@ -157,7 +182,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, s
                 {money && (
                     <>
                         <span className={style.Amount}>
-                            {money.toLocaleString('en-US', FORMAT_CURRENCY)}
+                            {money >= 0 && money.toLocaleString('en-US', FORMAT_CURRENCY)}
                         </span>
                         <img
                             alt=""

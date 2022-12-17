@@ -8,6 +8,7 @@ import { clsx } from 'clsx';
 import playerBanner from '/banner/player.jpg';
 import { DndContext, DragEndEvent, rectIntersection } from '@dnd-kit/core';
 import { useInventoryRow } from '../../../hooks/useInventoryRow';
+import { handleSortInventory } from '../../../hooks/handleSortInventory';
 
 export const StorageContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -144,6 +145,7 @@ export const StorageContainer = () => {
                     item: event.active.data.current.item,
                     slot: event.over.data.current.slot,
                     inventory: event.active.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id,
+                    manualFilter: event.active.data.current.container === 'player' && targetInventory?.type,
                 }),
             })
                 .then(res => res.json())
@@ -232,6 +234,7 @@ export const StorageContainer = () => {
                         <ContainerSlots
                             id='player'
                             rows={playerInventoryRow}
+                            money={-1}
                             items={playerInventory.items.map((item, i) => ({ ...item, id: i }))}
                         />
                     </ContainerWrapper>
@@ -246,6 +249,7 @@ export const StorageContainer = () => {
                         banner={targetInventoryBanner}
                         weight={targetInventory.weight}
                         maxWeight={targetInventory.maxWeight}
+                        sortCallback={() => handleSortInventory(targetInventory.id, setTargetInventory)}
                     >
                         <ContainerSlots
                             id='storage'

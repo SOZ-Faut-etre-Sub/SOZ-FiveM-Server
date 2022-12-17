@@ -70,4 +70,12 @@ local function table_deepclone(tbl)
 end
 table.deepclone = table_deepclone
 
+table.length = function(tbl)
+    local count = 0
+    for _ in pairs(tbl) do
+        count = count + 1
+    end
+    return count
+end
+
 return table

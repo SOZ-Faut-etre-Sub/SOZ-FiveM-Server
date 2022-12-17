@@ -2173,6 +2173,7 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['semi_skimmed_milk'] = {
         ['name'] = 'semi_skimmed_milk',
@@ -2195,6 +2196,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['skimmed_milk'] = {
         ['name'] = 'skimmed_milk',
@@ -2217,6 +2219,7 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        ['illustrator'] = '.Sniteur',
     },
     ['cheese1'] = {
         ['name'] = 'cheese1',
@@ -3257,7 +3260,15 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Il faut parfois se protéger avant de sortir.',
-        ['illustrator'] = '.LeakFlood',
+        ['illustrator'] = {
+            ['unmark'] = '.Omega',
+            ['lspd'] = '.Omega',
+            ['bcso'] = '.Omega',
+            ['fbi'] = '.Omega',
+            ['lsmc'] = '.DanyG',
+            ['stonk'] = '.Biblys',
+            ['news'] = '.LuckyG',
+        },
     },
     ['outfit'] = {
         ['name'] = 'outfit',
@@ -3268,7 +3279,10 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = {
+            ['lsmc'] = '.Smogogo'
+        }
     },
     ['handcuffs'] = {
         ['name'] = 'handcuffs',
@@ -3830,6 +3844,7 @@ QBShared.Items = {
             [4] = 3000,
         },
         ['resellZone'] = 'Resell:Zkea',
+        ['illustrator'] = '.DrLuck1'
     },
     --- Summer body health
     ['flask_pee_empty'] = {

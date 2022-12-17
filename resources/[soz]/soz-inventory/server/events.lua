@@ -15,13 +15,26 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
-                                function(source, cb, inventorySource, inventoryTarget, item, amount, metadata, slot, targetSlot)
+                                function(source, cb, inventorySource, inventoryTarget, item, amount, metadata, slot, targetSlot, manualFilter)
     Inventory.TransfertItem(inventorySource, inventoryTarget, item, amount, metadata, slot, function(success, reason)
         local sourceInv = Inventory(inventorySource)
         local targetInv = Inventory(inventoryTarget)
 
-        cb(success, reason, Inventory.FilterItems(sourceInv, targetInv.type), Inventory.FilterItems(targetInv, sourceInv.type))
-    end, targetSlot)
+        local sourceInventory = Inventory.FilterItems(sourceInv, targetInv.type)
+        if sourceInv.id == targetInv.id and manualFilter then
+            sourceInventory = Inventory.FilterItems(sourceInv, manualFilter)
+        end
+
+        cb(success, reason, sourceInventory, Inventory.FilterItems(targetInv, sourceInv.type))
+    end, targetSlot, manualFilter)
+end)
+
+QBCore.Functions.CreateCallback("inventory:server:SortInventoryAZ", function(source, cb, inventorySource)
+    Inventory.SortInventoryAZ(inventorySource, function(success, reason)
+        local sourceInv = Inventory(inventorySource)
+
+        cb(success, reason, sourceInv)
+    end)
 end)
 
 RegisterServerEvent("inventory:server:closeInventory", function(invID)

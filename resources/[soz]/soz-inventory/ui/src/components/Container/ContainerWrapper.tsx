@@ -7,9 +7,10 @@ type Props = {
     banner: string
     weight?: number;
     maxWeight?: number;
+    sortCallback?: () => void;
 }
 
-export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({display, banner, weight = 1000, maxWeight = 1000, children}) => {
+export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({display, banner, weight = 1000, maxWeight = 1000, sortCallback, children}) => {
     return (
         <main
             className={clsx(style.Wrapper, {
@@ -22,9 +23,25 @@ export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({d
                 backgroundSize: 'cover',
             }}>
                 {maxWeight !== -1 && (
-                    <span>
-                        {weight / 1000}/{maxWeight / 1000} Kg
-                    </span>
+                    <>
+                    {sortCallback ? (
+                        <span className={style.Sort} onClick={sortCallback}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                            </svg>
+                            A-Z
+                        </span>
+                    ): <span />}
+                        <span>
+                            {weight / 1000}/{maxWeight / 1000} Kg
+                        </span>
+                    </>
                 )}
             </header>
 
