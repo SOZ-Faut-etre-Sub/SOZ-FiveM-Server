@@ -281,7 +281,6 @@ Config.AtmLocations = {
     ["atm_small_-1535964382"] = {accountId = "bank_fleeca6", coords = {x = 1172.457, y = 2703.139}},
     ["atm_small_-2095358695"] = {accountId = "bank_fleeca6", coords = {x = 1687.395, y = 4815.911}},
     ["atm_small_1950825746"] = {accountId = "bank_fleeca7", coords = {x = 1700.694, y = 6426.762}},
-    ["atm_small_-430197987"] = {accountId = "bank_fleeca6", coords = {x = 1822.971, y = 3682.577}},
     ["atm_big_1160659784"] = {accountId = "bank_fleeca2", coords = {x = 2558.324, y = 350.988}},
     ["atm_small_-1439659778"] = {accountId = "bank_fleeca6", coords = {x = 2564.001, y = 2584.553}},
     -- Pacific main entrance
