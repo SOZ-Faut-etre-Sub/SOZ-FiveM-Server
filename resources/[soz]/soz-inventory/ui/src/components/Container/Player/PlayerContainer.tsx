@@ -9,6 +9,7 @@ import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
 import { useInventoryRow } from '../../../hooks/useInventoryRow';
+import { handleSortInventory } from '../../../hooks/handleSortInventory';
 
 export const PlayerContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -172,6 +173,7 @@ export const PlayerContainer = () => {
                     banner={playerBanner}
                     weight={playerInventory.weight}
                     maxWeight={playerInventory.maxWeight}
+                    sortCallback={() => handleSortInventory(playerInventory.id, setPlayerInventory)}
                 >
                     <ContainerSlots
                         id="player"

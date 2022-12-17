@@ -595,6 +595,64 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
     cb(success, reason)
 end
 
+function Inventory.SortInventoryAZ(inv, cb)
+    local success, reason = false, nil
+    if type(inv) ~= "table" then
+        inv = Inventory(inv)
+    end
+
+    if not _G.Container[inv.type]:CanGetContentInInventory(item) then
+        cb(false, "get_not_allowed")
+        return
+    end
+
+    if not _G.Container[inv.type]:CanPutContentInInventory(item) then
+        cb(false, "put_not_allowed")
+        return
+    end
+
+    local inventorySorted = {}
+    local sorted = table.deepclone(inv.items)
+    table.sort(sorted, function(a, b)
+        if a == nil or b ==nil then
+            return false
+        end
+
+        if a.label == b.label then
+            return a.amount < b.amount
+        end
+
+        if a.label == b.label and a.amount == b.amount then
+            return table.matches(a.metadata, b.metadata)
+        end
+
+        return a.label < b.label
+    end)
+
+    for s, item in pairs(sorted) do
+        local slot = #inventorySorted + 1
+
+        inventorySorted[slot] = item
+        inventorySorted[slot].slot = slot
+    end
+
+    if table.length(inventorySorted) > 0 then
+        inv.changed = true
+        inv.items = inventorySorted
+
+        _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
+        success = true
+
+        if inv.type ~= "player" and #inv.users > 1 then
+            for player, _ in pairs(inv.users) do
+                TriggerClientEvent("inventory:client:updateTargetStoragesState", player, inv)
+            end
+        end
+    end
+
+    cb(success, reason)
+end
+
 --- Items By Type
 function Inventory.GetItemsByType(inv, type)
     inv = Inventory(inv)

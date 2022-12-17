@@ -17,7 +17,7 @@
 
 .Banner {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
@@ -32,4 +32,26 @@
     line-height: 1.2rem;
     color: #fff;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.Sort {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.Sort:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.Sort svg {
+    height: 1rem;
+    width: 1rem;
+    color: #fff;
+    margin-right: 0.2rem;
 }

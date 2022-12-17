@@ -59,6 +59,15 @@ RegisterNUICallback("sortItem", function(data, cb)
     end, data.inventory, data.inventory, data.item.name, data.item.amount, data.item.metadata, data.item.slot, data.slot, data.manualFilter)
 end)
 
+RegisterNUICallback("sortInventoryAZ", function(data, cb)
+    QBCore.Functions.TriggerCallback("inventory:server:SortInventoryAZ", function(success, reason, invSource)
+        cb({status = success, sourceInventory = invSource})
+        if not success then
+            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+        end
+    end, data.inventory)
+end)
+
 RegisterNUICallback("closeNUI", function(data, cb)
     SetNuiFocus(false, false)
     cb(true)
