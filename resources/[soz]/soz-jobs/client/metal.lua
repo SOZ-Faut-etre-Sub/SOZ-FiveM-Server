@@ -203,7 +203,6 @@ AddEventHandler("jobs:metal:start", function()
     Counter = Counter + 1
 end)
 
-
 local function close()
     TriggerServerEvent("job:set:unemployed")
     QBCore.Functions.DeleteVehicle(metal_vehicule)
