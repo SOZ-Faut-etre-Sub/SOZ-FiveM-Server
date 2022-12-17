@@ -125,6 +125,8 @@ export const PlayerContainer = () => {
         if (!item) return null;
 
         const shortcut = Object.entries(playerShortcuts || {})?.find(([id, s]) => {
+            if (s === null) return false;
+
             const itemMetadata = Object.values(item.metadata || {})
             const shortcutMetadata = Object.values(s?.metadata || {})
 
