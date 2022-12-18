@@ -39,7 +39,7 @@ function CreateMakeupMenuItems(makeupMenu, playerId, skin)
 
     -- Rouge à lèvres
     makeupMenu:AddTitle({label = "Rouge à lèvres"})
-    CreateSliderList(makeupMenu, "Cheveux", skin.Makeup.LipstickType, Labels.Lipstick, function(value)
+    CreateSliderList(makeupMenu, "Type", skin.Makeup.LipstickType, Labels.Lipstick, function(value)
         skin.Makeup.LipstickType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
