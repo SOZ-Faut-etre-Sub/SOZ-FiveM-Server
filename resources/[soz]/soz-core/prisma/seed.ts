@@ -1,19 +1,20 @@
 import { PrismaClient } from '@prisma/client';
 
-import { dealership_job } from './seed/dealership';
 import { storages } from './seed/fuel_storage';
 import { grades } from './seed/job';
 import { facilities } from './seed/upw_facility';
-import { vehicles } from './seed/vehicle';
+import { dealership_job, vehicles } from './seed/vehicle';
 
 const prisma = new PrismaClient();
 
 async function main() {
     await prisma.vehicle.createMany({
         data: vehicles,
+        skipDuplicates: true,
     });
     await prisma.concess_entreprise.createMany({
         data: dealership_job,
+        skipDuplicates: true,
     });
     await prisma.job_grades.createMany({
         data: grades,

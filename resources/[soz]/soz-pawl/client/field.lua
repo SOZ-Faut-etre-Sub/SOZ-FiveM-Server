@@ -129,17 +129,20 @@ RegisterNetEvent("pawl:client:syncField", function(identifier, data)
     end
 
     local currentTime = exports["soz-utils"]:GetTimestamp() / 1000
-    for _, v in pairs(data) do
-        if (currentTime - v.harvestTime) * 1000 >= Config.Field.RefillDelay then
-            local tree = CreateObjectNoOffset(v.model, v.position.x, v.position.y, v.position.z, false, false, false)
-            SetEntityHeading(tree, v.position.w or 0.0)
-            FreezeEntityPosition(tree, true)
 
-            field[#field + 1] = tree
-            TreeInteraction(identifier, v.position)
-        else
-            local zoneName = ("pawl:%s:%s"):format(identifier, v.position.x .. v.position.y)
-            exports["qb-target"]:RemoveZone(zoneName)
+    if data then
+        for _, v in pairs(data) do
+            if (currentTime - v.harvestTime) * 1000 >= Config.Field.RefillDelay then
+                local tree = CreateObjectNoOffset(v.model, v.position.x, v.position.y, v.position.z, false, false, false)
+                SetEntityHeading(tree, v.position.w or 0.0)
+                FreezeEntityPosition(tree, true)
+
+                field[#field + 1] = tree
+                TreeInteraction(identifier, v.position)
+            else
+                local zoneName = ("pawl:%s:%s"):format(identifier, v.position.x .. v.position.y)
+                exports["qb-target"]:RemoveZone(zoneName)
+            end
         end
     end
 end)
