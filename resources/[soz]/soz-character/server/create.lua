@@ -8,7 +8,7 @@ QBCore.Functions.CreateCallback("soz-character:server:GetUserAccount", function(
             cb(nil)
         end
     else
-        cb(result)
+        cb(account)
     end
 end)
 
