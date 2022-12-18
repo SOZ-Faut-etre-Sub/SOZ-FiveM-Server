@@ -102,12 +102,6 @@ On Linux:
 bash ~/FXServer/server/run.sh +exec server.cfg
 ```
 
-### Data
-This repository does not propose, yet, any base data (like vehicles, weapons, fuel stations, dealership, etc ....), you must use the inject your own data into
-the database at the moment.
-
-We want to provide a tool / base data set to do that, you can contribute to help us to do that.
-
 ![SOZ - Issues   Pull requests_](https://user-images.githubusercontent.com/104008465/206208630-bf79fd74-d6e8-4b67-821d-dd3080306b8e.png)
 Contribution are welcomed, but you must follow the rules below:
 
