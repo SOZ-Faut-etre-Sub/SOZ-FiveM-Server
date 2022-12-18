@@ -1,0 +1,1 @@
+UPDATE `police_fines` SET `price_min` = '1000', `price_max` = '1000' WHERE `id` = '3';
