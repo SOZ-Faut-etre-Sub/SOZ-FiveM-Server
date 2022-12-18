@@ -180,10 +180,10 @@ RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
     powerOffRadio()
 end)
 
-RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
+RegisterNetEvent("QBCore:Player:SetPlayerData", function(player)
     haveItem = false
 
-    for _, item in pairs(PlayerData.items or {}) do
+    for _, item in pairs(player.items or {}) do
         if item.name == "radio" then
             haveItem = true
             break
@@ -191,8 +191,17 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(PlayerData)
     end
 
     if not haveItem then
-        powerOffRadio()
-        SendNUIMessage({type = "radio", action = "reset"})
+        Citizen.CreateThread(function()
+            Citizen.Wait(1000)
+
+            for _, item in pairs(PlayerData.items or {}) do
+                if item.name == "radio" then
+                    return
+                end
+            end
+
+            powerOffRadio()
+            SendNUIMessage({type = "radio", action = "reset"})
+        end)
     end
 end)
-
