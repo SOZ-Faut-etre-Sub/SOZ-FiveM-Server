@@ -4,7 +4,7 @@ labels: "request"
 body:
   - type: markdown
     attributes:
-      value: Tech support does not belong here. You should only file an issue here if you are requesting a feature you believe would make yuzu better.
+      value: Tech support does not belong here. You should only file an issue here if you are requesting a feature you believe would make SOZ better.
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?
@@ -20,9 +20,16 @@ body:
     validations:
       required: true
   - type: textarea
+    id: long-explanation
+    attributes:
+      label: Explain all the steps and mechanics clearly and precisely.
+      description: A long description of the requested feature.
+    validations:
+      required: true
+    - type: textarea
     id: why-feature
     attributes:
       label: Why would this feature be useful?
-      description: A brief description of why this feature would make yuzu better.
+      description: A brief description of why this feature would make SOZ better.
     validations:
       required: true
