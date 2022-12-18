@@ -74,7 +74,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
 
         QBCore.Functions.SetPermission(steam, defaultAnonymousRole)
     else
-        QBCore.Functions.SetPermission(steam, result.role or 'user')
+        QBCore.Functions.SetPermission(steam, account.role or 'user')
     end
 
     deferrals.done()
