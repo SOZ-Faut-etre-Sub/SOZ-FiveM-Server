@@ -101,8 +101,14 @@ end)
 
 RegisterNetEvent("jobs:livraison:tenue")
 AddEventHandler("jobs:livraison:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
-    JobOutfit = true
+    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", SozJobCore.livraison_clothes[PlayerData.skin.Model.Hash])
+        TriggerServerEvent("job:anounce", "Sortez le véhicule de service")
+        JobOutfit = true
+    end)
 end)
 
 RegisterNetEvent("jobs:livraison:vehicle")
@@ -181,8 +187,7 @@ AddEventHandler("jobs:livraison:start", function()
     DrawInteractionMarker(ObjectifCoord, true)
 end)
 
-RegisterNetEvent("jobs:livraison:end")
-AddEventHandler("jobs:livraison:end", function()
+local function close()
     TriggerServerEvent("job:set:unemployed")
     local money = SozJobCore.livraison_payout * payout_counter
     TriggerServerEvent("job:payout", money)
@@ -195,4 +200,19 @@ AddEventHandler("jobs:livraison:end", function()
     JobCounter = 0
     payout_counter = 0
     DrawDistance = 0
+end
+
+RegisterNetEvent("jobs:livraison:end")
+AddEventHandler("jobs:livraison:end", function()
+    if JobOutfit then
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            close()
+        end)
+    else
+        close()
+    end
 end)
