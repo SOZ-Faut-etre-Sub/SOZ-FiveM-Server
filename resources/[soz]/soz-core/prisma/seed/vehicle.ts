@@ -18,7 +18,7 @@ const vehicleJobList: [JobType, string, number][] = [
     [JobType.BCSO, 'sheriff3', 0],
     [JobType.BCSO, 'sheriff4', 0],
     [JobType.BCSO, 'sheriffb', 0],
-    // [JobType.Bennys, 'flatbed4', 1],
+    [JobType.Bennys, 'flatbed4', 1],
     [JobType.Bennys, 'burrito6', 1],
     [JobType.CashTransfer, 'stockade', 0],
     [JobType.CashTransfer, 'baller8', 1],
