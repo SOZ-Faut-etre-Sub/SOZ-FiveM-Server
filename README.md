@@ -7,7 +7,7 @@ Developed especially for the Zerator community.
 ![SOZ - Join the server_](https://user-images.githubusercontent.com/104008465/206221735-bd60fab7-3d0a-4844-b07f-245ee932adbc.png)
 [ZeratoR](https://www.twitch.tv/zerator) is a French Twitch Streamer who created the ZEvent, MANDATORY and many other projects. Following one of them called RPZ, bringing together numerous French content creators for a temporary two-week server, following this experience we had the idea to offer a server to his community. **Everyone on SOZ is a volunteer, however the project is fully funded by ZeratoR that includes the server and the various licenses.**
 
-The server is in development since February 2022, and can be joined by being accepted on the [AllowList](https://soz.zerator.com/) ! 
+The server is in development since February 2022, and can be joined by being accepted on the [AllowList](https://soz.zerator.com/) !
 
 You can also visit the [Official Discord](https://discord.gg/soz-pas-soz), if you want to follow the development, the RoadMap and the many announcements to come !
 
@@ -36,7 +36,7 @@ Also, we count on the participation of everyone. **We may not be the best, but t
 
 > BTarget improvement, allowing to add any interaction.
 
-> Use of safes simultaneously, all separate. 
+> Use of safes simultaneously, all separate.
 
 > A custom VOIP Mumble, nammed [Zumble](https://github.com/SOZ-Faut-etre-Sub/ZUMBLE). Being important, it has its own repository.
 
@@ -81,6 +81,10 @@ All contributors to the project will be notified on a list.
  * Migrate the database:
    ```
    cd resources/[soz]/soz-core && yarn run prisma migrate deploy
+   ```
+ * Inject base data into the database:
+   ```
+   cd resources/[soz]/soz-core && yarn run prisma db seed
    ```
  * If you want to run in "production" mode copy the `modules-prod.cfg` file to `modules.cfg`
  * If you want to run in "test" mode copy the `modules-prod.cfg` file to `modules.cfg`
