@@ -103,8 +103,14 @@ end)
 
 RegisterNetEvent("jobs:metal:tenue")
 AddEventHandler("jobs:metal:tenue", function()
-    TriggerServerEvent("job:anounce", "Sortez le véhicule")
-    JobOutfit = true
+    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+        disableMovement = true,
+        disableCombat = true,
+    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", SozJobCore.metal_clothes[PlayerData.skin.Model.Hash])
+        TriggerServerEvent("job:anounce", "Sortez le véhicule")
+        JobOutfit = true
+    end)
 end)
 
 RegisterNetEvent("jobs:metal:vehicle")
@@ -197,8 +203,7 @@ AddEventHandler("jobs:metal:start", function()
     Counter = Counter + 1
 end)
 
-RegisterNetEvent("jobs:metal:end")
-AddEventHandler("jobs:metal:end", function()
+local function close()
     TriggerServerEvent("job:set:unemployed")
     QBCore.Functions.DeleteVehicle(metal_vehicule)
     exports["qb-target"]:RemoveZone("metal_zone")
@@ -209,6 +214,23 @@ AddEventHandler("jobs:metal:end", function()
     JobVehicle = false
     Counter = 0
     hasEnteredZoneOnce = false
-    harvestZone:destroy()
-    harvestZone = nil
+    if harvestZone ~= nil then
+        harvestZone:destroy()
+        harvestZone = nil
+    end
+end
+
+RegisterNetEvent("jobs:metal:end")
+AddEventHandler("jobs:metal:end", function()
+    if JobOutfit then
+        QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true, {
+            disableMovement = true,
+            disableCombat = true,
+        }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
+            TriggerServerEvent("soz-character:server:SetPlayerJobClothes", nil)
+            close()
+        end)
+    else
+        close()
+    end
 end)
