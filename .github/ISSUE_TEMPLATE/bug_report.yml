@@ -3,7 +3,7 @@ description: File a bug report
 body:
   - type: markdown
     attributes:
-      value: Tech support does not belong here. You should only file an issue here if you think you have experienced an actual bug with yuzu.
+      value: Tech support does not belong here. You should only file an issue here if you think you have experienced an actual bug with SOZ.
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?
@@ -11,13 +11,6 @@ body:
       options:
       - label: I have searched the existing issues
         required: true
-  - type: input
-    attributes:
-      label: Affected Build(s)
-      description: List the affected build(s) that this issue applies to.
-      placeholder: Mainline 1234 / Early Access 1234
-    validations:
-      required: true
   - type: textarea
     id: issue-desc
     attributes:
@@ -40,25 +33,9 @@ body:
     validations:
       required: true
   - type: textarea
-    id: log
+    id: happen
     attributes:
-      label: Log File
-      description: A log file will help our developers to better diagnose and fix the issue.
-    validations:
-      required: true
-  - type: textarea
-    id: system-config
-    attributes:
-      label: System Configuration
-      placeholder: |
-        CPU: Intel i5-10400 / AMD Ryzen 5 3600
-        GPU/Driver: NVIDIA GeForce GTX 1060 (Driver 512.95)
-        RAM: 16GB DDR4-3200
-        OS: Windows 11 22H2 (Build 22621.819)
-      value: |
-        CPU:
-        GPU/Driver:
-        RAM:
-        OS:
+      label: Does it happen all the time ?
+      description: Explain if the problem happens 100% of the time, or if it only happens once in a while.
     validations:
       required: true
