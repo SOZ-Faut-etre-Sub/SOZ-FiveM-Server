@@ -15,7 +15,7 @@ const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 
 @Provider()
 export class WeatherProvider {
-    private forecast: Forecast = isFeatureEnabled(Feature.Halloween) ? Halloween : SpringAutumn;
+    private forecast: Forecast = SpringAutumn;
 
     private shouldUpdateWeather = true;
 
