@@ -10,7 +10,7 @@ export const SpringAutumn: Forecast = {
     CLOUDS: { RAIN: 15, FOGGY: 20, OVERCAST: 65 },
     CLEARING: { RAIN: 20, CLOUDS: 55, OVERCAST: 20 },
     RAIN: { THUNDER: 10, SMOG: 30, FOGGY: 30, OVERCAST: 30 },
-    THUNDER: { HALLOWEEN: 5, EXTRASUNNY: 45, CLEAR: 50 },
+    THUNDER: { EXTRASUNNY: 45, CLEAR: 50 },
     SNOW: {},
     BLIZZARD: {},
     SNOWLIGHT: {},
