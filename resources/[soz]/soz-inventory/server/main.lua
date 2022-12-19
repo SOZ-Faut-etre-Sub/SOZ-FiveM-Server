@@ -426,7 +426,7 @@ end
 RegisterNetEvent("inventory:server:SetMetadata", Inventory.SetMetadata)
 exports("SetMetadata", Inventory.SetMetadata)
 
-function Inventory.RemoveItem(inv, item, amount, metadata, slot)
+function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOwned)
     inv = Inventory(inv)
     if type(item) ~= "table" then
         item = QBCore.Shared.Items[item]
@@ -440,6 +440,9 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot)
 
         local itemSlots, totalAmount = Inventory.GetItemSlots(inv, item, metadata)
         if amount > totalAmount then
+            if not allowMoreThanOwned then
+                return false
+            end
             amount = totalAmount
         end
         local removed, total, slots = 0, amount, {}
@@ -487,8 +490,9 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot)
             inv.changed = true
             _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
         end
+        return removed
     end
-    return inv.changed
+    return false
 end
 RegisterNetEvent("inventory:server:RemoveItem", Inventory.RemoveItem)
 exports("RemoveItem", Inventory.RemoveItem)
