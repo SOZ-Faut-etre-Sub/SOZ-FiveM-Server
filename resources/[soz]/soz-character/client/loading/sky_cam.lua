@@ -45,11 +45,19 @@ end
 function StopZoomSkyCam()
     if DoesCamExist(ZoomSkyCam) then
         RenderScriptCams(false, true, 4500, true, true)
+        local waiting = true
+        Citizen.CreateThread(function()
+            while waiting do
+                DisableControlAction(0, 1, true)
+                DisableControlAction(0, 2, true)
+                Citizen.Wait(0)
+            end
+        end)
         Citizen.Wait(4500)
         SetCamActive(ZoomSkyCam, false)
         DestroyCam(ZoomSkyCam, true)
         ClearFocus()
-
+        waiting = false
         ZoomSkyCam = nil
     end
 end
