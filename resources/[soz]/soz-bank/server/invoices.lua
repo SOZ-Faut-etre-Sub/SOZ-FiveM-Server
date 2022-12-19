@@ -324,7 +324,7 @@ RegisterNetEvent("banking:server:payInvoice", function(invoiceID)
         end
     end
 
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture a payer", "info")
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture à payer", "info")
 end)
 
 RegisterNetEvent("banking:server:rejectInvoice", function(invoiceID)
@@ -344,5 +344,5 @@ RegisterNetEvent("banking:server:rejectInvoice", function(invoiceID)
         end
     end
 
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture a payer", "info")
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture à payer", "info")
 end)
