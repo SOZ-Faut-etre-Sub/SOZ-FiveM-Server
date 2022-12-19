@@ -1,7 +1,7 @@
 QBCore.Functions.CreateCallback("soz-character:server:GetUserAccount", function(source, cb)
     local account = QBCore.Functions.GetUserAccount(source)
 
-    if account then
+    if not account then
         if not GetConvar("soz_allow_anonymous_login", "false") == "true" then
             DropPlayer(source, "no account found with this steam id")
         else
