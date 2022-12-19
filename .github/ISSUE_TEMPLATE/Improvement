@@ -1,0 +1,35 @@
+name: Improvement
+description: File a improvement request.
+labels: "request"
+body:
+  - type: markdown
+    attributes:
+      value: Tech support does not belong here. You should only file an issue here if you are requesting a feature you believe would make SOZ better.
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the feature you are requesting.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: textarea
+    id: what-situation
+    attributes:
+      label: In which category does your improvement fall?
+      description: Like "Inventory", "Vehicule", "LSPD", ...
+    validations:
+      required: true
+  - type: textarea
+    id: what-improvement
+    attributes:
+      label: Explain the current situation that you do not think is right.
+      description: A brief description of the actual situation.
+    validations:
+      required: true
+  - type: textarea
+    id: why-feature
+    attributes:
+      label: How is the improvement you propose?
+      description: A brief description of the improvement request.
+    validations:
+      required: true
