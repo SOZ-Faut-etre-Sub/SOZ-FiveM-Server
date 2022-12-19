@@ -57,6 +57,7 @@ function StopZoomSkyCam()
         SetCamActive(ZoomSkyCam, false)
         DestroyCam(ZoomSkyCam, true)
         ClearFocus()
+        
         waiting = false
         ZoomSkyCam = nil
     end
