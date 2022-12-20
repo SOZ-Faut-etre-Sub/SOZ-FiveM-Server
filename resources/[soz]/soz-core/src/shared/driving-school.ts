@@ -1,4 +1,14 @@
+import { PlayerLicenceType } from './player';
+
+export enum DrivingSchoolLicenseType {
+    Car = PlayerLicenceType.Car,
+    Truck = PlayerLicenceType.Truck,
+    Moto = PlayerLicenceType.Moto,
+    Heli = PlayerLicenceType.Heli,
+}
+
 export const DrivingSchoolConfig = {
+    fadeDelay: 500, // in ms
     blip: {
         name: 'Auto-école',
         sprite: 545,
@@ -16,7 +26,7 @@ export const DrivingSchoolConfig = {
         },
     },
     licenses: {
-        car: {
+        [DrivingSchoolLicenseType.Car]: {
             vehicle: {
                 model: 'dilettante2',
                 spawnPoints: [
@@ -39,7 +49,7 @@ export const DrivingSchoolConfig = {
             label: 'Permis voiture',
             points: 12,
         },
-        truck: {
+        [DrivingSchoolLicenseType.Truck]: {
             vehicle: {
                 model: 'boxville4',
                 spawnPoints: [
@@ -62,7 +72,7 @@ export const DrivingSchoolConfig = {
             label: 'Permis camion',
             points: 12,
         },
-        motorcycle: {
+        [DrivingSchoolLicenseType.Moto]: {
             vehicle: {
                 model: 'faggio',
                 spawnPoints: [
@@ -85,7 +95,7 @@ export const DrivingSchoolConfig = {
             label: 'Permis moto',
             points: 12,
         },
-        heli: {
+        [DrivingSchoolLicenseType.Heli]: {
             vehicle: {
                 model: 'seasparrow2',
                 spawnPoints: [
