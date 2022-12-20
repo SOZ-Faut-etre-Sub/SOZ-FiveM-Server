@@ -27,9 +27,9 @@ export type FoodCraftProcess = {
 const wineCraftZones: NamedZone[] = [
     {
         name: 'food_craft_wine',
-        center: [-1887.97, 2063.92, 141.0],
+        center: [-1887.8, 2063.9, 141.0],
         length: 0.4,
-        width: 1.0,
+        width: 1.4,
         heading: 340,
         minZ: 140.0,
         maxZ: 142.0,
