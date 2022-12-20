@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { useNuiEvent } from '../hook/nui';
 import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
+import { RepairApp } from './Bennys/RepairApp';
 import { HealthBookApp } from './HealthBook/HealthBookApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
@@ -35,6 +36,7 @@ export const App: FunctionComponent = () => {
                 <PlayerApp />
                 <ProgressApp />
                 <PanelApp />
+                <RepairApp />
             </div>
         </Provider>
     );

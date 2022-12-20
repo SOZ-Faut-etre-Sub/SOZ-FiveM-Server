@@ -13,6 +13,7 @@ import { Vector3 } from '../../../shared/polyzone/vector';
 import { RpcEvent } from '../../../shared/rpc';
 import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
+import { NuiDispatch } from '../../nui/nui.dispatch';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
@@ -42,6 +43,9 @@ export class BennysVehicleProvider {
 
     @Inject(VehicleModificationService)
     private vehicleModificationService: VehicleModificationService;
+
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
@@ -399,8 +403,6 @@ export class BennysVehicleProvider {
     }
 
     public async analyzeVehicle(vehicle: number) {
-        const state = this.vehicleService.getVehicleState(vehicle);
-
         const { completed } = await this.progressService.progress(
             'vehicle_analyze',
             'Vous analysez le véhicule.',
@@ -434,18 +436,31 @@ export class BennysVehicleProvider {
             return;
         }
 
-        const plate = state.plate || GetVehicleNumberPlateText(vehicle);
+        const state = this.vehicleService.getVehicleState(vehicle);
 
-        this.notifier.notify(
-            `
-Diagnostic du véhicule ${plate} :<br /><br />
-Moteur : ${state.condition.engineHealth.toFixed(0)}<br />
-Carrosserie : ${state.condition.bodyHealth.toFixed(0)}<br />
-Réservoir : ${state.condition.tankHealth.toFixed(0)}<br />
-Essence : ${state.condition.fuelLevel.toFixed(2)}%<br />
-Huile : ${state.condition.oilLevel.toFixed(2)}%<br />
-Kilométrage : ${((state.condition.mileage || 0) / 1000).toFixed(2)}km
-`
-        );
+        const doorExist = [];
+
+        const windowExist = [
+            GetEntityBoneIndexByName(vehicle, 'window_lf') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rf') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_lr') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rr') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_lm') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rm') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'windscreen') !== -1,
+            true, //GetEntityBoneIndexByName(vehicle, 'windscreen_f') !== -1, // Find correct bone name for back window, presume it exists every where
+        ];
+
+        for (const index of Object.keys(state.condition.doorStatus)) {
+            if (GetIsDoorValid(vehicle, parseInt(index))) {
+                doorExist.push(index);
+            }
+        }
+
+        this.nuiDispatch.dispatch('repair', 'open', {
+            condition: state.condition,
+            doors: doorExist,
+            windows: windowExist,
+        });
     }
 }

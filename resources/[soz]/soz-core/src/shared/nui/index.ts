@@ -11,6 +11,7 @@ import { NuiMenuMethodMap } from './menu';
 import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiProgressMethodMap } from './progress';
+import { NuiRepairMethodMap } from './repair';
 
 export interface NuiGlobalMethodMap {
     PauseMenuActive: boolean;
@@ -31,6 +32,7 @@ export interface NuiMethodMap {
     player: NuiPLayerMethodMap;
     progress: NuiProgressMethodMap;
     panel: NuiPanelMethodMap;
+    repair: NuiRepairMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

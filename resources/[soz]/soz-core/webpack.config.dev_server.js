@@ -8,5 +8,11 @@ module.exports = (env, argv) => {
         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
     });
 
+    config.module.rules.push({
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
+    });
+
     return config;
 };
