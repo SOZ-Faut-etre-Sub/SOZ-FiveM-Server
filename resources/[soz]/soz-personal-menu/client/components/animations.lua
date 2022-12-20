@@ -44,6 +44,7 @@ local PlayEmote = function(animation)
     end
 
     if animation.event then
+        ClearPedTasksImmediately(ped)
         TriggerEvent(animation.event)
         return
     end
