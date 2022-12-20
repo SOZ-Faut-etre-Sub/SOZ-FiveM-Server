@@ -1,7 +1,7 @@
 NewsConfig = {}
 
-NewsConfig.SellAmount = {min = 2, max = 5}
-NewsConfig.SellPrice = 20
+NewsConfig.SellAmount = {min = 2, max = 10}
+NewsConfig.SellPrice = 50
 
 NewsConfig.FarmMultiplier = 5
 
