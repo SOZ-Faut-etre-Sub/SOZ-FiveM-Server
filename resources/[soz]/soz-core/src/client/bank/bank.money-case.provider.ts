@@ -25,6 +25,10 @@ export class BankMoneyCaseProvider {
             return false;
         }
 
+        if (LocalPlayer.state.weapon_animation) {
+            return false;
+        }
+
         if (this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item, 1)) {
             return true;
         }

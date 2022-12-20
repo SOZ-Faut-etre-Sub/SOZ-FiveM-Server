@@ -85,7 +85,7 @@ export class WeaponGunsmithProvider {
             return false;
         }
 
-        if (this.playerMoneyService.remove(source, WEAPON_CUSTOM_PRICE.tint)) {
+        if (this.payUpgrade(source, WEAPON_CUSTOM_PRICE.tint, Number(tint) === weapon.metadata.tint)) {
             this.inventoryManager.updateMetadata(source, slot, { tint: Number(tint) });
             return true;
         }
@@ -109,7 +109,7 @@ export class WeaponGunsmithProvider {
             return false;
         }
 
-        if (this.playerMoneyService.remove(source, WEAPON_CUSTOM_PRICE.attachment)) {
+        if (this.payUpgrade(source, WEAPON_CUSTOM_PRICE.attachment, attachment === null)) {
             if (weapon.metadata.attachments === undefined) {
                 weapon.metadata.attachments = {
                     clip: null,
@@ -129,5 +129,12 @@ export class WeaponGunsmithProvider {
         }
 
         return false;
+    }
+
+    private payUpgrade(source, price, skipMoneyCheck = false) {
+        if (skipMoneyCheck) {
+            return true;
+        }
+        return this.playerMoneyService.remove(source, price);
     }
 }

@@ -45,6 +45,13 @@ export class WeaponGunsmithProvider {
         const weapons = this.inventoryManager.getItems().filter(item => item.type === 'weapon');
         const coords = GetEntityCoords(PlayerPedId(), true);
 
+        if (weapons.length === 0) {
+            this.notifier.notify("Vous n'avez pas d'arme sur vous", 'info');
+            return;
+        }
+
+        await this.weaponService.clear();
+
         this.nuiMenu.openMenu(
             MenuType.GunSmith,
             {
@@ -72,7 +79,7 @@ export class WeaponGunsmithProvider {
     }
 
     @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
-    public async resetSkin({ menuType }) {
+    public async resetGunSmith({ menuType }) {
         if (menuType !== MenuType.GunSmith) {
             return;
         }
@@ -86,6 +93,14 @@ export class WeaponGunsmithProvider {
         if (weapon) {
             await this.weaponService.set(weapon);
         }
+    }
+    @OnNuiEvent(NuiEvent.GunSmithPreviewAnimation)
+    public async applyAnimation() {
+        this.animationService.stop();
+
+        LocalPlayer.state.set('weapon_animation', false, true);
+
+        await this.setupAnimation();
     }
 
     // Tint
@@ -226,7 +241,7 @@ export class WeaponGunsmithProvider {
             }
         }
 
-        this.nuiMenu.closeMenu();
+        this.nuiMenu.closeMenu(false);
 
         if (customValidated) {
             this.notifier.notify('Vos modifications ont été appliquées');
@@ -241,7 +256,12 @@ export class WeaponGunsmithProvider {
     }
 
     private async setupAnimation() {
+        if (LocalPlayer.state.weapon_animation === true) {
+            return;
+        }
+
         LocalPlayer.state.set('weapon_animation', true, true);
+
         await this.animationService.playAnimation(
             {
                 base: {
