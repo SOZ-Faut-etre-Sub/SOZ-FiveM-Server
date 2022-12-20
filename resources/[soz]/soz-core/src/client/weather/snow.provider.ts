@@ -12,8 +12,8 @@ export class SnowProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
-    async applySnowForWeather(weather: Weather) {
-        const applySnow = WEATHER_WITH_SNOW.includes(weather);
+    async applySnowForWeather(weather: Weather, needSnow?: boolean) {
+        const applySnow = needSnow || WEATHER_WITH_SNOW.includes(weather);
 
         ForceSnowPass(applySnow);
         SetForceVehicleTrails(applySnow);
@@ -30,11 +30,16 @@ export class SnowProvider {
 
     @StateBagHandler('weather', 'global')
     async onWeatherChange(_name, _key, weather: Weather) {
-        await this.applySnowForWeather(weather);
+        await this.applySnowForWeather(weather, GlobalState.snow);
+    }
+
+    @StateBagHandler('snow', 'global')
+    async onSnowChange(_name, _key, needSnow: boolean) {
+        await this.applySnowForWeather(GlobalState.weather, needSnow);
     }
 
     @Once()
     async onStart() {
-        await this.applySnowForWeather(GlobalState.weather);
+        await this.applySnowForWeather(GlobalState.weather, GlobalState.snow);
     }
 }
