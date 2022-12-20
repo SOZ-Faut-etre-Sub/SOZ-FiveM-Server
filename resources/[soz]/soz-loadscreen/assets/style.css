@@ -28,20 +28,24 @@ video {
     position: absolute;
     bottom: 0;
     left: 0;
+    right: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: .3rem 1rem;
-    margin: 1vh 1vw;
-    background: rgba(0,0,0,.5);
-    border-radius: .5rem;
+    margin: 1.5vh 1vw;
     z-index: 1;
+}
+
+.box {
+    color: #ffffff;
+    padding: .3rem 1rem;
+    background: rgba(0,0,0,.6);
+    border-radius: .3rem;
 }
 
 .volume-container {
     display: flex;
     align-items: center;
-    flex-grow: 1;
 }
 
 .volume-container svg {
