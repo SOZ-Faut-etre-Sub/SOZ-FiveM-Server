@@ -173,7 +173,7 @@ export class VehicleService {
         const wheelNumber = 6;
 
         for (let i = 0; i < wheelNumber; i++) {
-            tireHealth[i] = GetVehicleWheelHealth(vehicle, i);
+            tireHealth[i] = GetTyreHealth(vehicle, i);
         }
 
         for (let i = 0; i < wheelNumber; i++) {

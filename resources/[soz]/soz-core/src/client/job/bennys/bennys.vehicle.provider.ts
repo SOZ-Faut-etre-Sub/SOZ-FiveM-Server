@@ -437,8 +437,30 @@ export class BennysVehicleProvider {
         }
 
         const state = this.vehicleService.getVehicleState(vehicle);
-        console.log(state.condition);
 
-        this.nuiDispatch.dispatch('repair', 'open', state.condition);
+        const doorExist = [];
+
+        const windowExist = [
+            GetEntityBoneIndexByName(vehicle, 'window_lf') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rf') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_lr') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rr') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_lm') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'window_rm') !== -1,
+            GetEntityBoneIndexByName(vehicle, 'windscreen') !== -1,
+            true, //GetEntityBoneIndexByName(vehicle, 'windscreen_f') !== -1, // Find correct bone name for back window, presume it exists every where
+        ];
+
+        for (const index of Object.keys(state.condition.doorStatus)) {
+            if (GetIsDoorValid(vehicle, parseInt(index))) {
+                doorExist.push(index);
+            }
+        }
+
+        this.nuiDispatch.dispatch('repair', 'open', {
+            condition: state.condition,
+            doors: doorExist,
+            windows: windowExist,
+        });
     }
 }

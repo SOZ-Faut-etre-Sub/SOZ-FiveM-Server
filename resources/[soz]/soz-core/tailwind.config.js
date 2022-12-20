@@ -14,6 +14,7 @@ module.exports = {
             sans: ['Inter var', ...defaultTheme.fontFamily.sans],
             arial: ['Arial', 'Helvetica', 'serif'],
             noto: ['Noto Serif', 'serif'],
+            mono: ['input-mono', 'monospace'],
         },
         extend: {
             colors: {},
