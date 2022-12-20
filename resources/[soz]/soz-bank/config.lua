@@ -11,7 +11,7 @@ Config.ErrorMessage = {
     ["action_forbidden"] = "Vous n'avez pas de droit de faire cette action !",
     ["invalid_account"] = "Le compte n'existe pas !",
     ["already_exist"] = "Le compte existe déjà !",
-    ["transfert_failed"] = "Le transfer a subis une erreur !",
+    ["transfert_failed"] = "Le transfert a subi une erreur !",
     ["no_account_money"] = "Le compte ne possède pas assez d'argent !",
     ["invalid_liquidity"] = "Liquidité insuffisante à ce terminal",
     ["max_widthdrawal_limit"] = "Vous ne pouvez pas retirer plus de ~b~$%s~s~ depuis ce terminal",
@@ -97,7 +97,7 @@ Config.SafeStorages = {
         offsetDownZ = 0.5,
     },
     ["safe_bennys"] = {
-        label = "Coffre Bennys",
+        label = "Coffre New Gahray",
         owner = "bennys",
         position = vector3(-204.6, -1333.11, 34.89),
         size = vec2(1.0, 2.5),

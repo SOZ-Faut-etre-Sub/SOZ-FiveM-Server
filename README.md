@@ -87,7 +87,7 @@ All contributors to the project will be notified on a list.
    cd resources/[soz]/soz-core && yarn run prisma db seed
    ```
  * If you want to run in "production" mode copy the `modules-prod.cfg` file to `modules.cfg`
- * If you want to run in "test" mode copy the `modules-prod.cfg` file to `modules.cfg`
+ * If you want to run in "test" mode copy the `modules-test.cfg` file to `modules.cfg`
 
 ### Running the server
 Once everything is configured, [you can run the server by using the FXServer executable](https://docs.fivem.net/docs/server-manual/setting-up-a-server-vanilla/)
