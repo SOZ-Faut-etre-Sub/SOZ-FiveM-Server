@@ -15,6 +15,7 @@ QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function
 end)
 
 RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
+    local ply = Player(source)
     local Player = QBCore.Functions.GetPlayer(source)
     local itemData = Player.Functions.GetItemBySlot(slot)
 
@@ -23,6 +24,11 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
     end
 
     if Player.PlayerData.metadata["isdead"] or Player.PlayerData.metadata["ishandcuffed"] or Player.PlayerData.metadata["inlaststand"] then
+        return
+    end
+
+    if ply.state.inv_busy then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Une action est déjà en cours !", "warning")
         return
     end
 

@@ -451,6 +451,11 @@ export class VehicleLockProvider {
         if (player.metadata.ishandcuffed || player.metadata.isdead) {
             return;
         }
+        if (LocalPlayer.state.inv_busy) {
+            this.notifier.notify('Une action est déjà en cours !', 'warning');
+
+            return;
+        }
 
         const vehicle = this.vehicleService.getClosestVehicle();
 
