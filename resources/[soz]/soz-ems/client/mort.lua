@@ -5,6 +5,9 @@ local function OnDeath()
         IsDead = true
         local player = PlayerPedId()
 
+        exports["menuv"]:SendNUIMessage({action = "KEY_CLOSE_ALL"})
+        TriggerEvent("soz-core:client:menu:close", false)
+
         while GetEntitySpeed(player) > 0.5 or IsPedRagdoll(player) do
             Wait(10)
         end
