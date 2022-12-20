@@ -7,8 +7,20 @@ export enum DrivingSchoolLicenseType {
     Heli = PlayerLicenceType.Heli,
 }
 
+export interface DrivingSchoolLicense {
+    vehicle: {
+        model: string;
+        spawnPoints: { x: number; y: number; z: number; w: number }[];
+    };
+    price: number;
+    icon: string;
+    label: string;
+    points: number;
+}
+
 export const DrivingSchoolConfig = {
     fadeDelay: 500, // in ms
+    vehiclePlateText: 'P3RM15',
     blip: {
         name: 'Auto-école',
         sprite: 545,
@@ -25,7 +37,7 @@ export const DrivingSchoolConfig = {
             coords: { x: -815.99, y: -1357.3, z: 5.15, w: 309.49 },
         },
     },
-    licenses: {
+    licenses: <Record<DrivingSchoolLicenseType, DrivingSchoolLicense>>{
         [DrivingSchoolLicenseType.Car]: {
             vehicle: {
                 model: 'dilettante2',

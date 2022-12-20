@@ -167,7 +167,7 @@ export enum ClientEvent {
     ADMIN_NOCLIP_DISABLED = 'soz-core:client:admin:noclip:disabled',
 
     DRIVING_SCHOOL_START_EXAM = 'soz-core:client:driving-school:start-exam',
-    DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:client:driving-school:spawn-veh',
+    DRIVING_SCHOOL_SETUP_EXAM = 'soz-core:client:driving-school:spawn-veh',
 
     FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
     FFS_EXIT_CLOTHING_SHOP = 'soz-core:client:job:ffs:exit-clothing-shop',
