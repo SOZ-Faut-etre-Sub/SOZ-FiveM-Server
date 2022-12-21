@@ -241,8 +241,6 @@ export class WeaponGunsmithProvider {
             }
         }
 
-        this.nuiMenu.closeMenu(false);
-
         if (customValidated) {
             this.notifier.notify('Vos modifications ont été appliquées');
         } else {
@@ -252,7 +250,7 @@ export class WeaponGunsmithProvider {
             );
         }
 
-        await this.weaponService.clear();
+        this.nuiMenu.closeMenu(false);
     }
 
     private async setupAnimation() {

@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { NuiEvent } from '../../../shared/event';
 import { InventoryItem } from '../../../shared/item';
@@ -7,6 +8,7 @@ import { WEAPON_CUSTOM_PRICE, WeaponAttachment, WeaponComponentType } from '../.
 import { WeaponTintColor, WeaponTintColorChoiceItem } from '../../../shared/weapons/tint';
 import { WeaponConfiguration, WeaponsMenuData } from '../../../shared/weapons/weapon';
 import { fetchNui } from '../../fetch';
+import { RootState } from '../../store';
 import {
     MainMenu,
     Menu,
@@ -53,7 +55,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
         if (configuration.repair) {
             price +=
                 WEAPON_CUSTOM_PRICE.repair *
-                Math.floor(100 - (weapon.metadata.health / weapon.metadata.maxHealth) * 100);
+                Math.floor(100 - ((weapon.metadata.health / weapon.metadata.maxHealth) * 100 || 0));
         }
 
         if (configuration.tint && configuration.tint !== weapon.metadata.tint) {
@@ -86,7 +88,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                         setConfiguration(s => ({ ...s, repair }));
                     }}
                 >
-                    Réparer l'arme ({((weapon.metadata.health / weapon.metadata.maxHealth) * 100).toFixed(0)}%)
+                    Réparer l'arme ({((weapon.metadata.health / weapon.metadata.maxHealth) * 100 || 0).toFixed(0)}%)
                 </MenuItemCheckbox>
 
                 <MenuItemSelect
@@ -184,6 +186,7 @@ const MenuWeaponComponentSelect: FunctionComponent<{
     onUpdate?: (s) => void;
 }> = ({ onUpdate, label, type, weapon, attachments }) => {
     const options = attachments.filter(a => a.type === type);
+    const player = useSelector((state: RootState) => state.player);
 
     return (
         <MenuItemSelect
@@ -197,7 +200,10 @@ const MenuWeaponComponentSelect: FunctionComponent<{
                 onUpdate?.(s => ({ ...s, attachments: { ...s.attachments, [type]: attachment } }));
             }}
             value={weapon.metadata?.attachments?.[type] ?? 0}
-            disabled={options.length === 0}
+            disabled={
+                options.length === 0 ||
+                (type === WeaponComponentType.Suppressor && player.role !== 'admin' && player.role !== 'staff')
+            }
         >
             <MenuItemSelectOption value={null}>Défaut</MenuItemSelectOption>
 
