@@ -12,7 +12,7 @@ import { TargetOptions } from '../target/target.factory';
 
 @Provider()
 export class ExamProvider {
-    private licenseData: DrivingSchoolLicense;
+    private license: DrivingSchoolLicense;
 
     private instructorEntity: number;
     private vehicleEntity: number;
@@ -22,14 +22,6 @@ export class ExamProvider {
 
     @Inject(PedFactory)
     private pedFactory: PedFactory;
-
-    private get license() {
-        return this.licenseData;
-    }
-
-    private set license(data) {
-        this.licenseData = data;
-    }
 
     @On(ClientEvent.DRIVING_SCHOOL_START_EXAM)
     public async examPrecheck(data: TargetOptions) {
