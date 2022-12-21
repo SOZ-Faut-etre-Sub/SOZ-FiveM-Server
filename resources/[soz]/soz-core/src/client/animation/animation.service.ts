@@ -256,6 +256,14 @@ export class AnimationService {
         }
     }
 
+    public purge() {
+        this.queue = [];
+
+        if (this.currentAnimationLoopResolve) {
+            this.currentAnimationLoopResolve();
+        }
+    }
+
     public destroy() {
         this.stop();
         this.running = false;

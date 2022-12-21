@@ -2,6 +2,7 @@ import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
+import { wait } from '../../core/utils';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
@@ -84,23 +85,15 @@ export class WeaponGunsmithProvider {
             return;
         }
 
-        this.animationService.stop();
+        this.animationService.purge();
         await this.weaponService.clear();
 
-        LocalPlayer.state.set('weapon_animation', false, true);
+        LocalPlayer.state.set('in_shop', false, true);
 
         const weapon = this.weaponService.getCurrentWeapon();
         if (weapon) {
             await this.weaponService.set(weapon);
         }
-    }
-    @OnNuiEvent(NuiEvent.GunSmithPreviewAnimation)
-    public async applyAnimation() {
-        this.animationService.stop();
-
-        LocalPlayer.state.set('weapon_animation', false, true);
-
-        await this.setupAnimation();
     }
 
     // Tint
@@ -254,12 +247,15 @@ export class WeaponGunsmithProvider {
     }
 
     private async setupAnimation() {
-        if (LocalPlayer.state.weapon_animation === true) {
+        const player = PlayerPedId();
+        LocalPlayer.state.set('in_shop', true, true);
+
+        if (IsEntityPlayingAnim(player, 'missbigscore1guard_wait_rifle', 'wait_base', 3)) {
             return;
         }
 
-        LocalPlayer.state.set('weapon_animation', true, true);
-
+        this.animationService.purge();
+        await wait(300);
         await this.animationService.playAnimation(
             {
                 base: {

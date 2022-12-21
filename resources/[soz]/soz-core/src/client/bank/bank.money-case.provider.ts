@@ -29,6 +29,10 @@ export class BankMoneyCaseProvider {
             return false;
         }
 
+        if (LocalPlayer.state.in_shop) {
+            return false;
+        }
+
         if (this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item, 1)) {
             return true;
         }
