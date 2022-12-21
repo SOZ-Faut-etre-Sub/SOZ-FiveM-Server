@@ -1,4 +1,5 @@
 import { PlayerLicenceType } from './player';
+import { Vector3, Vector4 } from './polyzone/vector';
 
 export enum DrivingSchoolLicenseType {
     Car = PlayerLicenceType.Car,
@@ -16,10 +17,52 @@ export interface DrivingSchoolLicense {
     icon: string;
     label: string;
     points: number;
+    marker: Marker;
+    checkpointCount: number;
+    finalCheckpoint: Checkpoint;
 }
+
+interface Marker {
+    type: number;
+    typeFinal: number;
+    size: number;
+    color: MarkerColor;
+}
+
+interface MarkerColor {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+}
+
+const markerColor: MarkerColor = { r: 12, g: 123, b: 86, a: 150 };
+
+const markers: Record<string, Marker> = {
+    landVehicle: { type: 0, typeFinal: 4, size: 3.0, color: markerColor },
+    airVehicle: { type: 42, typeFinal: 4, size: 10.0, color: markerColor },
+};
+
+interface Checkpoint {
+    coords: Vector3;
+    message?: string;
+    licenses?: DrivingSchoolLicenseType[];
+}
+
+const finalCheckpoints: Record<string, Checkpoint> = {
+    landVehicle: {
+        coords: [-763.07, -1322.39, 3.42],
+        message: 'Tu es arrivé au bout. Bien joué !',
+    },
+    airVehicle: {
+        coords: [-745.25, -1468.67, 4.0],
+        message: 'Très beau vol. Bien joué !',
+    },
+};
 
 export const DrivingSchoolConfig = {
     fadeDelay: 500, // in ms
+    playerDefaultLocation: <Vector4>[-806.57, -1344.53, 5.5, 150.0],
     vehiclePlateText: 'P3RM15',
     blip: {
         name: 'Auto-école',
@@ -60,6 +103,9 @@ export const DrivingSchoolConfig = {
             icon: 'c:driving-school/voiture.png',
             label: 'Permis voiture',
             points: 12,
+            marker: markers.landVehicle,
+            checkpointCount: 6,
+            finalCheckpoint: finalCheckpoints.landVehicle,
         },
         [DrivingSchoolLicenseType.Truck]: {
             vehicle: {
@@ -83,6 +129,9 @@ export const DrivingSchoolConfig = {
             icon: 'c:driving-school/camion.png',
             label: 'Permis camion',
             points: 12,
+            marker: markers.landVehicle,
+            checkpointCount: 6,
+            finalCheckpoint: finalCheckpoints.landVehicle,
         },
         [DrivingSchoolLicenseType.Moto]: {
             vehicle: {
@@ -106,6 +155,9 @@ export const DrivingSchoolConfig = {
             icon: 'c:driving-school/moto.png',
             label: 'Permis moto',
             points: 12,
+            marker: markers.landVehicle,
+            checkpointCount: 6,
+            finalCheckpoint: finalCheckpoints.landVehicle,
         },
         [DrivingSchoolLicenseType.Heli]: {
             vehicle: {
@@ -123,6 +175,113 @@ export const DrivingSchoolConfig = {
             icon: 'c:driving-school/heli.png',
             label: 'Permis hélicoptère',
             points: 12,
+            marker: markers.airVehicle,
+            checkpointCount: 5,
+            finalCheckpoint: finalCheckpoints.airVehicle,
         },
     },
 };
+
+const checkpoints: Checkpoint[] = [
+    {
+        coords: [-606.1, -957.79, 20.39],
+        message: 'Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades…',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [31.24, -767.01, 42.67],
+        message: 'Connaissez-vous Stonk Depository ?',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [248.3, -369.19, 42.89],
+        message: "T'auras besoin de ton permis si tu veux un job du Pole emploi, alors concentre-toi !",
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [667.22, -27.01, 80.96],
+        message: 'LSPD Vinewood. Au premier excès de vitesse, tu finis ici !',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [204.08, 195.72, 104.01],
+        message: "La Pacific Bank. Je crois que c'est ici qu'ils rendent l'argent.",
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [807.06, -1290.38, 24.72],
+        message: "LSPD, La Mesa. C'est cette patrouille autoroutière qui te coinceras si tu fais n'importe quoi…",
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [305.58, -1367.15, 30.44],
+        message: "Les mauvais conducteurs finissent souvent ici, à l'Hôpital !",
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [506.42, -1306.97, 27.76],
+        message: 'Ta maman ne sera pas fière si tu dois venir chercher ta voiture à cette fourrière…',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [-222.02, -2053.33, 26.06],
+        message: 'L\'affiche dit : "ZEvent, du 8 au 11 Septembre 2022."',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [-1028.3, -871.1, 5.83],
+        message: 'Los Santos Police Department ! De chouettes types !',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [-696.01, 40.51, 41.56],
+        message: 'Kifflom !',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [-1379.76, 55.13, 52.04],
+        message: "Tu essayes de m'acheter avec une partie de golf ?! Dommage je n'ai pas mes clubs…",
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [399.83, -981.8, 27.77],
+        message: 'Le LSPD surveille tous les conducteurs. Regarde la route !',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [-262.13, -1310.05, 29.65],
+        message: "New Gahray ! J'ai le sentiment que tu vas passer beaucoup de temps ici !",
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [-1601.2, 156.95, 58.05],
+        message: 'Pfff! Regarde-moi tous ces étudiants qui passent leur vie sur les jeux-vidéos…',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [-86.89, -1101.69, 24.46],
+        message: 'Termine cet examen avant de lorgner sur le concessionnaire. Chaque chose en son temps.',
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    {
+        coords: [-552.76, -151.6, 36.62],
+        message: "Il paraît que c'est dans ce commissariat qu'il y a les meilleurs donuts.",
+        licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
+    },
+    { coords: [-340.44, -2357.59, 30.65], licenses: [DrivingSchoolLicenseType.Heli] },
+    { coords: [-934.18, -1280.37, 28.13], message: 'Olé !', licenses: [DrivingSchoolLicenseType.Heli] },
+    { coords: [-1511.35, -555.54, 52.55], message: 'Belle manoeuvre !', licenses: [DrivingSchoolLicenseType.Heli] },
+    { coords: [-913.59, -382.14, 154.54], licenses: [DrivingSchoolLicenseType.Heli] },
+    {
+        coords: [-75.35, -819.17, 326.79],
+        message: 'Je suis le roi du monde !',
+        licenses: [DrivingSchoolLicenseType.Heli],
+    },
+    {
+        coords: [-7.21, 682.43, 197.93],
+        message: 'Redresse ! On va se noyer !',
+        licenses: [DrivingSchoolLicenseType.Heli],
+    },
+    { coords: [722.25, 1198.04, 350.88], message: 'Vinewood, baby !', licenses: [DrivingSchoolLicenseType.Heli] },
+    { coords: [592.46, -1021.0, 21.91], licenses: [DrivingSchoolLicenseType.Heli] },
+];
