@@ -13,7 +13,7 @@ Config.Products["barber"] = {
             category = "Beard",
             label = "Barbe",
             overlay = "Hair",
-            components = {["BeardType"] = true, ["BeardColor"] = true},
+            components = {["BeardType"] = true, ["BeardColor"] = true, ["BeardOpacity"] = true},
             items = Config.CharacterComponentList.BeardMale,
         },
         {
@@ -26,6 +26,7 @@ Config.Products["barber"] = {
                 ["FullMakeupDefaultColor"] = true,
                 ["FullMakeupPrimaryColor"] = true,
                 ["FullMakeupSecondaryColor"] = true,
+                ["FullMakeupOpacity"] = true,
             },
             items = Config.CharacterComponentList.Makeup,
         },
@@ -44,7 +45,7 @@ Config.Products["barber"] = {
             category = "Blush",
             label = "Blush",
             overlay = "Makeup",
-            components = {["BlushType"] = true, ["BlushColor"] = true},
+            components = {["BlushType"] = true, ["BlushColor"] = true, ["BlushOpacity"] = true },
             items = Config.CharacterComponentList.Blush,
         },
         {
@@ -52,7 +53,7 @@ Config.Products["barber"] = {
             category = "Lipstick",
             label = "Rouge à lèvre",
             overlay = "Makeup",
-            components = {["LipstickType"] = true, ["LipstickColor"] = true},
+            components = {["LipstickType"] = true, ["LipstickColor"] = true, ["LipstickOpacity"] = true},
             items = Config.CharacterComponentList.Lipstick,
         },
         {
@@ -65,6 +66,7 @@ Config.Products["barber"] = {
                 ["FullMakeupDefaultColor"] = true,
                 ["FullMakeupPrimaryColor"] = true,
                 ["FullMakeupSecondaryColor"] = true,
+                ["FullMakeupOpacity"] = true,
             },
             items = Config.CharacterComponentList.Makeup,
         },
