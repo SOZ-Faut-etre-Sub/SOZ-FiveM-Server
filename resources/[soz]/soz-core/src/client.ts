@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import './globals';
 
+import { modules as PrivateModules } from '@private/client/modules';
+
 import { AdminModule } from './client/admin/admin.module';
 import { AfkModule } from './client/afk/afk.module';
 import { AnimationModule } from './client/animation/animation.module';
@@ -61,7 +63,8 @@ async function bootstrap() {
         FactoryModule,
         OilModule,
         WeaponModule,
-        InventoryModule
+        InventoryModule,
+        ...PrivateModules
     );
 
     await app.stop();

@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { modules as PrivateModules } from '@private/server/modules';
+
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderServerLoader } from './core/loader/provider.server.loader';
@@ -56,7 +58,8 @@ async function bootstrap() {
         AfkModule,
         OilModule,
         WeaponModule,
-        InventoryModule
+        InventoryModule,
+        ...PrivateModules
     );
 
     await app.stop();

@@ -2,6 +2,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const webpack = require('webpack');
+const fs = require('fs');
 
 const createConfig = (entry, isProduction, variables = {}, port = undefined, target = undefined) => {
     const plugins = [
@@ -14,6 +15,15 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
 
     if (!isProduction && target !== 'node') {
         plugins.push(new ReactRefreshWebpackPlugin());
+    }
+
+    const privatePath = path.resolve(__dirname, '..', '..', '..', '..', 'private', 'soz-core-src');
+    const privateAlias = [];
+
+    if (fs.existsSync(privatePath)) {
+        privateAlias.push(privatePath + '/*');
+    } else {
+        privateAlias.push('private/*');
     }
 
     return {
@@ -67,6 +77,12 @@ const createConfig = (entry, isProduction, variables = {}, port = undefined, tar
                                     },
                                 },
                                 keepClassNames: true,
+                                baseUrl: '.',
+                                paths: {
+                                    '@public/*': ['src/*'],
+                                    '@private/*': privateAlias,
+                                    '@core/*': ['src/core/*'],
+                                },
                             },
                             sourceMaps: !isProduction,
                             minify: isProduction,
