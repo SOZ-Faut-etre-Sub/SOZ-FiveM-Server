@@ -17,7 +17,7 @@ const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 export class WeatherProvider {
     private forecast: Forecast = Winter;
 
-    private shouldUpdateWeather = true;
+    private shouldUpdateWeather = false;
 
     @Inject(Pollution)
     private pollution: Pollution;
@@ -27,7 +27,7 @@ export class WeatherProvider {
         GlobalState.blackout ||= false;
         GlobalState.blackout_level ||= 0;
         GlobalState.blackout_override = false;
-        GlobalState.weather ||= 'OVERCAST' as Weather;
+        GlobalState.weather ||= 'XMAS' as Weather;
         GlobalState.snow ||= true;
         GlobalState.time ||= { hour: 2, minute: 0, second: 0 } as Time;
     }
