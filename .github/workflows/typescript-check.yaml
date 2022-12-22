@@ -1,0 +1,24 @@
+name: "[Dev] Check Typescript"
+
+on:
+    push:
+        branches-ignore:
+            - main
+            - production
+
+jobs:
+    check-typescript:
+        runs-on: [self-hosted, linux, global]
+        strategy:
+            matrix:
+                resource: ["soz-core", "soz-phone"]
+
+        steps:
+            - uses: actions/checkout@v3
+            - uses: bahmutov/npm-install@v1
+              with:
+                  working-directory: "gta-server/resources/[soz]/${{ matrix.resource }}"
+            - name: "check-typescript"
+              working-directory: "gta-server/resources/[soz]/${{ matrix.resource }}"
+              run: yarn run tsc -p tsconfig.json --noEmit
+
