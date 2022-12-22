@@ -1,14 +1,12 @@
-name: "[Dev] Automatic review"
+name: "Automatic review"
 
 on:
-    pull_request:
-        branches-ignore:
-            - production
+    pull_request: ~
 
 jobs:
     suggest-lua:
+        runs-on: ubuntu-latest
         name: runner / lua formatter
-        runs-on: [self-hosted, linux, global]
         container:
             image: "ghcr.io/soz-faut-etre-sub/lua-formatter:latest"
             credentials:
@@ -19,15 +17,15 @@ jobs:
             - name: "check-lua-code-style"
               shell: bash
               run: |
-                  lua-format -i `find 'gta-server/resources/[soz]' -name '*.lua'`
+                  lua-format -i `find 'resources/[soz]' -name '*.lua'`
                   git config --global --add safe.directory `pwd`
             - uses: reviewdog/action-suggester@v1
               with:
                   tool_name: lua-format
 
     eslint:
+        runs-on: ubuntu-latest
         name: runner / eslint
-        runs-on: [self-hosted, linux, global]
         strategy:
             matrix:
                 resource: ["soz-core", "soz-phone"]
@@ -35,9 +33,9 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - run: yarn install
-              working-directory: "gta-server/resources/[soz]/${{ matrix.resource }}"
+              working-directory: "resources/[soz]/${{ matrix.resource }}"
             - uses: reviewdog/action-eslint@v1
               with:
                   reporter: github-pr-review
                   eslint_flags: 'src/'
-                  workdir: "gta-server/resources/[soz]/${{ matrix.resource }}"
+                  workdir: "resources/[soz]/${{ matrix.resource }}"

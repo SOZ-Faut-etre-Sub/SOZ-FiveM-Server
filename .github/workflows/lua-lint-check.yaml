@@ -1,14 +1,11 @@
-name: "[Dev] Check Lua Code Style"
+name: "Check Lua Code Style"
 
 on:
-    push:
-        branches-ignore:
-            - main
-            - production
+    pull_request: ~
 
 jobs:
     check-lua:
-        runs-on: [self-hosted, linux, global]
+        runs-on: ubuntu-latest
         container:
             image: "ghcr.io/soz-faut-etre-sub/lua-formatter:latest"
             credentials:
@@ -19,7 +16,7 @@ jobs:
             - name: "check-lua-code-style"
               shell: bash
               run: |
-                  lua-format -i `find 'gta-server/resources/[soz]' -name '*.lua'`
+                  lua-format -i `find 'resources/[soz]' -name '*.lua'`
                   git config --global --add safe.directory `pwd`
                   git diff --exit-code
 
