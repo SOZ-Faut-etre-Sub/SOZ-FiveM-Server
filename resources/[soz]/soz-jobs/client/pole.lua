@@ -161,6 +161,7 @@ end
 function DrawInteractionMarker(ObjectifCoord, show)
     local a, b, c, d, entity = GetShapeTestResult(StartShapeTestCapsule(ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z, ObjectifCoord.x, ObjectifCoord.y,
                                                                         ObjectifCoord.z, 1.0, 16, 0, 7))
-    SetEntityDrawOutlineColor(100, 163, 16, 50)
+    SetEntityDrawOutlineColor(0, 180, 0, 255)
+    SetEntityDrawOutlineShader(1)
     SetEntityDrawOutline(entity, show)
 end
