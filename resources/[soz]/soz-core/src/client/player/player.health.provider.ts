@@ -1,4 +1,4 @@
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent, On } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -748,5 +748,15 @@ export class PlayerHealthProvider {
                 ],
             },
         });
+    }
+
+    @On('QBCore:Player:SetPlayerData')
+    public async updateMaxHealth(playerData: PlayerData): Promise<void> {
+        const playerPed = PlayerPedId();
+        SetPedMaxHealth(playerPed, playerData.metadata.max_health);
+
+        if (GetEntityHealth(playerPed) > playerData.metadata.max_health) {
+            SetEntityHealth(playerPed, playerData.metadata.max_health);
+        }
     }
 }

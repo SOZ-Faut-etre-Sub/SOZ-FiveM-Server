@@ -19,7 +19,7 @@ const Minimap= () => {
         return () => window.removeEventListener('message', onMessageReceived)
     }, []);
 
-    const healthPercent = (health * 100 / maxHealth);
+    const healthPercent = (health-100) * 100 / (maxHealth-100);
 
     return (
         <div style={{
@@ -32,7 +32,7 @@ const Minimap= () => {
             top: `calc((100vh * ${minimap.bottomY}) - .5rem )`,
             left: `calc(100vw * ${minimap.leftX})`
         }}>
-            {(inVehicle || healthPercent <= 80) && <PlayerStat
+            {(inVehicle || healthPercent <= 60) && <PlayerStat
                 type="health"
                 value={healthPercent}
                 backgroundPrimary={'rgba(60,152,30,0.5)'}

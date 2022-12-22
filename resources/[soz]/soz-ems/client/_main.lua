@@ -49,7 +49,6 @@ AddEventHandler("soz_ems:client:Revive", function()
     if isInHospitalBed == true then
         TriggerEvent("soz-ems:client:lit", HospitalBedId, false)
     end
-    SetEntityMaxHealth(player, 200)
     SetEntityHealth(player, 200)
     ClearPedBloodDamage(player)
     SetPlayerSprint(PlayerId(), true)

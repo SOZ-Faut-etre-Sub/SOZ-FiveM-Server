@@ -148,9 +148,9 @@ export class ItemNutritionProvider {
                 let maxHealth = 200;
 
                 if (newHealthLevel < 20) {
-                    maxHealth = 120;
-                } else if (newHealthLevel < 40) {
                     maxHealth = 160;
+                } else if (newHealthLevel < 40) {
+                    maxHealth = 180;
                 }
 
                 this.playerService.setPlayerMetadata(source, 'max_health', maxHealth);

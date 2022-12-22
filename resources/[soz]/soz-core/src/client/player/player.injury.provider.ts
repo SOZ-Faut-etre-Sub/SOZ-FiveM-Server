@@ -5,7 +5,7 @@ import { Notifier } from '../notifier';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 
-const CRITICAL_HEALTH = 40;
+const CRITICAL_HEALTH = 120;
 
 @Provider()
 export class PlayerInjuryProvider {
