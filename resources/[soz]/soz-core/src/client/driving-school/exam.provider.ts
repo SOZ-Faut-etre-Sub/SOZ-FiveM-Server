@@ -69,7 +69,7 @@ export class ExamProvider {
     }
 
     @On(ClientEvent.DRIVING_SCHOOL_SETUP_EXAM)
-    public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint) {
+    public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
         await this.screenFadeOut();
 
         const instructorConfig = DrivingSchoolConfig.peds.instructor;
@@ -79,7 +79,7 @@ export class ExamProvider {
             blockevents: true,
         });
 
-        this.teleportPlayer([spawnPoint.x, spawnPoint.y, spawnPoint.z, spawnPoint.w]); // TODO: Spawnpoint to Vector4
+        this.teleportPlayer(spawnPoint);
         await wait(200);
 
         const vehicleModel = this.license.vehicle.model;
@@ -134,15 +134,16 @@ export class ExamProvider {
         SetEntityHeading(playerPed, w);
     }
 
-    private getSpawnPoint(points: { x: number; y: number; z: number; w: number }[]) {
+    private getSpawnPoint(points: Vector4[]) {
         for (const point of points) {
-            if (!IsPositionOccupied(point.x, point.y, point.z, 0.25, false, true, true, false, false, 0, false)) {
+            const [x, y, z] = point;
+            if (!IsPositionOccupied(x, y, z, 0.25, false, true, true, false, false, 0, false)) {
                 return point;
             }
         }
     }
 
-    private startExam(spawnPoint) {
+    private startExam(spawnPoint: Vector4) {
         this.isExamRunning = true;
     }
 

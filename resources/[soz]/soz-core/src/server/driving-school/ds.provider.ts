@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { DrivingSchoolConfig, DrivingSchoolLicenseType } from '../../shared/driving-school';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { Vector4 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';
@@ -21,7 +22,7 @@ export class DrivingSchoolProvider {
     private vehicleSpawner: VehicleSpawner;
 
     @OnEvent(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY)
-    public makePlayerPay(source: number, licenseType: DrivingSchoolLicenseType, spawnPoint) {
+    public makePlayerPay(source: number, licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
         const qbPlayer = this.QBCore.getPlayer(source);
         if (!qbPlayer) return;
 
