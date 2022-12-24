@@ -1,14 +1,18 @@
+import { Notifier } from '../client/notifier';
+import { PhoneService } from '../client/phone/phone.service';
+import { PlayerService } from '../client/player/player.service';
+import { VehicleSeatbeltProvider } from '../client/vehicle/vehicle.seatbelt.provider';
 import { PlayerLicenceType } from './player';
 import { Vector3, Vector4 } from './polyzone/vector';
 
-export enum DrivingSchoolLicenseType {
-    Car = PlayerLicenceType.Car,
-    Truck = PlayerLicenceType.Truck,
-    Moto = PlayerLicenceType.Moto,
-    Heli = PlayerLicenceType.Heli,
+interface Checkpoint {
+    coords: Vector3;
+    message?: string;
+    licenses?: DrivingSchoolLicenseType[];
 }
 
 export interface DrivingSchoolLicense {
+    licenseType: DrivingSchoolLicenseType;
     vehicle: {
         model: string;
         spawnPoints: { x: number; y: number; z: number; w: number }[];
@@ -20,6 +24,13 @@ export interface DrivingSchoolLicense {
     marker: Marker;
     checkpointCount: number;
     finalCheckpoint: Checkpoint;
+}
+
+export enum DrivingSchoolLicenseType {
+    Car = PlayerLicenceType.Car,
+    Truck = PlayerLicenceType.Truck,
+    Moto = PlayerLicenceType.Moto,
+    Heli = PlayerLicenceType.Heli,
 }
 
 interface Marker {
@@ -36,18 +47,21 @@ interface MarkerColor {
     a: number;
 }
 
+export interface PenaltyContext {
+    phoneService: PhoneService;
+    playerService: PlayerService;
+    notifier: Notifier;
+    seatbeltProvider: VehicleSeatbeltProvider;
+    undrivableVehicles: number[];
+    vehicle: number;
+}
+
 const markerColor: MarkerColor = { r: 12, g: 123, b: 86, a: 150 };
 
 const markers: Record<string, Marker> = {
     landVehicle: { type: 0, typeFinal: 4, size: 3.0, color: markerColor },
     airVehicle: { type: 42, typeFinal: 4, size: 10.0, color: markerColor },
 };
-
-interface Checkpoint {
-    coords: Vector3;
-    message?: string;
-    licenses?: DrivingSchoolLicenseType[];
-}
 
 const finalCheckpoints: Record<string, Checkpoint> = {
     landVehicle: {
@@ -64,6 +78,8 @@ export const DrivingSchoolConfig = {
     fadeDelay: 500, // in ms
     playerDefaultLocation: <Vector4>[-806.57, -1344.53, 5.5, 150.0],
     vehiclePlateText: 'P3RM15',
+    maxGracePeriod: 4000, // in ms
+    gracePeriodIncrement: 200, // in ms
     blip: {
         name: 'Auto-école',
         sprite: 545,
@@ -82,6 +98,7 @@ export const DrivingSchoolConfig = {
     },
     licenses: <Record<DrivingSchoolLicenseType, DrivingSchoolLicense>>{
         [DrivingSchoolLicenseType.Car]: {
+            licenseType: DrivingSchoolLicenseType.Car,
             vehicle: {
                 model: 'dilettante2',
                 spawnPoints: [
@@ -108,6 +125,7 @@ export const DrivingSchoolConfig = {
             finalCheckpoint: finalCheckpoints.landVehicle,
         },
         [DrivingSchoolLicenseType.Truck]: {
+            licenseType: DrivingSchoolLicenseType.Truck,
             vehicle: {
                 model: 'boxville4',
                 spawnPoints: [
@@ -134,6 +152,7 @@ export const DrivingSchoolConfig = {
             finalCheckpoint: finalCheckpoints.landVehicle,
         },
         [DrivingSchoolLicenseType.Moto]: {
+            licenseType: DrivingSchoolLicenseType.Moto,
             vehicle: {
                 model: 'faggio',
                 spawnPoints: [
@@ -160,6 +179,7 @@ export const DrivingSchoolConfig = {
             finalCheckpoint: finalCheckpoints.landVehicle,
         },
         [DrivingSchoolLicenseType.Heli]: {
+            licenseType: DrivingSchoolLicenseType.Heli,
             vehicle: {
                 model: 'seasparrow2',
                 spawnPoints: [
