@@ -77,6 +77,41 @@ const BENNYS_CLOAKROOM: Record<string, WardrobeConfig> = {
             },
         },
     },
+
+    ["Responsable d'atelier"]: {
+        [GetHashKey('mp_m_freemode_01')]: {
+            ['Tenue de service']: {
+                Components: {
+                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 146, Texture: 2, Palette: 0 },
+                },
+                Props: {},
+            },
+        },
+        [GetHashKey('mp_f_freemode_01')]: {
+            ['Tenue de service']: {
+                Components: {
+                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 338, Texture: 7, Palette: 0 },
+                },
+                Props: {},
+            },
+        },
+    },
     ['Mécano confirmé']: {
         [GetHashKey('mp_m_freemode_01')]: {
             ['Tenue de service']: {
