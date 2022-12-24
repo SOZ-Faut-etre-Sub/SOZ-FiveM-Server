@@ -12,7 +12,7 @@ import {
 } from '../../shared/driving-school';
 import { EntityType } from '../../shared/entity';
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
-import { Vector4 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, isErr, isOk, Result } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { PedFactory } from '../factory/ped.factory';
@@ -26,10 +26,11 @@ import { Penalties, Penalty } from './penalties';
 @Provider()
 export class ExamProvider {
     private license: DrivingSchoolLicense;
+    private spawnPoint: Vector4;
 
     private context: PenaltyContext;
     private isExamRunning = false;
-    private isPenaltyLoppRunning = false;
+    private isPenaltyLoopRunning = false;
     private penalties: Penalty[];
 
     private undrivableVehicles: number[] = [];
@@ -72,6 +73,8 @@ export class ExamProvider {
     public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
         await this.screenFadeOut();
 
+        this.spawnPoint = spawnPoint;
+
         const instructorConfig = DrivingSchoolConfig.peds.instructor;
         const instructor = await this.pedFactory.createPed({
             ...instructorConfig,
@@ -79,7 +82,7 @@ export class ExamProvider {
             blockevents: true,
         });
 
-        this.teleportPlayer(spawnPoint);
+        this.teleportPlayer(this.spawnPoint);
         await wait(200);
 
         const vehicleModel = this.license.vehicle.model;
@@ -110,8 +113,11 @@ export class ExamProvider {
     private async examLoop() {
         if (!this.isExamRunning) return;
 
-        if (!this.isPenaltyLoppRunning) {
-            this.startPenaltyLoop();
+        if (!this.isPenaltyLoopRunning) {
+            const vehCoords = GetEntityCoords(this.vehicleEntity, true) as Vector3;
+            if (getDistance(this.spawnPoint, vehCoords) > 2.0) {
+                this.startPenaltyLoop();
+            }
         }
 
         // TODO: Checkpoints
@@ -119,7 +125,7 @@ export class ExamProvider {
 
     @Tick(200)
     private async penaltyLoop() {
-        if (!this.isPenaltyLoppRunning) return;
+        if (!this.isPenaltyLoopRunning) return;
 
         for (const penalty of this.penalties) {
             if (isErr(penalty.performCheck())) {
@@ -148,14 +154,13 @@ export class ExamProvider {
     }
 
     private startPenaltyLoop() {
-        // TODO: Start penalty loop only when vehicle has moved from spawnpoint
         this.setupPenaltySystem();
-        this.isPenaltyLoppRunning = true;
+        this.isPenaltyLoopRunning = true;
     }
 
     private async terminateExam(result: Result<boolean, boolean>) {
         this.isExamRunning = false;
-        this.isPenaltyLoppRunning = false;
+        this.isPenaltyLoopRunning = false;
 
         if (this.playerService.getPlayer().metadata.isdead) {
             this.deleteVehicleAndPed();
