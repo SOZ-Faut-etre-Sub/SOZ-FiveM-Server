@@ -159,12 +159,7 @@ CREATE TABLE `job_grades` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- CreateTable
-CREATE TABLE `migrations` (
-    `name` VARCHAR(255) NOT NULL,
 
-    PRIMARY KEY (`name`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `persistent_prop` (
@@ -518,7 +513,6 @@ CREATE TABLE `shop_content` (
 ALTER TABLE `housing_apartment` ADD CONSTRAINT `housing_apartment_housing_property_id_fk` FOREIGN KEY (`property_id`) REFERENCES `housing_property`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `player_cloth_set` ADD CONSTRAINT `FK_player_cloth_set_player` FOREIGN KEY (`citizenid`) REFERENCES `player`(`citizenid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `player_vehicles` ADD CONSTRAINT `FK_playervehicles_players` FOREIGN KEY (`citizenid`) REFERENCES `player`(`citizenid`) ON DELETE CASCADE ON UPDATE CASCADE;
