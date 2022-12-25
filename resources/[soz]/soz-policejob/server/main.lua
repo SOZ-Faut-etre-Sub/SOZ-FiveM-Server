@@ -56,6 +56,7 @@ RegisterNetEvent("police:server:EscortPlayer", function(playerId)
 
                 TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source)
                 TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source)
+                TriggerClientEvent("animation:client:CancelRagdoll", target.PlayerData.source) --Cancels Ragdoll
 
                 return
             end

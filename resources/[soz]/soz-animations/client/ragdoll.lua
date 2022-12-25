@@ -23,3 +23,7 @@ CreateThread(function()
     end
 end)
 
+RegisterNetEvent("animation:client:CancelRagdoll", function ()
+    isInRagdoll = false
+end)
+
