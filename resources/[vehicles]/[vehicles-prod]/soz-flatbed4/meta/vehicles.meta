@@ -85,7 +85,7 @@
             <type>VEHICLE_TYPE_CAR</type>
             <plateType>VPT_FRONT_PLATES</plateType>
             <dashboardType>VDT_TRUCK</dashboardType>
-            <vehicleClass>VC_UTILITY</vehicleClass>
+            <vehicleClass>VC_INDUSTRIAL</vehicleClass>
             <wheelType>VWT_SPORT</wheelType>
             <trailers />
             <additionalTrailers />
