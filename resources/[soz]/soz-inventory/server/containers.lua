@@ -222,11 +222,23 @@ Container["bin"] = InventoryDatastore:new({
 --- Housing
 Container["house_stash"] = InventoryContainer:new({
     type = "stash",
-    allowedTypes = {"item", "item_illegal", "weapon", "weapon_ammo", "furniture", "outfit", "drug"},
+    allowedTypes = {
+        "item",
+        "item_illegal",
+        "weapon",
+        "weapon_ammo",
+        "furniture",
+        "outfit",
+        "drug",
+        "log",
+        "oil_and_item",
+        "plank",
+        "sawdust",
+    },
 })
 Container["house_fridge"] = InventoryContainer:new({
     type = "fridge",
-    allowedTypes = {"food", "drink", "cocktail", "liquor", "flavor", "organ"},
+    allowedTypes = {"food", "drink", "cocktail", "liquor", "flavor"},
 })
 
 --- Jobs PAWL
