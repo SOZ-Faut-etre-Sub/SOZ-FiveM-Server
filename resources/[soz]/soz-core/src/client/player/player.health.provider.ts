@@ -509,6 +509,22 @@ export class PlayerHealthProvider {
         } else {
             this.lastRunPosition = null;
         }
+
+        const playerId = PlayerId();
+        const stamina = GetPlayerStamina(playerId);
+        if (player.metadata.max_stamina >= 100.0) {
+            if (stamina >= 100 && stamina < player.metadata.max_stamina && !IsPedSprinting(playerPed)) {
+                const deltastam = isRunning ? 1.0 : 3.33;
+                const newstamina = Math.min(player.metadata.max_stamina, stamina + deltastam);
+                SetPlayerMaxStamina(playerId, newstamina);
+                RestorePlayerStamina(playerId, 1.0);
+                SetPlayerMaxStamina(playerId, 100.0);
+            }
+        } else {
+            if (stamina > player.metadata.max_stamina && IsPedSprinting(playerPed)) {
+                SetPlayerStamina(playerId, stamina - (100 - player.metadata.max_stamina));
+            }
+        }
     }
 
     @OnEvent(ClientEvent.PLAYER_REQUEST_HEALTH_BOOK)
@@ -567,8 +583,6 @@ export class PlayerHealthProvider {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
-
-        SetPlayerMaxStamina(PlayerId(), player.metadata.max_stamina);
 
         this.blipFactory.create('outdoorSport1', {
             name: 'Zone de sport',

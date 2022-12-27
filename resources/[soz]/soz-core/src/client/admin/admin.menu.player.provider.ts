@@ -175,7 +175,7 @@ export class AdminMenuPlayerProvider {
                 this.notifier.notify(`La force du joueur ~g~${player.name}~s~ a été modifiée.`, 'info');
                 break;
             case 'stamina':
-                TriggerServerEvent(ServerEvent.ADMIN_SET_STAMINA, player, value === 'min' ? 0 : 150);
+                TriggerServerEvent(ServerEvent.ADMIN_SET_STAMINA, player, value === 'min' ? 60 : 150);
                 this.notifier.notify(`L'endurance du joueur ~g~${player.name}~s~ a été modifiée.`, 'info');
                 break;
             case 'stress':
