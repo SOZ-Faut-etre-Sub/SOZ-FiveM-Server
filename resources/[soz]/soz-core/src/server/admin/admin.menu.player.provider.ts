@@ -22,19 +22,16 @@ export class AdminMenuPlayerProvider {
 
     @OnEvent(ServerEvent.ADMIN_SET_STAMINA)
     public onSetStamina(source: number, player: AdminPlayer, value: number) {
-        this.playerService.setPlayerMetadata(player.id, 'last_max_stamina_update', new Date().toUTCString());
         this.playerService.setPlayerMetadata(player.id, 'max_stamina', value);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_STRESS_LEVEL)
     public onSetStressLevel(source: number, player: AdminPlayer, value: number) {
-        this.playerService.setPlayerMetadata(player.id, 'last_stress_level_update', new Date().toUTCString());
         this.playerService.setPlayerMetadata(player.id, 'stress_level', value);
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_STRENGTH)
     public onSetStrength(source: number, player: AdminPlayer, value: number) {
-        this.playerService.setPlayerMetadata(player.id, 'last_strength_update', new Date().toUTCString());
         this.playerService.setPlayerMetadata(player.id, 'strength', value);
         this.playerService.updatePlayerMaxWeight(player.id);
     }

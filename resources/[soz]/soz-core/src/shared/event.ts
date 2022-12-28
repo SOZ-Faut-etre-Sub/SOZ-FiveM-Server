@@ -58,7 +58,6 @@ export enum ServerEvent {
     OIL_SET_STATION_PRICE = 'soz-core:server:oil:set-station-price',
 
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
-    PLAYER_INCREASE_STAMINA = 'soz-core:server:player:increase-stamina',
     PLAYER_INCREASE_STRENGTH = 'soz-core:server:player:increase-strength',
     PLAYER_SET_CURRENT_DISEASE = 'soz-core:server:server:set-current-disease',
     PLAYER_INCREASE_RUN_TIME = 'soz-core:server:player:health:increase-run-time',
