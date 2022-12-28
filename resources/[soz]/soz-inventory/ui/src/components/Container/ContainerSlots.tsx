@@ -1,4 +1,4 @@
-import { FunctionComponent, useCallback, useState } from 'react';
+import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import style from './ContainerSlots.module.css';
 import { InventoryItem } from '../../types/inventory';
 import Draggable from '../Draggable/Draggable';
@@ -26,6 +26,10 @@ export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows,
         },
         [setInContextMenu]
     );
+
+    useEffect(() => {
+        setDescription(null);
+    }, [items]);
 
     return (
         <>
