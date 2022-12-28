@@ -19,7 +19,7 @@ const WHEEL_LABEL = {
     2: 'Arrière gauche (autre)',
     3: 'Arrière droite (autre)',
     4: 'Arrière gauche',
-    5: 'Arrière droite)',
+    5: 'Arrière droite',
 };
 
 const WINDOWS_LABEL = {
@@ -52,6 +52,7 @@ const EnginePage: FunctionComponent<PageProps> = ({ analyze }) => {
             <h3 className="text-3xl mb-4">Moteur</h3>
             <p>Etat du moteur : {analyze.condition.engineHealth.toFixed(2)} / 1000</p>
             <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 100</p>
+            <p>Kilométrage : {(analyze.condition.mileage / 1000).toFixed(2)} km</p>
         </>
     );
 };
@@ -66,15 +67,19 @@ const WheelPage: FunctionComponent<PageProps> = ({ analyze }) => {
                     const health = analyze.condition.tireHealth[index];
                     const burst = analyze.condition.tireBurstState[index];
                     const completelyBurst = analyze.condition.tireBurstCompletely[index];
+                    const burstDistance = analyze.condition.tireTemporaryRepairDistance[index];
 
                     if (health <= 0.01 && !burst && !completelyBurst) {
                         return null;
                     }
 
                     return (
-                        <div className="mt-2" key={wheel}>
+                        <div className="my-4" key={wheel}>
                             <h5 className="text-xl">{WHEEL_LABEL[wheel]}</h5>
-                            <p>Vie : {health.toFixed(2)} / 1000</p>
+                            <p>Pneu neuf : {burstDistance === undefined ? 'Oui' : 'Non'}</p>
+                            {burstDistance !== undefined && (
+                                <p>Vie restante : {((10000 - burstDistance) / 1000).toFixed(2)} km</p>
+                            )}
                             <p>Crevaison : {burst ? 'Oui' : 'Non'}</p>
                             <p>Sur les jantes : {completelyBurst ? 'Oui' : 'Non'}</p>
                         </div>
