@@ -448,7 +448,7 @@ export class BennysVehicleProvider {
             GetEntityBoneIndexByName(vehicle, 'window_lm') !== -1,
             GetEntityBoneIndexByName(vehicle, 'window_rm') !== -1,
             GetEntityBoneIndexByName(vehicle, 'windscreen') !== -1,
-            true, //GetEntityBoneIndexByName(vehicle, 'windscreen_f') !== -1, // Find correct bone name for back window, presume it exists every where
+            GetEntityBoneIndexByName(vehicle, 'windscreen_r') !== -1,
         ];
 
         for (const index of Object.keys(state.condition.doorStatus)) {

@@ -163,9 +163,8 @@ export class VehicleConditionProvider {
 
             if (isBurst) {
                 repairTime += 10000;
+                tireTemporaryRepairDistance[wheelIndex] = 0;
             }
-
-            tireTemporaryRepairDistance[wheelIndex] = 0;
         }
 
         if (repairTime === 0) {
