@@ -2,21 +2,29 @@ import { ServerPromiseResp } from '@typings/common';
 import { PhotoEvents } from '@typings/photo';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import React, { memo, PropsWithChildren, useCallback } from 'react';
+import React, { memo, PropsWithChildren, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { isDefaultWallpaper } from './apps/settings/utils/isDefaultWallpaper';
 import { useConfig, useVisibility } from './hooks/usePhone';
 import { useCall } from './os/call/hooks/useCall';
+import { RootState } from './store';
 
 const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
+    const available = useSelector((state: RootState) => state.phone.available);
+
     const settings = useConfig();
     const { pathname } = useLocation();
 
     const { call } = useCall();
     const { visibility, notifVisibility } = useVisibility();
 
-    const wrapperClass = useCallback(() => {
+    const wrapperClass = useMemo(() => {
+        if (!available) {
+            return 'translate-y-[1000px]';
+        }
+
         if (settings.handsFree && !visibility && !!call) {
             return 'translate-y-[650px]';
         }
@@ -24,7 +32,7 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
             return 'translate-y-[800px]';
         }
         return visibility ? 'translate-y-0' : 'translate-y-[1000px]';
-    }, [settings, call, visibility, notifVisibility]);
+    }, [available, settings, call, visibility, notifVisibility]);
 
     return (
         <div
@@ -38,7 +46,7 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
             <div
                 className={cn(
                     'fixed right-0 bottom-0 w-[500px] h-[1000px] bg-cover origin-bottom-right transition-any ease-in-out duration-300',
-                    wrapperClass()
+                    wrapperClass
                 )}
                 style={{
                     zoom: `${settings.zoom.value}%`,

@@ -6,7 +6,7 @@ import { RootModel } from '.';
 
 export const phone = createModel<RootModel>()({
     state: {
-        available: false,
+        available: true,
         config: config.defaultSettings as IPhoneSettings,
         callModal: false,
     },
