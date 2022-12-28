@@ -12,7 +12,12 @@ export const KeyContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    const [playerInventory, setPlayerInventory] = useState<InventoryItem[]>([]);
+    const [playerInventory, setPlayerInventory] = useState<InventoryItem[] | null>([]);
+
+    const closeMenu = useCallback(() => {
+        setDisplay(false);
+        setPlayerInventory(null);
+    }, [setDisplay, setPlayerInventory]);
 
     const transfertItem = useCallback((event: any) => {
         if (!event.active.data.current) return;
@@ -24,9 +29,9 @@ export const KeyContainer = () => {
             },
             body: JSON.stringify(event.active.data.current.item)
         }).then(() => {
-            closeNUI(() => setDisplay(false));
+            closeNUI(() => closeMenu());
         });
-    }, [setDisplay]);
+    }, [closeMenu]);
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === "openPlayerKeyInventory") {
@@ -39,16 +44,16 @@ export const KeyContainer = () => {
 
     const onKeyDownReceived = useCallback((event: KeyboardEvent) => {
         if (display && !event.repeat && event.key === 'Escape') {
-            closeNUI(() => setDisplay(false));
+            closeNUI(() => closeMenu());
         }
-    }, [display, setDisplay])
+    }, [display, closeMenu])
 
     const onClickReceived = useCallback((event: MouseEvent) => {
         if (display &&menuRef.current && !menuRef.current.contains(event.target as Node)){
             event.preventDefault();
-            closeNUI(() => setDisplay(false));
+            closeNUI(() => closeMenu());
         }
-    }, [menuRef, display, setDisplay])
+    }, [menuRef, display, closeMenu])
 
     useEffect(() => {
         window.addEventListener("contextmenu", onClickReceived);

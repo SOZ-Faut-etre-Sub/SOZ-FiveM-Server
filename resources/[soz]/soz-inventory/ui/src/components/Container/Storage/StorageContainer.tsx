@@ -16,6 +16,12 @@ export const StorageContainer = () => {
     const [playerInventory, setPlayerInventory] = useState<SozInventoryModel | null>();
     const [targetInventory, setTargetInventory] = useState<SozInventoryModel | null>();
 
+    const closeMenu = useCallback(() => {
+        setDisplay(false);
+        setPlayerInventory(null);
+        setTargetInventory(null);
+    }, [setDisplay, setPlayerInventory, setTargetInventory]);
+
     const targetInventoryBanner = useMemo(() => {
         let type = targetInventory?.type || 'default';
 
@@ -56,7 +62,7 @@ export const StorageContainer = () => {
                     console.error(e, event.data.playerInventory, event.data.targetInventory);
                     closeNUI(
                         () => {
-                            setDisplay(false);
+                            closeMenu();
                         },
                         {
                             target: targetInventory?.id,
@@ -75,7 +81,7 @@ export const StorageContainer = () => {
                     console.error(e, event.data.playerInventory, event.data.targetInventory);
                     closeNUI(
                         () => {
-                            setDisplay(false);
+                            closeMenu();
                         },
                         {
                             target: targetInventory?.id,
@@ -85,7 +91,7 @@ export const StorageContainer = () => {
             } else if (event.data.action === 'closeInventory') {
                 closeNUI(
                     () => {
-                        setDisplay(false);
+                        closeMenu();
                     },
                     {
                         target: targetInventory?.id,
@@ -93,7 +99,7 @@ export const StorageContainer = () => {
                 );
             }
         },
-        [setDisplay, setPlayerInventory, setTargetInventory],
+        [closeMenu, setPlayerInventory, setTargetInventory],
     );
 
     const onKeyDownReceived = useCallback(
@@ -108,11 +114,11 @@ export const StorageContainer = () => {
                         target: targetInventory?.id,
                     }),
                 }).then(() => {
-                    setDisplay(false);
+                    closeMenu();
                 });
             }
         },
-        [targetInventory, setDisplay],
+        [targetInventory, closeMenu],
     );
 
     const handleInventoryUpdate = useCallback((apiResponse: {sourceInventory?: SozInventoryModel; targetInventory?: SozInventoryModel}) => {
