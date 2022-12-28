@@ -45,7 +45,7 @@ Config.Products["barber"] = {
             category = "Blush",
             label = "Blush",
             overlay = "Makeup",
-            components = {["BlushType"] = true, ["BlushColor"] = true, ["BlushOpacity"] = true },
+            components = {["BlushType"] = true, ["BlushColor"] = true, ["BlushOpacity"] = true},
             items = Config.CharacterComponentList.Blush,
         },
         {
