@@ -196,9 +196,9 @@ Config.Checkpoints = {
         licenses = {"car", "truck", "motorcycle"},
     },
     {
-        x = 506.42,
-        y = -1306.97,
-        z = 27.76,
+        x = 431.82,
+        y = -1633.01,
+        z = 27.69,
         message = "Ta maman ne sera pas fière si tu dois venir chercher ta voiture à cette fourrière…",
         licenses = {"car", "truck", "motorcycle"},
     },
