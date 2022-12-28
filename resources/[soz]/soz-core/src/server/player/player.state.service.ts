@@ -35,6 +35,9 @@ export class PlayerStateService {
             lostStrength: 0,
             runTime: 0,
             yoga: false,
+            lastStrengthUpdate: new Date(),
+            lastMaxStaminaUpdate: new Date(),
+            lastStressLevelUpdate: new Date(),
         };
     }
 }
