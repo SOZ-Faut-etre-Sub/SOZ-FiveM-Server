@@ -36,6 +36,9 @@ export class InventoryUsageProvider {
             if (value.name === item.name && value.metadata.serial === item.metadata.serial) {
                 player.PlayerData.metadata.shortcuts[key] = null;
             }
+            if (parseInt(key) < 0 || parseInt(key) > 9) {
+                player.PlayerData.metadata.shortcuts[key] = null;
+            }
         });
 
         player.PlayerData.metadata.shortcuts[shortcut] = {
