@@ -1,3 +1,13 @@
+local SapHarvestedTrees = {}
+
+local function ConcatPosition(position)
+    local x = math.floor(position.x)
+    local y = math.floor(position.y)
+    local z = math.floor(position.z)
+
+    return table.concat({x, y, z}, "-")
+end
+
 local function TreeInteraction(identifier, position)
     local zoneName = ("pawl:%s:%s"):format(identifier, position.x .. position.y)
     exports["qb-target"]:RemoveZone(zoneName)
@@ -33,7 +43,8 @@ local function TreeInteraction(identifier, position)
                 event = "pawl:client:harvestTreeSap",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
-                    if GetGameTimer() - (Config.Field.List[identifier][table.concat(position, "-")] or 0) <= Config.Field.RefillDelay / 1000 then
+                    local treeKey = ConcatPosition(position)
+                    if SapHarvestedTrees[treeKey] ~= nil then
                         return false
                     end
 
@@ -74,6 +85,9 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
         if cutTree then
             table.insert(Config.Field.List[data.identifier], GetGameTimer())
 
+            local treeKey = ConcatPosition(data.position)
+            SapHarvestedTrees[treeKey] = nil
+
             exports["soz-hud"]:DrawNotification("Vous avez ~g~découpé~s~ l’arbre.")
         else
             exports["soz-hud"]:DrawNotification("Vous avez ~r~raté~s~ la découpe de l’arbre.")
@@ -104,7 +118,8 @@ RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
     if success then
         local sapTree = QBCore.Functions.TriggerRpc("pawl:server:harvestTreeSap", data.identifier, data.position)
         if sapTree then
-            Config.Field.List[data.identifier][table.concat(data.position, "-")] = GetGameTimer()
+            local treeKey = ConcatPosition(data.position)
+            SapHarvestedTrees[treeKey] = true
 
             exports["soz-hud"]:DrawNotification("Vous avez ~g~récolté~s~ de la sève.")
         else
