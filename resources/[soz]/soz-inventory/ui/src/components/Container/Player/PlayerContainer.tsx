@@ -19,6 +19,13 @@ export const PlayerContainer = () => {
     const [playerInventory, setPlayerInventory] = useState<SozInventoryModel | null>();
     const [playerShortcuts, setPlayerShortcuts] = useState<Partial<InventoryItem>[]>();
 
+
+    const closeMenu = useCallback(() => {
+        setDisplay(false);
+        setPlayerInventory(null);
+        setPlayerShortcuts([]);
+    }, [setDisplay, setPlayerInventory, setPlayerShortcuts]);
+
     const interactAction = useCallback(
         (action: string, item: InventoryItem, shortcut: number) => {
             fetch(`https://soz-inventory/player/${action}`, {
@@ -27,21 +34,19 @@ export const PlayerContainer = () => {
                     "Content-Type": "application/json; charset=UTF-8",
                 },
                 body: JSON.stringify({ ...item, shortcut }),
-            }).then(() => {
-                setDisplay(false);
-            });
+            }).then(() => closeMenu());
         },
-        [setDisplay]
+        [closeMenu]
     );
 
     const onClickReceived = useCallback(
         (event: MouseEvent) => {
             if (display && menuRef.current && !menuRef.current.contains(event.target as Node)) {
                 event.preventDefault();
-                closeNUI(() => setDisplay(false));
+                closeNUI(() => closeMenu());
             }
         },
-        [menuRef, display, setDisplay]
+        [menuRef, display, closeMenu]
     );
 
     const onMessageReceived = useCallback(
@@ -63,20 +68,20 @@ export const PlayerContainer = () => {
                     setDisplay(true);
                 } catch (e: any) {
                     console.error(e, event.data.playerInventory, event.data.playerMoney);
-                    closeNUI(() => setDisplay(false));
+                    closeNUI(() => closeMenu());
                 }
             }
         },
-        [setDisplay, setPlayerMoney, setPlayerInventory, setPlayerShortcuts]
+        [setDisplay, closeMenu, setPlayerMoney, setPlayerInventory, setPlayerShortcuts]
     );
 
     const onKeyDownReceived = useCallback(
         (event: KeyboardEvent) => {
             if (display && !event.repeat && (event.key === "Escape" || event.key === "F2")) {
-                closeNUI(() => setDisplay(false));
+                closeNUI(() => closeMenu());
             }
         },
-        [display, setDisplay]
+        [display, closeMenu]
     );
 
     const handleDragAndDrop = useCallback((event: any) => {
@@ -113,12 +118,10 @@ export const PlayerContainer = () => {
                         "Content-Type": "application/json; charset=UTF-8",
                     },
                     body: JSON.stringify(event.active.data.current.item),
-                }).then(() => {
-                    setDisplay(false);
-                });
+                }).then(() => closeMenu());
             }
         },
-        [playerInventory, setDisplay]
+        [playerInventory, closeMenu]
     );
 
     const itemShortcut = useCallback((item: InventoryItem) => {
