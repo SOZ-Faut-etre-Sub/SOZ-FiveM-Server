@@ -1,0 +1,116 @@
+[
+  {
+    "Bracelet": {
+      "0": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet légère"
+        }
+      },
+      "1": {
+        "0": {
+          "GXT": "",
+          "Localized": "Grosse chaîne de poignet"
+        }
+      },
+      "2": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet carrée"
+        }
+      },
+      "3": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet crâne"
+        }
+      },
+      "4": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet torsadé"
+        }
+      },
+      "5": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de Moto et cuire"
+        }
+      },
+      "6": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet à pointes"
+        }
+      },
+      "7": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet Noire"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet Chocolat"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet Beige"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bracelet cuire de boeuf"
+        }
+      },
+      "8": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Bleu"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Rouge"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Rose"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Jaune"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Orange"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Vert"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Rouge & Bleu"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Orange & Jaune"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Vert & Rose"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Rainbow"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Levé de soleil"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Tropique"
+        }
+      }
+    }
+  }
+]

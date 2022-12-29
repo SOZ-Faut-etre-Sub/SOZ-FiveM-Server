@@ -1,0 +1,960 @@
+[
+  {
+    "Casques": {
+      "0": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Rouge"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Violet"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Vert"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Jaune"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Desert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Bleu"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Bleu Pale"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Orange"
+        }
+      },
+      "15": {
+        "0": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Blanc"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Rouge"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Gris"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Bleu"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Violet"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Rose"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Orange"
+        }
+      },
+      "16": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque Cross Jaune"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque Cross Bleu"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque Cross Orange"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque Cross Vert"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque Cross Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque Cross Or-blanc"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque Cross Noir"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque Cross Lilla"
+        }
+      },
+      "17": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque Jet Bleu Pale"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque Jet Bleu Pale"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque Jet Gris"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque Jet Noir"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque Jet Rose"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque Jet Blanc-noir"
+        }
+      },
+      "18": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque integral eclats"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque integral etoiles"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque integral gris"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque integral sang"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque integral crane"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque integral AoS noir"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque integral flammes"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque integral blanc-rouge"
+        }
+      },
+      "47": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir brillant tout-terrain"
+        }
+      },
+      "48": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir mat tout-terrain"
+        }
+      },
+      "49": {
+        "0": {
+          "GXT": "",
+          "Localized": "Intégral brillant"
+        }
+      },
+      "50": {
+        "0": {
+          "GXT": "",
+          "Localized": "Visière Chromé"
+        }
+      },
+      "51": {
+        "0": {
+          "GXT": "",
+          "Localized": "Mat Intégral Noir"
+        }
+      },
+      "52": {
+        "0": {
+          "GXT": "",
+          "Localized": "Mat Visière Chromé"
+        }
+      },
+      "62": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque intégral Vert"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque intégral Orange"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque intégral Violet"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque intégral Rose"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque intégral Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque intégral Bleu"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque intégral Gris Foncé"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque intégral Gris"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque intégral Blanc"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque intégral Noir"
+        }
+      },
+      "67": {
+        "0": {
+          "GXT": "",
+          "Localized": "Glossy All Noir Biker"
+        }
+      },
+      "68": {
+        "0": {
+          "GXT": "",
+          "Localized": "Glossy MirroRouge Biker"
+        }
+      },
+      "69": {
+        "0": {
+          "GXT": "",
+          "Localized": "Matte All Noir Biker"
+        }
+      },
+      "70": {
+        "0": {
+          "GXT": "",
+          "Localized": "Matte MirroRouge Biker"
+        }
+      },
+      "71": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque intégral Vert Ouvert"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque intégral Orange Ouvert"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque intégral Violet Ouvert"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque intégral Rose Ouvert"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque intégral Rouge Ouvert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque intégral Bleu Ouvert"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque intégral Gris Foncé Ouvert"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque intégral Gris Ouvert"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque intégral Blanc Ouvert"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque intégral Noir Ouvert"
+        }
+      },
+      "72": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque Retro Crème"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque Retro Gris"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque Retro Orange"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque Retro Pale Bleu"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque Retro Vert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque Retro Orange Pale"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque Retro Violet"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque Retro Rose Noir"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque Retro Blanc"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque Retro Bleu"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casque Retro Rouge"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casque Retro Noir"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casque Retro Rose "
+        }
+      },
+      "73": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque Retro Crème Ouvert"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque Retro Gris Ouvert"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque Retro Orange Ouvert"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque Retro Pale Bleu Ouvert"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque Retro Vert Ouvert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque Retro Orange Pale Ouvert"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque Retro Violet Ouvert"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque Retro Rose Noir Ouvert"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque Retro Blanc Ouvert"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque Retro Bleu Ouvert"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casque Retro Rouge Ouvert"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casque Retro Noir Ouvert"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casque Retro Rose  Ouvert"
+        }
+      },
+      "74": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque Bob Vert"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque Bob Orange"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque Bob Violet"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque Bob Panthère Rose"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque Bob Tourbillon"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque Bob Rouge Jaune"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque Bob Racing"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque Bob USA"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque Bob Blue Stars"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque Bob Griffure"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casque Bob Red Star"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casque Bob Xero"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casque Bob Burger Shot"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casque Bob Infinité"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casque Bob Linea"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casque Bob Eruption"
+        }
+      },
+      "78": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert Blanc"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert Bleu"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert Rouge"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert Noir"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert rose"
+        }
+      },
+      "79": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque retro fermé Or bande"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque retro fermé Argent bande"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque retro fermé Or"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque retro fermé Argent"
+        }
+      },
+      "80": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert Or bande"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert Argent bande"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert Or"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque retro Ouvert Argent"
+        }
+      },
+      "81": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque intégral Shatter Pattern"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque intégral Stars"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque intégral SquaRed"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque intégral Cramoisi"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque intégral Skull"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque intégral Ace of Spades"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque intégral Flamejob"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque intégral Blanc"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque intégral Downhill"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque intégral Slalom"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casque intégral Crâne"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casque intégral Vibe"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casque intégral Burst"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casque intégral Tri"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casque intégral Sprunk"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casque intégral Skeleton"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casque intégral Death"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casque intégral Cobble"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casque intégral Cubist"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casque intégral Digital"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casque intégral Snakeskin"
+        }
+      },
+      "83": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque à pointes Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque à pointes Carbon"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque à pointes Orange Fiber"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque à pointes Star and Stripes"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque à pointes Vert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque à pointes Feathers"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque à pointes Ox andchets"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque à pointes Ride Free"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque à pointes Ace of Spades"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque à pointes Skull and Snake"
+        }
+      },
+      "84": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque rond"
+        }
+      },
+      "85": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque rond a Visière"
+        }
+      },
+      "86": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque rond a crète"
+        }
+      },
+      "87": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque rond a pointe"
+        }
+      },
+      "88": {
+        "0": {
+          "GXT": "",
+          "Localized": "Grand Casque Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Grand Casque Carbon"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Grand Casque Orange Fiber"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Grand Casque Star and Stripes"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Grand Casque Vert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Grand Casque Feathers"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Grand Casque Ox andchets"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Grand Casque Ride Free"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Grand Casque Ace of Spades"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Grand Casque Skull and Snake"
+        }
+      },
+      "89": {
+        "0": {
+          "GXT": "",
+          "Localized": "Grand Casque Chromé"
+        }
+      },
+      "90": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque néon Jaune"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque néon Vert"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque néon Orange"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque néon Violet"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque néon Rose"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque néon Rouge"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque néon Bleu"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque néon Cendre"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque néon Gris"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque néon Blanc"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casque néon Bleu Clair"
+        }
+      },
+      "91": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque néon Jaune Ouvert"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque néon Vert Ouvert"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque néon Orange Ouvert"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque néon Violet Ouvert"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque néon Rose Ouvert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque néon Rouge Ouvert"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque néon Bleu Ouvert"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque néon Cendre Ouvert"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque néon Gris Ouvert"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque néon Blanc Ouvert"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casque néon Bleu Clair Ouvert"
+        }
+      },
+      "92": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque Faggio Cible"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque Faggio UK"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque Faggio Vert"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque Faggio UK Vert"
+        }
+      },
+      "111": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque Woodland Combat"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque Dark Combat"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque Light Combat"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque Flecktarn Combat"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque Noir Combat"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque Medic Combat"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque Gris Woodland Combat"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque Tan Digital Combat"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque Aqua Camo Combat"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque Splinter Combat"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casque Rouge Star Combat"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casque Marron Digital Combat"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casque MP Combat"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casque Zebra Combat"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casque Leopard Combat"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casque Tigre Combat"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casque Police Combat"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casque Flames Combat"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casque Stars & Stripes Combat"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casque Patriot Combat"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casque Vert Stars Combat"
+        }
+      },
+      "126": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque intégral cyan ouvert"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque intégral jaune ouvert"
+        }
+      },
+      "127": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque intégral cyan"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque intégral jaune"
+        }
+      }
+    }
+  }
+]

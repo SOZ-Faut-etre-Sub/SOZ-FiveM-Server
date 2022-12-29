@@ -2,7 +2,12 @@ fx_version "cerulean"
 games {"gta5"}
 lua54 "yes"
 
-shared_scripts {"config/*.lua", "config/datasource/*.json"}
+shared_scripts {
+    "config/*.lua",
+    "config/datasource/*.json",
+    "config/datasource/jewelry/female/*.json",
+    "config/datasource/jewelry/male/*.json"
+}
 
 client_scripts {
     "@PolyZone/client.lua",

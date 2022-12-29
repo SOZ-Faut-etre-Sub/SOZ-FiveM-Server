@@ -1,0 +1,1550 @@
+[
+  {
+    "Lunette de Soleil": {
+      "0": {
+        "0": {
+          "GXT": "",
+          "Localized": "Frelon Sports"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "à deux tons Sports"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Orange Sports"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bleu Sports"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Marbre Sports"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Violet Sports"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Topaz Sports"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Beige Sports"
+        }
+      },
+      "1": {
+        "0": {
+          "GXT": "",
+          "Localized": "Marbre Cuivre"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Marbre Bleu Teinté"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Marbre Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Marbre Violet"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Marbre Bleu sarcelle"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Marbre Rouge Teinté"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Marbre Blanc"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Marbre Rose Teinté"
+        }
+      },
+      "2": {
+        "0": {
+          "GXT": "",
+          "Localized": "Marbre Mademoiselles"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Cuivre Mademoiselles"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Orange Teinté Mademoiselles"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Rose Teinté Mademoiselles"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Noisetté Mademoiselles"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Noir Mademoiselles"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Vintage Rouge Mademoiselles"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Or Mademoiselles"
+        }
+      },
+      "3": {
+        "0": {
+          "GXT": "",
+          "Localized": "Zebra Shields"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Ombre Shields"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Flame Shields"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Violet Shields"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Sun Shields"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Argent Accent Shields"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Party Shields"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Or Shields"
+        }
+      },
+      "4": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noisetté Retro"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Marbre Retro"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Beige Retro"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Aqua Retro"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Dice Retro"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Noir Retro"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Caramel Retro"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Rouge Retro"
+        }
+      },
+      "6": {
+        "0": {
+          "GXT": "",
+          "Localized": "Violet Papillon"
+        }
+      },
+      "7": {
+        "0": {
+          "GXT": "",
+          "Localized": "Champagne Infini"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Platinum Infini"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Sapphire Infini"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Amethyst Infini"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Or Infini"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Blanc Infini"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Gris Infini"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Grenat Infini"
+        }
+      },
+      "8": {
+        "0": {
+          "GXT": "",
+          "Localized": "Orange Teinté SquaRed"
+        }
+      },
+      "9": {
+        "0": {
+          "GXT": "",
+          "Localized": "Lime Teinté Tireurs"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Orange Teinté Tireurs"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bleu Tireurs"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Tropique Tireurs"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Fly Tireurs"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Cramoisi Tireurs"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Vert Teinté Tireurs"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Rose Tireurs"
+        }
+      },
+      "10": {
+        "0": {
+          "GXT": "",
+          "Localized": "Ice Sports"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Noir Sports"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Vert Sports"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Peau de Vache Sports"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Orange Sports"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Noir Modèle Sports"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bleu Modèle Sports"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Rose Modèle Sports"
+        }
+      },
+      "11": {
+        "0": {
+          "GXT": "",
+          "Localized": "Étain Aviateurs"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Acier Aviateurs"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bronze Aviateurs"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Noir Aviateurs"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Neon Aviateurs"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Cuivre Aviateurs"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Or Aviateurs"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Ardoise Aviateurs"
+        }
+      },
+      "16": {
+        "0": {
+          "GXT": "",
+          "Localized": "DS Marron Papillons"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "DS Bleu Teinté Papillons"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "DS Vert Marbre Papillons"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "DS Bleu sarcelle Papillons"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "DS Blanc Papillons"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "DS Rose Papillons"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "DS Rouge Papillons"
+        }
+      },
+      "17": {
+        "0": {
+          "GXT": "",
+          "Localized": "Violet au carré"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bleu Leopard au carré"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Violet au carré"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bleu sarcelle au carré"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Beige au carré"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Rose au carré"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Blanc au carré"
+        }
+      },
+      "18": {
+        "0": {
+          "GXT": "",
+          "Localized": "Acier Tige mince"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Etain Tige mince"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Tige mince"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Noir Tige mince"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Jaune Tige mince"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Cuivre Tige mince"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Or Tige mince"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Argent Tige mince"
+        }
+      },
+      "19": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir Plastique"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Orange Hinge Plastique"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Rose Plastique"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Marbre Plastique"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Latte Plastique"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Vixen Plastique"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Sunshine Plastique"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Excentrique Plastique"
+        }
+      },
+      "24": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir Casuals"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Zap Casuals"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Écaille Casuals"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Rouge Casuals"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Blanc Casuals"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Camo Collection Casuals"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Citron Casuals"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Rouge Sang Casuals"
+        }
+      },
+      "25": {
+        "0": {
+          "GXT": "",
+          "Localized": "Lunettes de tir vertes"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Lunettes de tir oranges"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Lunettes de tir violettes"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Lunettes de tir roses"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Lunettes de tir rouges sombre"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Lunettes de tir bleues"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Lunettes de tir gris"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Lunettes de tir cendres"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Lunettes de tir blanches"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Lunettes de tir noires"
+        }
+      },
+      "30": {
+        "0": {
+          "GXT": "",
+          "Localized": "Gris Aviateurs"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Orange Teinté Aviateurs"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noisetté Aviateurs"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Horizon Aviateurs"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Violet Aviateurs"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chevron Aviateurs"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Or Teinté Aviateurs"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Magenta Teinté Aviateurs"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bleu électrique Teinté Aviateurs"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bleu Argyle Aviateurs"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Noir Teinté  Aviateurs"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Blanc Teinté Aviateurs"
+        }
+      },
+      "31": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir Profond"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "à deux tons Profond"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Blanc Profond"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Rouge Profond"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Aqua Profond"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Vert Profond"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Vert Urban Profond"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Rose Urban Profond"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Digital Profond"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Éclat Profond"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Zèbre Profond"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Pied-de-poule Profond"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Mute Profond"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Sunrise Profond"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Rayé Profond"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Mono Profond"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Noir Fame or Shame"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Rouge Fame or Shame"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Bleu Fame or Shame"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Blanc Fame or Shame"
+        }
+      },
+      "33": {
+        "0": {
+          "GXT": "",
+          "Localized": "Midnight Teinté Énorme"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Sunset Teinté Énorme"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noir Teinté Énorme"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bleu Teinté Énorme"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Or Teinté Énorme"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Vert Teinté Énorme"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Orange Teinté Énorme"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Rouge Teinté Énorme"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Rose Teinté Énorme"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Jaune Teinté Énorme"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Lemon Teinté Énorme"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Or Énorme"
+        }
+      },
+      "34": {
+        "6": {
+          "GXT": "",
+          "Localized": "Rose Teinté Ronde"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bleu Teinté Ronde"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Orange Ronde à carreaux"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Vert Teinté Ronde"
+        }
+      },
+      "35": {
+        "6": {
+          "GXT": "",
+          "Localized": "Rose Carré teinté"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bleu Carré teinté"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Carré"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Mono Carré"
+        }
+      }
+    },
+    "Lunette de vue": {
+      "0": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Sports"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Sports"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Sports"
+        }
+      },
+      "1": {
+        "8": {
+          "GXT": "",
+          "Localized": "Marbre Terre de feu"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Marbre Noir"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Marbre Blanc"
+        }
+      },
+      "2": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Mademoiselle"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Mademoiselle"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Mademoiselle"
+        }
+      },
+      "3": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Shield"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Shield"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Shield"
+        }
+      },
+      "4": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Retro"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Retro"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Retro"
+        }
+      },
+      "6": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Papillon"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Papillon"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Papillon"
+        }
+      },
+      "7": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Infini"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Infini"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Infini"
+        }
+      },
+      "8": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu SquaRed"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir SquaRed"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc SquaRed"
+        }
+      },
+      "9": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Tireurs"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Tireurs"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Tireurs"
+        }
+      },
+      "10": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu HS"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir HS"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc HS"
+        }
+      },
+      "14": {
+        "0": {
+          "GXT": "",
+          "Localized": "Yeux de chat Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Yeux de chat Marron Marbre"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Yeux de chat Rose"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Yeux de chat Vert Marbre"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Yeux de chat Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Yeux de chat Bleu sarcelle"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Yeux de chat Violet"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Yeux de chat Bleu"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Yeux de chat Terre de feu"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Yeux de chat Noir"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Yeux de chat Blanc"
+        }
+      },
+      "16": {
+        "7": {
+          "GXT": "",
+          "Localized": "DS Ambre"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "DS Noir"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "DS Blanc"
+        }
+      },
+      "17": {
+        "7": {
+          "GXT": "",
+          "Localized": "Ambre au carré"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Noir au carré"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Blanc au carré"
+        }
+      },
+      "19": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Plastique"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Plastique"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Plastique"
+        }
+      },
+      "20": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir Retro Classics"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "à deux tons Retro Classics"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Grenat Retro Classics"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Multicolore Retro Classics"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Peach Retro Classics"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bleu Retro Classics"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Rouge Retro Classics"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Lime Retro Classics"
+        }
+      },
+      "21": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir Hipsters"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bleu Hipsters"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Marbre Hipsters"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Trempé Hipsters"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Rouge Hipsters"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Orange Hipsters"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Hot Rose Hipsters"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Marron Hipsters"
+        }
+      },
+      "24": {
+        "8": {
+          "GXT": "",
+          "Localized": "Terre de feu Casual"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Casual"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Blanc Casual"
+        }
+      },
+      "34": {
+        "0": {
+          "GXT": "",
+          "Localized": "Blanc Ronde à carreaux"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Rose Ronde à carreaux"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Jaune Ronde à carreaux"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Rouge Ronde à carreaux"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Blanc Ronde"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Noir Ronde"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Vert Ronde à carreaux"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bleu Ronde à carreaux"
+        }
+      },
+      "35": {
+        "0": {
+          "GXT": "",
+          "Localized": "Marron Ronde"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Jaune Ronde"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noir Ronde"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Écaille de tortue Carré"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Vert Carré"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Rouge Carré"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Blanc Carré"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Rose Carré"
+        }
+      },
+      "36": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noires Rondes"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Rondes"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Rondes"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Rose Rondes"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Ecaille de tortue Rondes"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Monture Or Rondes"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Monture Bleu Rondes"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Ecaille de tortue Argent Rondes"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Ecaille de tortue & Or Rondes"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Ecaille de tortue grises Rondes"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Tornade d'or Rondes"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Or patiné Rondes"
+        }
+      },
+      "37": {
+        "0": {
+          "GXT": "",
+          "Localized": "Carrées Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Carrées Argent"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Carrées Or"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Carrées Rose"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Carrées Noir & Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Carrées Noir & Marron"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Carrées Noir & Bleu"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Carrées Ecaille de tortue & Marron"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Carrées Or & Ecaille de tortue"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Carrées Ecaille de tortue Gris"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Carrées Ecaille de tortue"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Carrées Rose & Noir"
+        }
+      },
+      "38": {
+        "0": {
+          "GXT": "",
+          "Localized": "Yeux de chat Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Yeux de chat Argent"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Yeux de chat Or"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Yeux de chat Ecaille de tortue"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Yeux de chat Noir & Vert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Yeux de chat Ecaille de tortue sombre"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Yeux de chat Noir & Turquoise"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Yeux de chat Noir & Rouge"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Yeux de chat Or & Noir"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Yeux de chat Bleu Foncé"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Yeux de chat Rose & Noir"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Yeux de chat Ecaille de chat Or"
+        }
+      },
+      "39": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir Rectangulaires"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Rectangulaires"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Rectangulaires"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Ecaille de tortue claires Rectangulaires"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Ecaille de tortue bordeaux Rectangulaires"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bleu Rectangulaires"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Gris & Rouge Rectangulaires"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Turquoise délavé Rectangulaires"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Jaune Rectangulaires"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Vert Rectangulaires"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Rouge délavé Rectangulaires"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Ecaille de tortue sombres Rectangulaires"
+        }
+      },
+      "40": {
+        "0": {
+          "GXT": "",
+          "Localized": "Noir Ergonomiques"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Ergonomiques"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Ergonomiques"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Ecaille de tortue Ergonomiques"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Vert Ergonomiques"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Écaille de tortue Casuals"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Turquoise Ergonomiques"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Rouge Ergonomiques"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Or & Noir Ergonomiques"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bleu Ergonomiques"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Rose Ergonomiques"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Tigre Ergonomiques"
+        }
+      },
+      "41": {
+        "0": {
+          "GXT": "",
+          "Localized": "Ronde Noir Retro"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Ronde Argent Rétro"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Ronde Or Rétro"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Ronde Rose Rétro"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Ronde Noir & Rose Rétro"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Ronde Noir & Marron Rétro"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Rondes Noir & Bleu Foncé Rétro"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Ronde Écaillé Rétro"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Ronde Or & écaille de tortue Rétro"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Ronde Noir & écaille de tortue Rétro"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Ronde Écaillé"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Ronde Or & Noir Rétro"
+        }
+      }
+    },
+    "Lunette de fête": {
+      "22": {
+        "0": {
+          "GXT": "",
+          "Localized": "Cadre étoilé"
+        }
+      },
+      "23": {
+        "0": {
+          "GXT": "",
+          "Localized": "Étoilé"
+        }
+      },
+      "26": {
+        "0": {
+          "GXT": "",
+          "Localized": "Marron Outlaw"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Noir Outlaw"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Mono Outlaw"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Ox Blood Outlaw"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bleu Outlaw"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Beige Outlaw"
+        }
+      },
+      "27": {
+        "0": {
+          "GXT": "",
+          "Localized": "Tropique Urban Ski"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Jaune Urban Ski"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Vert Urban Ski"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Crépuscule Urban Ski"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Gris Urban Ski"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Rose Urban Ski"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Orange Urban Ski"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Marron Urban Ski"
+        }
+      },
+      "32": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bleu & Rose Brilliant"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Rouge Brilliant"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Orange Brilliant"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Jaune Brilliant"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Vert Brilliant"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bleu Brilliant"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Rose Brilliant"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bleu & Magenta Brilliant"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Violet & Jaune Brilliant"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bleu & Jaune Brilliant"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Rose & Jaune Brilliant"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Rouge & Jaune Brilliant"
+        }
+      }
+    }
+  }
+]

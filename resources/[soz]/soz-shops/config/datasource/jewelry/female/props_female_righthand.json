@@ -1,0 +1,158 @@
+[
+  {
+    "Bracelet": {
+      "0": {
+        "0": {
+          "GXT": "",
+          "Localized": "Manchette serpent en Or"
+        }
+      },
+      "1": {
+        "0": {
+          "GXT": "",
+          "Localized": "Manchette diamant en Or"
+        }
+      },
+      "2": {
+        "0": {
+          "GXT": "",
+          "Localized": "Manchette Plain en Or"
+        }
+      },
+      "3": {
+        "0": {
+          "GXT": "",
+          "Localized": "Manchette Le Chien en Or"
+        }
+      },
+      "4": {
+        "0": {
+          "GXT": "",
+          "Localized": "Manchette à détails en Or"
+        }
+      },
+      "5": {
+        "0": {
+          "GXT": "",
+          "Localized": "Manchette Tourbillon en Or"
+        }
+      },
+      "6": {
+        "0": {
+          "GXT": "",
+          "Localized": "Manchette Texturée en Or"
+        }
+      },
+      "7": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet légère"
+        }
+      },
+      "8": {
+        "0": {
+          "GXT": "",
+          "Localized": "Grosse chaîne de poignet"
+        }
+      },
+      "9": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet carrée"
+        }
+      },
+      "10": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet crâne"
+        }
+      },
+      "11": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet torsadé"
+        }
+      },
+      "12": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de Moto et cuire"
+        }
+      },
+      "13": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet à pointes"
+        }
+      },
+      "14": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet Noire"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet Chocolat"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet Beige"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bracelet cuire de boeuf"
+        }
+      },
+      "15": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Bleu"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Rouge"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Rose"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Jaune"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Orange"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Vert"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Rouge & Bleu"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Orange & Jaune"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Vert & Rose"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Rainbow"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Levé de soleil"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Bracelet Néon Tropique"
+        }
+      }
+    }
+  }
+]

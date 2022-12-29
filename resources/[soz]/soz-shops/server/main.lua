@@ -98,27 +98,27 @@ local function checkStock(products, productID, amount)
     return false, nil
 end
 
-local function getItemPrice(product, productID, Player)
-    if product == "tattoo" then
-        for _, tattoo in pairs(Config.Products[product]) do
+local function getItemPrice(brand, product, Player)
+    if brand == "tattoo" then
+        for _, tattoo in pairs(Config.Products[brand]) do
             local overlayField = Player.PlayerData.charinfo.gender == 0 and "HashNameMale" or "HashNameFemale"
 
-            if tattoo["Collection"] == productID.collection and tattoo[overlayField] == productID.overlay then
+            if tattoo["Collection"] == product.collection and tattoo[overlayField] == product.overlay then
                 return tattoo["Price"]
             end
         end
-    elseif product == "barber" then
-        return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.categoryIndex].price
-    elseif product == "jewelry" then
-        return Config.Products[product][Player.PlayerData.skin.Model.Hash][productID.categoryIndex].price
-    elseif product == "ponsonbys" or product == "suburban" or product == "binco" then
-        local _, item = checkStock(ShopsContent[Player.PlayerData.skin.Model.Hash][Shops[product]], productID.item, 1)
+    elseif brand == "barber" then
+        return Config.Products[brand][Player.PlayerData.skin.Model.Hash][product.categoryIndex].price
+    elseif brand == "jewelry" then
+        return Config.Products[brand][Player.PlayerData.skin.Model.Hash][product.categoryIndex].price
+    elseif brand == "ponsonbys" or brand == "suburban" or brand == "binco" then
+        local _, item = checkStock(ShopsContent[Player.PlayerData.skin.Model.Hash][Shops[brand]], product.item, 1)
         if item then
             return item.price
         end
         return 1000000000 -- Safe guard, if no clothe was found
     else
-        return Config.Products[product][productID].price
+        return Config.Products[brand][product].price
     end
 end
 
