@@ -104,7 +104,7 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Tops]: { Drawable: 146, Texture: 6, Palette: 0 },
+                [Component.Tops]: { Drawable: 47, Texture: 0, Palette: 0 },
             },
             Props: {},
         },
