@@ -51,6 +51,21 @@ GarbageConfig.Cloakroom = {
             },
             Props = {},
         },
+        ["Référent"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 18, Texture = 0, Palette = 0},
+                [4] = {Drawable = 86, Texture = 0, Palette = 0},
+                [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                [6] = {Drawable = 82, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 0, Texture = 24, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 220, Texture = 0, Palette = 0},
+            },
+            Props = {},
+        },
     },
     [GetHashKey("mp_f_freemode_01")] = {
         ["Essai"] = {
@@ -95,6 +110,21 @@ GarbageConfig.Cloakroom = {
                 [9] = {Drawable = 0, Texture = 0, Palette = 0},
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 256, Texture = 4, Palette = 0},
+            },
+            Props = {},
+        },
+        ["Référent"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 19, Texture = 0, Palette = 0},
+                [4] = {Drawable = 89, Texture = 0, Palette = 0},
+                [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                [6] = {Drawable = 25, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 0, Texture = 24, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 230, Texture = 0, Palette = 0},
             },
             Props = {},
         },
