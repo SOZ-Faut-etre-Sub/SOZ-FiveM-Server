@@ -5,6 +5,8 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
 import {
+    Checkpoint,
+    Checkpoints,
     DrivingSchoolConfig,
     DrivingSchoolLicense,
     DrivingSchoolLicenseType,
@@ -13,7 +15,7 @@ import {
 import { EntityType } from '../../shared/entity';
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
-import { Err, isErr, isOk, Result } from '../../shared/result';
+import { Err, isErr, isOk, Ok, Result } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
 import { PedFactory } from '../factory/ped.factory';
 import { Notifier } from '../notifier';
@@ -28,9 +30,15 @@ export class ExamProvider {
     private license: DrivingSchoolLicense;
     private spawnPoint: Vector4;
 
-    private context: PenaltyContext;
     private isExamRunning = false;
     private isPenaltyLoopRunning = false;
+
+    private checkpoints: Checkpoint[];
+    private currentCp: Checkpoint;
+    private cpEntity: number;
+    private cpBlip: number;
+
+    private context: PenaltyContext;
     private penalties: Penalty[];
 
     private undrivableVehicles: number[] = [];
@@ -95,8 +103,7 @@ export class ExamProvider {
         this.instructorEntity = instructor;
         this.vehicleEntity = vehicle;
 
-        // TODO: Start exam loop
-        this.startExam(spawnPoint);
+        this.startExam();
 
         await this.screenFadeIn();
     }
@@ -113,14 +120,40 @@ export class ExamProvider {
     private async examLoop() {
         if (!this.isExamRunning) return;
 
+        const vehCoords = GetEntityCoords(this.vehicleEntity, true) as Vector3;
+
         if (!this.isPenaltyLoopRunning) {
-            const vehCoords = GetEntityCoords(this.vehicleEntity, true) as Vector3;
             if (getDistance(this.spawnPoint, vehCoords) > 2.0) {
                 this.startPenaltyLoop();
             }
         }
 
-        // TODO: Checkpoints
+        DisplayRadar(true);
+
+        const dist = getDistance(this.currentCp.coords, vehCoords);
+
+        if (dist > this.license.marker.size) return;
+
+        DeleteCheckpoint(this.cpEntity);
+
+        const msg = this.currentCp.message;
+        if (typeof msg === 'string' && msg.length > 0) {
+            this.notifier.notify(msg, 'info');
+        }
+
+        this.currentCp = this.checkpoints.shift();
+        const nextCp = this.checkpoints.length > 0 ? this.checkpoints[0] : null;
+
+        this.notifier.notify(
+            `Checkpoint ${this.license.checkpointCount - this.checkpoints.length}/${this.license.checkpointCount}`,
+            'info'
+        );
+
+        if (this.currentCp) {
+            this.cpEntity = this.displayCheckpoint(this.currentCp, nextCp);
+        } else {
+            this.terminateExam(Ok(true));
+        }
     }
 
     @Tick(200)
@@ -149,8 +182,19 @@ export class ExamProvider {
         }
     }
 
-    private startExam(spawnPoint: Vector4) {
+    private startExam() {
         this.isExamRunning = true;
+
+        this.displayInstructorStartSpeech(this.license.licenseType);
+
+        this.checkpoints = this.getRandomCheckpoints(this.license.licenseType, this.license.checkpointCount);
+
+        this.checkpoints.push(this.license.finalCheckpoint);
+
+        this.currentCp = this.checkpoints.shift();
+        const nextCp = this.checkpoints.length > 0 ? this.checkpoints[0] : null;
+
+        this.cpEntity = this.displayCheckpoint(this.currentCp, nextCp);
     }
 
     private startPenaltyLoop() {
@@ -169,16 +213,15 @@ export class ExamProvider {
             this.deleteEntitiesAndTeleportBack();
         }
 
-        this.cleanupPenaltySystem();
-
-        // TODO:
-        // CLEAR CHECKPOINT
-        // HIDE GPS
+        DisplayRadar(false);
 
         if (isOk(result)) {
-            TriggerServerEvent('soz-driving-license:server:update_license', this.license.licenseType);
+            // TODO: Update user driving licenses
             this.notifier.notify(`Félicitations ! Vous venez d'obtenir votre ${this.license.label.toLowerCase()}`);
         }
+
+        this.cleanupPenaltySystem();
+        this.cleanupExamSystem();
     }
 
     private setupPenaltySystem() {
@@ -200,6 +243,15 @@ export class ExamProvider {
             });
     }
 
+    private cleanupExamSystem() {
+        delete this.license;
+        delete this.spawnPoint;
+        delete this.checkpoints;
+        delete this.currentCp;
+        delete this.cpEntity;
+        delete this.cpBlip;
+    }
+
     private cleanupPenaltySystem() {
         delete this.context;
         delete this.penalties;
@@ -208,7 +260,9 @@ export class ExamProvider {
     private deleteVehicleAndPed() {
         DeletePed(this.instructorEntity);
         DeleteVehicle(this.vehicleEntity);
-        // TODO: REMOVE KEYS ?
+
+        delete this.instructorEntity;
+        delete this.vehicleEntity;
     }
 
     private async deleteEntitiesAndTeleportBack() {
@@ -219,6 +273,48 @@ export class ExamProvider {
         this.teleportPlayer(DrivingSchoolConfig.playerDefaultLocation);
 
         await this.screenFadeIn();
+    }
+
+    private getRandomCheckpoints(licenseType: DrivingSchoolLicenseType, count: number) {
+        if (count > Checkpoints.length) count = Checkpoints.length;
+
+        const eligibleCheckpoints = [...Checkpoints].filter(c => c.licenses.includes(licenseType));
+
+        return [...Array(count).keys()].map(() => {
+            const idx = Math.floor(Math.random() * eligibleCheckpoints.length);
+            return eligibleCheckpoints.splice(idx, 1)[0];
+        });
+    }
+
+    private displayCheckpoint(current: Checkpoint, next: Checkpoint) {
+        const m = this.license.marker;
+
+        const type = next ? m.type : m.typeFinal;
+
+        const [x1, y1, z1] = current.coords;
+
+        const [r, g, b, a] = Object.values(m.color);
+
+        const cpId = CreateCheckpoint(type, x1, y1, z1, 0.0, 0.0, 0.0, m.size, r, g, b, a, 0);
+
+        SetCheckpointCylinderHeight(cpId, m.size, m.size, m.size);
+
+        if (this.cpBlip) RemoveBlip(this.cpBlip);
+        this.cpBlip = AddBlipForCoord(x1, y1, z1);
+        const blipColor = DrivingSchoolConfig.blip.color;
+        SetBlipColour(this.cpBlip, blipColor);
+        SetBlipRouteColour(this.cpBlip, blipColor);
+        SetBlipRoute(this.cpBlip, true);
+
+        return cpId;
+    }
+
+    private displayInstructorStartSpeech(licenseType: DrivingSchoolLicenseType) {
+        DrivingSchoolConfig.startSpeeches
+            .filter(s => Array.isArray(s.exclude) && !s.exclude.includes(licenseType))
+            .forEach(s => {
+                this.notifier.notify(s.message, 'info');
+            });
     }
 
     private async screenFadeOut() {
