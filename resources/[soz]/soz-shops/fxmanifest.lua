@@ -6,7 +6,7 @@ shared_scripts {
     "config/*.lua",
     "config/datasource/*.json",
     "config/datasource/jewelry/female/*.json",
-    "config/datasource/jewelry/male/*.json"
+    "config/datasource/jewelry/male/*.json",
 }
 
 client_scripts {
