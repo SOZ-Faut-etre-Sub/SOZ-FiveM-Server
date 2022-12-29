@@ -8,209 +8,178 @@ import { PlayerWardrobe } from '../../player/player.wardrobe';
 import { ProgressService } from '../../progress.service';
 import { JobGradeRepository } from '../../resources/job.grade.repository';
 
-const BENNYS_CLOAKROOM: Record<string, WardrobeConfig> = {
-    ['Patron']: {
-        [GetHashKey('mp_m_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 98, Texture: 17, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 351, Texture: 9, Palette: 0 },
-                },
-                Props: {},
+const BENNYS_CLOAKROOM: WardrobeConfig = {
+    [GetHashKey('mp_m_freemode_01')]: {
+        ['Patron']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 17, Palette: 0 },
+                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 351, Texture: 9, Palette: 0 },
             },
+            Props: {},
         },
-        [GetHashKey('mp_f_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 101, Texture: 17, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 377, Texture: 5, Palette: 0 },
-                },
-                Props: {},
+        ["Chef d'atelier"]: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 146, Texture: 2, Palette: 0 },
             },
+            Props: {},
         },
-    },
-    ["Chef d'atelier"]: {
-        [GetHashKey('mp_m_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 146, Texture: 2, Palette: 0 },
-                },
-                Props: {},
+        ['Mécano confirmé']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 64, Texture: 13, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 146, Texture: 3, Palette: 0 },
             },
+            Props: {},
         },
-        [GetHashKey('mp_f_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 338, Texture: 7, Palette: 0 },
-                },
-                Props: {},
+        ['Mécano']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 0, Texture: 2, Palette: 0 },
             },
+            Props: {},
         },
-    },
-    ['Mécano confirmé']: {
-        [GetHashKey('mp_m_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 64, Texture: 13, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 146, Texture: 3, Palette: 0 },
-                },
-                Props: {},
+        ['Mécano novice']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 64, Texture: 13, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 208, Texture: 18, Palette: 0 },
             },
+            Props: {},
         },
-        [GetHashKey('mp_f_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 67, Texture: 13, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 141, Texture: 5, Palette: 0 },
-                },
-                Props: {},
+        ['Apprenti']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
+                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 66, Texture: 1, Palette: 0 },
             },
+            Props: {},
         },
     },
-    ['Mécano']: {
-        [GetHashKey('mp_m_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 0, Texture: 2, Palette: 0 },
-                },
-                Props: {},
+
+    [GetHashKey('mp_f_freemode_01')]: {
+        ['Patron']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 17, Palette: 0 },
+                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 377, Texture: 5, Palette: 0 },
             },
+            Props: {},
         },
-        [GetHashKey('mp_f_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 331, Texture: 1, Palette: 0 },
-                },
-                Props: {},
+        ["Chef d'atelier"]: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 338, Texture: 7, Palette: 0 },
             },
+            Props: {},
         },
-    },
-    ['Mécano novice']: {
-        [GetHashKey('mp_m_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 64, Texture: 13, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 208, Texture: 18, Palette: 0 },
-                },
-                Props: {},
+        ['Mécano confirmé']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 67, Texture: 13, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 141, Texture: 5, Palette: 0 },
             },
+            Props: {},
         },
-        [GetHashKey('mp_f_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 67, Texture: 13, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 212, Texture: 18, Palette: 0 },
-                },
-                Props: {},
+        ['Mécano']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 331, Texture: 1, Palette: 0 },
             },
+            Props: {},
         },
-    },
-    ['Apprenti']: {
-        [GetHashKey('mp_m_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 66, Texture: 1, Palette: 0 },
-                },
-                Props: {},
+        ['Mécano novice']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 67, Texture: 13, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 212, Texture: 18, Palette: 0 },
             },
+            Props: {},
         },
-        [GetHashKey('mp_f_freemode_01')]: {
-            ['Tenue de service']: {
-                Components: {
-                    [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
-                    [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 60, Texture: 1, Palette: 0 },
-                },
-                Props: {},
+        ['Apprenti']: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
+                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 60, Texture: 1, Palette: 0 },
             },
+            Props: {},
         },
     },
 };
@@ -231,26 +200,7 @@ export class BennysCloakroomProvider {
 
     @OnEvent(ClientEvent.BENNYS_OPEN_CLOAKROOM)
     public async openCloakroom(storageIdToSave) {
-        const player = this.playerService.getPlayer();
-
-        if (!player) {
-            return;
-        }
-
-        const grade = typeof player.job.grade === 'number' ? player.job.grade : parseInt(player.job.grade, 10);
-        const jobGrade = await this.jobGradeRepository.getJobGrade(player.job.id, grade);
-
-        if (!jobGrade) {
-            return;
-        }
-
-        const wardrobeConfig = BENNYS_CLOAKROOM[jobGrade.name];
-
-        if (!wardrobeConfig) {
-            return;
-        }
-
-        const outfitSelection = await this.playerWardrobe.selectOutfit(wardrobeConfig, 'Tenue civile');
+        const outfitSelection = await this.playerWardrobe.selectOutfit(BENNYS_CLOAKROOM, 'Tenue civile');
 
         if (outfitSelection.canceled) {
             return;
