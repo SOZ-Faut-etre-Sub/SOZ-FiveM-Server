@@ -15,6 +15,7 @@ import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { NuiMenu } from '../../nui/nui.menu';
+import { PhoneService } from '../../phone/phone.service';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
@@ -46,6 +47,9 @@ export class BennysVehicleProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
@@ -403,6 +407,15 @@ export class BennysVehicleProvider {
     }
 
     public async analyzeVehicle(vehicle: number) {
+        if (this.phoneService.isPhoneVisible()) {
+            this.notifier.notify(
+                'Vous ne pouvez pas faire un diagnostic lorsque vous utilisez votre téléphone',
+                'error'
+            );
+
+            return;
+        }
+
         const { completed } = await this.progressService.progress(
             'vehicle_analyze',
             'Vous analysez le véhicule.',
