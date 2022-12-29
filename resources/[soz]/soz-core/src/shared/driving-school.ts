@@ -5,7 +5,7 @@ import { VehicleSeatbeltProvider } from '../client/vehicle/vehicle.seatbelt.prov
 import { PlayerLicenceType } from './player';
 import { Vector3, Vector4 } from './polyzone/vector';
 
-interface Checkpoint {
+export interface Checkpoint {
     coords: Vector3;
     message?: string;
     licenses?: DrivingSchoolLicenseType[];
@@ -59,7 +59,7 @@ export interface PenaltyContext {
 const markerColor: MarkerColor = { r: 12, g: 123, b: 86, a: 150 };
 
 const markers: Record<string, Marker> = {
-    landVehicle: { type: 0, typeFinal: 4, size: 3.0, color: markerColor },
+    landVehicle: { type: 47, typeFinal: 4, size: 3.0, color: markerColor },
     airVehicle: { type: 42, typeFinal: 4, size: 10.0, color: markerColor },
 };
 
@@ -96,6 +96,15 @@ export const DrivingSchoolConfig = {
             coords: { x: -815.99, y: -1357.3, z: 5.15, w: 309.49 },
         },
     },
+    startSpeeches: [
+        {
+            message: 'Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.',
+            exclude: [DrivingSchoolLicenseType.Moto],
+        },
+        {
+            message: 'Suis ton GPS à allure modérée, et respecte les autres usagers de la route.',
+        },
+    ],
     licenses: <Record<DrivingSchoolLicenseType, DrivingSchoolLicense>>{
         [DrivingSchoolLicenseType.Car]: {
             licenseType: DrivingSchoolLicenseType.Car,
@@ -202,7 +211,7 @@ export const DrivingSchoolConfig = {
     },
 };
 
-const checkpoints: Checkpoint[] = [
+export const Checkpoints: Checkpoint[] = [
     {
         coords: [-606.1, -957.79, 20.39],
         message: 'Ici, ce sont les bureaux de ~p~Twitch News~s~. Ils ne racontent que des salades…',
