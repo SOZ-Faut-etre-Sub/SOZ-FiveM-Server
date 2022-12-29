@@ -5,13 +5,13 @@ import { VehicleSeatbeltProvider } from '../client/vehicle/vehicle.seatbelt.prov
 import { PlayerLicenceType } from './player';
 import { Vector3, Vector4 } from './polyzone/vector';
 
-export interface Checkpoint {
+export type Checkpoint = {
     coords: Vector3;
     message?: string;
     licenses?: DrivingSchoolLicenseType[];
-}
+};
 
-export interface DrivingSchoolLicense {
+export type DrivingSchoolLicense = {
     licenseType: DrivingSchoolLicenseType;
     vehicle: {
         model: string;
@@ -24,7 +24,7 @@ export interface DrivingSchoolLicense {
     marker: Marker;
     checkpointCount: number;
     finalCheckpoint: Checkpoint;
-}
+};
 
 export enum DrivingSchoolLicenseType {
     Car = PlayerLicenceType.Car,
@@ -33,28 +33,28 @@ export enum DrivingSchoolLicenseType {
     Heli = PlayerLicenceType.Heli,
 }
 
-interface Marker {
+type Marker = {
     type: number;
     typeFinal: number;
     size: number;
     color: MarkerColor;
-}
+};
 
-interface MarkerColor {
+type MarkerColor = {
     r: number;
     g: number;
     b: number;
     a: number;
-}
+};
 
-export interface PenaltyContext {
+export type PenaltyContext = {
     phoneService: PhoneService;
     playerService: PlayerService;
     notifier: Notifier;
     seatbeltProvider: VehicleSeatbeltProvider;
     undrivableVehicles: number[];
     vehicle: number;
-}
+};
 
 const markerColor: MarkerColor = { r: 12, g: 123, b: 86, a: 150 };
 
