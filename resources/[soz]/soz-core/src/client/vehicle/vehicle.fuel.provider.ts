@@ -369,7 +369,9 @@ export class VehicleFuelProvider {
             return;
         }
 
-        if (station.stock <= 0) {
+        const refreshStation = await emitRpc<FuelStation>(RpcEvent.OIL_GET_STATION, station.id);
+
+        if (refreshStation.stock <= 0) {
             this.notifier.notify("La station ne contient pas assez d'essence.", 'error');
             await this.disableStationPistol();
 
