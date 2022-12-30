@@ -211,6 +211,9 @@ export class ExamProvider {
             this.deleteEntitiesAndTeleportBack();
         }
 
+        if (this.cpEntity) DeleteCheckpoint(this.cpEntity);
+        if (this.cpBlip) RemoveBlip(this.cpBlip);
+
         DisplayRadar(false);
 
         if (isOk(result)) {
