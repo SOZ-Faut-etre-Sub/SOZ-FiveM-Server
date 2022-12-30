@@ -141,16 +141,16 @@ export class ExamProvider {
             this.notifier.notify(msg, 'info');
         }
 
-        this.currentCp = this.checkpoints.shift();
-        const nextCp = this.checkpoints.length > 0 ? this.checkpoints[0] : null;
-
         this.notifier.notify(
-            `Checkpoint ${this.license.checkpointCount - this.checkpoints.length}/${this.license.checkpointCount}`,
+            `Checkpoint ${this.license.checkpointCount + 1 - this.checkpoints.length}/${
+                this.license.checkpointCount + 1
+            }`,
             'info'
         );
 
+        this.currentCp = this.checkpoints.shift();
         if (this.currentCp) {
-            this.cpEntity = this.displayCheckpoint(this.currentCp, nextCp);
+            this.cpEntity = this.displayCheckpoint(this.currentCp);
         } else {
             this.terminateExam(Ok(true));
         }
@@ -183,8 +183,6 @@ export class ExamProvider {
     }
 
     private startExam() {
-        this.isExamRunning = true;
-
         this.displayInstructorStartSpeech(this.license.licenseType);
 
         this.checkpoints = this.getRandomCheckpoints(this.license.licenseType, this.license.checkpointCount);
@@ -192,9 +190,9 @@ export class ExamProvider {
         this.checkpoints.push(this.license.finalCheckpoint);
 
         this.currentCp = this.checkpoints.shift();
-        const nextCp = this.checkpoints.length > 0 ? this.checkpoints[0] : null;
+        this.cpEntity = this.displayCheckpoint(this.currentCp);
 
-        this.cpEntity = this.displayCheckpoint(this.currentCp, nextCp);
+        this.isExamRunning = true;
     }
 
     private startPenaltyLoop() {
@@ -216,8 +214,11 @@ export class ExamProvider {
         DisplayRadar(false);
 
         if (isOk(result)) {
-            // TODO: Update user driving licenses
-            this.notifier.notify(`Félicitations ! Vous venez d'obtenir votre ${this.license.label.toLowerCase()}`);
+            TriggerServerEvent(
+                ServerEvent.DRIVING_SCHOOL_UPDATE_LICENSE,
+                this.license.licenseType,
+                this.license.label.toLowerCase()
+            );
         }
 
         this.cleanupPenaltySystem();
@@ -286,10 +287,10 @@ export class ExamProvider {
         });
     }
 
-    private displayCheckpoint(current: Checkpoint, next: Checkpoint) {
+    private displayCheckpoint(current: Checkpoint) {
         const m = this.license.marker;
 
-        const type = next ? m.type : m.typeFinal;
+        const type = this.checkpoints.length > 0 ? m.type : m.typeFinal;
 
         const [x1, y1, z1] = current.coords;
 
