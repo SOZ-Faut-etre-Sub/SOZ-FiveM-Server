@@ -1,0 +1,234 @@
+[
+  {
+    "Oreilles": {
+      "0": {
+        "0": {
+          "GXT": "",
+          "Localized": "Kit main libre Gris"
+        }
+      },
+      "1": {
+        "0": {
+          "GXT": "",
+          "Localized": "Kit main libre Rouge"
+        }
+      },
+      "2": {
+        "0": {
+          "GXT": "",
+          "Localized": "Kit main libre LCD"
+        }
+      },
+      "3": {
+        "0": {
+          "GXT": "",
+          "Localized": "Pendule en Platine"
+        }
+      },
+      "4": {
+        "0": {
+          "GXT": "",
+          "Localized": "Pendule en Or"
+        }
+      },
+      "5": {
+        "0": {
+          "GXT": "",
+          "Localized": "Goutte d'eau Or"
+        }
+      },
+      "6": {
+        "0": {
+          "GXT": "",
+          "Localized": "Goutte d'eau Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Goutte d'eau Platine"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Goutte d'eau Or Noir"
+        }
+      },
+      "7": {
+        "0": {
+          "GXT": "",
+          "Localized": "Cascades de Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Cascades de Platine"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Cascades de Or Noir"
+        }
+      },
+      "8": {
+        "0": {
+          "GXT": "",
+          "Localized": "Totem Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Totem Or noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Totem Platine"
+        }
+      },
+      "9": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaînes de diamants en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chaînes de diamants en Platine"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chaînes de diamants en Or Noir"
+        }
+      },
+      "10": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaînes d'émeraude en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chaînes d'émeraude en Platine"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chaînes d'émeraude en Or Noir"
+        }
+      },
+      "11": {
+        "0": {
+          "GXT": "",
+          "Localized": "Goutte Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Goutte platine"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Goutte Or noir"
+        }
+      },
+      "12": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clous d'oreilles diamants en Platine"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clous d'oreilles diamants en Or"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Clous d'oreilles diamants en Or Noir"
+        }
+      },
+      "13": {
+        "0": {
+          "GXT": "",
+          "Localized": "Cerceaux d'Assaut"
+        }
+      },
+      "14": {
+        "0": {
+          "GXT": "",
+          "Localized": "Cerceaux en Os"
+        }
+      },
+      "15": {
+        "0": {
+          "GXT": "",
+          "Localized": "Cerceaux Classic"
+        }
+      },
+      "16": {
+        "0": {
+          "GXT": "",
+          "Localized": "Cerceaux Fuuuu..."
+        }
+      },
+      "17": {
+        "0": {
+          "GXT": "",
+          "Localized": "Cerceaux GFYS"
+        }
+      },
+      "18": {
+        "0": {
+          "GXT": "",
+          "Localized": "Micros D'Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Micros D'Argent"
+        }
+      },
+      "19": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Trèfle"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Carreaux"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Coeur"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Pique"
+        }
+      },
+      "20": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Dé Blanc"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Dé Rouge"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Dé Beige"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Dé Gris"
+        }
+      },
+      "21": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Jeton Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Jeton Jaune"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Jeton Rouge"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Jeton Rose"
+        }
+      }
+    }
+  }
+]

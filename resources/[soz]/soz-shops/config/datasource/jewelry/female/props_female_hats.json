@@ -1,0 +1,3616 @@
+[
+  {
+    "Bonnets": {
+      "1": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet d ane"
+        }
+      },
+      "5": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet Rearwall Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bonnet Crevis Cendre"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bonnet Crevis Rose"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bonnet LS Panic"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bonnet SA"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bonnet Hawaiian Snow Bleu"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bonnet Rearwall Lime"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bonnet Hawaiian Snow"
+        }
+      },
+      "12": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet cotonneux Noir"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bonnet cotonneux Hawaiian Snow"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bonnet cotonneux Yeti"
+        }
+      },
+      "29": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet Violet Large"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bonnet Blanc Large"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bonnet Fuchsia Large"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bonnet Rouge Large"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bonnet Gris Large"
+        }
+      },
+      "33": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet patriotique"
+        }
+      },
+      "119": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Charbon"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Cendre"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Blanc"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Bleu"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Light Bleu"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Beige"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Light Woodland"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Gris Woodland"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Aqua Camo"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Tigre"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Tricolore"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Bleu"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Rasta Trio"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Marron Striped"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Stars & Stripes"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Rasta Stripes"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Noir & Jaune"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Bleu & Jaune"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Bonnet Bas Vert Houndstooth"
+        }
+      }
+    },
+    "Western": {
+      "2": {
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau Cowgirl Noir Rose"
+        }
+      },
+      "20": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau Cowgirl Beige"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau Cowgirl à deux tons"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau Cowgirl Farshtunken Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau Cowgirl MyMy Rose"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau Cowgirl Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chapeau Cowgirl Logger"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Chapeau Cowgirl Rayée"
+        }
+      }
+    },
+    "Bob": {
+      "3": {
+        "7": {
+          "GXT": "",
+          "Localized": "Bob à carreaux Gris"
+        }
+      },
+      "21": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bob Rose à motif"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bob Crevis Bleu"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bob Beige"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bob Rouge"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bob Hawaiian Snow Jaune"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bob Hawaiian Snow Bleu"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bob Hawaiian Snow Violet"
+        }
+      },
+      "93": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Crème"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Rouge"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Bleu"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Cyan"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Blanc"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Gris"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Bleu Foncé"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Noir Rouge"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Gris foncé"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bob Le Pêcheur Vert Foret"
+        }
+      },
+      "103": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bob militaire Bleu Digital"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bob militaire Marron Digital"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bob militaire Vert Digital"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bob militaire Gris Digital"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bob militaire Peach Digital"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bob militaire Fall Boonie Down"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bob militaire Dark Woodland"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bob militaire Crosshatch"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bob militaire Moss Digital"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bob militaire Gris Woodland"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Bob militaire Aqua Camo"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Bob militaire Splinter"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Bob militaire Contrast Camo"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Bob militaire Cobble"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Bob militaire Peach Camo"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Bob militaire Brushstroke"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Bob militaire Flecktarn"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Bob militaire Light Woodland"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Bob militaire Moss"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Bob militaire Sand"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Bob militaire Noir"
+        }
+      },
+      "104": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Bleu Digital"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Marron Digital"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Vert Digital"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Gris Digital"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Peach Digital"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Fall"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Dark Woodland"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Crosshatch"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Moss Digital"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Gris Woodland"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Aqua Camo"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Splinter"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Contrast Camo"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Cobble"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Peach Camo"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Brushstroke"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Flecktarn"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Light Woodland"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Moss"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Sand"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Bob mil. relevé Noir"
+        }
+      },
+      "131": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bob Taco Canvas"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bob Burger Shot Canvas"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bob Cluckin' Bell Canvas"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bob Hotdogs Canvas"
+        }
+      }
+    },
+    "Casquettes": {
+      "4": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Large Noir LS"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Large Fruntalot"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Large Broker"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Large SA"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Large SA Boars"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Large Stank"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Large Rouge Mist XI"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Large LS Corkers"
+        }
+      },
+      "9": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette iFruit"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette 247"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Fred's"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette US Post LS"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Swallow"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette CNT"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Peachy Chics Serpend"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Peachy Chics Leopard"
+        }
+      },
+      "10": {
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Ocre Patterned"
+        }
+      },
+      "43": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Naughty"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Noire Ho Ho Ho"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Snowflake bleue"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Nice rouge"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Verte Ho Ho Ho"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Snowflake"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Gingerbread"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Bah Humbug"
+        }
+      },
+      "53": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Familles"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Ballas"
+        }
+      },
+      "55": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Broker Rouge"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Broker Charbon"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Trickster Crème"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Trickster Bleu marine"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Broker Marron"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Harsh Souls Marron"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Sweatbox Orange"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Sweatbox Bleu"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Yeti Rayée"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Trickster Link"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Yeti Diamond"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Cerise"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette Fruntalot Marron clair"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Sweatbox Verte"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette Yeti Jungle"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette Trickster Forest"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette Broker Café"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette Dual Trey Baker"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette Sweatbox Gris "
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette Sweatbox Crème "
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette Yeti Rouge"
+        }
+      },
+      "56": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Magnetics Charbon"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Magnetics Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Low Santos Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Boars Noir"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Benny's Noir"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Westside Noir"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Eastside Noir"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Strawberry Noir"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette SA Noir"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Davis Noir"
+        }
+      },
+      "58": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Beige"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Khaki"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Noir"
+        }
+      },
+      "60": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Verte"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Orange"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Violette"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Rose"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Bleu"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Gris Foncé"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Gris"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Blanc"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Millitaire Noir"
+        }
+      },
+      "63": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette neutre Vert"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette neutre Orange"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette neutre Violet"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette neutre Rose"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette neutre Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette neutre Bleu"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette neutre Gris Foncé"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette neutre Gris"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette neutre Blanc"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette neutre Noir"
+        }
+      },
+      "66": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque ouvert Shatter Pattern"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque ouvert Stars"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque ouvert SquaRouge"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque ouvert Cramoisi"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque ouvert Skull"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque ouvert Ace of Spades"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque ouvert Flamejob"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque ouvert Blanc"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casque ouvert Downhill"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casque ouvert Slalom"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casque ouvert SA Assault"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casque ouvert Vibe"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casque ouvert Burst"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casque ouvert Tri"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casque ouvert Sprunk"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casque ouvert Skeleton"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casque ouvert Death"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casque ouvert Cobble"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casque ouvert Cubist"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casque ouvert Digital"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casque ouvert Snakeskin"
+        }
+      },
+      "75": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Atomic"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Auto Exotic"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Chepalle"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Cunning Stunts"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Flash"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Fukaru"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Globe Oil"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Grotti"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Imponte Racing"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Lampadati Racing"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette LTD"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Nagasaki Racing"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette Nagasaki Moto"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Patriot"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette Rebel Radio"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette Rougewood"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette Scooter Brothers"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette The Mount"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette Total Ride"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette Vapid"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette Xero Gas"
+        }
+      },
+      "76": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Atomic a l'envers"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Auto Exotic a l'envers"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Chepalle a l'envers"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Cunning Stunts a l'envers"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Flash a l'envers"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Fukaru a l'envers"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Globe Oil a l'envers"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Grotti a l'envers"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Imponte Racing a l'envers"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Lampadati Racing a l'envers"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette LTD a l'envers"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Nagasaki Racing a l'envers"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette Nagasaki Moto a l'envers"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Patriot a l'envers"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette Rebel Radio a l'envers"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette Rougewood a l'envers"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette Scooter Brothers a l'envers"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette The Mount a l'envers"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette Total Ride a l'envers"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette Vapid a l'envers"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette Xero Gas a l'envers"
+        }
+      },
+      "95": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Noir Bigness"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Bigness"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Orange Camo Sand"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Violet Güffy"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Off-Blanc Bigness"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Bold Abstract Bigness"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Gris Abstract Bigness"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Pale Abstract Bigness"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Primary Squash"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Spots Squash"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Banana Squash"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Splat Squash"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette OJ Squash"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Multicolor Leaves Güffy"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Güffy"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Güffy"
+        }
+      },
+      "102": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Digital"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Marron Digital"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Vert Digital"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Gris Digital"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Peach Digital"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Fall"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Dark Woodland"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Crosshatch"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Moss Digital"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Gris Woodland"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Aqua Camo"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Splinter"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette Contrast Camo "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Cobble"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette Peach Camo"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette Brushstroke"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette Flecktarn"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette Light Woodland"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette Moss"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette Sand"
+        }
+      },
+      "106": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette militaire Bleu Digital"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette militaire Marron Digital"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette militaire Vert Digital"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette militaire Gris Digital"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette militaire Peach Digital"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette militaire Fall"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette militaire Dark Woodland"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette militaire Crosshatch"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette militaire Moss Digital"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette militaire Gris Woodland"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette militaire Aqua Camo"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette militaire Splinter"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette militaire Contrast Camo"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette militaire Cobble"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette militaire Peach Camo"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette militaire Brushstroke"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette militaire Flecktarn"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette militaire Light Woodland"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette militaire Moss"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette militaire Sand"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette militaire Noir"
+        }
+      },
+      "107": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boquette Bleu Digital"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boquette Marron Digital"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boquette Vert Digital"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boquette Gris Digital"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Boquette Peach Digital"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Boquette Fall"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Boquette Dark Woodland"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Boquette Crosshatch"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Boquette Moss Digital"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Boquette Gris Woodland"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Boquette Aqua Camo"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Boquette Splinter"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Boquette Contrast Camo"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Boquette Cobble"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Boquette Peach Camo"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Boquette Brushstroke"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Boquette Flecktarn"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Boquette Light Woodland"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Boquette Moss"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Boquette Sand"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Boquette Noir"
+        }
+      },
+      "108": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Hawk & Little"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Noir Hawk & Little"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Shrewsbury"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Noir Shrewsbury"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Vom Feuer"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Noir Vom Feuer"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Wine Coil"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Noir Coil"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Noir Ammu-Nation"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Ammu-Nation"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Warstock"
+        }
+      },
+      "109": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Hawk & Little a l'enver"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Noir Hawk & Little a l'enver"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Shrewsbury a l'enver"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Noir Shrewsbury a l'enver"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Vom Feuer a l'enver"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Noir Vom Feuer a l'enver"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Wine Coil a l'enver"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Noir Coil a l'enver"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Noir Ammu-Nation a l'enver"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Ammu-Nation a l'enver"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Warstock a l'enver"
+        }
+      },
+      "129": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Burger Shot Burgers"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Burger Shot Fries"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Burger Shot Logo"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Burger Shot Bullseye"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Jaune Cluckin' Bell"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Cluckin' Bell"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Cluckin' Bell Logos "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Noir Hotdogs"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Taco Bomb"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Violet Hotdogs"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Rose Hotdogs"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Lucky Plucker"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Lucky Plucker"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Lucky Plucker Rouge Pattern"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette Lucky Plucker Blanc Pattern"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Pisswasser"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette Noir Pisswasser"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Taco Bomb"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette Vert Taco Bomb"
+        }
+      },
+      "130": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Burger Shot Burgers"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Burger Shot Fries"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Burger Shot Logo"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Burger Shot Bullseye"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Jaune Cluckin' Bell"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Bleu Cluckin' Bell"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Cluckin' Bell Logos"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Noir Hotdogs"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Taco Bomb"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Violet Hotdogs"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Rose Hotdogs"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Blanc Lucky Plucker"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Rouge Lucky Plucker"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Lucky Plucker Rouge Pattern"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Lucky Plucker Blanc Pattern"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Blanc Pisswasser"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Noir Pisswasser"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Blanc Taco Bomb"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Vert Taco Bomb"
+        }
+      },
+      "134": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Blanc The Diamond"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Noir The Diamond"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Blanc LS Diamond"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Noir LS Diamond"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Rouge The Diamond"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Orange The Diamond"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Bleu LS Diamond"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Vert The Diamond"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Orange LS Diamond"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Violet The Diamond"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Rose LS Diamond"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Broker"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette Noir Broker"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Sarcelle Broker"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette Rouge Flying Bravo"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette Vert Flying Bravo"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette Noir SC Broker"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Sarcelle SC Broker"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette Violet SC Broker"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette Rouge SC Broker"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette Blanc SC Broker"
+        }
+      },
+      "135": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Blanc The Diamond"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Noir The Diamond"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Blanc LS Diamond"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Noir LS Diamond"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Rouge The Diamond"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Orange The Diamond"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Bleu LS Diamond"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Vert The Diamond"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Orange LS Diamond"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Violet The Diamond"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers LS Diamond"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Blanc Broker"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Noir Broker"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Bleu Sarcelle Broker"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Rouge Flying Bravo"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Vert Flying Bravo"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Noir SC Broker"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Bleu Sarcelle SC Broker"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Violet SC Broker"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Rouge SC Broker"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Blanc SC Broker"
+        }
+      },
+      "138": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Bugstars "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Prison Authority "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Yung Ancestor "
+        }
+      },
+      "139": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Bugstars "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Prison Authority "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Yung Ancestor "
+        }
+      },
+      "141": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Noir "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Gris "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Light Gris "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Rouge "
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Sarcelle"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Smiley "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Gris Digital "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Digital "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Wave "
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Stars & Stripes "
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Toothy Grin "
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Wolf "
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette Gris Camo "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Noir Skull "
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette Blood Cross "
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette Marron Skull "
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette Vert Camo "
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette Vert Neon Camo "
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette Violet Neon Camo "
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette Cobble "
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette Vert Snakeskin "
+        }
+      },
+      "142": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Noir "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Gris "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Light Gris "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Rouge "
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Bleu Sarcelle"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Smiley "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Gris Digital "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Bleu Digital "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Bleu Wave "
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Stars & Stripes "
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Toothy Grin "
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Wolf "
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Gris Camo "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Noir Skull "
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Blood Cross "
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Marron Skull "
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Vert Camo "
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Vert Neon Camo "
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Violet Neon Camo "
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Cobble "
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette a l'enver Vert Snakeskin "
+        }
+      },
+      "150": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Enus Yeti "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette 720 "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Exsorbeo 720 "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Güffy Double Logo "
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Rockstar "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Civilist Blanc "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Civilist Noir "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Civilist Orange "
+        }
+      },
+      "151": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Enus Yeti Backwards"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers 720 "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Exsorbeo 720 "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Güffy Double Logo "
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Rockstar "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Civilist Blanc "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Civilist Noir "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Civilist Orange "
+        }
+      },
+      "153": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Sprunk "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette eCola "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Broker "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Light Dinka "
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Dark Dinka "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Güffy "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Noir Güffy "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Annis"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Hellion "
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette Emperor "
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette Karin "
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette Lampadati "
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette Omnis "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette Vapid "
+        }
+      },
+      "154": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Sprunk "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers eCola "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Broker "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Light Dinka "
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Dark Dinka "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Blanc Güffy "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Noir Güffy "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Annis "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Hellion "
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Emperor "
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Karin "
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Lampadati "
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Omnis "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette à l'envers Vapid "
+        }
+      },
+      "155": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Rose "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Jaune "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Gris Curved "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Bleu Foncé"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Rouge "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Beige "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Salmon "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Orange "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Chocolate "
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Slate "
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Ice"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Cramoisi"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Vert "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Bleu "
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Olive "
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Maroon "
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Lemon "
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Hot Rose "
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Noir "
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Contrast Camo "
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette incurvée Aqua Camo "
+        }
+      },
+      "156": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Rose "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Jaune "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Gris "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Bleu Foncé"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Rouge "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Beige "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Salmon "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Orange "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Chocolate "
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Slate "
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Ice "
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Cramoisi"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Vert "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Bleu "
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Olive "
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Maroon "
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Lemon "
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Hot Rose "
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Noir "
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Contrast Camo "
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette incurvée à l'envers Aqua Camo "
+        }
+      },
+      "157": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette rigide Rose "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette rigide Jaune "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette rigide Gris "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette rigide Bleu Foncé"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette rigide Rouge "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette rigide Beige "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette rigide Salmon "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette rigide Orange "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette rigide Chocolate "
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette rigide Slate "
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette rigide Ice"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette rigide Cramoisi"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette rigide Vert "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette rigide Bleu "
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette rigide Olive "
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette rigide Maroon "
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette rigide Lemon "
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette rigide Hot Rose "
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette rigide Noir "
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette rigide Contrast Camo "
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette rigide Aqua Camo "
+        }
+      },
+      "158": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Prolaps"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Vert Prolaps"
+        }
+      },
+      "159": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Rose "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Jaune "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Gris "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Bleu Foncé"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Rouge "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Beige "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Salmon "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Orange "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Chocolate "
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Slate "
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Ice "
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Cramoisi"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Vert "
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Bleu "
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Olive "
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Maroon "
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Lemon "
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Hot Rose "
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Noir "
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Contrast Camo "
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Casquette rigide à l'envers Aqua Camo "
+        }
+      },
+      "160": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Bleu Prolaps à l'envers"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Vert Prolaps à l'envers"
+        }
+      },
+      "161": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casquette Violet Broker "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casquette Gris Broker "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casquette Noir Trickster "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casquette Jaune Trickster "
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casquette Jaune Camo Trickster "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casquette Noir VDG "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casquette Jaune VDG "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casquette Noir Pounders "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Casquette Blanc Pounders "
+        }
+      },
+      "162": {
+        "0": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Violet Broker "
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Gris Broker "
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Noir Trickster "
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Jaune Trickster "
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Jaune Camo Trickster "
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Noir VDG "
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Jaune VDG "
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Noir Pounders "
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Caquette à l'envers Blanc Pounders "
+        }
+      }
+    },
+    "Béret": {
+      "6": {
+        "0": {
+          "GXT": "",
+          "Localized": "Béret militaire Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Béret militaire Verte"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Béret militaire Leopard"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Béret militaire Ocre"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Béret militaire Jean"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Béret militaire Field Camo"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Béret militaire Desert Camo"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Béret militaire Woodland Camo"
+        }
+      },
+      "7": {
+        "0": {
+          "GXT": "",
+          "Localized": "Béret Bleu Foncé"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Béret Blanc"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Béret Gris"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Béret Marron"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Béret Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Béret Rose"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Béret Vert"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Béret Fruity"
+        }
+      },
+      "14": {
+        "0": {
+          "GXT": "",
+          "Localized": "Béret Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Béret Cherry"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Béret Violet"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Béret Blanc"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Béret Gris"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Béret Bleu Foncé"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Béret Beige"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Béret Magenta"
+        }
+      },
+      "105": {
+        "0": {
+          "GXT": "",
+          "Localized": "Béret Bleu Digital"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Béret Marron Digital"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Béret Vert Digital"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Béret Gris Digital"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Béret Peach Digital"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Béret Fall"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Béret Dark Woodland Beret"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Béret Crosshatch"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Béret Moss Digital"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Béret Gris Woodland"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Béret Aqua Camo"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Béret Splinter"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Béret Contrast Camo"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Béret Cobble"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Béret Peach Camo"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Béret Brushstroke"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Béret Flecktarn"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Béret Light Woodland"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Béret Moss"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Béret Sand"
+        },
+        "20": {
+          "GXT": "",
+          "Localized": "Béret Midnight"
+        }
+      }
+    },
+    "Luxe": {
+      "8": {
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau Porkpie Rose"
+        }
+      },
+      "11": {
+        "1": {
+          "GXT": "",
+          "Localized": "Capeline Noir"
+        }
+      },
+      "13": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau de paille Beige"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau de paille à deux tons"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau de paille Marron"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau de paille Safari"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau de paille Gris à motifs"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chapeau de paille Marron"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Chapeau de paille Gris"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Chapeau de paille Bleu Foncé"
+        }
+      },
+      "22": {
+        "0": {
+          "GXT": "",
+          "Localized": "Capeline Beige"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Capeline Crème"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Capeline Bleu Foncé"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Capeline à deux tons"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Capeline Marron"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Capeline MyMy Passion"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Capeline MyMy Wild"
+        }
+      },
+      "26": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau melon Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau melon Gris"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau melon Bleu"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau melon Gris clair"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau melon Olive"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chapeau melon Violet"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Chapeau melon Rouge"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Chapeau melon Marron"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Chapeau melon Vintage Marron"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Chapeau melon Creme"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Chapeau melon Cendre"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Chapeau melon Cendre bleue"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Chapeau melon Argent sublime"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Chapeau melon Blanc"
+        }
+      },
+      "27": {
+        "0": {
+          "GXT": "",
+          "Localized": "Haut de forme noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Haut de forme gris"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Haut de forme bleu"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Haut de forme gris clair"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Haut de forme olive"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Haut de forme violet"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Haut de forme rouge"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Haut de forme marron"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Haut de forme vintage"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Haut de forme creme"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Haut de forme cendre"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Haut de forme Bleu Foncé"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Haut de forme argent"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Haut de forme blanc"
+        }
+      },
+      "28": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau Fedora Marron"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau Fedora Crème"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau Fedora Blanc"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau Fedora Noir"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau Fedora Gris"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chapeau Fedora Rouge"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Chapeau Fedora Beige"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Chapeau Fedora Rose"
+        }
+      },
+      "54": {
+        "0": {
+          "GXT": "",
+          "Localized": "Tan Cashmere Fedora"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Light Gris Cashmere Fedora"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Marron Cashmere Fedora"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Rouge Cashmere Fedora"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Gris Cashmere Fedora"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bleu Foncé Cashmere Fedora"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Vert Cashmere Fedora"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Blanc Cashmere Fedora"
+        }
+      },
+      "61": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Vert"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Orange"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Violet"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Rose"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Rouge"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Bleu"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Gris Foncé"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Gris"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Blanc"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Chapeau Borsalino Noir"
+        }
+      },
+      "94": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Crème"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Rouge"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Bleu"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Cyan"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Blanc"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Gris"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Bleu Foncé"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Rouge"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Gris Fonce"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Chapeau bandeau Vert Foret"
+        }
+      },
+      "145": {
+        "0": {
+          "GXT": "",
+          "Localized": "Haut de Forme Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Haut de Forme Dark Gris"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Haut de Forme Dusty Violet"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Haut de Forme Light Gris"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Haut de Forme Sage Vert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Haut de Forme Dusty Rose"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Haut de Forme Rouge"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Haut de Forme Terracotta"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Haut de Forme Crème"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Haut de Forme Ivory"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Haut de Forme Cendre"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Haut de Forme Dark Violet"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Haut de Forme Eggshell"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Haut de Forme Blanc"
+        }
+      }
+    },
+    "Costume": {
+      "23": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet Noel Rouge"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bonnet Noel Vert"
+        }
+      },
+      "24": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet elf"
+        }
+      },
+      "25": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bois de rennes"
+        }
+      },
+      "30": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau USA"
+        }
+      },
+      "31": {
+        "0": {
+          "GXT": "",
+          "Localized": "Haut de forme USA"
+        }
+      },
+      "32": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau Sheriff Rouge"
+        }
+      },
+      "34": {
+        "0": {
+          "GXT": "",
+          "Localized": "Couronne des États-Unis"
+        }
+      },
+      "35": {
+        "0": {
+          "GXT": "",
+          "Localized": "Serre tête Etats-Unis"
+        }
+      },
+      "36": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau a bière Bleu"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau a bière Benedict"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau a bière Rose"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau a bière Patriotique"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau a bière Blarneys"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chapeau a bière Jaune"
+        }
+      },
+      "39": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau pointe arbre noel"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau pointe flocon violet"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau pointe houx"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau pointe rouge-blanc"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Chapeau pointe Vert-rose"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Chapeau pointe etoiles"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Chapeau pointe noel"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Chapeau pointe elf"
+        }
+      },
+      "40": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet pudding"
+        }
+      },
+      "41": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet tombant elf"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bonnet tombant Vert-blanc"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bonnet tombant Vert-rouge"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bonnet tombant violet"
+        }
+      },
+      "42": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet de nuit charantaise"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bonnet de nuit bleu"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bonnet de nuit croix"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bonnet de nuit carrés"
+        }
+      },
+      "44": {
+        "1": {
+          "GXT": "",
+          "Localized": "Casque Pompier Noir Ho Ho Ho"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque Pompier Bleu Snowflake"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque Pompier Nice Rouge Blanc"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque Pompier Vert Ho Ho Ho"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque pompier Rouge Snowflake"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque pompier Gingerbread"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque pompier Bah Humbug"
+        }
+      },
+      "96": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau à point lumineux Arbre"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Chapeau à point lumineux rose"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Chapeau à point lumineux Houx"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Chapeau à point lumineux Violet"
+        }
+      },
+      "97": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau à point lumineux Pudding"
+        }
+      },
+      "98": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet noel lumineux "
+        }
+      },
+      "99": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bonnet Elf lumineux"
+        }
+      },
+      "100": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bois de rennes lumineux"
+        }
+      },
+      "112": {
+        "4": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Aqua Camo"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Light Marron"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Moss"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Gris Digital"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Dark Woodland"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Rouge"
+        },
+        "15": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Chocolate"
+        },
+        "17": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Sand"
+        },
+        "19": {
+          "GXT": "",
+          "Localized": "Képi cérémonie Rose"
+        }
+      },
+      "113": {
+        "0": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Blanc & Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Blanc & Bleu"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Gris Leopard"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Bleu Foncé"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Aqua Camo"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Rouge & Bleu"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Rouge"
+        },
+        "12": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Brushstroke"
+        },
+        "13": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Moss"
+        },
+        "14": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Marron Digital"
+        },
+        "16": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Blanc Camo"
+        },
+        "18": {
+          "GXT": "",
+          "Localized": "Marine Cérémonie Zebre"
+        }
+      },
+      "144": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque de chantier Jaune"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque de chantier Orange"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque de chantier Blanc"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque de chantier Bleu"
+        }
+      },
+      "152": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chapeau de pirate"
+        }
+      }
+    },
+    "Bandana": {
+      "82": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bandana Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bandana Uptown Riders"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bandana Ride Free"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bandana As de pique"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bandana Crâne et serpent"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bandana Boeuf et hachettes"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bandana Étoiles et rayures"
+        }
+      }
+    }
+  }
+]

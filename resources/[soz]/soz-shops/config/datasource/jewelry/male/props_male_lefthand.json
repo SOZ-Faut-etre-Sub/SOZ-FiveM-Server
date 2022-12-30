@@ -1,0 +1,664 @@
+[
+  {
+    "Montre": {
+      "0": {
+        "0": {
+          "GXT": "",
+          "Localized": "Montre Haute Mer"
+        }
+      },
+      "1": {
+        "0": {
+          "GXT": "",
+          "Localized": "Blanc LED, Noir Strap"
+        }
+      },
+      "3": {
+        "0": {
+          "GXT": "",
+          "Localized": "Pendulus Sport Noir Sports"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Pfister Design Rouge Sports"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Blanc Sports"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Jaune Sports"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bleu Sports"
+        }
+      },
+      "4": {
+        "0": {
+          "GXT": "",
+          "Localized": "Montre en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Montre en Argent"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Montre Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Montre en Or Blanc"
+        }
+      },
+      "5": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet LED Rouge & Blanc"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet LED Rouge & Marron"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet LED Or Blanc"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bracelet LED Jaune"
+        }
+      },
+      "6": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or Rose Kronos Quantum"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Kronos Quantum"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Carbon Kronos Quantum"
+        }
+      },
+      "7": {
+        "0": {
+          "GXT": "",
+          "Localized": "Platinum Gaulle Retro Hex"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Carbon Gaulle Retro Hex"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Gaulle Retro Hex"
+        }
+      },
+      "8": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or Covgari Supernova"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Carbon Covgari Supernova"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Rose Covgari Supernova"
+        }
+      },
+      "9": {
+        "0": {
+          "GXT": "",
+          "Localized": "Pendule Galaxie en Platine"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Pendule Galaxie en Charbon"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Pendule Galaxie en Or"
+        }
+      },
+      "10": {
+        "0": {
+          "GXT": "",
+          "Localized": "Argent Crowex Chromosphere"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Or Crowex Chromosphere"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Carbon Crowex Chromosphere"
+        }
+      },
+      "11": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or Rose Vangelico Geomeister"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Vangelico Geomeister"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Vangelico Geomeister"
+        }
+      },
+      "12": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or iFruit Link"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent iFruit Link"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Rose iFruit Link"
+        }
+      },
+      "13": {
+        "0": {
+          "GXT": "",
+          "Localized": "Carbon iFruit Tech"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Lime iFruit Tech"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "PRB iFruit Tech"
+        }
+      },
+      "14": {
+        "0": {
+          "GXT": "",
+          "Localized": "Argent Covgari Explorer"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Or Rose Covgari Explorer"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Or Covgari Explorer"
+        }
+      },
+      "15": {
+        "0": {
+          "GXT": "",
+          "Localized": "Pendule en Argent"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Pendule en Or"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Pendule en Platine"
+        }
+      },
+      "16": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or Covgari Universe"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Covgari Universe"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Acier Covgari Universe"
+        }
+      },
+      "17": {
+        "0": {
+          "GXT": "",
+          "Localized": "Cuivre Gaulle Destiny"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Vintage Gaulle Destiny"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Argent Gaulle Destiny"
+        }
+      },
+      "18": {
+        "0": {
+          "GXT": "",
+          "Localized": "Carbon Medici Radial"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Medici Radial"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Acier Medici Radial"
+        }
+      },
+      "19": {
+        "0": {
+          "GXT": "",
+          "Localized": "Argent Étoile du temps"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Or Étoile du temps"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Carbon Étoile du temps"
+        }
+      },
+      "20": {
+        "0": {
+          "GXT": "",
+          "Localized": "Carbon Kronos Submariner"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Rouge Kronos Submariner"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Jaune Kronos Submariner"
+        }
+      },
+      "21": {
+        "0": {
+          "GXT": "",
+          "Localized": "Lime iFruit"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Blanc iFruit"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Neon iFruit"
+        }
+      },
+      "30": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or Enduring"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Enduring"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noir Enduring"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Deck Enduring"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Royal Enduring"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Roulette Enduring"
+        }
+      },
+      "31": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or Kronos Tempo"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Kronos Tempo"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noir Kronos Tempo"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Or Fifty Kronos Tempo"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Or Roulette Kronos Tempo"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Baroque Kronos Tempo"
+        }
+      },
+      "32": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or Kronos Pulse"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Kronos Pulse"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noir Kronos Pulse"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Argent Fifty Kronos Pulse"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Argent Roulette Kronos Pulse"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Spade Kronos Pulse"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Rouge Kronos"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Vert Kronos"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bleu Fame or Shame Kronos"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Noir Fame or Shame Kronos"
+        }
+      },
+      "33": {
+        "0": {
+          "GXT": "",
+          "Localized": "Or Kronos Ära"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Argent Kronos Ära"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noir Kronos Ära"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Or Fifty Kronos Ära"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Beige Spade Kronos Ära"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Marron Spade Kronos Ära"
+        }
+      },
+      "34": {
+        "0": {
+          "GXT": "",
+          "Localized": "Automatique Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Automatique Argent"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Automatique Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Automatique Pique"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Automatique Metal"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Automatique Roulette"
+        }
+      },
+      "35": {
+        "0": {
+          "GXT": "",
+          "Localized": "Argent Crowex Époque"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Or Crowex Époque"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noir Crowex Époque"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Wheel Crowex Époque"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Suits Crowex Époque"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Roulette Crowex Époque"
+        }
+      },
+      "36": {
+        "0": {
+          "GXT": "",
+          "Localized": "Kronos Or Rectangulaire"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Kronos Argent Rectangulaire"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Kronos Noir Rectangulaire"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Kronos Roulette Rectangulaire"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Kronos Fifty Rectangulaire"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Kronos Suits Rectangulaire"
+        }
+      },
+      "37": {
+        "0": {
+          "GXT": "",
+          "Localized": "Argent Crowex Ronde"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Or Crowex Ronde"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Noir Crowex Rond"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bêche Crowex Rond"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Royauté Crowex Rond"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Dé Crowex Rond"
+        }
+      },
+      "38": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet Argent SASS"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet Or SASS"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet Noir SASS"
+        }
+      },
+      "39": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet Rond Argent SASS"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet Rond Or SASS"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet Rond Noir SASS"
+        }
+      }
+    },
+    "Bracelet": {
+      "22": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet légère"
+        }
+      },
+      "23": {
+        "0": {
+          "GXT": "",
+          "Localized": "Grosse chaîne de poignet"
+        }
+      },
+      "24": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet carrée"
+        }
+      },
+      "25": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet crâne"
+        }
+      },
+      "26": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de poignet torsadé"
+        }
+      },
+      "27": {
+        "0": {
+          "GXT": "",
+          "Localized": "Chaîne de Moto et cuire"
+        }
+      },
+      "28": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet à pointes"
+        }
+      },
+      "29": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet Noire"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet Chocolat"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet Beige"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bracelet cuire de boeuf"
+        }
+      },
+      "40": {
+        "0": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Bleu"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Rouge"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Rose"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Jaune"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Orange"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Vert"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Rouge & Bleu"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Jaune & Orange"
+        },
+        "8": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Vert & Rose"
+        },
+        "9": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Arc en Ciel"
+        },
+        "10": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Coucher de Soleil"
+        },
+        "11": {
+          "GXT": "",
+          "Localized": "Bracelet Neon Tropical"
+        }
+      }
+    }
+  }
+]

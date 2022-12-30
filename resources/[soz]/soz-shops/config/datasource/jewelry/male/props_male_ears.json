@@ -1,0 +1,538 @@
+[
+  {
+    "Oreilles": {
+      "0": {
+        "0": {
+          "GXT": "",
+          "Localized": "Kit main libre Gris"
+        }
+      },
+      "1": {
+        "0": {
+          "GXT": "",
+          "Localized": "Kit main libre Rouge"
+        }
+      },
+      "2": {
+        "0": {
+          "GXT": "",
+          "Localized": "Kit main libre LCD"
+        }
+      },
+      "3": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde en Platine"
+        }
+      },
+      "4": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde en Platine"
+        }
+      },
+      "5": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille ronde en Platine"
+        }
+      },
+      "6": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou Rond en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou Rond en Platine"
+        }
+      },
+      "7": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou Rond en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou Rond en Platine"
+        }
+      },
+      "8": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou Rond en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou Rond en Platine"
+        }
+      },
+      "9": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant en Platine"
+        }
+      },
+      "10": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant en Platine"
+        }
+      },
+      "11": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille diamant en Platine"
+        }
+      },
+      "12": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou Carré en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou Carré Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Clou Carré en Platine"
+        }
+      },
+      "13": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou Carré en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou Carré Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Clou Carré en Platine"
+        }
+      },
+      "14": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou Carré en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou Carré Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Clou Carré en Platine"
+        }
+      },
+      "15": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems en Platine"
+        }
+      },
+      "16": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems en Platine"
+        }
+      },
+      "17": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille gems en Platine"
+        }
+      },
+      "18": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or Illusion"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Platinum"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Platinum Noir"
+        }
+      },
+      "19": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or Illusion"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Platinum"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Platinum Noir"
+        }
+      },
+      "20": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or Illusion"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Or Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Platinum"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles carrées Platinum Noir"
+        }
+      },
+      "21": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles SN en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles SN en Platine"
+        }
+      },
+      "22": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles SN en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles SN en Platine"
+        }
+      },
+      "23": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles SN en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles SN en Platine"
+        }
+      },
+      "24": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Argent"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Or"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Platine"
+        }
+      },
+      "25": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Argent"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Or"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Platine"
+        }
+      },
+      "26": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Argent"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Or"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne Noir"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles crâne en Platine"
+        }
+      },
+      "27": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles pique en Platine"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles pique en Or"
+        }
+      },
+      "28": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles pique en Platine"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles pique en Or"
+        }
+      },
+      "29": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles pique en Platine"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles pique en Or"
+        }
+      },
+      "30": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou d'onyx en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou d'onyx Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Clou d'onyx en platine"
+        }
+      },
+      "31": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou d'onyx en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou d'onyx Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Clou d'onyx en platine"
+        }
+      },
+      "32": {
+        "0": {
+          "GXT": "",
+          "Localized": "Clou d'onyx en Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Clou d'onyx Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Clou d'onyx en platine"
+        }
+      },
+      "34": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles en Platine SN Carré"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles en Or SN Carré"
+        }
+      },
+      "35": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles en Platine SN Carré"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles en Or SN Carré"
+        }
+      },
+      "36": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles en Platine SN Carré"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles en Or SN Carré"
+        }
+      },
+      "37": {
+        "0": {
+          "GXT": "",
+          "Localized": "L'École du micro d'Or"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "L'École du micro d'Argent"
+        }
+      },
+      "38": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Trèfle"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Carreau"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Coeur"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Pique"
+        }
+      },
+      "39": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles dé Blanc"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles dé Rouge"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles dé Beige"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles dé Gris"
+        }
+      },
+      "40": {
+        "0": {
+          "GXT": "",
+          "Localized": "Boucle d'oreille Jeton Noir"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Jeton Jaune"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Jeton Rouge"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Boucles d'oreilles Jeton Rose"
+        }
+      }
+    }
+  }
+]
