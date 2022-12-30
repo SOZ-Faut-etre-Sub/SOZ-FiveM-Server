@@ -248,7 +248,7 @@ export const Checkpoints: Checkpoint[] = [
         licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
     },
     {
-        coords: [506.42, -1306.97, 27.76],
+        coords: [432.83, -1634.1, 28.55],
         message: 'Ta maman ne sera pas fière si tu dois venir chercher ta voiture à cette fourrière…',
         licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
     },
