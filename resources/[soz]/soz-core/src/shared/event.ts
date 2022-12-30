@@ -25,6 +25,7 @@ export enum ServerEvent {
     BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
 
     DRIVING_SCHOOL_PLAYER_PAY = 'soz-core:server:driving-school:player-pay',
+    DRIVING_SCHOOL_UPDATE_LICENSE = 'soz-core:server:driving-school:update-license',
 
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 

@@ -1,4 +1,4 @@
-import { OnEvent } from '../../core/decorators/event';
+import { On } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -21,7 +21,7 @@ export class DrivingSchoolProvider {
     @Inject(VehicleSpawner)
     private vehicleSpawner: VehicleSpawner;
 
-    @OnEvent(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY)
+    @On(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY)
     public makePlayerPay(source: number, licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
         const qbPlayer = this.QBCore.getPlayer(source);
         if (!qbPlayer) return;
@@ -35,6 +35,26 @@ export class DrivingSchoolProvider {
         }
 
         TriggerClientEvent(ClientEvent.DRIVING_SCHOOL_SETUP_EXAM, source, licenseType, spawnPoint);
+    }
+
+    @On(ServerEvent.DRIVING_SCHOOL_UPDATE_LICENSE)
+    public updatePlayerLicense(source: number, licenseType: DrivingSchoolLicenseType, licenseLabel: string) {
+        const qbPlayer = this.QBCore.getPlayer(source);
+        if (!qbPlayer) return;
+
+        const licenses = qbPlayer.PlayerData.metadata['licences'];
+        const licenseData = DrivingSchoolConfig.licenses[licenseType];
+        if (!licenses || !licenseData) {
+            this.notifier.notify(source, 'Erreur lors de la délivrance de votre permis', 'error');
+            return;
+        }
+
+        licenses[licenseType] = licenseData.points || true;
+
+        qbPlayer.Functions.SetMetaData('licences', licenses);
+        qbPlayer.Functions.Save();
+
+        this.notifier.notify(source, `Félicitations ! Vous venez d'obtenir votre ${licenseLabel}`, 'success');
     }
 
     @Rpc(RpcEvent.DRIVING_SCHOOL_SPAWN_VEHICLE)
