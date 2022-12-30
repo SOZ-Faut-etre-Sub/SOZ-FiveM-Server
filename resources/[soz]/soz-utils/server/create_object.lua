@@ -25,6 +25,8 @@ local function CreateObjectClientSide(model, x, y, z, w, culling, freeze)
     table.insert(ObjectList, {ref = ref, model = model, x = x, y = y, z = z, w = w, culling = culling, freeze = freeze})
 
     TriggerClientEvent("soz-utils:client:create-object", -1, ref, model, x, y, z, w, culling, freeze)
+
+    return ref
 end
 
 local function DeleteObjectServerSide(ref)
@@ -47,7 +49,7 @@ QBCore.Functions.CreateCallback("soz-utils:object:GetList", function(source, cb)
 end)
 
 function CreateObject(model, x, y, z, w, culling, freeze)
-    CreateObjectClientSide(model, x, y, z, w, culling, freeze)
+    return CreateObjectClientSide(model, x, y, z, w, culling, freeze)
 end
 
 function DeleteObject(ref)

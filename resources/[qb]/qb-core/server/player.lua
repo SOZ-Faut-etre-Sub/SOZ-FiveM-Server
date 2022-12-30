@@ -16,7 +16,7 @@ function QBCore.Player.Login(source, citizenid, newData)
             local account = QBCore.Functions.GetUserAccount(src)
 
             if account then
-                role = account.role
+                role = account.role:lower()
             end
 
             if PlayerData and (license == PlayerData.license or role == 'admin') then

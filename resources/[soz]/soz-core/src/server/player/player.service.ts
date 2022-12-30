@@ -35,6 +35,10 @@ export class PlayerService {
         return player.PlayerData;
     }
 
+    public getPlayersSources(): number[] | null {
+        return this.QBCore.getPlayersSources();
+    }
+
     public getPlayerJobAndGrade(source: number): [string, number] | null {
         const player = this.QBCore.getPlayer(source);
 

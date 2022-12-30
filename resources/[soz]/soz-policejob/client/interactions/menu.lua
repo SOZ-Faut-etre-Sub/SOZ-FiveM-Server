@@ -104,20 +104,7 @@ local function RadarEntity(menu, job)
 
     radarItem:On("change", function(menu, value)
         menuState["radar"] = value
-        for radarID, radar in pairs(Config.Radars) do
-            if radar.station == job then
-                if not QBCore.Functions.GetBlip("police_radar_" .. radarID) then
-                    QBCore.Functions.CreateBlip("police_radar_" .. radarID, {
-                        name = "Radar",
-                        coords = radar.props,
-                        sprite = 184,
-                        scale = 0.5,
-                    })
-                end
-
-                QBCore.Functions.HideBlip("police_radar_" .. radarID, not value)
-            end
-        end
+        TriggerEvent("soz-core:client:radar:toggle-blip", value, job)
     end)
 end
 

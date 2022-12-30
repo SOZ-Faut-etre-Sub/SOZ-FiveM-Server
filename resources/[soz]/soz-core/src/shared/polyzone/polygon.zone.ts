@@ -1,4 +1,5 @@
 import { RGBColor } from '../color';
+import { AbstractZone } from './abstract.zone';
 import { Point3D, Vector2 } from './vector';
 
 export type PolygonZoneOptions<T> = {
@@ -7,7 +8,7 @@ export type PolygonZoneOptions<T> = {
     data?: T;
 };
 
-export class PolygonZone<T = never> {
+export class PolygonZone<T = never> implements AbstractZone {
     public readonly data?: T;
     public readonly minZ?: number;
     public readonly maxZ?: number;
