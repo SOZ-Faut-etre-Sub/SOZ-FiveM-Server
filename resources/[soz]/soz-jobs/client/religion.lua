@@ -17,7 +17,8 @@ end
 
 local function SetNPCAnimation(npcPed, shouldIdle)
     if shouldIdle then
-        local animDict = GetEntityModel(npcPed) == GetHashKey("mp_m_freemode_01") and "anim@heists@heist_corona@team_idles@male_c" or "anim@heists@heist_corona@team_idles@female_a"
+        local animDict = GetEntityModel(npcPed) == GetHashKey("mp_m_freemode_01") and "anim@heists@heist_corona@team_idles@male_c" or
+                             "anim@heists@heist_corona@team_idles@female_a"
 
         while not HasAnimDictLoaded(animDict) do
             RequestAnimDict(animDict)
