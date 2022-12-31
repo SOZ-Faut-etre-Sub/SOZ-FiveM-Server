@@ -110,7 +110,6 @@ export class ExamProvider {
 
     @OnGameEvent(GameEvent.CEventNetworkVehicleUndrivable)
     private async onVehicleUndrivable(veh: number) {
-        console.log(GetEntityType(veh), EntityType.Vehicle, IsEntityDead(veh));
         if (GetEntityType(veh) == EntityType.Vehicle && IsEntityDead(veh)) {
             this.undrivableVehicles.push(veh);
         }
