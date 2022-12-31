@@ -137,7 +137,8 @@ AddEventHandler("jobs:religion:vehicle", function()
 end)
 
 RegisterNetEvent("jobs:religion:vehicle-spawn")
-AddEventHandler("jobs:religion:vehicle-spawn", function()
+AddEventHandler("jobs:religion:vehicle-spawn", function(vehicleNetId)
+    religion_vehicule = NetToVeh(vehicleNetId)
     JobVehicle = true
     createblip("Véhicule", "Vélo de service", 225, SozJobCore.religion_vehicule)
     local player = GetPlayerPed(-1)
