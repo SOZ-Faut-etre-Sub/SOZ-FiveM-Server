@@ -15,6 +15,26 @@ local function ResetPrayersState()
     PrayersPed = {}
 end
 
+local function SetNPCAnimation(npcPed, shouldIdle)
+    if shouldIdle then
+        local animDict = GetEntityModel(npcPed) == GetHashKey("mp_m_freemode_01") and "anim@heists@heist_corona@team_idles@male_c" or "anim@heists@heist_corona@team_idles@female_a"
+
+        while not HasAnimDictLoaded(animDict) do
+            RequestAnimDict(animDict)
+            Wait(100)
+        end
+
+        -- prevents ped from having walk anim while being frozen 
+        ClearPedTasksImmediately(npcPed)
+        TaskPlayAnim(npcPed, animDict, "idle", 1.0, 1.0, -1, 1, 1, 0, 0, 0)
+    else
+        -- remove idle animation as ped should be able to move
+        ClearPedTasksImmediately(npcPed)
+    end
+
+    FreezeEntityPosition(npcPed, shouldIdle)
+end
+
 exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07), 1, 1, {
     name = "job religion",
     heading = 0,
@@ -76,14 +96,14 @@ exports["qb-target"]:AddBoxZone("job religion", vector3(-766.24, -24.34, 41.07),
 })
 
 RegisterNetEvent("jobs:religion:fix")
-AddEventHandler("jobs:religion:fix", function(ped)
+AddEventHandler("jobs:religion:fix", function(npcPed)
     for _, p in ipairs(PrayersPed) do
-        if p == ped then
+        if p == npcPed then
             exports["soz-hud"]:DrawNotification("Vous avez déjà parlé à cette personne", "warning")
             return
         end
     end
-    FreezeEntityPosition(ped, true)
+    SetNPCAnimation(npcPed, true)
     QBCore.Functions.Progressbar("religion_fix", "Vous balancez une info chat...", 10000, false, true,
                                  {
         disableMovement = true,
@@ -93,8 +113,8 @@ AddEventHandler("jobs:religion:fix", function(ped)
     }, {animDict = "timetable@amanda@ig_4", anim = "ig_4_base"}, {}, {}, function()
         payout_counter = payout_counter + 1
         PrayersCount = PrayersCount + 1
-        table.insert(PrayersPed, ped)
-        FreezeEntityPosition(ped, false)
+        table.insert(PrayersPed, npcPed)
+        SetNPCAnimation(npcPed, false)
         if PrayersCount >= PrayersMax then
             exports["soz-hud"]:DrawNotification(string.format("Vous avez prêché %d infos chat dans cette zone", PrayersCount), "warning")
             exports["soz-hud"]:DrawNotification("Retournez voir le prêtre", "info")
