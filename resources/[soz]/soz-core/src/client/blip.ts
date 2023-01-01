@@ -18,4 +18,8 @@ export class BlipFactory {
     public remove(id: string): void {
         this.QBCore.removeBlip(id);
     }
+
+    public exist(id: string): boolean {
+        return this.QBCore.hasBlip(id);
+    }
 }

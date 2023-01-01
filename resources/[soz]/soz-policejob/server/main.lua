@@ -226,7 +226,7 @@ end)
 AddEventHandler("entityCreating", function(handle)
     local entityModel = GetEntityModel(handle)
 
-    if Config.RadarAllowedVehicle[entityModel] then
+    if Config.SirenVehicle[entityModel] then
         Entity(handle).state:set("isSirenMuted", false, true)
     end
 end)

@@ -38,6 +38,10 @@ export class Qbcore {
         this.QBCore.Functions.RemoveBlip(id);
     }
 
+    public hasBlip(id: string): boolean {
+        return !!this.QBCore.Functions.GetBlip(id);
+    }
+
     public getJobs(): Job[] {
         const jobs = this.SozJobCore.Jobs as { [key in JobType]: Job };
         if (!jobs) {

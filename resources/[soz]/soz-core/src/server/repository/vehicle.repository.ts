@@ -22,4 +22,8 @@ export class VehicleRepository extends Repository<Vehicle[]> {
     public async findByModel(model: string): Promise<Vehicle | null> {
         return (await this.get()).find(v => v.model === model) ?? null;
     }
+
+    public async findByHash(modelHash: number): Promise<Vehicle | null> {
+        return (await this.get()).find(v => v.hash === modelHash) ?? null;
+    }
 }

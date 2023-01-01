@@ -29,7 +29,7 @@ CreateThread(function()
             if IsVehicleSirenOn(vehicles[i]) then
                 local entityModel = GetEntityModel(vehicles[i])
 
-                if Config.RadarAllowedVehicle[entityModel] then
+                if Config.SirenVehicle[entityModel] then
                     SetVehicleHasMutedSirens(vehicles[i], Entity(vehicles[i]).state.isSirenMuted)
                 end
             end

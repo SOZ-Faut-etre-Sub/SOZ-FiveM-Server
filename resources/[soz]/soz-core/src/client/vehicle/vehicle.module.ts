@@ -8,6 +8,7 @@ import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
 import { VehicleLockProvider } from './vehicle.lock.provider';
 import { VehicleMenuProvider } from './vehicle.menu.provider';
+import { VehicleRadarProvider } from './vehicle.radar.provider';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleSpawnProvider } from './vehicle.spawn.provider';
 
@@ -24,6 +25,7 @@ import { VehicleSpawnProvider } from './vehicle.spawn.provider';
         VehicleMenuProvider,
         VehicleSeatbeltProvider,
         VehicleSpawnProvider,
+        VehicleRadarProvider,
     ],
 })
 export class VehicleModule {}

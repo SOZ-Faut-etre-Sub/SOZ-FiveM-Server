@@ -226,6 +226,11 @@ export enum ClientEvent {
     VEHICLE_GARAGE_HOUSE_SHOW_PARKING = 'soz-core:client:vehicle:garage:house:show-parking',
     VEHICLE_ROUTE_EJECTION = 'soz-core:client:vehicle:route-ejection',
     VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
+    VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
+    VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
+
+    RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
+    RADAR_REMOVE_BLIP = 'soz-core:client:radar:remove-blip',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 
