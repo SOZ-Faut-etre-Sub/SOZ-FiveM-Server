@@ -7,7 +7,8 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector4 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
-import { QBCore } from '../qbcore';
+import { PlayerMoneyService } from '../player/player.money.service';
+import { PlayerService } from '../player/player.service';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 
 @Provider()
@@ -15,25 +16,23 @@ export class DrivingSchoolProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(QBCore)
-    private QBCore: QBCore;
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @Inject(PlayerMoneyService)
+    private playerMoneyService: PlayerMoneyService;
 
     @Inject(VehicleSpawner)
     private vehicleSpawner: VehicleSpawner;
 
     @On(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY)
     public makePlayerPay(source: number, licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
-        const qbPlayer = this.QBCore.getPlayer(source);
-        if (!qbPlayer) {
-            return;
-        }
-
         const lData = DrivingSchoolConfig.licenses[licenseType];
         if (!lData || typeof lData.price !== 'number') {
             return;
         }
 
-        if (!qbPlayer.Functions.RemoveMoney('money', lData.price)) {
+        if (this.playerMoneyService.remove(source, lData.price)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
             return;
         }
@@ -43,12 +42,9 @@ export class DrivingSchoolProvider {
 
     @On(ServerEvent.DRIVING_SCHOOL_UPDATE_LICENSE)
     public updatePlayerLicense(source: number, licenseType: DrivingSchoolLicenseType, licenseLabel: string) {
-        const qbPlayer = this.QBCore.getPlayer(source);
-        if (!qbPlayer) {
-            return;
-        }
+        const player = this.playerService.getPlayer(source);
 
-        const licenses = qbPlayer.PlayerData.metadata['licences'];
+        const licenses = player.metadata['licences'];
         const licenseData = DrivingSchoolConfig.licenses[licenseType];
         if (!licenses || !licenseData) {
             this.notifier.notify(source, 'Erreur lors de la délivrance de votre permis', 'error');
@@ -57,8 +53,8 @@ export class DrivingSchoolProvider {
 
         licenses[licenseType] = licenseData.points || true;
 
-        qbPlayer.Functions.SetMetaData('licences', licenses);
-        qbPlayer.Functions.Save();
+        this.playerService.setPlayerMetadata(source, 'licences', licenses);
+        this.playerService.save(source);
 
         this.notifier.notify(source, `Félicitations ! Vous venez d'obtenir votre ${licenseLabel}`, 'success');
     }
