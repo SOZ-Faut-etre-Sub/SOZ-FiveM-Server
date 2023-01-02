@@ -63,23 +63,28 @@ export class ExamProvider {
 
     @On(ClientEvent.DRIVING_SCHOOL_START_EXAM)
     public async examPrecheck(data: TargetOptions) {
-        const licenseType = data.license;
-        this.license = DrivingSchoolConfig.licenses[licenseType];
+        const lData: DrivingSchoolLicense = DrivingSchoolConfig.licenses[data.license];
 
-        const vData = this.license.vehicle;
-        const spawnPoint = this.getSpawnPoint(vData.spawnPoints);
+        if (!lData) {
+            this.notifier.notify("Impossible de démarrer l'examen", 'error');
+            return;
+        }
+
+        const spawnPoint = this.getSpawnPoint(lData.vehicle.spawnPoints);
 
         if (!spawnPoint) {
             this.notifier.notify("Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen.", 'error');
             return;
         }
 
-        TriggerServerEvent(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY, licenseType, spawnPoint);
+        TriggerServerEvent(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY, lData.licenseType, spawnPoint);
     }
 
     @On(ClientEvent.DRIVING_SCHOOL_SETUP_EXAM)
     public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
         await this.screenFadeOut();
+
+        this.license = DrivingSchoolConfig.licenses[licenseType];
 
         this.spawnPoint = spawnPoint;
 
