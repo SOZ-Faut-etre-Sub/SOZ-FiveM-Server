@@ -117,6 +117,21 @@ Config.Cloakroom = {
     },
     ["bcso"] = {
         [GetHashKey("mp_m_freemode_01")] = {
+            ["Tenue Hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 11, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 22, Texture = 8, Palette = 0},
+                    [5] = {Drawable = 54, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 51, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 8, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 12, Texture = 7, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 413, Texture = 0, Palette = 0},
+                },
+                Props = {[0] = {Drawable = 33, Texture = 1, Palette = 0}},
+            },
             ["Tenue de pilote"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -148,6 +163,21 @@ Config.Cloakroom = {
             },
         },
         [GetHashKey("mp_f_freemode_01")] = {
+            ["Tenue Hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 9, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 3, Texture = 7, Palette = 0},
+                    [5] = {Drawable = 54, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 52, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 8, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 38, Texture = 8, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 440, Texture = 0, Palette = 0},
+                },
+                Props = {[0] = {Drawable = 32, Texture = 1, Palette = 0}},
+            },
             ["Tenue de pilote"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
