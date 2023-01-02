@@ -19,6 +19,21 @@ Config.Locations = {
 Config.Cloakroom = {
     ["lspd"] = {
         [GetHashKey("mp_m_freemode_01")] = {
+            ["Tenue Hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 11, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 35, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 52, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 51, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 8, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 32, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 414, Texture = 0, Palette = 0},
+                },
+                Props = {},
+            },
             --[[ ["Tenue SWAT"] = {
                 Components = {
                     [1] = {Drawable = 185, Texture = 0, Palette = 0},
@@ -67,6 +82,21 @@ Config.Cloakroom = {
             },
         },
         [GetHashKey("mp_f_freemode_01")] = {
+            ["Tenue Hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 9, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 34, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 52, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 52, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 8, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 37, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 441, Texture = 0, Palette = 0},
+                },
+                Props = {},
+            },
             --[[ ["Tenue SWAT"] = {
                 Components = {
                     [1] = {Drawable = 185, Texture = 0, Palette = 0},
