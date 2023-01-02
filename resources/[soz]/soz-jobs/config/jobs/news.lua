@@ -49,6 +49,20 @@ NewsConfig.Cloakroom = {
             },
             Props = {},
         },
+        ["Costume Terrain d'hiver"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 22, Texture = 0, Palette = 0},
+                [4] = {Drawable = 20, Texture = 0, Palette = 0},
+                [6] = {Drawable = 10, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 139, Texture = 6, Palette = 0},
+            },
+            Props = {},
+        },
         ["Costume Hélico"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -104,6 +118,20 @@ NewsConfig.Cloakroom = {
                 [9] = {Drawable = 0, Texture = 0, Palette = 0},
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 26, Texture = 4, Palette = 0},
+            },
+            Props = {},
+        },
+        ["Costume Terrain d'hiver"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 23, Texture = 0, Palette = 0},
+                [4] = {Drawable = 133, Texture = 3, Palette = 0},
+                [6] = {Drawable = 29, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 14, Texture = 0, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 136, Texture = 6, Palette = 0},
             },
             Props = {},
         },
