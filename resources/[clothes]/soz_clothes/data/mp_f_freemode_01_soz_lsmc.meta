@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ShopPedApparel>
+    <pedName>mp_f_freemode_01</pedName>
+    <dlcName>soz_lsmc</dlcName>
+    <fullDlcName>mp_f_freemode_01_soz_lsmc</fullDlcName>
+    <eCharacter>SCR_CHAR_MULTIPLAYER_F</eCharacter>
+    <creatureMetaData>MP_CreatureMetadata_soz_lsmc</creatureMetaData>
+
+    <pedOutfits/>
+    <pedComponents/>
+    <pedProps/>
+</ShopPedApparel>
