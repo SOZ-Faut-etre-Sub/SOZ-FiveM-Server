@@ -46,12 +46,18 @@ export abstract class Penalty {
     }
 
     protected displayWarningMsg(): void {
-        if (!this.warningMsg) return;
+        if (!this.warningMsg) {
+            return;
+        }
+
         this.context.notifier.notify(`AVERTISSEMENT: ${this.warningMsg}`, 'warning');
     }
 
     protected displayFailMsg(): void {
-        if (!this.failMsg) return;
+        if (!this.failMsg) {
+            return;
+        }
+
         this.context.notifier.notify(`ÉCHEC: ${this.failMsg}`, 'error');
     }
 

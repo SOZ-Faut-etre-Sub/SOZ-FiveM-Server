@@ -117,7 +117,9 @@ export class ExamProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     private async examLoop() {
-        if (!this.isExamRunning) return;
+        if (!this.isExamRunning) {
+            return;
+        }
 
         const vehCoords = GetEntityCoords(this.vehicleEntity, true) as Vector3;
 
@@ -131,7 +133,9 @@ export class ExamProvider {
 
         const dist = getDistance(this.currentCp.coords, vehCoords);
 
-        if (dist > this.license.marker.size) return;
+        if (dist > this.license.marker.size) {
+            return;
+        }
 
         DeleteCheckpoint(this.cpEntity);
 
@@ -157,7 +161,9 @@ export class ExamProvider {
 
     @Tick(200)
     private async penaltyLoop() {
-        if (!this.isPenaltyLoopRunning) return;
+        if (!this.isPenaltyLoopRunning) {
+            return;
+        }
 
         for (const penalty of this.penalties) {
             if (isErr(penalty.performCheck())) {
@@ -210,8 +216,13 @@ export class ExamProvider {
             this.deleteEntitiesAndTeleportBack();
         }
 
-        if (this.cpEntity) DeleteCheckpoint(this.cpEntity);
-        if (this.cpBlip) RemoveBlip(this.cpBlip);
+        if (this.cpEntity) {
+            DeleteCheckpoint(this.cpEntity);
+        }
+
+        if (this.cpBlip) {
+            RemoveBlip(this.cpBlip);
+        }
 
         DisplayRadar(false);
 
@@ -302,7 +313,10 @@ export class ExamProvider {
 
         SetCheckpointCylinderHeight(cpId, m.size, m.size, m.size);
 
-        if (this.cpBlip) RemoveBlip(this.cpBlip);
+        if (this.cpBlip) {
+            RemoveBlip(this.cpBlip);
+        }
+
         this.cpBlip = AddBlipForCoord(x1, y1, z1);
         const blipColor = DrivingSchoolConfig.blip.color;
         SetBlipColour(this.cpBlip, blipColor);
