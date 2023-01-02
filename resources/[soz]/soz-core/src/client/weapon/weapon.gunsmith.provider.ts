@@ -206,15 +206,18 @@ export class WeaponGunsmithProvider {
         }
 
         if (tint !== weapon.metadata.tint) {
-            const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_TINT, weapon.slot, tint);
-            if (applied) {
-                this.notifier.notify(
-                    `Vous avez changé la couleur de votre arme en ~b~${
-                        (weapon.name.includes('mk2') ? WeaponMk2TintColorChoices : WeaponTintColorChoices)[tint].label
-                    }`
-                );
-            } else {
-                customValidated = false;
+            if (tint !== 0 && weapon.metadata.tint !== undefined) {
+                const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_TINT, weapon.slot, tint);
+                if (applied) {
+                    this.notifier.notify(
+                        `Vous avez changé la couleur de votre arme en ~b~${
+                            (weapon.name.includes('mk2') ? WeaponMk2TintColorChoices : WeaponTintColorChoices)[tint]
+                                .label
+                        }`
+                    );
+                } else {
+                    customValidated = false;
+                }
             }
         }
 

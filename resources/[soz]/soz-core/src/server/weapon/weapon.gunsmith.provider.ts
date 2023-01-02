@@ -85,6 +85,10 @@ export class WeaponGunsmithProvider {
             return false;
         }
 
+        if (Number(tint) === 0 && weapon.metadata.tint === undefined) {
+            return false;
+        }
+
         if (this.payUpgrade(source, WEAPON_CUSTOM_PRICE.tint, Number(tint) === weapon.metadata.tint)) {
             this.inventoryManager.updateMetadata(source, slot, { tint: Number(tint) });
             return true;
