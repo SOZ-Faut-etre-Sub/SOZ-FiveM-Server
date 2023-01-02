@@ -11,9 +11,8 @@ local function setPersistentProp(prop)
 
     if prop.event == nil or prop.event == "xmas" then
         local objCoord = persistent_props[prop.id].position
-        local obj = CreateObject(prop.model, objCoord.x, objCoord.y, objCoord.z, objCoord.w, 8000.0, true)
 
-        persistent_props[prop.id].netId = NetworkGetNetworkIdFromEntity(obj)
+        CreateObject(prop.model, objCoord.x, objCoord.y, objCoord.z, objCoord.w, 8000.0, true)
     end
 end
 
