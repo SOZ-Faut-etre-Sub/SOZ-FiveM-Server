@@ -77,21 +77,3 @@ RegisterNetEvent("ems:client:applyDutyClothing", function(clotheType)
         TriggerServerEvent("soz-character:server:SetPlayerJobClothes", clothesConfig, true)
     end)
 end)
-
-RegisterNetEvent("ems:client:applyPatientClothing", function()
-    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, false, {
-        disableMovement = true,
-        disableCombat = true,
-    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-        TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", Config.PatientClothes[PlayerData.skin.Model.Hash])
-    end)
-end)
-
-RegisterNetEvent("ems:client:removePatientClothing", function()
-    QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, false, {
-        disableMovement = true,
-        disableCombat = true,
-    }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
-        TriggerEvent("soz-character:Client:ApplyTemporaryClothSet", {})
-    end)
-end)

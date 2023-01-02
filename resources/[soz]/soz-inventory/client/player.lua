@@ -201,7 +201,7 @@ exports("hasPhone", function()
             return
         end
 
-        if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] or IsPauseMenuActive() then
+        if PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] or IsPauseMenuActive() then
             p:resolve(false)
             return
         end

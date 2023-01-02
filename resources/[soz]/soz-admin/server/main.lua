@@ -156,7 +156,7 @@ RegisterNetEvent("admin:server:revive", function(player)
         return
     end
 
-    TriggerEvent("lsmc:server:revive", player.id)
+    TriggerEvent("soz-core:lsmc:server:revive", player.id, true)
 end)
 
 RegisterNetEvent("admin:server:ChangePlayer", function(citizenid)

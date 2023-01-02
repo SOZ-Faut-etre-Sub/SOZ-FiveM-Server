@@ -52,6 +52,11 @@ export class NuiMenu {
         }
     }
 
+    public closeAll(skipCloseEvent = true) {
+        exports['menuv'].SendNUIMessage({ action: 'KEY_CLOSE_ALL' });
+        this.closeMenu(skipCloseEvent);
+    }
+
     @OnEvent(ClientEvent.CORE_CLOSE_MENU)
     public closeMenu(skipCloseEvent = true) {
         if (this.getOpened() === null) {

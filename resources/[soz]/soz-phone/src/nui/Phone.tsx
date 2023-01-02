@@ -1,10 +1,11 @@
 import { useApps } from '@os/apps/hooks/useApps';
 import { CallModal } from '@os/call/components/CallModal';
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { HomeApp } from './apps/home';
+import { useEmergency } from './hooks/useEmergency';
 import { useCallModal, useConfig } from './hooks/usePhone';
+import { EmergencyModal } from './os/emergency/components/EmergencyModal';
 import { NotificationAlert } from './os/notifications/components/NotificationAlert';
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
@@ -17,6 +18,7 @@ import { useVisibilityService } from './services/os/useVisibilityService';
 import { useCallService } from './services/useCallService';
 import { useContactService } from './services/useContactService';
 import { useDebugService } from './services/useDebugService';
+import { useEmergencyService } from './services/useEmergencyService';
 import { useKeyboardService } from './services/useKeyboardService';
 import { useMessagesService } from './services/useMessagesService';
 import { usePhoneService } from './services/usePhoneService';
@@ -27,6 +29,7 @@ function Phone() {
     const { apps } = useApps();
     const config = useConfig();
     const callModal = useCallModal();
+    const emergency = useEmergency();
 
     useDebugService();
 
@@ -42,6 +45,7 @@ function Phone() {
     useContactService();
     useMessagesService();
     usePhotoService();
+    useEmergencyService();
 
     // Apps services
     useAppBankService();
@@ -60,6 +64,7 @@ function Phone() {
             <Routes>
                 <Route path="/" element={<HomeApp />} />
                 {callModal && <Route path="/call" element={<CallModal />} />}
+                {emergency && <Route path="/emergency" element={<EmergencyModal />} />}
                 {apps.map(app => (
                     <Route key={app.id} path={app.path + '/*'} element={app.component} />
                 ))}

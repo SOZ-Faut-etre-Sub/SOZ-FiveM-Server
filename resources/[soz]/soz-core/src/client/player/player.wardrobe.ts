@@ -5,7 +5,9 @@ import { Outfit, WardrobeConfig } from '../../shared/cloth';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
+import { ProgressResult } from '../../shared/progress';
 import { NuiMenu } from '../nui/nui.menu';
+import { ProgressService } from '../progress.service';
 
 type OutfitSelection = {
     outfit: Outfit | null;
@@ -16,6 +18,9 @@ type OutfitSelection = {
 export class PlayerWardrobe {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
 
     private currentOutfitResolve: (outfit: OutfitSelection) => void | null;
 
@@ -46,6 +51,27 @@ export class PlayerWardrobe {
         );
 
         return promise;
+    }
+
+    public async waitProgress(canCancel: boolean): Promise<ProgressResult> {
+        return await this.progressService.progress(
+            'switch_clothes',
+            "Changement d'habits...",
+            5000,
+            {
+                name: 'male_shower_towel_dry_to_get_dressed',
+                dictionary: 'anim@mp_yacht@shower@male@',
+                options: {
+                    cancellable: false,
+                    enablePlayerControl: false,
+                },
+            },
+            {
+                disableCombat: true,
+                disableMovement: true,
+                canCancel: canCancel,
+            }
+        );
     }
 
     @OnNuiEvent<Outfit>(NuiEvent.SetWardrobeOutfit)

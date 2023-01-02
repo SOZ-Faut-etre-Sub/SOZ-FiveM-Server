@@ -20,7 +20,7 @@ export class VehicleRadarProvider {
         for (const radarID in RadarList) {
             const radar = RadarList[radarID];
             if (radar.isOnline) {
-                this.playerInOutService.add(radar.zone, isInside => {
+                this.playerInOutService.add('radar' + radarID, radar.zone, isInside => {
                     if (isInside) {
                         const ped = PlayerPedId();
                         const vehicle = GetVehiclePedIsIn(ped, false);

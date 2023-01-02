@@ -4,6 +4,7 @@ import { appBank } from './app/bank';
 import { appNotes } from './app/notes';
 import { appSociety } from './app/society';
 import { appTwitchNews } from './app/twitchNews';
+import { emergency } from './emergency';
 import { time } from './os/time';
 import { visibility } from './os/visibility';
 import { phone } from './phone';
@@ -21,6 +22,7 @@ export interface RootModel extends Models<RootModel> {
     simCard: typeof simCard;
     avatar: typeof avatar;
     photo: typeof photo;
+    emergency: typeof emergency;
 
     // Apps models
     appBank: typeof appBank;
@@ -40,4 +42,5 @@ export const models: RootModel = {
     appNotes,
     appTwitchNews,
     appSociety,
+    emergency,
 };

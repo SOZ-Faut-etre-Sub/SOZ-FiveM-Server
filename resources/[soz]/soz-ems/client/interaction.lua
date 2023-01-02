@@ -41,28 +41,20 @@ CreateThread(function()
                     return PlayerData.job.onduty and Player(target).state.isdead and not InsideSurgery
                 end,
                 action = function(entity)
-                    TriggerServerEvent("lsmc:server:GetMort", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
-                    QBCore.Functions.Progressbar("Revive", "Vous réanimez la personne..", 10000, false, true,
-                                                 {
-                        disableMovement = true,
-                        disableCarMovement = true,
-                        disableMouse = false,
-                        disableCombat = true,
-                    }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
-                        TriggerServerEvent("lsmc:server:remove", "bloodbag")
-                        TriggerServerEvent("lsmc:server:add", "used_bloodbag")
-                        TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
-                        TriggerServerEvent("monitor:server:event", "job_lsmc_revive_bloodbag", {},
-                                           {
-                            target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
-                            position = GetEntityCoords(entity),
-                        }, true)
-                    end)
+                    TriggerEvent("soz-core:lsmc:reanimate", entity)
+                    TriggerServerEvent("soz-core:lsmc:server:notif-death-reason", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
+                    TriggerServerEvent("lsmc:server:remove", "bloodbag")
+                    TriggerServerEvent("lsmc:server:add", "used_bloodbag")
+                    TriggerServerEvent("monitor:server:event", "job_lsmc_revive_bloodbag", {},
+                                       {
+                        target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
+                        position = GetEntityCoords(entity),
+                    }, true)
                 end,
                 item = "bloodbag",
             },
             {
-                label = "Réanimer",
+                label = "Utiliser Défibrilateur",
                 color = "lsmc",
                 icon = "c:ems/revive.png",
                 canInteract = function(entity)
@@ -70,21 +62,13 @@ CreateThread(function()
                     return Player(target).state.isdead
                 end,
                 action = function(entity)
-                    QBCore.Functions.Progressbar("Revive", "Vous réanimez la personne..", 10000, false, true,
-                                                 {
-                        disableMovement = true,
-                        disableCarMovement = true,
-                        disableMouse = false,
-                        disableCombat = true,
-                    }, {animDict = "mini@cpr@char_a@cpr_str", anim = "cpr_pumpchest"}, {}, {}, function()
-                        TriggerServerEvent("lsmc:server:remove", "defibrillator")
-                        TriggerServerEvent("lsmc:server:revive", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
-                        TriggerServerEvent("monitor:server:event", "job_lsmc_revive_defibrillator", {},
-                                           {
-                            target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
-                            position = GetEntityCoords(entity),
-                        }, true)
-                    end)
+                    TriggerEvent("soz-core:lsmc:reanimate", entity)
+                    TriggerServerEvent("lsmc:server:remove", "defibrillator")
+                    TriggerServerEvent("monitor:server:event", "job_lsmc_revive_defibrillator", {},
+                                       {
+                        target_source = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)),
+                        position = GetEntityCoords(entity),
+                    }, true)
                 end,
                 item = "defibrillator",
             },

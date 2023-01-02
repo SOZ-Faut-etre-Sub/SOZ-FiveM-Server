@@ -3,7 +3,6 @@ import { getSoundSettings } from '@os/sound/utils/getSoundSettings';
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useAvailability, useVisibility } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { DEFAULT_ALERT_HIDE_TIME } from '../notifications.constants';
 
@@ -52,6 +51,7 @@ export const NotificationsContext = createContext<{
 
 export function NotificationsProvider({ children }) {
     const isPhoneAvailable = useSelector((state: RootState) => state.phone.available);
+    const emergency = useSelector((state: RootState) => state.emergency);
 
     const settings = useSelector((state: RootState) => state.phone.config);
     const [barUncollapsed, setBarUncollapsed] = useState<boolean>(false);
@@ -125,7 +125,7 @@ export function NotificationsProvider({ children }) {
                     onCloseAlert: onExit(n.onClose),
                 });
 
-                if (isPhoneAvailable && n.sound && soundUrl) {
+                if (isPhoneAvailable && n.sound && soundUrl && !emergency.emergency) {
                     play(soundUrl);
                 }
 
@@ -140,7 +140,7 @@ export function NotificationsProvider({ children }) {
                 }, DEFAULT_ALERT_HIDE_TIME + 300);
             });
         },
-        [isPhoneAvailable, play]
+        [isPhoneAvailable, play, emergency]
     );
 
     const addNotificationAlert = (n: INotification, cb: (n: INotification) => void) => {

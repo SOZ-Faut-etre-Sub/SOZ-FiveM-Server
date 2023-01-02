@@ -23,9 +23,10 @@ export enum Prop {
 
 export type OutfitItem = {
     Index?: number;
-    Drawable: number;
-    Texture: number;
-    Palette: number;
+    Drawable?: number;
+    Texture?: number;
+    Palette?: number;
+    Clear?: boolean;
 };
 
 export type Outfit = {

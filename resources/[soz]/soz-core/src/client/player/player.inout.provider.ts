@@ -12,13 +12,15 @@ export class PlayerInOutProvider {
     @Tick(500)
     public run(): void {
         const pedCoords = GetEntityCoords(PlayerPedId()) as Vector3;
-        this.playerInOutService.get().forEach(elem => {
+        const list = this.playerInOutService.get();
+        for (const id in list) {
+            const elem = list[id];
             const isInside = elem.zone.isPointInside(pedCoords);
 
             if (isInside !== elem.isLastInside) {
                 elem.isLastInside = isInside;
                 elem.cb(isInside);
             }
-        });
+        }
     }
 }

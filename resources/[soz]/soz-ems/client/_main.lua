@@ -33,31 +33,6 @@ AddEventHandler("soz_ems:client:KillPlayer", function()
     SetEntityHealth(PlayerPedId(), 0)
 end)
 
-RegisterNetEvent("soz_ems:client:Revive")
-AddEventHandler("soz_ems:client:Revive", function()
-    local player = PlayerPedId()
-
-    if IsDead then
-        local playerPos = GetEntityCoords(player, true)
-        NetworkResurrectLocalPlayer(playerPos, true, true, false)
-        IsDead = false
-        SetEntityInvincible(player, false)
-        SetBlockingOfNonTemporaryEvents(player, false)
-        IsEntityStatic(player, false)
-    end
-
-    if isInHospitalBed == true then
-        TriggerEvent("soz-ems:client:lit", HospitalBedId, false)
-    end
-    SetEntityHealth(player, 200)
-    ClearPedBloodDamage(player)
-    SetPlayerSprint(PlayerId(), true)
-    ResetAll()
-    TriggerEvent("soz-core:client:player:refresh-walk-style")
-
-    exports["soz-hud"]:DrawNotification("Vous êtes guéri!")
-end)
-
 RegisterNetEvent("lsmc:client:GiveBlood")
 AddEventHandler("lsmc:client:GiveBlood", function()
     local player = PlayerPedId()
@@ -66,55 +41,6 @@ AddEventHandler("lsmc:client:GiveBlood", function()
     TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", PlayerData.metadata["thirst"] - 20)
 
     exports["soz-hud"]:DrawNotification("Vous avez ~g~donné~s~ votre sang !")
-end)
-
-function ResetAll()
-    IsDead = false
-    DeathTime = 0
-    isInHospitalBed = false
-    Callems = false
-
-    TriggerServerEvent("soz-core:server:server:set-current-disease", false)
-
-    StopScreenEffect("DeathFailOut")
-    TriggerServerEvent("QBCore:Server:SetMetaData", "hunger", 100)
-    TriggerServerEvent("QBCore:Server:SetMetaData", "thirst", 100)
-    TriggerServerEvent("QBCore:Server:SetMetaData", "alcohol", 0)
-    TriggerServerEvent("QBCore:Server:SetMetaData", "drug", 0)
-end
-
-RegisterNetEvent("soz-ems:client:respawn")
-AddEventHandler("soz-ems:client:respawn", function()
-    player = PlayerPedId()
-    for k, v in pairs(Config.Locations["lit"]) do
-        if Config.Locations["lit"][k].used == false then
-            HospitalBedId = k
-        end
-    end
-    SetEntityCoords(player, Config.Locations["lit"][HospitalBedId].coords.x, Config.Locations["lit"][HospitalBedId].coords.y,
-                    Config.Locations["lit"][HospitalBedId].coords.z + 0.5, false, false, false, false)
-    SetEntityHeading(player, 320)
-    TriggerServerEvent("soz-ems:server:setLit", HospitalBedId, true)
-    isInHospitalBed = true
-end)
-
-RegisterNetEvent("soz-ems:client:lit", function(id, isUsed)
-    Config.Locations["lit"][id].used = isUsed
-end)
-
-RegisterNetEvent("soz-ems:client:callems")
-AddEventHandler("soz-ems:client:callems", function()
-    local ped = PlayerPedId()
-    local coords = GetEntityCoords(ped)
-    local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
-
-    TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
-        anonymous = true,
-        number = "555-LSMC",
-        message = ("Besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
-        position = true,
-    })
-    exports["soz-hud"]:DrawNotification("Vous avez appelé le ~g~LSMC~s~ !", "info")
 end)
 
 RegisterNetEvent("lsmc:client:ifaks")

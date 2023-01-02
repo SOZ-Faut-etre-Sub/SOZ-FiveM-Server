@@ -14,7 +14,11 @@ export class ClothingService {
     }
 
     public applyProp(prop: Prop, outfitItem: OutfitItem) {
-        SetPedPropIndex(PlayerPedId(), Number(prop), outfitItem.Drawable || 0, outfitItem.Texture || 0, true);
+        if (outfitItem.Clear) {
+            ClearPedProp(PlayerPedId(), Number(prop));
+        } else {
+            SetPedPropIndex(PlayerPedId(), Number(prop), outfitItem.Drawable || 0, outfitItem.Texture || 0, true);
+        }
     }
 
     public applyOutfit(outfit: Outfit) {

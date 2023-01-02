@@ -15,7 +15,6 @@ import { ServerPromiseResp } from '../../../typings/common';
 import { emitNetTyped, onNetTyped } from '../../server/utils/miscUtils';
 import { sendDialerEvent } from '../../utils/messages';
 import { animationService } from '../animations/animation.controller';
-import { hidePhone } from '../cl_main';
 import { RegisterNuiCB, RegisterNuiProxy } from '../cl_utils';
 import { ClUtils } from '../client';
 import { CallService } from './cl_calls.service';
@@ -96,12 +95,6 @@ RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, async (data, cb) => {
 onNet(CallEvents.WAS_ENDED, () => {
     callService.handleEndCall();
     animationService.endPhoneCall();
-});
-
-onNet('ems:client:onDeath', () => {
-    callService.handleEndCall();
-    animationService.endPhoneCall();
-    hidePhone();
 });
 
 // Simple fetch so lets just proxy it

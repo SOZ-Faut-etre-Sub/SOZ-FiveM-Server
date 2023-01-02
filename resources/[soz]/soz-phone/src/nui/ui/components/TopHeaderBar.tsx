@@ -4,8 +4,8 @@ import React, { FunctionComponent, memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useEmergency } from '../../../nui/hooks/useEmergency';
 import { useCallModal, useConfig, useTime } from '../../hooks/usePhone';
-import { useCall as useCurrentCall } from '../../hooks/useSimCard';
 import { useApp } from '../../os/apps/hooks/useApps';
 import { useCall } from '../../os/call/hooks/useCall';
 import { NotificationItem } from '../../os/notifications/components/NotificationItem';
@@ -20,10 +20,10 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     const { icons, notifications, removeNotification, barUncollapsed, setBarUncollapsed } = useNotifications();
 
     const { pathname } = useLocation();
-    const currentCall = useCurrentCall();
     const { call } = useCall();
 
     const callModal = useCallModal();
+    const emergency = useEmergency();
     const { icon: DialerIcon } = useApp('dialer');
 
     const config = useConfig();
@@ -36,7 +36,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     }, [notifications, setBarUncollapsed]);
 
     const color = () => {
-        if (pathname === '/') {
+        if (pathname === '/' || pathname === '/emergency') {
             return 'text-white';
         } else if (pathname === '/call' || pathname.includes('/phone')) {
             return 'text-white';
@@ -50,18 +50,27 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     return (
         <>
             <div
-                className={cn('z-40 grid grid-cols-3 px-5 py-3 text-sm w-full cursor-pointer', color())}
-                onClick={() => {
-                    setBarUncollapsed(curr => !curr);
-                }}
+                className={cn(
+                    `z-40 grid grid-cols-3 px-5 py-3 text-sm w-full`,
+                    emergency ? '' : 'cursor-pointer',
+                    color()
+                )}
+                onClick={
+                    emergency
+                        ? () => {}
+                        : () => {
+                              setBarUncollapsed(curr => !curr);
+                          }
+                }
             >
                 <div className="flex justify-center font-semibold text-center truncate">
                     <p className="mr-4">{time}</p>
-                    {callModal && <DialerIcon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />}
-                    {icons.map(notifIcon => {
-                        const Icon = notifIcon.icon;
-                        return <Icon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />;
-                    })}
+                    {!emergency && callModal && <DialerIcon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />}
+                    {!emergency &&
+                        icons.map(notifIcon => {
+                            const Icon = notifIcon.icon;
+                            return <Icon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />;
+                        })}
                 </div>
 
                 <div>&nbsp;</div>

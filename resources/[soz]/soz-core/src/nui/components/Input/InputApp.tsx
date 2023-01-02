@@ -80,7 +80,7 @@ export const InputApp: FunctionComponent = () => {
     return (
         <div className="absolute h-full w-full flex items-center justify-center bg-black bg-opacity-25">
             <form onSubmit={handleSubmit} className="w-3/5 p-2 bg-black bg-opacity-75">
-                <h2 className="text-base text-white drop-shadow-md mb-2 capitalize">{askInput.title}</h2>
+                <h2 className="text-base text-white drop-shadow-md mb-2">{askInput.title}</h2>
 
                 {askInput.maxCharacters <= 64 ? (
                     <input

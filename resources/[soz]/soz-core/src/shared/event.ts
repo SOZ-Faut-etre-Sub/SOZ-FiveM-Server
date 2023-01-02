@@ -110,7 +110,11 @@ export enum ServerEvent {
 
     LSMC_CLEAR_DISEASE = 'lsmc:maladie:ClearDisease',
     LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
-    LSMC_REVIVE = 'lsmc:server:revive',
+    LSMC_REVIVE = 'soz-core:lsmc:server:revive',
+    LSMC_FREE_BED = 'soz-core:lsmc:server:free-bed',
+    LSMC_ON_DEATH = 'soz-core:lsmc:server:on-death',
+    LSMC_SET_DEATH_REASON = 'soz-core:lsmc:server:set-death-reason',
+    LSMC_NOTIF_DEATH_REASON = 'soz-core:lsmc:server:notif-death-reason',
 
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
@@ -185,6 +189,11 @@ export enum ClientEvent {
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
     LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
+    LSMC_REVIVE = 'soz-core:lsmc:client:revive',
+    LSMC_CALL = 'soz-core:lsmc:client:call',
+    LSMC_REAMINATE = 'soz-core:lsmc:reanimate',
+    LSMC_APPLY_PATIENT_CLOTHING = 'ems:client:applyPatientClothing',
+    LSMC_REMOVE_PATIENT_CLOTHING = 'ems:client:removePatientClothing',
 
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
 

@@ -2,7 +2,8 @@ import PCancelable from 'p-cancelable';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { wait, waitUntil } from '../../core/utils';
-import { Vector4 } from '../../shared/polyzone/vector';
+import { BoxZone } from '../../shared/polyzone/box.zone';
+import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { AnimationOptions, animationOptionsToFlags } from '../../shared/progress';
 import { WeaponName } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
@@ -197,9 +198,22 @@ export class AnimationService {
     }
 
     public async walkToCoords(coords: Vector4, duration = 1000) {
+        const playerPed = PlayerPedId();
         TaskGoStraightToCoord(PlayerPedId(), coords[0], coords[1], coords[2], 1.0, duration, coords[3], 0.1);
 
-        await wait(duration);
+        const zone: BoxZone = new BoxZone([coords[0], coords[1], coords[2]], 1, 1);
+        const interval = 500;
+        for (let i = 0; i < duration - interval; i += interval) {
+            if (
+                zone.isPointInside(GetEntityCoords(playerPed) as Vector3) &&
+                Math.abs(GetEntityHeading(playerPed) - coords[3]) < 5
+            ) {
+                break;
+            }
+
+            await wait(interval);
+        }
+        await wait(interval);
     }
 
     public async playScenario(scenario: Scenario, options?: PlayOptions): Promise<boolean> {

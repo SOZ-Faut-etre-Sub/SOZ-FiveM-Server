@@ -130,4 +130,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     halloween2022: Halloween2022 | null;
     licences: Partial<Record<PlayerLicenceType, number>>;
     shortcuts: Record<number, Partial<InventoryItem>>;
+    mort: string | null;
 };

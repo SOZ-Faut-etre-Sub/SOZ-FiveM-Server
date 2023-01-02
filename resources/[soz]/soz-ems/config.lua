@@ -4,20 +4,7 @@ Config = {}
 
 Config.AllowedJobInteraction = {"lsmc"}
 
-Config.DeathTime = 900
-
 Config.ConditionType = {NoRun = "NoRun", NoHair = "NoHair"}
-
-Config.Locations = {
-    ["lit"] = {
-        [1] = {coords = vector3(312.84, -1433.25, 32.07), used = false},
-        [2] = {coords = vector3(315.47, -1435.46, 32.07), used = false},
-        [3] = {coords = vector3(318.02, -1437.59, 32.07), used = false},
-        [4] = {coords = vector3(320.61, -1439.77, 32.07), used = false},
-        [5] = {coords = vector3(325.71, -1444.05, 32.07), used = false},
-        [7] = {coords = vector3(328.38, -1446.29, 32.07), used = false},
-    },
-}
 
 Config.Cloakroom = {
     ["lsmc"] = {
@@ -139,51 +126,6 @@ Config.DutyOutfit = {
                 },
                 Props = {},
             },
-        },
-    },
-}
-
-Config.PatientClothes = {
-    [GetHashKey("mp_m_freemode_01")] = {
-        Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
-            [3] = {Drawable = 15, Texture = 0, Palette = 0},
-            [4] = {Drawable = 29, Texture = 0, Palette = 0},
-            [5] = {Drawable = 0, Texture = 0, Palette = 0},
-            [6] = {Drawable = 34, Texture = 0, Palette = 0},
-            [7] = {Drawable = 0, Texture = 0, Palette = 0},
-            [8] = {Drawable = 15, Texture = 0, Palette = 0},
-            [9] = {Drawable = 0, Texture = 0, Palette = 0},
-            [10] = {Drawable = 0, Texture = 0, Palette = 0},
-            [11] = {Drawable = 104, Texture = 0, Palette = 0},
-        },
-        Props = {
-            [0] = {Clear = true},
-            [1] = {Clear = true},
-            [2] = {Clear = true},
-            [6] = {Clear = true},
-            [7] = {Clear = true},
-        },
-    },
-    [GetHashKey("mp_f_freemode_01")] = {
-        Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
-            [3] = {Drawable = 0, Texture = 0, Palette = 0},
-            [4] = {Drawable = 21, Texture = 0, Palette = 0},
-            [6] = {Drawable = 35, Texture = 0, Palette = 0},
-            [5] = {Drawable = 0, Texture = 0, Palette = 0},
-            [7] = {Drawable = 0, Texture = 0, Palette = 0},
-            [8] = {Drawable = 14, Texture = 0, Palette = 0},
-            [9] = {Drawable = 0, Texture = 0, Palette = 0},
-            [10] = {Drawable = 0, Texture = 0, Palette = 0},
-            [11] = {Drawable = 95, Texture = 0, Palette = 0},
-        },
-        Props = {
-            [0] = {Clear = true},
-            [1] = {Clear = true},
-            [2] = {Clear = true},
-            [6] = {Clear = true},
-            [7] = {Clear = true},
         },
     },
 }

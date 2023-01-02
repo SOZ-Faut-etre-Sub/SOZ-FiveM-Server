@@ -9,8 +9,13 @@ export class Notifier {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    public notify(source: number, message: string, type: 'error' | 'success' | 'warning' | 'info' = 'success') {
-        TriggerClientEvent('hud:client:DrawNotification', source, message, type);
+    public notify(
+        source: number,
+        message: string,
+        type: 'error' | 'success' | 'warning' | 'info' = 'success',
+        delay?: number
+    ) {
+        TriggerClientEvent('hud:client:DrawNotification', source, message, type, delay);
     }
 
     public advancedNotify(
