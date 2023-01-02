@@ -24,10 +24,14 @@ export class DrivingSchoolProvider {
     @On(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY)
     public makePlayerPay(source: number, licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
         const qbPlayer = this.QBCore.getPlayer(source);
-        if (!qbPlayer) return;
+        if (!qbPlayer) {
+            return;
+        }
 
         const lData = DrivingSchoolConfig.licenses[licenseType];
-        if (!lData || typeof lData.price !== 'number') return;
+        if (!lData || typeof lData.price !== 'number') {
+            return;
+        }
 
         if (!qbPlayer.Functions.RemoveMoney('money', lData.price)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
@@ -40,7 +44,9 @@ export class DrivingSchoolProvider {
     @On(ServerEvent.DRIVING_SCHOOL_UPDATE_LICENSE)
     public updatePlayerLicense(source: number, licenseType: DrivingSchoolLicenseType, licenseLabel: string) {
         const qbPlayer = this.QBCore.getPlayer(source);
-        if (!qbPlayer) return;
+        if (!qbPlayer) {
+            return;
+        }
 
         const licenses = qbPlayer.PlayerData.metadata['licences'];
         const licenseData = DrivingSchoolConfig.licenses[licenseType];
