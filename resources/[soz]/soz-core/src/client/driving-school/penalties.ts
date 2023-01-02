@@ -123,9 +123,7 @@ class OutOfVehiclePenalty extends Penalty {
     public isValid(): boolean {
         const playerPed = GetPlayerPed(-1);
 
-        if (IsPedInAnyVehicle(playerPed, true)) {
-            return GetVehiclePedIsIn(playerPed, false) == this.context.vehicle;
-        } else return false;
+        return IsPedInAnyVehicle(playerPed, true) ? GetVehiclePedIsIn(playerPed, false) == this.context.vehicle : false;
     }
 }
 
