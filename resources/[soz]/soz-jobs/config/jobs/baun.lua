@@ -36,6 +36,20 @@ BaunConfig.Cloakroom = {
                 },
                 Props = {},
             },
+            ["Tenue d'hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 33, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 24, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 20, Texture = 7, Palette = 0},
+                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 139, Texture = 1, Palette = 0},
+                },
+                Props = {[0] = {Drawable = 61, Texture = 4, Palette = 0}},
+            },
             ["Tenue de la direction"] = {
                 Components = {
                     [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -96,6 +110,20 @@ BaunConfig.Cloakroom = {
                     [11] = {Drawable = 26, Texture = 2, Palette = 0},
                 },
                 Props = {[0] = {Drawable = 120, Texture = 0, Palette = 0}},
+            },
+            ["Tenue d'hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 36, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 133, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 42, Texture = 4, Palette = 0},
+                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 103, Texture = 1, Palette = 0},
+                },
+                Props = {[0] = {Drawable = 14, Texture = 0, Palette = 0}},
             },
             ["Tenue de la direction"] = {
                 Components = {

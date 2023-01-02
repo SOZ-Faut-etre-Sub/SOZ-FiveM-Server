@@ -24,6 +24,20 @@ Config.Cloakroom = {
                 },
                 Props = {},
             },
+            ["Tenue d'hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 22, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 24, Texture = 5, Palette = 0},
+                    [6] = {Drawable = 10, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 139, Texture = 3, Palette = 0},
+                },
+                Props = {},
+            },
             ["Tenue de direction"] = {
                 Components = {
                     [3] = {Drawable = 12, Texture = 0, Palette = 0},
@@ -45,6 +59,20 @@ Config.Cloakroom = {
                     [7] = {Drawable = 23, Texture = 0, Palette = 0},
                     [8] = {Drawable = 185, Texture = 0, Palette = 0},
                     [11] = {Drawable = 334, Texture = 1, Palette = 0},
+                },
+                Props = {},
+            },
+            ["Tenue d'hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 23, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 37, Texture = 5, Palette = 0},
+                    [6] = {Drawable = 29, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 15, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 103, Texture = 3, Palette = 0},
                 },
                 Props = {},
             },
