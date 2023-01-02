@@ -258,11 +258,7 @@ export class ExamProvider {
 
         this.penalties = [...Penalties]
             .map(P => new P(this.context))
-            .filter(P => {
-                if (Array.isArray(P.exclude)) {
-                    return !P.exclude.includes(this.license.licenseType);
-                } else return true;
-            });
+            .filter(P => (Array.isArray(P.exclude) ? !P.exclude.includes(this.license.licenseType) : true));
     }
 
     private cleanupExamSystem() {
