@@ -21,7 +21,7 @@ Config.Items = {
 Config.Harvest = {Duration = 10000}
 
 Config.Production = {
-    Tick = 60000, -- in ms
+    Tick = 48000, -- in ms
     EnergyPerCell = {
         energy_cell_fossil = GetConvarInt("soz_upw_energy_per_cell_fossil", 1),
         energy_cell_hydro = GetConvarInt("soz_upw_energy_per_cell_hydro", 1),
@@ -32,7 +32,7 @@ Config.Production = {
 }
 
 Config.Consumption = {
-    Tick = Config.Production.Tick, -- in ms
+    Tick = 60000, -- in ms
     EnergyPerTick = GetConvarInt("soz_upw_consumption_energy_per_tick", 1) / 100, -- per connected player
     EnergyJobPerTick = GetConvarInt("soz_upw_consumption_energy_job_per_tick", 1) / 100, -- per player on duty
 }
@@ -51,7 +51,7 @@ Config.WasteMultiplier = {
 
 Config.Pollution = {
     -- this value per hour represents 100% pollution
-    MaxUnitsPerHour = 624,
+    MaxUnitsPerHour = 900,
     Persistence = 24 * 7, -- 24, -- previous pollution units kept this amount of hours
     Tick = 60000, -- in ms
 }
