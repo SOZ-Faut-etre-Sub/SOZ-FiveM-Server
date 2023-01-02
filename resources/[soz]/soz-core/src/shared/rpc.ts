@@ -9,7 +9,7 @@ export enum RpcEvent {
     BENNYS_CANCEL_ORDER = 'soz-core:server:job:bennys:cancel-order',
     BENNYS_ORDER_VEHICLE = 'soz-core:server:job:bennys:order-vehicle',
 
-    DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:server:driving-school:soawn-vehicle',
+    DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:server:driving-school:spawn-vehicle',
 
     INVENTORY_SEARCH = 'soz-core:inventory:search',
 
