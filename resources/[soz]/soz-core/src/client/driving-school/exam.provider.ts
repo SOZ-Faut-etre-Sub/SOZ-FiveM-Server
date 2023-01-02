@@ -110,8 +110,16 @@ export class ExamProvider {
 
     @OnGameEvent(GameEvent.CEventNetworkVehicleUndrivable)
     private async onVehicleUndrivable(veh: number) {
+        if (!this.isExamRunning) {
+            return;
+        }
+
         if (GetEntityType(veh) == EntityType.Vehicle && IsEntityDead(veh)) {
-            this.undrivableVehicles.push(veh);
+            if (Array.isArray(this.undrivableVehicles)) {
+                this.undrivableVehicles.push(veh);
+            } else {
+                this.undrivableVehicles = [veh];
+            }
         }
     }
 
@@ -264,6 +272,7 @@ export class ExamProvider {
         delete this.currentCp;
         delete this.cpEntity;
         delete this.cpBlip;
+        delete this.undrivableVehicles;
     }
 
     private cleanupPenaltySystem() {
