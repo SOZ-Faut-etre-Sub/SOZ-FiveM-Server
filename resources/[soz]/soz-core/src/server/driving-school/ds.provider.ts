@@ -32,7 +32,7 @@ export class DrivingSchoolProvider {
             return;
         }
 
-        if (this.playerMoneyService.remove(source, lData.price)) {
+        if (!this.playerMoneyService.remove(source, lData.price)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
             return;
         }
