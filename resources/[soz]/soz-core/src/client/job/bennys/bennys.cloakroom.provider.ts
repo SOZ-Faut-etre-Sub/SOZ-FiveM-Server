@@ -108,6 +108,20 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
             },
             Props: {},
         },
+        ["Tenue d'hiver"]: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 31, Texture: 2, Palette: 0 },
+                [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 139, Texture: 3, Palette: 0 },
+            },
+            Props: {},
+        },
     },
     [GetHashKey('mp_f_freemode_01')]: {
         ['Patron']: {
@@ -205,6 +219,20 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 338, Texture: 9, Palette: 0 },
+            },
+            Props: {},
+        },
+        ["Tenue d'hiver"]: {
+            Components: {
+                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 23, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 30, Texture: 2, Palette: 0 },
+                [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 103, Texture: 3, Palette: 0 },
             },
             Props: {},
         },

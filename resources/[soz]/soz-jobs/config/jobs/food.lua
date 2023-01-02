@@ -46,6 +46,20 @@ FoodConfig.Cloakroom = {
             },
             Props = {},
         },
+        ["Tenue d'hiver"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 96, Texture = 0, Palette = 0},
+                [4] = {Drawable = 0, Texture = 8, Palette = 0},
+                [6] = {Drawable = 12, Texture = 6, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 24, Texture = 1, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 69, Texture = 3, Palette = 0},
+            },
+            Props = {},
+        },
         ["Tenue de Chasse"] = {
             Components = {
                 [1] = {Drawable = 0, Texture = 0, Palette = 0},
@@ -102,6 +116,20 @@ FoodConfig.Cloakroom = {
                 [9] = {Drawable = 0, Texture = 0, Palette = 0},
                 [10] = {Drawable = 0, Texture = 0, Palette = 0},
                 [11] = {Drawable = 7, Texture = 0, Palette = 0},
+            },
+            Props = {},
+        },
+        ["Tenue d'hiver"] = {
+            Components = {
+                [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                [3] = {Drawable = 44, Texture = 0, Palette = 0},
+                [4] = {Drawable = 1, Texture = 4, Palette = 0},
+                [6] = {Drawable = 101, Texture = 0, Palette = 0},
+                [7] = {Drawable = 0, Texture = 0, Palette = 0},
+                [8] = {Drawable = 44, Texture = 1, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                [11] = {Drawable = 63, Texture = 3, Palette = 0},
             },
             Props = {},
         },
