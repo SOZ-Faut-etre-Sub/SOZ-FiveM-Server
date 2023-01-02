@@ -51,6 +51,20 @@ Config.Cloakroom = {
                 },
                 Props = {[0] = {Clear = true}},
             },
+            ["Tenue Hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 92, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 101, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 51, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 30, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 46, Texture = 0, Palette = 0},
+                    [9] = {Drawable = 29, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 415, Texture = 0, Palette = 0},
+                },
+                Props = {},
+            },
         },
         [GetHashKey("mp_f_freemode_01")] = {
             ["Tenue incendie"] = {
@@ -81,6 +95,20 @@ Config.Cloakroom = {
                     [11] = {Drawable = 61, Texture = 2, Palette = 0},
                 },
                 Props = {[0] = {Clear = true}},
+            },
+            ["Tenue Hiver"] = {
+                Components = {
+                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [3] = {Drawable = 106, Texture = 0, Palette = 0},
+                    [4] = {Drawable = 105, Texture = 0, Palette = 0},
+                    [6] = {Drawable = 52, Texture = 0, Palette = 0},
+                    [7] = {Drawable = 14, Texture = 0, Palette = 0},
+                    [8] = {Drawable = 39, Texture = 3, Palette = 0},
+                    [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [10] = {Drawable = 0, Texture = 0, Palette = 0},
+                    [11] = {Drawable = 442, Texture = 0, Palette = 0},
+                },
+                Props = {},
             },
         },
     },
