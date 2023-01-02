@@ -24,14 +24,6 @@ MySQL.ready(function()
     local BankNotLoaded = table.clone(Config.BankPedLocations)
     local AtmNotLoaded = table.clone(Config.AtmLocations)
 
-    local weekday = os.date("%w")
-    local hour = os.date("%H")
-
-    if tonumber(weekday) == 1 and tonumber(hour) < 14 then
-        exports.oxmysql:update_async("UPDATE bank_accounts SET money = money + 400000 WHERE account_type = 'business' AND businessid IN ('lspd', 'bcso')")
-        exports.oxmysql:update_async("UPDATE bank_accounts SET money = money + 200000 WHERE account_type = 'business' AND businessid IN ('lsmc', 'bennys')")
-    end
-
     MySQL.query("SELECT * FROM bank_accounts", {}, function(result)
         if result then
             for _, v in pairs(result) do
