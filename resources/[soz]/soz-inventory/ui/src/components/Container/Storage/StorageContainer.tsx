@@ -53,7 +53,6 @@ export const StorageContainer = () => {
                     event.data.playerInventory.items = event.data.playerInventory.items.filter((i: InventoryItem) => i !== null)
                     event.data.targetInventory.items = event.data.targetInventory.items.filter((i: InventoryItem) => i !== null)
 
-
                     setPlayerInventory(event.data.playerInventory);
                     setTargetInventory(event.data.targetInventory);
 
@@ -72,9 +71,19 @@ export const StorageContainer = () => {
             } else if (event.data.action === 'updateInventory') {
                 try {
                     if (event.data.playerInventory !== undefined) {
+                        if (typeof event.data.playerInventory === "object") {
+                            event.data.playerInventory.items = Object.values(event.data.playerInventory.items);
+                        }
+                        event.data.playerInventory.items = event.data.playerInventory.items.filter((i: InventoryItem) => i !== null)
+
                         setPlayerInventory(event.data.playerInventory);
                     }
                     if (event.data.targetInventory !== undefined) {
+                        if (typeof event.data.targetInventory === "object") {
+                            event.data.targetInventory.items = Object.values(event.data.targetInventory.items);
+                        }
+                        event.data.targetInventory.items = event.data.targetInventory.items.filter((i: InventoryItem) => i !== null)
+
                         setTargetInventory(event.data.targetInventory);
                     }
                 } catch (e: any) {
