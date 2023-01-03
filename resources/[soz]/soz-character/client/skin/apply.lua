@@ -185,6 +185,8 @@ function ClothConfigComputeToClothSet(clothConfig)
     if not hasHelmet then
         SetPedConfigFlag(PlayerPedId(), 34, hasHelmet)
     end
+
+    SetPedCanLosePropsOnDamage(PlayerPedId(), not clothConfig.Config.ShowHelmet or not hasHelmet, 0)
     if clothConfig.Config.ShowHelmet and hasHelmet then
         local override = {Props = {[PropType.Head] = clothConfig["BaseClothSet"].Props[PropType.Helmet]}}
 
