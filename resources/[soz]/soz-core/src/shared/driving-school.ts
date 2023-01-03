@@ -25,7 +25,6 @@ export type CurrentExam = {
     checkpointBlip?: number;
     penalties?: Penalty[];
     context?: PenaltyContext;
-    undrivableVehicles?: number[];
 };
 
 export type DrivingSchoolLicense = {
