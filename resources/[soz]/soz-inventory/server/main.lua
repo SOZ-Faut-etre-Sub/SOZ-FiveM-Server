@@ -585,12 +585,12 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
         _G.Container[invTarget.type]:SyncInventory(invTarget.id, invTarget.items)
     end
 
-    if invSource.type ~= "player" and #invSource.users > 1 then
+    if invSource.type ~= "player" and table.length(invSource.users) > 1 then
         for player, _ in pairs(invSource.users) do
             TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invSource)
         end
     end
-    if invTarget.type ~= "player" and #invTarget.users > 1 then
+    if invTarget.type ~= "player" and table.length(invTarget.users) > 1 then
         for player, _ in pairs(invTarget.users) do
             TriggerClientEvent("inventory:client:updateTargetStoragesState", player, invTarget)
         end
@@ -653,7 +653,7 @@ function Inventory.SortInventoryAZ(inv, cb)
         _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
         success = true
 
-        if inv.type ~= "player" and #inv.users > 1 then
+        if inv.type ~= "player" and table.length(inv.users) > 1 then
             for player, _ in pairs(inv.users) do
                 TriggerClientEvent("inventory:client:updateTargetStoragesState", player, inv)
             end
