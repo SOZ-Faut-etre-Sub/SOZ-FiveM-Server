@@ -21,7 +21,6 @@ Config.Cloakroom = {
         [GetHashKey("mp_m_freemode_01")] = {
             ["Tenue Hiver"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 11, Texture = 0, Palette = 0},
                     [4] = {Drawable = 35, Texture = 0, Palette = 0},
                     [5] = {Drawable = 52, Texture = 0, Palette = 0},
@@ -54,7 +53,6 @@ Config.Cloakroom = {
             }, ]]
             ["Tenue de pilote"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 16, Texture = 0, Palette = 0},
                     [4] = {Drawable = 64, Texture = 0, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
@@ -68,7 +66,6 @@ Config.Cloakroom = {
             },
             ["Tenue de moto"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 22, Texture = 0, Palette = 0},
                     [4] = {Drawable = 32, Texture = 1, Palette = 0},
                     [6] = {Drawable = 13, Texture = 0, Palette = 0},
@@ -84,7 +81,6 @@ Config.Cloakroom = {
         [GetHashKey("mp_f_freemode_01")] = {
             ["Tenue Hiver"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 9, Texture = 0, Palette = 0},
                     [4] = {Drawable = 34, Texture = 0, Palette = 0},
                     [5] = {Drawable = 52, Texture = 0, Palette = 0},
@@ -117,7 +113,6 @@ Config.Cloakroom = {
             }, ]]
             ["Tenue de pilote"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 17, Texture = 0, Palette = 0},
                     [4] = {Drawable = 66, Texture = 0, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
@@ -131,7 +126,6 @@ Config.Cloakroom = {
             },
             ["Tenue de moto"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 3, Texture = 0, Palette = 0},
                     [4] = {Drawable = 31, Texture = 1, Palette = 0},
                     [6] = {Drawable = 34, Texture = 0, Palette = 0},
@@ -149,7 +143,6 @@ Config.Cloakroom = {
         [GetHashKey("mp_m_freemode_01")] = {
             ["Tenue Hiver"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 11, Texture = 0, Palette = 0},
                     [4] = {Drawable = 22, Texture = 8, Palette = 0},
                     [5] = {Drawable = 54, Texture = 0, Palette = 0},
@@ -164,7 +157,6 @@ Config.Cloakroom = {
             },
             ["Tenue de pilote"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 96, Texture = 0, Palette = 0},
                     [4] = {Drawable = 64, Texture = 1, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
@@ -178,7 +170,6 @@ Config.Cloakroom = {
             },
             ["Tenue de moto"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 20, Texture = 0, Palette = 0},
                     [4] = {Drawable = 32, Texture = 2, Palette = 0},
                     [5] = {Drawable = 54, Texture = 0, Palette = 0},
@@ -195,7 +186,6 @@ Config.Cloakroom = {
         [GetHashKey("mp_f_freemode_01")] = {
             ["Tenue Hiver"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 9, Texture = 0, Palette = 0},
                     [4] = {Drawable = 3, Texture = 7, Palette = 0},
                     [5] = {Drawable = 54, Texture = 0, Palette = 0},
@@ -210,7 +200,6 @@ Config.Cloakroom = {
             },
             ["Tenue de pilote"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 36, Texture = 0, Palette = 0},
                     [4] = {Drawable = 66, Texture = 1, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
@@ -224,7 +213,6 @@ Config.Cloakroom = {
             },
             ["Tenue de moto"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 0, Texture = 0, Palette = 0},
                     [4] = {Drawable = 31, Texture = 2, Palette = 0},
                     [5] = {Drawable = 54, Texture = 0, Palette = 0},
@@ -246,7 +234,6 @@ Config.DutyOutfit = {
         [0] = { -- Cadet
             [GetHashKey("mp_m_freemode_01")] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 11, Texture = 0, Palette = 0},
                     [4] = {Drawable = 35, Texture = 0, Palette = 0},
                     [5] = {Drawable = 52, Texture = 0, Palette = 0},
@@ -261,7 +248,6 @@ Config.DutyOutfit = {
             },
             [GetHashKey("mp_f_freemode_01")] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 9, Texture = 0, Palette = 0},
                     [4] = {Drawable = 34, Texture = 0, Palette = 0},
                     [5] = {Drawable = 52, Texture = 0, Palette = 0},
@@ -350,7 +336,6 @@ Config.DutyOutfit = {
         [0] = { -- Junior
             [GetHashKey("mp_m_freemode_01")] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 11, Texture = 0, Palette = 0},
                     [4] = {Drawable = 22, Texture = 8, Palette = 0},
                     [5] = {Drawable = 54, Texture = 0, Palette = 0},
@@ -365,7 +350,6 @@ Config.DutyOutfit = {
             },
             [GetHashKey("mp_f_freemode_01")] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 9, Texture = 0, Palette = 0},
                     [4] = {Drawable = 3, Texture = 7, Palette = 0},
                     [5] = {Drawable = 54, Texture = 0, Palette = 0},

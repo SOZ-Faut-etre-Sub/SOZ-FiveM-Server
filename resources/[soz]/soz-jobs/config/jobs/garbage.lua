@@ -8,7 +8,6 @@ GarbageConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         ["Essai"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 39, Texture = 0, Palette = 0},
                 [4] = {Drawable = 98, Texture = 11, Palette = 0},
                 [5] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -23,7 +22,6 @@ GarbageConfig.Cloakroom = {
         },
         ["Junior"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 39, Texture = 0, Palette = 0},
                 [4] = {Drawable = 98, Texture = 8, Palette = 0},
                 [5] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -38,7 +36,6 @@ GarbageConfig.Cloakroom = {
         },
         ["Senior"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 39, Texture = 0, Palette = 0},
                 [4] = {Drawable = 98, Texture = 8, Palette = 0},
                 [5] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -53,10 +50,9 @@ GarbageConfig.Cloakroom = {
         },
         ["Référent"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 18, Texture = 0, Palette = 0},
+                [3] = {Drawable = 39, Texture = 0, Palette = 0},
                 [4] = {Drawable = 86, Texture = 0, Palette = 0},
-                [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                [5] = {Drawable = 82, Texture = 0, Palette = 0},
                 [6] = {Drawable = 82, Texture = 0, Palette = 0},
                 [7] = {Drawable = 0, Texture = 0, Palette = 0},
                 [8] = {Drawable = 0, Texture = 24, Palette = 0},
@@ -70,7 +66,6 @@ GarbageConfig.Cloakroom = {
     [GetHashKey("mp_f_freemode_01")] = {
         ["Essai"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 33, Texture = 0, Palette = 0},
                 [4] = {Drawable = 101, Texture = 11, Palette = 0},
                 [5] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -85,7 +80,6 @@ GarbageConfig.Cloakroom = {
         },
         ["Junior"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 33, Texture = 0, Palette = 0},
                 [4] = {Drawable = 101, Texture = 8, Palette = 0},
                 [5] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -100,7 +94,6 @@ GarbageConfig.Cloakroom = {
         },
         ["Senior"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 33, Texture = 0, Palette = 0},
                 [4] = {Drawable = 101, Texture = 8, Palette = 0},
                 [5] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -115,10 +108,9 @@ GarbageConfig.Cloakroom = {
         },
         ["Référent"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
-                [3] = {Drawable = 19, Texture = 0, Palette = 0},
+                [3] = {Drawable = 33, Texture = 0, Palette = 0},
                 [4] = {Drawable = 89, Texture = 0, Palette = 0},
-                [5] = {Drawable = 0, Texture = 0, Palette = 0},
+                [5] = {Drawable = 82, Texture = 0, Palette = 0},
                 [6] = {Drawable = 25, Texture = 0, Palette = 0},
                 [7] = {Drawable = 0, Texture = 0, Palette = 0},
                 [8] = {Drawable = 0, Texture = 24, Palette = 0},

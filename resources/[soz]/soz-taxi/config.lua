@@ -26,7 +26,6 @@ Config.Cloakroom = {
             },
             ["Tenue d'hiver"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 22, Texture = 0, Palette = 0},
                     [4] = {Drawable = 24, Texture = 5, Palette = 0},
                     [6] = {Drawable = 10, Texture = 0, Palette = 0},
@@ -64,7 +63,6 @@ Config.Cloakroom = {
             },
             ["Tenue d'hiver"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 23, Texture = 0, Palette = 0},
                     [4] = {Drawable = 37, Texture = 5, Palette = 0},
                     [6] = {Drawable = 29, Texture = 0, Palette = 0},

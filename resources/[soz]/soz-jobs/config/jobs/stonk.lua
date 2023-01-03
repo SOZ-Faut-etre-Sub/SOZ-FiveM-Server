@@ -3,7 +3,6 @@ StonkConfig = {}
 StonkConfig.DutyOutfit = {
     [GetHashKey("mp_m_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 4, Texture = 0, Palette = 0},
             [4] = {Drawable = 25, Texture = 3, Palette = 0},
             [6] = {Drawable = 54, Texture = 0, Palette = 0},
@@ -17,7 +16,6 @@ StonkConfig.DutyOutfit = {
     },
     [GetHashKey("mp_f_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 3, Texture = 0, Palette = 0},
             [4] = {Drawable = 3, Texture = 15, Palette = 0},
             [6] = {Drawable = 55, Texture = 0, Palette = 0},
@@ -49,7 +47,6 @@ StonkConfig.Cloakroom = {
         },
         ["Tenue Direction"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 4, Texture = 0, Palette = 0},
                 [4] = {Drawable = 24, Texture = 3, Palette = 0},
                 [6] = {Drawable = 20, Texture = 3, Palette = 0},
@@ -79,7 +76,6 @@ StonkConfig.Cloakroom = {
         },
         ["Tenue Direction"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 3, Texture = 0, Palette = 0},
                 [4] = {Drawable = 37, Texture = 3, Palette = 0},
                 [6] = {Drawable = 29, Texture = 1, Palette = 0},

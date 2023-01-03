@@ -6,7 +6,6 @@ FoodConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         ["Tenue de Direction"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 6, Texture = 0, Palette = 0},
                 [4] = {Drawable = 24, Texture = 0, Palette = 0},
                 [6] = {Drawable = 104, Texture = 4, Palette = 0},
@@ -20,7 +19,6 @@ FoodConfig.Cloakroom = {
         },
         ["Tenue de travail"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 0, Texture = 0, Palette = 0},
                 [4] = {Drawable = 90, Texture = 0, Palette = 0},
                 [6] = {Drawable = 51, Texture = 0, Palette = 0},
@@ -34,7 +32,6 @@ FoodConfig.Cloakroom = {
         },
         ["Tenue de prestation"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 14, Texture = 0, Palette = 0},
                 [4] = {Drawable = 35, Texture = 0, Palette = 0},
                 [6] = {Drawable = 20, Texture = 3, Palette = 0},
@@ -48,7 +45,6 @@ FoodConfig.Cloakroom = {
         },
         ["Tenue d'hiver"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 96, Texture = 0, Palette = 0},
                 [4] = {Drawable = 0, Texture = 8, Palette = 0},
                 [6] = {Drawable = 12, Texture = 6, Palette = 0},
@@ -62,7 +58,6 @@ FoodConfig.Cloakroom = {
         },
         ["Tenue de Chasse"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 12, Texture = 0, Palette = 0},
                 [4] = {Drawable = 86, Texture = 6, Palette = 0},
                 [6] = {Drawable = 63, Texture = 4, Palette = 0},
@@ -79,7 +74,6 @@ FoodConfig.Cloakroom = {
     [GetHashKey("mp_f_freemode_01")] = {
         ["Tenue de Direction"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 3, Texture = 0, Palette = 0},
                 [4] = {Drawable = 37, Texture = 0, Palette = 0},
                 [6] = {Drawable = 42, Texture = 2, Palette = 0},
@@ -93,7 +87,6 @@ FoodConfig.Cloakroom = {
         },
         ["Tenue de travail"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 0, Texture = 0, Palette = 0},
                 [4] = {Drawable = 93, Texture = 0, Palette = 0},
                 [6] = {Drawable = 52, Texture = 0, Palette = 0},
@@ -107,7 +100,6 @@ FoodConfig.Cloakroom = {
         },
         ["Tenue de prestation"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 3, Texture = 0, Palette = 0},
                 [4] = {Drawable = 34, Texture = 0, Palette = 0},
                 [6] = {Drawable = 29, Texture = 1, Palette = 0},
@@ -121,7 +113,6 @@ FoodConfig.Cloakroom = {
         },
         ["Tenue d'hiver"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 44, Texture = 0, Palette = 0},
                 [4] = {Drawable = 1, Texture = 4, Palette = 0},
                 [6] = {Drawable = 101, Texture = 0, Palette = 0},
@@ -135,7 +126,6 @@ FoodConfig.Cloakroom = {
         },
         ["Tenue de Chasse"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 0, Texture = 0, Palette = 0},
                 [4] = {Drawable = 89, Texture = 6, Palette = 0},
                 [6] = {Drawable = 66, Texture = 4, Palette = 0},

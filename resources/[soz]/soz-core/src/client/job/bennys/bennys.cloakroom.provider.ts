@@ -12,7 +12,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
         ['Patron']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 17, Palette: 0 },
                 [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
@@ -26,7 +25,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ["Chef d'atelier"]: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
@@ -40,7 +38,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ['Mécano confirmé']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 64, Texture: 13, Palette: 0 },
@@ -54,7 +51,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ['Mécano']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
@@ -68,7 +64,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ['Mécano novice']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 64, Texture: 13, Palette: 0 },
@@ -82,7 +77,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ['Apprenti']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
                 [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
@@ -96,7 +90,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ["Responsable d'atelier"]: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
@@ -110,7 +103,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ["Tenue d'hiver"]: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 31, Texture: 2, Palette: 0 },
                 [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
@@ -126,7 +118,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
     [GetHashKey('mp_f_freemode_01')]: {
         ['Patron']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 17, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
@@ -140,7 +131,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ["Chef d'atelier"]: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
@@ -154,7 +144,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ['Mécano confirmé']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 67, Texture: 13, Palette: 0 },
@@ -168,7 +157,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ['Mécano']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
@@ -182,7 +170,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ['Mécano novice']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 67, Texture: 13, Palette: 0 },
@@ -196,7 +183,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ['Apprenti']: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
@@ -210,7 +196,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ["Responsable d'atelier"]: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
@@ -224,7 +209,6 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
         },
         ["Tenue d'hiver"]: {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 23, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 30, Texture: 2, Palette: 0 },
                 [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
@@ -261,7 +245,7 @@ export class BennysCloakroomProvider {
             return;
         }
 
-        await this.progressService.progress(
+        const progress = await this.progressService.progress(
             'switch_clothes',
             "Changement d'habits...",
             5000,
@@ -278,6 +262,10 @@ export class BennysCloakroomProvider {
                 disableMovement: true,
             }
         );
+
+        if (!progress.completed) {
+            return;
+        }
 
         if (outfitSelection.outfit) {
             if (storageIdToSave) {

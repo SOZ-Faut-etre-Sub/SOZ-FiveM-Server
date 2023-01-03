@@ -18,7 +18,6 @@ Config.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         ["Tenue Bucheron"] = {
             Components = {
-                [1] = {Palette = 0, Texture = 0, Drawable = 0},
                 [3] = {Palette = 0, Texture = 4, Drawable = 145},
                 [4] = {Palette = 0, Texture = 8, Drawable = 90},
                 [6] = {Palette = 0, Texture = 0, Drawable = 81},
@@ -32,7 +31,6 @@ Config.Cloakroom = {
         },
         ["Chef Bucheron"] = {
             Components = {
-                [1] = {Palette = 0, Texture = 0, Drawable = 0},
                 [3] = {Palette = 0, Texture = 4, Drawable = 145},
                 [4] = {Palette = 0, Texture = 3, Drawable = 98},
                 [6] = {Palette = 0, Texture = 0, Drawable = 81},
@@ -46,7 +44,6 @@ Config.Cloakroom = {
         },
         ["Tenue d'hiver"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 145, Texture = 4, Palette = 0},
                 [4] = {Drawable = 97, Texture = 2, Palette = 0},
                 [6] = {Drawable = 70, Texture = 2, Palette = 0},
@@ -62,7 +59,6 @@ Config.Cloakroom = {
     [GetHashKey("mp_f_freemode_01")] = {
         ["Tenue Bucheron"] = {
             Components = {
-                [1] = {Texture = 0, Drawable = 0, Palette = 0},
                 [3] = {Texture = 4, Drawable = 179, Palette = 0},
                 [4] = {Texture = 8, Drawable = 93, Palette = 0},
                 [6] = {Texture = 0, Drawable = 86, Palette = 0},
@@ -76,7 +72,6 @@ Config.Cloakroom = {
         },
         ["Chef Bucheron"] = {
             Components = {
-                [1] = {Texture = 0, Drawable = 0, Palette = 0},
                 [3] = {Texture = 4, Drawable = 179, Palette = 0},
                 [4] = {Texture = 3, Drawable = 101, Palette = 0},
                 [6] = {Texture = 0, Drawable = 86, Palette = 0},
@@ -90,7 +85,6 @@ Config.Cloakroom = {
         },
         ["Tenue d'hiver"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 179, Texture = 4, Palette = 0},
                 [4] = {Drawable = 100, Texture = 2, Palette = 0},
                 [6] = {Drawable = 73, Texture = 2, Palette = 0},
