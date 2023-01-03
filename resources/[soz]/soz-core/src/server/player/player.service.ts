@@ -117,8 +117,8 @@ export class PlayerService {
         source: number,
         key: K,
         value: number,
-        min = 0,
-        max: number | null = null
+        min: number,
+        max: number
     ): number {
         const player = this.QBCore.getPlayer(source);
 

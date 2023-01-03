@@ -22,6 +22,13 @@ const STRENGTH_RATE = -1.0;
 const MAX_STAMINA_RATE = -1.0;
 const STRESS_RATE = -1.0;
 
+const STRENGTH_MIN = 60;
+const STRENGTH_MAX = 150;
+const MAX_STAMINA_MIN = 60;
+const MAX_STAMINA_MAX = 150;
+const STRESS_MIN = 0;
+const STRESS_MAX = 100;
+
 @Provider()
 export class PlayerHealthProvider {
     @Inject(PlayerService)
@@ -84,7 +91,7 @@ export class PlayerHealthProvider {
                 playerState.exercise.completed < 4
             ) {
                 playerState.lastStrengthUpdate = new Date();
-                this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, 60, 150);
+                this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, STRENGTH_MIN, STRENGTH_MAX);
                 this.playerService.updatePlayerMaxWeight(source);
 
                 playerState.lostStrength += 1;
@@ -96,7 +103,13 @@ export class PlayerHealthProvider {
 
             if (staminaTimeDiff > 60 * 60 * 1000 && playerState.lostStamina < 3 && playerState.runTime < 60 * 8) {
                 playerState.lastMaxStaminaUpdate = new Date();
-                this.playerService.incrementMetadata(source, 'max_stamina', MAX_STAMINA_RATE, 60, 150);
+                this.playerService.incrementMetadata(
+                    source,
+                    'max_stamina',
+                    MAX_STAMINA_RATE,
+                    MAX_STAMINA_MIN,
+                    MAX_STAMINA_MAX
+                );
 
                 playerState.lostStamina += 1;
 
@@ -107,7 +120,7 @@ export class PlayerHealthProvider {
 
             if (stressTimeDiff > 30 * 60 * 1000) {
                 playerState.lastStressLevelUpdate = new Date();
-                this.playerService.incrementMetadata(source, 'stress_level', STRESS_RATE, 0, 100);
+                this.playerService.incrementMetadata(source, 'stress_level', STRESS_RATE, STRESS_MIN, STRESS_MAX);
 
                 this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'success');
             }
@@ -134,7 +147,7 @@ export class PlayerHealthProvider {
         playerState.exercise[exercise] = true;
         playerState.exercise.completed += 1;
 
-        this.playerService.incrementMetadata(source, 'strength', 2, 60, 150);
+        this.playerService.incrementMetadata(source, 'strength', 2, STRENGTH_MIN, STRENGTH_MAX);
         this.playerService.updatePlayerMaxWeight(source);
     }
 
@@ -142,7 +155,7 @@ export class PlayerHealthProvider {
     public async increaseStress(source: number, stress: number): Promise<void> {
         const playerState = this.playerStateService.get(source);
         playerState.lastStressLevelUpdate = new Date();
-        this.playerService.incrementMetadata(source, 'stress_level', stress, 0, 100);
+        this.playerService.incrementMetadata(source, 'stress_level', stress, STRESS_MIN, STRESS_MAX);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_RUN_TIME)
@@ -165,7 +178,7 @@ export class PlayerHealthProvider {
             const minutes = playerState.runTime / 60;
 
             if (playerState.runTime % 120 == 0) {
-                this.playerService.incrementMetadata(source, 'max_stamina', 1);
+                this.playerService.incrementMetadata(source, 'max_stamina', 1, MAX_STAMINA_MIN, MAX_STAMINA_MAX);
             }
 
             if (minutes < 8) {
