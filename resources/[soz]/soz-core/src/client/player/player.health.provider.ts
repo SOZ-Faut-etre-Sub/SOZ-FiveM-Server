@@ -1,4 +1,4 @@
-import { Once, OnceStep, OnEvent, On } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -192,7 +192,6 @@ const GymWardrobeConfig: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
         'Homme natation': {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 16, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
@@ -206,7 +205,6 @@ const GymWardrobeConfig: WardrobeConfig = {
         },
         'Homme sport': {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 12, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 31, Texture: 0, Palette: 3 },
@@ -222,7 +220,6 @@ const GymWardrobeConfig: WardrobeConfig = {
     [GetHashKey('mp_f_freemode_01')]: {
         'Femme natation': {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 17, Texture: 9, Palette: 0 },
                 [Component.Shoes]: { Drawable: 35, Texture: 0, Palette: 0 },
@@ -236,7 +233,6 @@ const GymWardrobeConfig: WardrobeConfig = {
         },
         'Femme sport': {
             Components: {
-                [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 10, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 81, Texture: 0, Palette: 0 },
@@ -579,7 +575,7 @@ export class PlayerHealthProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded(player: PlayerData): Promise<void> {
+    async onPlayerLoaded(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }

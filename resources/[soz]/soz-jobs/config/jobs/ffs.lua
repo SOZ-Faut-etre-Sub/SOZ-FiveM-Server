@@ -4,7 +4,6 @@ FfsConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         ["Tenue Employé"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 4, Texture = 0, Palette = 0},
                 [4] = {Drawable = 53, Texture = 0, Palette = 0},
                 [5] = {Drawable = 41, Texture = 0, Palette = 0},
@@ -19,7 +18,6 @@ FfsConfig.Cloakroom = {
         },
         ["Tenue Direction"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 4, Texture = 0, Palette = 0},
                 [4] = {Drawable = 25, Texture = 0, Palette = 0},
                 [6] = {Drawable = 15, Texture = 0, Palette = 0},
@@ -35,7 +33,6 @@ FfsConfig.Cloakroom = {
     [GetHashKey("mp_f_freemode_01")] = {
         ["Tenue Employé"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 3, Texture = 0, Palette = 0},
                 [4] = {Drawable = 55, Texture = 0, Palette = 0},
                 [5] = {Drawable = 41, Texture = 0, Palette = 0},
@@ -50,7 +47,6 @@ FfsConfig.Cloakroom = {
         },
         ["Tenue Direction"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 3, Texture = 0, Palette = 0},
                 [4] = {Drawable = 23, Texture = 10, Palette = 0},
                 [6] = {Drawable = 29, Texture = 0, Palette = 0},

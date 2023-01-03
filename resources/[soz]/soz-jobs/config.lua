@@ -566,7 +566,6 @@ SozJobCore.adsl_vehicule = {x = 500.79, y = -105.88, z = 62.07, w = 253.78}
 SozJobCore.adsl_clothes = {
     [GetHashKey("mp_m_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 0, Texture = 0, Palette = 0},
             [4] = {Drawable = 9, Texture = 3, Palette = 0},
             [6] = {Drawable = 25, Texture = 0, Palette = 0},
@@ -580,7 +579,6 @@ SozJobCore.adsl_clothes = {
     },
     [GetHashKey("mp_f_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 14, Texture = 0, Palette = 0},
             [4] = {Drawable = 11, Texture = 4, Palette = 0},
             [6] = {Drawable = 25, Texture = 0, Palette = 0},
@@ -599,7 +597,6 @@ SozJobCore.livraison_vehicule = {x = -413.45, y = -2791.54, z = 7.0, w = 317.52}
 SozJobCore.livraison_clothes = {
     [GetHashKey("mp_m_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 0, Texture = 0, Palette = 0},
             [4] = {Drawable = 6, Texture = 0, Palette = 0},
             [6] = {Drawable = 9, Texture = 10, Palette = 0},
@@ -613,7 +610,6 @@ SozJobCore.livraison_clothes = {
     },
     [GetHashKey("mp_f_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 14, Texture = 0, Palette = 0},
             [4] = {Drawable = 8, Texture = 4, Palette = 0},
             [6] = {Drawable = 3, Texture = 5, Palette = 0},
@@ -633,7 +629,6 @@ SozJobCore.religion_prayers_range = {min = 3, max = 6}
 SozJobCore.religion_clothes = {
     [GetHashKey("mp_m_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 11, Texture = 0, Palette = 0},
             [4] = {Drawable = 0, Texture = 0, Palette = 0},
             [6] = {Drawable = 14, Texture = 0, Palette = 0},
@@ -647,7 +642,6 @@ SozJobCore.religion_clothes = {
     },
     [GetHashKey("mp_f_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 14, Texture = 0, Palette = 0},
             [4] = {Drawable = 0, Texture = 0, Palette = 0},
             [6] = {Drawable = 2, Texture = 2, Palette = 0},
@@ -666,7 +660,6 @@ SozJobCore.metal_vehicule = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67}
 SozJobCore.metal_clothes = {
     [GetHashKey("mp_m_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 0, Texture = 0, Palette = 0},
             [4] = {Drawable = 9, Texture = 8, Palette = 0},
             [6] = {Drawable = 25, Texture = 0, Palette = 0},
@@ -680,7 +673,6 @@ SozJobCore.metal_clothes = {
     },
     [GetHashKey("mp_f_freemode_01")] = {
         Components = {
-            [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 14, Texture = 0, Palette = 0},
             [4] = {Drawable = 11, Texture = 2, Palette = 0},
             [6] = {Drawable = 25, Texture = 0, Palette = 0},

@@ -10,7 +10,6 @@ BaunConfig.Cloakroom = {
         [GetHashKey("mp_m_freemode_01")] = {
             ["Tenue de travail"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 61, Texture = 0, Palette = 0},
                     [4] = {Drawable = 1, Texture = 1, Palette = 0},
                     [6] = {Drawable = 4, Texture = 4, Palette = 0},
@@ -24,7 +23,6 @@ BaunConfig.Cloakroom = {
             },
             ["Tenue de service"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 11, Texture = 0, Palette = 0},
                     [4] = {Drawable = 35, Texture = 0, Palette = 0},
                     [6] = {Drawable = 21, Texture = 0, Palette = 0},
@@ -38,7 +36,6 @@ BaunConfig.Cloakroom = {
             },
             ["Tenue d'hiver"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 33, Texture = 0, Palette = 0},
                     [4] = {Drawable = 24, Texture = 0, Palette = 0},
                     [6] = {Drawable = 20, Texture = 7, Palette = 0},
@@ -52,7 +49,6 @@ BaunConfig.Cloakroom = {
             },
             ["Tenue de la direction"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 1, Texture = 0, Palette = 0},
                     [4] = {Drawable = 25, Texture = 2, Palette = 0},
                     [6] = {Drawable = 21, Texture = 0, Palette = 0},
@@ -66,7 +62,6 @@ BaunConfig.Cloakroom = {
             },
             ["Tenue de patron"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 83, Texture = 0, Palette = 0},
                     [4] = {Drawable = 143, Texture = 8, Palette = 0},
                     [6] = {Drawable = 18, Texture = 0, Palette = 0},
@@ -85,7 +80,6 @@ BaunConfig.Cloakroom = {
         [GetHashKey("mp_f_freemode_01")] = {
             ["Tenue de travail"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 19, Texture = 0, Palette = 0},
                     [4] = {Drawable = 4, Texture = 0, Palette = 0},
                     [6] = {Drawable = 3, Texture = 2, Palette = 0},
@@ -99,7 +93,6 @@ BaunConfig.Cloakroom = {
             },
             ["Tenue de service"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 4, Texture = 0, Palette = 0},
                     [4] = {Drawable = 6, Texture = 0, Palette = 0},
                     [6] = {Drawable = 42, Texture = 2, Palette = 0},
@@ -113,7 +106,6 @@ BaunConfig.Cloakroom = {
             },
             ["Tenue d'hiver"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 36, Texture = 0, Palette = 0},
                     [4] = {Drawable = 133, Texture = 0, Palette = 0},
                     [6] = {Drawable = 42, Texture = 4, Palette = 0},
@@ -127,7 +119,6 @@ BaunConfig.Cloakroom = {
             },
             ["Tenue de la direction"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 7, Texture = 0, Palette = 0},
                     [4] = {Drawable = 76, Texture = 0, Palette = 0},
                     [6] = {Drawable = 20, Texture = 2, Palette = 0},
@@ -141,7 +132,6 @@ BaunConfig.Cloakroom = {
             },
             ["Tenue de patron"] = {
                 Components = {
-                    [1] = {Drawable = 0, Texture = 0, Palette = 0},
                     [3] = {Drawable = 12, Texture = 0, Palette = 0},
                     [4] = {Drawable = 15, Texture = 0, Palette = 0},
                     [6] = {Drawable = 42, Texture = 2, Palette = 0},

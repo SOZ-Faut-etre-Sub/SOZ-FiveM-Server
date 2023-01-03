@@ -40,7 +40,6 @@ FuelerConfig.Cloakroom = {
     [GetHashKey("mp_m_freemode_01")] = {
         ["Tenue de travail d'hiver"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 1, Texture = 0, Palette = 0},
                 [4] = {Drawable = 98, Texture = 16, Palette = 0},
                 [6] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -54,7 +53,6 @@ FuelerConfig.Cloakroom = {
         },
         ["Tenue Direction"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 4, Texture = 0, Palette = 0},
                 [4] = {Drawable = 129, Texture = 4, Palette = 0},
                 [6] = {Drawable = 20, Texture = 3, Palette = 0},
@@ -68,7 +66,6 @@ FuelerConfig.Cloakroom = {
         },
         ["Tenue de travail d'été"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 0, Texture = 0, Palette = 0},
                 [4] = {Drawable = 98, Texture = 16, Palette = 0},
                 [6] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -82,7 +79,6 @@ FuelerConfig.Cloakroom = {
         },
         ["Tenue Formateur"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 0, Texture = 0, Palette = 0},
                 [4] = {Drawable = 98, Texture = 16, Palette = 0},
                 [6] = {Drawable = 82, Texture = 0, Palette = 0},
@@ -98,7 +94,6 @@ FuelerConfig.Cloakroom = {
     [GetHashKey("mp_f_freemode_01")] = {
         ["Tenue de travail d'hiver"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 1, Texture = 0, Palette = 0},
                 [4] = {Drawable = 101, Texture = 16, Palette = 0},
                 [6] = {Drawable = 25, Texture = 0, Palette = 0},
@@ -112,7 +107,6 @@ FuelerConfig.Cloakroom = {
         },
         ["Tenue Direction"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 3, Texture = 0, Palette = 0},
                 [4] = {Drawable = 37, Texture = 5, Palette = 0},
                 [6] = {Drawable = 29, Texture = 1, Palette = 0},
@@ -126,7 +120,6 @@ FuelerConfig.Cloakroom = {
         },
         ["Tenue de travail d'été"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 14, Texture = 0, Palette = 0},
                 [4] = {Drawable = 101, Texture = 16, Palette = 0},
                 [6] = {Drawable = 25, Texture = 0, Palette = 0},
@@ -140,7 +133,6 @@ FuelerConfig.Cloakroom = {
         },
         ["Tenue Formateur"] = {
             Components = {
-                [1] = {Drawable = 0, Texture = 0, Palette = 0},
                 [3] = {Drawable = 0, Texture = 0, Palette = 0},
                 [4] = {Drawable = 101, Texture = 16, Palette = 0},
                 [6] = {Drawable = 25, Texture = 0, Palette = 0},

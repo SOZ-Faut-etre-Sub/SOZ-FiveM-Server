@@ -92,7 +92,6 @@ Config.Cloakroom = {
             name = "Tenue d'apprenti pour été",
             skin = {
                 Components = {
-                    [1] = {Palette = 0, Drawable = 0, Texture = 0},
                     [3] = {Palette = 0, Drawable = 41, Texture = 0},
                     [4] = {Palette = 0, Drawable = 98, Texture = 19},
                     [6] = {Palette = 0, Drawable = 12, Texture = 5},
@@ -109,7 +108,6 @@ Config.Cloakroom = {
             name = "Tenue d'apprenti pour hiver",
             skin = {
                 Components = {
-                    [1] = {Palette = 0, Drawable = 0, Texture = 0},
                     [3] = {Palette = 0, Drawable = 42, Texture = 0},
                     [4] = {Palette = 0, Drawable = 98, Texture = 19},
                     [6] = {Palette = 0, Drawable = 12, Texture = 5},
@@ -126,7 +124,6 @@ Config.Cloakroom = {
             name = "Tenue d'électricien pour été",
             skin = {
                 Components = {
-                    [1] = {Palette = 0, Drawable = 0, Texture = 0},
                     [3] = {Palette = 0, Drawable = 41, Texture = 0},
                     [4] = {Palette = 0, Drawable = 98, Texture = 19},
                     [6] = {Palette = 0, Drawable = 12, Texture = 5},
@@ -143,7 +140,6 @@ Config.Cloakroom = {
             name = "Tenue d'électricien pour hiver",
             skin = {
                 Components = {
-                    [1] = {Palette = 0, Drawable = 0, Texture = 0},
                     [3] = {Palette = 0, Drawable = 42, Texture = 0},
                     [4] = {Palette = 0, Drawable = 98, Texture = 19},
                     [6] = {Palette = 0, Drawable = 12, Texture = 5},
@@ -160,7 +156,6 @@ Config.Cloakroom = {
             name = "Tenue de chef électricien pour été",
             skin = {
                 Components = {
-                    [1] = {Palette = 0, Drawable = 0, Texture = 0},
                     [3] = {Palette = 0, Drawable = 41, Texture = 0},
                     [4] = {Palette = 0, Drawable = 98, Texture = 19},
                     [6] = {Palette = 0, Drawable = 12, Texture = 5},
@@ -177,7 +172,6 @@ Config.Cloakroom = {
             name = "Tenue de chef électricien pour hiver",
             skin = {
                 Components = {
-                    [1] = {Palette = 0, Drawable = 0, Texture = 0},
                     [3] = {Palette = 0, Drawable = 42, Texture = 0},
                     [4] = {Palette = 0, Drawable = 98, Texture = 19},
                     [6] = {Palette = 0, Drawable = 12, Texture = 5},
@@ -194,7 +188,6 @@ Config.Cloakroom = {
             name = "Tenue de la Direction",
             skin = {
                 Components = {
-                    [1] = {Palette = 0, Drawable = 0, Texture = 0},
                     [3] = {Palette = 0, Drawable = 1, Texture = 0},
                     [4] = {Palette = 0, Drawable = 25, Texture = 0},
                     [6] = {Palette = 0, Drawable = 56, Texture = 1},
@@ -213,7 +206,6 @@ Config.Cloakroom = {
             name = "Tenue d'apprentie pour été",
             skin = {
                 Components = {
-                    [1] = {Texture = 0, Palette = 0, Drawable = 0},
                     [3] = {Texture = 0, Palette = 0, Drawable = 57},
                     [4] = {Texture = 19, Palette = 0, Drawable = 101},
                     [6] = {Texture = 2, Palette = 0, Drawable = 60},
@@ -230,7 +222,6 @@ Config.Cloakroom = {
             name = "Tenue d'apprentie pour hiver",
             skin = {
                 Components = {
-                    [1] = {Texture = 0, Palette = 0, Drawable = 0},
                     [3] = {Texture = 0, Palette = 0, Drawable = 46},
                     [4] = {Texture = 19, Palette = 0, Drawable = 101},
                     [6] = {Texture = 2, Palette = 0, Drawable = 60},
@@ -247,7 +238,6 @@ Config.Cloakroom = {
             name = "Tenue d'électricienne pour été",
             skin = {
                 Components = {
-                    [1] = {Texture = 0, Palette = 0, Drawable = 0},
                     [3] = {Texture = 0, Palette = 0, Drawable = 57},
                     [4] = {Texture = 19, Palette = 0, Drawable = 101},
                     [6] = {Texture = 2, Palette = 0, Drawable = 60},
@@ -264,7 +254,6 @@ Config.Cloakroom = {
             name = "Tenue d'électricienne pour hiver",
             skin = {
                 Components = {
-                    [1] = {Texture = 0, Palette = 0, Drawable = 0},
                     [3] = {Texture = 0, Palette = 0, Drawable = 46},
                     [4] = {Texture = 19, Palette = 0, Drawable = 101},
                     [6] = {Texture = 2, Palette = 0, Drawable = 60},
@@ -281,7 +270,6 @@ Config.Cloakroom = {
             name = "Tenue de cheffe électricienne pour été",
             skin = {
                 Components = {
-                    [1] = {Texture = 0, Palette = 0, Drawable = 0},
                     [3] = {Texture = 0, Palette = 0, Drawable = 57},
                     [4] = {Texture = 19, Palette = 0, Drawable = 101},
                     [6] = {Texture = 2, Palette = 0, Drawable = 60},
@@ -298,7 +286,6 @@ Config.Cloakroom = {
             name = "Tenue de cheffe électricienne pour hiver",
             skin = {
                 Components = {
-                    [1] = {Texture = 0, Palette = 0, Drawable = 0},
                     [3] = {Texture = 0, Palette = 0, Drawable = 46},
                     [4] = {Texture = 19, Palette = 0, Drawable = 101},
                     [6] = {Texture = 2, Palette = 0, Drawable = 60},
@@ -315,7 +302,6 @@ Config.Cloakroom = {
             name = "Tenue de la Direction",
             skin = {
                 Components = {
-                    [1] = {Texture = 0, Palette = 0, Drawable = 0},
                     [3] = {Texture = 0, Palette = 0, Drawable = 5},
                     [4] = {Texture = 0, Palette = 0, Drawable = 133},
                     [6] = {Texture = 0, Palette = 0, Drawable = 27},
