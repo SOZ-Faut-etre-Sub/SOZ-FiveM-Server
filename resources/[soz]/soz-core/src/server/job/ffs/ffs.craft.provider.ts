@@ -54,8 +54,8 @@ export class FightForStyleCraftProvider {
 
     private canCraft(source: number, craftProcess: Process): boolean {
         for (const input of craftProcess.inputs) {
-            const item = this.inventoryManager.getFirstItemInventory(source, input.id);
-            if (!item || item.amount < input.amount) {
+            const amount = this.inventoryManager.getItemCount(source, input.id);
+            if (!amount || amount < input.amount) {
                 return false;
             }
         }

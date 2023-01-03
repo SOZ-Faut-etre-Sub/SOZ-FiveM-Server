@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { ItemService } from '../../server/item/item.service';
 import { InventoryItem } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 
@@ -6,6 +7,9 @@ import { PlayerService } from '../player/player.service';
 export class InventoryManager {
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
 
     public getItems(): InventoryItem[] {
         const items = this.playerService.getPlayer().items;
@@ -17,17 +21,22 @@ export class InventoryManager {
         }
     }
 
-    public hasEnoughItem(itemId: string, amount?: number): boolean {
+    public hasEnoughItem(itemId: string, amount?: number, skipExpiredItem?: boolean): boolean {
         const items = this.playerService.getPlayer().items;
+        let count = 0;
 
         if (Array.isArray(items)) {
             for (const item of items) {
                 if (item.name === itemId) {
-                    if (amount) {
-                        return item.amount >= amount;
+                    if (!amount) {
+                        return true;
                     }
 
-                    return true;
+                    if (skipExpiredItem && this.itemService.isItemExpired(item)) {
+                        continue;
+                    }
+
+                    count += item.amount;
                 }
             }
         } else {
@@ -35,13 +44,21 @@ export class InventoryManager {
                 const item = items[slot];
 
                 if (item.name === itemId) {
-                    if (amount) {
-                        return item.amount >= amount;
+                    if (!amount) {
+                        return true;
                     }
 
-                    return true;
+                    if (skipExpiredItem && this.itemService.isItemExpired(item)) {
+                        continue;
+                    }
+
+                    count += item.amount;
                 }
             }
+        }
+
+        if (amount) {
+            return count >= amount;
         }
         return false;
     }

@@ -76,10 +76,7 @@ export class FoodProvider {
             const inputs = [];
             for (const input of craftProcess.inputs) {
                 const item = this.itemService.getItem(input.id);
-                const predicate = (item: InventoryItem) => {
-                    return item.name === input.id && item.amount >= input.amount && !this.itemService.isExpired(item);
-                };
-                const hasRequiredAmount = !!this.inventoryManager.findItem(predicate);
+                const hasRequiredAmount = !!this.inventoryManager.hasEnoughItem(input.id, input.amount, true);
                 inputs.push({
                     label: input.amount > 1 && item.pluralLabel ? item.pluralLabel : item.label,
                     hasRequiredAmount,
