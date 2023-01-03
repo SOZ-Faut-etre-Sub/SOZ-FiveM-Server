@@ -1,3 +1,4 @@
+import { Penalty } from '../client/driving-school/penalties';
 import { Notifier } from '../client/notifier';
 import { PhoneService } from '../client/phone/phone.service';
 import { PlayerService } from '../client/player/player.service';
@@ -9,6 +10,22 @@ export type Checkpoint = {
     coords: Vector3;
     message?: string;
     licenses?: DrivingSchoolLicenseType[];
+};
+
+export type CurrentExam = {
+    isExamRunning: boolean;
+    isPenaltyLoopRunning: boolean;
+    license?: DrivingSchoolLicense;
+    spawnPoint?: Vector4;
+    instructorEntity?: number;
+    vehicleEntity?: number;
+    checkpoints?: Checkpoint[];
+    currentCheckpoint?: Checkpoint;
+    checkpointEntity?: number;
+    checkpointBlip?: number;
+    penalties?: Penalty[];
+    context?: PenaltyContext;
+    undrivableVehicles?: number[];
 };
 
 export type DrivingSchoolLicense = {

@@ -7,10 +7,10 @@ import { wait } from '../../core/utils';
 import {
     Checkpoint,
     Checkpoints,
+    CurrentExam,
     DrivingSchoolConfig,
     DrivingSchoolLicense,
     DrivingSchoolLicenseType,
-    PenaltyContext,
 } from '../../shared/driving-school';
 import { EntityType } from '../../shared/entity';
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
@@ -23,28 +23,11 @@ import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { TargetOptions } from '../target/target.factory';
 import { VehicleSeatbeltProvider } from '../vehicle/vehicle.seatbelt.provider';
-import { Penalties, Penalty } from './penalties';
+import { Penalties } from './penalties';
 
 @Provider()
 export class ExamProvider {
-    private license: DrivingSchoolLicense;
-    private spawnPoint: Vector4;
-
-    private isExamRunning = false;
-    private isPenaltyLoopRunning = false;
-
-    private checkpoints: Checkpoint[];
-    private currentCp: Checkpoint;
-    private cpEntity: number;
-    private cpBlip: number;
-
-    private context: PenaltyContext;
-    private penalties: Penalty[];
-
-    private undrivableVehicles: number[] = [];
-
-    private instructorEntity: number;
-    private vehicleEntity: number;
+    private examState: CurrentExam = this.resetExamState();
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -84,9 +67,9 @@ export class ExamProvider {
     public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
         await this.screenFadeOut();
 
-        this.license = DrivingSchoolConfig.licenses[licenseType];
+        this.examState.license = DrivingSchoolConfig.licenses[licenseType];
 
-        this.spawnPoint = spawnPoint;
+        this.examState.spawnPoint = spawnPoint;
 
         const instructorConfig = DrivingSchoolConfig.peds.instructor;
         const instructor = await this.pedFactory.createPed({
@@ -95,18 +78,18 @@ export class ExamProvider {
             blockevents: true,
         });
 
-        this.teleportPlayer(this.spawnPoint);
+        this.teleportPlayer(this.examState.spawnPoint);
         await wait(200);
 
-        const vehicleModel = this.license.vehicle.model;
+        const vehicleModel = this.examState.license.vehicle.model;
         const vehicleNetId = await emitRpc<number>(RpcEvent.DRIVING_SCHOOL_SPAWN_VEHICLE, vehicleModel);
 
         const vehicle = NetToVeh(vehicleNetId);
         SetVehicleNumberPlateText(vehicle, DrivingSchoolConfig.vehiclePlateText);
         SetPedIntoVehicle(instructor, vehicle, 0);
 
-        this.instructorEntity = instructor;
-        this.vehicleEntity = vehicle;
+        this.examState.instructorEntity = instructor;
+        this.examState.vehicleEntity = vehicle;
 
         this.startExam();
 
@@ -115,58 +98,58 @@ export class ExamProvider {
 
     @OnGameEvent(GameEvent.CEventNetworkVehicleUndrivable)
     private async onVehicleUndrivable(veh: number) {
-        if (!this.isExamRunning) {
+        if (!this.examState.isExamRunning) {
             return;
         }
 
         if (GetEntityType(veh) == EntityType.Vehicle && IsEntityDead(veh)) {
-            if (Array.isArray(this.undrivableVehicles)) {
-                this.undrivableVehicles.push(veh);
+            if (Array.isArray(this.examState.undrivableVehicles)) {
+                this.examState.undrivableVehicles.push(veh);
             } else {
-                this.undrivableVehicles = [veh];
+                this.examState.undrivableVehicles = [veh];
             }
         }
     }
 
     @Tick(TickInterval.EVERY_FRAME)
     private async examLoop() {
-        if (!this.isExamRunning) {
+        if (!this.examState.isExamRunning) {
             return;
         }
 
-        const vehCoords = GetEntityCoords(this.vehicleEntity, true) as Vector3;
+        const vehCoords = GetEntityCoords(this.examState.vehicleEntity, true) as Vector3;
 
-        if (!this.isPenaltyLoopRunning) {
-            if (getDistance(this.spawnPoint, vehCoords) > 2.0) {
+        if (!this.examState.isPenaltyLoopRunning) {
+            if (getDistance(this.examState.spawnPoint, vehCoords) > 2.0) {
                 this.startPenaltyLoop();
             }
         }
 
         DisplayRadar(true);
 
-        const dist = getDistance(this.currentCp.coords, vehCoords);
+        const dist = getDistance(this.examState.currentCheckpoint.coords, vehCoords);
 
-        if (dist > this.license.marker.size) {
+        if (dist > this.examState.license.marker.size) {
             return;
         }
 
-        DeleteCheckpoint(this.cpEntity);
+        DeleteCheckpoint(this.examState.checkpointEntity);
 
-        const msg = this.currentCp.message;
+        const msg = this.examState.currentCheckpoint.message;
         if (typeof msg === 'string' && msg.length > 0) {
             this.notifier.notify(msg, 'info');
         }
 
         this.notifier.notify(
-            `Checkpoint ${this.license.checkpointCount + 1 - this.checkpoints.length}/${
-                this.license.checkpointCount + 1
+            `Checkpoint ${this.examState.license.checkpointCount + 1 - this.examState.checkpoints.length}/${
+                this.examState.license.checkpointCount + 1
             }`,
             'info'
         );
 
-        this.currentCp = this.checkpoints.shift();
-        if (this.currentCp) {
-            this.cpEntity = this.displayCheckpoint(this.currentCp);
+        this.examState.currentCheckpoint = this.examState.checkpoints.shift();
+        if (this.examState.currentCheckpoint) {
+            this.examState.checkpointEntity = this.displayCheckpoint(this.examState.currentCheckpoint);
         } else {
             this.terminateExam(Ok(true));
         }
@@ -174,11 +157,11 @@ export class ExamProvider {
 
     @Tick(200)
     private async penaltyLoop() {
-        if (!this.isPenaltyLoopRunning) {
+        if (!this.examState.isPenaltyLoopRunning) {
             return;
         }
 
-        for (const penalty of this.penalties) {
+        for (const penalty of this.examState.penalties) {
             if (isErr(penalty.performCheck())) {
                 await this.terminateExam(Err(false));
             }
@@ -201,40 +184,43 @@ export class ExamProvider {
     }
 
     private startExam() {
-        this.displayInstructorStartSpeech(this.license.licenseType);
+        this.displayInstructorStartSpeech(this.examState.license.licenseType);
 
-        this.checkpoints = this.getRandomCheckpoints(this.license.licenseType, this.license.checkpointCount);
+        this.examState.checkpoints = this.getRandomCheckpoints(
+            this.examState.license.licenseType,
+            this.examState.license.checkpointCount
+        );
 
-        this.checkpoints.push(this.license.finalCheckpoint);
+        this.examState.checkpoints.push(this.examState.license.finalCheckpoint);
 
-        this.currentCp = this.checkpoints.shift();
-        this.cpEntity = this.displayCheckpoint(this.currentCp);
+        this.examState.currentCheckpoint = this.examState.checkpoints.shift();
+        this.examState.checkpointEntity = this.displayCheckpoint(this.examState.currentCheckpoint);
 
-        this.isExamRunning = true;
+        this.examState.isExamRunning = true;
     }
 
     private startPenaltyLoop() {
         this.setupPenaltySystem();
-        this.isPenaltyLoopRunning = true;
+        this.examState.isPenaltyLoopRunning = true;
     }
 
     private async terminateExam(result: Result<boolean, boolean>) {
-        this.isExamRunning = false;
-        this.isPenaltyLoopRunning = false;
+        this.examState.isExamRunning = false;
+        this.examState.isPenaltyLoopRunning = false;
 
         if (this.playerService.getPlayer().metadata.isdead) {
             this.deleteVehicleAndPed();
         } else {
             await wait(2000);
-            this.deleteEntitiesAndTeleportBack();
+            await this.deleteEntitiesAndTeleportBack();
         }
 
-        if (this.cpEntity) {
-            DeleteCheckpoint(this.cpEntity);
+        if (this.examState.checkpointEntity) {
+            DeleteCheckpoint(this.examState.checkpointEntity);
         }
 
-        if (this.cpBlip) {
-            RemoveBlip(this.cpBlip);
+        if (this.examState.checkpointBlip) {
+            RemoveBlip(this.examState.checkpointBlip);
         }
 
         DisplayRadar(false);
@@ -242,51 +228,39 @@ export class ExamProvider {
         if (isOk(result)) {
             TriggerServerEvent(
                 ServerEvent.DRIVING_SCHOOL_UPDATE_LICENSE,
-                this.license.licenseType,
-                this.license.label.toLowerCase()
+                this.examState.license.licenseType,
+                this.examState.license.label.toLowerCase()
             );
         }
 
-        this.cleanupPenaltySystem();
-        this.cleanupExamSystem();
+        this.examState = this.resetExamState();
     }
 
     private setupPenaltySystem() {
-        this.context = {
+        this.examState.context = {
             phoneService: this.phoneService,
             playerService: this.playerService,
             notifier: this.notifier,
             seatbeltProvider: this.seatbeltProvider,
-            undrivableVehicles: this.undrivableVehicles,
-            vehicle: this.vehicleEntity,
+            undrivableVehicles: [],
+            vehicle: this.examState.vehicleEntity,
         };
 
-        this.penalties = [...Penalties]
-            .map(P => new P(this.context))
-            .filter(P => (Array.isArray(P.exclude) ? !P.exclude.includes(this.license.licenseType) : true));
+        this.examState.penalties = [...Penalties]
+            .map(P => new P(this.examState.context))
+            .filter(P => (Array.isArray(P.exclude) ? !P.exclude.includes(this.examState.license.licenseType) : true));
     }
 
-    private cleanupExamSystem() {
-        delete this.license;
-        delete this.spawnPoint;
-        delete this.checkpoints;
-        delete this.currentCp;
-        delete this.cpEntity;
-        delete this.cpBlip;
-        delete this.undrivableVehicles;
-    }
-
-    private cleanupPenaltySystem() {
-        delete this.context;
-        delete this.penalties;
+    private resetExamState(): CurrentExam {
+        return {
+            isExamRunning: false,
+            isPenaltyLoopRunning: false,
+        };
     }
 
     private deleteVehicleAndPed() {
-        DeletePed(this.instructorEntity);
-        DeleteVehicle(this.vehicleEntity);
-
-        delete this.instructorEntity;
-        delete this.vehicleEntity;
+        DeletePed(this.examState.instructorEntity);
+        DeleteVehicle(this.examState.vehicleEntity);
     }
 
     private async deleteEntitiesAndTeleportBack() {
@@ -311,9 +285,9 @@ export class ExamProvider {
     }
 
     private displayCheckpoint(current: Checkpoint) {
-        const m = this.license.marker;
+        const m = this.examState.license.marker;
 
-        const type = this.checkpoints.length > 0 ? m.type : m.typeFinal;
+        const type = this.examState.checkpoints.length > 0 ? m.type : m.typeFinal;
 
         const [x1, y1, z1] = current.coords;
 
@@ -323,15 +297,15 @@ export class ExamProvider {
 
         SetCheckpointCylinderHeight(cpId, m.size, m.size, m.size);
 
-        if (this.cpBlip) {
-            RemoveBlip(this.cpBlip);
+        if (this.examState.checkpointBlip) {
+            RemoveBlip(this.examState.checkpointBlip);
         }
 
-        this.cpBlip = AddBlipForCoord(x1, y1, z1);
+        this.examState.checkpointBlip = AddBlipForCoord(x1, y1, z1);
         const blipColor = DrivingSchoolConfig.blip.color;
-        SetBlipColour(this.cpBlip, blipColor);
-        SetBlipRouteColour(this.cpBlip, blipColor);
-        SetBlipRoute(this.cpBlip, true);
+        SetBlipColour(this.examState.checkpointBlip, blipColor);
+        SetBlipRouteColour(this.examState.checkpointBlip, blipColor);
+        SetBlipRoute(this.examState.checkpointBlip, true);
 
         return cpId;
     }
