@@ -152,9 +152,17 @@ RegisterNetEvent("voip:client:radio:set-balance", function(kind, instance, ear)
     end
 end)
 
+RegisterNetEvent("ems:client:onDeath", function()
+    IsTalkingOnRadio = false
+    PrimaryLongRadioModuleInstance:stopTransmission()
+    SecondaryLongRadioModuleInstance:stopTransmission()
+    PrimaryShortRadioModuleInstance:stopTransmission()
+    SecondaryShortRadioModuleInstance:stopTransmission()
+end)
+
 local function CreateTransmissionToggle(command, context, volumeKey, module)
     RegisterCommand("+" .. command, function()
-        if module:startTransmission() then
+        if not LocalPlayer.state.isdead and module:startTransmission() then
             StartRadioAnimationTask()
             PlayLocalRadioClick(context, true, Config[volumeKey])
         end

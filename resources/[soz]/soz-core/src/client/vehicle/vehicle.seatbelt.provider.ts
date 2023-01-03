@@ -79,7 +79,7 @@ export class VehicleSeatbeltProvider {
     async toggleVehicleSeatbelt() {
         const player = this.playerService.getPlayer();
 
-        if (!player) {
+        if (!player || player.metadata.isdead) {
             return;
         }
 
