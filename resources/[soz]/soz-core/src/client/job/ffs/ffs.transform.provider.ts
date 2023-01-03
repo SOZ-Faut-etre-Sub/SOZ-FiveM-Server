@@ -39,10 +39,7 @@ export class FightForStyleTransformProvider {
                 blackoutJob: 'ffs',
                 canInteract: () => {
                     for (const input of process.inputs) {
-                        const predicate = (item: InventoryItem) => {
-                            return item.name === input.id && item.amount >= input.amount;
-                        };
-                        if (!this.inventoryManager.findItem(predicate)) {
+                        if (!this.inventoryManager.hasEnoughItem(input.id, input.amount)) {
                             return false;
                         }
                     }
