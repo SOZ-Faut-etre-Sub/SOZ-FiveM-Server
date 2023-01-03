@@ -103,10 +103,10 @@ export class ExamProvider {
         }
 
         if (GetEntityType(veh) == EntityType.Vehicle && IsEntityDead(veh)) {
-            if (Array.isArray(this.examState.undrivableVehicles)) {
-                this.examState.undrivableVehicles.push(veh);
+            if (Array.isArray(this.examState.context.undrivableVehicles)) {
+                this.examState.context.undrivableVehicles.push(veh);
             } else {
-                this.examState.undrivableVehicles = [veh];
+                this.examState.context.undrivableVehicles = [veh];
             }
         }
     }
