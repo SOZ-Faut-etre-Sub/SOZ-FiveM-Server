@@ -33,7 +33,7 @@ function FilterRadioSubmix:update(params)
 
         self.submix:setEffectParamFloat("fudge", fudge)
     else
-        self.submix:setEffectParamFloat("fudge", 4.0)
+        self.submix:setEffectParamFloat("fudge", 1.5)
     end
 
     local volume = params.volume or 1.0

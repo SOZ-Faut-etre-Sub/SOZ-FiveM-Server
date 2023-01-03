@@ -7,8 +7,8 @@ Config.debug = false
 Config.whisperRange = 1.5
 Config.normalRange = 4.0
 Config.shoutRange = 7.5
-Config.megaphoneRange = 24.0
-Config.microphoneRange = 24.0
+Config.megaphoneRange = 36.0
+Config.microphoneRange = 36.0
 
 Config.voiceRanges = {
     [1] = {name = "whisper", range = Config.whisperRange},
@@ -33,6 +33,7 @@ Config.balances = {
 }
 
 --- Volume
+Config.volumeRadioSoundClick = 0.4
 Config.volumeRadioPrimaryShort = 1.0
 Config.volumeRadioPrimaryLong = 1.0
 Config.volumeRadioSecondaryShort = 1.0
