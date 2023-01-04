@@ -165,7 +165,7 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
     end
 
     if resellZone.ZoneName == "Resell:Zkea" then
-        Inventory.AddItem("zkea_storage", item, amount, item.metadata, nil, nil)
+        Inventory.AddItem("cabinet_storage", item, amount, item.metadata, nil, nil)
     end
 
     local price = itemSpec.resellPrice
