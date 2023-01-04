@@ -154,7 +154,7 @@ Config.PatientClothes = {
         Components = {
             [1] = {Drawable = 0, Texture = 0, Palette = 0},
             [3] = {Drawable = 15, Texture = 0, Palette = 0},
-            [4] = {Drawable = 29, Texture = 0, Palette = 0},
+            [4] = {Drawable = 61, Texture = 0, Palette = 0},
             [5] = {Drawable = 0, Texture = 0, Palette = 0},
             [6] = {Drawable = 34, Texture = 0, Palette = 0},
             [7] = {Drawable = 0, Texture = 0, Palette = 0},
