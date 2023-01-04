@@ -67,6 +67,7 @@ local PlayEmote = function(animation)
 
     if animation.event then
         ClearPedTasksImmediately(ped)
+        cleanProps()
         TriggerEvent(animation.event)
         return
     end
@@ -123,6 +124,13 @@ local PlayEmote = function(animation)
                                      true)
                 prop2_net = modelSpawn
             end
+
+            CreateThread(function()
+                while IsEntityPlayingAnim(ped, animation[1], animation[2], 3) do
+                    Wait(500)
+                end
+                cleanProps()
+            end)
         end
     else
         if IsPedUsingScenario(ped, animation[2]) then
