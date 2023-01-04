@@ -4,6 +4,7 @@ local JobVehicle = false
 local InVehicle = false
 local ObjectifCoord = {}
 local Counter = 0
+local JobDone = nil
 local harvestZone = nil
 local hasEnteredZoneOnce = false
 local PedCoord = {x = 479.17, y = -107.53, z = 63.16}
@@ -66,7 +67,6 @@ exports["qb-target"]:AddBoxZone("job metal", vector3(-343.2, -1554.44, 25.23), 1
 RegisterNetEvent("jobs:metal:fix")
 AddEventHandler("jobs:metal:fix", function()
     DrawInteractionMarker(ObjectifCoord, false)
-    TriggerEvent("jobs:metal:start")
     QBCore.Functions.Progressbar("adsl_fix", "Vous cherchez de la ferraille...", 10000, false, false,
                                  {
         disableMovement = true,
@@ -77,6 +77,7 @@ AddEventHandler("jobs:metal:fix", function()
         TaskPlayAnim(PlayerPedId(), "random@domestic", "pickup_low", 8.0, -8.0, -1, 49, 0, 0, 0, 0)
         amount = math.random(1, 2)
         TriggerServerEvent("job:get:metal", amount)
+        TriggerEvent("jobs:metal:start")
     end)
 end)
 
@@ -143,10 +144,10 @@ end)
 
 local function random_coord()
     local result = SozJobCore.metal[math.random(#SozJobCore.metal)]
-    if result.x == JobDone then
-        random_coord()
+    while result.x == JobDone do
+        result = SozJobCore.metal[math.random(#SozJobCore.metal)]
     end
-    local JobDone = result.x
+    JobDone = result.x
     return result
 end
 
@@ -198,6 +199,7 @@ AddEventHandler("jobs:metal:start", function()
         options = {{type = "client", event = "jobs:metal:fix", icon = "c:pole/recolter.png", label = "Récolter"}},
         distance = 1.5,
     })
+    DrawInteractionMarker(ObjectifCoord, false)
     ObjectifCoord = coords
     DrawInteractionMarker(ObjectifCoord, true)
     Counter = Counter + 1
