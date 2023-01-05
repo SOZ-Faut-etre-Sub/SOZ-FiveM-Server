@@ -7,6 +7,10 @@ function Field:new(identifier, item, capacity, maxCapacity, refillDelay, harvest
         maxCapacity = math.random(maxCapacity.min, maxCapacity.max)
     end
 
+    if upwBoost == nil then
+        upwBoost = true
+    end
+
     return setmetatable({
         identifier = identifier,
         item = item,
@@ -14,7 +18,7 @@ function Field:new(identifier, item, capacity, maxCapacity, refillDelay, harvest
         maxCapacity = maxCapacity,
         refillDelay = refillDelay,
         harvest = harvest or 1,
-        upwBoost = upwBoost or true,
+        upwBoost = upwBoost,
     }, self)
 end
 
