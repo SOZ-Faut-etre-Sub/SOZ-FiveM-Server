@@ -153,6 +153,13 @@ function Inventory.CalculateWeight(items)
     return weight
 end
 
+function Inventory.CalculateAvailableWeight(inv)
+    inv = Inventory(inv)
+    local weight = Inventory.CalculateWeight(inv.items)
+    local maxWeight = inv.maxWeight
+    return maxWeight - weight
+end
+
 function Inventory.SetMaxWeight(inv, weight)
     inv = Inventory(inv)
     if inv then
@@ -405,6 +412,8 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
     end
     if cb then
         cb(success, reason)
+    else
+        return success, reason
     end
 end
 RegisterNetEvent("inventory:server:AddItem", Inventory.AddItem)
