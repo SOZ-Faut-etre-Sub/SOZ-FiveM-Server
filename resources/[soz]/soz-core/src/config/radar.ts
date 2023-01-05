@@ -105,7 +105,7 @@ export const RadarList: Record<number, Radar> = {
         speed: 90,
     },
     [15]: {
-        props: [-163.0, 109.87, 69.42, 215.3],
+        props: [-163.1, 109.87, 69.42, 215.3],
         zone: new CylinderZone([-148.8, 90.02], 8, 62.77, 78.77),
         station: JobType.LSPD,
         isOnline: true,
