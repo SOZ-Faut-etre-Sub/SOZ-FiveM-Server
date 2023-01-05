@@ -28,10 +28,25 @@ function ShopShell:GunSmith()
         blackoutGlobal = true,
     }
 end
+function ShopShell:Zkea()
+    return {
+        event = "",
+        icon = "fas fa-store",
+        label = "Vérifier le stock",
+        canInteract = function()
+            local playerData = QBCore.Functions.GetPlayerData()
+            return playerData.job.onduty and self.brand == "zkea" and currentShop ~= nil and currentShopBrand == self.brand
+        end,
+        blackoutGlobal = true,
+        action = function()
+            TriggerServerEvent("shops:server:CheckZkeaStock")
+        end,
+    }
+end
 
 function ShopShell:AddTargetModel()
     exports["qb-target"]:AddTargetModel({self.ped}, {
-        options = {self:GetPedAction(), self:GunSmith(), self.target},
+        options = {self:GetPedAction(), self:GunSmith(), self:Zkea(), self.target},
         distance = 2.5,
     })
 end
