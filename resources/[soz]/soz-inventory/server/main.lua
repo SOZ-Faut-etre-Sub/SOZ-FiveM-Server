@@ -433,7 +433,6 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOw
     end
     amount = math.floor(amount + 0.5)
     if item and amount > 0 then
-
         if metadata ~= nil then
             metadata = type(metadata) == "string" and {type = metadata} or metadata
         end
@@ -447,6 +446,9 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOw
         end
         local removed, total, slots = 0, amount, {}
         if slot and itemSlots[slot] then
+            if itemSlots[slot] < amount then
+                return false
+            end
             removed = amount
             Inventory.SetSlot(inv, item, -amount, metadata, slot)
             slots[#slots + 1] = inv.items[slot] or slot
