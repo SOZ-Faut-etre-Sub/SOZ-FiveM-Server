@@ -48,6 +48,8 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:refillTanker", function(sour
             })
         else
             TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre remorque ~r~ne peut plus~s~ recevoir de pétrole.", "error")
+            cb({0, newHealth})
+            return
         end
     end)
 

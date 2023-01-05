@@ -438,14 +438,16 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
 
         if success then
             local refillResponse = QBCore.Functions.TriggerRpc("jobs:server:fueler:refillTanker", Tanker.vehicle, currentField)
-            _, currentFieldHealth = table.unpack(refillResponse)
+            refillQuantity, currentFieldHealth = table.unpack(refillResponse)
             DisplayFieldHealth(true, currentField, currentFieldHealth)
 
             if currentFieldHealth == 0 then
                 exports["soz-hud"]:DrawNotification("Le champ est épuisé...", "warning")
                 canFillTanker = false
-            else
+            elseif refillQuantity ~= 0 then
                 canFillTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefill", Tanker.vehicle)
+            else
+                canFillTanker = false
             end
         else
             canFillTanker = false
