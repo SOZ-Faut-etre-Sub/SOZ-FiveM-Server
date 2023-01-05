@@ -47,7 +47,12 @@ SozJobCore.JobPermission = {
 }
 
 SozJobCore.Jobs = {
-    [SozJobCore.JobType.Unemployed] = {label = "Sans emploi", grades = {}, permissions = {}},
+    [SozJobCore.JobType.Unemployed] = {
+        label = "Sans emploi",
+        grades = {},
+        permissions = {},
+        canReceiveSocietyInvoice = false,
+    },
     [SozJobCore.JobType.Adsl] = {
         label = "ADSL",
         platePrefix = "ADSL",
@@ -67,6 +72,7 @@ SozJobCore.Jobs = {
         },
         grades = {},
         permissions = {},
+        canReceiveSocietyInvoice = false,
     },
     [SozJobCore.JobType.Delivery] = {
         label = "Fougère Prime",
@@ -84,6 +90,7 @@ SozJobCore.Jobs = {
         },
         grades = {},
         permissions = {},
+        canReceiveSocietyInvoice = false,
     },
     [SozJobCore.JobType.Religious] = {
         label = "InfoChat",
@@ -99,6 +106,7 @@ SozJobCore.Jobs = {
         },
         grades = {},
         permissions = {},
+        canReceiveSocietyInvoice = false,
     },
     [SozJobCore.JobType.Scrapper] = {
         label = "DeMetal Company",
@@ -116,6 +124,7 @@ SozJobCore.Jobs = {
         },
         grades = {},
         permissions = {},
+        canReceiveSocietyInvoice = false,
     },
     [SozJobCore.JobType.FBI] = {
         label = "Federal Bureau of Investigation",
@@ -125,6 +134,7 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.LSPD] = {
         label = "Los Santos Police Department",
@@ -159,6 +169,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.BCSO] = {
         label = "Blaine County Sheriff Office",
@@ -193,6 +204,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.LSMC] = {
         label = "Los Santos Medical Center",
@@ -223,6 +235,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Taxi] = {
         label = "Carl Jr Services",
@@ -252,6 +265,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Food] = {
         label = "Château Marius",
@@ -290,6 +304,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.News] = {
         label = "Twitch News",
@@ -321,6 +336,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Garbage] = {
         label = "BlueBird",
@@ -350,6 +366,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Oil] = {
         label = "Michel Transport Petrol",
@@ -380,6 +397,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.CashTransfer] = {
         label = "STONK Depository",
@@ -413,6 +431,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Bennys] = {
         label = "New Gahray",
@@ -445,6 +464,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Upw] = {
         label = "Unexpected Power & Water",
@@ -474,6 +494,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Pawl] = {
         label = "Pipe And Wooden Leg",
@@ -513,6 +534,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Baun] = {
         label = "Bahama Unicorn",
@@ -537,6 +559,7 @@ SozJobCore.Jobs = {
             {x = 96.11, y = -1292.08, z = 29.27, sx = 7.2, sy = 6.2, heading = 300, minZ = 28.27, maxZ = 32.27},
             {x = -1387.87, y = -631.19, z = 30.81, sx = 5.4, sy = 6.4, heading = 303, minZ = 29.81, maxZ = 33.81},
         },
+        canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Ffs] = {
         label = "Fight For Style",
@@ -557,8 +580,9 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
         bossZones = {{x = 706.83, y = -965.59, z = 30.41, sx = 6.0, sy = 6.0, heading = 0, minZ = 29.41, maxZ = 33.41}},
+        canReceiveSocietyInvoice = true,
     },
-    [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}},
+    [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}, canReceiveSocietyInvoice = false},
 }
 
 SozJobCore.adsl_payout = 12
