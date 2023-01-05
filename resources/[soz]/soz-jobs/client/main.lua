@@ -184,8 +184,15 @@ CreateThread(function()
                         color = jobId,
                         icon = "c:jobs/facture.png",
                         event = "jobs:client:InvoiceSociety",
-                        canInteract = function()
-                            return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(jobId, SozJobCore.JobPermission.SocietyBankInvoices)
+                        canInteract = function(entity)
+                            if not PlayerData.job.onduty or not SozJobCore.Functions.HasPermission(jobId, SozJobCore.JobPermission.SocietyBankInvoices) then
+                                return false
+                            end
+
+                            local targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                            local targetJob = QBCore.Functions.TriggerRpc("soz-jobs:GetPlayerJob", targetSource)
+
+                            return SozJobCore.Jobs[targetJob.id].canReceiveSocietyInvoice
                         end,
                         job = jobId,
                         blackoutGlobal = true,
