@@ -17,5 +17,12 @@ export class BennysSpecialVehicleProvider {
                 },
             },
         });
+        await this.prismaService.storages.deleteMany({
+            where: {
+                name: {
+                    startsWith: 'trunk_ESSAI',
+                },
+            },
+        });
     }
 }
