@@ -34,8 +34,7 @@ function ShopShell:Zkea()
         icon = "fas fa-store",
         label = "Vérifier le stock",
         canInteract = function()
-            local playerData = QBCore.Functions.GetPlayerData()
-            return playerData.job.onduty and self.brand == "zkea" and currentShop ~= nil and currentShopBrand == self.brand
+            return self.brand == "zkea" and currentShop ~= nil and currentShopBrand == self.brand
         end,
         blackoutGlobal = true,
         action = function()
