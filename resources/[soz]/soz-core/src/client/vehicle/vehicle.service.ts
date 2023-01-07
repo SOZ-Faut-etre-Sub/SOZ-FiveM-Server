@@ -42,6 +42,13 @@ export class VehicleService {
     public getVehicleState(vehicle: number): VehicleEntityState {
         const state = Entity(vehicle).state;
         const defaultState = getDefaultVehicleState();
+        const condition = this.getVehicleCondition(vehicle);
+
+        defaultState.condition = {
+            ...defaultState.condition,
+            ...condition,
+        };
+
         const returnState = {};
 
         for (const key of Object.keys(defaultState)) {
