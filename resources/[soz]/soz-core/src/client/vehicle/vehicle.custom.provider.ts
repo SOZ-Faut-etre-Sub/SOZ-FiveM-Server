@@ -9,6 +9,7 @@ import { MultiZone } from '../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import {
+    getVehicleConfigurationDiff,
     getVehicleCustomPrice,
     VehicleConfiguration,
     VehicleCustomMenuData,
@@ -125,13 +126,22 @@ export class VehicleCustomProvider {
         }
     }
 
-    @OnNuiEvent<{ vehicleEntityId: number; vehicleConfiguration: VehicleConfiguration }>(NuiEvent.VehicleCustomApply)
-    public async applyVehicleConfiguration({ vehicleEntityId, vehicleConfiguration }): Promise<VehicleUpgradeOptions> {
+    @OnNuiEvent<{
+        vehicleEntityId: number;
+        vehicleConfiguration: VehicleConfiguration;
+        originalConfiguration: VehicleConfiguration;
+    }>(NuiEvent.VehicleCustomApply)
+    public async applyVehicleConfiguration({
+        vehicleEntityId,
+        vehicleConfiguration,
+        originalConfiguration,
+    }): Promise<VehicleUpgradeOptions> {
         if (!vehicleEntityId || !vehicleConfiguration) {
             return null;
         }
 
-        this.vehicleModificationService.applyVehicleConfiguration(vehicleEntityId, vehicleConfiguration);
+        const diff = getVehicleConfigurationDiff(originalConfiguration, vehicleConfiguration);
+        this.vehicleModificationService.applyVehicleConfiguration(vehicleEntityId, diff);
 
         return this.vehicleModificationService.createOptions(vehicleEntityId);
     }

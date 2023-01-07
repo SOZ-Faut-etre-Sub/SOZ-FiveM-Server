@@ -313,6 +313,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     const applyCustom = async (vehicle: number, config: VehicleConfiguration) => {
         const newOptions = await fetchNui(NuiEvent.VehicleCustomApply, {
             vehicleEntityId: data.vehicle,
+            originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: config,
         });
 

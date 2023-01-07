@@ -1421,3 +1421,21 @@ export const HornLabelList: Record<number, { name: string; label: string }> = {
     [47]: { name: 'HORN_XM15_2', label: 'Festive Loop 2' },
     [48]: { name: 'HORN_XM15_3', label: 'Festive Loop 3' },
 };
+
+export const getVehicleConfigurationDiff = (
+    source: VehicleConfiguration,
+    target: VehicleConfiguration
+): VehicleConfiguration => {
+    const extraDiff = {};
+
+    for (const key in target.extra) {
+        if (target.extra[key] !== source.extra[key]) {
+            extraDiff[key] = target.extra[key];
+        }
+    }
+
+    return {
+        ...target,
+        extra: extraDiff,
+    };
+};

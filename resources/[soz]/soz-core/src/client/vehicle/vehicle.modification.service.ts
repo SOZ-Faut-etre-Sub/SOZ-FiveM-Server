@@ -31,6 +31,13 @@ const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
 
 const ModExclusion: Record<number, VehicleModType[]> = {
     [GetHashKey('sentinel')]: [VehicleModType.ColumnShifterLevers, VehicleModType.Speakers],
+    [GetHashKey('banshee')]: [VehicleModType.Speakers],
+};
+
+const ModValueExclusion: Record<number, Partial<Record<VehicleModType, number[]>>> = {
+    [GetHashKey('banshee')]: {
+        [VehicleModType.Spoiler]: [3, 4],
+    },
 };
 
 export const getModTypeName = (vehicleEntityId: number, mod: VehicleModType): string => {
@@ -317,7 +324,13 @@ export const createModificationHelperList = (
                 },
             ];
 
+            const exclusions = ModValueExclusion[model]?.[type] ?? [];
+
             for (let i = 0; i < modCount; i++) {
+                if (exclusions.includes(i)) {
+                    continue;
+                }
+
                 choices.push({
                     label: getModName(vehicleEntityId, type, i, modCount),
                     value: i,
