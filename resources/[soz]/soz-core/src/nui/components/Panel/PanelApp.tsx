@@ -34,7 +34,7 @@ export const PanelApp: FunctionComponent = () => {
     }
 
     return (
-        <div className="flex flex-col h-full w-full p-40">
+        <div className="absolute flex flex-col h-full w-full p-40">
             <div
                 style={{
                     height: '97px',

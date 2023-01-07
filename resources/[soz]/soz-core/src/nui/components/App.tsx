@@ -31,12 +31,12 @@ export const App: FunctionComponent = () => {
             <div className={classes}>
                 <MenuApp />
                 <HealthBookApp />
-                <InputApp />
                 <AudioApp />
                 <PlayerApp />
                 <ProgressApp />
                 <PanelApp />
                 <RepairApp />
+                <InputApp />
             </div>
         </Provider>
     );
