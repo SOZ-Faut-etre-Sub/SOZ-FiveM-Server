@@ -29,7 +29,7 @@ type BlipConfig = {
     color: number;
 };
 
-const DISTANCE_STORE_VEHICLE_THRESHOLD = 15.0;
+const DISTANCE_STORE_VEHICLE_THRESHOLD = 8.0;
 
 const BlipConfigMap: Partial<Record<GarageType, Partial<Record<GarageCategory, BlipConfig | null>>>> = {
     [GarageType.Private]: {
