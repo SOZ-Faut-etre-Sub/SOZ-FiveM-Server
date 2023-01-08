@@ -32,7 +32,7 @@ local function GetTerminals(scope)
     local terminals = {}
 
     for identifier, terminal in pairs(Terminals) do
-        if terminal.scope == "default" then
+        if terminal.scope == scope then
             terminals[identifier] = terminal
         end
     end
@@ -170,3 +170,10 @@ function StartConsumptionLoop()
         end
     end)
 end
+
+RegisterNetEvent("soz-upw:server:ConsumeTerminalRatio", function(id, value)
+    local terminal = GetTerminal(id);
+    if terminal then
+        terminal:ConsumeRatio(value)
+    end
+end)

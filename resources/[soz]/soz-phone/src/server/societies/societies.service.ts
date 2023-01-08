@@ -58,6 +58,9 @@ class _SocietyService {
             reqObj.data.pedPosition = JSON.stringify({ x: playerX, y: playerY, z: playerZ });
         }
 
+        if (reqObj.data.overrideIdentifier) {
+            identifier = reqObj.data.overrideIdentifier;
+        }
         if (reqObj.data.anonymous) {
             identifier = `#${identifier}`;
         }

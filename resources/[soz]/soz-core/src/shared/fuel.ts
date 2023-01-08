@@ -13,6 +13,7 @@ export enum FuelStationType {
 }
 
 export type FuelStation = {
+    entity?: number;
     id: number;
     name: string;
     model: number;

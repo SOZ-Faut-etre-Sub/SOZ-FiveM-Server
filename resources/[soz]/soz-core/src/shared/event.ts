@@ -56,6 +56,7 @@ export enum ServerEvent {
     OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:server:oil:refill-kerosene-station',
     OIL_SET_STATION_PRICE = 'soz-core:server:oil:set-station-price',
+    OIL_DECREMENT_STATION = 'soz-core:server:oil:decrement',
 
     PLAYER_INCREASE_STRESS = 'soz-core:server:player:increase-stress',
     PLAYER_INCREASE_STRENGTH = 'soz-core:server:player:increase-strength',
@@ -150,6 +151,8 @@ export enum ServerEvent {
     INVENTORY_SET_ITEM_SHORTCUT = 'soz-core:server:inventory:set-item-usage',
 
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
+
+    VANDALISM_END = 'soz-core:server:vandalism:end',
 }
 
 export enum ClientEvent {
@@ -185,6 +188,7 @@ export enum ClientEvent {
     JOBS_TRY_OPEN_CLOAKROOM = 'soz-jobs:client:try-open-cloakroom',
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
+    JOB_DUTY_CHANGE = 'QBCore:Client:SetDuty',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
@@ -239,7 +243,6 @@ export enum ClientEvent {
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
 
     RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
-    RADAR_REMOVE_BLIP = 'soz-core:client:radar:remove-blip',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 

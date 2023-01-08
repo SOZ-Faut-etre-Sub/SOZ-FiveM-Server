@@ -22,7 +22,7 @@ local function GetZoneConfig(zone)
             {create = CreateWasteZone, zone = "zones.wasteZone"},
         },
         ["inverter"] = {create = CreateInverterZone, zone = "zone"},
-        ["terminal"] = {create = CreateTerminalZone, zone = "zone"},
+        ["terminal"] = {create = CreateTerminalZone, zone = "zone", createTarget = CreateTerminalTarget},
     }
 
     if config[zone] == nil then
@@ -79,12 +79,10 @@ Citizen.CreateThread(function()
         end
     end
 
+    local types = {"plant", "inverter", "terminal"}
+
     -- Fetch facilities from database
-    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", {
-        "plant",
-        "inverter",
-        "terminal",
-    })
+    local facilities = QBCore.Functions.TriggerRpc("soz-upw:server:GetFacilitiesFromDb", types)
 
     for _, facility in ipairs(facilities) do
         local conf = GetZoneConfig(facility.type)
@@ -139,6 +137,13 @@ Citizen.CreateThread(function()
         end
 
         QBCore.Functions.HideBlip(blip_id, true)
+    end
+
+    for _, type in ipairs(types) do
+        local conf = GetZoneConfig(type)
+        if conf.createTarget then
+            conf.createTarget()
+        end
     end
 
     -- Resale zone

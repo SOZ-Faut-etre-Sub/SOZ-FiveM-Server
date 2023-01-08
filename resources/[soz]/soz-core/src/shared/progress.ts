@@ -50,6 +50,7 @@ export type ProgressOptions = {
         entity: number;
         heading: number;
     };
+    ignorePollution: boolean;
 };
 
 export type ProgressAnimation = {

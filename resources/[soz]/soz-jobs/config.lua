@@ -134,6 +134,7 @@ SozJobCore.Jobs = {
         permissions = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
         },
+        phone = "555-FBI",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.LSPD] = {
@@ -169,6 +170,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-LSPD",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.BCSO] = {
@@ -204,6 +206,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-BCSO",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.LSMC] = {
@@ -235,6 +238,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-LSMC",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Taxi] = {
@@ -265,6 +269,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-CARLJR",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Food] = {
@@ -304,6 +309,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-MARIUS",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.News] = {
@@ -336,6 +342,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-NEWS",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Garbage] = {
@@ -366,6 +373,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-BLUEBIRD",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Oil] = {
@@ -397,6 +405,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-MTP",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.CashTransfer] = {
@@ -431,6 +440,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-STONK",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Bennys] = {
@@ -464,6 +474,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-NEWGAHRAY",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Upw] = {
@@ -494,6 +505,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-UPW",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Pawl] = {
@@ -534,6 +546,7 @@ SozJobCore.Jobs = {
                 debugPoly = false,
             },
         },
+        phone = "555-PAWL",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Baun] = {
@@ -559,6 +572,7 @@ SozJobCore.Jobs = {
             {x = 96.11, y = -1292.08, z = 29.27, sx = 7.2, sy = 6.2, heading = 300, minZ = 28.27, maxZ = 32.27},
             {x = -1387.87, y = -631.19, z = 30.81, sx = 5.4, sy = 6.4, heading = 303, minZ = 29.81, maxZ = 33.81},
         },
+        phone = "555-BAUN",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Ffs] = {
@@ -580,6 +594,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
         },
         bossZones = {{x = 706.83, y = -965.59, z = 30.41, sx = 6.0, sy = 6.0, heading = 0, minZ = 29.41, maxZ = 33.41}},
+        phone = "555-FFS",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}, canReceiveSocietyInvoice = false},
