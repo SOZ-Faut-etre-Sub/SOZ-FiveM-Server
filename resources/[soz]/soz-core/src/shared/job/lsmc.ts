@@ -26,7 +26,7 @@ export const PatientClothes: WardrobeConfig = {
             Components: {
                 [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
-                [Component.Legs]: { Drawable: 29, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 61, Texture: 0, Palette: 0 },
                 [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
