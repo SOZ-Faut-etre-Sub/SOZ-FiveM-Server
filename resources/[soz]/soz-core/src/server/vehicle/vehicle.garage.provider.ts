@@ -153,10 +153,37 @@ export class VehicleGarageProvider {
         }
     }
 
+    @Rpc(RpcEvent.VEHICLE_GARAGE_GET_MAX_PLACES)
+    public async getMaxPlaces(source: number, garage: Garage): Promise<number | null> {
+        if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
+            return null;
+        }
+
+        const player = this.playerService.getPlayer(source);
+        const isPropertyGarage = garage.type === GarageType.House;
+
+        if (isPropertyGarage) {
+            if (!player) {
+                return 0;
+            }
+            const playerApartmentTier = player.apartment?.tier ?? -1
+            return 1 + playerApartmentTier
+        }
+
+        return 38
+    }
+
     @Rpc(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES)
     public async getFreePlaces(source: number, id: string, garage: Garage): Promise<number | null> {
-        if (garage.type !== GarageType.Private) {
+        if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
             return null;
+        }
+
+        const player = this.playerService.getPlayer(source);
+        const isPropertyGarage = garage.type === GarageType.House;
+
+        if (isPropertyGarage && !id.startsWith('property_')) {
+            id = `property_${id}`;
         }
 
         const ids = [id];
@@ -168,10 +195,14 @@ export class VehicleGarageProvider {
         const count = await this.prismaService.playerVehicle.count({
             where: {
                 garage: { in: ids },
+                citizenid: isPropertyGarage ? { equals: player.citizenid } : undefined,
+                state: isPropertyGarage ? 1 : undefined,
             },
         });
 
-        return Math.max(0, 38 - count);
+        const maxPlaces = await this.getMaxPlaces(source, garage);
+
+        return Math.max(0, maxPlaces - count);
     }
 
     @Rpc(RpcEvent.VEHICLE_GARAGE_GET_VEHICLES)

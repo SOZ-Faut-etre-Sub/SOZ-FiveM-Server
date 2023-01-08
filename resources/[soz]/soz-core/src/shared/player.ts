@@ -21,6 +21,7 @@ export type QBCorePlayer = {
 };
 
 export type PlayerData = {
+    apartment: any;
     citizenid: string;
     license: string;
     name: string;

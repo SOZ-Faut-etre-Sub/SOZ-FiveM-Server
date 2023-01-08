@@ -48,4 +48,5 @@ export type GarageMenuData = {
     garage: Garage;
     free_places: number | null;
     id: string;
+    max_places: number | null;
 };

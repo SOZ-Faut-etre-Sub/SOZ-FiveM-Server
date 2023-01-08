@@ -425,9 +425,13 @@ export class VehicleGarageProvider {
         const vehicles = await emitRpc<GarageVehicle[]>(RpcEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
 
         let free_places = null;
-
-        if (garage.type === GarageType.Private) {
+        if (garage.type === GarageType.Private || garage.type === GarageType.House) {
             free_places = await emitRpc<number>(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES, id, garage);
+        }
+
+        let max_places = null;
+        if (garage.type === GarageType.Private || garage.type === GarageType.House) {
+            max_places = await emitRpc<number>(RpcEvent.VEHICLE_GARAGE_GET_MAX_PLACES, garage);
         }
 
         const vehicleRenamed = vehicles.map(garageVehicle => {
@@ -445,6 +449,7 @@ export class VehicleGarageProvider {
                 id,
                 garage,
                 free_places,
+                max_places,
             },
             {
                 position: {

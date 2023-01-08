@@ -93,6 +93,7 @@ model housing_apartment {
   stash_zone       String?          @db.LongText
   closet_zone      String?          @db.LongText
   money_zone       String?          @db.LongText
+  tier             Int?
   housing_property housing_property @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
 
   @@index([property_id], map: "housing_apartment_housing_property_id_fk")
