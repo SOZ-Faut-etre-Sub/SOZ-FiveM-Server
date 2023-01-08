@@ -8,6 +8,7 @@ import { ProviderServerLoader } from './core/loader/provider.server.loader';
 import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
 import { DatabaseModule } from './server/database/database.module';
+import { DrivingSchoolModule } from './server/driving-school/ds.module';
 import { FieldModule } from './server/farm/field.module';
 import { InventoryModule } from './server/inventory/inventory.module';
 import { ItemModule } from './server/item/item.module';
@@ -59,6 +60,7 @@ async function bootstrap() {
         OilModule,
         WeaponModule,
         InventoryModule,
+        DrivingSchoolModule,
         ...PrivateModules
     );
 

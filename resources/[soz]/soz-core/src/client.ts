@@ -7,6 +7,7 @@ import { AdminModule } from './client/admin/admin.module';
 import { AfkModule } from './client/afk/afk.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
+import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
 import { InventoryModule } from './client/inventory/inventory.module';
 import { ItemModule } from './client/item/item.module';
@@ -64,6 +65,7 @@ async function bootstrap() {
         OilModule,
         WeaponModule,
         InventoryModule,
+        DrivingSchoolModule,
         ...PrivateModules
     );
 
