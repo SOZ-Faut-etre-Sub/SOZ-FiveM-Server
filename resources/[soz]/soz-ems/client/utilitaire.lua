@@ -15,7 +15,7 @@ exports["qb-target"]:AddTargetModel(lit_ems, {
                     heading = heading + 179
                 end
                 SetEntityHeading(player, heading)
-                SetPedCoordsKeepVehicle(player, coords.x, coords.y, coords.z)
+                SetPedCoordsKeepVehicle(player, coords.x, coords.y, coords.z + 0.1)
                 TaskPlayAnim(player, "anim@gangops@morgue@table@", "body_search", 1.0, 1.0, -1, 1, 0, 0, 0, 0)
             end,
         },
