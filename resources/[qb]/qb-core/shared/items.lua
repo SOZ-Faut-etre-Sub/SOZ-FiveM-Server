@@ -5092,4 +5092,26 @@ QBShared.Items = {
         ['description'] = 'Pour transporter tes horreurs.',
         ['illustrator'] = '.SuperPG'
     },
+    ['new_year_bottle_2023'] = {
+        ['name'] = 'new_year_bottle_2023',
+        ['label'] = 'Joyeuze année 2023',
+        ['weight'] = 1000,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 365,
+        ['combinable'] = nil,
+        ['description'] = 'Cadeau offert à l\'occassion du début d\'année 2023, accompagné de son luxueux caddy.',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 10,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 10,
+            ['protein'] = 0,
+            ['alcohol'] = 40,
+        },
+    },
 }
