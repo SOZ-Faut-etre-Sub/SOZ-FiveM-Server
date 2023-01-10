@@ -19,8 +19,27 @@
 
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'soz-phone-nui-load') {
-                    const url = event.data.mode === 'dev' ? 'http://localhost:9001/nui.js' : 'https://cfx-nui-soz-phone/build/nui/nui.js';
-                    loadNUIScript(url);
+                    const buildurl = 'https://cfx-nui-soz-phone/build/nui/nui.js';
+                    if (event.data.mode === 'dev') {
+                        const devdurl = 'http://localhost:9001/nui.js';
+                        const req = new XMLHttpRequest();
+                        req.open('GET', devdurl);
+                        req.onreadystatechange = () => {
+                            if (req.readyState === 4 && req.status === 200) {
+                                if (req.status === 200) {
+                                    loadNUIScript(devdurl);
+                                }
+                            }
+                        };
+                        req.onerror = () => {
+                            loadNUIScript(buildurl);
+                            console.warn('Phone Fall back to build nui');
+                        };
+                        req.send();
+                    }
+                    else {
+                        loadNUIScript(buildurl);
+                    }
                 }
             });
 
