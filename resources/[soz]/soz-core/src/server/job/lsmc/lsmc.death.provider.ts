@@ -38,6 +38,7 @@ export class LSMCDeathProvider {
         this.playerService.incrementMetadata(targetid, 'alcohol', -50, 0, 100);
         this.playerService.incrementMetadata(targetid, 'drug', -50, 0, 100);
         this.playerService.setPlayerMetadata(targetid, 'isdead', false);
+        this.playerService.setPlayerMetadata(targetid, 'mort', '');
         Player(targetid).state.isdead = false;
     }
 
@@ -77,6 +78,8 @@ export class LSMCDeathProvider {
     @OnEvent(ServerEvent.LSMC_NOTIF_DEATH_REASON)
     public notifDeathReason(source: number, target: number) {
         const targetPlayer = this.playerService.getPlayer(target);
-        this.notifier.notify(source, targetPlayer.metadata.mort, 'success', 20000);
+        if (targetPlayer.metadata.mort) {
+            this.notifier.notify(source, targetPlayer.metadata.mort, 'success', 20000);
+        }
     }
 }

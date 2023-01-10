@@ -338,7 +338,7 @@ export class LSMCDeathProvider {
         const coord = GetEntityCoords(target);
         const heading = GetEntityHeading(target);
         const array = this.loc(coord, heading);
-        await this.animationService.walkToCoords([array[0], array[1], coord[2], array[2]], 10000);
+        await this.animationService.walkToCoords([array[0], array[1], coord[2], array[2]], 4000);
 
         TriggerServerEvent(ServerEvent.LSMC_REVIVE, GetPlayerServerId(NetworkGetPlayerIndexFromPed(target)));
         const reviveAnimPromise = this.animationService.playAnimation(reviveAnimDoc);

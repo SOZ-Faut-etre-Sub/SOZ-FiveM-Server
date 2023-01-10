@@ -63,6 +63,7 @@ CreateThread(function()
                 end,
                 action = function(entity)
                     TriggerEvent("soz-core:lsmc:reanimate", entity)
+                    TriggerServerEvent("soz-core:lsmc:server:notif-death-reason", GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity)))
                     TriggerServerEvent("lsmc:server:remove", "defibrillator")
                     TriggerServerEvent("monitor:server:event", "job_lsmc_revive_defibrillator", {},
                                        {
