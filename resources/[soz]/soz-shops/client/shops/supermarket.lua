@@ -51,22 +51,24 @@ function SupermarketShop:GenerateZkeaUpgradesMenu()
     shopMenu:ClearItems()
     shopMenu:SetSubtitle(self.label)
 
-    local cumul = 0
+    local priceCumul = 0
+    local zkeaPriceCumul = 0
     for tier, upgrade in pairs(Config.Upgrades["zkea"]) do
         if apartmentTier < tier then
-            local baseTierPrice = math.floor(apartmentPrice * upgrade.pricePercent / 100)
-            local tierPrice = cumul + baseTierPrice
-            cumul = cumul + tierPrice
+            priceCumul = priceCumul + math.floor(apartmentPrice * upgrade.pricePercent / 100)
+            zkeaPriceCumul = zkeaPriceCumul + upgrade.zkeaPrice
 
             shopMenu:AddButton({
                 label = "Palier " .. tier,
                 value = {
                     tier = tier,
-                    price = tierPrice
+                    price = priceCumul,
+                    zkeaPrice = zkeaPriceCumul
                 },
-                rightLabel = "$" .. QBCore.Shared.GroupDigits(tierPrice),
-                select = function()
-                    TriggerServerEvent("housing:server:UpgradePlayerApartmentTier", tier, tierPrice)
+                rightLabel = "$" .. QBCore.Shared.GroupDigits(priceCumul),
+                select = function(data)
+                    local value = data.Value
+                    TriggerServerEvent("housing:server:UpgradePlayerApartmentTier", value.tier, value.price, value.zkeaPrice)
                     shopMenu:Close()
                 end
             })

@@ -421,7 +421,7 @@ RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apar
     TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
 end)
 
-RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, price)
+RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, price, zkeaPrice)
     local player = QBCore.Functions.GetPlayer(source)
 
     if not player then return end
@@ -441,13 +441,19 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
     end
 
     if player.Functions.RemoveMoney("money", price) then
-        MySQL.update.await("UPDATE housing_apartment SET tier = ? WHERE id = ?", {
-            tier,
-            apartmentId,
-        })
-
-        player.Functions.SetApartmentTier(tier)
-        TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~" .. tier .. "~s~ pour ~b~$" .. price)
+        local removed = exports["soz-inventory"]:RemoveItem("cabinet_storage", "cabinet_zkea", zkeaPrice)
+        if removed ~= false then
+            MySQL.update.await("UPDATE housing_apartment SET tier = ? WHERE id = ?", {
+                tier,
+                apartmentId,
+            })
+    
+            player.Functions.SetApartmentTier(tier)
+            TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~" .. tier .. "~s~ pour ~b~$" .. price)
+        else
+            player.Functions.AddMoney("money", price)
+            TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Zkea n'a pas assez de stock", "error")
+        end
     else
         TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
     end
