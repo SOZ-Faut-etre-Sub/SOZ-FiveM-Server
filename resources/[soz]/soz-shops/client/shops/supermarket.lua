@@ -42,7 +42,9 @@ end
 
 function SupermarketShop:GenerateZkeaUpgradesMenu()
     local playerData = QBCore.Functions.GetPlayerData()
-    if not playerData.apartment then return end
+    if not playerData.apartment then
+        return
+    end
 
     local apartmentTier = playerData.apartment.tier
     local apartmentPrice = playerData.apartment.price
@@ -60,26 +62,21 @@ function SupermarketShop:GenerateZkeaUpgradesMenu()
 
             shopMenu:AddButton({
                 label = "Palier " .. tier,
-                value = {
-                    tier = tier,
-                    price = priceCumul,
-                    zkeaPrice = zkeaPriceCumul
-                },
+                value = {tier = tier, price = priceCumul, zkeaPrice = zkeaPriceCumul},
                 rightLabel = "$" .. QBCore.Shared.GroupDigits(priceCumul),
                 select = function(data)
                     local value = data.Value
                     TriggerServerEvent("housing:server:UpgradePlayerApartmentTier", value.tier, value.price, value.zkeaPrice)
                     shopMenu:Close()
-                end
+                end,
             })
         else
             local label = "Acquis"
-            if apartmentTier == tier then label = "Actuel" end
+            if apartmentTier == tier then
+                label = "Actuel"
+            end
 
-            shopMenu:AddButton({
-                label = "Palier " .. tier,
-                rightLabel = label,
-            })
+            shopMenu:AddButton({label = "Palier " .. tier, rightLabel = label})
         end
     end
 

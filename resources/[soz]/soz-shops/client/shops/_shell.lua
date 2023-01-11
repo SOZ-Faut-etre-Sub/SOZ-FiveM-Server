@@ -56,14 +56,9 @@ function ShopShell:ZkeaUpgrade()
 end
 
 function ShopShell:AddTargetModel()
-    exports["qb-target"]:AddTargetModel({self.ped}, {
-        options = {
-            self:GetPedAction(),
-            self:GunSmith(),
-            self:ZkeaStock(),
-            self:ZkeaUpgrade(),
-            self.target
-        },
+    exports["qb-target"]:AddTargetModel({self.ped},
+                                        {
+        options = {self:GetPedAction(), self:GunSmith(), self:ZkeaStock(), self:ZkeaUpgrade(), self.target},
         distance = 2.5,
     })
 end

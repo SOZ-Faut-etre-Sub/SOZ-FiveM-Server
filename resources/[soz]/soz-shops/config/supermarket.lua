@@ -25,7 +25,7 @@ Config.Upgrades = {
         [2] = {pricePercent = 45, zkeaPrice = 45},
         [3] = {pricePercent = 70, zkeaPrice = 80},
         [4] = {pricePercent = 100, zkeaPrice = 100},
-    }
+    },
 }
 
 Config.Locations["247supermarket-north"] = {
