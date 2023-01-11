@@ -68,3 +68,37 @@ export type WardrobeMenuData = {
 
 // A list of wardrobe indexed by model hash
 export type WardrobeConfig = Record<number, Wardrobe>;
+
+export const KeepHairWithMask = {
+    [105]: true,
+    [107]: true,
+    [108]: true,
+    [111]: true,
+    [116]: true,
+    [120]: true,
+    [121]: true,
+    [124]: true,
+    [127]: true,
+    [128]: true,
+    [133]: true,
+    [148]: true,
+    [160]: true,
+    [161]: true,
+    [164]: true,
+    [165]: true,
+    [166]: true,
+    [168]: true,
+    [169]: true,
+    [175]: true,
+    [179]: true,
+    [183]: true,
+    [186]: true,
+    [187]: true,
+    [198]: true,
+    [199]: true,
+    [201]: true,
+    [202]: true,
+    [204]: true,
+    [206]: true,
+    [207]: true,
+};

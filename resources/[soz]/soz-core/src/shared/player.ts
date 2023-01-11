@@ -13,6 +13,7 @@ export type QBCorePlayer = {
         AddMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
+        GetMoney: (type: 'money' | 'marked_money') => number;
     };
     PlayerData: PlayerData;
 };
@@ -37,6 +38,9 @@ export type PlayerData = {
 
 // TODO: Finish to implement the other properties
 export type Skin = {
+    Hair: {
+        HairType: number;
+    };
     Model: {
         Hash: number;
     };

@@ -1,3 +1,5 @@
+PlayerData = QBCore.Functions.GetPlayerData()
+
 local function ApplyPlayerModelHash(playerId, hash)
     if hash == GetEntityModel(GetPlayerPed(playerId)) then
         return
@@ -208,6 +210,13 @@ function ClothConfigComputeToClothSet(clothConfig)
 
         clothSet = MergeClothSet(clothSet, override)
     end
+
+    local maskDrawable = clothSet.Components[tostring(ComponentType.Mask)].Drawable
+    local hair = 0
+    if exports["soz-core"]:DisplayHairWithMask(maskDrawable) then
+        hair = PlayerData.skin.Hair.HairType
+    end
+    clothSet.Components[tostring(ComponentType.Hair)] = {Drawable = hair, Texture = 0, Palette = 0}
 
     if clothConfig.Config.HideGlasses then
         local override = {Props = {[PropType.Glasses] = {Clear = true}}}
