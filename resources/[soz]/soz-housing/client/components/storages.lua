@@ -48,7 +48,9 @@ Housing.Functions.Components.SetupMoneyInteraction = function(propertyId, apartm
                 return not apartment:IsAvailable() and Housing.Functions.IsInsideApartment()
             end,
             action = function()
-                TriggerEvent("banking:client:openHouseSafe", apartment:GetIdentifier())
+                TriggerEvent("banking:client:openHouseSafe", apartment:GetIdentifier(), {
+                    apartmentTier = apartment:GetTier(),
+                })
             end,
         },
     })

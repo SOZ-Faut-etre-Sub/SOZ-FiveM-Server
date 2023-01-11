@@ -109,6 +109,10 @@ function Account.Create(id, label, accountType, owner, money, marked_money, coor
         end
     end
 
+    if self.type == "house_safe" then
+        self.max = Config.HouseSafeTiers[0]
+    end
+
     Accounts[self.id] = self
     return Accounts[self.id]
 end
@@ -125,7 +129,12 @@ function Account.AddMoney(acc, money, money_type)
         money_type = "money"
     end
 
-    acc[money_type] = math.ceil(acc[money_type] + money - 0.5)
+    local total = math.ceil(acc[money_type] + money - 0.5)
+    if total > acc.max then
+        return false
+    end
+
+    acc[money_type] = total
     acc.changed = true
     return true
 end

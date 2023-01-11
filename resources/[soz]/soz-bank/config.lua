@@ -6,6 +6,8 @@ Config.OffShoreMaxWashAmount = math.random(50000, 150000)
 
 Config.DefaultAccountMoney = {["player"] = 5000, ["business"] = 200000}
 
+Config.HouseSafeTiers = {[0] = 10000, [1] = 20000, [2] = 40000, [3] = 60000, [4] = 100000}
+
 Config.ErrorMessage = {
     ["unknown"] = "Erreur de la banque !",
     ["action_forbidden"] = "Vous n'avez pas de droit de faire cette action !",
