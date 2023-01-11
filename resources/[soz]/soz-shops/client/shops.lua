@@ -35,6 +35,11 @@ RegisterNetEvent("shops:client:GetShop", function()
         ShopContext[currentShopBrand]:GenerateMenu()
     end
 end)
+RegisterNetEvent("shops:client:GetZkeaShop", function()
+    if currentShop and currentShopBrand == "zkea" then
+        ShopContext[currentShopBrand]:GenerateZkeaUpgradesMenu()
+    end
+end)
 
 RegisterNetEvent("shops:client:SetShopItems", function(product, shopProducts)
     Config.Products[product] = shopProducts

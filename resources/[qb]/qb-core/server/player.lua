@@ -11,7 +11,7 @@ function QBCore.Player.Login(source, citizenid, newData)
         if citizenid then
             local license = QBCore.Functions.GetSozIdentifier(src)
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
-            local apartment = exports.oxmysql:singleSync('SELECT property_id,label,price,tier FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
+            local apartment = exports.oxmysql:singleSync('SELECT id,property_id,label,price,tier FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
             local role = GetConvar("soz_anonymous_default_role", "user")
             local account = QBCore.Functions.GetUserAccount(src)
 
@@ -523,6 +523,11 @@ function QBCore.Player.CreatePlayer(PlayerData)
             licences[licence] = tonumber(points)
             self.Functions.UpdatePlayerData()
         end
+    end
+
+    self.Functions.SetApartmentTier = function(tier)
+        self.PlayerData.apartment.tier = tier
+        self.Functions.UpdatePlayerData()
     end
 
     self.Functions.Save = function()

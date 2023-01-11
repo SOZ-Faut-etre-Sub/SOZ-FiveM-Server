@@ -40,6 +40,50 @@ function SupermarketShop:GenerateMenu()
     shopMenu:Open()
 end
 
+function SupermarketShop:GenerateZkeaUpgradesMenu()
+    local playerData = QBCore.Functions.GetPlayerData()
+    if not playerData.apartment then return end
+
+    local apartmentTier = playerData.apartment.tier
+    local apartmentPrice = playerData.apartment.price
+
+    shopMenu.Texture = "menu_shop_supermarket"
+    shopMenu:ClearItems()
+    shopMenu:SetSubtitle(self.label)
+
+    local cumul = 0
+    for tier, upgrade in pairs(Config.Upgrades["zkea"]) do
+        if apartmentTier < tier then
+            local baseTierPrice = math.floor(apartmentPrice * upgrade.pricePercent / 100)
+            local tierPrice = cumul + baseTierPrice
+            cumul = cumul + tierPrice
+
+            shopMenu:AddButton({
+                label = "Palier " .. tier,
+                value = {
+                    tier = tier,
+                    price = tierPrice
+                },
+                rightLabel = "$" .. QBCore.Shared.GroupDigits(tierPrice),
+                select = function()
+                    TriggerServerEvent("housing:server:UpgradePlayerApartmentTier", tier, tierPrice)
+                    shopMenu:Close()
+                end
+            })
+        else
+            local label = "Acquis"
+            if apartmentTier == tier then label = "Actuel" end
+
+            shopMenu:AddButton({
+                label = "Palier " .. tier,
+                rightLabel = label,
+            })
+        end
+    end
+
+    shopMenu:Open()
+end
+
 --- Exports shop
 ShopContext["247supermarket-north"] = SupermarketShop:new("Superette", "247supermarket-north", {sprite = 52, color = 2}, "ig_ashley")
 ShopContext["247supermarket-south"] = SupermarketShop:new("Superette", "247supermarket-south", {sprite = 52, color = 2}, "cs_ashley")

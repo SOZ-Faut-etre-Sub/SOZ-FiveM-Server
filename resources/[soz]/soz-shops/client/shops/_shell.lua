@@ -28,7 +28,7 @@ function ShopShell:GunSmith()
         blackoutGlobal = true,
     }
 end
-function ShopShell:Zkea()
+function ShopShell:ZkeaStock()
     return {
         event = "",
         icon = "fas fa-store",
@@ -42,10 +42,28 @@ function ShopShell:Zkea()
         end,
     }
 end
+function ShopShell:ZkeaUpgrade()
+    return {
+        event = "shops:client:GetZkeaShop",
+        icon = "fas fa-store",
+        label = "Améliorations",
+        canInteract = function()
+            local playerData = QBCore.Functions.GetPlayerData()
+            return playerData.apartment and self.brand == "zkea" and currentShop ~= nil and currentShopBrand == self.brand
+        end,
+        blackoutGlobal = true,
+    }
+end
 
 function ShopShell:AddTargetModel()
     exports["qb-target"]:AddTargetModel({self.ped}, {
-        options = {self:GetPedAction(), self:GunSmith(), self:Zkea(), self.target},
+        options = {
+            self:GetPedAction(),
+            self:GunSmith(),
+            self:ZkeaStock(),
+            self:ZkeaUpgrade(),
+            self.target
+        },
         distance = 2.5,
     })
 end

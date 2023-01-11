@@ -421,6 +421,38 @@ RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apar
     TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
 end)
 
+RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, price)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if not player then return end
+
+    local playerData = player.PlayerData
+
+    if not playerData.apartment or not playerData.apartment.tier then return end
+
+    local playerApartment = playerData.apartment
+    local apartmentId = playerApartment.id
+    local propertyId = playerApartment.property_id
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if player.Functions.RemoveMoney("money", price) then
+        MySQL.update.await("UPDATE housing_apartment SET tier = ? WHERE id = ?", {
+            tier,
+            apartmentId,
+        })
+
+        player.Functions.SetApartmentTier(tier)
+        TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~" .. tier .. "~s~ pour ~b~$" .. price)
+    else
+        TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
+    end
+end)
+
 ---
 --- Exports
 ---
