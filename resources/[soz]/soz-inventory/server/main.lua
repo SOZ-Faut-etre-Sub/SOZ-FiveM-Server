@@ -863,7 +863,11 @@ function GetOrCreateInventory(storageType, invID, ctx)
         targetInv = Inventory("house_stash_" .. invID)
 
         if targetInv == nil then
-            targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
+            local tier = 0
+            if ctx then
+                tier = ctx.apartmentTier
+            end
+            targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig[tier].slot, storageConfig[tier].weight, invID)
         end
     elseif storageType == "house_fridge" then
         targetInv = Inventory("house_fridge_" .. invID)

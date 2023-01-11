@@ -1,7 +1,9 @@
 --- @class Apartment
 Apartment = {}
 
-function Apartment:new(identifier, label, owner, roommate, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone, temporary_access)
+function Apartment:new(
+    identifier, label, owner, roommate, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone, tier, temporary_access
+)
     self.__index = self
 
     return setmetatable({
@@ -11,6 +13,7 @@ function Apartment:new(identifier, label, owner, roommate, price, inside_coord, 
         roommate = roommate,
         price = price,
         inside_coord = decode_json(inside_coord),
+        tier = tier,
         --- Zones
         exit_zone = decode_json(exit_zone),
         fridge_zone = decode_json(fridge_zone),
@@ -105,6 +108,10 @@ function Apartment:GetMoneyCoord()
     return self.money_zone
 end
 
+function Apartment:GetTier()
+    return self.tier
+end
+
 ---
 --- SETTERS
 ---
@@ -142,4 +149,8 @@ function Apartment:SetZone(name, config)
     end
 
     self[name] = decode_json(config)
+end
+
+function Apartment:SetTier(tier)
+    self.tier = tier
 end

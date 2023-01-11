@@ -44,7 +44,7 @@ MySQL.ready(function()
         Properties[apartment.property_id]:AddApartment(apartment.id,
                                                        Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.roommate,
                                                                      apartment.price, apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone,
-                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone))
+                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone, apartment.tier))
     end
 end)
 
