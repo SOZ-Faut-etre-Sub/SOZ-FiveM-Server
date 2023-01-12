@@ -36,8 +36,9 @@ QBCore.Functions.CreateCallback("soz-character:server:SavePlayerClothe", functio
         local clothSet = exports.oxmysql:scalar_async("SELECT COUNT(cloth_set) FROM player_cloth_set WHERE citizenid = ?", {
             Player.PlayerData.citizenid,
         })
-        if clothSet >= 4 then -- TODO implement dynamic upgrade
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas avoir plus de 4 tenues.", "error")
+        local max = Config.CloakroomUpgrades[Player.PlayerData.apartment.tier]
+        if clothSet >= max then
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas avoir plus de " .. max .. " tenues.", "error")
 
             cb(false)
             return
