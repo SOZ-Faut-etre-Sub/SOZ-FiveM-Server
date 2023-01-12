@@ -188,6 +188,10 @@ class _SocietyService {
                 }
             }
 
+            if (societyMessage.source_phone.includes('#')) {
+                societyMessage.source_phone = '';
+            }
+
             const players = await PlayerService.getPlayersFromSocietyNumber(identifier);
             players.forEach(player => {
                 emitNet(SocietyEvents.UPDATE_SOCIETY_MESSAGE_SUCCESS, player.source, societyMessage);
