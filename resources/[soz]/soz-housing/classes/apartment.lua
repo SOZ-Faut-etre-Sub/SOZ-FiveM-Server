@@ -77,7 +77,12 @@ function Apartment:GetPrice()
 end
 
 function Apartment:GetResellPrice()
-    return self.price / 2
+    local resellPrice = self.price / 2
+    for i = 0, self.tier, 1 do
+        local tierPrice = self.price * Config.UpgradesPercent[i] / 100
+        resellPrice = resellPrice + tierPrice / 2
+    end
+    return resellPrice
 end
 
 function Apartment:GetZone(zone)

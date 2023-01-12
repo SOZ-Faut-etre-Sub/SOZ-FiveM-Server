@@ -450,6 +450,8 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
             MySQL.update.await("UPDATE housing_apartment SET tier = ? WHERE id = ?", {tier, apartmentId})
 
             player.Functions.SetApartmentTier(tier)
+            apartment:SetTier(tier)
+            TriggerClientEvent("housing:client:SetApartmentTier", -1, propertyId, apartmentId, tier)
             TriggerClientEvent("hud:client:DrawNotification", playerData.source,
                                "Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~" .. tier .. "~s~ pour ~b~$" .. price)
         else
