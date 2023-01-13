@@ -157,11 +157,12 @@ function ClothingShop:GenerateMenu(skipIntro)
                         local ped = PlayerPedId()
                         for id, component in pairs(item.Value.components) do
                             SetPedComponentVariation(ped, tonumber(id), component.Drawable, component.Texture or 0, component.Palette or 0);
-                        end
-                        
-                        local properTorsoDrawable = Config.Torsos[GetHashKey(GetEntityModel(ped))][GetPedDrawableVariation(ped, 11)]
-                        if properTorsoDrawable ~= -1 then
-                            SetPedComponentVariation(ped, 3, properTorsoDrawable, 0, 0)
+                            if tonumber(id) == 11 then
+                                local properTorso = Config.Torsos[GetEntityModel(ped)][component.Drawable]
+                                if properTorso ~= null then
+                                    SetPedComponentVariation(ped, 3, properTorso, 0, 0)
+                                end
+                            end
                         end
                     end)
 
