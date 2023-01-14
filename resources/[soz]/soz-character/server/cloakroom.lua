@@ -14,6 +14,14 @@ local function GetCacheCloakroom(citizenid)
     return Cloakrooms[citizenid]
 end
 
+local function CountClothSet(cloakroom)
+    local count = 0
+    for _, __ in pairs(cloakroom) do
+        count = count + 1
+    end
+    return count
+end
+
 QBCore.Functions.CreateCallback("soz-character:server:GetPlayerCloakroom", function(source, cb)
     local Player = QBCore.Functions.GetPlayer(source)
 
@@ -83,5 +91,26 @@ QBCore.Functions.CreateCallback("soz-character:server:DeletePlayerClothe", funct
         end
     else
         cb(false)
+    end
+end)
+
+exports("TruncatePlayerCloakroomFromTier", function(citizenid, tier)
+    local clothes = GetCacheCloakroom(citizenid)
+
+    local toDelete = math.max(0, CountClothSet(clothes) - Config.CloakroomUpgrades[tier])
+
+    for _, clothe in pairs(clothes) do
+        if toDelete == 0 then
+            break
+        end
+        local affectedRows = exports.oxmysql:update_async("DELETE FROM player_cloth_set WHERE id = ? AND citizenid = ?", {
+            clothe.id,
+            citizenid,
+        })
+
+        if affectedRows then
+            Cloakrooms[citizenid][clothe.id] = nil
+            toDelete = toDelete - 1
+        end
     end
 end)

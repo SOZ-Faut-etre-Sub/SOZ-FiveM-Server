@@ -285,6 +285,7 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         exports["soz-inventory"]:SetHouseStashMaxWeightFromTier(apartment:GetIdentifier(), 0)
         Player.Functions.SetApartment(nil)
 
+        exports["soz-character"]:TruncatePlayerCloakroomFromTier(Player.PlayerData.citizenid, 0)
         TriggerEvent("monitor:server:event", "house_sell", {player_source = Player.PlayerData.source},
                      {house_id = apartment:GetIdentifier(), amount = resellPrice})
 
