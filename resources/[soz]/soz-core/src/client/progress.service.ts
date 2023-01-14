@@ -30,7 +30,9 @@ export class ProgressService {
             }
         }
 
-        duration = exports['soz-upw'].CalculateDuration(duration);
+        if (!options.ignorePollution) {
+            duration = exports['soz-upw'].CalculateDuration(duration);
+        }
 
         const start = GetGameTimer();
         let promiseResolve;

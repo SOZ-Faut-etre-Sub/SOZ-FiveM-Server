@@ -16,13 +16,6 @@ RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
     PlayerData.job = JobInfo
 end)
 
-RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    PlayerData.job.onduty = duty
-    if not PlayerData.job.onduty then
-        TriggerEvent("soz-core:client:radar:remove-blip")
-    end
-end)
-
 --- Events
 AddEventHandler("police:cloakroom:openStash", function()
     TriggerServerEvent("inventory:server:openInventory", "stash", ("%s_%s"):format(PlayerData.job.id, PlayerData.citizenid))

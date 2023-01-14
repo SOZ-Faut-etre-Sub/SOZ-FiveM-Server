@@ -4,6 +4,7 @@ export interface PreDBSociety {
     message: string;
     position: boolean;
     pedPosition?: string;
+    overrideIdentifier?: string;
 }
 
 export interface DBSocietyUpdate {

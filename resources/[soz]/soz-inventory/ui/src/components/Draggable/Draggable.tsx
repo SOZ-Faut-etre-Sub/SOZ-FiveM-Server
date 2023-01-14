@@ -60,17 +60,18 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if (WeaponAmmo[item.name]) {
                 contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
             }
-        } else {
-            if (item?.metadata?.expiration) {
-                const currentTime = new Date().getTime();
-                const expiration = new Date(item.metadata['expiration'])
+        } else if (item?.metadata?.expiration) {
+            const currentTime = new Date().getTime();
+            const expiration = new Date(item.metadata['expiration'])
 
-                if (currentTime > expiration.getTime()) {
-                    itemExtraLabel += ` [Périmé]`
-                } else {
-                    itemExtraLabel += ` [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
-                }
+            if (currentTime > expiration.getTime()) {
+                itemExtraLabel += ` [Périmé]`
+            } else {
+                itemExtraLabel += ` [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
             }
+        }
+        else if (item?.metadata?.type && !item?.metadata?.label) {
+            itemExtraLabel += ` [${item?.metadata?.type}]`
         }
 
         if (item.illustrator && item.illustrator instanceof Object) {

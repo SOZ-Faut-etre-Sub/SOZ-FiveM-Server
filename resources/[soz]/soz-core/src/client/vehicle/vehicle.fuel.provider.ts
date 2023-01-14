@@ -7,7 +7,6 @@ import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
-import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { VehicleClass } from '../../shared/vehicle/vehicle';
@@ -20,13 +19,8 @@ import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../resources/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
-import { ObjectFactory } from '../world/object.factory';
+import { ObjectFactory } from './../world/object.factory';
 import { VehicleService } from './vehicle.service';
-
-type StationZone = {
-    station: FuelStation;
-    zone: BoxZone;
-};
 
 type CurrentStationPistol = {
     object: number;
@@ -75,8 +69,6 @@ export class VehicleFuelProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    private stationsByModel: Record<number, StationZone[]> = {};
-
     private currentStationPistol: CurrentStationPistol | null = null;
 
     @Once(OnceStep.RepositoriesLoaded)
@@ -87,9 +79,6 @@ export class VehicleFuelProvider {
             await wait(100);
             stations = this.fuelStationRepository.get();
         }
-
-        const models: number[] = [];
-        this.stationsByModel = {};
 
         for (const station of Object.values(stations)) {
             if (station.type === FuelStationType.Public) {
@@ -106,45 +95,18 @@ export class VehicleFuelProvider {
                 });
             }
 
-            if (!this.stationsByModel[station.model]) {
-                this.stationsByModel[station.model] = [];
-                models.push(station.model);
-            }
-
             if (station.type === FuelStationType.Private || station.fuel === FuelType.Kerosene) {
-                this.objectFFactory.create(station.model, station.position, true);
-
-                const zone = new BoxZone(station.position, 2.0, 2.0, {
-                    heading: station.position[3],
-                    minZ: station.zone.minZ - 2.0,
-                    maxZ: station.zone.maxZ + 2.0,
-                });
-
-                this.stationsByModel[station.model].push({
-                    station,
-                    zone,
-                });
-            } else {
-                const zone = new BoxZone(station.zone.center, station.zone.length, station.zone.width, {
-                    heading: station.zone.heading,
-                    minZ: station.zone.minZ - 2.0,
-                    maxZ: station.zone.maxZ + 2.0,
-                });
-
-                this.stationsByModel[station.model].push({
-                    station,
-                    zone,
-                });
+                station.entity = this.objectFFactory.create(station.model, station.position, true);
             }
         }
 
-        this.targetFactory.createForModel(models, [
+        this.targetFactory.createForModel(this.fuelStationRepository.getModels(), [
             {
                 label: "Remplir la station d'essence",
                 color: JobType.Oil,
                 icon: 'c:fuel/pistolet.png',
                 action: entity => {
-                    const station = this.getStationForEntity(entity);
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
 
                     if (!station) {
                         return false;
@@ -163,7 +125,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    const station = this.getStationForEntity(entity);
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
 
                     if (!station) {
                         return false;
@@ -180,7 +142,7 @@ export class VehicleFuelProvider {
                 color: JobType.Oil,
                 icon: 'c:fuel/pistolet.png',
                 action: entity => {
-                    const station = this.getStationForEntity(entity);
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
 
                     if (!station) {
                         return false;
@@ -199,7 +161,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    const station = this.getStationForEntity(entity);
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
 
                     if (!station) {
                         return false;
@@ -230,7 +192,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    const station = this.getStationForEntity(entity);
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
 
                     if (!station) {
                         return false;
@@ -261,7 +223,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    const station = this.getStationForEntity(entity);
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
 
                     if (!station) {
                         return false;
@@ -296,7 +258,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    const station = this.getStationForEntity(entity);
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
 
                     if (!station) {
                         return false;
@@ -443,7 +405,7 @@ export class VehicleFuelProvider {
     }
 
     private async toggleStationPistol(entity: number) {
-        const station = this.getStationForEntity(entity);
+        const station = this.fuelStationRepository.getStationForEntity(entity);
 
         if (!station) {
             return;
@@ -598,7 +560,7 @@ export class VehicleFuelProvider {
     }
 
     private async getStationFuelLevel(entity: number) {
-        const station = this.getStationForEntity(entity);
+        const station = this.fuelStationRepository.getStationForEntity(entity);
 
         if (!station) {
             return;
@@ -687,30 +649,5 @@ export class VehicleFuelProvider {
             SetVehicleEngineHealth(vehicle, newEngineHealth);
             SetVehicleEngineOn(vehicle, false, true, true);
         }
-    }
-
-    private getStationForEntity(entity: number): FuelStation | null {
-        const model = GetEntityModel(entity);
-        const stations = this.stationsByModel[model];
-
-        if (!stations) {
-            return null;
-        }
-
-        const position = GetEntityCoords(entity, false) as Vector3;
-
-        for (const station of stations) {
-            if (station.zone.isPointInside(position)) {
-                const updateToDateStation = this.fuelStationRepository.find(station.station.name);
-
-                if (!updateToDateStation) {
-                    return;
-                }
-
-                return updateToDateStation;
-            }
-        }
-
-        return null;
     }
 }
