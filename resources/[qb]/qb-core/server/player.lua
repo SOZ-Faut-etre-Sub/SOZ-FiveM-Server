@@ -32,6 +32,8 @@ function QBCore.Player.Login(source, citizenid, newData)
                 if apartment then
                     PlayerData.address = apartment.label
                     PlayerData.apartment = apartment
+                else
+                    PlayerData.apartment = nil
                 end
 
                 if PlayerData.gang then
@@ -523,6 +525,16 @@ function QBCore.Player.CreatePlayer(PlayerData)
             licences[licence] = tonumber(points)
             self.Functions.UpdatePlayerData()
         end
+    end
+
+    self.Functions.SetApartment = function(apartment)
+        if apartment then
+            self.PlayerData.address = apartment.label
+        else
+            self.PlayerData.address = ""
+        end
+        self.PlayerData.apartment = apartment
+        self.Functions.UpdatePlayerData()
     end
 
     self.Functions.SetApartmentTier = function(tier)

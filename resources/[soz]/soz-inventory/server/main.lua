@@ -168,6 +168,14 @@ function Inventory.SetMaxWeight(inv, weight)
 end
 exports("SetMaxWeight", Inventory.SetMaxWeight)
 
+function Inventory.SetHouseStashMaxWeightFromTier(inv, tier)
+    inv = Inventory("house_stash_" .. inv)
+    if inv then
+        inv.maxWeight = Config.StorageCapacity["house_stash"][tier].weight
+    end
+end
+exports("SetHouseStashMaxWeightFromTier", Inventory.SetHouseStashMaxWeightFromTier)
+
 function Inventory.SlotWeight(item, slot)
     local weight = item.weight * slot.amount
     if not slot.metadata then

@@ -131,13 +131,6 @@ RegisterNetEvent("housing:client:SetApartmentInsideCoord", function(propertyId, 
     end
 end)
 
-RegisterNetEvent("housing:client:SetApartmentTier", function(propertyId, apartmentId, tier)
-    local apartment = Properties[propertyId]:GetApartment(apartmentId)
-    if apartment then
-        apartment:SetTier(tier)
-    end
-end)
-
 RegisterNetEvent("housing:client:UpdateApartmentZone", function(propertyId, apartmentId, zone_name, config)
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment then

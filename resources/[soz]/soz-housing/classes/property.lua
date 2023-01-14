@@ -186,6 +186,10 @@ function Property:GetExteriorCulling()
     return self.exterior_culling
 end
 
+function Property:GetGarageName()
+    return "property_" .. self.identifier
+end
+
 ---
 --- SETTERS
 ---

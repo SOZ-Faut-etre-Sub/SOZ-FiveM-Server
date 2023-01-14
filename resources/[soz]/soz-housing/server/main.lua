@@ -234,7 +234,14 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
         TriggerEvent("monitor:server:event", "house_buy", {player_source = Player.PlayerData.source},
                      {house_id = apartment:GetIdentifier(), amount = apartment:GetPrice()})
 
-        Player.PlayerData.apartment = apartment:GetLabel()
+        Player.Functions.SetApartment({
+            id = apartmentId,
+            property_id = propertyId,
+            label = apartment:GetLabel(),
+            price = apartment:GetPrice(),
+            tier = apartment:GetTier(),
+        })
+        Player.PlayerData.address = apartment:GetLabel()
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
@@ -246,7 +253,8 @@ end)
 RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    local property = Properties[propertyId]
+    local apartment = property:GetApartment(apartmentId)
     if apartment == nil then
         exports["soz-monitor"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
@@ -262,17 +270,26 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         return
     end
 
-    if Player.Functions.AddMoney("money", apartment:GetResellPrice()) then
-        MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL WHERE id = ?", {apartmentId})
+    local resellPrice = apartment:GetResellPrice()
+    if Player.Functions.AddMoney("money", resellPrice) then
+        MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL, tier = 0 WHERE id = ?", {
+            apartmentId,
+        })
+        MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
+                           {Player.PlayerData.citizenid, property:GetGarageName()})
+
         apartment:SetOwner(nil)
         apartment:SetRoommate(nil)
+        apartment:SetTier(0)
+
+        exports["soz-inventory"]:SetHouseStashMaxWeightFromTier(apartment:GetIdentifier(), 0)
+        Player.Functions.SetApartment(nil)
 
         TriggerEvent("monitor:server:event", "house_sell", {player_source = Player.PlayerData.source},
-                     {house_id = apartment:GetIdentifier(), amount = apartment:GetResellPrice()})
+                     {house_id = apartment:GetIdentifier(), amount = resellPrice})
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                           "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. apartment:GetResellPrice())
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. resellPrice)
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
@@ -449,9 +466,10 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
         if removed ~= false then
             MySQL.update.await("UPDATE housing_apartment SET tier = ? WHERE id = ?", {tier, apartmentId})
 
+            exports["soz-inventory"]:SetHouseStashMaxWeightFromTier(apartment:GetIdentifier(), tier)
             player.Functions.SetApartmentTier(tier)
             apartment:SetTier(tier)
-            TriggerClientEvent("housing:client:SetApartmentTier", -1, propertyId, apartmentId, tier)
+            TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
             TriggerClientEvent("hud:client:DrawNotification", playerData.source,
                                "Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~" .. tier .. "~s~ pour ~b~$" .. price)
         else
