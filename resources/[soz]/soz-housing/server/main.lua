@@ -275,6 +275,15 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL, tier = 0 WHERE id = ?", {
             apartmentId,
         })
+
+        if apartment:HasRoommate() then
+            local Target = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
+            MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
+                               {Target.PlayerData.citizenid, property:GetGarageName()})
+            Target.Functions.SetApartment(nil)
+            exports["soz-character"]:TruncatePlayerCloakroomFromTier(Target.PlayerData.citizenid, 0)
+            TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+        end
         MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
                            {Player.PlayerData.citizenid, property:GetGarageName()})
 
@@ -345,6 +354,13 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
         apartmentId,
     })
     apartment:SetRoommate(Target.PlayerData.citizenid)
+    Target.Functions.SetApartment({
+        id = apartmentId,
+        property_id = propertyId,
+        label = apartment:GetLabel(),
+        price = apartment:GetPrice(),
+        tier = apartment:GetTier(),
+    })
 
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ajouté un partenaire à votre maison")
     TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été ajouté à votre maison")
@@ -355,7 +371,8 @@ end)
 RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    local property = Properties[propertyId]
+    local apartment = property:GetApartment(apartmentId)
     if apartment == nil then
         exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
@@ -379,7 +396,11 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
     local Target = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
 
     MySQL.update.await("UPDATE housing_apartment SET roommate = NULL WHERE id = ?", {apartmentId})
+    MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
+                       {Target.PlayerData.citizenid, property:GetGarageName()})
     apartment:SetRoommate(nil)
+    Target.Functions.SetApartment(nil)
+    exports["soz-character"]:TruncatePlayerCloakroomFromTier(Target.PlayerData.citizenid, 0)
 
     if apartment:IsOwner(Player.PlayerData.citizenid) then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez supprimé un partenaire de votre maison")
