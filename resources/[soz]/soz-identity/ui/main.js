@@ -68,7 +68,7 @@ window.addEventListener("message", (event) => {
     }
 
     if (scope === "licences" && type === "display") {
-        displayLicensesData(event.data.licences);
+        displayLicensesData(event.data.licences, event.data.vehicleLimit);
         displayPlayerName(
             event.data.firstName,
             event.data.lastName
