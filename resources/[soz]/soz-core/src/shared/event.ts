@@ -161,6 +161,8 @@ export enum ServerEvent {
     VANDALISM_END = 'soz-core:server:vandalism:end',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
+
+    RACKET = 'soz-core:server:racket',
 }
 
 export enum ClientEvent {

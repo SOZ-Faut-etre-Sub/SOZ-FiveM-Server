@@ -130,6 +130,13 @@ export class TargetFactory {
         });
     }
 
+    public createForAllPed(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+        exports['qb-target'].AddGlobalPed({
+            options: targets,
+            distance: distance,
+        });
+    }
+
     public removeTargetModel(models: string[], labels: string[]) {
         exports['qb-target'].RemoveTargetModel(models, labels);
     }

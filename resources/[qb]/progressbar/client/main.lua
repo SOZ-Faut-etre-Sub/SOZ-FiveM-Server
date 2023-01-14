@@ -85,8 +85,8 @@ function Process(action, start, tick, finish)
                 if start ~= nil then
                     start()
                 end
+                Wait(1)
                 while isDoingAction do
-                    Wait(1)
                     if tick ~= nil then
                         tick()
                     end
@@ -103,6 +103,7 @@ function Process(action, start, tick, finish)
                     if IsEntityDead(ped) and not Action.useWhileDead then
                         TriggerEvent("progressbar:client:cancel")
                     end
+                    Wait(1)
                 end
                 if finish ~= nil then
                     finish(wasCancelled)
@@ -242,7 +243,6 @@ function ActionCleanup()
             ClearPedTasks(ped)
             ClearPedSecondaryTask(ped)
             StopAnimTask(ped, Action.animDict, Action.anim, 1.0)
-            SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
         else
             ClearPedTasks(ped)
         end
