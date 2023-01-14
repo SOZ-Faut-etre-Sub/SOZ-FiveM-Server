@@ -63,16 +63,33 @@ local function GetTerminalCapacities(scope)
     return capacity, maxCapacity
 end
 
+local function GetWorkingTerminals(scope)
+    local count, total = 0, 0
+
+    for _, terminal in pairs(GetTerminals(scope)) do
+        if terminal.scope == scope then
+            local capacity = (terminal.capacity * 100) / terminal.maxCapacity
+
+            total = total + 1
+
+            if capacity >= 1 then
+                count = count + 1
+            end
+        end
+    end
+
+    return count, total
+end
+
 function GetBlackoutPercent()
-    local capacity, maxCapacity = GetTerminalCapacities("default")
-    local percent = math.ceil(capacity / maxCapacity * 100)
+    local count, total = GetWorkingTerminals("default")
+    local percent = math.ceil(count / total * 100)
 
     return percent
 end
 
 function GetBlackoutLevel()
-    local capacity, maxCapacity = GetTerminalCapacities("default")
-    local percent = math.ceil(capacity / maxCapacity * 100)
+    local percent = GetBlackoutPercent()
 
     if percent >= 100 then
         return QBCore.Shared.Blackout.Level.Zero
