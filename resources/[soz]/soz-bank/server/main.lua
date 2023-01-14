@@ -200,14 +200,16 @@ QBCore.Functions.CreateCallback("banking:server:openHouseSafeStorage", function(
         return
     end
 
+    local inside = player.PlayerData.metadata.inside
+    local apartmentTier = exports["soz-housing"]:GetApartmentTier(inside.property, inside.apartment)
     local account = Account(safeStorage)
 
     if account == nil then
         account = Account.Create(safeStorage, safeStorage, "house_safe", safeStorage)
     end
-    account.max = Config.HouseSafeTiers[player.PlayerData.apartment.tier]
 
     if Account.AccessGranted(account, source) then
+        account.max = Config.HouseSafeTiers[apartmentTier]
         cb(true, account.money, account.marked_money, account.max)
     else
         cb(false)

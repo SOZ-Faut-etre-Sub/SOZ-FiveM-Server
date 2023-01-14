@@ -631,3 +631,15 @@ exports("UpdateApartmentZone", function(propertyId, apartmentId, zone_type, zone
 
     TriggerClientEvent("housing:client:UpdateApartmentZone", -1, propertyId, apartmentId, zone_type, apartment:GetZone(zone_type))
 end)
+
+exports("GetApartmentTier", function(propertyId, apartmentId)
+    local property = Properties[propertyId]
+    if property == nil then
+        return -1
+    end
+    local apartment = property:GetApartment(apartmentId)
+    if apartment == nil then
+        return -1
+    end
+    return apartment:GetTier()
+end)
