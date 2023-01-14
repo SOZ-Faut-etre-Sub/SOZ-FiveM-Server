@@ -146,4 +146,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     criminal_state: PlayerCriminalState;
     criminal_reputation: number;
     criminal_talents: Talent[];
+    vehicleLimit: number;
 };
