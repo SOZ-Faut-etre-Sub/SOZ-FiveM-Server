@@ -166,11 +166,11 @@ export class VehicleGarageProvider {
             if (!player) {
                 return 0;
             }
-            const playerApartmentTier = player.apartment?.tier ?? -1
-            return 1 + playerApartmentTier
+            const playerApartmentTier = player.apartment?.tier ?? -1;
+            return 1 + playerApartmentTier;
         }
 
-        return 38
+        return 38;
     }
 
     @Rpc(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES)

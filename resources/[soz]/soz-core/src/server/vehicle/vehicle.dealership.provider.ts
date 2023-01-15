@@ -350,7 +350,6 @@ export class VehicleDealershipProvider {
         if (!player) {
             return false;
         }
-        
 
         const playerVehicleCount = await this.prismaService.playerVehicle.count({
             where: {
@@ -359,7 +358,7 @@ export class VehicleDealershipProvider {
         });
 
         if (playerVehicleCount >= player.metadata.vehicleLimit) {
-            this.notifier.notify(source, "Vous avez atteint la limite de véhicule sur votre carte grise !", 'error');
+            this.notifier.notify(source, 'Vous avez atteint la limite de véhicule sur votre carte grise !', 'error');
 
             return false;
         }
