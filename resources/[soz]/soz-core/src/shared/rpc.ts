@@ -1,5 +1,6 @@
 export enum RpcEvent {
     ADMIN_GET_PLAYERS = 'soz-core:admin:get-players',
+    ADMIN_GET_CHARACTERS = 'soz-core:admin:get-characters',
     ADMIN_GET_FULL_PLAYERS = 'soz-core:admin:get-full-players',
     ADMIN_GET_VEHICLES = 'soz-core:admin:get-vehicles',
     ADMIN_IS_ALLOWED = 'soz-core:admin:is-allowed',
