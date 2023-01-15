@@ -114,7 +114,7 @@ function Apartment:GetMoneyCoord()
 end
 
 function Apartment:GetTier()
-    return self.tier
+    return self.tier or 0
 end
 
 ---

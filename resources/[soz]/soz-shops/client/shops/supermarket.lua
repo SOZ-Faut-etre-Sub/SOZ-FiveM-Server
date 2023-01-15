@@ -46,7 +46,7 @@ function SupermarketShop:GenerateZkeaUpgradesMenu()
         return
     end
 
-    local apartmentTier = playerData.apartment.tier
+    local apartmentTier = playerData.apartment.tier or 0
     local apartmentPrice = playerData.apartment.price
 
     shopMenu.Texture = "menu_shop_supermarket"

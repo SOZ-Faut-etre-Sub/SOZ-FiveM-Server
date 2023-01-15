@@ -469,7 +469,7 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
 
     local playerData = player.PlayerData
 
-    if not playerData.apartment or not playerData.apartment.tier then
+    if not playerData.apartment then
         return
     end
 
