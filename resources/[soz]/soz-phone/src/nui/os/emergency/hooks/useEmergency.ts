@@ -5,7 +5,7 @@ import { fetchNui } from '../../../utils/fetchNui';
 
 interface EmergencyHook {
     lsmcCall(): void;
-    XCall(): void;
+    UHUCall(): void;
 }
 
 export const useEmergency = (): EmergencyHook => {
@@ -13,9 +13,9 @@ export const useEmergency = (): EmergencyHook => {
         fetchNui(EmergencyEvents.LSMC_CALL, null, {});
     }, []);
 
-    const XCall = useCallback(() => {
-        fetchNui(EmergencyEvents.UNITEX_CALL, null, {});
+    const UHUCall = useCallback(() => {
+        fetchNui(EmergencyEvents.UHU_CALL, null, {});
     }, []);
 
-    return { lsmcCall, XCall };
+    return { lsmcCall, UHUCall };
 };
