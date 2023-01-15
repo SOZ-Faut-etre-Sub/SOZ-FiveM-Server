@@ -1,6 +1,8 @@
 QBCore.Functions.CreateCallback("soz-character:server:GetDefaultPlayer", function(source, cb)
     local steam = QBCore.Functions.GetSozIdentifier(source)
-    local character = MySQL.single.await("SELECT * FROM player WHERE license = ? AND is_default = 1 LIMIT 1", {steam})
+    local character = MySQL.single.await("SELECT * FROM player WHERE license = ? AND is_default = 1 ORDER BY created_at ASC LIMIT 1", {
+        steam,
+    })
 
     cb(character)
 end)

@@ -100,6 +100,8 @@ export enum ServerEvent {
     ADMIN_SPECTATE = 'admin:server:spectate',
     ADMIN_UNCUFF = 'admin:gamemaster:unCuff',
     ADMIN_UNFREEZE = 'admin:server:unfreeze',
+    ADMIN_CREATE_CHARACTER = 'soz-core:server:admin:create-character',
+    ADMIN_SWITCH_CHARACTER = 'soz-core:server:admin:switch-character',
 
     BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
@@ -310,7 +312,8 @@ export enum NuiEvent {
     AdminMenuSkinCopy = 'soz-core:client:admin:skin:copy',
     AdminMenuSkinLookAtDrawable = 'soz-core:client:admin:skin:look-at-drawable',
     AdminMenuSkinSave = 'soz-core:client:admin:skin:save',
-
+    AdminMenuGameMasterCreateNewCharacter = 'soz-core:client:admin:game-master:create-new-character',
+    AdminMenuGameMasterSwitchCharacter = 'soz-core:client:admin:game-master:switch-character',
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
 
     StonkDisplayBlip = 'soz-core:client:job:stonk:display-blip',

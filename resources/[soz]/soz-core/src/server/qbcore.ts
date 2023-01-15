@@ -14,6 +14,9 @@ export class QBCore {
         this.SozJobCore = exports['soz-jobs'].GetCoreObject();
     }
 
+    public logout(source: number): void {
+        this.QBCore.Player.Logout(source);
+    }
     public createUseableItem(name, action: (player: number, item: any) => void) {
         this.QBCore.Functions.CreateUseableItem(name, action);
     }

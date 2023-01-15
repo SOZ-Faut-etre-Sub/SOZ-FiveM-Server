@@ -1,3 +1,5 @@
+import { PlayerCharInfo } from '@public/shared/player';
+
 import { SozRole } from '../../core/permissions';
 import { Component, Outfit, Prop } from '../cloth';
 
@@ -60,6 +62,7 @@ export type DeveloperSubMenuState = {
 export type AdminMenuData = {
     banner: string;
     permission: SozRole;
+    characters: Record<string, PlayerCharInfo>;
     state: {
         gameMaster: GameMasterSubMenuState;
         interactive: InteractiveSubMenuState;
