@@ -188,7 +188,7 @@ RegisterNuiCB<void>(EmergencyEvents.LSMC_CALL, async (_, cb) => {
     cb({});
 });
 
-RegisterNuiCB<void>(EmergencyEvents.UNITEX_CALL, async (_, cb) => {
+RegisterNuiCB<void>(EmergencyEvents.UHU_CALL, async (_, cb) => {
     TriggerServerEvent('soz-core:lsmc:server:revive', null, true, true);
     hidePhone();
     cb({});

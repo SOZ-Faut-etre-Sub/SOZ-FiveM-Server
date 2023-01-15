@@ -216,10 +216,10 @@ export class LSMCDeathProvider {
     }
 
     @OnEvent(ClientEvent.LSMC_REVIVE)
-    public async revive(skipanim: boolean, uniteX: boolean, uniteXBed: number) {
+    public async revive(skipanim: boolean, uniteHU: boolean, uniteHUBed: number) {
         const player = PlayerPedId();
 
-        if (uniteX) {
+        if (uniteHU) {
             DoScreenFadeOut(1000);
             await wait(2000);
         }
@@ -254,20 +254,20 @@ export class LSMCDeathProvider {
 
         TriggerEvent(ClientEvent.PLAYER_REFRESH_WALK_STYLE);
 
-        if (uniteX) {
-            this.uniteX(uniteXBed);
+        if (uniteHU) {
+            this.uniteHU(uniteHUBed);
         }
 
         this.notifier.notify('Vous êtes réanimé!');
     }
 
-    private async uniteX(uniteXBed: number) {
+    private async uniteHU(uniteHUBed: number) {
         const ped = PlayerPedId();
         const player = this.playerService.getPlayer();
 
         this.playerService.setTempClothes(PatientClothes[player.skin.Model.Hash]['Patient']);
 
-        if (uniteXBed == -1) {
+        if (uniteHUBed == -1) {
             ClearPedTasksImmediately(PlayerPedId());
             SetEntityCoords(
                 ped,
@@ -283,9 +283,9 @@ export class LSMCDeathProvider {
         } else {
             SetEntityCoords(
                 ped,
-                BedLocations[uniteXBed][0],
-                BedLocations[uniteXBed][1],
-                BedLocations[uniteXBed][2] + 0.5,
+                BedLocations[uniteHUBed][0],
+                BedLocations[uniteHUBed][1],
+                BedLocations[uniteHUBed][2] + 0.5,
                 false,
                 false,
                 false,
@@ -294,12 +294,12 @@ export class LSMCDeathProvider {
             SetEntityHeading(ped, 320);
 
             this.playerInOutService.add(
-                'UniteX',
-                new BoxZone(BedLocations[uniteXBed], 3, 3, { heading: 320 }),
+                'UniteHU',
+                new BoxZone(BedLocations[uniteHUBed], 3, 3, { heading: 320 }),
                 isInside => {
                     if (isInside === false) {
                         TriggerServerEvent(ServerEvent.LSMC_FREE_BED);
-                        this.playerInOutService.remove('UniteX');
+                        this.playerInOutService.remove('UniteHU');
                     }
                 }
             );
