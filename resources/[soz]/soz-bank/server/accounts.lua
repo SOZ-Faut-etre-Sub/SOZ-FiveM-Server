@@ -130,7 +130,7 @@ function Account.AddMoney(acc, money, money_type)
     end
 
     local total = math.ceil(acc[money_type] + money - 0.5)
-    if total > acc.max then
+    if acc.type == "house_safe" and total > acc.max then
         return false
     end
 
