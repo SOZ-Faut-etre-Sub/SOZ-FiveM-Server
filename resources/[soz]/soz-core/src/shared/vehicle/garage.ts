@@ -35,6 +35,7 @@ export type Garage = {
     zone: Zone;
     allowTrailers?: boolean;
     parkingPlaces: Zone<GarageParkingPlaceData>[];
+    isTrailerGarage?: boolean;
 };
 
 export type GarageVehicle = {

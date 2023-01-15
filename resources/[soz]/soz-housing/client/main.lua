@@ -57,7 +57,8 @@ RegisterNetEvent("housing:client:UpdateApartment", function(propertyId, apartmen
     local property = Properties[propertyId]
     if property then
         local newApartment = Apartment:new(data.identifier, data.label, data.owner, data.roommate, data.price, data.inside_coord, data.exit_zone,
-                                           data.fridge_zone, data.stash_zone, data.closet_zone, data.money_zone, data.tier, data.temporary_access)
+                                           data.fridge_zone, data.stash_zone, data.closet_zone, data.money_zone, data.tier, data.has_parking_place,
+                                           data.temporary_access)
         property:UpdateApartment(apartmentId, newApartment)
 
         Housing.Functions.SetupBlips(Properties[propertyId])
@@ -78,7 +79,8 @@ RegisterNetEvent("housing:client:SyncProperties", function()
             Properties[propertyId]:AddApartment(apartmentId,
                                                 Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.roommate, apartment.price,
                                                               apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone, apartment.stash_zone,
-                                                              apartment.closet_zone, apartment.money_zone, apartment.tier, apartment.temporary_access))
+                                                              apartment.closet_zone, apartment.money_zone, apartment.tier, apartment.has_parking_place,
+                                                              apartment.temporary_access))
 
             local apartmentData = Properties[propertyId]:GetApartment(apartmentId)
             Housing.Functions.Components.SetupExitInteraction(propertyId, apartmentId, apartmentData)

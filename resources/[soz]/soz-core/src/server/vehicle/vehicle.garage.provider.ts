@@ -159,6 +159,10 @@ export class VehicleGarageProvider {
             return null;
         }
 
+        if (garage.type === GarageType.House && garage.isTrailerGarage) {
+            return 1;
+        }
+
         const player = this.playerService.getPlayer(source);
         const isPropertyGarage = garage.type === GarageType.House;
 

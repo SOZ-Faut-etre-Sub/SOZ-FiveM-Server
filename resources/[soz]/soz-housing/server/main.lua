@@ -44,7 +44,8 @@ MySQL.ready(function()
         Properties[apartment.property_id]:AddApartment(apartment.id,
                                                        Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.roommate,
                                                                      apartment.price, apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone,
-                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone, apartment.tier))
+                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone, apartment.tier,
+                                                                     apartment.has_parking_place))
     end
 end)
 
@@ -272,7 +273,7 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
 
     local resellPrice = apartment:GetResellPrice()
     if Player.Functions.AddMoney("money", resellPrice) then
-        MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL, tier = 0 WHERE id = ?", {
+        MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL, tier = 0, has_parking_place = 0 WHERE id = ?", {
             apartmentId,
         })
 
@@ -290,6 +291,9 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         apartment:SetOwner(nil)
         apartment:SetRoommate(nil)
         apartment:SetTier(0)
+        if property:IsTrailer() then
+            apartment:SetParkingPlace(false)
+        end
 
         exports["soz-inventory"]:SetHouseStashMaxWeightFromTier(apartment:GetIdentifier(), 0)
         Player.Functions.SetApartment(nil)
@@ -479,7 +483,7 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-monitor"]:Log("ERROR", ("UpgradeApartmentTier %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
@@ -498,6 +502,50 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
             player.Functions.AddMoney("money", price)
             TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Zkea n'a pas assez de stock", "error")
         end
+    else
+        TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
+    end
+end)
+
+RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(price)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if not player then
+        return
+    end
+
+    local playerData = player.PlayerData
+
+    if not playerData.apartment then
+        return
+    end
+
+    local playerApartment = playerData.apartment
+    local apartmentId = playerApartment.id
+    local propertyId = playerApartment.property_id
+
+    local property = Properties[propertyId]
+    if property == nil then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it has no property"):format(propertyId, apartmentId))
+        return
+    end
+    if not property:IsTrailer() then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it is not a trailer"):format(propertyId, apartmentId))
+        return
+    end
+    local apartment = property:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if player.Functions.RemoveMoney("money", price) then
+        MySQL.update.await("UPDATE housing_apartment SET has_parking_place = ? WHERE id = ?", {1, apartmentId})
+        player.Functions.SetApartmentHasParkingPlace(true)
+        apartment:SetParkingPlace(true)
+        TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
+        TriggerClientEvent("hud:client:DrawNotification", playerData.source,
+                           "Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$" .. price)
     else
         TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
     end

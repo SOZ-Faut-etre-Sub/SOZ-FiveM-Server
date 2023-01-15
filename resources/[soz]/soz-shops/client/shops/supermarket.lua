@@ -51,7 +51,7 @@ function SupermarketShop:GenerateZkeaUpgradesMenu()
 
     shopMenu.Texture = "menu_shop_supermarket"
     shopMenu:ClearItems()
-    shopMenu:SetSubtitle(self.label)
+    shopMenu:SetSubtitle("Améliorations habitation")
 
     local priceCumul = 0
     local zkeaPriceCumul = 0
@@ -77,6 +77,30 @@ function SupermarketShop:GenerateZkeaUpgradesMenu()
             end
 
             shopMenu:AddButton({label = "Palier " .. tier, rightLabel = label})
+        end
+    end
+
+    local properties = QBCore.Functions.TriggerRpc("housing:server:GetAllProperties")
+    local property = properties[playerData.apartment.property_id]
+
+    if property and string.find(property.identifier, "trailer") then
+        local apartment = property.apartments[tostring(playerData.apartment.id)]
+        if apartment then
+            if not apartment.has_parking_place then
+                local price = math.floor(apartmentPrice * 50 / 100)
+                shopMenu:AddButton({
+                    label = "Ajout place de parking",
+                    value = {price = price},
+                    rightLabel = "$" .. QBCore.Shared.GroupDigits(price),
+                    select = function(data)
+                        local value = data.Value
+                        TriggerServerEvent("housing:server:SetPlayerApartmentParkingPlace", value.price)
+                        shopMenu:Close()
+                    end,
+                })
+            else
+                shopMenu:AddButton({label = "Ajout place de parking", rightLabel = "Acquis"})
+            end
         end
     end
 

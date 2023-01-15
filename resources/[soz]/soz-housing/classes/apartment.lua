@@ -2,7 +2,20 @@
 Apartment = {}
 
 function Apartment:new(
-    identifier, label, owner, roommate, price, inside_coord, exit_zone, fridge_zone, stash_zone, closet_zone, money_zone, tier, temporary_access
+    identifier,
+    label,
+    owner,
+    roommate,
+    price,
+    inside_coord,
+    exit_zone,
+    fridge_zone,
+    stash_zone,
+    closet_zone,
+    money_zone,
+    tier,
+    has_parking_place,
+    temporary_access
 )
     self.__index = self
 
@@ -14,6 +27,7 @@ function Apartment:new(
         price = price,
         inside_coord = decode_json(inside_coord),
         tier = tier,
+        has_parking_place = has_parking_place,
         --- Zones
         exit_zone = decode_json(exit_zone),
         fridge_zone = decode_json(fridge_zone),
@@ -117,6 +131,10 @@ function Apartment:GetTier()
     return self.tier or 0
 end
 
+function Apartment:HasParkingPlace()
+    return self.has_parking_place
+end
+
 ---
 --- SETTERS
 ---
@@ -158,4 +176,8 @@ end
 
 function Apartment:SetTier(tier)
     self.tier = tier
+end
+
+function Apartment:SetParkingPlace(value)
+    self.has_parking_place = value
 end

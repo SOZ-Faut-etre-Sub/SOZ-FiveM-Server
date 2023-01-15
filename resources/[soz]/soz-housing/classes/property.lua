@@ -162,6 +162,10 @@ function Property:IsBuilding()
     return table.length(self.apartments) > 1
 end
 
+function Property:IsTrailer()
+    return string.find(self.identifier, "trailer")
+end
+
 function Property:HasGarage()
     return self.garage_zone ~= nil
 end
