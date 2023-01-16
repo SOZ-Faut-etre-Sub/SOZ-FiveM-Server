@@ -119,6 +119,8 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
             if playerIdx == -1 then -- Is NPC
                 if currentResellZone ~= nil then
                     TriggerServerEvent("inventory:server:ResellItem", data, tonumber(amount), currentResellZone)
+                else
+                    exports["soz-hud"]:DrawNotification("Assurez-vous d'avoir le bon emploi et d'être en service", "error")
                 end
             else
                 TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(playerIdx), data, tonumber(amount))
