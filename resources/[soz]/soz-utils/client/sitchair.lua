@@ -27,7 +27,7 @@ RegisterCommand("unsit", function()
     if lastCoord == nil then
         return
     end
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     local distance = #(lastCoord - GetEntityCoords(player))
     if sit == true and distance <= 2.5 then
         SetPedCoordsKeepVehicle(player, lastCoord)
