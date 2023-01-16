@@ -265,6 +265,12 @@ Container["log_processing"] = InventoryContainer:new({
         return false
     end,
 })
+--- PAWL - ZKEA
+Container["cabinet_storage"] = InventoryContainer:new({
+    type = "cabinet_storage",
+    allowedTypes = {"item"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+})
 
 --- Jobs UPW
 Container["inverter"] = InventoryContainer:new({
