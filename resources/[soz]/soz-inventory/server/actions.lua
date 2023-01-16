@@ -165,7 +165,8 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
     end
 
     if resellZone.ZoneName == "Resell:Zkea" and item.name == "cabinet_zkea" then
-        local zkeaAmount = itemSpec.resellZkeaQty[item.metadata.tier] * amount
+        local tier = tonumber(item.metadata.tier) or 1
+        local zkeaAmount = itemSpec.resellZkeaQty[tier] * amount
         local msg = string.format("%s meuble(s) ajouté(s) au stock Zkea.", zkeaAmount)
 
         local s, r = Inventory.AddItem("cabinet_storage", item.name, zkeaAmount, {}, nil, nil)
