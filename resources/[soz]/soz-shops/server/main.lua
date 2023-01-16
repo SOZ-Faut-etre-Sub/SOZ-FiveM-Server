@@ -216,7 +216,7 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                     clothConfig[clothConfigName].Components[compId].Drawable = tonumber(component.Drawable)
                     clothConfig[clothConfigName].Components[compId].Texture = tonumber(component.Texture) or 0
                     clothConfig[clothConfigName].Components[compId].Palette = tonumber(component.Palette) or 0
-                    
+
                     -- If the top is modified, update the torso
                     if compId == "11" then
                         local currentTop = clothConfig["BaseClothSet"].Components["11"]

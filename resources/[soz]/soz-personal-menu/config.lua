@@ -200,7 +200,11 @@ Config.AnimationsList = {
             "inv_copsuit",
             {"0", "world_human_car_park_attendant", 262144},
         },
-        {"Lampe torche", "Pratique (ou pas)", false, "inv_copsuit", 
+        {
+            "Lampe torche",
+            "Pratique (ou pas)",
+            false,
+            "inv_copsuit",
             {
                 "amb@world_human_security_shine_torch@male@base",
                 "base",
@@ -210,7 +214,7 @@ Config.AnimationsList = {
                 nil,
                 nil,
                 {model = "prop_cs_police_torch_02", bone = 18905, coords = {0.16, 0.03, 0, 110.0, -70.0, 0.0}},
-            }
+            },
         },
         {"Cow Boy", "Sheriff incompris", false, "inv_copsuit", {"amb@world_human_cop_idles@male@base", "base", 49}},
         {

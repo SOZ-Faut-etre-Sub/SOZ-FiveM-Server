@@ -1,6 +1,6 @@
 -- Maybe these permissions could be included in SozJobCore.Jobs in resources/[soz]/soz-jobs/config.lua
 local jobCanFine = {"lspd", "bcso"}
-local jobCanFouille = {"lspd","bcso", "cash-transfer"}
+local jobCanFouille = {"lspd", "bcso", "cash-transfer"}
 local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc"}
 
 --- Targets
@@ -8,52 +8,52 @@ Citizen.CreateThread(function()
     for _, jobId in pairs(jobCanFine) do
         exports["qb-target"]:AddGlobalPlayer({
             options = {
-                    {
-                        label = "Amender",
-                        color = jobId,
-                        icon = "c:police/amender.png",
-                        event = "police:client:InvoicePlayer",
-                        canInteract = function(player)
-                            return PlayerData.job.onduty
-                        end,
-                        job = jobId,
-                        blackoutGlobal = true,
-                        blackoutJob = true,
-                    },
-                    {
-                        label = "Permis",
-                        color = jobId,
-                        icon = "c:police/permis.png",
-                        event = "police:client:LicensePlayer",
-                        canInteract = function(player)
-                            return PlayerData.job.onduty
-                        end,
-                        job = jobId,
-                    },
-                    {
-                        label = "Menotter",
-                        color = jobId,
-                        icon = "c:police/menotter.png",
-                        event = "police:client:CuffPlayer",
-                        item = "handcuffs",
-                        canInteract = function(entity)
-                            return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                                    not IsPedInAnyVehicle(PlayerPedId())
-                        end,
-                        job = jobId,
-                    },
-                    {
-                        label = "Démenotter",
-                        color = jobId,
-                        icon = "c:police/demenotter.png",
-                        event = "police:client:UnCuffPlayer",
-                        item = "handcuffs_key",
-                        canInteract = function(entity)
-                            return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                                    not IsPedInAnyVehicle(PlayerPedId())
-                        end,
-                        job = jobId,
-                    },
+                {
+                    label = "Amender",
+                    color = jobId,
+                    icon = "c:police/amender.png",
+                    event = "police:client:InvoicePlayer",
+                    canInteract = function(player)
+                        return PlayerData.job.onduty
+                    end,
+                    job = jobId,
+                    blackoutGlobal = true,
+                    blackoutJob = true,
+                },
+                {
+                    label = "Permis",
+                    color = jobId,
+                    icon = "c:police/permis.png",
+                    event = "police:client:LicensePlayer",
+                    canInteract = function(player)
+                        return PlayerData.job.onduty
+                    end,
+                    job = jobId,
+                },
+                {
+                    label = "Menotter",
+                    color = jobId,
+                    icon = "c:police/menotter.png",
+                    event = "police:client:CuffPlayer",
+                    item = "handcuffs",
+                    canInteract = function(entity)
+                        return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
+                                   not IsPedInAnyVehicle(PlayerPedId())
+                    end,
+                    job = jobId,
+                },
+                {
+                    label = "Démenotter",
+                    color = jobId,
+                    icon = "c:police/demenotter.png",
+                    event = "police:client:UnCuffPlayer",
+                    item = "handcuffs_key",
+                    canInteract = function(entity)
+                        return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
+                                   not IsPedInAnyVehicle(PlayerPedId())
+                    end,
+                    job = jobId,
+                },
             },
             distance = 1.5,
         })
@@ -72,7 +72,8 @@ Citizen.CreateThread(function()
                         end
 
                         return PlayerData.job.onduty and
-                                (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
+                                   (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or
+                                       IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
                     end,
                     job = jobId,
                 },
@@ -96,7 +97,7 @@ Citizen.CreateThread(function()
                             end
                         end
                         return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
-                                not IsPedInAnyVehicle(PlayerPedId())
+                                   not IsPedInAnyVehicle(PlayerPedId())
                     end,
                     job = jobId,
                 },
