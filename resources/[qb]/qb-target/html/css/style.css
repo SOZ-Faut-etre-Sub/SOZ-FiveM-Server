@@ -99,6 +99,9 @@ body {
 .target-item.pawl {
   --item-color: 15;
 }
+.target-item.crimi {
+  --item-color: 0;
+}
 
 .target-item .tooltip {
   position: absolute;

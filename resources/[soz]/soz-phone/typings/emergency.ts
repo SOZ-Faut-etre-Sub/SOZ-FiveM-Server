@@ -1,5 +1,5 @@
 export enum EmergencyEvents {
     LSMC_CALL = 'emergency:LSMCCall',
-    UNITEX_CALL = 'emergency:XCall',
+    UHU_CALL = 'emergency:UHUCall',
     SET_EMERGENCY = 'emergency:setEmergency',
 }

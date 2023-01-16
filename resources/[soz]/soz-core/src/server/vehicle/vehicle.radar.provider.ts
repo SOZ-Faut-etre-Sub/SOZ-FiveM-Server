@@ -1,5 +1,5 @@
 import { RadarAllowedVehicle, RadarInformedVehicle, RadarList } from '../../config/radar';
-import { Once, OnEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
@@ -8,12 +8,10 @@ import { PlayerLicenceType } from '../../shared/player';
 import { BankService } from '../bank/bank.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
-import { PropsService } from '../props.service';
 import { VehicleRepository } from '../repository/vehicle.repository';
 import { ServerStateService } from '../server.state.service';
 import { VehicleStateService } from './vehicle.state.service';
 
-const radar_props = GetHashKey('soz_prop_radar');
 const RadarMessage = {
     Title: 'RADAR AUTOMATIQUE',
     FlashVehicle: 'Votre véhicule a été flashé !',
@@ -28,9 +26,6 @@ export class VehicleRadarProvider {
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
 
-    @Inject(PropsService)
-    private propsService: PropsService;
-
     @Inject(BankService)
     private bankService: BankService;
 
@@ -42,14 +37,6 @@ export class VehicleRadarProvider {
 
     @Inject(VehicleStateService)
     vehicleStateService: VehicleStateService;
-
-    @Once()
-    public init() {
-        for (const radarID in RadarList) {
-            const radar = RadarList[radarID];
-            this.propsService.createObject(radar_props, radar.props, 8000.0, true);
-        }
-    }
 
     @OnEvent(ClientEvent.VEHICLE_RADAR_TRIGGER)
     public async radarTrigger(

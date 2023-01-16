@@ -133,3 +133,11 @@ QBCore.Functions.CreateCallback("banking:server:needRefill", function(source, cb
         accountId = account.id,
     })
 end)
+
+RegisterNetEvent("banking:server:RemoveAtmLiquidityRatio", function(coords, atmType, value)
+    if (type(coords) ~= "vector3") then
+        coords = vector3(coords.x, coords.y, coords.z)
+    end
+    local account = GetAtmAccount(atmType, coords)
+    Account.RemoveMoney(account, account.money * value, "money")
+end)

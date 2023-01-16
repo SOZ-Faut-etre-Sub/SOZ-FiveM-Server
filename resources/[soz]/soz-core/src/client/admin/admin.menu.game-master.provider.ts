@@ -4,11 +4,19 @@ import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Notifier } from '../notifier';
+import { InputService } from '../nui/input.service';
+import { NuiMenu } from '../nui/nui.menu';
 
 @Provider()
 export class AdminMenuGameMasterProvider {
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(InputService)
+    private inputService: InputService;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
 
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
@@ -94,5 +102,39 @@ export class AdminMenuGameMasterProvider {
     @OnNuiEvent(NuiEvent.AdminMenuGameMasterUncuff)
     public async unCuff(): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_UNCUFF);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuGameMasterCreateNewCharacter)
+    public async createNewCharacter(): Promise<void> {
+        const firstName = await this.inputService.askInput({
+            maxCharacters: 30,
+            title: 'Prénom',
+            defaultValue: '',
+        });
+
+        if (!firstName) {
+            return;
+        }
+
+        await wait(100);
+
+        const lastName = await this.inputService.askInput({
+            maxCharacters: 30,
+            title: 'Nom',
+            defaultValue: '',
+        });
+
+        if (!lastName) {
+            return;
+        }
+
+        this.nuiMenu.closeAll();
+        TriggerServerEvent(ServerEvent.ADMIN_CREATE_CHARACTER, firstName, lastName);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuGameMasterSwitchCharacter)
+    public async switchCharacter(citizenId: string): Promise<void> {
+        this.nuiMenu.closeAll();
+        TriggerServerEvent(ServerEvent.ADMIN_SWITCH_CHARACTER, citizenId);
     }
 }

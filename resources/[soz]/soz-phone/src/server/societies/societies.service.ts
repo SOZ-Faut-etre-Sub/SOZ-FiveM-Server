@@ -58,6 +58,9 @@ class _SocietyService {
             reqObj.data.pedPosition = JSON.stringify({ x: playerX, y: playerY, z: playerZ });
         }
 
+        if (reqObj.data.overrideIdentifier) {
+            identifier = reqObj.data.overrideIdentifier;
+        }
         if (reqObj.data.anonymous) {
             identifier = `#${identifier}`;
         }
@@ -186,6 +189,10 @@ class _SocietyService {
                         );
                     }
                 }
+            }
+
+            if (societyMessage.source_phone.includes('#')) {
+                societyMessage.source_phone = '';
             }
 
             const players = await PlayerService.getPlayersFromSocietyNumber(identifier);

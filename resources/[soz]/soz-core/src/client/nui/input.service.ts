@@ -46,10 +46,6 @@ export class InputService {
 
     @OnNuiEvent(NuiEvent.InputSet)
     public async onInput(input: string): Promise<Result<any, string>> {
-        if (!this.currentInputValidate) {
-            return Ok(null);
-        }
-
         if (this.currentInputValidate) {
             const result = this.currentInputValidate(input);
 

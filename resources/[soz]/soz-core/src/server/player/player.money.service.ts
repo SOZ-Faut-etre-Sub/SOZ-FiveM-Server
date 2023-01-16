@@ -6,12 +6,12 @@ export class PlayerMoneyService {
     @Inject(QBCore)
     private QBCore: QBCore;
 
-    public add(source: number, money: number): boolean {
-        return this.QBCore.getPlayer(source).Functions.AddMoney('money', money);
+    public add(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+        return this.QBCore.getPlayer(source).Functions.AddMoney(type, money);
     }
 
-    public remove(source: number, money: number): boolean {
-        return this.QBCore.getPlayer(source).Functions.RemoveMoney('money', money);
+    public remove(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+        return this.QBCore.getPlayer(source).Functions.RemoveMoney(type, money);
     }
 
     public async transfer(

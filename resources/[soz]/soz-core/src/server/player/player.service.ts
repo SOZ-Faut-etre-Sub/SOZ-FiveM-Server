@@ -28,7 +28,7 @@ export class PlayerService {
     public getPlayer(source: number): PlayerData | null {
         const player = this.QBCore.getPlayer(source);
 
-        if (null === player) {
+        if (!player) {
             return null;
         }
 
@@ -118,7 +118,7 @@ export class PlayerService {
         key: K,
         value: number,
         min: number,
-        max: number
+        max?: number
     ): number {
         const player = this.QBCore.getPlayer(source);
 

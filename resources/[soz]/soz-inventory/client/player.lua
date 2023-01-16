@@ -194,27 +194,32 @@ RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
 end)
 
 exports("hasPhone", function()
-    local p = promise.new()
-    QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
-        if inventory == nil then
-            p:resolve(false)
-            return
+    if IsPauseMenuActive() then
+        return false
+    end
+
+    local hasphone = false
+    for _, item in pairs(PlayerData.items) do
+        if item.name == "phone" then
+            hasphone = true
+            break
         end
+    end
 
-        if PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] or IsPauseMenuActive() then
-            p:resolve(false)
-            return
-        end
+    if not hasphone then
+        exports["soz-hud"]:DrawNotification("Vous n'avez pas de téléphone", "error");
+        return false
+    end
 
-        for _, item in pairs(inventory.items) do
-            if item.name == "phone" then
-                p:resolve(true)
-                return
-            end
-        end
+    if LocalPlayer.state.inv_busy then
+        exports["soz-hud"]:DrawNotification("Action en cours", "error")
+        return false
+    end
 
-        p:resolve(false)
-    end, "player", PlayerId())
+    if PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] then
+        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas accéder à votre téléphone", "error")
+        return false
+    end
 
-    return Citizen.Await(p)
+    return true;
 end)

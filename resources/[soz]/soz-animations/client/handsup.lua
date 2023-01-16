@@ -15,13 +15,14 @@ RegisterCommand("hu", function()
     handsup = not handsup
 
     if IsPedSittingInAnyVehicle(ped) or LocalPlayer.state.isEscorted or LocalPlayer.state.isEscorting or PlayerData.metadata["isdead"] or
-        PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] or exports["progressbar"]:IsDoingAction() then
+        PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
         return
     end
 
     if handsup then
         SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
         TriggerEvent("soz-personal-menu:cleanProps")
+        TriggerEvent("progressbar:client:cancel")
         TaskPlayAnim(ped, animDict, anim, 8.0, 8.0, -1, 50, 0, false, false, false)
         if IsPedInAnyVehicle(ped, false) then
             local vehicle = GetVehiclePedIsIn(ped, false)
