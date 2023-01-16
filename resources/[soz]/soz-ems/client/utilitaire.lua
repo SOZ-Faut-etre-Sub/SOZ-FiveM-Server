@@ -6,7 +6,7 @@ exports["qb-target"]:AddTargetModel(lit_ems, {
             icon = "fas fa-bed",
             label = "S'allonger sur le lit",
             action = function(entity)
-                local player = GetPlayerPed(-1)
+                local player = PlayerPedId()
                 local coords = GetEntityCoords(entity)
                 local heading = GetEntityHeading(entity)
                 if heading >= 180 then

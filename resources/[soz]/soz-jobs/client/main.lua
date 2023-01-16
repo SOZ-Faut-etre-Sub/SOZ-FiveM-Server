@@ -88,7 +88,7 @@ CreateThread(function()
                         return false
                     end
 
-                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local playerPosition = GetEntityCoords(PlayerPedId())
                     local targetPosition = GetEntityCoords(entity)
                     for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
@@ -116,7 +116,7 @@ CreateThread(function()
                         return false
                     end
 
-                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local playerPosition = GetEntityCoords(PlayerPedId())
                     local targetPosition = GetEntityCoords(entity)
                     for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then
@@ -145,7 +145,7 @@ CreateThread(function()
                         return false
                     end
 
-                    local playerPosition = GetEntityCoords(GetPlayerPed(-1))
+                    local playerPosition = GetEntityCoords(PlayerPedId())
                     local targetPosition = GetEntityCoords(entity)
                     for _, bossZone in pairs(bossZones[PlayerData.job.id] or {}) do
                         if bossZone ~= nil and (bossZone:isPointInside(playerPosition) and bossZone:isPointInside(targetPosition)) then

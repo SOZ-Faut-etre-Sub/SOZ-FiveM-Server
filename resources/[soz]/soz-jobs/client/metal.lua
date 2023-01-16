@@ -131,7 +131,7 @@ AddEventHandler("jobs:metal:vehicle-spawn", function(vehicleNetId)
     metal_vehicule = NetworkGetEntityFromNetworkId(vehicleNetId)
     JobVehicle = true
     createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.metal_vehicule)
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     while InVehicle == false do
         Citizen.Wait(100)
         if IsPedInVehicle(player, metal_vehicule, true) == 1 then
