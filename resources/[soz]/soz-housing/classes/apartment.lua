@@ -26,7 +26,7 @@ function Apartment:new(
         roommate = roommate,
         price = price,
         inside_coord = decode_json(inside_coord),
-        tier = tier,
+        tier = tier or 0,
         has_parking_place = has_parking_place,
         --- Zones
         exit_zone = decode_json(exit_zone),
@@ -128,7 +128,7 @@ function Apartment:GetMoneyCoord()
 end
 
 function Apartment:GetTier()
-    return self.tier or 0
+    return self.tier
 end
 
 function Apartment:HasParkingPlace()
