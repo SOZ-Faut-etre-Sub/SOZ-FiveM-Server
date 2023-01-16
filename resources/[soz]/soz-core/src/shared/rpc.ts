@@ -64,4 +64,7 @@ export enum RpcEvent {
     HEIST_JEWELRY_IS_ZONE_UNLOCK = 'soz-core:server:heist:jewelry-check-unlock',
     HEIST_JEWELRY_CHECK_ROBBERY = 'soz-core:server:heist:jewelry-check-robbery',
     HEIST_JEWELRY_START_ROBBERY = 'soz-core:server:heist:jewelry-start-robbery',
+
+    LSMC_CAN_REMOVE_ITT = 'soz-core:server:lsmc:can-remove-itt',
+    LSMC_CAN_SET_ITT = 'soz-core:server:lsmc:can-set-itt',
 }

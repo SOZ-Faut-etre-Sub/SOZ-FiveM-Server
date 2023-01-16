@@ -16,3 +16,8 @@ export const useLSMCCalled = () => {
     const state = useSelector((state: RootState) => state.emergency);
     return state.lsmcCalled;
 };
+
+export const useIsDead = () => {
+    const state = useSelector((state: RootState) => state.emergency);
+    return state.dead;
+};

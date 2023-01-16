@@ -297,6 +297,25 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             <MenuItemSelectOption key={'aio_max_option'}>Max</MenuItemSelectOption>
                         </MenuItemSelect>
                         <MenuItemSelect
+                            title={`Blessure`}
+                            value={player.injuries || 0}
+                            onConfirm={async index => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleInjuriesUpdate, {
+                                    player,
+                                    value: index,
+                                });
+                                player.injuries = index;
+                            }}
+                        >
+                            {Array(11)
+                                .fill(0)
+                                .map((_, index) => (
+                                    <MenuItemSelectOption value={index} key={`injuries_${index}`}>
+                                        {index}
+                                    </MenuItemSelectOption>
+                                ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
                             title={'Réinitialiser la progression Halloween 2022'}
                             onConfirm={async selectedIndex => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleResetHalloween, {

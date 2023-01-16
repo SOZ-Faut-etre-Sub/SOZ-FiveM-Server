@@ -70,7 +70,7 @@ function ShopShell:AddTargetModel()
             self:GetPedAction(),
             self:GunSmith(),
             self:ZkeaStock(),
-            self:ZkeaStock(),
+            self:ZkeaUpgrade(),
             {
                 icon = "c:stonk/collecter.png",
                 label = "Collecter",

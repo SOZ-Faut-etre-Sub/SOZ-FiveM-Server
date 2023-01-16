@@ -6,6 +6,7 @@ export enum ServerEvent {
     ADMIN_SET_STAMINA = 'soz-core:server:admin:set-stamina',
     ADMIN_SET_STRENGTH = 'soz-core:server:admin:set-strength',
     ADMIN_SET_STRESS_LEVEL = 'soz-core:server:admin:set-stress-level',
+    ADMIN_SET_INJURIES_COUNT = 'soz-core:server:admin:set-injuries-count',
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
     ADMIN_VEHICLE_SPAWN = 'soz-core:server:admin:vehicle:spawn',
@@ -59,6 +60,9 @@ export enum ServerEvent {
     MISSIVE_CREATE_ITEM = 'soz-core:server:missive:create-item',
     MISSIVE_DELETE_ITEM = 'soz-core:server:missive:delete-item',
     MISSIVE_COMPLETE = 'soz-core:server:missive:complete',
+
+    LSMC_SET_PATIENT_OUTFIT = 'soz-core:server:job:lsmc:set-patient-outfit',
+
     OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:server:oil:refill-kerosene-station',
     OIL_SET_STATION_PRICE = 'soz-core:server:oil:set-station-price',
@@ -123,7 +127,6 @@ export enum ServerEvent {
     LSMC_FREE_BED = 'soz-core:lsmc:server:free-bed',
     LSMC_ON_DEATH = 'soz-core:lsmc:server:on-death',
     LSMC_SET_DEATH_REASON = 'soz-core:lsmc:server:set-death-reason',
-    LSMC_NOTIF_DEATH_REASON = 'soz-core:lsmc:server:notif-death-reason',
 
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
@@ -284,6 +287,8 @@ export enum ClientEvent {
     MDR_USE_TICKET = 'soz-core:client:mdr:use-ticket',
     HEIST_GUARD = 'soz-core:client:heist:guard',
     HEIST_PLAY_ANIM = 'soz-core:client:heist:play-anim',
+
+    INJURY_DEATH = 'soz-core:client:injury:death',
 }
 
 export enum GameEvent {
@@ -316,6 +321,7 @@ export enum NuiEvent {
     AdminMenuPlayerHandleVocalOption = 'soz-core:client:admin:handle-vocal-option',
     AdminMenuPlayerHandleResetHalloween = 'soz-core:client:admin:handle-reset-halloween',
     AdminMenuPlayerHandleOpenGunSmith = 'soz-core:client:admin:handle-open-gunsmith',
+    AdminMenuPlayerHandleInjuriesUpdate = 'soz-core:client:admin:handle-injuries-update',
     AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
     AdminSetGodMode = 'soz-core:client:admin:set-god-mode',
     AdminSetJob = 'soz-core:client:admin:set-job',

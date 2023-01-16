@@ -87,6 +87,7 @@ export type AdminPlayer = {
     license: string;
     name: string;
     rpFullName: string;
+    injuries: number;
 };
 
 export type FullAdminPlayer = AdminPlayer & {

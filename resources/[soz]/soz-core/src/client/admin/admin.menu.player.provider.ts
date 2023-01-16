@@ -194,4 +194,9 @@ export class AdminMenuPlayerProvider {
                 break;
         }
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleInjuriesUpdate)
+    public async updateInjuriesCount({ player, value }: { player: AdminPlayer; value: number }): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_SET_INJURIES_COUNT, player.id, value);
+    }
 }

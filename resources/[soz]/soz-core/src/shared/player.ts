@@ -17,6 +17,7 @@ export type QBCorePlayer = {
         RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
         GetMoney: (type: 'money' | 'marked_money') => number;
+        SetJobDuty: (onDuty: boolean) => void;
     };
     PlayerData: PlayerData;
 };
@@ -156,4 +157,8 @@ export type PlayerMetadata = PlayerHealthBook & {
     criminal_talents: Talent[];
     vehiclelimit: number;
     inside: PlayerInsideState;
+    injuries_count: number;
+    injuries_date: number;
+    itt: boolean;
+    auto_mort_message: string | null;
 };

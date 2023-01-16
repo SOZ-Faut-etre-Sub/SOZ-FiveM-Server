@@ -2,6 +2,23 @@ import { Component, Prop, WardrobeConfig } from '../cloth';
 import { joaat } from '../joaat';
 import { Vector3, Vector4 } from '../polyzone/vector';
 
+export type KillerVehData = {
+    name: string;
+    seat: number;
+    plate: string;
+};
+
+export type KillData = {
+    killerid: number;
+    killertype: number;
+    killerentitytype: number;
+    weaponhash: number;
+    weapondamagetype: number;
+    killpos: Vector3;
+    killerveh?: KillerVehData;
+    ejection: boolean;
+};
+
 export const PHARMACY_PRICES = {
     tissue: 250,
     antibiotic: 250,

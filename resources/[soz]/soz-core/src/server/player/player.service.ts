@@ -149,4 +149,14 @@ export class PlayerService {
 
         return null;
     }
+
+    public setJobDuty(source: number, onDuty: boolean): PlayerData | null {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return null;
+        }
+
+        player.Functions.SetJobDuty(onDuty);
+    }
 }

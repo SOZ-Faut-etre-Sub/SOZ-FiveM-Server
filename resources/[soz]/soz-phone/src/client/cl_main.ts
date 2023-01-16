@@ -168,6 +168,10 @@ onNet('soz-core:lsmc:client:revive', async () => {
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess);
 });
 
+onNet('soz-core:client:injury:death', async () => {
+    sendMessage('PHONE', EmergencyEvents.SET_DEAD, true);
+});
+
 /* * * * * * * * * * * * *
  *
  *  NUI Service Callback Registration

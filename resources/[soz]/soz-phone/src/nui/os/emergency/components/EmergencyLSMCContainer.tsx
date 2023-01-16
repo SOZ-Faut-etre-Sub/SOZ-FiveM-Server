@@ -1,12 +1,14 @@
 import React, { Fragment, FunctionComponent } from 'react';
 
 import { useLSMCCalled } from '../../../hooks/useEmergency';
+import { useIsDead } from '../../../hooks/useEmergency';
 import { store } from '../../../store';
 import { useEmergency } from '../hooks/useEmergency';
 
 const EmergencyLSMCContainer: FunctionComponent = () => {
     const emergency = useEmergency();
     const lsmcCalled = useLSMCCalled();
+    const isDead = useIsDead();
 
     const handleCallLSMC = e => {
         e.stopPropagation();
@@ -22,7 +24,7 @@ const EmergencyLSMCContainer: FunctionComponent = () => {
                         className="text-white text-center w-4/5 rounded-2xl p-4 bg-green-500 cursor-pointer h-16"
                         onClick={handleCallLSMC}
                     >
-                        Signaler une urgence
+                        {!isDead ? 'Signaler une urgence' : 'Signaler un décès'}
                     </div>
                 ) : (
                     <div className="text-gray-900 text-center w-4/5 rounded-2xl p-4 bg-gray-300 h-16">

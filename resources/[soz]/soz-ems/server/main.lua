@@ -61,29 +61,3 @@ AddEventHandler("lsmc:server:SetItt", function(id)
         TriggerClientEvent("hud:client:DrawNotification", source, "Vous avez mis la personne en interdiction de travail temporaire")
     end
 end)
-
-RegisterServerEvent("lsmc:server:SetPatientOutfit", function(target, useOutfit)
-    local player = QBCore.Functions.GetPlayer(tonumber(target))
-    if not player then
-        return
-    end
-
-    Player(player.PlayerData.source).state.isWearingPatientOutfit = useOutfit
-
-    if useOutfit then
-        TriggerClientEvent("ems:client:applyPatientClothing", player.PlayerData.source)
-    else
-        TriggerClientEvent("ems:client:removePatientClothing", player.PlayerData.source)
-    end
-end)
-
-QBCore.Functions.CreateCallback("lsmc:server:IsItt", function(source, cb, id)
-    local Player = QBCore.Functions.GetPlayer(id)
-    local itt = Player.PlayerData.metadata["itt"]
-
-    if itt == nil then
-        itt = false
-    end
-
-    cb(itt)
-end)

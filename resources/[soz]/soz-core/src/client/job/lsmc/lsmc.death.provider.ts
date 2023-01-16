@@ -1,20 +1,21 @@
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { uuidv4, wait } from '@core/utils';
 import { Animation, AnimationService } from '@public/client/animation/animation.service';
 import { Notifier } from '@public/client/notifier';
+import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
+import { SoundService } from '@public/client/sound.service';
+import { VehicleSeatbeltProvider } from '@public/client/vehicle/vehicle.seatbelt.provider';
 import { OnEvent } from '@public/core/decorators/event';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { BedLocations, FailoverLocation, PatientClothes } from '@public/shared/job/lsmc';
+import { BedLocations, FailoverLocation, KillData, KillerVehData, PatientClothes } from '@public/shared/job/lsmc';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
-
-import { Inject } from '../../../core/decorators/injectable';
-import { Provider } from '../../../core/decorators/provider';
-import { uuidv4, wait } from '../../../core/utils';
-import { Ok } from '../../../shared/result';
-import { InputService } from '../../nui/input.service';
+import { Ok } from '@public/shared/result';
 
 const deathAnim: Animation = {
     base: {
@@ -105,6 +106,12 @@ export class LSMCDeathProvider {
     @Inject(PlayerInOutService)
     private playerInOutService: PlayerInOutService;
 
+    @Inject(VehicleSeatbeltProvider)
+    private vehicleSeatbeltProvider: VehicleSeatbeltProvider;
+
+    @Inject(SoundService)
+    public soundService: SoundService;
+
     private IsDead = false;
 
     @Tick(10)
@@ -120,6 +127,16 @@ export class LSMCDeathProvider {
         }
     }
 
+    private getPedVehicleSeat(player: number) {
+        const vehicle = GetVehiclePedIsIn(player, false);
+        for (let i = -2; i < GetVehicleMaxNumberOfPassengers(vehicle); i++) {
+            if (GetPedInVehicleSeat(vehicle, i) == player) {
+                return i;
+            }
+        }
+        return -2;
+    }
+
     private async onDeath(player: number) {
         if (!this.IsDead) {
             this.IsDead = true;
@@ -129,9 +146,52 @@ export class LSMCDeathProvider {
 
             this.nuiMenu.closeAll(false);
 
+            const playerid = PlayerId();
+            let [killer, killerweapon] = NetworkGetEntityKillerOfPlayer(playerid);
+
+            if (!killerweapon) {
+                killerweapon = GetPedCauseOfDeath(player);
+            }
+            if (killer == -1) {
+                killer = GetPedSourceOfDeath(player);
+            }
+
+            const killerentitytype = GetEntityType(killer);
+            let killertype = -1;
+            let killVehData: KillerVehData;
+            if (killerentitytype == 1) {
+                killertype = GetPedType(killer);
+                const veh = GetVehiclePedIsUsing(killer);
+                if (veh) {
+                    killVehData = {
+                        name: GetDisplayNameFromVehicleModel(GetEntityModel(veh)),
+                        seat: this.getPedVehicleSeat(killer),
+                        plate: GetVehicleNumberPlateText(veh),
+                    };
+                }
+            }
+
+            let killerid = NetworkGetPlayerIndexFromPed(killer);
+            if (killer != playerid && killerid && NetworkIsPlayerActive(killerid)) {
+                killerid = GetPlayerServerId(killerid);
+            } else {
+                killerid = -1;
+            }
+
+            const killData = {
+                killerid: killerid,
+                killertype: killertype,
+                killerentitytype: killerentitytype,
+                weaponhash: killerweapon,
+                weapondamagetype: GetWeaponDamageType(killerweapon),
+                killpos: GetEntityCoords(player),
+                killerveh: killVehData,
+                ejection: Date.now() - this.vehicleSeatbeltProvider.getLastEjectTime() < 10000,
+            } as KillData;
+
             TriggerEvent('inventory:client:StoreWeapon');
-            TriggerEvent(ClientEvent.PLAYER_ON_DEATH);
-            TriggerServerEvent(ServerEvent.LSMC_ON_DEATH);
+            TriggerEvent(ClientEvent.PLAYER_ON_DEATH, killData);
+            TriggerServerEvent(ServerEvent.LSMC_ON_DEATH, killData);
 
             let ragdollTime = 20000;
             while ((GetEntitySpeed(player) > 0.5 || IsPedRagdoll(player)) && ragdollTime > 0) {
@@ -144,15 +204,9 @@ export class LSMCDeathProvider {
 
             const veh = GetVehiclePedIsIn(player, false);
             if (veh) {
-                const vehseats = GetVehicleModelNumberOfSeats(GetEntityModel(veh));
-                for (let i = -1; i < vehseats - 1; i++) {
-                    const occupant = GetPedInVehicleSeat(veh, i);
-                    if (occupant == player) {
-                        NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, true, false);
-                        SetPedIntoVehicle(player, veh, i);
-                        break;
-                    }
-                }
+                const seat = this.getPedVehicleSeat(player);
+                NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, true, false);
+                SetPedIntoVehicle(player, veh, seat);
             } else {
                 NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2] + 0.5, heading, true, false);
             }
@@ -165,10 +219,12 @@ export class LSMCDeathProvider {
 
             LocalPlayer.state.set('inv_busy', false, true);
 
+            const status = this.playerService.getPlayer().metadata.injuries_count < 10 ? 'du coma' : 'de ton décès';
+
             this.inputService
                 .askInput(
                     {
-                        title: "Explique la raison du coma, celle-ci sera lue par les médecins lorsqu'ils te relèveront :",
+                        title: `Explique la raison ${status}, celle-ci sera lue par les médecins lorsqu'ils te prendront en charge :`,
                         maxCharacters: 200,
                         defaultValue: '',
                     },
@@ -367,5 +423,10 @@ export class LSMCDeathProvider {
             position: true,
         });
         this.notifier.notify('Vous avez appelé le ~g~LSMC~s~ !', 'info');
+    }
+
+    @OnEvent(ClientEvent.INJURY_DEATH)
+    public injuryDeath() {
+        this.soundService.play('death', 0.1);
     }
 }
