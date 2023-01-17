@@ -9,6 +9,18 @@ CreateThread(function()
     end
 end)
 
+local inputRagdoll = false
+local inCooldown = false
+
+RegisterKeyMapping("ragdoll", "Ragdoll", "keyboard", "w")
+RegisterCommand("ragdoll", function()
+    if inCooldown then
+        return
+    end
+    inputRagdoll = not inputRagdoll
+    inCooldown = true
+end, false)
+
 CreateThread(function()
     while true do
         Wait(0)
