@@ -1433,21 +1433,21 @@ export const GarageList: Record<string, Garage> = {
         job: JobType.Oil,
         category: GarageCategory.Car,
         allowTrailers: true,
-        zone: new BoxZone([-276.89, 6017.69, 31.02], 1.0, 1.0, {
-            heading: 226.23,
-            minZ: 30.02,
-            maxZ: 34.02,
+        zone: new BoxZone([-260.06, 6071.11, 30.35], 1.0, 1.0, {
+            heading: 135.0,
+            minZ: 30.35,
+            maxZ: 33.35,
         }),
         parkingPlaces: [
-            new BoxZone([-285.17, 6018.65, 31.47], 18.0, 6.6, {
-                heading: 315,
-                minZ: 30.47,
-                maxZ: 33.47,
+            new BoxZone([-267.65, 6071.77, 31.42], 10.4, 3.4, {
+                heading: 45.0,
+                minZ: 30.42,
+                maxZ: 33.42,
             }),
-            new BoxZone([-289.91, 6024.54, 31.47], 18.0, 6.6, {
-                heading: 315,
-                minZ: 30.47,
-                maxZ: 33.47,
+            new BoxZone([-257.71, 6061.84, 31.35], 13.4, 3.6, {
+                heading: 46.0,
+                minZ: 30.35,
+                maxZ: 33.35,
                 data: {
                     capacity: [PlaceCapacity.Large],
                 },
