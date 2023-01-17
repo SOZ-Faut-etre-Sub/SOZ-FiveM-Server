@@ -126,15 +126,15 @@ end
 CreateThread(function()
     CreateTankerAction()
 
-    exports["qb-target"]:AddBoxZone("mtp:duty", vector3(-246.62, 6090.77, 32.25), 0.15, 1.2, {
+    exports["qb-target"]:AddBoxZone("mtp:duty", vector3(-230.65, 6088.05, 31.39), 0.10, 3.10, {
         name = "mtp:duty",
-        heading = 45,
-        minZ = 32.1,
-        maxZ = 33.4,
+        heading = 315,
+        minZ = 30.39,
+        maxZ = 33.39,
     }, {options = SozJobCore.Functions.GetDutyActions("oil"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("mtp:fuel_craft", vector3(-251.12, 6081.49, 32.28), 0.95, 2.85,
-                                    {name = "fuel_craft", heading = 45, minZ = 31.28, maxZ = 33.28}, {
+    exports["qb-target"]:AddBoxZone("mtp:fuel_craft", vector3(-203.11, 6115.01, 31.35), 2.80, 3.20,
+                                    {name = "fuel_craft", heading = 315, minZ = 30.35, maxZ = 33.35}, {
         options = {
             {
                 event = "jobs:client:fueler:StartCraftEssence",
@@ -149,9 +149,9 @@ CreateThread(function()
                 blackoutJob = "oil",
             },
             {
-                event = "jobs:client:fueler:StartCraftEssenceJerryCan",
+                event = "jobs:client:fueler:StartCraftKerosene",
                 icon = "c:fuel/pistolet.png",
-                label = "Bidon d’essence",
+                label = "Kérosène conditionné",
                 color = "oil",
                 canInteract = function()
                     return PlayerData.job.onduty
@@ -160,10 +160,17 @@ CreateThread(function()
                 blackoutGlobal = true,
                 blackoutJob = "oil",
             },
+        },
+        distance = 2.0,
+    })
+
+    exports["qb-target"]:AddBoxZone("mtp:jerrycan_craft", vector3(-206.84, 6119.91, 31.35), 1.45, 3.20,
+                                    {name = "jerrycan_craft", heading = 315, minZ = 30.35, maxZ = 33.35}, {
+        options = {
             {
-                event = "jobs:client:fueler:StartCraftKerosene",
+                event = "jobs:client:fueler:StartCraftEssenceJerryCan",
                 icon = "c:fuel/pistolet.png",
-                label = "Kérosène conditionné",
+                label = "Bidon d’essence",
                 color = "oil",
                 canInteract = function()
                     return PlayerData.job.onduty
@@ -207,8 +214,8 @@ CreateThread(function()
         distance = 2.0,
     })
 
-    exports["qb-target"]:AddBoxZone("fueler:bossPrice", vector3(-237.78, 6090.83, 32.26), 0.25, 1.3,
-                                    {name = "fueler:bossPrice", heading = 45, minZ = 32.01, maxZ = 32.61}, {
+    exports["qb-target"]:AddBoxZone("fueler:bossPrice", vector3(-244.89, 6068.39, 40.57), 0.55, 1.40,
+                                    {name = "fueler:bossPrice", heading = 315, minZ = 39.57, maxZ = 42.57}, {
         options = {
             {
                 label = "Configurateur station",
@@ -724,7 +731,7 @@ end)
 CreateThread(function()
     QBCore.Functions.CreateBlip("jobs:oil", {
         name = "Michel Transport Petrol",
-        coords = vector3(-243.97, 6071.59, 32.32),
+        coords = vector3(-251.75, 6099.03, 31.39),
         sprite = 436,
         scale = 1.0,
     })
