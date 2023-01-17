@@ -50,11 +50,11 @@ CreateThread(function()
         maxZ = 141.25,
     }, {options = callSociety("555-MARIUS"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bell:mtp", vector3(-245.88, 6072.43, 32.33), 0.25, 0.35, {
+    exports["qb-target"]:AddBoxZone("bell:mtp", vector3(-241.39, 6088.71, 31.39), 0.35, 0.25, {
         name = "bell:mtp",
-        heading = 76.0,
-        minZ = 32.3,
-        maxZ = 32.6,
+        heading = 315.0,
+        minZ = 30.39,
+        maxZ = 33.39,
     }, {options = callSociety("555-MTP"), distance = 2.5})
 
     exports["qb-target"]:AddBoxZone("bell:lsmc", vector3(358.71, -1415.06, 32.51), 0.6, 0.4, {
