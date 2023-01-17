@@ -163,6 +163,7 @@ function ClothingShop:GenerateMenu(skipIntro)
                                     SetPedComponentVariation(ped, 3, properTorso, 0, 0)
                                 end
                             end
+                            SetPedComponentVariation(ped, 8, 14, 0, 0) -- No undershirt for the moment!
                         end
                     end)
 

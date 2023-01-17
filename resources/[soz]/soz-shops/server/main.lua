@@ -221,11 +221,18 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                     if compId == "11" then
                         local currentTop = clothConfig["BaseClothSet"].Components["11"]
                         local properTorsoDrawable = Config.Torsos[Player.PlayerData.skin.Model.Hash][currentTop.Drawable]
+                        clothConfig["BaseClothSet"].Components["3"] = {}
                         clothConfig["BaseClothSet"].Components["3"].Drawable = properTorsoDrawable
                         clothConfig["BaseClothSet"].Components["3"].Texture = 0
                         clothConfig["BaseClothSet"].Components["3"].Palette = 0
                     end
                 end
+
+                -- Remove undershirt. Not implemented for the moment.
+                clothConfig["BaseClothSet"].Components["8"] = {}
+                clothConfig["BaseClothSet"].Components["8"].Drawable = 14
+                clothConfig["BaseClothSet"].Components["8"].Texture = 0
+                clothConfig["BaseClothSet"].Components["8"].Palette = 0
 
                 local affectedRows = MySQL.update.await("update shop_content set stock = stock - @stock where id = @id", {
                     id = product.item,
