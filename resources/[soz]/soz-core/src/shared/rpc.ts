@@ -1,5 +1,6 @@
 export enum RpcEvent {
     ADMIN_GET_PLAYERS = 'soz-core:admin:get-players',
+    ADMIN_GET_CHARACTERS = 'soz-core:admin:get-characters',
     ADMIN_GET_FULL_PLAYERS = 'soz-core:admin:get-full-players',
     ADMIN_GET_VEHICLES = 'soz-core:admin:get-vehicles',
     ADMIN_IS_ALLOWED = 'soz-core:admin:is-allowed',
@@ -49,4 +50,7 @@ export enum RpcEvent {
     WEAPON_REPAIR = 'soz-core:server:weapon:repair',
     WEAPON_SET_TINT = 'soz-core:server:weapon:setTint',
     WEAPON_SET_ATTACHMENTS = 'soz-core:server:weapon:setAttachments',
+
+    VANDALISM_END = 'soz-core:server:vandalism:end',
+    VANDALISM_LOAD = 'soz-core:server:vandalism:load',
 }

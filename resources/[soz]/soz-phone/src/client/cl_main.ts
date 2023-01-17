@@ -102,6 +102,10 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 };
 
 async function togglePhone(): Promise<void> {
+    if (global.isPhoneOpen) {
+        return await hidePhone();
+    }
+
     if (!LocalPlayer.state.isdead) {
         if (global.isPhoneDisabled) return;
         if (cityIsInBlackOut()) return;
@@ -109,12 +113,10 @@ async function togglePhone(): Promise<void> {
         if (config.PhoneAsItem.enabled) {
             const canAccess = await checkExportCanOpen();
             if (!canAccess) {
-                exps['soz-hud'].DrawNotification("Vous n'avez pas de téléphone", 'error');
                 return;
             }
         }
     }
-    if (global.isPhoneOpen) return await hidePhone();
     await showPhone();
 }
 
@@ -186,7 +188,7 @@ RegisterNuiCB<void>(EmergencyEvents.LSMC_CALL, async (_, cb) => {
     cb({});
 });
 
-RegisterNuiCB<void>(EmergencyEvents.UNITEX_CALL, async (_, cb) => {
+RegisterNuiCB<void>(EmergencyEvents.UHU_CALL, async (_, cb) => {
     TriggerServerEvent('soz-core:lsmc:server:revive', null, true, true);
     hidePhone();
     cb({});

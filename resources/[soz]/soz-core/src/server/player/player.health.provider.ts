@@ -53,7 +53,7 @@ export class PlayerHealthProvider {
     public async nutritionLoop(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
-        if (player === null || player.metadata.godmode || player.metadata.isdead) {
+        if (!player || player.metadata.godmode || player.metadata.isdead) {
             return;
         }
 

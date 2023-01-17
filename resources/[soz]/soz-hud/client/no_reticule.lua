@@ -1,6 +1,6 @@
 Citizen.CreateThread(function()
     while true do
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
 
         if DoesEntityExist(ped) and not IsEntityDead(ped) then
             local _, hash = GetCurrentPedWeapon(ped, true)

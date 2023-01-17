@@ -10,6 +10,8 @@ local function CreateObject(ref, model, x, y, z, w, culling, freeze)
     if freeze then
         FreezeEntityPosition(entity, true)
     end
+
+    return entity
 end
 
 local function DeleteObject(ref)
@@ -35,4 +37,9 @@ end)
 
 RegisterNetEvent("soz-utils:client:delete-object", function(ref)
     DeleteObject(ref)
+end)
+
+exports("CreateObjectClient", function(ref, model, x, y, z, w, culling, freeze)
+    DeleteObject(ref)
+    return CreateObject(ref, model, x, y, z, w, culling, freeze);
 end)

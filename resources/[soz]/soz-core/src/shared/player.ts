@@ -1,4 +1,6 @@
-import { SozRole } from '../core/permissions';
+import { SozRole } from '@core/permissions';
+import { Talent } from '@private/shared/talent';
+
 import { ClothConfig } from './cloth';
 import { Disease } from './disease';
 import { InventoryItem } from './item';
@@ -13,6 +15,7 @@ export type QBCorePlayer = {
         AddMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
+        GetMoney: (type: 'money' | 'marked_money') => number;
     };
     PlayerData: PlayerData;
 };
@@ -37,6 +40,9 @@ export type PlayerData = {
 
 // TODO: Finish to implement the other properties
 export type Skin = {
+    Hair: {
+        HairType: number;
+    };
     Model: {
         Hash: number;
     };
@@ -98,6 +104,11 @@ export enum PlayerLicenceType {
     Rescuer = 'rescuer',
 }
 
+export enum PlayerCriminalState {
+    None,
+    Allowed,
+}
+
 export type PlayerMetadata = PlayerHealthBook & {
     godmode: boolean;
     isdead: boolean;
@@ -131,4 +142,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     licences: Partial<Record<PlayerLicenceType, number>>;
     shortcuts: Record<number, Partial<InventoryItem>>;
     mort: string | null;
+    criminal_state: PlayerCriminalState;
+    criminal_reputation: number;
+    criminal_talents: Talent[];
 };

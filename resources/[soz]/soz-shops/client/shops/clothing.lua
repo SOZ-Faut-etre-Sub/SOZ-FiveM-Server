@@ -134,14 +134,10 @@ function ClothingShop:GenerateMenu(skipIntro)
                     return
                 end
 
-                local ped = PlayerPedId()
-                local torsoDrawable, torsoTexture = GetPedDrawableVariation(ped, 3), GetPedTextureVariation(ped, 3)
-
                 TriggerServerEvent("shops:server:pay", self.brand, {
                     category = categoryID,
                     collection = collectionID,
                     item = productId,
-                    torso = {drawable = torsoDrawable, texture = torsoTexture},
                 }, 1)
             end,
         })
@@ -161,11 +157,12 @@ function ClothingShop:GenerateMenu(skipIntro)
                         local ped = PlayerPedId()
                         for id, component in pairs(item.Value.components) do
                             SetPedComponentVariation(ped, tonumber(id), component.Drawable, component.Texture or 0, component.Palette or 0);
-                        end
-
-                        local torsoDrawable, torsoTexture = GetProperTorso(ped, GetPedDrawableVariation(ped, 11), GetPedTextureVariation(ped, 11))
-                        if torsoDrawable ~= -1 and torsoTexture ~= -1 then
-                            SetPedComponentVariation(ped, 3, torsoDrawable, torsoTexture, 0)
+                            if tonumber(id) == 11 then
+                                local properTorso = Config.Torsos[GetEntityModel(ped)][component.Drawable]
+                                if properTorso ~= null then
+                                    SetPedComponentVariation(ped, 3, properTorso, 0, 0)
+                                end
+                            end
                         end
                     end)
 

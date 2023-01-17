@@ -11,6 +11,7 @@ import { RpcEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { JobService } from '../../job.service';
+import { LockService } from '../../lock.service';
 import { Notifier } from '../../notifier';
 import { PlayerMoneyService } from '../../player/player.money.service';
 import { PlayerService } from '../../player/player.service';
@@ -45,6 +46,9 @@ export class OilStationProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(LockService)
+    private lockService: LockService;
 
     @Rpc(RpcEvent.OIL_GET_STATION)
     public async getStation(source: number, stationId: number): Promise<FuelStation | null> {
@@ -298,5 +302,30 @@ export class OilStationProvider {
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
+    }
+
+    @OnEvent(ServerEvent.OIL_DECREMENT_STATION)
+    public async decrement(source: number, stationId: number, ratio: number) {
+        if (ratio > 1) {
+            ratio = 1;
+        }
+
+        await this.lockService.lock(`fuel_station_${stationId}`, async () => {
+            const station = await this.prismaService.fuel_storage.findUnique({
+                where: {
+                    id: stationId,
+                },
+            });
+            await this.prismaService.fuel_storage.update({
+                where: {
+                    id: stationId,
+                },
+                data: {
+                    stock: {
+                        decrement: Math.round(ratio * station.stock),
+                    },
+                },
+            });
+        });
     }
 }

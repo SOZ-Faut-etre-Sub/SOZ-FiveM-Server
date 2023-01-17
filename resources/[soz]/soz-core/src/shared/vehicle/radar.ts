@@ -8,4 +8,6 @@ export type Radar = {
     station: JobType.LSPD | JobType.BCSO;
     isOnline: boolean;
     speed: number;
+    entity?: number;
+    disableTime?: number;
 };

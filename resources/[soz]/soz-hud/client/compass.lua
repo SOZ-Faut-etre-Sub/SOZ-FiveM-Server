@@ -45,7 +45,7 @@ Citizen.CreateThread(function()
                 playerHeadingDegrees = 360.0 - ((camRot.z + 360.0) % 360.0)
             else
                 -- Converts E = 270 to E = 90
-                playerHeadingDegrees = 360.0 - GetEntityHeading(GetPlayerPed(-1))
+                playerHeadingDegrees = 360.0 - GetEntityHeading(PlayerPedId())
             end
 
             local tickDegree = playerHeadingDegrees - compass.fov / 2

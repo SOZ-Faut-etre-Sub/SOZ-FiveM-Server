@@ -127,7 +127,7 @@ AddEventHandler("jobs:livraison:vehicle-spawn", function(vehicleNetId)
     livraison_vehicule = NetworkGetEntityFromNetworkId(vehicleNetId)
     JobVehicle = true
     createblip("Véhicule", "Scooter de sevrice", 225, SozJobCore.livraison_vehicule)
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     while InVehicle == false do
         Citizen.Wait(100)
         if IsPedInVehicle(player, livraison_vehicule, true) == 1 then
@@ -180,7 +180,7 @@ AddEventHandler("jobs:livraison:start", function()
     DrawDistance = 100
     while DrawDistance >= 50 do
         Citizen.Wait(1000)
-        local player = GetPlayerPed(-1)
+        local player = PlayerPedId()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end

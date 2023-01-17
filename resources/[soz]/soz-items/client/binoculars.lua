@@ -74,8 +74,8 @@ local createCameraThread = function()
         local player = PlayerPedId()
 
         if not IsPedSittingInAnyVehicle(player) then
-            TaskStartScenarioInPlace(GetPlayerPed(-1), "WORLD_HUMAN_BINOCULARS", 0, 1)
-            PlayAmbientSpeech1(GetPlayerPed(-1), "GENERIC_CURSE_MED", "SPEECH_PARAMS_FORCE")
+            TaskStartScenarioInPlace(PlayerPedId(), "WORLD_HUMAN_BINOCULARS", 0, 1)
+            PlayAmbientSpeech1(PlayerPedId(), "GENERIC_CURSE_MED", "SPEECH_PARAMS_FORCE")
 
             Citizen.Wait(2000)
         end
@@ -130,7 +130,7 @@ local createCameraThread = function()
         end
         -- exports["soz-hud"]:DisableTwitchNewsOverlay()
 
-        ClearPedTasks(GetPlayerPed(-1))
+        ClearPedTasks(PlayerPedId())
         RenderScriptCams(false, false, 0, 1, 0)
         DestroyCam(cam, false)
     end)

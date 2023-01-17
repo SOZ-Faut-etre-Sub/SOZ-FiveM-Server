@@ -14,7 +14,7 @@ Citizen.CreateThread(function()
 
     while true do
         if HudDisplayed then
-            local playerPos = GetEntityCoords(GetPlayerPed(-1), true)
+            local playerPos = GetEntityCoords(PlayerPedId(), true)
             local streetA, streetB = GetStreetNameAtCoord(playerPos.x, playerPos.y, playerPos.z)
             street = {}
 

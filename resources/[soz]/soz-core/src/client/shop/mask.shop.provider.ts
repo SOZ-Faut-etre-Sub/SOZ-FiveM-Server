@@ -1,3 +1,5 @@
+import { Exportable } from '@public/core/decorators/exports';
+
 import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -47,9 +49,10 @@ export class MaskShopProvider {
 
     @OnNuiEvent(NuiEvent.ShopMaskPreview)
     public async previewOutfit(outfit: Outfit) {
-        for (const [componentIndex, component] of Object.entries(outfit.Components)) {
-            this.clothingService.applyComponent(Number(componentIndex), component);
+        if (!outfit.Props) {
+            outfit.Props = {};
         }
+        this.clothingService.applyOutfit(outfit);
         return Ok(true);
     }
 
@@ -60,8 +63,8 @@ export class MaskShopProvider {
         }
 
         this.cameraService.deleteCamera();
-        TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
+        TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         FreezeEntityPosition(PlayerPedId(), false);
     }
 
@@ -125,5 +128,10 @@ export class MaskShopProvider {
                 },
             ]
         );
+    }
+
+    @Exportable('DisplayHairWithMask')
+    displayHairWithMask(maskDrawable: number): boolean {
+        return this.clothingService.displayHairWithMask(maskDrawable);
     }
 }

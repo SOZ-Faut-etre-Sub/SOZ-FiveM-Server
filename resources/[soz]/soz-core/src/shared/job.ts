@@ -71,6 +71,7 @@ export type Job = {
     canInvoice?: boolean;
     menuCallback?: ClientEvent;
     resell?: any;
+    phone?: string;
 };
 
 export type JobGrade = {

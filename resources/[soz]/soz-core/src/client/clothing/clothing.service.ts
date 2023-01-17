@@ -1,8 +1,12 @@
-import { Injectable } from '../../core/decorators/injectable';
-import { Component, Outfit, OutfitItem, Prop } from '../../shared/cloth';
+import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Component, KeepHairWithMask, Outfit, OutfitItem, Prop } from '../../shared/cloth';
+import { PlayerService } from '../player/player.service';
 
 @Injectable()
 export class ClothingService {
+    @Inject(PlayerService)
+    public playerService: PlayerService;
+
     public applyComponent(component: Component, outfitItem: OutfitItem) {
         SetPedComponentVariation(
             PlayerPedId(),
@@ -11,6 +15,10 @@ export class ClothingService {
             Number(outfitItem.Texture),
             Number(outfitItem.Palette)
         );
+    }
+
+    public displayHairWithMask(maskDrawable: number): boolean {
+        return maskDrawable < 103 || KeepHairWithMask[maskDrawable];
     }
 
     public applyProp(prop: Prop, outfitItem: OutfitItem) {
@@ -24,6 +32,14 @@ export class ClothingService {
     public applyOutfit(outfit: Outfit) {
         for (const [componentIndex, component] of Object.entries(outfit.Components)) {
             this.applyComponent(Number(componentIndex), component);
+
+            if (Number(componentIndex) == Component.Mask) {
+                let hair = 0;
+                if (this.displayHairWithMask(component.Drawable)) {
+                    hair = this.playerService.getPlayer().skin.Hair.HairType;
+                }
+                SetPedComponentVariation(PlayerPedId(), Component.Hair, hair, 0, 0);
+            }
         }
 
         for (const [propIndex, prop] of Object.entries(outfit.Props)) {

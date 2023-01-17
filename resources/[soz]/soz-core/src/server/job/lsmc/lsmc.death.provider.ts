@@ -21,23 +21,24 @@ export class LSMCDeathProvider {
     private occupiedBeds: Record<number, number> = {};
 
     @OnEvent(ServerEvent.LSMC_REVIVE)
-    public revive(source: number, targetid: number, skipanim: boolean, uniteX: boolean) {
+    public revive(source: number, targetid: number, skipanim: boolean, uniteHU: boolean) {
         if (!targetid) {
             targetid = source;
         }
 
         const player = this.playerService.getPlayer(targetid);
-        let uniteXBed = -1;
-        if (uniteX) {
-            uniteXBed = this.getFreeBed(source);
+        let uniteHUBed = -1;
+        if (uniteHU) {
+            uniteHUBed = this.getFreeBed(source);
             Player(targetid).state.isWearingPatientOutfit = true;
         }
-        TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, skipanim, uniteX, uniteXBed);
+        TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, skipanim, uniteHU, uniteHUBed);
         this.playerService.incrementMetadata(targetid, 'hunger', 30, 0, 100);
         this.playerService.incrementMetadata(targetid, 'thirst', 30, 0, 100);
         this.playerService.incrementMetadata(targetid, 'alcohol', -50, 0, 100);
         this.playerService.incrementMetadata(targetid, 'drug', -50, 0, 100);
         this.playerService.setPlayerMetadata(targetid, 'isdead', false);
+        this.playerService.setPlayerMetadata(targetid, 'mort', '');
         Player(targetid).state.isdead = false;
     }
 
@@ -77,6 +78,8 @@ export class LSMCDeathProvider {
     @OnEvent(ServerEvent.LSMC_NOTIF_DEATH_REASON)
     public notifDeathReason(source: number, target: number) {
         const targetPlayer = this.playerService.getPlayer(target);
-        this.notifier.notify(source, targetPlayer.metadata.mort, 'success', 20000);
+        if (targetPlayer.metadata.mort) {
+            this.notifier.notify(source, targetPlayer.metadata.mort, 'success', 20000);
+        }
     }
 }

@@ -216,14 +216,15 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                     clothConfig[clothConfigName].Components[compId].Drawable = tonumber(component.Drawable)
                     clothConfig[clothConfigName].Components[compId].Texture = tonumber(component.Texture) or 0
                     clothConfig[clothConfigName].Components[compId].Palette = tonumber(component.Palette) or 0
-                end
 
-                if product.torso and product.torso.drawable and product.torso.texture then
-                    clothConfig["BaseClothSet"].Components["3"] = {
-                        Drawable = tonumber(product.torso.drawable),
-                        Texture = tonumber(product.torso.texture),
-                        Palette = 0,
-                    }
+                    -- If the top is modified, update the torso
+                    if compId == "11" then
+                        local currentTop = clothConfig["BaseClothSet"].Components["11"]
+                        local properTorsoDrawable = Config.Torsos[Player.PlayerData.skin.Model.Hash][currentTop.Drawable]
+                        clothConfig["BaseClothSet"].Components["3"].Drawable = properTorsoDrawable
+                        clothConfig["BaseClothSet"].Components["3"].Texture = 0
+                        clothConfig["BaseClothSet"].Components["3"].Palette = 0
+                    end
                 end
 
                 local affectedRows = MySQL.update.await("update shop_content set stock = stock - @stock where id = @id", {

@@ -159,6 +159,11 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         SerialNumber = QBCore.Player.CreateSerialNumber(),
         InstalledApps = {},
     }
+
+    PlayerData.metadata['criminal_talents'] = PlayerData.metadata['criminal_talents'] or {}
+    PlayerData.metadata['criminal_state'] = PlayerData.metadata['criminal_state'] or 0
+    PlayerData.metadata['criminal_reputation'] = PlayerData.metadata['criminal_reputation'] or 0
+
     if not PlayerData.metadata.lastBidTime then
         PlayerData.metadata.canBid = true
     else

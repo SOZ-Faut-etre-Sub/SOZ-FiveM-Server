@@ -17,6 +17,7 @@ CreateThread(function()
                 isInRagdoll = false
             else
                 isInRagdoll = true
+                TriggerEvent("progressbar:client:cancel")
                 Wait(500)
             end
         end
