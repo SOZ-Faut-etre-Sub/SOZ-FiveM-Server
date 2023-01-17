@@ -1,88 +1,110 @@
+-- Maybe these permissions could be included in SozJobCore.Jobs in resources/[soz]/soz-jobs/config.lua
+local jobCanFine = {"lspd", "bcso"}
+local jobCanFouille = {"lspd", "bcso", "cash-transfer"}
+local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc"}
+
 --- Targets
 Citizen.CreateThread(function()
-    exports["qb-target"]:AddGlobalPlayer({
-        options = {
-            {
-                label = "Amender",
-                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
-                icon = "c:police/amender.png",
-                event = "police:client:InvoicePlayer",
-                canInteract = function(player)
-                    return PlayerData.job.onduty
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
-                blackoutGlobal = true,
-                blackoutJob = true,
+    for _, jobId in pairs(jobCanFine) do
+        exports["qb-target"]:AddGlobalPlayer({
+            options = {
+                {
+                    label = "Amender",
+                    color = jobId,
+                    icon = "c:police/amender.png",
+                    event = "police:client:InvoicePlayer",
+                    canInteract = function(player)
+                        return PlayerData.job.onduty
+                    end,
+                    job = jobId,
+                    blackoutGlobal = true,
+                    blackoutJob = true,
+                },
+                {
+                    label = "Permis",
+                    color = jobId,
+                    icon = "c:police/permis.png",
+                    event = "police:client:LicensePlayer",
+                    canInteract = function(player)
+                        return PlayerData.job.onduty
+                    end,
+                    job = jobId,
+                },
+                {
+                    label = "Menotter",
+                    color = jobId,
+                    icon = "c:police/menotter.png",
+                    event = "police:client:CuffPlayer",
+                    item = "handcuffs",
+                    canInteract = function(entity)
+                        return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
+                                   not IsPedInAnyVehicle(PlayerPedId())
+                    end,
+                    job = jobId,
+                },
+                {
+                    label = "Démenotter",
+                    color = jobId,
+                    icon = "c:police/demenotter.png",
+                    event = "police:client:UnCuffPlayer",
+                    item = "handcuffs_key",
+                    canInteract = function(entity)
+                        return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
+                                   not IsPedInAnyVehicle(PlayerPedId())
+                    end,
+                    job = jobId,
+                },
             },
-            {
-                label = "Permis",
-                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
-                icon = "c:police/permis.png",
-                event = "police:client:LicensePlayer",
-                canInteract = function(player)
-                    return PlayerData.job.onduty
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
-            },
-            {
-                label = "Fouiller",
-                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
-                icon = "c:police/fouiller.png",
-                event = "police:client:SearchPlayer",
-                canInteract = function(entity)
-                    if PlayerData.job.id == "cash-transfer" then
-                        return exports["soz-jobs"]:WearVIPClothes()
-                    end
-
-                    return PlayerData.job.onduty and
-                               (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0, ["cash-transfer"] = 0},
-            },
-            {
-                label = "Menotter",
-                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
-                icon = "c:police/menotter.png",
-                event = "police:client:CuffPlayer",
-                item = "handcuffs",
-                canInteract = function(entity)
-                    return PlayerData.job.onduty and not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                               not IsPedInAnyVehicle(PlayerPedId())
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
-            },
-            {
-                label = "Démenotter",
-                color = "lspd", -- @TODO Bad color if bcso find another solution to get color (allow a function ?)
-                icon = "c:police/demenotter.png",
-                event = "police:client:UnCuffPlayer",
-                item = "handcuffs_key",
-                canInteract = function(entity)
-                    return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                               not IsPedInAnyVehicle(PlayerPedId())
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
-            },
-            {
-                label = "Escorter",
-                color = "lspd", -- @TODO Bad color if bcso or lsmc find another solution to get color (allow a function ?)
-                icon = "c:police/escorter.png",
-                event = "police:client:RequestEscortPlayer",
-                canInteract = function(entity)
-                    local player, _ = QBCore.Functions.GetClosestPlayer()
-                    if PlayerData.job.id == "cash-transfer" then
-                        if not exports["soz-jobs"]:WearVIPClothes() then
-                            return false
+            distance = 1.5,
+        })
+    end
+    for _, jobId in pairs(jobCanFouille) do
+        exports["qb-target"]:AddGlobalPlayer({
+            options = {
+                {
+                    label = "Fouiller",
+                    color = jobId,
+                    icon = "c:police/fouiller.png",
+                    event = "police:client:SearchPlayer",
+                    canInteract = function(entity)
+                        if PlayerData.job.id == "cash-transfer" then
+                            return exports["soz-jobs"]:WearVIPClothes()
                         end
-                    end
-                    return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
-                               not IsPedInAnyVehicle(PlayerPedId())
-                end,
-                job = {["lspd"] = 0, ["bcso"] = 0, ["lsmc"] = 0, ["cash-transfer"] = 0},
+
+                        return PlayerData.job.onduty and
+                                   (IsEntityPlayingAnim(entity, "missminuteman_1ig_2", "handsup_base", 3) or
+                                       IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3))
+                    end,
+                    job = jobId,
+                },
             },
-        },
-        distance = 1.5,
-    })
+            distance = 1.5,
+        })
+    end
+    for _, jobId in pairs(jobCanEscort) do
+        exports["qb-target"]:AddGlobalPlayer({
+            options = {
+                {
+                    label = "Escorter",
+                    color = jobId,
+                    icon = "c:police/escorter.png",
+                    event = "police:client:RequestEscortPlayer",
+                    canInteract = function(entity)
+                        local player, _ = QBCore.Functions.GetClosestPlayer()
+                        if PlayerData.job.id == "cash-transfer" then
+                            if not exports["soz-jobs"]:WearVIPClothes() then
+                                return false
+                            end
+                        end
+                        return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
+                                   not IsPedInAnyVehicle(PlayerPedId())
+                    end,
+                    job = jobId,
+                },
+            },
+            distance = 1.5,
+        })
+    end
 end)
 
 --- Events

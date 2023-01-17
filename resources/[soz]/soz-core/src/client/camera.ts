@@ -24,6 +24,6 @@ export class CameraService {
     public deleteCamera() {
         RenderScriptCams(false, true, 1000, true, true);
         DestroyAllCams(true);
-        SetFocusEntity(GetPlayerPed(-1));
+        SetFocusEntity(PlayerPedId());
     }
 }

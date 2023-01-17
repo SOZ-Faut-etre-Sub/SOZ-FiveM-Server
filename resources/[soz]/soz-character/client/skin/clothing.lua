@@ -1,3 +1,4 @@
+-- Now Depreciated. Use Config.Torsos
 function GetProperTorso(ped, drawable, texture)
     local player = PlayerPedId()
     local torsoDrawable, torsoTexture = -1, -1

@@ -132,7 +132,7 @@ AddEventHandler("jobs:adsl:vehicle-spawn", function(vehicleNetId)
 
     JobVehicle = true
     createblip("Véhicule", "Montez dans le véhicule", 225, SozJobCore.adsl_vehicule)
-    local player = GetPlayerPed(-1)
+    local player = PlayerPedId()
     while InVehicle == false do
         Citizen.Wait(100)
         if IsPedInVehicle(player, adsl_vehicule, true) == 1 then
@@ -183,7 +183,7 @@ AddEventHandler("jobs:adsl:start", function()
     DrawDistance = 100
     while DrawDistance >= 50 do
         Citizen.Wait(1000)
-        local player = GetPlayerPed(-1)
+        local player = PlayerPedId()
         local CoordPlayer = GetEntityCoords(player)
         DrawDistance = GetDistanceBetweenCoords(CoordPlayer.x, CoordPlayer.y, CoordPlayer.z, ObjectifCoord.x, ObjectifCoord.y, ObjectifCoord.z)
     end
