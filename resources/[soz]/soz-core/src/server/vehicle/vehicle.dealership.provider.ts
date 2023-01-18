@@ -358,7 +358,10 @@ export class VehicleDealershipProvider {
         });
 
         if (playerVehicleCount >= player.metadata.vehicleLimit) {
-            this.notifier.notify(source, 'Vous avez atteint la limite de véhicule sur votre carte grise !', 'error');
+            let errorMsg = `Limite de véhicule atteinte (${playerVehicleCount}/${player.metadata.vehicleLimit})`;
+            if (player.metadata.vehicleLimit < 10) errorMsg += ". Améliorez votre carte grise à l'auto-école.";
+
+            this.notifier.notify(source, errorMsg, 'error');
 
             return false;
         }
