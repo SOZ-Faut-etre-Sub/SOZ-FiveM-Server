@@ -240,6 +240,7 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
             property_id = propertyId,
             label = apartment:GetLabel(),
             price = apartment:GetPrice(),
+            owner = apartment:GetOwner(),
             tier = apartment:GetTier(),
         })
         Player.PlayerData.address = apartment:GetLabel()
@@ -363,6 +364,7 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
         property_id = propertyId,
         label = apartment:GetLabel(),
         price = apartment:GetPrice(),
+        owner = apartment:GetOwner(),
         tier = apartment:GetTier(),
     })
 

@@ -49,7 +49,16 @@ function ShopShell:ZkeaUpgrade()
         label = "Améliorations",
         canInteract = function()
             local playerData = QBCore.Functions.GetPlayerData()
-            return playerData.apartment and self.brand == "zkea" and currentShop ~= nil and currentShopBrand == self.brand
+
+            if not playerData.apartment or not playerData.apartment.owner then
+                return false
+            end
+
+            if playerData.apartment.owner ~= playerData.citizenid then
+                return false
+            end
+
+            return self.brand == "zkea" and currentShop ~= nil and currentShopBrand == self.brand
         end,
         blackoutGlobal = true,
     }
