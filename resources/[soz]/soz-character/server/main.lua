@@ -47,8 +47,8 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes)
 end)
 
 RegisterNetEvent("soz-character:server:UpdateClothConfig", function(key, value)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local clothConfig = Player.PlayerData.cloth_config
+    local player = QBCore.Functions.GetPlayer(source)
+    local clothConfig = player.PlayerData.cloth_config
 
     if key ~= nil and value ~= nil then
         clothConfig.Config[key] = value
@@ -57,9 +57,9 @@ RegisterNetEvent("soz-character:server:UpdateClothConfig", function(key, value)
             if value and clothConfig["JobClothSet"] and clothConfig["JobClothSet"].Components then
                 clothConfig["JobClothSet"].Components["9"] = nil
             end
-            Player.Functions.SetArmour(not clothConfig.Config[key])
+            player.Functions.SetArmour(not clothConfig.Config[key])
         end
 
-        Player.Functions.SetClothConfig(clothConfig, false)
+        player.Functions.SetClothConfig(clothConfig, Player(source).state.isWearingPatientOutfit)
     end
 end)
