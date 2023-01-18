@@ -2,9 +2,6 @@ local drivingSchoolMenu = MenuV:CreateMenu("", "Carte grise", "menu_shop_superma
 
 RegisterNetEvent("soz-driving-license:client:OpenMenu", function()
     local playerData = QBCore.Functions.GetPlayerData()
-    if not playerData.apartment then
-        return
-    end
 
     local vehicleLimit = playerData.metadata.vehicleLimit
 
