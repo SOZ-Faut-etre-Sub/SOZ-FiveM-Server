@@ -367,7 +367,7 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
         owner = apartment:GetOwner(),
         tier = apartment:GetTier(),
     })
-
+    Target.PlayerData.address = apartment:GetLabel()
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ajouté un partenaire à votre maison")
     TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été ajouté à votre maison")
 
@@ -500,6 +500,11 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
             TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
             TriggerClientEvent("hud:client:DrawNotification", playerData.source,
                                "Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~" .. tier .. "~s~ pour ~b~$" .. price)
+
+            if apartment:HasRoommate() then
+                local roommate = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
+                roommate.Functions.SetApartmentTier(tier)
+            end
         else
             player.Functions.AddMoney("money", price)
             TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Zkea n'a pas assez de stock", "error")
