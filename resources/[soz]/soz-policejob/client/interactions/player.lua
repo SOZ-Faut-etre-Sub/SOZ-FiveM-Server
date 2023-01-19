@@ -88,9 +88,8 @@ Citizen.CreateThread(function()
                     label = "Escorter",
                     color = jobId,
                     icon = "c:police/escorter.png",
-                    event = "police:client:RequestEscortPlayer",
                     canInteract = function(entity)
-                        local player, _ = QBCore.Functions.GetClosestPlayer()
+                        local player =  NetworkGetPlayerIndexFromPed(entity)
                         if PlayerData.job.id == "cash-transfer" then
                             if not exports["soz-jobs"]:WearVIPClothes() then
                                 return false
@@ -100,6 +99,23 @@ Citizen.CreateThread(function()
                                    not IsPedInAnyVehicle(PlayerPedId())
                     end,
                     job = jobId,
+                    action = function(entity)
+                        local playerPedCoords = GetEntityCoords(PlayerPedId())
+                        local targetPedCoords = GetEntityCoords(entity)
+                        local distance = #(playerPedCoords-targetPedCoords)
+                        if entity ~= -1 and distance < 2.5 then
+                            if not LocalPlayer.state.isEscorted and not LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and
+                                not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] then
+                                local playerServerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                    
+                                TriggerServerEvent("police:server:EscortPlayer", playerServerId)
+                                TriggerServerEvent("monitor:server:event", "job_police_escort_player", {},
+                                                   {target_source = playerServerId, position = GetEntityCoords(entity)}, true)
+                            end
+                        else
+                            exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+                        end
+                    end
                 },
             },
             distance = 1.5,
@@ -214,23 +230,26 @@ RegisterNetEvent("police:client:LicensePlayer", function(data)
 end)
 
 --- Escorted
-RegisterNetEvent("police:client:RequestEscortPlayer", function()
-    local player, distance = QBCore.Functions.GetClosestPlayer()
+RegisterNetEvent("police:client:RequestEscortPlayer", function(playerServerId)
+    local playerPedCoords = GetEntityCoords(PlayerPedId())
+    local targetPedCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerServerId)))
+    local distance = #(playerPedCoords-targetPedCoords)
+    exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", tostring(distance))
     if player ~= -1 and distance < 2.5 then
         if not LocalPlayer.state.isEscorted and not LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and
             not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] then
-            local playerId = GetPlayerServerId(player)
+            local playerServerId = GetPlayerServerId(player)
 
-            TriggerServerEvent("police:server:EscortPlayer", playerId)
+            TriggerServerEvent("police:server:EscortPlayer", playerServerId)
             TriggerServerEvent("monitor:server:event", "job_police_escort_player", {},
-                               {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
+                               {target_source = playerServerId, position = targetPedCoords}, true)
         end
     else
         exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
     end
 end)
 
-RegisterNetEvent("police:client:SetEscorting", function()
+RegisterNetEvent("police:client:SetEscorting", function(playerId)
     CreateThread(function()
         Wait(1000)
 
@@ -240,15 +259,16 @@ RegisterNetEvent("police:client:SetEscorting", function()
             end
             QBCore.Functions.ShowHelpNotification("~INPUT_FRONTEND_RRIGHT~ Pour lâcher")
             if IsControlJustReleased(0, 194) or IsControlJustReleased(0, 225) then
-                local player, distance = QBCore.Functions.GetClosestPlayer()
+                local player = GetPlayerFromServerId(playerId)
+                local playerPedCoords = GetEntityCoords(PlayerPedId())
+                local targetPedCoords = GetEntityCoords(GetPlayerPed(player))
+                local distance = #(playerPedCoords-targetPedCoords)
                 if player ~= -1 and distance < 2.5 then
                     if not LocalPlayer.state.isEscorted and LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and
                         not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] then
-                        local playerId = GetPlayerServerId(player)
-
                         TriggerServerEvent("police:server:DeEscortPlayer", playerId)
                         TriggerServerEvent("monitor:server:event", "job_police_deescort_player", {},
-                                           {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
+                                           {target_source = playerId, position = targetPedCoords}, true)
                     else
                         exports["soz-hud"]:DrawNotification("Vous ne pouvez pas arrêter une personne dans un véhicule", "error")
                     end

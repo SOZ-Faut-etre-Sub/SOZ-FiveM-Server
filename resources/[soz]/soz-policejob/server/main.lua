@@ -54,7 +54,7 @@ RegisterNetEvent("police:server:EscortPlayer", function(playerId)
                 Player(player.PlayerData.source).state:set("escorting", target.PlayerData.source, true)
                 Player(target.PlayerData.source).state:set("isEscorted", true, true)
 
-                TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source)
+                TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source, target.PlayerData.source)
                 TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source)
 
                 return
