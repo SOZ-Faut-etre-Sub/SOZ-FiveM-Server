@@ -35,9 +35,9 @@ end)
 QBCore.Functions.CreateCallback("soz-character:server:SavePlayerClothe", function(source, cb, name)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    if name == nil then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Veuillez entrer un nom pour votre tenue.", "error")
-        cb(false)
+    if name == nil or name == "" then
+        cb("Veuillez entrer un nom pour votre tenue.")
+        return
     end
 
     if Player then
@@ -46,9 +46,7 @@ QBCore.Functions.CreateCallback("soz-character:server:SavePlayerClothe", functio
         })
         local max = Config.CloakroomUpgrades[Player.PlayerData.apartment.tier]
         if clothSet >= max then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas avoir plus de " .. max .. " tenues.", "error")
-
-            cb(false)
+            cb("Vous ne pouvez pas avoir plus de " .. max .. " tenues.")
             return
         end
 
@@ -59,12 +57,12 @@ QBCore.Functions.CreateCallback("soz-character:server:SavePlayerClothe", functio
         if id then
             Cloakrooms[Player.PlayerData.citizenid][id] = {id = id, name = name, cloth = currentClothing}
 
-            cb(true)
+            cb(nil)
         else
-            cb(false)
+            cb("Une erreur est survenue.")
         end
     else
-        cb(false)
+        cb("Une erreur est survenue.")
     end
 end)
 
