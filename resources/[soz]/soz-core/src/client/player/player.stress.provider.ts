@@ -8,6 +8,7 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { Item } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
@@ -65,6 +66,9 @@ export class PlayerStressProvider {
 
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     private isStressUpdated = false;
     private wasDead = false;
@@ -237,10 +241,25 @@ export class PlayerStressProvider {
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_YOGA)
     async doYoga(): Promise<void> {
-        const { completed } = await this.progressService.progress('Yoga', 'Vous vous relaxez...', 30000, {
-            dictionary: 'timetable@amanda@ig_4',
-            name: 'ig_4_idle',
-        });
+        this.animationService
+            .playAnimation({
+                base: {
+                    dictionary: 'timetable@amanda@ig_4',
+                    name: 'ig_4_idle',
+                    options: {
+                        enablePlayerControl: false,
+                        repeat: true,
+                    },
+                },
+            })
+            .then(cancelled => {
+                if (cancelled) {
+                    this.progressService.cancel();
+                }
+            });
+
+        const { completed } = await this.progressService.progress('Yoga', 'Vous vous relaxez...', 30000);
+        this.animationService.stop();
 
         if (!completed) {
             return;

@@ -91,4 +91,8 @@ export class ProgressService {
     public isDoingAction(): boolean {
         return exports['progressbar'].IsDoingAction();
     }
+
+    public cancel() {
+        TriggerEvent('progressbar:client:cancel');
+    }
 }
