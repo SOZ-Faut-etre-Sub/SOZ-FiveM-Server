@@ -124,9 +124,12 @@ Citizen.CreateThread(function()
 end)
 
 --- Events
-RegisterNetEvent("police:client:SearchPlayer", function()
-    local player, distance = QBCore.Functions.GetClosestPlayer()
+RegisterNetEvent("police:client:SearchPlayer", function(data)
+    local player = NetworkGetPlayerIndexFromPed(data.entity)
     local ped = PlayerPedId()
+    local playerPedCoords = GetEntityCoords(ped)
+    local targetPedCoords = GetEntityCoords(data.entity)
+    local distance = #(playerPedCoords-targetPedCoords)
     if player ~= -1 and distance < 2.5 then
         local playerPed = GetPlayerPed(player)
         local playerId = GetPlayerServerId(player)
@@ -162,9 +165,13 @@ RegisterNetEvent("police:client:SearchPlayer", function()
 end)
 
 --- Cuff
-RegisterNetEvent("police:client:CuffPlayer", function()
+RegisterNetEvent("police:client:CuffPlayer", function(data)
     if not IsPedRagdoll(PlayerPedId()) then
-        local player, distance = QBCore.Functions.GetClosestPlayer()
+        local player = NetworkGetPlayerIndexFromPed(data.entity)
+        local ped = PlayerPedId()
+        local playerPedCoords = GetEntityCoords(ped)
+        local targetPedCoords = GetEntityCoords(data.entity)
+        local distance = #(playerPedCoords-targetPedCoords)
         if player ~= -1 and distance < 1.5 then
             if not IsPedInAnyVehicle(GetPlayerPed(player)) and not IsPedInAnyVehicle(PlayerPedId()) then
                 local playerId = GetPlayerServerId(player)
@@ -185,7 +192,11 @@ end)
 
 RegisterNetEvent("police:client:UnCuffPlayer", function()
     if not IsPedRagdoll(PlayerPedId()) then
-        local player, distance = QBCore.Functions.GetClosestPlayer()
+        local player = NetworkGetPlayerIndexFromPed(data.entity)
+        local ped = PlayerPedId()
+        local playerPedCoords = GetEntityCoords(ped)
+        local targetPedCoords = GetEntityCoords(data.entity)
+        local distance = #(playerPedCoords-targetPedCoords)
         if player ~= -1 and distance < 1.5 then
             if not IsPedInAnyVehicle(GetPlayerPed(player)) and not IsPedInAnyVehicle(PlayerPedId()) then
                 local playerId = GetPlayerServerId(player)
@@ -227,26 +238,6 @@ end)
 --- License
 RegisterNetEvent("police:client:LicensePlayer", function(data)
     PoliceJob.Functions.Menu.GenerateLicenseMenu(PlayerData.job.id, data.entity)
-end)
-
---- Escorted
-RegisterNetEvent("police:client:RequestEscortPlayer", function(playerServerId)
-    local playerPedCoords = GetEntityCoords(PlayerPedId())
-    local targetPedCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(playerServerId)))
-    local distance = #(playerPedCoords-targetPedCoords)
-    exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", tostring(distance))
-    if player ~= -1 and distance < 2.5 then
-        if not LocalPlayer.state.isEscorted and not LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and
-            not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] then
-            local playerServerId = GetPlayerServerId(player)
-
-            TriggerServerEvent("police:server:EscortPlayer", playerServerId)
-            TriggerServerEvent("monitor:server:event", "job_police_escort_player", {},
-                               {target_source = playerServerId, position = targetPedCoords}, true)
-        end
-    else
-        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
-    end
 end)
 
 RegisterNetEvent("police:client:SetEscorting", function(playerId)
