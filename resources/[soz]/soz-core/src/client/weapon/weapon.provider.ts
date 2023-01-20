@@ -10,7 +10,6 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomItem } from '@public/shared/random';
 
-import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
@@ -30,6 +29,7 @@ import { VoipRadioProvider } from '../voip/voip.radio.provider';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
 import { WeaponHolsterProvider } from './weapon.holster.provider';
 import { WeaponService } from './weapon.service';
+import { ClientEvent, GameEvent, ServerEvent } from '@public/shared/event';
 
 const messageExcludeGroups = [
     GetHashKey('GROUP_FIREEXTINGUISHER'),
@@ -179,6 +179,37 @@ export class WeaponProvider {
 
         if (weapon.metadata.ammo < this.weapon.getMaxAmmoInClip() * GlobalWeaponConfig.MaxAmmoRefill(weapon.name)) {
             await this.onUseAmmoLoop(ammoName);
+        }
+    }
+
+    @OnEvent(ClientEvent.WEAPON_PICK_SNOWBALL)
+    public async onSnowPickup() {
+        const playerPedId = PlayerPedId();
+        const playerId = PlayerId();
+        if (
+            IsPedInAnyVehicle(playerPedId, true) ||
+            IsPlayerFreeAiming(playerId) ||
+            IsPedSwimming(playerPedId) ||
+            IsPedSwimmingUnderWater(playerPedId) ||
+            IsPedRagdoll(playerPedId) ||
+            IsPedFalling(playerPedId) ||
+            IsPedRunning(playerPedId) ||
+            IsPedSprinting(playerPedId) ||
+            GetInteriorFromEntity(playerPedId) ||
+            IsPedShooting(playerPedId) ||
+            IsPedUsingAnyScenario(playerPedId) ||
+            IsPedInCover(playerPedId, false)
+        ) {
+            return;
+        }
+
+        const { completed } = await this.progressService.progress('snow', 'Ramassage de neige...', 2000, {
+            dictionary: 'anim@mp_snowball',
+            name: 'pickup_snowball',
+        });
+
+        if (completed) {
+            TriggerServerEvent(ServerEvent.GET_SNOW);
         }
     }
 
