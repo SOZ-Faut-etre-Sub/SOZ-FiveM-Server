@@ -171,7 +171,7 @@ export class VehicleGarageProvider {
             });
             if (!apartment) return 0;
             const places = apartment.tier + 1;
-            if (includesRoommate && apartment.roommate && apartment.roommate !== "") return 2 * places;
+            if (includesRoommate && apartment.roommate && apartment.roommate !== '') return 2 * places;
             return places;
         }
 
@@ -179,7 +179,12 @@ export class VehicleGarageProvider {
     }
 
     @Rpc(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES)
-    public async getFreePlaces(source: number, id: string, garage: Garage, includesRoommate = false): Promise<number | null> {
+    public async getFreePlaces(
+        source: number,
+        id: string,
+        garage: Garage,
+        includesRoommate = false
+    ): Promise<number | null> {
         if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
             return null;
         }
@@ -431,13 +436,17 @@ export class VehicleGarageProvider {
             id = `property_${id}`;
         }
 
-        let freePlaces = 0
+        let freePlaces = 0;
         const apartment = await this.prismaService.housing_apartment.findUnique({
             where: { id: player.apartment.id },
         });
 
-        if (apartment.roommate && apartment.roommate !== "" && vehicleState.defaultOwner === apartment.roommate) {
-            freePlaces = await this.getFreePlaces(this.playerService.getPlayerByCitizenId(apartment.roommate).source, id, garage);
+        if (apartment.roommate && apartment.roommate !== '' && vehicleState.defaultOwner === apartment.roommate) {
+            freePlaces = await this.getFreePlaces(
+                this.playerService.getPlayerByCitizenId(apartment.roommate).source,
+                id,
+                garage
+            );
         } else {
             freePlaces = await this.getFreePlaces(source, id, garage);
         }

@@ -197,7 +197,7 @@ export class VehicleSpawner {
             id: vehicle.id,
             open: false,
             owner: player.citizenid,
-            defaultOwner: vehicle.citizenid
+            defaultOwner: vehicle.citizenid,
         };
 
         const hash = parseInt(vehicle.hash || '0', 10);
