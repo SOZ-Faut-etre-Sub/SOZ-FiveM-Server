@@ -154,7 +154,7 @@ export class VehicleGarageProvider {
     }
 
     @Rpc(RpcEvent.VEHICLE_GARAGE_GET_MAX_PLACES)
-    public async getMaxPlaces(source: number, garage: Garage): Promise<number | null> {
+    public async getMaxPlaces(source: number, garage: Garage, includesRoommate = false): Promise<number | null> {
         if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
             return null;
         }
@@ -163,22 +163,23 @@ export class VehicleGarageProvider {
             return 1;
         }
 
-        const player = this.playerService.getPlayer(source);
-        const isPropertyGarage = garage.type === GarageType.House;
-
-        if (isPropertyGarage) {
-            if (!player) {
-                return 0;
-            }
-            const playerApartmentTier = player.apartment?.tier ?? -1;
-            return 1 + playerApartmentTier;
+        if (garage.type === GarageType.House) {
+            const player = this.playerService.getPlayer(source);
+            if (!player || !player.apartment || !player.apartment.id) return 0;
+            const apartment = await this.prismaService.housing_apartment.findUnique({
+                where: { id: player.apartment.id },
+            });
+            if (!apartment) return 0;
+            const places = apartment.tier + 1;
+            if (includesRoommate && apartment.roommate && apartment.roommate !== "") return 2 * places;
+            return places;
         }
 
         return 38;
     }
 
     @Rpc(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES)
-    public async getFreePlaces(source: number, id: string, garage: Garage): Promise<number | null> {
+    public async getFreePlaces(source: number, id: string, garage: Garage, includesRoommate = false): Promise<number | null> {
         if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
             return null;
         }
@@ -199,12 +200,12 @@ export class VehicleGarageProvider {
         const count = await this.prismaService.playerVehicle.count({
             where: {
                 garage: { in: ids },
-                citizenid: isPropertyGarage ? { equals: player.citizenid } : undefined,
+                citizenid: isPropertyGarage && !includesRoommate ? { equals: player.citizenid } : undefined,
                 state: isPropertyGarage ? 1 : undefined,
             },
         });
 
-        const maxPlaces = await this.getMaxPlaces(source, garage);
+        const maxPlaces = await this.getMaxPlaces(source, garage, includesRoommate);
 
         return Math.max(0, maxPlaces - count);
     }
@@ -430,10 +431,27 @@ export class VehicleGarageProvider {
             id = `property_${id}`;
         }
 
-        const freePlaces = await this.getFreePlaces(source, id, garage);
+        let freePlaces = 0
+        const apartment = await this.prismaService.housing_apartment.findUnique({
+            where: { id: player.apartment.id },
+        });
+
+        if (apartment.roommate && apartment.roommate !== "" && vehicleState.defaultOwner === apartment.roommate) {
+            freePlaces = await this.getFreePlaces(this.playerService.getPlayerByCitizenId(apartment.roommate).source, id, garage);
+        } else {
+            freePlaces = await this.getFreePlaces(source, id, garage);
+        }
 
         if (freePlaces !== null && freePlaces <= 0) {
-            this.notifier.notify(source, 'Ce garage est plein.', 'error');
+            if (garage.type === GarageType.House) {
+                if (vehicleState.defaultOwner === player.citizenid) {
+                    this.notifier.notify(source, 'Vous avez atteint votre limite de place.', 'error');
+                } else {
+                    this.notifier.notify(source, 'Votre colocataire a atteint sa limite de place.', 'error');
+                }
+            } else {
+                this.notifier.notify(source, 'Ce garage est plein.', 'error');
+            }
 
             return;
         }

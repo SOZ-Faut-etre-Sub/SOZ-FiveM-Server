@@ -426,12 +426,12 @@ export class VehicleGarageProvider {
 
         let free_places = null;
         if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-            free_places = await emitRpc<number>(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES, id, garage);
+            free_places = await emitRpc<number>(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES, id, garage, true);
         }
 
         let max_places = null;
         if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-            max_places = await emitRpc<number>(RpcEvent.VEHICLE_GARAGE_GET_MAX_PLACES, garage);
+            max_places = await emitRpc<number>(RpcEvent.VEHICLE_GARAGE_GET_MAX_PLACES, garage, true);
         }
 
         const vehicleRenamed = vehicles.map(garageVehicle => {
