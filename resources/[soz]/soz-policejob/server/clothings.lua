@@ -13,9 +13,9 @@ QBCore.Functions.CreateUseableItem("armor", function(source, item)
 end)
 
 QBCore.Functions.CreateUseableItem("outfit", function(source, item)
-    local Player = QBCore.Functions.GetPlayer(source)
+    local player = QBCore.Functions.GetPlayer(source)
 
-    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item.name, 1, item.metadata) then
+    if exports["soz-inventory"]:RemoveItem(player.PlayerData.source, item.name, 1, item.metadata) then
         if item.metadata["type"] == "lspd" or item.metadata["type"] == "bcso" then
             TriggerClientEvent("police:client:applyDutyClothing", source, item.metadata["type"])
         elseif item.metadata["type"] == "lsmc" then
@@ -23,6 +23,7 @@ QBCore.Functions.CreateUseableItem("outfit", function(source, item)
         elseif item.metadata["type"] == "stonk" then
             TriggerClientEvent("stonk:client:applyDutyClothing", source)
         elseif item.metadata["type"] == "patient" then
+            Player(source).state.isWearingPatientOutfit = true
             TriggerClientEvent("ems:client:applyPatientClothing", source)
         end
     end
