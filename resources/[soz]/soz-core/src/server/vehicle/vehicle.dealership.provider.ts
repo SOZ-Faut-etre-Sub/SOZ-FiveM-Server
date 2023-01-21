@@ -354,6 +354,11 @@ export class VehicleDealershipProvider {
         const playerVehicleCount = await this.prismaService.playerVehicle.count({
             where: {
                 citizenid: player.citizenid,
+                job: null,
+                life_counter: {
+                    gt: 0,
+                    lte: 3,
+                },
             },
         });
 
