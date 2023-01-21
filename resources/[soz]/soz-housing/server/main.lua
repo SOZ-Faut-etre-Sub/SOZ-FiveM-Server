@@ -279,12 +279,15 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         })
 
         if apartment:HasRoommate() then
-            local Target = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
+            local roommateCitizenId = apartment:GetRoomMate()
             MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
-                               {Target.PlayerData.citizenid, property:GetGarageName()})
-            Target.Functions.SetApartment(nil)
-            exports["soz-character"]:TruncatePlayerCloakroomFromTier(Target.PlayerData.citizenid, 0)
-            TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+                               {roommateCitizenId, property:GetGarageName()})
+            exports["soz-character"]:TruncatePlayerCloakroomFromTier(roommateCitizenId, 0)
+            local Target = QBCore.Functions.GetPlayerByCitizenId(roommateCitizenId)
+            if Target then
+                Target.Functions.SetApartment(nil)
+                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+            end
         end
         MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
                            {Player.PlayerData.citizenid, property:GetGarageName()})
@@ -402,8 +405,10 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
     local roommateCitizenId = apartment:GetRoomMate()
 
     MySQL.update.await("UPDATE housing_apartment SET roommate = NULL WHERE id = ?", {apartmentId})
-    MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
-                       {roommateCitizenId, property:GetGarageName()})
+    MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?", {
+        roommateCitizenId,
+        property:GetGarageName(),
+    })
     apartment:SetRoommate(nil)
     exports["soz-character"]:TruncatePlayerCloakroomFromTier(roommateCitizenId, 0)
 
