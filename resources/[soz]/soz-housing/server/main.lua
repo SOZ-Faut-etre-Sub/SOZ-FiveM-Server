@@ -272,7 +272,7 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         return
     end
 
-    local resellPrice = apartment:GetResellPrice()
+    local resellPrice = apartment:GetResellPrice(property:IsTrailer())
     if Player.Functions.AddMoney("money", resellPrice) then
         MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL, tier = 0, has_parking_place = 0 WHERE id = ?", {
             apartmentId,

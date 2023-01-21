@@ -48,7 +48,7 @@ RegisterNetEvent("housing:client:ShowSellMenu", function(propertyId)
         for apartmentId, apartment in pairs(apartments) do
             menu:AddButton({
                 label = apartment:GetLabel(),
-                rightLabel = "$" .. QBCore.Shared.Round(apartment:GetResellPrice()),
+                rightLabel = "$" .. QBCore.Shared.Round(apartment:GetResellPrice(property:IsTrailer())),
                 select = function()
                     TriggerServerEvent("housing:server:SellApartment", propertyId, apartmentId)
                     menu:Close()
