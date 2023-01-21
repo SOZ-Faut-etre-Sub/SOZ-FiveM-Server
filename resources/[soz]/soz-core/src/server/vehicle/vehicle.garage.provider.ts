@@ -167,7 +167,7 @@ export class VehicleGarageProvider {
             const player = this.playerService.getPlayer(source);
             if (!player || !player.apartment || !player.apartment.id) return 0;
             const apartment = await this.prismaService.housing_apartment.findUnique({
-                where: { id: player.apartment.id },
+                where: { id: parseInt(player.apartment.id) },
             });
             if (!apartment) return 0;
             const places = apartment.tier + 1;
