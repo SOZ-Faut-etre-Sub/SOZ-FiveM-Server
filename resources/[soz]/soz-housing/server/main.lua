@@ -399,20 +399,22 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
         return
     end
 
-    local Target = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
+    local roommateCitizenId = apartment:GetRoomMate()
 
     MySQL.update.await("UPDATE housing_apartment SET roommate = NULL WHERE id = ?", {apartmentId})
     MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
-                       {Target.PlayerData.citizenid, property:GetGarageName()})
+                       {roommateCitizenId, property:GetGarageName()})
     apartment:SetRoommate(nil)
-    Target.Functions.SetApartment(nil)
-    exports["soz-character"]:TruncatePlayerCloakroomFromTier(Target.PlayerData.citizenid, 0)
+    exports["soz-character"]:TruncatePlayerCloakroomFromTier(roommateCitizenId, 0)
 
     if apartment:IsOwner(Player.PlayerData.citizenid) then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez supprimé un partenaire de votre maison")
     end
+
+    local Target = QBCore.Functions.GetPlayerByCitizenId(roommateCitizenId)
     if Target then
-        if Target.PlayerData.citizenid == Player.PlayerData.citizenid then
+        Target.Functions.SetApartment(nil)
+        if roommateCitizenId == Player.PlayerData.citizenid then
             TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez quitté la colocation")
         else
             TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
