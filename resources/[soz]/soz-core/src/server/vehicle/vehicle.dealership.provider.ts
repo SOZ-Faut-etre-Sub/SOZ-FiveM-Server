@@ -351,24 +351,25 @@ export class VehicleDealershipProvider {
             return false;
         }
 
-        const playerVehicleCount = await this.prismaService.playerVehicle.count({
-            where: {
-                citizenid: player.citizenid,
-                job: null,
-                life_counter: {
-                    gt: 0,
-                    lte: 3,
+        if (dealershipId !== DealershipType.Job) {
+            const playerVehicleCount = await this.prismaService.playerVehicle.count({
+                where: {
+                    citizenid: player.citizenid,
+                    job: null,
+                    state: {
+                        not: PlayerVehicleState.Destroyed,
+                    },
                 },
-            },
-        });
-
-        if (playerVehicleCount >= player.metadata.vehicleLimit) {
-            let errorMsg = `Limite de véhicule atteinte (${playerVehicleCount}/${player.metadata.vehicleLimit})`;
-            if (player.metadata.vehicleLimit < 10) errorMsg += ". Améliorez votre carte grise à l'auto-école.";
-
-            this.notifier.notify(source, errorMsg, 'error');
-
-            return false;
+            });
+    
+            if (playerVehicleCount >= player.metadata.vehicleLimit) {
+                let errorMsg = `Limite de véhicule atteinte (${playerVehicleCount}/${player.metadata.vehicleLimit})`;
+                if (player.metadata.vehicleLimit < 10) errorMsg += ". Améliorez votre carte grise à l'auto-école.";
+    
+                this.notifier.notify(source, errorMsg, 'error');
+    
+                return false;
+            }
         }
 
         if (
