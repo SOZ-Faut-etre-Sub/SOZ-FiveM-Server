@@ -440,6 +440,76 @@
         }
       }
     },
+    "Casques": {
+      "0": {
+        "0": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Rouge"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Bleu"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Vert"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Jaune"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Desert"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Noir"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Gris"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Casque anti-bruit Blanc"
+        }
+      },
+      "15": {
+        "0": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Blanc"
+        },
+        "1": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Noir"
+        },
+        "2": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Rouge"
+        },
+        "3": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Bleu"
+        },
+        "4": {
+          "GXT": "",
+          "Localized": "Ecouteur beat jaune"
+        },
+        "5": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Violet"
+        },
+        "6": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Gris"
+        },
+        "7": {
+          "GXT": "",
+          "Localized": "Ecouteur beat Vert"
+        }
+      }
+    },
     "Casquettes": {
       "4": {
         "0": {
