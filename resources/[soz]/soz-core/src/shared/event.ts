@@ -24,6 +24,9 @@ export enum ServerEvent {
     BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
     BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
 
+    DRIVING_SCHOOL_PLAYER_PAY = 'soz-core:server:driving-school:player-pay',
+    DRIVING_SCHOOL_UPDATE_LICENSE = 'soz-core:server:driving-school:update-license',
+
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 
     FOOD_CRAFT = 'soz-core:server:job:food:craft',
@@ -173,6 +176,9 @@ export enum ClientEvent {
     ADMIN_NOCLIP_ENABLED = 'soz-core:client:admin:noclip:enabled',
     ADMIN_NOCLIP_DISABLED = 'soz-core:client:admin:noclip:disabled',
 
+    DRIVING_SCHOOL_START_EXAM = 'soz-core:client:driving-school:start-exam',
+    DRIVING_SCHOOL_SETUP_EXAM = 'soz-core:client:driving-school:spawn-veh',
+
     FFS_ENTER_CLOTHING_SHOP = 'soz-core:client:job:ffs:enter-clothing-shop',
     FFS_EXIT_CLOTHING_SHOP = 'soz-core:client:job:ffs:exit-clothing-shop',
 
@@ -255,6 +261,7 @@ export enum ClientEvent {
 
 export enum GameEvent {
     CEventNetworkPedDamage = 'CEventNetworkPedDamage',
+    CEventNetworkVehicleUndrivable = 'CEventNetworkVehicleUndrivable',
     CEventVehicleCollision = 'CEventVehicleCollision',
     CEventExplosionHeard = 'CEventExplosionHeard',
     CEventGunShot = 'CEventGunShot',
