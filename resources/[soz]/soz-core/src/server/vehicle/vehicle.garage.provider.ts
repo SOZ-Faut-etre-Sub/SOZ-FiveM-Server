@@ -189,9 +189,7 @@ export class VehicleGarageProvider {
             return null;
         }
 
-        const player = this.playerService.getPlayer(source);
         const isPropertyGarage = garage.type === GarageType.House;
-
         if (isPropertyGarage && !id.startsWith('property_')) {
             id = `property_${id}`;
         }
@@ -202,11 +200,23 @@ export class VehicleGarageProvider {
             ids.push(garage.legacyId);
         }
 
+        const player = this.playerService.getPlayer(source);
+        const citizenIds = [player.citizenid];
+        if (isPropertyGarage && includesRoommate && player && player.apartment && player.apartment.id) {
+            const {owner, roommate} = await this.prismaService.housing_apartment.findUnique({
+                where: { id: parseInt(player.apartment.id) },
+            }) ?? {owner: "", roommate: ""};
+            if (player.citizenid === owner && roommate) citizenIds.push(roommate);
+            if (player.citizenid === roommate && owner) citizenIds.push(owner);
+        }
+
         const count = await this.prismaService.playerVehicle.count({
             where: {
                 garage: { in: ids },
-                citizenid: isPropertyGarage && !includesRoommate ? { equals: player.citizenid } : undefined,
-                state: isPropertyGarage ? 1 : undefined,
+                citizenid: isPropertyGarage ? { in: citizenIds } : undefined,
+                state: {
+                    in: [PlayerVehicleState.InGarage, PlayerVehicleState.InPound, PlayerVehicleState.InJobGarage],
+                },
             },
         });
 
@@ -437,16 +447,11 @@ export class VehicleGarageProvider {
         }
 
         let freePlaces = 0;
-        const apartment = await this.prismaService.housing_apartment.findUnique({
-            where: { id: player.apartment.id },
-        });
-
-        if (apartment.roommate && apartment.roommate !== '' && vehicleState.defaultOwner === apartment.roommate) {
-            freePlaces = await this.getFreePlaces(
-                this.playerService.getPlayerByCitizenId(apartment.roommate).source,
-                id,
-                garage
-            );
+        if (garage.type === GarageType.House) {
+            const apartment = await this.prismaService.housing_apartment.findUnique({
+                where: { id: parseInt(player.apartment.id) },
+            });
+            freePlaces = await this.getFreePlacesFromCitizenIdAndApartmentTier(vehicleState.defaultOwner, id, garage, apartment.tier);
         } else {
             freePlaces = await this.getFreePlaces(source, id, garage);
         }
@@ -669,6 +674,41 @@ export class VehicleGarageProvider {
             },
             1000
         );
+    }
+
+    private async getFreePlacesFromCitizenIdAndApartmentTier(
+        citizenId: string,
+        id: string,
+        garage: Garage,
+        apartmentTier: number
+    ): Promise<number | null> {
+        if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
+            return null;
+        }
+
+        const isPropertyGarage = garage.type === GarageType.House;
+
+        if (isPropertyGarage && !id.startsWith('property_')) {
+            id = `property_${id}`;
+        }
+
+        const ids = [id];
+
+        if (garage.legacyId) {
+            ids.push(garage.legacyId);
+        }
+
+        const count = await this.prismaService.playerVehicle.count({
+            where: {
+                garage: { in: ids },
+                citizenid: isPropertyGarage ? citizenId : undefined,
+                state: isPropertyGarage ? 1 : undefined,
+            },
+        });
+
+        const maxPlaces = apartmentTier + 1;
+
+        return Math.max(0, maxPlaces - count);
     }
 
     private async getCitizenIdsForGarage(player: PlayerData, garage: Garage, propertyId: string): Promise<Set<string>> {
