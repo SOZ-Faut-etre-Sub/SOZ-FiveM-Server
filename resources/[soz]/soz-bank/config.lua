@@ -90,11 +90,11 @@ Config.SafeStorages = {
     ["safe_oil"] = {
         label = "Coffre MTP",
         owner = "oil",
-        position = vector3(-234.58, 6090.64, 31.76),
-        size = vec2(0.8, 1.25),
-        heading = 45,
-        offsetUpZ = 0.4,
-        offsetDownZ = 0.5,
+        position = vector3(-246.30, 6064.38, 40.57),
+        size = vec2(0.20, 0.95),
+        heading = 315,
+        offsetUpZ = 1.0,
+        offsetDownZ = 0.2,
     },
     ["safe_bennys"] = {
         label = "Coffre New Gahray",
