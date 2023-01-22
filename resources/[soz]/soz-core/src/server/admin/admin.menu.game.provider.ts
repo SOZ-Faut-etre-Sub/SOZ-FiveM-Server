@@ -43,19 +43,24 @@ export class AdminMenuGameProvider {
 
     @Rpc(RpcEvent.ADMIN_GET_CHARACTERS)
     public async getCharacters(source: number): Promise<Record<string, PlayerCharInfo>> {
-        const steam = this.QBCore.getSteamIdentifier(source);
-        const players = await this.database.player.findMany({
-            where: {
-                license: steam,
-            },
-        });
+        try {
+            const steam = this.QBCore.getSteamIdentifier(source);
+            const players = await this.database.player.findMany({
+                where: {
+                    license: steam,
+                },
+            });
 
-        const characters = {};
+            const characters = {};
 
-        for (const player of players) {
-            characters[player.citizenid] = JSON.parse(player.charinfo);
+            for (const player of players) {
+                characters[player.citizenid] = JSON.parse(player.charinfo);
+            }
+
+            return characters;
+        } catch (e) {
+            console.trace(e);
+            return {};
         }
-
-        return characters;
     }
 }
