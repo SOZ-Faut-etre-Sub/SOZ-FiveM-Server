@@ -92,16 +92,13 @@ end
 
 function Apartment:GetResellPrice(isTrailer)
     local resellPrice = self.price / 2
-    if isTrailer then
-        if self.has_parking_place == 1 then
-            -- 50% trailer price + 50% parking place (which is 50% trailer price)
-            resellPrice = resellPrice + resellPrice / 2
-        end
-    else
-        for i = 0, self.tier, 1 do
-            local tierPrice = self.price * Config.UpgradesPercent[i] / 100
-            resellPrice = resellPrice + tierPrice / 2
-        end
+    if isTrailer and self.has_parking_place == 1 then
+        -- 50% parking place (which is 50% trailer price)
+        resellPrice = resellPrice + resellPrice / 2
+    end
+    for i = 0, self.tier, 1 do
+        local tierPrice = self.price * Config.UpgradesPercent[i] / 100
+        resellPrice = resellPrice + tierPrice / 2
     end
     return resellPrice
 end
