@@ -93,7 +93,7 @@ end
 function Apartment:GetResellPrice(isTrailer)
     local resellPrice = self.price / 2
     if isTrailer then
-        if self.has_parking_place then
+        if self.has_parking_place == 1 then
             -- 50% trailer price + 50% parking place (which is 50% trailer price)
             resellPrice = resellPrice + resellPrice / 2
         end
@@ -139,7 +139,7 @@ function Apartment:GetTier()
 end
 
 function Apartment:HasParkingPlace()
-    return self.has_parking_place
+    return self.has_parking_place == 1
 end
 
 ---

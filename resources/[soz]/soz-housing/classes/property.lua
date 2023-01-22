@@ -163,7 +163,7 @@ function Property:IsBuilding()
 end
 
 function Property:IsTrailer()
-    return string.find(self.identifier, "trailer")
+    return string.find(self.identifier, "trailer") ~= nil
 end
 
 function Property:HasGarage()

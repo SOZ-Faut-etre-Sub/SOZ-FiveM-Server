@@ -86,7 +86,7 @@ function SupermarketShop:GenerateZkeaUpgradesMenu()
     if property and string.find(property.identifier, "trailer") then
         local apartment = property.apartments[tostring(playerData.apartment.id)]
         if apartment then
-            if not apartment.has_parking_place then
+            if apartment.has_parking_place ~= 1 then
                 local price = math.floor(apartmentPrice * 50 / 100)
                 shopMenu:AddButton({
                     label = "Ajout place de parking",

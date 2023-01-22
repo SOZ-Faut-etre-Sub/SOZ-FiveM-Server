@@ -296,7 +296,7 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         apartment:SetRoommate(nil)
         apartment:SetTier(0)
         if property:IsTrailer() then
-            apartment:SetParkingPlace(false)
+            apartment:SetParkingPlace(0)
         end
 
         exports["soz-inventory"]:SetHouseStashMaxWeightFromTier(apartment:GetIdentifier(), 0)
@@ -555,8 +555,8 @@ RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(price
 
     if player.Functions.RemoveMoney("money", price) then
         MySQL.update.await("UPDATE housing_apartment SET has_parking_place = ? WHERE id = ?", {1, apartmentId})
-        player.Functions.SetApartmentHasParkingPlace(true)
-        apartment:SetParkingPlace(true)
+        player.Functions.SetApartmentHasParkingPlace(1)
+        apartment:SetParkingPlace(1)
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
         TriggerClientEvent("hud:client:DrawNotification", playerData.source,
                            "Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$" .. price)
