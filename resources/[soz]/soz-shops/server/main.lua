@@ -1,5 +1,6 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 
+local ShopsPed = {}
 local Shops = {}
 local ShopsContent = {
     [1885233650] = {}, -- Homme

@@ -1,12 +1,12 @@
 Config.Products["tattoo"] = json.decode(LoadResourceFile(GetCurrentResourceName(), "config/datasource/tattoos.json"))
 
 Config.Locations["tattoo"] = {
-    vector4(319.67, 181.11, 103.59, 248.97),
-    vector4(1862.56, 3748.41, 33.03, 33.12),
-    vector4(-292.15, 6199.63, 31.49, 232.53),
-    vector4(-1151.95, -1423.96, 4.95, 128.08),
-    vector4(1324.83, -1650.14, 52.28, 129.56),
-    vector4(-3170.73, 1072.86, 20.83, 332.32),
+    ["tattooshop"] = vector4(319.67, 181.11, 103.59, 248.97),
+    ["tattooshop2"] = vector4(1862.56, 3748.41, 33.03, 33.12),
+    ["tattooshop3"] = vector4(-292.15, 6199.63, 31.49, 232.53),
+    ["tattooshop4"] = vector4(-1151.95, -1423.96, 4.95, 128.08),
+    ["tattooshop5"] = vector4(1324.83, -1650.14, 52.28, 129.56),
+    ["tattooshop6"] = vector4(-3170.73, 1072.86, 20.83, 332.32),
 }
 
 Config.TattooLocationsInShop = {

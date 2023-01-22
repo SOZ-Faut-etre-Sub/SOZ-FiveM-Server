@@ -1,3 +1,5 @@
+import { JobType } from '@public/shared/job';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { PedFactory } from '../factory/ped.factory';
@@ -10,9 +12,9 @@ export type TargetOptions = {
     event?: string;
     blackoutGlobal?: boolean;
     blackoutJob?: string;
-    canInteract?: (entity) => boolean;
+    canInteract?: (entity) => boolean | Promise<boolean>;
     action?: (entity) => void;
-    job?: string;
+    job?: string | JobType | Partial<{ [key in JobType]: number }>;
     license?: string;
     item?: string;
 };
@@ -92,7 +94,7 @@ export class TargetFactory {
             exports['qb-target'].RemoveZone(id);
         }
 
-        exports['qb-target'].DeletePeds();
+        //exports['qb-target'].DeletePeds();
     }
 
     public async createForPed(ped: PedOptions) {

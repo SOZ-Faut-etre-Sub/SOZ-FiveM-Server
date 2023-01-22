@@ -25,6 +25,7 @@ import { PlayerModule } from './server/player/player.module';
 import { RebootModule } from './server/reboot/reboot.module';
 import { RepositoryModule } from './server/repository/repository.module';
 import { ShopModule } from './server/shop/shop.module';
+import { SoundModule } from './server/sound/sound.module';
 import { StoryModule } from './server/story/story.module';
 import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
@@ -63,6 +64,7 @@ async function bootstrap() {
         InventoryModule,
         DrivingSchoolModule,
         MdrModule,
+        SoundModule,
         ...PrivateModules
     );
 

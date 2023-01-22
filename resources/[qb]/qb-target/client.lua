@@ -894,6 +894,7 @@ local function SpawnPed(data)
 
 		Config.Peds[nextnumber] = data
 	end
+	return data
 end
 
 exports("SpawnPed", SpawnPed)

@@ -2,7 +2,7 @@
 ShopShell = {}
 
 function ShopShell:new(label, brand, blip, ped)
-    return setmetatable({label = label, brand = brand, blip = blip, ped = ped, target = {}}, {__index = ShopShell})
+    return setmetatable({label = label, brand = brand, blip = blip, ped = ped}, {__index = ShopShell})
 end
 
 --- Ped functions
@@ -65,32 +65,46 @@ function ShopShell:ZkeaUpgrade()
 end
 
 function ShopShell:AddTargetModel()
-    exports["qb-target"]:AddTargetModel({self.ped},
-                                        {
-        options = {self:GetPedAction(), self:GunSmith(), self:ZkeaStock(), self:ZkeaUpgrade(), self.target},
+    exports["qb-target"]:AddTargetModel(self.ped, {
+        options = {
+            self:GetPedAction(),
+            self:GunSmith(),
+            self:ZkeaStock(),
+            self:ZkeaUpgrade(),
+            {
+                icon = "c:stonk/collecter.png",
+                label = "Collecter",
+                canInteract = function()
+                    return exports["soz-core"]:CanBagsBeCollected(currentShopBrand, currentShop)
+                end,
+                blackoutGlobal = true,
+                blackoutJob = true,
+                action = function()
+                    TriggerServerEvent("soz-core:server:job:stonk:collect", currentShopBrand, currentShop)
+                end,
+            },
+        },
         distance = 2.5,
     })
 end
 
 function ShopShell:RemoveTargetModel()
-    exports["qb-target"]:RemoveTargetModel({self.ped})
+    exports["qb-target"]:RemoveTargetModel(self.ped)
 end
 
-function ShopShell:SpawnPed(location, target)
-    if target then
-        self.target = target
-    end
-    exports["qb-target"]:SpawnPed({
-        {
-            model = self.ped,
-            coords = location,
-            minusOne = true,
-            freeze = true,
-            invincible = true,
-            blockevents = true,
-            scenario = "WORLD_HUMAN_STAND_IMPATIENT",
-        },
+function ShopShell:SpawnPed(location)
+    local ret = exports["qb-target"]:SpawnPed({
+        model = self.ped,
+        coords = location,
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        blockevents = true,
+        spawnNow = true,
+        scenario = "WORLD_HUMAN_STAND_IMPATIENT",
     })
+
+    return ret.currentpednumber
 end
 
 --- Shop functions

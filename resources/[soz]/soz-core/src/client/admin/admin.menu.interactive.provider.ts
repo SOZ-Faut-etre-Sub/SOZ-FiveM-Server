@@ -35,9 +35,9 @@ export class AdminMenuInteractiveProvider {
         }
         this.intervalHandlers.displayOwners = setInterval(async () => {
             const vehicles: number[] = GetGamePool('CVehicle');
+            const playerCoords = GetEntityCoords(PlayerPedId(), false);
             for (const vehicle of vehicles) {
                 const vehicleCoords = GetEntityCoords(vehicle, false);
-                const playerCoords = GetEntityCoords(PlayerPedId(), false);
                 const dist = GetDistanceBetweenCoords(
                     vehicleCoords[0],
                     vehicleCoords[1],
@@ -70,6 +70,33 @@ export class AdminMenuInteractiveProvider {
                         [vehicleCoords[0], vehicleCoords[1], vehicleCoords[2] + 2],
                         vehicleInfo
                     );
+                }
+            }
+
+            const peds: number[] = GetGamePool('CPed');
+            for (const ped of peds) {
+                if (IsPedInAnyVehicle(ped, false) || !NetworkGetEntityIsNetworked(ped)) {
+                    continue;
+                }
+                const pedCoords = GetEntityCoords(ped, false);
+                const dist = GetDistanceBetweenCoords(
+                    pedCoords[0],
+                    pedCoords[1],
+                    pedCoords[2],
+                    playerCoords[0],
+                    playerCoords[1],
+                    playerCoords[2],
+                    false
+                );
+                if (dist < 50) {
+                    let text = ' | OwnerNet: ';
+                    if (GetPlayerServerId(NetworkGetEntityOwner(ped)) === GetPlayerServerId(PlayerId())) {
+                        text = ` | ~g~OwnerNet: `;
+                    }
+                    const ownerInfo =
+                        `PedNet: ${NetworkGetNetworkIdFromEntity(ped)} ` +
+                        `${text} ${GetPlayerServerId(NetworkGetEntityOwner(ped))}`;
+                    this.drawService.drawText3d([pedCoords[0], pedCoords[1], pedCoords[2] + 1], ownerInfo);
                 }
             }
         }, 1);

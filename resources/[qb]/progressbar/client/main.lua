@@ -119,7 +119,7 @@ end
 
 function ActionStart()
     runProgThread = true
-    LocalPlayer.state:set("inv_busy", true, true) -- Busy
+    LocalPlayer.state:set("inv_busy", not Action.no_inv_busy, true) -- Busy
     CreateThread(function()
         while runProgThread do
             if isDoingAction then

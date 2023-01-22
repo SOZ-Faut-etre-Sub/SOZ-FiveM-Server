@@ -5506,4 +5506,13 @@ QBShared.Items = {
         ["useable"] = true,
         ["description"] = "",
     },
+    ['special_blowtorch'] = {
+        ['name'] = 'special_blowtorch',
+        ['label'] = 'Chalumeau spécial',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['description'] = '',
+    },
 }

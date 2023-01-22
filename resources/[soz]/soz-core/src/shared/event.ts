@@ -163,6 +163,15 @@ export enum ServerEvent {
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
 
     RACKET = 'soz-core:server:racket',
+
+    HEIST_ADD_ITEM = 'soz-core:server:heist:add-item',
+    HEIST_JEWELRY_UNLOCK = 'soz-core:server:heist:unlock',
+    HEIST_JEWELRY_ALARM_STOP = 'soz-core:server:heist:alarm-stop',
+    HEIST_JEWELRY_START_ROBBERY = 'soz-core:server:heist:start-robbery',
+    HEIST_PLAY_ANIM = 'soz-core:server:heist:play-anim',
+    HEIST_PLAY_ANIM_INIT = 'soz-core:server:heist:init',
+
+    SOUND_GLOBAL_INIT = 'soz-core:server:sound:init',
 }
 
 export enum ClientEvent {
@@ -267,6 +276,8 @@ export enum ClientEvent {
     WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
 
     MDR_USE_TICKET = 'soz-core:client:mdr:use-ticket',
+    HEIST_GUARD = 'soz-core:client:heist:guard',
+    HEIST_PLAY_ANIM = 'soz-core:client:heist:play-anim',
 }
 
 export enum GameEvent {
