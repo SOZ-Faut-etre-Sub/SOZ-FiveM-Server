@@ -221,7 +221,7 @@ export class LSMCDeathProvider {
 
         if (uniteHU) {
             DoScreenFadeOut(1000);
-            await wait(2000);
+            await wait(1000);
         }
 
         StopScreenEffect('DeathFailOut');
@@ -266,9 +266,10 @@ export class LSMCDeathProvider {
         const player = this.playerService.getPlayer();
 
         this.playerService.setTempClothes(PatientClothes[player.skin.Model.Hash]['Patient']);
+        FreezeEntityPosition(ped, true);
 
         if (uniteHUBed == -1) {
-            ClearPedTasksImmediately(PlayerPedId());
+            ClearPedTasksImmediately(ped);
             SetEntityCoords(
                 ped,
                 FailoverLocation[0],
@@ -320,7 +321,9 @@ export class LSMCDeathProvider {
                 },
             });
         }
-        await wait(1000);
+        await wait(2000);
+
+        FreezeEntityPosition(ped, false);
 
         DoScreenFadeIn(1000);
     }
@@ -338,7 +341,7 @@ export class LSMCDeathProvider {
         const coord = GetEntityCoords(target);
         const heading = GetEntityHeading(target);
         const array = this.loc(coord, heading);
-        await this.animationService.walkToCoords([array[0], array[1], coord[2], array[2]], 4000);
+        await this.animationService.walkToCoords([array[0], array[1], coord[2], array[2]], 3000);
 
         TriggerServerEvent(ServerEvent.LSMC_REVIVE, GetPlayerServerId(NetworkGetPlayerIndexFromPed(target)));
         const reviveAnimPromise = this.animationService.playAnimation(reviveAnimDoc);
