@@ -64,7 +64,7 @@ export class AnimationService {
             ? 1000
             : animation.options?.repeat
             ? -1
-            : GetAnimDuration(animation.dictionary, animation.name);
+            : GetAnimDuration(animation.dictionary, animation.name) * 1000;
 
         const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 1;
         const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : 1;
@@ -199,7 +199,6 @@ export class AnimationService {
             if (options.reset_weapon) {
                 SetCurrentPedWeapon(ped, GetHashKey(WeaponName.UNARMED), true);
             }
-
             this.currentAnimation.resolve(cancelled);
 
             this.currentAnimation = null;

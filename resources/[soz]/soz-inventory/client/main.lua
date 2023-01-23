@@ -20,15 +20,6 @@ RegisterNetEvent("inventory:client:openInventory", function(playerInventory, tar
     SetNuiFocus(true, true)
 end)
 
-RegisterNetEvent("inventory:client:requestOpenInventory", function(data)
-    if data.invType == "bin" then
-        local coords = GetEntityCoords(data.entity)
-        data.invID = string.format("bin_%.5f+%.5f+%.5f", coords.x, coords.y, coords.z)
-    end
-
-    TriggerServerEvent("inventory:server:openInventory", data.invType, data.invID)
-end)
-
 RegisterNUICallback("transfertItem", function(data, cb)
     local amount = data.item.amount
 
