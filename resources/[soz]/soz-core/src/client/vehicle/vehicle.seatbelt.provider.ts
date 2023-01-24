@@ -94,6 +94,12 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
+        const vehicleEntering = GetVehiclePedIsEntering(ped);
+
+        if (vehicleEntering === vehicle) {
+            return;
+        }
+
         const vehicleClass = GetVehicleClass(vehicle);
 
         if (
