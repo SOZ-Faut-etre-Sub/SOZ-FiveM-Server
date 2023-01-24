@@ -95,7 +95,7 @@ export type PlayerServerState = {
 export enum PlayerLicenceType {
     Car = 'car',
     Truck = 'truck',
-    Moto = 'moto',
+    Moto = 'motorcycle',
     Boat = 'boat',
     Heli = 'heli',
     Weapon = 'weapon',
