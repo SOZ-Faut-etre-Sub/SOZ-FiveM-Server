@@ -2899,7 +2899,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Soulage les indigestions'
+        ['description'] = 'Soulage les indigestions',
+        ['illustrator'] = '.Smogogo',
     },
     ['walkstick'] = {
         ['name'] = 'walkstick',
@@ -3160,7 +3161,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'ZPAD PRO 14'
+        ['description'] = 'ZPAD PRO 14',
+        ['illustrator'] = '.Sniteur',
     },
     ['gps'] = {
         ['name'] = 'gps',
