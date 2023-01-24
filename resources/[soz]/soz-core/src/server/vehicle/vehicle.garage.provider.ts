@@ -98,7 +98,7 @@ export class VehicleGarageProvider {
 
         for (const vehicle of vehicles) {
             const parkingTime = new Date(vehicle.parkingtime * 1000);
-            const days = Math.floor((Date.now() / 1000 - parkingTime.getTime()) / (24 * 60 * 60));
+            const days = (Date.now() - parkingTime.getTime()) / (1000 * 60 * 60 * 24);
 
             let garageId = vehicle.garage;
 
@@ -116,7 +116,7 @@ export class VehicleGarageProvider {
                 toVoid.push(vehicle.id);
             } else if (garage && garage.type === GarageType.Depot && days > 7) {
                 toVoid.push(vehicle.id);
-            } else if (garage && garage.type !== GarageType.Job && days > 21) {
+            } else if ((!garage || garage.type !== GarageType.Job) && days > 21) {
                 toPound.push(vehicle.id);
             }
         }
