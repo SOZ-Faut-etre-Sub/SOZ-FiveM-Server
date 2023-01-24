@@ -64,27 +64,33 @@ export class VehicleGarageProvider {
 
     @Once(OnceStep.DatabaseConnected)
     public async init(): Promise<void> {
-        await this.prismaService.$executeRawUnsafe(
-            "UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL AND category = 'car'"
-        );
-        await this.prismaService.$executeRawUnsafe(
-            "UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL AND category = 'car'"
-        );
+        const queries = `
+            UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL AND category = 'car';
+            UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL AND category = 'car';
+            UPDATE player_vehicles SET state = 1, garage = 'airport_air' WHERE state = 0 AND job IS NULL AND category = 'air';
+            UPDATE player_vehicles SET state = 3, garage = concat(job,'_air') WHERE state = 0 AND job IS NOT NULL AND category = 'air';
+            UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil';
+            UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer';
+            UPDATE player_vehicles SET garage = 'pound' WHERE state = 2 AND garage != 'pound';
 
-        await this.prismaService.$executeRawUnsafe(
-            "UPDATE player_vehicles SET state = 1, garage = 'airport_air' WHERE state = 0 AND job IS NULL AND category = 'air'"
-        );
-        await this.prismaService.$executeRawUnsafe(
-            "UPDATE player_vehicles SET state = 3, garage = concat(job,'_air') WHERE state = 0 AND job IS NOT NULL AND category = 'air'"
-        );
+            UPDATE vehicles v SET v.stock = 8 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Compacts';
+            UPDATE vehicles v SET v.stock = 6 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Coupes';
+            UPDATE vehicles v SET v.stock = 3 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Muscle';
+            UPDATE vehicles v SET v.stock = 4 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Suvs';
+            UPDATE vehicles v SET v.stock = 6 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Vans';
+            UPDATE vehicles v SET v.stock = 4 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Off-road';
+            UPDATE vehicles v SET v.stock = 6 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Sedans';
+            UPDATE vehicles v SET v.stock = 6 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Motorcycles';
+            UPDATE vehicles v SET v.stock = 3 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Helicopters';
+            UPDATE vehicles v SET v.stock = 99 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Cycles';
+            UPDATE vehicles v SET v.stock = 0 WHERE v.stock < 0;
+        `
+            .split(';')
+            .filter(s => s.trim().length > 0);
 
-        await this.prismaService.$executeRawUnsafe("UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil'");
-        await this.prismaService.$executeRawUnsafe(
-            "UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer'"
-        );
-        await this.prismaService.$executeRawUnsafe(
-            "UPDATE player_vehicles SET garage = 'pound' WHERE state = 2 AND garage != 'pound'"
-        );
+        for (const query of queries) {
+            await this.prismaService.$executeRawUnsafe(query);
+        }
 
         const vehicles = await this.prismaService.playerVehicle.findMany({
             where: {
