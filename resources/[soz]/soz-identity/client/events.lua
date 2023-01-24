@@ -50,7 +50,7 @@ AddEventHandler("soz-identity:client:request-licenses-data", function(target, ac
     TriggerServerEvent("soz-identity:server:request-data", target, "licences", action, {
         firstName = charinfo.firstname,
         lastName = charinfo.lastname,
-        vehicleLimit = PlayerData.metadata["vehicleLimit"],
+        vehicleLimit = PlayerData.metadata["vehiclelimit"],
         licences = PlayerData.metadata["licences"],
         created_at = PlayerData.metadata["arrived_in_town"] or 0,
     })

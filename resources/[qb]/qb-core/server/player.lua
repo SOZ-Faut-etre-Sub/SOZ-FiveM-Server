@@ -154,7 +154,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         ['fishing'] = false,
         ['rescuer'] = false,
     }
-    PlayerData.metadata['vehicleLimit'] = PlayerData.metadata['vehicleLimit'] or 1
+    PlayerData.metadata['vehiclelimit'] = PlayerData.metadata['vehiclelimit'] or 1
     PlayerData.metadata['inside'] = PlayerData.metadata['inside'] or {
         ['exitCoord'] = false,
         ['apartment'] = false,
@@ -529,7 +529,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.SetVehicleLimit = function (limit)
-        self.PlayerData.metadata.vehicleLimit = limit
+        self.PlayerData.metadata.vehiclelimit = limit
         self.Functions.UpdatePlayerData()
     end
 

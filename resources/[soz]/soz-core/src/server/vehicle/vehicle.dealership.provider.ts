@@ -362,9 +362,9 @@ export class VehicleDealershipProvider {
                 },
             });
     
-            if (playerVehicleCount >= player.metadata.vehicleLimit) {
-                let errorMsg = `Limite de véhicule atteinte (${playerVehicleCount}/${player.metadata.vehicleLimit})`;
-                if (player.metadata.vehicleLimit < 10) errorMsg += ". Améliorez votre carte grise à l'auto-école.";
+            if (playerVehicleCount >= player.metadata.vehiclelimit) {
+                let errorMsg = `Limite de véhicule atteinte (${playerVehicleCount}/${player.metadata.vehiclelimit})`;
+                if (player.metadata.vehiclelimit < 10) errorMsg += ". Améliorez votre carte grise à l'auto-école.";
     
                 this.notifier.notify(source, errorMsg, 'error');
     

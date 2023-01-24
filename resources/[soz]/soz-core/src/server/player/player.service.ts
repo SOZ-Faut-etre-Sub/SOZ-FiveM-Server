@@ -113,6 +113,14 @@ export class PlayerService {
         }
     }
 
+    public updatePlayerData(source: number): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            player.Functions.UpdatePlayerData();
+        }
+    }
+
     public incrementMetadata<K extends keyof PlayerMetadata>(
         source: number,
         key: K,

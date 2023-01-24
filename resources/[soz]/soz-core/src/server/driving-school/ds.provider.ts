@@ -1,3 +1,4 @@
+import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 import { On } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -6,6 +7,7 @@ import { DrivingSchoolConfig, DrivingSchoolLicenseType } from '../../shared/driv
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector4 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
+import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
@@ -21,6 +23,9 @@ export class DrivingSchoolProvider {
 
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
+
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
 
     @Inject(VehicleSpawner)
     private vehicleSpawner: VehicleSpawner;
@@ -62,5 +67,43 @@ export class DrivingSchoolProvider {
     @Rpc(RpcEvent.DRIVING_SCHOOL_SPAWN_VEHICLE)
     public async spawnExamVehicle(source: number, model: string) {
         return await this.vehicleSpawner.spawnTemporaryVehicle(source, model);
+    }
+
+    @On(ServerEvent.DRIVING_SCHOOL_UPDATE_VEHICLE_LIMIT)
+    public async updateVehicleLimit(source: number, limit: number, price: number) {
+        if (!this.playerMoneyService.remove(source, price, 'money')) {
+            this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
+            return;
+        }
+
+        this.playerService.setPlayerMetadata(source, 'vehiclelimit', limit);
+        this.playerService.save(source);
+        this.playerService.updatePlayerData(source);
+
+        this.notifier.notify(source, `Vous venez d'améliorer votre carte grise au niveau ${limit} pour $${price}`, 'success');
+    }
+
+    @On(ServerEvent.DRIVING_SCHOOL_CHECK_VEHICLE_SLOTS)
+    public async checkVehicleSlots(source: number) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) return;
+
+        const playerVehicleCount = await this.prismaService.playerVehicle.count({
+            where: {
+                citizenid: player.citizenid,
+                job: null,
+                state: {
+                    not: PlayerVehicleState.Destroyed,
+                },
+            },
+        });
+        const limit = player.metadata.vehiclelimit;
+
+        if (playerVehicleCount >= limit) {
+            this.notifier.notify(source, "Vous n'avez plus de place(s) sur votre carte grise", 'warning');
+            return;
+        }
+
+        this.notifier.notify(source, `Il vous reste ${limit - playerVehicleCount} place(s) sur votre carte grise`, 'info');
     }
 }
