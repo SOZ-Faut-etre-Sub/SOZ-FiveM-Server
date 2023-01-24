@@ -136,10 +136,12 @@ export class VehicleDealershipProvider {
                     body: 1000,
                     mods: JSON.stringify(configuration),
                     condition: JSON.stringify(getDefaultVehicleCondition()),
+                    label: null,
                 },
                 update: {
                     vehicle: vehicle.model,
                     hash: vehicle.hash.toString(),
+                    label: null,
                     garage: 'bennys_luxury',
                     state: PlayerVehicleState.InGarage,
                     mods: JSON.stringify(configuration),
