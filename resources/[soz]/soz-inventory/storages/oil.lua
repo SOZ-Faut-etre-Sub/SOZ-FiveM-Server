@@ -54,7 +54,7 @@ Config.Storages["oil_male_cloakroom"] = {
     minZ = 30.39,
     maxZ = 33.39,
     heading = 315,
-    targetOptions = getCloakroomTargetOptions("oil", "oil_cloakroom", "jobs:client:fueler:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("oil", "oil_male_cloakroom", "jobs:client:fueler:OpenCloakroomMenu"),
 }
 
 Config.Storages["oil_female_cloakroom"] = {
@@ -66,5 +66,5 @@ Config.Storages["oil_female_cloakroom"] = {
     minZ = 30.39,
     maxZ = 33.39,
     heading = 315,
-    targetOptions = getCloakroomTargetOptions("oil", "oil_cloakroom", "jobs:client:fueler:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("oil", "oil_female_cloakroom", "jobs:client:fueler:OpenCloakroomMenu"),
 }
