@@ -318,49 +318,25 @@ export class BennysFlatbedProvider {
         }
 
         const attachedVehicle = NetworkGetEntityFromNetworkId(attachedNetworkId);
-        const height = GetEntityHeightAboveGround(attachedVehicle) - 0.4 - GetEntityHeightAboveGround(vehicle);
 
         if (NetworkHasControlOfEntity(attachedVehicle)) {
             return;
         }
 
-        // Here we are in a case where we owned the flatbed but not the attached vehicle
-        // Duplicate the vehicle and attach it to the flatbed while destroying the original
-        const position = GetEntityCoords(attachedVehicle, true) as Vector3;
-        const heading = GetEntityHeading(attachedVehicle);
-        const [vehicleDuplicate, duplicateNetworkId] = await this.duplicateVehicle(attachedVehicle, [
-            ...position,
-            heading,
-        ]);
-
-        this.attachVehicleToFlatbed(vehicle, vehicleDuplicate, height);
-        Entity(vehicle).state.flatbedAttachedVehicle = duplicateNetworkId;
+        await this.requestVehicleOwnership(attachedVehicle, attachedNetworkId);
     }
 
-    public async duplicateVehicle(vehicleEntityId: number, position: Vector4 = [0, 0, 0, 0]) {
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-        const vehicleState = this.vehicleService.getVehicleState(vehicleEntityId);
-        const plate = vehicleState.plate || GetVehicleNumberPlateText(vehicleEntityId);
-        const configuration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
-        const model = GetEntityModel(vehicleEntityId);
+    public async requestVehicleOwnership(vehicle: number, vehicleNetworkId: number) {
+        let tryCount = 0;
 
-        const vehicleDuplicate = CreateVehicle(model, position[0], position[1], position[2], position[3], true, true);
-
-        const duplicateNetworkId = NetworkGetNetworkIdFromEntity(vehicleDuplicate);
-
-        SetNetworkIdCanMigrate(duplicateNetworkId, true);
-        SetEntityAsMissionEntity(vehicleDuplicate, true, true);
-        SetVehicleHasBeenOwnedByPlayer(vehicleDuplicate, true);
-        SetVehicleNeedsToBeHotwired(vehicleDuplicate, false);
-        SetVehRadioStation(vehicleDuplicate, 'OFF');
-        CopyVehicleDamages(vehicleEntityId, vehicleDuplicate);
-
-        this.vehicleService.applyVehicleConfiguration(vehicleDuplicate, configuration);
-        this.vehicleService.syncVehicle(vehicleDuplicate, vehicleState);
-        SetVehicleNumberPlateText(vehicleDuplicate, plate);
-        TriggerServerEvent(ServerEvent.VEHICLE_SWAP, vehicleNetworkId, duplicateNetworkId, vehicleState);
-
-        return [vehicleDuplicate, duplicateNetworkId];
+        while (
+            !NetworkRequestControlOfEntity(vehicle) &&
+            !NetworkRequestControlOfNetworkId(vehicleNetworkId) &&
+            tryCount < 10
+        ) {
+            await wait(100);
+            tryCount++;
+        }
     }
 
     public async detachVehicle(flatbed: number) {
@@ -373,14 +349,21 @@ export class BennysFlatbedProvider {
         const attachedVehicle = NetworkGetEntityFromNetworkId(attachedVehicleNetworkId);
         const flatbedPosition = GetEntityCoords(flatbed, true) as Vector4;
         const attachedVehiclePosition = GetEntityCoords(attachedVehicle, true) as Vector4;
-        const [vehicleDuplicate] = await this.duplicateVehicle(attachedVehicle, [
+
+        await this.requestVehicleOwnership(attachedVehicle, attachedVehicleNetworkId);
+        DetachEntity(attachedVehicle, true, true);
+
+        SetEntityCoords(
+            attachedVehicle,
             flatbedPosition[0] - (flatbedPosition[0] - attachedVehiclePosition[0]) * 6,
             flatbedPosition[1] - (flatbedPosition[1] - attachedVehiclePosition[1]) * 6,
             flatbedPosition[2],
-            GetEntityHeading(flatbed),
-        ]);
-
-        SetVehicleOnGroundProperly(vehicleDuplicate);
+            false,
+            false,
+            false,
+            false
+        );
+        SetVehicleOnGroundProperly(attachedVehicle);
         Entity(flatbed).state.set('flatbedAttachedVehicle', null, true);
 
         this.soundService.play('seatbelt/unbuckle', 0.2);
@@ -419,14 +402,11 @@ export class BennysFlatbedProvider {
         }
 
         const height = GetEntityHeightAboveGround(vehicle);
-        const position = GetEntityCoords(vehicle, true) as Vector3;
-        const heading = GetEntityHeading(vehicle);
-        const [vehicleDuplicate, vehicleDuplicateNetworkId] = await this.duplicateVehicle(vehicle, [
-            ...position,
-            heading,
-        ]);
+        const attachedVehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        this.attachVehicleToFlatbed(this.currentFlatbedAttach.entity, vehicleDuplicate, height);
+        await this.requestVehicleOwnership(vehicle, attachedVehicleNetworkId);
+
+        this.attachVehicleToFlatbed(this.currentFlatbedAttach.entity, vehicle, height);
 
         this.soundService.play('seatbelt/buckle', 0.2);
         this.notifier.notify('Le véhicule a été attaché au flatbed.');
@@ -438,7 +418,7 @@ export class BennysFlatbedProvider {
         TriggerServerEvent(
             ServerEvent.BENNYS_FLATBED_ATTACH_VEHICLE,
             vehicleFlatbedNetworkId,
-            vehicleDuplicateNetworkId
+            attachedVehicleNetworkId
         );
     }
 
