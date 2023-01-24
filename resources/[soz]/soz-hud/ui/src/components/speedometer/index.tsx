@@ -7,7 +7,7 @@ import {FuelGauge, SpeedGauge} from "./Gauges";
 
 const SpeedoMeter: FunctionComponent<any> = () => {
     const {inVehicle, seatbelt: haveSeatbelt, updateInVehicle, updateSeatbelt: updatePlayerSeatbelt} = useContext(PlayerContext)
-    const {speed, fuel, engine, oil, lock, hasFuel, seatbelt, lightState, updateSpeed, updateFuel, updateEngine, updateOil, updateLock, updateSeatbelt, updateLightState, updateHasFuel} = useContext(VehicleDataContext)
+    const {speed, fuel, engine, oil, lock, hasFuel, seatbelt, lightState, fuelType, updateSpeed, updateFuel, updateEngine, updateOil, updateLock, updateSeatbelt, updateLightState, updateHasFuel, updateFuelType} = useContext(VehicleDataContext)
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'speedometer') {
@@ -18,6 +18,7 @@ const SpeedoMeter: FunctionComponent<any> = () => {
             if (event.data.speed !== undefined) updateSpeed(event.data.speed)
             if (event.data.fuel !== undefined) updateFuel(event.data.fuel)
             if (event.data.hasFuel !== undefined) updateHasFuel(event.data.hasFuel)
+            if (event.data.fuelType !== undefined) updateFuelType(event.data.fuelType)
             if (event.data.engine !== undefined) updateEngine(event.data.engine)
             if (event.data.oil !== undefined) updateOil(event.data.oil)
             if (event.data.lock !== undefined) updateLock(event.data.lock)
@@ -48,8 +49,8 @@ const SpeedoMeter: FunctionComponent<any> = () => {
             </div>
             <div className={style.centerContainer}>
                 <SpeedGauge speed={speed} hasFuel={hasFuel} />
-                {hasFuel && <FuelGauge value={fuel} />}
-                <MotorIndicator motor={engine} oil={oil} />
+                {hasFuel && <FuelGauge value={fuel} fuelType={fuelType} />}
+                <MotorIndicator motor={engine} oil={oil} fuelType={fuelType} />
             </div>
             <div className={style.rightContainer}>
                 <LightIndicator state={lightState} />

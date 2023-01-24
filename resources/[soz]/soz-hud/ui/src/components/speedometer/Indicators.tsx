@@ -6,6 +6,7 @@ import SeatbeltIcon from "../../assets/vehicle/seatbelt";
 import style from "./style.module.css"
 import cn from "classnames";
 import OilIcon from '../../assets/vehicle/oil';
+import BatteryIcon from "@assets/vehicle/battery";
 
 function LightIndicator(props: {state: number}) {
     return (
@@ -16,7 +17,17 @@ function LightIndicator(props: {state: number}) {
     )
 }
 
-function MotorIndicator(props: {motor: number, oil: number}) {
+function MotorIndicator(props: {motor: number, oil: number, fuelType: string}) {
+    var secondaryIcon = <OilIcon className={cn(style.icon, style.motor, {
+        [style.hidden]: props.oil > 10,
+        [style.red]: props.oil <= 10,
+    })} />;
+    if (props.fuelType === 'electric') {
+        var secondaryIcon = <BatteryIcon className={cn(style.icon, style.motor, {
+            [style.hidden]: props.oil > 10,
+            [style.red]: props.oil <= 10,
+        })} />;
+    }
     return (
         <>
             <MotorIcon className={cn(style.icon, style.motor, {
@@ -25,10 +36,7 @@ function MotorIndicator(props: {motor: number, oil: number}) {
                 [style.orange]: props.motor < 400 && props.motor >= 101,
                 [style.red]: props.motor < 101,
             })} />
-            <OilIcon className={cn(style.icon, style.motor, {
-                [style.hidden]: props.oil > 10,
-                [style.red]: props.oil <= 10,
-            })} />
+            {secondaryIcon}
         </>
     )
 }

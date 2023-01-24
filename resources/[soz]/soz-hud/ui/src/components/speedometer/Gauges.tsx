@@ -1,5 +1,6 @@
 import style from "./style.module.css"
 import FuelIcon from "../../assets/vehicle/fuel";
+import EnergyIcon from "@assets/vehicle/energy";
 
 function SpeedGauge(props: {speed: number, hasFuel: boolean}) {
     return (
@@ -29,7 +30,19 @@ function SpeedGauge(props: {speed: number, hasFuel: boolean}) {
     )
 }
 
-function FuelGauge(props: {value: number}) {
+function FuelGauge(props: {value: number, fuelType: string}) {
+    var color = "#00E949" // classical green
+    var icon = <FuelIcon className={style.fuelIcon} width="15" height="15" style={{color: '#ffffff50'}} />
+    if (props.fuelType === 'electric') {
+        var icon = <EnergyIcon className={style.fuelIcon} width="15" height="15" style={{color: '#ffffff50'}} />
+        color = "#FFFF33"; // yellow
+        if (props.value < 60) {
+            color = "#FFA500"; //orange
+        }
+        if (props.value < 30) {
+            color = "#FF0000"; //red
+        }
+    }
     return (
         <div className={style.fuelGauge}>
             <svg className={style.fuelSvg} width="30" height="50">
@@ -42,14 +55,13 @@ function FuelGauge(props: {value: number}) {
                 <path
                     d="M16.3586 56.0748C17.1932 52.039 17.6419 47.8612 17.6645 43.5816C17.7481 27.6865 11.9379 13.1353 2.28418 2"
                     fill="none"
-                    stroke="#00E949"
+                    stroke={color}
                     strokeWidth="3"
                     strokeOpacity="1.0"
                     strokeDasharray="60"
                     style={{strokeDashoffset: 60 - (props.value/100*60)}}/>
-
             </svg>
-            <FuelIcon className={style.fuelIcon} width="15" height="15" style={{color: '#ffffff50'}} />
+            {icon}
         </div>
     )
 }

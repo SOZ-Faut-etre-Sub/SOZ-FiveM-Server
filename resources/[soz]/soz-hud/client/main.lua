@@ -44,6 +44,8 @@ local HudVehicleStatus = {
     lightsOn = false,
     --- @type boolean
     highBeamsOn = false,
+    --- @type string
+    fuelType = "essence",
 }
 --- @class VoiceData
 local HudVoiceStatus = {
@@ -142,6 +144,7 @@ local function setVehicleData(data)
             speed = HudVehicleStatus.speed,
             fuel = HudVehicleStatus.fuel,
             hasFuel = HudVehicleStatus.hasFuel,
+            fuelType = HudVehicleStatus.fuelType,
             engine = HudVehicleStatus.engine,
             oil = HudVehicleStatus.oil,
             lock = HudVehicleStatus.lock,
@@ -231,6 +234,7 @@ CreateThread(function()
             if IsPedInAnyVehicle(player) and not IsThisModelABicycle(vehicle) then
                 local class = GetVehicleClass(vehicle)
                 local haveLight, lightsOn, highBeamsOn = GetVehicleLightsState(vehicle)
+                local vehicle_hash = GetEntityModel(vehicle)
 
                 PlayerInVehicle = true
                 setHudRadar(true and HudDisplayed)
@@ -240,11 +244,16 @@ CreateThread(function()
                 end
 
                 local condition = Entity(vehicle).state.condition or {}
+                local fuelType = "essence"
+                if Config.ElectricCars[vehicle_hash] ~= nil then
+                    fuelType = "electric"
+                end
 
                 setVehicleData({
                     speed = math.ceil(actualspeed * Config.SpeedMultiplier),
                     fuel = condition.fuelLevel or GetVehicleFuelLevel(vehicle),
                     hasFuel = class < 23,
+                    fuelType = fuelType,
                     engine = math.ceil(GetVehicleEngineHealth(vehicle)),
                     oil = condition.oilLevel or 100,
                     lock = not Entity(vehicle).state.open,
