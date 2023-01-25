@@ -18,6 +18,7 @@ import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { OilModule } from './client/job/oil/oil.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
+import { UpwModule } from './client/job/upw/upw.module';
 import { NuiModule } from './client/nui/nui.module';
 import { PlayerModule } from './client/player/player.module';
 import { RepositoryModule } from './client/resources/repository.module';
@@ -64,6 +65,7 @@ async function bootstrap() {
         OilModule,
         WeaponModule,
         InventoryModule,
+        UpwModule,
         ...PrivateModules
     );
 

@@ -244,6 +244,8 @@ export enum ClientEvent {
     VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
 
+    UPW_OPEN_CLOAKROOM = 'soz-core:client:job:upw:open-cloakroom',
+
     RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
@@ -333,6 +335,7 @@ export enum NuiEvent {
     MenuClosed = 'menu_closed',
     JobBossShopBuyItem = 'soz-core:nui:job:boss-shop:buy-item',
     OilAskStationPrice = 'soz-core:nui:job:oil:ask-station-price',
+    UpwDisplayBlips = 'soz-core:nui:job:upw:display-blips',
 
     PanelClosed = 'soz-core:nui:panel:closed',
     SetFocusInput = 'soz-core:nui:set-focus-input',

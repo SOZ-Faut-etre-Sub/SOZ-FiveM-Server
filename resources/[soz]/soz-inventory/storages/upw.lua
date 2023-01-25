@@ -37,7 +37,7 @@ Config.Storages["upw_cloakroom_1"] = {
     minZ = 40.86,
     maxZ = 43.86,
     heading = 4,
-    targetOptions = getCloakroomTargetOptions("upw", "upw_cloakroom_1", "upw:client:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("upw", "upw_cloakroom_1", "soz-core:client:job:upw:open-cloakroom"),
 }
 
 Config.Storages["upw_cloakroom_2"] = {
@@ -49,5 +49,5 @@ Config.Storages["upw_cloakroom_2"] = {
     minZ = 40.86,
     maxZ = 43.86,
     heading = 4,
-    targetOptions = getCloakroomTargetOptions("upw", "upw_cloakroom_2", "upw:client:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("upw", "upw_cloakroom_2", "soz-core:client:job:upw:open-cloakroom"),
 }

@@ -19,6 +19,7 @@ import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { OilModule } from './server/job/oil/oil.module';
 import { StonkModule } from './server/job/stonk/stonk.module';
+import { UpwModule } from './server/job/upw/upw.module';
 import { PlayerModule } from './server/player/player.module';
 import { RebootModule } from './server/reboot/reboot.module';
 import { RepositoryModule } from './server/repository/repository.module';
@@ -59,6 +60,7 @@ async function bootstrap() {
         OilModule,
         WeaponModule,
         InventoryModule,
+        UpwModule,
         ...PrivateModules
     );
 
