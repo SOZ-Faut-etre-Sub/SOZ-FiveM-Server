@@ -369,6 +369,11 @@ export enum NuiEvent {
     VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
 
+    UpwGetOrders = 'soz-core:client:job:upw:get-orders',
+    UpwOrder = 'soz-core:client:job:upw:order',
+    UpwGetCatalog = 'soz-core:client:job:upw:get-catalog',
+    UpwCancelOrder = 'soz-core:client:job:upw:cancel-order',
+
     GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
     GunSmithPreviewTint = 'soz-core:client:job:gunsmith:preview-tint',
     GunSmithPreviewAnimation = 'soz-core:client:job:gunsmith:preview-animation',

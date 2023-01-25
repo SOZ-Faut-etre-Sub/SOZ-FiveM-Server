@@ -45,7 +45,11 @@ export enum RpcEvent {
 
     INVENTORY_GET_ITEM_BY_SHORTCUT = 'soz-core:inventory:get-item-by-shortcut',
 
-    UPW_GET_FACILITIES = 'soz-core:job:upw:getFacilities',
+    UPW_GET_FACILITIES = 'soz-core:job:upw:get-facilities',
+    UPW_GET_ORDERS = 'soz-core:job:upw:get-orders',
+    UPW_CANCEL_ORDER = 'soz-core:server:job:upw:cancel-order',
+    UPW_ORDER_VEHICLE = 'soz-core:server:job:upw:order-vehicle',
+    UPW_GET_CATALOG = 'soz-core:server:job:upw:get-catalog',
 
     WEAPON_USE_AMMO = 'soz-core:server:weapon:useAmmo',
     WEAPON_SET_LABEL = 'soz-core:server:weapon:setLabel',

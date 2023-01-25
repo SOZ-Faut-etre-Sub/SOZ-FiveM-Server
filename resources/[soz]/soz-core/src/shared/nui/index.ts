@@ -12,6 +12,7 @@ import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiProgressMethodMap } from './progress';
 import { NuiRepairMethodMap } from './repair';
+import { NuiUpwOrderMenuMethodMap } from './upw_order_menu';
 
 export interface NuiGlobalMethodMap {
     PauseMenuActive: boolean;
@@ -22,6 +23,7 @@ export interface NuiMethodMap {
     admin_skin_submenu: NuiAdminSkinSubMenuMethodMap;
     audio: NuiAudioMethodMap;
     bennys_order_menu: NuiBennysOrderMenuMethodMap;
+    upw_order_menu: NuiUpwOrderMenuMethodMap;
     clipboard: NuiClipboardMethodMap;
     ffs_recipe_book: NuiFfsRecipeBookMethodMap;
     global: NuiGlobalMethodMap;
