@@ -102,11 +102,13 @@ function Plant:GetWasteMultiplier(w)
 end
 
 function Plant:ProduceWaste()
-    local waste = self.wastePerMinute * 0.5
+    local waste = self.wastePerMinute
 
     if type(self.wastePerMinute) == "table" then
-        waste = math.random(self.wastePerMinute.min, self.wastePerMinute.max) * 0.5
+        waste = math.random(self.wastePerMinute.min, self.wastePerMinute.max)
     end
+
+    waste = waste * 0.5
 
     self.waste = self.waste + waste
 end
