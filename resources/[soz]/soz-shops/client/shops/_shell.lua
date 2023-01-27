@@ -44,7 +44,7 @@ function ShopShell:ZkeaStock()
 end
 function ShopShell:ZkeaUpgrade()
     return {
-        event = "shops:client:GetZkeaShop",
+        event = "soz-core:client:housing:open-upgrades-menu",
         icon = "fas fa-store",
         label = "Améliorations",
         canInteract = function()

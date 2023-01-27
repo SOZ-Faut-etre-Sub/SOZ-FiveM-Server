@@ -557,6 +557,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     titleWidth?: number;
     description?: string;
     useGrid?: boolean;
+    alignRight?: boolean;
     equalityFn?: (a: any, b: any) => boolean;
 }>;
 
@@ -575,6 +576,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     titleWidth = 40,
     description = null,
     useGrid = false,
+    alignRight = false,
     equalityFn = (a, b) => a === b,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
@@ -594,6 +596,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
 
     const classNameList = cn({
         'ml-4': showAllOptions,
+        'ml-auto': alignRight,
     });
 
     const itemSetDescription = useCallback(

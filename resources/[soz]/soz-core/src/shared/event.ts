@@ -186,6 +186,8 @@ export enum ClientEvent {
 
     FOOD_UPDATE_ORDER = 'soz-core:client:food:update-order',
 
+    HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
+
     IDENTITY_HIDE = 'soz-identity:client:hide',
     ITEM_USE = 'soz-core:client:item:use',
 
@@ -383,4 +385,6 @@ export enum NuiEvent {
 
     DrivingSchoolUpdateVehicleLimit = 'soz-core:client:driving-school:update-vehicle-limit',
     DrivingSchoolCheckVehicleSlots = 'soz-core:client:driving-school:check-vehicle-slots',
+
+    HousingUpgradeApartment = 'soz-core:client:housing:upgrade-apartment',
 }

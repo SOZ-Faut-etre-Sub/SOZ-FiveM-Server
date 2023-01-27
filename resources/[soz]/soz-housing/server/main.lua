@@ -514,14 +514,14 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
             end
         else
             player.Functions.AddMoney("money", price)
-            TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Zkea n'a pas assez de stock", "error")
+            TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock", "error")
         end
     else
         TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
 
-RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(price)
+RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(hasParking, price)
     local player = QBCore.Functions.GetPlayer(source)
 
     if not player then
@@ -532,6 +532,11 @@ RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(price
 
     if not playerData.apartment then
         return
+    end
+
+    local parkingValue = 0
+    if hasParking == true then
+        parkingValue = 1
     end
 
     local playerApartment = playerData.apartment
@@ -554,9 +559,9 @@ RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(price
     end
 
     if player.Functions.RemoveMoney("money", price) then
-        MySQL.update.await("UPDATE housing_apartment SET has_parking_place = ? WHERE id = ?", {1, apartmentId})
-        player.Functions.SetApartmentHasParkingPlace(1)
-        apartment:SetParkingPlace(1)
+        MySQL.update.await("UPDATE housing_apartment SET has_parking_place = ? WHERE id = ?", {parkingValue, apartmentId})
+        player.Functions.SetApartmentHasParkingPlace(parkingValue)
+        apartment:SetParkingPlace(parkingValue)
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
         TriggerClientEvent("hud:client:DrawNotification", playerData.source,
                            "Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$" .. price)

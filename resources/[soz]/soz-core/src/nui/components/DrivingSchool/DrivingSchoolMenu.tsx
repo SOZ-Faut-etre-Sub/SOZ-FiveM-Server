@@ -3,7 +3,7 @@ import { DrivingSchoolConfig, DrivingSchoolMenuData } from "@public/shared/drivi
 import { NuiEvent } from "@public/shared/event";
 import { MenuType } from "@public/shared/nui/menu";
 import { FunctionComponent, useEffect, useState } from "react";
-import { MainMenu, Menu, MenuContent, MenuItemButton, MenuItemSelect, MenuItemSelectOption, MenuItemSelectOptionBox, MenuItemSubMenuLink, MenuTitle, SubMenu } from "../Styleguide/Menu";
+import { MainMenu, Menu, MenuContent, MenuItemButton, MenuItemSelect, MenuItemSelectOptionBox, MenuItemSubMenuLink, MenuTitle, SubMenu } from "../Styleguide/Menu";
 
 type DrivingSchoolMenuProps = {
   data?: DrivingSchoolMenuData;
@@ -72,10 +72,10 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
             title='Niveau'
             showAllOptions
             useGrid
-            onChange={(index, value) => onChange(value)}
+            onChange={(_, value) => onChange(value)}
           >
-            {Object.entries(DrivingSchoolConfig.vehicleLimits).map(([limit, _], index) => (
-              <MenuItemSelectOptionBox key={index} value={parseInt(limit)}>{parseInt(limit)}</MenuItemSelectOptionBox>
+            {Object.entries(DrivingSchoolConfig.vehicleLimits).map(([limit, _]) => (
+              <MenuItemSelectOptionBox key={limit} value={parseInt(limit)}>{parseInt(limit)}</MenuItemSelectOptionBox>
             ))}
           </MenuItemSelect>
           <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
