@@ -1,4 +1,5 @@
 import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
+
 import { On } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -83,7 +84,7 @@ export class DrivingSchoolProvider {
         this.notifier.notify(
             source,
             `Vous venez d'améliorer votre carte grise au niveau ${limit} pour $${price}`,
-            'success',
+            'success'
         );
     }
 
@@ -111,7 +112,7 @@ export class DrivingSchoolProvider {
         this.notifier.notify(
             source,
             `Il vous reste ${limit - playerVehicleCount} place(s) sur votre carte grise`,
-            'info',
+            'info'
         );
     }
 }

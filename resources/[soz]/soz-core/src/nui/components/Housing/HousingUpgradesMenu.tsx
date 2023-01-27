@@ -4,6 +4,7 @@ import { HousingUpgradesMenuData } from '@public/shared/housing/menu';
 import { HousingTiers } from '@public/shared/housing/upgrades';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent, useEffect, useState } from 'react';
+
 import {
     MainMenu,
     Menu,
@@ -94,7 +95,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                         showAllOptions
                         alignRight
                     >
-                        {Object.entries(HousingTiers).map(([tier, _]) => {
+                        {Object.keys(HousingTiers).map(tier => {
                             const value = parseInt(tier);
                             const label = value !== 0 ? value : 'Origine';
                             return (

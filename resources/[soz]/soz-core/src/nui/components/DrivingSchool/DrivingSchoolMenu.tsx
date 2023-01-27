@@ -83,7 +83,7 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
                         useGrid
                         onChange={(_, value) => onChange(value)}
                     >
-                        {Object.entries(DrivingSchoolConfig.vehicleLimits).map(([limit, _]) => (
+                        {Object.keys(DrivingSchoolConfig.vehicleLimits).map(limit => (
                             <MenuItemSelectOptionBox key={limit} value={parseInt(limit)}>
                                 {parseInt(limit)}
                             </MenuItemSelectOptionBox>

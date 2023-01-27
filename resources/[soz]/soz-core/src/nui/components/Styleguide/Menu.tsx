@@ -652,10 +652,11 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                                 }}
                             >
                                 <MenuSelectControls onChange={onChange} initialValue={initialValue}>
-                                    {useGrid
-                                        ? <ul className="grid grid-cols-5 place-items-center">{children}</ul>
-                                        : <ul className="flex">{children}</ul>
-                                    }
+                                    {useGrid ? (
+                                        <ul className="grid grid-cols-5 place-items-center">{children}</ul>
+                                    ) : (
+                                        <ul className="flex">{children}</ul>
+                                    )}
                                 </MenuSelectControls>
                             </div>
                         </div>
