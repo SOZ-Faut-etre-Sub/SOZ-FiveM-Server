@@ -559,7 +559,10 @@ RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(hasPa
     end
 
     if player.Functions.RemoveMoney("money", price) then
-        MySQL.update.await("UPDATE housing_apartment SET has_parking_place = ? WHERE id = ?", {parkingValue, apartmentId})
+        MySQL.update.await("UPDATE housing_apartment SET has_parking_place = ? WHERE id = ?", {
+            parkingValue,
+            apartmentId,
+        })
         player.Functions.SetApartmentHasParkingPlace(parkingValue)
         apartment:SetParkingPlace(parkingValue)
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
