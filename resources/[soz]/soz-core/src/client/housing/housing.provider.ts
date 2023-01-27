@@ -1,13 +1,13 @@
-import { MenuType } from '../../shared/nui/menu';
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { emitQBRpc } from '../../core/rpc';
 import { ClientEvent, NuiEvent } from '../../shared/event';
+import { MenuType } from '../../shared/nui/menu';
+import { RpcEvent } from '../../shared/rpc';
+import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { Notifier } from '../notifier';
-import { emitQBRpc } from '../../core/rpc';
-import { RpcEvent } from '../../shared/rpc';
 
 @Provider()
 export class HousingProvider {

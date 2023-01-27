@@ -1,9 +1,9 @@
-import { MenuType } from '../../shared/nui/menu';
 import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { DrivingSchoolConfig } from '../../shared/driving-school';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { MenuType } from '../../shared/nui/menu';
 import { BlipFactory } from '../blip';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -42,7 +42,7 @@ export class DrivingSchoolProvider {
     }
 
     @OnNuiEvent<{ limit: number; price: number }>(NuiEvent.DrivingSchoolUpdateVehicleLimit)
-    public async updateVehicleLimit({limit, price}) {
+    public async updateVehicleLimit({ limit, price }) {
         TriggerServerEvent(ServerEvent.DRIVING_SCHOOL_UPDATE_VEHICLE_LIMIT, limit, price);
         this.nuiMenu.closeMenu();
     }
@@ -53,16 +53,18 @@ export class DrivingSchoolProvider {
     }
 
     private getTargetOptions(): TargetOptions[] {
-        const targetOptions: TargetOptions[] = [{
-            label: `Carte grise`,
-            icon: 'c:driving-school/voiture.png',
-            blackoutGlobal: true,
-            action: async () => {
-                this.nuiMenu.openMenu(MenuType.DrivingSchool, {
-                    currentVehicleLimit: this.playerService.getPlayer().metadata.vehiclelimit,
-                });
+        const targetOptions: TargetOptions[] = [
+            {
+                label: `Carte grise`,
+                icon: 'c:driving-school/voiture.png',
+                blackoutGlobal: true,
+                action: async () => {
+                    this.nuiMenu.openMenu(MenuType.DrivingSchool, {
+                        currentVehicleLimit: this.playerService.getPlayer().metadata.vehiclelimit,
+                    });
+                },
             },
-        }];
+        ];
         const licensesConfig = DrivingSchoolConfig.licenses;
 
         Object.entries(licensesConfig).forEach(([licenseType, data]) => {
