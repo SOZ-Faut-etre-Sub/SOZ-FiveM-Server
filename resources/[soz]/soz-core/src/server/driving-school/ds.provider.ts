@@ -80,7 +80,11 @@ export class DrivingSchoolProvider {
         this.playerService.save(source);
         this.playerService.updatePlayerData(source);
 
-        this.notifier.notify(source, `Vous venez d'améliorer votre carte grise au niveau ${limit} pour $${price}`, 'success');
+        this.notifier.notify(
+            source,
+            `Vous venez d'améliorer votre carte grise au niveau ${limit} pour $${price}`,
+            'success',
+        );
     }
 
     @On(ServerEvent.DRIVING_SCHOOL_CHECK_VEHICLE_SLOTS)
@@ -104,6 +108,10 @@ export class DrivingSchoolProvider {
             return;
         }
 
-        this.notifier.notify(source, `Il vous reste ${limit - playerVehicleCount} place(s) sur votre carte grise`, 'info');
+        this.notifier.notify(
+            source,
+            `Il vous reste ${limit - playerVehicleCount} place(s) sur votre carte grise`,
+            'info',
+        );
     }
 }
