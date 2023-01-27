@@ -20,7 +20,7 @@ type VehicleStatus = {
     vehicle: number;
 };
 
-const ENGINE_DAMAGE_MULTIPLIER = 5.0;
+const ENGINE_DAMAGE_MULTIPLIER = 6.25;
 const BODY_DAMAGE_MULTIPLIER = 5.0;
 const TANK_DAMAGE_MULTIPLIER = 2.0;
 
@@ -450,7 +450,7 @@ export class VehicleConditionProvider {
         const bodyHealthDiffSharing = bodyHealthDiff * 0.25;
         const tankHealthDiffSharing = tankHealthDiff * 0.25;
 
-        engineHealthDiff += bodyHealthDiffSharing + tankHealthDiffSharing;
+        engineHealthDiff += (bodyHealthDiffSharing + tankHealthDiffSharing) * 1.25;
         bodyHealthDiff += engineHealthDiffSharing + tankHealthDiffSharing;
         tankHealthDiff += (engineHealthDiffSharing + bodyHealthDiffSharing) * 0.4;
 
