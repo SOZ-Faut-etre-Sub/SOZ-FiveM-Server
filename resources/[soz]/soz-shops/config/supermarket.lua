@@ -18,16 +18,6 @@ Config.Products["robsliquor-south"] = Config.Products["supermarket"]
 
 Config.Products["zkea"] = {[1] = {name = "house_map", price = 15, amount = 2000}}
 
-Config.Upgrades = {
-    ["zkea"] = {
-        [0] = {pricePercent = 0, zkeaPrice = 0},
-        [1] = {pricePercent = 20, zkeaPrice = 20},
-        [2] = {pricePercent = 45, zkeaPrice = 45},
-        [3] = {pricePercent = 70, zkeaPrice = 80},
-        [4] = {pricePercent = 100, zkeaPrice = 100},
-    },
-}
-
 Config.Locations["247supermarket-north"] = {
     vector4(1727.7, 6415.4, 35.04, 237.95),
     vector4(1959.84, 3739.86, 32.34, 299.67),
