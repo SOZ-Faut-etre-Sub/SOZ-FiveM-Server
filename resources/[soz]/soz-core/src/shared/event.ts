@@ -83,6 +83,9 @@ export enum ServerEvent {
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
 
+    UPW_CREATE_CHARGER = 'soz-core:server:job:upw:create-charger',
+    UPW_REFILL_STATION = 'soz-core:server:job:upw:refill-station',
+
     AFK_KICK = 'soz-core:server:afk:kick',
 
     // not core
@@ -245,6 +248,7 @@ export enum ClientEvent {
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
 
     UPW_OPEN_CLOAKROOM = 'soz-core:client:job:upw:open-cloakroom',
+    UPW_CREATE_CHARGER = 'soz-core:client:job:upw:create-charger',
 
     RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
 

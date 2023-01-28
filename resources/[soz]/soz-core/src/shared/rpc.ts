@@ -50,6 +50,7 @@ export enum RpcEvent {
     UPW_CANCEL_ORDER = 'soz-core:server:job:upw:cancel-order',
     UPW_ORDER_VEHICLE = 'soz-core:server:job:upw:order-vehicle',
     UPW_GET_CATALOG = 'soz-core:server:job:upw:get-catalog',
+    UPW_GET_STATION = 'soz-core:server:job:upw:get-station',
 
     WEAPON_USE_AMMO = 'soz-core:server:weapon:useAmmo',
     WEAPON_SET_LABEL = 'soz-core:server:weapon:setLabel',

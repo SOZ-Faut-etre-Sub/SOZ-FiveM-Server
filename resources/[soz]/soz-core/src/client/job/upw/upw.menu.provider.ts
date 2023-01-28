@@ -68,7 +68,6 @@ export class UpwMenuProvider {
         this.displayedBlips[blip] = value;
 
         if (blip == 'charger') {
-            await this.upwChargerRepository.load();
             const chargers = this.upwChargerRepository.get();
             for (const charger of Object.values(chargers)) {
                 if (value && !charger.active) {
@@ -81,19 +80,21 @@ export class UpwMenuProvider {
                 const end = GetGameTimer() + 15000;
                 while (GetGameTimer() < end) {
                     for (const charger of Object.values(chargers)) {
-                        const pedPosition = GetEntityCoords(PlayerPedId()) as Vector3;
-                        const distanceToCharger = getDistance(pedPosition, charger.position);
-                        if (distanceToCharger < 100) {
-                            DrawLightWithRange(
-                                charger.position[0],
-                                charger.position[1],
-                                charger.position[2] + 0.5,
-                                0,
-                                229,
-                                255,
-                                1.5,
-                                80.0
-                            );
+                        if (!charger.active) {
+                            const pedPosition = GetEntityCoords(PlayerPedId()) as Vector3;
+                            const distanceToCharger = getDistance(pedPosition, charger.position);
+                            if (distanceToCharger < 100) {
+                                DrawLightWithRange(
+                                    charger.position[0],
+                                    charger.position[1],
+                                    charger.position[2] + 0.5,
+                                    0,
+                                    229,
+                                    255,
+                                    1.5,
+                                    80.0
+                                );
+                            }
                         }
                     }
                     await wait(0);
