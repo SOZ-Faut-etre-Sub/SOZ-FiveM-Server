@@ -352,12 +352,27 @@ export class VehicleDealershipProvider {
         }
 
         if (dealershipId !== DealershipType.Job) {
+            const vehicleModels = (
+                await this.prismaService.vehicle.findMany({
+                    select: {
+                        model: true,
+                    },
+                    where: {
+                        dealershipId: {
+                            not: null,
+                        },
+                    },
+                })
+            ).map(v => v.model);
             const playerVehicleCount = await this.prismaService.playerVehicle.count({
                 where: {
                     citizenid: player.citizenid,
                     job: null,
                     state: {
                         not: PlayerVehicleState.Destroyed,
+                    },
+                    vehicle: {
+                        in: vehicleModels,
                     },
                 },
             });
