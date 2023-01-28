@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
-import { ArchiveIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
+import { ArchiveIcon, PhoneIcon, UserAddIcon, PencilAltIcon } from '@heroicons/react/solid';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
@@ -74,11 +74,15 @@ export const Messages = () => {
         return messagesByDate;
     }, [messages, groupId]);
 
-    const { getDisplayByNumber } = useContact();
+    const { getDisplayByNumber, getIdByNumber } = useContact();
     const { initializeCall } = useCall();
 
     const handleAddContact = number => {
         return navigate(`/contacts/-1/?addNumber=${number}`);
+    };
+
+    const openContactInfo = (phoneNumber: number) => {
+        navigate(`/contacts/${getIdByNumber(phoneNumber)}`);
     };
 
     const handleArchiveConversation = conversation_id => {
@@ -123,6 +127,14 @@ export const Messages = () => {
                                     <UserAddIcon
                                         className="h-6 w-6 cursor-pointer"
                                         onClick={() => handleAddContact(conversation.phoneNumber)}
+                                    />
+                                </Button>
+                            )}
+                            {getDisplayByNumber(conversation.phoneNumber) !== conversation.phoneNumber && (
+                                <Button className="mx-3">
+                                    <PencilAltIcon
+                                        className="h-6 w-6 cursor-pointer"
+                                        onClick={ async () => { await openContactInfo(conversation.phoneNumber);} }
                                     />
                                 </Button>
                             )}

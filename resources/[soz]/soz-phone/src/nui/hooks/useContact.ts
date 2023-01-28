@@ -54,11 +54,19 @@ export const useContact = () => {
         [contacts]
     );
 
+    const getIdByNumber = useCallback(
+        (number: string) => {
+            return contacts.find(contact => contact.number === number)?.id;
+        },
+        [contacts]
+    );
+
     return {
         getDisplayByNumber,
         getPictureByNumber,
         getContacts,
         getContact,
         getFilteredContacts,
+        getIdByNumber,
     };
 };
