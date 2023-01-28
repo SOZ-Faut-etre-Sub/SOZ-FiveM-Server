@@ -218,4 +218,22 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         targets: [],
         products: [{ id: 'microphone', type: 'item', price: 50 }],
     },
+    {
+        name: 'upw',
+        job: JobType.Upw,
+        zone: {
+            center: [604.99, 2750.29, 40.85],
+            length: 0.8,
+            width: 0.6,
+            heading: 0,
+            minZ: 40.85,
+            maxZ: 42.85,
+        },
+        targets: [],
+        products: [
+            { id: 'car_charger', type: 'item', price: 240000 },
+            { id: 'lithium_battery', type: 'item', price: 5000 },
+            { id: 'car_portable_battery', type: 'item', price: 1000 },
+        ],
+    },
 ];
