@@ -2,7 +2,6 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
-import { JobType } from '../../shared/job';
 import { BlipFactory } from '../blip';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { RadarRepository } from '../resources/radar.repository';
@@ -66,21 +65,19 @@ export class VehicleRadarProvider {
     }
 
     @OnEvent(ClientEvent.RADAR_TOGGLE_BLIP)
-    public async toggleBlip(value: boolean, job: JobType) {
+    public async toggleBlip(value: boolean) {
         for (const radarID in this.radarRepository.get()) {
             const radar = this.radarRepository.find(radarID);
-            if (radar.station == job) {
-                if (!this.blipFactory.exist('police_radar_' + radarID)) {
-                    this.blipFactory.create('police_radar_' + radarID, {
-                        name: 'Radar',
-                        coords: { x: radar.props[0], y: radar.props[1], z: radar.props[2] },
-                        sprite: 184,
-                        scale: 0.5,
-                    });
-                }
-
-                this.blipFactory.hide('police_radar_' + radarID, !value);
+            if (!this.blipFactory.exist('police_radar_' + radarID)) {
+                this.blipFactory.create('police_radar_' + radarID, {
+                    name: 'Radar',
+                    coords: { x: radar.props[0], y: radar.props[1], z: radar.props[2] },
+                    sprite: 184,
+                    scale: 0.5,
+                });
             }
+
+            this.blipFactory.hide('police_radar_' + radarID, !value);
         }
     }
 
