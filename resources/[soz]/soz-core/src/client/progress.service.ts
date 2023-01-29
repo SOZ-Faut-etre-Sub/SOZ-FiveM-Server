@@ -1,11 +1,19 @@
 import PCancelable from 'p-cancelable';
 
-import { Injectable } from '../core/decorators/injectable';
+import { Inject, Injectable } from '../core/decorators/injectable';
 import { wait } from '../core/utils';
 import { animationOptionsToFlags, ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
+import { AnimationService } from './animation/animation.service';
+import { Notifier } from './notifier';
 
 @Injectable()
 export class ProgressService {
+    @Inject(AnimationService)
+    private animationService: AnimationService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     public async progress(
         name: string,
         label: string,
@@ -19,6 +27,11 @@ export class ProgressService {
             disableCombat: true,
             ...options,
         };
+
+        if (this.isDoingAction()) {
+            this.notifier.notify('Une action est déjà en cours !', 'error');
+            return { completed: false, progress: 0 };
+        }
 
         if (options.headingEntity) {
             TaskTurnPedToFaceEntity(PlayerPedId(), options.headingEntity.entity, 1000);
@@ -40,11 +53,44 @@ export class ProgressService {
             promiseResolve = resolve;
 
             onCancel(() => {
-                TriggerEvent('progressbar:client:cancel');
+                this.cancel();
             });
         });
 
-        exports['progressbar'].Progress(
+        if (options.useAnimationService && animation) {
+            if (animation.task) {
+                this.animationService.playScenario({ name: animation.task }).then((cancelled: boolean) => {
+                    if (cancelled) {
+                        this.cancel();
+                    }
+                });
+            } else {
+                this.animationService
+                    .playAnimation(
+                        {
+                            base: {
+                                dictionary: animation.dictionary,
+                                name: animation.name,
+                                blendInSpeed: animation.blendInSpeed,
+                                blendOutSpeed: animation.blendOutSpeed,
+                                playbackRate: animation.playbackRate,
+                                options: animation.options,
+                            },
+                        },
+                        {
+                            reset_weapon: false,
+                        }
+                    )
+                    .then((cancelled: boolean) => {
+                        if (cancelled) {
+                            this.cancel();
+                        }
+                    });
+            }
+            animation = null;
+        }
+
+        exports['progressbar'].ProgressWithStartAndTick(
             {
                 name: name.toLowerCase(),
                 duration,
@@ -67,8 +113,14 @@ export class ProgressService {
                     : null,
                 prop: options.firstProp || {},
                 propTwo: options.secondProp || {},
+                no_inv_busy: options.no_inv_busy,
             },
+            options.start,
+            options.tick,
             (cancelled: boolean) => {
+                if (options.useAnimationService) {
+                    this.animationService.stop();
+                }
                 if (cancelled) {
                     const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
 
