@@ -14,6 +14,7 @@ import { VehicleStateService } from '../vehicle/vehicle.state.service';
 import { ItemService } from './item.service';
 
 export const JERRYCAN_FUEL_AMOUNT = 30;
+export const BATTERY_FUEL_AMOUNT = 33;
 
 @Provider()
 export class ItemFuelProvider {
@@ -49,7 +50,11 @@ export class ItemFuelProvider {
 
         const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
 
-        if (vehicleType === 'heli' || vehicleType === 'plane') {
+        if (
+            vehicleType === 'heli' ||
+            vehicleType === 'plane' ||
+            isVehicleModelElectric(GetEntityModel(closestVehicle.vehicleEntityId))
+        ) {
             this.notifier.notify(source, 'Vous ne pouvez pas utiliser ce carburant pour ce véhicule.', 'error');
 
             return;
@@ -221,10 +226,142 @@ export class ItemFuelProvider {
         this.notifier.notify(source, "Vous avez ~g~utilisé~s~ un bidon d'huile.", 'success');
     }
 
+    public async useLithiumBattery(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
+
+        if (!closestVehicle) {
+            this.notifier.notify(source, 'Aucun véhicule à proximité');
+
+            return;
+        }
+
+        if (!isVehicleModelElectric(GetEntityModel(closestVehicle.vehicleEntityId))) {
+            this.notifier.notify(source, "Ce véhicule n'a pas de batterie Lithium-ion", 'error');
+            return;
+        }
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'battery_change',
+            'Changement de la batterie...',
+            10000,
+            {
+                name: 'car_bomb_mechanic',
+                dictionary: 'mp_car_bomb',
+                options: {
+                    onlyUpperBody: true,
+                    repeat: true,
+                },
+            },
+            {
+                disableMovement: true,
+                disableCarMovement: true,
+                disableCombat: true,
+                disableMouse: false,
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
+
+        if (!this.inventoryManager.addItemToInventory(source, 'empty_lithium_battery', 1).success) {
+            this.notifier.notify(source, 'Vous êtes ~r~trop chargé~s~ pour récupérer la batterie vide.', 'error');
+            return;
+        }
+
+        if (
+            !this.inventoryManager.removeItemFromInventory(
+                source,
+                item.name,
+                1,
+                inventoryItem.metadata,
+                inventoryItem.slot
+            )
+        ) {
+            return;
+        }
+
+        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+            oilLevel: 100,
+        });
+
+        this.notifier.notify(source, 'Vous avez ~g~changé~s~ la batterie du véhicule.', 'success');
+    }
+
+    public async usePortableBattery(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
+
+        if (!closestVehicle) {
+            this.notifier.notify(source, 'Aucun véhicule à proximité');
+
+            return;
+        }
+
+        if (!isVehicleModelElectric(GetEntityModel(closestVehicle.vehicleEntityId))) {
+            this.notifier.notify(source, "Ce véhicule ne roule pas à l'éléctrique", 'error');
+            return;
+        }
+
+        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+
+        if (vehicleState.condition.fuelLevel >= 67) {
+            this.notifier.notify(
+                source,
+                'La batterie est ~r~trop chargée~s~ pour utiliser batterie portable.',
+                'error'
+            );
+
+            return;
+        }
+
+        if (
+            !this.inventoryManager.removeItemFromInventory(
+                source,
+                item.name,
+                1,
+                inventoryItem.metadata,
+                inventoryItem.slot
+            )
+        ) {
+            return;
+        }
+
+        const { progress } = await this.progressService.progress(
+            source,
+            'recharger_battery',
+            'Rechargement de la batterie...',
+            10000,
+            {
+                dictionary: 'timetable@gardener@filling_can',
+                name: 'gar_ig_5_filling_can',
+            },
+            {
+                disableMovement: true,
+                disableCarMovement: true,
+                disableCombat: true,
+                disableMouse: false,
+            }
+        );
+
+        const filledFuel = Math.round(progress * BATTERY_FUEL_AMOUNT);
+        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+            fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
+        });
+
+        this.notifier.notify(source, 'Vous avez ~g~rechargé~s~ la batterie du véhicule.', 'success');
+    }
+
     @Once()
-    public onStart() {
+    public async onStart() {
         this.item.setItemUseCallback('essence_jerrycan', this.useEssenceJerrycan.bind(this));
         this.item.setItemUseCallback('kerosene_jerrycan', this.useKeroseneJerrycan.bind(this));
         this.item.setItemUseCallback('oil_jerrycan', this.useOilJerrycan.bind(this));
+        this.item.setItemUseCallback('lithium_battery', this.useLithiumBattery.bind(this));
+        this.item.setItemUseCallback('car_portable_battery', this.usePortableBattery.bind(this));
     }
 }

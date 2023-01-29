@@ -85,6 +85,7 @@ export enum ServerEvent {
 
     UPW_CREATE_CHARGER = 'soz-core:server:job:upw:create-charger',
     UPW_REFILL_STATION = 'soz-core:server:job:upw:refill-station',
+    UPW_CHANGE_BATTERY = 'soz-core:server:job:upw:change-battery',
 
     AFK_KICK = 'soz-core:server:afk:kick',
 
