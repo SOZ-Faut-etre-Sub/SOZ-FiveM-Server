@@ -9,4 +9,5 @@ export type RepairAnalyze = {
     condition: VehicleCondition;
     doors: number[];
     windows: boolean[];
+    isElectric: boolean;
 };

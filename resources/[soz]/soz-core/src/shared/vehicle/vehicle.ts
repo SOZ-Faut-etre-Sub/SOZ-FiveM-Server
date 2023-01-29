@@ -232,6 +232,7 @@ export const VehicleMaxStock: Record<keyof typeof VehicleCategory, number> = {
     Vans: 6,
     Openwheel: 0,
     Muscle: 3,
+    Electric: 6, // I don't know what this is.
 };
 
 export enum VehicleCategory {
@@ -258,4 +259,24 @@ export enum VehicleCategory {
     Trains = 'Trains',
     Utility = 'Utilitaires',
     Vans = 'Vans',
+    Electric = 'Electriques',
 }
+
+export const VehicleElectricModels: Record<number, string> = {
+    [-1130810103]: 'Dilettante',
+    [544021352]: 'Khamelion',
+    [-1894894188]: 'Surge',
+    [-1622444098]: 'Voltic',
+    [1392481335]: 'Cyclone',
+    [-1848994066]: 'Neon',
+    [-1529242755]: 'Raiden',
+    [1031562256]: 'Tezeract',
+    [-1132721664]: 'Imorgon',
+    [662793086]: 'IWagen',
+    [-505223465]: 'Omnis e-GT',
+    [1147287684]: 'Caddy',
+};
+
+export const isVehicleModelElectric = (model: number): boolean => {
+    return VehicleElectricModels[model] != null;
+};

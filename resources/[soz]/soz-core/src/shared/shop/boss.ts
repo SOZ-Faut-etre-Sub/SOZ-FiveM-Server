@@ -233,7 +233,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         products: [
             { id: 'car_charger', type: 'item', price: 240000 },
             { id: 'lithium_battery', type: 'item', price: 5000 },
-            { id: 'car_portable_battery', type: 'item', price: 1000 },
+            { id: 'car_portable_battery', type: 'item', price: 2500 },
         ],
     },
 ];

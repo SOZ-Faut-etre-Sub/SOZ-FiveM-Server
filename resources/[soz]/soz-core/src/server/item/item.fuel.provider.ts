@@ -1,3 +1,5 @@
+import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
+
 import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -170,6 +172,11 @@ export class ItemFuelProvider {
         if (!closestVehicle) {
             this.notifier.notify(source, 'Aucun véhicule à proximité');
 
+            return;
+        }
+
+        if (isVehicleModelElectric(GetEntityModel(closestVehicle.vehicleEntityId))) {
+            this.notifier.notify(source, "Ce véhicule n'a pas besoin d'huile, il est éléctrique !", 'error');
             return;
         }
 

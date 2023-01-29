@@ -1,3 +1,5 @@
+import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
+
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -198,6 +200,10 @@ export class BennysVehicleProvider {
                     }
 
                     if (!this.isInsideUpgradeZoneOrNearRepairVehicle()) {
+                        return false;
+                    }
+
+                    if (isVehicleModelElectric(GetEntityModel(entity))) {
                         return false;
                     }
 
@@ -450,6 +456,7 @@ export class BennysVehicleProvider {
         }
 
         const state = this.vehicleService.getVehicleState(vehicle);
+        const model = GetEntityModel(vehicle);
 
         const doorExist = [];
 
@@ -474,6 +481,7 @@ export class BennysVehicleProvider {
             condition: state.condition,
             doors: doorExist,
             windows: windowExist,
+            isElectric: isVehicleModelElectric(model),
         });
     }
 }
