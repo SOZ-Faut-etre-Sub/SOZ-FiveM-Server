@@ -492,6 +492,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.UPW.Order] = {label = "Commander des véhicules éléctriques"},
+            [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"}
         },
         bossZones = {
             {

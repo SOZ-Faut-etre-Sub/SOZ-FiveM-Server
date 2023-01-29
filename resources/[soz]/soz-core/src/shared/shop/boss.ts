@@ -223,11 +223,12 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         job: JobType.Upw,
         zone: {
             center: [604.99, 2750.29, 40.85],
-            length: 0.8,
-            width: 0.6,
+            length: 1.0,
+            width: 1.0,
             heading: 0,
             minZ: 40.85,
             maxZ: 42.85,
+            debugPoly: false,
         },
         targets: [],
         products: [
