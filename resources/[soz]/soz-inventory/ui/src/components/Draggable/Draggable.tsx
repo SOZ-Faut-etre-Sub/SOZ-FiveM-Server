@@ -3,8 +3,9 @@ import React, { FunctionComponent, useCallback, useEffect, useRef, useState } fr
 import { InventoryItem } from '../../types/inventory';
 import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
-import keyIcon from '/icon/key.png';
+import apartmentKeyIcon from '/icon/apartment_key.png';
 import moneyIcon from '/icon/money.png';
+import vehicleKeyIcon from '/icon/vehicle_key.png';
 import { clsx } from 'clsx';
 import { WeaponAmmo } from '../../types/weapon';
 import { createPortal } from 'react-dom';
@@ -121,6 +122,13 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
     const itemIcon = useCallback((item: InventoryItem) => {
         let path = item.name
 
+        if (item.name === 'vehicle_key') {
+            return vehicleKeyIcon;
+        }
+        if (item.name === 'apartment_key') {
+            return apartmentKeyIcon;
+        }
+
         if (item.name === 'outfit' || item.name === 'armor') {
             path += `_${item.metadata?.type}`
         } else if (item.name === 'cabinet_zkea') {
@@ -140,7 +148,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 <img
                 alt=""
                 className={style.Icon}
-                src={item.type === 'key' ? keyIcon : itemIcon(item)}
+                src={itemIcon(item)}
                 onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
             />
             </DragOverlay>, document.body
@@ -175,7 +183,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                         <img
                             alt=""
                             className={style.Icon}
-                            src={item.type === 'key' ? keyIcon : itemIcon(item)}
+                            src={itemIcon(item)}
                             onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
                         />
                     </>

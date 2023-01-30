@@ -4,7 +4,7 @@ RegisterNetEvent("inventory:client:openPlayerKeyInventory", function(vehicleKeys
     for _, plate in pairs(vehicleKeys) do
         playerKeys[#playerKeys + 1] = {
             type = "key",
-            name = "handcuffs_key", -- Used for icon
+            name = "vehicle_key", -- Used for icon
             label = "Véhicule " .. plate,
             target = "vehicle_key",
             plate = plate,
@@ -16,7 +16,7 @@ RegisterNetEvent("inventory:client:openPlayerKeyInventory", function(vehicleKeys
         for apartmentId, apartment in pairs(properties) do
             playerKeys[#playerKeys + 1] = {
                 type = "key",
-                name = "handcuffs_key", -- Used for icon
+                name = "apartment_key", -- Used for icon
                 label = "Appartement " .. apartment.label,
                 target = "apartment_access",
                 propertyId = propertyId,
