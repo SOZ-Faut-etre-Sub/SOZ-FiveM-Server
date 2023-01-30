@@ -418,6 +418,8 @@ model investigation {
   citizenid              String                   @db.VarChar(255)
   service                String                   @db.VarChar(255)
   title                  String                   @db.VarChar(128)
+  type                   report_type              @default(investigation)
+  isTemplate             Boolean?                 @default(false)
   closed                 Boolean?                 @default(false)
   granted                String?                  @db.LongText
   granted_services       String?                  @db.LongText
@@ -521,4 +523,10 @@ model halloween_pumpkin_hunt {
   hunted_at DateTime @default(now()) @db.Timestamp(0)
 
   @@index([citizenid], map: "citizenid")
+}
+
+enum report_type {
+  investigation
+  report
+  complaint
 }
