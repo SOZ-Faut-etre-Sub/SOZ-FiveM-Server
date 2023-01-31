@@ -4,6 +4,7 @@ import { VehicleCommandProvider } from './vehicle.command.provider';
 import { VehicleConditionProvider } from './vehicle.condition.provider';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleDealershipProvider } from './vehicle.dealership.provider';
+import { VehicleElectricProvider } from './vehicle.electric.provider';
 import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
 import { VehicleKeysProvider } from './vehicle.keys.provider';
@@ -30,6 +31,7 @@ import { VehicleSpawner } from './vehicle.spawner';
         VehicleService,
         VehicleSpawner,
         VehicleRadarProvider,
+        VehicleElectricProvider,
     ],
 })
 export class VehicleModule {}
