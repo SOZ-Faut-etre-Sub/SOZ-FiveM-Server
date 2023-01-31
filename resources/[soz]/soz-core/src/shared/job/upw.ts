@@ -16,13 +16,12 @@ export type UpwOrder = {
 
 const orderZone: NamedZone = {
     name: 'upw_order',
-    // Same place of duty
-    center: [582.72, 2756.97, 41.86],
-    length: 0.4,
-    width: 0.3,
-    minZ: 42.1,
-    maxZ: 42.6,
-    heading: 4,
+    center: [609.3484, 2759.589, 40.85264],
+    length: 1.15,
+    width: 2.5,
+    minZ: 41.7,
+    maxZ: 42.25,
+    heading: 365,
     debugPoly: false,
 };
 
