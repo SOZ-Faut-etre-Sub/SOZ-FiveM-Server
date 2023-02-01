@@ -5404,4 +5404,16 @@ QBShared.Items = {
         ['useable'] = false,
         ['description'] = 'Gel combustible',
     },
+    ['lsmc_calendar_2023'] = {
+        ['name'] = 'lsmc_calendar_2023',
+        ['label'] = 'Calendrier du LSMC 2023',
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Ne laissez pas les accidents vous prendre de court pour 2023',
+        ['illustrator'] = '.NariieL',
+    },
 }

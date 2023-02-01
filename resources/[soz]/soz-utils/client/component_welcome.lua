@@ -13,3 +13,8 @@ RegisterNetEvent("soz-utils:health-book", function()
     SendNUIMessage({action = "show-health"})
     SetNuiFocus(true, true)
 end)
+
+RegisterNetEvent("soz-utils:lsmc-calender-2023", function()
+    SendNUIMessage({action = "show-lsmc-calendar-2023"})
+    SetNuiFocus(true, true)
+end)
