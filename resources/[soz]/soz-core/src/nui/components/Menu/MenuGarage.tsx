@@ -108,7 +108,7 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
                 <>
                     {data.vehicles.map(garageVehicle => {
                         const name = garageVehicle.vehicle.label
-                            ? `${garageVehicle.vehicle.label} | ${garageVehicle.vehicle.plate}`
+                            ? `${garageVehicle.vehicle.label} | ${garageVehicle.name} | ${garageVehicle.vehicle.plate}`
                             : `${garageVehicle.name} | ${garageVehicle.vehicle.plate}`;
 
                         return (
@@ -140,7 +140,7 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
                 <>
                     {data.vehicles.map(garageVehicle => {
                         const name = garageVehicle.vehicle.label
-                            ? `${garageVehicle.vehicle.label} | ${garageVehicle.vehicle.plate}`
+                            ? `${garageVehicle.vehicle.label} | ${garageVehicle.name} | ${garageVehicle.vehicle.plate}`
                             : `${garageVehicle.name} | ${garageVehicle.vehicle.plate}`;
 
                         if (
