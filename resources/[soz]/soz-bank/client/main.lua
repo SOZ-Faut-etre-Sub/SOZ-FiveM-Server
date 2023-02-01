@@ -320,7 +320,7 @@ RegisterNetEvent("banking:client:qTargetOpenSafe", function(data)
             if isAllowed then
                 OpenSafeStorageMenu(data.SafeId, money, black_money)
             else
-                exports["soz-hud"]:DrawNotification("Vous n'avez pas accès a ce coffre", "error")
+                exports["soz-hud"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
             end
         end, data.SafeId)
     end
@@ -331,7 +331,7 @@ RegisterNetEvent("banking:client:openHouseSafe", function(houseid)
         if isAllowed then
             OpenHouseSafeStorageMenu(houseid, money, black_money)
         else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas accès a ce coffre", "error")
+            exports["soz-hud"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
         end
     end, houseid)
 end)

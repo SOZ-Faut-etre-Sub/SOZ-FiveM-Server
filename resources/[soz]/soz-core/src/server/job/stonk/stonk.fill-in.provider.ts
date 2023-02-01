@@ -58,7 +58,7 @@ export class StonkFillInProvider {
                 JobPermission.CashTransfer_FillIn
             )
         ) {
-            this.notifier.notify(source, `Vous n'avez pas les accreditations nécessaires.`, 'error');
+            this.notifier.notify(source, `Vous n'avez pas les accréditations nécessaires.`, 'error');
             return;
         }
 

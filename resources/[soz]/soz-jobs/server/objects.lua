@@ -13,7 +13,7 @@ RegisterNetEvent("job:server:placeProps", function(item, props, rotation, offset
         exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, item, 1)
         TriggerClientEvent("job:client:AddObject", Player.PlayerData.source, GetHashKey(props), rotation, offset)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne possèder pas cette objet.", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne possédez pas cet objet.", "error")
     end
 end)
 

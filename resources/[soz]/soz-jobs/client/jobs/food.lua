@@ -290,7 +290,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
     for ingId, count in pairs(ingredients) do
         local ingredient = QBCore.Shared.Items[ingId]
         if ingredient == nil then
-            exports["soz-hud"]:DrawNotification("Ingérdient invalide", "error")
+            exports["soz-hud"]:DrawNotification("Ingrédient invalide", "error")
             return
         end
         local countInInv = FoodJob.Functions.GetItemCountFromInventory(ingId) or 0

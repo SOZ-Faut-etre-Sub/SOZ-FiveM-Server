@@ -899,7 +899,7 @@ export class Halloween2022Scenario4Provider {
                     icon: 'fas fa-question',
                     action: async () => {
                         this.notifier.notify(
-                            "J'suis encore en retard dans mes corrections... Hein, quoi? Oui, je viendrai tester plus tard... Mais pas besoin, l'évent a été fantastique, non?",
+                            "J'suis encore en retard dans mes corrections... Hein, quoi? Oui, je viendrai tester plus tard... Mais pas besoin, l'event a été fantastique, non?",
                             'info'
                         );
                     },
@@ -1589,7 +1589,7 @@ export class Halloween2022Scenario4Provider {
                     label: 'Brouznouf',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify("Il parait qu'il y a un fantôme qui sort son téléphone au BCSO ?", 'info');
+                        this.notifier.notify("Il paraît qu'il y a un fantôme qui sort son téléphone au BCSO ?", 'info');
                     },
                 },
             ]
@@ -1804,7 +1804,7 @@ export class Halloween2022Scenario4Provider {
                     icon: 'fas fa-question',
                     action: async () => {
                         this.notifier.notify(
-                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            "... Prononce un truc incompréhensible mais ça avait l'air intéressant ...",
                             'info'
                         );
                     },
@@ -1910,7 +1910,7 @@ export class Halloween2022Scenario4Provider {
                     icon: 'fas fa-question',
                     action: async () => {
                         this.notifier.notify(
-                            "... Prononce un truc incompréhensible mais ca avait l'air intéressant ...",
+                            "... Prononce un truc incompréhensible mais ça avait l'air intéressant ...",
                             'info'
                         );
                     },
@@ -2128,7 +2128,7 @@ export class Halloween2022Scenario4Provider {
                     icon: 'fas fa-question',
                     action: async () => {
                         this.notifier.notify(
-                            "En tant que fier  Sheriff du BCSO, je n'ai résolu aucune enquête.",
+                            "En tant que fier Sheriff du BCSO, je n'ai résolu aucune enquête.",
                             'info'
                         );
                     },

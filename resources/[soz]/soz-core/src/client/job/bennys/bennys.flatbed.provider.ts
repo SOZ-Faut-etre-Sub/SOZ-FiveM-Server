@@ -407,7 +407,7 @@ export class BennysFlatbedProvider {
         }
 
         if (Entity(vehicle).state.flatbedAttachedVehicle) {
-            this.notifier.notify('Les chateaux de flatbed sont interdits, merci de prendre un jeu de carte.', 'error');
+            this.notifier.notify('Les châteaux de flatbed sont interdits, merci de prendre un jeu de cartes.', 'error');
 
             return;
         }

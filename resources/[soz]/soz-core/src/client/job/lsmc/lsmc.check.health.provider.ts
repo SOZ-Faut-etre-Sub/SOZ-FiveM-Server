@@ -68,7 +68,7 @@ export class LSMCCheckHealthProvider {
                         `Valeur incorrecte, doit être entre ${HealthBookMinMax[field].min} et ${HealthBookMinMax[field].max}`
                     );
                 } else if (!HealthBookMinMax[field].max && number < HealthBookMinMax[field].min) {
-                    return Err(`Valeur incorrecte, doit être supérieur à ${HealthBookMinMax[field].min}`);
+                    return Err(`Valeur incorrecte, doit être supérieure à ${HealthBookMinMax[field].min}`);
                 }
 
                 return Ok(true);

@@ -162,7 +162,7 @@ export class PlayerDiseaseProvider {
 
         if (disease === 'dyspepsie') {
             this.notifier.notify(
-                "Tu as l'impression de mal digérer ! consulte un médecin au plus vite ou prend une gélule d'antiacide."
+                "Tu as l'impression de mal digérer ! Consulte un médecin au plus vite ou prend une gélule d'antiacide."
             );
             this.currentDiseaseLoop = this.dyspepsiaLoop();
         }

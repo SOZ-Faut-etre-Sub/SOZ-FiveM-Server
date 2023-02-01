@@ -270,7 +270,7 @@ RegisterServerEvent("job:grade:add-permission", function(id, permission)
         ["@id"] = id,
         ["@permissions"] = json.encode(newPermissions),
     })
-    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été ajouté !")
+    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été ajoutée !")
     SynchroniseJob()
 end)
 
@@ -310,6 +310,6 @@ RegisterServerEvent("job:grade:remove-permission", function(id, permission)
         ["@id"] = id,
         ["@permissions"] = json.encode(newPermissions),
     })
-    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été supprimé !")
+    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été supprimée !")
     SynchroniseJob()
 end)

@@ -35,7 +35,7 @@ local function PropsEntity(menu)
         label = "Poser un objet",
         value = nil,
         values = {
-            {label = "Cone de circulation", value = {item = "cone", props = "prop_air_conelight", offset = -0.15}},
+            {label = "Cône de circulation", value = {item = "cone", props = "prop_air_conelight", offset = -0.15}},
             {label = "Barrière", value = {item = "police_barrier", props = "prop_barrier_work05"}},
             {label = "Herse", value = {item = "spike"}},
         },
@@ -238,7 +238,7 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
             select = function()
                 local title = exports["soz-hud"]:Input("Titre", 200)
                 if title == nil or title == "" then
-                    exports["soz-hud"]:DrawNotification("Vous devez spécifier un title", "error")
+                    exports["soz-hud"]:DrawNotification("Vous devez spécifier un titre", "error")
                     return
                 end
 
@@ -355,7 +355,7 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
                     values = sliderPoints,
                     select = function(item)
                         local ped = PlayerPedId()
-                        QBCore.Functions.Progressbar("job:police:license", "Retrais de points en cours...", 5000, false, true,
+                        QBCore.Functions.Progressbar("job:police:license", "Retrait de points en cours...", 5000, false, true,
                                                      {
                             disableMovement = false,
                             disableCarMovement = true,

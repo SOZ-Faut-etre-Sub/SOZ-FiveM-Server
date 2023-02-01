@@ -181,7 +181,7 @@ const craftZones: NamedZone[] = [
 
 const craftProcesses: Process[] = [
     {
-        label: '👕 Haut en fibre naturelle',
+        label: '👕 Haut en fibres naturelles',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
@@ -194,7 +194,7 @@ const craftProcesses: Process[] = [
         },
     },
     {
-        label: '👕 Haut en fibre artificielle',
+        label: '👕 Haut en fibres artificielles',
         inputs: [
             {
                 id: FabricMaterial.ARTIFICIAL_FIBER,
@@ -299,7 +299,7 @@ const luxuryCraftZones: NamedZone[] = [
 
 const luxuryCraftProcesses: Process[] = [
     {
-        label: '👕 Haut luxueux en fibre naturelle',
+        label: '👕 Haut luxueux en fibres naturelles',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
@@ -312,7 +312,7 @@ const luxuryCraftProcesses: Process[] = [
         },
     },
     {
-        label: '👕 Haut luxueux en fibre artificielle',
+        label: '👕 Haut luxueux en fibres artificielles',
         inputs: [
             {
                 id: FabricMaterial.ARTIFICIAL_FIBER,

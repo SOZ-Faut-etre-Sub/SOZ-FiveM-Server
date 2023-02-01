@@ -177,7 +177,7 @@ RegisterNUICallback("doTransfer", function(data, cb)
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransferMoney", function(success, reason)
             if success then
-                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Transfert: ~r~" .. amount .. "$", "Vous avez transférer de l'argent sur un compte",
+                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Transfert: ~r~" .. amount .. "$", "Vous avez transféré de l'argent sur un compte",
                                                             "CHAR_BANK_MAZE")
             else
                 exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")

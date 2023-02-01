@@ -39,7 +39,7 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:refillTanker", function(sour
 
     exports["soz-inventory"]:AddItem("trunk_" .. tankerPlate, item, quantity, nil, nil, function(success, _)
         if success then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez ~g~remplis~s~ %dL de pétrole"):format(quantity))
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez ~g~rempli~s~ %dL de pétrole"):format(quantity))
 
             TriggerEvent("monitor:server:event", "job_mtp_fill_oil_tanker", {player_source = Player.PlayerData.source},
                          {

@@ -163,7 +163,7 @@ export class RebootProvider {
             `${ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST}:${uuidv4()}`,
             {
                 type: `reboot_${minutes}`,
-                message: `Un ouragan arrive à toute allure ! Il devrait frapper la coeur de San Andreas d'ici ${minutes} minutes. Veillez ranger vos véhicules et vous abriter ! Votre sécurité est primordiale.`,
+                message: `Un ouragan arrive à toute allure ! Il devrait frapper le coeur de San Andreas d'ici ${minutes} minutes. Veuillez ranger vos véhicules et vous abriter ! Votre sécurité est primordiale.`,
                 reporter: 'San Andreas Météo',
             }
         );

@@ -161,7 +161,7 @@ export class VehicleCustomProvider {
 
         if (usePricing && (!vehicle || !vehicle.price)) {
             this.notifier.notify(
-                "Cette voiture n'est pas enregistré auprès des autorités et ne peut donc pas être modifiée, veuillez prendre contact avec les autorités.",
+                "Ce véhicule n'est pas enregistré auprès des autorités et ne peut donc pas être modifié, veuillez prendre contact avec les autorités.",
                 'error'
             );
 
@@ -199,7 +199,7 @@ export class VehicleCustomProvider {
 
         if (!vehicle || !vehicle.price) {
             this.notifier.notify(
-                "Cette voiture n'est pas enregistré auprès des autorités et ne peut donc pas être modifiée, veuillez prendre contact avec les autorités.",
+                "Ce véhicule n'est pas enregistré auprès des autorités et ne peut donc pas être modifié, veuillez prendre contact avec les autorités.",
                 'error'
             );
 

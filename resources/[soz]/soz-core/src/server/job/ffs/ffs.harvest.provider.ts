@@ -39,7 +39,7 @@ export class FightForStyleHarvestProvider {
         if (!this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1)) {
             this.notifier.notify(
                 source,
-                `Vous ne possédez suffisamment pas de place dans votre inventaire pour récolter.`
+                `Vous ne possédez pas suffisamment de place dans votre inventaire pour récolter.`
             );
             return;
         }

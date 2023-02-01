@@ -84,7 +84,7 @@ export const BankHome = memo(() => {
                         'text-black': config.theme.value === 'light',
                     })}
                 >
-                    Paramètre de la carte
+                    Paramètres de la carte
                 </h2>
 
                 <Checkbox title="Activer les retraits distributeurs" enabled={true} />

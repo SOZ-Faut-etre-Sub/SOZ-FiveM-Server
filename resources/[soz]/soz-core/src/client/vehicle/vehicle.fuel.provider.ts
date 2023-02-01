@@ -585,7 +585,7 @@ export class VehicleFuelProvider {
         );
 
         if (completed) {
-            this.notifier.notify(`Status de la cuve: ~b~${refreshStation.stock}L`, 'success');
+            this.notifier.notify(`Statut de la cuve: ~b~${refreshStation.stock}L`, 'success');
         }
     }
 

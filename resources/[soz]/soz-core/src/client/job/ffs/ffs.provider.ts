@@ -110,7 +110,7 @@ export class FightForStyleProvider {
             scale: 1.2,
         });
         this.blipFactory.create('ffs_cotton_bale', {
-            name: 'Point de récolte de balle de coton',
+            name: 'Point de récolte de balles de coton',
             coords: { x: 2564.11, y: 4680.59, z: 34.08 },
             sprite: 808,
             scale: 0.9,

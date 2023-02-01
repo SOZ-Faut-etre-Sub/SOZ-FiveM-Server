@@ -54,7 +54,7 @@ export class StonkCollectProvider {
                 JobPermission.CashTransfer_CollectBags
             )
         ) {
-            this.notifier.notify(source, `Vous n'avez pas les accreditations nécessaires.`, 'error');
+            this.notifier.notify(source, `Vous n'avez pas les accréditations nécessaires.`, 'error');
             return;
         }
 
@@ -67,7 +67,7 @@ export class StonkCollectProvider {
         }
 
         if (!this.canCollect(source, brand, shop, item)) {
-            this.notifier.notify(source, `Ce magasin n'a plus de sac actuellement !`, 'error');
+            this.notifier.notify(source, `Ce magasin n'a plus de sacs actuellement !`, 'error');
             return;
         }
 

@@ -6,7 +6,7 @@ local function CreateBodyMenuItems(bodyMenu, playerId, skin)
         skin.FaceTrait.Ageing = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateSliderList(bodyMenu, "Taches sur le visage", skin.FaceTrait.Blemish, Labels.Blemish, function(value)
+    CreateSliderList(bodyMenu, "Tâches sur le visage", skin.FaceTrait.Blemish, Labels.Blemish, function(value)
         skin.FaceTrait.Blemish = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
@@ -102,12 +102,12 @@ local function CreateBodyMenuItems(bodyMenu, playerId, skin)
     end)
 
     -- Machoire
-    bodyMenu:AddTitle({label = "Machoire"})
-    CreateRangeSizeItem(bodyMenu, "Largeur de la machoire", skin.FaceTrait.JawBoneWidth, function(value)
+    bodyMenu:AddTitle({label = "Mâchoire"})
+    CreateRangeSizeItem(bodyMenu, "Largeur de la mâchoire", skin.FaceTrait.JawBoneWidth, function(value)
         skin.FaceTrait.JawBoneWidth = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateRangeSizeItem(bodyMenu, "Avancement de la machoire", skin.FaceTrait.JawBoneBackLength, function(value)
+    CreateRangeSizeItem(bodyMenu, "Avancement de la mâchoire", skin.FaceTrait.JawBoneBackLength, function(value)
         skin.FaceTrait.JawBoneBackLength = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
@@ -123,11 +123,11 @@ local function CreateBodyMenuItems(bodyMenu, playerId, skin)
     -- Corps
     bodyMenu:AddTitle({label = "Corps"})
 
-    CreateSliderList(bodyMenu, "Taches sur le corps", skin.FaceTrait.BodyBlemish, Labels.BodyBlemishes, function(value)
+    CreateSliderList(bodyMenu, "Tâches sur le corps", skin.FaceTrait.BodyBlemish, Labels.BodyBlemishes, function(value)
         skin.FaceTrait.BodyBlemish = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateSliderList(bodyMenu, "Extra taches sur le corps", skin.FaceTrait.AddBodyBlemish, Labels.AddBodyBlemishes, function(value)
+    CreateSliderList(bodyMenu, "Extra tâches sur le corps", skin.FaceTrait.AddBodyBlemish, Labels.AddBodyBlemishes, function(value)
         skin.FaceTrait.AddBodyBlemish = value
         ApplyPlayerBodySkin(playerId, skin)
     end)

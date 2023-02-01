@@ -66,7 +66,7 @@ export class OilStationProvider {
 
         const refill = await this.inputService.askInput(
             {
-                title: 'Quantité a ajouter (en Litre) :',
+                title: 'Quantité à ajouter (en litres) :',
                 maxCharacters: 4,
                 defaultValue: (2000 - station.stock).toString(),
             },
@@ -112,7 +112,7 @@ export class OilStationProvider {
 
         const refill = await this.inputService.askInput(
             {
-                title: 'Quantité a ajouter (en Litre) :',
+                title: 'Quantité à ajouter (en litres) :',
                 maxCharacters: 4,
                 defaultValue: (2000 - station.stock).toString(),
             },

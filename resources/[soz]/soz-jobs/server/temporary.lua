@@ -12,7 +12,7 @@ RegisterServerEvent("job:set:pole", function(jobId)
         return
     end
 
-    TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous commencer le travail: %s", job.label))
+    TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous commencez le travail: %s", job.label))
 
     local gradeId = nil
 
@@ -68,6 +68,6 @@ RegisterServerEvent("job:remove:metal", function(amount)
         local payout = amount * SozJobCore.metal_payout
         TriggerEvent("job:payout:metal", payout, source)
     else
-        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous essayer de vendre plus que se que vous possédez", amount), "error")
+        TriggerClientEvent("hud:client:DrawNotification", source, string.format("Vous essayez de vendre plus que ce que vous ne possédez", amount), "error")
     end
 end)

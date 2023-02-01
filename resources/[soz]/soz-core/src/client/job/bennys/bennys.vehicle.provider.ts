@@ -206,7 +206,7 @@ export class BennysVehicleProvider {
             },
             {
                 icon: 'c:mechanic/repair_wheel.png',
-                label: 'Changements de roues',
+                label: 'Changement des roues',
                 color: 'bennys',
                 action: this.repairVehicleWheel.bind(this),
                 blackoutGlobal: true,

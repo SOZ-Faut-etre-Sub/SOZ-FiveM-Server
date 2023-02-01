@@ -429,7 +429,7 @@ export class VehicleLockProvider {
     }
 
     @Command('soz_vehicle_toggle_vehicle_lock', {
-        description: 'Ouvrir/fermer le véhicule',
+        description: 'Ouvrir/Fermer le véhicule',
         keys: [
             {
                 mapper: 'keyboard',

@@ -21,7 +21,7 @@ export const MOVEMENT_OPTIONS = [
 ];
 
 export const VOCAL_OPTIONS = [
-    { label: 'Status', value: 'status' },
+    { label: 'Statut', value: 'status' },
     { label: 'Muter', value: 'mute' },
     { label: 'Démuter', value: 'unmute' },
 ];

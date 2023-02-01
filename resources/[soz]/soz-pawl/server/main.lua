@@ -132,7 +132,7 @@ RegisterNetEvent("pawl:server:statusProcessingTree", function()
         return
     end
 
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Aucun traitement est en cours.", "info")
+    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Aucun traitement n'est en cours.", "info")
 end)
 
 RegisterNetEvent("pawl:server:stopProcessingTree", function()
@@ -162,7 +162,7 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
     end
 
     if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de planche est plein !", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de planches est plein !", "error")
         return
     end
 

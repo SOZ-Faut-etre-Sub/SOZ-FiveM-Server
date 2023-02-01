@@ -472,7 +472,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
     end
 
     if LocalPlayer.state.tankerUsing then
-        exports["soz-hud"]:DrawNotification("Vous utilisez deja le tanker.", "error")
+        exports["soz-hud"]:DrawNotification("Vous utilisez déjà le tanker.", "error")
 
         return
     end
@@ -505,7 +505,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
 
     LocalPlayer.state.tankerUsing = false
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
-    exports["soz-hud"]:DrawNotification("Le raffinage est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
+    exports["soz-hud"]:DrawNotification("Le raffinage est ~g~terminé~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
 end)
 
 RegisterNetEvent("jobs:client:fueler:StartCraftEssence", function(data)

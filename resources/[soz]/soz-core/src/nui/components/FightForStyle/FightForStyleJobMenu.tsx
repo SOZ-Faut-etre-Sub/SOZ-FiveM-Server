@@ -76,7 +76,7 @@ export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = 
                         checked={blips['ffs_cotton_bale']}
                         onChange={value => displayBlip('ffs_cotton_bale', value)}
                     >
-                        Afficher la récolte de balle de coton
+                        Afficher la récolte de balles de coton
                     </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>

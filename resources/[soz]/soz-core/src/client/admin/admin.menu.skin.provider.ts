@@ -128,7 +128,7 @@ export class AdminMenuSkinProvider {
     @OnNuiEvent(NuiEvent.AdminMenuSkinCopy)
     public async onSkinCopy() {
         this.clipboard.copy(this.clothingService.getClothSet());
-        this.notifier.notify('Tenue copié dans le presse-papier');
+        this.notifier.notify('Tenue copiée dans le presse-papier');
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuSkinSave)
