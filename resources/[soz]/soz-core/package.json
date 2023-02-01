@@ -67,6 +67,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-icons": "^4.4.0",
+        "react-node-to-string": "^0.1.1",
         "react-redux": "^8.0.4",
         "react-router-dom": "^6.3.0",
         "redux": "^4.2.0",

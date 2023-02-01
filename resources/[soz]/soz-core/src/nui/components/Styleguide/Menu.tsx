@@ -22,6 +22,7 @@ import {
     useRef,
     useState,
 } from 'react';
+import reactNodeToString from 'react-node-to-string';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { RGBColor } from '../../../shared/color';
@@ -588,7 +589,14 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
         'justify-between': !showAllOptions,
     });
 
+    const classNameTitleContainer = cn('overflow-hidden flex');
     const classNameTitle = cn('pr-2 truncate');
+    const classNameTitleDefile = cn(
+        'inline-block whitespace-nowrap scroll-pl-[100%] scroll-pr-[2em] animate-defilement'
+    );
+
+    const titleLength = reactNodeToString(title).length;
+    const maxlength = (titleWidth * 42) / 100;
 
     const classNameList = cn({
         'ml-4': showAllOptions,
@@ -632,14 +640,31 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                 >
                     <div className="w-full">
                         <div className={classNameContainer}>
-                            <h3
-                                className={classNameTitle}
-                                style={{
-                                    width: showAllOptions ? 'auto' : `${titleWidth}%`,
-                                }}
-                            >
-                                {title}
-                            </h3>
+                            {title && titleLength > maxlength && (
+                                <>
+                                    <div
+                                        className={classNameTitleContainer}
+                                        style={{
+                                            width: showAllOptions ? 'auto' : `${titleWidth}%`,
+                                        }}
+                                    >
+                                        <span className={classNameTitleDefile}>{title}&nbsp;&nbsp;&nbsp;</span>
+                                        <span className={classNameTitleDefile}>{title}&nbsp;&nbsp;&nbsp;</span>
+                                    </div>
+                                </>
+                            )}
+                            {title && titleLength <= maxlength && (
+                                <>
+                                    <h3
+                                        className={classNameTitle}
+                                        style={{
+                                            width: showAllOptions ? 'auto' : `${titleWidth}%`,
+                                        }}
+                                    >
+                                        {title}
+                                    </h3>
+                                </>
+                            )}
                             <div
                                 className={classNameList}
                                 style={{
