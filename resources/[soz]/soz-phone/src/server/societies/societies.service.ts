@@ -183,7 +183,7 @@ class _SocietyService {
                         emitNet(
                             'hud:client:DrawNotification',
                             player.source,
-                            "Votre ~b~appel~s~ vient d'être pris !",
+                            `Votre ~b~appel~s~ au ${societyMessage.conversation_id} vient d\'être pris !`,
                             'info',
                             10000
                         );
