@@ -396,7 +396,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     )}
                     <MenuItemSelectVehicleColor
                         value={config?.color?.primary as VehicleColor}
-                        title="Couleur principal"
+                        title="Couleur principale"
                         useCategory={true}
                         initialValue={data.originalConfiguration?.color?.primary as VehicleColor}
                         onChange={color => {
@@ -584,7 +584,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 <MenuContent>
                     {Object.keys(options.wheelType).length > 1 && (
                         <MenuItemSelect
-                            title="Type de roue"
+                            title="Type de roues"
                             value={config?.wheelType}
                             initialValue={data.originalConfiguration?.wheelType}
                             onChange={(index, value) => {
@@ -917,7 +917,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     />
                     <MenuItemSelectVehicleColor
                         value={config?.xenonColor as VehicleXenonColor}
-                        title="Couleur xénon"
+                        title="Couleur xénons"
                         initialValue={data.originalConfiguration?.xenonColor as VehicleXenonColor}
                         onChange={color => {
                             setConfig({

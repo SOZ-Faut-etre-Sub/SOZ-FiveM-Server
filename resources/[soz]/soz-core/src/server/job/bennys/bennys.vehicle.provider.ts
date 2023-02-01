@@ -76,7 +76,7 @@ export class BennysVehicleProvider {
 
         const owner = NetworkGetEntityOwner(vehicleEntity);
 
-        this.notifier.notify(source, `La carrosserie a été réparé.`);
+        this.notifier.notify(source, `La carrosserie a été réparée.`);
 
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
             bodyHealth: 1000,

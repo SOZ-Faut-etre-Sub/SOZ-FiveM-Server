@@ -68,7 +68,7 @@ export class ItemHealthProvider {
         if (!success) {
             this.notifier.notify(source, 'Impossible de remplir la fiole: ' + reason, 'error');
         } else {
-            this.notifier.notify(source, "Fiole rempli jusqu'à la dernière goutte", 'success');
+            this.notifier.notify(source, "Fiole remplie jusqu'à la dernière goutte", 'success');
         }
     }
 
@@ -140,7 +140,7 @@ export class ItemHealthProvider {
         if (!success) {
             this.notifier.notify(source, 'Impossible de remplir la fiole: ' + reason, 'error');
         } else {
-            this.notifier.notify(source, "Fiole rempli jusqu'à la dernière goutte", 'success');
+            this.notifier.notify(source, "Fiole remplie jusqu'à la dernière goutte", 'success');
         }
     }
 
