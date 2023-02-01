@@ -120,7 +120,7 @@ export class VehicleElectricProvider {
             this.vehicleStateService.updateVehicleState(vehicleEntity, {
                 condition: {
                     ...vehicleState.condition,
-                    fuelLevel: vehicleState.condition.fuelLevel + Math.floor(totalFilled / 0.6),
+                    fuelLevel: vehicleState.condition.fuelLevel + Math.ceil(totalFilled / 0.6),
                 },
             });
 

@@ -272,9 +272,11 @@ export const VehicleElectricModels: Record<number, string> = {
     [-1529242755]: 'Raiden',
     [1031562256]: 'Tezeract',
     [-1132721664]: 'Imorgon',
-    [662793086]: 'IWagen',
+    [662793086]: 'I-Wagen',
     [-505223465]: 'Omnis e-GT',
     [1147287684]: 'Caddy',
+    [1560980623]: 'Airtug',
+    [989294410]: 'Rocket Voltic',
 };
 
 export const isVehicleModelElectric = (model: number): boolean => {

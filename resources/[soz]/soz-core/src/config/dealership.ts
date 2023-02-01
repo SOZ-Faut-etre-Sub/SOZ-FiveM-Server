@@ -9,6 +9,7 @@ export enum DealershipType {
     Boat = 'boat',
     Job = 'job',
     Luxury = 'luxury',
+    Electric = 'electric',
 }
 
 export type DealershipConfigItem = {
@@ -136,6 +137,21 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         },
         daysBeforeNextPurchase: 7,
         garageName: 'marina_boat',
+    },
+    [DealershipType.Electric]: {
+        position: [-63.2, 71.92, 71.0, 147.57],
+        blip: {
+            name: 'Concessionnaire Electrique',
+            sprite: 596,
+            color: 46,
+        },
+        ped: 's_m_m_autoshop_01',
+        showroom: {
+            position: [-71.42, 70.37, 71.97, 324.87],
+            camera: [-71.09, 76.8, 72.68],
+        },
+        daysBeforeNextPurchase: 7,
+        garageName: 'airport_public',
     },
 };
 
