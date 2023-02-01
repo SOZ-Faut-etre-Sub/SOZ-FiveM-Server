@@ -31,7 +31,7 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
     const banner = 'https://nui-img/soz/menu_job_carrier';
     const [blips, setBlips] = useState(null);
 
-    const propsList = [{ label: 'Cone de circulation', item: 'cone', props: 'prop_roadcone02a' }];
+    const propsList = [{ label: 'Cône de circulation', item: 'cone', props: 'prop_roadcone02a' }];
 
     useEffect(() => {
         if (data && data.state) {
@@ -82,19 +82,19 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
                         checked={blips['displayResellBigBagBlip']}
                         onChange={value => displayBlip('displayResellBigBagBlip', value)}
                     >
-                        Afficher la revente de grand sac d'argent
+                        Afficher la revente de grands sacs d'argent
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
                         checked={blips['displayResellMediumBagBlip']}
                         onChange={value => displayBlip('displayResellMediumBagBlip', value)}
                     >
-                        Afficher la revente de moyen sac d'argent
+                        Afficher la revente de moyens sacs d'argent
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
                         checked={blips['displayResellSmallBagBlip']}
                         onChange={value => displayBlip('displayResellSmallBagBlip', value)}
                     >
-                        Afficher la revente de petit sac d'argent
+                        Afficher la revente de petits sacs d'argent
                     </MenuItemCheckbox>
 
                     <MenuItemSelect
