@@ -51,6 +51,10 @@ export type ProgressOptions = {
         heading: number;
     };
     ignorePollution: boolean;
+    start: () => void;
+    tick: () => void;
+    useAnimationService: boolean;
+    no_inv_busy: boolean;
 };
 
 export type ProgressAnimation = {
@@ -58,6 +62,9 @@ export type ProgressAnimation = {
     name?: string;
     flags?: number;
     task?: string;
+    blendInSpeed?: number;
+    blendOutSpeed?: number;
+    playbackRate?: number;
     options?: AnimationOptions;
 };
 

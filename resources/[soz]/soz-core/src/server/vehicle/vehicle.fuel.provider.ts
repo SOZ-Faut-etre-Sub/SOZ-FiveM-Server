@@ -104,6 +104,9 @@ export class VehicleFuelProvider {
                     repeat: true,
                     onlyUpperBody: true,
                 },
+            },
+            {
+                useAnimationService: true,
             }
         );
 
