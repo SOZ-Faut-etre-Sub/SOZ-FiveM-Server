@@ -170,7 +170,7 @@ export class VehicleGarageProvider {
                 where: { id: parseInt(player.apartment.id) },
             });
             if (!apartment) return 0;
-            const places = apartment.tier + 1;
+            const places = (apartment.tier + 1) * 2;
             if (includesRoommate && apartment.roommate && apartment.roommate !== '') return 2 * places;
             return places;
         }
