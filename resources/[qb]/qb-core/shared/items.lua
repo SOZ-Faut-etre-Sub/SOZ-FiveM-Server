@@ -2817,6 +2817,18 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'L\'outil parfait pour faire infecter un ordinateur'
     },
+	['umbrella'] = {
+        ['name'] = 'umbrella',
+        ['label'] = 'Parapluie',
+        ['weight'] = 600,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pour rester au sec sous la drache',
+        ['illustrator'] = '.Sniteur'
+    },
     -- Vehicle Tools
     ['repairkit'] = {
         ['name'] = 'repairkit',
