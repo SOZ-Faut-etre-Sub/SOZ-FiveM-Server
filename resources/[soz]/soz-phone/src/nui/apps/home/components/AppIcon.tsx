@@ -1,3 +1,4 @@
+import { TextDefiling } from '@ui/components/TextDefiling';
 import React, { FunctionComponent, memo } from 'react';
 
 export const AppIcon: FunctionComponent<{ title: string; icon: React.FC<any>; badge?: any }> = memo(
@@ -14,10 +15,10 @@ export const AppIcon: FunctionComponent<{ title: string; icon: React.FC<any>; ba
                     )}
                 </div>
                 <span
-                    className="overflow-hidden text-ellipsis text-sm w-full whitespace-nowrap text-center"
+                    className="overflow-hidden text-ellipsis text-sm w-full whitespace-nowrap text-center group"
                     title={title}
                 >
-                    {title}
+                    <TextDefiling text={title} maxLength={12}></TextDefiling>
                 </span>
             </div>
         );

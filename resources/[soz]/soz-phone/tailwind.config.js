@@ -15,6 +15,15 @@ module.exports = {
             borderRadius: {
                 ios: '.8rem',
             },
+            keyframes: {
+                defilement: {
+                    '0%': { transform: 'translate(0%,0)' },
+                    '100%': { transform: 'translate(-100%,0)' },
+                },
+            },
+            animation: {
+                defilement: 'defilement 5s infinite linear',
+            },
         },
     },
     plugins: [],

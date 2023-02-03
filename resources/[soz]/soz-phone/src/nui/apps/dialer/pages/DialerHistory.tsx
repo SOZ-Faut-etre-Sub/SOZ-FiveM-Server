@@ -7,6 +7,7 @@ import {
     UserAddIcon,
 } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
+import { TextDefiling } from '@ui/components/TextDefiling';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import dayjs from 'dayjs';
@@ -83,7 +84,7 @@ export const DialerHistory: React.FC = () => {
                                                 )}
                                             />
                                         </div>
-                                        <div className="flex flex-1 min-w-0 cursor-pointer">
+                                        <div className="flex flex-1 min-w-0 cursor-pointer group">
                                             <div className="shrink self-center">
                                                 {!call.is_accepted ? (
                                                     <PhoneMissedCallIcon className="h-5 w-5 text-red-500 mr-3" />
@@ -99,9 +100,12 @@ export const DialerHistory: React.FC = () => {
                                                     'text-gray-600': config.theme.value === 'light',
                                                 })}
                                             >
-                                                {getDisplayByNumber(
-                                                    call.transmitter === myNumber ? call.receiver : call.transmitter
-                                                )}
+                                                <TextDefiling
+                                                    text={getDisplayByNumber(
+                                                        call.transmitter === myNumber ? call.receiver : call.transmitter
+                                                    )}
+                                                    maxLength={20}
+                                                ></TextDefiling>
                                             </p>
                                         </div>
                                         <div className="text-gray-500 text-sm">

@@ -5,15 +5,24 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
 import { useConfig } from '../../hooks/usePhone';
+import { TextDefiling } from './TextDefiling';
 
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
     app?: IApp;
     title?: string;
     action?: JSX.Element;
     isBigHeader?: boolean;
+    maxTitleLengthBeforeDefiling?: number;
 }
 
-export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, action, children }) => {
+export const AppTitle: React.FC<AppTitleProps> = ({
+    app,
+    title,
+    isBigHeader,
+    action,
+    children,
+    maxTitleLengthBeforeDefiling,
+}) => {
     const [t] = useTranslation();
     const config = useConfig();
     const { pathname } = useLocation();
@@ -36,12 +45,18 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
             >
                 {children && <div className="flex items-center text-[#347DD9]">{children}</div>}
                 <div
-                    className={cn('truncate', {
+                    className={cn('truncate group', {
                         'col-span-4 text-left': !children && !action,
                         'col-span-2 text-center': children,
                     })}
                 >
-                    {title ? title : t(app.nameLocale)}
+                    {maxTitleLengthBeforeDefiling != null && (
+                        <TextDefiling
+                            text={title ? title : t(app.nameLocale)}
+                            maxLength={maxTitleLengthBeforeDefiling}
+                        ></TextDefiling>
+                    )}
+                    {maxTitleLengthBeforeDefiling == null && (title ? title : t(app.nameLocale))}
                 </div>
                 {action && <div className="justify-self-end text-[#347DD9] font-normal text-base">{action}</div>}
             </h2>

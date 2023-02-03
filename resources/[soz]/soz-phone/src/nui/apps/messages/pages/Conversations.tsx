@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/outline';
 import { AppContent } from '@ui/components/AppContent';
 import { SearchField } from '@ui/components/SearchField';
+import { TextDefiling } from '@ui/components/TextDefiling';
 import cn from 'classnames';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -95,7 +96,7 @@ export const Conversations = (): any => {
                                                 </span>
                                             )}
                                         </div>
-                                        <div className="flex-1 min-w-0 cursor-pointer">
+                                        <div className="flex-1 min-w-0 cursor-pointer group">
                                             <span className="absolute inset-0" aria-hidden="true" />
                                             <p
                                                 className={cn('text-left text-sm font-medium truncate', {
@@ -103,7 +104,10 @@ export const Conversations = (): any => {
                                                     'text-gray-600': config.theme.value === 'light',
                                                 })}
                                             >
-                                                {getDisplayByNumber(conversation.phoneNumber)}
+                                                <TextDefiling
+                                                    text={getDisplayByNumber(conversation.phoneNumber)}
+                                                    maxLength={29}
+                                                ></TextDefiling>
                                             </p>
                                         </div>
                                         <div className="flex-shrink-0">

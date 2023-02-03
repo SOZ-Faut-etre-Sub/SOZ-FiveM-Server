@@ -4,6 +4,7 @@ import { ChatIcon, PencilAltIcon, PhoneIcon } from '@heroicons/react/solid';
 import { useApp } from '@os/apps/hooks/useApps';
 import { useCall } from '@os/call/hooks/useCall';
 import { AppContent } from '@ui/components/AppContent';
+import { TextDefiling } from '@ui/components/TextDefiling';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import React, { FunctionComponent, useMemo, useState } from 'react';
@@ -103,7 +104,7 @@ export const ContactList: FunctionComponent<{ skipTitle?: boolean }> = ({ skipTi
                                                     <div className="flex-shrink-0">
                                                         <ContactPicture picture={contact.avatar} />
                                                     </div>
-                                                    <div className="flex-1 min-w-0 cursor-pointer">
+                                                    <div className="flex-1 min-w-0 cursor-pointer group">
                                                         <span className="absolute inset-0" aria-hidden="true" />
                                                         <p
                                                             className={cn('text-left text-sm font-medium truncate', {
@@ -111,7 +112,10 @@ export const ContactList: FunctionComponent<{ skipTitle?: boolean }> = ({ skipTi
                                                                 'text-gray-600': config.theme.value === 'light',
                                                             })}
                                                         >
-                                                            {contact.display}
+                                                            <TextDefiling
+                                                                text={contact.display}
+                                                                maxLength={31}
+                                                            ></TextDefiling>
                                                         </p>
                                                     </div>
                                                 </div>

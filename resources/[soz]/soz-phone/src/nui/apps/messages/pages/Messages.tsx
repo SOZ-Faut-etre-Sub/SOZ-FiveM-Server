@@ -112,6 +112,7 @@ export const Messages = () => {
             <AppWrapper>
                 <AppTitle
                     title={getDisplayByNumber(conversation.phoneNumber) || conversation.phoneNumber}
+                    maxTitleLengthBeforeDefiling={14}
                     action={
                         <div className="flex">
                             <ArchiveIcon

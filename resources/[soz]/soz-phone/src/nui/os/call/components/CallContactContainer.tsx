@@ -1,3 +1,4 @@
+import { TextDefiling } from '@ui/components/TextDefiling';
 import React from 'react';
 
 import { useContact } from '../../../hooks/useContact';
@@ -18,7 +19,9 @@ const CallContactContainer = () => {
                 size={'large'}
                 picture={call.isTransmitter ? getPictureByNumber(call.receiver) : getPictureByNumber(call?.transmitter)}
             />
-            <div className="text-3xl font-light max-w-[90%] truncate">{getDisplayOrNumber()}</div>
+            <div className="text-3xl font-light max-w-[90%] truncate group">
+                <TextDefiling text={getDisplayOrNumber()} maxLength={19}></TextDefiling>
+            </div>
         </div>
     );
 };
