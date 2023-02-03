@@ -120,3 +120,12 @@ QBCore.Functions.CreateUseableItem("walkstick", function(source, item)
     end
     TriggerClientEvent("items:walkstick:toggle", source)
 end)
+
+--- Parapluie
+
+QBCore.Functions.CreateUseableItem("umbrella", function(source, item)
+    if not preventUsageWhileHoldingWeapon(source) then
+        return
+    end
+    TriggerClientEvent("items:umbrella:toggle", source)
+end)
