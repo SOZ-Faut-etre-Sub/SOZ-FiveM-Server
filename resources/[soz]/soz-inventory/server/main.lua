@@ -153,6 +153,13 @@ function Inventory.CalculateWeight(items)
     return weight
 end
 
+function Inventory.CalculateAvailableWeight(inv)
+    inv = Inventory(inv)
+    local weight = Inventory.CalculateWeight(inv.items)
+    local maxWeight = inv.maxWeight
+    return maxWeight - weight
+end
+
 function Inventory.SetMaxWeight(inv, weight)
     inv = Inventory(inv)
     if inv then
@@ -160,6 +167,14 @@ function Inventory.SetMaxWeight(inv, weight)
     end
 end
 exports("SetMaxWeight", Inventory.SetMaxWeight)
+
+function Inventory.SetHouseStashMaxWeightFromTier(inv, tier)
+    inv = Inventory("house_stash_" .. inv)
+    if inv then
+        inv.maxWeight = Config.StorageCapacity["house_stash"][tier].weight
+    end
+end
+exports("SetHouseStashMaxWeightFromTier", Inventory.SetHouseStashMaxWeightFromTier)
 
 function Inventory.SlotWeight(item, slot)
     local weight = item.weight * slot.amount
@@ -405,6 +420,8 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
     end
     if cb then
         cb(success, reason)
+    else
+        return success, reason
     end
 end
 RegisterNetEvent("inventory:server:AddItem", Inventory.AddItem)
@@ -854,7 +871,11 @@ function GetOrCreateInventory(storageType, invID, ctx)
         targetInv = Inventory("house_stash_" .. invID)
 
         if targetInv == nil then
-            targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
+            local tier = 0
+            if ctx then
+                tier = ctx.apartmentTier
+            end
+            targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig[tier].slot, storageConfig[tier].weight, invID)
         end
     elseif storageType == "house_fridge" then
         targetInv = Inventory("house_fridge_" .. invID)

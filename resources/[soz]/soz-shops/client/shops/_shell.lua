@@ -28,10 +28,46 @@ function ShopShell:GunSmith()
         blackoutGlobal = true,
     }
 end
+function ShopShell:ZkeaStock()
+    return {
+        event = "",
+        icon = "fas fa-store",
+        label = "Vérifier le stock",
+        canInteract = function()
+            return self.brand == "zkea" and currentShop ~= nil and currentShopBrand == self.brand
+        end,
+        blackoutGlobal = true,
+        action = function()
+            TriggerServerEvent("shops:server:CheckZkeaStock")
+        end,
+    }
+end
+function ShopShell:ZkeaUpgrade()
+    return {
+        event = "soz-core:client:housing:open-upgrades-menu",
+        icon = "fas fa-store",
+        label = "Améliorations",
+        canInteract = function()
+            local playerData = QBCore.Functions.GetPlayerData()
+
+            if not playerData.apartment or not playerData.apartment.owner then
+                return false
+            end
+
+            if playerData.apartment.owner ~= playerData.citizenid then
+                return false
+            end
+
+            return self.brand == "zkea" and currentShop ~= nil and currentShopBrand == self.brand
+        end,
+        blackoutGlobal = true,
+    }
+end
 
 function ShopShell:AddTargetModel()
-    exports["qb-target"]:AddTargetModel({self.ped}, {
-        options = {self:GetPedAction(), self:GunSmith(), self.target},
+    exports["qb-target"]:AddTargetModel({self.ped},
+                                        {
+        options = {self:GetPedAction(), self:GunSmith(), self:ZkeaStock(), self:ZkeaUpgrade(), self.target},
         distance = 2.5,
     })
 end

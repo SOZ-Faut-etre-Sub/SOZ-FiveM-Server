@@ -164,6 +164,25 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         return
     end
 
+    if resellZone.ZoneName == "Resell:Zkea" and item.name == "cabinet_zkea" then
+        local tier = tonumber(item.metadata.tier) or 1
+        local zkeaAmount = itemSpec.resellZkeaQty[tier] * amount
+        local msg = string.format("%s meuble(s) ajouté(s) au stock Zkea.", zkeaAmount)
+
+        local s, r = Inventory.AddItem("cabinet_storage", item.name, zkeaAmount, {}, nil, nil)
+        if not s and r == "invalid_weight" then
+            local availableAmount = math.floor(Inventory.CalculateAvailableWeight("cabinet_storage") / itemSpec.weight)
+            if availableAmount > 0 then
+                Inventory.AddItem("cabinet_storage", item.name, availableAmount, {}, nil, nil)
+                msg = string.format("%s meuble(s) ajouté(s) au stock Zkea. Le stock est maintenant plein.", availableAmount)
+            else
+                msg = string.format("Aucun meuble ajouté au stock Zkea. Le stock est déjà plein.", availableAmount)
+            end
+        end
+
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, msg, "info")
+    end
+
     local price = itemSpec.resellPrice
     if type(itemSpec.resellPrice) == "table" then
         price = itemSpec.resellPrice[item.metadata.tier] or 1

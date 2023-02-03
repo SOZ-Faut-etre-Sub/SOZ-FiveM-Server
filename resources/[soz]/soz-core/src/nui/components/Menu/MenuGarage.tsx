@@ -34,6 +34,8 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         return null;
     }
 
+    const showFreePlaces = data?.garage.type === GarageType.Private || data?.garage.type === GarageType.House;
+
     const vehicleShowPlaces = () => {
         fetchNui(NuiEvent.VehicleGarageShowPlaces, { id: data.id, garage: data.garage });
     };
@@ -62,7 +64,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
             <MainMenu>
                 <MenuTitle banner={BannerMap[data?.garage.type]}>
                     {data?.garage.name}
-                    {data?.garage.type === GarageType.Private && ` | Places libres (${data?.free_places}) / 38`}
+                    {showFreePlaces && ` | Places libres : ${data?.free_places} / ${data?.max_places}`}
                 </MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="vehicles">Les véhicules</MenuItemSubMenuLink>
@@ -78,7 +80,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
             <SubMenu id="vehicles">
                 <MenuTitle banner={BannerMap[data?.garage.type]}>
                     {data?.garage.name}
-                    {data?.garage.type === GarageType.Private && ` | Places libres (${data?.free_places}) / 38`}
+                    {showFreePlaces && ` | Places libres : ${data?.free_places} / ${data?.max_places}`}
                 </MenuTitle>
                 <VehicleList data={data} />
             </SubMenu>

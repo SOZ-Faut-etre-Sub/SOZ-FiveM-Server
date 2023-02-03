@@ -351,6 +351,42 @@ export class VehicleDealershipProvider {
             return false;
         }
 
+        if (dealershipId !== DealershipType.Job) {
+            const vehicleModels = (
+                await this.prismaService.vehicle.findMany({
+                    select: {
+                        model: true,
+                    },
+                    where: {
+                        dealershipId: {
+                            not: null,
+                        },
+                    },
+                })
+            ).map(v => v.model);
+            const playerVehicleCount = await this.prismaService.playerVehicle.count({
+                where: {
+                    citizenid: player.citizenid,
+                    job: null,
+                    state: {
+                        not: PlayerVehicleState.Destroyed,
+                    },
+                    vehicle: {
+                        in: vehicleModels,
+                    },
+                },
+            });
+
+            if (playerVehicleCount >= player.metadata.vehiclelimit) {
+                let errorMsg = `Limite de véhicule atteinte (${playerVehicleCount}/${player.metadata.vehiclelimit})`;
+                if (player.metadata.vehiclelimit < 10) errorMsg += ". Améliorez votre carte grise à l'auto-école.";
+
+                this.notifier.notify(source, errorMsg, 'error');
+
+                return false;
+            }
+        }
+
         if (
             vehicle.requiredLicence &&
             (!player.metadata.licences[vehicle.requiredLicence] ||

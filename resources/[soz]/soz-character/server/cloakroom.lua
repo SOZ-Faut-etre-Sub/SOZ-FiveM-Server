@@ -14,6 +14,14 @@ local function GetCacheCloakroom(citizenid)
     return Cloakrooms[citizenid]
 end
 
+local function CountClothSet(cloakroom)
+    local count = 0
+    for _, __ in pairs(cloakroom) do
+        count = count + 1
+    end
+    return count
+end
+
 QBCore.Functions.CreateCallback("soz-character:server:GetPlayerCloakroom", function(source, cb)
     local Player = QBCore.Functions.GetPlayer(source)
 
@@ -27,19 +35,18 @@ end)
 QBCore.Functions.CreateCallback("soz-character:server:SavePlayerClothe", function(source, cb, name)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    if name == nil then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Veuillez entrer un nom pour votre tenue.", "error")
-        cb(false)
+    if name == nil or name == "" then
+        cb("Veuillez entrer un nom pour votre tenue.")
+        return
     end
 
     if Player then
         local clothSet = exports.oxmysql:scalar_async("SELECT COUNT(cloth_set) FROM player_cloth_set WHERE citizenid = ?", {
             Player.PlayerData.citizenid,
         })
-        if clothSet >= 4 then -- TODO implement dynamic upgrade
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas avoir plus de 4 tenues.", "error")
-
-            cb(false)
+        local max = Config.CloakroomUpgrades[Player.PlayerData.apartment.tier]
+        if clothSet >= max then
+            cb("Vous ne pouvez pas avoir plus de " .. max .. " tenues.")
             return
         end
 
@@ -50,12 +57,12 @@ QBCore.Functions.CreateCallback("soz-character:server:SavePlayerClothe", functio
         if id then
             Cloakrooms[Player.PlayerData.citizenid][id] = {id = id, name = name, cloth = currentClothing}
 
-            cb(true)
+            cb(nil)
         else
-            cb(false)
+            cb("Une erreur est survenue.")
         end
     else
-        cb(false)
+        cb("Une erreur est survenue.")
     end
 end)
 
@@ -82,5 +89,26 @@ QBCore.Functions.CreateCallback("soz-character:server:DeletePlayerClothe", funct
         end
     else
         cb(false)
+    end
+end)
+
+exports("TruncatePlayerCloakroomFromTier", function(citizenid, tier)
+    local clothes = GetCacheCloakroom(citizenid)
+
+    local toDelete = math.max(0, CountClothSet(clothes) - Config.CloakroomUpgrades[tier])
+
+    for _, clothe in pairs(clothes) do
+        if toDelete == 0 then
+            break
+        end
+        local affectedRows = exports.oxmysql:update_async("DELETE FROM player_cloth_set WHERE id = ? AND citizenid = ?", {
+            clothe.id,
+            citizenid,
+        })
+
+        if affectedRows then
+            Cloakrooms[citizenid][clothe.id] = nil
+            toDelete = toDelete - 1
+        end
     end
 end)

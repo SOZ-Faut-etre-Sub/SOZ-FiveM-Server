@@ -556,6 +556,8 @@ type MenuItemSelectProps = PropsWithChildren<{
     initialValue?: any;
     titleWidth?: number;
     description?: string;
+    useGrid?: boolean;
+    alignRight?: boolean;
     equalityFn?: (a: any, b: any) => boolean;
 }>;
 
@@ -573,6 +575,8 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     initialValue,
     titleWidth = 40,
     description = null,
+    useGrid = false,
+    alignRight = false,
     equalityFn = (a, b) => a === b,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
@@ -585,13 +589,14 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     }, [activeOptionIndex, onConfirm, activeValue]);
 
     const classNameContainer = cn('flex items-center', {
-        'justify-between': !showAllOptions,
+        'justify-between': !showAllOptions || useGrid,
     });
 
     const classNameTitle = cn('pr-2 truncate');
 
     const classNameList = cn({
         'ml-4': showAllOptions,
+        'ml-auto': alignRight,
     });
 
     const itemSetDescription = useCallback(
@@ -647,7 +652,11 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                                 }}
                             >
                                 <MenuSelectControls onChange={onChange} initialValue={initialValue}>
-                                    <ul className="flex">{children}</ul>
+                                    {useGrid ? (
+                                        <ul className="grid grid-cols-5 place-items-center">{children}</ul>
+                                    ) : (
+                                        <ul className="flex">{children}</ul>
+                                    )}
                                 </MenuSelectControls>
                             </div>
                         </div>

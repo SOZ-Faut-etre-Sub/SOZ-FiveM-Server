@@ -11,7 +11,7 @@ function QBCore.Player.Login(source, citizenid, newData)
         if citizenid then
             local license = QBCore.Functions.GetSozIdentifier(src)
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
-            local apartment = exports.oxmysql:singleSync('SELECT label FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
+            local apartment = exports.oxmysql:singleSync('SELECT id,property_id,label,price,owner,tier,has_parking_place FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
             local role = GetConvar("soz_anonymous_default_role", "user")
             local account = QBCore.Functions.GetUserAccount(src)
 
@@ -31,6 +31,9 @@ function QBCore.Player.Login(source, citizenid, newData)
                 PlayerData.role = role
                 if apartment then
                     PlayerData.address = apartment.label
+                    PlayerData.apartment = apartment
+                else
+                    PlayerData.apartment = nil
                 end
 
                 if PlayerData.gang then
@@ -151,6 +154,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
         ['fishing'] = false,
         ['rescuer'] = false,
     }
+    PlayerData.metadata['vehiclelimit'] = PlayerData.metadata['vehiclelimit'] or 1
     PlayerData.metadata['inside'] = PlayerData.metadata['inside'] or {
         ['exitCoord'] = false,
         ['apartment'] = false,
@@ -522,6 +526,31 @@ function QBCore.Player.CreatePlayer(PlayerData)
             licences[licence] = tonumber(points)
             self.Functions.UpdatePlayerData()
         end
+    end
+
+    self.Functions.SetVehicleLimit = function (limit)
+        self.PlayerData.metadata.vehiclelimit = limit
+        self.Functions.UpdatePlayerData()
+    end
+
+    self.Functions.SetApartment = function(apartment)
+        if apartment then
+            self.PlayerData.address = apartment.label
+        else
+            self.PlayerData.address = ""
+        end
+        self.PlayerData.apartment = apartment
+        self.Functions.UpdatePlayerData()
+    end
+
+    self.Functions.SetApartmentTier = function(tier)
+        self.PlayerData.apartment.tier = tier
+        self.Functions.UpdatePlayerData()
+    end
+
+    self.Functions.SetApartmentHasParkingPlace = function(value)
+        self.PlayerData.apartment.has_parking_place = value
+        self.Functions.UpdatePlayerData()
     end
 
     self.Functions.Save = function()

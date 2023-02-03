@@ -1,6 +1,8 @@
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
+import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
+import { HousingUpgradesMenuData } from '../housing/menu';
 import { BossShopMenu } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
@@ -33,10 +35,12 @@ export enum MenuType {
     BennysOrderMenu = 'bennys_order',
     BennysUpgradeVehicle = 'bennys_upgrade_vehicle',
     Demo = 'demo',
+    DrivingSchool = 'driving_school',
     BossShop = 'boss_shop',
     MaskShop = 'mask_shop',
     FightForStyleJobMenu = 'ffs_job',
     FoodJobMenu = 'food_job_menu',
+    HousingUpgrades = 'housing_upgrades',
     Garage = 'garage_menu',
     JobBennys = 'job_bennys',
     OilSetStationPrice = 'oil_set_station_price',
@@ -57,7 +61,9 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.BennysOrderMenu]: any;
     [MenuType.BossShop]: BossShopMenu;
     [MenuType.Demo]: never;
+    [MenuType.DrivingSchool]: DrivingSchoolMenuData;
     [MenuType.FightForStyleJobMenu]: any;
+    [MenuType.HousingUpgrades]: HousingUpgradesMenuData;
     [MenuType.Garage]: GarageMenuData;
     [MenuType.JobBennys]: {
         insideUpgradeZone: boolean;

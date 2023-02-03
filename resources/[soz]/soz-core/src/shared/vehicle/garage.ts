@@ -35,6 +35,7 @@ export type Garage = {
     zone: Zone;
     allowTrailers?: boolean;
     parkingPlaces: Zone<GarageParkingPlaceData>[];
+    isTrailerGarage?: boolean;
 };
 
 export type GarageVehicle = {
@@ -48,4 +49,5 @@ export type GarageMenuData = {
     garage: Garage;
     free_places: number | null;
     id: string;
+    max_places: number | null;
 };

@@ -58,8 +58,19 @@ body, html {
     padding-bottom: 4%;
 }
 #left-col-licenses {
-    align-items: flex-end;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
     padding-bottom: 6.5%;
+}
+#left-col-licenses > .vehicle-limit {
+    padding-left: 8px;
+}
+#left-col-licenses > .name {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 #right-col-licenses {
     height: 87%;

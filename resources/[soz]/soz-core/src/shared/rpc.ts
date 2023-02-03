@@ -41,6 +41,7 @@ export enum RpcEvent {
     VEHICLE_DEALERSHIP_BUY = 'soz-core:vehicle:dealership:buy',
     VEHICLE_GARAGE_GET_VEHICLES = 'soz-core:vehicle:garage:get-vehicles',
     VEHICLE_GARAGE_GET_FREE_PLACES = 'soz-core:vehicle:garage:get-free-places',
+    VEHICLE_GARAGE_GET_MAX_PLACES = 'soz-core:vehicle:garage:get-max-places',
     VEHICLE_HAS_KEY = 'soz-core:vehicle:has-key',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',

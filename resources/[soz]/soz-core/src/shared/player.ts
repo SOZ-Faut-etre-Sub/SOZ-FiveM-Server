@@ -12,6 +12,7 @@ export type QBCorePlayer = {
         SetMetaData: (key: string, val: any) => void;
         Save: () => void;
         UpdateMaxWeight: () => void;
+        UpdatePlayerData: () => void;
         AddMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
@@ -21,6 +22,7 @@ export type QBCorePlayer = {
 };
 
 export type PlayerData = {
+    apartment: any;
     citizenid: string;
     license: string;
     name: string;
@@ -145,4 +147,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     criminal_state: PlayerCriminalState;
     criminal_reputation: number;
     criminal_talents: Talent[];
+    vehiclelimit: number;
 };

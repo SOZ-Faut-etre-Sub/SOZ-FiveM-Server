@@ -49,6 +49,10 @@ export enum DrivingSchoolLicenseType {
     Heli = PlayerLicenceType.Heli,
 }
 
+export type DrivingSchoolMenuData = {
+    currentVehicleLimit: number;
+};
+
 type Marker = {
     type: number;
     typeFinal: number;
@@ -121,6 +125,18 @@ export const DrivingSchoolConfig = {
             message: 'Suis ton GPS à allure modérée, et respecte les autres usagers de la route.',
         },
     ],
+    vehicleLimits: {
+        1: 0,
+        2: 5000,
+        3: 10000,
+        4: 15000,
+        5: 20000,
+        6: 40000,
+        7: 60000,
+        8: 80000,
+        9: 100000,
+        10: 200000,
+    },
     licenses: <Record<DrivingSchoolLicenseType, DrivingSchoolLicense>>{
         [DrivingSchoolLicenseType.Car]: {
             licenseType: DrivingSchoolLicenseType.Car,

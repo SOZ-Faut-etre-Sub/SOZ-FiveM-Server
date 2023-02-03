@@ -3847,6 +3847,12 @@ QBShared.Items = {
             [3] = 800,
             [4] = 3000,
         },
+        ['resellZkeaQty'] = {
+            [1] = 1,
+            [2] = 2,
+            [3] = 4,
+            [4] = 10,
+        },
         ['resellZone'] = 'Resell:Zkea',
         ['illustrator'] = '.DrLuck1'
     },

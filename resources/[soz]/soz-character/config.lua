@@ -2,6 +2,8 @@ Config = {}
 
 Config.PedCoords = vector4(-813.97, 176.22, 76.74, -7.5) -- Create preview ped at these coordinates
 
+Config.CloakroomUpgrades = {[0] = 4, [1] = 5, [2] = 6, [3] = 7, [4] = 8}
+
 Config.Locations = {
     ["spawn1"] = {
         PlayerCustomization = vector4(-811.82, 175.2, 75.75, 111.82),

@@ -1,9 +1,12 @@
-import { Once, OnceStep } from '../../core/decorators/event';
+import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { DrivingSchoolConfig } from '../../shared/driving-school';
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { MenuType } from '../../shared/nui/menu';
 import { BlipFactory } from '../blip';
+import { NuiMenu } from '../nui/nui.menu';
+import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
 
 @Provider()
@@ -11,8 +14,14 @@ export class DrivingSchoolProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
@@ -32,8 +41,30 @@ export class DrivingSchoolProvider {
         });
     }
 
+    @OnNuiEvent<{ limit: number; price: number }>(NuiEvent.DrivingSchoolUpdateVehicleLimit)
+    public async updateVehicleLimit({ limit, price }) {
+        TriggerServerEvent(ServerEvent.DRIVING_SCHOOL_UPDATE_VEHICLE_LIMIT, limit, price);
+        this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.DrivingSchoolCheckVehicleSlots)
+    public async checkVehicleSlots() {
+        TriggerServerEvent(ServerEvent.DRIVING_SCHOOL_CHECK_VEHICLE_SLOTS);
+    }
+
     private getTargetOptions(): TargetOptions[] {
-        const targetOptions: TargetOptions[] = [];
+        const targetOptions: TargetOptions[] = [
+            {
+                label: `Carte grise`,
+                icon: 'c:driving-school/voiture.png',
+                blackoutGlobal: true,
+                action: async () => {
+                    this.nuiMenu.openMenu(MenuType.DrivingSchool, {
+                        currentVehicleLimit: this.playerService.getPlayer().metadata.vehiclelimit,
+                    });
+                },
+            },
+        ];
         const licensesConfig = DrivingSchoolConfig.licenses;
 
         Object.entries(licensesConfig).forEach(([licenseType, data]) => {

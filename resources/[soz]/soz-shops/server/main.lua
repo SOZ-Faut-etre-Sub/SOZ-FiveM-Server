@@ -274,6 +274,15 @@ RegisterNetEvent("shops:server:resetTattoos", function()
     end
 end)
 
+RegisterNetEvent("shops:server:CheckZkeaStock", function()
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if player then
+        local amount = exports["soz-inventory"]:GetItem("cabinet_storage", "cabinet_zkea", nil, true)
+        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, ("Il reste %s meubles Zkea."):format(amount));
+    end
+end)
+
 ---
 local garmentToCategory = function(garment)
     if garment == "garment_top" or garment == "luxury_garment_top" then

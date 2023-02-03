@@ -34,6 +34,7 @@ import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
+import { HousingModule } from './client/housing/housing.module';
 
 async function bootstrap() {
     const app = await Application.create(
@@ -66,6 +67,7 @@ async function bootstrap() {
         WeaponModule,
         InventoryModule,
         DrivingSchoolModule,
+        HousingModule,
         ...PrivateModules
     );
 
