@@ -27,7 +27,7 @@ export class WeatherProvider {
         GlobalState.blackout ||= false;
         GlobalState.blackout_level ||= 0;
         GlobalState.blackout_override = false;
-        GlobalState.weather ||= 'XMAS' as Weather;
+        GlobalState.weather ||= 'CLEAR' as Weather;
         GlobalState.snow ||= true;
         GlobalState.time ||= { hour: 2, minute: 0, second: 0 } as Time;
     }
