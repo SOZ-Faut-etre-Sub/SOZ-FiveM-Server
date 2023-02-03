@@ -139,11 +139,11 @@ export class WeaponDrawingProvider {
     public async undrawWeapons() {
     async undrawWeapons() {
         const vehicleClass = GetVehicleClass(GetVehiclePedIsIn(PlayerPedId(), false));
-		if (vehicleClass === VehicleClass.Motorcycles ||
+	if (vehicleClass === VehicleClass.Motorcycles ||
             vehicleClass === VehicleClass.Cycles
-		) { 
-			return 
-		};
+	) { 
+		return 
+	};
 		
         this.shouldDrawWeapon = false;
         await this.undrawWeapon();
