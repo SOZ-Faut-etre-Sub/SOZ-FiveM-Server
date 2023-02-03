@@ -218,7 +218,7 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:resellTanker", function(sour
     if essenceItemAmount >= 10 then
         if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
             TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L d'essence")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 100L d'essence")
             TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
                          {quantity = 10, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
 
@@ -230,7 +230,7 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:resellTanker", function(sour
     if keroseneItemAmount >= 10 then
         if exports["soz-inventory"]:RemoveItem(tankerInv, "kerosene", 10) then
             TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 10L de kérosène")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 100L de kérosène")
             TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
                          {quantity = 10, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
 
