@@ -1,9 +1,7 @@
 RegisterNetEvent("admin:skin:UpdateClothes", function(cloth)
-    if not SozAdmin.Functions.IsPlayerAdmin(source) then
+    if not SozAdmin.Functions.IsPlayerStaff(source) then
         return
     end
-
-    TriggerEvent("QBCore:DebugSomething", cloth)
 
     local Player = QBCore.Functions.GetPlayer(source)
     local skin = Player.PlayerData.skin
