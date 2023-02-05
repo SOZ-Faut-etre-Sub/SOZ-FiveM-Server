@@ -2,11 +2,11 @@ import { Component, Prop, WardrobeConfig } from '../cloth';
 import { Vector3, Vector4 } from '../polyzone/vector';
 
 export const PHARMACY_PRICES = {
-    tissue: 150,
-    antibiotic: 150,
-    pommade: 150,
-    painkiller: 150,
-    antiacide: 150,
+    tissue: 250,
+    antibiotic: 250,
+    pommade: 250,
+    painkiller: 250,
+    antiacide: 250,
     heal: 400,
 };
 
