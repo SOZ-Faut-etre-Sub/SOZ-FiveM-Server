@@ -54,4 +54,10 @@ export class ResourceLoader {
     unloadModel(name: string | number): void {
         SetModelAsNoLongerNeeded(name);
     }
+
+    async requestScriptAudioBank(name: string): Promise<void> {
+        while (!RequestScriptAudioBank(name, false)) {
+            await wait(100);
+        }
+    }
 }

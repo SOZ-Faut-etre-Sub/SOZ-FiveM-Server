@@ -15,14 +15,20 @@ export class PlayerWalkstyleProvider {
     private resourceLoader: ResourceLoader;
 
     private currentWalkStyle: string | null = null;
+    private overrideWalkStyle = false;
 
     @OnEvent(ClientEvent.PLAYER_UPDATE_WALK_STYLE)
-    async applyWalkStyle(walkStyle: string | null): Promise<void> {
+    async applyWalkStyle(walkStyle: string | null, overrideWalkStyle = false, transitionSpeed = 1.0): Promise<void> {
         if (this.currentWalkStyle === walkStyle) {
             return;
         }
+        if (this.overrideWalkStyle && !overrideWalkStyle) {
+            return;
+        }
 
-        ResetPedMovementClipset(PlayerPedId(), 1.0);
+        this.overrideWalkStyle = overrideWalkStyle;
+
+        ResetPedMovementClipset(PlayerPedId(), transitionSpeed);
         this.currentWalkStyle = walkStyle;
 
         if (walkStyle === null || walkStyle === '') {
@@ -30,7 +36,7 @@ export class PlayerWalkstyleProvider {
         }
 
         await this.resourceLoader.loadAnimationSet(walkStyle);
-        SetPedMovementClipset(PlayerPedId(), walkStyle, 1.0);
+        SetPedMovementClipset(PlayerPedId(), walkStyle, transitionSpeed);
     }
 
     @OnEvent(ClientEvent.PLAYER_REFRESH_WALK_STYLE)
@@ -42,6 +48,7 @@ export class PlayerWalkstyleProvider {
             return;
         }
 
+        this.overrideWalkStyle = false;
         await this.applyWalkStyle(this.playerService.getPlayer().metadata.walk);
     }
 
@@ -54,6 +61,6 @@ export class PlayerWalkstyleProvider {
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(): Promise<void> {
-        await this.refresh();
+        await this.applyWalkStyle(this.playerService.getPlayer().metadata.walk);
     }
 }

@@ -172,6 +172,9 @@ export enum ServerEvent {
     HEIST_JEWELRY_START_ROBBERY = 'soz-core:server:heist:start-robbery',
     HEIST_PLAY_ANIM = 'soz-core:server:heist:play-anim',
     HEIST_PLAY_ANIM_INIT = 'soz-core:server:heist:init',
+    HEIST_RETRIEVE_ITEM = 'soz-core:server:heist:retrieve',
+    HEIST_RETRIEVE_JEWEL = 'soz-core:server:heist:jewelry-retrieve-jewel',
+    HEIST_JEWELRY_STOP_ROBBERY = 'soz-core:server:heist:jewelry-stop-robbery',
 
     SOUND_GLOBAL_INIT = 'soz-core:server:sound:init',
 }

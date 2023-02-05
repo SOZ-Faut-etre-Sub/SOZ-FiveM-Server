@@ -55,10 +55,13 @@ export enum RpcEvent {
     WEAPON_SET_TINT = 'soz-core:server:weapon:setTint',
     WEAPON_SET_ATTACHMENTS = 'soz-core:server:weapon:setAttachments',
 
+    RACKET_LAST_RACKET_TIME = 'soz-core:server:racket:last-time',
+
     VANDALISM_END = 'soz-core:server:vandalism:end',
     VANDALISM_LOAD = 'soz-core:server:vandalism:load',
 
     HEIST_CHECK = 'soz-core:server:heist:check',
     HEIST_JEWELRY_IS_ZONE_UNLOCK = 'soz-core:server:heist:jewelry-check-unlock',
-    HEIST_JEWELRY_CHECK_ROBBERY = 'soz-core:server:heist:jewelry-check-roberry',
+    HEIST_JEWELRY_CHECK_ROBBERY = 'soz-core:server:heist:jewelry-check-robbery',
+    HEIST_JEWELRY_START_ROBBERY = 'soz-core:server:heist:jewelry-start-robbery',
 }
