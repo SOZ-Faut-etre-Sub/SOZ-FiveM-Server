@@ -10,6 +10,7 @@ export enum RpcEvent {
     BENNYS_ORDER_VEHICLE = 'soz-core:server:job:bennys:order-vehicle',
 
     DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:server:driving-school:spawn-vehicle',
+    DRIVING_SCHOOL_CHECK_REMAINING_SLOTS = 'soz-core:server:driving-school:check-vehicle-slots',
 
     INVENTORY_SEARCH = 'soz-core:inventory:search',
 

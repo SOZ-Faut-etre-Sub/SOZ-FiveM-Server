@@ -11,9 +11,7 @@ import {
     MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOptionBox,
-    MenuItemSubMenuLink,
     MenuTitle,
-    SubMenu,
 } from '../Styleguide/Menu';
 
 type DrivingSchoolMenuProps = {
@@ -24,6 +22,7 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
     if (!data) {
         data = {
             currentVehicleLimit: 1,
+            remainingSlots: 0,
         };
     }
 
@@ -58,23 +57,14 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
         setLimit(selectedLimit);
     };
 
-    const onCheckVehicleSlot = () => {
-        fetchNui(NuiEvent.DrivingSchoolCheckVehicleSlots);
-    };
-
     return (
         <Menu type={MenuType.DrivingSchool}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
-                <MenuContent>
-                    <MenuItemSubMenuLink id="vehicle-limit-upgrades">Améliorations</MenuItemSubMenuLink>
-                    <MenuItemButton onConfirm={() => onCheckVehicleSlot()}>
-                        Vérifier les places restantes
-                    </MenuItemButton>
-                </MenuContent>
-            </MainMenu>
-            <SubMenu id="vehicle-limit-upgrades">
-                <MenuTitle banner={banner}>Améliorations</MenuTitle>
+                <MenuTitle banner={banner}>
+                    <div className="flex">
+                        Améliorations <span className="ml-auto">Places restantes : {data.remainingSlots}</span>
+                    </div>
+                </MenuTitle>
                 <MenuContent>
                     <MenuItemSelect
                         value={data.currentVehicleLimit}
@@ -96,7 +86,7 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
                         </div>
                     </MenuItemButton>
                 </MenuContent>
-            </SubMenu>
+            </MainMenu>
         </Menu>
     );
 };

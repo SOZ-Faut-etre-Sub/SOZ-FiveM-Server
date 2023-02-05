@@ -51,6 +51,7 @@ export enum DrivingSchoolLicenseType {
 
 export type DrivingSchoolMenuData = {
     currentVehicleLimit: number;
+    remainingSlots: number;
 };
 
 type Marker = {

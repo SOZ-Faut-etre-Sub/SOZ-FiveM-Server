@@ -88,8 +88,8 @@ export class DrivingSchoolProvider {
         );
     }
 
-    @On(ServerEvent.DRIVING_SCHOOL_CHECK_VEHICLE_SLOTS)
-    public async checkVehicleSlots(source: number) {
+    @Rpc(RpcEvent.DRIVING_SCHOOL_CHECK_REMAINING_SLOTS)
+    public async checkRemainingSlots(source: number) {
         const player = this.playerService.getPlayer(source);
         if (!player) return;
 
@@ -119,15 +119,6 @@ export class DrivingSchoolProvider {
         });
         const limit = player.metadata.vehiclelimit;
 
-        if (playerVehicleCount >= limit) {
-            this.notifier.notify(source, "Vous n'avez plus de place(s) sur votre carte grise", 'warning');
-            return;
-        }
-
-        this.notifier.notify(
-            source,
-            `Il vous reste ${limit - playerVehicleCount} place(s) sur votre carte grise`,
-            'info'
-        );
+        return Math.max(limit - playerVehicleCount, 0);
     }
 }
