@@ -70,6 +70,10 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     for moneytype, startamount in pairs(QBCore.Config.Money.MoneyTypes) do
         PlayerData.money[moneytype] = math.floor(PlayerData.money[moneytype] or startamount)
     end
+    PlayerData.apartment = PlayerData.apartment or nil
+    if PlayerData.apartment then
+        PlayerData.apartment.tier = PlayerData.apartment.tier or 0
+    end
     -- Charinfo
     PlayerData.charinfo = PlayerData.charinfo or {}
     PlayerData.charinfo.firstname = PlayerData.charinfo.firstname or 'Firstname'

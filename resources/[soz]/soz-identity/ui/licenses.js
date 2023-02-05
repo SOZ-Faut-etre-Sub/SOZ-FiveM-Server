@@ -10,17 +10,13 @@ const LICENSES = {
     rescuer: { type: "rescuer", verbose: "SECOURISTE" }
 };
 
-function displayLicensesData(playerLicenses = {}, vehicleLimit = 1) {
+function displayLicensesData(playerLicenses = {}) {
     const validitiesElement = document.querySelector('#validities');
     const pointsElement = document.querySelector('#points');
-    const vehicleLimitElement = document.querySelector('#vehicle_limit');
 
     // Reset any existing content
     validitiesElement.innerHTML = null;
     pointsElement.innerHTML = null;
-    vehicleLimitElement.innerHTML = null;
-
-    vehicleLimitElement.innerText = vehicleLimit;
 
     Object.entries(LICENSES).forEach(([licenseType, data]) => {
         const playerLicenseData = playerLicenses[licenseType];

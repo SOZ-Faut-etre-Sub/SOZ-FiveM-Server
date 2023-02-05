@@ -27,7 +27,6 @@ export enum ServerEvent {
     DRIVING_SCHOOL_PLAYER_PAY = 'soz-core:server:driving-school:player-pay',
     DRIVING_SCHOOL_UPDATE_LICENSE = 'soz-core:server:driving-school:update-license',
     DRIVING_SCHOOL_UPDATE_VEHICLE_LIMIT = 'soz-core:server:driving-school:update-vehicle-limit',
-    DRIVING_SCHOOL_CHECK_VEHICLE_SLOTS = 'soz-core:server:driving-school:check-vehicle-slots',
 
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 

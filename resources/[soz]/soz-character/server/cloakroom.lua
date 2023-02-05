@@ -40,11 +40,12 @@ QBCore.Functions.CreateCallback("soz-character:server:SavePlayerClothe", functio
         return
     end
 
-    if Player then
+    if Player and Player.PlayerData.apartment then
         local clothSet = exports.oxmysql:scalar_async("SELECT COUNT(cloth_set) FROM player_cloth_set WHERE citizenid = ?", {
             Player.PlayerData.citizenid,
         })
-        local max = Config.CloakroomUpgrades[Player.PlayerData.apartment.tier]
+        local playerApartmentTier = Player.PlayerData.apartment.tier or 0
+        local max = Config.CloakroomUpgrades[playerApartmentTier]
         if clothSet >= max then
             cb("Vous ne pouvez pas avoir plus de " .. max .. " tenues.")
             return

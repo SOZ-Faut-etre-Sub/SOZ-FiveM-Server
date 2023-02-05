@@ -653,7 +653,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                             >
                                 <MenuSelectControls onChange={onChange} initialValue={initialValue}>
                                     {useGrid ? (
-                                        <ul className="grid grid-cols-5 place-items-center">{children}</ul>
+                                        <ul className="grid grid-cols-5 gap-2">{children}</ul>
                                     ) : (
                                         <ul className="flex">{children}</ul>
                                     )}
@@ -804,6 +804,8 @@ type MenuItemSelectOptionProps = PropsWithChildren<{
     value?: any;
     description?: string;
     helper?: ReactNode;
+    useGrid?: boolean;
+    highlight?: boolean;
 }>;
 
 export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> = ({
@@ -834,6 +836,8 @@ export const MenuItemSelectOptionBox: FunctionComponent<MenuItemSelectOptionProp
     value = null,
     description = null,
     helper = null,
+    useGrid = false,
+    highlight = false,
 }) => {
     const [handleRefSet, show, selected, onClick, isInitialValue] = useSelectOption(
         value,
@@ -845,12 +849,16 @@ export const MenuItemSelectOptionBox: FunctionComponent<MenuItemSelectOptionProp
     return (
         <li
             ref={handleRefSet}
-            className={cn('border-2 rounded-sm p-2 truncate mr-2', {
+            className={cn('border-2 rounded-sm p-2 truncate', {
+                'mr-2': !useGrid,
                 hidden: !show,
                 'border-white': selected,
-                'border-white/20': !selected,
+                'border-white/20': !highlight && !selected,
+                'border-green-400': !selected && highlight,
                 'text-white': isInitialValue,
                 'text-white/50': !isInitialValue,
+                'text-green-400': !isInitialValue && highlight,
+                'grid place-content-center': useGrid,
             })}
             onClick={onClick}
         >

@@ -1,3 +1,6 @@
+import { emitRpc } from '@public/core/rpc';
+import { RpcEvent } from '@public/shared/rpc';
+
 import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -47,11 +50,6 @@ export class DrivingSchoolProvider {
         this.nuiMenu.closeMenu();
     }
 
-    @OnNuiEvent(NuiEvent.DrivingSchoolCheckVehicleSlots)
-    public async checkVehicleSlots() {
-        TriggerServerEvent(ServerEvent.DRIVING_SCHOOL_CHECK_VEHICLE_SLOTS);
-    }
-
     private getTargetOptions(): TargetOptions[] {
         const targetOptions: TargetOptions[] = [
             {
@@ -59,8 +57,10 @@ export class DrivingSchoolProvider {
                 icon: 'c:driving-school/voiture.png',
                 blackoutGlobal: true,
                 action: async () => {
+                    const remainingSlots = await emitRpc<number>(RpcEvent.DRIVING_SCHOOL_CHECK_REMAINING_SLOTS);
                     this.nuiMenu.openMenu(MenuType.DrivingSchool, {
                         currentVehicleLimit: this.playerService.getPlayer().metadata.vehiclelimit,
+                        remainingSlots,
                     });
                 },
             },

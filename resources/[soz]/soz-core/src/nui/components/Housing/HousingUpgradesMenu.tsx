@@ -28,6 +28,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
             enableParking: true,
         };
     }
+    if (!data.currentTier) data.currentTier = 0;
 
     const [tier, setTier] = useState(0);
     const [parking, setParking] = useState(true);

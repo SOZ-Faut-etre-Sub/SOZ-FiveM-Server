@@ -11,9 +11,7 @@ import {
     MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOptionBox,
-    MenuItemSubMenuLink,
     MenuTitle,
-    SubMenu,
 } from '../Styleguide/Menu';
 
 type DrivingSchoolMenuProps = {
@@ -24,8 +22,13 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
     if (!data) {
         data = {
             currentVehicleLimit: 1,
+            remainingSlots: 0,
         };
     }
+
+    const vehicleLimits = DrivingSchoolConfig.vehicleLimits;
+    const lastVehicleLimit = parseInt(Object.keys(vehicleLimits)[Object.keys(vehicleLimits).length - 1]);
+    const initialLimit = Math.min(data.currentVehicleLimit + 1, lastVehicleLimit);
 
     const [limit, setLimit] = useState(0);
     const [price, setPrice] = useState(0);
@@ -42,12 +45,13 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
         const currentLimit = data.currentVehicleLimit;
         let newPrice = 0;
         for (let i = currentLimit + 1; i <= limit; i++) {
-            newPrice += DrivingSchoolConfig.vehicleLimits[i];
+            newPrice += vehicleLimits[i];
         }
         setPrice(newPrice);
     }, [limit]);
 
     const onConfirm = () => {
+        if (limit <= data.currentVehicleLimit) return;
         fetchNui(NuiEvent.DrivingSchoolUpdateVehicleLimit, {
             limit,
             price,
@@ -58,33 +62,29 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
         setLimit(selectedLimit);
     };
 
-    const onCheckVehicleSlot = () => {
-        fetchNui(NuiEvent.DrivingSchoolCheckVehicleSlots);
-    };
-
     return (
         <Menu type={MenuType.DrivingSchool}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
-                <MenuContent>
-                    <MenuItemSubMenuLink id="vehicle-limit-upgrades">Améliorations</MenuItemSubMenuLink>
-                    <MenuItemButton onConfirm={() => onCheckVehicleSlot()}>
-                        Vérifier les places restantes
-                    </MenuItemButton>
-                </MenuContent>
-            </MainMenu>
-            <SubMenu id="vehicle-limit-upgrades">
-                <MenuTitle banner={banner}>Améliorations</MenuTitle>
+                <MenuTitle banner={banner}>
+                    <div className="flex">
+                        Améliorations <span className="ml-auto">Places restantes : {data.remainingSlots}</span>
+                    </div>
+                </MenuTitle>
                 <MenuContent>
                     <MenuItemSelect
-                        value={data.currentVehicleLimit}
+                        value={initialLimit}
                         title="Niveau"
                         showAllOptions
                         useGrid
                         onChange={(_, value) => onChange(value)}
                     >
-                        {Object.keys(DrivingSchoolConfig.vehicleLimits).map(limit => (
-                            <MenuItemSelectOptionBox key={limit} value={parseInt(limit)}>
+                        {Object.keys(vehicleLimits).map(limit => (
+                            <MenuItemSelectOptionBox
+                                key={limit}
+                                value={parseInt(limit)}
+                                useGrid
+                                highlight={data.currentVehicleLimit >= parseInt(limit)}
+                            >
                                 {parseInt(limit)}
                             </MenuItemSelectOptionBox>
                         ))}
@@ -96,7 +96,7 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
                         </div>
                     </MenuItemButton>
                 </MenuContent>
-            </SubMenu>
+            </MainMenu>
         </Menu>
     );
 };
