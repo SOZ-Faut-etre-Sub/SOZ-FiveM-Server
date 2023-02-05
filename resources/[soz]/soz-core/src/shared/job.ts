@@ -53,6 +53,7 @@ export enum JobPermission {
     BennysResell = 'resell',
     BennysOrder = 'order',
     UpwOrder = 'order',
+    UpwChangePrice = 'upw-change-price',
 }
 
 export type Job = {

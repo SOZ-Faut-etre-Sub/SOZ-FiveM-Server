@@ -50,6 +50,6 @@ export class UpwVehicleProvider {
                     return player.job.onduty && player.job.id === JobType.Upw;
                 },
             },
-        ])
+        ]);
     }
 }

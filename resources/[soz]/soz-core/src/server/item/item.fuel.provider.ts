@@ -226,71 +226,6 @@ export class ItemFuelProvider {
         this.notifier.notify(source, "Vous avez ~g~utilisé~s~ un bidon d'huile.", 'success');
     }
 
-    public async useLithiumBattery(source: number, item: CommonItem, inventoryItem: InventoryItem) {
-        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
-
-        if (!closestVehicle) {
-            this.notifier.notify(source, 'Aucun véhicule à proximité');
-
-            return;
-        }
-
-        if (!isVehicleModelElectric(GetEntityModel(closestVehicle.vehicleEntityId))) {
-            this.notifier.notify(source, "Ce véhicule n'a pas de batterie Lithium-ion", 'error');
-            return;
-        }
-
-        const { completed } = await this.progressService.progress(
-            source,
-            'battery_change',
-            'Changement de la batterie...',
-            10000,
-            {
-                name: 'car_bomb_mechanic',
-                dictionary: 'mp_car_bomb',
-                options: {
-                    onlyUpperBody: true,
-                    repeat: true,
-                },
-            },
-            {
-                disableMovement: true,
-                disableCarMovement: true,
-                disableCombat: true,
-                disableMouse: false,
-            }
-        );
-
-        if (!completed) {
-            return;
-        }
-
-        if (!this.inventoryManager.addItemToInventory(source, 'empty_lithium_battery', 1).success) {
-            this.notifier.notify(source, 'Vous êtes ~r~trop chargé~s~ pour récupérer la batterie vide.', 'error');
-            return;
-        }
-
-        if (
-            !this.inventoryManager.removeItemFromInventory(
-                source,
-                item.name,
-                1,
-                inventoryItem.metadata,
-                inventoryItem.slot
-            )
-        ) {
-            return;
-        }
-
-        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
-
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
-            oilLevel: 100,
-        });
-
-        this.notifier.notify(source, 'Vous avez ~g~changé~s~ la batterie du véhicule.', 'success');
-    }
-
     public async usePortableBattery(source: number, item: CommonItem, inventoryItem: InventoryItem) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
@@ -310,7 +245,7 @@ export class ItemFuelProvider {
         if (vehicleState.condition.fuelLevel >= 67) {
             this.notifier.notify(
                 source,
-                'La batterie est ~r~trop chargée~s~ pour utiliser batterie portable.',
+                'La batterie est ~r~trop chargée~s~ pour utiliser une batterie portable.',
                 'error'
             );
 
@@ -361,7 +296,6 @@ export class ItemFuelProvider {
         this.item.setItemUseCallback('essence_jerrycan', this.useEssenceJerrycan.bind(this));
         this.item.setItemUseCallback('kerosene_jerrycan', this.useKeroseneJerrycan.bind(this));
         this.item.setItemUseCallback('oil_jerrycan', this.useOilJerrycan.bind(this));
-        this.item.setItemUseCallback('lithium_battery', this.useLithiumBattery.bind(this));
         this.item.setItemUseCallback('car_portable_battery', this.usePortableBattery.bind(this));
     }
 }
