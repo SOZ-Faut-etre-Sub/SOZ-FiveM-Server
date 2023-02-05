@@ -7,7 +7,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
@@ -285,6 +285,11 @@ export class VehicleFuelProvider {
                 blackoutGlobal: true,
                 canInteract: (entity: number) => {
                     if (GetEntityHealth(entity) <= 0) {
+                        return false;
+                    }
+                    const model = GetEntityModel(entity);
+
+                    if (!IsThisModelAHeli(model) && !IsThisModelAPlane(model) && !this.checkBackOfVehicle(entity)) {
                         return false;
                     }
 
@@ -655,5 +660,15 @@ export class VehicleFuelProvider {
             SetVehicleEngineHealth(vehicle, newEngineHealth);
             SetVehicleEngineOn(vehicle, false, true, true);
         }
+    }
+
+    private checkBackOfVehicle(vehicle: number): boolean {
+        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const model = GetEntityModel(vehicle);
+        const [min, max] = GetModelDimensions(model) as [Vector3, Vector3];
+        const vehicleLength = max[1] - min[1];
+        const backPosition = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -vehicleLength / 2, 0.0) as Vector3;
+        const distance = getDistance(backPosition, playerPosition);
+        return distance < 2.0;
     }
 }
