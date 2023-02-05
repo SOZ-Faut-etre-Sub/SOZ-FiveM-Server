@@ -38,6 +38,23 @@ Config.FarmAccountMoney = {
     ["farm_ffs"] = {money = 100000, marked_money = 0},
 }
 
+Config.SocietyTaxes = {
+    privateSociety = {
+        ["baun"] = {"baun", "safe_baun"},
+        ["bennys"] = {"bennys", "safe_bennys"},
+        ["ffs"] = {"ffs", "safe_ffs"},
+        ["food"] = {"food", "safe_food"},
+        ["garbage"] = {"garbage", "safe_garbage"},
+        ["news"] = {"news", "safe_news"},
+        ["oil"] = {"oil", "safe_oil"},
+        ["pawl"] = {"pawl", "safe_pawl"},
+        ["taxi"] = {"taxi", "safe_taxi"},
+        ["upw"] = {"upw", "safe_upw"},
+    },
+
+    taxRepartition = {["lspd"] = 30, ["bcso"] = 30, ["lsmc"] = 30, ["stonk"] = 10},
+}
+
 Config.SafeStorages = {
     ["safe_cash-transfer"] = {
         label = "Coffre STONK Depository",
