@@ -22,6 +22,15 @@ export enum PlaceCapacity {
     Medium = 2,
     Large = 3,
 }
+
+export const HouseGarageLimits = {
+    0: 2,
+    1: 4,
+    2: 6,
+    3: 8,
+    4: 10,
+};
+
 export type GarageParkingPlaceData = {
     capacity: PlaceCapacity[];
 };
