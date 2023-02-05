@@ -26,6 +26,10 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
         };
     }
 
+    const vehicleLimits = DrivingSchoolConfig.vehicleLimits;
+    const lastVehicleLimit = parseInt(Object.keys(vehicleLimits)[Object.keys(vehicleLimits).length - 1]);
+    const initialLimit = Math.min(data.currentVehicleLimit + 1, lastVehicleLimit);
+
     const [limit, setLimit] = useState(0);
     const [price, setPrice] = useState(0);
 
@@ -41,12 +45,13 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
         const currentLimit = data.currentVehicleLimit;
         let newPrice = 0;
         for (let i = currentLimit + 1; i <= limit; i++) {
-            newPrice += DrivingSchoolConfig.vehicleLimits[i];
+            newPrice += vehicleLimits[i];
         }
         setPrice(newPrice);
     }, [limit]);
 
     const onConfirm = () => {
+        if (limit <= data.currentVehicleLimit) return;
         fetchNui(NuiEvent.DrivingSchoolUpdateVehicleLimit, {
             limit,
             price,
@@ -67,14 +72,19 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
                 </MenuTitle>
                 <MenuContent>
                     <MenuItemSelect
-                        value={data.currentVehicleLimit}
+                        value={initialLimit}
                         title="Niveau"
                         showAllOptions
                         useGrid
                         onChange={(_, value) => onChange(value)}
                     >
-                        {Object.keys(DrivingSchoolConfig.vehicleLimits).map(limit => (
-                            <MenuItemSelectOptionBox key={limit} value={parseInt(limit)}>
+                        {Object.keys(vehicleLimits).map(limit => (
+                            <MenuItemSelectOptionBox
+                                key={limit}
+                                value={parseInt(limit)}
+                                useGrid
+                                highlight={data.currentVehicleLimit >= parseInt(limit)}
+                            >
                                 {parseInt(limit)}
                             </MenuItemSelectOptionBox>
                         ))}
