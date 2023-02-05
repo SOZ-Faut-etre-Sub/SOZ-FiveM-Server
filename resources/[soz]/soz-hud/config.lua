@@ -2,18 +2,20 @@ Config = {
     SpeedMultiplier = 3.6, --- 3.6 GTA -> km/h | 2.23694 GTA -> mph
 
     ElectricCars = {
-        [GetHashKey("DILETTANTE")] = "Dilettante",
-        [GetHashKey("KHAMELION")] = "Khamelion",
-        [GetHashKey("SURGE")] = "Surge",
-        [GetHashKey("VOLRIC")] = "Voltic",
-        [GetHashKey("CYCLONE")] = "Cyclone",
-        [GetHashKey("NEON")] = "Neon",
-        [GetHashKey("RAIDEN")] = "Raiden",
-        [GetHashKey("TEZERACT")] = "Tezeract",
-        [GetHashKey("IMORGON")] = "Imorgon",
-        [GetHashKey("CYCLONE2")] = "Cyclone2",
-        [GetHashKey("IWAGEN")] = "IWagen",
-        [GetHashKey("CADDY")] = "Caddy",
+        [-1130810103] = 'Dilettante',
+        [544021352] = 'Khamelion',
+        [-1894894188] = 'Surge',
+        [-1622444098] = 'Voltic',
+        [1392481335] = 'Cyclone',
+        [-1848994066] = 'Neon',
+        [-1529242755] = 'Raiden',
+        [1031562256] = 'Tezeract',
+        [-1132721664] = 'Imorgon',
+        [662793086] = 'I-Wagen',
+        [-505223465] = 'Omnis e-GT',
+        [1147287684] = 'Caddy',
+        [1560980623] = 'Airtug',
+        [989294410] = 'Rocket Voltic',
     },
 
     AllowedReticuleWeapon = {

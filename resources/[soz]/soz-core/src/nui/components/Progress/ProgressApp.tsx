@@ -43,13 +43,16 @@ export const ProgressApp: FunctionComponent = () => {
     if (!progress) {
         return null;
     }
+    const progressColor = progress.color || 'text-lime-500';
 
     return (
-        <div className="fixed flex bottom-10 text-center left-0 right-0 text-lime-500 text-xl mx-auto items-center">
+        <div
+            className={`fixed flex bottom-10 text-center left-0 right-0 ${progressColor} text-xl mx-auto items-center`}
+        >
             <div className="flex bg-black/50 p-2 rounded items-center mx-auto">
                 <div>{progress.label}</div>
                 {progress.units.map((unit, index) => (
-                    <div key={index} className="ml-4 font-mono w-16">
+                    <div key={index} className="ml-4 font-mono w-18">
                         {((unit.end - unit.start) * currentProgress + unit.start).toFixed(2)}
                         {unit.unit}
                     </div>
