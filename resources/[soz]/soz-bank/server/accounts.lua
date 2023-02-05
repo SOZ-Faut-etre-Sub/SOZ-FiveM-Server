@@ -122,6 +122,20 @@ function Account.Remove(acc)
     Accounts[acc.id] = nil
 end
 
+function Account.GetMoney(acc, money_type)
+    acc = Account(acc)
+
+    if money_type == nil then
+        money_type = "money"
+    end
+
+    if acc == nil then
+        return 0
+    end
+
+    return acc[money_type]
+end
+
 function Account.AddMoney(acc, money, money_type)
     acc = Account(acc)
 
