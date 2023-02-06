@@ -102,6 +102,11 @@ export class DrivingSchoolProvider {
                     dealershipId: {
                         not: null,
                     },
+                    AND: {
+                        dealershipId: {
+                            not: 'cycle',
+                        },
+                    },
                 },
             })
         ).map(v => v.model);
