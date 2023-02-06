@@ -30,6 +30,9 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
     }
     if (!data.currentTier) data.currentTier = 0;
 
+    const lastTier = parseInt(Object.keys(HousingTiers)[Object.keys(HousingTiers).length - 1]);
+    const initialTier = Math.min(data.currentTier + 1, lastTier);
+
     const [tier, setTier] = useState(0);
     const [parking, setParking] = useState(true);
     const [tierPrice, setTierPrice] = useState(0);
@@ -61,6 +64,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
     }, [tier, parking]);
 
     const onConfirm = () => {
+        if (tier <= data.currentTier) return;
         fetchNui(NuiEvent.HousingUpgradeApartment, {
             tier,
             price: tierPrice,
@@ -91,7 +95,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                                 <h3 className="ml-4">Palier</h3>
                             </div>
                         }
-                        value={data.currentTier}
+                        value={initialTier}
                         onChange={(_, value) => onChange(value)}
                         showAllOptions
                         alignRight
@@ -100,7 +104,11 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                             const value = parseInt(tier);
                             const label = value !== 0 ? value : 'Origine';
                             return (
-                                <MenuItemSelectOptionBox key={value} value={value}>
+                                <MenuItemSelectOptionBox
+                                    key={value}
+                                    value={value}
+                                    highlight={data.currentTier >= value}
+                                >
                                     {label}
                                 </MenuItemSelectOptionBox>
                             );

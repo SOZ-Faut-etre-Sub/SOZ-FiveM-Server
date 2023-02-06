@@ -595,7 +595,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     const classNameTitle = cn('pr-2 truncate');
 
     const classNameList = cn({
-        'ml-4': showAllOptions,
+        'ml-4': showAllOptions && !alignRight,
         'ml-auto': alignRight,
     });
 
