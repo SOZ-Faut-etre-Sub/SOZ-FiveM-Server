@@ -361,6 +361,11 @@ export class VehicleDealershipProvider {
                         dealershipId: {
                             not: null,
                         },
+                        AND: {
+                            dealershipId: {
+                                not: 'cycle',
+                            },
+                        },
                     },
                 })
             ).map(v => v.model);
