@@ -11,7 +11,7 @@ export type Vehicle = {
     name: string;
     price: number;
     category: string;
-    dealership?: DealershipId;
+    dealershipId?: DealershipId | string;
     requiredLicence?: string;
     size: number;
     jobName?: { [key in JobType]: string };

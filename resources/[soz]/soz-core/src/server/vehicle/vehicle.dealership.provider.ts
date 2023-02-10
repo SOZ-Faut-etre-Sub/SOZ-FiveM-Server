@@ -14,6 +14,7 @@ import { Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItems } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
+import { DealershipId } from '../../shared/vehicle/dealership';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, Vehicle, VehicleMaxStock } from '../../shared/vehicle/vehicle';
@@ -382,7 +383,7 @@ export class VehicleDealershipProvider {
                 },
             });
 
-            if (playerVehicleCount >= player.metadata.vehiclelimit) {
+            if (vehicle.dealershipId !== DealershipId.Cycle && playerVehicleCount >= player.metadata.vehiclelimit) {
                 let errorMsg = `Limite de véhicule atteinte (${playerVehicleCount}/${player.metadata.vehiclelimit})`;
                 if (player.metadata.vehiclelimit < 10) errorMsg += ". Améliorez votre carte grise à l'auto-école.";
 
