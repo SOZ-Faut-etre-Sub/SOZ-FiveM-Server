@@ -2677,32 +2677,21 @@ CreateThread(function()
         local hidden = IsScreenFadedOut() or IsPauseMenuActive()
 
         if MenuV.CurrentMenu ~= nil and not hidden then
-            DisableAllControlActions(0)
-
-            EnableControlAction(0, 1, true) -- INPUT_LOOK_LR
-            EnableControlAction(0, 2, true) -- INPUT_LOOK_UD
-            EnableControlAction(0, 19, true) -- INPUT_CHARACTER_WHEEL
-            EnableControlAction(0, 21, true) -- INPUT_SPRINT
-            EnableControlAction(0, 30, true) -- INPUT_MOVE_LR
-            EnableControlAction(0, 31, true) -- INPUT_MOVE_UD
-            EnableControlAction(0, 59, true) -- INPUT_VEH_MOVE_LR
-            EnableControlAction(0, 71, true) -- INPUT_VEH_ACCELERATE
-            EnableControlAction(0, 72, true) -- INPUT_VEH_BRAKE
-            EnableControlAction(0, 74, true) -- INPUT_VEH_HEADLIGHT
-            EnableControlAction(0, 75, true) -- INPUT_VEH_EXIT
-            EnableControlAction(0, 76, true) -- INPUT_VEH_HANDBRAKE
-            EnableControlAction(0, 86, true) -- INPUT_VEH_HORN
-            EnableControlAction(0, 137, true) -- INPUT_VEH_PUSHBIKE_SPRINT
-            EnableControlAction(0, 172, true) -- INPUT_CELLPHONE_UP
-            EnableControlAction(0, 173, true) -- INPUT_CELLPHONE_DOWN
-            EnableControlAction(0, 174, true) -- INPUT_CELLPHONE_LEFT
-            EnableControlAction(0, 175, true) -- INPUT_CELLPHONE_RIGHT
-            EnableControlAction(0, 189, true) -- INPUT_FRONTEND_LEFT
-            EnableControlAction(0, 190, true) -- INPUT_FRONTEND_RIGHT
-            EnableControlAction(0, 191, true) -- INPUT_FRONTEND_RDOWN
-            EnableControlAction(0, 194, true) -- INPUT_FRONTEND_RRIGHT
-            EnableControlAction(0, 239, true) -- INPUT_CURSOR_X
-            EnableControlAction(0, 240, true) -- INPUT_CURSOR_Y
+            DisablePlayerFiring(PlayerId(), true) -- Disable weapon firing
+            DisableControlAction(0, 24, true) -- disable attack
+            DisableControlAction(0, 25, true) -- disable aim
+            DisableControlAction(0, 29, true) -- disable ability secondary (B)
+            DisableControlAction(0, 44, true) -- disable cover
+            DisableControlAction(1, 37, true) -- disable weapon select
+            DisableControlAction(0, 47, true) -- disable weapon
+            DisableControlAction(0, 58, true) -- disable weapon
+            DisableControlAction(0, 140, true) -- disable melee
+            DisableControlAction(0, 141, true) -- disable melee
+            DisableControlAction(0, 142, true) -- disable melee
+            DisableControlAction(0, 143, true) -- disable melee
+            DisableControlAction(0, 263, true) -- disable melee
+            DisableControlAction(0, 264, true) -- disable melee
+            DisableControlAction(0, 257, true) -- disable melee
         end
 
         Wait(0)
