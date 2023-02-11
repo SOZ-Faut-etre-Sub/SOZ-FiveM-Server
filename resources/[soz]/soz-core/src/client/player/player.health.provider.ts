@@ -331,12 +331,13 @@ export class PlayerHealthProvider {
             return;
         }
 
+        let progressEnd = false;
         this.animationService
             .playScenario({
                 name: 'world_human_muscle_free_weights',
             })
             .then(cancelled => {
-                if (cancelled) {
+                if (cancelled && !progressEnd) {
                     this.progressService.cancel();
                 }
             });
@@ -345,6 +346,7 @@ export class PlayerHealthProvider {
             'Vous faites des haltères...',
             EXERCISE_TIME
         );
+        progressEnd = true;
 
         if (completed) {
             await this.doStrengthExercise('freeWeight');
@@ -386,6 +388,7 @@ export class PlayerHealthProvider {
             return;
         }
 
+        let progressEnd = false;
         const animationPromise = this.animationService
             .playAnimation({
                 enter: enterduration
@@ -418,12 +421,13 @@ export class PlayerHealthProvider {
                     : null,
             })
             .then(cancelled => {
-                if (cancelled) {
+                if (cancelled && !progressEnd) {
                     this.progressService.cancel();
                 }
             });
 
         const { completed } = await this.progressService.progress(type, message, EXERCISE_TIME);
+        progressEnd = true;
 
         if (completed) {
             this.doStrengthExercise(type);
