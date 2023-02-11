@@ -1,3 +1,5 @@
+import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
+
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
 import { NuiAudioMethodMap } from './audio';
@@ -33,6 +35,7 @@ export interface NuiMethodMap {
     progress: NuiProgressMethodMap;
     panel: NuiPanelMethodMap;
     repair: NuiRepairMethodMap;
+    missive: NuiMissiveMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

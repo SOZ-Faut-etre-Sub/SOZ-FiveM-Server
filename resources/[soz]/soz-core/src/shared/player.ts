@@ -150,6 +150,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     licences: Partial<Record<PlayerLicenceType, number>>;
     shortcuts: Record<number, Partial<InventoryItem>>;
     mort: string | null;
+    missive_count: number;
     criminal_state: PlayerCriminalState;
     criminal_reputation: number;
     criminal_talents: Talent[];

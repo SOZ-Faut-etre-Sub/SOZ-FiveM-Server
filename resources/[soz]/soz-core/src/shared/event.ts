@@ -56,7 +56,9 @@ export enum ServerEvent {
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',
     LSMC_HEALTH_CHECK = 'soz-core:server:job:lsmc:health-check',
     LSMC_SET_HEALTH_BOOK = 'soz-core:server:job:lsmc:set-health-book',
-
+    MISSIVE_CREATE_ITEM = 'soz-core:server:missive:create-item',
+    MISSIVE_DELETE_ITEM = 'soz-core:server:missive:delete-item',
+    MISSIVE_COMPLETE = 'soz-core:server:missive:complete',
     OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:server:oil:refill-kerosene-station',
     OIL_SET_STATION_PRICE = 'soz-core:server:oil:set-station-price',
@@ -224,6 +226,7 @@ export enum ClientEvent {
     LSMC_APPLY_PATIENT_CLOTHING = 'ems:client:applyPatientClothing',
     LSMC_REMOVE_PATIENT_CLOTHING = 'ems:client:removePatientClothing',
 
+    MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
 
     NUI_HIDE_PANEL = 'soz-core:client:nui:hide-panel',

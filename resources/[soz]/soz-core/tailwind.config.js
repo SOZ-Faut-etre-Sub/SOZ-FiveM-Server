@@ -2,7 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
     darkMode: 'class',
-    content: ['./src/**/*.{vue,js,ts,jsx,tsx}'],
+    content: ['./src/nui/**/*.{vue,js,ts,jsx,tsx}', './../../../../private/soz-core-src/nui/**/*.{vue,js,ts,jsx,tsx}'],
     theme: {
         screens: {
             sm: '480px',

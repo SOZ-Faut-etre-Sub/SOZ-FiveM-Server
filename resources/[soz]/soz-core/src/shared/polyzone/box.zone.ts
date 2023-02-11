@@ -50,6 +50,20 @@ export class BoxZone<T = never> extends PolygonZone<T> {
         });
     }
 
+    public static default<T>(
+        center: Point3D | Vector4,
+        length = 1,
+        width = 1,
+        options?: BoxZoneOptions<T>
+    ): BoxZone<T> {
+        return new BoxZone(center, length, width, {
+            minZ: center[2] - 1,
+            maxZ: center[2] + 2,
+            heading: center[3] || 0,
+            ...options,
+        });
+    }
+
     public constructor(center: Point3D | Vector4, length: number, width: number, options?: BoxZoneOptions<T>) {
         const points: Vector2[] = [];
         const heading = options?.heading || 0;

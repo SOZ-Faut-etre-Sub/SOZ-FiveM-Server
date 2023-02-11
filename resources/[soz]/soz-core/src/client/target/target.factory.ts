@@ -47,7 +47,7 @@ export class TargetFactory {
     @Inject(PedFactory)
     private pedFactory: PedFactory;
 
-    public createForBoxZone(id: string, zone: Zone, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+    public createForBoxZone(id: string, zone: Zone<any>, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         zone = {
             length: 1,
             width: 1,
