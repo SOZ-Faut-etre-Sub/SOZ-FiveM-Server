@@ -1,11 +1,17 @@
-import { OnEvent } from '../../core/decorators/event';
+import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
+import { Item } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
+import { InventoryManager } from '../inventory/inventory.manager';
+import { ItemService } from '../item/item.service';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
+import { ProgressService } from '../player/progress.service';
 import { VehiclePlayerRepository } from './vehicle.player.repository';
+import { VehicleSpawner } from './vehicle.spawner';
 import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
@@ -19,7 +25,58 @@ export class VehicleLockProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(ItemService)
+    private item: ItemService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(VehicleSpawner)
+    private vehicleSpawner: VehicleSpawner;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
+
     private trunkOpened: Record<number, Set<number>> = {};
+
+    @Once()
+    public onStart() {
+        this.item.setItemUseCallback('lockpick', this.useLockpick.bind(this));
+    }
+
+    public async useLockpick(source: number, item: Item): Promise<void> {
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
+
+        if (null === closestVehicle || closestVehicle.distance > 3) {
+            this.notifier.notify(source, 'Aucun véhicule à proximité', 'error');
+
+            return;
+        }
+
+        if (!this.inventoryManager.removeItemFromInventory(source, item.name, 1)) {
+            this.notifier.notify(source, 'Aucun lockpick', 'error');
+
+            return;
+        }
+
+        const { completed } = await this.progressService.progress(source, 'Lockpick', 'Crochetage du véhicule', 10000, {
+            dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+            name: 'machinic_loop_mechandplayer',
+        });
+
+        if (!completed) {
+            return;
+        }
+
+        this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
+            forced: true,
+        });
+
+        this.notifier.notify(source, 'Le véhicule a été forcé.', 'success');
+    }
 
     @OnEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE)
     async onSetTrunkState(source: number, vehicleNetworkId: number, state: boolean) {
