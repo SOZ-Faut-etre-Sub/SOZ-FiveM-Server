@@ -61,6 +61,7 @@ export class VehicleSeatbeltProvider {
         await wait(2000);
         SetPedConfigFlag(PlayerPedId(), 184, true);
         this.isSwitchingSeat = false;
+        this.vehicleService.updateVehiculeClothConfig();
     }
 
     public isSeatbeltOnForPlayer() {

@@ -39,3 +39,17 @@ RegisterNetEvent("soz-character:Client:SetTemporaryNaked", function()
 
     ApplyPlayerClothConfig(PlayerId(), tempClothConfig)
 end)
+
+exports("ReApplyHeadConfig", function()
+    local clothSet = ClothConfigComputeToClothSet(PlayerData.cloth_config)
+    local ped = PlayerPedId()
+
+    local prop = clothSet.Props[tostring(PropType.Head)] or clothSet.Components[PropType.Head]
+    if prop then
+        if prop == nil or prop.Clear == true then
+            ClearPedProp(ped, PropType.Head)
+        else
+            SetPedPropIndex(ped, PropType.Head, prop.Drawable, prop.Texture or 0, prop.Palette or 0)
+        end
+    end
+end)
