@@ -330,6 +330,8 @@ export enum NuiEvent {
 
     JobPlaceProps = 'soz-core:client:job:place-props',
 
+    LsmcPharmacyBuyItem = 'soz-core:nui:job:lsmc:pharmacy:buy-item',
+
     BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
     BennysOrder = 'soz-core:client:job:bennys:order',
     BennysGetOrders = 'soz-core:client:job:bennys:get-orders',

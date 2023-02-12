@@ -1,4 +1,5 @@
 import { Component, Prop, WardrobeConfig } from '../cloth';
+import { joaat } from '../joaat';
 import { Vector3, Vector4 } from '../polyzone/vector';
 
 export const PHARMACY_PRICES = {
@@ -21,7 +22,7 @@ export const BedLocations: Vector3[] = [
 export const FailoverLocation: Vector4 = [337.57, -1435.95, 32.51, 83.48];
 
 export const PatientClothes: WardrobeConfig = {
-    [GetHashKey('mp_m_freemode_01')]: {
+    [joaat('mp_m_freemode_01')]: {
         ['Patient']: {
             Components: {
                 [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -45,7 +46,7 @@ export const PatientClothes: WardrobeConfig = {
             },
         },
     },
-    [GetHashKey('mp_f_freemode_01')]: {
+    [joaat('mp_f_freemode_01')]: {
         ['Patient']: {
             Components: {
                 [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
