@@ -401,7 +401,7 @@ export class VehicleElectricProvider {
 
         await this.animationService.playAnimation({
             base: {
-                dictionary: 'anim@move_m@trash',
+                dictionary: 'anim@amb@nightclub@mini@drinking@drinking_shots@ped_d@normal',
                 name: 'pickup',
                 blendInSpeed: 8.0,
                 blendOutSpeed: -8.0,
@@ -420,7 +420,7 @@ export class VehicleElectricProvider {
 
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
         const object = CreateObject(
-            GetHashKey('prop_cs_fuel_nozle'),
+            GetHashKey('car_charger_plug'),
             position[0],
             position[1],
             position[2] - 1.0,
@@ -434,12 +434,12 @@ export class VehicleElectricProvider {
             object,
             PlayerPedId(),
             GetPedBoneIndex(PlayerPedId(), 26610),
-            0.04,
-            -0.04,
-            0.02,
-            305.0,
-            270.0,
-            -40.0,
+            0.07,
+            0,
+            0,
+            -30.0,
+            0.0,
+            0.0,
             true,
             true,
             false,
@@ -457,7 +457,7 @@ export class VehicleElectricProvider {
             0.0,
             0.0,
             15.0,
-            1,
+            4,
             10.0,
             1.0,
             0,
@@ -476,40 +476,35 @@ export class VehicleElectricProvider {
             station: station,
             filling: false,
         };
-
-        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
-        AttachRopeToEntity(rope, entity, ropePosition[0], ropePosition[1], ropePosition[2], true);
         ActivatePhysics(rope);
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_FRAME)
     private async handleStationPlug() {
         if (!this.currentStationPlug) {
             return;
         }
-
-        const ropePosition = GetOffsetFromEntityInWorldCoords(this.currentStationPlug.entity, 0.0, 0.0, 1.0) as Vector3;
-        const handPosition = GetWorldPositionOfEntityBone(
-            PlayerPedId(),
-            GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
+        const plugPosition = GetOffsetFromEntityInWorldCoords(
+            this.currentStationPlug.object,
+            -0.02,
+            -0.145,
+            0
         ) as Vector3;
 
-        AttachEntitiesToRope(
+        AttachRopeToEntity(
             this.currentStationPlug.rope,
-            this.currentStationPlug.entity,
             PlayerPedId(),
-            ropePosition[0],
-            ropePosition[1],
-            ropePosition[2],
-            handPosition[0],
-            handPosition[1],
-            handPosition[2],
-            10.0,
-            true,
-            true,
-            null,
-            'BONETAG_L_FINGER2'
+            plugPosition[0],
+            plugPosition[1],
+            plugPosition[2],
+            true
         );
+
+        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const stationPosition = GetEntityCoords(this.currentStationPlug.entity, true) as Vector3;
+        if (getDistance(playerPosition, stationPosition) > 15.0) {
+            await this.disableStationPlug();
+        }
     }
 
     @OnEvent(ClientEvent.VEHICLE_CHARGE_START)
@@ -523,7 +518,7 @@ export class VehicleElectricProvider {
             units: [
                 {
                     unit: 'kWh',
-                    start: 60 - amount,
+                    start: amount,
                     end: 60,
                 },
                 {
