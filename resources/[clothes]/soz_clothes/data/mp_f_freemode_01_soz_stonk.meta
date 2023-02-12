@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ShopPedApparel>
+    <pedName>mp_f_freemode_01</pedName>
+    <dlcName>soz_stonk</dlcName>
+    <fullDlcName>mp_f_freemode_01_soz_stonk</fullDlcName>
+    <eCharacter>SCR_CHAR_MULTIPLAYER_F</eCharacter>
+    <creatureMetaData>MP_CreatureMetadata_soz_stonk</creatureMetaData>
+
+    <pedOutfits/>
+    <pedComponents/>
+    <pedProps/>
+</ShopPedApparel>

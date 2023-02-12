@@ -58,6 +58,19 @@ StonkConfig.Cloakroom = {
             },
             Props = {},
         },
+        ["Tenue Hiver"] = {
+            Components = {
+                [3] = {Drawable = 6, Texture = 0, Palette = 0},
+                [4] = {Drawable = 25, Texture = 3, Palette = 0},
+                [6] = {Drawable = 54, Texture = 0, Palette = 0},
+                [7] = {Drawable = 8, Texture = 0, Palette = 0},
+                [8] = {Drawable = 20, Texture = 3, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 73, Texture = 0, Palette = 0},
+                [11] = {Drawable = 416, Texture = 0, Palette = 0},
+            },
+            Props = {[0] = {Drawable = 10, Texture = 2, Palette = 0}},
+        },
     },
     [GetHashKey("mp_f_freemode_01")] = {
         ["Tenue VIP"] = {
@@ -86,6 +99,19 @@ StonkConfig.Cloakroom = {
                 [11] = {Drawable = 57, Texture = 3, Palette = 0},
             },
             Props = {},
+        },
+        ["Tenues Hiver"] = {
+            Components = {
+                [3] = {Drawable = 5, Texture = 0, Palette = 0},
+                [4] = {Drawable = 3, Texture = 15, Palette = 0},
+                [6] = {Drawable = 55, Texture = 0, Palette = 0},
+                [7] = {Drawable = 8, Texture = 0, Palette = 0},
+                [8] = {Drawable = 19, Texture = 3, Palette = 0},
+                [9] = {Drawable = 0, Texture = 0, Palette = 0},
+                [10] = {Drawable = 82, Texture = 0, Palette = 0},
+                [11] = {Drawable = 443, Texture = 0, Palette = 0},
+            },
+            Props = {[0] = {Drawable = 10, Texture = 2, Palette = 0}},
         },
     },
 }
