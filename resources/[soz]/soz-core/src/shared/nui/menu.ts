@@ -52,6 +52,7 @@ export enum MenuType {
     VehicleDealership = 'vehicle_dealership',
     Wardrobe = 'wardrobe',
     GunSmith = 'gunsmith',
+    LsmcPharmacy = 'lsmc_pharmacy',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -76,4 +77,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.VehicleDealership]: VehicleDealershipMenuData;
     [MenuType.Wardrobe]: WardrobeMenuData;
     [MenuType.GunSmith]: WeaponsMenuData;
+    [MenuType.LsmcPharmacy]: never;
 }
