@@ -2817,6 +2817,18 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'L\'outil parfait pour faire infecter un ordinateur'
     },
+	['protestsign'] = {
+        ['name'] = 'protestsign',
+        ['label'] = 'Pancarte de manifestation',
+        ['weight'] = 600,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Pas content ! Pas content !',
+        ['illustrator'] = '.Poulpito'
+    },
     -- Vehicle Tools
     ['repairkit'] = {
         ['name'] = 'repairkit',

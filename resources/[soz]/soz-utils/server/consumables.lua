@@ -120,3 +120,12 @@ QBCore.Functions.CreateUseableItem("walkstick", function(source, item)
     end
     TriggerClientEvent("items:walkstick:toggle", source)
 end)
+
+--- Panneau de Manif
+
+QBCore.Functions.CreateUseableItem("protestsign", function(source, item)
+    if not preventUsageWhileHoldingWeapon(source) then
+        return
+    end
+    TriggerClientEvent("items:protestsign:toggle", source)
+end)
