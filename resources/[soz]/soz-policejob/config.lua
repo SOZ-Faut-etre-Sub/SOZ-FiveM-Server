@@ -55,6 +55,7 @@ Config.Cloakroom = {
                 Components = {
                     [3] = {Drawable = 16, Texture = 0, Palette = 0},
                     [4] = {Drawable = 64, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 67, Texture = 0, Palette = 0},
@@ -68,6 +69,7 @@ Config.Cloakroom = {
                 Components = {
                     [3] = {Drawable = 22, Texture = 0, Palette = 0},
                     [4] = {Drawable = 32, Texture = 1, Palette = 0},
+                    [5] = {Drawable = 52, Texture = 0, Palette = 0},
                     [6] = {Drawable = 13, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 56, Texture = 0, Palette = 0},
@@ -115,6 +117,7 @@ Config.Cloakroom = {
                 Components = {
                     [3] = {Drawable = 17, Texture = 0, Palette = 0},
                     [4] = {Drawable = 66, Texture = 0, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 49, Texture = 0, Palette = 0},
@@ -128,6 +131,7 @@ Config.Cloakroom = {
                 Components = {
                     [3] = {Drawable = 3, Texture = 0, Palette = 0},
                     [4] = {Drawable = 31, Texture = 1, Palette = 0},
+                    [5] = {Drawable = 52, Texture = 0, Palette = 0},
                     [6] = {Drawable = 34, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 33, Texture = 0, Palette = 0},
@@ -159,6 +163,7 @@ Config.Cloakroom = {
                 Components = {
                     [3] = {Drawable = 96, Texture = 0, Palette = 0},
                     [4] = {Drawable = 64, Texture = 1, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 43, Texture = 2, Palette = 0},
@@ -202,6 +207,7 @@ Config.Cloakroom = {
                 Components = {
                     [3] = {Drawable = 36, Texture = 0, Palette = 0},
                     [4] = {Drawable = 66, Texture = 1, Palette = 0},
+                    [5] = {Drawable = 0, Texture = 0, Palette = 0},
                     [6] = {Drawable = 24, Texture = 0, Palette = 0},
                     [7] = {Drawable = 8, Texture = 0, Palette = 0},
                     [8] = {Drawable = 30, Texture = 2, Palette = 0},

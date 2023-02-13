@@ -41,7 +41,7 @@ RegisterNetEvent("police:client:OpenCloakroomMenu", function(storageId)
                         if storageId then
                             TriggerServerEvent("soz-core:server:job:use-work-clothes", storageId)
                         end
-                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin)
+                        TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin, true)
                     end)
                 end,
             })

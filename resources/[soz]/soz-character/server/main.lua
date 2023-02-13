@@ -20,7 +20,7 @@ RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
     Player.Functions.SetClothConfig(clothConfig, false)
 end)
 
-RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes)
+RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, removeHideBag)
     local Player = QBCore.Functions.GetPlayer(source)
     local clothConfig = Player.PlayerData.cloth_config
 
@@ -41,6 +41,10 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes)
 
     for _, key in pairs(ConfigKeyToReset) do
         clothConfig.Config[key] = false
+    end
+
+    if removeHideBag then
+        clothConfig.Config["HideBag"] = false
     end
 
     Player.Functions.SetClothConfig(clothConfig, false)
