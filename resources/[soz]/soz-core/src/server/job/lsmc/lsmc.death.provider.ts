@@ -31,6 +31,11 @@ export class LSMCDeathProvider {
         if (uniteHU) {
             uniteHUBed = this.getFreeBed(source);
             Player(targetid).state.isWearingPatientOutfit = true;
+            const inside = player.metadata.inside;
+            inside.exitCoord = false;
+            inside.apartment = false;
+            inside.property = null;
+            this.playerService.setPlayerMetadata(targetid, 'inside', inside);
         }
         TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, skipanim, uniteHU, uniteHUBed);
         this.playerService.incrementMetadata(targetid, 'hunger', 30, 0, 100);
