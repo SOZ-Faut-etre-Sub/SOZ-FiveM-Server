@@ -111,6 +111,12 @@ export enum PlayerCriminalState {
     Allowed,
 }
 
+export type PlayerInsideState = {
+    apartment: number | false;
+    property: number | null;
+    exitCoord: { x: number; y: number; z: number } | false;
+};
+
 export type PlayerMetadata = PlayerHealthBook & {
     godmode: boolean;
     isdead: boolean;
@@ -148,4 +154,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     criminal_reputation: number;
     criminal_talents: Talent[];
     vehiclelimit: number;
+    inside: PlayerInsideState;
 };
