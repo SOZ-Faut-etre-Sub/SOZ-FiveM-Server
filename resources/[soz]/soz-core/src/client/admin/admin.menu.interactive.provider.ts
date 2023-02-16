@@ -127,22 +127,44 @@ export class AdminMenuInteractiveProvider {
 
     @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayersOnMap)
     public async toggleDisplayPlayersOnMap(value: boolean): Promise<void> {
-        if (!value) {
-            for (const value of Object.values(this.playerBlips)) {
-                RemoveBlip(value);
-            }
-            clearInterval(this.intervalHandlers.displayPlayersOnMap);
-            return;
-        }
-        this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
-            for (const value of Object.values(this.playerBlips)) {
-                RemoveBlip(value);
-            }
+        if (value === null) {
+				
+			this.playerBlips.forEach((BlipValue, BlipKey) => {
+				SetBlipDisplay(BlipValue, 1);
+			 	RemoveBlip(BlipValue);
+			 	this.playerBlips.delete(BlipKey);
+			});
 
-            const players = await emitRpc<FullAdminPlayer[]>(RpcEvent.ADMIN_GET_FULL_PLAYERS);
+            clearInterval(this.intervalHandlers.displayPlayersOnMap);
+			clearInterval(this.intervalHandlers.HideDisconnectPlayersOnMap);
+            return;
+        } else {
+
+			this.intervalHandlers.HideDisconnectPlayersOnMap = setInterval(async () => {			
+			const players = await emitRpc<FullAdminPlayer[]>(RpcEvent.ADMIN_GET_FULL_PLAYERS);
+			this.playerBlips.forEach((BlipValue, BlipKey) => {
+
+				let Blipstillexist = false;
+				for (const player of players) {
+					if (player.citizenId === BlipKey){
+						Blipstillexist = true;
+					}
+				}
+				if (!Blipstillexist) {
+					SetBlipDisplay(BlipValue, 1);
+					RemoveBlip(BlipValue);
+					this.playerBlips.delete(BlipKey);
+				}
+			});            
+			}, 10000);
+
+        	this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
+
+			const players = await emitRpc<FullAdminPlayer[]>(RpcEvent.ADMIN_GET_FULL_PLAYERS);         
 
             for (const player of players) {
-                const blipId = this.playerBlips.get(player.citizenId);
+
+				const blipId = this.playerBlips.get(player.citizenId);
 
                 const coords = player.coords;
                 if (DoesBlipExist(blipId)) {
@@ -161,8 +183,9 @@ export class AdminMenuInteractiveProvider {
                     this.playerBlips.set(player.citizenId, createdBlip);
                 }
             }
-            this.previousPlayers = players.map(player => player.citizenId);
         }, 2500);
+					
+		}
     }
 
     private async displayPlayerNames(withDetails: boolean): Promise<void> {
