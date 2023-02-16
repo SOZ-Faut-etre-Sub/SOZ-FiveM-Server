@@ -127,42 +127,59 @@ export class AdminMenuInteractiveProvider {
 
     @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayersOnMap)
     public async toggleDisplayPlayersOnMap(value: boolean): Promise<void> {
-        if (!value) {
-            for (const value of Object.values(this.playerBlips)) {
-                RemoveBlip(value);
-            }
+        if (value === null) {
+            this.playerBlips.forEach((BlipValue, BlipKey) => {
+                SetBlipDisplay(BlipValue, 1);
+                RemoveBlip(BlipValue);
+                this.playerBlips.delete(BlipKey);
+            });
+
             clearInterval(this.intervalHandlers.displayPlayersOnMap);
+            clearInterval(this.intervalHandlers.HideDisconnectPlayersOnMap);
             return;
-        }
-        this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
-            for (const value of Object.values(this.playerBlips)) {
-                RemoveBlip(value);
-            }
+        } else {
+            this.intervalHandlers.HideDisconnectPlayersOnMap = setInterval(async () => {
+                const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
+                this.playerBlips.forEach((BlipValue, BlipKey) => {
+                    let Blipstillexist = false;
+                    for (const player of players) {
+                        if (player.citizenId === BlipKey) {
+                            Blipstillexist = true;
+                        }
+                    }
+                    if (!Blipstillexist) {
+                        SetBlipDisplay(BlipValue, 1);
+                        RemoveBlip(BlipValue);
+                        this.playerBlips.delete(BlipKey);
+                    }
+                });
+            }, 10000);
 
-            const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
+            this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
+                const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
 
-            for (const player of players) {
-                const blipId = this.playerBlips.get(player.citizenId);
+                for (const player of players) {
+                    const blipId = this.playerBlips.get(player.citizenId);
 
-                const coords = player.coords;
-                if (DoesBlipExist(blipId)) {
-                    SetBlipCoords(blipId, coords[0], coords[1], coords[2]);
-                    SetBlipRotation(blipId, Math.ceil(player.heading));
-                } else {
-                    const createdBlip = this.QBCore.createBlip('admin:player-blip:' + player.citizenId, {
-                        coords: { x: coords[0], y: coords[1], z: coords[2] },
-                        heading: player.heading,
-                        name: player.rpFullName,
-                        playername: player.rpFullName,
-                        showheading: true,
-                        sprite: 1,
-                    });
-                    SetBlipCategory(createdBlip, 7);
-                    this.playerBlips.set(player.citizenId, createdBlip);
+                    const coords = player.coords;
+                    if (DoesBlipExist(blipId)) {
+                        SetBlipCoords(blipId, coords[0], coords[1], coords[2]);
+                        SetBlipRotation(blipId, Math.ceil(player.heading));
+                    } else {
+                        const createdBlip = this.QBCore.createBlip('admin:player-blip:' + player.citizenId, {
+                            coords: { x: coords[0], y: coords[1], z: coords[2] },
+                            heading: player.heading,
+                            name: player.rpFullName,
+                            playername: player.rpFullName,
+                            showheading: true,
+                            sprite: 1,
+                        });
+                        SetBlipCategory(createdBlip, 7);
+                        this.playerBlips.set(player.citizenId, createdBlip);
+                    }
                 }
-            }
-            this.previousPlayers = players.map(player => player.citizenId);
-        }, 2500);
+            }, 2500);
+        }
     }
 
     private async displayPlayerNames(withDetails: boolean): Promise<void> {
