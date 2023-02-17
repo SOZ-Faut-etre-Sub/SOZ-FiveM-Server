@@ -6,9 +6,10 @@ import { ContainerSlots } from '../ContainerSlots';
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import playerBanner from '/banner/player.jpg';
-import { DndContext, DragEndEvent, rectIntersection } from '@dnd-kit/core';
+import { DndContext, DragEndEvent, rectIntersection, } from '@dnd-kit/core';
 import { useInventoryRow } from '../../../hooks/useInventoryRow';
 import { handleSortInventory } from '../../../hooks/handleSortInventory';
+import { getKeyModifier } from '../../../hooks/getKeyModifier'
 
 export const StorageContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -169,8 +170,11 @@ export const StorageContainer = () => {
     }, [setPlayerMoney, setTargetMoney])
 
     const transfertItem = useCallback((event: DragEndEvent) => {
+
         if (!event.active.data.current) return;
         if (!event.over?.data.current) return;
+        const keyEvent = event?.activatorEvent as KeyboardEvent
+
 
         if (event.active.id == 'player_drag_money_') {
             if (event.over.data.current.container === 'player') {
@@ -223,6 +227,7 @@ export const StorageContainer = () => {
                     slot: event.over.data.current.slot,
                     inventory: event.active.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id,
                     manualFilter: event.active.data.current.container === 'player' && targetInventory?.type,
+                    keyModifier: getKeyModifier(keyEvent)
                 }),
             })
                 .then(res => res.json())
@@ -266,6 +271,7 @@ export const StorageContainer = () => {
                     target: targetInvId,
                     item: event.active.data.current.item,
                     slot: event.over.data.current.slot,
+                    keyModifier: getKeyModifier(keyEvent)
                 }),
             })
                 .then((res) => res.json())
