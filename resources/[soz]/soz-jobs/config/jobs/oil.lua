@@ -1,6 +1,6 @@
 FuelerConfig = {}
 
-FuelerConfig.SellPrice = 20
+FuelerConfig.SellPrice = 30
 
 FuelerConfig.Fields = {
     ["petrol1"] = {
