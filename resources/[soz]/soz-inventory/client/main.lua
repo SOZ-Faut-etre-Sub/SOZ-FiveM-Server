@@ -42,7 +42,6 @@ function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
         tempAmount = 1
         return tempAmount
     elseif amount > 1 and keyModifier == 'ALT' then
-
         SetNuiFocus(false, false)
         tempAmount = exports["soz-hud"]:Input("Quantité", 5, math.floor(amount/2))
         SetNuiFocus(true, true)
