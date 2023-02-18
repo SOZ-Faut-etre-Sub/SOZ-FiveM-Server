@@ -35,24 +35,48 @@ RegisterNetEvent("inventory:client:requestOpenInventory", function(data)
     TriggerServerEvent("inventory:server:openInventory", data.invType, data.invID)
 end)
 
-function getAmountFromShortcutModifier(keyModifier, amount)
+function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
+    local tempAmount = amount
+
     if amount >= 1 and keyModifier == 'CTRL' then
-        return 1
+        tempAmount = 1
+        return tempAmount
     elseif amount > 1 and keyModifier == 'ALT' then
+
         SetNuiFocus(false, false)
-        local tempAmount = exports["soz-hud"]:Input("Quantité", 5, math.floor(amount/2))
+        tempAmount = exports["soz-hud"]:Input("Quantité", 5, math.floor(amount/2))
         SetNuiFocus(true, true)
         return tempAmount
+
     elseif amount >= 1  then
-        return amount
+        if not maxAmount then
+            return amount
+        end
+
+        local tempAmount = math.min(amount, maxAmount)
+
+        if tempAmount <= 0 then
+            exports["soz-hud"]:DrawNotification("Cet inventaire est déjà plein", "error")
+            return amount
+        end
+
+        if maxAmount < amount then
+            exports["soz-hud"]:DrawNotification(maxAmount .." objets déplacés", "info")
+        end
+
+        return tempAmount
     end
 end
 
 RegisterNUICallback("transfertItem", function(data, cb)
     local amount = data.item.amount
     local keyModifier = data.keyModifier
+    local targetMaxWeight = tonumber(data.targetMaxWeight)
+    local targetCurrentWeight = tonumber(data.targetCurrentWeight)
 
-    amount = getAmountFromShortcutModifier(keyModifier, amount)
+    local maxAmount = math.floor((targetMaxWeight - targetCurrentWeight) / QBCore.Shared.Items[data.item.name].weight)
+
+    amount = getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
 
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})

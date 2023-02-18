@@ -260,6 +260,8 @@ export const StorageContainer = () => {
             const sourceInvId = event.active.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id;
             const targetInvId = event.over.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id;
             const inverse = event.active.data.current.container === 'storage';
+            const targetMaxWeight = event.over.data.current.container === 'player' ? playerInventory?.maxWeight : targetInventory?.maxWeight;
+            const targetCurrentWeight = event.over.data.current.container === 'player' ? playerInventory?.weight : targetInventory?.weight;
 
             fetch(`https://soz-inventory/transfertItem`, {
                 method: "POST",
@@ -269,6 +271,8 @@ export const StorageContainer = () => {
                 body: JSON.stringify({
                     source: sourceInvId,
                     target: targetInvId,
+                    targetCurrentWeight: targetCurrentWeight,
+                    targetMaxWeight: targetMaxWeight,
                     item: event.active.data.current.item,
                     slot: event.over.data.current.slot,
                     keyModifier: getKeyModifier(keyEvent)
