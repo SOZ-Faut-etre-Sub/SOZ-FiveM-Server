@@ -1,4 +1,4 @@
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -22,16 +22,20 @@ export class WeaponProvider {
     private inventoryManager: InventoryManager;
 
     @OnEvent(ServerEvent.WEAPON_SHOOTING)
-    async onWeaponShooting(source: number, weaponSlot: number) {
+    async onWeaponShooting(source: number, weaponSlot: number, weaponGroup: number) {
         const weapon = this.inventoryManager.getSlot(source, weaponSlot);
         if (!weapon) {
             return;
         }
 
-        this.inventoryManager.updateMetadata(source, weapon.slot, {
-            ammo: weapon.metadata.ammo > 0 ? weapon.metadata.ammo - 1 : 0,
-            health: weapon.metadata.health > 0 ? weapon.metadata.health - 1 : 0,
-        });
+        if (weaponGroup == GetHashKey('GROUP_THROWN') && weapon.metadata.ammo <= 1) {
+            this.inventoryManager.removeItemFromInventory(source, weapon.name, 1, weapon.metadata, weaponSlot);
+        } else {
+            this.inventoryManager.updateMetadata(source, weapon.slot, {
+                ammo: weapon.metadata.ammo > 0 ? weapon.metadata.ammo - 1 : 0,
+                health: weapon.metadata.health > 0 ? weapon.metadata.health - 1 : 0,
+            });
+        }
     }
 
     private async useAmmo(source: number, item: InventoryItem) {
@@ -102,5 +106,16 @@ export class WeaponProvider {
 
     private getWeaponConfig(weaponName: string): WeaponConfig | null {
         return Weapons[weaponName.toUpperCase()] ?? null;
+    }
+
+    @On('explosionEvent')
+    public onExplosion(unk: any, source: number, explosionData) {
+        TriggerClientEvent(
+            ClientEvent.WEAPON_EXPLOSION,
+            source,
+            explosionData.posX,
+            explosionData.posY,
+            explosionData.posZ
+        );
     }
 }

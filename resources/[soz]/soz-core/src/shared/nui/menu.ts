@@ -3,7 +3,7 @@ import { WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { HousingUpgradesMenuData } from '../housing/menu';
-import { BossShopMenu } from '../shop';
+import { BossShopMenu, ShopProduct } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
 import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
@@ -54,6 +54,7 @@ export enum MenuType {
     GunSmith = 'gunsmith',
     LsmcPharmacy = 'lsmc_pharmacy',
     MandatoryJobMenu = 'mdr_job',
+    IllegalShop = 'illegal_shop',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -80,4 +81,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.GunSmith]: WeaponsMenuData;
     [MenuType.LsmcPharmacy]: never;
     [MenuType.MandatoryJobMenu]: any;
+    [MenuType.IllegalShop]: Map<string, ShopProduct[]>;
 }

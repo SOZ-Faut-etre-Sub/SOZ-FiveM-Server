@@ -30,3 +30,5 @@ server_scripts {
     "server/moneycheck.lua",
     "server/clothings.lua",
 }
+
+dependencies {"qb-target", "soz-jobs"}

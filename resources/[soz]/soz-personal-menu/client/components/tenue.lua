@@ -50,6 +50,10 @@ function TenueEntry(menu)
             label = component.label,
             value = value,
             change = function(_, value)
+                if LocalPlayer.state["is_in_hub"] then
+                    return
+                end
+
                 FreezeEntityPosition(PlayerPedId(), true)
                 component.anim(value)
                 FreezeEntityPosition(PlayerPedId(), false)

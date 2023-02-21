@@ -28,7 +28,7 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminGiveMarkedMoney)
     public async giveMarkedMoney(amount: number): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'marked', amount);
+        TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'marked_money', amount);
         this.notifier.notify(`Vous vous êtes donné ${amount}$ en argent sale.`, 'success');
     }
 

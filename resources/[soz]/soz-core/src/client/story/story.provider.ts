@@ -17,6 +17,7 @@ export class StoryProvider {
 
     private camera: number | null = null;
     private inCinematic = false;
+    private line: string;
 
     public async launchDialog(dialog: Dialog, useCamera = false, x?: number, y?: number, z?: number, w?: number) {
         this.inCinematic = true;
@@ -40,7 +41,7 @@ export class StoryProvider {
             RenderScriptCams(true, true, 500, true, true);
         }
 
-        await this.audioService.playAudio(dialog.audio);
+        this.audioService.playAudio(dialog.audio);
         await this.drawTextDialog(dialog.text, dialog.timing);
 
         if (DoesCamExist(this.camera)) {
@@ -78,6 +79,8 @@ export class StoryProvider {
     }
 
     private async drawTextDialog(text: string[], timing?: number[]) {
+        this.line = ' ';
+        this.drawLineDialogLoop();
         for (const line of text) {
             let textDuration = line.length * 5;
 
@@ -85,21 +88,27 @@ export class StoryProvider {
                 textDuration = timing[text.indexOf(line)];
             }
 
-            for (let i = 0; i < textDuration; i++) {
-                SetTextScale(0.5, 0.5);
-                SetTextFont(4);
-                SetTextDropshadow(1.0, 0, 0, 0, 255);
-                SetTextEdge(1, 0, 0, 0, 255);
-                SetTextColour(255, 255, 255, 215);
-                SetTextJustification(0);
-                SetTextEntry('STRING');
-                AddTextComponentString(line);
-                DrawText(0.5, 0.95);
+            this.line = line;
+            await wait(textDuration);
+        }
+        this.line = null;
+    }
 
-                DrawRect(0.25 + 0.5 / 2, 0.94 + 0.05 / 2, 0.5, 0.05, 11, 11, 11, 200);
+    private async drawLineDialogLoop() {
+        while (this.line) {
+            SetTextScale(0.5, 0.5);
+            SetTextFont(4);
+            SetTextDropshadow(1.0, 0, 0, 0, 255);
+            SetTextEdge(1, 0, 0, 0, 255);
+            SetTextColour(255, 255, 255, 215);
+            SetTextJustification(0);
+            SetTextEntry('STRING');
+            AddTextComponentString(this.line);
+            DrawText(0.5, 0.95);
 
-                await wait(0);
-            }
+            DrawRect(0.25 + 0.5 / 2, 0.94 + 0.05 / 2, 0.5, 0.05, 11, 11, 11, 200);
+
+            await wait(0);
         }
     }
 

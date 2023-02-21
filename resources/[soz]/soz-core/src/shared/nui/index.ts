@@ -10,6 +10,7 @@ import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiHealthBookMethodMap } from './health_book';
+import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
 import { NuiMaskShopMethodMap } from './mask_shop';
 import { NuiMenuMethodMap } from './menu';
@@ -44,6 +45,7 @@ export interface NuiMethodMap {
     police: NuiPoliceMethodMap;
     crafting: NuiCraftingMethodMap;
     item: NuiItemMethodMap;
+    hood: NuiHoodMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

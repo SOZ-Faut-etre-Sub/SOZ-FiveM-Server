@@ -9,4 +9,12 @@ export class PhoneService {
     setPhoneFocus(status: boolean): void {
         exports['soz-phone'].setPhoneFocus(status);
     }
+
+    stopPhoneCall(): void {
+        exports['soz-phone'].stopPhoneCall();
+    }
+
+    setPhoneDisabled(value: boolean): void {
+        exports['soz-phone'].setPhoneDisabled(value);
+    }
 }

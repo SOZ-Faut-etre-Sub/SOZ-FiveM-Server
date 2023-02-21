@@ -1,7 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Outfit } from '../../shared/cloth';
+import { ClothConfig, Outfit } from '../../shared/cloth';
 import { ServerEvent } from '../../shared/event';
 import { QBCore } from '../qbcore';
 import { ProgressService } from './progress.service';
@@ -145,5 +145,10 @@ export class PlayerAppearanceService {
 
             player.Functions.SetClothConfig(config, !apply);
         }
+    }
+
+    public async setClothConfig(source: number, config: ClothConfig, skipApply: boolean) {
+        const player = this.QBCore.getPlayer(source);
+        player.Functions.SetClothConfig(config, skipApply);
     }
 }

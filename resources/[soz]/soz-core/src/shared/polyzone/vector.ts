@@ -32,3 +32,12 @@ export const toVector3Object = (vector: Vector3) => {
 export const rad = (x: number) => {
     return (x * Math.PI) / 180;
 };
+
+export const toVector4Object = (vector: Vector4) => {
+    return {
+        x: vector[0],
+        y: vector[1],
+        z: vector[2],
+        w: vector[3],
+    };
+};

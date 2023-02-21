@@ -14,9 +14,15 @@ RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
     LocalPlayer.state:set("inv_busy", true, true)
 end)
 
-RegisterNetEvent("inventory:client:openInventory", function(playerInventory, targetInventory)
+RegisterNetEvent("inventory:client:openInventory", function(playerInventory, targetInventory, targetMoney)
     TriggerEvent("inventory:client:StoreWeapon")
-    SendNUIMessage({action = "openInventory", playerInventory = playerInventory, targetInventory = targetInventory})
+    SendNUIMessage({
+        action = "openInventory",
+        playerInventory = playerInventory,
+        playerMoney = PlayerData.money["money"] + PlayerData.money["marked_money"],
+        targetInventory = targetInventory,
+        targetMoney = targetMoney and (targetMoney["money"] + targetMoney["marked_money"]),
+    })
     SetNuiFocus(true, true)
 end)
 
@@ -39,6 +45,47 @@ RegisterNUICallback("transfertItem", function(data, cb)
             PlaySoundFrontend(-1, "Collect_Pickup", "DLC_IE_PL_Player_Sounds", true)
         end
     end, data.source, data.target, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot, data.slot)
+end)
+
+function indentation(s, indent)
+    for i = 1, indent do
+        s = "  " .. s
+    end
+    return s
+end
+
+function dump(o, indent)
+    if not indent then
+        indent = 0
+    end
+    if type(o) == "table" then
+        local s = "{\n"
+        for k, v in pairs(o) do
+            if type(k) ~= "number" then
+                k = "\"" .. k .. "\""
+            end
+            s = s .. indentation("[" .. k .. "] = " .. dump(v, indent + 1) .. ",\n", indent + 1)
+        end
+        return s .. indentation("}", indent)
+    else
+        return tostring(o)
+    end
+end
+
+RegisterNUICallback("transfertMoney", function(data, cb)
+    SetNuiFocus(false, false)
+    local amount = exports["soz-hud"]:Input("Quantité", 12)
+    SetNuiFocus(true, true)
+
+    if amount and tonumber(amount) > 0 then
+
+        QBCore.Functions.TriggerCallback("inventory:server:TransfertMoney", function(sourceMoney, targetMoney)
+            cb({status = true, sourceMoney = sourceMoney, targetMoney = targetMoney, inverse = data.inverse})
+        end, data.target, tonumber(amount), data.inverse)
+
+    else
+        cb(false)
+    end
 end)
 
 RegisterNUICallback("sortItem", function(data, cb)

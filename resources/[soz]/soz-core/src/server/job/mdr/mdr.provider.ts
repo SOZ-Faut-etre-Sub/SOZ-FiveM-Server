@@ -35,7 +35,6 @@ export class MdrProvider {
     @OnEvent(ServerEvent.MDR_SHOW_TICKET)
     public showTicket(source: number, target: number, dlc: string) {
         const expiration = new Date(dlc);
-        console.log(expiration);
         this.notifier.notify(
             target,
             `Le ticket nouvel arrivant présenté est valable jusqu'à ${expiration.toLocaleDateString(

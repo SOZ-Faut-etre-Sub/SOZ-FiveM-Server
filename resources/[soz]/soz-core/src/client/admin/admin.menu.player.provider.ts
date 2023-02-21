@@ -131,7 +131,7 @@ export class AdminMenuPlayerProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleDiseaseOption)
     public async handleDiseaseOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
-        TriggerServerEvent(`admin:server:disease:${action}`, player.id);
+        TriggerServerEvent('admin:server:disease', player.id, action);
         this.notifier.notify(`La maladie ~g~${action}~s~ a été appliquée sur le joueur ~g~${player.name}~s~.`, 'info');
     }
 

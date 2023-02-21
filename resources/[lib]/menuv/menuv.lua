@@ -2243,7 +2243,8 @@ function MenuV:OpenMenu(menu, cb, reopen)
     local uuid = Utilities:Typeof(menu) == 'Menu' and menu.UUID or Utilities:Typeof(menu) == 'string' and menu
 
     if (uuid == nil) then return end
-
+    
+    exports["menuv"]:BringOnTop()
     cb = Utilities:Ensure(cb, function() end)
 
     menu = self:GetMenu(uuid)
@@ -2302,7 +2303,7 @@ function MenuV:OpenMenu(menu, cb, reopen)
         menu = menu:ToTable(),
         reopen = Utilities:Ensure(reopen, false)
     })
-
+    
     cb()
 end
 
@@ -2557,7 +2558,7 @@ REGISTER_NUI_CALLBACK('close', function(info, cb)
     local uuid = Utilities:Ensure(info.uuid, '00000000-0000-0000-0000-000000000000')
 
     if (MenuV.CurrentMenu == nil or MenuV.CurrentMenu.UUID ~= uuid) then cb('ok') return end
-
+    
     MenuV.CurrentMenu:RemoveOnEvent('update', MenuV.CurrentUpdateUUID)
     MenuV.CurrentMenu:Trigger('close')
     MenuV.CurrentMenu:DestroyThreads()

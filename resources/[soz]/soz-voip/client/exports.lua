@@ -12,6 +12,10 @@ local function SetVoiceProximity(proximity)
 end
 
 local function MutePlayer(state)
+    if LocalPlayer.state["is_in_hub"] then
+        return
+    end
+
     if state and type(state) == "boolean" then
         muted = state
     else

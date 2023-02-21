@@ -236,7 +236,13 @@ local function EnableTarget()
 					-- Player and Ped targets
 					if entityType == 1 then
 						local data = Models[GetEntityModel(entity)]
-						if IsPedAPlayer(entity) then data = Players end
+						if IsPedAPlayer(entity) then
+							if LocalPlayer.state.is_in_hub then
+								data = nil
+							else
+								data = Players
+							end
+						end
 						if data ~= nil then
 							CheckEntity(hit, data, entity, distance)
 						end

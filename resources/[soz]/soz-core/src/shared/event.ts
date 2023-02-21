@@ -193,6 +193,14 @@ export enum ServerEvent {
     HELICO_ADD_LIGHT = 'soz-core:server:police:add-light',
     HELICO_REMOVE_LIGHT = 'soz-core:server:police:del-light',
     HELICO_UPDATE_LIGHT = 'soz-core:server:police:update-light',
+
+    HUB_TELEPORT_ENTER = 'soz-core:server:hub:teleport:enter',
+    HUB_TELEPORT_EXIT = 'soz-core:server:hub:teleport:exit',
+    HUB_WASH = 'soz-core:server:hub:wash',
+    HUB_SHOP_BUY = 'soz-core:server:hub:shop-buy',
+
+    CRIMI_HOOD = 'soz-core:server:crimi:hood',
+    CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
 }
 
 export enum ClientEvent {
@@ -312,6 +320,7 @@ export enum ClientEvent {
     WEAPON_USE_WEAPON = 'soz-core:client:weapon:use-weapon',
     WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
     WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
+    WEAPON_EXPLOSION = 'soz-core:client:weapon:explosion',
 
     MDR_USE_TICKET = 'soz-core:client:mdr:use-ticket',
     HEIST_GUARD = 'soz-core:client:heist:guard',
@@ -333,6 +342,12 @@ export enum ClientEvent {
     HELICO_REMOVE_LIGHT = 'soz-core:client:police:del-light',
 
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:client:talent:disable-crimi',
+
+    PLAYER_TELEPORT = 'soz-core:client:player:teleport',
+
+    HUB_ENTER = 'soz-core:client:hub:enter',
+
+    CRIMI_HOOD = 'soz-core:server:crimi:hood',
 }
 
 export enum GameEvent {
@@ -472,6 +487,8 @@ export enum NuiEvent {
 
     ToggleRadar = 'soz-core:client:radar:toggle',
     RedCall = 'soz-core:client:police:red-call',
+
+    IllegalShopBuyItem = 'soz-core:client:hubshop:buy',
 
     TalentTreeBuy = 'soz-core:client:talent-tree:buy',
     TalentTreeReset = 'soz-core:client:talent-tree:reset',

@@ -244,6 +244,8 @@ RegisterNetEvent("voip:client:reset", function()
     -- Clear last state
     lastState = {}
 
+    LocalPlayer.state:set("megaphone", false, true)
+
     -- Remove filters
     local toRemove = {}
     FilterRegistryInstance:loop(function(id)

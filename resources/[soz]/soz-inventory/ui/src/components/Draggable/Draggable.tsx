@@ -30,7 +30,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             container: containerName,
             item
         },
-        disabled: !!money || item?.disabled === true,
+        disabled: item?.disabled === true,
     });
 
     const itemRef = useRef<HTMLDivElement>(null);
@@ -138,17 +138,30 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         return null
     }
 
-    if (item && isDragging) {
-        return createPortal(
-            <DragOverlay className={style.Card}>
-                <img
-                alt=""
-                className={style.Icon}
-                src={item.type === 'key' ? keyIcon : itemIcon(item)}
-                onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
-            />
-            </DragOverlay>, document.body
-        )
+    if (isDragging) {
+        if (item) {
+            return createPortal(
+                <DragOverlay className={style.Card}>
+                    <img
+                    alt=""
+                    className={style.Icon}
+                    src={item.type === 'key' ? keyIcon : itemIcon(item)}
+                    onError={(e) => e.currentTarget.src = 'https://placekitten.com/200/200'}
+                />
+                </DragOverlay>, document.body
+            )
+        }
+        else if(money) {
+            return createPortal(
+                <DragOverlay className={style.Card}>
+                    <img
+                        alt=""
+                        className={style.Icon}
+                        src={moneyIcon}
+                />
+                </DragOverlay>, document.body
+            )
+        }
     }
 
     return (
