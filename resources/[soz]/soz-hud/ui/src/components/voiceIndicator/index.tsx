@@ -28,7 +28,7 @@ function VoiceIndicator() {
     return (
         <div className={style.voiceInfo}>
             <Suspense fallback={<FallbackIcon className={style.icon}/>}>
-                {voiceMode === -1 && <MuteIcon className={style.icon} />}
+                {voiceMode === -1 && <MuteIcon className={style.iconPersist} />}
                 {voiceMode === 0 && <WhisperIcon className={style.icon} />}
                 {voiceMode === 1 && <NormalIcon className={style.icon} />}
                 {voiceMode === 2 && <ShoutingIcon className={style.icon} />}
