@@ -3,6 +3,7 @@ export default {
     MESSAGES: 'MESSAGES',
     NOTES: 'NOTES',
     CONTACTS: 'CONTACTS',
+    INVOICES: 'INVOICES',
     CAMERA: 'CAMERA',
     PHOTO: 'PHOTO',
     SOCIETIES: 'SOCIETIES',

@@ -10,6 +10,7 @@ import { NotificationAlert } from './os/notifications/components/NotificationAle
 import { PhoneSnackbar } from './os/snackbar/components/PhoneSnackbar';
 import PhoneWrapper from './PhoneWrapper';
 import { useAppBankService } from './services/app/useAppBankService';
+import { useAppInvoicesService } from './services/app/useAppInvoicesService';
 import { useAppNotesService } from './services/app/useAppNotesService';
 import { useAppSocietyService } from './services/app/useAppSocietyService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
@@ -50,6 +51,7 @@ function Phone() {
     // Apps services
     useAppBankService();
     useAppNotesService();
+    useAppInvoicesService();
     useAppTwitchNewsService();
     useAppSocietyService();
 

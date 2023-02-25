@@ -8,6 +8,7 @@ import './functions';
 import './cl_exports';
 import './apps/bank';
 import './apps/news';
+import './apps/invoices';
 import './apps/notes';
 import './apps/societies';
 
