@@ -77,11 +77,11 @@
       "TAKE_PHOTO_SUCCESS": "La photo est bien sauvegardée !",
       "IS_NOT_AVAILABLE_DURING_CALL": "La caméra n'est pas disponible pendant un appel"
     },
-      "PHOTO": {
-          "FEEDBACK": {
-              "NO_PHOTOS": "Vous n'avez pas de photos"
-          }
-      },
+    "PHOTO": {
+      "FEEDBACK": {
+        "NO_PHOTOS": "Vous n'avez pas de photos"
+      }
+    },
     "CONTACTS": {
       "FEEDBACK": {
         "ADD_FAILED": "Erreur de création du contact!",
@@ -120,6 +120,9 @@
         "UPDATE_FAILED": "Impossible de mettre à jour la note.",
         "UPDATE_SUCCESS": "Note mise à jour avec succès."
       }
+    },
+    "INVOICES": {
+      "NO_INVOICES": "Vous n'avez pas de factures en attente."
     },
     "BANK": {
       "HOME_TITLE": "Compte en banque",
@@ -230,6 +233,7 @@
     "APPS_SETTINGS": "Paramètres",
     "APPS_BANK": "Fleeca Banque",
     "APPS_NOTES": "Notes",
+    "APPS_INVOICES": "Factures",
     "APPS_EXAMPLE": "Example app",
     "APPS_MARKETPLACE": "Marketplace",
     "APPS_CAMERA": "Caméra",
