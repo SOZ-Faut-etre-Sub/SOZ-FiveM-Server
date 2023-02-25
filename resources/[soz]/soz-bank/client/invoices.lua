@@ -1,4 +1,4 @@
-RegisterNetEvent("banking:client:invoiceReceived", function(invoiceId, label, amount)
+RegisterNetEvent("banking:client:invoiceReceived", function(invoiceId, label, amount, emitterName)
     CreateThread(function()
         local notificationTimer = GetGameTimer() + 20000
         exports["soz-hud"]:DrawAdvancedNotification("Maze Facture", "Facture de ~r~$" .. amount,

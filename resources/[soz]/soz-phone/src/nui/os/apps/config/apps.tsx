@@ -3,6 +3,7 @@ import React from 'react';
 
 import { BankApp } from '../../../apps/bank';
 import BankIcon from '../../../apps/bank/icon';
+import InvoiceIcon from '../../../apps/invoices/icon';
 import CameraApp from '../../../apps/camera/components/CameraApp';
 import CameraIcon from '../../../apps/camera/icon';
 import { ContactsApp } from '../../../apps/contacts';
@@ -12,6 +13,7 @@ import DialerIcon from '../../../apps/dialer/icon';
 import { MessagesApp } from '../../../apps/messages';
 import MessagesIcon from '../../../apps/messages/icon';
 import { NotesApp } from '../../../apps/notes';
+import { InvoiceApp } from '../../../apps/invoices';
 import NotesIcon from '../../../apps/notes/icon';
 import PhotoApp from '../../../apps/photo';
 import PhotoIcon from '../../../apps/photo/icon';
@@ -77,6 +79,13 @@ export const APPS: IAppConfig[] = [
         path: '/notes',
         component: <NotesApp />,
         icon: NotesIcon,
+    },
+    {
+        id: 'invoices',
+        nameLocale: 'APPS_INVOICES',
+        path: '/invoices',
+        component: <InvoiceApp />,
+        icon: InvoiceIcon,
     },
     {
         id: 'society-contacts',
