@@ -17,6 +17,7 @@ export type QBCorePlayer = {
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
         GetMoney: (type: 'money' | 'marked_money') => number;
         SetJobDuty: (onDuty: boolean) => void;
+        SetSkin: (skin: Skin, skipApply: boolean) => void;
     };
     PlayerData: PlayerData;
 };
@@ -44,11 +45,35 @@ export type PlayerData = {
 // TODO: Finish to implement the other properties
 export type Skin = {
     Hair: {
-        HairType: number;
+        HairType?: number;
+        HairColor?: number;
+        HairSecondaryColor?: number;
+        BeardType?: number;
+        BeardOpacity?: number;
+        BeardColor?: number;
+    };
+    Makeup: {
+        BeardType?: number;
+        BeardColor?: number;
+        FullMakeupType?: number;
+        FullMakeupOpacity?: number;
+        FullMakeupDefaultColor?: boolean;
+        FullMakeupPrimaryColor?: number;
+        FullMakeupSecondaryColor?: number;
+        BlushType?: number;
+        BlushOpacity?: number;
+        BlushColor?: number;
+        LipstickType?: number;
+        LipstickOpacity?: number;
+        LipstickColor?: number;
     };
     Model: {
         Hash: number;
     };
+    Tattoos: {
+        Collection: number;
+        Overlay: number;
+    }[];
 };
 
 export const PlayerPedHash = {
