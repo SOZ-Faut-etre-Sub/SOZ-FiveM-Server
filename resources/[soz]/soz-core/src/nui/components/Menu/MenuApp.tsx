@@ -18,8 +18,13 @@ import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
 import { LsmcJobMenu } from '../LSMC/LsmcJobMenu';
 import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
+import { BarberShopMenu } from '../Shop/BarberShopMenu';
+import { ClothShopMenu } from '../Shop/ClothShopMenu';
 import { EasterShopMenu } from '../Shop/EasterShopMenu';
+import { JewelryShopMenu } from '../Shop/JewelryShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
+import { SuperetteShopMenu } from '../Shop/SuperetteShopMenu';
+import { TattooShopMenu } from '../Shop/TattooShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { TaxiJobMenu } from '../Taxi/TaxiJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
@@ -151,6 +156,11 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.StonkJobMenu}/*`} element={<StonkJobMenu data={menuData} />} />
             <Route path={`/${MenuType.FoodJobMenu}/*`} element={<FoodJobMenu data={menuData} />} />
             <Route path={`/${MenuType.MaskShop}/*`} element={<MaskShopMenu catalog={menuData} />} />
+            <Route path={`/${MenuType.ClothShop}/*`} element={<ClothShopMenu catalog={menuData} />} />
+            <Route path={`/${MenuType.SuperetteShop}/*`} element={<SuperetteShopMenu data={menuData} />} />
+            <Route path={`/${MenuType.TattooShop}/*`} element={<TattooShopMenu data={menuData} />} />
+            <Route path={`/${MenuType.JewelryShop}/*`} element={<JewelryShopMenu catalog={menuData} />} />
+            <Route path={`/${MenuType.BarberShop}/*`} element={<BarberShopMenu data={menuData} />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />
             <Route path={`/${MenuType.GunSmith}/*`} element={<MenuGunSmith data={menuData} />} />

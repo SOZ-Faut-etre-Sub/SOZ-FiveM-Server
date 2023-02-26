@@ -583,6 +583,21 @@ export enum NuiEvent {
     ShopMaskPreview = 'soz-core:client:shop:mask:preview',
     ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
 
+    SuperetteShopBuy = 'soz-core:client:shop:superette:buy',
+    TattooShopResetTattos = 'soz-core:client:shop:tattoo:resetTattos',
+    TattooShopBuy = 'soz-core:client:shop:tattoo:buy',
+    TattoShopPreview = 'soz-core:client:shop:tattoo:preview',
+    TattooShopSelectCategory = 'soz-core:client:shop:tattoo:select-category',
+    ClothingShopPreview = 'soz-core:client:shop:clothing:preview',
+    ClothingShopBuy = 'soz-core:client:shop:clothing:buy',
+    ClothingShopBackspace = 'soz-core:client:shop:clothing:backspace',
+    JewelryShopPreview = 'soz-core:client:shop:jewelry:preview',
+    JewelryShopBuy = 'soz-core:client:shop:jewelry:buy',
+    JewelryShopBackspace = 'soz-core:client:shop:jewelry:backspace',
+    JewelryShopToggleCamera = 'soz-core:client:shop:jewelry:toggle-camera',
+    BarberShopPreview = 'soz-core:client:shop:barber:preview',
+    BarberShopBuy = 'soz-core:client:shop:barber:buy',
+
     TriggerServerEvent = 'soz-core:nui:trigger-server-event',
     TriggerClientEvent = 'soz-core:nui:trigger-client-event',
 
