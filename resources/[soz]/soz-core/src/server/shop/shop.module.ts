@@ -5,6 +5,6 @@ import { MigrationProvider } from './migration.provider';
 import { ShopProvider } from './shop.provider';
 
 @Module({
-    providers: [MaskShopProvider, MigrationProvider, EasterShopProvider, ShopProvider],
+    providers: [MaskShopProvider, MigrationProvider, ShopProvider, EasterShopProvider],
 })
 export class ShopModule {}
