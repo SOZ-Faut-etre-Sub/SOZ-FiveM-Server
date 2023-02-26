@@ -5,14 +5,14 @@ import { ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 
 import { Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 
 @Injectable()
 export class ClothingShopRepository {
     private repoData: ClothingShopRepositoryData;
 
     public async load() {
-        this.repoData = await emitRpc<ClothingShopRepositoryData>(RpcEvent.REPOSITORY_GET_DATA, 'clothingShop');
+        this.repoData = await emitRpc<ClothingShopRepositoryData>(RpcServerEvent.REPOSITORY_GET_DATA, 'clothingShop');
 
         // Hydrate tops with proper torsos and remove undershirts
         for (const shop of Object.values(this.repoData.categories)) {
@@ -48,7 +48,7 @@ export class ClothingShopRepository {
 
     public async updateShopStock(shop: string) {
         this.repoData.shops[shop].stocks = await emitRpc<Record<number, number>>(
-            RpcEvent.REPOSITORY_CLOTHING_GET_STOCK,
+            RpcServerEvent.REPOSITORY_CLOTHING_GET_STOCK,
             shop
         );
     }
