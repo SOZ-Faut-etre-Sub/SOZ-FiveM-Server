@@ -6,6 +6,7 @@ import { ClientEvent } from '../../shared/event';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { JobGradeRepository } from './job.grade.repository';
+import { ClothingShopRepository } from './shop.repository';
 import { VehicleRepository } from './vehicle.repository';
 
 @Provider()
@@ -22,6 +23,9 @@ export class RepositoryProvider {
     @Inject(FuelStationRepository)
     private fuelStationRepository: FuelStationRepository;
 
+    @Inject(ClothingShopRepository)
+    private clothingShopRepository: ClothingShopRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -31,6 +35,7 @@ export class RepositoryProvider {
         await this.jobGradeRepository.load();
         await this.vehicleRepository.load();
         await this.fuelStationRepository.load();
+        await this.clothingShopRepository.load();
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
@@ -50,6 +55,8 @@ export class RepositoryProvider {
             case 'fuelStation':
                 this.fuelStationRepository.update(data);
                 break;
+            case 'clothingShop':
+                this.clothingShopRepository.update(data);
         }
     }
 }

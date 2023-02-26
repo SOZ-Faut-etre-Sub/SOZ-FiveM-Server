@@ -5,6 +5,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
+import { ClothingShopRepository, ClothingShopRepositoryData } from './cloth.shop.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { JobGradeRepository } from './job.grade.repository';
@@ -28,6 +29,9 @@ export class RepositoryProvider {
     @Inject(FuelStationRepository)
     private fuelStationRepository: FuelStationRepository;
 
+    @Inject(ClothingShopRepository)
+    private clothingShopRepository: ClothingShopRepository;
+
     private repositories: Record<string, Repository<any>> = {};
 
     @Once()
@@ -36,6 +40,7 @@ export class RepositoryProvider {
         this.repositories['vehicle'] = this.vehicleRepository;
         this.repositories['jobGrade'] = this.jobGradeRepository;
         this.repositories['fuelStation'] = this.fuelStationRepository;
+        this.repositories['clothingShop'] = this.clothingShopRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)
@@ -61,5 +66,10 @@ export class RepositoryProvider {
 
             TriggerClientEvent(ClientEvent.REPOSITORY_SYNC_DATA, -1, repositoryName, data);
         }
+    }
+
+    @Rpc(RpcEvent.REPOSITORY_CLOTHING_GET_STOCK)
+    public async getClothingStock(source: number, shop: string): Promise<Record<number, number>> {
+        return ((await this.repositories['clothingShop'].get()) as ClothingShopRepositoryData).shops[shop].stocks;
     }
 }
