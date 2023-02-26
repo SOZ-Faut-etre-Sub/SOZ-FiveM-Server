@@ -7,6 +7,7 @@ import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
+import { ClothingShopRepository } from './shop.repository';
 import { UpwChargerRepository } from './upw.station.repository';
 import { VehicleRepository } from './vehicle.repository';
 
@@ -26,6 +27,8 @@ export class RepositoryProvider {
 
     @Inject(UpwChargerRepository)
     private upwChargerRepository: UpwChargerRepository;
+    @Inject(ClothingShopRepository)
+    private clothingShopRepository: ClothingShopRepository;
 
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
@@ -41,6 +44,7 @@ export class RepositoryProvider {
         await this.fuelStationRepository.load();
         await this.upwChargerRepository.load();
         await this.housingRepository.load();
+        await this.clothingShopRepository.load();
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
@@ -65,6 +69,9 @@ export class RepositoryProvider {
                 break;
             case 'housing':
                 this.housingRepository.update(data);
+                break;
+            case 'clothingShop':
+                this.clothingShopRepository.update(data);
                 break;
         }
     }
