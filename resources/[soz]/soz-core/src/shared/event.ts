@@ -120,6 +120,8 @@ export enum ServerEvent {
     UPW_REFILL_STATION = 'soz-core:server:job:upw:refill-station',
     UPW_CHANGE_BATTERY = 'soz-core:server:job:upw:change-battery',
     UPW_SET_CHARGER_PRICE = 'soz-core:server:job:upw:set-charger-price',
+    SHOP_BUY = 'soz-core:server:shop:buy',
+    SHOP_TATTOO_RESET = 'soz-core:server:shop:tattoo-reset',
 
     AFK_KICK = 'soz-core:server:afk:kick',
 
@@ -343,6 +345,9 @@ export enum ClientEvent {
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
     STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
 
+    SHOP_OPEN_MENU = 'soz-core:client:shops:open-menu',
+    SHOP_UPDATE_STOCKS = 'soz-core:client:update-stocks',
+
     // Temp event which should be internally used by a service when only soz core
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
 
@@ -451,6 +456,10 @@ export enum ClientEvent {
     BINOCULARS_SET = 'items:binoculars:set',
 
     RACKET_START_PHASE = 'soz-core:client:racket:start-phase',
+
+    // Not core
+    LOCATION_ENTER = 'locations:zone:enter',
+    LOCATION_EXIT = 'locations:zone:exit',
 }
 
 export enum GameEvent {
