@@ -13,8 +13,13 @@ import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
 import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
+import { BarberShopMenu } from '../Shop/BarberShopMenu';
 import { BossShopMenu } from '../Shop/BossShopMenu';
+import { ClothShopMenu } from '../Shop/ClothShopMenu';
+import { JewelryShopMenu } from '../Shop/JewelryShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
+import { SuperetteShopMenu } from '../Shop/SuperetteShopMenu';
+import { TattooShopMenu } from '../Shop/TattooShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
@@ -140,6 +145,11 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.StonkJobMenu}/*`} element={<StonkJobMenu data={menuData} />} />
             <Route path={`/${MenuType.FoodJobMenu}/*`} element={<FoodJobMenu data={menuData} />} />
             <Route path={`/${MenuType.MaskShop}/*`} element={<MaskShopMenu catalog={menuData} />} />
+            <Route path={`/${MenuType.ClothShop}/*`} element={<ClothShopMenu catalog={menuData} />} />
+            <Route path={`/${MenuType.SuperetteShop}/*`} element={<SuperetteShopMenu data={menuData} />} />
+            <Route path={`/${MenuType.TattooShop}/*`} element={<TattooShopMenu data={menuData} />} />
+            <Route path={`/${MenuType.JewelryShop}/*`} element={<JewelryShopMenu catalog={menuData} />} />
+            <Route path={`/${MenuType.BarberShop}/*`} element={<BarberShopMenu data={menuData} />} />
             <Route path={`/${MenuType.BossShop}/*`} element={<BossShopMenu data={menuData} />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />

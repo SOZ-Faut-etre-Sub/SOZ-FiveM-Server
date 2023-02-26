@@ -3,6 +3,7 @@ import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSub
 import { NuiAudioMethodMap } from './audio';
 import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
+import { NuiClothShopMethodMap } from './cloth_shop';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiHealthBookMethodMap } from './health_book';
 import { NuiInputMethodMap } from './input';
@@ -23,6 +24,7 @@ export interface NuiMethodMap {
     audio: NuiAudioMethodMap;
     bennys_order_menu: NuiBennysOrderMenuMethodMap;
     clipboard: NuiClipboardMethodMap;
+    cloth_shop: NuiClothShopMethodMap;
     ffs_recipe_book: NuiFfsRecipeBookMethodMap;
     global: NuiGlobalMethodMap;
     health_book: NuiHealthBookMethodMap;
