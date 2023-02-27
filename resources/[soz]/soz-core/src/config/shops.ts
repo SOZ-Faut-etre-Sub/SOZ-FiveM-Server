@@ -214,31 +214,31 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     },
     ['barber']: {
         brand: ShopBrand.Barber,
-        location: [-813.4, -181.86, 37.57, 126.21],
+        location: [-823.04, -183.63, 37.57, 208.03],
     },
     ['barber2']: {
         brand: ShopBrand.Barber,
-        location: [138.35, -1708.18, 29.3, 110.08],
+        location: [134.98, -1707.95, 29.29, 152.5],
     },
     ['barber3']: {
         brand: ShopBrand.Barber,
-        location: [1212.64, -474.02, 66.22, 42.01],
+        location: [1211.68, -470.88, 66.21, 74.72],
     },
     ['barber4']: {
         brand: ShopBrand.Barber,
-        location: [-278.48, 6227.89, 31.7, 23.14],
+        location: [-277.87, 6230.14, 31.7, 50.93],
     },
     ['barber5']: {
         brand: ShopBrand.Barber,
-        location: [-1282.2, -1118.39, 7.0, 62.16],
+        location: [-1283.93, -1115.55, 6.99, 89.85],
     },
     ['barber6']: {
         brand: ShopBrand.Barber,
-        location: [1932.48, 3731.46, 32.85, 181.57],
+        location: [1930.92, 3728.27, 32.84, 218.55],
     },
     ['barber7']: {
         brand: ShopBrand.Barber,
-        location: [-34.41, -152.48, 57.09, 327.14],
+        location: [-30.98, -151.74, 57.08, 346.24],
     },
     ['jewelry1']: {
         brand: ShopBrand.Jewelry,
