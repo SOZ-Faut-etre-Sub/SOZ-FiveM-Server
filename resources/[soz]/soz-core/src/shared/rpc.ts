@@ -67,4 +67,8 @@ export enum RpcEvent {
 
     LSMC_CAN_REMOVE_ITT = 'soz-core:server:lsmc:can-remove-itt',
     LSMC_CAN_SET_ITT = 'soz-core:server:lsmc:can-set-itt',
+
+    TALENT_TREE_UNLOCK = 'soz-core:server:talent:unlock',
+    TALENT_TREE_RESET = 'soz-core:server:talent:reset',
+    TALENT_TOGGLE_CRIMINAL_MODE = 'soz-core:server:talent:toggleCriminalMode',
 }

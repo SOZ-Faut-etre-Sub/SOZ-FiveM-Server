@@ -1,4 +1,5 @@
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
+import { NuiTalentMethodMap } from '@public/shared/nui/talent';
 
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
@@ -34,6 +35,7 @@ export interface NuiMethodMap {
     player: NuiPLayerMethodMap;
     progress: NuiProgressMethodMap;
     panel: NuiPanelMethodMap;
+    talent: NuiTalentMethodMap;
     repair: NuiRepairMethodMap;
     missive: NuiMissiveMethodMap;
 }

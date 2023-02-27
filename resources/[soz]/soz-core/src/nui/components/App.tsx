@@ -1,6 +1,7 @@
 import '../styles/index.scss';
 
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
+import { TalentApp } from '@private/nui/Talent/TalentApp';
 import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 import { Provider } from 'react-redux';
@@ -39,6 +40,7 @@ export const App: FunctionComponent = () => {
                 <RepairApp />
                 <InputApp />
                 <MissiveApp />
+                <TalentApp />
             </div>
         </Provider>
     );

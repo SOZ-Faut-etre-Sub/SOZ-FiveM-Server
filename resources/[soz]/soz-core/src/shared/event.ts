@@ -423,4 +423,8 @@ export enum NuiEvent {
 
     ToggleRadar = 'soz-core:client:radar:toggle',
     RedCall = 'soz-core:client:police:red-call',
+
+    TalentTreeBuy = 'soz-core:client:talent-tree:buy',
+    TalentTreeReset = 'soz-core:client:talent-tree:reset',
+    TalentToggleCriminalMode = 'soz-core:client:talent:toggle-criminal-mode',
 }

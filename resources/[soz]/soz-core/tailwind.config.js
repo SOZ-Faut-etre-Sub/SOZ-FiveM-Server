@@ -21,6 +21,16 @@ module.exports = {
             zIndex: {
                 9999: '9999',
             },
+            gridTemplateRows: {
+                12: 'minmax(0, 1fr), -2rem, repeat(2, minmax(0, 1fr)), -2rem, repeat(3, minmax(0, 1fr)), -2rem, repeat(3, minmax(0, 1fr))',
+            },
+            gridRowStart: {
+                8: '8',
+                9: '9',
+                10: '10',
+                11: '11',
+                12: '12',
+            },
         },
     },
     plugins: [require('tailwind-scrollbar')],
