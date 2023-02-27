@@ -44,16 +44,16 @@ Citizen.CreateThread(function()
     AddTextEntry("0x8D5C6517", "Numéro - 8") -- POLICE5_B8
     AddTextEntry("0x7A833F65", "Numéro - 9") -- POLICE5_B9
 
-    AddTextEntry("0x35C4FF5", "Numéro - 0") -- POLICE5_C0
-    AddTextEntry("0xEE732623", "Numéro - 1") -- POLICE5_C1
-    AddTextEntry("0xDD08834E", "Numéro - 2") -- POLICE5_C2
-    AddTextEntry("0x59E77D0E", "Numéro - 3") -- POLICE5_C3
-    AddTextEntry("0x4891DA63", "Numéro - 4") -- POLICE5_C4
-    AddTextEntry("0x33BAB0B5", "Numéro - 5") -- POLICE5_C5
-    AddTextEntry("0x91E46D07", "Numéro - 6") -- POLICE5_C6
-    AddTextEntry("0x82FACF34", "Numéro - 7") -- POLICE5_C7
-    AddTextEntry("0x71312BA1", "Numéro - 8") -- POLICE5_C8
-    AddTextEntry("0x5CC802CF", "Numéro - 9") -- POLICE5_C9
+    AddTextEntry('0x35C4FF5','Numéro - 0')   -- POLICE5_C0
+    AddTextEntry('0xEE732623','Numéro - 1')   -- POLICE5_C1
+    AddTextEntry('0xDD08834E','Numéro - 2')   -- POLICE5_C2
+    AddTextEntry('0x59E77D0E','Numéro - 3')   -- POLICE5_C3
+    AddTextEntry('0x4891DA63','Numéro - 4')   -- POLICE5_C4
+    AddTextEntry('0x33BAB0B5','Numéro - 5')   -- POLICE5_C5
+    AddTextEntry('0x91E46D07','Numéro - 6')   -- POLICE5_C6
+    AddTextEntry('0x82FACF34','Numéro - 7')   -- POLICE5_C7
+    AddTextEntry('0x71312BA1','Numéro - 8')   -- POLICE5_C8
+    AddTextEntry('0x5CC802CF','Numéro - 9')   -- POLICE5_C9
 
-    AddTextEntry("0xAA1D8988", "Sticker MDR") -- Sticker MDR
+    AddTextEntry('0xAA1D8988','Sticker MDR') -- Sticker MDR
 end)
