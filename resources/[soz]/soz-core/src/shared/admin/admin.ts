@@ -59,6 +59,10 @@ export type DeveloperSubMenuState = {
     displayCoords: boolean;
 };
 
+export type VehicleSubMenuState = {
+    noStall: boolean;
+};
+
 export type AdminMenuData = {
     banner: string;
     permission: SozRole;
@@ -68,6 +72,7 @@ export type AdminMenuData = {
         interactive: InteractiveSubMenuState;
         skin: SkinSubMenuState;
         developer: DeveloperSubMenuState;
+        vehicule: VehicleSubMenuState;
     };
 };
 

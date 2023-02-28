@@ -78,6 +78,8 @@ export class VehicleConditionProvider {
 
     private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
+    private adminNoStall = false;
+
     @Once(OnceStep.PlayerLoaded)
     public async init() {
         this.targetFactory.createForAllVehicle([
@@ -199,7 +201,7 @@ export class VehicleConditionProvider {
             value.engineHealth -
             value.bodyHealth;
 
-        if (healthDiff > STOP_ENGINE_THRESHOLD) {
+        if (healthDiff > STOP_ENGINE_THRESHOLD && !this.adminNoStall) {
             const waitTime = Math.min(
                 (previousState.condition.engineHealth / value.engineHealth +
                     previousState.condition.bodyHealth / value.bodyHealth) *
@@ -674,5 +676,13 @@ export class VehicleConditionProvider {
                 openWindows: toggleWindowsDown ? true : toggleWindowsUp ? false : state.openWindows,
             });
         }
+    }
+
+    public setAdminNoStall(value: boolean) {
+        this.adminNoStall = value;
+    }
+
+    public getAdminNoStall(): boolean {
+        return this.adminNoStall;
     }
 }

@@ -10,6 +10,7 @@ import { PlayerCharInfo } from '../../shared/player';
 import { RpcEvent } from '../../shared/rpc';
 import { ClothingService } from '../clothing/clothing.service';
 import { NuiMenu } from '../nui/nui.menu';
+import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 
@@ -26,6 +27,9 @@ export class AdminMenuProvider {
 
     @Inject(AdminMenuDeveloperProvider)
     private adminMenuDeveloperProvider: AdminMenuDeveloperProvider;
+
+    @Inject(VehicleConditionProvider)
+    private vehicleConditionProvider: VehicleConditionProvider;
 
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
@@ -77,6 +81,9 @@ export class AdminMenuProvider {
                     developer: {
                         noClip: this.adminMenuDeveloperProvider.isIsNoClipMode(),
                         displayCoords: this.adminMenuDeveloperProvider.showCoordinatesInterval !== null,
+                    },
+                    vehicule: {
+                        noStall: this.vehicleConditionProvider.getAdminNoStall(),
                     },
                 },
             },
