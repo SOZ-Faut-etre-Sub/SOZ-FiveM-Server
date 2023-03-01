@@ -291,7 +291,6 @@ export class ShopProvider {
     }
 
     public async shopSuperetteBuy(source: number, product: ShopProduct, quantity: number) {
-        console.log(product);
         if (quantity < 1) {
             return;
         }
@@ -300,8 +299,6 @@ export class ShopProvider {
             this.notifier.notify(source, "Vous n'avez pas le permis nécessaire", 'error');
             return;
         }
-        console.log(product.id);
-        console.log(quantity);
         if (!this.inventoryManager.canCarryItem(source, product.id, quantity)) {
             this.notifier.notify(source, `Vous n'avez pas assez de place dans votre inventaire`, 'error');
             return;

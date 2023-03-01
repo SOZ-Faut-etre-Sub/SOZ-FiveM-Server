@@ -112,8 +112,6 @@ export class ShopProvider {
         this.currentShopBrand = brand;
         this.addTargetModel();
 
-        console.log('onLocationEnter', brand, shop);
-
         if (brand == ShopBrand.Ponsonbys || brand == ShopBrand.Suburban || brand == ShopBrand.Binco) {
             TriggerEvent(ClientEvent.FFS_ENTER_CLOTHING_SHOP, brand);
         }
