@@ -57,9 +57,6 @@ export class TattooShopProvider {
                     Name: product.LocalizedName != null ? product.LocalizedName : GetLabelText(product.Name),
                 } as TattooShopItem)
         );
-        console.log(brand);
-        console.log(categories);
-        console.log(products[0]);
 
         await this.setupShop(brand, shop);
         this.nuiMenu.openMenu(MenuType.TattooShop, { brand, categories, products });
@@ -67,7 +64,6 @@ export class TattooShopProvider {
 
     @OnNuiEvent(NuiEvent.TattoShopPreview)
     public async onPreviewTattoo(product: TattooShopItem) {
-        console.log(product);
         const player = this.playerService.getPlayer();
         const temporarySkin: Skin = {
             ...player.skin,
@@ -83,7 +79,6 @@ export class TattooShopProvider {
             Collection: GetHashKey(product.Collection),
             Overlay: GetHashKey(product[overlayField]),
         });
-        console.log(temporarySkin);
         TriggerEvent('soz-character:Client:ApplyTemporarySkin', temporarySkin);
         return Ok(true);
     }
@@ -223,8 +218,6 @@ export class TattooShopProvider {
         if (this.state == null) {
             return;
         }
-        console.log(category);
-        console.log(ShopTattooConfig[category].cam);
         this.state.cameraCurrentVariation = 0;
         this.state.currentSelectedCategory = category;
         this.updateCamera(category, 0);

@@ -35,8 +35,6 @@ export class SuperetteShopProvider {
                 ...product,
                 item: this.itemService.getItem(product.id),
             }));
-        console.log(products);
-        console.log(brand);
         if (!products) {
             console.error(`Shop ${brand} not found`);
             return;
@@ -47,7 +45,6 @@ export class SuperetteShopProvider {
     @OnNuiEvent(NuiEvent.SuperetteShopBuy)
     public async onBuySuperette(product: ShopProduct) {
         let quantity = 1;
-        console.log(product);
         if (product.type !== 'weapon') {
             const value = await this.inputService.askInput(
                 {

@@ -111,7 +111,6 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
             repository.shops[shopName].products[item.id] = shopItem;
             repository.shops[shopName].stocks[item.id] = item.stock;
         }
-        console.log(repository);
         return repository;
     }
 }

@@ -81,7 +81,6 @@ export class JewelryShopProvider {
 
     @OnNuiEvent(NuiEvent.JewelryShopPreview)
     public async onPreviewJewelry(data: { propId: number; drawable: number; texture: number; componentId: number }) {
-        console.log(data);
         const ped = PlayerPedId();
         if (data.propId != null) {
             SetPedPropIndex(ped, data.propId, data.drawable, data.texture, true);
@@ -93,7 +92,6 @@ export class JewelryShopProvider {
 
     @OnNuiEvent(NuiEvent.JewelryShopBuy)
     public async onBuyJewelry(product: JewelryShopItem) {
-        console.log(product);
         TriggerServerEvent(ServerEvent.SHOP_BUY, product, ShopBrand.Jewelry);
     }
 
