@@ -70,8 +70,6 @@ export class BarberShopProvider {
         this.barberShopContent[-1667301416][1].items = this.barberShopLabels.Blush;
         this.barberShopContent[-1667301416][2].items = this.barberShopLabels.Lipstick;
         this.barberShopContent[-1667301416][3].items = this.barberShopLabels.Makeup;
-
-        console.log(this.barberShopContent);
     }
 
     public async openShop() {
@@ -107,7 +105,6 @@ export class BarberShopProvider {
 
     @OnNuiEvent(NuiEvent.BarberShopBuy)
     public async onBarberBuy({ configuration, price, overlay }) {
-        console.log(configuration, price, overlay);
         TriggerServerEvent(
             ServerEvent.SHOP_BUY,
             {

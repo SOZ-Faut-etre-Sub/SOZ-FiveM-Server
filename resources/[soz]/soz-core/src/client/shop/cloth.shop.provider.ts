@@ -41,8 +41,6 @@ export class ClothingShopProvider {
         const shop_content = this.clothingShopRepository.getShop(brand);
         const shop_categories = this.clothingShopRepository.getAllCategories();
         const player_data = this.playerService.getPlayer();
-        console.log(shop_content);
-        console.log(shop_categories);
         if (!shop_content) {
             console.error(`Shop ${brand} not found`);
             return;
