@@ -59,6 +59,7 @@ export type ClothingShopItem = {
     modelHash?: number;
     components?: Record<Component, OutfitItem>;
     props?: Record<Prop, OutfitItem>;
+    correspondingDrawables?: Record<number, number>; // This is for torso compatibility (for gloves)
 };
 
 export type ClothingShopItemData = {
@@ -66,7 +67,7 @@ export type ClothingShopItemData = {
     props?: Record<Prop, OutfitItem>;
     label?: string;
     modelHash?: number;
-    correspondingDrawables?: Record<number, number>;
+    correspondingDrawables?: Record<number, number>; // This is for torso compatibility (for gloves)
 };
 
 // Tattoo
