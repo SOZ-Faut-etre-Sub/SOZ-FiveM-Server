@@ -32,6 +32,7 @@ export type OutfitItem = {
 export type Outfit = {
     Components: Partial<Record<Component, OutfitItem>>;
     Props: Partial<Record<Prop, OutfitItem>>;
+    Gloves?: Partial<Record<number, OutfitItem>>;
 };
 
 export type ClothConfig = {
@@ -55,6 +56,7 @@ export type ClothConfig = {
         HideBag: boolean;
         HidePants: boolean;
         HideShoes: boolean;
+        HideGloves: boolean;
     };
 };
 
