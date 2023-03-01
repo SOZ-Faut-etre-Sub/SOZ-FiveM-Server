@@ -292,6 +292,16 @@ export class ShopProvider {
                 } as OutfitItem;
             }
         }
+        if (product.correspondingDrawables) {
+            clothConfig.BaseClothSet.Gloves = {};
+            for (const baseTorsoDrawable of Object.keys(product.correspondingDrawables)) {
+                clothConfig.BaseClothSet.Gloves[baseTorsoDrawable] = {
+                    Drawable: product.correspondingDrawables[baseTorsoDrawable],
+                    Texture: product.components[Component.Torso].Texture,
+                    Palette: 0,
+                } as OutfitItem;
+            }
+        }
 
         // Update player cloth config through QBCore
         this.qbcore.getPlayer(source).Functions.SetClothConfig(clothConfig, false);
