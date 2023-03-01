@@ -1,5 +1,5 @@
 import { ShopBrand } from '@public/config/shops';
-import { Prop } from '@public/shared/cloth';
+import { Component, OutfitItem, Prop } from '@public/shared/cloth';
 import { InventoryItemMetadata, ItemType } from '@public/shared/item';
 import { Skin } from '@public/shared/player';
 import { BarberShopItem, ClothingShopItem, JewelryShopItem, ShopProduct, TattooShopItem } from '@public/shared/shop';
@@ -236,14 +236,24 @@ export class ShopProvider {
 
         // Update player cloth config
         const clothConfig = this.playerService.getPlayer(source).cloth_config;
-        if (product.components) {
+        if (product.components && product.correspondingDrawables == null) {
             for (const componentId of Object.keys(product.components)) {
                 clothConfig.BaseClothSet.Components[componentId] = product.components[componentId];
             }
         }
-        if (product.props) {
+        if (product.props && product.correspondingDrawables == null) {
             for (const propId of Object.keys(product.props)) {
                 clothConfig.BaseClothSet.Props[propId] = product.props[propId];
+            }
+        }
+        if (product.correspondingDrawables) {
+            clothConfig.BaseClothSet.Gloves = {};
+            for (const baseTorsoDrawable of Object.keys(product.correspondingDrawables)) {
+                clothConfig.BaseClothSet.Gloves[baseTorsoDrawable] = {
+                    Drawable: product.correspondingDrawables[baseTorsoDrawable],
+                    Texture: product.components[Component.Torso].Texture,
+                    Palette: 0,
+                } as OutfitItem;
             }
         }
 

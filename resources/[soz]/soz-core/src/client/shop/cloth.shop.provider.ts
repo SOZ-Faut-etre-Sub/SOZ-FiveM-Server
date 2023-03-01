@@ -3,6 +3,7 @@ import { On, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
+import { Component } from '@public/shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -84,8 +85,7 @@ export class ClothingShopProvider {
     @OnNuiEvent(NuiEvent.ClothingShopPreview)
     public async onPreviewCloth(product: ClothingShopItem) {
         const ped = PlayerPedId();
-        console.log(product);
-        if (product.components) {
+        if (product.components && !product.correspondingDrawables) {
             for (const [compId, comp] of Object.entries(product.components)) {
                 const drawable = comp.Drawable;
                 const texture = comp.Texture;
@@ -98,6 +98,22 @@ export class ClothingShopProvider {
                 const texture = prop.Texture;
                 SetPedPropIndex(ped, parseInt(propId), drawable, texture, true);
             }
+        }
+        // This is for gloves
+        if (product.correspondingDrawables) {
+            console.log(product.correspondingDrawables);
+            const baseTorsoDrawable =
+                this.playerService.getPlayer().cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
+            const correspondingGloveDrawable = product.correspondingDrawables[baseTorsoDrawable];
+            console.log(baseTorsoDrawable);
+            console.log(correspondingGloveDrawable);
+            SetPedComponentVariation(
+                ped,
+                Component.Torso,
+                correspondingGloveDrawable,
+                product.components[Component.Torso].Texture,
+                0
+            );
         }
     }
 

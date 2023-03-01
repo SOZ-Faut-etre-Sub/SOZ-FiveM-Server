@@ -316,6 +316,14 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, override)
     end
 
+    -- Fetch gloves from BaseClothSet.Gloves and copy it to clothset.Components
+    if not clothConfig.Config.HideGloves and clothConfig.BaseClothSet.Gloves ~= nil then
+        local currentTorsoDrawable = clothSet.Components["3"].Drawable
+        if clothConfig.BaseClothSet.Gloves[tostring(currentTorsoDrawable)] ~= nil then
+            clothSet.Components["3"] = clothConfig.BaseClothSet.Gloves[tostring(currentTorsoDrawable)]
+        end
+    end
+
     return clothSet
 end
 
