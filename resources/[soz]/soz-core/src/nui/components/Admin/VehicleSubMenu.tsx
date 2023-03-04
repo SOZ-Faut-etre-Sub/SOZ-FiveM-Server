@@ -116,7 +116,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                             await fetchNui(NuiEvent.AdminToggleNoStall, value);
                         }}
                     >
-                        ✇ Calage désactivé
+                        ⛍ Calage désactivé
                     </MenuItemCheckbox>
                     <MenuItemButton
                         onConfirm={async () => {

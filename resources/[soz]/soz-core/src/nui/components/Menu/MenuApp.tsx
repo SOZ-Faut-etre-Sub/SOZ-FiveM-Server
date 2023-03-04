@@ -15,6 +15,7 @@ import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
+import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
 import { BossShopMenu } from '../Shop/BossShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
@@ -156,6 +157,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.DrivingSchool}/*`} element={<DrivingSchoolMenu data={menuData} />} />
             <Route path={`/${MenuType.HousingUpgrades}/*`} element={<HousingUpgradesMenu data={menuData} />} />
             <Route path={`/${MenuType.LsmcPharmacy}/*`} element={<MenuLsmcPharmacy />} />
+            <Route path={`/${MenuType.MandatoryJobMenu}/*`} element={<MandatoryJobMenu data={menuData} />} />
 
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route

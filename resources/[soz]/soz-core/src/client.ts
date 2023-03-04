@@ -9,6 +9,7 @@ import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
+import { HousingModule } from './client/housing/housing.module';
 import { InventoryModule } from './client/inventory/inventory.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
@@ -17,6 +18,7 @@ import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
 import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
+import { MandatoryModule } from './client/job/mdr/mdr.module';
 import { OilModule } from './client/job/oil/oil.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { NuiModule } from './client/nui/nui.module';
@@ -34,7 +36,6 @@ import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
 import { unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
-import { HousingModule } from './client/housing/housing.module';
 
 async function bootstrap() {
     const app = await Application.create(
@@ -68,6 +69,7 @@ async function bootstrap() {
         InventoryModule,
         DrivingSchoolModule,
         HousingModule,
+        MandatoryModule,
         ...PrivateModules
     );
 

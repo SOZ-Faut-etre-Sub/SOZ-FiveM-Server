@@ -1,10 +1,4 @@
-local relationshipTypesLike = {
-    "CIVMALE",
-    "CIVFEMALE",
-    "COP",
-    "SECURITY_GUARD",
-    "PRIVATE_SECURITY",
-}
+local relationshipTypesLike = {"CIVMALE", "CIVFEMALE", "COP", "SECURITY_GUARD", "PRIVATE_SECURITY"}
 
 local relationshipTypesRespect = {
     "GANG_1",

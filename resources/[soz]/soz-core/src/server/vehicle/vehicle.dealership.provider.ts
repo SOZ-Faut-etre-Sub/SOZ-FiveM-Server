@@ -545,7 +545,7 @@ export class VehicleDealershipProvider {
                         parkingPlace.heading || 0,
                     ] as Vector4);
 
-                    this.notifier.notify(source, `Merci pour votre achat !'`, 'success');
+                    this.notifier.notify(source, `Merci pour votre achat !`, 'success');
                 } else {
                     const garageConfig = GarageList[dealership.garageName];
 

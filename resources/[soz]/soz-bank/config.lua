@@ -160,6 +160,13 @@ Config.SafeStorages = {
         minZ = 30.21,
         maxZ = 30.81,
     },
+    ["safe_mdr"] = {
+        label = "Coffre Mandatory",
+        owner = "mdr",
+        position = vector3(-546.25, -200.29, 47.66),
+        size = vec2(1.0, 1.0),
+        heading = 30.0,
+    },
 }
 
 Config.ATMModels = {
