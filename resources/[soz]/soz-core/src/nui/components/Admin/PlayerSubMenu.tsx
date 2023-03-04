@@ -307,7 +307,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                                 player.injuries = index;
                             }}
                         >
-                            {Array(11)
+                            {Array(13)
                                 .fill(0)
                                 .map((_, index) => (
                                     <MenuItemSelectOption value={index} key={`injuries_${index}`}>

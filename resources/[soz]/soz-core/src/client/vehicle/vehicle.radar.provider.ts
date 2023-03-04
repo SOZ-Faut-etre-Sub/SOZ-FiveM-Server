@@ -23,16 +23,23 @@ export class VehicleRadarProvider {
     @Inject(RadarRepository)
     private radarRepository: RadarRepository;
 
+    private globalDisableTime = 0;
+
     @Once(OnceStep.Start)
     onStart(): void {
         for (const [radarID, radar] of Object.entries(this.radarRepository.get())) {
             radar.entity = this.objectFFactory.create(radar_props, radar.props, true);
 
             radar.disableTime = GetResourceKvpInt('radar/disableEndTime/' + radarID);
+            this.globalDisableTime = GetResourceKvpInt('radar/disableEndTime/all');
 
             if (radar.isOnline) {
                 this.playerInOutService.add('radar' + radarID, radar.zone, isInside => {
                     if (isInside) {
+                        if (this.globalDisableTime && this.globalDisableTime > Date.now() / 1000) {
+                            return;
+                        }
+
                         if (radar.disableTime && radar.disableTime > Date.now() / 1000) {
                             return;
                         }
@@ -90,5 +97,11 @@ export class VehicleRadarProvider {
                 }
             }
         }
+    }
+
+    public disableAll(duration: number) {
+        const disableEndTime = Math.round(Date.now() / 1000 + duration);
+        this.globalDisableTime = disableEndTime;
+        SetResourceKvpInt('radar/disableEndTime/all', disableEndTime);
     }
 }
