@@ -24,4 +24,20 @@ Locations["ammunation"] = {
                          {name = "ammunation8", heading = 42, minZ = 17.55, maxZ = 20.55, debugPoly = LocationDebugPoly}),
     [9] = BoxZone:Create(vector3(843.13, -1030.66, 28.19), 11.8, 7.8,
                          {name = "ammunation9", heading = 0, minZ = 27.19, maxZ = 30.19, debugPoly = LocationDebugPoly}),
+    [10] = BoxZone:Create(vector3(-3169.31, 1085.86, 20.84), 11.8, 7.8,
+                          {
+        name = "ammunation10",
+        heading = 65,
+        minZ = 19.84,
+        maxZ = 21.84,
+        debugPoly = LocationDebugPoly,
+    }),
+    [11] = BoxZone:Create(vector3(-1308.72, -392.85, 36.70), 11.8, 7.8,
+                          {
+        name = "ammunation10",
+        heading = 75,
+        minZ = 35.70,
+        maxZ = 37.70,
+        debugPoly = LocationDebugPoly,
+    }),
 }
