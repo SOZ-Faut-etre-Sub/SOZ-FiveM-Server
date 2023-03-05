@@ -21,6 +21,7 @@ export enum JobType {
     Ffs = 'ffs',
     Baun = 'baun',
     FBI = 'fbi',
+    MDR = 'mdr',
 }
 
 export enum JobPermission {

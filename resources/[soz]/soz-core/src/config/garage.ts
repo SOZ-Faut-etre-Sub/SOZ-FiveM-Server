@@ -1771,6 +1771,71 @@ export const GarageList: Record<string, Garage> = {
             }),
         ],
     },
+    mdr: {
+        name: 'Mandatory Parking',
+        type: GarageType.Job,
+        job: JobType.MDR,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-568.26, -171.6, 37.2], 1.0, 1.0, {
+            heading: 109.72,
+            minZ: 37.02,
+            maxZ: 40.02,
+        }),
+        parkingPlaces: [
+            new BoxZone([-580.87, -171.81, 38.1], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 37.1,
+                maxZ: 40.1,
+            }),
+            new BoxZone([-575.53, -169.34, 37.87], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 36.87,
+                maxZ: 39.87,
+            }),
+            new BoxZone([-570.28, -167.43, 37.95], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 36.95,
+                maxZ: 39.95,
+            }),
+            new BoxZone([-564.56, -165.17, 37.97], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 36.97,
+                maxZ: 39.97,
+            }),
+            new BoxZone([-557.93, -162.49, 38.17], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 36.97,
+                maxZ: 39.97,
+            }),
+            new BoxZone([-552.0, -159.97, 38.16], 6.8, 4.0, {
+                heading: 110.0,
+                minZ: 37.16,
+                maxZ: 40.16,
+            }),
+        ],
+    },
+    mdr_air: {
+        name: 'Mandatory Air Parking',
+        type: GarageType.Job,
+        job: JobType.MDR,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-549.69, -246.95, 35.6], 1.0, 1.0, {
+            heading: 209.86,
+            minZ: 35.6,
+            maxZ: 38.6,
+        }),
+        parkingPlaces: [
+            new BoxZone([-543.34, -254.8, 36.25], 6.8, 4.0, {
+                heading: 27.32,
+                minZ: 37.1,
+                maxZ: 40.1,
+                debugPoly: true,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
     marina_boat: {
         name: 'Port de la Marina',
         type: GarageType.Public,

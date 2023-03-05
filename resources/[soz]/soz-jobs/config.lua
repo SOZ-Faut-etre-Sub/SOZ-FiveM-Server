@@ -22,6 +22,7 @@ SozJobCore.JobType = {
     Baun = "baun",
     Ffs = "ffs",
     Debug = "debug",
+    MDR = "mdr",
 }
 
 SozJobCore.JobPermission = {
@@ -595,6 +596,26 @@ SozJobCore.Jobs = {
         },
         bossZones = {{x = 706.83, y = -965.59, z = 30.41, sx = 6.0, sy = 6.0, heading = 0, minZ = 29.41, maxZ = 33.41}},
         phone = "555-FFS",
+        canReceiveSocietyInvoice = true,
+    },
+    [SozJobCore.JobType.MDR] = {
+        label = "Mandatory",
+        platePrefix = "MDR",
+        grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyBankInvoices] = {label = "Accès aux outils de facturation société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+        },
+        bossZones = {
+            {x = -546.36, y = -201.78, z = 47.66, sx = 8.0, sy = 17.0, heading = 30.0, minZ = 46.66, maxZ = 49.66},
+        },
+        menuCallback = "soz-jobs:client:mdr:OpenSocietyMenu",
+        canInvoice = true,
+        phone = "555-MDR",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}, canReceiveSocietyInvoice = false},

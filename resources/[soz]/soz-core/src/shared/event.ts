@@ -196,6 +196,7 @@ export enum ClientEvent {
     JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
     JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
     JOBS_STONK_OPEN_SOCIETY_MENU = 'stonk:client:OpenSocietyMenu',
+    JOBS_MDR_OPEN_SOCIETY_MENU = 'soz-jobs:client:mdr:OpenSocietyMenu',
     JOBS_TRY_OPEN_CLOAKROOM = 'soz-jobs:client:try-open-cloakroom',
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
@@ -389,4 +390,7 @@ export enum NuiEvent {
     DrivingSchoolCheckVehicleSlots = 'soz-core:client:driving-school:check-vehicle-slots',
 
     HousingUpgradeApartment = 'soz-core:client:housing:upgrade-apartment',
+
+    ToggleRadar = 'soz-core:client:radar:toggle',
+    RedCall = 'soz-core:client:police:red-call',
 }
