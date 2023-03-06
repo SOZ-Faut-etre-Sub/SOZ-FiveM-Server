@@ -21,6 +21,7 @@ export type GameMasterSubMenuProps = {
     permission: SozRole;
     characters: Record<string, PlayerCharInfo>;
     state: {
+        adminGPS: boolean;
         moneyCase: boolean;
         invisible: boolean;
     };
@@ -148,6 +149,16 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                 >
                     Créer nouveau personnage
                 </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.adminGPS}
+                    disabled={!isAdminOrStaff}
+                    onChange={async value => {
+                        state.adminGPS = value;
+                        await fetchNui(NuiEvent.AdminSetAdminGPS, value);
+                    }}
+                >
+                    🗺 GPS permanent
+                </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
     );

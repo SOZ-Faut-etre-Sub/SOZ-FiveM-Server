@@ -37,6 +37,7 @@ export const LICENCES = [
 export type GameMasterSubMenuState = {
     moneyCase: boolean;
     invisible: boolean;
+    adminGPS: boolean;
 };
 
 export type InteractiveSubMenuState = {
