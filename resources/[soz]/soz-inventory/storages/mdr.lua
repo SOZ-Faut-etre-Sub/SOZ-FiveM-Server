@@ -16,3 +16,23 @@ Config.Storages["mdr_storage"] = {
     heading = 30,
     offsetUpZ = 1.0,
 }
+
+Config.Storages["mdr_fridge1"] = {
+    label = "Frigo MDR",
+    type = "fridge",
+    owner = "mdr",
+    position = vector3(-569.05, -196.28, 47.66),
+    size = vec2(1.1, 1.1),
+    heading = 30.0,
+    offsetUpZ = 1.0,
+}
+
+Config.Storages["mdr_fridge2"] = {
+    label = "Frigo MDR 2",
+    type = "fridge",
+    owner = "mdr",
+    position = vector3(-570.33, -194.09, 47.66),
+    size = vec2(1.1, 1.1),
+    heading = 30.0,
+    offsetUpZ = 1.0,
+}
