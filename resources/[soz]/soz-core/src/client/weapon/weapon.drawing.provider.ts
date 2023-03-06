@@ -98,11 +98,6 @@ export class WeaponDrawingProvider {
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(player: PlayerData) {
         await this.updateWeaponDrawList(player.items);
-
-        if (!this.shouldDrawWeapon) {
-            return;
-        }
-
         const weapon = this.weaponService.getCurrentWeapon();
 
         if (weapon) {
@@ -114,6 +109,11 @@ export class WeaponDrawingProvider {
                 await this.weaponService.clear();
             }
         }
+
+        if (!this.shouldDrawWeapon) {
+            return;
+        }
+
         await this.refreshDrawWeapons();
     }
 
