@@ -52,7 +52,7 @@ Config.SocietyTaxes = {
         ["upw"] = {"upw", "safe_upw"},
     },
 
-    taxRepartition = {["lspd"] = 30, ["bcso"] = 30, ["lsmc"] = 30, ["cash-transfer"] = 10},
+    taxRepartition = {["lspd"] = 30, ["bcso"] = 30, ["lsmc"] = 25, ["cash-transfer"] = 5, ["mdr"] = 10},
 }
 
 Config.SafeStorages = {
