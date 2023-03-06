@@ -115,21 +115,21 @@ local function GetFilterForPlayer(player)
         return "phone"
     end
 
-    -- if contains(player.context, "radio_lr_primary") then
-    --    return "radio"
-    -- end
-    --
-    -- if contains(player.context, "radio_lr_secondary") then
-    --    return "radio"
-    -- end
-    --
-    -- if contains(player.context, "radio_sr_primary") then
-    --    return "radio"
-    -- end
-    --
-    -- if contains(player.context, "radio_sr_secondary") then
-    --    return "radio"
-    -- end
+    if contains(player.context, "radio_lr_primary") then
+        return "radio"
+    end
+
+    if contains(player.context, "radio_lr_secondary") then
+        return "radio"
+    end
+
+    if contains(player.context, "radio_sr_primary") then
+        return "radio"
+    end
+
+    if contains(player.context, "radio_sr_secondary") then
+        return "radio"
+    end
 
     return nil
 end
