@@ -6,7 +6,9 @@ local function SetVoiceProximity(proximity)
 
     ProximityModuleInstance:updateRange(proximityConfig.range)
     voiceProximity = proximity
-    TriggerEvent("hud:client:UpdateVoiceMode", voiceProximity - 1)
+    if not muted then
+        TriggerEvent("hud:client:UpdateVoiceMode", voiceProximity - 1)
+    end
 end
 
 local function MutePlayer(state)
