@@ -9,7 +9,6 @@ import { RpcEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { Qbcore } from '../qbcore';
-import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 
 @Provider()
 export class AdminMenuJobProvider {
@@ -21,9 +20,6 @@ export class AdminMenuJobProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
-
-    @Inject(VehicleConditionProvider)
-    private vehicleConditionProvider: VehicleConditionProvider;
 
     @OnNuiEvent(NuiEvent.AdminGetJobs)
     public async getJobs() {
@@ -47,10 +43,5 @@ export class AdminMenuJobProvider {
     @OnNuiEvent(NuiEvent.AdminToggleDuty)
     public async setJobDuty(): Promise<void> {
         TriggerServerEvent(ServerEvent.QBCORE_TOGGLE_DUTY);
-    }
-
-    @OnNuiEvent(NuiEvent.AdminToggleNoStall)
-    public async setNoStall(value: boolean): Promise<void> {
-        this.vehicleConditionProvider.setAdminNoStall(value);
     }
 }

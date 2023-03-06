@@ -113,6 +113,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                     <MenuItemCheckbox
                         checked={state.noStall}
                         onChange={async value => {
+                            state.noStall = value;
                             await fetchNui(NuiEvent.AdminToggleNoStall, value);
                         }}
                     >

@@ -326,6 +326,7 @@ export enum NuiEvent {
     AdminMenuSkinSave = 'soz-core:client:admin:skin:save',
     AdminMenuGameMasterCreateNewCharacter = 'soz-core:client:admin:game-master:create-new-character',
     AdminMenuGameMasterSwitchCharacter = 'soz-core:client:admin:game-master:switch-character',
+    AdminSetAdminGPS = 'soz-core:client:admin:gps',
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
 
     StonkDisplayBlip = 'soz-core:client:job:stonk:display-blip',
