@@ -45,6 +45,7 @@ SozJobCore.JobPermission = {
     Baun = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Ffs = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Bennys = {Estimate = "estimate", Resell = "resell", Order = "order"},
+    Mdr = {ViewOtherJobs = "view-other-jobs", ViewCitizenData = "view-citizen-data"},
 }
 
 SozJobCore.Jobs = {
@@ -609,6 +610,14 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyBankInvoices] = {label = "Accès aux outils de facturation société"},
             [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.CriminalRecord] = {label = "Accès aux casiers judiciaire"},
+            [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès aux registre des véhicules"},
+            [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
+            [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
+            [SozJobCore.JobPermission.Mdr.ViewOtherJobs] = {label = "Accès aux infos des entreprises"},
+            [SozJobCore.JobPermission.Mdr.ViewCitizenData] = {label = "Accès aux infos des citoyens"},
         },
         bossZones = {
             {x = -546.36, y = -201.78, z = 47.66, sx = 8.0, sy = 17.0, heading = 30.0, minZ = 46.66, maxZ = 49.66},
