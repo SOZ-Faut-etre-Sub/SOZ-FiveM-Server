@@ -147,5 +147,8 @@ export class ClothingShopProvider {
         }
         await this.clothingShopRepository.updateShopStock(brand);
         this.nuiDispatch.dispatch('cloth_shop', 'SetStocks', this.clothingShopRepository.getShop(brand).stocks);
+        // Also update player data in case the player changed clothes
+        const playerData = this.playerService.getPlayer();
+        this.nuiDispatch.dispatch('cloth_shop', 'SetPlayerData', playerData);
     }
 }
