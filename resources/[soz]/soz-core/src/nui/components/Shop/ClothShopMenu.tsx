@@ -27,6 +27,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
     const location = useLocation();
     const state = location.state as { activeIndex: number } | undefined;
     const [stocks, setStocks] = useState<Record<number, number>>(catalog.shop_content.stocks);
+    const [playerData, setPlayerData] = useState<PlayerData>(catalog.player_data);
 
     const selectCategory = (categoryId: number) => {
         navigate(`/${MenuType.ClothShop}/${categoryId}`, {
@@ -43,6 +44,10 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
 
     useNuiEvent('cloth_shop', 'SetStocks', stocks => {
         setStocks(stocks);
+    });
+
+    useNuiEvent('cloth_shop', 'SetPlayerData', playerData => {
+        setPlayerData(playerData);
     });
 
     return (
@@ -85,8 +90,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                             .filter(
                                 product =>
                                     product.categoryId == cat.id &&
-                                    (product.modelHash == catalog.player_data.skin.Model.Hash ||
-                                        product.modelHash == null)
+                                    (product.modelHash == playerData.skin.Model.Hash || product.modelHash == null)
                             )
                             .sort((a, b) => a.label.localeCompare(b.label))
                             .map(product => {
