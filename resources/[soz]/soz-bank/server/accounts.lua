@@ -137,7 +137,7 @@ function Account.GetMoney(acc, money_type)
     return acc[money_type]
 end
 
-function Account.AddMoney(acc, money, money_type)
+function Account.AddMoney(acc, money, money_type, allowoverflow)
     acc = Account(acc)
 
     if money_type == nil then
@@ -145,7 +145,7 @@ function Account.AddMoney(acc, money, money_type)
     end
 
     local total = math.ceil(acc[money_type] + money - 0.5)
-    if (acc.type == "house_safe" or acc.type == "safestorages") and total > acc.max then
+    if not allowoverflow and (acc.type == "house_safe" or acc.type == "safestorages") and total > acc.max then
         return false
     end
 

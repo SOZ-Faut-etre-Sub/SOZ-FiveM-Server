@@ -71,4 +71,8 @@ export enum RpcEvent {
     TALENT_TREE_UNLOCK = 'soz-core:server:talent:unlock',
     TALENT_TREE_RESET = 'soz-core:server:talent:reset',
     TALENT_TOGGLE_CRIMINAL_MODE = 'soz-core:server:talent:toggleCriminalMode',
+
+    HELICO_INIT_LIGHT = 'soz-core:server:helico:init-spotlight',
+
+    POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
 }

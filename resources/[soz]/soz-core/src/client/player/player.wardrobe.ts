@@ -1,13 +1,15 @@
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Outfit, WardrobeConfig } from '../../shared/cloth';
+import { Outfit, WardrobeConfig, WardRobeElements } from '../../shared/cloth';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { ProgressResult } from '../../shared/progress';
+import { ClothingService } from '../clothing/clothing.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { ProgressService } from '../progress.service';
+import { PlayerService } from './player.service';
 
 type OutfitSelection = {
     outfit: Outfit | null;
@@ -19,14 +21,30 @@ export class PlayerWardrobe {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(ClothingService)
+    private clothingService: ClothingService;
+
+    private customOutfit: Outfit;
+
     private currentOutfitResolve: (outfit: OutfitSelection) => void | null;
 
-    public async selectOutfit(config: WardrobeConfig, nullLabel?: string): Promise<OutfitSelection | null> {
+    public async selectOutfit(
+        config: WardrobeConfig,
+        nullLabel?: string,
+        customLabel?: string
+    ): Promise<OutfitSelection | null> {
         const model = GetEntityModel(PlayerPedId());
         const wardrobe = config[model];
+        this.customOutfit = {
+            Components: {},
+            Props: {},
+        };
 
         if (!wardrobe) {
             return null;
@@ -41,6 +59,7 @@ export class PlayerWardrobe {
             {
                 wardrobe,
                 allowNullLabel: nullLabel,
+                allowCustom: customLabel,
             },
             {
                 position: {
@@ -88,10 +107,49 @@ export class PlayerWardrobe {
 
     @OnNuiEvent(NuiEvent.MenuClosed)
     public async onCloseMenu() {
+        if (this.customOutfit) {
+            this.playerService.resetClothConfig();
+        }
+
         if (this.currentOutfitResolve) {
             this.currentOutfitResolve({ outfit: null, canceled: true });
         }
 
         this.currentOutfitResolve = null;
+    }
+
+    @OnNuiEvent<Outfit>(NuiEvent.WardrobeElementSelect)
+    public async onWardrobeElementSelect(config) {
+        const outfit = config.outfit as Outfit;
+        const wardRobeElement = WardRobeElements[config.wardRobeElementId];
+
+        if (!outfit) {
+            return;
+        }
+
+        if (wardRobeElement.componentId) {
+            wardRobeElement.componentId.forEach(element => {
+                this.customOutfit.Components[element] = outfit.Components[element];
+            });
+        }
+        if (wardRobeElement.propId) {
+            wardRobeElement.propId.forEach(element => {
+                this.customOutfit.Props[element] = outfit.Props[element];
+            });
+        }
+
+        this.playerService.setTempClothes(this.customOutfit);
+    }
+
+    @OnNuiEvent<Outfit>(NuiEvent.WardrobeCustomSave)
+    public async onCustomWardrobeSabe() {
+        if (this.currentOutfitResolve) {
+            this.currentOutfitResolve({ outfit: this.customOutfit, canceled: false });
+        }
+
+        this.nuiMenu.closeMenu();
+        this.currentOutfitResolve = null;
+
+        return true;
     }
 }

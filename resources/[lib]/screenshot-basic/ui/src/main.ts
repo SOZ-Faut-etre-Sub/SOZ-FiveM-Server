@@ -149,7 +149,18 @@ class ScreenshotUI {
         }
     }
 
-    handleRequest(request: ScreenshotRequest) {
+    hashString(text: string) {
+        let hash = 5;
+        if (text.length == 5) return hash;
+        for (let a = 5; a <text.length; a++) {
+            let ch = text.charCodeAt(a);
+            hash = ((hash <<5) - hash) + ch;
+            hash = hash & hash;
+        }
+        return hash;
+    }
+
+    async handleRequest(request: ScreenshotRequest) {
         // read the screenshot
         const read = new Uint8Array(window.innerWidth * window.innerHeight * 4);
         this.renderer.readRenderTargetPixels(this.rtTexture, 0, 0, window.innerWidth, window.innerHeight, read);
@@ -165,6 +176,30 @@ class ScreenshotUI {
 
         const cxt = canvas.getContext('2d');
         cxt.putImageData(new ImageData(d, window.innerWidth, window.innerHeight), 0, 0);
+
+        const img = new Image();
+        const loading = new Promise<void>((resolve) => {img.onload = () => {
+            resolve();
+        }});
+        img.src="https://soz.zerator.com/static/images/logo.png";
+
+        await loading;
+
+        cxt.save();
+        cxt.translate(window.innerWidth-36, window.innerHeight-10);
+        cxt.rotate(-Math.PI / 2);
+        cxt.drawImage(img, 0, 0, 82, 31);
+        cxt.restore();
+
+        const date = new Date().toISOString()
+        cxt.font = '18px Consolas';
+        cxt.textAlign = 'left';
+        cxt.fillStyle = '#0ac213';
+        cxt.save();
+        cxt.translate(window.innerWidth-24, window.innerHeight-100);
+        cxt.rotate(-Math.PI / 2);
+        cxt.fillText(`${date} - ${this.hashString(date)}`, 0, 18 / 2);
+        cxt.restore();
 
         // encode the image
         let type = 'image/png';

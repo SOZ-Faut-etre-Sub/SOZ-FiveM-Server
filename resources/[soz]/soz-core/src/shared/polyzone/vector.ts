@@ -28,3 +28,7 @@ export const toVector3Object = (vector: Vector3) => {
         z: vector[2],
     };
 };
+
+export const rad = (x: number) => {
+    return (x * Math.PI) / 180;
+};

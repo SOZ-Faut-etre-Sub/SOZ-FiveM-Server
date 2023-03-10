@@ -180,6 +180,12 @@ export enum ServerEvent {
     HEIST_JEWELRY_STOP_ROBBERY = 'soz-core:server:heist:jewelry-stop-robbery',
 
     SOUND_GLOBAL_INIT = 'soz-core:server:sound:init',
+
+    POLICE_TAKE_DOWN = 'soz-core:server:takedown',
+
+    HELICO_ADD_LIGHT = 'soz-core:server:police:add-light',
+    HELICO_REMOVE_LIGHT = 'soz-core:server:police:del-light',
+    HELICO_UPDATE_LIGHT = 'soz-core:server:police:update-light',
 }
 
 export enum ClientEvent {
@@ -229,8 +235,10 @@ export enum ClientEvent {
     LSMC_REVIVE = 'soz-core:lsmc:client:revive',
     LSMC_CALL = 'soz-core:lsmc:client:call',
     LSMC_REAMINATE = 'soz-core:lsmc:reanimate',
-    LSMC_APPLY_PATIENT_CLOTHING = 'ems:client:applyPatientClothing',
-    LSMC_REMOVE_PATIENT_CLOTHING = 'ems:client:removePatientClothing',
+    LSMC_APPLY_PATIENT_CLOTHING = 'soz-core:client:lsmc:applyPatientClothing',
+    LSMC_REMOVE_PATIENT_CLOTHING = 'soz-core:client:lsmc:removePatientClothing',
+    LSMC_OPEN_CLOAKROOM = 'soz-core:client:lsmc::OpenCloakroomMenu',
+    LSMC_APPLY_OUTFIT = 'soz-core:client:lsmc:ApplyDutyClothing',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
@@ -242,6 +250,8 @@ export enum ClientEvent {
     OIL_UPDATE_STATION_PRICE = 'soz-core:client:oil:update-station-price',
 
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
+    STONK_OPEN_CLOAKROOM = 'soz-core:client:stonk::OpenCloakroomMenu',
+    STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
 
     // Temp event which should be internally used by a service when only soz core
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
@@ -289,6 +299,19 @@ export enum ClientEvent {
     HEIST_PLAY_ANIM = 'soz-core:client:heist:play-anim',
 
     INJURY_DEATH = 'soz-core:client:injury:death',
+
+    TAKE_DOWN = 'soz-core:client:player:animation:takedown',
+    TAKE_DOWN_TARGET = 'soz-core:client:player:animation:takedown-target',
+
+    POLICE_OPEN_CLOAKROOM = 'soz-core:client:police:OpenCloakroomMenu',
+    POLICE_APPLY_OUTFIT = 'soz-core:client:police:ApplyDutyClothing',
+    POLICE_SET_PRISONER_CLOTHES = 'soz-core:client:police:SetPrisonerClothes',
+    POLICE_SETUP_ARMOR = 'soz-core:client:police:setup-armor',
+    POLICE_MOBILE_RADAR = 'soz-core:client:police:mobile-radar',
+    POLICE_BREATHANALYZER_TARGET = 'soz-core:client:police:breathanalyzer-target',
+
+    HELICO_ADD_LIGHT = 'soz-core:client:police:add-light',
+    HELICO_REMOVE_LIGHT = 'soz-core:client:police:del-light',
 }
 
 export enum GameEvent {
@@ -427,4 +450,7 @@ export enum NuiEvent {
     TalentTreeBuy = 'soz-core:client:talent-tree:buy',
     TalentTreeReset = 'soz-core:client:talent-tree:reset',
     TalentToggleCriminalMode = 'soz-core:client:talent:toggle-criminal-mode',
+
+    WardrobeElementSelect = 'soz-core:client:wardrobe:element-select',
+    WardrobeCustomSave = 'soz-core:client:wardrobe:custom-save',
 }

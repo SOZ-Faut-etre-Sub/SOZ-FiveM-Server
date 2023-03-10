@@ -162,6 +162,8 @@ export const RadarAllowedVehicle: number[] = [
     GetHashKey('police5'),
     GetHashKey('police6'),
     GetHashKey('policeb2'),
+    GetHashKey('lspdbana1'),
+    GetHashKey('lspdbana2'),
     // BCSO
     GetHashKey('sheriff'),
     GetHashKey('sheriff2'),
@@ -170,6 +172,8 @@ export const RadarAllowedVehicle: number[] = [
     GetHashKey('sheriffb'),
     GetHashKey('sheriffdodge'),
     GetHashKey('sheriffcara'),
+    GetHashKey('bcsobana1'),
+    GetHashKey('bcsobana2'),
     // LSPD / BCSO
     GetHashKey('pbus'),
     // FBI
@@ -188,6 +192,8 @@ export const RadarInformedVehicle: number[] = [
     GetHashKey('police5'),
     GetHashKey('police6'),
     GetHashKey('policeb2'),
+    GetHashKey('lspdbana1'),
+    GetHashKey('lspdbana2'),
     // BCSO
     GetHashKey('sheriff'),
     GetHashKey('sheriff2'),
@@ -196,4 +202,6 @@ export const RadarInformedVehicle: number[] = [
     GetHashKey('sheriffb'),
     GetHashKey('sheriffdodge'),
     GetHashKey('sheriffcara'),
+    GetHashKey('bcsobana1'),
+    GetHashKey('bcsobana1'),
 ];

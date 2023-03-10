@@ -15,6 +15,7 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { BedLocations, FailoverLocation, KillData, KillerVehData, PatientClothes } from '@public/shared/job/lsmc';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
+import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
 
 const deathAnim: Animation = {
@@ -384,12 +385,8 @@ export class LSMCDeathProvider {
         DoScreenFadeIn(1000);
     }
 
-    private rad(x: number): number {
-        return (x * Math.PI) / 180;
-    }
-
     private loc(pos: number[], w: number): number[] {
-        return [pos[0] - Math.cos(this.rad(w)), pos[1] - Math.sin(this.rad(w)), (w + 270) % 360];
+        return [pos[0] - Math.cos(rad(w)), pos[1] - Math.sin(rad(w)), (w + 270) % 360];
     }
 
     @OnEvent(ClientEvent.LSMC_REAMINATE, false)

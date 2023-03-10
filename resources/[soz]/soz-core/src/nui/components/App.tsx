@@ -15,6 +15,8 @@ import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
 import { PlayerApp } from './Player/PlayerApp';
+import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
+import { RadarApp } from './Police/RadarApp';
 import { ProgressApp } from './Progress/ProgressApp';
 
 export const App: FunctionComponent = () => {
@@ -41,6 +43,8 @@ export const App: FunctionComponent = () => {
                 <InputApp />
                 <MissiveApp />
                 <TalentApp />
+                <RadarApp />
+                <BreathAnalyzerApp />
             </div>
         </Provider>
     );

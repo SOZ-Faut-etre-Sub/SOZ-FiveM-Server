@@ -180,7 +180,7 @@ Config.AnimationsList = {
             "Animation d'arrestation",
             false,
             "inv_barriere",
-            {"anim@sports@ballgame@handball@", "ball_rstop_r", 262144, false, false, "ball_get_up"},
+            {event = "soz-core:client:player:animation:takedown"},
         },
         ["SWAT"] = {
             {"Venez !", "Intervention", false, "inv_lspdshield", {"swat", "come", 50}},

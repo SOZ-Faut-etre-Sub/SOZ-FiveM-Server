@@ -146,6 +146,10 @@ RegisterNetEvent("banking:server:SafeStorageDeposit", function(money_type, safeS
     end
 end)
 
+exports("AddMoney", function(safeStorage, amount, money_type, allowoverflow)
+    return Account.AddMoney(safeStorage, amount, money_type, allowoverflow)
+end)
+
 RegisterNetEvent("banking:server:SafeStorageWithdraw", function(money_type, safeStorage, amount)
     local Player = QBCore.Functions.GetPlayer(source)
     amount = tonumber(amount)

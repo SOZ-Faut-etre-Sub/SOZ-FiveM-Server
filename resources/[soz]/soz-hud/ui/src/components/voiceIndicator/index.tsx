@@ -12,6 +12,8 @@ function VoiceIndicator() {
     const WhisperIcon = lazy(() => import(`../../assets/voice/whisper`).catch(() => import('../../assets/fallback')))
     const NormalIcon = lazy(() => import(`../../assets/voice/normal`).catch(() => import('../../assets/fallback')))
     const ShoutingIcon = lazy(() => import(`../../assets/voice/shouting`).catch(() => import('../../assets/fallback')))
+    const MegaphoneIcon = lazy(() => import(`../../assets/voice/megaphone`).catch(() => import('../../assets/fallback')))
+    const MicrophoneIcon = lazy(() => import(`../../assets/voice/microphone`).catch(() => import('../../assets/fallback')))
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === 'voiceMode') {
@@ -32,6 +34,8 @@ function VoiceIndicator() {
                 {voiceMode === 0 && <WhisperIcon className={style.icon} />}
                 {voiceMode === 1 && <NormalIcon className={style.icon} />}
                 {voiceMode === 2 && <ShoutingIcon className={style.icon} />}
+                {voiceMode === 9 && <MicrophoneIcon className={style.icon} />}
+                {voiceMode === 10 && <MegaphoneIcon className={style.icon} />}
             </Suspense>
         </div>
     )

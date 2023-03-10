@@ -2,11 +2,8 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Component, WardrobeConfig } from '../../../shared/cloth';
-import { ClientEvent, ServerEvent } from '../../../shared/event';
-import { PlayerService } from '../../player/player.service';
-import { PlayerWardrobe } from '../../player/player.wardrobe';
-import { ProgressService } from '../../progress.service';
-import { JobGradeRepository } from '../../resources/job.grade.repository';
+import { ClientEvent } from '../../../shared/event';
+import { JobCloakroomProvider } from '../job.cloakroom.provider';
 
 const BENNYS_CLOAKROOM: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
@@ -225,56 +222,11 @@ const BENNYS_CLOAKROOM: WardrobeConfig = {
 
 @Provider()
 export class BennysCloakroomProvider {
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
-    @Inject(PlayerWardrobe)
-    private playerWardrobe: PlayerWardrobe;
-
-    @Inject(JobGradeRepository)
-    private jobGradeRepository: JobGradeRepository;
-
-    @Inject(ProgressService)
-    private progressService: ProgressService;
+    @Inject(JobCloakroomProvider)
+    private jobCloakroomProvider: JobCloakroomProvider;
 
     @OnEvent(ClientEvent.BENNYS_OPEN_CLOAKROOM)
-    public async openCloakroom(storageIdToSave) {
-        const outfitSelection = await this.playerWardrobe.selectOutfit(BENNYS_CLOAKROOM, 'Tenue civile');
-
-        if (outfitSelection.canceled) {
-            return;
-        }
-
-        const progress = await this.progressService.progress(
-            'switch_clothes',
-            "Changement d'habits...",
-            5000,
-            {
-                name: 'male_shower_towel_dry_to_get_dressed',
-                dictionary: 'anim@mp_yacht@shower@male@',
-                options: {
-                    cancellable: false,
-                    enablePlayerControl: false,
-                },
-            },
-            {
-                disableCombat: true,
-                disableMovement: true,
-            }
-        );
-
-        if (!progress.completed) {
-            return;
-        }
-
-        if (outfitSelection.outfit) {
-            if (storageIdToSave) {
-                TriggerServerEvent(ServerEvent.JOBS_USE_WORK_CLOTHES, storageIdToSave);
-            }
-
-            TriggerServerEvent('soz-character:server:SetPlayerJobClothes', outfitSelection.outfit);
-        } else {
-            TriggerServerEvent('soz-character:server:SetPlayerJobClothes', null);
-        }
+    public async openCloakroom(storageIdToSave: string) {
+        await this.jobCloakroomProvider.openCloakroom(storageIdToSave, BENNYS_CLOAKROOM);
     }
 }

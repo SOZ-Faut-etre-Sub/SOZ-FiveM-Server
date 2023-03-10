@@ -64,6 +64,16 @@ export type Wardrobe = Record<string, Outfit>;
 export type WardrobeMenuData = {
     wardrobe: Wardrobe;
     allowNullLabel?: string;
+    allowCustom?: string;
+};
+
+export const WardRobeElements = {
+    [0]: { label: 'Casque', propId: ['Helmet'] },
+    [1]: { label: 'Chapeau', propId: [0] },
+    [2]: { label: 'Masque', componentId: [1] },
+    [3]: { label: 'Haut', componentId: [3, 5, 7, 8, 10, 11] },
+    [4]: { label: 'Pantalon', componentId: [4] },
+    [5]: { label: 'Chaussures', componentId: [6] },
 };
 
 // A list of wardrobe indexed by model hash

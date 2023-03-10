@@ -2,6 +2,7 @@
 local jobCanFine = {"lspd", "bcso"}
 local jobCanFouille = {"lspd", "bcso", "cash-transfer"}
 local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc"}
+local jobCanBreathAnalyze = {"lspd", "bcso", "lsmc"}
 
 --- Targets
 Citizen.CreateThread(function()
@@ -68,7 +69,9 @@ Citizen.CreateThread(function()
                     event = "police:client:SearchPlayer",
                     canInteract = function(entity)
                         if PlayerData.job.id == "cash-transfer" then
-                            return exports["soz-jobs"]:WearVIPClothes()
+                            if not exports["soz-core"]:WearVIPClothes() then
+                                return false
+                            end
                         end
 
                         return PlayerData.job.onduty and
@@ -92,12 +95,30 @@ Citizen.CreateThread(function()
                     canInteract = function(entity)
                         local player, _ = QBCore.Functions.GetClosestPlayer()
                         if PlayerData.job.id == "cash-transfer" then
-                            if not exports["soz-jobs"]:WearVIPClothes() then
+                            if not exports["soz-core"]:WearVIPClothes() then
                                 return false
                             end
                         end
                         return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
                                    not IsPedInAnyVehicle(PlayerPedId())
+                    end,
+                    job = jobId,
+                },
+            },
+            distance = 1.5,
+        })
+    end
+    for _, jobId in pairs(jobCanBreathAnalyze) do
+        exports["qb-target"]:AddGlobalPlayer({
+            options = {
+                {
+                    label = "Acootest",
+                    color = jobId,
+                    icon = "c:police/alcootest.png",
+                    event = "police:client:breathanalyzer",
+                    item = "breathanalyzer",
+                    canInteract = function(player)
+                        return PlayerData.job.onduty
                     end,
                     job = jobId,
                 },
@@ -121,7 +142,7 @@ RegisterNetEvent("police:client:SearchPlayer", function()
                 disableCarMovement = true,
                 disableMouse = false,
                 disableCombat = true,
-            }, {animDict = "random@shop_robbery", anim = "robbery_action_b", flags = 16}, {}, {}, function() -- Done
+            }, {animDict = "anim@gangops@morgue@table@", anim = "player_search", flags = 16}, {}, {}, function() -- Done
                 local plyCoords = GetEntityCoords(playerPed)
                 local pos = GetEntityCoords(ped)
                 if #(pos - plyCoords) < 2.5 then

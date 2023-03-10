@@ -46,14 +46,17 @@ end
 local function SetPlayerMegaphoneInUse(state)
     if state then
         ProximityModuleInstance:updateRange(Config.megaphoneRange)
+        TriggerEvent("hud:client:UpdateVoiceMode", 10)
     else
         SetVoiceProximity(voiceProximity)
     end
+    LocalPlayer.state:set("megaphone", state, true)
 end
 
 local function SetPlayerMicrophoneInUse(state)
     if state then
         ProximityModuleInstance:updateRange(Config.microphoneRange)
+        TriggerEvent("hud:client:UpdateVoiceMode", 9)
     else
         SetVoiceProximity(voiceProximity)
     end

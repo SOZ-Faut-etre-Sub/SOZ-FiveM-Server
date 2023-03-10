@@ -13,6 +13,7 @@ import { NuiMaskShopMethodMap } from './mask_shop';
 import { NuiMenuMethodMap } from './menu';
 import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
+import { NuiPoliceMethodMap } from './police';
 import { NuiProgressMethodMap } from './progress';
 import { NuiRepairMethodMap } from './repair';
 
@@ -38,6 +39,7 @@ export interface NuiMethodMap {
     talent: NuiTalentMethodMap;
     repair: NuiRepairMethodMap;
     missive: NuiMissiveMethodMap;
+    police: NuiPoliceMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

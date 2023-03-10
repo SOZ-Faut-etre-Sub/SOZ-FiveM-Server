@@ -7,11 +7,11 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
 import { GlobalWeaponConfig, WeaponName } from '../../shared/weapons/weapon';
-import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
 import { TalkService } from '../talk.service';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
+import { WeaponHolsterProvider } from './weapon.holster.provider';
 import { WeaponService } from './weapon.service';
 
 @Provider()
@@ -31,8 +31,8 @@ export class WeaponProvider {
     @Inject(TalkService)
     private talkService: TalkService;
 
-    @Inject(Notifier)
-    private notifier: Notifier;
+    @Inject(WeaponHolsterProvider)
+    private weaponHolsterProvider: WeaponHolsterProvider;
 
     @Once(OnceStep.PlayerLoaded)
     async onPlayerLoaded() {
@@ -172,7 +172,7 @@ export class WeaponProvider {
             await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
-        if (LocalPlayer.state.weapon_animation === true) {
+        if (this.weaponHolsterProvider.isInAnimation()) {
             return;
         }
 

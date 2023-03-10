@@ -60,4 +60,12 @@ export class ResourceLoader {
             await wait(100);
         }
     }
+
+    async loadScaleformMovie(name: string) {
+        const scaleform = RequestScaleformMovie(name);
+        while (!HasScaleformMovieLoaded(scaleform)) {
+            await wait(0);
+        }
+        return scaleform;
+    }
 }

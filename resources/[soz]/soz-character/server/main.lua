@@ -1,6 +1,21 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-local ConfigKeyToReset = {"Naked", "HideChain", "HideBulletproof", "HideTop", "HidePants", "HideShoes"}
+local MappingCompomentKeyToReset = {
+    ["1"] = "HideMask",
+    ["4"] = "HidePants",
+    ["5"] = "HideBag",
+    ["6"] = "HideShoes",
+    ["7"] = "HideChain",
+    ["9"] = "HideBulletproof",
+    ["11"] = "HideTop",
+}
+
+local MappingPropKeyToReset = {
+    ["0"] = "HideHead",
+    ["1"] = "HideGlasses",
+    ["6"] = "HideLeftHand",
+    ["7"] = "HideRightHand",
+}
 
 RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
     local Player = QBCore.Functions.GetPlayer(source)
@@ -20,32 +35,35 @@ RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
     Player.Functions.SetClothConfig(clothConfig, false)
 end)
 
-RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, removeHideBag)
+RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, merge)
     local Player = QBCore.Functions.GetPlayer(source)
     local clothConfig = Player.PlayerData.cloth_config
 
     if clothes == nil then
         clothConfig["JobClothSet"] = clothes
     else
-        if clothConfig["JobClothSet"] == nil then
+        if clothConfig["JobClothSet"] == nil or not merge then
             clothConfig["JobClothSet"] = {Components = {}, Props = {}}
         end
 
         for componentId, component in pairs(clothes.Components or {}) do
             clothConfig["JobClothSet"].Components[tostring(componentId)] = component
+            if MappingCompomentKeyToReset[tostring(componentId)] then
+                clothConfig.Config[MappingCompomentKeyToReset[tostring(componentId)]] = false
+            end
         end
         for propId, prop in pairs(clothes.Props or {}) do
             clothConfig["JobClothSet"].Props[tostring(propId)] = prop
+            if MappingPropKeyToReset[tostring(propId)] then
+                clothConfig.Config[MappingPropKeyToReset[tostring(propId)]] = false
+            end
+            if tostring(propId) == "Helmet" then
+                clothConfig.Config["ShowHelmet"] = true
+            end
         end
     end
 
-    for _, key in pairs(ConfigKeyToReset) do
-        clothConfig.Config[key] = false
-    end
-
-    if removeHideBag then
-        clothConfig.Config["HideBag"] = false
-    end
+    clothConfig.Config["Naked"] = false
 
     Player.Functions.SetClothConfig(clothConfig, false)
 end)

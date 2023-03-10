@@ -1,14 +1,10 @@
-RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    if not duty then
-        return
-    end
-
-    exports["qb-target"]:AddBoxZone("police:moneychecker", vector3(586.82, 13.41, 76.63), 2.4, 0.8,
-                                    {name = "police:moneychecker", heading = 350, minZ = 76.63, maxZ = 77.63}, {
+CreateThread(function()
+    exports["qb-target"]:AddBoxZone("lspd:moneychecker", vector3(586.82, 13.41, 76.63), 2.4, 0.8,
+                                    {name = "lspd:moneychecker", heading = 350, minZ = 76.63, maxZ = 77.63}, {
         options = {
             {
                 label = "Analyser",
-                color = PlayerData.job.id,
+                color = "lspd",
                 icon = "c:police/fouiller.png",
                 event = "police:client:MoneyChecker",
                 canInteract = function(player)
@@ -16,9 +12,30 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
 
                     return PlayerData.job.onduty and player ~= -1 and distance <= 2.0
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = "lspd",
                 blackoutGlobal = true,
-                blackoutJob = true,
+                blackoutJob = "lspd",
+            },
+        },
+        distance = 2.5,
+    })
+
+    exports["qb-target"]:AddBoxZone("bcso:moneychecker", vector3(1857.69, 3687.39, 30.27), 2.4, 0.8,
+                                    {name = "bcso:moneychecker", heading = 210, minZ = 29.27, maxZ = 32.27}, {
+        options = {
+            {
+                label = "Analyser",
+                color = "bcso",
+                icon = "c:police/fouiller.png",
+                event = "police:client:MoneyChecker",
+                canInteract = function(player)
+                    local player, distance = QBCore.Functions.GetClosestPlayer()
+
+                    return PlayerData.job.onduty and player ~= -1 and distance <= 2.0
+                end,
+                job = "bcso",
+                blackoutGlobal = true,
+                blackoutJob = "bcso",
             },
         },
         distance = 2.5,

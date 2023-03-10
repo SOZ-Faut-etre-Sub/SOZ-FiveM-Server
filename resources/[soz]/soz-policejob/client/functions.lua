@@ -29,7 +29,7 @@ PoliceJob.Functions.GetCloakroomPrisonerAction = function()
         {
             targeticon = "fas fa-box",
             icon = "fas fa-tshirt",
-            event = "police:client:SetPrisonerClothes",
+            event = "soz-core:client:police:SetPrisonerClothes",
             label = "Se changer",
         },
     }

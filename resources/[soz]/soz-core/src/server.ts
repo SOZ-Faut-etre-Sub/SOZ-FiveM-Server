@@ -20,6 +20,7 @@ import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { MdrModule } from './server/job/mdr/mdr.module';
 import { OilModule } from './server/job/oil/oil.module';
+import { PoliceModule } from './server/job/police/police.module';
 import { StonkModule } from './server/job/stonk/stonk.module';
 import { PlayerModule } from './server/player/player.module';
 import { RebootModule } from './server/reboot/reboot.module';
@@ -65,6 +66,7 @@ async function bootstrap() {
         DrivingSchoolModule,
         MdrModule,
         SoundModule,
+        PoliceModule,
         ...PrivateModules
     );
 
