@@ -21,17 +21,10 @@ function displayMugshot(mugshot) {
 function displayIdentityData(playerData) {
     const identityElement = document.querySelector("#right-col-identity");
     const pictureElement = document.querySelector("#left-col-identity");
-    const newPlayerBadgeElement = document.querySelector("#identity-new-player-badge");
 
     // Reset any existing content
     identityElement.innerHTML = null;
     pictureElement.innerHTML = null;
-
-    if (new Date().getTime() - playerData.created_at < TWO_WEEKS) {
-        newPlayerBadgeElement.style.display = "block";
-    } else {
-        newPlayerBadgeElement.style.display = "none";
-    }
 
     Object.entries(IDENTITY).forEach(([key, label]) => {
         const value = playerData[key];

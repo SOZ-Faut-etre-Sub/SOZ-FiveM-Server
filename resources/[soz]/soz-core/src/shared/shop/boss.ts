@@ -218,4 +218,18 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         targets: [],
         products: [{ id: 'microphone', type: 'item', price: 50 }],
     },
+    {
+        name: 'mdr',
+        job: JobType.MDR,
+        zone: {
+            center: [-547.5, -201.13, 47.66],
+            length: 0.2,
+            width: 1.0,
+            heading: 10,
+            minZ: 47.36,
+            maxZ: 48.36,
+        },
+        targets: [],
+        products: [{ id: 'newcomer_ticket', type: 'item', price: 5000 }],
+    },
 ];

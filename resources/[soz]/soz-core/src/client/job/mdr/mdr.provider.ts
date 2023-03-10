@@ -1,9 +1,11 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { Notifier } from '@public/client/notifier';
+import { ResourceLoader } from '@public/client/resources/resource.loader';
 import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provider';
 import { uuidv4 } from '@public/core/utils';
-import { ClientEvent, NuiEvent } from '@public/shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 
@@ -36,6 +38,12 @@ export class MandatoryProvider {
 
     @Inject(VehicleRadarProvider)
     private vehicleRadarProvider: VehicleRadarProvider;
+
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     private state = {
         radar: false,
@@ -136,5 +144,20 @@ export class MandatoryProvider {
         }
 
         return;
+    }
+
+    @OnEvent(ClientEvent.MDR_USE_TICKET)
+    public useTicket(dlc: string) {
+        const [player, distance] = this.playerService.getClosestPlayer();
+
+        if (player && distance < 2.5) {
+            const animDict = 'mp_common';
+            this.resourceLoader.loadAnimationDictionary(animDict);
+            TaskPlayAnim(PlayerPedId(), animDict, 'givetake2_a', 8.0, 8.0, -1, 0, 0, true, false, true);
+            const target = GetPlayerServerId(player);
+            TriggerServerEvent(ServerEvent.MDR_SHOW_TICKET, target, dlc);
+        } else {
+            this.notifier.notify("Il n'y a personne à proximité", 'error');
+        }
     }
 }

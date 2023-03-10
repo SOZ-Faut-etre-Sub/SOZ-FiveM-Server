@@ -159,6 +159,8 @@ export enum ServerEvent {
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
 
     VANDALISM_END = 'soz-core:server:vandalism:end',
+
+    MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
 }
 
 export enum ClientEvent {
@@ -261,6 +263,8 @@ export enum ClientEvent {
     WEAPON_USE_WEAPON = 'soz-core:client:weapon:use-weapon',
     WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
     WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
+
+    MDR_USE_TICKET = 'soz-core:client:mdr:use-ticket',
 }
 
 export enum GameEvent {

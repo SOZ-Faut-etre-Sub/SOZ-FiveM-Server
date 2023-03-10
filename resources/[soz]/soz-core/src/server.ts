@@ -18,6 +18,7 @@ import { FightForStyleModule } from './server/job/ffs/ffs.module';
 import { FoodModule } from './server/job/food/food.module';
 import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
+import { MdrModule } from './server/job/mdr/mdr.module';
 import { OilModule } from './server/job/oil/oil.module';
 import { StonkModule } from './server/job/stonk/stonk.module';
 import { PlayerModule } from './server/player/player.module';
@@ -61,6 +62,7 @@ async function bootstrap() {
         WeaponModule,
         InventoryModule,
         DrivingSchoolModule,
+        MdrModule,
         ...PrivateModules
     );
 

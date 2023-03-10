@@ -5422,4 +5422,16 @@ QBShared.Items = {
         ['description'] = 'Ne laissez pas les accidents vous prendre de court pour 2023',
         ['illustrator'] = '.NariieL',
     },
+    ['newcomer_ticket'] = {
+        ['name'] = 'newcomer_ticket',
+        ['label'] = 'Ticket nouvel arrivant',
+        ['weight'] = 0,
+        ['type'] = 'item',
+        ['durability'] = 9,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['not_searchable'] = true,
+        ['description'] = "Bienvenue à Los Santos ! Profite d'avantages particuliers durant toute ta période d'accueil. ❤️",
+        ['illustrator'] = '.NariieL',
+    },
 }
