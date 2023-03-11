@@ -119,6 +119,7 @@ export enum ServerEvent {
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
     QBCORE_CALL_COMMAND = 'QBCore:CallCommand',
     QBCORE_TOGGLE_DUTY = 'QBCore:ToggleDuty',
+    QBCORE_SET_DUTY = 'QBCore:Server:SetDuty',
     QBCORE_SET_METADATA = 'QBCore:Server:SetMetaData',
 
     IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
@@ -315,6 +316,8 @@ export enum ClientEvent {
 
     HELICO_ADD_LIGHT = 'soz-core:client:police:add-light',
     HELICO_REMOVE_LIGHT = 'soz-core:client:police:del-light',
+
+    TALENT_TREE_DISABLE_CRIMI = 'soz-core:client:talent:disable-crimi',
 }
 
 export enum GameEvent {
@@ -455,7 +458,7 @@ export enum NuiEvent {
 
     TalentTreeBuy = 'soz-core:client:talent-tree:buy',
     TalentTreeReset = 'soz-core:client:talent-tree:reset',
-    TalentToggleCriminalMode = 'soz-core:client:talent:toggle-criminal-mode',
+    TalentSetCriminalMode = 'soz-core:client:talent:set-criminal-mode',
 
     WardrobeElementSelect = 'soz-core:client:wardrobe:element-select',
     WardrobeCustomSave = 'soz-core:client:wardrobe:custom-save',

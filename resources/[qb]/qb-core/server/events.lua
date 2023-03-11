@@ -157,6 +157,7 @@ RegisterNetEvent('QBCore:ToggleDuty', function()
     end
     Player(player.PlayerData.source).state.onDuty = player.PlayerData.job.onduty
     TriggerClientEvent('QBCore:Client:SetDuty', src, player.PlayerData.job.onduty)
+    TriggerEvent('QBCore:Server:SetDuty', player.PlayerData.job.id, player.PlayerData.job.onduty)
 end)
 
 -- Items
