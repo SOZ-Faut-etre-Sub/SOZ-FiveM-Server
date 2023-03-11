@@ -22,6 +22,10 @@ export class Qbcore {
         return this.QBCore.Functions.GetClosestPlayer();
     }
 
+    public getItems(): Item[] {
+        return Object.values(this.QBCore.Shared.Items);
+    }
+
     public getItem<T extends Item = Item>(name: string): T | null {
         return (this.QBCore.Shared.Items[name] as T) || null;
     }

@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
 import { Item } from '../../shared/item';
+import { getRandomInt } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
@@ -45,9 +46,19 @@ export class VehicleLockProvider {
     @Once()
     public onStart() {
         this.item.setItemUseCallback('lockpick', this.useLockpick.bind(this));
+        this.item.setItemUseCallback('lockpick_low', this.useLockpick.bind(this));
+        this.item.setItemUseCallback('lockpick_medium', this.useLockpick.bind(this));
+        this.item.setItemUseCallback('lockpick_high', this.useLockpick.bind(this));
     }
 
     public async useLockpick(source: number, item: Item): Promise<void> {
+        const percentages = {
+            lockpick_low: 40,
+            lockpick_medium: 70,
+            lockpick_high: 100,
+            lockpick: 100,
+        };
+
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
         if (null === closestVehicle || closestVehicle.distance > 3) {
@@ -68,6 +79,14 @@ export class VehicleLockProvider {
         });
 
         if (!completed) {
+            return;
+        }
+
+        const random = getRandomInt(0, 100);
+
+        if (random > percentages[item.name]) {
+            this.notifier.notify(source, "Vous n'avez pas réussi à crocheter le véhicule", 'error');
+
             return;
         }
 

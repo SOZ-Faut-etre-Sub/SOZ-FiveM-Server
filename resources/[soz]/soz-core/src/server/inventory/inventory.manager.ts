@@ -68,7 +68,7 @@ export class InventoryManager {
         return this.sozInventory.GetItem(inventory, itemId, metadata);
     }
 
-    public getItemCount(inventory: number | string, itemId: string, metadata: InventoryItemMetadata = null): any {
+    public getItemCount(inventory: number | string, itemId: string, metadata: InventoryItemMetadata = null): number {
         return this.sozInventory.GetItem(inventory, itemId, metadata, true);
     }
 
@@ -87,6 +87,10 @@ export class InventoryManager {
         metadata?: InventoryItemMetadata
     ): InventoryItem | InventoryItem[] | false {
         return this.sozInventory.Search(source, searchType, itemId, metadata);
+    }
+
+    public removeInventoryItem(source, item: InventoryItem, amount = 1): boolean {
+        return this.removeItemFromInventory(source, item.name, amount, item.metadata, item.slot);
     }
 
     public removeItemFromInventory(

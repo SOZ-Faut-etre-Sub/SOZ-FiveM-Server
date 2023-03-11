@@ -14,6 +14,7 @@ import { RpcEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
 import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -69,6 +70,9 @@ export class VehicleGarageProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     @Inject(InputService)
     private inputService: InputService;
@@ -387,7 +391,17 @@ export class VehicleGarageProvider {
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageTakeOut)
-    public async takeOutVehicle({ id, garage, vehicle }: { id: number; garage: Garage; vehicle: number }) {
+    public async takeOutVehicle({
+        id,
+        garage,
+        vehicle,
+        use_ticket,
+    }: {
+        id: number;
+        garage: Garage;
+        vehicle: number;
+        use_ticket: boolean;
+    }) {
         const garageWithFreePlaces: Garage = { ...garage, parkingPlaces: [] };
 
         for (const parkingPlace of garage.parkingPlaces) {
@@ -416,7 +430,7 @@ export class VehicleGarageProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_RETRIEVE, id, garageWithFreePlaces, vehicle);
+        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_RETRIEVE, id, garageWithFreePlaces, vehicle, use_ticket);
 
         this.nuiMenu.closeMenu();
     }
@@ -450,6 +464,7 @@ export class VehicleGarageProvider {
                 garage,
                 free_places,
                 max_places,
+                has_fake_ticket: this.inventoryManager.hasEnoughItem('parking_ticket_fake', 1),
             },
             {
                 position: {

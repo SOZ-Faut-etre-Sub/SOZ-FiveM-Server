@@ -17,6 +17,7 @@ import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modificatio
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job.service';
 import { LockService } from '../lock.service';
 import { Notifier } from '../notifier';
@@ -58,6 +59,9 @@ export class VehicleGarageProvider {
 
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     @Inject(Monitor)
     private monitor: Monitor;
@@ -484,10 +488,22 @@ export class VehicleGarageProvider {
     }
 
     @OnEvent(ServerEvent.VEHICLE_GARAGE_RETRIEVE)
-    public async takeOutVehicle(source: number, id: string, garage: Garage, vehicleId: number): Promise<void> {
+    public async takeOutVehicle(
+        source: number,
+        id: string,
+        garage: Garage,
+        vehicleId: number,
+        use_ticket: boolean
+    ): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
+            return;
+        }
+
+        if (use_ticket && this.inventoryManager.getItemCount(source, 'parking_ticket_fake') <= 0) {
+            this.notifier.notify(source, "Vous n'avez pas de ticket de parking.", 'error');
+
             return;
         }
 
@@ -573,13 +589,13 @@ export class VehicleGarageProvider {
                     price = Math.min(200, hours * 20);
                 }
 
-                if (price !== 0 && !this.playerMoneyService.remove(source, price)) {
+                if (!use_ticket && price !== 0 && !this.playerMoneyService.remove(source, price)) {
                     this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
 
                     return;
                 }
 
-                if (price !== 0) {
+                if (!use_ticket && price !== 0) {
                     this.monitor.publish(
                         'pay_vehicle_garage_fee',
                         {
@@ -593,7 +609,7 @@ export class VehicleGarageProvider {
                     );
                 }
 
-                if (price !== 0 && garage.type === GarageType.Depot) {
+                if (!use_ticket && price !== 0 && garage.type === GarageType.Depot) {
                     const bennysFee = Math.round(vehicle.price * 0.02);
                     await this.playerMoneyService.transfer('farm_bennys', 'safe_bennys', bennysFee);
 
@@ -641,6 +657,10 @@ export class VehicleGarageProvider {
                     );
 
                     this.notifier.notify(source, 'Vous avez sorti votre véhicule.', 'success');
+
+                    if (use_ticket) {
+                        this.inventoryManager.removeItemFromInventory(source, 'parking_ticket_fake', 1);
+                    }
                 } else {
                     this.notifier.notify(
                         source,

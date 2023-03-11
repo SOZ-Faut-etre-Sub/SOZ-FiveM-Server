@@ -9,6 +9,8 @@ export enum RpcEvent {
     BENNYS_CANCEL_ORDER = 'soz-core:server:job:bennys:cancel-order',
     BENNYS_ORDER_VEHICLE = 'soz-core:server:job:bennys:order-vehicle',
 
+    CRIMI_CAN_USE_CLOAKROOM = 'soz-core:server:crimi:can-use-cloakroom',
+
     DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:server:driving-school:spawn-vehicle',
     DRIVING_SCHOOL_CHECK_REMAINING_SLOTS = 'soz-core:server:driving-school:check-vehicle-slots',
 
@@ -22,6 +24,9 @@ export enum RpcEvent {
     PLAYER_GET_HEALTH_BOOK = 'soz-core:player:get-health-book',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
     PLAYER_GET_JWT_TOKEN = 'soz-core:player:get-jwt-token',
+
+    CRAFTING_GET_RECIPES = 'soz-core:crafting:get-recipes',
+    CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',
 
     SHOP_MASK_GET_CATEGORIES = 'soz-core:shop:mask:get-categories',
     SHOP_MASK_GET_ITEMS = 'soz-core:shop:mask:get-items',

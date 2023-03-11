@@ -59,4 +59,5 @@ export type GarageMenuData = {
     free_places: number | null;
     id: string;
     max_places: number | null;
+    has_fake_ticket: boolean;
 };

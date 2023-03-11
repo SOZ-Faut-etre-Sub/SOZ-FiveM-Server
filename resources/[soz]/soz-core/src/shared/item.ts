@@ -157,6 +157,7 @@ export type InventoryItemMetadata = {
     missiveChoice3?: number;
     attachments?: Record<WeaponComponentType, string | null>;
     tier?: number;
+    crafted?: boolean;
 };
 
 export type InventoryItem = {

@@ -1,5 +1,6 @@
 import '../styles/index.scss';
 
+import { CraftingApp } from '@private/nui/crafting/CraftingApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
 import { TalentApp } from '@private/nui/Talent/TalentApp';
 import classNames from 'classnames';
@@ -14,10 +15,10 @@ import { HealthBookApp } from './HealthBook/HealthBookApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
-import { PlayerApp } from './Player/PlayerApp';
 import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
 import { RadarApp } from './Police/RadarApp';
 import { ProgressApp } from './Progress/ProgressApp';
+import { StateApp } from './StateApp';
 
 export const App: FunctionComponent = () => {
     const [hide, setHide] = useState(false);
@@ -33,10 +34,10 @@ export const App: FunctionComponent = () => {
     return (
         <Provider store={store}>
             <div className={classes}>
+                <StateApp />
                 <MenuApp />
                 <HealthBookApp />
                 <AudioApp />
-                <PlayerApp />
                 <ProgressApp />
                 <PanelApp />
                 <RepairApp />
@@ -45,6 +46,7 @@ export const App: FunctionComponent = () => {
                 <TalentApp />
                 <RadarApp />
                 <BreathAnalyzerApp />
+                <CraftingApp />
             </div>
         </Provider>
     );

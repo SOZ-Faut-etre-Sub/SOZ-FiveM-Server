@@ -74,6 +74,10 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             itemExtraLabel += ` [${item?.metadata?.type}]`
         }
 
+        if (item?.metadata?.crafted) {
+            itemExtraLabel += ` [Confection]`
+        }
+
         if (item.illustrator && item.illustrator instanceof Object) {
             if (item.name === 'outfit' || item.name === 'armor') {
                 illustrator = item.illustrator[item?.metadata?.type || ''] || '';

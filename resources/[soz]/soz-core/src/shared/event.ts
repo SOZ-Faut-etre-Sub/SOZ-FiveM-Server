@@ -24,7 +24,6 @@ export enum ServerEvent {
     BENNYS_REPAIR_VEHICLE_WHEEL = 'soz-core:server:job:bennys:repair-vehicle-wheel',
     BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
     BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
-
     DRIVING_SCHOOL_PLAYER_PAY = 'soz-core:server:driving-school:player-pay',
     DRIVING_SCHOOL_UPDATE_LICENSE = 'soz-core:server:driving-school:update-license',
     DRIVING_SCHOOL_UPDATE_VEHICLE_LIMIT = 'soz-core:server:driving-school:update-vehicle-limit',
@@ -86,6 +85,9 @@ export enum ServerEvent {
     PLAYER_APPEARANCE_REMOVE_JOB_OUTFIT = 'soz-core:server:appearance:remove-job-outfit',
     PLAYER_APPEARANCE_SET_TEMP_OUTFIT = 'soz-core:server:appearance:set-temp-outfit',
     PLAYER_APPEARANCE_REMOVE_TEMP_OUTFIT = 'soz-core:server:appearance:remove-temp-outfit',
+
+    PLAYER_ZIP = 'soz-core:server:player:zip',
+    PLAYER_UNZIP = 'soz-core:server:player:unzip',
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
@@ -204,6 +206,7 @@ export enum ClientEvent {
     ADMIN_NOCLIP_ENABLED = 'soz-core:client:admin:noclip:enabled',
     ADMIN_NOCLIP_DISABLED = 'soz-core:client:admin:noclip:disabled',
 
+    CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',
     DRIVING_SCHOOL_START_EXAM = 'soz-core:client:driving-school:start-exam',
     DRIVING_SCHOOL_SETUP_EXAM = 'soz-core:client:driving-school:spawn-veh',
 
@@ -380,6 +383,7 @@ export enum NuiEvent {
     AdminMenuGameMasterSwitchCharacter = 'soz-core:client:admin:game-master:switch-character',
     AdminSetAdminGPS = 'soz-core:client:admin:gps',
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
+    CraftingDoCraft = 'soz-core:nui:crafting:do-craft',
 
     StonkDisplayBlip = 'soz-core:client:job:stonk:display-blip',
 
@@ -397,6 +401,8 @@ export enum NuiEvent {
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
+
+    Loaded = 'soz-core:nui:loaded',
     MenuClosed = 'menu_closed',
     JobBossShopBuyItem = 'soz-core:nui:job:boss-shop:buy-item',
     OilAskStationPrice = 'soz-core:nui:job:oil:ask-station-price',
