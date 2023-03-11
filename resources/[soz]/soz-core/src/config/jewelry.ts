@@ -15006,4 +15006,446 @@ export const MaleJewelryItems: ShopJewelryContent = {
             },
         },
     },
+    Cou: {
+        categoryId: 7,
+        componentId: 7,
+        overlay: 'Neck',
+        price: 50,
+        items: {
+            Colliers: {
+                '113': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Collier Namaste noir',
+                    },
+                },
+                '123': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Collier Namaste marron',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Collier Namaste blanc',
+                    },
+                },
+            },
+            Echarpes: {
+                '31': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Echarpe unie blanche',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Echarpe unie grise',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Echarpe unie noire',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Echarpe unie bleue',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Echarpe unie rouge',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Echarpe unie verte',
+                    },
+                },
+                '35': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Echarpe rayée rouge',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Echarpe de Noël',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Echarpe flocon de neige',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: "Echarpe d'hiver",
+                    },
+                },
+                '112': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Tour de cou large sable',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Tour de cou large vert',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Tour de cou large noir',
+                    },
+                },
+            },
+            Chaînes: {
+                '49': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines ZS or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines ZS argent',
+                    },
+                },
+                '50': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines crâne or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines crâne argent',
+                    },
+                },
+                '51': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines bandit',
+                    },
+                },
+                '52': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines puzzle or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines puzzle argent',
+                    },
+                },
+                '53': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines LC or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines LC argent',
+                    },
+                },
+                '54': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines DIX or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines DIX argent',
+                    },
+                },
+                '55': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines LE CHIEN or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines LE CHIEN argent',
+                    },
+                },
+                '85': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines fine or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines fine or',
+                    },
+                },
+                '86': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 1',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 1',
+                    },
+                },
+                '87': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 2',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 2',
+                    },
+                },
+                '88': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 3',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 3',
+                    },
+                },
+                '89': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 4',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 4',
+                    },
+                },
+                '90': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 5',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 5',
+                    },
+                },
+                '91': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 6',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 6',
+                    },
+                },
+                '92': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 7',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 7',
+                    },
+                },
+                '93': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 8',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 8',
+                    },
+                },
+                '94': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines en or 9',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines en argent 9',
+                    },
+                },
+                '111': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines M or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines M argent',
+                    },
+                },
+                '120': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines jante or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines jante argent',
+                    },
+                },
+                '122': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines jante inversée or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines jante inversée argent',
+                    },
+                },
+                '131': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Enorme chaine F en or',
+                    },
+                },
+                '135': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Petite chaine lampe',
+                    },
+                },
+                '137': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines LS en or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines LS en argent',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Chaines LS en bronze',
+                    },
+                },
+                '139': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaines LS fine en or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaines LS fine en argent',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Chaines LS fine en bronze',
+                    },
+                },
+                '141': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Plaque militaire en or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Plaque militaire en argent',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Plaque militaire en bronze',
+                    },
+                },
+                '145': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Chaine à rond or',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Chaine à rond argent',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Chaine à rond bronze',
+                    },
+                },
+            },
+            Accessoires: {
+                '114': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Casque bo rouge',
+                    },
+                },
+                '124': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Casque bo blanc',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Casque bo noir',
+                    },
+                },
+                '150': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Collier fluo bleu',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Collier fluo rouge',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Collier fluo rose',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Collier fluo jaune',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Collier fluo orange',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Collier fluo vert',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 1',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 2',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 3',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 4',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 5',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 6',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 7',
+                    },
+                    '13': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 8',
+                    },
+                    '14': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 9',
+                    },
+                    '15': {
+                        GXT: '',
+                        Localized: 'Collier fluo tricolore 10',
+                    },
+                },
+                '151': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Foulard rouge',
+                    },
+                },
+            },
+        },
+    },
 };
