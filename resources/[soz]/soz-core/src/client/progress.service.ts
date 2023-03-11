@@ -25,6 +25,7 @@ export class ProgressService {
             useWhileDead: false,
             canCancel: true,
             disableCombat: true,
+            disableNui: false,
             ...options,
         };
 
@@ -95,6 +96,7 @@ export class ProgressService {
                 name: name.toLowerCase(),
                 duration,
                 label,
+                disableNui: options.disableNui,
                 useWhileDead: options.useWhileDead,
                 canCancel: options.canCancel,
                 controlDisables: {

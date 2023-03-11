@@ -5517,7 +5517,7 @@ QBShared.Items = {
     },
     ["missive"] = {
         ["name"] = "missive",
-        ["label"] = "Missive",
+        ["label"] = "Contrat",
         ["weight"] = 50,
         ["type"] = "item_illegal",
         ["unique"] = false,

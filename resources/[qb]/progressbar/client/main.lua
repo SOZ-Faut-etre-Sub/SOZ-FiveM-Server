@@ -75,11 +75,13 @@ function Process(action, start, tick, finish)
             isAnim = false
             isProp = false
 
-            SendNUIMessage({
-                action = "progress",
-                duration = Action.duration,
-                label = Action.label
-            })
+            if not Action.disableNui then
+                SendNUIMessage({
+                    action = "progress",
+                    duration = Action.duration,
+                    label = Action.label
+                })
+            end
 
             CreateThread(function()
                 if start ~= nil then

@@ -158,6 +158,7 @@ export type InventoryItemMetadata = {
     attachments?: Record<WeaponComponentType, string | null>;
     tier?: number;
     crafted?: boolean;
+    id?: string;
 };
 
 export type InventoryItem = {
