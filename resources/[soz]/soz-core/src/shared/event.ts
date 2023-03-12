@@ -208,6 +208,7 @@ export enum ClientEvent {
     ADMIN_NOCLIP_DISABLED = 'soz-core:client:admin:noclip:disabled',
 
     CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',
+    CRIMI_REMOVE_CLOTH = 'soz-core:client:crimi:remove-cloth',
     DRIVING_SCHOOL_START_EXAM = 'soz-core:client:driving-school:start-exam',
     DRIVING_SCHOOL_SETUP_EXAM = 'soz-core:client:driving-school:spawn-veh',
 

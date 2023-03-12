@@ -64,10 +64,33 @@ function ShopShell:ZkeaUpgrade()
     }
 end
 
+function ShopShell:GetRemoveClothAction()
+    return {
+        event = "soz-core:client:crimi:remove-cloth",
+        label = "Enlever la tenue temporaire",
+        color = "crimi",
+        canInteract = function()
+            if self.brand ~= "ponsonbys" and self.brand ~= "suburban" and self.brand ~= "binco" then
+                return false
+            end
+
+            local playerData = QBCore.Functions.GetPlayerData()
+
+            if playerData.cloth_config.TemporaryClothSet == nil then
+                return false
+            end
+
+            return true
+        end,
+        blackoutGlobal = true,
+    }
+end
+
 function ShopShell:AddTargetModel()
     exports["qb-target"]:AddTargetModel(self.ped, {
         options = {
             self:GetPedAction(),
+            self:GetRemoveClothAction(),
             self:GunSmith(),
             self:ZkeaStock(),
             self:ZkeaUpgrade(),

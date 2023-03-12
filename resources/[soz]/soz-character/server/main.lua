@@ -32,6 +32,8 @@ RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
         clothConfig["BaseClothSet"].Props[tostring(propId)] = prop
     end
 
+    clothConfig["TemporaryClothSet"] = nil
+
     Player.Functions.SetClothConfig(clothConfig, false)
 end)
 
@@ -54,6 +56,40 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, m
         end
         for propId, prop in pairs(clothes.Props or {}) do
             clothConfig["JobClothSet"].Props[tostring(propId)] = prop
+            if MappingPropKeyToReset[tostring(propId)] then
+                clothConfig.Config[MappingPropKeyToReset[tostring(propId)]] = false
+            end
+            if tostring(propId) == "Helmet" then
+                clothConfig.Config["ShowHelmet"] = true
+            end
+        end
+    end
+
+    clothConfig.Config["Naked"] = false
+    clothConfig["TemporaryClothSet"] = nil
+
+    Player.Functions.SetClothConfig(clothConfig, false)
+end)
+
+RegisterNetEvent("soz-character:server:SetPlayerTemporaryClothes", function(clothes, merge)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local clothConfig = Player.PlayerData.cloth_config
+
+    if clothes == nil then
+        clothConfig["TemporaryClothSet"] = clothes
+    else
+        if clothConfig["TemporaryClothSet"] == nil or not merge then
+            clothConfig["TemporaryClothSet"] = {Components = {}, Props = {}}
+        end
+
+        for componentId, component in pairs(clothes.Components or {}) do
+            clothConfig["TemporaryClothSet"].Components[tostring(componentId)] = component
+            if MappingCompomentKeyToReset[tostring(componentId)] then
+                clothConfig.Config[MappingCompomentKeyToReset[tostring(componentId)]] = false
+            end
+        end
+        for propId, prop in pairs(clothes.Props or {}) do
+            clothConfig["TemporaryClothSet"].Props[tostring(propId)] = prop
             if MappingPropKeyToReset[tostring(propId)] then
                 clothConfig.Config[MappingPropKeyToReset[tostring(propId)]] = false
             end
