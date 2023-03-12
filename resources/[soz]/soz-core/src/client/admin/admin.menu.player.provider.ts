@@ -199,4 +199,32 @@ export class AdminMenuPlayerProvider {
     public async updateInjuriesCount({ player, value }: { player: AdminPlayer; value: number }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_SET_INJURIES_COUNT, player.id, value);
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetReputation)
+    public async handleGiveReputation(player: AdminPlayer): Promise<void> {
+        const current = await emitRpc<number>(RpcEvent.ADMIN_GET_REPUTATION, player.id);
+        const value = await this.inputService.askInput(
+            {
+                title: `Changer la Réputation (actuelle ${current})`,
+                defaultValue: '',
+                maxCharacters: 7,
+            },
+            value => {
+                if (!value) {
+                    return Ok(true);
+                }
+                const int = parseInt(value);
+                if (isNaN(int) || int < 0) {
+                    return Err('Valeur incorrecte');
+                }
+                return Ok(true);
+            }
+        );
+
+        if (!value) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.ADMIN_SET_REPUTATION, player.id, value);
+    }
 }
