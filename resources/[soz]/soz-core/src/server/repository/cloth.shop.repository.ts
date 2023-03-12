@@ -107,6 +107,10 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
                 components: shopItemData.components,
                 props: shopItemData.props,
                 correspondingDrawables: shopItemData.correspondingDrawables,
+                undershirtType: shopItemData.undershirtType,
+                underTypes: shopItemData.underTypes,
+                modelLabel: shopItemData.modelLabel,
+                colorLabel: shopItemData.colorLabel,
             };
             const shopName = repository.shopNameById[item.shop_id];
             repository.shops[shopName].products[item.id] = shopItem;

@@ -55,11 +55,15 @@ export type ClothingShopItem = {
     shopId: number;
     categoryId?: number;
     label: string;
+    modelLabel?: string;
+    colorLabel?: string;
     price: number;
     modelHash?: number;
     components?: Record<Component, OutfitItem>;
     props?: Record<Prop, OutfitItem>;
     correspondingDrawables?: Record<number, number>; // This is for torso compatibility (for gloves)
+    undershirtType?: number; // This is for top compatibility (for undershirt)
+    underTypes?: number[]; // This is for undershirt compatibility (for tops)
 };
 
 export type ClothingShopItemData = {
@@ -68,6 +72,10 @@ export type ClothingShopItemData = {
     label?: string;
     modelHash?: number;
     correspondingDrawables?: Record<number, number>; // This is for torso compatibility (for gloves)
+    undershirtType?: number; // This is for top compatibility (for undershirt)
+    underTypes?: number[]; // This is for undershirt compatibility (for tops)
+    modelLabel?: string;
+    colorLabel?: string;
 };
 
 // Tattoo
