@@ -38,9 +38,6 @@ export class LSMCDeathProvider {
             this.playerService.setPlayerMetadata(targetid, 'inside', inside);
         }
 
-        if (player.metadata.auto_mort_message) {
-            this.notifier.notify(source, player.metadata.auto_mort_message, 'warning', 20000);
-        }
         if (player.metadata.mort) {
             this.notifier.notify(source, player.metadata.mort, 'success', 20000);
         }
@@ -52,7 +49,6 @@ export class LSMCDeathProvider {
         this.playerService.incrementMetadata(targetid, 'drug', -50, 0, 100);
         this.playerService.setPlayerMetadata(targetid, 'isdead', false);
         this.playerService.setPlayerMetadata(targetid, 'mort', '');
-        this.playerService.setPlayerMetadata(targetid, 'auto_mort_message', '');
         Player(targetid).state.isdead = false;
     }
 

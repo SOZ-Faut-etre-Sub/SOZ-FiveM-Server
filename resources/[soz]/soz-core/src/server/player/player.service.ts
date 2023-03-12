@@ -159,4 +159,8 @@ export class PlayerService {
 
         player.Functions.SetJobDuty(onDuty);
     }
+
+    public getSteamIdentifier(source: number): string {
+        return this.QBCore.getSteamIdentifier(source);
+    }
 }

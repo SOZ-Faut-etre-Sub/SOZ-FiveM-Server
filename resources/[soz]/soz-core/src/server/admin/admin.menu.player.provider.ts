@@ -68,18 +68,6 @@ export class AdminMenuPlayerProvider {
         }
     }
 
-    @OnEvent(ServerEvent.ADMIN_SET_INJURIES_COUNT)
-    public onUpdateInjuriesCount(source: number, playerid: number, value: number) {
-        this.playerService.setPlayerMetadata(playerid, 'injuries_count', value);
-        this.playerService.setPlayerMetadata(playerid, 'injuries_date', Date.now());
-        const player = this.playerService.getPlayer(playerid);
-        this.notifier.notify(
-            source,
-            `Le nombre de blessures de ~g~${player.charinfo.firstname} ${player.charinfo.lastname}~s~ est mainbtenant de ~r~${value}`,
-            'info'
-        );
-    }
-
     @OnEvent(ServerEvent.ADMIN_RESET_SKIN)
     public async onResetSkin(source: number, target: number) {
         TriggerClientEvent(ClientEvent.CHARACTER_REQUEST_CHARACTER_WIZARD, target);

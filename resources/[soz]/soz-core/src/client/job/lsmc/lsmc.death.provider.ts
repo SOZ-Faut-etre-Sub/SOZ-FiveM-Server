@@ -423,7 +423,9 @@ export class LSMCDeathProvider {
     }
 
     @OnEvent(ClientEvent.INJURY_DEATH)
-    public injuryDeath() {
-        this.soundService.play('death', 0.1);
+    public injuryDeath(value: boolean) {
+        if (value && LocalPlayer.state.isdead) {
+            this.soundService.play('death', 0.1);
+        }
     }
 }

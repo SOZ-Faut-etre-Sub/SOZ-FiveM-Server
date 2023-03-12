@@ -177,7 +177,6 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['injuries_date'] = PlayerData.metadata['injuries_date'] or 0
     
     PlayerData.metadata['mort'] = PlayerData.metadata['mort'] or ''
-    PlayerData.metadata['auto_mort_message'] = PlayerData.metadata['auto_mort_message'] or ''
 
     if not PlayerData.metadata.lastBidTime then
         PlayerData.metadata.canBid = true

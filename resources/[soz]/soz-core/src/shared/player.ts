@@ -160,5 +160,4 @@ export type PlayerMetadata = PlayerHealthBook & {
     injuries_count: number;
     injuries_date: number;
     itt: boolean;
-    auto_mort_message: string | null;
 };
