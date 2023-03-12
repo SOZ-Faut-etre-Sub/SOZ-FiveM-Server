@@ -1,6 +1,6 @@
 import { ProperTorsos } from '@public/config/shops';
 import { ClothingShopRepositoryData } from '@public/server/repository/cloth.shop.repository';
-import { Component, OutfitItem } from '@public/shared/cloth';
+import { Component } from '@public/shared/cloth';
 import { ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 
 import { Injectable } from '../../core/decorators/injectable';
@@ -14,7 +14,7 @@ export class ClothingShopRepository {
     public async load() {
         this.repoData = await emitRpc<ClothingShopRepositoryData>(RpcEvent.REPOSITORY_GET_DATA, 'clothingShop');
 
-        // Hydrate items with proper torsos
+        // Hydrate tops with proper torsos and remove undershirts
         for (const shop of Object.values(this.repoData.shops)) {
             for (const item of Object.values(shop.products)) {
                 if (item.components[Component.Tops] != null) {
@@ -22,6 +22,17 @@ export class ClothingShopRepository {
                         Drawable: ProperTorsos[item.modelHash][item.components[Component.Tops].Drawable],
                         Texture: 0,
                     };
+                    if (item.modelHash == -1667301416) {
+                        item.components[Component.Undershirt] = {
+                            Drawable: 14, // This is without undershirt (for women)
+                            Texture: 0,
+                        };
+                    } else {
+                        item.components[Component.Undershirt] = {
+                            Drawable: 15, // This is without undershirt (for men)
+                            Texture: 0,
+                        };
+                    }
                 }
             }
         }

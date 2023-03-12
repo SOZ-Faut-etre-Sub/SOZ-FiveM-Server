@@ -1,4 +1,4 @@
-import { ShopBrand } from '@public/config/shops';
+import { ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { Component, OutfitItem, Prop } from '@public/shared/cloth';
 import { InventoryItemMetadata, ItemType } from '@public/shared/item';
 import { Skin } from '@public/shared/player';
@@ -252,6 +252,25 @@ export class ShopProvider {
                 clothConfig.BaseClothSet.Gloves[baseTorsoDrawable] = {
                     Drawable: product.correspondingDrawables[baseTorsoDrawable],
                     Texture: product.components[Component.Torso].Texture,
+                    Palette: 0,
+                } as OutfitItem;
+            }
+        }
+        // This is for undershirt/top compatibility
+        console.log(product.underTypes);
+        if (product.underTypes != null) {
+            clothConfig.BaseClothSet.underTypes = product.underTypes;
+        }
+        // Adapt torso to undershirt
+        const playerModel = this.playerService.getPlayer(source).skin.Model.Hash;
+        if (product.undershirtType && UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType]) {
+            const baseTorsoDrawable = clothConfig.BaseClothSet.Components[Component.Torso].Drawable;
+            const replacementTorsoDrawable =
+                UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType][baseTorsoDrawable];
+            if (replacementTorsoDrawable) {
+                clothConfig.BaseClothSet.Components[Component.Torso] = {
+                    Drawable: replacementTorsoDrawable,
+                    Texture: 0,
                     Palette: 0,
                 } as OutfitItem;
             }
