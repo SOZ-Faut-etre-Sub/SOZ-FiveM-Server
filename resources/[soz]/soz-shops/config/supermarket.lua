@@ -31,7 +31,7 @@ Config.Locations["247supermarket-south"] = {
     ["247supermarket2"] = vector4(-3040.65, 583.85, 7.91, 22.65),
     ["247supermarket3"] = vector4(-3244.07, 999.89, 12.83, 0.41),
     ["247supermarket8"] = vector4(2555.43, 380.62, 108.62, 1.74),
-    ["247supermarket9"] = vector4(2555.43, 380.62, 108.62, 254.29),
+    ["247supermarket9"] = vector4(372.86, 328.17, 103.57, 253.87),
 }
 
 Config.Locations["ltdgasoline-north"] = {["ltdgasoline5"] = vector4(1697.24, 4923.27, 42.06, 324.94)}
