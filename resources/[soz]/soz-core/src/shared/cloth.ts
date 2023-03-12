@@ -33,6 +33,7 @@ export type Outfit = {
     Components: Partial<Record<Component, OutfitItem>>;
     Props: Partial<Record<Prop, OutfitItem>>;
     Gloves?: Partial<Record<number, OutfitItem>>;
+    underTypes?: number[];
 };
 
 export type ClothConfig = {

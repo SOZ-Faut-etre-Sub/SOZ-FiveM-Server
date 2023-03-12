@@ -1,4 +1,4 @@
-import { ShopBrand, ShopsConfig } from '@public/config/shops';
+import { ShopBrand, ShopsConfig, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { On, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -100,10 +100,10 @@ export class ClothingShopProvider {
             }
         }
         // This is for gloves
+        const baseTorsoDrawable =
+            this.playerService.getPlayer().cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
         if (product.correspondingDrawables) {
             console.log(product.correspondingDrawables);
-            const baseTorsoDrawable =
-                this.playerService.getPlayer().cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
             const correspondingGloveDrawable = product.correspondingDrawables[baseTorsoDrawable];
             console.log(baseTorsoDrawable);
             console.log(correspondingGloveDrawable);
@@ -112,6 +112,17 @@ export class ClothingShopProvider {
                 Component.Torso,
                 correspondingGloveDrawable,
                 product.components[Component.Torso].Texture,
+                0
+            );
+        }
+        // Adapt the torso to the undershirt
+        const playerModel = GetEntityModel(ped);
+        if (product.undershirtType && UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType]) {
+            SetPedComponentVariation(
+                ped,
+                Component.Torso,
+                UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType][baseTorsoDrawable],
+                0,
                 0
             );
         }
