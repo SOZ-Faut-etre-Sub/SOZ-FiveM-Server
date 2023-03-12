@@ -874,7 +874,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 150, Texture: 0, Palette: 0 },
-                    [Prop.Glasses]: { Drawable: 23, Texture: 0, Palette: 0 },
+                    [Prop.Glasses]: { Drawable: 40, Texture: 0, Palette: 0 },
                 },
             },
             ['heavy_antiriot_outfit']: {
@@ -940,7 +940,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.BodyArmor]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] +
@@ -958,7 +958,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 149, Texture: 0, Palette: 0 },
-                    [Prop.Glasses]: { Drawable: 25, Texture: 0, Palette: 0 },
+                    [Prop.Glasses]: { Drawable: 42, Texture: 0, Palette: 0 },
                 },
             },
             ['heavy_antiriot_outfit']: {
@@ -1044,7 +1044,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 150, Texture: 1, Palette: 0 },
-                    [Prop.Glasses]: { Drawable: 23, Texture: 0, Palette: 0 },
+                    [Prop.Glasses]: { Drawable: 40, Texture: 7, Palette: 0 },
                 },
             },
             ['heavy_antiriot_outfit']: {
@@ -1110,7 +1110,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.BodyArmor]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] +
@@ -1128,7 +1128,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {
                     [Prop.Helmet]: { Drawable: 149, Texture: 1, Palette: 0 },
-                    [Prop.Glasses]: { Drawable: 25, Texture: 0, Palette: 0 },
+                    [Prop.Glasses]: { Drawable: 42, Texture: 7, Palette: 0 },
                 },
             },
             ['heavy_antiriot_outfit']: {
