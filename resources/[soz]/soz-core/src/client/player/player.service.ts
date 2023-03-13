@@ -38,7 +38,7 @@ export class PlayerService {
     }
 
     public setTempClothes(clothes: Outfit | null) {
-        if (clothes.Props[Prop.Helmet]) {
+        if (clothes && clothes.Props[Prop.Helmet]) {
             clothes.Props[Prop.Hat] = clothes.Props[Prop.Helmet];
         }
         TriggerEvent(ClientEvent.CHARACTER_SET_TEMPORARY_CLOTH, clothes || {});
