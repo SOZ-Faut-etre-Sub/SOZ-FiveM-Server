@@ -501,7 +501,7 @@ export class VehicleGarageProvider {
             return;
         }
 
-        if (use_ticket && this.inventoryManager.getItemCount(source, 'parking_ticket_fake') <= 0) {
+        if (use_ticket && !this.inventoryManager.hasEnoughItem(source, 'parking_ticket_fake', 1, true)) {
             this.notifier.notify(source, "Vous n'avez pas de ticket de parking.", 'error');
 
             return;

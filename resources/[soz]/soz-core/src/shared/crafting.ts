@@ -3,6 +3,7 @@ import { Talent } from '@private/shared/talent';
 export type CriminalCraftingRequirements = {
     items: Record<string, number>;
     talent: Talent;
+    expire: boolean;
 };
 
 export type CriminalCraftingCheckItem = {

@@ -1,9 +1,12 @@
+import { PlayerTalentService } from '@private/server/player/player.talent.service';
+import { Talent } from '@private/shared/talent';
+
 import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
-import { Item } from '../../shared/item';
+import { InventoryItem, Item } from '../../shared/item';
 import { getRandomInt } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -41,6 +44,9 @@ export class VehicleLockProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(PlayerTalentService)
+    private playerTalentService: PlayerTalentService;
+
     private trunkOpened: Record<number, Set<number>> = {};
 
     @Once()
@@ -51,7 +57,13 @@ export class VehicleLockProvider {
         this.item.setItemUseCallback('lockpick_high', this.useLockpick.bind(this));
     }
 
-    public async useLockpick(source: number, item: Item): Promise<void> {
+    public async useLockpick(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
+        if (this.item.isItemExpired(inventoryItem)) {
+            this.notifier.notify(source, 'Le lockpick est cassé', 'error');
+
+            return;
+        }
+
         const percentages = {
             lockpick_low: 40,
             lockpick_medium: 70,
@@ -83,8 +95,12 @@ export class VehicleLockProvider {
         }
 
         const random = getRandomInt(0, 100);
+        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
 
-        if (random > percentages[item.name]) {
+        if (
+            random > percentages[item.name] ||
+            (vehicleState.isPlayerVehicle && !this.playerTalentService.hasTalent(source, Talent.AllowJobCarjacking))
+        ) {
             this.notifier.notify(source, "Vous n'avez pas réussi à crocheter le véhicule", 'error');
 
             return;
