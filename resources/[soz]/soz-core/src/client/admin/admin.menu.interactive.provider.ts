@@ -7,6 +7,7 @@ import { NuiEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
 import { DrawService } from '../draw.service';
 import { Qbcore } from '../qbcore';
+import { VehicleService } from '../vehicle/vehicle.service';
 
 @Provider()
 export class AdminMenuInteractiveProvider {
@@ -15,6 +16,9 @@ export class AdminMenuInteractiveProvider {
 
     @Inject(Qbcore)
     private QBCore: Qbcore;
+
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
 
     public intervalHandlers = {
         displayOwners: null,
@@ -47,6 +51,10 @@ export class AdminMenuInteractiveProvider {
                     playerCoords[2],
                     false
                 );
+
+                const state = this.vehicleService.getVehicleState(vehicle);
+                
+
                 if (dist < 50) {
                     let text = ' | OwnerNet: ';
                     if (GetPlayerServerId(NetworkGetEntityOwner(vehicle)) === GetPlayerServerId(PlayerId())) {
@@ -55,7 +63,8 @@ export class AdminMenuInteractiveProvider {
                     const ownerInfo =
                         `${GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))} ` +
                         `| VehicleNet: ${NetworkGetNetworkIdFromEntity(vehicle)} ` +
-                        `${text} ${GetPlayerServerId(NetworkGetEntityOwner(vehicle))}`;
+                        `${text} ${GetPlayerServerId(NetworkGetEntityOwner(vehicle))}` +
+                        `~w~| Open: ${state.open} | Forced: ${state.forced} `;
                     const vehicleInfo =
                         `Veh Engine.: ${GetVehicleEngineHealth(vehicle).toFixed(2)} ` +
                         `| Veh Body: ${GetVehicleBodyHealth(vehicle).toFixed(2)}` +

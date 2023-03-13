@@ -167,7 +167,7 @@ export class VehicleLockProvider {
 
         if (!player.metadata.godmode && !state.open && !state.forced) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
-
+            TaskLeaveVehicle(ped, vehicle, 0);
             return;
         }
 
