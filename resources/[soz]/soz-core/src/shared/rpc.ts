@@ -28,6 +28,7 @@ export enum RpcEvent {
 
     CRAFTING_GET_RECIPES = 'soz-core:crafting:get-recipes',
     CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',
+    CRAFTING_DO_SALVAGE = 'soz-core:crafting:do-salvage',
 
     SHOP_MASK_GET_CATEGORIES = 'soz-core:shop:mask:get-categories',
     SHOP_MASK_GET_ITEMS = 'soz-core:shop:mask:get-items',

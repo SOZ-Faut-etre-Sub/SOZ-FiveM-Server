@@ -390,7 +390,7 @@ export enum NuiEvent {
     AdminSetAdminGPS = 'soz-core:client:admin:gps',
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     CraftingDoCraft = 'soz-core:nui:crafting:do-craft',
-
+    CraftingDoSalvage = 'soz-core:nui:crafting:do-salvage',
     StonkDisplayBlip = 'soz-core:client:job:stonk:display-blip',
 
     JobPlaceProps = 'soz-core:client:job:place-props',

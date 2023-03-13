@@ -1,4 +1,5 @@
 import { Talent } from '@private/shared/talent';
+import { InventoryItem } from '@public/shared/item';
 
 export type CriminalCraftingRequirements = {
     items: Record<string, number>;
@@ -16,4 +17,9 @@ export type CriminalCraftingCheck = {
     talent: boolean;
     amount: number;
     canCraft: boolean;
+};
+
+export type CriminalCraftingSalvage = {
+    item: InventoryItem;
+    results: Record<string, number>;
 };
