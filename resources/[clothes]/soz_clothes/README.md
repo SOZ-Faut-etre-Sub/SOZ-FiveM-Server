@@ -25,6 +25,8 @@
 3  police intervention
 4  sheriff intervention
 5  anti-emeute LSPD/BCSO
+6  light crimi
+7  medium crimi
 
     Undershirt
 0  stonk holster radio epaule // pas utilisé?
