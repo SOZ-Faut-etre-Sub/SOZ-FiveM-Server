@@ -15,23 +15,27 @@ export class ClothingShopRepository {
         this.repoData = await emitRpc<ClothingShopRepositoryData>(RpcEvent.REPOSITORY_GET_DATA, 'clothingShop');
 
         // Hydrate tops with proper torsos and remove undershirts
-        for (const shop of Object.values(this.repoData.shops)) {
-            for (const item of Object.values(shop.products)) {
-                if (item.components[Component.Tops] != null) {
-                    item.components[Component.Torso] = {
-                        Drawable: ProperTorsos[item.modelHash][item.components[Component.Tops].Drawable],
-                        Texture: 0,
-                    };
-                    if (item.modelHash == -1667301416) {
-                        item.components[Component.Undershirt] = {
-                            Drawable: 14, // This is without undershirt (for women)
-                            Texture: 0,
-                        };
-                    } else {
-                        item.components[Component.Undershirt] = {
-                            Drawable: 15, // This is without undershirt (for men)
-                            Texture: 0,
-                        };
+        for (const shop of Object.values(this.repoData.categories)) {
+            for (const genderContent of Object.values(Object.values(shop))) {
+                for (const shopContent of Object.values(genderContent)) {
+                    for (const item of shopContent.content) {
+                        if (item.components[Component.Tops] != null) {
+                            item.components[Component.Torso] = {
+                                Drawable: ProperTorsos[item.modelHash][item.components[Component.Tops].Drawable],
+                                Texture: 0,
+                            };
+                            if (item.modelHash == -1667301416) {
+                                item.components[Component.Undershirt] = {
+                                    Drawable: 14, // This is without undershirt (for women)
+                                    Texture: 0,
+                                };
+                            } else {
+                                item.components[Component.Undershirt] = {
+                                    Drawable: 15, // This is without undershirt (for men)
+                                    Texture: 0,
+                                };
+                            }
+                        }
                     }
                 }
             }
@@ -53,12 +57,13 @@ export class ClothingShopRepository {
         return this.repoData.shops[shop];
     }
 
-    public getCategoriesOfShop(shop: string): Record<number, ClothingShopCategory> {
+    public getFirstCategoriesOfShop(shop: string): Record<number, ClothingShopCategory> {
         return this.repoData.shops[shop].categories;
     }
 
-    public getAllCategories(): Record<number, ClothingShopCategory> {
-        return this.repoData.categories;
+    public getModelCategoriesOfShop(shop: string, modelHash: number): Record<number, ClothingShopCategory> {
+        const shopId = this.repoData.shops[shop].id;
+        return this.repoData.categories[modelHash][shopId];
     }
 
     public getShopNameById(id: number): string {

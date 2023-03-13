@@ -479,7 +479,7 @@ export const UndershirtCategoryNeedingReplacementTorso = {
             [2]: 2,
             [3]: 3,
             [4]: 11,
-            [5]: 1,
+            [5]: 3,
             [6]: 3,
             [7]: 3,
             [8]: 8,

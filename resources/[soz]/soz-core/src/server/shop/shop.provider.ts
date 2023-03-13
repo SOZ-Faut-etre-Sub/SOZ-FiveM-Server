@@ -257,7 +257,6 @@ export class ShopProvider {
             }
         }
         // This is for undershirt/top compatibility
-        console.log(product.underTypes);
         if (product.underTypes != null) {
             clothConfig.BaseClothSet.underTypes = product.underTypes;
         }

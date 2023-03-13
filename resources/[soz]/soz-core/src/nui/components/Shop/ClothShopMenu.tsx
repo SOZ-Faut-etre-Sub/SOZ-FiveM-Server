@@ -66,27 +66,33 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                     Magasin {catalog.brand.charAt(0).toUpperCase() + catalog.brand.slice(1)}
                 </MenuTitle>
                 <MenuContent>
-                    {Object.values(catalog.shop_content.categories).map(category => (
-                        <MenuItemButton
-                            key={category.id}
-                            onConfirm={async () => {
-                                selectCategory(category.id);
-                            }}
-                        >
-                            {category.name}
-                        </MenuItemButton>
-                    ))}
+                    {Object.values(catalog.shop_content.categories)
+                        .filter(
+                            category =>
+                                catalog.shop_categories[category.id].content.length > 0 ||
+                                Object.values(catalog.shop_categories).filter(
+                                    childCat => childCat.parentId == category.id
+                                ).length > 0
+                        )
+                        .map(category => (
+                            <MenuItemButton
+                                key={category.id}
+                                onConfirm={async () => {
+                                    selectCategory(category.id);
+                                }}
+                            >
+                                {category.name}
+                            </MenuItemButton>
+                        ))}
                 </MenuContent>
             </MainMenu>
             {Object.values(catalog.shop_categories).map(cat => {
-                const items = Object.values(catalog.shop_content.products)
+                const items = cat.content
                     .filter(
                         product =>
-                            product.categoryId == cat.id && // Right category
-                            (product.modelHash == playerData.skin.Model.Hash || product.modelHash == null) && // Right model
-                            (!product.undershirtType ||
-                                (playerData.cloth_config.BaseClothSet.underTypes != null &&
-                                    playerData.cloth_config.BaseClothSet.underTypes.includes(product.undershirtType))) // Compatible undershirt types
+                            !product.undershirtType ||
+                            (playerData.cloth_config.BaseClothSet.underTypes != null &&
+                                playerData.cloth_config.BaseClothSet.underTypes.includes(product.undershirtType)) // Compatible undershirt types
                     )
                     .sort((a, b) => a.label.localeCompare(b.label));
                 if (items.length == 0 || !items[0].modelLabel) {
@@ -96,11 +102,22 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                             <MenuTitle banner={banner}>{cat.name}</MenuTitle>
                             <MenuContent>
                                 {Object.values(catalog.shop_categories)
-                                    .filter(childCat => {
-                                        // Check if this subcategory is not empty and is a child of this category
-                                        // This is very badly optimized, as it has to loop through all items for each category
-                                        return childCat.parentId == cat.id;
-                                    })
+                                    .filter(
+                                        childCat =>
+                                            // Check if this subcategory is not empty and is a child of this category
+                                            childCat.parentId == cat.id &&
+                                            (Object.values(catalog.shop_categories).filter(
+                                                childchildCat => childchildCat.parentId == childCat.id
+                                            ).length > 0 ||
+                                                childCat.content.filter(
+                                                    product =>
+                                                        !product.undershirtType ||
+                                                        (playerData.cloth_config.BaseClothSet.underTypes != null &&
+                                                            playerData.cloth_config.BaseClothSet.underTypes.includes(
+                                                                product.undershirtType
+                                                            )) // Compatible undershirt types
+                                                ).length > 0)
+                                    )
                                     .map(childCat => (
                                         <MenuItemButton
                                             key={childCat.id}
@@ -155,7 +172,23 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                             <MenuTitle banner={banner}>{cat.name}</MenuTitle>
                             <MenuContent>
                                 {Object.values(catalog.shop_categories)
-                                    .filter(childCat => childCat.parentId == cat.id)
+                                    .filter(
+                                        childCat =>
+                                            // is child
+                                            childCat.parentId == cat.id &&
+                                            // has sub category
+                                            (Object.values(catalog.shop_categories).filter(
+                                                childchildCat => childchildCat.parentId == childCat.id
+                                            ).length > 0 || // or has items
+                                                childCat.content.filter(
+                                                    product =>
+                                                        !product.undershirtType ||
+                                                        (playerData.cloth_config.BaseClothSet.underTypes != null &&
+                                                            playerData.cloth_config.BaseClothSet.underTypes.includes(
+                                                                product.undershirtType
+                                                            ))
+                                                ).length > 0)
+                                    )
                                     .map(childCat => (
                                         <MenuItemButton
                                             key={childCat.id}
