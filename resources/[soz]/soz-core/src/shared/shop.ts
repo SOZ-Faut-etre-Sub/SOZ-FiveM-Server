@@ -39,7 +39,7 @@ export type BossShopMenu = {
 export type ClothingShop = {
     id: number;
     name: string;
-    products?: Record<number, ClothingShopItem>;
+    // products?: Record<number, ClothingShopItem>;
     categories?: Record<number, ClothingShopCategory>;
     stocks?: Record<number, number>;
 };
@@ -48,6 +48,7 @@ export type ClothingShopCategory = {
     id: number;
     name: string;
     parentId?: number;
+    content?: ClothingShopItem[]; // Map modelHash -> list of items
 };
 
 export type ClothingShopItem = {
