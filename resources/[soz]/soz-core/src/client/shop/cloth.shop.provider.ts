@@ -40,7 +40,8 @@ export class ClothingShopProvider {
 
         await this.clothingShopRepository.updateShopStock(brand);
         const shop_content = this.clothingShopRepository.getShop(brand);
-        const shop_categories = this.clothingShopRepository.getAllCategories();
+        const modelHash = GetEntityModel(PlayerPedId());
+        const shop_categories = this.clothingShopRepository.getModelCategoriesOfShop(brand, modelHash);
         const player_data = this.playerService.getPlayer();
         if (!shop_content) {
             console.error(`Shop ${brand} not found`);
@@ -85,6 +86,9 @@ export class ClothingShopProvider {
     @OnNuiEvent(NuiEvent.ClothingShopPreview)
     public async onPreviewCloth(product: ClothingShopItem) {
         const ped = PlayerPedId();
+        if (!product) {
+            return;
+        }
         if (product.components && !product.correspondingDrawables) {
             for (const [compId, comp] of Object.entries(product.components)) {
                 const drawable = comp.Drawable;
@@ -103,10 +107,7 @@ export class ClothingShopProvider {
         const baseTorsoDrawable =
             this.playerService.getPlayer().cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
         if (product.correspondingDrawables) {
-            console.log(product.correspondingDrawables);
             const correspondingGloveDrawable = product.correspondingDrawables[baseTorsoDrawable];
-            console.log(baseTorsoDrawable);
-            console.log(correspondingGloveDrawable);
             SetPedComponentVariation(
                 ped,
                 Component.Torso,
@@ -117,14 +118,18 @@ export class ClothingShopProvider {
         }
         // Adapt the torso to the undershirt
         const playerModel = GetEntityModel(ped);
-        if (product.undershirtType && UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType]) {
-            SetPedComponentVariation(
-                ped,
-                Component.Torso,
-                UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType][baseTorsoDrawable],
-                0,
-                0
-            );
+        if (product.undershirtType != null) {
+            if (UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType] != null) {
+                SetPedComponentVariation(
+                    ped,
+                    Component.Torso,
+                    UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType][baseTorsoDrawable],
+                    0,
+                    0
+                );
+            } else {
+                SetPedComponentVariation(ped, Component.Torso, baseTorsoDrawable, 0, 0);
+            }
         }
     }
 
