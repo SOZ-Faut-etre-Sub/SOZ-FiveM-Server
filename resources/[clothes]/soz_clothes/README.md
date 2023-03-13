@@ -3,7 +3,7 @@
 1  pilote LSPD/BCSO
 2  moto LSPD/BCSO
 3  service LSMC
-4  service LSPD/BCSO/noir       //logo LSPD manquant femme
+4  service LSPD/BCSO/noir
 5  service Stonks
 6  hiver LSMC
 7  patient
@@ -34,7 +34,8 @@
 4  ceinture LSPD
 5  ceinture LSMC
 6  pilote BCSO
-7  antiemeute
+7  antiemeute LSPD/BCSO
+8  harnais holster
 
     Accessories
 0  stétho    //same as vanilla?
