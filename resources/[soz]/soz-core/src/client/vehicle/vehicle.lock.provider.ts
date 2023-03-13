@@ -18,6 +18,7 @@ import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleService } from './vehicle.service';
+import { VehicleClass } from '../../shared/vehicle/vehicle';
 
 const DOOR_INDEX_CONFIG: Partial<Record<VehicleClass, Record<string, number>>> = {
     [VehicleClass.Helicopters]: {
@@ -214,7 +215,9 @@ export class VehicleLockProvider {
 
         if (!player.metadata.godmode && !state.open && !state.forced) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
-            TaskLeaveVehicle(ped, vehicle, 0);
+
+            const vehicleClass = GetVehicleClass(vehicle);
+            if ( vehicleClass === VehicleClass.Motorcycles || vehicleClass === VehicleClass.Cycles ){ ClearPedTasksImmediately(ped); }
             return;
         }
 
