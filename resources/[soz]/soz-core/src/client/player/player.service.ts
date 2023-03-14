@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { Outfit, Prop } from '../../shared/cloth';
+import { Outfit } from '../../shared/cloth';
 import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -38,9 +38,6 @@ export class PlayerService {
     }
 
     public setTempClothes(clothes: Outfit | null) {
-        if (clothes && clothes.Props[Prop.Helmet]) {
-            clothes.Props[Prop.Hat] = clothes.Props[Prop.Helmet];
-        }
         TriggerEvent(ClientEvent.CHARACTER_SET_TEMPORARY_CLOTH, clothes || {});
     }
 

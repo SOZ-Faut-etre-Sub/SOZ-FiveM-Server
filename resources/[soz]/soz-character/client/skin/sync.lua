@@ -11,6 +11,10 @@ end)
 -- Mettre un ensemble de vetement temporaire pour le joueur (donnes non persisté, pour tester avant sauvegarde)
 -- Cette ensemble est mergé avec la configuration persisté
 RegisterNetEvent("soz-character:Client:ApplyTemporaryClothSet", function(clothSet)
+    if clothSet and clothSet.Props and clothSet.Props[PropType.Helmet] then
+        clothSet.Props[PropType.Head] = clothSet.Props[PropType.Helmet];
+    end
+
     local baseClothSet = ClothConfigComputeToClothSet(PlayerData.cloth_config)
     local applyClothSet = MergeClothSet(baseClothSet, clothSet)
 

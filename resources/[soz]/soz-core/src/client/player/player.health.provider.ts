@@ -1,3 +1,5 @@
+import { wait } from '@public/core/utils';
+
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -331,6 +333,9 @@ export class PlayerHealthProvider {
             return;
         }
 
+        ClearPedTasksImmediately(PlayerPedId());
+        await wait(1);
+
         let progressEnd = false;
         this.animationService
             .playScenario({
@@ -387,6 +392,9 @@ export class PlayerHealthProvider {
         if (!this.canDoExercise()) {
             return;
         }
+
+        ClearPedTasksImmediately(PlayerPedId());
+        await wait(1);
 
         let progressEnd = false;
         const animationPromise = this.animationService

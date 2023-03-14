@@ -45,11 +45,7 @@ export const PatientClothes: WardrobeConfig = {
             Components: {
                 [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 15, Texture: 0, Palette: 0 },
-                [Component.Legs]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_m_freemode_01')][Component.Legs],
-                    Texture: 0,
-                    Palette: 0,
-                },
+                [Component.Legs]: { Drawable: 61, Texture: 0, Palette: 0 },
                 [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -77,11 +73,7 @@ export const PatientClothes: WardrobeConfig = {
             Components: {
                 [Component.Mask]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Legs]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[joaat('mp_f_freemode_01')][Component.Legs],
-                    Texture: 0,
-                    Palette: 0,
-                },
+                [Component.Legs]: { Drawable: 15, Texture: 3, Palette: 0 },
                 [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 35, Texture: 0, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },

@@ -43,9 +43,9 @@ local function ProximityVoiceDecrease()
     SetVoiceProximity(voiceProximity - 1)
 end
 
-local function SetPlayerMegaphoneInUse(state)
+local function SetPlayerMegaphoneInUse(state, range)
     if state then
-        ProximityModuleInstance:updateRange(Config.megaphoneRange)
+        ProximityModuleInstance:updateRange(range or Config.megaphoneRange)
         TriggerEvent("hud:client:UpdateVoiceMode", 10)
     else
         SetVoiceProximity(voiceProximity)

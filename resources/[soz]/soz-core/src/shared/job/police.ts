@@ -745,10 +745,10 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Accessories]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
                                 Component.Accessories
                             ] + 2,
-                        Texture: 0,
+                        Texture: 1,
                         Palette: 0,
                     },
                     [Component.Undershirt]: { Drawable: 160, Texture: 0, Palette: 0 },

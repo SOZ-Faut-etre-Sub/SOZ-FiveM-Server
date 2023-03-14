@@ -241,6 +241,9 @@ export class PlayerStressProvider {
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_YOGA)
     async doYoga(): Promise<void> {
+        ClearPedTasksImmediately(PlayerPedId());
+        await wait(1);
+
         this.animationService
             .playAnimation({
                 base: {

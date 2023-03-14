@@ -118,14 +118,13 @@ export class PlayerWardrobe {
         this.currentOutfitResolve = null;
     }
 
-    @OnNuiEvent<Outfit>(NuiEvent.WardrobeElementSelect)
-    public async onWardrobeElementSelect(config) {
-        const outfit = config.outfit as Outfit;
-        const wardRobeElement = WardRobeElements[config.wardRobeElementId];
-
+    @OnNuiEvent(NuiEvent.WardrobeElementSelect)
+    public async onWardrobeElementSelect({ outfit, wardRobeElementId }: { outfit: Outfit; wardRobeElementId: number }) {
         if (!outfit) {
             return;
         }
+
+        const wardRobeElement = WardRobeElements[wardRobeElementId];
 
         if (wardRobeElement.componentId) {
             wardRobeElement.componentId.forEach(element => {
@@ -134,14 +133,16 @@ export class PlayerWardrobe {
         }
         if (wardRobeElement.propId) {
             wardRobeElement.propId.forEach(element => {
+                console.log(element, outfit.Props[element]);
                 this.customOutfit.Props[element] = outfit.Props[element];
             });
         }
 
         this.playerService.setTempClothes(this.customOutfit);
+        return;
     }
 
-    @OnNuiEvent<Outfit>(NuiEvent.WardrobeCustomSave)
+    @OnNuiEvent(NuiEvent.WardrobeCustomSave)
     public async onCustomWardrobeSabe() {
         if (this.currentOutfitResolve) {
             this.currentOutfitResolve({ outfit: this.customOutfit, canceled: false });
@@ -150,6 +151,6 @@ export class PlayerWardrobe {
         this.nuiMenu.closeMenu();
         this.currentOutfitResolve = null;
 
-        return true;
+        return;
     }
 }
