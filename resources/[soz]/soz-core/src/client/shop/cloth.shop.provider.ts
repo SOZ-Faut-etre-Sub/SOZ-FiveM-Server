@@ -103,21 +103,10 @@ export class ClothingShopProvider {
                 SetPedPropIndex(ped, parseInt(propId), drawable, texture, true);
             }
         }
-        // This is for gloves
-        const baseTorsoDrawable =
-            this.playerService.getPlayer().cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
-        if (product.correspondingDrawables) {
-            const correspondingGloveDrawable = product.correspondingDrawables[baseTorsoDrawable];
-            SetPedComponentVariation(
-                ped,
-                Component.Torso,
-                correspondingGloveDrawable,
-                product.components[Component.Torso].Texture,
-                0
-            );
-        }
-        // Adapt the torso to the undershirt
+        // Adapt the torso to the undershirt if selected
         const playerModel = GetEntityModel(ped);
+        const player = this.playerService.getPlayer();
+        const baseTorsoDrawable = player.cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
         if (product.undershirtType != null) {
             if (UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType] != null) {
                 SetPedComponentVariation(
@@ -127,8 +116,43 @@ export class ClothingShopProvider {
                     0,
                     0
                 );
+                // Also show the current top of the player to avoid a naked torso
+                SetPedComponentVariation(
+                    ped,
+                    Component.Tops,
+                    player.cloth_config.BaseClothSet.Components[Component.Tops].Drawable,
+                    player.cloth_config.BaseClothSet.Components[Component.Tops].Texture,
+                    0
+                );
             } else {
                 SetPedComponentVariation(ped, Component.Torso, baseTorsoDrawable, 0, 0);
+            }
+        }
+        // Preview gloves if selected
+        if (product.correspondingDrawables) {
+            const correspondingGloveDrawable = product.correspondingDrawables[baseTorsoDrawable];
+            SetPedComponentVariation(
+                ped,
+                Component.Torso,
+                correspondingGloveDrawable,
+                product.components[Component.Torso].Texture,
+                0
+            );
+        } else {
+            // Else preview current gloves of the player
+            if (
+                !player.cloth_config.Config.HideGloves &&
+                player.cloth_config.BaseClothSet.Gloves &&
+                player.cloth_config.BaseClothSet.Gloves[baseTorsoDrawable]
+            ) {
+                const currentTorso = GetPedDrawableVariation(ped, Component.Torso);
+                SetPedComponentVariation(
+                    ped,
+                    Component.Torso,
+                    player.cloth_config.BaseClothSet.Gloves[currentTorso].Drawable,
+                    player.cloth_config.BaseClothSet.Gloves[currentTorso].Texture,
+                    0
+                );
             }
         }
     }

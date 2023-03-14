@@ -1,7 +1,7 @@
 import { ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { Component, OutfitItem, Prop } from '@public/shared/cloth';
 import { InventoryItemMetadata, ItemType } from '@public/shared/item';
-import { Skin } from '@public/shared/player';
+import { Skin, TenueIdToHide } from '@public/shared/player';
 import { BarberShopItem, ClothingShopItem, JewelryShopItem, ShopProduct, TattooShopItem } from '@public/shared/shop';
 
 import { OnEvent } from '../../core/decorators/event';
@@ -181,16 +181,25 @@ export class ShopProvider {
         if (product.components) {
             for (const componentId of Object.keys(product.components)) {
                 clothConfig.BaseClothSet.Components[componentId] = product.components[componentId];
+                const HideToReset = TenueIdToHide.Components[componentId];
+                if (HideToReset) {
+                    clothConfig.Config[HideToReset] = false;
+                }
             }
         }
         if (product.props) {
             if (product.overlay == 'Helmet') {
                 for (const propId of Object.keys(product.props)) {
                     clothConfig.BaseClothSet.Props[Prop.Helmet] = product.props[propId];
+                    clothConfig.Config.ShowHelmet = true;
                 }
             } else {
                 for (const propId of Object.keys(product.props)) {
                     clothConfig.BaseClothSet.Props[propId] = product.props[propId];
+                    const HideToReset = TenueIdToHide.Props[propId];
+                    if (HideToReset) {
+                        clothConfig.Config[HideToReset] = false;
+                    }
                 }
             }
         }
@@ -239,11 +248,19 @@ export class ShopProvider {
         if (product.components && product.correspondingDrawables == null) {
             for (const componentId of Object.keys(product.components)) {
                 clothConfig.BaseClothSet.Components[componentId] = product.components[componentId];
+                const HideToReset = TenueIdToHide.Components[componentId];
+                if (HideToReset) {
+                    clothConfig.Config[HideToReset] = false;
+                }
             }
         }
         if (product.props && product.correspondingDrawables == null) {
             for (const propId of Object.keys(product.props)) {
                 clothConfig.BaseClothSet.Props[propId] = product.props[propId];
+                const HideToReset = TenueIdToHide.Props[propId];
+                if (HideToReset) {
+                    clothConfig.Config[HideToReset] = false;
+                }
             }
         }
         if (product.correspondingDrawables) {
@@ -255,6 +272,7 @@ export class ShopProvider {
                     Palette: 0,
                 } as OutfitItem;
             }
+            clothConfig.Config.HideGloves = false;
         }
         // This is for undershirt/top compatibility
         if (product.underTypes != null) {
