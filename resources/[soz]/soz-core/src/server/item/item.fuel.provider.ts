@@ -37,6 +37,12 @@ export class ItemFuelProvider {
     private vehicleStateService: VehicleStateService;
 
     public async useEssenceJerrycan(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        if (this.item.isItemExpired(inventoryItem)) {
+            this.notifier.notify(source, "L'essence du jerrycan est périmé.", 'error');
+
+            return;
+        }
+
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
         if (!closestVehicle) {
