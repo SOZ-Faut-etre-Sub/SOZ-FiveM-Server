@@ -76,6 +76,9 @@ export class VehicleFuelProvider {
 
     private currentStationPistol: CurrentStationPistol | null = null;
 
+    private publicOilStationPrice: number = 0;
+    private publicKeroseneStationPrice: number = 0;
+
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoryLoaded() {
         let stations = this.fuelStationRepository.get();
@@ -238,11 +241,69 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    if (station.type === FuelStationType.Public) {
-                        return true;
+                    return player.job.id === station.job && player.job.onduty;
+                },
+                blackoutGlobal: true,
+            },
+            {
+                icon: 'c:fuel/pistolet.png',
+                label: 'Prendre le pistolet ' + '($' + this.publicOilStationPrice.toFixed(2) + '/L)',
+                action: (entity: number) => {
+                    this.toggleStationPistol(entity);
+                },
+                canInteract: (entity: number) => {
+                    if (GetEntityHealth(entity) <= 0) {
+                        return false;
                     }
 
-                    return player.job.id === station.job && player.job.onduty;
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
+
+                    if (!station) {
+                        return false;
+                    }
+
+                    if (this.currentStationPistol) {
+                        return false;
+                    }
+
+                    return station.type === FuelStationType.Public && station.fuel === FuelType.Essence;
+                },
+                blackoutGlobal: true,
+            },
+            {
+                icon: 'c:fuel/pistolet.png',
+                label: 'Prendre le pistolet ' + '($' + this.publicKeroseneStationPrice.toFixed(2) + '/L)',
+                action: (entity: number) => {
+                    this.toggleStationPistol(entity);
+                },
+                canInteract: (entity: number) => {
+                    if (GetEntityHealth(entity) <= 0) {
+                        return false;
+                    }
+
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    const station = this.fuelStationRepository.getStationForEntity(entity);
+
+                    if (!station) {
+                        return false;
+                    }
+
+                    if (this.currentStationPistol) {
+                        return false;
+                    }
+
+                    return station.type === FuelStationType.Public && station.fuel === FuelType.Kerosene;
                 },
                 blackoutGlobal: true,
             },
@@ -662,5 +723,12 @@ export class VehicleFuelProvider {
             fuelLevel: newFuel,
             oilLevel: newOil,
         };
+    }
+
+    @Tick(TickInterval.EVERY_5_MINUTE)
+    private async refreshStationPrices() {
+        const stationPrices = await emitRpc<Record<FuelType, number>>(RpcServerEvent.OIL_GET_STATION_PRICES);
+        this.publicOilStationPrice = stationPrices[FuelType.Essence];
+        this.publicKeroseneStationPrice = stationPrices[FuelType.Kerosene];
     }
 }
