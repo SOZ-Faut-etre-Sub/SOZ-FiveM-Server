@@ -5,7 +5,7 @@ import { Component, WardrobeConfig } from '../../../shared/cloth';
 import { ClientEvent } from '../../../shared/event';
 import { JobCloakroomProvider } from '../job.cloakroom.provider';
 
-const BENNYS_CLOAKROOM: WardrobeConfig = {
+export const BENNYS_CLOAKROOM: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
         ['Patron']: {
             Components: {
