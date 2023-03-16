@@ -202,14 +202,17 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                     ))}
                                 {Object.entries(groupedItems).map(([modelLabel, items]) => (
                                     <MenuItemSelect
-                                        key={modelLabel}
+                                        keyDescendant={modelLabel}
                                         title={modelLabel}
                                         titleWidth={60}
                                         value={items[0]}
+                                        initialValue={items[0]}
                                         onChange={async (_, item) => await fetchNui(NuiEvent.ClothingShopPreview, item)}
                                         onConfirm={async (_, item) => await fetchNui(NuiEvent.ClothingShopBuy, item)}
-                                        onSelected={async () => await fetchNui(NuiEvent.ClothingShopPreview, items[0])}
-                                        description={`Il reste ${stocks[items[0].id]} produits en stock.`}
+                                        onSelectedValue={async (_, item) =>
+                                            await fetchNui(NuiEvent.ClothingShopPreview, item)
+                                        }
+                                        descriptionValue={item => `Il reste ${stocks[item.id]} produits en stock.`}
                                     >
                                         {items.map(item => (
                                             <MenuItemSelectOption
