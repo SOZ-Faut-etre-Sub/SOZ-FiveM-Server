@@ -118,8 +118,8 @@ export class ShopProvider {
     }
 
     @OnEvent(ClientEvent.LOCATION_EXIT)
-    public onLocationExit(brand) {
-        this.removeTargetModel();
+    public async onLocationExit(brand) {
+        await this.removeTargetModel();
         this.currentShop = null;
         this.currentShopBrand = null;
 
@@ -129,11 +129,15 @@ export class ShopProvider {
     }
 
     public async addTargetModel() {
-        this.targetFactory.createForModel(BrandsConfig[this.currentShopBrand].pedModel, this.shopActions);
+        if (this.currentShopBrand != null && BrandsConfig[this.currentShopBrand].pedModel) {
+            this.targetFactory.createForModel(BrandsConfig[this.currentShopBrand].pedModel, this.shopActions);
+        }
     }
 
     public async removeTargetModel() {
-        this.targetFactory.removeTargetModel([BrandsConfig[this.currentShopBrand].pedModel], []);
+        if (this.currentShopBrand != null && BrandsConfig[this.currentShopBrand].pedModel) {
+            this.targetFactory.removeTargetModel([BrandsConfig[this.currentShopBrand].pedModel], []);
+        }
     }
 
     public async openShop() {
