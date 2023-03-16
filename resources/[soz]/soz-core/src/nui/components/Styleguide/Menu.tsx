@@ -584,6 +584,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     title: string | ReactNode;
     onConfirm?: (index: number, value: any | undefined) => void;
     onSelected?: () => void;
+    onSelectedValue?: (index: number, value: any | undefined) => void;
     onChange?: (index: number, value: any) => void;
     disabled?: boolean;
     value?: any;
@@ -595,6 +596,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     description?: string;
     useGrid?: boolean;
     alignRight?: boolean;
+    descriptionValue?: (value: any) => string;
     equalityFn?: (a: any, b: any) => boolean;
 }>;
 
@@ -602,6 +604,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     children,
     onConfirm,
     onSelected,
+    onSelectedValue,
     onChange,
     title,
     disabled = false,
@@ -614,6 +617,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     description = null,
     useGrid = false,
     alignRight = false,
+    descriptionValue,
     equalityFn = (a, b) => a === b,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
@@ -649,10 +653,16 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
 
     return (
         <MenuItemContainer
-            onSelected={onSelected}
+            onSelected={
+                onSelected
+                    ? onSelected
+                    : onSelectedValue
+                    ? () => onSelectedValue(activeOptionIndex, activeValue)
+                    : undefined
+            }
             onConfirm={onItemConfirm}
             disabled={disabled}
-            description={description}
+            description={descriptionValue ? descriptionValue(activeValue) : description}
         >
             <DescendantProvider
                 key={keyDescendant}
