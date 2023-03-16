@@ -39,6 +39,10 @@ export class WeaponDrawingProvider {
     }
 
     private async drawWeapon() {
+        if (!this.shouldDrawWeapon) {
+            return;
+        }
+
         for (const weapon of this.weaponsToDraw) {
             if (this.weaponAttached[weapon.model]) continue;
 
@@ -108,10 +112,6 @@ export class WeaponDrawingProvider {
             ) {
                 await this.weaponService.clear();
             }
-        }
-
-        if (!this.shouldDrawWeapon) {
-            return;
         }
 
         await this.refreshDrawWeapons();

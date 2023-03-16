@@ -49,7 +49,7 @@
 1  BCSO badge pectoraux
 
     pantalon
-0  patient
+0  patient  //don"t use, cause tatoo duplication between legs
 1  service LSPD/BCSO
 2  stonk
 3  motard LSPD/BCSO
