@@ -172,10 +172,10 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['criminal_talents'] = PlayerData.metadata['criminal_talents'] or {}
     PlayerData.metadata['criminal_state'] = PlayerData.metadata['criminal_state'] or 0
     PlayerData.metadata['criminal_reputation'] = PlayerData.metadata['criminal_reputation'] or 0
-    
+
     PlayerData.metadata['injuries_count'] = PlayerData.metadata['injuries_count'] or 0
     PlayerData.metadata['injuries_date'] = PlayerData.metadata['injuries_date'] or 0
-    
+
     PlayerData.metadata['mort'] = PlayerData.metadata['mort'] or ''
 
     if not PlayerData.metadata.lastBidTime then
@@ -435,6 +435,12 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
         local strengthMultiplier = self.PlayerData.metadata.strength / 100
         local baseWeight = 20000 * strengthMultiplier
+
+        for k, v in pairs(self.PlayerData.metadata["criminal_talents"]) do
+            if v == 20 then
+                baseWeight = baseWeight + 10000
+            end
+        end
 
         if (baseBag == 0 and jobBag == 0) or ((baseBag ~= 0 or jobBag ~= 0) and self.PlayerData.cloth_config.Config.HideBag) then
             exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(baseWeight))
