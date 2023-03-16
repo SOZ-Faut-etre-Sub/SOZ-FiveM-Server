@@ -7597,6 +7597,176 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                     },
                 },
             },
+            Cravates: {
+                '21': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Cravate longue blanche',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate longue grise',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate longue noire',
+                    },
+                },
+                '22': {
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate longue crème',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate longue blanche rayée',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Cravate longue verte à pois',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Cravate longue violette à losanges',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Cravate longue bordeaux à pois',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Cravate longue grise à losanges',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Cravate longue marron',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Cravate longue ciel à rayures',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Cravate longue bleu foncé',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Cravate longue orange',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Cravate longue à losanges blancs',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Cravate longue crème à rayures',
+                    },
+                    '13': {
+                        GXT: '',
+                        Localized: 'Cravate longue rose',
+                    },
+                    '14': {
+                        GXT: '',
+                        Localized: 'Cravate longue verte à losanges',
+                    },
+                    '15': {
+                        GXT: '',
+                        Localized: 'Cravate longue nuage gris',
+                    },
+                },
+                '26': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Cravate courte blanche',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate courte grise',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate courte noire',
+                    },
+                },
+                '27': {
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate courte crème',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate courte blanche rayée',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Cravate courte verte à pois',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Cravate courte violette à losanges',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Cravate courte bordeaux à pois',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Cravate courte grise à losanges',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Cravate courte marron',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Cravate courte ciel à rayures',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Cravate courte bleu foncé',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Cravate courte orange',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Cravate courte à losanges blancs',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Cravate courte crème à rayures',
+                    },
+                    '13': {
+                        GXT: '',
+                        Localized: 'Cravate courte rose',
+                    },
+                    '14': {
+                        GXT: '',
+                        Localized: 'Cravate courte verte à losanges',
+                    },
+                    '15': {
+                        GXT: '',
+                        Localized: 'Cravate courte nuage gris',
+                    },
+                },
+            },
+            'Noeuds papillon': {
+                '23': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Noeud papillon noir',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Noeud papillon blanc',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Noeud papillon rouge',
+                    },
+                },
+            },
         },
     },
 };
@@ -15443,6 +15613,378 @@ export const MaleJewelryItems: ShopJewelryContent = {
                     '0': {
                         GXT: '',
                         Localized: 'Foulard rouge',
+                    },
+                },
+            },
+            Cravates: {
+                '21': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue bleue',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue marine',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue rouge',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue verte',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue orange',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue jaune',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue violette',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue marron',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue crème',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue losanges',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue losanges 2',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue rayée 1',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue rayée 2',
+                    },
+                },
+                '23': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue bleue',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue marine',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue rouge',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue verte',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue orange',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue jaune',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue violette',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue marron',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue crème',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue losanges',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue losanges 2',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue rayée 1',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Cravate fine longue rayée 2',
+                    },
+                },
+                '38': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue noire',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue crème',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue blanche rayée',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue verte à pois',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue violette à losanges',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue bordeaux à pois',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue grise à losanges',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue marron',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue ciel à rayures',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue bleu foncé',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue orange',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue à losanges blancs',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue crème à rayures',
+                    },
+                    '13': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue rose',
+                    },
+                    '14': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue verte à losanges',
+                    },
+                    '15': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse longue nuage gris',
+                    },
+                },
+                '24': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte blanche',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte grise',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte noire',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte bleue',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte marine',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte rouge',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte verte',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte orange',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte jaune',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte violette',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte marron',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte crème',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte losanges',
+                    },
+                    '13': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte losanges 2',
+                    },
+                    '14': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte rayée 1',
+                    },
+                    '15': {
+                        GXT: '',
+                        Localized: 'Cravate épaisse courte rayée 2',
+                    },
+                },
+                '25': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte blanche',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte grise',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte noire',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte bleue',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte marine',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte rouge',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte verte',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte orange',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte jaune',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte violette',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte marron',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte crème',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte losanges',
+                    },
+                    '13': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte losanges 2',
+                    },
+                    '14': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte rayée 1',
+                    },
+                    '15': {
+                        GXT: '',
+                        Localized: 'Cravate fine courte rayée 2',
+                    },
+                },
+            },
+            'Noeuds papillon': {
+                '22': {
+                    '0': {
+                        GXT: '',
+                        Localized: 'Noeud papillon blanc',
+                    },
+                    '1': {
+                        GXT: '',
+                        Localized: 'Noeud papillon gris',
+                    },
+                    '2': {
+                        GXT: '',
+                        Localized: 'Noeud papillon bleu',
+                    },
+                    '3': {
+                        GXT: '',
+                        Localized: 'Noeud papillon marine',
+                    },
+                    '4': {
+                        GXT: '',
+                        Localized: 'Noeud papillon rouge',
+                    },
+                    '5': {
+                        GXT: '',
+                        Localized: 'Noeud papillon vert',
+                    },
+                    '6': {
+                        GXT: '',
+                        Localized: 'Noeud papillon orange',
+                    },
+                    '7': {
+                        GXT: '',
+                        Localized: 'Noeud papillon jaune',
+                    },
+                    '8': {
+                        GXT: '',
+                        Localized: 'Noeud papillon violet',
+                    },
+                    '9': {
+                        GXT: '',
+                        Localized: 'Noeud papillon marron',
+                    },
+                    '10': {
+                        GXT: '',
+                        Localized: 'Noeud papillon crème',
+                    },
+                    '11': {
+                        GXT: '',
+                        Localized: 'Noeud papillon carreaux bleus',
+                    },
+                    '12': {
+                        GXT: '',
+                        Localized: 'Noeud papillon carreaux oranges',
+                    },
+                    '13': {
+                        GXT: '',
+                        Localized: 'Noeud papillon losanges blancs',
+                    },
+                    '14': {
+                        GXT: '',
+                        Localized: 'Noeud papillon losanges rouges',
                     },
                 },
             },
