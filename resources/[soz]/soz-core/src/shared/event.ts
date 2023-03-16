@@ -272,6 +272,7 @@ export enum ClientEvent {
     PLAYER_UPDATE = 'soz-core:client:player:update',
     PLAYER_UPDATE_WALK_STYLE = 'soz-core:client:player:update-walk-style',
     PLAYER_REFRESH_WALK_STYLE = 'soz-core:client:player:refresh-walk-style',
+    PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
 
     PROGRESS_START = 'soz-core:client:progress:start',
 

@@ -65,8 +65,10 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, m
         end
     end
 
-    clothConfig.Config["Naked"] = false
-    clothConfig["TemporaryClothSet"] = nil
+    if not merge then
+        clothConfig.Config["Naked"] = false
+        clothConfig["TemporaryClothSet"] = nil
+    end
 
     Player.Functions.SetClothConfig(clothConfig, false)
 end)
@@ -99,7 +101,9 @@ RegisterNetEvent("soz-character:server:SetPlayerTemporaryClothes", function(clot
         end
     end
 
-    clothConfig.Config["Naked"] = false
+    if not merge then
+        clothConfig.Config["Naked"] = false
+    end
 
     Player.Functions.SetClothConfig(clothConfig, false)
 end)
