@@ -212,7 +212,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
         positionInShop: [-1099.84, 2717.69, 19.11, 135.67],
         cameraInShop: [-1101.08, 2716.36, 19.11, 310.78],
     },
-    ['barber1']: {
+    ['barber']: {
         brand: ShopBrand.Barber,
         location: [-813.4, -181.86, 37.57, 126.21],
     },
@@ -226,7 +226,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     },
     ['barber4']: {
         brand: ShopBrand.Barber,
-        location: [-278.59, 6227.0, 31.71, 23.14],
+        location: [-278.48, 6227.89, 31.7, 23.14],
     },
     ['barber5']: {
         brand: ShopBrand.Barber,
