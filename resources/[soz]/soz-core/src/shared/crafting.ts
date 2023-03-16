@@ -1,10 +1,11 @@
 import { Talent } from '@private/shared/talent';
-import { InventoryItem } from '@public/shared/item';
+import { InventoryItem, InventoryItemMetadata } from '@public/shared/item';
 
 export type CriminalCraftingRequirements = {
     items: Record<string, number>;
     talent: Talent;
     expire: boolean;
+    metadata?: InventoryItemMetadata;
 };
 
 export type CriminalCraftingCheckItem = {
