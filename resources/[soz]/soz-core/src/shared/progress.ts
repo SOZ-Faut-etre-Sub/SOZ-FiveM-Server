@@ -38,6 +38,10 @@ export const animationOptionsToFlags = (options: AnimationOptions): number => {
 };
 
 export type ProgressOptions = {
+    audio?: {
+        path: string;
+        volume?: number;
+    };
     useWhileDead: boolean;
     disableNui: boolean;
     canCancel: boolean;

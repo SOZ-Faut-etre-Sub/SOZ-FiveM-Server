@@ -1,3 +1,4 @@
+import { AudioService } from '@public/client/nui/audio.service';
 import PCancelable from 'p-cancelable';
 
 import { Inject, Injectable } from '../core/decorators/injectable';
@@ -10,6 +11,9 @@ import { Notifier } from './notifier';
 export class ProgressService {
     @Inject(AnimationService)
     private animationService: AnimationService;
+
+    @Inject(AudioService)
+    private audioService: AudioService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -48,6 +52,12 @@ export class ProgressService {
             duration = exports['soz-upw'].CalculateDuration(duration);
         }
 
+        let audioId = null;
+
+        if (options.audio) {
+            audioId = this.audioService.playAudio(options.audio.path, options.audio.volume || 0.5);
+        }
+
         const start = GetGameTimer();
         let promiseResolve;
         const promise = new PCancelable<ProgressResult>(function (resolve, reject, onCancel) {
@@ -56,6 +66,10 @@ export class ProgressService {
             onCancel(() => {
                 this.cancel();
             });
+        }).finally(() => {
+            if (audioId) {
+                this.audioService.stopAudio(audioId);
+            }
         });
 
         if (options.useAnimationService && animation) {

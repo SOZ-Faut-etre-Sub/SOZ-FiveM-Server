@@ -208,6 +208,8 @@ export enum ClientEvent {
     ADMIN_NOCLIP_ENABLED = 'soz-core:client:admin:noclip:enabled',
     ADMIN_NOCLIP_DISABLED = 'soz-core:client:admin:noclip:disabled',
 
+    AUDIO_PLAY = 'soz-core:client:audio:play',
+    AUDIO_STOP = 'soz-core:client:audio:stop',
     CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',
     CRIMI_REMOVE_CLOTH = 'soz-core:client:crimi:remove-cloth',
     DRIVING_SCHOOL_START_EXAM = 'soz-core:client:driving-school:start-exam',
@@ -391,6 +393,7 @@ export enum NuiEvent {
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     CraftingDoCraft = 'soz-core:nui:crafting:do-craft',
     CraftingDoSalvage = 'soz-core:nui:crafting:do-salvage',
+    CraftingCancel = 'soz-core:nui:crafting:cancel',
     StonkDisplayBlip = 'soz-core:client:job:stonk:display-blip',
 
     JobPlaceProps = 'soz-core:client:job:place-props',
