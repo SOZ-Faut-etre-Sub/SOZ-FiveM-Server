@@ -49,6 +49,8 @@ export class PlayerHealthProvider {
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
 
+    private yogaAndNaturalMultiplier: (source: number) => number = () => 1;
+
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
     public async nutritionLoop(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
@@ -120,7 +122,13 @@ export class PlayerHealthProvider {
 
             if (stressTimeDiff > 30 * 60 * 1000) {
                 playerState.lastStressLevelUpdate = new Date();
-                this.playerService.incrementMetadata(source, 'stress_level', STRESS_RATE, STRESS_MIN, STRESS_MAX);
+                this.playerService.incrementMetadata(
+                    source,
+                    'stress_level',
+                    this.yogaAndNaturalMultiplier(source) * STRESS_RATE,
+                    STRESS_MIN,
+                    STRESS_MAX
+                );
 
                 this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'success');
             }
@@ -227,7 +235,7 @@ export class PlayerHealthProvider {
 
         this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'success');
 
-        await this.increaseStress(source, -8);
+        await this.increaseStress(source, this.yogaAndNaturalMultiplier(source) * -8);
     }
 
     @Rpc(RpcEvent.PLAYER_GET_HEALTH_BOOK)
@@ -272,5 +280,9 @@ export class PlayerHealthProvider {
                 'error'
             );
         }
+    }
+
+    public setYogaAndNaturalMultiplier(fn: (value: number) => number) {
+        this.yogaAndNaturalMultiplier = fn;
     }
 }
