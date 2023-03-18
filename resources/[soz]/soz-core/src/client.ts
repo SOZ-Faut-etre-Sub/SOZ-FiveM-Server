@@ -31,7 +31,6 @@ import { StoryModule } from './client/story/story.module';
 import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
 import { VehicleModule } from './client/vehicle/vehicle.module';
-import { VoipModule } from './client/voip/voip.module';
 import { WeaponModule } from './client/weapon/weapon.module';
 import { WeatherModule } from './client/weather/weather.module';
 import { WorldModule } from './client/world/world.module';
@@ -75,7 +74,6 @@ async function bootstrap() {
         HousingModule,
         MandatoryModule,
         PoliceModule,
-        VoipModule,
         ...PrivateModules
     );
 

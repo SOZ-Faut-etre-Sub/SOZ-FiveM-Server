@@ -1,8 +1,12 @@
-import { Provider } from '../../core/decorators/provider';
+import { Injectable } from '@public/core/decorators/injectable';
 
-@Provider()
+@Injectable()
 export class VoipService {
     public mutePlayer(value: boolean) {
         exports['soz-voip'].MutePlayer(value);
+    }
+
+    public setPlayerMegaphoneInUse(value: boolean, range: number) {
+        exports['soz-voip'].SetPlayerMegaphoneInUse(value, range);
     }
 }
