@@ -25,6 +25,9 @@ export enum ServerEvent {
     BENNYS_REPAIR_VEHICLE_WHEEL = 'soz-core:server:job:bennys:repair-vehicle-wheel',
     BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
     BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
+
+    CRIMI_CONFIRM_REMOTE_WORKSHOP = 'soz-core:server:job:crimi:confirm-remote-workshop',
+
     DRIVING_SCHOOL_PLAYER_PAY = 'soz-core:server:driving-school:player-pay',
     DRIVING_SCHOOL_UPDATE_LICENSE = 'soz-core:server:driving-school:update-license',
     DRIVING_SCHOOL_UPDATE_VEHICLE_LIMIT = 'soz-core:server:driving-school:update-vehicle-limit',
@@ -212,6 +215,10 @@ export enum ClientEvent {
     AUDIO_STOP = 'soz-core:client:audio:stop',
     CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',
     CRIMI_REMOVE_CLOTH = 'soz-core:client:crimi:remove-cloth',
+    CRIMI_ASK_REMOTE_WORKSHOP = 'soz-core:client:crimi:ask-remote-workshop',
+    CRIMI_ADD_REMOTE_WORKSHOP = 'soz-core:client:crimi:add-remote-workshop',
+    CRIMI_REMOVE_REMOTE_WORKSHOP = 'soz-core:client:crimi:remove-remote-workshop',
+
     DRIVING_SCHOOL_START_EXAM = 'soz-core:client:driving-school:start-exam',
     DRIVING_SCHOOL_SETUP_EXAM = 'soz-core:client:driving-school:spawn-veh',
 
@@ -252,6 +259,9 @@ export enum ClientEvent {
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
 
     NUI_HIDE_PANEL = 'soz-core:client:nui:hide-panel',
+
+    OBJECT_CREATE = 'soz-core:client:object:create',
+    OBJECT_DELETE = 'soz-core:client:object:delete',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',

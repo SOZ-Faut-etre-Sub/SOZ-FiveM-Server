@@ -23,6 +23,7 @@ import { OilModule } from './client/job/oil/oil.module';
 import { PoliceModule } from './client/job/police/police.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { NuiModule } from './client/nui/nui.module';
+import { ObjectModule } from './client/object/object.module';
 import { PlayerModule } from './client/player/player.module';
 import { RepositoryModule } from './client/resources/repository.module';
 import { ShopModule } from './client/shop/shop.module';
@@ -43,6 +44,7 @@ async function bootstrap() {
         ProviderClientLoader,
         RepositoryModule,
         WorldModule,
+        ObjectModule,
         PlayerModule,
         WeatherModule,
         ItemModule,
