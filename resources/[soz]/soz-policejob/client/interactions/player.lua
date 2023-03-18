@@ -112,7 +112,7 @@ Citizen.CreateThread(function()
         exports["qb-target"]:AddGlobalPlayer({
             options = {
                 {
-                    label = "Acootest",
+                    label = "Alcootest",
                     color = jobId,
                     icon = "c:police/alcootest.png",
                     event = "police:client:breathanalyzer",
