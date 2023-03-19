@@ -1,3 +1,5 @@
+import { Monitor } from '@public/shared/monitor';
+
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -20,6 +22,9 @@ export class WeaponProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @OnEvent(ServerEvent.WEAPON_SHOOTING)
     async onWeaponShooting(source: number, weaponSlot: number, weaponGroup: number) {
@@ -110,12 +115,15 @@ export class WeaponProvider {
 
     @On('explosionEvent')
     public onExplosion(unk: any, source: number, explosionData) {
-        TriggerClientEvent(
-            ClientEvent.WEAPON_EXPLOSION,
-            source,
-            explosionData.posX,
-            explosionData.posY,
-            explosionData.posZ
-        );
+        this.monitor.log('INFO', 'Explosion ' + JSON.stringify(explosionData));
+        if (!explosionData.f208) {
+            TriggerClientEvent(
+                ClientEvent.WEAPON_EXPLOSION,
+                source,
+                explosionData.posX,
+                explosionData.posY,
+                explosionData.posZ
+            );
+        }
     }
 }
