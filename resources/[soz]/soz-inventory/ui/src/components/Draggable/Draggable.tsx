@@ -30,7 +30,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             container: containerName,
             item
         },
-        disabled: item?.disabled === true,
+        disabled: item?.disabled === true || money == -1,
     });
 
     const itemRef = useRef<HTMLDivElement>(null);

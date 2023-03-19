@@ -63,7 +63,7 @@ export const StorageContainer = () => {
                         setTargetMoney(event.data.targetMoney || -1);
                     }
                     else {
-                        setPlayerMoney(undefined);
+                        setPlayerMoney(-1);
                         setTargetMoney(undefined);
                     }
 
