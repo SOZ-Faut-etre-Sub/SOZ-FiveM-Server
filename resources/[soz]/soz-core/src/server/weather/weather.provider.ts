@@ -17,7 +17,7 @@ const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 export class WeatherProvider {
     private forecast: Forecast = SpringAutumn;
 
-    private shouldUpdateWeather = false;
+    private shouldUpdateWeather = true;
 
     @Inject(Pollution)
     private pollution: Pollution;
