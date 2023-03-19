@@ -9,13 +9,13 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
 import { Forecast, Time, Weather } from '../../shared/weather';
 import { Pollution } from '../pollution';
-import { Polluted, Winter } from './forecast';
+import { Polluted, SpringAutumn } from './forecast';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 
 @Provider()
 export class WeatherProvider {
-    private forecast: Forecast = Winter;
+    private forecast: Forecast = SpringAutumn;
 
     private shouldUpdateWeather = false;
 
@@ -28,7 +28,7 @@ export class WeatherProvider {
         GlobalState.blackout_level ||= 0;
         GlobalState.blackout_override = false;
         GlobalState.weather ||= 'CLEAR' as Weather;
-        GlobalState.snow ||= true;
+        GlobalState.snow ||= false;
         GlobalState.time ||= { hour: 2, minute: 0, second: 0 } as Time;
     }
 
