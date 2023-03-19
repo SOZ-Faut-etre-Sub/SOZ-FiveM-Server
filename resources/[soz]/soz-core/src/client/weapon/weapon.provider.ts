@@ -22,6 +22,8 @@ const messageExcludeGroups = [
     GetHashKey('GROUP_STUNGUN'),
 ];
 
+const messageExclude = [GetHashKey('weapon_musket')];
+
 @Provider()
 export class WeaponProvider {
     @Inject(WeaponService)
@@ -155,6 +157,7 @@ export class WeaponProvider {
         emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot, weaponGroup);
 
         if (
+            !messageExclude.includes(GetHashKey(weapon.name)) &&
             !messageExcludeGroups.includes(weaponGroup) &&
             Math.random() < 0.6 &&
             Date.now() - this.lastPoliceCall > 120000
