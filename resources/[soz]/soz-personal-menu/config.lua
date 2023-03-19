@@ -5387,6 +5387,7 @@ Config.WalkStyle = {
     {name = "Menotté", walk = "move_m@prisoner_cuffed"},
     {name = "Pressé", walk = "move_f@hurry@a"},
     {name = "Trottiner", walk = "move_m@quick"},
+    {name = "Accroupi", walk = "move_ped_crouched"},
 }
 
 -- {
