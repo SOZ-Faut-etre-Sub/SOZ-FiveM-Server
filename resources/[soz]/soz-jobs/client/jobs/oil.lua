@@ -312,11 +312,6 @@ AddEventHandler("locations:zone:exit", function(zone, _, isAKeroseneStation)
     end
 end)
 
---- Events
-RegisterNetEvent("jobs:client:fueler:OpenCloakroomMenu", function(storageId)
-    SozJobCore.Functions.OpenCloakroomMenu(societyMenu, FuelerConfig.Cloakroom, storageId)
-end)
-
 RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
     local playerPed = PlayerPedId()
     local vehicle = data.entity

@@ -48,5 +48,5 @@ Config.Storages["garbage_cloakroom"] = {
     minZ = 32.01,
     maxZ = 35.01,
     heading = 355,
-    targetOptions = getCloakroomTargetOptions("garbage", "garbage_cloakroom", "jobs:client:garbage:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("garbage", "garbage_cloakroom"),
 }

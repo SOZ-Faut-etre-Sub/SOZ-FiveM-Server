@@ -6,20 +6,10 @@ import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { DUTY_OUTFIT_NAME, StonkCloakroom } from '@public/shared/job/stonk';
 
-import { JobCloakroomProvider } from '../job.cloakroom.provider';
-
 @Provider()
 export class StonkCloakRoomProvider {
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
-
-    @Inject(JobCloakroomProvider)
-    private jobCloakroomProvider: JobCloakroomProvider;
-
-    @OnEvent(ClientEvent.STONK_OPEN_CLOAKROOM)
-    public async openCloakroom(storageIdToSave: string) {
-        await this.jobCloakroomProvider.openCloakroom(storageIdToSave, StonkCloakroom);
-    }
 
     @OnEvent(ClientEvent.STONK_APPLY_OUTFIT)
     public async applyDutyClothing() {

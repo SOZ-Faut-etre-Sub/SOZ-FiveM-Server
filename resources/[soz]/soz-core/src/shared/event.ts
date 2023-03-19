@@ -50,7 +50,6 @@ export enum ServerEvent {
     STONK_DELIVERY_TAKE = 'soz-core:server:job:stonk:delivery-take',
     STONK_DELIVERY_END = 'soz-core:server:job:stonk:delivery-end',
 
-    JOBS_USE_WORK_CLOTHES = 'soz-core:server:job:use-work-clothes',
     JOBS_PLACE_PROPS = 'job:server:placeProps',
 
     LSMC_BLOOD_FILL_FLASK = 'soz-core:server:job:lsmc:blood-fill-flask',
@@ -247,10 +246,10 @@ export enum ClientEvent {
     JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
     JOBS_STONK_OPEN_SOCIETY_MENU = 'stonk:client:OpenSocietyMenu',
     JOBS_MDR_OPEN_SOCIETY_MENU = 'soz-jobs:client:mdr:OpenSocietyMenu',
-    JOBS_TRY_OPEN_CLOAKROOM = 'soz-jobs:client:try-open-cloakroom',
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
     JOB_DUTY_CHANGE = 'QBCore:Client:SetDuty',
+    JOB_OPEN_CLOAKROOM = 'soz-core:client:job::OpenCloakroomMenu',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
@@ -260,7 +259,6 @@ export enum ClientEvent {
     LSMC_REAMINATE = 'soz-core:lsmc:reanimate',
     LSMC_APPLY_PATIENT_CLOTHING = 'soz-core:client:lsmc:applyPatientClothing',
     LSMC_REMOVE_PATIENT_CLOTHING = 'soz-core:client:lsmc:removePatientClothing',
-    LSMC_OPEN_CLOAKROOM = 'soz-core:client:lsmc::OpenCloakroomMenu',
     LSMC_APPLY_OUTFIT = 'soz-core:client:lsmc:ApplyDutyClothing',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
@@ -276,7 +274,6 @@ export enum ClientEvent {
     OIL_UPDATE_STATION_PRICE = 'soz-core:client:oil:update-station-price',
 
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
-    STONK_OPEN_CLOAKROOM = 'soz-core:client:stonk::OpenCloakroomMenu',
     STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
 
     // Temp event which should be internally used by a service when only soz core

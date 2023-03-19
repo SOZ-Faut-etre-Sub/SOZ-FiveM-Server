@@ -171,13 +171,6 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
 end)
 
 ---
---- MENUS
----
-RegisterNetEvent("jobs:client:food:OpenCloakroomMenu", function(storageId)
-    SozJobCore.Functions.OpenCloakroomMenu(FoodJob.Menu, FoodConfig.Cloakroom, storageId)
-end)
-
----
 --- FARM
 ---
 AddEventHandler("soz-jobs:client:food-collect-ingredients", function()

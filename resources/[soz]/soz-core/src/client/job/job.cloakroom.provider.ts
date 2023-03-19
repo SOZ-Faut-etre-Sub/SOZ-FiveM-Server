@@ -1,5 +1,17 @@
 import { WardrobeConfig } from '@public/shared/cloth';
+import { JobType } from '@public/shared/job';
+import { BaunCloakroom } from '@public/shared/job/baun';
+import { NewGarrayCloakroom } from '@public/shared/job/bennys';
+import { CjrCloakroom } from '@public/shared/job/cjr';
+import { FfsCloakroom } from '@public/shared/job/ffs';
+import { FoodCloakroom } from '@public/shared/job/food';
+import { GarbageCloakroom } from '@public/shared/job/garbage';
 import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '@public/shared/job/lsmc';
+import { NewsCloakroom } from '@public/shared/job/news';
+import { OilCloakroom } from '@public/shared/job/oil';
+import { PawlCloakroom } from '@public/shared/job/pawl';
+import { StonkCloakroom } from '@public/shared/job/stonk';
+import { UpwCloakroom } from '@public/shared/job/upw';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -7,41 +19,35 @@ import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { RpcEvent } from '../../shared/rpc';
-import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
-import { PlayerService } from '../player/player.service';
 import { PlayerWardrobe } from '../player/player.wardrobe';
 import { ProgressService } from '../progress.service';
+
+const jobStorage: Partial<Record<JobType, WardrobeConfig>> = {
+    upw: UpwCloakroom,
+    taxi: CjrCloakroom,
+    pawl: PawlCloakroom,
+    baun: BaunCloakroom,
+    oil: OilCloakroom,
+    news: NewsCloakroom,
+    garbage: GarbageCloakroom,
+    food: FoodCloakroom,
+    ffs: FfsCloakroom,
+    ['cash-transfer']: StonkCloakroom,
+    bennys: NewGarrayCloakroom,
+    lsmc: LsmcCloakroom,
+};
 
 @Provider()
 export class JobCloakroomProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
     @Inject(ProgressService)
     private progressService: ProgressService;
 
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
-
-    @OnEvent(ClientEvent.JOBS_TRY_OPEN_CLOAKROOM)
-    public async onTryOpenCloakroom(storageId: string, event: string) {
-        const result = await emitRpc(RpcEvent.INVENTORY_SEARCH, storageId, 'work_clothes');
-        if (!result) {
-            this.notifier.notify(`Il n'y a pas de tenue de travail dans le vestiaire.`, 'error');
-            return;
-        }
-
-        // Keep propagating the storageId as we need to remove a work_clothes item
-        // from it only when selecting the appropriate button on the cloakroom menu.
-        TriggerEvent(event, storageId);
-    }
 
     @OnEvent(ClientEvent.JOBS_CHECK_CLOAKROOM_STORAGE)
     public async onCheckCloakroomStorage(storageId: string) {
@@ -73,6 +79,15 @@ export class JobCloakroomProvider {
             return;
         }
 
+        if (
+            outfitSelection.outfit &&
+            storageIdToSave &&
+            !(await emitRpc<boolean>(RpcEvent.JOBS_USE_WORK_CLOTHES, storageIdToSave))
+        ) {
+            this.notifier.notify("Il n'y a pas de tenue de travail dans le vestiaire.", 'error');
+            return;
+        }
+
         const progress = await this.playerWardrobe.waitProgress(false);
 
         if (!progress.completed) {
@@ -80,10 +95,6 @@ export class JobCloakroomProvider {
         }
 
         if (outfitSelection.outfit) {
-            if (storageIdToSave) {
-                TriggerServerEvent(ServerEvent.JOBS_USE_WORK_CLOTHES, storageIdToSave);
-            }
-
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfitSelection.outfit);
 
             const ped = PlayerPedId();
@@ -103,5 +114,10 @@ export class JobCloakroomProvider {
         } else {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
         }
+    }
+
+    @OnEvent(ClientEvent.JOB_OPEN_CLOAKROOM)
+    public async openJobCloakroom(storageIdToSave: string, job: string) {
+        await this.openCloakroom(storageIdToSave, jobStorage[job]);
     }
 }
