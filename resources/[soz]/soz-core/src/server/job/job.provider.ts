@@ -1,9 +1,7 @@
 import { Qbcore } from '../../client/qbcore';
-import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { ServerEvent } from '../../shared/event';
 import { Job } from '../../shared/job';
 import { RpcEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
@@ -70,8 +68,8 @@ export class JobProvider {
         return jobs.filter(job => job.grades.length > 0);
     }
 
-    @OnEvent(ServerEvent.JOBS_USE_WORK_CLOTHES)
+    @Rpc(RpcEvent.JOBS_USE_WORK_CLOTHES)
     public async useWorkClothes(source: number, storageId: string) {
-        this.inventoryManager.removeItemFromInventory(storageId, 'work_clothes', 1);
+        return this.inventoryManager.removeItemFromInventory(storageId, 'work_clothes', 1);
     }
 }

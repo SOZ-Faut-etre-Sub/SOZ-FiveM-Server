@@ -18,6 +18,7 @@ export enum RpcEvent {
     INVENTORY_SEARCH = 'soz-core:inventory:search',
 
     JOB_GET_JOBS = 'soz-core:jobs:get-jobs',
+    JOBS_USE_WORK_CLOTHES = 'soz-core:server:job:use-work-clothes',
 
     OIL_GET_STATION = 'soz-core:job:oil:get-station',
     OIL_GET_STATION_PRICES = 'soz-core:job:oil:get-station-prices',

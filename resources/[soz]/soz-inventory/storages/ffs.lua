@@ -40,5 +40,5 @@ Config.Storages["ffs_cloakroom"] = {
     minZ = 29.4,
     maxZ = 31.6,
     heading = 0,
-    targetOptions = getCloakroomTargetOptions("ffs", "ffs_cloakroom", "jobs:client:ffs:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("ffs", "ffs_cloakroom"),
 }

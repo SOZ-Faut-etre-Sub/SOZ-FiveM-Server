@@ -11,7 +11,7 @@ function getCloakroomTargetOptions(job, storage, event)
                 return PlayerData.job.onduty
             end,
             action = function()
-                TriggerEvent("soz-jobs:client:try-open-cloakroom", storage, event)
+                TriggerEvent(event or "soz-core:client:job::OpenCloakroomMenu", storage, job)
             end,
         },
         {
