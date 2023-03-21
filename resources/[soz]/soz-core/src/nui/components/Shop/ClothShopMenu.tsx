@@ -219,6 +219,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                                 key={item.id}
                                                 value={item}
                                                 description={`Il reste ${stocks[item.id]} produits en stock.`}
+                                                disabled={stocks[item.id] == 0}
                                             >
                                                 {item.colorLabel}
                                             </MenuItemSelectOption>
