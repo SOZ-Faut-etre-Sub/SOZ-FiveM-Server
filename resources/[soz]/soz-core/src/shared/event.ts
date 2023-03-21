@@ -197,6 +197,7 @@ export enum ServerEvent {
     HUB_TELEPORT_EXIT = 'soz-core:server:hub:teleport:exit',
     HUB_WASH = 'soz-core:server:hub:wash',
     HUB_SHOP_BUY = 'soz-core:server:hub:shop-buy',
+    HUB_EXIT = 'soz-core:server:hub:exit',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
@@ -343,6 +344,7 @@ export enum ClientEvent {
     PLAYER_TELEPORT = 'soz-core:client:player:teleport',
 
     HUB_ENTER = 'soz-core:client:hub:enter',
+    HUB_REMOVE_STATUS = 'soz-core:client:hub:remove-status',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
 }

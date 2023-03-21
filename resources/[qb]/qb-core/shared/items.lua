@@ -5670,7 +5670,7 @@ QBShared.Items = {
     },
     ['clothing_job_low'] = {
         ['name'] = 'clothing_job_low',
-        ['label'] = 'Tenue de stagiaire pôle emploie',
+        ['label'] = 'Tenue de stagiaire Pôle emploi',
         ['weight'] = 2000,
         ['type'] = 'item_illegal',
         ['unique'] = false,
@@ -5899,7 +5899,7 @@ QBShared.Items = {
         ['illustrator'] = '.Poulpito'
     },
     ['jewelbag_illegal'] = {
-        ['name'] = 'jewelbag',
+        ['name'] = 'jewelbag_illegal',
         ['label'] = 'Sac de bijoux',
         ['weight'] = 5000,
         ['type'] = 'item_illegal',
@@ -5911,7 +5911,7 @@ QBShared.Items = {
         ['illustrator'] = '.DaraBesque'
     },
     ['small_moneybag_illegal'] = {
-        ['name'] = 'small_moneybag',
+        ['name'] = 'small_moneybag_illegal',
         ['label'] = 'Petit sac d\'argent',
         ['weight'] = 1000,
         ['type'] = 'item_illegal',
@@ -5923,7 +5923,7 @@ QBShared.Items = {
         ['illustrator'] = '.Sniteur'
     },
     ['medium_moneybag_illegal'] = {
-        ['name'] = 'medium_moneybag',
+        ['name'] = 'medium_moneybag_illegal',
         ['label'] = 'Moyen sac d’argent',
         ['weight'] = 2000,
         ['type'] = 'item_illegal',
@@ -5935,8 +5935,8 @@ QBShared.Items = {
         ['illustrator'] = '.Sniteur'
     },
     ['big_moneybag_illegal'] = {
-        ['name'] = 'big_moneybag',
-        ['label'] = 'Grand sac d\'argent [volé]',
+        ['name'] = 'big_moneybag_illegal',
+        ['label'] = 'Grand sac d\'argent',
         ['weight'] = 3000,
         ['type'] = 'item_illegal',
         ['unique'] = false,
@@ -5945,5 +5945,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = "De quoi être plein aux as. ",
         ['illustrator'] = '.Sniteur'
+    },
+    ['police_pliers'] = {
+        ['name'] = 'police_pliers',
+        ['label'] = 'Pince policière',
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Attention ca coupe. ",
+        ['illustrator'] = '.Poulpito'
     },
 }

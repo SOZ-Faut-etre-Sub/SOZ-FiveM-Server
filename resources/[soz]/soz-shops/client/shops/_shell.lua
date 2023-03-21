@@ -11,8 +11,8 @@ function ShopShell:GetPedAction()
         event = "shops:client:GetShop",
         icon = "fas fa-shopping-cart",
         label = "Accéder au magasin",
-        canInteract = function()
-            return currentShop ~= nil and currentShopBrand == self.brand
+        canInteract = function(entity)
+            return currentShop ~= nil and currentShopBrand == self.brand and not IsEntityPlayingAnim(entity, "random@robbery", "robbery_main_female", 3)
         end,
         blackoutGlobal = true,
     }

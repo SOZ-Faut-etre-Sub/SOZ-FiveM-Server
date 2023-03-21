@@ -50,8 +50,9 @@ Citizen.CreateThread(function()
                     event = "police:client:UnCuffPlayer",
                     item = "handcuffs_key",
                     canInteract = function(entity)
+                        local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                         return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                                   not IsPedInAnyVehicle(PlayerPedId())
+                                   not IsPedInAnyVehicle(PlayerPedId()) and not Player(target).state.zipped
                     end,
                     job = jobId,
                 },

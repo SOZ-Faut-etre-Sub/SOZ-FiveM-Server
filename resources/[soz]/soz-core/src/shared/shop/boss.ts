@@ -181,6 +181,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'ammo_01', type: 'weapon_ammo', price: 10 },
             { id: 'mobile_radar', type: 'item', price: 40 },
             { id: 'breathanalyzer', type: 'item', price: 5 },
+            { id: 'police_pliers', type: 'item', price: 450 },
         ],
     },
     {
@@ -213,6 +214,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'ammo_02', type: 'weapon_ammo', price: 10 },
             { id: 'mobile_radar', type: 'item', price: 40 },
             { id: 'breathanalyzer', type: 'item', price: 5 },
+            { id: 'police_pliers', type: 'item', price: 450 },
         ],
     },
     {

@@ -10,6 +10,7 @@ import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
 import { SoundService } from '@public/client/sound.service';
 import { VehicleSeatbeltProvider } from '@public/client/vehicle/vehicle.seatbelt.provider';
+import { WeaponDrawingProvider } from '@public/client/weapon/weapon.drawing.provider';
 import { OnEvent } from '@public/core/decorators/event';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
@@ -112,6 +113,9 @@ export class LSMCDeathProvider {
 
     @Inject(SoundService)
     public soundService: SoundService;
+
+    @Inject(WeaponDrawingProvider)
+    private weaponDrawingProvider: WeaponDrawingProvider;
 
     private IsDead = false;
 
@@ -323,6 +327,7 @@ export class LSMCDeathProvider {
         const player = this.playerService.getPlayer();
 
         this.playerService.setTempClothes(PatientClothes[player.skin.Model.Hash]['Patient']);
+        this.weaponDrawingProvider.refreshDrawWeapons();
         FreezeEntityPosition(ped, true);
 
         if (uniteHUBed == -1) {
