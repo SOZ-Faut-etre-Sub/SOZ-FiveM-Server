@@ -827,6 +827,7 @@ type MenuItemSelectOptionProps = PropsWithChildren<{
     helper?: ReactNode;
     useGrid?: boolean;
     highlight?: boolean;
+    disabled?: boolean;
 }>;
 
 export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> = ({
@@ -835,6 +836,7 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
     value = null,
     description = null,
     helper = null,
+    disabled = false,
 }) => {
     const [handleRefSet, show, , onClick] = useSelectOption(value, onSelected, description, helper, helper);
 
@@ -843,6 +845,8 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
             ref={handleRefSet}
             className={cn('truncate', {
                 hidden: !show,
+                'text-white/50': disabled,
+                'text-white': !disabled,
             })}
             onClick={onClick}
         >
