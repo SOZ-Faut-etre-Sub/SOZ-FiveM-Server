@@ -21,7 +21,7 @@ function PaycheckLoop()
                 })
             else
                 if not Player.PlayerData.job.onduty then
-                    payment = math.ceil(payment / 2)
+                    payment = math.ceil(payment * 30 / 100)
                 end
 
                 Account.TransfertMoney(Player.PlayerData.job.id, Player.PlayerData.charinfo.account, payment, function(success, reason)
