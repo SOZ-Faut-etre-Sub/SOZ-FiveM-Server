@@ -83,4 +83,5 @@ export enum RpcEvent {
     HELICO_INIT_LIGHT = 'soz-core:server:helico:init-spotlight',
 
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
+    HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
 }

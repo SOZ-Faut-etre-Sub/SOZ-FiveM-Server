@@ -1,6 +1,7 @@
 import { OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { WeaponDrawingProvider } from '@public/client/weapon/weapon.drawing.provider';
 
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { DUTY_OUTFIT_NAME, LsmcCloakroom, PatientClothes } from '../../../shared/job/lsmc';
@@ -15,17 +16,22 @@ export class LSMCCloakroomProvider {
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
 
+    @Inject(WeaponDrawingProvider)
+    private weaponDrawingProvider: WeaponDrawingProvider;
+
     @OnEvent(ClientEvent.LSMC_APPLY_PATIENT_CLOTHING)
     public async applyPatientClothing() {
         await this.playerWardrobe.waitProgress(false);
         const player = this.playerService.getPlayer();
         this.playerService.setTempClothes(PatientClothes[player.skin.Model.Hash]['Patient']);
+        this.weaponDrawingProvider.refreshDrawWeapons();
     }
 
     @OnEvent(ClientEvent.LSMC_REMOVE_PATIENT_CLOTHING)
     public async removePatientClothing() {
         await this.playerWardrobe.waitProgress(false);
         this.playerService.setTempClothes(null);
+        this.weaponDrawingProvider.refreshDrawWeapons();
     }
 
     @OnEvent(ClientEvent.LSMC_APPLY_OUTFIT)
