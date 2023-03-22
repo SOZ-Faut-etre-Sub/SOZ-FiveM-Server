@@ -3,6 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { wait } from '@core/utils';
 import { Tick } from '@public/core/decorators/tick';
+import { Component } from '@public/shared/cloth';
 import { JobType } from '@public/shared/job';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -13,6 +14,11 @@ const holsterableWeaponGroups = [GetHashKey('GROUP_PISTOL'), GetHashKey('GROUP_S
 const excludeWeapon = [GetHashKey('WEAPON_BRIEFCASE'), 966099553 /*WEAPON_OBJECT*/];
 
 const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD];
+
+const hosterDrawable = {
+    [GetHashKey('mp_m_freemode_01')]: 130,
+    [GetHashKey('mp_f_freemode_01')]: 160,
+};
 
 @Provider()
 export class WeaponHolsterProvider {
@@ -63,8 +69,8 @@ export class WeaponHolsterProvider {
                 if (this.currWeapon != GetHashKey('WEAPON_UNARMED')) {
                     if (
                         this.isWeaponHolsterable(this.currWeapon) &&
-                        AllowedJob.includes(player.job.id) &&
-                        player.cloth_config.JobClothSet
+                        ((AllowedJob.includes(player.job.id) && player.cloth_config.JobClothSet) ||
+                            hosterDrawable[GetEntityModel(ped)] == GetPedDrawableVariation(ped, Component.Undershirt))
                     ) {
                         await this.putWeaponInHolster(ped, pos, rot);
                     } else {
@@ -76,8 +82,8 @@ export class WeaponHolsterProvider {
                 if (newWeap != GetHashKey('WEAPON_UNARMED')) {
                     if (
                         this.isWeaponHolsterable(newWeap) &&
-                        AllowedJob.includes(player.job.id) &&
-                        player.cloth_config.JobClothSet
+                        ((AllowedJob.includes(player.job.id) && player.cloth_config.JobClothSet) ||
+                            hosterDrawable[GetEntityModel(ped)] == GetPedDrawableVariation(ped, Component.Undershirt))
                     ) {
                         await this.drawWeaponFromHolster(ped, pos, rot, newWeap);
                     } else {
