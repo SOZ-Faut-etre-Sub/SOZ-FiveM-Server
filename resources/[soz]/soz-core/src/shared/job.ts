@@ -35,6 +35,7 @@ export enum JobPermission {
     SocietyTakeOutPound = 'society-take-out-pound',
     NewsManageArticle = 'manage-article',
     CashTransfer_CollectBags = 'collect-bags',
+    CashTransfer_CollectSecure = 'collect-secure',
     CashTransfer_ResaleBags = 'resale-bags',
     CashTransfer_FillIn = 'fill-in',
     Food_Harvest = 'harvest',
