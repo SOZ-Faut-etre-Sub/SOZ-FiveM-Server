@@ -2,7 +2,7 @@ import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
-import { JobType } from '../../../shared/job';
+import { JobPermission, JobType } from '../../../shared/job';
 import { StonkConfig } from '../../../shared/job/stonk';
 import { Monitor } from '../../../shared/monitor';
 import { NamedZone } from '../../../shared/polyzone/box.zone';
@@ -81,6 +81,20 @@ export class StonkDeliveryProvider {
 
     @OnEvent(ServerEvent.STONK_DELIVERY_TAKE)
     public async onTake(source: number) {
+        const [playerJob, playerJobGrade] = this.playerService.getPlayerJobAndGrade(source);
+
+        if (
+            !this.QBCore.hasJobPermission(
+                JobType.CashTransfer,
+                playerJob,
+                playerJobGrade,
+                JobPermission.CashTransfer_CollectSecure
+            )
+        ) {
+            this.notifier.notify(source, `Vous n'avez pas les accreditations nécessaires.`, 'error');
+            return;
+        }
+
         if (!this.inventoryManager.canCarryItem(source, StonkConfig.delivery.item, 1)) {
             this.notifier.notify(source, `Vous n'avez pas ~r~assez~s~ de place dans vos poches.`, 'error');
             return false;

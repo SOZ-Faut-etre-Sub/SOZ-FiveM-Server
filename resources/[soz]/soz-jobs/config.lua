@@ -35,7 +35,12 @@ SozJobCore.JobPermission = {
     SocietyBankInvoices = "society-bank-invoices",
     SocietyTakeOutPound = "society-take-out-pound",
     NewsManageArticle = "manage-article",
-    CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
+    CashTransfer = {
+        CollectBags = "collect-bags",
+        ResaleBags = "resale-bags",
+        FillIn = "fill-in",
+        CollectSecure = "collect-secure",
+    },
     Food = {Harvest = "harvest", Craft = "craft"},
     Fueler = {ChangePrice = "fueler-change-price"},
     CriminalRecord = "criminal-record",
@@ -428,6 +433,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.CashTransfer.FillIn] = {label = "Remplir banque / ATM"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.CashTransfer.CollectSecure] = {label = "Collecte des containers sécurisés"},
         },
         bossZones = {
             {
