@@ -12,6 +12,8 @@ import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 
+const DIR_WATER_HYDRANT = 13;
+
 @Provider()
 export class WeaponProvider {
     @Inject(ItemService)
@@ -115,6 +117,10 @@ export class WeaponProvider {
 
     @On('explosionEvent')
     public onExplosion(unk: any, source: number, explosionData) {
+        if (explosionData.explosionType == DIR_WATER_HYDRANT) {
+            return;
+        }
+
         this.monitor.log('INFO', 'Explosion ' + JSON.stringify(explosionData));
         if (!explosionData.f208) {
             TriggerClientEvent(
