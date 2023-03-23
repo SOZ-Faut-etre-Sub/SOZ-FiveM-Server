@@ -138,7 +138,6 @@ export class PlayerWardrobe {
         }
         if (wardRobeElement.propId) {
             wardRobeElement.propId.forEach(element => {
-                console.log(element, outfit.Props[element]);
                 this.customOutfit.Props[element] = outfit.Props[element];
             });
         }
