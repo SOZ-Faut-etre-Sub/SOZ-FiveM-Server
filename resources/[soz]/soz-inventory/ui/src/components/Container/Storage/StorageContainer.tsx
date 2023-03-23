@@ -244,6 +244,14 @@ export const StorageContainer = () => {
                 });
 
         } else {
+            if (event.active.id == 'player_drag_money_' ||  
+                event.over.id == 'player_money' || 
+                event.active.id == 'storage_drag_money_' || 
+                event.over.id == 'storage_money'
+            ) {
+                return;
+            }
+            
             const sourceInvId = event.active.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id;
             const targetInvId = event.over.data.current.container === 'player' ? playerInventory?.id : targetInventory?.id;
             const inverse = event.active.data.current.container === 'storage';

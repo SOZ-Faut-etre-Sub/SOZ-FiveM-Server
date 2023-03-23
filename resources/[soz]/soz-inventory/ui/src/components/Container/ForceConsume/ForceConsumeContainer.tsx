@@ -7,6 +7,7 @@ import playerBanner from '/banner/player.jpg'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
+import { useInventoryRow } from '../../../hooks/useInventoryRow';
 
 export const ForceConsumeContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
@@ -71,7 +72,7 @@ export const ForceConsumeContainer = () => {
     }, [onClickReceived, onMessageReceived, onKeyDownReceived]);
 
     const inventoryRow = useMemo(() => {
-        return Math.floor((playerInventory || []).length / 5);
+        return useInventoryRow(playerInventory || []);
     }, [playerInventory]);
 
     if (!playerInventory) {
@@ -99,6 +100,7 @@ export const ForceConsumeContainer = () => {
                         id="player"
                         rows={inventoryRow}
                         items={playerInventory.map((item, i) => ({...item, id: i}))}
+                        money={-1}
                     />
                 </ContainerWrapper>
             </div>
