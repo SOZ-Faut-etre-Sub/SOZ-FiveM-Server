@@ -5633,6 +5633,10 @@
                   <Name>COMPONENT_SMG_CLIP_02</Name>
                   <Default value="false" />
                 </Item>
+                <Item>
+                  <Name>COMPONENT_SMG_CLIP_03</Name>
+                  <Default value="false" />
+                </Item>
               </Components>
             </Item>
             <Item>
@@ -5645,10 +5649,10 @@
               </Components>
             </Item>
             <Item>
-              <AttachBone>WAPScop</AttachBone>
+              <AttachBone>WAPScop_2</AttachBone>
               <Components>
                 <Item>
-                  <Name>COMPONENT_AT_SCOPE_MACRO</Name>
+                  <Name>COMPONENT_AT_SCOPE_MACRO_02</Name>
                   <Default value="false" />
                 </Item>
               </Components>
