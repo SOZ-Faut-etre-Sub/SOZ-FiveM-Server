@@ -44,7 +44,7 @@ export class PoliceProvider {
         const armorType = item.metadata['type'] || 'unmark';
 
         if (this.inventoryManager.removeItemFromInventory(source, item.name, 1, item.metadata)) {
-            this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: false });
+            this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
             TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR, source, armorType);
         }
 
@@ -63,7 +63,7 @@ export class PoliceProvider {
         }
 
         if (item.name == 'heavy_antiriot_outfit' || item.name == 'light_intervention_outfit') {
-            this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: false });
+            this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
         }
 
         if (item.metadata['type'] == 'lspd' || item.metadata['type'] == 'bcso') {
