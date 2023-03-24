@@ -1,4 +1,4 @@
-import { WardrobeConfig } from '@public/shared/cloth';
+import { Component, WardrobeConfig } from '@public/shared/cloth';
 import { JobType } from '@public/shared/job';
 import { BaunCloakroom } from '@public/shared/job/baun';
 import { NewGarrayCloakroom } from '@public/shared/job/bennys';
@@ -99,12 +99,13 @@ export class JobCloakroomProvider {
 
             const ped = PlayerPedId();
             let hazmat = true;
-            for (const [id, component] of Object.entries(
+            for (const [componentkey, item] of Object.entries(
                 LsmcCloakroom[GetEntityModel(ped)][HAZMAT_OUTFIT_NAME].Components
             )) {
+                const component = Number(componentkey) as Component;
                 if (
-                    !outfitSelection.outfit.Components[id] ||
-                    outfitSelection.outfit.Components[id].drawable != component.Drawable
+                    !outfitSelection.outfit.Components[component] ||
+                    outfitSelection.outfit.Components[component].Drawable != item.Drawable
                 ) {
                     hazmat = false;
                     break;
