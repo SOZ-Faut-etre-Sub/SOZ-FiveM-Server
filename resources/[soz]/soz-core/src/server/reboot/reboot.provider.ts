@@ -6,6 +6,7 @@ import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PrismaService } from '../database/prisma.service';
+import { PlayerCleanService } from '../player/player.clean.service';
 import { QBCore } from '../qbcore';
 import { VehicleDealershipProvider } from '../vehicle/vehicle.dealership.provider';
 import { WeatherProvider } from '../weather/weather.provider';
@@ -25,6 +26,9 @@ export class RebootProvider {
 
     @Inject(VehicleDealershipProvider)
     private vehicleDealershipProvider: VehicleDealershipProvider;
+
+    @Inject(PlayerCleanService)
+    private playerCleanService: PlayerCleanService;
 
     @OnEvent(ServerEvent.FIVEM_PLAYER_CONNECTING)
     public onPlayerConnecting(source, name, setKickReason, deferrals) {
@@ -86,6 +90,13 @@ export class RebootProvider {
         exports['soz-bank'].saveAccounts();
         exports['soz-upw'].saveUpw();
         exports['soz-inventory'].saveInventories();
+        exports['soz-inventory'].stopSyncInventories();
+
+        const ids = await this.playerCleanService.getPlayerToCleans();
+        const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);
+
+        console.log(`Houses owner cleaned: ${houseOwnerCount}`);
+        console.log(`Houses roommate cleaned: ${houseRoommateCount}`);
     }
 
     @Command('thunder', {
