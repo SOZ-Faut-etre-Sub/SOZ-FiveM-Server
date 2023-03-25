@@ -3,6 +3,7 @@ SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 local Inventory = {}
 local Inventories = {}
+local SyncInventory = true
 
 setmetatable(Inventory, {
     __call = function(self, arg)
@@ -925,6 +926,10 @@ local function purgeBinLoop()
 end
 
 local function saveInventories(loop)
+    if not SyncInventory then
+        return
+    end
+
     for _, inv in pairs(Inventories) do
         if not inv.datastore and inv.changed then
             if _G.Container[inv.type]:SaveInventory(inv.id, inv.owner, inv.items) then
@@ -957,6 +962,10 @@ AddEventHandler("onResourceStop", function(resource)
 end)
 
 exports("saveInventories", saveInventories)
+
+exports("stopSyncInventories", function()
+    SyncInventory = false
+end)
 
 _G.Inventory = Inventory
 _G.Container = {}
