@@ -239,6 +239,8 @@ RegisterNetEvent("voip:client:reset", function()
     restarting = true
     Citizen.Wait(200)
 
+    TriggerServerEvent("monitor:server:event", "voip_restart", {}, {}, true)
+
     exports["soz-hud"]:DrawNotification("Arret de la voip...", "info")
 
     -- Clear last state
