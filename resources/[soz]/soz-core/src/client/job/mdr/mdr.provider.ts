@@ -4,7 +4,6 @@ import { Provider } from '@core/decorators/provider';
 import { Notifier } from '@public/client/notifier';
 import { ResourceLoader } from '@public/client/resources/resource.loader';
 import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provider';
-import { uuidv4 } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
@@ -134,13 +133,11 @@ export class MandatoryProvider {
                 name += ' et ' + GetStreetNameFromHashKey(street2);
             }
 
-            TriggerEvent('police:client:RedCall');
-            TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-                anonymous: false,
-                number: '555-POLICE',
-                message: `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`,
-                position: true,
-            });
+            TriggerEvent(
+                'police:client:RedCall',
+                '555-POLICE',
+                `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`
+            );
         }
 
         return;

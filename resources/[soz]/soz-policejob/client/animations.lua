@@ -23,12 +23,17 @@ RegisterNetEvent("police:client:UnCuffAnimation", function()
     TaskPlayAnim(ped, lib, "a_uncuff", 8.0, -8.0, 3000, 48, 0, 0, 0, 0)
 end)
 
-RegisterNetEvent("police:client:RedCall", function()
-    local ped = PlayerPedId()
-    local lib = "oddjobs@assassinate@guard"
-
-    QBCore.Functions.RequestAnimDict(lib)
-    TaskPlayAnim(ped, lib, "unarmed_earpiece_a", 8.0, -8.0, 6000, 48, 0, 1, 1, 1)
+RegisterNetEvent("police:client:RedCall", function(societyNumber, msg)
+    QBCore.Functions.Progressbar("job:police:red-call", "Code rouge en cours ...", 5000, true, true,
+                                 {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "oddjobs@assassinate@guard", anim = "unarmed_earpiece_a", flags = 48}, {}, {}, function() -- Done
+        TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(),
+                           {anonymous = false, number = societyNumber, message = msg, position = true})
+    end)
 end)
 
 PoliceJob.Animations.GetCuffed = function(playerId)
