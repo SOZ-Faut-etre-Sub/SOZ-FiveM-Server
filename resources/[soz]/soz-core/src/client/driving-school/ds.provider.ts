@@ -26,11 +26,16 @@ export class DrivingSchoolProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
-    @Once(OnceStep.PlayerLoaded)
+    @Once(OnceStep.Start)
     public onPlayerLoaded() {
         const secretaryPedConfig = DrivingSchoolConfig.peds.secretary;
         this.targetFactory.createForPed({
             ...secretaryPedConfig,
+            freeze: true,
+            invincible: true,
+            blockevents: true,
+            spawnNow: true,
+            scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
             target: { options: this.getTargetOptions(), distance: 2.5 },
         });
 

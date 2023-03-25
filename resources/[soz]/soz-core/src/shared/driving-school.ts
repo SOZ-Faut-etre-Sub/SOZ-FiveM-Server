@@ -114,7 +114,7 @@ export const DrivingSchoolConfig = {
         },
         secretary: {
             model: 'u_f_y_princess',
-            coords: { x: -815.99, y: -1357.3, z: 5.15, w: 309.49 },
+            coords: { x: -815.99, y: -1357.3, z: 4.15, w: 309.49 },
         },
     },
     startSpeeches: [
