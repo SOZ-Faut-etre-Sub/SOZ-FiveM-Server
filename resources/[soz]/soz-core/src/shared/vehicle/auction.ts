@@ -13,3 +13,10 @@ export type AuctionVehicle = {
         price: number;
     } | null;
 };
+
+export type ShowVehicle = {
+    position: Vector4;
+    model: string;
+    entity: number;
+    rotSpeed: number;
+};

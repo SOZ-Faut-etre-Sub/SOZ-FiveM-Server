@@ -333,7 +333,7 @@ export class VehicleElectricProvider {
 
         const vehicleState = this.vehicleService.getVehicleState(vehicle);
 
-        if (vehicleState.condition.fuelLevel > 99.0) {
+        if (vehicleState.condition.fuelLevel > 97.0) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
             await this.disableStationPlug();
 

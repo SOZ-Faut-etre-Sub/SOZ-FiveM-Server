@@ -1,3 +1,5 @@
+import { Tick } from '@public/core/decorators/tick';
+
 import { DealershipConfig, DealershipConfigItem, DealershipJob, DealershipType } from '../../config/dealership';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -11,7 +13,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { getRandomItem } from '../../shared/random';
 import { Err, Ok } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
-import { AuctionVehicle } from '../../shared/vehicle/auction';
+import { AuctionVehicle, ShowVehicle } from '../../shared/vehicle/auction';
 import { Vehicle, VehicleDealershipMenuData } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { JobPermissionService } from '../job/job.permission.service';
@@ -58,6 +60,35 @@ export class VehicleDealershipProvider {
     private lastVehicleShowroom: number | null = null;
 
     private auctionVehicles: Record<string, AuctionVehicle> = {};
+
+    private electricShowVehicles: Record<number, ShowVehicle> = {
+        [1]: {
+            position: [-59.5, 65.61, 71.97, 173.62],
+            model: 'omnisegt',
+            entity: null,
+            rotSpeed: 0.2,
+        },
+        [2]: {
+            position: [-76.05, 76.71, 71.97, 8.85],
+            model: 'iwagen',
+            entity: null,
+            rotSpeed: 0.2,
+        },
+    };
+
+    @Tick(20)
+    public async onTick() {
+        for (const [, vehicle] of Object.entries(this.electricShowVehicles)) {
+            if (vehicle.entity === null) {
+                return;
+            }
+
+            const heading = GetEntityHeading(vehicle.entity);
+            const newHeading = heading + vehicle.rotSpeed;
+
+            SetEntityHeading(vehicle.entity, newHeading);
+        }
+    }
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
@@ -183,6 +214,27 @@ export class VehicleDealershipProvider {
                     },
                 },
             ]);
+        }
+
+        for (const [id, vehicle] of Object.entries(this.electricShowVehicles)) {
+            await this.resourceLoader.loadModel(GetHashKey(vehicle.model));
+
+            const createdVehicle = CreateVehicle(
+                GetHashKey(vehicle.model),
+                vehicle.position[0],
+                vehicle.position[1],
+                vehicle.position[2] - 1.0,
+                vehicle.position[3],
+                false,
+                false
+            );
+            this.electricShowVehicles[id].entity = createdVehicle;
+
+            SetEntityInvincible(createdVehicle, true);
+            SetVehicleDirtLevel(createdVehicle, 0);
+            FreezeEntityPosition(createdVehicle, true);
+            SetVehicleNumberPlateText(createdVehicle, 'ELEC');
+            SetVehicleDoorsLocked(createdVehicle, 2);
         }
     }
 
