@@ -3723,6 +3723,54 @@ QBShared.Items = {
         ['description'] = '',
         ['illustrator'] = '.Darabesque'
     },
+    ['car_charger'] = {
+        ['name'] = 'car_charger',
+        ['label'] = "Borne de recharge",
+        ['weight'] = 50000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Kit d’installation d’une luxueuse borne de recharge idéale aux différentes stations essences de San Andreas.',
+        ['illustrator'] = '.NariieL'
+    },
+    ['lithium_battery'] = {
+        ['name'] = 'lithium_battery',
+        ['label'] = "Batterie lithium-ion",
+        ['weight'] = 25000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = 'Idéale afin de réaliser l’entretien d’un véhicule électrique.',
+        ['illustrator'] = '.NariieL'
+    },
+    ['empty_lithium_battery'] = {
+        ['name'] = 'empty_lithium_battery',
+        ['label'] = "Batterie lithium-ion vide",
+        ['weight'] = 25000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Une batterie vide... Elle n'a pas l'air de service à grand chose.",
+        ['illustrator'] = '.NariieL'
+    },
+    ['car_portable_battery'] = {
+        ['name'] = 'car_portable_battery',
+        ['label'] = "Batterie portable",
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Batterie moderne permettant d’être transportée facilement et de recharger en cas d’urgence n’importe quel véhicule électrique.",
+        ['illustrator'] = '.NariieL'
+    },
 
     -- zkea
     ['house_map'] = {
