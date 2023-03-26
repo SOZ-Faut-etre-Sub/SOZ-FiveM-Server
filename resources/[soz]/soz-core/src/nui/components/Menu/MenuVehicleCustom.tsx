@@ -78,10 +78,11 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
         if (configuration && data) {
             fetchNui(NuiEvent.VehicleCustomApply, {
                 vehicleEntityId: data.vehicle,
+                originalConfiguration: data.originalConfiguration,
                 vehicleConfiguration: configuration,
             });
         }
-    }, [configuration]);
+    }, [configuration, data]);
 
     if (!data || !configuration) {
         return null;
