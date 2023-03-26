@@ -1,5 +1,9 @@
 import { FunctionComponent } from 'react';
 
-export const MenuIllegalShop: FunctionComponent = () => {
+export type MenuIllegalShopProps = {
+    data: any;
+};
+
+export const MenuIllegalShop: FunctionComponent<MenuIllegalShopProps> = () => {
     return null;
 };
