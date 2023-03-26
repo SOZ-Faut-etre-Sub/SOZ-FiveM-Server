@@ -2,7 +2,7 @@ import { Component, Prop, WardrobeConfig } from '../cloth';
 import { NamedZone } from '../polyzone/box.zone';
 
 export const UpwCloakroom: WardrobeConfig = {
-    [GetHashKey('mp_m_freemode_01')]: {
+    [1885233650]: {
         ["Tenue d'apprenti pour été"]: {
             Components: {
                 [Component.Torso]: { Palette: 0, Drawable: 41, Texture: 0 },
@@ -95,7 +95,7 @@ export const UpwCloakroom: WardrobeConfig = {
             Props: { [Prop.Hat]: { Drawable: 145, Texture: 3, Palette: 0 } },
         },
     },
-    [GetHashKey('mp_f_freemode_01')]: {
+    [-1667301416]: {
         ["Tenue d'apprentie pour été"]: {
             Components: {
                 [Component.Torso]: { Texture: 0, Palette: 0, Drawable: 57 },
