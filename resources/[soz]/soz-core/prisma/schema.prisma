@@ -79,6 +79,26 @@ model fuel_storage {
   zone     String  @db.Text
 }
 
+model upw_stations {
+  id              Int     @id @default(autoincrement())
+  station         String  @db.VarChar(15) @unique
+  stock           Int     @default(0)
+  max_stock       Int     @default(600)
+  price           Float?  @default(0.00) @db.Float
+  position        String  @db.Text
+  chargers        upw_chargers[]
+}
+
+model upw_chargers {
+  id              Int              @id @default(autoincrement())
+  station         String           
+  position        String      
+  active          Int              @default(0)
+  upw_station     upw_stations     @relation(fields: [station], references: [station], onDelete: Cascade, onUpdate: Restrict, map: "FK_upw_chargers_soz_test.upw_stations")
+  
+  @@index([station], map: "FK_upw_chargers_soz_test.upw_stations")
+}
+
 model housing_apartment {
   id               Int              @id @default(autoincrement())
   property_id      Int
