@@ -363,6 +363,7 @@ export const createModificationHelperToggle = (
     return {
         apply: (vehicleEntityId: number, value?: boolean): void => {
             if (value === null || value === undefined) {
+                ToggleVehicleMod(vehicleEntityId, type, false);
                 RemoveVehicleMod(vehicleEntityId, type);
 
                 return;
