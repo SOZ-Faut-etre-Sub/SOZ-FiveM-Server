@@ -317,7 +317,10 @@ export class VehicleFuelProvider {
             return;
         }
 
-        if ((IsThisModelAHeli(model) || IsThisModelAPlane(model)) && station.fuel === FuelType.Essence) {
+        if (
+            (IsThisModelAHeli(model) || IsThisModelAPlane(model) || isVehicleModelElectric(model)) &&
+            station.fuel === FuelType.Essence
+        ) {
             this.notifier.notify("~r~Vous ne pouvez pas remplir ce véhicule avec de l'essence.", 'error');
             await this.disableStationPistol();
 

@@ -30,7 +30,7 @@ export class UpwChargerRepository {
     }
 
     public getClosestCharger(position: Vector3): UpwCharger | null {
-        let closestCharger;
+        let closestCharger = null;
         let closestDistance = -1;
         Object.values(this.upwCharger).forEach(charger => {
             const distance = getDistance(position, charger.position);
@@ -40,5 +40,10 @@ export class UpwChargerRepository {
             }
         });
         return closestCharger;
+    }
+
+    public getStationForEntity(entity: number): string | null {
+        const position = GetEntityCoords(entity) as Vector3;
+        return this.getClosestCharger(position).station || null;
     }
 }
