@@ -347,8 +347,11 @@ export class VehicleElectricProvider {
         }
 
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
-
         this.currentStationPlug.filling = true;
+        TaskTurnPedToFaceEntity(PlayerPedId(), vehicle, 500);
+        await wait(500);
+        this.soundService.playAround('fuel/blip_in', 5, 0.3);
+
         TriggerServerEvent(ServerEvent.VEHICLE_CHARGE_START, vehicleNetworkId, refreshStation.id);
     }
 
@@ -485,10 +488,6 @@ export class VehicleElectricProvider {
             return;
         }
 
-        if (this.currentStationPlug.filling) {
-            this.soundService.playAround('fuel/charging', 5, 0.3);
-        }
-
         const ropePosition = GetOffsetFromEntityInWorldCoords(this.currentStationPlug.entity, 0.0, 0.0, 1.0) as Vector3;
         const handPosition = GetWorldPositionOfEntityBone(
             PlayerPedId(),
@@ -518,13 +517,14 @@ export class VehicleElectricProvider {
         const maxPrice = amount * price;
 
         this.nuiDispatch.dispatch('progress', 'Start', {
-            label: 'Rechargement du véhicule',
+            label: 'Chargement du véhicule...',
             duration,
+            color: 'text-yellow-400',
             units: [
                 {
                     unit: 'kWh',
-                    start: 0,
-                    end: amount,
+                    start: 60 - amount,
+                    end: 60,
                 },
                 {
                     unit: '$',
@@ -538,6 +538,8 @@ export class VehicleElectricProvider {
     @OnEvent(ClientEvent.VEHICLE_CHARGE_STOP)
     private async onVehicleChargeStop() {
         this.nuiDispatch.dispatch('progress', 'Stop');
+        this.soundService.playAround('fuel/blip_in', 5, 0.3);
+        await wait(500);
 
         if (this.currentStationPlug) {
             this.currentStationPlug.filling = false;

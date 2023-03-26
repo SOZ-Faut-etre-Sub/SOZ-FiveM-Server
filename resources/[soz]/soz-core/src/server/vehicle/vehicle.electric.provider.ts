@@ -76,39 +76,33 @@ export class VehicleElectricProvider {
 
         if (maxEnergyForMoney <= 0) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
-            TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_STOP, source); // TODO
+            TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_STOP, source);
 
             return;
         }
 
         if (reservedEnergy <= 0) {
             this.notifier.notify(source, 'La station vient de se vider.', 'error');
-            TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_STOP, source); // TODO
+            TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_STOP, source);
 
             return;
         }
 
-        const duration = Math.max(reservedEnergy * 3000, 25000); // Charging is 3x slower than fueling (and there is a factor 0.6 between fuel and energy)
+        const duration = Math.max(reservedEnergy * 3000, 8000); // Charging is 3x slower than fueling (and there is a factor 0.6 between fuel and energy)
 
         TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_START, source, duration, reservedEnergy, station.price);
 
-        const { progress } = await this.progressService.progress(
-            source,
-            'charging_vehicle',
-            'Rechargement en cours...',
-            duration,
-            {
-                name: 'gar_ig_5_filling_can',
-                dictionary: 'timetable@gardener@filling_can',
-                options: {
-                    enablePlayerControl: false,
-                    repeat: true,
-                    onlyUpperBody: true,
-                },
-            }
-        );
+        const { progress } = await this.progressService.progress(source, 'charging_vehicle', '', duration, {
+            name: 'gar_ig_5_filling_can',
+            dictionary: 'timetable@gardener@filling_can',
+            options: {
+                enablePlayerControl: false,
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        });
 
-        const totalFilled = Math.min(reservedEnergy, Math.ceil(progress * reservedEnergy));
+        const totalFilled = Math.min(reservedEnergy, Math.floor(progress * reservedEnergy));
         const cost = Math.floor(totalFilled * station.price);
         let leftOver = reservedEnergy - totalFilled;
 

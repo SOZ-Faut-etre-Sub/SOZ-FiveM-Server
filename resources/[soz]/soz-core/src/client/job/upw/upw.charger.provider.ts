@@ -22,8 +22,8 @@ export class UpwChargerProvider {
     @OnEvent(ClientEvent.UPW_CREATE_CHARGER)
     public async onCreateCharger(charger: UpwCharger) {
         const ped = PlayerPedId();
-        TaskTurnPedToFaceCoord(ped, charger.position[0], charger.position[1], charger.position[2], 1000);
-        await wait(1000);
+        TaskTurnPedToFaceCoord(ped, charger.position[0], charger.position[1], charger.position[2], 500);
+        await wait(500);
         const { completed } = await this.progressService.progress(
             'create_charger',
             'Installer une borne de recharge...',
@@ -45,11 +45,14 @@ export class UpwChargerProvider {
     @Tick(5000)
     public async updateChargerTexture() {
         const position = GetEntityCoords(PlayerPedId(), false) as Vector3;
-        const chargers = this.upwChargerRepository.getClosestCharger(position);
-        if (getDistance(position, chargers.position) > 50) {
+        const charger = this.upwChargerRepository.getClosestCharger(position);
+        if (!charger) {
             return;
         }
-        const station = await emitRpc<UpwStation>(RpcEvent.UPW_GET_STATION, chargers.station);
+        if (!charger || getDistance(position, charger.position) > 50) {
+            return;
+        }
+        const station = await emitRpc<UpwStation>(RpcEvent.UPW_GET_STATION, charger.station);
         if (!station) {
             return;
         }
