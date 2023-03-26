@@ -51,7 +51,7 @@ SozJobCore.JobPermission = {
     Ffs = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Bennys = {Estimate = "estimate", Resell = "resell", Order = "order"},
     Mdr = {ViewOtherJobs = "view-other-jobs", ViewCitizenData = "view-citizen-data"},
-    UPW = {Order = "order"},
+    UPW = {Order = "order", ChangePrice = "upw-change-price"},
 }
 
 SozJobCore.Jobs = {
@@ -500,7 +500,8 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.UPW.Order] = {label = "Commander des véhicules éléctriques"},
-            [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"}
+            [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.UPW.ChangePrice] = {label = "Changer le prix des chargeurs"},
         },
         bossZones = {
             {

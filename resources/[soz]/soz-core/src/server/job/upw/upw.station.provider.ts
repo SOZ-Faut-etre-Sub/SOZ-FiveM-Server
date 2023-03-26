@@ -5,14 +5,16 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { PrismaService } from '@public/server/database/prisma.service';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
+import { JobService } from '@public/server/job.service';
 import { Notifier } from '@public/server/notifier';
+import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
-import { PropsService } from '@public/server/props.service';
 import { RepositoryProvider } from '@public/server/repository/repository.provider';
 import { UpwChargerRepository } from '@public/server/repository/upw.station.repository';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwCharger, UpwStation } from '@public/shared/fuel';
 import { CommonItem, InventoryItem } from '@public/shared/item';
+import { JobPermission, JobType } from '@public/shared/job';
 import { UPW_CHARGER_REFILL_VALUES } from '@public/shared/job/upw';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcEvent } from '@public/shared/rpc';
@@ -21,9 +23,6 @@ import { RpcEvent } from '@public/shared/rpc';
 export class UpwStationProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
-
-    @Inject(PropsService)
-    private propsService: PropsService;
 
     @Inject(UpwChargerRepository)
     private upwChargerRepository: UpwChargerRepository;
@@ -42,6 +41,12 @@ export class UpwStationProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     public async useCarCharger(source: number, item: CommonItem, inventoryItem: InventoryItem) {
         const playerPosition = GetEntityCoords(GetPlayerPed(source)) as Vector3;
@@ -125,7 +130,7 @@ export class UpwStationProvider {
             return;
         }
         if (stationToRefill.stock > stationToRefill.max_stock - 1) {
-            this.notifier.notify(source, 'Vous avez ~g~terminé~s~ la recharge de la borne', 'info');
+            this.notifier.notify(source, 'Vous avez ~g~terminé~s~ la recharge de la station', 'info');
             return;
         }
         if (!this.inventoryManager.removeItemFromInventory(source, cell)) {
@@ -167,6 +172,29 @@ export class UpwStationProvider {
         });
         this.notifier.notify(source, `Charge... ~b~${newStock}/${stationToRefill.max_stock}kWh`);
         this.onRefillStation(source, station, cell);
+    }
+
+    @OnEvent(ServerEvent.UPW_SET_CHARGER_PRICE)
+    public async onSetChargerPrice(source: number, price: number) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        if (!this.jobService.hasPermission(player, JobType.Upw, JobPermission.UpwChangePrice)) {
+            this.notifier.notify(source, "Vous n'avez pas la permission de faire ça.", 'error');
+
+            return;
+        }
+
+        await this.prismaService.upw_stations.updateMany({
+            data: {
+                price,
+            },
+        });
+
+        this.notifier.notify(source, `Vous avez changé le prix des chargeurs à $${price}/kWh.`);
     }
 
     @Once(OnceStep.Start)
