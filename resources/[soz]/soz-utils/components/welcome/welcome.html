@@ -92,6 +92,21 @@
                 <img src="./health/health-book-2.jpg" class="page" id="ph2" />
                 <img src="./health/health-book-3.jpg" class="page" id="ph3" />
             </div>
+            <div id="lsmc-calendar-2023">
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-01.jpg" class="page" id="page-calendar-lsmc-2023-01" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-02.jpg" class="page" id="page-calendar-lsmc-2023-02" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-03.jpg" class="page" id="page-calendar-lsmc-2023-03" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-04.jpg" class="page" id="page-calendar-lsmc-2023-04" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-05.jpg" class="page" id="page-calendar-lsmc-2023-05" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-06.jpg" class="page" id="page-calendar-lsmc-2023-06" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-07.jpg" class="page" id="page-calendar-lsmc-2023-07" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-08.jpg" class="page" id="page-calendar-lsmc-2023-08" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-09.jpg" class="page" id="page-calendar-lsmc-2023-09" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-10.jpg" class="page" id="page-calendar-lsmc-2023-10" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-11.jpg" class="page" id="page-calendar-lsmc-2023-11" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-12.jpg" class="page" id="page-calendar-lsmc-2023-12" />
+                <img src="./lsmc-calendar-2023/lsmc-calendar-2023-13.jpg" class="page" id="page-calendar-lsmc-2023-13" />
+            </div>
         </div>
 
         <div class="buttons">
@@ -117,6 +132,21 @@
             document.querySelector("#ph1"),
             document.querySelector("#ph2"),
             document.querySelector("#ph3"),
+        ];
+        const stepsCalendarLSMC2023 = [
+            document.querySelector("#page-calendar-lsmc-2023-01"),
+            document.querySelector("#page-calendar-lsmc-2023-02"),
+            document.querySelector("#page-calendar-lsmc-2023-03"),
+            document.querySelector("#page-calendar-lsmc-2023-04"),
+            document.querySelector("#page-calendar-lsmc-2023-05"),
+            document.querySelector("#page-calendar-lsmc-2023-06"),
+            document.querySelector("#page-calendar-lsmc-2023-07"),
+            document.querySelector("#page-calendar-lsmc-2023-08"),
+            document.querySelector("#page-calendar-lsmc-2023-09"),
+            document.querySelector("#page-calendar-lsmc-2023-10"),
+            document.querySelector("#page-calendar-lsmc-2023-11"),
+            document.querySelector("#page-calendar-lsmc-2023-12"),
+            document.querySelector("#page-calendar-lsmc-2023-13"),
         ];
 
         let steps = stepsWelcome;
@@ -164,19 +194,51 @@
 
             const wrapper = document.querySelector("#wrapper");
 
-            if (action === "show" || action === "show-health") {
-                if (action === "show-health") {
-                    steps = stepsHealths;
-                    document.querySelector('#welcome').classList.add('hide');
-                    document.querySelector('#welcome').classList.remove('show');
-                    document.querySelector('#health').classList.add('show');
-                    document.querySelector('#health').classList.remove('hide');
-                } else {
-                    steps = stepsWelcome;
-                    document.querySelector('#welcome').classList.add('show');
-                    document.querySelector('#welcome').classList.remove('hide');
-                    document.querySelector('#health').classList.add('hide');
-                    document.querySelector('#health').classList.remove('show');
+            const welcomeBook = document.querySelector("#welcome");
+            const healthBook = document.querySelector("#health");
+            const lsmcCalendar2023 = document.querySelector("#lsmc-calendar-2023");
+
+            if (action === "show" || action === "show-health" || action === "show-lsmc-calendar-2023") {
+                switch (action) {
+                    case 'show':
+                        steps = stepsWelcome;
+
+                        welcomeBook.classList.add('show');
+                        welcomeBook.classList.remove('hide');
+
+                        healthBook.classList.add('hide');
+                        healthBook.classList.remove('show');
+
+                        lsmcCalendar2023.classList.add('hide');
+                        lsmcCalendar2023.classList.remove('show');
+
+                        break;
+                    case 'show-health':
+                        steps = stepsHealths;
+
+                        welcomeBook.classList.add('hide');
+                        welcomeBook.classList.remove('show');
+
+                        healthBook.classList.add('show');
+                        healthBook.classList.remove('hide');
+
+                        lsmcCalendar2023.classList.add('hide');
+                        lsmcCalendar2023.classList.remove('show');
+
+                        break;
+                    case 'show-lsmc-calendar-2023':
+                        steps = stepsCalendarLSMC2023;
+
+                        welcomeBook.classList.add('hide');
+                        welcomeBook.classList.remove('show');
+
+                        healthBook.classList.add('hide');
+                        healthBook.classList.remove('show');
+
+                        lsmcCalendar2023.classList.add('show');
+                        lsmcCalendar2023.classList.remove('hide');
+
+                        break;
                 }
 
                 wrapper.classList.add("show");

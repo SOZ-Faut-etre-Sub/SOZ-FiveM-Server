@@ -1,3 +1,4 @@
+import { MenuIllegalShop } from '@private/nui/illegalshop/MenuIllegalShop';
 import { FunctionComponent, useLayoutEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
@@ -10,9 +11,12 @@ import { usePrevious } from '../../hook/previous';
 import { AdminMenu } from '../Admin/AdminMenu';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
+import { DrivingSchoolMenu } from '../DrivingSchool/DrivingSchoolMenu';
 import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
+import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
+import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
 import { BossShopMenu } from '../Shop/BossShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
@@ -20,6 +24,7 @@ import { MenuBennys } from './Job/MenuBennys';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
 import { MenuDemo } from './MenuDemo';
 import { MenuGarage } from './MenuGarage';
+import { MenuLsmcPharmacy } from './MenuLsmcPharmacy';
 import { MenuOilSetPrice } from './MenuOilSetPrice';
 import { MenuSetHealthState } from './MenuSetHealthState';
 import { MenuVehicle } from './MenuVehicle';
@@ -150,6 +155,11 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.VehicleDealership}/*`} element={<MenuVehicleDealership data={menuData} />} />
             <Route path={`/${MenuType.Garage}/*`} element={<MenuGarage data={menuData} />} />
             <Route path={`/${MenuType.OilSetStationPrice}/*`} element={<MenuOilSetPrice data={menuData} />} />
+            <Route path={`/${MenuType.DrivingSchool}/*`} element={<DrivingSchoolMenu data={menuData} />} />
+            <Route path={`/${MenuType.HousingUpgrades}/*`} element={<HousingUpgradesMenu data={menuData} />} />
+            <Route path={`/${MenuType.LsmcPharmacy}/*`} element={<MenuLsmcPharmacy />} />
+            <Route path={`/${MenuType.MandatoryJobMenu}/*`} element={<MandatoryJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.IllegalShop}/*`} element={<MenuIllegalShop data={menuData} />} />
 
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route

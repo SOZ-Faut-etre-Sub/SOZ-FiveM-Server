@@ -51,4 +51,19 @@ export class VehicleCommandProvider {
             dirtLevel: 15.0,
         });
     }
+
+    @Command('fuel', { role: ['admin'], description: 'Set fuel level (Admin Only)' })
+    async fuelCommand(source: number, newlevel: number) {
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
+        const state = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+
+        if (state) {
+            this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
+                condition: {
+                    ...state.condition,
+                    fuelLevel: newlevel,
+                },
+            });
+        }
+    }
 }

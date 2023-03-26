@@ -179,16 +179,12 @@ Container["bin"] = InventoryDatastore:new({
     populateDatastoreCallback = function()
         local inventory = {}
         local items = {
-            ["plastic"] = math.random(0, 100) >= 90 and math.random(0, 2) or 0,
             ["metalscrap"] = math.random(0, 100) >= 90 and math.random(0, 1) or 0,
             ["aluminum"] = math.random(0, 100) >= 90 and math.random(0, 2) or 0,
             ["rubber"] = math.random(0, 100) >= 90 and math.random(0, 2) or 0,
-            ["electronickit"] = math.random(0, 100) >= 90 and 1 or 0,
             ["rolex"] = math.random(0, 100) >= 95 and 1 or 0,
             ["diamond_ring"] = math.random(0, 100) >= 95 and 1 or 0,
             ["goldchain"] = math.random(0, 100) >= 95 and 1 or 0,
-            ["10kgoldchain"] = math.random(0, 100) >= 95 and 1 or 0,
-            ["goldbar"] = math.random(0, 100) >= 98 and 1 or 0,
             ["garbagebag"] = math.random(5, 20),
         }
 
@@ -264,6 +260,12 @@ Container["log_processing"] = InventoryContainer:new({
     inventoryGetContentCallback = function()
         return false
     end,
+})
+--- PAWL - ZKEA
+Container["cabinet_storage"] = InventoryContainer:new({
+    type = "cabinet_storage",
+    allowedTypes = {"item"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 --- Jobs UPW

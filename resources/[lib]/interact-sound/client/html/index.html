@@ -4,12 +4,27 @@
         <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js" type="text/javascript"></script>
         <script>
+            let audioLoopPlayer;
             window.addEventListener('message', function(event) {
                 // Check for playSound transaction
                 if (event.data.transactionType === "playSound") {
-                  let audioPlayer = new Howl({src: ["./sounds/" + event.data.transactionFile + ".ogg"]});
-                  audioPlayer.volume(event.data.transactionVolume);
-                  audioPlayer.play();
+                    let audioPlayer = new Howl({src: ["./sounds/" + event.data.transactionFile + ".ogg"]});
+                    audioPlayer.volume(event.data.transactionVolume);
+                    audioPlayer.play();
+                }
+                else if (event.data.transactionType === "playLoopSound") {
+                    if (audioLoopPlayer) {
+                        audioLoopPlayer.stop();
+                    }
+                    audioLoopPlayer = new Howl({src: ["./sounds/" + event.data.transactionFile + ".ogg"], loop:true});
+                    audioLoopPlayer.volume(event.data.transactionVolume);
+                    audioLoopPlayer.play(); 
+                }
+                else if (event.data.transactionType === "updatevolume") {
+                    audioLoopPlayer.volume(event.data.transactionVolume);
+                }
+                else if (event.data.transactionType === "stopLoopSound") {
+                    audioLoopPlayer.stop();
                 }
             });
         </script>

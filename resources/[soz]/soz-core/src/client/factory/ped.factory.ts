@@ -21,6 +21,7 @@ export type Ped = {
     animDict?: string;
     anim?: string;
     flag?: number;
+    network?: boolean;
 };
 
 export enum PedFaceFeature {
@@ -74,7 +75,7 @@ export class PedFactory {
 
         await this.resourceLoader.loadModel(hash);
 
-        const pedId = CreatePed(0, hash, ped.coords.x, ped.coords.y, ped.coords.z, ped.coords.w, false, false);
+        const pedId = CreatePed(0, hash, ped.coords.x, ped.coords.y, ped.coords.z, ped.coords.w, ped.network, false);
 
         SetPedDefaultComponentVariation(pedId);
 

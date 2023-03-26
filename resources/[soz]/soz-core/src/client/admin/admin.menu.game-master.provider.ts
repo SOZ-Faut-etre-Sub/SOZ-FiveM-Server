@@ -18,6 +18,8 @@ export class AdminMenuGameMasterProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
+    private adminGPS = false;
+
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'money', amount);
@@ -26,7 +28,7 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminGiveMarkedMoney)
     public async giveMarkedMoney(amount: number): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'marked', amount);
+        TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'marked_money', amount);
         this.notifier.notify(`Vous vous êtes donné ${amount}$ en argent sale.`, 'success');
     }
 
@@ -136,5 +138,15 @@ export class AdminMenuGameMasterProvider {
     public async switchCharacter(citizenId: string): Promise<void> {
         this.nuiMenu.closeAll();
         TriggerServerEvent(ServerEvent.ADMIN_SWITCH_CHARACTER, citizenId);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetAdminGPS)
+    public async setAdminGPS(value: boolean): Promise<void> {
+        this.adminGPS = value;
+        TriggerEvent('hud:client:admingps', value);
+    }
+
+    public getAdminGPS() {
+        return this.adminGPS;
     }
 }

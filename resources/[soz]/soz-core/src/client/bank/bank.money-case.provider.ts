@@ -4,6 +4,7 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { StonkConfig } from '../../shared/job/stonk';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerService } from '../player/player.service';
+import { WeaponHolsterProvider } from '../weapon/weapon.holster.provider';
 
 const MONEY_CASE_TRIGGER = 5000;
 const MONEY_CASE_HASH = GetHashKey('WEAPON_BRIEFCASE');
@@ -16,6 +17,9 @@ export class BankMoneyCaseProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(WeaponHolsterProvider)
+    private weaponHolsterProvider: WeaponHolsterProvider;
+
     private shouldDisplayMoneyCase(): boolean {
         if (this.playerService.getPlayer() === null) {
             return false;
@@ -25,7 +29,7 @@ export class BankMoneyCaseProvider {
             return false;
         }
 
-        if (LocalPlayer.state.weapon_animation) {
+        if (this.weaponHolsterProvider.isInAnimation()) {
             return false;
         }
 

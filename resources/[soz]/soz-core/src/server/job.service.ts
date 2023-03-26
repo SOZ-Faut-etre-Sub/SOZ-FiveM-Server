@@ -1,4 +1,5 @@
-import { Injectable } from '../core/decorators/injectable';
+import { Injectable } from '@core/decorators/injectable';
+
 import { Job, JobPermission, JobType } from '../shared/job';
 import { PlayerData } from '../shared/player';
 

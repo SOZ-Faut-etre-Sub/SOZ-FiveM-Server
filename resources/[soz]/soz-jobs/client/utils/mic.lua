@@ -16,7 +16,7 @@ local spawnMicObject = function()
 
     MicConfig.object = CreateObject(GetHashKey(MicConfig.prop), coords.x, coords.y, coords.z, 1, 1, 1)
     SetNetworkIdCanMigrate(ObjToNet(MicConfig.object), false)
-    AttachEntityToEntity(MicConfig.object, player, GetPedBoneIndex(player, 60309), 0.1, 0.05, 0.0, 230.0, -30.0, 0.0, 1, 1, 0, 1, 0, 1)
+    AttachEntityToEntity(MicConfig.object, player, GetPedBoneIndex(player, 60309), 0.1, 0.05, 0.0, 20.0, 110.0, 70.0, 1, 0, 0, 0, 2, 1)
 end
 
 local deleteMicObject = function()
@@ -49,10 +49,12 @@ local micOperator = function()
             spawnMicObject()
         end
         createMicThread()
+        exports["soz-voip"]:SetPlayerMicrophoneInUse(true)
     else
         if MicConfig.object ~= nil then
             deleteMicObject()
         end
+        exports["soz-voip"]:SetPlayerMicrophoneInUse(false)
     end
 end
 
@@ -62,7 +64,6 @@ RegisterNetEvent("jobs:utils:mic:toggle", function()
         return
     end
 
-    TriggerEvent("talk:microphone:use");
     MicConfig.enabled = not MicConfig.enabled
     micOperator()
 end)

@@ -1,7 +1,9 @@
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
+import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
-import { BossShopMenu } from '../shop';
+import { HousingUpgradesMenuData } from '../housing/menu';
+import { BossShopMenu, ShopProduct } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
 import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
@@ -33,10 +35,12 @@ export enum MenuType {
     BennysOrderMenu = 'bennys_order',
     BennysUpgradeVehicle = 'bennys_upgrade_vehicle',
     Demo = 'demo',
+    DrivingSchool = 'driving_school',
     BossShop = 'boss_shop',
     MaskShop = 'mask_shop',
     FightForStyleJobMenu = 'ffs_job',
     FoodJobMenu = 'food_job_menu',
+    HousingUpgrades = 'housing_upgrades',
     Garage = 'garage_menu',
     JobBennys = 'job_bennys',
     OilSetStationPrice = 'oil_set_station_price',
@@ -48,6 +52,9 @@ export enum MenuType {
     VehicleDealership = 'vehicle_dealership',
     Wardrobe = 'wardrobe',
     GunSmith = 'gunsmith',
+    LsmcPharmacy = 'lsmc_pharmacy',
+    MandatoryJobMenu = 'mdr_job',
+    IllegalShop = 'illegal_shop',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -57,7 +64,9 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.BennysOrderMenu]: any;
     [MenuType.BossShop]: BossShopMenu;
     [MenuType.Demo]: never;
+    [MenuType.DrivingSchool]: DrivingSchoolMenuData;
     [MenuType.FightForStyleJobMenu]: any;
+    [MenuType.HousingUpgrades]: HousingUpgradesMenuData;
     [MenuType.Garage]: GarageMenuData;
     [MenuType.JobBennys]: {
         insideUpgradeZone: boolean;
@@ -70,4 +79,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.VehicleDealership]: VehicleDealershipMenuData;
     [MenuType.Wardrobe]: WardrobeMenuData;
     [MenuType.GunSmith]: WeaponsMenuData;
+    [MenuType.LsmcPharmacy]: never;
+    [MenuType.MandatoryJobMenu]: any;
+    [MenuType.IllegalShop]: Map<string, ShopProduct[]>;
 }

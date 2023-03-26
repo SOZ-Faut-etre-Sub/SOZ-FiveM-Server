@@ -10,6 +10,7 @@ export class OnceLoader {
         [OnceStep.PlayerLoaded]: [],
         [OnceStep.RepositoriesLoaded]: [],
         [OnceStep.Stop]: [],
+        [OnceStep.NuiLoaded]: [],
     };
 
     public async trigger(step: OnceStep, ...args): Promise<void> {
@@ -50,6 +51,7 @@ export class OnceLoader {
             [OnceStep.PlayerLoaded]: [],
             [OnceStep.RepositoriesLoaded]: [],
             [OnceStep.Stop]: [],
+            [OnceStep.NuiLoaded]: [],
         };
     }
 }

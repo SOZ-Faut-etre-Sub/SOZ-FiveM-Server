@@ -6,10 +6,16 @@ local function SetVoiceProximity(proximity)
 
     ProximityModuleInstance:updateRange(proximityConfig.range)
     voiceProximity = proximity
-    TriggerEvent("hud:client:UpdateVoiceMode", voiceProximity - 1)
+    if not muted then
+        TriggerEvent("hud:client:UpdateVoiceMode", voiceProximity - 1)
+    end
 end
 
 local function MutePlayer(state)
+    if LocalPlayer.state["is_in_hub"] then
+        return
+    end
+
     if state and type(state) == "boolean" then
         muted = state
     else
@@ -41,17 +47,20 @@ local function ProximityVoiceDecrease()
     SetVoiceProximity(voiceProximity - 1)
 end
 
-local function SetPlayerMegaphoneInUse(state)
+local function SetPlayerMegaphoneInUse(state, range)
     if state then
-        ProximityModuleInstance:updateRange(Config.megaphoneRange)
+        ProximityModuleInstance:updateRange(range or Config.megaphoneRange)
+        TriggerEvent("hud:client:UpdateVoiceMode", 10)
     else
         SetVoiceProximity(voiceProximity)
     end
+    LocalPlayer.state:set("megaphone", state, true)
 end
 
 local function SetPlayerMicrophoneInUse(state)
     if state then
         ProximityModuleInstance:updateRange(Config.microphoneRange)
+        TriggerEvent("hud:client:UpdateVoiceMode", 9)
     else
         SetVoiceProximity(voiceProximity)
     end

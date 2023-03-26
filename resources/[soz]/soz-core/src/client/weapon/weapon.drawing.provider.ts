@@ -12,6 +12,7 @@ import { WeaponService } from './weapon.service';
 @Provider()
 export class WeaponDrawingProvider {
     private shouldDrawWeapon = true;
+    private shouldAdminDrawWeapon = true;
     private weaponsToDraw: WeaponDrawPosition[] = [];
     private weaponAttached: Record<string, number> = {};
 
@@ -39,6 +40,10 @@ export class WeaponDrawingProvider {
     }
 
     private async drawWeapon() {
+        if (!this.shouldDrawWeapon || !this.shouldAdminDrawWeapon || LocalPlayer.state.isWearingPatientOutfit) {
+            return;
+        }
+
         for (const weapon of this.weaponsToDraw) {
             if (this.weaponAttached[weapon.model]) continue;
 
@@ -98,11 +103,6 @@ export class WeaponDrawingProvider {
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(player: PlayerData) {
         await this.updateWeaponDrawList(player.items);
-
-        if (!this.shouldDrawWeapon) {
-            return;
-        }
-
         const weapon = this.weaponService.getCurrentWeapon();
 
         if (weapon) {
@@ -114,19 +114,30 @@ export class WeaponDrawingProvider {
                 await this.weaponService.clear();
             }
         }
+
         await this.refreshDrawWeapons();
     }
 
-    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.ADMIN_NOCLIP_ENABLED)
-    async undrawWeapons() {
+    async undrawAdminWeapons() {
+        this.shouldAdminDrawWeapon = false;
+        await this.undrawWeapon();
+    }
+
+    @OnEvent(ClientEvent.ADMIN_NOCLIP_DISABLED)
+    async drawAdminWeapons() {
+        this.shouldAdminDrawWeapon = true;
+        await this.drawWeapon();
+    }
+
+    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
+    public async undrawWeapons() {
         this.shouldDrawWeapon = false;
         await this.undrawWeapon();
     }
 
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
-    @OnEvent(ClientEvent.ADMIN_NOCLIP_DISABLED)
-    async drawWeapons() {
+    public async drawWeapons() {
         this.shouldDrawWeapon = true;
         await this.drawWeapon();
     }

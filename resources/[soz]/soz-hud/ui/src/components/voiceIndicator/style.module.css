@@ -23,3 +23,19 @@
         opacity: 0;
     }
 }
+
+.iconPersist {
+    opacity: 1;
+    width: 3rem;
+    height: 3rem;
+    animation: display-persist 1s;
+}
+
+@keyframes display-persist {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

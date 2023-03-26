@@ -1,3 +1,5 @@
+import { JobType } from '@public/shared/job';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { PedFactory } from '../factory/ped.factory';
@@ -10,9 +12,9 @@ export type TargetOptions = {
     event?: string;
     blackoutGlobal?: boolean;
     blackoutJob?: string;
-    canInteract?: (entity) => boolean;
+    canInteract?: (entity) => boolean | Promise<boolean>;
     action?: (entity) => void;
-    job?: string;
+    job?: string | JobType | Partial<{ [key in JobType]: number }>;
     license?: string;
     item?: string;
 };
@@ -45,7 +47,7 @@ export class TargetFactory {
     @Inject(PedFactory)
     private pedFactory: PedFactory;
 
-    public createForBoxZone(id: string, zone: Zone, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+    public createForBoxZone(id: string, zone: Zone<any>, targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         zone = {
             length: 1,
             width: 1,
@@ -92,7 +94,7 @@ export class TargetFactory {
             exports['qb-target'].RemoveZone(id);
         }
 
-        exports['qb-target'].DeletePeds();
+        //exports['qb-target'].DeletePeds();
     }
 
     public async createForPed(ped: PedOptions) {
@@ -125,6 +127,13 @@ export class TargetFactory {
 
     public createForAllVehicle(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         exports['qb-target'].AddGlobalVehicle({
+            options: targets,
+            distance: distance,
+        });
+    }
+
+    public createForAllPed(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
+        exports['qb-target'].AddGlobalPed({
             options: targets,
             distance: distance,
         });

@@ -1,3 +1,5 @@
+import { MissiveType } from '@private/shared/missive';
+
 import { WeaponComponentType } from './weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from './weapons/tint';
 
@@ -149,7 +151,14 @@ export type InventoryItemMetadata = {
     maxHealth?: number;
     ammo?: number;
     tint?: WeaponTintColor | WeaponMk2TintColor;
+    missiveType?: MissiveType;
+    missiveChoice1?: number;
+    missiveChoice2?: number;
+    missiveChoice3?: number;
     attachments?: Record<WeaponComponentType, string | null>;
+    tier?: number;
+    crafted?: boolean;
+    id?: string;
 };
 
 export type InventoryItem = {

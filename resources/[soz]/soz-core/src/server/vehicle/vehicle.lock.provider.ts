@@ -1,11 +1,21 @@
-import { OnEvent } from '../../core/decorators/event';
+import { PlayerTalentService } from '@private/server/player/player.talent.service';
+import { Talent } from '@private/shared/talent';
+
+import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
+import { InventoryItem, Item } from '../../shared/item';
+import { getRandomInt } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
+import { InventoryManager } from '../inventory/inventory.manager';
+import { ItemService } from '../item/item.service';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
+import { ProgressService } from '../player/progress.service';
 import { VehiclePlayerRepository } from './vehicle.player.repository';
+import { VehicleSpawner } from './vehicle.spawner';
 import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
@@ -19,7 +29,89 @@ export class VehicleLockProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(ItemService)
+    private item: ItemService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(VehicleSpawner)
+    private vehicleSpawner: VehicleSpawner;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
+
+    @Inject(PlayerTalentService)
+    private playerTalentService: PlayerTalentService;
+
     private trunkOpened: Record<number, Set<number>> = {};
+
+    @Once()
+    public onStart() {
+        this.item.setItemUseCallback('lockpick', this.useLockpick.bind(this));
+        this.item.setItemUseCallback('lockpick_low', this.useLockpick.bind(this));
+        this.item.setItemUseCallback('lockpick_medium', this.useLockpick.bind(this));
+        this.item.setItemUseCallback('lockpick_high', this.useLockpick.bind(this));
+    }
+
+    public async useLockpick(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
+        if (this.item.isItemExpired(inventoryItem)) {
+            this.notifier.notify(source, 'Le lockpick est cassé', 'error');
+
+            return;
+        }
+
+        const percentages = {
+            lockpick_low: 40,
+            lockpick_medium: 70,
+            lockpick_high: 100,
+            lockpick: 100,
+        };
+
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
+
+        if (null === closestVehicle || closestVehicle.distance > 3) {
+            this.notifier.notify(source, 'Aucun véhicule à proximité', 'error');
+
+            return;
+        }
+
+        if (!this.inventoryManager.removeItemFromInventory(source, item.name, 1)) {
+            this.notifier.notify(source, 'Aucun lockpick', 'error');
+
+            return;
+        }
+
+        const { completed } = await this.progressService.progress(source, 'Lockpick', 'Crochetage du véhicule', 10000, {
+            dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+            name: 'machinic_loop_mechandplayer',
+        });
+
+        if (!completed) {
+            return;
+        }
+
+        const random = getRandomInt(0, 100);
+        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+
+        if (
+            random > percentages[item.name] ||
+            (vehicleState.isPlayerVehicle && !this.playerTalentService.hasTalent(source, Talent.AllowJobCarjacking))
+        ) {
+            this.notifier.notify(source, "Vous n'avez pas réussi à crocheter le véhicule", 'error');
+
+            return;
+        }
+
+        this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
+            forced: true,
+        });
+
+        this.notifier.notify(source, 'Le véhicule a été forcé.', 'success');
+    }
 
     @OnEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE)
     async onSetTrunkState(source: number, vehicleNetworkId: number, state: boolean) {

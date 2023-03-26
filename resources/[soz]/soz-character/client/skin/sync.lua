@@ -11,10 +11,10 @@ end)
 -- Mettre un ensemble de vetement temporaire pour le joueur (donnes non persisté, pour tester avant sauvegarde)
 -- Cette ensemble est mergé avec la configuration persisté
 RegisterNetEvent("soz-character:Client:ApplyTemporaryClothSet", function(clothSet)
-    local baseClothSet = ClothConfigComputeToClothSet(PlayerData.cloth_config)
-    local applyClothSet = MergeClothSet(baseClothSet, clothSet)
+    local tempClothConfig = Clone(PlayerData.cloth_config)
+    tempClothConfig.TemporaryClothSet = clothSet
 
-    ApplyPlayerClothSet(PlayerId(), applyClothSet)
+    ApplyPlayerClothConfig(PlayerId(), tempClothConfig)
 end)
 
 -- Mettre un skin temporaire pour le joueur (donnes non persisté, pour tester avant sauvegarde
@@ -38,4 +38,18 @@ RegisterNetEvent("soz-character:Client:SetTemporaryNaked", function()
     tempClothConfig.Config.Naked = true
 
     ApplyPlayerClothConfig(PlayerId(), tempClothConfig)
+end)
+
+exports("ReApplyHeadConfig", function()
+    local clothSet = ClothConfigComputeToClothSet(PlayerData.cloth_config)
+    local ped = PlayerPedId()
+
+    local prop = clothSet.Props[tostring(PropType.Head)] or clothSet.Components[PropType.Head]
+    if prop then
+        if prop == nil or prop.Clear == true then
+            ClearPedProp(ped, PropType.Head)
+        else
+            SetPedPropIndex(ped, PropType.Head, prop.Drawable, prop.Texture or 0, prop.Palette or 0)
+        end
+    end
 end)

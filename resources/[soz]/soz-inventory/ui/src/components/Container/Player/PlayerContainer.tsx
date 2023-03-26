@@ -62,7 +62,7 @@ export const PlayerContainer = () => {
                     event.data.playerInventory.items = event.data.playerInventory.items.filter((i: InventoryItem) => i !== null)
 
                     setPlayerInventory(event.data.playerInventory);
-                    setPlayerMoney(event.data.playerMoney);
+                    setPlayerMoney(event.data.playerMoney || -1);
                     setPlayerShortcuts(event.data.playerShortcuts);
 
                     setDisplay(true);
@@ -88,6 +88,9 @@ export const PlayerContainer = () => {
             if (!event.active.data.current) return;
 
             if (event.over !== null) { // Do a sort in inventory
+                if (event.active.id == 'player_drag_money_' || event.over.id == 'player_money' ) {
+                    return;
+                }
                 fetch(`https://soz-inventory/sortItem`, {
                     method: "POST",
                     headers: {
@@ -111,6 +114,13 @@ export const PlayerContainer = () => {
                     .catch((e) => {
                     console.error("Failed to sort item", e);
                 });
+            } else if (event.active.id == 'player_drag_money_') {
+                fetch(`https://soz-inventory/player/giveMoneyToTarget`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8",
+                    },
+                }).then(() => closeMenu());                   
             } else {
                 fetch(`https://soz-inventory/player/giveItemToTarget`, {
                     method: "POST",

@@ -148,6 +148,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'antidepressant', type: 'item', price: 15 },
             { id: 'health_book', type: 'item', price: 30 },
             { id: 'antiacide', type: 'item', price: 15 },
+            { id: 'breathanalyzer', type: 'item', price: 5 },
         ],
     },
     {
@@ -165,6 +166,8 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         products: [
             { id: 'outfit', type: 'item', metadata: { label: 'LSPD', type: 'lspd' }, price: 100 },
             { id: 'armor', type: 'item', metadata: { label: 'LSPD', type: 'lspd' }, price: 150 },
+            { id: 'light_intervention_outfit', type: 'item', metadata: { label: 'LSPD', type: 'lspd' }, price: 300 },
+            { id: 'heavy_antiriot_outfit', type: 'item', metadata: { label: 'LSPD', type: 'lspd' }, price: 300 },
             { id: 'radio', type: 'item', price: 80 },
             { id: 'handcuffs', type: 'item', price: 30 },
             { id: 'handcuffs_key', type: 'item', price: 15 },
@@ -174,7 +177,11 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'weapon_nightstick', type: 'weapon', price: 25 },
             { id: 'weapon_stungun', type: 'weapon', price: 45 },
             { id: 'weapon_pistol_mk2', type: 'weapon', price: 300 },
+            { id: 'weapon_smg', type: 'weapon', price: 1200 },
             { id: 'ammo_01', type: 'weapon_ammo', price: 10 },
+            { id: 'mobile_radar', type: 'item', price: 40 },
+            { id: 'breathanalyzer', type: 'item', price: 5 },
+            { id: 'police_pliers', type: 'item', price: 450 },
         ],
     },
     {
@@ -192,6 +199,8 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         products: [
             { id: 'outfit', type: 'item', metadata: { label: 'BCSO', type: 'bcso' }, price: 100 },
             { id: 'armor', type: 'item', metadata: { label: 'BCSO', type: 'bcso' }, price: 150 },
+            { id: 'light_intervention_outfit', type: 'item', metadata: { label: 'BCSO', type: 'bcso' }, price: 300 },
+            { id: 'heavy_antiriot_outfit', type: 'item', metadata: { label: 'BCSO', type: 'bcso' }, price: 300 },
             { id: 'radio', type: 'item', price: 80 },
             { id: 'handcuffs', type: 'item', price: 30 },
             { id: 'handcuffs_key', type: 'item', price: 15 },
@@ -201,7 +210,11 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'weapon_nightstick', type: 'weapon', price: 25 },
             { id: 'weapon_stungun', type: 'weapon', price: 45 },
             { id: 'weapon_revolver_mk2', type: 'weapon', price: 300 },
+            { id: 'weapon_combatpdw', type: 'weapon', price: 1200 },
             { id: 'ammo_02', type: 'weapon_ammo', price: 10 },
+            { id: 'mobile_radar', type: 'item', price: 40 },
+            { id: 'breathanalyzer', type: 'item', price: 5 },
+            { id: 'police_pliers', type: 'item', price: 450 },
         ],
     },
     {
@@ -217,5 +230,19 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         },
         targets: [],
         products: [{ id: 'microphone', type: 'item', price: 50 }],
+    },
+    {
+        name: 'mdr',
+        job: JobType.MDR,
+        zone: {
+            center: [-547.5, -201.13, 47.66],
+            length: 0.2,
+            width: 1.0,
+            heading: 10,
+            minZ: 47.36,
+            maxZ: 48.36,
+        },
+        targets: [],
+        products: [{ id: 'newcomer_ticket', type: 'item', price: 5000 }],
     },
 ];

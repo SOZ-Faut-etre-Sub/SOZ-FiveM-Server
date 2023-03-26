@@ -3,6 +3,7 @@ import { Point2D, Point3D, Vector2, Vector3, Vector4 } from './vector';
 
 type BoxZoneOptions<T> = PolygonZoneOptions<T> & {
     heading?: number;
+    debugPoly?: boolean;
 };
 
 export type Zone<T = never> = {
@@ -38,6 +39,7 @@ export class BoxZone<T = never> extends PolygonZone<T> {
     public readonly length: number;
     public readonly width: number;
     public readonly heading: number;
+    public readonly debugPoly: boolean;
 
     public static fromZone<T>(zone: Zone<T>): BoxZone<T> {
         return new BoxZone(zone.center, zone.length || 1, zone.width || 1, {
@@ -45,6 +47,20 @@ export class BoxZone<T = never> extends PolygonZone<T> {
             maxZ: zone.maxZ,
             data: zone.data,
             heading: zone.heading,
+        });
+    }
+
+    public static default<T>(
+        center: Point3D | Vector4,
+        length = 1,
+        width = 1,
+        options?: BoxZoneOptions<T>
+    ): BoxZone<T> {
+        return new BoxZone(center, length, width, {
+            minZ: center[2] - 1,
+            maxZ: center[2] + 2,
+            heading: center[3] || 0,
+            ...options,
         });
     }
 

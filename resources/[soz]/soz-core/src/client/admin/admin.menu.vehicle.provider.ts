@@ -9,6 +9,7 @@ import { groupBy } from '../../shared/utils/array';
 import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
 import { VehicleService } from '../vehicle/vehicle.service';
 
@@ -25,6 +26,9 @@ export class AdminMenuVehicleProvider {
 
     @Inject(VehicleModificationService)
     private vehicleModificationService: VehicleModificationService;
+
+    @Inject(VehicleConditionProvider)
+    private vehicleConditionProvider: VehicleConditionProvider;
 
     @OnNuiEvent(NuiEvent.AdminGetVehicles)
     public async getVehicles() {
@@ -161,5 +165,10 @@ export class AdminMenuVehicleProvider {
     @OnNuiEvent(NuiEvent.AdminMenuVehicleDelete)
     public async onAdminMenuVehicleDelete() {
         TriggerServerEvent(ServerEvent.ADMIN_VEHICLE_DELETE);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminToggleNoStall)
+    public async setNoStall(value: boolean): Promise<void> {
+        this.vehicleConditionProvider.setAdminNoStall(value);
     }
 }

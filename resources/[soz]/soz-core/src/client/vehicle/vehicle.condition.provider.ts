@@ -20,7 +20,7 @@ type VehicleStatus = {
     vehicle: number;
 };
 
-const ENGINE_DAMAGE_MULTIPLIER = 5.0;
+const ENGINE_DAMAGE_MULTIPLIER = 6.25;
 const BODY_DAMAGE_MULTIPLIER = 5.0;
 const TANK_DAMAGE_MULTIPLIER = 2.0;
 
@@ -77,6 +77,8 @@ export class VehicleConditionProvider {
     private currentVehiclePositionForMileage: CurrentVehiclePosition | null = null;
 
     private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
+
+    private adminNoStall = false;
 
     @Once(OnceStep.PlayerLoaded)
     public async init() {
@@ -199,7 +201,7 @@ export class VehicleConditionProvider {
             value.engineHealth -
             value.bodyHealth;
 
-        if (healthDiff > STOP_ENGINE_THRESHOLD) {
+        if (healthDiff > STOP_ENGINE_THRESHOLD && !this.adminNoStall) {
             const waitTime = Math.min(
                 (previousState.condition.engineHealth / value.engineHealth +
                     previousState.condition.bodyHealth / value.bodyHealth) *
@@ -450,7 +452,7 @@ export class VehicleConditionProvider {
         const bodyHealthDiffSharing = bodyHealthDiff * 0.25;
         const tankHealthDiffSharing = tankHealthDiff * 0.25;
 
-        engineHealthDiff += bodyHealthDiffSharing + tankHealthDiffSharing;
+        engineHealthDiff += (bodyHealthDiffSharing + tankHealthDiffSharing) * 1.25;
         bodyHealthDiff += engineHealthDiffSharing + tankHealthDiffSharing;
         tankHealthDiff += (engineHealthDiffSharing + bodyHealthDiffSharing) * 0.4;
 
@@ -674,5 +676,13 @@ export class VehicleConditionProvider {
                 openWindows: toggleWindowsDown ? true : toggleWindowsUp ? false : state.openWindows,
             });
         }
+    }
+
+    public setAdminNoStall(value: boolean) {
+        this.adminNoStall = value;
+    }
+
+    public getAdminNoStall(): boolean {
+        return this.adminNoStall;
     }
 }

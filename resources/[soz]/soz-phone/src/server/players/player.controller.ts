@@ -29,9 +29,7 @@ on('QBCore:Server:OnJobUpdate', async (source: number, playerData: any) => {
 });
 
 // Handle removing from player maps when player disconnects
-on('QBCore:Server:PlayerUnload', async () => {
-    const src = getSource();
-    // Get identifier for player to remove
+on('QBCore:Server:PlayerUnload', async (src: number) => {
     try {
         await PlayerService.handleUnloadPlayerEvent(src);
     } catch (e) {

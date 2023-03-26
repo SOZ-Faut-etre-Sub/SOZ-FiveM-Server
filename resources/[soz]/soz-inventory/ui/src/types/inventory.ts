@@ -68,4 +68,5 @@ export type InventoryItemMetadata = {
     ammo?: number;
     tint?: number;
     attachments?: Record<string, string | null>;
+    crafted?: boolean;
 };

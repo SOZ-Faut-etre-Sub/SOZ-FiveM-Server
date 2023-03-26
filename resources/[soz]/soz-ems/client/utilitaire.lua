@@ -24,8 +24,8 @@ exports["qb-target"]:AddTargetModel(lit_ems, {
 })
 
 local function GetDeadPedInVehicle(entity)
-    local vehicleSeats = GetVehicleModelNumberOfSeats(GetHashKey(GetEntityModel(entity)))
-    for i = -1, vehicleSeats do
+    local vehicleSeats = GetVehicleModelNumberOfSeats(GetEntityModel(entity))
+    for i = -1, vehicleSeats - 2 do
         local ped = GetPedInVehicleSeat(entity, i)
         if Player(GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped))).state.isdead then
             return ped

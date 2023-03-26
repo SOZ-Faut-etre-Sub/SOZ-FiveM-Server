@@ -8,10 +8,6 @@ BaunJob.Menu = MenuV:CreateMenu(nil, "", "menu_job_baun", "soz", "baun:menu")
 BaunJob.Harvest = {}
 BaunJob.CraftZones = {}
 
-RegisterNetEvent("jobs:client:baun:OpenCloakroomMenu", function(storageId)
-    SozJobCore.Functions.OpenCloakroomMenu(BaunJob.Menu, BaunConfig.Cloakroom.Clothes, storageId)
-end)
-
 AddEventHandler("onClientResourceStart", function(resourceName)
     if (GetCurrentResourceName() == resourceName and GetConvarInt("feature_msb_baun", 0) == 1) then
         for _, config in pairs(BaunConfig.Blips) do

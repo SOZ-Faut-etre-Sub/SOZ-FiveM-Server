@@ -1,6 +1,12 @@
 RegisterServerEvent("inventory:server:openInventory", function(storageType, invID, ctx)
     local Player = QBCore.Functions.GetPlayer(source)
 
+    local targetMoney = nil
+    if storageType == "player" then
+        local Target = QBCore.Functions.GetPlayer(invID)
+        targetMoney = Target.PlayerData.money
+    end
+
     local sourceInv = Inventory(source)
     local targetInv = GetOrCreateInventory(storageType, invID, ctx)
 
@@ -8,7 +14,7 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
         targetInv.users[Player.PlayerData.source] = true
 
         TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
-                           Inventory.FilterItems(targetInv, sourceInv.type))
+                           Inventory.FilterItems(targetInv, sourceInv.type), targetMoney)
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas accès à ce stockage", "error")
     end
@@ -27,6 +33,55 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
 
         cb(success, reason, sourceInventory, Inventory.FilterItems(targetInv, sourceInv.type))
     end, targetSlot, manualFilter)
+end)
+
+QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(source, cb, target, amount, inverse)
+    local SourcePlayer = QBCore.Functions.GetPlayer(source)
+    local TargetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
+
+    if inverse then
+        local temp = TargetPlayer
+        TargetPlayer = SourcePlayer
+        SourcePlayer = temp
+    end
+
+    if SourcePlayer.PlayerData.source == TargetPlayer.PlayerData.source then
+        cb(SourcePlayer.PlayerData.money, TargetPlayer.PlayerData.money)
+        return
+    end
+
+    local moneyAmount = SourcePlayer.Functions.GetMoney("money")
+    local moneyMarkedAmount = SourcePlayer.Functions.GetMoney("marked_money")
+
+    if (moneyAmount + moneyMarkedAmount) >= amount then
+        local moneyTake = 0
+        local markedMoneyTake = 0
+
+        if moneyAmount < amount then
+            moneyTake = moneyAmount
+            markedMoneyTake = amount - moneyAmount
+        else
+            moneyTake = amount
+        end
+
+        SourcePlayer.Functions.RemoveMoney("money", moneyTake)
+        SourcePlayer.Functions.RemoveMoney("marked_money", markedMoneyTake)
+        TargetPlayer.Functions.AddMoney("money", moneyTake)
+        TargetPlayer.Functions.AddMoney("marked_money", markedMoneyTake)
+
+        if inverse then
+            TriggerClientEvent("hud:client:DrawNotification", SourcePlayer.PlayerData.source, string.format("On vous a pris ~r~%s$", amount))
+            TriggerClientEvent("hud:client:DrawNotification", TargetPlayer.PlayerData.source, string.format("Vous avez pris ~g~%s$", amount))
+        else
+            TriggerClientEvent("hud:client:DrawNotification", SourcePlayer.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
+            TriggerClientEvent("hud:client:DrawNotification", TargetPlayer.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
+        end
+    else
+        TriggerClientEvent("hud:client:DrawNotification", source, "Pas assez d'argent", "error")
+    end
+
+    cb(SourcePlayer.Functions.GetMoney("money") + SourcePlayer.Functions.GetMoney("marked_money"),
+       TargetPlayer.Functions.GetMoney("money") + TargetPlayer.Functions.GetMoney("marked_money"))
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:SortInventoryAZ", function(source, cb, inventorySource)

@@ -1,7 +1,6 @@
 {
     "name": "soz-core",
     "version": "1.0.0",
-    "main": "index.js",
     "license": "MIT",
     "scripts": {
         "build-module": "webpack --mode production --config webpack.config.watch.js",

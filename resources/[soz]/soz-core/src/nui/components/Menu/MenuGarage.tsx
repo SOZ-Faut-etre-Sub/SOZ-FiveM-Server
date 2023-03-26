@@ -34,6 +34,8 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         return null;
     }
 
+    const showFreePlaces = data?.garage.type === GarageType.Private || data?.garage.type === GarageType.House;
+
     const vehicleShowPlaces = () => {
         fetchNui(NuiEvent.VehicleGarageShowPlaces, { id: data.id, garage: data.garage });
     };
@@ -62,7 +64,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
             <MainMenu>
                 <MenuTitle banner={BannerMap[data?.garage.type]}>
                     {data?.garage.name}
-                    {data?.garage.type === GarageType.Private && ` | Places libres (${data?.free_places}) / 38`}
+                    {showFreePlaces && ` | Places libres : ${data?.free_places} / ${data?.max_places}`}
                 </MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="vehicles">Les véhicules</MenuItemSubMenuLink>
@@ -78,7 +80,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
             <SubMenu id="vehicles">
                 <MenuTitle banner={BannerMap[data?.garage.type]}>
                     {data?.garage.name}
-                    {data?.garage.type === GarageType.Private && ` | Places libres (${data?.free_places}) / 38`}
+                    {showFreePlaces && ` | Places libres : ${data?.free_places} / ${data?.max_places}`}
                 </MenuTitle>
                 <VehicleList data={data} />
             </SubMenu>
@@ -91,8 +93,8 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
         return null;
     }
 
-    const vehicleTakeOut = (id: number) => {
-        fetchNui(NuiEvent.VehicleGarageTakeOut, { id: data.id, garage: data.garage, vehicle: id });
+    const vehicleTakeOut = (id: number, use_ticket: boolean) => {
+        fetchNui(NuiEvent.VehicleGarageTakeOut, { id: data.id, garage: data.garage, vehicle: id, use_ticket });
     };
 
     const vehicleSetName = (id: number) => {
@@ -113,7 +115,7 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
                             <MenuItemSelect
                                 onConfirm={(idnex, value) => {
                                     if (value === 'take_out') {
-                                        vehicleTakeOut(garageVehicle.vehicle.id);
+                                        vehicleTakeOut(garageVehicle.vehicle.id, false);
                                     }
 
                                     if (value === 'set_name') {
@@ -140,10 +142,47 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
                         const name = garageVehicle.vehicle.label
                             ? `${garageVehicle.vehicle.label} | ${garageVehicle.vehicle.plate}`
                             : `${garageVehicle.name} | ${garageVehicle.vehicle.plate}`;
+
+                        if (
+                            garageVehicle.price > 0 &&
+                            data.has_fake_ticket &&
+                            data.garage.type === GarageType.Private
+                        ) {
+                            return (
+                                <MenuItemSelect
+                                    onConfirm={(index, value) => {
+                                        if (value === 'take_out') {
+                                            vehicleTakeOut(garageVehicle.vehicle.id, false);
+                                        }
+
+                                        if (value === 'take_out_ticket') {
+                                            vehicleTakeOut(garageVehicle.vehicle.id, true);
+                                        }
+                                    }}
+                                    key={garageVehicle.vehicle.id}
+                                    title={name}
+                                    titleWidth={60}
+                                    description={`Kilométrage: ${(
+                                        (garageVehicle.vehicle.condition.mileage || 0) / 1000
+                                    ).toFixed(2)}km`}
+                                >
+                                    <MenuItemSelectOption value="take_out">
+                                        Payer ${garageVehicle.price}
+                                    </MenuItemSelectOption>
+                                    <MenuItemSelectOption value="take_out_ticket">
+                                        Utiliser un ticket
+                                    </MenuItemSelectOption>
+                                </MenuItemSelect>
+                            );
+                        }
+
                         return (
                             <MenuItemButton
-                                onConfirm={() => vehicleTakeOut(garageVehicle.vehicle.id)}
+                                onConfirm={() => vehicleTakeOut(garageVehicle.vehicle.id, false)}
                                 key={garageVehicle.vehicle.id}
+                                description={`Kilométrage: ${(
+                                    (garageVehicle.vehicle.condition.mileage || 0) / 1000
+                                ).toFixed(2)}km`}
                             >
                                 {name}
                                 {garageVehicle.price > 0 && ` - Coût: $${garageVehicle.price}`}

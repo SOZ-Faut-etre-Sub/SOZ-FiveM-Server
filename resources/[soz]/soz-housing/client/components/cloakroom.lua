@@ -24,16 +24,12 @@ RegisterNetEvent("housing:client:cloakroom", function()
             select = function()
                 local name = exports["soz-hud"]:Input("Nom de la tenue", 64)
 
-                if name == nil or name == "" then
-                    exports["soz-hud"]:DrawNotification("Veuillez entrer un nom pour votre tenue.", "error")
-                    return
-                end
-
-                local success = QBCore.Functions.TriggerRpc("soz-character:server:SavePlayerClothe", name)
-                if success then
+                local error = QBCore.Functions.TriggerRpc("soz-character:server:SavePlayerClothe", name)
+                if error == nil then
                     exports["soz-hud"]:DrawNotification("Votre tenue a été sauvegardée.")
                 else
-                    exports["soz-hud"]:DrawNotification("Une erreur est survenue.", "error")
+                    exports["soz-hud"]:DrawNotification(error, "error")
+                    return
                 end
                 menu:Close()
             end,

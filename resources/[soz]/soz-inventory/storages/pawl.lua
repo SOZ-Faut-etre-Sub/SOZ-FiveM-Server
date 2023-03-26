@@ -86,5 +86,5 @@ Config.Storages["pawl_cloakroom"] = {
     minZ = 75.37,
     maxZ = 78.37,
     heading = 250,
-    targetOptions = getCloakroomTargetOptions("pawl", "pawl_cloakroom", "pawl:client:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("pawl", "pawl_cloakroom"),
 }

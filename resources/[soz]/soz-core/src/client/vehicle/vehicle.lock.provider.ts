@@ -41,11 +41,6 @@ const VEHICLE_TRUNK_TYPES = {
     [GetHashKey('trash')]: 'trash',
 };
 
-type CurrentHat = {
-    hat: number;
-    texture: number;
-};
-
 type TrunkOpened = {
     vehicle: number;
     vehicleNetworkId: number;
@@ -74,46 +69,10 @@ export class VehicleLockProvider {
 
     private vehicleTrunkOpened: TrunkOpened | null = null;
 
-    private currentPedHat: CurrentHat | null = null;
-
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public async onEnterLeaveVehicle() {
-        if (!this.currentPedHat) {
-            return;
-        }
-
-        const currentPedHat = { ...this.currentPedHat };
-
-        if (currentPedHat.hat === -1) {
-            SetPedConfigFlag(PlayerPedId(), 34, false);
-        }
-
-        SetPedPropIndex(PlayerPedId(), 0, currentPedHat.hat, currentPedHat.texture, true);
-        TriggerServerEvent(ServerEvent.PLAYER_UPDATE_HAT_VEHICLE, currentPedHat.hat, currentPedHat.texture);
-    }
-
-    @Tick(TickInterval.EVERY_SECOND)
-    public saveCurrentPedHat() {
-        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-        const lastCurrentHat = this.currentPedHat;
-
-        this.currentPedHat = {
-            hat: GetPedPropIndex(PlayerPedId(), 0),
-            texture: GetPedPropTextureIndex(PlayerPedId(), 0),
-        };
-
-        if (
-            vehicle &&
-            lastCurrentHat &&
-            (lastCurrentHat.hat !== this.currentPedHat.hat || lastCurrentHat.texture !== this.currentPedHat.texture)
-        ) {
-            TriggerServerEvent(
-                ServerEvent.PLAYER_UPDATE_HAT_VEHICLE,
-                this.currentPedHat.hat,
-                this.currentPedHat.texture
-            );
-        }
+        this.vehicleService.updateVehiculeClothConfig();
     }
 
     @Tick(TickInterval.EVERY_FRAME)

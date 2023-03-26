@@ -37,6 +37,12 @@ export class ItemFuelProvider {
     private vehicleStateService: VehicleStateService;
 
     public async useEssenceJerrycan(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+        if (this.item.isItemExpired(inventoryItem)) {
+            this.notifier.notify(source, "L'essence du jerrycan est périmé.", 'error');
+
+            return;
+        }
+
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
 
         if (!closestVehicle) {
@@ -90,7 +96,11 @@ export class ItemFuelProvider {
             }
         );
 
-        const filledFuel = Math.round(progress * JERRYCAN_FUEL_AMOUNT);
+        const amount = {
+            essence_jerrycan_low: 20,
+            essence_jerrycan: 30,
+        }[item.name];
+        const filledFuel = Math.round(progress * amount);
         const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
         TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
@@ -217,6 +227,7 @@ export class ItemFuelProvider {
     @Once()
     public onStart() {
         this.item.setItemUseCallback('essence_jerrycan', this.useEssenceJerrycan.bind(this));
+        this.item.setItemUseCallback('essence_jerrycan_low', this.useEssenceJerrycan.bind(this));
         this.item.setItemUseCallback('kerosene_jerrycan', this.useKeroseneJerrycan.bind(this));
         this.item.setItemUseCallback('oil_jerrycan', this.useOilJerrycan.bind(this));
     }

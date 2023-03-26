@@ -1,8 +1,6 @@
 AddStateBagChangeHandler("isSirenMuted", nil, function(bagName, key, value, _, _)
-    local entNet = bagName:gsub("entity:", "")
-
     if key == "isSirenMuted" and type(value) == "boolean" then
-        local vehicle = NetToVeh(tonumber(entNet))
+        local vehicle = GetEntityFromStateBagName(bagName)
         if vehicle ~= 0 then
             SetVehicleHasMutedSirens(vehicle, value)
         end

@@ -43,3 +43,5 @@ else
         end
     end)
 end
+
+Config.ShopsPedEntity = {}

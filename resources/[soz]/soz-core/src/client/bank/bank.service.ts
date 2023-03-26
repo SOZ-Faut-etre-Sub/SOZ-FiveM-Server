@@ -31,11 +31,6 @@ export class BankService {
         return exports['soz-bank'].GetCurrentBank();
     }
 
-    private twoDigitsFloor(u: number) {
-        const base = (Math.floor(u * 100) / 100).toString();
-        return base.includes('.') ? base : base + '.0';
-    }
-
     public getAtmName(entity: number, type: string) {
         const coords = GetEntityCoords(entity) as Vector3;
         const coordsHash = getLocationHash(coords);

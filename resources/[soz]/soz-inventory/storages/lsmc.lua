@@ -54,7 +54,7 @@ Config.Storages["lsmc_male_cloakroom"] = {
     minZ = 31.71,
     maxZ = 34.01,
     heading = 320,
-    targetOptions = getCloakroomTargetOptions("lsmc", "lsmc_male_cloakroom", "lsmc:client:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("lsmc", "lsmc_male_cloakroom"),
 }
 
 Config.Storages["lsmc_female_cloakroom"] = {
@@ -66,5 +66,5 @@ Config.Storages["lsmc_female_cloakroom"] = {
     minZ = 31.51,
     maxZ = 33.91,
     heading = 320,
-    targetOptions = getCloakroomTargetOptions("lsmc", "lsmc_female_cloakroom", "lsmc:client:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("lsmc", "lsmc_female_cloakroom"),
 }

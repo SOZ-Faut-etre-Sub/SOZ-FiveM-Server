@@ -1,13 +1,13 @@
-import { OnEvent } from '../../../core/decorators/event';
-import { Inject } from '../../../core/decorators/injectable';
-import { Provider } from '../../../core/decorators/provider';
-import { ServerEvent } from '../../../shared/event';
-import { healthLevelToLabel, stressLevelToLabel } from '../../../shared/health';
-import { PlayerHealthBook } from '../../../shared/player';
-import { InventoryManager } from '../../inventory/inventory.manager';
-import { Notifier } from '../../notifier';
-import { PlayerService } from '../../player/player.service';
-import { ProgressService } from '../../player/progress.service';
+import { OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { Notifier } from '@public/server/notifier';
+import { PlayerService } from '@public/server/player/player.service';
+import { ProgressService } from '@public/server/player/progress.service';
+import { ServerEvent } from '@public/shared/event';
+import { healthLevelToLabel, stressLevelToLabel } from '@public/shared/health';
+import { PlayerHealthBook } from '@public/shared/player';
 
 @Provider()
 export class LSMCCheckHealthProvider {
@@ -81,20 +81,6 @@ export class LSMCCheckHealthProvider {
 
     @OnEvent(ServerEvent.LSMC_HEALTH_CHECK)
     async onHealthCheck(source: number, target: number) {
-        const { completed } = await this.progressService.progress(
-            source,
-            'lsmc_health_check',
-            "Vous étudiez l'état de santé du patient...",
-            5000,
-            {
-                task: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
-            }
-        );
-
-        if (!completed) {
-            return;
-        }
-
         const targetPlayer = this.playerService.getPlayer(target);
 
         if (!targetPlayer) {

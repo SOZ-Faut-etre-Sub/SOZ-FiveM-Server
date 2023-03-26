@@ -31,7 +31,17 @@ export class LSMCDeathProvider {
         if (uniteHU) {
             uniteHUBed = this.getFreeBed(source);
             Player(targetid).state.isWearingPatientOutfit = true;
+            const inside = player.metadata.inside;
+            inside.exitCoord = false;
+            inside.apartment = false;
+            inside.property = null;
+            this.playerService.setPlayerMetadata(targetid, 'inside', inside);
         }
+
+        if (player.metadata.mort) {
+            this.notifier.notify(source, player.metadata.mort, 'success', 20000);
+        }
+
         TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, skipanim, uniteHU, uniteHUBed);
         this.playerService.incrementMetadata(targetid, 'hunger', 30, 0, 100);
         this.playerService.incrementMetadata(targetid, 'thirst', 30, 0, 100);
@@ -73,13 +83,5 @@ export class LSMCDeathProvider {
         const deathDescription = reason ? reason : '';
         this.playerService.setPlayerMetadata(source, 'mort', deathDescription);
         this.monitor.publish('player_dead', { player_source: source }, { reason: deathDescription });
-    }
-
-    @OnEvent(ServerEvent.LSMC_NOTIF_DEATH_REASON)
-    public notifDeathReason(source: number, target: number) {
-        const targetPlayer = this.playerService.getPlayer(target);
-        if (targetPlayer.metadata.mort) {
-            this.notifier.notify(source, targetPlayer.metadata.mort, 'success', 20000);
-        }
     }
 }

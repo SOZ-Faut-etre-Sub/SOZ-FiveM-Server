@@ -1,17 +1,4 @@
-local stonkAction = {
-    icon = "c:stonk/collecter.png",
-    label = "Collecter",
-    canInteract = function()
-        return exports["soz-core"]:CanBagsBeCollected(currentShopBrand, currentShop)
-    end,
-    blackoutGlobal = true,
-    blackoutJob = true,
-    action = function()
-        TriggerServerEvent("soz-core:server:job:stonk:collect", currentShopBrand, currentShop)
-    end,
-}
-
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+CreateThread(function()
     for id, shop in pairs(ShopContext) do
         for shopId, location in pairs(Config.Locations[id]) do
             if not QBCore.Functions.GetBlip("shops_" .. id .. "_" .. shopId) then
@@ -24,9 +11,10 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                 })
             end
 
-            shop:SpawnPed(location, stonkAction)
+            Config.ShopsPedEntity[shopId] = {entity = shop:SpawnPed(location), location = location}
         end
     end
+    TriggerEvent("shops:client:shop:PedSpawned")
 end)
 
 -- Events
@@ -38,4 +26,18 @@ end)
 
 RegisterNetEvent("shops:client:SetShopItems", function(product, shopProducts)
     Config.Products[product] = shopProducts
+end)
+
+AddEventHandler("onResourceStop", function(resource)
+    if resource ~= GetCurrentResourceName() then
+        return
+    end
+
+    for id, shop in pairs(ShopContext) do
+        for shopId, location in pairs(Config.Locations[id]) do
+            if Config.ShopsPedEntity[shopId] and Config.ShopsPedEntity[shopId].entity and DoesEntityExist(Config.ShopsPedEntity[shopId].entity) then
+                DeleteEntity(Config.ShopsPedEntity[shopId].entity)
+            end
+        end
+    end
 end)

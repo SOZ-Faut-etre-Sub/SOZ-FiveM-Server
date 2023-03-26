@@ -52,5 +52,12 @@ AddEventHandler("locations:zone:exit", function(brand, shop)
 end)
 
 exports("GetCurrentShop", function()
-    return currentShop
+    local entity = Config.ShopsPedEntity[currentShop] and Config.ShopsPedEntity[currentShop].entity or 0
+    return {shopId = currentShop, shopbrand = currentShopBrand, shopPedEntity = entity}
+end)
+
+exports("GetShopPedEntity", function(currentShop)
+    local entity = Config.ShopsPedEntity[currentShop] and Config.ShopsPedEntity[currentShop].entity or 0
+    local location = Config.ShopsPedEntity[currentShop] and Config.ShopsPedEntity[currentShop].location or vec4(0, 0, 0, 0)
+    return {entity = entity, location = {location.x, location.y, location.z, location.w}}
 end)

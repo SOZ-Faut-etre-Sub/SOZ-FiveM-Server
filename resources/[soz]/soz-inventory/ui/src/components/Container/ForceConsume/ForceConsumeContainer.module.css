@@ -1,0 +1,21 @@
+.Wrapper {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    width: 20%;
+    min-width: 24rem;
+    transition: transform 0.15s, opacity 0.15s;
+    max-height: 50vh;
+}
+
+.Show {
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 10;
+}
+
+.Hide {
+    transform: translateY(-1rem);
+    opacity: 0;
+    z-index: 0;
+}

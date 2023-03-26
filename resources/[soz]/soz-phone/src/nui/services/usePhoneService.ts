@@ -31,6 +31,10 @@ export const usePhoneService = () => {
         setTimeout(() => window.location.reload(), 3000);
     });
 
+    useNuiEvent('PHONE', PhoneEvents.UNLOAD_CHARACTER, () => {
+        window.location.reload();
+    });
+
     // useNuiEvent('PHONE', PhoneEvents.ADD_SNACKBAR_ALERT, addAlert);
     useNuiEvent('PHONE', PhoneEvents.SET_AVAILABILITY, store.dispatch.phone.setAvailability);
     useNuiEvent('PHONE', PhoneEvents.SET_CONFIG, store.dispatch.phone.setConfig);

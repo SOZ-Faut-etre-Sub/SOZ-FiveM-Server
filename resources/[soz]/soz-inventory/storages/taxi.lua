@@ -27,6 +27,6 @@ Config.Storages["taxi_cloakroom"] = {
     minZ = 73.75,
     maxZ = 75.75,
     heading = 330,
-    targetOptions = getCloakroomTargetOptions("taxi", "taxi_cloakroom", "taxi:client:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("taxi", "taxi_cloakroom"),
 }
 

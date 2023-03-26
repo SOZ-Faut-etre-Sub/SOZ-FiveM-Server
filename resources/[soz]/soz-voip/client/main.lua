@@ -131,7 +131,11 @@ local function GetFilterForPlayer(player)
         return "radio"
     end
 
-    return nil
+    if contains(player.context, "megaphone") then
+        return "megaphone"
+    end
+
+    return nil;
 end
 
 local function ApplyFilters(players)
@@ -150,7 +154,6 @@ local function ApplyFilters(players)
     for _, player in pairs(players) do
         if player.transmitting then
             local filterType = GetFilterForPlayer(player)
-
             if filterType == nil then
                 FilterRegistryInstance:remove(player.serverId)
             else
@@ -207,7 +210,8 @@ Citizen.CreateThread(function()
                 state.players[("player_%d"):format(data.serverId)] = {
                     serverId = data.serverId,
                     volume = -1.0,
-                    context = {"proximity"},
+                    context = {data.context},
+                    transmitting = data.transmitting,
                 }
             end
 
@@ -235,10 +239,14 @@ RegisterNetEvent("voip:client:reset", function()
     restarting = true
     Citizen.Wait(200)
 
+    TriggerServerEvent("monitor:server:event", "voip_restart", {}, {}, true)
+
     exports["soz-hud"]:DrawNotification("Arret de la voip...", "info")
 
     -- Clear last state
     lastState = {}
+
+    LocalPlayer.state:set("megaphone", false, true)
 
     -- Remove filters
     local toRemove = {}

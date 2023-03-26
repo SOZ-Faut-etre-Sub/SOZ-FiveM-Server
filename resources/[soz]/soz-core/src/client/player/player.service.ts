@@ -40,4 +40,12 @@ export class PlayerService {
     public setTempClothes(clothes: Outfit | null) {
         TriggerEvent(ClientEvent.CHARACTER_SET_TEMPORARY_CLOTH, clothes || {});
     }
+
+    public reApplyHeadConfig() {
+        exports['soz-character'].ReApplyHeadConfig();
+    }
+
+    public resetClothConfig() {
+        TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+    }
 }

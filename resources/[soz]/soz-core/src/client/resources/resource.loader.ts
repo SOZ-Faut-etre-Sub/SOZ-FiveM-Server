@@ -54,4 +54,18 @@ export class ResourceLoader {
     unloadModel(name: string | number): void {
         SetModelAsNoLongerNeeded(name);
     }
+
+    async requestScriptAudioBank(name: string): Promise<void> {
+        while (!RequestScriptAudioBank(name, false)) {
+            await wait(100);
+        }
+    }
+
+    async loadScaleformMovie(name: string) {
+        const scaleform = RequestScaleformMovie(name);
+        while (!HasScaleformMovieLoaded(scaleform)) {
+            await wait(0);
+        }
+        return scaleform;
+    }
 }

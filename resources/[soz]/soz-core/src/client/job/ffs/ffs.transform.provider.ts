@@ -2,7 +2,7 @@ import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { InventoryItem, SewingRawMaterialItem } from '../../../shared/item';
+import { SewingRawMaterialItem } from '../../../shared/item';
 import { FabricMaterial, FfsConfig, Process } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';

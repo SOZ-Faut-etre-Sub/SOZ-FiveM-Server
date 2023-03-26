@@ -1,3 +1,5 @@
+import { ItemService } from '@public/server/item/item.service';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { InventoryItem, InventoryItemMetadata } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
@@ -6,6 +8,9 @@ import { PlayerService } from '../player/player.service';
 export class InventoryManager {
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
 
     private sozInventory: any;
 
@@ -68,7 +73,7 @@ export class InventoryManager {
         return this.sozInventory.GetItem(inventory, itemId, metadata);
     }
 
-    public getItemCount(inventory: number | string, itemId: string, metadata: InventoryItemMetadata = null): any {
+    public getItemCount(inventory: number | string, itemId: string, metadata: InventoryItemMetadata = null): number {
         return this.sozInventory.GetItem(inventory, itemId, metadata, true);
     }
 
@@ -87,6 +92,10 @@ export class InventoryManager {
         metadata?: InventoryItemMetadata
     ): InventoryItem | InventoryItem[] | false {
         return this.sozInventory.Search(source, searchType, itemId, metadata);
+    }
+
+    public removeInventoryItem(source, item: InventoryItem, amount = 1): boolean {
+        return this.removeItemFromInventory(source, item.name, amount, item.metadata, item.slot);
     }
 
     public removeItemFromInventory(
@@ -128,6 +137,31 @@ export class InventoryManager {
         secondItemAmount: number
     ): boolean {
         return this.sozInventory.CanSwapItem(source, firstItemId, firstItemAmount, secondItemId, secondItemAmount);
+    }
+
+    public hasEnoughItem(source: number, itemId: string, amount?: number, skipExpiredItem?: boolean): boolean {
+        const items = this.getItems(source);
+        let count = 0;
+
+        for (const item of items) {
+            if (item.name === itemId) {
+                if (skipExpiredItem && this.itemService.isItemExpired(item)) {
+                    continue;
+                }
+
+                if (!amount) {
+                    return true;
+                }
+
+                count += item.amount;
+            }
+        }
+
+        if (amount) {
+            return count >= amount;
+        }
+
+        return false;
     }
 
     // TODO: Implement the following method in soz core directly

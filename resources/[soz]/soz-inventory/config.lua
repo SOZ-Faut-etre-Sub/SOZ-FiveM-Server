@@ -15,7 +15,13 @@ Config.StorageCapacity = {
     ["storage_tank"] = {slot = 10, weight = 10000000},
     ["cloakroom"] = {slot = 10, weight = 1000000},
     --- houses
-    ["house_stash"] = {slot = 10, weight = 100000},
+    ["house_stash"] = {
+        [0] = {slot = 10, weight = 100000},
+        [1] = {slot = 10, weight = 200000},
+        [2] = {slot = 10, weight = 300000},
+        [3] = {slot = 10, weight = 400000},
+        [4] = {slot = 10, weight = 500000},
+    },
     ["house_fridge"] = {slot = 10, weight = 100000},
     --- Jobs PAWL
     ["log_storage"] = {slot = 10, weight = 20000000},
@@ -30,6 +36,8 @@ Config.StorageCapacity = {
     ["furniture_storage"] = {slot = 100, weight = 200000},
     --- Jobs BlueBird
     ["recycler_processing"] = {slot = 100, weight = 400000},
+    --- Zkea
+    ["cabinet_storage"] = {slot = 1, weight = 1600000}, -- 400 cabinet_zkea maximum
 }
 
 Config.ErrorMessage = {

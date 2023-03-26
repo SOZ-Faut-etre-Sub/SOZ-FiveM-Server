@@ -6,11 +6,6 @@ function FilterRadioSubmix:new(serverId, submix, radioPool)
 end
 
 function FilterRadioSubmix:connect()
-    -- set default values
-    self.submix:setEffectParamInt("enabled", 1)
-    self.submix:setEffectParamInt("default", 1)
-    self.submix:setEffectParamFloat("fudge", 4.0)
-
     self.submix:connect(self.serverId)
 end
 
@@ -48,7 +43,6 @@ end
 function FilterRadioSubmix:disconnect()
     -- disable on disconnect
     self.submix:disconnect(self.serverId)
-    self.submix:setEffectParamInt("enabled", 0)
 
     self.radioPool:release(self.serverId)
 end

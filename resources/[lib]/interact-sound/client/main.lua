@@ -11,8 +11,9 @@
 local standardVolumeOutput = 0.3;
 local hasPlayerLoaded = false
 Citizen.CreateThread(function()
-	Wait(15000)
+	Wait(5000)
 	hasPlayerLoaded = true
+    TriggerServerEvent('soz-core:server:sound:init')
 end)
 ------
 -- RegisterNetEvent LIFE_CL:Sound:PlayOnOne
@@ -88,5 +89,54 @@ AddEventHandler('InteractSound_CL:PlayWithinDistance', function(otherPlayerCoord
 			})
 		end
 	end
+end)
+
+local loop
+RegisterNetEvent('InteractSound_CL:PlayWithinDistanceRatioLoop')
+AddEventHandler('InteractSound_CL:PlayWithinDistanceRatioLoop', function(location, maxDistance, soundFile, soundVolume)
+	if hasPlayerLoaded then
+        local locationCoords = vector3(location[1], location[2], location[3])
+		local myCoords = GetEntityCoords(PlayerPedId())
+		local distance = #(myCoords - locationCoords)
+        local baseVolume = soundVolume or standardVolumeOutput
+        local volume = 0
+        if distance < maxDistance then
+            volume = (maxDistance - distance) / maxDistance * baseVolume
+        end
+
+        SendNUIMessage({
+            transactionType = 'playLoopSound',
+            transactionFile  = soundFile,
+            transactionVolume = volume,
+        })
+
+        loop = true
+
+        CreateThread(function()
+            while loop do
+                Wait(1000)
+                local myCoords = GetEntityCoords(PlayerPedId())
+                local distance = #(myCoords - locationCoords)
+                local baseVolume = soundVolume or standardVolumeOutput
+                local volume = 0
+                if distance < maxDistance then
+                    volume = (maxDistance - distance) / maxDistance * baseVolume
+                end
+
+                SendNUIMessage({
+                    transactionType = 'updatevolume',
+                    transactionVolume = volume,
+                })
+            end
+        end)
+	end
+end)
+
+RegisterNetEvent('InteractSound_CL:Stoploop')
+AddEventHandler('InteractSound_CL:Stoploop', function()
+    loop = false
+    SendNUIMessage({
+        transactionType = 'stopLoopSound'
+    })
 end)
 

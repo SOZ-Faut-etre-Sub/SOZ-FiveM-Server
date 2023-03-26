@@ -21,4 +21,5 @@ export const useEmergencyService = () => {
     }, [navigate, emergency, pathname]);
 
     useNuiEvent('PHONE', EmergencyEvents.SET_EMERGENCY, store.dispatch.emergency.setEmergency);
+    useNuiEvent('PHONE', EmergencyEvents.SET_DEAD, store.dispatch.emergency.setDead);
 };

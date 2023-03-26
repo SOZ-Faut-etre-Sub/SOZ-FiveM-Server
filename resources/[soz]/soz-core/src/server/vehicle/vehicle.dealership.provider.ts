@@ -14,6 +14,7 @@ import { Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItems } from '../../shared/random';
 import { RpcEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
+import { DealershipId } from '../../shared/vehicle/dealership';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, Vehicle, VehicleMaxStock } from '../../shared/vehicle/vehicle';
@@ -136,10 +137,12 @@ export class VehicleDealershipProvider {
                     body: 1000,
                     mods: JSON.stringify(configuration),
                     condition: JSON.stringify(getDefaultVehicleCondition()),
+                    label: null,
                 },
                 update: {
                     vehicle: vehicle.model,
                     hash: vehicle.hash.toString(),
+                    label: null,
                     garage: 'bennys_luxury',
                     state: PlayerVehicleState.InGarage,
                     mods: JSON.stringify(configuration),
@@ -349,6 +352,47 @@ export class VehicleDealershipProvider {
             return false;
         }
 
+        if (dealershipId !== DealershipType.Job) {
+            const vehicleModels = (
+                await this.prismaService.vehicle.findMany({
+                    select: {
+                        model: true,
+                    },
+                    where: {
+                        dealershipId: {
+                            not: null,
+                        },
+                        AND: {
+                            dealershipId: {
+                                not: 'cycle',
+                            },
+                        },
+                    },
+                })
+            ).map(v => v.model);
+            const playerVehicleCount = await this.prismaService.playerVehicle.count({
+                where: {
+                    citizenid: player.citizenid,
+                    job: null,
+                    state: {
+                        not: PlayerVehicleState.Destroyed,
+                    },
+                    vehicle: {
+                        in: vehicleModels,
+                    },
+                },
+            });
+
+            if (vehicle.dealershipId !== DealershipId.Cycle && playerVehicleCount >= player.metadata.vehiclelimit) {
+                let errorMsg = `Limite de véhicule atteinte (${playerVehicleCount}/${player.metadata.vehiclelimit})`;
+                if (player.metadata.vehiclelimit < 10) errorMsg += ". Améliorez votre carte grise à l'auto-école.";
+
+                this.notifier.notify(source, errorMsg, 'error');
+
+                return false;
+            }
+        }
+
         if (
             vehicle.requiredLicence &&
             (!player.metadata.licences[vehicle.requiredLicence] ||
@@ -501,7 +545,7 @@ export class VehicleDealershipProvider {
                         parkingPlace.heading || 0,
                     ] as Vector4);
 
-                    this.notifier.notify(source, `Merci pour votre achat !'`, 'success');
+                    this.notifier.notify(source, `Merci pour votre achat !`, 'success');
                 } else {
                     const garageConfig = GarageList[dealership.garageName];
 

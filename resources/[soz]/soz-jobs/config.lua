@@ -22,6 +22,7 @@ SozJobCore.JobType = {
     Baun = "baun",
     Ffs = "ffs",
     Debug = "debug",
+    MDR = "mdr",
 }
 
 SozJobCore.JobPermission = {
@@ -34,7 +35,12 @@ SozJobCore.JobPermission = {
     SocietyBankInvoices = "society-bank-invoices",
     SocietyTakeOutPound = "society-take-out-pound",
     NewsManageArticle = "manage-article",
-    CashTransfer = {CollectBags = "collect-bags", ResaleBags = "resale-bags", FillIn = "fill-in"},
+    CashTransfer = {
+        CollectBags = "collect-bags",
+        ResaleBags = "resale-bags",
+        FillIn = "fill-in",
+        CollectSecure = "collect-secure",
+    },
     Food = {Harvest = "harvest", Craft = "craft"},
     Fueler = {ChangePrice = "fueler-change-price"},
     CriminalRecord = "criminal-record",
@@ -44,6 +50,7 @@ SozJobCore.JobPermission = {
     Baun = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Ffs = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Bennys = {Estimate = "estimate", Resell = "resell", Order = "order"},
+    Mdr = {ViewOtherJobs = "view-other-jobs", ViewCitizenData = "view-citizen-data"},
 }
 
 SozJobCore.Jobs = {
@@ -394,14 +401,14 @@ SozJobCore.Jobs = {
         },
         bossZones = {
             {
-                x = -237.14,
-                y = 6093.98,
-                z = 32.26,
-                sx = 9.0,
-                sy = 7.6,
-                heading = 45,
-                minZ = 31.26,
-                maxZ = 35.26,
+                x = -242.74,
+                y = 6070.52,
+                z = 40.61,
+                sx = 13.40,
+                sy = 4.60,
+                heading = 315,
+                minZ = 39.61,
+                maxZ = 42.61,
                 debugPoly = false,
             },
         },
@@ -426,6 +433,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.CashTransfer.FillIn] = {label = "Remplir banque / ATM"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.CashTransfer.CollectSecure] = {label = "Collecte des containers sécurisés"},
         },
         bossZones = {
             {
@@ -595,6 +603,34 @@ SozJobCore.Jobs = {
         },
         bossZones = {{x = 706.83, y = -965.59, z = 30.41, sx = 6.0, sy = 6.0, heading = 0, minZ = 29.41, maxZ = 33.41}},
         phone = "555-FFS",
+        canReceiveSocietyInvoice = true,
+    },
+    [SozJobCore.JobType.MDR] = {
+        label = "Mandatory",
+        platePrefix = "MDR",
+        grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyBankInvoices] = {label = "Accès aux outils de facturation société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.CriminalRecord] = {label = "Accès aux casiers judiciaire"},
+            [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès aux registre des véhicules"},
+            [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
+            [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
+            [SozJobCore.JobPermission.Mdr.ViewOtherJobs] = {label = "Accès aux infos des entreprises"},
+            [SozJobCore.JobPermission.Mdr.ViewCitizenData] = {label = "Accès aux infos des citoyens"},
+        },
+        bossZones = {
+            {x = -546.36, y = -201.78, z = 47.66, sx = 8.0, sy = 17.0, heading = 30.0, minZ = 46.66, maxZ = 49.66},
+        },
+        menuCallback = "soz-jobs:client:mdr:OpenSocietyMenu",
+        canInvoice = true,
+        phone = "555-MDR",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}, canReceiveSocietyInvoice = false},
