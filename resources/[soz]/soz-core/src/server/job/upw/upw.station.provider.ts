@@ -6,7 +6,6 @@ import { PrismaService } from '@public/server/database/prisma.service';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
 import { Notifier } from '@public/server/notifier';
-import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { PropsService } from '@public/server/props.service';
 import { RepositoryProvider } from '@public/server/repository/repository.provider';
@@ -15,9 +14,8 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwCharger, UpwStation } from '@public/shared/fuel';
 import { CommonItem, InventoryItem } from '@public/shared/item';
 import { UPW_CHARGER_REFILL_VALUES } from '@public/shared/job/upw';
-import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcEvent } from '@public/shared/rpc';
-import { stat } from 'fs';
 
 @Provider()
 export class UpwStationProvider {
@@ -94,7 +92,7 @@ export class UpwStationProvider {
         this.inventoryManager.removeItemFromInventory(source, 'car_charger', 1);
         TriggerEvent('core:server:refresh-charger-props');
         await this.repositoryProvider.refresh('upwCharger');
-        this.notifier.notify(source, 'Votre nouvelle borne de recharge a été posée ! Elle est magnifique.', 'success');
+        this.notifier.notify(source, "Vous avez ~g~terminé~s~ l'installation de la borne de recharge.", 'success');
     }
 
     @Rpc(RpcEvent.UPW_GET_STATION)
@@ -127,7 +125,7 @@ export class UpwStationProvider {
             return;
         }
         if (stationToRefill.stock > stationToRefill.max_stock - 1) {
-            this.notifier.notify(source, 'La station est pleine !', 'info');
+            this.notifier.notify(source, 'Vous avez ~g~terminé~s~ la recharge de la borne', 'info');
             return;
         }
         if (!this.inventoryManager.removeItemFromInventory(source, cell)) {
@@ -167,7 +165,7 @@ export class UpwStationProvider {
                 },
             },
         });
-        this.notifier.notify(source, `Charge... ~b~${newStock} / ${stationToRefill.max_stock}kWh`);
+        this.notifier.notify(source, `Charge... ~b~${newStock}/${stationToRefill.max_stock}kWh`);
         this.onRefillStation(source, station, cell);
     }
 
