@@ -5,6 +5,7 @@ declare global {
             isPhoneDrowned: boolean;
             isPhoneDisabled: boolean;
             isPlayerLoaded: boolean;
+            isPlayerHasItem: boolean;
         }
     }
 }
