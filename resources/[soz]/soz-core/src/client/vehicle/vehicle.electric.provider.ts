@@ -3,7 +3,7 @@ import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwStation } from '@public/shared/fuel';
 import { JobType } from '@public/shared/job';
-import { Vector3 } from '@public/shared/polyzone/vector';
+import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcEvent } from '@public/shared/rpc';
 import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
 
@@ -270,7 +270,7 @@ export class VehicleElectricProvider {
                         return false;
                     }
 
-                    return this.currentStationPlug !== null;
+                    return this.currentStationPlug !== null && this.checkBackOfVehicle(entity);
                 },
                 action: (entity: number) => {
                     this.chargeVehicle(entity);
@@ -291,6 +291,12 @@ export class VehicleElectricProvider {
         }
 
         const model = GetEntityModel(vehicle);
+
+        if (!this.checkBackOfVehicle(vehicle)) {
+            this.notifier.notify('~r~Vous devez être derrière le véhicule pour le recharger.', 'error');
+
+            return;
+        }
 
         if (IsThisModelABicycle(model)) {
             this.notifier.notify("~r~Ce véhicule fonctionne uniquement à l'huile de coude", 'error');
@@ -376,14 +382,24 @@ export class VehicleElectricProvider {
         this.soundService.playAround('fuel/end_fuel', 5, 0.3);
     }
 
+    private checkBackOfVehicle(vehicle: number): boolean {
+        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const model = GetEntityModel(vehicle);
+        const [min, max] = GetModelDimensions(model) as [Vector3, Vector3];
+        const vehicleLength = max[1] - min[1];
+        const backPosition = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -vehicleLength / 2, 0.0) as Vector3;
+        const distance = getDistance(backPosition, playerPosition);
+        return distance < 2.0;
+    }
+
     private async activateStationPlug(entity: number, station: string) {
         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
         await wait(500);
 
         await this.animationService.playAnimation({
             base: {
-                dictionary: 'anim@mp_atm@enter',
-                name: 'enter',
+                dictionary: 'anim@move_m@trash',
+                name: 'pickup',
                 blendInSpeed: 8.0,
                 blendOutSpeed: -8.0,
                 duration: 3000,
@@ -470,7 +486,7 @@ export class VehicleElectricProvider {
         }
 
         if (this.currentStationPlug.filling) {
-            this.soundService.playAround('fuel/refueling', 5, 0.3);
+            this.soundService.playAround('fuel/charging', 5, 0.3);
         }
 
         const ropePosition = GetOffsetFromEntityInWorldCoords(this.currentStationPlug.entity, 0.0, 0.0, 1.0) as Vector3;
