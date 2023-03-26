@@ -43,6 +43,7 @@ export enum MenuType {
     HousingUpgrades = 'housing_upgrades',
     Garage = 'garage_menu',
     JobBennys = 'job_bennys',
+    JobUpw = 'job_upw',
     OilSetStationPrice = 'oil_set_station_price',
     SetHealthState = 'set_health_state',
     StonkJobMenu = 'stonk_job',
@@ -71,6 +72,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.JobBennys]: {
         insideUpgradeZone: boolean;
     };
+    [MenuType.JobUpw]: any;
     [MenuType.OilSetStationPrice]: Record<FuelType, number>;
     [MenuType.SetHealthState]: number;
     [MenuType.Vehicle]: VehicleMenuData;
