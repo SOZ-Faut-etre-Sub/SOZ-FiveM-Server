@@ -2,7 +2,6 @@ import { emitRpc } from '@public/core/rpc';
 import { ServerEvent } from '@public/shared/event';
 import { UpwStation } from '@public/shared/fuel';
 import { JobType } from '@public/shared/job';
-import { UPW_CHARGER_REFILL_VALUES } from '@public/shared/job/upw';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcEvent } from '@public/shared/rpc';
 
