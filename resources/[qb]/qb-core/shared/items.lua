@@ -5142,7 +5142,7 @@ QBShared.Items = {
     },
     ['cigarette_used'] = {
         ['name'] = 'cigarette_used',
-        ['label'] = 'Cigarette usagée "Era"',
+        ['label'] = "Cigarette usagée 'Era'",
         ['weight'] = 50,
         ['type'] = 'item_illegal',
         ['unique'] = false,
@@ -5152,7 +5152,7 @@ QBShared.Items = {
     },
     ['cigarette_pack'] = {
         ['name'] = 'cigarette_pack',
-        ['label'] = 'Paquet de cigarette "Era"',
+        ['label'] = 'Paquet de cigarette \'Era\'',
         ['weight'] = 300,
         ['type'] = 'item_illegal',
         ['unique'] = false,
