@@ -32,3 +32,12 @@ export type UpwCharger = {
     position: Vector4;
     active: boolean;
 };
+
+export type UpwStation = {
+    id: number;
+    station: string;
+    stock: number;
+    max_stock: number;
+    price: number;
+    position: Vector4;
+}
