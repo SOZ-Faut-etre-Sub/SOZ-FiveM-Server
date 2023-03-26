@@ -1,4 +1,4 @@
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
@@ -15,6 +15,7 @@ export class WeaponDrawingProvider {
     private shouldAdminDrawWeapon = true;
     private weaponsToDraw: WeaponDrawPosition[] = [];
     private weaponAttached: Record<string, number> = {};
+    private playerLoaded = false;
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
@@ -46,11 +47,9 @@ export class WeaponDrawingProvider {
 
         for (const weapon of this.weaponsToDraw) {
             if (this.weaponAttached[weapon.model]) continue;
+            this.weaponAttached[weapon.model] = -1;
 
             await this.resourceLoader.loadModel(weapon.model);
-
-            // Ensure weapon is not already exist if model took to mush time to complete
-            if (this.weaponAttached[weapon.model]) continue;
 
             const object = CreateObject(weapon.model, 1, 1, 1, true, true, false);
             this.weaponAttached[weapon.model] = object;
@@ -97,19 +96,24 @@ export class WeaponDrawingProvider {
     @Once(OnceStep.PlayerLoaded)
     async onPlayerLoaded(player: PlayerData) {
         this.shouldDrawWeapon = true;
+        this.playerLoaded = true;
         await this.updateWeaponDrawList(player.items);
     }
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(player: PlayerData) {
+        if (!this.playerLoaded) {
+            return;
+        }
+
         await this.updateWeaponDrawList(player.items);
         const weapon = this.weaponService.getCurrentWeapon();
 
         if (weapon) {
             if (
                 !Object.values(player.items)
-                    .map(i => i.name)
-                    .includes(weapon.name)
+                    .map(i => i.slot)
+                    .includes(weapon.slot)
             ) {
                 await this.weaponService.clear();
             }
@@ -143,8 +147,19 @@ export class WeaponDrawingProvider {
     }
 
     async refreshDrawWeapons() {
-        await this.undrawWeapon();
-        await this.drawWeapon();
+        Object.values(this.weaponAttached).forEach(weapon => {
+            SetEntityVisible(weapon, true, false);
+        });
+
+        const weapon = this.weaponService.getCurrentWeapon();
+        if (weapon) {
+            const weaponModel = Weapons[weapon.name.toUpperCase()]?.drawPosition?.model;
+            if (weaponModel) {
+                if (this.weaponAttached[weaponModel]) {
+                    SetEntityVisible(this.weaponAttached[weaponModel], !weapon, false);
+                }
+            }
+        }
     }
 
     @OnEvent(ClientEvent.WEAPON_USE_WEAPON)
@@ -171,6 +186,13 @@ export class WeaponDrawingProvider {
     @Once(OnceStep.Stop)
     async stop() {
         this.shouldDrawWeapon = false;
+        await this.undrawWeapon();
+    }
+
+    @On('QBCore:Client:OnPlayerUnload')
+    async playerUnLoaded() {
+        this.shouldDrawWeapon = false;
+        this.playerLoaded = false;
         await this.undrawWeapon();
     }
 }
