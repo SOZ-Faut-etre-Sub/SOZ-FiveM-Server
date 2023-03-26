@@ -49,6 +49,19 @@ export class UpwMenuProvider {
             });
             this.blipFactory.hide('job_upw_charger_' + charger.id, true);
         }
+        for (const charger of Object.values(chargers)) {
+            this.blipFactory.create('job_upw_charger_active_' + charger.id, {
+                coords: {
+                    x: charger.position[0],
+                    y: charger.position[1],
+                    z: charger.position[2],
+                },
+                name: 'Chargeur UPW',
+                sprite: 620,
+                color: 5,
+            });
+            this.blipFactory.hide('job_upw_charger_active_' + charger.id, true);
+        }
     }
 
     @OnEvent(ClientEvent.JOB_OPEN_MENU)
@@ -64,16 +77,21 @@ export class UpwMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.UpwDisplayBlips)
-    public async onDisplayBlisp({ blip, value }) {
+    public async onDisplayBlip({ blip, value }) {
         this.displayedBlips[blip] = value;
 
         if (blip == 'charger') {
             const chargers = this.upwChargerRepository.get();
             for (const charger of Object.values(chargers)) {
-                if (value && !charger.active) {
-                    this.blipFactory.hide('job_upw_charger_' + charger.id, false);
+                if (value) {
+                    if (charger.active) {
+                        this.blipFactory.hide('job_upw_charger_active_' + charger.id, false);
+                    } else {
+                        this.blipFactory.hide('job_upw_charger_' + charger.id, false);
+                    }
                 } else {
                     this.blipFactory.hide('job_upw_charger_' + charger.id, true);
+                    this.blipFactory.hide('job_upw_charger_active_' + charger.id, true);
                 }
             }
             if (value) {
