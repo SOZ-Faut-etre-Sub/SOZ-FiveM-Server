@@ -14,6 +14,7 @@ type MenuUpwProps = {
             globalTerminal: boolean;
             plant: boolean;
             resell: boolean;
+            charger: boolean;
         };
     };
 };
@@ -76,6 +77,9 @@ export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
                     </MenuItemCheckbox>
                     <MenuItemCheckbox checked={blips['resell']} onChange={value => displayBlip('resell', value)}>
                         Afficher le Stockage de revente
+                    </MenuItemCheckbox>
+                    <MenuItemCheckbox checked={blips['charger']} onChange={value => displayBlip('charger', value)}>
+                        Afficher les Emplacements de chargeurs
                     </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>
