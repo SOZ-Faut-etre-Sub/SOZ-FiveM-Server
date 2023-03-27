@@ -79,6 +79,14 @@ export class VehicleLockProvider {
             return;
         }
 
+        const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
+
+        if (vehicleType !== 'automobile' && vehicleType !== 'bike' && vehicleType !== 'trailer') {
+            this.notifier.notify(source, 'Vous ne pouvez pas crocheter ce véhicule', 'error');
+
+            return;
+        }
+
         if (!this.inventoryManager.removeItemFromInventory(source, item.name, 1)) {
             this.notifier.notify(source, 'Aucun lockpick', 'error');
 

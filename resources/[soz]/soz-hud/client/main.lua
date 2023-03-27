@@ -257,8 +257,8 @@ CreateThread(function()
                 setVehicleData({
                     speed = math.ceil(actualspeed * Config.SpeedMultiplier),
                     fuel = condition.fuelLevel or GetVehicleFuelLevel(vehicle),
-                    hasFuel = class < 23,
                     fuelType = fuelType,
+                    hasFuel = class < 23 and class ~= 13,
                     engine = math.ceil(GetVehicleEngineHealth(vehicle)),
                     oil = condition.oilLevel or 100,
                     lock = not Entity(vehicle).state.open,

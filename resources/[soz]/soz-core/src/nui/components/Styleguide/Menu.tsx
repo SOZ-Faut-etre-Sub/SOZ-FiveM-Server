@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { CheckIcon } from '@heroicons/react/solid';
+import { useIsOverflow } from '@public/nui/hook/overflow';
 import {
     createDescendantContext,
     Descendant,
@@ -583,6 +584,10 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     const [activeOptionIndex, setActiveOptionIndex] = useState(0);
     const [activeValue, setActiveValue] = useState(value);
     const { setDescription } = useContext(MenuContext);
+    const overflowRef = useRef<HTMLDivElement>(null);
+    const [isTitleOverflow, setIsTitleOverflow] = useState(false);
+
+    useIsOverflow(overflowRef, setIsTitleOverflow);
 
     const onItemConfirm = useCallback(() => {
         onConfirm && onConfirm(activeOptionIndex, activeValue);
@@ -592,7 +597,11 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
         'justify-between': !showAllOptions || useGrid,
     });
 
+    const classNameTitleContainer = cn('overflow-hidden flex');
     const classNameTitle = cn('pr-2 truncate');
+    const classNameTitleDefile = cn(
+        'inline-block whitespace-nowrap scroll-pl-[100%] scroll-pr-[2em] animate-defilement'
+    );
 
     const classNameList = cn({
         'ml-4': showAllOptions && !alignRight,
@@ -638,12 +647,19 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
                     <div className="w-full">
                         <div className={classNameContainer}>
                             <h3
-                                className={classNameTitle}
+                                ref={overflowRef}
+                                className={isTitleOverflow ? classNameTitleContainer : classNameTitle}
                                 style={{
                                     width: showAllOptions ? 'auto' : `${titleWidth}%`,
                                 }}
                             >
-                                {title}
+                                {isTitleOverflow && (
+                                    <>
+                                        <span className={classNameTitleDefile}>{title}&nbsp;&nbsp;&nbsp;</span>
+                                        <span className={classNameTitleDefile}>{title}&nbsp;&nbsp;&nbsp;</span>
+                                    </>
+                                )}
+                                {!isTitleOverflow && title}
                             </h3>
                             <div
                                 className={classNameList}

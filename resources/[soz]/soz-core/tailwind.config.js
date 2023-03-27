@@ -35,6 +35,15 @@ module.exports = {
                 11: '11',
                 12: '12',
             },
+            keyframes: {
+                defilement: {
+                    '0%, 29%': { transform: 'translate(0%,0)' },
+                    '100%': { transform: 'translate(-100%,0)' },
+                },
+            },
+            animation: {
+                defilement: 'defilement 7s infinite linear',
+            },
         },
     },
     plugins: [require('tailwind-scrollbar')],
