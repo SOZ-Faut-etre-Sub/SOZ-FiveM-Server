@@ -38,16 +38,16 @@ export const MenuSetHealthState: FunctionComponent<MenuSetHealthStateProps> = ({
                         Définir l'état de stress
                     </MenuItemButton>
                     <MenuItemButton onConfirm={createSetHealthBookField('health_book_sugar')}>
-                        Définir le taux de glucide
+                        Définir le taux de glucides
                     </MenuItemButton>
                     <MenuItemButton onConfirm={createSetHealthBookField('health_book_fiber')}>
                         Définir le taux de fibres
                     </MenuItemButton>
                     <MenuItemButton onConfirm={createSetHealthBookField('health_book_lipid')}>
-                        Définir le taux de lipide
+                        Définir le taux de lipides
                     </MenuItemButton>
                     <MenuItemButton onConfirm={createSetHealthBookField('health_book_protein')}>
-                        Définir le taux de protéine
+                        Définir le taux de protéines
                     </MenuItemButton>
                 </MenuContent>
             </MainMenu>

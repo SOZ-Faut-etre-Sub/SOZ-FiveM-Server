@@ -52,7 +52,7 @@ export class StonkResellProvider {
                 JobPermission.CashTransfer_ResaleBags
             )
         ) {
-            this.notifier.notify(source, `Vous n'avez pas les accreditations nécessaires.`, 'error');
+            this.notifier.notify(source, `Vous n'avez pas les accréditations nécessaires.`, 'error');
             return;
         }
 
