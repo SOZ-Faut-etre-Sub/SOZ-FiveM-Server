@@ -101,16 +101,27 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleGarageSetName, { id: data.id, garage: data.garage, vehicle: id });
     };
 
+    const vehicleList = data.vehicles
+        .map(garageVehicle => {
+            const name = garageVehicle.vehicle.label
+                ? `${garageVehicle.vehicle.label} | ${garageVehicle.name} | ${garageVehicle.vehicle.plate}`
+                : `${garageVehicle.name} | ${garageVehicle.vehicle.plate}`;
+
+            return {
+                ...garageVehicle,
+                vehicle_name: name,
+            };
+        })
+        .sort((a, b) => {
+            return a.vehicle_name.localeCompare(b.vehicle_name);
+        });
+
     return (
         <MenuContent>
             {data.vehicles.length === 0 && <MenuItemButton disabled>Aucun véhicule</MenuItemButton>}
             {(data.garage.type === GarageType.Job || data.garage.type === GarageType.House) && (
                 <>
-                    {data.vehicles.map(garageVehicle => {
-                        const name = garageVehicle.vehicle.label
-                            ? `${garageVehicle.vehicle.label} | ${garageVehicle.name} | ${garageVehicle.vehicle.plate}`
-                            : `${garageVehicle.name} | ${garageVehicle.vehicle.plate}`;
-
+                    {vehicleList.map(garageVehicle => {
                         return (
                             <MenuItemSelect
                                 onConfirm={(idnex, value) => {
@@ -123,7 +134,7 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
                                     }
                                 }}
                                 key={garageVehicle.vehicle.id}
-                                title={name}
+                                title={garageVehicle.vehicle_name}
                                 titleWidth={60}
                                 description={`Kilométrage: ${(
                                     (garageVehicle.vehicle.condition.mileage || 0) / 1000
@@ -138,11 +149,7 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
             )}
             {data.garage.type !== GarageType.Job && data.garage.type !== GarageType.House && (
                 <>
-                    {data.vehicles.map(garageVehicle => {
-                        const name = garageVehicle.vehicle.label
-                            ? `${garageVehicle.vehicle.label} | ${garageVehicle.name} | ${garageVehicle.vehicle.plate}`
-                            : `${garageVehicle.name} | ${garageVehicle.vehicle.plate}`;
-
+                    {vehicleList.map(garageVehicle => {
                         if (
                             garageVehicle.price > 0 &&
                             data.has_fake_ticket &&
@@ -160,7 +167,7 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
                                         }
                                     }}
                                     key={garageVehicle.vehicle.id}
-                                    title={name}
+                                    title={garageVehicle.vehicle_name}
                                     titleWidth={60}
                                     description={`Kilométrage: ${(
                                         (garageVehicle.vehicle.condition.mileage || 0) / 1000
@@ -184,7 +191,7 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
                                     (garageVehicle.vehicle.condition.mileage || 0) / 1000
                                 ).toFixed(2)}km`}
                             >
-                                {name}
+                                {garageVehicle.vehicle_name}
                                 {garageVehicle.price > 0 && ` - Coût: $${garageVehicle.price}`}
                             </MenuItemButton>
                         );
