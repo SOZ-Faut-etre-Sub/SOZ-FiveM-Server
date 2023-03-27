@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
-import { ArchiveIcon, PhoneIcon, UserAddIcon, PencilAltIcon } from '@heroicons/react/solid';
+import { ArchiveIcon, PencilAltIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/solid';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
@@ -81,7 +81,7 @@ export const Messages = () => {
         return navigate(`/contacts/-1/?addNumber=${number}`);
     };
 
-    const openContactInfo = (phoneNumber: number) => {
+    const openContactInfo = (phoneNumber: string) => {
         navigate(`/contacts/${getIdByNumber(phoneNumber)}`);
     };
 
@@ -134,7 +134,9 @@ export const Messages = () => {
                                 <Button className="mx-3">
                                     <PencilAltIcon
                                         className="h-6 w-6 cursor-pointer"
-                                        onClick={ async () => { await openContactInfo(conversation.phoneNumber);} }
+                                        onClick={async () => {
+                                            await openContactInfo(conversation.phoneNumber);
+                                        }}
                                     />
                                 </Button>
                             )}
