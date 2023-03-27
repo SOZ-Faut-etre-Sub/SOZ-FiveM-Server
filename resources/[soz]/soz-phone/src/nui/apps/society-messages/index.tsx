@@ -1,21 +1,20 @@
 import { Transition } from '@headlessui/react';
+import { ChatIcon } from '@heroicons/react/outline';
 import { useApp } from '@os/apps/hooks/useApps';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
-import { ChatIcon } from '@heroicons/react/outline';
 import cn from 'classnames';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import { useSociety } from '../../../nui/hooks/app/useSociety';
+import { useConfig } from '../../../nui/hooks/usePhone';
+import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
 import { useBackground } from '../../ui/hooks/useBackground';
 import MessagesList from './pages/MessagesList';
-
-import { useConfig } from '../../../nui/hooks/usePhone';
-import { useNavigate } from 'react-router-dom';
-import { useSociety } from '../../../nui/hooks/app/useSociety';
-import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
 
 export const SocietyMessagesApp = () => {
     const messages = useApp('society-messages');
@@ -45,7 +44,7 @@ export const SocietyMessagesApp = () => {
                 leaveTo="scale-[0.0] opacity-0"
             >
                 <AppWrapper>
-                    <div className='flex flex-row justify-between pr-4'>
+                    <div className="flex flex-row justify-between pr-4">
                         <AppTitle app={messages} />
                         <button onClick={() => openContactInfo(societyId)}>
                             <ChatIcon

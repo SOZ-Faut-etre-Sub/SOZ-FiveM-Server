@@ -4,13 +4,7 @@ import React, { FunctionComponent, memo } from 'react';
 
 import { TwitchNewsMessage } from '../../../../../typings/twitch-news';
 import { useConfig } from '../../../hooks/usePhone';
-import {
-    convertTypeToName,
-    isActivePoliceMessage,
-    isBCSOMessage,
-    isLSPDMessage,
-    isPoliceMessage,
-} from '../utils/isPolice';
+import { convertTypeToName, isBCSOMessage, isLSPDMessage, isPoliceMessage } from '../utils/isPolice';
 import { PoliceContent } from './PoliceContent';
 
 export const Card: FunctionComponent<TwitchNewsMessage> = memo(

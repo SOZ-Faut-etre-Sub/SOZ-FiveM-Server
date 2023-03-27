@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 import { useConfig } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
-import { BankCard } from '../components/BankCard';
 import { Checkbox } from '../../../ui/components/Checkbox';
+import { BankCard } from '../components/BankCard';
 
 export const BankHome = memo(() => {
     const credentials = useSelector((state: RootState) => state.appBank);
