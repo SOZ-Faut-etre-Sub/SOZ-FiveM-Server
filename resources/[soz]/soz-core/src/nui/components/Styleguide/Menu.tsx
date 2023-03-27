@@ -23,7 +23,6 @@ import {
     useRef,
     useState,
 } from 'react';
-import reactNodeToString from 'react-node-to-string';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { RGBColor } from '../../../shared/color';
