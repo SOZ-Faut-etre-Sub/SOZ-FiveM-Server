@@ -10,7 +10,7 @@ local function AlertPlayer()
         while interfaceCrashed do
             QBCore.Functions.DrawText(0.315, 0.01, 0, 0, 1.0, 244, 43, 29, 255, "Perte de communication avec les interfaces...")
             QBCore.Functions.DrawText(0.355, 0.07, 0, 0, 0.5, 255, 255, 255, 255, "Ton installation de FiveM ne supporte pas la charge des interfaces...")
-            QBCore.Functions.DrawText(0.378, 0.1, 0, 0, 0.5, 255, 255, 255, 255, "Réduit tes paramètres graphiques, et redémarre ton jeu.")
+            QBCore.Functions.DrawText(0.378, 0.1, 0, 0, 0.5, 255, 255, 255, 255, "Réduis tes paramètres graphiques, et redémarre ton jeu.")
 
             Citizen.Wait(0)
         end

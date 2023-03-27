@@ -167,7 +167,7 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
                         Changer l'apparence du personnage
                     </MenuItemButton>
                     <MenuItemSelect
-                        title={`Liste d'apparence prédéfini`}
+                        title={`Liste d'apparences prédéfinies`}
                         onConfirm={async selectedIndex => {
                             const value = SKIN_OPTIONS[selectedIndex].value;
                             await fetchNui(NuiEvent.AdminMenuSkinChangeAppearance, value);

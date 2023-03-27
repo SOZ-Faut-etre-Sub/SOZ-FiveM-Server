@@ -14,7 +14,7 @@ const SpawnList: Spawn[] = [
     {
         identifier: 'spawn1',
         name: 'Los Santos',
-        description: 'La ville avec le plus gros réseau de livreur Zuber de tout San Andreas !',
+        description: 'La ville avec le plus gros réseau de livreurs Zuber de tout San Andreas !',
         image: SpawnLosSantos,
         waypoint: {
             left: '85vw',

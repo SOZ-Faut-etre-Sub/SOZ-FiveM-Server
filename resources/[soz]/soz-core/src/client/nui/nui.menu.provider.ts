@@ -11,7 +11,7 @@ export class NuiMenuProvider {
     private nuiDispatch: NuiDispatch;
 
     @Command('soz_menu_toggle_focus', {
-        description: 'Active ou désasctive la souris dans le menu',
+        description: 'Active ou désactive la souris dans le menu',
         keys: [
             {
                 mapper: 'keyboard',
