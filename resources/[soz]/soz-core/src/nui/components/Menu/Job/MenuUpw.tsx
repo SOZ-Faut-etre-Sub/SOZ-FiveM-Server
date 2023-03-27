@@ -7,7 +7,11 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../../Styleguide/Menu';
 
-export const MenuUpw: FunctionComponent<MenuUpwData> = ({ data }) => {
+type MenuUpwProps = {
+    data?: MenuUpwData;
+};
+
+export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_upw';
     const player = usePlayer();
     const [blips, setBlips] = useState(null);

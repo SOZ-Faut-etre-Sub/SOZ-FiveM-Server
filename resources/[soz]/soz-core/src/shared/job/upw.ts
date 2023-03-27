@@ -238,20 +238,16 @@ export const UPW_CHARGER_REFILL_VALUES: Record<string, number> = {
 };
 
 export type MenuUpwData = {
-    data: {
-        blips: {
-            inverter: boolean;
-            jobTerminal: boolean;
-            globalTerminal: boolean;
-            plant: boolean;
-            resell: boolean;
-            charger: boolean;
-        };
+    blips: {
+        inverter: boolean;
+        jobTerminal: boolean;
+        globalTerminal: boolean;
+        plant: boolean;
+        resell: boolean;
+        charger: boolean;
     };
 };
 
 export type UpwOrderMenuData = {
-    data: {
-        catalog: Vehicle[];
-    };
+    catalog: Vehicle[];
 };

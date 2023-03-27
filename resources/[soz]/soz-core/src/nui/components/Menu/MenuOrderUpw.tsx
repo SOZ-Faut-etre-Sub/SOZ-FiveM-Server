@@ -15,7 +15,11 @@ import {
     SubMenu,
 } from '../Styleguide/Menu';
 
-export const UpwOrderMenu: FunctionComponent<UpwOrderMenuData> = ({ data }) => {
+type UpwOrderMenuProps = {
+    data?: UpwOrderMenuData;
+};
+
+export const UpwOrderMenu: FunctionComponent<UpwOrderMenuProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_upw';
     const [orders, setOrders] = useState<UpwOrder[]>([]);
 
