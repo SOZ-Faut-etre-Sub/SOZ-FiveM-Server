@@ -129,6 +129,14 @@ export class InventoryManager {
         return this.sozInventory.CanCarryItem(source, itemId, amount, metadata);
     }
 
+    public canCarryItems(
+        source: number,
+        items: { name: string; amount: number }[],
+        metadata?: InventoryItemMetadata
+    ): boolean {
+        return this.sozInventory.CanCarryItems(source, items, metadata);
+    }
+
     public canSwapItem(
         source: number,
         firstItemId: string,
