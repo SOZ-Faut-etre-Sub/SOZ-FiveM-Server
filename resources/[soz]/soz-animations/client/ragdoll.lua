@@ -17,7 +17,7 @@ local function cooldown()
     inCooldown = false
 end
 
-RegisterKeyMapping("ragdoll", "Ragdoll", "keyboard", "w")
+RegisterKeyMapping("ragdoll", "Ragdoll", "keyboard", "z")
 RegisterCommand("ragdoll", function()
     if inCooldown then
         return
