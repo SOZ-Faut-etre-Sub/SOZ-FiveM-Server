@@ -56,7 +56,7 @@ Config.Storages["bennys_cloakroom"] = {
     minZ = 33.89,
     maxZ = 37.89,
     heading = 0,
-    targetOptions = getCloakroomTargetOptions("bennys", "bennys_cloakroom", "soz-core:client:job:bennys:open-cloakroom"),
+    targetOptions = getCloakroomTargetOptions("bennys", "bennys_cloakroom"),
 }
 
 Config.Storages["bennys_cloakroom_north"] = {
@@ -68,5 +68,5 @@ Config.Storages["bennys_cloakroom_north"] = {
     minZ = 45.93,
     maxZ = 46.932,
     heading = 331.00,
-    targetOptions = getCloakroomTargetOptions("bennys", "bennys_cloakroom_north", "soz-core:client:job:bennys:open-cloakroom"),
+    targetOptions = getCloakroomTargetOptions("bennys", "bennys_cloakroom_north"),
 }

@@ -1,3 +1,5 @@
+import { wait } from '@public/core/utils';
+
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -325,147 +327,123 @@ export class PlayerHealthProvider {
         return true;
     }
 
-    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
-    public async doPushUps(): Promise<void> {
-        if (!this.canDoExercise()) {
-            return;
-        }
-
-        const animationPromise = this.animationService.playAnimation({
-            enter: {
-                dictionary: 'amb@world_human_push_ups@male@enter',
-                name: 'enter',
-                duration: 3050,
-                options: {
-                    enablePlayerControl: false,
-                },
-            },
-            base: {
-                dictionary: 'amb@world_human_push_ups@male@base',
-                name: 'base',
-                options: {
-                    enablePlayerControl: false,
-                    repeat: true,
-                },
-            },
-            exit: {
-                dictionary: 'amb@world_human_push_ups@male@exit',
-                name: 'exit',
-                duration: 3050,
-                options: {
-                    enablePlayerControl: false,
-                },
-            },
-        });
-
-        const { completed } = await this.progressService.progress('Pompes', 'Vous faites des pompes...', EXERCISE_TIME);
-
-        if (completed) {
-            await this.doStrengthExercise('pushUp');
-        }
-
-        this.animationService.stop();
-
-        await animationPromise;
-    }
-
-    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_SIT_UP)
-    public async doSitUps(): Promise<void> {
-        if (!this.canDoExercise()) {
-            return;
-        }
-
-        const animationPromise = this.animationService.playAnimation({
-            enter: {
-                dictionary: 'amb@world_human_sit_ups@male@enter',
-                name: 'enter',
-                duration: 3050,
-                options: {
-                    enablePlayerControl: false,
-                },
-            },
-            base: {
-                dictionary: 'amb@world_human_sit_ups@male@base',
-                name: 'base',
-                options: {
-                    enablePlayerControl: false,
-                    repeat: true,
-                },
-            },
-            exit: {
-                dictionary: 'amb@world_human_sit_ups@male@exit',
-                name: 'exit',
-                duration: 3050,
-                options: {
-                    enablePlayerControl: false,
-                },
-            },
-        });
-
-        const { completed } = await this.progressService.progress(
-            'Abdominaux',
-            'Vous faites des abdos...',
-            EXERCISE_TIME
-        );
-
-        if (completed) {
-            await this.doStrengthExercise('sitUp');
-        }
-
-        this.animationService.stop();
-
-        await animationPromise;
-    }
-
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_FREE_WEIGHT)
     public async doFreeWeight(): Promise<void> {
         if (!this.canDoExercise()) {
             return;
         }
 
+        ClearPedTasksImmediately(PlayerPedId());
+        await wait(1);
+
+        let progressEnd = false;
+        this.animationService
+            .playScenario({
+                name: 'world_human_muscle_free_weights',
+            })
+            .then(cancelled => {
+                if (cancelled && !progressEnd) {
+                    this.progressService.cancel();
+                }
+            });
         const { completed } = await this.progressService.progress(
             'Haltères',
             'Vous faites des haltères...',
-            EXERCISE_TIME,
-            {
-                task: 'world_human_muscle_free_weights',
-                options: {
-                    cancellable: true,
-                    enablePlayerControl: false,
-                    repeat: true,
-                },
-            }
+            EXERCISE_TIME
         );
+        progressEnd = true;
 
         if (completed) {
             await this.doStrengthExercise('freeWeight');
         }
+
+        this.animationService.stop();
+    }
+
+    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_PUSH_UP)
+    public async doPushUps(): Promise<void> {
+        await this.doSports('amb@world_human_push_ups@male@', 'pushUp', 'Vous faites des pompes...', 3800, 5166);
+    }
+
+    @OnEvent(ClientEvent.PLAYER_HEALTH_DO_SIT_UP)
+    public async doSitUps(): Promise<void> {
+        await this.doSports('amb@world_human_sit_ups@male@', 'sitUp', 'Vous faites des abdos...', 4000, 5000);
     }
 
     private async doChinUps(coords: Vector4): Promise<void> {
+        await this.animationService.walkToCoords(coords, 2000);
+
+        await this.doSports(
+            'amb@prop_human_muscle_chin_ups@male@',
+            'chinUp',
+            'Vous faites des tractions...',
+            2800,
+            2100
+        );
+    }
+
+    private async doSports(
+        dict: string,
+        type: keyof PlayerServerStateExercise,
+        message: string,
+        enterduration: number,
+        exitduration: number
+    ): Promise<void> {
         if (!this.canDoExercise()) {
             return;
         }
 
-        await this.animationService.walkToCoords(coords, 2000);
+        ClearPedTasksImmediately(PlayerPedId());
+        await wait(1);
 
-        const { completed } = await this.progressService.progress(
-            'Tractions',
-            'Vous faites des tractions...',
-            EXERCISE_TIME,
-            {
-                task: 'prop_human_muscle_chin_ups',
-                options: {
-                    cancellable: true,
-                    enablePlayerControl: false,
-                    repeat: true,
+        let progressEnd = false;
+        const animationPromise = this.animationService
+            .playAnimation({
+                enter: enterduration
+                    ? {
+                          dictionary: dict + 'enter',
+                          name: 'enter',
+                          duration: enterduration,
+                          options: {
+                              enablePlayerControl: false,
+                          },
+                      }
+                    : null,
+                base: {
+                    dictionary: dict + 'base',
+                    name: 'base',
+                    options: {
+                        enablePlayerControl: false,
+                        repeat: true,
+                    },
                 },
-            }
-        );
+                exit: exitduration
+                    ? {
+                          dictionary: dict + 'exit',
+                          name: 'exit',
+                          duration: exitduration,
+                          options: {
+                              enablePlayerControl: false,
+                          },
+                      }
+                    : null,
+            })
+            .then(cancelled => {
+                if (cancelled && !progressEnd) {
+                    this.progressService.cancel();
+                }
+            });
+
+        const { completed } = await this.progressService.progress(type, message, EXERCISE_TIME);
+        progressEnd = true;
 
         if (completed) {
-            this.doStrengthExercise('chinUp');
+            this.doStrengthExercise(type);
         }
+
+        this.animationService.stop();
+
+        await animationPromise;
     }
 
     @Tick(TickInterval.EVERY_SECOND)

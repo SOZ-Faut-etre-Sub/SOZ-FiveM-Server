@@ -87,14 +87,6 @@ QBCore.Functions.CreateUseableItem("firework4", function(source, item)
     TriggerClientEvent("fireworks:client:UseFirework", source, item.name, "scr_indep_fireworks")
 end)
 
---- Lockpick
-QBCore.Functions.CreateUseableItem("lockpick", function(source, item)
-    if not preventUsageWhileHoldingWeapon(source) then
-        return
-    end
-    TriggerClientEvent("lockpicks:UseLockpick", source)
-end)
-
 --- Soz
 QBCore.Functions.CreateUseableItem("cardbord", function(source)
     if not preventUsageWhileHoldingWeapon(source) then

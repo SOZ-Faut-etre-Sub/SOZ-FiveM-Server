@@ -203,3 +203,14 @@ RegisterNetEvent("admin:server:effect:normal", function(id)
     player.Functions.SetMetaData("alcohol", 0)
     player.Functions.SetMetaData("drug", 0)
 end)
+
+RegisterNetEvent("admin:server:disease", function(id, action)
+    if not SozAdmin.Functions.IsPlayerAdmin(source) then
+        return
+    end
+
+    local player = QBCore.Functions.GetPlayer(id or source)
+    player.Functions.SetMetaData("disease", false);
+
+    TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", id, action)
+end)

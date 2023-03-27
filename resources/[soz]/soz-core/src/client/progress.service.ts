@@ -1,11 +1,23 @@
+import { AudioService } from '@public/client/nui/audio.service';
 import PCancelable from 'p-cancelable';
 
-import { Injectable } from '../core/decorators/injectable';
+import { Inject, Injectable } from '../core/decorators/injectable';
 import { wait } from '../core/utils';
 import { animationOptionsToFlags, ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
+import { AnimationService } from './animation/animation.service';
+import { Notifier } from './notifier';
 
 @Injectable()
 export class ProgressService {
+    @Inject(AnimationService)
+    private animationService: AnimationService;
+
+    @Inject(AudioService)
+    private audioService: AudioService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     public async progress(
         name: string,
         label: string,
@@ -17,8 +29,14 @@ export class ProgressService {
             useWhileDead: false,
             canCancel: true,
             disableCombat: true,
+            disableNui: false,
             ...options,
         };
+
+        if (this.isDoingAction()) {
+            this.notifier.notify('Une action est déjà en cours !', 'error');
+            return { completed: false, progress: 0 };
+        }
 
         if (options.headingEntity) {
             TaskTurnPedToFaceEntity(PlayerPedId(), options.headingEntity.entity, 1000);
@@ -34,21 +52,65 @@ export class ProgressService {
             duration = exports['soz-upw'].CalculateDuration(duration);
         }
 
+        let audioId = null;
+
+        if (options.audio) {
+            audioId = this.audioService.playAudio(options.audio.path, options.audio.volume || 0.5);
+        }
+
         const start = GetGameTimer();
         let promiseResolve;
         const promise = new PCancelable<ProgressResult>(function (resolve, reject, onCancel) {
             promiseResolve = resolve;
 
             onCancel(() => {
-                TriggerEvent('progressbar:client:cancel');
+                this.cancel();
             });
+        }).finally(() => {
+            if (audioId) {
+                this.audioService.stopAudio(audioId);
+            }
         });
 
-        exports['progressbar'].Progress(
+        if (options.useAnimationService && animation) {
+            if (animation.task) {
+                this.animationService.playScenario({ name: animation.task }).then((cancelled: boolean) => {
+                    if (cancelled) {
+                        this.cancel();
+                    }
+                });
+            } else {
+                this.animationService
+                    .playAnimation(
+                        {
+                            base: {
+                                dictionary: animation.dictionary,
+                                name: animation.name,
+                                blendInSpeed: animation.blendInSpeed,
+                                blendOutSpeed: animation.blendOutSpeed,
+                                playbackRate: animation.playbackRate,
+                                options: animation.options,
+                            },
+                        },
+                        {
+                            reset_weapon: false,
+                        }
+                    )
+                    .then((cancelled: boolean) => {
+                        if (cancelled) {
+                            this.cancel();
+                        }
+                    });
+            }
+            animation = null;
+        }
+
+        exports['progressbar'].ProgressWithStartAndTick(
             {
                 name: name.toLowerCase(),
                 duration,
                 label,
+                disableNui: options.disableNui,
                 useWhileDead: options.useWhileDead,
                 canCancel: options.canCancel,
                 controlDisables: {
@@ -67,8 +129,14 @@ export class ProgressService {
                     : null,
                 prop: options.firstProp || {},
                 propTwo: options.secondProp || {},
+                no_inv_busy: options.no_inv_busy,
             },
+            options.start,
+            options.tick,
             (cancelled: boolean) => {
+                if (options.useAnimationService) {
+                    this.animationService.stop();
+                }
                 if (cancelled) {
                     const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
 
@@ -90,5 +158,9 @@ export class ProgressService {
 
     public isDoingAction(): boolean {
         return exports['progressbar'].IsDoingAction();
+    }
+
+    public cancel() {
+        TriggerEvent('progressbar:client:cancel');
     }
 }

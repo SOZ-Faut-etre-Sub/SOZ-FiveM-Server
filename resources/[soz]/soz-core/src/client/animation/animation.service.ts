@@ -64,7 +64,7 @@ export class AnimationService {
             ? 1000
             : animation.options?.repeat
             ? -1
-            : GetAnimDuration(animation.dictionary, animation.name);
+            : GetAnimDuration(animation.dictionary, animation.name) * 1000;
 
         const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 1;
         const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : 1;
@@ -116,18 +116,33 @@ export class AnimationService {
         return cancelled;
     }
 
-    private async doScenario(scenario: Scenario): Promise<boolean> {
+    private async doScenario(scenario: Scenario, stop: PCancelable<void>): Promise<boolean> {
         const ped = PlayerPedId();
 
         ClearPedTasksImmediately(ped);
         TaskStartScenarioInPlace(ped, scenario.name, 0, true);
 
-        return waitUntil(
-            async () => {
-                return !IsPedUsingScenario(ped, scenario.name);
-            },
-            scenario.duration ? scenario.duration : -1
-        );
+        const until = async () => {
+            return !IsPedUsingAnyScenario(ped) || !IsPedUsingScenario(ped, scenario.name);
+        };
+
+        if (scenario.duration) {
+            return waitUntil(until, scenario.duration);
+        }
+
+        const waitUntilPromise = waitUntil(until);
+        const durationPromise = async () => {
+            await stop;
+
+            return false;
+        };
+
+        const cancelled = await Promise.race([waitUntilPromise, durationPromise()]);
+
+        waitUntilPromise.cancel();
+        stop.cancel();
+
+        return cancelled;
     }
 
     public async loop() {
@@ -176,7 +191,7 @@ export class AnimationService {
                     );
                 }
             } else if (this.currentAnimation.scenario) {
-                cancelled = await this.doScenario(this.currentAnimation.scenario);
+                cancelled = await this.doScenario(this.currentAnimation.scenario, animationPromise);
             }
 
             const ped = PlayerPedId();
@@ -184,7 +199,6 @@ export class AnimationService {
             if (options.reset_weapon) {
                 SetCurrentPedWeapon(ped, GetHashKey(WeaponName.UNARMED), true);
             }
-
             this.currentAnimation.resolve(cancelled);
 
             this.currentAnimation = null;

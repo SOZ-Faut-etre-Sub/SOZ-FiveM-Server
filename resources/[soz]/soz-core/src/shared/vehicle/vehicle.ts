@@ -11,7 +11,7 @@ export type Vehicle = {
     name: string;
     price: number;
     category: string;
-    dealership?: DealershipId;
+    dealershipId?: DealershipId | string;
     requiredLicence?: string;
     size: number;
     jobName?: { [key in JobType]: string };
@@ -93,6 +93,7 @@ export type VehicleEntityState = {
     open: boolean;
     plate: string | null;
     owner: string | null;
+    defaultOwner: string | null;
     speedLimit: number | null;
     isPlayerVehicle: boolean;
     yoloMode: boolean;
@@ -166,6 +167,7 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     forced: false,
     open: false,
     owner: null,
+    defaultOwner: null,
     plate: null,
     speedLimit: null,
     dead: false,

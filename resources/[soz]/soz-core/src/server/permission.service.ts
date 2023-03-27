@@ -18,6 +18,15 @@ export class PermissionService {
     public isHelper(source: number): boolean {
         return (
             this.hasPermission(source, 'helper') ||
+            this.hasPermission(source, 'gamemaster') ||
+            this.hasPermission(source, 'staff') ||
+            this.hasPermission(source, 'admin')
+        );
+    }
+
+    public isGameMaster(source: number): boolean {
+        return (
+            this.hasPermission(source, 'gamemaster') ||
             this.hasPermission(source, 'staff') ||
             this.hasPermission(source, 'admin')
         );
@@ -37,6 +46,9 @@ export class PermissionService {
         }
         if (this.isStaff(source)) {
             return 'staff';
+        }
+        if (this.isGameMaster(source)) {
+            return 'gamemaster';
         }
         if (this.isHelper(source)) {
             return 'helper';

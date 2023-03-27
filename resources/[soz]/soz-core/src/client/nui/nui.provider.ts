@@ -1,7 +1,8 @@
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
+import { OnceLoader } from '../../core/loader/once.loader';
 import { NuiEvent } from '../../shared/event';
 import { FocusInput, SetFocusInput } from '../../shared/nui/focus';
 import { NuiDispatch } from './nui.dispatch';
@@ -12,6 +13,14 @@ export class NuiProvider {
     private dispatcher: NuiDispatch;
 
     private state: Record<string, FocusInput> = {};
+
+    @Inject(OnceLoader)
+    private onceLoader: OnceLoader;
+
+    @OnNuiEvent(NuiEvent.Loaded)
+    public async onLoaded() {
+        this.onceLoader.trigger(OnceStep.NuiLoaded);
+    }
 
     @OnNuiEvent(NuiEvent.TriggerServerEvent)
     public async onTriggerServerEvent({ event, args }) {

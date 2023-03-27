@@ -18,6 +18,10 @@ export class Notifier {
         TriggerClientEvent('hud:client:DrawNotification', source, message, type, delay);
     }
 
+    public error(source: number, message: string) {
+        this.notify(source, message, 'error');
+    }
+
     public advancedNotify(
         source: number,
         title: string,

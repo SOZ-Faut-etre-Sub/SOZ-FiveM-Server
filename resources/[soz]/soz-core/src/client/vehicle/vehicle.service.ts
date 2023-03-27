@@ -1,9 +1,12 @@
+import { ServerEvent } from '@public/shared/event';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import { getDefaultVehicleState, VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
+import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
 import { VehicleModificationService } from './vehicle.modification.service';
 
@@ -19,6 +22,9 @@ export class VehicleService {
 
     @Inject(VehicleModificationService)
     private vehicleModificationService: VehicleModificationService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     public getVehicleProperties(vehicle: number): any[] {
         return this.QBCore.getVehicleProperties(vehicle);
@@ -213,5 +219,15 @@ export class VehicleService {
 
     public applyVehicleConfiguration(vehicle: number, modification: VehicleConfiguration): void {
         this.vehicleModificationService.applyVehicleConfiguration(vehicle, modification);
+    }
+
+    public updateVehiculeClothConfig() {
+        this.playerService.reApplyHeadConfig();
+
+        TriggerServerEvent(
+            ServerEvent.PLAYER_UPDATE_HAT_VEHICLE,
+            GetPedPropIndex(PlayerPedId(), 0),
+            GetPedPropTextureIndex(PlayerPedId(), 0)
+        );
     }
 }

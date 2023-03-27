@@ -1,99 +1,67 @@
-local PlayerHasHelmet, BaseClothSet, NakedClothSet = false
+local function PlayHelmetAnim(value)
+    QBCore.Functions.RequestAnimDict("veh@common@fp_helmet@")
+    if value then
+        TaskPlayAnim(PlayerPedId(), "veh@common@fp_helmet@", "put_on_helmet", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
+    else
+        TaskPlayAnim(PlayerPedId(), "veh@common@fp_helmet@", "take_off_helmet_stand", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
+    end
+    Wait(1100)
+end
+
+local function PlayComponentAnim(value)
+    QBCore.Functions.RequestAnimDict("anim@mp_yacht@shower@male@")
+    TaskPlayAnim(PlayerPedId(), "anim@mp_yacht@shower@male@", "male_shower_towel_dry_to_get_dressed", 8.0, -8.0, 3000, 16, 0, 0, 0, 0)
+    Wait(3000)
+end
+
+local function PlayPropsAnim(value)
+    QBCore.Functions.RequestAnimDict("mp_masks@on_foot")
+    TaskPlayAnim(PlayerPedId(), "mp_masks@on_foot", "put_on_mask", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
+    Wait(800)
+end
+
 local components = {
-    [1] = {label = "Chapeau", propId = 0, value = "HideHead"},
-    [2] = {label = "Masque", componentId = 1, value = "HideMask"},
-    [3] = {label = "Lunettes", propId = 1, value = "HideGlasses"},
-    [4] = {label = "Boucles", propId = 2, value = "HideEar"},
-    [5] = {label = "Collier", componentId = 7, value = "HideChain"},
-    [6] = {label = "Gilet", componentId = 9, value = "HideBulletproof"},
-    [7] = {label = "Haut", componentId = {3, 8, 10, 11}, value = "HideTop"},
-    [8] = {label = "Montre", propId = 6, value = "HideLeftHand"},
-    [9] = {label = "Bracelet", propId = 7, value = "HideRightHand"},
-    [10] = {label = "Sac", componentId = 5, value = "HideBag"},
-    [11] = {label = "Pantalon", componentId = 4, value = "HidePants"},
-    [12] = {label = "Chaussures", componentId = 6, value = "HideShoes"},
+    [1] = {label = "Casque", anim = PlayHelmetAnim, value = "ShowHelmet", inverted = true},
+    [2] = {label = "Chapeau", anim = PlayPropsAnim, value = "HideHead"},
+    [3] = {label = "Masque", anim = PlayComponentAnim, value = "HideMask"},
+    [4] = {label = "Lunettes", anim = PlayPropsAnim, value = "HideGlasses"},
+    [5] = {label = "Boucles", anim = PlayPropsAnim, value = "HideEar"},
+    [6] = {label = "Collier", anim = PlayComponentAnim, value = "HideChain"},
+    [7] = {label = "Gilet", anim = PlayComponentAnim, value = "HideBulletproof"},
+    [8] = {label = "Haut", anim = PlayComponentAnim, value = "HideTop"},
+    [9] = {label = "Montre", anim = PlayPropsAnim, value = "HideLeftHand"},
+    [10] = {label = "Bracelet", anim = PlayPropsAnim, value = "HideRightHand"},
+    [11] = {label = "Sac", anim = PlayComponentAnim, value = "HideBag"},
+    [12] = {label = "Pantalon", anim = PlayComponentAnim, value = "HidePants"},
+    [13] = {label = "Chaussures", anim = PlayComponentAnim, value = "HideShoes"},
 }
-
-local function componentEquipped(player, componentId)
-    if componentId == nil then
-        return false
-    end
-
-    if type(componentId) == "table" then
-        local found = false
-
-        for _, id in ipairs(componentId) do
-            found = found or componentEquipped(player, id)
-        end
-
-        return found
-    end
-
-    if NakedClothSet.Components[componentId] == nil then
-        return false
-    end
-
-    return GetPedDrawableVariation(player, componentId) ~= NakedClothSet.Components[componentId].Drawable or GetPedTextureVariation(player, componentId) ~=
-               NakedClothSet.Components[componentId].Texture or GetPedPaletteVariation(player, componentId) ~= NakedClothSet.Components[componentId].Palette
-end
-
-local function propEquipped(player, propId)
-    if propId == nil then
-        return false
-    end
-
-    if NakedClothSet.Props[propId] == nil then
-        NakedClothSet.Props[propId] = {Drawable = -1, Texture = -1}
-    end
-
-    return GetPedPropIndex(player, propId) ~= NakedClothSet.Props[propId].Drawable or GetPedPropTextureIndex(player, propId) ~=
-               NakedClothSet.Props[propId].Texture
-end
 
 function TenueEntry(menu)
     local componentsMenu = MenuV:InheritMenu(menu, {subtitle = "Gestion de la tenue"})
     local ped = PlayerPedId()
-    if PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") then
-        BaseClothSet = GetMaleDefaultBaseClothSet()
-        NakedClothSet = GetMaleDefaultNakedClothSet()
-    else
-        BaseClothSet = GetFemaleDefaultBaseClothSet()
-        NakedClothSet = GetFemaleDefaultNakedClothSet()
-    end
+    PlayerHasHelmet = PlayerData.cloth_config.Config.ShowHelmet
 
-    componentsMenu:AddCheckbox({
-        label = "Casque",
-        value = PlayerHasHelmet,
-        change = function(_, value)
-            PlayerHasHelmet = value
-            QBCore.Functions.RequestAnimDict("veh@common@fp_helmet@")
-            if PlayerHasHelmet then
-                TaskPlayAnim(ped, "veh@common@fp_helmet@", "put_on_helmet", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
-            else
-                TaskPlayAnim(ped, "veh@common@fp_helmet@", "take_off_helmet_stand", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
-            end
-            Wait(1100)
-            TriggerServerEvent("soz-character:server:UpdateClothConfig", "ShowHelmet", value)
-        end,
-    })
-
-    for _, component in ipairs(components) do
+    for k, component in ipairs(components) do
+        local value = not PlayerData.cloth_config.Config[component.value]
+        if component.inverted then
+            value = PlayerData.cloth_config.Config[component.value]
+        end
         componentsMenu:AddCheckbox({
             label = component.label,
-            value = componentEquipped(ped, component.componentId) or propEquipped(ped, component.propId),
+            value = value,
             change = function(_, value)
-                FreezeEntityPosition(PlayerPedId(), true)
-                if component.propId ~= nil then
-                    QBCore.Functions.RequestAnimDict("mp_masks@on_foot")
-                    TaskPlayAnim(ped, "mp_masks@on_foot", "put_on_mask", 8.0, -8.0, 2000, 16, 0, 0, 0, 0)
-                    Wait(800)
-                elseif component.componentId ~= nil then
-                    QBCore.Functions.RequestAnimDict("anim@mp_yacht@shower@male@")
-                    TaskPlayAnim(ped, "anim@mp_yacht@shower@male@", "male_shower_towel_dry_to_get_dressed", 8.0, -8.0, 3000, 16, 0, 0, 0, 0)
-                    Wait(3000)
+                if LocalPlayer.state["is_in_hub"] then
+                    return
                 end
+
+                FreezeEntityPosition(PlayerPedId(), true)
+                component.anim(value)
                 FreezeEntityPosition(PlayerPedId(), false)
-                TriggerServerEvent("soz-character:server:UpdateClothConfig", component.value, not value)
+                local sendvalue = not value
+                if component.inverted then
+                    sendvalue = value
+                end
+                TriggerServerEvent("soz-character:server:UpdateClothConfig", component.value, sendvalue)
             end,
         })
     end

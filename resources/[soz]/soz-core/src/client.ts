@@ -7,7 +7,9 @@ import { AdminModule } from './client/admin/admin.module';
 import { AfkModule } from './client/afk/afk.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
+import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
+import { HousingModule } from './client/housing/housing.module';
 import { InventoryModule } from './client/inventory/inventory.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
@@ -16,9 +18,12 @@ import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
 import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
+import { MandatoryModule } from './client/job/mdr/mdr.module';
 import { OilModule } from './client/job/oil/oil.module';
+import { PoliceModule } from './client/job/police/police.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { NuiModule } from './client/nui/nui.module';
+import { ObjectModule } from './client/object/object.module';
 import { PlayerModule } from './client/player/player.module';
 import { RepositoryModule } from './client/resources/repository.module';
 import { ShopModule } from './client/shop/shop.module';
@@ -39,6 +44,7 @@ async function bootstrap() {
         ProviderClientLoader,
         RepositoryModule,
         WorldModule,
+        ObjectModule,
         PlayerModule,
         WeatherModule,
         ItemModule,
@@ -64,6 +70,10 @@ async function bootstrap() {
         OilModule,
         WeaponModule,
         InventoryModule,
+        DrivingSchoolModule,
+        HousingModule,
+        MandatoryModule,
+        PoliceModule,
         ...PrivateModules
     );
 

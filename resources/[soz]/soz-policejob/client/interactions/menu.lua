@@ -17,13 +17,8 @@ local function RedAlertEntity(menu, societyNumber)
             local coords = GetEntityCoords(ped)
             local street, _ = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
             if not (IsWarningMessageActive() and tonumber(GetWarningMessageTitleHash()) == 1246147334) then
-                TriggerEvent("police:client:RedCall")
-                TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
-                    anonymous = false,
-                    number = societyNumber,
-                    message = ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
-                    position = true,
-                })
+                TriggerEvent("police:client:RedCall", societyNumber,
+                             ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)))
             end
         end,
     })
@@ -343,7 +338,7 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
         local giveLicenseMenu = MenuV:InheritMenu(menu, {subtitle = "Attribuer un permis"})
 
         for license, value in pairs(playerLicenses) do
-            if type(value) == "number" and value >= 1 then
+            if type(value) == "number" and value >= 1 and Config.Licenses[license] then
                 local sliderPoints = {}
                 for i = 1, value do
                     sliderPoints[i] = {label = i .. " point" .. (i > 1 and "s" or ""), value = i}
@@ -383,14 +378,14 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
                         menu:Close()
                     end,
                 })
-            elseif type(value) == "number" and value == 0 then
+            elseif type(value) == "number" and value == 0 and Config.Licenses[license] then
                 removePointMenu:AddButton({
                     label = Config.Licenses[license].label,
                     rightLabel = "Invalide",
                     value = nil,
                     disabled = true,
                 })
-            elseif type(value) == "boolean" and value then
+            elseif type(value) == "boolean" and value and Config.Licenses[license] then
                 removeLicenseMenu:AddConfirm({
                     label = Config.Licenses[license].label,
                     value = license,
@@ -424,7 +419,7 @@ PoliceJob.Functions.Menu.GenerateLicenseMenu = function(job, targetPlayer)
                         menu:Close()
                     end,
                 })
-            elseif type(value) == "boolean" and not value then
+            elseif type(value) == "boolean" and not value and Config.Licenses[license] then
                 removeLicenseMenu:AddButton({
                     label = Config.Licenses[license].label,
                     rightLabel = "Invalide",

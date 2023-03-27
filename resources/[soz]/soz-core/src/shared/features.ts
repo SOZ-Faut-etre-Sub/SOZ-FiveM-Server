@@ -14,6 +14,7 @@ export type Environment = 'development' | 'production' | 'test';
 
 const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
     [Feature.ChainsOfJustice]: {
+        production: true,
         development: true,
         test: true,
     },

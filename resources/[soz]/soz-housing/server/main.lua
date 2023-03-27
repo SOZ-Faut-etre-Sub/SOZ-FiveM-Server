@@ -44,7 +44,8 @@ MySQL.ready(function()
         Properties[apartment.property_id]:AddApartment(apartment.id,
                                                        Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.roommate,
                                                                      apartment.price, apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone,
-                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone))
+                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone, apartment.tier,
+                                                                     apartment.has_parking_place))
     end
 end)
 
@@ -234,7 +235,15 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
         TriggerEvent("monitor:server:event", "house_buy", {player_source = Player.PlayerData.source},
                      {house_id = apartment:GetIdentifier(), amount = apartment:GetPrice()})
 
-        Player.PlayerData.apartment = apartment:GetLabel()
+        Player.Functions.SetApartment({
+            id = apartmentId,
+            property_id = propertyId,
+            label = apartment:GetLabel(),
+            price = apartment:GetPrice(),
+            owner = apartment:GetOwner(),
+            tier = apartment:GetTier(),
+        })
+        Player.PlayerData.address = apartment:GetLabel()
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
@@ -246,7 +255,8 @@ end)
 RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    local property = Properties[propertyId]
+    local apartment = property:GetApartment(apartmentId)
     if apartment == nil then
         exports["soz-monitor"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
@@ -262,17 +272,42 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         return
     end
 
-    if Player.Functions.AddMoney("money", apartment:GetResellPrice()) then
-        MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL WHERE id = ?", {apartmentId})
+    local resellPrice = apartment:GetResellPrice(property:IsTrailer())
+    if Player.Functions.AddMoney("money", resellPrice) then
+        MySQL.update.await("UPDATE housing_apartment SET owner = NULL, roommate = NULL, tier = 0, has_parking_place = 0 WHERE id = ?", {
+            apartmentId,
+        })
+
+        if apartment:HasRoommate() then
+            local roommateCitizenId = apartment:GetRoomMate()
+            MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
+                               {roommateCitizenId, property:GetGarageName()})
+            exports["soz-character"]:TruncatePlayerCloakroomFromTier(roommateCitizenId, 0)
+            local Target = QBCore.Functions.GetPlayerByCitizenId(roommateCitizenId)
+            if Target then
+                Target.Functions.SetApartment(nil)
+                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+            end
+        end
+        MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
+                           {Player.PlayerData.citizenid, property:GetGarageName()})
+
         apartment:SetOwner(nil)
         apartment:SetRoommate(nil)
+        apartment:SetTier(0)
+        if property:IsTrailer() then
+            apartment:SetParkingPlace(0)
+        end
 
+        exports["soz-inventory"]:SetHouseStashMaxWeightFromTier(apartment:GetIdentifier(), 0)
+        Player.Functions.SetApartment(nil)
+
+        exports["soz-character"]:TruncatePlayerCloakroomFromTier(Player.PlayerData.citizenid, 0)
         TriggerEvent("monitor:server:event", "house_sell", {player_source = Player.PlayerData.source},
-                     {house_id = apartment:GetIdentifier(), amount = apartment:GetResellPrice()})
+                     {house_id = apartment:GetIdentifier(), amount = resellPrice})
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
-                           "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. apartment:GetResellPrice())
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. resellPrice)
     else
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
@@ -327,7 +362,15 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
         apartmentId,
     })
     apartment:SetRoommate(Target.PlayerData.citizenid)
-
+    Target.Functions.SetApartment({
+        id = apartmentId,
+        property_id = propertyId,
+        label = apartment:GetLabel(),
+        price = apartment:GetPrice(),
+        owner = apartment:GetOwner(),
+        tier = apartment:GetTier(),
+    })
+    Target.PlayerData.address = apartment:GetLabel()
     TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ajouté un partenaire à votre maison")
     TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été ajouté à votre maison")
 
@@ -337,7 +380,8 @@ end)
 RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, apartmentId)
     local Player = QBCore.Functions.GetPlayer(source)
 
-    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    local property = Properties[propertyId]
+    local apartment = property:GetApartment(apartmentId)
     if apartment == nil then
         exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
@@ -358,16 +402,24 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
         return
     end
 
-    local Target = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
+    local roommateCitizenId = apartment:GetRoomMate()
 
     MySQL.update.await("UPDATE housing_apartment SET roommate = NULL WHERE id = ?", {apartmentId})
+    MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?", {
+        roommateCitizenId,
+        property:GetGarageName(),
+    })
     apartment:SetRoommate(nil)
+    exports["soz-character"]:TruncatePlayerCloakroomFromTier(roommateCitizenId, 0)
 
     if apartment:IsOwner(Player.PlayerData.citizenid) then
         TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez supprimé un partenaire de votre maison")
     end
+
+    local Target = QBCore.Functions.GetPlayerByCitizenId(roommateCitizenId)
     if Target then
-        if Target.PlayerData.citizenid == Player.PlayerData.citizenid then
+        Target.Functions.SetApartment(nil)
+        if roommateCitizenId == Player.PlayerData.citizenid then
             TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez quitté la colocation")
         else
             TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
@@ -419,6 +471,106 @@ RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apar
     TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez reçu un accès à une maison")
 
     TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
+end)
+
+RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, price, zkeaPrice)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if not player then
+        return
+    end
+
+    local playerData = player.PlayerData
+
+    if not playerData.apartment then
+        return
+    end
+
+    local playerApartment = playerData.apartment
+    local apartmentId = playerApartment.id
+    local propertyId = playerApartment.property_id
+
+    local apartment = Properties[propertyId]:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("UpgradeApartmentTier %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if player.Functions.RemoveMoney("money", price) then
+        local removed = exports["soz-inventory"]:RemoveItem("cabinet_storage", "cabinet_zkea", zkeaPrice)
+        if removed ~= false then
+            MySQL.update.await("UPDATE housing_apartment SET tier = ? WHERE id = ?", {tier, apartmentId})
+
+            exports["soz-inventory"]:SetHouseStashMaxWeightFromTier(apartment:GetIdentifier(), tier)
+            player.Functions.SetApartmentTier(tier)
+            apartment:SetTier(tier)
+            TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
+            TriggerClientEvent("hud:client:DrawNotification", playerData.source,
+                               "Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~" .. tier .. "~s~ pour ~b~$" .. price)
+
+            if apartment:HasRoommate() then
+                local roommate = QBCore.Functions.GetPlayerByCitizenId(apartment:GetRoomMate())
+                roommate.Functions.SetApartmentTier(tier)
+            end
+        else
+            player.Functions.AddMoney("money", price)
+            TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock", "error")
+        end
+    else
+        TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
+    end
+end)
+
+RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(hasParking, price)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if not player then
+        return
+    end
+
+    local playerData = player.PlayerData
+
+    if not playerData.apartment then
+        return
+    end
+
+    local parkingValue = 0
+    if hasParking == true then
+        parkingValue = 1
+    end
+
+    local playerApartment = playerData.apartment
+    local apartmentId = playerApartment.id
+    local propertyId = playerApartment.property_id
+
+    local property = Properties[propertyId]
+    if property == nil then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it has no property"):format(propertyId, apartmentId))
+        return
+    end
+    if not property:IsTrailer() then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it is not a trailer"):format(propertyId, apartmentId))
+        return
+    end
+    local apartment = property:GetApartment(apartmentId)
+    if apartment == nil then
+        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        return
+    end
+
+    if player.Functions.RemoveMoney("money", price) then
+        MySQL.update.await("UPDATE housing_apartment SET has_parking_place = ? WHERE id = ?", {
+            parkingValue,
+            apartmentId,
+        })
+        player.Functions.SetApartmentHasParkingPlace(parkingValue)
+        apartment:SetParkingPlace(parkingValue)
+        TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
+        TriggerClientEvent("hud:client:DrawNotification", playerData.source,
+                           "Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$" .. price)
+    else
+        TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
+    end
 end)
 
 ---
@@ -569,4 +721,16 @@ exports("UpdateApartmentZone", function(propertyId, apartmentId, zone_type, zone
     end
 
     TriggerClientEvent("housing:client:UpdateApartmentZone", -1, propertyId, apartmentId, zone_type, apartment:GetZone(zone_type))
+end)
+
+exports("GetApartmentTier", function(propertyId, apartmentId)
+    local property = Properties[propertyId]
+    if property == nil then
+        return -1
+    end
+    local apartment = property:GetApartment(apartmentId)
+    if apartment == nil then
+        return -1
+    end
+    return apartment:GetTier()
 end)

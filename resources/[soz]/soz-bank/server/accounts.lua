@@ -107,6 +107,11 @@ function Account.Create(id, label, accountType, owner, money, marked_money, coor
         if string.find(self.id, "safe_") == nil then
             self.id = "safe_" .. self.id
         end
+        self.max = 300000
+    end
+
+    if self.type == "house_safe" then
+        self.max = Config.HouseSafeTiers[0]
     end
 
     Accounts[self.id] = self
@@ -118,14 +123,33 @@ function Account.Remove(acc)
     Accounts[acc.id] = nil
 end
 
-function Account.AddMoney(acc, money, money_type)
+function Account.GetMoney(acc, money_type)
     acc = Account(acc)
 
     if money_type == nil then
         money_type = "money"
     end
 
-    acc[money_type] = math.ceil(acc[money_type] + money - 0.5)
+    if acc == nil then
+        return 0
+    end
+
+    return acc[money_type]
+end
+
+function Account.AddMoney(acc, money, money_type, allowoverflow)
+    acc = Account(acc)
+
+    if money_type == nil then
+        money_type = "money"
+    end
+
+    local total = math.ceil(acc[money_type] + money - 0.5)
+    if not allowoverflow and (acc.type == "house_safe" or acc.type == "safestorages") and total > acc.max then
+        return false
+    end
+
+    acc[money_type] = total
     acc.changed = true
     return true
 end
@@ -155,6 +179,15 @@ function Account.TransfertMoney(accSource, accTarget, money, cb)
     if accSource then
         if accTarget then
             if money <= accSource.money then
+                if (accTarget.type == "house_safe" or accTarget.type == "safestorages") and money > accTarget.max then
+                    success, reason = false, "transfert_failed"
+
+                    if cb then
+                        cb(success, reason)
+                    end
+                    return
+                end
+
                 if Account.RemoveMoney(accSource, money) and Account.AddMoney(accTarget, money) then
                     _G.AccountType[accSource.type]:save(accSource.id, accSource.owner, accSource.money, accSource.marked_money)
                     _G.AccountType[accTarget.type]:save(accTarget.id, accTarget.owner, accTarget.money, accTarget.marked_money)

@@ -251,6 +251,11 @@ exports('SendNUIMessage', function(input)
     end
 end)
 
+exports('BringOnTop', function()
+    SetNuiFocus(true, false)
+    SetNuiFocus(false, false)
+end)
+
 --- Register `MenuV` keybinds
 MenuV:RegisterKey('UP', T('keybind_key_up'), 'KEYBOARD', 'UP')
 MenuV:RegisterKey('DOWN', T('keybind_key_down'), 'KEYBOARD', 'DOWN')

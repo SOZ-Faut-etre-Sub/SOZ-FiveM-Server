@@ -43,23 +43,19 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
 end)
 
 --- Escort
-RegisterNetEvent("police:server:EscortPlayer", function(playerId)
+RegisterNetEvent("police:server:EscortPlayer", function(playerId, crimi)
     local player = QBCore.Functions.GetPlayer(source)
     local target = QBCore.Functions.GetPlayer(playerId)
 
     if player and target and player ~= target then
-        for _, allowedJob in ipairs(Config.AllowedJobDragInteraction) do
-            if player.PlayerData.job.id == allowedJob then
-                Player(player.PlayerData.source).state:set("isEscorting", true, true)
-                Player(player.PlayerData.source).state:set("escorting", target.PlayerData.source, true)
-                Player(target.PlayerData.source).state:set("isEscorted", true, true)
+        Player(player.PlayerData.source).state:set("isEscorting", true, true)
+        Player(player.PlayerData.source).state:set("escorting", target.PlayerData.source, true)
+        Player(target.PlayerData.source).state:set("isEscorted", true, true)
 
-                TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source)
-                TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source)
+        TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source, target.PlayerData.source, crimi)
+        TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source, crimi)
 
-                return
-            end
-        end
+        return
     end
 end)
 
@@ -71,18 +67,14 @@ RegisterNetEvent("police:server:DeEscortPlayer", function(playerId)
     local targetState = Player(target.PlayerData.source).state
 
     if player and target and player ~= target then
-        for _, allowedJob in ipairs(Config.AllowedJobDragInteraction) do
-            if player.PlayerData.job.id == allowedJob then
-                if playerState.isEscorting and playerState.escorting == target.PlayerData.source and targetState.isEscorted then
-                    Player(player.PlayerData.source).state:set("isEscorting", false, true)
-                    Player(player.PlayerData.source).state:set("escorting", nil, true)
-                    Player(target.PlayerData.source).state:set("isEscorted", false, true)
+        if playerState.isEscorting and playerState.escorting == target.PlayerData.source and targetState.isEscorted then
+            Player(player.PlayerData.source).state:set("isEscorting", false, true)
+            Player(player.PlayerData.source).state:set("escorting", nil, true)
+            Player(target.PlayerData.source).state:set("isEscorted", false, true)
 
-                    TriggerClientEvent("police:client:DeEscort", target.PlayerData.source)
+            TriggerClientEvent("police:client:DeEscort", target.PlayerData.source)
 
-                    return
-                end
-            end
+            return
         end
     end
 end)

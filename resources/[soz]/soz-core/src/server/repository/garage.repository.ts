@@ -32,7 +32,7 @@ export class GarageRepository extends Repository<Record<string, Garage>> {
             const entryZone = JSON.parse(houseProperty.entry_zone) as DatabaseZone;
             const garageZone = JSON.parse(houseProperty.garage_zone) as DatabaseZone;
 
-            const houseGarage = {
+            const houseGarage: Garage = {
                 name: 'Garage personnel',
                 type: GarageType.House,
                 category: GarageCategory.Car,
@@ -48,6 +48,7 @@ export class GarageRepository extends Repository<Record<string, Garage>> {
                         maxZ: garageZone.maxZ,
                     }),
                 ],
+                isTrailerGarage: houseProperty.identifier.includes('trailer'),
             };
 
             garageList[houseProperty.identifier] = houseGarage;

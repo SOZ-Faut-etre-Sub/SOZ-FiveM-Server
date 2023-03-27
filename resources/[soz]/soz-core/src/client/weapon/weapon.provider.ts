@@ -1,3 +1,5 @@
+import { uuidv4 } from '@public/core/utils';
+
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -7,12 +9,20 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
 import { GlobalWeaponConfig, WeaponName } from '../../shared/weapons/weapon';
-import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
 import { TalkService } from '../talk.service';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
+import { WeaponHolsterProvider } from './weapon.holster.provider';
 import { WeaponService } from './weapon.service';
+
+const messageExcludeGroups = [
+    GetHashKey('GROUP_FIREEXTINGUISHER'),
+    GetHashKey('GROUP_THROWN'),
+    GetHashKey('GROUP_STUNGUN'),
+];
+
+const messageExclude = [GetHashKey('weapon_musket')];
 
 @Provider()
 export class WeaponProvider {
@@ -31,8 +41,10 @@ export class WeaponProvider {
     @Inject(TalkService)
     private talkService: TalkService;
 
-    @Inject(Notifier)
-    private notifier: Notifier;
+    @Inject(WeaponHolsterProvider)
+    private weaponHolsterProvider: WeaponHolsterProvider;
+
+    private lastPoliceCall = 0;
 
     @Once(OnceStep.PlayerLoaded)
     async onPlayerLoaded() {
@@ -141,8 +153,46 @@ export class WeaponProvider {
             return;
         }
 
-        emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot);
+        const weaponGroup = GetWeapontypeGroup(weapon.name);
+        emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot, weaponGroup);
+
+        if (
+            !messageExclude.includes(GetHashKey(weapon.name)) &&
+            !messageExcludeGroups.includes(weaponGroup) &&
+            Math.random() < 0.6 &&
+            Date.now() - this.lastPoliceCall > 120000
+        ) {
+            this.lastPoliceCall = Date.now();
+            const coords = GetEntityCoords(player);
+            const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
+            let name = GetStreetNameFromHashKey(street);
+            if (street2) {
+                name += ' et ' + GetStreetNameFromHashKey(street2);
+            }
+            const zone = GetLabelText(GetNameOfZone(coords[0], coords[1], coords[2]));
+
+            TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+                anonymous: true,
+                number: '555-POLICE',
+                message: `${zone}: Un coup de feu a été entendu vers ${name}.`,
+                position: false,
+                overrideIdentifier: 'System',
+            });
+        }
         await this.weapon.recoil();
+    }
+
+    @OnEvent(ClientEvent.WEAPON_EXPLOSION)
+    async onExplosion(x: number, y: number, z: number) {
+        const zone = GetLabelText(GetNameOfZone(x, y, z));
+
+        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+            anonymous: true,
+            number: '555-POLICE',
+            message: `Une explosion a été entendue vers ${zone}.`,
+            position: false,
+            overrideIdentifier: 'System',
+        });
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -172,7 +222,7 @@ export class WeaponProvider {
             await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
-        if (LocalPlayer.state.weapon_animation === true) {
+        if (this.weaponHolsterProvider.isInAnimation()) {
             return;
         }
 

@@ -89,4 +89,4 @@ Config.Products["jewelry"] = {
     },
 }
 
-Config.Locations["jewelry"] = {vector4(-623.22, -229.24, 38.06, 82.19)}
+Config.Locations["jewelry"] = {["jewelry"] = vector4(-623.22, -229.24, 38.06, 82.19)}

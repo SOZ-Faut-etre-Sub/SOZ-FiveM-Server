@@ -162,6 +162,40 @@ local Elevators = {
         downTo = nil,
         spawnPoint = vector4(2154.62, 2920.95, -81.08, 272.4),
     },
+    --- MTP
+    ["mtp:0"] = {
+        name = "MTP:Elevator0",
+        label = "Rez-de-chaussée",
+        buttons = vector2(-247.31, 6082.99),
+        size = vector2(0.20, 0.40),
+        heading = 315,
+        z = {min = 30.39, max = 33.39},
+        upTo = {"mtp:1", "mtp:2"},
+        downTo = nil,
+        spawnPoint = vector4(-247.59, 6081.25, 30.39, 313.56),
+    },
+    ["mtp:1"] = {
+        name = "MTP:Elevator1",
+        label = "Étage",
+        buttons = vector2(-247.29, 6082.97),
+        size = vector2(0.10, 0.40),
+        heading = 315,
+        z = {min = 39.57, max = 42.57},
+        upTo = "mtp:2",
+        downTo = "mtp:0",
+        spawnPoint = vector4(-247.32, 6081.62, 39.57, 328.02),
+    },
+    ["mtp:2"] = {
+        name = "MTP:Elevator2",
+        label = "Toit",
+        buttons = vector2(-244.09, 6076.16),
+        size = vector2(0.10, 0.40),
+        heading = 315,
+        z = {min = 50.22, max = 53.22},
+        upTo = nil,
+        downTo = {"mtp:0", "mtp:1"},
+        spawnPoint = vector4(-244.10, 6074.65, 50.22, 310.85),
+    },
 }
 
 ---Create QB-Target options for a possible elevator destination

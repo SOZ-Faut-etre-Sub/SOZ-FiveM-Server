@@ -1,4 +1,5 @@
 PlayerData = QBCore.Functions.GetPlayerData()
+local mask = 0
 
 local function ApplyPlayerModelHash(playerId, hash)
     if hash == GetEntityModel(GetPlayerPed(playerId)) then
@@ -45,26 +46,48 @@ local function ApplyPedFaceTrait(ped, faceTrait)
     SetPedHeadOverlay(ped, HeadOverlayType.Moles, faceTrait.Moles, 1.0);
     SetPedHeadOverlay(ped, HeadOverlayType.BodyBlemishes, faceTrait.BodyBlemish, 1.0);
     SetPedHeadOverlay(ped, HeadOverlayType.AddBodyBlemishes, faceTrait.AddBodyBlemish, 1.0);
-    SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, faceTrait.CheeksBoneHigh);
-    SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, faceTrait.CheeksBoneWidth);
-    SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, faceTrait.CheeksWidth);
-    SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLength, faceTrait.ChimpBoneLength);
-    SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLowering, faceTrait.ChimpBoneLower);
-    SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneWidth, faceTrait.ChimpBoneWidth);
-    SetPedFaceFeature(ped, FaceFeatureType.ChimpHole, faceTrait.ChimpHole);
+
+    SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, faceTrait.EyesOpening);
     SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, faceTrait.EyebrowForward);
     SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, faceTrait.EyebrowHigh);
-    SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, faceTrait.EyesOpening);
-    SetPedFaceFeature(ped, FaceFeatureType.JawBoneBackLength, faceTrait.JawBoneBackLength);
-    SetPedFaceFeature(ped, FaceFeatureType.JawBoneWidth, faceTrait.JawBoneWidth);
-    SetPedFaceFeature(ped, FaceFeatureType.LipsThickness, faceTrait.LipsThickness);
-    SetPedFaceFeature(ped, FaceFeatureType.NeckThickness, faceTrait.NeckThickness);
-    SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, faceTrait.NoseBoneHigh);
-    SetPedFaceFeature(ped, FaceFeatureType.NoseBoneTwist, faceTrait.NoseBoneTwist);
-    SetPedFaceFeature(ped, FaceFeatureType.NosePeakLength, faceTrait.NosePeakLength);
-    SetPedFaceFeature(ped, FaceFeatureType.NosePeakLowering, faceTrait.NosePeakLower);
-    SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, faceTrait.NosePeakHeight);
-    SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, faceTrait.NoseWidth);
+
+    if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, -1.0);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, -1.0);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLength, -1.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLowering, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneWidth, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpHole, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.JawBoneBackLength, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.JawBoneWidth, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.LipsThickness, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NeckThickness, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneTwist, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLength, 1.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLowering, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, 0.0);
+    else
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, faceTrait.CheeksBoneHigh);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, faceTrait.CheeksBoneWidth);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, faceTrait.CheeksWidth);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLength, faceTrait.ChimpBoneLength);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLowering, faceTrait.ChimpBoneLower);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneWidth, faceTrait.ChimpBoneWidth);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpHole, faceTrait.ChimpHole);
+        SetPedFaceFeature(ped, FaceFeatureType.JawBoneBackLength, faceTrait.JawBoneBackLength);
+        SetPedFaceFeature(ped, FaceFeatureType.JawBoneWidth, faceTrait.JawBoneWidth);
+        SetPedFaceFeature(ped, FaceFeatureType.LipsThickness, faceTrait.LipsThickness);
+        SetPedFaceFeature(ped, FaceFeatureType.NeckThickness, faceTrait.NeckThickness);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, faceTrait.NoseBoneHigh);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneTwist, faceTrait.NoseBoneTwist);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLength, faceTrait.NosePeakLength);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLowering, faceTrait.NosePeakLower);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, faceTrait.NosePeakHeight);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, faceTrait.NoseWidth);
+    end
 end
 
 local function ApplyPedMakeup(ped, makeup)
@@ -183,14 +206,14 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, clothConfig.NakedClothSet)
     end
 
-    local hasHelmet = clothConfig["BaseClothSet"].Props[PropType.Helmet] ~= nil
+    local hasHelmet = clothSet.Props[PropType.Helmet] ~= nil
     if not hasHelmet then
         SetPedConfigFlag(PlayerPedId(), 34, hasHelmet)
     end
 
     SetPedCanLosePropsOnDamage(PlayerPedId(), not clothConfig.Config.ShowHelmet or not hasHelmet, 0)
     if clothConfig.Config.ShowHelmet and hasHelmet then
-        local override = {Props = {[PropType.Head] = clothConfig["BaseClothSet"].Props[PropType.Helmet]}}
+        local override = {Props = {[PropType.Head] = clothSet.Props[PropType.Helmet]}}
 
         clothSet = MergeClothSet(clothSet, override)
     elseif clothConfig.Config.HideHead then
@@ -199,7 +222,7 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, override)
     else
         if CanApplyBaseHeadProp(clothConfig) then
-            local override = {Props = {[PropType.Head] = clothConfig["BaseClothSet"].Props[tostring(PropType.Head)]}}
+            local override = {Props = {[PropType.Head] = clothSet.Props[tostring(PropType.Head)]}}
 
             clothSet = MergeClothSet(clothSet, override)
         end
@@ -221,6 +244,11 @@ function ClothConfigComputeToClothSet(clothConfig)
         end
 
         clothSet.Components[tostring(ComponentType.Hair)] = {Drawable = hair, Texture = 0, Palette = 0}
+
+        if maskDrawable ~= mask then
+            mask = maskDrawable
+            ApplyPedFaceTrait(PlayerPedId(), PlayerData.skin.FaceTrait)
+        end
     end
 
     if clothConfig.Config.HideGlasses then

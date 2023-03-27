@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CDoorTuningFile>
+    <NamedTuningArray>
+        <Item>
+            <Name>SozGarageDoorOpening</Name>
+            <Tuning>
+                <AutoOpenVolumeOffset x="0" y="-1.675" z="-2.45"/>
+                <Flags/>
+                <AutoOpenRadiusModifier value="5.763"/>
+                <AutoOpenRate value="1"/>
+                <AutoOpenCosineAngleBetweenThreshold value="-1"/>
+                <AutoOpenCloseRateTaper value="true"/>
+                <UseAutoOpenTriggerBox value="true"/>
+                <CustomTriggerBox value="false"/>
+                <TriggerBoxMinMax>
+                    <min x="0" y="0" z="0"/>
+                    <max x="0" y="0" z="0"/>
+                </TriggerBoxMinMax>
+                <BreakableByVehicle value="false"/>
+                <BreakingImpulse value="0"/>
+                <ShouldLatchShut value="false"/>
+                <MassMultiplier value="1"/>
+                <WeaponImpulseMultiplier value="1"/>
+                <RotationLimitAngle value="0"/>
+                <TorqueAngularVelocityLimit value="5"/>
+                <StdDoorRotDir>StdDoorOpenBothDir</StdDoorRotDir>
+            </Tuning>
+        </Item>
+    </NamedTuningArray>
+    <ModelToTuneMapping>
+        <Item>
+            <ModelName>soz_mtp_room02_garagedoor</ModelName>
+            <TuningName>SozGarageDoorOpening</TuningName>
+        </Item>
+        <Item>
+            <ModelName>soz_mtp_room02_garagedoor01</ModelName>
+            <TuningName>SozGarageDoorOpening</TuningName>
+        </Item>
+    </ModelToTuneMapping>
+</CDoorTuningFile>

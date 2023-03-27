@@ -1,3 +1,5 @@
+import { Component, Prop, WardrobeConfig } from '../cloth';
+import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '../drawable';
 import { NamedZone } from '../polyzone/box.zone';
 
 export type StonkBagType = 'jewelbag' | 'small_moneybag' | 'medium_moneybag' | 'big_moneybag';
@@ -132,5 +134,216 @@ export const StonkConfig = {
         duration: 45 * 1000,
         society_gain: 6000,
         location: deliveryZones,
+    },
+};
+
+export const DUTY_OUTFIT_NAME = 'Tenue de service';
+
+export const StonkCloakroom: WardrobeConfig = {
+    [GetHashKey('mp_m_freemode_01')]: {
+        [DUTY_OUTFIT_NAME]: {
+            Components: {
+                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [Component.Legs]: {
+                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 2,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.Shoes]: { Drawable: 54, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: {
+                    Drawable:
+                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Undershirt] + 1,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: {
+                    Drawable:
+                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Decals] + 3,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.Tops]: {
+                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 5,
+                    Texture: 0,
+                    Palette: 0,
+                },
+            },
+            Props: {
+                [Prop.Hat]: {
+                    Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat],
+                    Texture: 0,
+                    Palette: 0,
+                },
+            },
+        },
+        ['Tenue VIP']: {
+            Components: {
+                [1]: { Drawable: 121, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 12, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 25, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 29, Texture: 2, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue Direction']: {
+            Components: {
+                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 24, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 20, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 34, Texture: 1, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 29, Texture: 3, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue Hiver']: {
+            Components: {
+                [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
+                [Component.Legs]: {
+                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 2,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.Shoes]: { Drawable: 54, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: {
+                    Drawable:
+                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Undershirt] + 1,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: {
+                    Drawable:
+                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Decals] + 3,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.Tops]: {
+                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 9,
+                    Texture: 0,
+                    Palette: 0,
+                },
+            },
+            Props: {
+                [Prop.Hat]: {
+                    Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat],
+                    Texture: 0,
+                    Palette: 0,
+                },
+            },
+        },
+    },
+    [GetHashKey('mp_f_freemode_01')]: {
+        [DUTY_OUTFIT_NAME]: {
+            Components: {
+                [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.Legs]: {
+                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 2,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.Shoes]: { Drawable: 55, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: {
+                    Drawable:
+                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Undershirt] + 1,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: {
+                    Drawable:
+                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Decals] + 3,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.Tops]: {
+                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Tops] + 5,
+                    Texture: 0,
+                    Palette: 0,
+                },
+            },
+            Props: {
+                [Prop.Hat]: {
+                    Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Prop.Hat],
+                    Texture: 0,
+                    Palette: 0,
+                },
+            },
+        },
+        ['Tenue VIP']: {
+            Components: {
+                [1]: { Drawable: 121, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 133, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 29, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 22, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 216, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 339, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue Direction']: {
+            Components: {
+                [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 37, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 29, Texture: 1, Palette: 0 },
+                [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 40, Texture: 4, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 57, Texture: 3, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenues Hiver']: {
+            Components: {
+                [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                [Component.Legs]: {
+                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 2,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.Shoes]: { Drawable: 55, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: {
+                    Drawable:
+                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Undershirt] + 1,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: {
+                    Drawable:
+                        VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Decals] + 3,
+                    Texture: 0,
+                    Palette: 0,
+                },
+                [Component.Tops]: {
+                    Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Tops] + 9,
+                    Texture: 0,
+                    Palette: 0,
+                },
+            },
+            Props: {
+                [Prop.Hat]: {
+                    Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Prop.Hat],
+                    Texture: 0,
+                    Palette: 0,
+                },
+            },
+        },
     },
 };

@@ -1,10 +1,6 @@
-local relationshipTypes = {
-    "CIVMALE",
-    "CIVFEMALE",
-    "COP",
-    "SECURITY_GUARD",
-    "PRIVATE_SECURITY",
-    "FIREMAN",
+local relationshipTypesLike = {"CIVMALE", "CIVFEMALE", "COP", "SECURITY_GUARD", "PRIVATE_SECURITY"}
+
+local relationshipTypesRespect = {
     "GANG_1",
     "GANG_2",
     "GANG_9",
@@ -31,6 +27,7 @@ local relationshipTypes = {
     "MISSION8",
     "AGGRESSIVE_INVESTIGATE",
     "MEDIC",
+    "FIREMAN",
 }
 
 --[[
@@ -43,6 +40,9 @@ Relationship types:
 5 = Hate
 255 = Pedestrians
 ]]
-for _, group in ipairs(relationshipTypes) do
+for _, group in ipairs(relationshipTypesRespect) do
+    SetRelationshipBetweenGroups(1, GetHashKey(group), GetHashKey("PLAYER"))
+end
+for _, group in ipairs(relationshipTypesLike) do
     SetRelationshipBetweenGroups(2, GetHashKey(group), GetHashKey("PLAYER"))
 end

@@ -3,13 +3,6 @@ SozJobCore = exports["soz-jobs"]:GetCoreObject()
 
 PlayerData = QBCore.Functions.GetPlayerData()
 
-IsDead = false
-isInHospitalBed = false
-HospitalBedId = nil
-DeathTime = 0
-Callems = false
-IsItt = false
-
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
     QBCore.Functions.CreateBlip("LSMC", {

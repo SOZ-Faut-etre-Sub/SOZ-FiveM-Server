@@ -236,7 +236,7 @@ Config.Storages["baun_unicorn_cloakroom_1"] = {
     minZ = 27.82,
     maxZ = 30.27,
     heading = 30,
-    targetOptions = getCloakroomTargetOptions("baun", "baun_unicorn_cloakroom_1", "jobs:client:baun:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("baun", "baun_unicorn_cloakroom_1"),
 }
 
 Config.Storages["baun_unicorn_cloakroom_2"] = {
@@ -248,7 +248,7 @@ Config.Storages["baun_unicorn_cloakroom_2"] = {
     minZ = 27.87,
     maxZ = 30.27,
     heading = 30,
-    targetOptions = getCloakroomTargetOptions("baun", "baun_unicorn_cloakroom_2", "jobs:client:baun:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("baun", "baun_unicorn_cloakroom_2"),
 }
 
 Config.Storages["baun_bahama_cloakroom_1"] = {
@@ -260,5 +260,5 @@ Config.Storages["baun_bahama_cloakroom_1"] = {
     minZ = 29.92,
     maxZ = 31.92,
     heading = 303,
-    targetOptions = getCloakroomTargetOptions("baun", "baun_bahama_cloakroom_1", "jobs:client:baun:OpenCloakroomMenu"),
+    targetOptions = getCloakroomTargetOptions("baun", "baun_bahama_cloakroom_1"),
 }

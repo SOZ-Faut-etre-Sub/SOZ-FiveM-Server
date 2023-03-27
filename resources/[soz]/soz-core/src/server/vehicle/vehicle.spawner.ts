@@ -49,6 +49,8 @@ const VEHICLE_HAS_RADIO = [
     'police5',
     'police6',
     'policeb2',
+    'lspdbana1',
+    'lspdbana2',
     'sheriff',
     'sheriff2',
     'sheriff3',
@@ -56,6 +58,8 @@ const VEHICLE_HAS_RADIO = [
     'sheriffb',
     'sheriffdodge',
     'sheriffcara',
+    'bcsobana1',
+    'bcsobana2',
     'maverick2',
     'pbus',
     'polmav',
@@ -197,6 +201,7 @@ export class VehicleSpawner {
             id: vehicle.id,
             open: false,
             owner: player.citizenid,
+            defaultOwner: vehicle.citizenid,
         };
 
         const hash = parseInt(vehicle.hash || '0', 10);

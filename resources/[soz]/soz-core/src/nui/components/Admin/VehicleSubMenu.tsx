@@ -1,3 +1,4 @@
+import { VehicleSubMenuState } from '@public/shared/admin/admin';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { SozRole } from '../../../core/permissions';
@@ -8,6 +9,7 @@ import { fetchNui } from '../../fetch';
 import {
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
@@ -18,6 +20,7 @@ import {
 export type VehicleSubMenuProps = {
     banner: string;
     permission: SozRole;
+    state: VehicleSubMenuState;
 };
 
 export const VEHICLE_OPTIONS = [
@@ -28,7 +31,7 @@ export const VEHICLE_OPTIONS = [
 
 type Catalog = Record<keyof VehicleCategory, Vehicle[]>;
 
-export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner, permission }) => {
+export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner, permission, state }) => {
     const [vehicles, setVehicles] = useState<any[]>([]);
     const [catalog, setCatalog] = useState<Catalog>(null);
 
@@ -67,7 +70,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                         🧞 Faire apparaître un véhicule
                     </MenuItemButton>
                     <MenuItemSubMenuLink id={'vehicles_catalog'}>📝 Catalogue des véhicules</MenuItemSubMenuLink>
-                    <MenuItemButton onConfirm={onOpenBennysUpgrade}>Améliorer le véhicule</MenuItemButton>
+                    <MenuItemButton onConfirm={onOpenBennysUpgrade}>🔧 Améliorer le véhicule</MenuItemButton>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleRepair);
@@ -107,6 +110,15 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                             </MenuItemButton>
                         </>
                     )}
+                    <MenuItemCheckbox
+                        checked={state.noStall}
+                        onChange={async value => {
+                            state.noStall = value;
+                            await fetchNui(NuiEvent.AdminToggleNoStall, value);
+                        }}
+                    >
+                        ⛍ Calage désactivé
+                    </MenuItemCheckbox>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleDelete);

@@ -1,4 +1,5 @@
 local SapHarvestedTrees = {}
+local harvesting = false
 
 local function ConcatPosition(position)
     local x = math.floor(position.x)
@@ -27,7 +28,7 @@ local function TreeInteraction(identifier, position)
                 event = "pawl:client:harvestTree",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
-                    return PlayerData.job.onduty
+                    return not harvesting and PlayerData.job.onduty
                 end,
                 job = "pawl",
                 blackoutGlobal = true,
@@ -48,7 +49,7 @@ local function TreeInteraction(identifier, position)
                         return false
                     end
 
-                    return PlayerData.job.onduty
+                    return not harvesting and PlayerData.job.onduty
                 end,
                 job = "pawl",
                 blackoutGlobal = true,
@@ -63,6 +64,7 @@ local function TreeInteraction(identifier, position)
 end
 
 RegisterNetEvent("pawl:client:harvestTree", function(data)
+    harvesting = true
     local ped = PlayerPedId()
 
     local HatchetWeapon = GetHashKey(Config.Harvest.RequiredWeapon)
@@ -95,9 +97,11 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
     end
 
     RemoveWeaponFromPed(ped, HatchetWeapon)
+    harvesting = false
 end)
 
 RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
+    harvesting = true
     local ped = PlayerPedId()
 
     local HatchetWeapon = GetHashKey(Config.Harvest.RequiredWeapon)
@@ -128,6 +132,7 @@ RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
     end
 
     RemoveWeaponFromPed(ped, HatchetWeapon)
+    harvesting = false
 end)
 
 RegisterNetEvent("pawl:client:syncField", function(identifier, data)

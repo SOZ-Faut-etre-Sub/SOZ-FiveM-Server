@@ -24,7 +24,7 @@ RegisterCommand("inventory", function()
             Wait(50)
             SetNuiFocusKeepInput(false)
         end
-    end, "player", source)
+    end, "player")
 end, false)
 
 RegisterNUICallback("player/useItem", function(data, cb)
@@ -119,9 +119,34 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
             if playerIdx == -1 then -- Is NPC
                 if currentResellZone ~= nil then
                     TriggerServerEvent("inventory:server:ResellItem", data, tonumber(amount), currentResellZone)
+                else
+                    exports["soz-hud"]:DrawNotification("Assurez-vous d'avoir le bon emploi et d'être en service", "error")
                 end
             else
                 TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(playerIdx), data, tonumber(amount))
+            end
+        end
+    else
+        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+    end
+
+    cb(true)
+end)
+
+RegisterNUICallback("player/giveMoneyToTarget", function(data, cb)
+    local hit, _, _, entityHit, entityType, _ = ScreenToWorld()
+    SetNuiFocus(false, false)
+
+    if hit == 1 and entityType == 1 then
+        local amount = exports["soz-hud"]:Input("Quantité", 12)
+
+        if amount and tonumber(amount) > 0 then
+            TriggerEvent("inventory:client:StoreWeapon")
+            local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
+            if playerIdx == -1 then -- Is NPC
+                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+            else
+                TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(playerIdx), "money", math.ceil(tonumber(amount)))
             end
         end
     else

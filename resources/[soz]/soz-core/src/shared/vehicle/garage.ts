@@ -22,6 +22,15 @@ export enum PlaceCapacity {
     Medium = 2,
     Large = 3,
 }
+
+export const HouseGarageLimits = {
+    0: 2,
+    1: 4,
+    2: 6,
+    3: 8,
+    4: 10,
+};
+
 export type GarageParkingPlaceData = {
     capacity: PlaceCapacity[];
 };
@@ -35,6 +44,7 @@ export type Garage = {
     zone: Zone;
     allowTrailers?: boolean;
     parkingPlaces: Zone<GarageParkingPlaceData>[];
+    isTrailerGarage?: boolean;
 };
 
 export type GarageVehicle = {
@@ -48,4 +58,6 @@ export type GarageMenuData = {
     garage: Garage;
     free_places: number | null;
     id: string;
+    max_places: number | null;
+    has_fake_ticket: boolean;
 };

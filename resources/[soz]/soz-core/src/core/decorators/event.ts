@@ -70,6 +70,7 @@ export enum OnceStep {
     PlayerLoaded = 'playerLoaded',
     RepositoriesLoaded = 'repositoriesLoaded',
     Stop = 'stop',
+    NuiLoaded = 'nuiLoaded',
 }
 
 export const OnceMetadataKey = 'soz_core.decorator.once';

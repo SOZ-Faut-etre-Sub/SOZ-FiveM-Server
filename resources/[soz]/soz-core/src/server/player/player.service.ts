@@ -113,6 +113,14 @@ export class PlayerService {
         }
     }
 
+    public updatePlayerData(source: number): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            player.Functions.UpdatePlayerData();
+        }
+    }
+
     public incrementMetadata<K extends keyof PlayerMetadata>(
         source: number,
         key: K,
@@ -140,5 +148,19 @@ export class PlayerService {
         }
 
         return null;
+    }
+
+    public setJobDuty(source: number, onDuty: boolean): PlayerData | null {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return null;
+        }
+
+        player.Functions.SetJobDuty(onDuty);
+    }
+
+    public getSteamIdentifier(source: number): string {
+        return this.QBCore.getSteamIdentifier(source);
     }
 }

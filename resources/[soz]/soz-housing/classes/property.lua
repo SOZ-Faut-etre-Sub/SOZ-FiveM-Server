@@ -162,6 +162,10 @@ function Property:IsBuilding()
     return table.length(self.apartments) > 1
 end
 
+function Property:IsTrailer()
+    return string.find(self.identifier, "trailer") ~= nil
+end
+
 function Property:HasGarage()
     return self.garage_zone ~= nil
 end
@@ -184,6 +188,10 @@ end
 
 function Property:GetExteriorCulling()
     return self.exterior_culling
+end
+
+function Property:GetGarageName()
+    return "property_" .. self.identifier
 end
 
 ---

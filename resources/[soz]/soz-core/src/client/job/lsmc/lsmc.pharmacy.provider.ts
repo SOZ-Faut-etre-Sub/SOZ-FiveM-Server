@@ -1,13 +1,23 @@
-import { Once, OnceStep } from '../../../core/decorators/event';
+import { Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { ServerEvent } from '../../../shared/event';
+import { NuiEvent, ServerEvent } from '../../../shared/event';
+import { MenuType } from '../../../shared/nui/menu';
+import { NuiMenu } from '../../nui/nui.menu';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
 export class LSMCPharmacyProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
+    @OnNuiEvent(NuiEvent.LsmcPharmacyBuyItem)
+    async buyItem({ item }: { item: string }) {
+        TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, item);
+    }
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
@@ -25,31 +35,10 @@ export class LSMCPharmacyProvider {
             target: {
                 options: [
                     {
-                        label: 'Acheter un mouchoir',
-                        icon: 'c:/ems/tissue.png',
-                        action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'tissue');
-                        },
-                    },
-                    {
-                        label: 'Acheter un antibiotique',
-                        icon: 'c:/ems/antibiotic.png',
-                        action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'antibiotic');
-                        },
-                    },
-                    {
-                        label: 'Acheter une pommade',
-                        icon: 'c:/ems/ointment.png',
-                        action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'pommade');
-                        },
-                    },
-                    {
-                        label: 'Acheter un antidouleur',
+                        label: 'Liste des médicaments',
                         icon: 'c:/ems/painkiller.png',
                         action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, 'painkiller');
+                            this.nuiMenu.openMenu(MenuType.LsmcPharmacy);
                         },
                     },
                     {

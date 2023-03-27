@@ -8,7 +8,9 @@ shared_scripts {"config.lua", "shared/items.js"}
 client_script "client/*.lua"
 server_scripts {"@oxmysql/lib/MySQL.lua", "server/*.lua"}
 
-files {"components/welcome/welcome.html", "components/welcome/**/*.jpg"}
+data_file "FIVEM_LOVES_YOU_4B38E96CC036038F" "events.meta"
+
+files {"components/welcome/welcome.html", "components/welcome/**/*.jpg", "events.meta", "relationships.dat"}
 
 ui_page "components/welcome/welcome.html"
 

@@ -36,6 +36,7 @@ export class VehicleSeatbeltProvider {
     private lastVehicleSpeed = 0;
     private lastVehiclePosition: Vector3 | null = null;
     private lastVehicleVelocity: Vector3 | null = null;
+    private lastEjectionTime = 0;
 
     private async trySwitchingSeat() {
         if (this.isSwitchingSeat) {
@@ -61,6 +62,7 @@ export class VehicleSeatbeltProvider {
         await wait(2000);
         SetPedConfigFlag(PlayerPedId(), 184, true);
         this.isSwitchingSeat = false;
+        this.vehicleService.updateVehiculeClothConfig();
     }
 
     public isSeatbeltOnForPlayer() {
@@ -91,6 +93,12 @@ export class VehicleSeatbeltProvider {
         const vehicle = GetVehiclePedIsIn(ped, false);
 
         if (!vehicle) {
+            return;
+        }
+
+        const vehicleEntering = GetVehiclePedIsEntering(ped);
+
+        if (vehicleEntering === vehicle) {
             return;
         }
 
@@ -252,6 +260,7 @@ export class VehicleSeatbeltProvider {
     private async ejectPlayer(ped: number, vehicle: number, velocity: Vector3) {
         const position = GetOffsetFromEntityInWorldCoords(vehicle, 1.0, 0.0, 1.0);
         SetEntityCoords(ped, position[0], position[1], position[2], false, false, false, false);
+        this.lastEjectionTime = Date.now();
 
         await wait(0);
 
@@ -260,5 +269,9 @@ export class VehicleSeatbeltProvider {
 
         this.isSeatbeltOn = false;
         TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
+    }
+
+    public getLastEjectTime(): number {
+        return this.lastEjectionTime;
     }
 }

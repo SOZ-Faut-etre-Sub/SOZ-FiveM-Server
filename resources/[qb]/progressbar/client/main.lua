@@ -75,18 +75,20 @@ function Process(action, start, tick, finish)
             isAnim = false
             isProp = false
 
-            SendNUIMessage({
-                action = "progress",
-                duration = Action.duration,
-                label = Action.label
-            })
+            if not Action.disableNui then
+                SendNUIMessage({
+                    action = "progress",
+                    duration = Action.duration,
+                    label = Action.label
+                })
+            end
 
             CreateThread(function()
                 if start ~= nil then
                     start()
                 end
+                Wait(1)
                 while isDoingAction do
-                    Wait(1)
                     if tick ~= nil then
                         tick()
                     end
@@ -103,6 +105,7 @@ function Process(action, start, tick, finish)
                     if IsEntityDead(ped) and not Action.useWhileDead then
                         TriggerEvent("progressbar:client:cancel")
                     end
+                    Wait(1)
                 end
                 if finish ~= nil then
                     finish(wasCancelled)
@@ -118,7 +121,7 @@ end
 
 function ActionStart()
     runProgThread = true
-    LocalPlayer.state:set("inv_busy", true, true) -- Busy
+    LocalPlayer.state:set("inv_busy", not Action.no_inv_busy, true) -- Busy
     CreateThread(function()
         while runProgThread do
             if isDoingAction then
@@ -242,7 +245,6 @@ function ActionCleanup()
             ClearPedTasks(ped)
             ClearPedSecondaryTask(ped)
             StopAnimTask(ped, Action.animDict, Action.anim, 1.0)
-            SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
         else
             ClearPedTasks(ped)
         end
@@ -254,10 +256,14 @@ function ActionCleanup()
     playerProps = {}
     playerHasProp = false
 
-    DetachEntity(NetToObj(prop_net), 1, 1)
-    DeleteEntity(NetToObj(prop_net))
-    DetachEntity(NetToObj(propTwo_net), 1, 1)
-    DeleteEntity(NetToObj(propTwo_net))
+    if prop_net then
+        DetachEntity(NetToObj(prop_net), 1, 1)
+        DeleteEntity(NetToObj(prop_net))
+    end
+    if propTwo_net then
+        DetachEntity(NetToObj(propTwo_net), 1, 1)
+        DeleteEntity(NetToObj(propTwo_net))
+    end
     prop_net = nil
     propTwo_net = nil
     runProgThread = false

@@ -50,8 +50,12 @@ window.addEventListener("message", function (event) {
 
         if (event.data.isATM) {
             $("#bankingTransfer-tab").css({"display":"none"});
+            $("#bankingDeposit-tab").css({"display":"none"});
+            $("#bankingDeposit-buttons").css({"display":"none"});
         } else {
             $("#bankingTransfer-tab").css({"display":"block"});
+            $("#bankingDeposit-tab").css({"display":"block"});
+            $("#bankingDeposit-buttons").css({"display":"flex"});
         }
         isATM = event.data.isATM;
         atmType = event.data.atmType;

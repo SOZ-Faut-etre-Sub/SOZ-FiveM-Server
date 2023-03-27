@@ -181,7 +181,7 @@ end
 --
 exports("GetUpwMetrics", function()
     local metrics = {}
-    if Pm == {} then
+    if Pm == {} or Pm == nil then
         return metrics
     end
 

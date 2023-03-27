@@ -108,5 +108,7 @@ function Plant:ProduceWaste()
         waste = math.random(self.wastePerMinute.min, self.wastePerMinute.max)
     end
 
+    waste = waste * 0.5
+
     self.waste = self.waste + waste
 end

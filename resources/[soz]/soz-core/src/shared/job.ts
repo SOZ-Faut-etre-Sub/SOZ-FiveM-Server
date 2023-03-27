@@ -21,6 +21,7 @@ export enum JobType {
     Ffs = 'ffs',
     Baun = 'baun',
     FBI = 'fbi',
+    MDR = 'mdr',
 }
 
 export enum JobPermission {
@@ -34,6 +35,7 @@ export enum JobPermission {
     SocietyTakeOutPound = 'society-take-out-pound',
     NewsManageArticle = 'manage-article',
     CashTransfer_CollectBags = 'collect-bags',
+    CashTransfer_CollectSecure = 'collect-secure',
     CashTransfer_ResaleBags = 'resale-bags',
     CashTransfer_FillIn = 'fill-in',
     Food_Harvest = 'harvest',
@@ -52,6 +54,8 @@ export enum JobPermission {
     BennysEstimate = 'estimate',
     BennysResell = 'resell',
     BennysOrder = 'order',
+    MdrViewOtherJobs = 'view-other-jobs',
+    MdrViewCitizenData = 'view-citizen-data',
 }
 
 export type Job = {

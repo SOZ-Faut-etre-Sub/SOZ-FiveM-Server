@@ -141,6 +141,9 @@ export const getModTypeName = (vehicleEntityId: number, mod: VehicleModType): st
 
             return GetLabelText('CMOD_MOD_S19');
         case VehicleModType.Tank:
+            if (model === GetHashKey('deity')) {
+                return null;
+            }
             if (model === GetHashKey('SlamVan3')) {
                 return GetLabelText('CMOD_MOD_S27');
             }
@@ -162,6 +165,12 @@ export const getModTypeName = (vehicleEntityId: number, mod: VehicleModType): st
         case VehicleModType.Spoiler:
             if (model === GetHashKey('toros')) {
                 return ModTypeLabels[VehicleModType.BumperFront];
+            }
+            break;
+
+        case VehicleModType.FenderRight:
+            if (model === GetHashKey('deity')) {
+                return null;
             }
             break;
     }
@@ -354,6 +363,7 @@ export const createModificationHelperToggle = (
     return {
         apply: (vehicleEntityId: number, value?: boolean): void => {
             if (value === null || value === undefined) {
+                ToggleVehicleMod(vehicleEntityId, type, false);
                 RemoveVehicleMod(vehicleEntityId, type);
 
                 return;
@@ -527,10 +537,13 @@ export class VehicleModificationService {
             const choice = helper.getUpgradeChoice(vehicle);
 
             if (choice) {
-                options.modification[key] = {
-                    label: helper.getModTypeName(vehicle),
-                    choice,
-                };
+                const label = helper.getModTypeName(vehicle);
+                if (label) {
+                    options.modification[key] = {
+                        label: label,
+                        choice,
+                    };
+                }
             }
         }
 

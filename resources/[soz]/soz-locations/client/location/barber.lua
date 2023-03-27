@@ -33,5 +33,5 @@ Locations["barber"] = {
     [6] = BoxZone:Create(vector3(1932.01, 3730.55, 32.84), 10.0, 5.6,
                          {name = "barber6", heading = 30, minZ = 31.84, maxZ = 34.84, debugPoly = LocationDebugPoly}),
     [7] = BoxZone:Create(vector3(-33.49, -152.25, 57.08), 10.0, 5.6,
-                         {name = "barber6", heading = 341, minZ = 56.08, maxZ = 59.08, debugPoly = LocationDebugPoly}),
+                         {name = "barber7", heading = 341, minZ = 56.08, maxZ = 59.08, debugPoly = LocationDebugPoly}),
 }

@@ -75,4 +75,5 @@ export const SocietyNumberList: SocietyNumber = {
     pawl: '555-PAWL',
     baun: '555-BAUN',
     ffs: '555-FFS',
+    mdr: '555-MDR',
 };

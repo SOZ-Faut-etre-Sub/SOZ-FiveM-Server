@@ -37,6 +37,7 @@ export const LICENCES = [
 export type GameMasterSubMenuState = {
     moneyCase: boolean;
     invisible: boolean;
+    adminGPS: boolean;
 };
 
 export type InteractiveSubMenuState = {
@@ -59,6 +60,10 @@ export type DeveloperSubMenuState = {
     displayCoords: boolean;
 };
 
+export type VehicleSubMenuState = {
+    noStall: boolean;
+};
+
 export type AdminMenuData = {
     banner: string;
     permission: SozRole;
@@ -68,6 +73,7 @@ export type AdminMenuData = {
         interactive: InteractiveSubMenuState;
         skin: SkinSubMenuState;
         developer: DeveloperSubMenuState;
+        vehicule: VehicleSubMenuState;
     };
 };
 
@@ -81,6 +87,7 @@ export type AdminPlayer = {
     license: string;
     name: string;
     rpFullName: string;
+    injuries: number;
 };
 
 export type FullAdminPlayer = AdminPlayer & {

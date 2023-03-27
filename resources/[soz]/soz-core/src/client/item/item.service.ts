@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
+
 import { InventoryItem, Item } from '../../shared/item';
 import { Qbcore } from '../qbcore';
 
@@ -6,6 +7,10 @@ import { Qbcore } from '../qbcore';
 export class ItemService {
     @Inject(Qbcore)
     private QBCore: Qbcore;
+
+    public getItems(): Item[] {
+        return this.QBCore.getItems();
+    }
 
     public getItem<T extends Item = Item>(id: string): T | null {
         return this.QBCore.getItem<T>(id);

@@ -180,7 +180,7 @@ Config.AnimationsList = {
             "Animation d'arrestation",
             false,
             "inv_barriere",
-            {"anim@sports@ballgame@handball@", "ball_rstop_r", 262144, false, false, "ball_get_up"},
+            {event = "soz-core:client:player:animation:takedown"},
         },
         ["SWAT"] = {
             {"Venez !", "Intervention", false, "inv_lspdshield", {"swat", "come", 50}},
@@ -5387,6 +5387,7 @@ Config.WalkStyle = {
     {name = "Menotté", walk = "move_m@prisoner_cuffed"},
     {name = "Pressé", walk = "move_f@hurry@a"},
     {name = "Trottiner", walk = "move_m@quick"},
+    {name = "Accroupi", walk = "move_ped_crouched"},
 }
 
 -- {
