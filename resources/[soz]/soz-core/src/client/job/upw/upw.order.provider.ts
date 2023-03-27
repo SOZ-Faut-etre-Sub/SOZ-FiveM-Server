@@ -59,13 +59,11 @@ export class UpwOrderProvider {
     @OnNuiEvent(NuiEvent.UpwGetOrders)
     public async onGetOrders() {
         const orders = await emitRpc<UpwOrder[]>(RpcEvent.UPW_GET_ORDERS);
-        console.log(orders);
         this.nuiDispatch.dispatch('upw_order_menu', 'SetOrders', orders);
     }
 
     public async openOrderMenu() {
         const vehicles = await emitRpc<Vehicle[]>(RpcEvent.UPW_GET_CATALOG);
-        console.log(vehicles);
         this.nuiMenu.openMenu(MenuType.UpwOrderMenu, { catalog: vehicles });
     }
 

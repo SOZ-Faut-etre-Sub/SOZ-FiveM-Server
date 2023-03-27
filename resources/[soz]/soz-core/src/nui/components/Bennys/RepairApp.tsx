@@ -48,15 +48,11 @@ type PageProps = {
 };
 
 const EnginePage: FunctionComponent<PageProps> = ({ analyze }) => {
-    let oilLine;
-    if (!analyze.isElectric) {
-        oilLine = <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 100</p>;
-    }
     return (
         <>
             <h3 className="text-3xl mb-4">Moteur</h3>
             <p>Etat du moteur : {analyze.condition.engineHealth.toFixed(2)} / 1000</p>
-            {oilLine}
+            {!analyze.isElectric && <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 1000</p>}
             <p>Kilométrage : {(analyze.condition.mileage / 1000).toFixed(2)} km</p>
         </>
     );
@@ -155,15 +151,14 @@ const TankPage: FunctionComponent<PageProps> = ({ analyze }) => {
                 <p>Charge : {(analyze.condition.fuelLevel * 0.6).toFixed(2)} / 60</p>
             </>
         );
-    } else {
-        return (
-            <>
-                <h3 className="text-3xl mb-4">Réservoir</h3>
-                <p>Etat du réservoir : {((analyze.condition.tankHealth - 600) * 2.5).toFixed(2)} / 1000</p>;
-                <p>Essence : {analyze.condition.fuelLevel.toFixed(2)} / 100</p>
-            </>
-        );
     }
+    return (
+        <>
+            <h3 className="text-3xl mb-4">Réservoir</h3>
+            <p>Etat du réservoir : {((analyze.condition.tankHealth - 600) * 2.5).toFixed(2)} / 1000</p>;
+            <p>Essence : {analyze.condition.fuelLevel.toFixed(2)} / 100</p>
+        </>
+    );
 };
 
 export const RepairApp: FunctionComponent = () => {
@@ -230,39 +225,6 @@ export const RepairApp: FunctionComponent = () => {
         'text-green-500': numberOfBadWheel === 0,
         'text-yellow-500': numberOfBadWheel > 0 && numberOfBadWheel <= 2,
     });
-
-    let tankLink;
-    if (repairData.isElectric) {
-        tankLink = (
-            <Link
-                style={{
-                    top: '421px',
-                    left: '1014px',
-                    width: '100px',
-                }}
-                className={batteryClass}
-                to="/tank"
-            >
-                <IconBattery className="h-8 w-8 mb-2" />
-                <span>Batterie</span>
-            </Link>
-        );
-    } else {
-        tankLink = (
-            <Link
-                style={{
-                    top: '421px',
-                    left: '1014px',
-                    width: '100px',
-                }}
-                className={tankClass}
-                to="/tank"
-            >
-                <IconTank className="h-8 w-8 mb-2" />
-                <span>Réservoir</span>
-            </Link>
-        );
-    }
 
     return (
         <MemoryRouter>
@@ -361,7 +323,33 @@ export const RepairApp: FunctionComponent = () => {
                             <span>Vitres</span>
                             <IconGlass className="h-7 w-7 mt-3" />
                         </Link>
-                        {tankLink}
+                        {repairData.isElectric ? (
+                            <Link
+                                style={{
+                                    top: '421px',
+                                    left: '1014px',
+                                    width: '100px',
+                                }}
+                                className={batteryClass}
+                                to="/tank"
+                            >
+                                <IconBattery className="h-8 w-8 mb-2" />
+                                <span>Batterie</span>
+                            </Link>
+                        ) : (
+                            <Link
+                                style={{
+                                    top: '421px',
+                                    left: '1014px',
+                                    width: '100px',
+                                }}
+                                className={tankClass}
+                                to="/tank"
+                            >
+                                <IconTank className="h-8 w-8 mb-2" />
+                                <span>Réservoir</span>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

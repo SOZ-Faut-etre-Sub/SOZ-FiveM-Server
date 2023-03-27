@@ -120,7 +120,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
-                canInteract: entity => {
+                canInteract: () => {
                     const player = this.playerService.getPlayer();
                     return player && player.job.onduty;
                 },
@@ -143,7 +143,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
-                canInteract: entity => {
+                canInteract: () => {
                     const player = this.playerService.getPlayer();
                     return player && player.job.onduty;
                 },
@@ -166,7 +166,7 @@ export class VehicleElectricProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.Upw,
                 job: JobType.Upw,
-                canInteract: entity => {
+                canInteract: () => {
                     const player = this.playerService.getPlayer();
                     return player && player.job.onduty;
                 },
@@ -192,7 +192,7 @@ export class VehicleElectricProvider {
                 action: (entity: number) => {
                     this.getStationEnergyLevel(entity);
                 },
-                canInteract: (entity: number) => {
+                canInteract: () => {
                     const player = this.playerService.getPlayer();
                     return player && player.job.onduty;
                 },
@@ -270,7 +270,7 @@ export class VehicleElectricProvider {
                         return false;
                     }
 
-                    return this.currentStationPlug !== null && this.checkBackOfVehicle(entity);
+                    return this.currentStationPlug !== null && this.vehicleService.checkBackOfVehicle(entity);
                 },
                 action: (entity: number) => {
                     this.chargeVehicle(entity);
@@ -292,7 +292,7 @@ export class VehicleElectricProvider {
 
         const model = GetEntityModel(vehicle);
 
-        if (!this.checkBackOfVehicle(vehicle)) {
+        if (!this.vehicleService.checkBackOfVehicle(vehicle)) {
             this.notifier.notify('~r~Vous devez être derrière le véhicule pour le recharger.', 'error');
 
             return;
@@ -383,16 +383,6 @@ export class VehicleElectricProvider {
         this.currentStationPlug = null;
 
         this.soundService.playAround('fuel/end_fuel', 5, 0.3);
-    }
-
-    private checkBackOfVehicle(vehicle: number): boolean {
-        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const model = GetEntityModel(vehicle);
-        const [min, max] = GetModelDimensions(model) as [Vector3, Vector3];
-        const vehicleLength = max[1] - min[1];
-        const backPosition = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -vehicleLength / 2, 0.0) as Vector3;
-        const distance = getDistance(backPosition, playerPosition);
-        return distance < 2.0;
     }
 
     private async activateStationPlug(entity: number, station: string) {

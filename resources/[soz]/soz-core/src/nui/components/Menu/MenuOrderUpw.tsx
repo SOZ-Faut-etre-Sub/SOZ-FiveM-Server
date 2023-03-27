@@ -1,9 +1,8 @@
 import { fetchNui } from '@public/nui/fetch';
 import { useNuiEvent } from '@public/nui/hook/nui';
 import { NuiEvent } from '@public/shared/event';
-import { UpwConfig, UpwOrder } from '@public/shared/job/upw';
+import { UpwConfig, UpwOrder, UpwOrderMenuData } from '@public/shared/job/upw';
 import { MenuType } from '@public/shared/nui/menu';
-import { Vehicle } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useState } from 'react';
 
 import {
@@ -16,13 +15,7 @@ import {
     SubMenu,
 } from '../Styleguide/Menu';
 
-type UpwOrderMenuProps = {
-    data: {
-        catalog: Vehicle[];
-    };
-};
-
-export const UpwOrderMenu: FunctionComponent<UpwOrderMenuProps> = ({ data }) => {
+export const UpwOrderMenu: FunctionComponent<UpwOrderMenuData> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_upw';
     const [orders, setOrders] = useState<UpwOrder[]>([]);
 

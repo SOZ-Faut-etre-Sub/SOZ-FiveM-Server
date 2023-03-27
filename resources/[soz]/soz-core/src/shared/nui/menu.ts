@@ -3,6 +3,7 @@ import { WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { HousingUpgradesMenuData } from '../housing/menu';
+import { MenuUpwData, UpwOrderMenuData } from '../job/upw';
 import { BossShopMenu, ShopProduct } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
@@ -73,8 +74,8 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.JobBennys]: {
         insideUpgradeZone: boolean;
     };
-    [MenuType.JobUpw]: any;
-    [MenuType.UpwOrderMenu]: any;
+    [MenuType.JobUpw]: MenuUpwData;
+    [MenuType.UpwOrderMenu]: UpwOrderMenuData;
     [MenuType.OilSetStationPrice]: Record<FuelType, number>;
     [MenuType.SetHealthState]: number;
     [MenuType.Vehicle]: VehicleMenuData;

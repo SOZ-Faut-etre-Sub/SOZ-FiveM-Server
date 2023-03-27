@@ -1,8 +1,10 @@
 import { Component, Prop, WardrobeConfig } from '../cloth';
+import { PlayerPedHash } from '../player';
 import { NamedZone } from '../polyzone/box.zone';
+import { Vehicle } from '../vehicle/vehicle';
 
 export const UpwCloakroom: WardrobeConfig = {
-    [1885233650]: {
+    [PlayerPedHash.Male]: {
         ["Tenue d'apprenti pour été"]: {
             Components: {
                 [Component.Torso]: { Palette: 0, Drawable: 41, Texture: 0 },
@@ -95,7 +97,7 @@ export const UpwCloakroom: WardrobeConfig = {
             Props: { [Prop.Hat]: { Drawable: 145, Texture: 3, Palette: 0 } },
         },
     },
-    [-1667301416]: {
+    [PlayerPedHash.Female]: {
         ["Tenue d'apprentie pour été"]: {
             Components: {
                 [Component.Torso]: { Texture: 0, Palette: 0, Drawable: 57 },
@@ -190,7 +192,14 @@ export const UpwCloakroom: WardrobeConfig = {
     },
 };
 
-export type UpwFacilityType = 'inverter' | 'plant' | 'resell' | 'terminal';
+export type UpwFacilityType =
+    | 'inverter'
+    | 'plant'
+    | 'resell'
+    | 'terminal'
+    | 'jobTerminal'
+    | 'globalTerminal'
+    | 'charger';
 
 export type UpwFacility = {
     type: UpwFacilityType;
@@ -226,4 +235,23 @@ export const UPW_CHARGER_REFILL_VALUES: Record<string, number> = {
     ['energy_cell_fossil']: 40,
     ['energy_cell_hydro']: 30,
     ['energy_cell_wind']: 20,
+};
+
+export type MenuUpwData = {
+    data: {
+        blips: {
+            inverter: boolean;
+            jobTerminal: boolean;
+            globalTerminal: boolean;
+            plant: boolean;
+            resell: boolean;
+            charger: boolean;
+        };
+    };
+};
+
+export type UpwOrderMenuData = {
+    data: {
+        catalog: Vehicle[];
+    };
 };

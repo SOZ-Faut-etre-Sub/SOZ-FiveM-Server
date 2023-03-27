@@ -1,25 +1,13 @@
 import { fetchNui } from '@public/nui/fetch';
 import { usePlayer } from '@public/nui/hook/data';
 import { NuiEvent } from '@public/shared/event';
+import { MenuUpwData, UpwFacilityType } from '@public/shared/job/upw';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../../Styleguide/Menu';
 
-type MenuUpwProps = {
-    data: {
-        blips: {
-            inverter: boolean;
-            jobTerminal: boolean;
-            globalTerminal: boolean;
-            plant: boolean;
-            resell: boolean;
-            charger: boolean;
-        };
-    };
-};
-
-export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
+export const MenuUpw: FunctionComponent<MenuUpwData> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_upw';
     const player = usePlayer();
     const [blips, setBlips] = useState(null);
@@ -34,7 +22,7 @@ export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
         return null;
     }
 
-    const displayBlip = async (blip: string, value: boolean) => {
+    const displayBlip = async (blip: UpwFacilityType, value: boolean) => {
         setBlips({ ...blips, [blip]: value });
         await fetchNui(NuiEvent.UpwDisplayBlips, { blip, value });
     };
