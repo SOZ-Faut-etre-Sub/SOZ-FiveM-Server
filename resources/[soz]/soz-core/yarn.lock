@@ -4852,6 +4852,11 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
+react-node-to-string@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-node-to-string/-/react-node-to-string-0.1.1.tgz#857a5e223ef2ea75d5d10e72d3c6b0d9a31000ab"
+  integrity sha512-BufjWy2h2dOFcQp1IY/iXgdJzVbhAX6rM4/aNcmyp2VgMpUCU0py/t3MHRBLPxMULB6dCQeNebM+s6iI/46Xqw==
+
 react-redux@^8.0.4:
   version "8.0.5"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.5.tgz#e5fb8331993a019b8aaf2e167a93d10af469c7bd"
