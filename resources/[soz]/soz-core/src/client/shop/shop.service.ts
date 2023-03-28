@@ -1,5 +1,7 @@
-import { Injectable } from '@core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
 import { Vector4 } from '@public/shared/polyzone/vector';
+
+import { ShopProvider } from './shop.provider';
 
 export type ShopInfo = {
     shopId: string;
@@ -14,11 +16,14 @@ export type ShopPedEntity = {
 
 @Injectable()
 export class ShopService {
+    @Inject(ShopProvider)
+    private shopProvider: ShopProvider;
+
     public getCurrentShopInfo(): ShopInfo {
-        return exports['soz-shops'].GetCurrentShop();
+        return this.shopProvider.getCurrentShop();
     }
 
     public GetShopPedEntity(shopid: string): ShopPedEntity {
-        return exports['soz-shops'].GetShopPedEntity(shopid);
+        return this.shopProvider.getShopPedEntity(shopid);
     }
 }
