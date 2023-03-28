@@ -8,12 +8,18 @@ import { JobType } from '@public/shared/job';
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
 import { StonkCollectProvider } from '../job/stonk/stonk.collect.provider';
+import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
 import { BarberShopProvider } from './barber.shop.provider';
 import { ClothingShopProvider } from './cloth.shop.provider';
 import { JewelryShopProvider } from './jewelry.shop.provider';
 import { SuperetteShopProvider } from './superette.shop.provider';
 import { TattooShopProvider } from './tattoo.shop.provider';
+
+type shopPedData = {
+    entity: number;
+    location: number[];
+};
 
 @Provider()
 export class ShopProvider {
@@ -44,8 +50,13 @@ export class ShopProvider {
     @Inject(BarberShopProvider)
     private barberShopProvider: BarberShopProvider;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     private currentShop: string = null;
     private currentShopBrand: ShopBrand = null;
+
+    private shopsPedEntity: Record<string, shopPedData> = {};
 
     public shopActions: TargetOptions[] = [
         {
@@ -77,6 +88,50 @@ export class ShopProvider {
                 TriggerServerEvent(ServerEvent.STONK_COLLECT, this.currentShopBrand, this.currentShop);
             },
         },
+        {
+            icon: 'fas fa-store',
+            label: 'Vérfier le stock',
+            canInteract: () => {
+                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
+            },
+            blackoutGlobal: true,
+            action: () => {
+                TriggerServerEvent(ServerEvent.ZKEA_CHECK_STOCK);
+            },
+        },
+        {
+            event: ClientEvent.HOUSING_OPEN_UPGRADES_MENU,
+            icon: 'fas fa-store',
+            label: 'Améliorations',
+            blackoutGlobal: true,
+            canInteract: () => {
+                const player = this.playerService.getPlayer();
+                if (!player.apartment || !player.apartment.owner) {
+                    return false;
+                }
+                if (player.apartment.owner !== player.citizenid) {
+                    return false;
+                }
+                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
+            },
+        },
+        {
+            event: ClientEvent.CRIMI_REMOVE_CLOTH,
+            label: 'Enlever la tenue temporaire',
+            color: 'crimi',
+            canInteract: () => {
+                const player = this.playerService.getPlayer();
+                if (player.cloth_config.TemporaryClothSet == null) {
+                    return false;
+                }
+                return (
+                    this.currentShop !== null &&
+                    (this.currentShopBrand === ShopBrand.Ponsonbys ||
+                        this.currentShopBrand === ShopBrand.Suburban ||
+                        this.currentShopBrand === ShopBrand.Binco)
+                );
+            },
+        },
     ];
 
     @Once(OnceStep.PlayerLoaded)
@@ -90,7 +145,7 @@ export class ShopProvider {
                 sprite: brandConfig.blipSprite,
                 color: brandConfig.blipColor,
             });
-            this.pedFactory.createPed({
+            const pedId = await this.pedFactory.createPed({
                 model: brandConfig.pedModel,
                 coords: {
                     x: config.location[0],
@@ -103,7 +158,9 @@ export class ShopProvider {
                 blockevents: true,
                 scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
             });
+            this.shopsPedEntity[shop] = { entity: pedId, location: config.location };
         }
+        TriggerEvent('shops:client:shop:PedSpawned');
     }
 
     @OnEvent(ClientEvent.LOCATION_ENTER)
