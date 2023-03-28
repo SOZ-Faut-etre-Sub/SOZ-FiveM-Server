@@ -122,6 +122,7 @@ export enum ServerEvent {
     UPW_SET_CHARGER_PRICE = 'soz-core:server:job:upw:set-charger-price',
     SHOP_BUY = 'soz-core:server:shop:buy',
     SHOP_TATTOO_RESET = 'soz-core:server:shop:tattoo-reset',
+    ZKEA_CHECK_STOCK = 'soz-core:client:shop:zkea:check-stock', // Todo
 
     AFK_KICK = 'soz-core:server:afk:kick',
 
