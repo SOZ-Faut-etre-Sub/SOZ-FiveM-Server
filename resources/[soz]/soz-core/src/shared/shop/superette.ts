@@ -25,7 +25,7 @@ const AmmunationContent: ShopContent = [
     { id: 'weapon_stungun', type: 'weapon', requiredLicense: PlayerLicenceType.Weapon, price: 2500 },
     { id: 'weapon_pistol', type: 'weapon', requiredLicense: PlayerLicenceType.Weapon, price: 7500 },
     { id: 'ammo_01', type: 'weapon', requiredLicense: PlayerLicenceType.Weapon, price: 500 },
-    { id: 'ammo_02', type: 'weapon', requiredLicense: PlayerLicenceType.Weapon, price: 500 },
+    { id: 'weapon_crowbar', type: 'weapon', price: 250 },
 ];
 
 const ZkeaContent: ShopContent = [{ id: 'house_map', type: 'item', price: 15 }];
