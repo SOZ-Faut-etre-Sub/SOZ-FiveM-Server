@@ -9,6 +9,7 @@ import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { ClothingShopItem } from '@public/shared/shop';
 
+import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
@@ -31,6 +32,9 @@ export class ClothingShopProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     @On(ClientEvent.SHOP_OPEN_MENU)
     public async openShop(brand: ShopBrand, shop: string) {
@@ -55,8 +59,7 @@ export class ClothingShopProvider {
         const ped = PlayerPedId();
         const [x, y, z, w] = ShopsConfig[shop].positionInShop;
         if (!skipIntro) {
-            TaskGoToCoordAnyMeans(ped, x, y, z, 1.0, 0, false, 786603, 0xbf800000);
-            brand == ShopBrand.Binco ? await wait(4000) : await wait(7000);
+            await this.animationService.walkToCoordsAvoidObstacles([x, y, z] as Vector3, 7000);
         }
         // TP and setup cam
         SetPedCoordsKeepVehicle(ped, x, y, z - 1);

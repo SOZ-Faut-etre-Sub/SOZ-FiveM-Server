@@ -12,6 +12,7 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
 import { TattooShopItem } from '@public/shared/shop';
 
+import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
@@ -41,6 +42,9 @@ export class TattooShopProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     private state: ShopTattooState = null;
 
@@ -84,11 +88,9 @@ export class TattooShopProvider {
     }
 
     public async setupShop(brand: ShopBrand, shop: string, skipIntro = false) {
-        const ped = PlayerPedId();
         const [x, y, z] = ShopsConfig[shop].positionInShop;
         if (!skipIntro) {
-            TaskGoToCoordAnyMeans(ped, x, y, z, 1.0, 0, false, 786603, 0xbf800000);
-            await wait(4000);
+            await this.animationService.walkToCoordsAvoidObstacles([x, y, z], 5000);
         }
 
         TriggerEvent('soz-character:Client:SetTemporaryNaked', true);
