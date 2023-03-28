@@ -28,9 +28,10 @@ export class Notifier {
         subtitle: string,
         message: string,
         image: string,
-        type: 'error' | 'success' | 'warning' | 'info' = 'success'
+        type: 'error' | 'success' | 'warning' | 'info' = 'success',
+        delay?: number
     ) {
-        TriggerClientEvent('hud:client:DrawAdvancedNotification', source, title, subtitle, message, image, type);
+        TriggerClientEvent('hud:client:DrawAdvancedNotification', source, title, subtitle, message, image, type, delay);
     }
 
     public advancedNotifyOnDutyWorkers(

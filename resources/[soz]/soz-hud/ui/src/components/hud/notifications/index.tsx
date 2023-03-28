@@ -14,8 +14,8 @@ const Notifications = () => {
         setNotifications(n => [{id: uuidv4(), message, delay, style}, ...n])
     }, [setNotifications])
 
-    const createAdvancedNotification = useCallback((title: string, subtitle: string, message: string, image: string, style?: string) => {
-        setNotifications(n => [{id: uuidv4(), title, subtitle, message, image, style}, ...n])
+    const createAdvancedNotification = useCallback((title: string, subtitle: string, message: string, image: string, style?: string, delay?: number) => {
+        setNotifications(n => [{id: uuidv4(), title, subtitle, message, image, delay, style}, ...n])
     }, [setNotifications])
 
     const deleteNotification = useCallback((id: string) => {
@@ -26,7 +26,7 @@ const Notifications = () => {
         if (event.data.action === 'draw_basic_notification') {
             createBasicNotification(event.data.message, event.data.style, event.data.delay)
         } else if (event.data.action === 'draw_advanced_notification') {
-            createAdvancedNotification(event.data.title, event.data.subtitle, event.data.message, event.data.image, event.data.style)
+            createAdvancedNotification(event.data.title, event.data.subtitle, event.data.message, event.data.image, event.data.style, event.data.delay)
         }
     }, [createBasicNotification])
 
