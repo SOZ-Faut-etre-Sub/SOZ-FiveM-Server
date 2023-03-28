@@ -89,6 +89,7 @@ export class ClothingShopProvider {
     @OnNuiEvent(NuiEvent.ClothingShopPreview)
     public async onPreviewCloth(product: ClothingShopItem) {
         const ped = PlayerPedId();
+        console.log(product);
         if (!product) {
             return;
         }
@@ -110,6 +111,9 @@ export class ClothingShopProvider {
         const playerModel = GetEntityModel(ped);
         const player = this.playerService.getPlayer();
         const baseTorsoDrawable = player.cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
+        if (!baseTorsoDrawable) {
+            return;
+        }
         if (product.undershirtType != null) {
             if (UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType] != null) {
                 SetPedComponentVariation(
@@ -149,6 +153,9 @@ export class ClothingShopProvider {
                 player.cloth_config.BaseClothSet.Gloves[baseTorsoDrawable]
             ) {
                 const currentTorso = GetPedDrawableVariation(ped, Component.Torso);
+                if (!player.cloth_config.BaseClothSet.Gloves[currentTorso]) {
+                    return;
+                }
                 SetPedComponentVariation(
                     ped,
                     Component.Torso,

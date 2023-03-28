@@ -4,6 +4,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
+import { Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
@@ -13,10 +14,9 @@ import { TargetFactory, TargetOptions } from '../target/target.factory';
 import { BarberShopProvider } from './barber.shop.provider';
 import { ClothingShopProvider } from './cloth.shop.provider';
 import { JewelryShopProvider } from './jewelry.shop.provider';
+import { ShopInfo, ShopPedEntity } from './shop.service';
 import { SuperetteShopProvider } from './superette.shop.provider';
 import { TattooShopProvider } from './tattoo.shop.provider';
-import { ShopInfo, ShopPedEntity } from './shop.service';
-import { Vector4 } from '@public/shared/polyzone/vector';
 
 type shopPedData = {
     entity: number;
@@ -168,7 +168,11 @@ export class ShopProvider {
     @Once(OnceStep.Stop)
     public async onPlayerStop() {
         for (const shop in ShopsConfig) {
-            if (!this.shopsPedEntity[shop] == null && this.shopsPedEntity[shop].entity != null && DoesEntityExist(this.shopsPedEntity[shop].entity)) {
+            if (
+                !this.shopsPedEntity[shop] == null &&
+                this.shopsPedEntity[shop].entity != null &&
+                DoesEntityExist(this.shopsPedEntity[shop].entity)
+            ) {
                 DeleteEntity(this.shopsPedEntity[shop].entity);
             }
         }
@@ -237,13 +241,16 @@ export class ShopProvider {
     }
 
     public getCurrentShop(): ShopInfo {
-        const entity = (this.currentShop && this.shopsPedEntity[this.currentShop]) ? this.shopsPedEntity[this.currentShop].entity : 0;
-        return {shopId: this.currentShop, shopbrand: this.currentShopBrand, shopPedEntity: entity} as ShopInfo;
+        const entity =
+            this.currentShop && this.shopsPedEntity[this.currentShop]
+                ? this.shopsPedEntity[this.currentShop].entity
+                : 0;
+        return { shopId: this.currentShop, shopbrand: this.currentShopBrand, shopPedEntity: entity } as ShopInfo;
     }
 
     public getShopPedEntity(shopId: string): ShopPedEntity {
-        const entity = (shopId && this.shopsPedEntity[shopId]) ? this.shopsPedEntity[shopId].entity : 0;
-        const location = (shopId && this.shopsPedEntity[shopId]) ? this.shopsPedEntity[shopId].location : [0, 0, 0, 0];
-        return {entity: entity, location: location as Vector4} as ShopPedEntity;
+        const entity = shopId && this.shopsPedEntity[shopId] ? this.shopsPedEntity[shopId].entity : 0;
+        const location = shopId && this.shopsPedEntity[shopId] ? this.shopsPedEntity[shopId].location : [0, 0, 0, 0];
+        return { entity: entity, location: location as Vector4 } as ShopPedEntity;
     }
 }
