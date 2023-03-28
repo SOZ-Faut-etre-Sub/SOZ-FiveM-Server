@@ -128,13 +128,13 @@ export class AdminMenuInteractiveProvider {
     @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayersOnMap)
     public async toggleDisplayPlayersOnMap(value: boolean): Promise<void> {
         if (!value) {
-        this.playerBlips.forEach((BlipValue, BlipKey) => {
+            this.playerBlips.forEach((BlipValue, BlipKey) => {
             this.QBCore.removeBlip('admin:player-blip:' + BlipKey);
             this.playerBlips.delete(BlipKey);
-        });
+            });
 
-        clearInterval(this.intervalHandlers.displayPlayersOnMap);
-        return;
+            clearInterval(this.intervalHandlers.displayPlayersOnMap);
+            return;
         }
 
         this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
