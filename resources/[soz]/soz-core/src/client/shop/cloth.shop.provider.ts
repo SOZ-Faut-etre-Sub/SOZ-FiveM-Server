@@ -89,7 +89,6 @@ export class ClothingShopProvider {
     @OnNuiEvent(NuiEvent.ClothingShopPreview)
     public async onPreviewCloth(product: ClothingShopItem) {
         const ped = PlayerPedId();
-        console.log(product);
         if (!product) {
             return;
         }
