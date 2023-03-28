@@ -1803,7 +1803,7 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                 '1': {
                     '0': {
                         GXT: '',
-                        Localized: 'Bonnet d ane',
+                        Localized: "Bonnet d'ane",
                     },
                 },
                 '5': {
@@ -5411,14 +5411,6 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                     },
                 },
             },
-        },
-    },
-    Casques: {
-        categoryId: 4,
-        propId: 0,
-        overlay: 'Helmet',
-        price: 50,
-        items: {
             Casques: {
                 '0': {
                     '0': {
@@ -5488,6 +5480,16 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                         Localized: 'Ecouteur beat Orange',
                     },
                 },
+            },
+        },
+    },
+    Casques: {
+        categoryId: 4,
+        propId: 0,
+        overlay: 'Helmet',
+        price: 50,
+        items: {
+            Casques: {
                 '16': {
                     '0': {
                         GXT: '',
@@ -9862,7 +9864,7 @@ export const MaleJewelryItems: ShopJewelryContent = {
                 '1': {
                     '0': {
                         GXT: '',
-                        Localized: 'Bonnet d ane',
+                        Localized: "Bonnet d'ane",
                     },
                 },
                 '2': {
@@ -13356,14 +13358,6 @@ export const MaleJewelryItems: ShopJewelryContent = {
                     },
                 },
             },
-        },
-    },
-    Casques: {
-        categoryId: 4,
-        propId: 0,
-        overlay: 'Helmet',
-        price: 50,
-        items: {
             Casques: {
                 '0': {
                     '0': {
@@ -13433,6 +13427,16 @@ export const MaleJewelryItems: ShopJewelryContent = {
                         Localized: 'Ecouteur beat Vert',
                     },
                 },
+            },
+        },
+    },
+    Casques: {
+        categoryId: 4,
+        propId: 0,
+        overlay: 'Helmet',
+        price: 50,
+        items: {
+            Casques: {
                 '16': {
                     '0': {
                         GXT: '',
