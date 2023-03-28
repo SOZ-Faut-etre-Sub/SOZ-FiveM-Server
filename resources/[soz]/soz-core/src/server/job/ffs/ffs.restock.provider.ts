@@ -43,18 +43,27 @@ export class FightForStyleRestockProvider {
 
     public garmentToCategory(garment: Garment | LuxuryGarment): number {
         switch (garment) {
-            case 'garment_top':
-            case 'luxury_garment_top':
+            case Garment.TOP:
+            case LuxuryGarment.TOP:
                 return 1;
-            case 'garment_pant':
-            case 'luxury_garment_pant':
+            case Garment.PANT:
+            case LuxuryGarment.PANT:
                 return 6;
-            case 'garment_shoes':
-            case 'luxury_garment_shoes':
+            case Garment.SHOES:
+            case LuxuryGarment.SHOES:
                 return 10;
-            case 'garment_underwear':
-            case 'luxury_garment_underwear':
+            case Garment.UNDERWEAR:
+            case LuxuryGarment.UNDERWEAR:
                 return 19;
+            case Garment.BAG:
+            case LuxuryGarment.BAG:
+                return 52;
+            case Garment.GLOVES:
+            case LuxuryGarment.GLOVES:
+                return 50;
+            case Garment.UNDERWEAR_TOP:
+            case LuxuryGarment.UNDERWEAR_TOP:
+                return 60;
             default:
                 return -1;
         }
