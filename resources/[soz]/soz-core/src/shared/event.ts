@@ -207,6 +207,8 @@ export enum ServerEvent {
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
+
+    BIN_CHANGE_LOCK_STATUS = 'soz-core:server:bin:change-lock-status',
 }
 
 export enum ClientEvent {

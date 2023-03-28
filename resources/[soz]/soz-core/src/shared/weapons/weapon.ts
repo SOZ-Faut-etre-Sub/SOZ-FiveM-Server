@@ -1055,3 +1055,19 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.FIREEXTINGUISHER]: { attachments: [] },
     [WeaponName.HAZARDCAN]: { attachments: [] },
 };
+
+export const GunShotMessage = [
+    "Un coup de feu vient d'être entendu proche de ${0}.",
+    'COUP DE FEU À ${0} !!!',
+    'Des coups de feu ont retenti dans la zone de ${0} !',
+    "AU SECOURS C'EST LA GUERRE, IL Y A DES COUPS DE FEU PROCHE DE ${0}.",
+    "Des bruits d'armes à feu à ${0} !",
+];
+
+export const ExplosionMessage = [
+    "Une explosion vient d'être entendue proche de ${0} !",
+    'Oskuuuur ! Gros boum à ${0} !!!',
+    "Heu, c'est normal les explosions à ${0} ?",
+    'Bordel ça explose de partout proche de ${0} !!',
+    "Une forte déflagration vient d'être ressentie à ${0}.",
+];
