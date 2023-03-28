@@ -240,107 +240,107 @@ export const ShopsConfig: Record<string, ShopConfig> = {
         brand: ShopBrand.Barber,
         location: [-30.98, -151.74, 57.08, 346.24],
     },
-    ['jewelry1']: {
+    ['jewelry']: {
         brand: ShopBrand.Jewelry,
         location: [-623.22, -229.24, 38.06, 82.19],
     },
-    ['247supermarket-north1']: {
+    ['247supermarket4']: {
         brand: ShopBrand.Supermarket247North,
         location: [1727.7, 6415.4, 35.04, 237.95],
     },
-    ['247supermarket-north2']: {
+    ['247supermarket5']: {
         brand: ShopBrand.Supermarket247North,
         location: [1959.84, 3739.86, 32.34, 299.67],
     },
-    ['247supermarket-north3']: {
+    ['247supermarket6']: {
         brand: ShopBrand.Supermarket247North,
         location: [549.28, 2671.37, 42.16, 98.65],
     },
-    ['247supermarket-north4']: {
+    ['247supermarket7']: {
         brand: ShopBrand.Supermarket247North,
         location: [2677.93, 3279.31, 55.24, 333.41],
     },
-    ['247supermarket-north5']: {
+    ['247supermarket10']: {
         brand: ShopBrand.Supermarket247North,
         location: [-2539.29, 2313.75, 33.41, 94.82],
     },
-    ['247supermarket-north6']: {
+    ['247supermarket11']: {
         brand: ShopBrand.Supermarket247North,
         location: [160.43, 6641.72, 31.71, 222.18],
     },
-    ['247supermarket-south1']: {
+    ['247supermarket']: {
         brand: ShopBrand.Supermarket247South,
         location: [24.14, -1347.22, 29.5, 273.39],
     },
-    ['247supermarket-south2']: {
+    ['247supermarket2']: {
         brand: ShopBrand.Supermarket247South,
         location: [-3038.86, 584.36, 7.91, 22.65],
     },
-    ['247supermarket-south3']: {
+    ['247supermarket3']: {
         brand: ShopBrand.Supermarket247South,
         location: [-3242.29, 999.76, 12.83, 0.41],
     },
-    ['247supermarket-south4']: {
+    ['247supermarket8']: {
         brand: ShopBrand.Supermarket247South,
         location: [2557.18, 380.64, 108.62, 1.74],
     },
-    ['247supermarket-south5']: {
+    ['247supermarket9']: {
         brand: ShopBrand.Supermarket247South,
         location: [372.45, 326.52, 103.57, 254.29],
     },
-    ['ltdgasoline-north1']: {
+    ['ltdgasoline5']: {
         brand: ShopBrand.LtdGasolineNorth,
         location: [1698.2, 4922.86, 42.06, 324.94],
     },
-    ['ltdgasoline-south1']: {
+    ['ltdgasoline']: {
         brand: ShopBrand.LtdGasolineSouth,
         location: [-46.7, -1757.9, 29.42, 49.1],
     },
-    ['ltdgasoline-south2']: {
+    ['ltdgasoline2']: {
         brand: ShopBrand.LtdGasolineSouth,
         location: [-706.16, -913.5, 19.22, 88.63],
     },
-    ['ltdgasoline-south3']: {
+    ['ltdgasoline3']: {
         brand: ShopBrand.LtdGasolineSouth,
         location: [-1820.21, 794.29, 138.09, 126.03],
     },
-    ['ltdgasoline-south4']: {
+    ['ltdgasoline4']: {
         brand: ShopBrand.LtdGasolineSouth,
         location: [1164.68, -322.59, 69.21, 110.25],
     },
-    ['ltdgasoline-south5']: {
+    ['ltdgasoline6']: {
         brand: ShopBrand.LtdGasolineSouth,
         location: [-1421.6, -270.53, 46.3, 51.58],
     },
-    ['ltdgasoline-south6']: {
+    ['ltdgasoline7']: {
         brand: ShopBrand.LtdGasolineSouth,
         location: [-2070.26, -333.33, 13.32, 357.19],
     },
-    ['robsliquor-north1']: {
+    ['robsliquor4']: {
         brand: ShopBrand.RobsliquorNorth,
         location: [1165.93, 2710.81, 38.16, 180.89],
     },
-    ['robsliquor-north2']: {
+    ['robsliquor6']: {
         brand: ShopBrand.RobsliquorNorth,
         location: [-162.81, 6323.02, 31.59, 322.62],
     },
-    ['robsliquor-south1']: {
+    ['robsliquor']: {
         brand: ShopBrand.RobsliquorSouth,
         location: [-1222.01, -908.37, 12.33, 31.52],
     },
-    ['robsliquor-south2']: {
+    ['robsliquor2']: {
         brand: ShopBrand.RobsliquorSouth,
         location: [-1486.2, -378.01, 40.16, 135.93],
     },
-    ['robsliquor-south3']: {
+    ['robsliquor3']: {
         brand: ShopBrand.RobsliquorSouth,
         location: [-2966.38, 390.94, 15.04, 86.14],
     },
-    ['robsliquor-south4']: {
+    ['robsliquor5']: {
         brand: ShopBrand.RobsliquorSouth,
         location: [1134.15, -982.51, 46.42, 281.3],
     },
-    ['zkea1']: {
+    ['zkea']: {
         brand: ShopBrand.Zkea,
         location: [2748.29, 3472.55, 55.68, 254.93],
     },
@@ -374,7 +374,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
         location: [-3170.73, 1072.86, 20.83, 332.32],
         positionInShop: [-3169.81, 1077.92, 20.83, 220.92],
     },
-    ['ammunation1']: {
+    ['ammunation']: {
         brand: ShopBrand.Ammunation,
         location: [-661.61, -933.49, 21.83, 176.46],
     },
@@ -409,6 +409,14 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     ['ammunation9']: {
         brand: ShopBrand.Ammunation,
         location: [841.8, -1035.26, 28.19, 356.67],
+    },
+    ['ammunation10']: {
+        brand: ShopBrand.Ammunation,
+        location: [-3173.41, 1089.23, 20.84, 223.04],
+    },
+    ['ammunation11']: {
+        brand: ShopBrand.Ammunation,
+        location: [-1304.12, -395.54, 36.7, 61.39],
     },
 };
 
