@@ -1,4 +1,6 @@
 import { WardrobeConfig } from '../cloth';
+import { getLocationHash } from '../locationhash';
+import { Vector3 } from '../polyzone/vector';
 
 export const GarbageCloakroom: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
@@ -118,3 +120,11 @@ export const GarbageCloakroom: WardrobeConfig = {
         },
     },
 };
+
+export function computeBinId(entity: number) {
+    const coords = GetEntityCoords(entity) as Vector3;
+    const coordsHash = getLocationHash(coords);
+    const id = 'bin_' + coordsHash;
+
+    return id;
+}

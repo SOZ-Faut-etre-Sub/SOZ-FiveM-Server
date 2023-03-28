@@ -74,7 +74,7 @@ export class PlayerWalkstyleProvider {
     }
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
-    async onPlayerUpdate(): Promise<void> {
-        await this.applyWalkStyle(this.playerService.getPlayer().metadata.walk);
+    async onPlayerUpdate(player: PlayerData): Promise<void> {
+        await this.applyWalkStyle(player.metadata.walk);
     }
 }

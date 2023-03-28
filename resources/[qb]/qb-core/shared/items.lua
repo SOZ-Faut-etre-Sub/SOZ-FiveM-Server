@@ -5958,4 +5958,16 @@ QBShared.Items = {
         ['description'] = "Attention ca coupe. ",
         ['illustrator'] = '.Poulpito'
     },
+    ['torn_garbagebag'] = {
+        ['name'] = 'torn_garbagebag',
+        ['label'] = 'Sac de détritus déchiré',
+        ['weight'] = 4000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Quelqu'un est passé par là et à tout déchiré...",
+        ['illustrator'] = '.Poulpito'
+    },
 }
