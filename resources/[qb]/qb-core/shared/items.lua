@@ -1258,7 +1258,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Sniteur'
     },
     ['ammo_08'] = {
         ['name'] = 'ammo_08',
@@ -1280,7 +1281,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = '',
+        ['illustrator'] = '.Poulpito'
     },
     ['ammo_10'] = {
         ['name'] = 'ammo_10',
@@ -2455,6 +2457,7 @@ QBShared.Items = {
         ['durability'] = 7,
         ['combinable'] = nil,
         ['description'] = 'Contient de nombreux plats.',
+        ['illustrator'] = '.Poulpito'
     },
     ['vegan_meal'] = {
         ['name'] = 'vegan_meal',
