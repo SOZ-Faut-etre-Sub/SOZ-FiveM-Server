@@ -52,6 +52,20 @@ export class AnimationService {
             this.runningAnimations.get(id).cancel(AnimationStopReason.Canceled);
         }
     }
+    public async walkToCoordsAvoidObstacles(coords: Vector3 | Vector4, maxDuration = 5000) {
+        const ped = PlayerPedId();
+        TaskGoToCoordAnyMeans(ped, coords[0], coords[1], coords[2], 1.0, 0, false, 786603, 0xbf800000);
+        const zone: BoxZone = new BoxZone([coords[0], coords[1], coords[2]], 1.5, 1.5);
+        const interval = 500;
+        for (let i = 0; i < maxDuration; i += interval) {
+            if (zone.isPointInside(GetEntityCoords(ped) as Vector3)) {
+                break;
+            }
+
+            await wait(interval);
+        }
+        ClearPedTasks(ped);
+    }
 
     public toggleAnimation(animation: Animation, options?: Partial<PlayOptions>) {
         const id = animation.base.dictionary + animation.base.name;
