@@ -1,4 +1,5 @@
 import { uuidv4 } from '@public/core/utils';
+import { getRandomItem } from '@public/shared/random';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -8,7 +9,7 @@ import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcEvent } from '../../shared/rpc';
-import { GlobalWeaponConfig, WeaponName } from '../../shared/weapons/weapon';
+import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
 import { TalkService } from '../talk.service';
@@ -174,7 +175,7 @@ export class WeaponProvider {
             TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
                 anonymous: true,
                 number: '555-POLICE',
-                message: `${zone}: Un coup de feu a été entendu vers ${name}.`,
+                message: `${zone}: ${getRandomItem(GunShotMessage).replace('${0}', name)}`,
                 position: false,
                 overrideIdentifier: 'System',
             });
@@ -189,7 +190,7 @@ export class WeaponProvider {
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-POLICE',
-            message: `Une explosion a été entendue vers ${zone}.`,
+            message: getRandomItem(ExplosionMessage).replace('${0}', zone),
             position: false,
             overrideIdentifier: 'System',
         });

@@ -84,4 +84,6 @@ export enum RpcEvent {
 
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
+
+    BIN_IS_LOCKED = 'soz-core:server:bin:is-locked',
 }

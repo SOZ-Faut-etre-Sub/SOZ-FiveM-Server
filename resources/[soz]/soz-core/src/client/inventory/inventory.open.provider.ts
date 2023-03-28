@@ -1,8 +1,9 @@
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
+import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
-import { getLocationHash } from '@public/shared/locationhash';
-import { Vector3 } from '@public/shared/polyzone/vector';
+import { computeBinId } from '@public/shared/job/garbage';
+import { RpcEvent } from '@public/shared/rpc';
 
 import { Provider } from '../../core/decorators/provider';
 import { AnimationService } from '../animation/animation.service';
@@ -31,8 +32,7 @@ export class InventoryOpenProvider {
                     label: 'Fouiller',
                     icon: 'c:inventory/ouvrir_la_poubelle.png',
                     action: async (entity: number) => {
-                        const coords = GetEntityCoords(entity) as Vector3;
-                        const coordsHash = getLocationHash(coords);
+                        const id = computeBinId(entity);
                         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 800);
                         await wait(800);
 
@@ -43,8 +43,12 @@ export class InventoryOpenProvider {
                         });
 
                         if (!cancelled) {
-                            this.openTargetInventory('bin', 'bin_' + coordsHash);
+                            this.openTargetInventory('bin', id);
                         }
+                    },
+                    canInteract: async (entity: number) => {
+                        const id = computeBinId(entity);
+                        return emitRpc<boolean>(RpcEvent.BIN_IS_LOCKED, id);
                     },
                 },
             ],
