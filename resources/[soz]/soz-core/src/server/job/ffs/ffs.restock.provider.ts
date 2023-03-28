@@ -145,10 +145,8 @@ export class FightForStyleRestockProvider {
             const loopAmount = Math.min(5, amountLeft); // <--- LoopAmount decreased to 5 to increase the diversity of restocked items
             amountLeft -= loopAmount;
             const loopSex = sexes[Math.floor(Math.random() * 2)];
-            console.log('loopSex', loopSex);
             const loopItems = allItemsByGender[loopSex];
             const randomItem = loopItems[Math.floor(Math.random() * loopItems.length)];
-            console.log('randomItem', randomItem);
             if (!randomItem || !loopItems) {
                 return;
             }
@@ -173,7 +171,6 @@ export class FightForStyleRestockProvider {
                 });
                 sameModelsIds = sameDrawableItems.map(item => item.id);
             }
-            console.log(sameModelsIds);
 
             // Update SQL database
             await this.prismaService.shop_content.updateMany({
