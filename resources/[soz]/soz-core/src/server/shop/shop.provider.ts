@@ -146,6 +146,12 @@ export class ShopProvider {
         }
     }
 
+    @OnEvent(ServerEvent.ZKEA_CHECK_STOCK)
+    public async zkeaCheckStock(source: number) {
+        const amount = this.inventoryManager.getItem('cabinet_storage', 'cabinet_zkea');
+        this.notifier.notify(source, `Il reste ${amount} ~b~meubles Zkea~s~ en stock.`, 'info');
+    }
+
     public async shopBarberBuy(source: number, product: BarberShopItem) {
         if (!this.shopPay(source, product.price)) {
             this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
