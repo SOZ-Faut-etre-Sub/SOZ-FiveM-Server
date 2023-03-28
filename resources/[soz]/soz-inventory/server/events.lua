@@ -20,6 +20,14 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
     end
 end)
 
+RegisterServerEvent("inventory:server:bin-vandalism", function(invID, ctx)
+    local storageType = "bin"
+    local binInv = GetOrCreateInventory(storageType, invID, ctx)
+    local count = Inventory.Search(binInv, "amount", "garbagebag")
+    Inventory.RemoveItem(binInv, "garbagebag", count)
+    Inventory.AddItem(binInv, "torn_garbagebag", math.ceil(count / 2))
+end)
+
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
                                 function(source, cb, inventorySource, inventoryTarget, item, amount, metadata, slot, targetSlot, manualFilter)
     Inventory.TransfertItem(inventorySource, inventoryTarget, item, amount, metadata, slot, function(success, reason)
