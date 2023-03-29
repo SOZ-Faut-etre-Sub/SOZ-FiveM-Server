@@ -211,7 +211,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
                 [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Tops]: { Drawable: 331, Texture: 1, Palette: 0 },
+                [Component.Tops]: { Drawable: 73, Texture: 1, Palette: 0 },
             },
             Props: {},
         },
