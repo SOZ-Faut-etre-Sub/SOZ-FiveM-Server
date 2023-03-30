@@ -6,6 +6,7 @@ import { JobPermission, JobType } from '../../../shared/job';
 import { PlayerService } from '../../player/player.service';
 import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
+import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
 
 @Provider()
 export class BennysEstimateProvider {
@@ -17,6 +18,9 @@ export class BennysEstimateProvider {
 
     @Inject(Qbcore)
     private QBCore: Qbcore;
+
+    @Inject(VehicleModificationService)
+    private vehicleModificationService: VehicleModificationService;
 
     @Once(OnceStep.Start)
     public async onStart() {
@@ -33,10 +37,10 @@ export class BennysEstimateProvider {
                     );
                 },
                 action: async vehicle => {
-                    const properties = this.QBCore.getVehicleProperties(vehicle);
                     const networkId = NetworkGetNetworkIdFromEntity(vehicle);
+                    const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
 
-                    TriggerServerEvent(ServerEvent.BENNYS_ESTIMATE_VEHICLE, networkId, properties);
+                    TriggerServerEvent(ServerEvent.BENNYS_ESTIMATE_VEHICLE, networkId, configuration);
                 },
             },
         ]);
