@@ -4,6 +4,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { isErr } from '../../../shared/result';
+import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
 import { QBCore } from '../../qbcore';
@@ -28,7 +29,7 @@ export class BennysEstimateProvider {
     private estimateService: EstimationService;
 
     @OnEvent(ServerEvent.BENNYS_ESTIMATE_VEHICLE)
-    public async onEstimateVehicle(source: number, networkId: number, properties: any) {
+    public async onEstimateVehicle(source: number, networkId: number, configuration: VehicleConfiguration) {
         const { completed } = await this.progressService.progress(
             source,
             'vehicle_estimate',
@@ -63,7 +64,7 @@ export class BennysEstimateProvider {
             return;
         }
 
-        const result = await this.estimateService.estimateVehicle(source, networkId, properties);
+        const result = await this.estimateService.estimateVehicle(source, networkId, configuration);
 
         if (isErr(result)) {
             this.notifier.notify(source, result.err);

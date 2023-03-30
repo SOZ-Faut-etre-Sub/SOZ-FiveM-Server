@@ -11,6 +11,7 @@ import { InputService } from '../../nui/input.service';
 import { PlayerService } from '../../player/player.service';
 import { Qbcore } from '../../qbcore';
 import { TargetFactory } from '../../target/target.factory';
+import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
 
 @Provider()
 export class BennysResellProvider {
@@ -25,6 +26,9 @@ export class BennysResellProvider {
 
     @Inject(Qbcore)
     private QBCore: Qbcore;
+
+    @Inject(VehicleModificationService)
+    private vehicleModificationService: VehicleModificationService;
 
     @Once(OnceStep.Start)
     public onStart() {
@@ -76,11 +80,12 @@ export class BennysResellProvider {
                         return;
                     }
 
-                    const properties = this.QBCore.getVehicleProperties(entity);
+                    const configuration = this.vehicleModificationService.getVehicleConfiguration(entity);
+
                     TriggerServerEvent(
                         ServerEvent.BENNYS_SELL_VEHICLE,
                         NetworkGetNetworkIdFromEntity(entity),
-                        properties
+                        configuration
                     );
                 },
             },
