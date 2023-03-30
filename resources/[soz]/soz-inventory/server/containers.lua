@@ -178,15 +178,7 @@ Container["bin"] = InventoryDatastore:new({
     },
     populateDatastoreCallback = function()
         local inventory = {}
-        local items = {
-            ["metalscrap"] = math.random(0, 100) >= 90 and math.random(0, 1) or 0,
-            ["aluminum"] = math.random(0, 100) >= 90 and math.random(0, 2) or 0,
-            ["rubber"] = math.random(0, 100) >= 90 and math.random(0, 2) or 0,
-            ["rolex"] = math.random(0, 100) >= 95 and 1 or 0,
-            ["diamond_ring"] = math.random(0, 100) >= 95 and 1 or 0,
-            ["goldchain"] = math.random(0, 100) >= 95 and 1 or 0,
-            ["garbagebag"] = math.random(5, 20),
-        }
+        local items = getBinItems()
 
         local availableWeight = Config.StorageCapacity["bin"].weight
         for item, amount in pairs(items) do
