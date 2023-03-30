@@ -97,6 +97,7 @@ export type LiquorItem = BaseItem & {
     type: 'liquor';
     nutrition: Nutrition;
     animation?: AnimationItem;
+    prop?: PropItem;
 };
 
 // Fight For Style
@@ -122,22 +123,32 @@ type AnimationItem = {
     flags: number;
 };
 
+type PropItem = {
+    model: string;
+    bone: number;
+    coords: { x: number; y: number; z: number };
+    rotation?: { x: number; y: number; z: number };
+};
+
 export type FoodItem = BaseItem & {
     type: 'food';
     nutrition: Nutrition;
     animation?: AnimationItem;
+    prop?: PropItem;
 };
 
 export type DrinkItem = BaseItem & {
     type: 'drink';
     nutrition: Nutrition;
     animation?: AnimationItem;
+    prop?: PropItem;
 };
 
 export type CocktailItem = BaseItem & {
     type: 'cocktail';
     nutrition: Nutrition;
     animation?: AnimationItem;
+    prop?: PropItem;
 };
 
 export type InventoryItemMetadata = {
