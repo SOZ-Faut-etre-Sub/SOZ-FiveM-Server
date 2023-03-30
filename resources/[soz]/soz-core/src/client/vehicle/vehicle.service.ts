@@ -26,10 +26,6 @@ export class VehicleService {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    public getVehicleProperties(vehicle: number): any[] {
-        return this.QBCore.getVehicleProperties(vehicle);
-    }
-
     public async getVehicleConfiguration(vehicleEntityId: number): Promise<VehicleConfiguration> {
         const state = this.getVehicleState(vehicleEntityId);
         let vehicleConfiguration = this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
