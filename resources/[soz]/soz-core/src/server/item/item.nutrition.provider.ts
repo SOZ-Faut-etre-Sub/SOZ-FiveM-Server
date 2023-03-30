@@ -56,7 +56,8 @@ export class ItemNutritionProvider {
 
         const name = item.type === 'food' ? 'eat_something' : 'drink_something';
         const prop =
-            item.type === 'food'
+            item.prop ||
+            (item.type === 'food'
                 ? item.name === 'zevent2022_popcorn'
                     ? {
                           model: 'xs_prop_trinket_cup_01a',
@@ -73,7 +74,7 @@ export class ItemNutritionProvider {
                       model: 'ba_prop_club_water_bottle',
                       bone: 28422,
                       coords: { x: 0.01, y: -0.01, z: -0.06 },
-                  };
+                  });
         const animation =
             item.animation ||
             (item.type === 'food'
