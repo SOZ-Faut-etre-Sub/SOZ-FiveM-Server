@@ -274,6 +274,21 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
         }
     };
 
+    useEffect(() => {
+        let foundColor = false;
+
+        for (const choice of choices) {
+            if (choice.color[0] === value[0] && choice.color[1] === value[1] && choice.color[2] === value[2]) {
+                foundColor = true;
+                break;
+            }
+        }
+
+        if (!foundColor && choices.length > 0 && onChange) {
+            onChange(choices[0].color);
+        }
+    }, [value, choices, onConfirm]);
+
     return (
         <MenuItemSelect
             distance={3}
