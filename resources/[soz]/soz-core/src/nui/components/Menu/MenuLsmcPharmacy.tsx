@@ -12,6 +12,7 @@ const products: Record<string, string> = {
     pommade: 'pommade',
     painkiller: 'antidouleur',
     antiacide: 'antiacide',
+    health_book: 'Guide de santé',
 };
 
 export const MenuLsmcPharmacy: FunctionComponent = () => {
