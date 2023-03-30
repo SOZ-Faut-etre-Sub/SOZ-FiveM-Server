@@ -27,6 +27,7 @@ export const PHARMACY_PRICES = {
     painkiller: 250,
     antiacide: 250,
     heal: 400,
+    health_book: 400,
 };
 
 export const BedLocations: Vector3[] = [

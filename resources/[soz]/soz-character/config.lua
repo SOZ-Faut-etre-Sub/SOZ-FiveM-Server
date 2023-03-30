@@ -38,4 +38,5 @@ Config.NewPlayerDefaultItems = {
     {name = "grapejuice3", quantity = 2},
     {name = "grapejuice5", quantity = 2},
     {name = "cardbord", quantity = 1},
+    {name = "health_book", quantity = 1},
 }
