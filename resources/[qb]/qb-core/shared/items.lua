@@ -1466,7 +1466,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_sandwich_01',
             bone = 60309,
-            coords = { x = 0.05 , y = -0.01, z = 0.01 },
+            coords = { x = 0.05 , y = -0.01, z = -0.01 },
         },
         ['illustrator'] = '.LeakFlood',
     },
@@ -4414,7 +4414,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_shots_glass_cs',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = 0.06 },
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
         illustrator = ".Kutz"
     },
@@ -4442,7 +4442,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_shots_glass_cs',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = 0.06 },
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
         illustrator = ".Smogogo"
     },
@@ -4470,7 +4470,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_shots_glass_cs',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = 0.06 },
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
         illustrator = ".Smogogo"
     },
@@ -4498,7 +4498,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_shots_glass_cs',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = 0.06 },
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
         illustrator = ".Kutz"
     },
@@ -4526,7 +4526,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_shots_glass_cs',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = 0.06 },
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
         illustrator = ".Smogogo"
     },
@@ -4554,7 +4554,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_shots_glass_cs',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = 0.06 },
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
         illustrator = ".Smogogo"
     },
@@ -4582,7 +4582,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_shots_glass_cs',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = 0.06 },
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
         illustrator = ".Kutz"
     },
@@ -4610,7 +4610,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_shots_glass_cs',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = 0.06 },
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
         illustrator = ".Kutz"
     },
