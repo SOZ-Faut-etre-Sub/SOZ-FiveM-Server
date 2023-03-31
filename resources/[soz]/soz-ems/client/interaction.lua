@@ -8,7 +8,7 @@ CreateThread(function()
                 job = "lsmc",
                 canInteract = function(entity)
                     local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                    return PlayerData.job.onduty and not Player(target).state.isdead and not InsideSurgery
+                    return PlayerData.job.onduty and not Player(target).state.isdead
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Soigner", "Appliquer un bandage..", 10000, false, true,
@@ -38,7 +38,7 @@ CreateThread(function()
                 job = "lsmc",
                 canInteract = function(entity)
                     local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                    return PlayerData.job.onduty and Player(target).state.isdead and not InsideSurgery
+                    return PlayerData.job.onduty and Player(target).state.isdead
                 end,
                 action = function(entity)
                     TriggerEvent("soz-core:lsmc:reanimate", entity)
@@ -78,7 +78,7 @@ CreateThread(function()
                 job = "lsmc",
                 canInteract = function(entity)
                     local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
-                    return PlayerData.job.onduty and not Player(target).state.isdead and not InsideSurgery
+                    return PlayerData.job.onduty and not Player(target).state.isdead
                 end,
                 action = function(entity)
                     QBCore.Functions.Progressbar("Take_Blood", "Vous faites une prise de sang...", 10000, false, true,
