@@ -160,6 +160,11 @@ RegisterNetEvent("talk:radio:use", function()
 end)
 
 RegisterCommand("radio_toggle", function()
+    if LocalPlayer.state.inv_busy then
+        exports["soz-hud"]:DrawNotification("Action en cours", "error")
+        return
+    end
+
     local player = PlayerPedId()
     if haveItem and (not IsNuiFocused() or radioOpen) and DoesEntityExist(player) and not PlayerData.metadata["isdead"] and
         not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] and not IsPauseMenuActive() then
