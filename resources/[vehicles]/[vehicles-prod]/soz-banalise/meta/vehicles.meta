@@ -7,8 +7,8 @@
             <modelName>lspdbana1</modelName>
             <txdName>felon1</txdName>
             <handlingId>FELON</handlingId>
-            <gameName>Felonbana</gameName>
-            <vehicleMakeName>FELONBAN</vehicleMakeName>
+            <gameName>LSPDBANA1</gameName>
+            <vehicleMakeName>LSPDBANA1</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
@@ -121,8 +121,8 @@
             <modelName>lspdbana2</modelName>
             <txdName>sultan1</txdName>
             <handlingId>SULTAN</handlingId>
-            <gameName>Sultanbana</gameName>
-            <vehicleMakeName>SULTANBA</vehicleMakeName>
+            <gameName>LSPDBANA2</gameName>
+            <vehicleMakeName>LSPDBANA2</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
@@ -236,8 +236,8 @@
             <modelName>bcsobana1</modelName>
             <txdName>fugitive</txdName>
             <handlingId>FUGITIVE</handlingId>
-            <gameName>FUGIBANA</gameName>
-            <vehicleMakeName>Fugitiveban</vehicleMakeName>
+            <gameName>BCSOBANA1</gameName>
+            <vehicleMakeName>BCSOBANA1</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
@@ -351,8 +351,8 @@
             <modelName>bcsobana2</modelName>
             <txdName>gresley</txdName>
             <handlingId>GRESLEY</handlingId>
-            <gameName>GRESBANA</gameName>
-            <vehicleMakeName>Gresleybana</vehicleMakeName>
+            <gameName>BCSOBANA2</gameName>
+            <vehicleMakeName>BCSOBANA2</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
