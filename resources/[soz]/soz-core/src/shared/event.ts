@@ -354,6 +354,7 @@ export enum ClientEvent {
     HELICO_REMOVE_LIGHT = 'soz-core:client:police:del-light',
 
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:client:talent:disable-crimi',
+    TALENT_NEW_CRIMI = 'soz-core:client:talent:new-crimi',
 
     PLAYER_TELEPORT = 'soz-core:client:player:teleport',
 
