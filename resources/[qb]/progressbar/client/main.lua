@@ -258,11 +258,11 @@ function ActionCleanup()
     playerProps = {}
     playerHasProp = false
 
-    if prop_net then
+    if prop_net and NetworkDoesNetworkIdExist(prop_net) then
         DetachEntity(NetToObj(prop_net), 1, 1)
         DeleteEntity(NetToObj(prop_net))
     end
-    if propTwo_net then
+    if propTwo_net and NetworkDoesNetworkIdExist(propTwo_net) then
         DetachEntity(NetToObj(propTwo_net), 1, 1)
         DeleteEntity(NetToObj(propTwo_net))
     end
