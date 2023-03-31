@@ -22,9 +22,9 @@ BaunConfig.HarvestZones = {
         zones = {
             {
                 ped = {model = "a_m_m_prolhost_01", coords = vector4(868.5, -1625.73, 30.25, 141.6)},
-                center = vector3(869.25, -1629.26, 30.21),
-                length = 2.6,
-                width = 0.1,
+                center = vector3(868.5, -1625.73, 30.25),
+                length = 0.8,
+                width = 0.8,
                 options = {name = "baun:harvest:flavor:1", heading = 0, minZ = 29.46, maxZ = 31.66},
             },
         },
@@ -34,10 +34,10 @@ BaunConfig.HarvestZones = {
         zones = {
             {
                 ped = {model = "a_f_y_business_02", coords = vector4(45.3, -1750.68, 29.64, 26.92)},
-                center = vector3(29.91, -1770.79, 29.57),
-                length = 4,
-                width = 0.1,
-                options = {name = "baun:harvest:furniture:1", heading = 320, minZ = 28.57, maxZ = 32.17},
+                center = vector3(45.31, -1750.79, 29.58),
+                length = 0.8,
+                width = 0.8,
+                options = {name = "baun:harvest:furniture:1", heading = 320, minZ = 28.58, maxZ = 30.58},
             },
         },
     },
