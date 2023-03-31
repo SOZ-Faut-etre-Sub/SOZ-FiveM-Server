@@ -204,7 +204,7 @@ export enum ServerEvent {
     HUB_WASH = 'soz-core:server:hub:wash',
     HUB_SHOP_BUY = 'soz-core:server:hub:shop-buy',
     HUB_EXIT = 'soz-core:server:hub:exit',
-    HUB_GAMEMASTER_RESELL = 'soz-core:server:hub:gamemaster-resell',
+    HUB_RESELL = 'soz-core:server:hub:resell',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
