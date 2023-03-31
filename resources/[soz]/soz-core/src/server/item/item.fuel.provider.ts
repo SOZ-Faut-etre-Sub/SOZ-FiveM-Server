@@ -51,6 +51,12 @@ export class ItemFuelProvider {
             return;
         }
 
+        if (closestVehicle.isInside) {
+            this.notifier.notify(source, "Vous ne pouvez pas utiliser ceci à l'intérieur d'un véhicule", 'error');
+
+            return;
+        }
+
         const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
 
         if (vehicleType === 'heli' || vehicleType === 'plane') {
@@ -119,6 +125,12 @@ export class ItemFuelProvider {
             return;
         }
 
+        if (closestVehicle.isInside) {
+            this.notifier.notify(source, "Vous ne pouvez pas utiliser ceci à l'intérieur d'un véhicule", 'error');
+
+            return;
+        }
+
         const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
 
         if (vehicleType !== 'heli' && vehicleType !== 'plane') {
@@ -179,6 +191,12 @@ export class ItemFuelProvider {
 
         if (!closestVehicle) {
             this.notifier.notify(source, 'Aucun véhicule à proximité');
+
+            return;
+        }
+
+        if (closestVehicle.isInside) {
+            this.notifier.notify(source, "Vous ne pouvez pas utiliser ceci à l'intérieur d'un véhicule", 'error');
 
             return;
         }
