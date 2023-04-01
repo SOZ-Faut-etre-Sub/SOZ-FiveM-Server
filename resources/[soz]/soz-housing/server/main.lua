@@ -3,6 +3,8 @@ local QBCore = exports["qb-core"]:GetCoreObject()
 --- @type Property[]
 Properties = {}
 
+local blockedCrimiDate = {}
+
 local function IsPropertyValid(house)
     house = decode_json(house)
     if house.identifier == nil then
@@ -84,9 +86,18 @@ QBCore.Functions.CreateCallback("housing:server:GetPlayerProperties", function(s
     cb(properties)
 end)
 
+RegisterNetEvent("housing:server:AddBlockedCrimiDate", function(citizenId, date)
+    blockedCrimiDate[citizenId] = date
+end)
+
 RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apartmentId, target)
     local Player = QBCore.Functions.GetPlayerByCitizenId(target)
     if not Player then
+        return
+    end
+
+    if blockedCrimiDate[target] and blockedCrimiDate[target] > GetGameTimer() then
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous devez attendre après avoir réalisé une action criminelle", "error")
         return
     end
 

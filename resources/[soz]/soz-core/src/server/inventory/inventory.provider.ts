@@ -1,10 +1,8 @@
-import { OnEvent } from '@public/core/decorators/event';
-import { ServerEvent } from '@public/shared/event';
-
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { RpcEvent } from '../../shared/rpc';
+import { LockBinService } from '../job/bluebird/lock.bin.service';
 import { InventoryManager } from './inventory.manager';
 
 /**
@@ -15,25 +13,12 @@ export class InventoryProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    private lockedBin: string[] = [];
+    @Inject(LockBinService)
+    private lockBinService: LockBinService;
 
-    @Rpc(RpcEvent.BIN_IS_LOCKED)
+    @Rpc(RpcEvent.BIN_IS_NOT_LOCKED)
     public isBinLock(source: number, id: string) {
-        return !this.lockedBin.includes(id);
-    }
-
-    @OnEvent(ServerEvent.BIN_CHANGE_LOCK_STATUS)
-    public onBinChangeLockStatus(source: number, id: string, status: boolean) {
-        if (status) {
-            if (!this.lockedBin.includes(id)) {
-                this.lockedBin.push(id);
-            }
-        } else {
-            const index = this.lockedBin.indexOf(id, 0);
-            if (index > -1) {
-                this.lockedBin.splice(index, 1);
-            }
-        }
+        return !this.lockBinService.isLock(id);
     }
 
     @Rpc(RpcEvent.INVENTORY_SEARCH)
