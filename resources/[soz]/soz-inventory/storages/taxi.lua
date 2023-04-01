@@ -30,3 +30,13 @@ Config.Storages["taxi_cloakroom"] = {
     targetOptions = getCloakroomTargetOptions("taxi", "taxi_cloakroom"),
 }
 
+Config.Storages["taxi_boss_storage"] = {
+    label = "Coffre patron",
+    type = "boss_storage",
+    owner = "taxi",
+    position = vector3(910.45, -152.13, 74.17),
+    size = vec2(0.2, 2.6),
+    minZ = 73.17,
+    maxZ = 75.17,
+    heading = 328,
+}
