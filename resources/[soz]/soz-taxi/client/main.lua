@@ -27,8 +27,12 @@ RegisterNetEvent("QBCore:Client:OnJobUpdate", function(JobInfo)
     PlayerData.job = JobInfo
 end)
 
-exports["qb-target"]:AddBoxZone("duty_taxi", vector3(903.47, -157.88, 74.17), 1.0, 1.0,
-                                {name = "duty_taxi", heading = 328, minZ = 73.97, maxZ = 74.77, debugPoly = false}, {
+exports["qb-target"]:AddBoxZone("duty_taxi", vector3(903.31, -157.89, 74.17), 1.0, 0.40, {
+    name = "duty_taxi",
+    heading = 328,
+    minZ = 73.97,
+    maxZ = 74.77,
+}, {
     options = {
         {
             type = "client",
