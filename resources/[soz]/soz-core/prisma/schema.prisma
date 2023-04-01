@@ -459,6 +459,7 @@ model investigation_revision {
   investigationId Int?
   citizenid       String         @db.VarChar(255)
   content         String         @db.LongText
+  note            String         @db.LongText @default("")
   created_at      DateTime?      @default(now()) @db.Timestamp(0)
   investigation   investigation? @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_investigation")
 
