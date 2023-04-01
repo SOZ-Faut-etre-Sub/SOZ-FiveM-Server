@@ -932,12 +932,14 @@ local function purgeBinLoop()
         if inv.datastore and inv.type == "bin" then
             local items = getBinItems()
             for item, amount in pairs(items) do
-                Inventory.AddItem(inv, item, amount)
+                for i = 1, amount do
+                    Inventory.AddItem(inv, item, 1)
+                end
             end
         end
     end
 
-    SetTimeout(2 * 60 * 60 * 1000, purgeBinLoop)
+    SetTimeout(math.random(1 * 3600 * 1000, 3 * 3600 * 1000), purgeBinLoop)
 end
 
 local function saveInventories(loop)
