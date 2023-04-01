@@ -64,7 +64,6 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
     }, [tier, parking]);
 
     const onConfirm = () => {
-        if (tier <= data.currentTier) return;
         fetchNui(NuiEvent.HousingUpgradeApartment, {
             tier,
             price: tierPrice,
