@@ -67,6 +67,7 @@ export enum RpcEvent {
 
     VANDALISM_END = 'soz-core:server:vandalism:end',
     VANDALISM_LOAD = 'soz-core:server:vandalism:load',
+    VANDALISM_LOCK = 'soz-core:server:vandalism:lock',
 
     HEIST_CHECK = 'soz-core:server:heist:check',
     HEIST_JEWELRY_IS_ZONE_UNLOCK = 'soz-core:server:heist:jewelry-check-unlock',
@@ -85,5 +86,5 @@ export enum RpcEvent {
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
 
-    BIN_IS_LOCKED = 'soz-core:server:bin:is-locked',
+    BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',
 }
