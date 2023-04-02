@@ -42,13 +42,13 @@ export class InventoryOpenProvider {
                             duration: 4000,
                         });
 
-                        if (!cancelled) {
+                        if (!cancelled && (await emitRpc<boolean>(RpcEvent.BIN_IS_NOT_LOCKED, id))) {
                             this.openTargetInventory('bin', id);
                         }
                     },
                     canInteract: async (entity: number) => {
                         const id = computeBinId(entity);
-                        return emitRpc<boolean>(RpcEvent.BIN_IS_LOCKED, id);
+                        return emitRpc<boolean>(RpcEvent.BIN_IS_NOT_LOCKED, id);
                     },
                 },
             ],

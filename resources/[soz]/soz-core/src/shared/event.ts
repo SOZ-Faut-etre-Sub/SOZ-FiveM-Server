@@ -170,6 +170,7 @@ export enum ServerEvent {
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
 
     VANDALISM_END = 'soz-core:server:vandalism:end',
+    VANDALISM_UNLOCK = 'soz-core:server:vandalism:unlock',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
 
@@ -202,8 +203,6 @@ export enum ServerEvent {
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
-
-    BIN_CHANGE_LOCK_STATUS = 'soz-core:server:bin:change-lock-status',
 }
 
 export enum ClientEvent {

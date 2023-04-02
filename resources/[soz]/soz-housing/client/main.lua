@@ -38,7 +38,7 @@ RegisterNetEvent("housing:client:Teleport", function(coords)
     Citizen.CreateThread(function()
         Citizen.Wait(2000)
 
-        while Housing.Functions.IsInsideApartment do
+        while Housing.Functions.IsInsideApartment() do
             local propertyId = PlayerData.metadata["inside"].property
             local interiorId = GetInteriorFromEntity(PlayerPedId())
 
