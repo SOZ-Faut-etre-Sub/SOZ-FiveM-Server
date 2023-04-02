@@ -15,6 +15,7 @@ global.isPhoneDrowned = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
 global.isPlayerHasItem = false;
+global.isBlackout = false;
 
 const exps = global.exports;
 
@@ -91,13 +92,21 @@ export const hidePhone = async (): Promise<void> => {
  *
  * * * * * * * * * * * * */
 
-export const updateAvailability = () => {
-    sendMessage(
-        'PHONE',
-        PhoneEvents.SET_AVAILABILITY,
-        (!global.isPhoneDrowned && !global.isPhoneDisabled && global.isPlayerHasItem && !cityIsInBlackOut()) ||
-            !!LocalPlayer.state.isdead
-    );
+export const updateAvailability = async () => {
+    const avail =
+        (!global.isPhoneDrowned && !global.isPhoneDisabled && global.isPlayerHasItem && !global.isBlackout) ||
+        !!LocalPlayer.state.isdead;
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, avail);
+
+    if (!avail) {
+        if (global.isPhoneOpen) {
+            await hidePhone();
+        }
+        if (callService.isInCall()) {
+            callService.handleEndCall();
+            await animationService.endPhoneCall();
+        }
+    }
 };
 
 /* * * * * * * * * * * * *
@@ -218,17 +227,14 @@ setInterval(async () => {
     const isSwimming = IsPedSwimming(ped);
     if (isSwimming && !global.isPhoneDrowned) {
         global.isPhoneDrowned = true;
-        if (global.isPhoneOpen) await hidePhone();
-        callService.handleEndCall();
         updateAvailability();
     } else if (!isSwimming && global.isPhoneDrowned) {
         global.isPhoneDrowned = false;
         updateAvailability();
     }
 
-    if (global.isPhoneOpen && cityIsInBlackOut()) {
-        await hidePhone();
-        callService.handleEndCall();
+    if (global.isBlackout != cityIsInBlackOut()) {
+        global.isBlackout = cityIsInBlackOut();
         updateAvailability();
     }
 }, 1000);
