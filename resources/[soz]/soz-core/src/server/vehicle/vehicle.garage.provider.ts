@@ -12,7 +12,14 @@ import { toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector'
 import { getRandomItem } from '../../shared/random';
 import { Err, isErr, Ok, Result } from '../../shared/result';
 import { RpcEvent } from '../../shared/rpc';
-import { Garage, GarageType, GarageVehicle, HouseGarageLimits, PlaceCapacity } from '../../shared/vehicle/garage';
+import {
+    Garage,
+    GarageCategory,
+    GarageType,
+    GarageVehicle,
+    HouseGarageLimits,
+    PlaceCapacity,
+} from '../../shared/vehicle/garage';
 import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicle/vehicle';
@@ -27,6 +34,12 @@ import { GarageRepository } from '../repository/garage.repository';
 import { VehicleRepository } from '../repository/vehicle.repository';
 import { VehicleSpawner } from './vehicle.spawner';
 import { VehicleStateService } from './vehicle.state.service';
+
+const ALLOWED_VEHICLE_TYPE: Record<GarageCategory, string[]> = {
+    [GarageCategory.Car]: ['automobile', 'bike', 'trailer'],
+    [GarageCategory.Air]: ['heli', 'plane'],
+    [GarageCategory.Sea]: ['boat', 'submarine'],
+};
 
 @Provider()
 export class VehicleGarageProvider {
@@ -424,6 +437,18 @@ export class VehicleGarageProvider {
             }
 
             this.notifier.notify(source, 'Ce véhicule ne vous appartient pas.', 'error');
+
+            return;
+        }
+
+        const vehicleType = GetVehicleType(vehicleEntityId);
+
+        if (!ALLOWED_VEHICLE_TYPE[garage.category].includes(vehicleType)) {
+            this.notifier.notify(
+                source,
+                `Vous ne pouvez pas ranger ce véhicule dans le garage ${garage.name}.`,
+                'error'
+            );
 
             return;
         }
