@@ -156,3 +156,12 @@ RegisterNetEvent("scuba:client:Toggle", function(scuba)
         end)
     end
 end)
+
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
+    PlayerData = QBCore.Functions.GetPlayerData()
+    if PlayerData.metadata.scuba then
+        local ped = PlayerPedId()
+        SetEnableScuba(ped, true)
+        SetPedMaxTimeUnderwater(ped, 1500.00)
+    end
+end)
