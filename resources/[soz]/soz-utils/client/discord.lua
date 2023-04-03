@@ -20,7 +20,7 @@ CreateThread(function()
 
         QBCore.Functions.TriggerCallback("smallresources:server:GetCurrentPlayers", function(result)
             -- SetRichPresence(result[1] .. "/" .. result[2])
-            SetRichPresence(result[1] .. "/150")
+            SetRichPresence(result[1] .. "/200")
         end)
 
         -- (26-02-2021) New Native:
