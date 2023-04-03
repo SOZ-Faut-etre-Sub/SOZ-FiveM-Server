@@ -117,13 +117,13 @@ export const Messages = () => {
                 <AppTitle
                     title={getDisplayByNumber(conversation.phoneNumber) || conversation.phoneNumber}
                     action={
-                        <div className="flex">
+                        <div className="flex gap-2.5">
                             <ArchiveIcon
-                                className="mx-2 h-6 w-6 cursor-pointer"
+                                className="h-6 w-6 cursor-pointer"
                                 onClick={() => handleArchiveConversation(conversation.conversation_id)}
                             />
                             {getDisplayByNumber(conversation.phoneNumber) === conversation.phoneNumber && (
-                                <Button className="mx-3">
+                                <Button>
                                     <UserAddIcon
                                         className="h-6 w-6 cursor-pointer"
                                         onClick={() => handleAddContact(conversation.phoneNumber)}
@@ -131,7 +131,7 @@ export const Messages = () => {
                                 </Button>
                             )}
                             {getDisplayByNumber(conversation.phoneNumber) !== conversation.phoneNumber && (
-                                <Button className="mx-3">
+                                <Button>
                                     <PencilAltIcon
                                         className="h-6 w-6 cursor-pointer"
                                         onClick={async () => {
