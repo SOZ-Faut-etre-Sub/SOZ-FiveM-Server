@@ -68,6 +68,8 @@ export class FuelStationRepository {
                   })
                 : BoxZone.fromZone(station.zone);
 
+            station.zone.minZ -= 2.0;
+
             if (zone.isPointInside(position)) {
                 return station;
             }
