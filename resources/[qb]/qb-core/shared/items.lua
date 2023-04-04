@@ -5057,7 +5057,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = 'Protège vos mains des intempéries.',
-        ['illustrator'] = ''
+        ['illustrator'] = '.Freaks'
     },
     ['garment_bag'] = {
         ['name'] = 'garment_bag',
@@ -5070,7 +5070,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = 'Pour transporter vos affaires.',
-        ['illustrator'] = ''
+        ['illustrator'] = '.Crash'
     },
     ['garment_underwear_top'] = {
         ['name'] = 'garment_underwear_top',
@@ -5083,7 +5083,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = "Marre d'être torse nu ?",
-        ['illustrator'] = ''
+        ['illustrator'] = '.Smogogo'
     },
     ['luxury_garment_top'] = {
         ['name'] = 'luxury_garment_top',
@@ -5148,7 +5148,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = 'De magnifiques gants pour vos magnifiques mains.',
-        ['illustrator'] = ''
+        ['illustrator'] = '.GautSlayer'
     },
     ['luxury_garment_bag'] = {
         ['name'] = 'luxury_garment_bag',
@@ -5161,7 +5161,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = 'Celui là est un Louis Zuitton !',
-        ['illustrator'] = ''
+        ['illustrator'] = '.Crash'
     },
     ['luxury_garment_underwear_top'] = {
         ['name'] = 'luxury_garment_underwear_top',
@@ -5174,7 +5174,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['combinable'] = nil,
         ['description'] = "Doux et soyeux, comme une peau de bébé.",
-        ['illustrator'] = ''
+        ['illustrator'] = '.Smogogo'
     },
     work_clothes = {
         name = 'work_clothes',

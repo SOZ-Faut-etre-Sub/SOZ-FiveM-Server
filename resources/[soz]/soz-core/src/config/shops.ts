@@ -1139,7 +1139,7 @@ export const ProperTorsos = {
         [96]: 0,
         [97]: 6,
         [98]: 0,
-        [99]: 0, // undershirt needed
+        [99]: 5,
         [100]: 0, // doomed
         [101]: 15,
         [102]: 14,
