@@ -30,8 +30,16 @@ export class PlayerPositionProvider {
         await wait(this.fadeDelay);
         this.weaponDrawingProvider.undrawWeapons();
 
+        FreezeEntityPosition(playerPed, true);
+
         SetEntityCoords(playerPed, x, y, z, false, false, false, false);
         SetEntityHeading(playerPed, w || 0.0);
+
+        while (!HasCollisionLoadedAroundEntity(playerPed)) {
+            await wait(1);
+        }
+
+        FreezeEntityPosition(playerPed, false);
 
         await wait(this.fadeDelay);
 
