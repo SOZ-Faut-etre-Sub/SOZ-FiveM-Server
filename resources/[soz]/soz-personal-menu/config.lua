@@ -488,7 +488,13 @@ Config.AnimationsList = {
             },
             {"Peur", "DESC", false, false, {"amb@code_human_cower_stand@male@idle_a", "idle_b", 262144, true}},
             {"Nerveux", "DESC", false, false, {"rcmme_tracey1", "nervous_loop", 262144, true}},
-            {"Se rendre", "WASTEDDDDD", false, "inv_pelucheprison", {}},
+            {
+                "Se rendre",
+                "WASTEDDDDD",
+                false,
+                "inv_pelucheprison",
+                {event = "soz-personal-menu:client:animation:surrender"},
+            },
             {"Menotté au sol", "Lachez moiii", false, false, {"random@burial", "b_burial", 262144, true}}, -- INTERACT JOUEUR CUFF ?
         },
         ["Douleur"] = {
