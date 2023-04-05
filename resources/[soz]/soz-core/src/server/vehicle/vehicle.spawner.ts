@@ -1,7 +1,5 @@
-import { Rpc } from '@core/decorators/rpc';
 import { Logger } from '@core/logger';
 import { PlayerVehicle } from '@prisma/client';
-import { RpcEvent } from '@public/shared/rpc';
 import PCancelable from 'p-cancelable';
 
 import { OnEvent } from '../../core/decorators/event';
