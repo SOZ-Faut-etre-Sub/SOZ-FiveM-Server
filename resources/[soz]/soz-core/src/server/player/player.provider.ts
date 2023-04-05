@@ -33,6 +33,11 @@ export class PlayerProvider {
         this.serverStateService.addPlayer(player.PlayerData);
     }
 
+    @On('QBCore:Server:PlayerUpdate', false)
+    onPlayerUpdate(player: any) {
+        this.serverStateService.updatePlayer(player);
+    }
+
     @On('QBCore:Server:PlayerUnload', false)
     onPlayerUnload(source: number) {
         this.serverStateService.removePlayer(source);
