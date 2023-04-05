@@ -84,21 +84,9 @@ export class VehicleSpawnProvider {
         SetVehicleHasBeenOwnedByPlayer(vehicle, true);
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
-        SetEntityVisible(vehicle, false, false);
 
         TriggerServerEvent(ServerEvent.VEHICLE_SPAWNED, spawnId, networkId);
 
-        this.resourceLoader.unloadModel(vehicleSpawn.model);
-
-        if (vehicleSpawn.warp) {
-            TaskWarpPedIntoVehicle(ped, vehicle, -1);
-        }
-
-        if (vehicleSpawn.modification) {
-            this.vehicleService.applyVehicleConfiguration(vehicle, vehicleSpawn.modification);
-        }
-
-        this.vehicleService.syncVehicle(vehicle, vehicleSpawn.state);
         let confirmSpawn = false;
         let confirmSpawnTry = 0;
 
@@ -114,16 +102,28 @@ export class VehicleSpawnProvider {
             confirmSpawn = state.spawned;
         }
 
-        if (confirmSpawn) {
-            SetEntityVisible(vehicle, true, false);
-        } else {
+        if (!confirmSpawn) {
             SetEntityAsMissionEntity(vehicle, true, true);
             SetEntityAsNoLongerNeeded(vehicle);
             DeleteVehicle(vehicle);
             DeleteEntity(vehicle);
 
             this.notifier.notify("Le véhicule n'a pas pu être sorti, veuillez ressayer", 'error');
+
+            return;
         }
+
+        this.resourceLoader.unloadModel(vehicleSpawn.model);
+
+        if (vehicleSpawn.warp) {
+            TaskWarpPedIntoVehicle(ped, vehicle, -1);
+        }
+
+        if (vehicleSpawn.modification) {
+            this.vehicleService.applyVehicleConfiguration(vehicle, vehicleSpawn.modification);
+        }
+
+        this.vehicleService.syncVehicle(vehicle, vehicleSpawn.state);
     }
 
     @OnEvent(ClientEvent.VEHICLE_DELETE)

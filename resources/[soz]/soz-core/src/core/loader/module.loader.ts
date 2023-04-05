@@ -16,7 +16,7 @@ export class ModuleLoader {
 
     public load(module: any): void {
         const moduleMetadata = Reflect.getMetadata(ModuleMetadataKey, module) as ModuleMetadata;
-        this.logger.debug('[soz-core] [module] load:', moduleMetadata.name);
+        this.logger.debug('[module] load:', moduleMetadata.name);
 
         for (const provider of moduleMetadata.providers) {
             this.providerLoader.load(this.container.get(provider));

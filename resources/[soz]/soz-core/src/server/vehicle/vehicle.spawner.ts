@@ -1,4 +1,7 @@
+import { Rpc } from '@core/decorators/rpc';
+import { Logger } from '@core/logger';
 import { PlayerVehicle } from '@prisma/client';
+import { RpcEvent } from '@public/shared/rpc';
 import PCancelable from 'p-cancelable';
 
 import { OnEvent } from '../../core/decorators/event';
@@ -85,6 +88,9 @@ export class VehicleSpawner {
 
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     private spawning: Record<string, (netId: number) => void> = {};
     private deleting: Record<string, () => void> = {};
@@ -279,13 +285,19 @@ export class VehicleSpawner {
             let tries = 0;
 
             while ((!entityId || !DoesEntityExist(entityId)) && tries < 150) {
+                this.logger.error(
+                    `Failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), try ${tries}, network entity id: ${netId}, entity id: ${entityId}`
+                );
+
                 entityId = NetworkGetEntityFromNetworkId(netId);
                 await wait(100);
                 tries += 1;
             }
 
             if (!entityId || !DoesEntityExist(entityId)) {
-                console.error('Failed to spawn vehicle while waiting for entity id to exist in server');
+                this.logger.error(
+                    `Failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), network entity id: ${netId}, entity id: ${entityId}`
+                );
 
                 return null;
             }
@@ -315,7 +327,7 @@ export class VehicleSpawner {
 
             return netId;
         } catch (e) {
-            console.error('Failed to spawn vehicle', e);
+            this.logger.error('failed to spawn vehicle', e);
 
             return null;
         } finally {
@@ -357,7 +369,7 @@ export class VehicleSpawner {
                 deleted = true;
                 deleteTry++;
             } catch (e) {
-                console.error('Failed to delete vehicle with netId', netId, e);
+                this.logger.error(`failed to delete vehicle with netId: ${netId}: ${e.toString()}`);
             }
 
             // Try to delete entity on server side

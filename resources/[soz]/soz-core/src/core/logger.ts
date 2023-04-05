@@ -24,7 +24,7 @@ export class Logger {
 
     public constructor() {
         if (SOZ_CORE_IS_PRODUCTION) {
-            this.level = LogLevel.Warn;
+            this.level = LogLevel.Info;
         }
     }
 
@@ -45,7 +45,7 @@ export class Logger {
     }
 
     private format(color: LogColor, ...message: string[]): string {
-        return '^' + color.valueOf().toString() + message.join(' ') + '^7';
+        return `^${color.valueOf().toString()}[${new Date().toLocaleString()}] ${message.join(' ')}^7`;
     }
 
     private write(level: LogLevel, message: string) {
