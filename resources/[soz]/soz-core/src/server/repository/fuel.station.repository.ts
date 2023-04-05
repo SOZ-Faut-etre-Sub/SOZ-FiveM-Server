@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Logger } from '../../core/logger';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
@@ -35,6 +36,9 @@ type DatabaseZone = {
 export class FuelStationRepository extends Repository<Record<string, FuelStation>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     protected async load(): Promise<Record<string, FuelStation>> {
         const stations = await this.prismaService.fuel_storage.findMany();
@@ -73,8 +77,7 @@ export class FuelStationRepository extends Repository<Record<string, FuelStation
                     job: station.owner ? (station.owner as JobType) : null,
                 };
             } catch (e) {
-                console.error('cannot load station: ', station.station, e);
-                continue;
+                this.logger.error('cannot load station: ', station.station, e);
             }
         }
 
