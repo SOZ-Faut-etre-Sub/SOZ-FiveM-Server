@@ -29,17 +29,21 @@ Citizen.CreateThread(function()
     Citizen.Wait(1000)
 
     while true do
-        local newMetrics = {
-            GetBankMetrics(),
-            GetPlayerMetrics(),
-            GetInventoryMetrics(),
-            GetUpwMetrics(),
-            GetMtpMetrics(),
-            GetPawlMetrics(),
-        }
-        metrics = table.concat(newMetrics, "\n")
+        local newMetrics = {}
+        table.insert(newMetrics, GetBankMetrics())
+        Citizen.Wait(500)
+        table.insert(newMetrics, GetPlayerMetrics())
+        Citizen.Wait(500)
+        table.insert(newMetrics, GetInventoryMetrics())
+        Citizen.Wait(500)
+        table.insert(newMetrics, GetUpwMetrics())
+        Citizen.Wait(500)
+        table.insert(newMetrics, GetMtpMetrics())
+        Citizen.Wait(500)
+        table.insert(newMetrics, GetPawlMetrics())
+        Citizen.Wait(500)
 
-        Citizen.Wait(3000)
+        metrics = table.concat(newMetrics, "\n")
     end
 end)
 
