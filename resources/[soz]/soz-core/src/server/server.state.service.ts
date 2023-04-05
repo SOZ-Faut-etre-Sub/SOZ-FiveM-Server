@@ -14,6 +14,14 @@ export class ServerStateService {
         this.connectedPlayers[player.source] = player;
     }
 
+    public updatePlayer(player: PlayerData) {
+        if (!this.connectedPlayers[player.source]) {
+            return;
+        }
+
+        this.connectedPlayers[player.source] = player;
+    }
+
     public removePlayer(source: number) {
         delete this.connectedPlayers[source];
     }

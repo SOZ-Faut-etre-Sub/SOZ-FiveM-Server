@@ -36,7 +36,7 @@ export class AdminMenuInteractiveProvider {
                 license: playerData.license,
                 name: playerData.name,
                 rpFullName: `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`,
-                injuries: this.playerService.getPlayer(playerData.source).metadata.injuries_count,
+                injuries: playerData.metadata.injuries_count,
             });
         }
         return players;
