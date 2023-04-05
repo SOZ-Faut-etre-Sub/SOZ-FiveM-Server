@@ -28,7 +28,7 @@ export abstract class ProviderLoader {
 
     public load(provider): void {
         const providerMetadata = Reflect.getMetadata(ProviderMetadataKey, provider) as ProviderMetadata;
-        this.logger.debug('[soz-core] [provider] register:', providerMetadata.name);
+        this.logger.debug('[provider] register:', providerMetadata.name);
 
         this.tickLoader.load(provider);
         this.eventLoader.load(provider);

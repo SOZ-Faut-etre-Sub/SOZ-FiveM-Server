@@ -59,7 +59,7 @@ export class Application {
         });
         addEventListener('soz_core.__internal__.stop_application', this.onStopCallback, false);
 
-        this.logger.debug('[soz-core] starting application');
+        this.logger.debug('starting application');
         await this.onceLoader.trigger(OnceStep.Start);
     }
 
@@ -73,7 +73,7 @@ export class Application {
         const stopped = await this.running;
         await this.onceLoader.trigger(OnceStep.Stop);
 
-        this.logger.debug('[soz-core] stopping application');
+        this.logger.debug('stopping application');
 
         this.moduleLoader.unload();
 
