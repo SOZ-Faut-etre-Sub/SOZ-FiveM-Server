@@ -29,8 +29,6 @@ export class EstimationService {
                 const level = category.priceByLevels[currentLevel];
 
                 if (level) {
-                    console.log('add price', key, level, basePrice * level);
-
                     price += basePrice * level;
                 }
             }
@@ -39,7 +37,6 @@ export class EstimationService {
                 const hasCurrent = configuration.modification[key];
 
                 if (hasCurrent) {
-                    console.log('add price', key, basePrice * category.priceByLevels[1]);
                     price += basePrice * category.priceByLevels[1];
                 } else {
                     price += basePrice * category.priceByLevels[0];
