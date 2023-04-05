@@ -2,6 +2,7 @@ import { Command } from '../../core/decorators/command';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Logger } from '../../core/logger';
 import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
@@ -29,6 +30,9 @@ export class RebootProvider {
 
     @Inject(PlayerCleanService)
     private playerCleanService: PlayerCleanService;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @OnEvent(ServerEvent.FIVEM_PLAYER_CONNECTING)
     public onPlayerConnecting(source, name, setKickReason, deferrals) {
@@ -95,8 +99,8 @@ export class RebootProvider {
         const ids = await this.playerCleanService.getPlayerToCleans();
         const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);
 
-        console.log(`Houses owner cleaned: ${houseOwnerCount}`);
-        console.log(`Houses roommate cleaned: ${houseRoommateCount}`);
+        this.logger.info(`[reboot] Houses owner cleaned: ${houseOwnerCount}`);
+        this.logger.info(`[reboot] Houses roommate cleaned: ${houseRoommateCount}`);
     }
 
     @Command('thunder', {

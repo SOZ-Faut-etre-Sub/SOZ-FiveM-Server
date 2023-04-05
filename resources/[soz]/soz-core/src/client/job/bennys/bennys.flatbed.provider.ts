@@ -323,20 +323,11 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        await this.requestVehicleOwnership(attachedVehicle, attachedNetworkId);
-    }
-
-    public async requestVehicleOwnership(vehicle: number, vehicleNetworkId: number) {
-        let tryCount = 0;
-
-        while (
-            !NetworkRequestControlOfEntity(vehicle) &&
-            !NetworkRequestControlOfNetworkId(vehicleNetworkId) &&
-            tryCount < 10
-        ) {
-            await wait(100);
-            tryCount++;
-        }
+        await this.vehicleService.getVehicleOwnership(
+            attachedVehicle,
+            attachedNetworkId,
+            'flatbedAttachedVehicle while driving'
+        );
     }
 
     public async detachVehicle(flatbed: number) {
@@ -346,11 +337,18 @@ export class BennysFlatbedProvider {
             return;
         }
 
+        const flatbedNetworkId = NetworkGetNetworkIdFromEntity(flatbed);
+        await this.vehicleService.getVehicleOwnership(flatbed, flatbedNetworkId, 'flatbed while detaching');
+
         const attachedVehicle = NetworkGetEntityFromNetworkId(attachedVehicleNetworkId);
         const flatbedPosition = GetEntityCoords(flatbed, true) as Vector4;
         const attachedVehiclePosition = GetEntityCoords(attachedVehicle, true) as Vector4;
 
-        await this.requestVehicleOwnership(attachedVehicle, attachedVehicleNetworkId);
+        await this.vehicleService.getVehicleOwnership(
+            attachedVehicle,
+            attachedVehicleNetworkId,
+            'flatbedAttachedVehicle while detaching'
+        );
         DetachEntity(attachedVehicle, true, true);
 
         SetEntityCoords(
@@ -401,10 +399,21 @@ export class BennysFlatbedProvider {
             await wait(500);
         }
 
+        const flatbedNetworkId = NetworkGetNetworkIdFromEntity(this.currentFlatbedAttach.entity);
+        await this.vehicleService.getVehicleOwnership(
+            this.currentFlatbedAttach.entity,
+            flatbedNetworkId,
+            'flatbed while attaching'
+        );
+
         const height = GetEntityHeightAboveGround(vehicle);
         const attachedVehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        await this.requestVehicleOwnership(vehicle, attachedVehicleNetworkId);
+        await this.vehicleService.getVehicleOwnership(
+            vehicle,
+            attachedVehicleNetworkId,
+            'flatbedAttachedVehicle while attaching'
+        );
 
         this.attachVehicleToFlatbed(this.currentFlatbedAttach.entity, vehicle, height);
 

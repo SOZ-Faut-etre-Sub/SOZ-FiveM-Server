@@ -4,6 +4,7 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Logger } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
 import { JobPermission, JobType } from '../../shared/job';
 import { Monitor } from '../../shared/monitor';
@@ -78,6 +79,9 @@ export class VehicleGarageProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @Once(OnceStep.DatabaseConnected)
     public async init(): Promise<void> {
@@ -720,7 +724,7 @@ export class VehicleGarageProvider {
 
                 if (appartements.length == 0) {
                     citizenIds.add(player.citizenid);
-                    console.error('no appartements found for property', propertyId);
+                    this.logger.error('no appartements found for property', propertyId);
                 }
 
                 for (const appartement of appartements) {
@@ -731,7 +735,7 @@ export class VehicleGarageProvider {
                     }
                 }
             } else {
-                console.error('property not found', propertyId);
+                this.logger.error('property not found', propertyId);
 
                 citizenIds.add(player.citizenid);
             }
