@@ -4,160 +4,155 @@ export type SeatPlaces = {
         y: number;
         z: number;
         heading: number;
-    },
-}
+    };
+};
 
-export const SeatsTargetConfig: Record<number,Record<string,any>> = {
-    [444105316]: {  
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading: 0},},
-    },    
+export const SeatsTargetConfig: Record<number, Record<string, any>> = {
+    [444105316]: {
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
+    },
     [1037469683]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.4, heading: 0},},
-    },    
-    [-109356459]: {  
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading: 0},},
-    },    
-    [49088219]: {  
-        [0]: { offset: {x: 0.0, y: 0.4, z: 0.5, heading: 0},},
-    },    
-    [-1173315865]: {  
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading: 0},},
-    },    
-    [536071214]: {  
-        [0]: { offset: {x: 0.0, y: -0.1, z: 0.5, heading: 0},},
-    },    
-    [603897027]: {  
-        [0]: { offset: {x: 0.0, y: 0.4, z: 0.4, heading: 0},},
-    },    
-    [GetHashKey("soz_v_club_bahbarstool")]: {  
-        [0]: { offset: {x: -0.1, y: 0.0, z: 0.35, heading: 0},},
-    },    
-    [GetHashKey("soz_v_club_baham_bckt_chr")]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.1, heading: 0},},
-    },    
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.4, heading: 0 } },
+    },
+    [-109356459]: {
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
+    },
+    [49088219]: {
+        [0]: { offset: { x: 0.0, y: 0.4, z: 0.5, heading: 0 } },
+    },
+    [-1173315865]: {
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
+    },
+    [536071214]: {
+        [0]: { offset: { x: 0.0, y: -0.1, z: 0.5, heading: 0 } },
+    },
+    [603897027]: {
+        [0]: { offset: { x: 0.0, y: 0.4, z: 0.4, heading: 0 } },
+    },
+    [GetHashKey('soz_v_club_bahbarstool')]: {
+        [0]: { offset: { x: -0.1, y: 0.0, z: 0.35, heading: 0 } },
+    },
+    [GetHashKey('soz_v_club_baham_bckt_chr')]: {
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.1, heading: 0 } },
+    },
     [-1761659350]: {
-        [0]: { offset: {x: -0.02, y: -0.12, z: 0.5, heading: 0},},
+        [0]: { offset: { x: -0.02, y: -0.12, z: 0.5, heading: 0 } },
     },
     [-1498352975]: {
-        [0]: { offset: {x: 0.0, y: 0.28, z: 0.38, heading: 0},},
+        [0]: { offset: { x: 0.0, y: 0.28, z: 0.38, heading: 0 } },
     },
     [-2024837020]: {
-        [0]: { offset: {x: 0.0, y: -0.5, z: 1.5, heading:180},},
+        [0]: { offset: { x: 0.0, y: -0.5, z: 1.5, heading: 180 } },
     },
     [47332588]: {
-        [0]: { offset: {x: 0.0, y: -0.0, z: 0.45, heading:0},},
+        [0]: { offset: { x: 0.0, y: -0.0, z: 0.45, heading: 0 } },
     },
     [-741944541]: {
-        [0]: { offset: {x: 0.0, y: -0.12, z: 0.48, heading:0},},
+        [0]: { offset: { x: 0.0, y: -0.12, z: 0.48, heading: 0 } },
     },
     [-1521264200]: {
-        [0]: { offset: {x: 0.0, y: -0.12, z: 0.01, heading:0},},
+        [0]: { offset: { x: 0.0, y: -0.12, z: 0.01, heading: 0 } },
     },
     [1805980844]: {
-        [0]: { offset: {x: 0.8, y: 0.0, z: 0.45, heading:0},},
-        [1]: { offset: {x: 0.0, y: 0.0, z: 0.45, heading:0},},
-        [2]: { offset: {x: -0.8, y: 0.0, z: 0.45, heading:0},},
+        [0]: { offset: { x: 0.8, y: 0.0, z: 0.45, heading: 0 } },
+        [1]: { offset: { x: 0.0, y: 0.0, z: 0.45, heading: 0 } },
+        [2]: { offset: { x: -0.8, y: 0.0, z: 0.45, heading: 0 } },
     },
     [1404176808]: {
-        [0]: { offset: {x: 0.0, y: -0.02, z: 0.54, heading:0},},
+        [0]: { offset: { x: 0.0, y: -0.02, z: 0.54, heading: 0 } },
     },
     [525667351]: {
-        [0]: { offset: {x: 0.0, y: 0.00, z: 0.50, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [764848282]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.50, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [1681727376]: {
-        [0]: { offset: {x: 0.0, y: -0.6, z: 0.51, heading:0},},
+        [0]: { offset: { x: 0.0, y: -0.6, z: 0.51, heading: 0 } },
     },
     [-99500382]: {
-        [0]: { offset: {x: 0.8, y: 0.0, z: 0.3, heading:0},},
-        [1]: { offset: {x: 0.0, y: 0.0, z: 0.3, heading:0},},
-        [2]: { offset: {x: -0.8, y: 0.0, z: 0.3, heading:0},},
+        [0]: { offset: { x: 0.8, y: 0.0, z: 0.3, heading: 0 } },
+        [1]: { offset: { x: 0.0, y: 0.0, z: 0.3, heading: 0 } },
+        [2]: { offset: { x: -0.8, y: 0.0, z: 0.3, heading: 0 } },
     },
     [-628719744]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [-1631057904]: {
-        [0]: { offset: {x: 0.6, y: -0.08, z: 0.45, heading:0},},
+        [0]: { offset: { x: 0.6, y: -0.08, z: 0.45, heading: 0 } },
     },
     [1290593659]: {
-        [0]: { offset: {x: 0.6, y: 0.0, z: 0.42, heading:0},},
+        [0]: { offset: { x: 0.6, y: 0.0, z: 0.42, heading: 0 } },
     },
     [1071807406]: {
-        [0]: { offset: {x: 0.0, y: -0.12, z: 0.07, heading:0},},
+        [0]: { offset: { x: 0.0, y: -0.12, z: 0.07, heading: 0 } },
     },
     [-1841495633]: {
-        [0]: { offset: {x: -0.5, y: 0.0, z: 0.5, heading:0},},
+        [0]: { offset: { x: -0.5, y: 0.0, z: 0.5, heading: 0 } },
     },
     [146905321]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [-1941377959]: {
-        [0]: { offset: {x: 0.0, y: -0.12, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.0, y: -0.12, z: 0.5, heading: 0 } },
     },
     [-403891623]: {
-        [0]: { offset: {x: 1.1, y: 0.0, z: 0.45, heading:0},},
-        [1]: { offset: {x: 0.3, y: 0.0, z: 0.45, heading:0},},
-        [2]: { offset: {x: -0.35, y: 0.0, z: 0.45, heading:0},},
-        [3]: { offset: {x: -1.15, y: 0.0, z: 0.45, heading:0},},
+        [0]: { offset: { x: 1.1, y: 0.0, z: 0.45, heading: 0 } },
+        [1]: { offset: { x: 0.3, y: 0.0, z: 0.45, heading: 0 } },
+        [2]: { offset: { x: -0.35, y: 0.0, z: 0.45, heading: 0 } },
+        [3]: { offset: { x: -1.15, y: 0.0, z: 0.45, heading: 0 } },
     },
     [-523951410]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [1612971419]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [725259233]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [2064599526]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [558578166]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.0, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.0, heading: 0 } },
     },
     [1028260687]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.0, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.0, heading: 0 } },
     },
     [-2016553006]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
     [-1235256368]: {
-        [0]: { offset: {x: 0.0, y: 0.0, z: -0.04, heading:90},},
+        [0]: { offset: { x: 0.0, y: 0.0, z: -0.04, heading: 90 } },
     },
     [-1317098115]: {
-        [0]: { offset: {x: 1.0, y: 0.0, z: 0.45, heading:0},},
-        [1]: { offset: {x: 0.0, y: 0.0, z: 0.45, heading:0},},
-        [2]: { offset: {x: -1.0, y: 0.0, z: 0.45, heading:0},},
+        [0]: { offset: { x: 1.0, y: 0.0, z: 0.45, heading: 0 } },
+        [1]: { offset: { x: 0.0, y: 0.0, z: 0.45, heading: 0 } },
+        [2]: { offset: { x: -1.0, y: 0.0, z: 0.45, heading: 0 } },
     },
     [-1062810675]: {
-        [0]: { offset: {x: 0.5, y: -0.05, z: 0.40, heading:0},},
-        [1]: { offset: {x: -0.5, y: -0.05, z: 0.40, heading:0},},
+        [0]: { offset: { x: 0.5, y: -0.05, z: 0.4, heading: 0 } },
+        [1]: { offset: { x: -0.5, y: -0.05, z: 0.4, heading: 0 } },
     },
     [-1572018818]: {
-        [0]: { offset: {x: 0.40, y: 0.67, z: 0.5, heading:180},},
-        [1]: { offset: {x: -0.45, y: 0.67, z: 0.5, heading:180},},
-        [2]: { offset: {x: -0.45, y: -0.69, z: 0.5, heading:0},},
-        [3]: { offset: {x: 0.40, y: -0.69, z: 0.5, heading:0},},
+        [0]: { offset: { x: 0.4, y: 0.67, z: 0.5, heading: 180 } },
+        [1]: { offset: { x: -0.45, y: 0.67, z: 0.5, heading: 180 } },
+        [2]: { offset: { x: -0.45, y: -0.69, z: 0.5, heading: 0 } },
+        [3]: { offset: { x: 0.4, y: -0.69, z: 0.5, heading: 0 } },
     },
     [-232870343]: {
-        [0]: { offset: {x: 0.7, y: -0.05, z: 0.29, heading:20},},
-        [1]: { offset: {x: -0.7, y: -0.05, z: 0.29, heading:-20},},
+        [0]: { offset: { x: 0.7, y: -0.05, z: 0.29, heading: 20 } },
+        [1]: { offset: { x: -0.7, y: -0.05, z: 0.29, heading: -20 } },
     },
 };
 
-export const LoungerTargetList = [
-    -1498352975,
-];
-
-export const LayingTargetList = [
-    -2024837020,
-];
+export const LoungerTargetList = [-1498352975];
+export const LayingTargetList = [-2024837020];
 
 export const SeatsTargetList = [
-    GetHashKey("soz_v_club_bahbarstool"),
-    GetHashKey("soz_v_club_baham_bckt_chr"),
+    GetHashKey('soz_v_club_bahbarstool'),
+    GetHashKey('soz_v_club_baham_bckt_chr'),
     1580642483,
     -1278649385,
     -109356459,
@@ -176,7 +171,7 @@ export const SeatsTargetList = [
     49088219,
     -1173315865,
     847910771,
-    -1761659350, 
+    -1761659350,
     47332588,
     -403891623,
     -741944541,
@@ -208,4 +203,3 @@ export const SeatsTargetList = [
     -1572018818,
     -232870343,
 ];
-    
