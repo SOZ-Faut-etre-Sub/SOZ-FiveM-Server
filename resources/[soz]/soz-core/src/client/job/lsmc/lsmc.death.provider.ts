@@ -196,7 +196,8 @@ export class LSMCDeathProvider {
 
             TriggerEvent('inventory:client:StoreWeapon');
             TriggerEvent(ClientEvent.PLAYER_ON_DEATH, killData);
-            TriggerServerEvent(ServerEvent.LSMC_ON_DEATH, killData);
+            TriggerServerEvent(ServerEvent.LSMC_ON_DEATH);
+            TriggerServerEvent(ServerEvent.LSMC_ON_DEATH2, killData);
 
             let ragdollTime = 20000;
             while ((GetEntitySpeed(player) > 0.5 || IsPedRagdoll(player)) && ragdollTime > 0) {
