@@ -77,7 +77,7 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                                     onSpeedLimit(value);
                                 }}
                                 value={data.speedLimit}
-                                title="Limitateur de vitesse"
+                                title="Limiteur de vitesse"
                             >
                                 <MenuItemSelectOption value={null}>Aucune limite de vitesse</MenuItemSelectOption>
                                 <MenuItemSelectOption value={50}>Limiter la vitesse à 50km/h</MenuItemSelectOption>
