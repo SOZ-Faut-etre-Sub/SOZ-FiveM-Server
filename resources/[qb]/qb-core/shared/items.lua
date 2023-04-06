@@ -1467,6 +1467,7 @@ QBShared.Items = {
             model = 'prop_sandwich_01',
             bone = 60309,
             coords = { x = 0.05 , y = -0.01, z = -0.01 },
+            rotation = { x = 30.01, y = 0.0, z = 0.0 },
         },
         ['illustrator'] = '.LeakFlood',
     },
@@ -1492,6 +1493,11 @@ QBShared.Items = {
             ['sugar'] = 0,
             ['protein'] = 0,
             ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'ba_prop_club_water_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.06 },
         },
         ['illustrator'] = '.LeakFlood',
     },
@@ -1803,6 +1809,11 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+        },
         ['illustrator'] = '.Omega',
     },
     ['grapejuice2'] = {
@@ -1827,6 +1838,11 @@ QBShared.Items = {
             ['sugar'] = 1,
             ['protein'] = 0,
             ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
         },
         ['illustrator'] = '.Volkstat',
     },
@@ -1853,6 +1869,11 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+        },
         ['illustrator'] = '.Volkstat',
     },
     ['grapejuice4'] = {
@@ -1878,6 +1899,11 @@ QBShared.Items = {
             ['protein'] = 0,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
+        },
         ['illustrator'] = '.Volkstat',
     },
     ['grapejuice5'] = {
@@ -1902,6 +1928,11 @@ QBShared.Items = {
             ['sugar'] = 1,
             ['protein'] = 0,
             ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'ba_prop_club_tonic_bottle',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.12 },
         },
         ['illustrator'] = '.Volkstat',
     },
@@ -2081,6 +2112,11 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
+        },
         ['illustrator'] = '.Volkstat',
     },
     ['sausage2'] = {
@@ -2105,6 +2141,11 @@ QBShared.Items = {
             ['sugar'] = 0,
             ['protein'] = 1,
             ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
         },
         ['illustrator'] = '.Volkstat',
     },
@@ -2131,6 +2172,11 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
+        },
         ['illustrator'] = '.Volkstat'
     },
     ['sausage4'] = {
@@ -2156,6 +2202,11 @@ QBShared.Items = {
             ['protein'] = 1,
             ['alcohol'] = 0,
         },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
+        },
         ['illustrator'] = '.Volkstat',
     },
     ['sausage5'] = {
@@ -2180,6 +2231,11 @@ QBShared.Items = {
             ['sugar'] = 0,
             ['protein'] = 1,
             ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'soz_prop_food_sausage',
+            bone = 60309,
+            coords = { x = 0.04, y = -0.01, z = -0.01 },
         },
         ['illustrator'] = '.Volkstat'
     },
@@ -2207,7 +2263,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_cs_milk_01',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = 0.03, y = -0.01, z = -0.06 },
         },
         ['illustrator'] = '.Sniteur',
     },
@@ -2235,7 +2291,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_cs_milk_01',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = 0.03, y = -0.01, z = -0.06 },
         },
         ['illustrator'] = '.Sniteur',
     },
@@ -2263,7 +2319,7 @@ QBShared.Items = {
         prop = {
             model = 'prop_cs_milk_01',
             bone = 28422,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = 0.03, y = -0.01, z = -0.06 },
         },
         ['illustrator'] = '.Sniteur',
     },
@@ -2293,7 +2349,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Volkstat'
     },
@@ -2323,7 +2380,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Freaks'
     },
@@ -2353,7 +2411,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Freaks'
     },
@@ -2383,7 +2442,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Volkstat'
     },
@@ -2413,7 +2473,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Volkstat'
     },
@@ -2443,7 +2504,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Freaks'
     },
@@ -2473,7 +2535,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Freaks'
     },
@@ -2503,7 +2566,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Volkstat'
     },
@@ -2533,7 +2597,8 @@ QBShared.Items = {
         prop = {
             model = 'soz_prop_food_cheese',
             bone = 60309,
-            coords = { x = 0.01, y = -0.01, z = -0.06 },
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
         ['illustrator'] = '.Freaks'
     },
