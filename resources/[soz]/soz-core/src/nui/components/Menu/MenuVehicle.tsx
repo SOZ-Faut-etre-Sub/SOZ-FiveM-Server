@@ -84,6 +84,7 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                                 <MenuItemSelectOption value={90}>Limiter la vitesse à 90km/h</MenuItemSelectOption>
                                 <MenuItemSelectOption value={110}>Limiter la vitesse à 110km/h</MenuItemSelectOption>
                                 <MenuItemSelectOption value={130}>Limiter la vitesse à 130km/h</MenuItemSelectOption>
+                                <MenuItemSelectOption value={-1}>Limiter à la vitesse actuelle</MenuItemSelectOption>
                             </MenuItemSelect>
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
                             {data.insideLSCustom && (

@@ -53,6 +53,12 @@ export class VehicleMenuProvider {
             return false;
         }
 
+        // -1 is for current speed
+        if (speedLimit === -1) {
+            const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
+            speedLimit = currentSpeed;
+        }
+
         this.vehicleService.updateVehicleState(vehicle, { speedLimit });
 
         return true;
