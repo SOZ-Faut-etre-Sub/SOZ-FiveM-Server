@@ -52,6 +52,22 @@ export class WeaponProvider {
         SetWeaponsNoAutoswap(true);
 
         await this.weapon.clear();
+
+        SetWeaponDamageModifier(WeaponName.BAT, 0.2);
+        SetWeaponDamageModifier(WeaponName.CROWBAR, 0.2);
+        SetWeaponDamageModifier(WeaponName.GOLFCLUB, 0.2);
+        SetWeaponDamageModifier(WeaponName.HAMMER, 0.2);
+        SetWeaponDamageModifier(WeaponName.NIGHTSTICK, 0.2);
+        SetWeaponDamageModifier(WeaponName.WRENCH, 0.2);
+        SetWeaponDamageModifier(WeaponName.KNUCKLE, 0.2);
+        SetWeaponDamageModifier(WeaponName.POOLCUE, 0.2);
+
+        SetWeaponDamageModifier('AMMO_SNOWBALL', 0.0);
+        SetWeaponDamageModifier('AMMO_FIREWORK', 0.0);
+        SetWeaponDamageModifier(WeaponName.SMOKEGRENADE, 0.0);
+        SetWeaponDamageModifier(WeaponName.BZGAS, 0.1);
+
+        SetWeaponDamageModifier(WeaponName.MUSKET, 0.5);
     }
 
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)

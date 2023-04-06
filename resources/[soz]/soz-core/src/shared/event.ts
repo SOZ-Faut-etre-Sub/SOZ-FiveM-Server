@@ -132,6 +132,7 @@ export enum ServerEvent {
     LSMC_REVIVE = 'soz-core:lsmc:server:revive',
     LSMC_FREE_BED = 'soz-core:lsmc:server:free-bed',
     LSMC_ON_DEATH = 'soz-core:lsmc:server:on-death',
+    LSMC_ON_DEATH2 = 'soz-core:lsmc:server:on-death2',
     LSMC_SET_DEATH_REASON = 'soz-core:lsmc:server:set-death-reason',
 
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
