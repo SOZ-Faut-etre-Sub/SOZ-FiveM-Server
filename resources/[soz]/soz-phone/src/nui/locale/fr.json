@@ -74,7 +74,8 @@
       "COPY_IMAGE": "Copiez le lien de l'image ici:",
       "FAILED_TO_DELETE": "La photo n'a pas pu être supprimée :(",
       "FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :(",
-      "TAKE_PHOTO_SUCCESS": "La photo est bien sauvegardée !"
+      "TAKE_PHOTO_SUCCESS": "La photo est bien sauvegardée !",
+      "IS_NOT_AVAILABLE_DURING_CALL": "La caméra n'est pas disponible pendant un appel"
     },
       "PHOTO": {
           "FEEDBACK": {
