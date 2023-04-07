@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { NuiEvent } from '../../../shared/event';
@@ -65,10 +65,6 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
         return price;
     }, [configuration]);
 
-    useEffect(() => {
-        fetchNui(NuiEvent.GunSmithPreviewAnimation);
-    }, []);
-
     return (
         <SubMenu id={`gunsmith_${submenu_id}`}>
             <MenuTitle banner={banner}>
@@ -101,9 +97,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                     value={(weapon.metadata.tint ?? 0).toString()}
                 >
                     {Object.entries(tint).map(([key, tint]) => (
-                        <p>
-                            <MenuItemSelectOptionColor key={key} color={tint.color} label={tint.label} value={key} />
-                        </p>
+                        <MenuItemSelectOptionColor key={key} color={tint.color} label={tint.label} value={key} />
                     ))}
                 </MenuItemSelect>
 
