@@ -1,4 +1,5 @@
-import { Injectable } from '../core/decorators/injectable';
+import { Injectable } from '@core/decorators/injectable';
+
 import { SOZ_CORE_IS_SERVER } from '../globals';
 
 export type LogLevels = 'TRACE' | 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'FATAL';
