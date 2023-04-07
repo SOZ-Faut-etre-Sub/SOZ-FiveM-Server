@@ -39,21 +39,21 @@ local function OverrideConnected()
     playerInventoryListConnected = newPlayerInventoryListConnected
 end
 
---Citizen.CreateThread(function()
+-- Citizen.CreateThread(function()
 --    while true do
 --        BuildListFromDatabase()
 --
 --        Citizen.Wait(60 * 1000)
 --    end
---end)
+-- end)
 
---Citizen.CreateThread(function()
+-- Citizen.CreateThread(function()
 --    while true do
 --        OverrideConnected()
 --
 --        Citizen.Wait(4 * 1000)
 --    end
---end)
+-- end)
 
 local function BuildInventoryMetrics(inventoryMetrics, name, description, type, getValue)
     local lines = {}
