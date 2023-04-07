@@ -7,7 +7,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { DrivingSchoolConfig, DrivingSchoolLicenseType } from '../../shared/driving-school';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector4 } from '../../shared/polyzone/vector';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -65,7 +65,7 @@ export class DrivingSchoolProvider {
         this.notifier.notify(source, `Félicitations ! Vous venez d'obtenir votre ${licenseLabel}`, 'success');
     }
 
-    @Rpc(RpcEvent.DRIVING_SCHOOL_SPAWN_VEHICLE)
+    @Rpc(RpcServerEvent.DRIVING_SCHOOL_SPAWN_VEHICLE)
     public async spawnExamVehicle(source: number, model: string) {
         return await this.vehicleSpawner.spawnTemporaryVehicle(source, model);
     }
@@ -88,7 +88,7 @@ export class DrivingSchoolProvider {
         );
     }
 
-    @Rpc(RpcEvent.DRIVING_SCHOOL_CHECK_REMAINING_SLOTS)
+    @Rpc(RpcServerEvent.DRIVING_SCHOOL_CHECK_REMAINING_SLOTS)
     public async checkRemainingSlots(source: number) {
         const player = this.playerService.getPlayer(source);
         if (!player) return;

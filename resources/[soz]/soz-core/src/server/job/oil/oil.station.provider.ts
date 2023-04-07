@@ -7,7 +7,7 @@ import { FuelStation, FuelStationType, FuelType } from '../../../shared/fuel';
 import { JobPermission, JobType } from '../../../shared/job';
 import { Monitor } from '../../../shared/monitor';
 import { toVector3Object, Vector3, Vector4 } from '../../../shared/polyzone/vector';
-import { RpcEvent } from '../../../shared/rpc';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { JobService } from '../../job.service';
@@ -50,7 +50,7 @@ export class OilStationProvider {
     @Inject(LockService)
     private lockService: LockService;
 
-    @Rpc(RpcEvent.OIL_GET_STATION)
+    @Rpc(RpcServerEvent.OIL_GET_STATION)
     public async getStation(source: number, stationId: number): Promise<FuelStation | null> {
         const station = await this.prismaService.fuel_storage.findUnique({
             where: {
@@ -89,7 +89,7 @@ export class OilStationProvider {
         };
     }
 
-    @Rpc(RpcEvent.OIL_GET_STATION_PRICES)
+    @Rpc(RpcServerEvent.OIL_GET_STATION_PRICES)
     public async getStationPrices(): Promise<Record<FuelType, number>> {
         const stations = await this.prismaService.fuel_storage.groupBy({
             by: ['fuel'],

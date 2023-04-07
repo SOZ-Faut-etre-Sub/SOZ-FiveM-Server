@@ -1,6 +1,6 @@
 import { Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class VehicleRepository {
     private vehicles: Vehicle[] = [];
 
     public async load() {
-        this.vehicles = await emitRpc(RpcEvent.REPOSITORY_GET_DATA, 'vehicle');
+        this.vehicles = await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA, 'vehicle');
     }
 
     public update(vehicles: Vehicle[]) {
