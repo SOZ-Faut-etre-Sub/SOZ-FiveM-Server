@@ -387,15 +387,14 @@ export class VehicleSpawner {
             return [0, 0];
         }
 
-        // const entity = CreateVehicleServerSetter(
-        //     vehicle.hash,
-        //     type,
-        //     vehicle.position[0],
-        //     vehicle.position[1],
-        //     vehicle.position[2],
-        //     vehicle.position[3]
-        // ); @TODO upgrade server version to have this native
-        const entity = 0;
+        const entity = CreateVehicleServerSetter(
+            vehicle.hash,
+            type,
+            vehicle.position[0],
+            vehicle.position[1],
+            vehicle.position[2],
+            vehicle.position[3]
+        );
 
         if (!entity) {
             this.logger.error(`failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from server, no entity`);
@@ -403,10 +402,36 @@ export class VehicleSpawner {
             return [0, 0];
         }
 
+        if (!DoesEntityExist(entity)) {
+            this.logger.error(`failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from server, no entity`);
+
+            return [0, 0];
+        }
+
         const networkId = NetworkGetNetworkIdFromEntity(entity);
+        let owner = NetworkGetEntityOwner(entity);
+        let tryCount = 0;
+
+        // Wait for the entity to be owned by a player, (wait for a maximum of 100 frames)
+        while (owner === -1 && tryCount < 100) {
+            await wait(0);
+            owner = NetworkGetEntityOwner(entity);
+            tryCount++;
+        }
+
+        if (owner === -1) {
+            this.logger.error(`failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from server, no owner`);
+
+            return [0, 0];
+        }
+
+        this.logger.info(
+            `Vehicle ${vehicle.model} (${vehicle.hash}) spawned from server, network entity id: ${networkId}, entity id: ${entity}, owner: ${owner}, in ${tryCount} frames`
+        );
+
         const initialized = await emitClientRpc<boolean>(
             RpcClientEvent.VEHICLE_SPAWN_FROM_SERVER,
-            player,
+            owner,
             networkId,
             vehicle
         );
