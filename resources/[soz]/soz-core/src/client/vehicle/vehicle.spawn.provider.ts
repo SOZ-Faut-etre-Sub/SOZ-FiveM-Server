@@ -129,12 +129,8 @@ export class VehicleSpawnProvider {
     @OnEvent(ClientEvent.VEHICLE_DELETE)
     async deleteVehicle(netId: number) {
         const vehicle = NetworkGetEntityFromNetworkId(netId);
-        let tryCount = 0;
 
-        while (!NetworkRequestControlOfEntity(vehicle) && !NetworkRequestControlOfNetworkId(netId) && tryCount < 10) {
-            await wait(100);
-            tryCount++;
-        }
+        await this.vehicleService.getVehicleOwnership(vehicle, netId, 'deleting vehicle');
 
         if (DoesEntityExist(vehicle)) {
             SetEntityAsMissionEntity(vehicle, true, true);
