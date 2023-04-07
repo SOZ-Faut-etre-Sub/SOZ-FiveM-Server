@@ -23,6 +23,7 @@ export enum SocietiesDatabaseLimits {
 
 export enum TwitchNewsEvents {
     FETCH_NEWS = 'phone:app:news:fetchNews',
+    RELOAD_NEWS = 'phone:app:news:reloadNews',
     CREATE_NEWS_BROADCAST = 'phone:app:news:createNewsBroadcast',
     API_NEWS_BROADCAST = 'soz-api:server:AddFlashNews',
 }

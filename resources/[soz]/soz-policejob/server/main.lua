@@ -208,6 +208,7 @@ QBCore.Functions.CreateCallback("police:server:DeleteWantedPlayer", function(sou
                 cb(MySQL.execute.await("UPDATE `phone_twitch_news` SET type = @type WHERE id = @id",
                                        {["@id"] = id, ["@type"] = player.PlayerData.job.id .. ":end"}).changedRows >= 1)
 
+                TriggerClientEvent("phone:app:news:reloadNews", -1)
                 return
             end
         end
