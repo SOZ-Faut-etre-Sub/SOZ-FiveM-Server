@@ -27,7 +27,7 @@ const CameraApp: React.FC = () => {
     const photos = getPhotos();
 
     const ref = useRef<HTMLCanvasElement>();
-    const { renderer, rtTexture, width, height } = useScreenshot();
+    const { renderer, rtTexture, width, height, destroy } = useScreenshot();
 
     const { addAlert } = useSnackbar();
     const { visibility } = useVisibility();
@@ -66,6 +66,10 @@ const CameraApp: React.FC = () => {
             ctx.putImageData(new ImageData(d, width, height), 0, 0);
         }
     }, 1);
+
+    useEffect(() => {
+        return () => destroy();
+    }, []);
 
     useEffect(() => {
         if (!visibility) navigate('/', { replace: true });
