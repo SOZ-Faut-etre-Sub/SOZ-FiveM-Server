@@ -583,7 +583,8 @@ QBShared.Items = {
         ['ammotype'] = 'AMMO_SHOTGUN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Fusil léger d\'époque, idéal à moyenne distance.'
+        ['description'] = 'Fusil léger d\'époque, idéal à moyenne distance.',
+        ['illustrator'] = '.Poulpito'
     },
     ['weapon_heavyshotgun'] = {
         ['name'] = 'weapon_heavyshotgun',
