@@ -11,11 +11,10 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { ActionButton } from '@ui/old_components/ActionButton';
 import { Button } from '@ui/old_components/Button';
-import { TextField } from '@ui/old_components/Input';
+import { NumberField, TextField } from '@ui/old_components/Input';
 import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import NumberFormat from 'react-number-format';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useContact } from '../../../hooks/useContact';
@@ -177,11 +176,7 @@ const ContactsInfoPage: React.FC = () => {
                             })}
                         >
                             <p className="text-sm text-[#347DD9] pl-5 pt-2">{t('CONTACTS.FORM_NUMBER')}</p>
-                            <NumberFormat
-                                className={cn('w-full rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none', {
-                                    'bg-ios-700 text-white': config.theme.value === 'dark',
-                                    'bg-gray-300 text-black': config.theme.value === 'light',
-                                })}
+                            <NumberField
                                 format="###-####"
                                 defaultValue="555-"
                                 value={number}
