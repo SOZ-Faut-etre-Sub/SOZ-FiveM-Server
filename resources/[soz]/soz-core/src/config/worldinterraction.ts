@@ -7,7 +7,7 @@ export type SeatPlaces = {
     };
 };
 
-export const SeatsTargetConfig: Record<number, Record<string, any>> = {
+export const EntityConfig: Record<number, Record<string, SeatPlaces>> = {
     [444105316]: {
         [0]: { offset: { x: 0.0, y: 0.0, z: 0.5, heading: 0 } },
     },
@@ -30,7 +30,7 @@ export const SeatsTargetConfig: Record<number, Record<string, any>> = {
         [0]: { offset: { x: 0.0, y: 0.4, z: 0.4, heading: 0 } },
     },
     [GetHashKey('soz_v_club_bahbarstool')]: {
-        [0]: { offset: { x: -0.1, y: 0.0, z: 0.35, heading: 0 } },
+        [0]: { offset: { x: 0.0, y: -0.14, z: 0.35, heading: 0 } },
     },
     [GetHashKey('soz_v_club_baham_bckt_chr')]: {
         [0]: { offset: { x: 0.0, y: 0.0, z: 0.1, heading: 0 } },
@@ -145,11 +145,42 @@ export const SeatsTargetConfig: Record<number, Record<string, any>> = {
         [0]: { offset: { x: 0.7, y: -0.05, z: 0.29, heading: 20 } },
         [1]: { offset: { x: -0.7, y: -0.05, z: 0.29, heading: -20 } },
     },
+    [1903501406]: {
+        [0]: { offset: { x: 0.0, y: 0.8, z: 1.0, heading: 180.0 } },
+    },
+    [286252949]: {
+        [0]: { offset: { x: 0.0, y: 0.8, z: 1.0, heading: 180.0 } },
+    },
+    [1129053052]: {
+        [0]: { offset: { x: 0.35, y: -1.0, z: 1.05, heading: 0.0 } },
+    },
+    [-1581502570]: {
+        [0]: { offset: { x: 0.25, y: -0.95, z: 1.05, heading: 0.0 } },
+    },
+    [1281480215]: {
+        [0]: { offset: { x: 0.0, y: 0.0, z: -0.05, heading: 0 } },
+    },
+    [826023884]: {
+        [0]: { offset: { x: 0.0, y: -0.07, z: 0.5, heading: 0 } },
+    },
+    [-1829764702]: {
+        [0]: { offset: { x: 0.0, y: -0.15, z: 0.8, heading: 0 } },
+    },
+    [2037887057]: {
+        [0]: { offset: { x: 0.8, y: 0.0, z: 0.45, heading: 0 } },
+        [1]: { offset: { x: 0.0, y: 0.0, z: 0.45, heading: 0 } },
+        [2]: { offset: { x: -0.8, y: 0.0, z: 0.45, heading: 0 } },
+    },
+    [-1215681419]: {
+        [0]: { offset: { x: 0.8, y: 0.0, z: 0.45, heading: 0 } },
+        [1]: { offset: { x: 0.0, y: 0.0, z: 0.45, heading: 0 } },
+        [2]: { offset: { x: -0.8, y: 0.0, z: 0.45, heading: 0 } },
+    },
 };
 
 export const LoungerTargetList = [-1498352975];
 export const LayingTargetList = [-2024837020];
-
+export const BarbecueList = [1903501406, 286252949, 1129053052, -1581502570];
 export const SeatsTargetList = [
     GetHashKey('soz_v_club_bahbarstool'),
     GetHashKey('soz_v_club_baham_bckt_chr'),
@@ -202,4 +233,9 @@ export const SeatsTargetList = [
     -1062810675,
     -1572018818,
     -232870343,
+    1281480215,
+    826023884,
+    -1829764702,
+    2037887057,
+    -1215681419,
 ];
