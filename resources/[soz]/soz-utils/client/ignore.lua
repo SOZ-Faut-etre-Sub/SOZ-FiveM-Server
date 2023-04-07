@@ -81,7 +81,6 @@ end)
 CreateThread(function()
     local weaponUnarmed = GetHashKey("WEAPON_UNARMED")
     local weaponPetrolCan = GetHashKey("WEAPON_PETROLCAN")
-    local weaponFireExtinguisher = GetHashKey("WEAPON_FIREEXTINGUISHER")
 
     while true do
         local ped = PlayerPedId()
@@ -96,14 +95,6 @@ CreateThread(function()
             if weapon == weaponPetrolCan then
                 if IsPedShooting(ped) then
                     SetPedInfiniteAmmo(ped, true, weaponPetrolCan)
-                end
-            end
-
-            if weapon == weaponFireExtinguisher then
-                local ammo = GetAmmoInPedWeapon(ped, weaponFireExtinguisher)
-                if (IsPedShooting(ped) and ammo == 0) or ammo == 0 then
-                    TriggerEvent("inventory:client:StoreWeapon")
-                    TriggerServerEvent("weapons:server:RemoveFireExtinguisher")
                 end
             end
         else
