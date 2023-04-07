@@ -43,6 +43,7 @@ import { MenuGarage } from './MenuGarage';
 import { MenuOilSetPrice } from './MenuOilSetPrice';
 import { UpwOrderMenu } from './MenuOrderUpw';
 import { MenuPlayerPersonal } from './MenuPlayerPersonal';
+import { MenuPropPlacement } from './MenuPropPlacement';
 import { MenuRentBoat } from './MenuRentBoat';
 import { MenuSetHealthState } from './MenuSetHealthState';
 import { MenuVehicle } from './MenuVehicle';
@@ -50,7 +51,6 @@ import { MenuVehicleAuction } from './MenuVehicleAuction';
 import { MenuVehicleCustom } from './MenuVehicleCustom';
 import { MenuVehicleDealership } from './MenuVehicleDealership';
 import { MenuWardrobe } from './MenuWardrobe';
-import { MenuPropPlacement } from './MenuPropPlacement';
 
 export const MenuApp: FunctionComponent = () => {
     return (
