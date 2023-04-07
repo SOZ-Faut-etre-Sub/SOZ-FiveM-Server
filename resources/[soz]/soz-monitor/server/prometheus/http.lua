@@ -31,17 +31,15 @@ Citizen.CreateThread(function()
     while true do
         local newMetrics = {}
         table.insert(newMetrics, GetBankMetrics())
-        Citizen.Wait(500)
+        Citizen.Wait(1000)
         table.insert(newMetrics, GetPlayerMetrics())
-        Citizen.Wait(500)
-        table.insert(newMetrics, GetInventoryMetrics())
-        Citizen.Wait(500)
+        Citizen.Wait(1000)
         table.insert(newMetrics, GetUpwMetrics())
-        Citizen.Wait(500)
+        Citizen.Wait(1000)
         table.insert(newMetrics, GetMtpMetrics())
-        Citizen.Wait(500)
+        Citizen.Wait(1000)
         table.insert(newMetrics, GetPawlMetrics())
-        Citizen.Wait(500)
+        Citizen.Wait(1000)
 
         metrics = table.concat(newMetrics, "\n")
     end
