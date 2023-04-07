@@ -8,7 +8,7 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
@@ -97,7 +97,7 @@ export class WeaponProvider {
         LocalPlayer.state.set('inv_busy', true, true);
 
         const weapon = await emitRpc<InventoryItem | null>(
-            RpcEvent.WEAPON_USE_AMMO,
+            RpcServerEvent.WEAPON_USE_AMMO,
             this.weapon.getCurrentWeapon().slot,
             ammoName,
             this.weapon.getMaxAmmoInClip()

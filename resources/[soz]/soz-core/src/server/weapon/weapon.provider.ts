@@ -6,7 +6,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
@@ -58,7 +58,7 @@ export class WeaponProvider {
         TriggerClientEvent(ClientEvent.WEAPON_USE_AMMO, source, item.name);
     }
 
-    @Rpc(RpcEvent.WEAPON_USE_AMMO)
+    @Rpc(RpcServerEvent.WEAPON_USE_AMMO)
     async onUseAmmo(
         source: number,
         weaponSlot: number,

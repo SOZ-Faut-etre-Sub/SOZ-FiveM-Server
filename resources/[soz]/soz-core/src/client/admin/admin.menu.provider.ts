@@ -7,7 +7,7 @@ import { emitRpc } from '../../core/rpc';
 import { ClientEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerCharInfo } from '../../shared/player';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingService } from '../clothing/clothing.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
@@ -45,7 +45,7 @@ export class AdminMenuProvider {
         ],
     })
     public async openAdminMenu(subMenuId?: string): Promise<void> {
-        const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcEvent.ADMIN_IS_ALLOWED);
+        const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcServerEvent.ADMIN_IS_ALLOWED);
         if (!isAllowed) {
             return;
         }
@@ -58,7 +58,7 @@ export class AdminMenuProvider {
 
         const banner = 'https://nui-img/soz/menu_admin_' + permission;
         const ped = PlayerPedId();
-        const characters = await emitRpc<Record<string, PlayerCharInfo>>(RpcEvent.ADMIN_GET_CHARACTERS);
+        const characters = await emitRpc<Record<string, PlayerCharInfo>>(RpcServerEvent.ADMIN_GET_CHARACTERS);
 
         this.nuiMenu.openMenu<MenuType.AdminMenu>(
             MenuType.AdminMenu,

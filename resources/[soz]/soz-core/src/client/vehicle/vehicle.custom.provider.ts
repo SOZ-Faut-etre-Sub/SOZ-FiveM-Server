@@ -7,7 +7,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { MultiZone } from '../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import {
     getVehicleConfigurationDiff,
     getVehicleCustomPrice,
@@ -179,7 +179,7 @@ export class VehicleCustomProvider {
             : 0;
 
         const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
-            RpcEvent.VEHICLE_CUSTOM_SET_MODS,
+            RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
             vehicleNetworkId,
             vehicleConfiguration,
             originalConfiguration,

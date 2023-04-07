@@ -146,6 +146,17 @@ export enum VehicleClass {
     Trains = 21,
 }
 
+export enum VehicleType {
+    Automobile = 'automobile',
+    Bike = 'bike',
+    Boat = 'boat',
+    Helicopter = 'heli',
+    Plane = 'plane',
+    Submarine = 'submarine',
+    Trailer = 'trailer',
+    Train = 'train',
+}
+
 export const getDefaultVehicleCondition = (): VehicleCondition => ({
     bodyHealth: 1000,
     doorStatus: {},
@@ -261,3 +272,28 @@ export enum VehicleCategory {
     Utility = 'Utilitaires',
     Vans = 'Vans',
 }
+
+export const VehicleTypeFromClass: Record<VehicleClass, VehicleType> = {
+    [VehicleClass.Compacts]: VehicleType.Automobile,
+    [VehicleClass.Sedans]: VehicleType.Automobile,
+    [VehicleClass.SUVs]: VehicleType.Automobile,
+    [VehicleClass.Coupes]: VehicleType.Automobile,
+    [VehicleClass.Muscle]: VehicleType.Automobile,
+    [VehicleClass.SportsClassics]: VehicleType.Automobile,
+    [VehicleClass.Sports]: VehicleType.Automobile,
+    [VehicleClass.Super]: VehicleType.Automobile,
+    [VehicleClass.Motorcycles]: VehicleType.Bike,
+    [VehicleClass.OffRoad]: VehicleType.Automobile,
+    [VehicleClass.Industrial]: VehicleType.Automobile,
+    [VehicleClass.Utility]: VehicleType.Trailer,
+    [VehicleClass.Vans]: VehicleType.Automobile,
+    [VehicleClass.Cycles]: VehicleType.Bike,
+    [VehicleClass.Boats]: VehicleType.Boat,
+    [VehicleClass.Helicopters]: VehicleType.Helicopter,
+    [VehicleClass.Planes]: VehicleType.Plane,
+    [VehicleClass.Service]: VehicleType.Automobile,
+    [VehicleClass.Emergency]: VehicleType.Automobile,
+    [VehicleClass.Military]: VehicleType.Automobile,
+    [VehicleClass.Commercial]: VehicleType.Automobile,
+    [VehicleClass.Trains]: VehicleType.Train,
+};

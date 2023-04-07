@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { AdminPlayer, FullAdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { DrawService } from '../draw.service';
 import { Qbcore } from '../qbcore';
 
@@ -139,7 +139,7 @@ export class AdminMenuInteractiveProvider {
                 RemoveBlip(value);
             }
 
-            const players = await emitRpc<FullAdminPlayer[]>(RpcEvent.ADMIN_GET_FULL_PLAYERS);
+            const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
 
             for (const player of players) {
                 const blipId = this.playerBlips.get(player.citizenId);
@@ -171,7 +171,7 @@ export class AdminMenuInteractiveProvider {
             this.multiplayerTags.delete(value);
         }
 
-        const players = await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS);
+        const players = await emitRpc<AdminPlayer[]>(RpcServerEvent.ADMIN_GET_PLAYERS);
 
         players.forEach(player => {
             this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.id));

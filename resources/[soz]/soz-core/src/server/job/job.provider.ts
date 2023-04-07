@@ -3,7 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Job } from '../../shared/job';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
@@ -34,7 +34,7 @@ export class JobProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Rpc(RpcEvent.JOB_GET_JOBS)
+    @Rpc(RpcServerEvent.JOB_GET_JOBS)
     public async getJobs(): Promise<Job[]> {
         const jobs = this.QBCore.getJobs();
 
@@ -68,7 +68,7 @@ export class JobProvider {
         return jobs.filter(job => job.grades.length > 0);
     }
 
-    @Rpc(RpcEvent.JOBS_USE_WORK_CLOTHES)
+    @Rpc(RpcServerEvent.JOBS_USE_WORK_CLOTHES)
     public async useWorkClothes(source: number, storageId: string) {
         return this.inventoryManager.removeItemFromInventory(storageId, 'work_clothes', 1);
     }

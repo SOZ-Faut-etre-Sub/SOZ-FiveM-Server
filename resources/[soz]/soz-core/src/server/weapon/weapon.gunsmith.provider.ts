@@ -1,7 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { REPAIR_HEALTH_REDUCER, WEAPON_CUSTOM_PRICE, WeaponComponentType } from '../../shared/weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from '../../shared/weapons/tint';
 import { GlobalWeaponConfig } from '../../shared/weapons/weapon';
@@ -18,7 +18,7 @@ export class WeaponGunsmithProvider {
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
 
-    @Rpc(RpcEvent.WEAPON_SET_LABEL)
+    @Rpc(RpcServerEvent.WEAPON_SET_LABEL)
     async renameWeapon(source: number, slot: number, label: string): Promise<boolean> {
         const weapon = this.inventoryManager.getSlot(source, slot);
         if (!weapon) {
@@ -41,7 +41,7 @@ export class WeaponGunsmithProvider {
         return false;
     }
 
-    @Rpc(RpcEvent.WEAPON_REPAIR)
+    @Rpc(RpcServerEvent.WEAPON_REPAIR)
     async repairWeapon(source: number, slot: number): Promise<boolean> {
         const weapon = this.inventoryManager.getSlot(source, slot);
         if (!weapon) {
@@ -74,7 +74,7 @@ export class WeaponGunsmithProvider {
         return false;
     }
 
-    @Rpc(RpcEvent.WEAPON_SET_TINT)
+    @Rpc(RpcServerEvent.WEAPON_SET_TINT)
     async applyTint(source: number, slot: number, tint: WeaponTintColor | WeaponMk2TintColor): Promise<boolean> {
         const weapon = this.inventoryManager.getSlot(source, slot);
         if (!weapon) {
@@ -97,7 +97,7 @@ export class WeaponGunsmithProvider {
         return false;
     }
 
-    @Rpc(RpcEvent.WEAPON_SET_ATTACHMENTS)
+    @Rpc(RpcServerEvent.WEAPON_SET_ATTACHMENTS)
     async applyAttachments(
         source: number,
         slot: number,

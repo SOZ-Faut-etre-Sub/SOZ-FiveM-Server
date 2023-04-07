@@ -3,7 +3,7 @@ import { emitRpc } from '@public/core/rpc';
 import { ServerEvent } from '@public/shared/event';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Once } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -40,7 +40,7 @@ export class LSMCInteractionProvider {
                 blackoutJob: 'lsmc',
                 canInteract: async entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const canRemoveItt = await emitRpc<boolean>(RpcEvent.LSMC_CAN_REMOVE_ITT, target);
+                    const canRemoveItt = await emitRpc<boolean>(RpcServerEvent.LSMC_CAN_REMOVE_ITT, target);
                     return (
                         this.playerService.getPlayer().job.onduty &&
                         !Player(target).state.isdead &&
@@ -61,7 +61,7 @@ export class LSMCInteractionProvider {
                 blackoutJob: 'lsmc',
                 canInteract: async entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const canSetItt = await emitRpc<boolean>(RpcEvent.LSMC_CAN_SET_ITT, target);
+                    const canSetItt = await emitRpc<boolean>(RpcServerEvent.LSMC_CAN_SET_ITT, target);
                     return (
                         this.playerService.getPlayer().job.onduty &&
                         !Player(target).state.isdead &&

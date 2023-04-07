@@ -12,7 +12,7 @@ import { PlayerData } from '../../shared/player';
 import { toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItem } from '../../shared/random';
 import { Err, isErr, Ok, Result } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import {
     Garage,
     GarageCategory,
@@ -83,7 +83,7 @@ export class VehicleGarageProvider {
     @Inject(Logger)
     private logger: Logger;
 
-    @Once(OnceStep.DatabaseConnected)
+    @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
         const queries = `
             UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL AND category = 'car';
@@ -120,7 +120,7 @@ export class VehicleGarageProvider {
             },
         });
 
-        const garages = await this.garageRepository.refresh();
+        const garages = await this.garageRepository.get();
         const toPound = [];
         const toVoid = [];
 
@@ -175,7 +175,7 @@ export class VehicleGarageProvider {
         }
     }
 
-    @Rpc(RpcEvent.VEHICLE_GARAGE_GET_MAX_PLACES)
+    @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_MAX_PLACES)
     public async getMaxPlaces(source: number, garage: Garage): Promise<number | null> {
         if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
             return null;
@@ -199,7 +199,7 @@ export class VehicleGarageProvider {
         return 38;
     }
 
-    @Rpc(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES)
+    @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_FREE_PLACES)
     public async getFreePlaces(source: number, id: string, garage: Garage): Promise<number | null> {
         if (garage.type !== GarageType.Private && garage.type !== GarageType.House) {
             return null;
@@ -241,7 +241,7 @@ export class VehicleGarageProvider {
         return Math.max(0, maxPlaces - count);
     }
 
-    @Rpc(RpcEvent.VEHICLE_GARAGE_GET_VEHICLES)
+    @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES)
     public async getGarageVehicles(source: number, id: string, garage: Garage): Promise<GarageVehicle[]> {
         const player = this.playerService.getPlayer(source);
 

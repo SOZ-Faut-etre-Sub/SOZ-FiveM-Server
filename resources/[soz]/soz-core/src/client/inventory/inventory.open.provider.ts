@@ -3,7 +3,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { computeBinId } from '@public/shared/job/garbage';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Provider } from '../../core/decorators/provider';
 import { AnimationService } from '../animation/animation.service';
@@ -42,13 +42,13 @@ export class InventoryOpenProvider {
                             duration: 4000,
                         });
 
-                        if (!cancelled && (await emitRpc<boolean>(RpcEvent.BIN_IS_NOT_LOCKED, id))) {
+                        if (!cancelled && (await emitRpc<boolean>(RpcServerEvent.BIN_IS_NOT_LOCKED, id))) {
                             this.openTargetInventory('bin', id);
                         }
                     },
                     canInteract: async (entity: number) => {
                         const id = computeBinId(entity);
-                        return emitRpc<boolean>(RpcEvent.BIN_IS_NOT_LOCKED, id);
+                        return emitRpc<boolean>(RpcServerEvent.BIN_IS_NOT_LOCKED, id);
                     },
                 },
             ],

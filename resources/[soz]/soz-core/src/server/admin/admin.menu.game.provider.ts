@@ -5,7 +5,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { wait } from '../../core/utils';
 import { ServerEvent } from '../../shared/event';
 import { PlayerCharInfo } from '../../shared/player';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
 
@@ -41,7 +41,7 @@ export class AdminMenuGameProvider {
         TriggerClientEvent('soz-character:client:login-character', source, player);
     }
 
-    @Rpc(RpcEvent.ADMIN_GET_CHARACTERS)
+    @Rpc(RpcServerEvent.ADMIN_GET_CHARACTERS)
     public async getCharacters(source: number): Promise<Record<string, PlayerCharInfo>> {
         try {
             const steam = this.QBCore.getSteamIdentifier(source);

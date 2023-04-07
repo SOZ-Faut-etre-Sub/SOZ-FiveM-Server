@@ -10,7 +10,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
@@ -486,6 +486,6 @@ export class VehicleLockProvider {
             return true;
         }
 
-        return await emitRpc<boolean>(RpcEvent.VEHICLE_HAS_KEY, state.id);
+        return await emitRpc<boolean>(RpcServerEvent.VEHICLE_HAS_KEY, state.id);
     }
 }

@@ -7,7 +7,7 @@ import { ItemService } from '@public/server/item/item.service';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem, Item } from '@public/shared/item';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 @Provider()
 export class PoliceProvider {
@@ -85,7 +85,7 @@ export class PoliceProvider {
         return;
     }
 
-    @Rpc(RpcEvent.POLICE_ALCOOLLEVEL)
+    @Rpc(RpcServerEvent.POLICE_ALCOOLLEVEL)
     public getAlcoolLevel(source: number, target: number) {
         this.inventoryManager.removeItemFromInventory(source, 'breathanalyzer', 1);
         const targetPlayer = this.playerService.getPlayer(target);

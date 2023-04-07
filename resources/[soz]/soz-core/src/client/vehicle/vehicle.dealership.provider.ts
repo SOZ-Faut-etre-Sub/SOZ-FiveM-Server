@@ -10,7 +10,7 @@ import { JobPermission } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { getRandomItem } from '../../shared/random';
 import { Err, Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
 import { Vehicle, VehicleDealershipMenuData } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
@@ -153,7 +153,9 @@ export class VehicleDealershipProvider {
             color: 46,
         });
 
-        this.auctionVehicles = await emitRpc<Record<string, AuctionVehicle>>(RpcEvent.VEHICLE_DEALERSHIP_GET_AUCTIONS);
+        this.auctionVehicles = await emitRpc<Record<string, AuctionVehicle>>(
+            RpcServerEvent.VEHICLE_DEALERSHIP_GET_AUCTIONS
+        );
 
         for (const [name, auction] of Object.entries(this.auctionVehicles)) {
             await this.resourceLoader.loadModel(auction.vehicle.hash);
@@ -227,7 +229,7 @@ export class VehicleDealershipProvider {
         );
 
         const amount = parseInt(input);
-        const hasBid = await emitRpc<boolean>(RpcEvent.VEHICLE_DEALERSHIP_AUCTION_BID, name, amount);
+        const hasBid = await emitRpc<boolean>(RpcServerEvent.VEHICLE_DEALERSHIP_AUCTION_BID, name, amount);
 
         if (hasBid) {
             this.nuiMenu.closeMenu();
@@ -312,7 +314,13 @@ export class VehicleDealershipProvider {
             parkingPlace = getRandomItem(freePlaces);
         }
 
-        const bought = await emitRpc(RpcEvent.VEHICLE_DEALERSHIP_BUY, vehicle, dealershipId, dealership, parkingPlace);
+        const bought = await emitRpc(
+            RpcServerEvent.VEHICLE_DEALERSHIP_BUY,
+            vehicle,
+            dealershipId,
+            dealership,
+            parkingPlace
+        );
 
         if (bought) {
             this.clearMenu();
@@ -343,7 +351,7 @@ export class VehicleDealershipProvider {
     }
 
     public async openDealership(dealershipType: DealershipType, config: DealershipConfigItem) {
-        const vehicles = await emitRpc<Vehicle[]>(RpcEvent.VEHICLE_DEALERSHIP_GET_LIST, dealershipType);
+        const vehicles = await emitRpc<Vehicle[]>(RpcServerEvent.VEHICLE_DEALERSHIP_GET_LIST, dealershipType);
 
         const vehicle = this.vehicleService.getClosestVehicle({
             position: config.showroom.position,
@@ -394,7 +402,7 @@ export class VehicleDealershipProvider {
             return;
         }
 
-        const vehicles = await emitRpc<Vehicle[]>(RpcEvent.VEHICLE_DEALERSHIP_GET_LIST_JOB, player.job.id);
+        const vehicles = await emitRpc<Vehicle[]>(RpcServerEvent.VEHICLE_DEALERSHIP_GET_LIST_JOB, player.job.id);
 
         this.nuiMenu.openMenu(MenuType.VehicleDealership, {
             name: 'Concessionnaire entreprise',

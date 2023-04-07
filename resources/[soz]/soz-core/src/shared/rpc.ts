@@ -1,4 +1,4 @@
-export enum RpcEvent {
+export enum RpcServerEvent {
     ADMIN_GET_PLAYERS = 'soz-core:admin:get-players',
     ADMIN_GET_CHARACTERS = 'soz-core:admin:get-characters',
     ADMIN_GET_FULL_PLAYERS = 'soz-core:admin:get-full-players',
@@ -87,4 +87,11 @@ export enum RpcEvent {
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
 
     BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',
+}
+
+export enum RpcClientEvent {
+    VEHICLE_GET_TYPE = 'soz-core:rpc:client:vehicle:get-type',
+    VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:spawn',
+    VEHICLE_SPAWN_FROM_SERVER = 'soz-core:rpc:client:vehicle:spawn-from-server',
+    VEHICLE_DELETE = 'soz-core:rpc:client:vehicle:delete',
 }

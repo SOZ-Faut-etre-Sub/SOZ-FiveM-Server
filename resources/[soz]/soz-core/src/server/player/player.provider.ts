@@ -6,7 +6,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Permissions } from '../../core/permissions';
 import { PlayerServerState } from '../../shared/player';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
 import { PlayerStateService } from './player.state.service';
@@ -55,12 +55,12 @@ export class PlayerProvider {
         }
     }
 
-    @Rpc(RpcEvent.PLAYER_GET_SERVER_STATE)
+    @Rpc(RpcServerEvent.PLAYER_GET_SERVER_STATE)
     public getServerState(source: number): PlayerServerState {
         return this.playerStateService.get(source);
     }
 
-    @Rpc(RpcEvent.PLAYER_GET_JWT_TOKEN)
+    @Rpc(RpcServerEvent.PLAYER_GET_JWT_TOKEN)
     public async getJwtToken(source: number): Promise<string | null> {
         const steam = this.QBCore.getSteamIdentifier(source);
 
