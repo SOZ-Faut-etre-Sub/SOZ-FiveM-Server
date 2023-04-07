@@ -655,12 +655,12 @@ export class VehicleGarageProvider {
                     );
                 }
 
-                if (
-                    await this.vehicleSpawner.spawnPlayerVehicle(source, playerVehicle, [
-                        ...parkingPlace.center,
-                        parkingPlace.heading || 0,
-                    ] as Vector4)
-                ) {
+                const spawnedVehicleId = await this.vehicleSpawner.spawnPlayerVehicle(source, playerVehicle, [
+                    ...parkingPlace.center,
+                    parkingPlace.heading || 0,
+                ] as Vector4);
+
+                if (spawnedVehicleId !== null) {
                     await this.prismaService.playerVehicle.update({
                         where: { id: playerVehicle.id },
                         data: {
