@@ -9,7 +9,7 @@ import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { Ok, Result } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { CameraService } from '../camera';
 import { ClothingService } from '../clothing/clothing.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -69,7 +69,7 @@ export class MaskShopProvider {
     }
 
     public async onShopMaskOpenMenu() {
-        const categories = await emitRpc(RpcEvent.SHOP_MASK_GET_CATEGORIES);
+        const categories = await emitRpc(RpcServerEvent.SHOP_MASK_GET_CATEGORIES);
 
         this.nuiMenu.openMenu(MenuType.MaskShop, categories);
         FreezeEntityPosition(PlayerPedId(), true);
@@ -77,7 +77,7 @@ export class MaskShopProvider {
 
     @OnNuiEvent(NuiEvent.ShopMaskSelectCategory)
     public async onShopMaskSelectCategory(categoryId: number): Promise<Result<any, never>> {
-        const items = await emitRpc(RpcEvent.SHOP_MASK_GET_ITEMS, categoryId);
+        const items = await emitRpc(RpcServerEvent.SHOP_MASK_GET_ITEMS, categoryId);
 
         return Ok(items);
     }

@@ -50,8 +50,8 @@
         "webpack-dev-server": "^4.9.2"
     },
     "dependencies": {
-        "@citizenfx/client": "^2.0.5659-1",
-        "@citizenfx/server": "^2.0.5659-1",
+        "@citizenfx/client": "^2.0.6378-1",
+        "@citizenfx/server": "^2.0.6378-1",
         "@heroicons/react": "^1.0.6",
         "@prisma/client": "^4.4.0",
         "@reach/descendants": "^0.17.0",

@@ -5,7 +5,7 @@ import { ServerEvent } from '@public/shared/event';
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import { getDefaultVehicleState, VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
@@ -55,7 +55,7 @@ export class VehicleService {
         if (state.id) {
             const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
             vehicleConfiguration = await emitRpc<VehicleConfiguration>(
-                RpcEvent.VEHICLE_CUSTOM_GET_MODS,
+                RpcServerEvent.VEHICLE_CUSTOM_GET_MODS,
                 vehicleNetworkId
             );
         }

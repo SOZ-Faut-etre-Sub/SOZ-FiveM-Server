@@ -1,5 +1,5 @@
 import { Rpc } from '@public/core/decorators/rpc';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -90,7 +90,7 @@ export class AdminMenuPlayerProvider {
         );
     }
 
-    @Rpc(RpcEvent.ADMIN_GET_REPUTATION)
+    @Rpc(RpcServerEvent.ADMIN_GET_REPUTATION)
     public getReputation(source: number, target: number) {
         return this.playerService.getPlayer(target).metadata.criminal_reputation;
     }

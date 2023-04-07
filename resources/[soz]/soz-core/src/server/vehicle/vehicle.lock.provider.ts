@@ -8,7 +8,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
 import { InventoryItem, Item } from '../../shared/item';
 import { getRandomInt } from '../../shared/random';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -173,7 +173,7 @@ export class VehicleLockProvider {
         SetPedPropIndex(entity, 0, hat, texture, true);
     }
 
-    @Rpc(RpcEvent.VEHICLE_HAS_KEY)
+    @Rpc(RpcServerEvent.VEHICLE_HAS_KEY)
     public async hasVehicleKey(source: number, vehicleId: number): Promise<boolean> {
         const player = this.playerService.getPlayer(source);
 

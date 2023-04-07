@@ -5,7 +5,7 @@ import { emitRpc } from '../../core/rpc';
 import { AdminPlayer, HEALTH_OPTIONS, MOVEMENT_OPTIONS, VOCAL_OPTIONS } from '../../shared/admin/admin';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -26,7 +26,9 @@ export class AdminMenuPlayerProvider {
     private inputService: InputService;
 
     private async getPlayers(): Promise<AdminPlayer[]> {
-        return (await emitRpc<AdminPlayer[]>(RpcEvent.ADMIN_GET_PLAYERS)).sort((a, b) => a.name.localeCompare(b.name));
+        return (await emitRpc<AdminPlayer[]>(RpcServerEvent.ADMIN_GET_PLAYERS)).sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
     }
 
     @OnNuiEvent(NuiEvent.AdminGetPlayers)
@@ -96,7 +98,7 @@ export class AdminMenuPlayerProvider {
             return;
         }
         if (action === 'status') {
-            const isMuted = await emitRpc<boolean>(RpcEvent.VOIP_IS_MUTED, player.id);
+            const isMuted = await emitRpc<boolean>(RpcServerEvent.VOIP_IS_MUTED, player.id);
 
             if (isMuted) {
                 this.notifier.notify(`Le joueur est ~r~muté.`, 'info');
@@ -202,7 +204,7 @@ export class AdminMenuPlayerProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetReputation)
     public async handleGiveReputation(player: AdminPlayer): Promise<void> {
-        const current = await emitRpc<number>(RpcEvent.ADMIN_GET_REPUTATION, player.id);
+        const current = await emitRpc<number>(RpcServerEvent.ADMIN_GET_REPUTATION, player.id);
         const value = await this.inputService.askInput(
             {
                 title: `Changer la Réputation (actuelle ${current})`,

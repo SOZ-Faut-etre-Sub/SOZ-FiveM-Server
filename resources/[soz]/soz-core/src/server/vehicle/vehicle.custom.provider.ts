@@ -1,7 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
@@ -22,7 +22,7 @@ export class VehicleCustomProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Rpc(RpcEvent.VEHICLE_CUSTOM_SET_MODS)
+    @Rpc(RpcServerEvent.VEHICLE_CUSTOM_SET_MODS)
     public async setMods(
         source: number,
         vehicleNetworkId: number,
@@ -67,7 +67,7 @@ export class VehicleCustomProvider {
         return mods;
     }
 
-    @Rpc(RpcEvent.VEHICLE_CUSTOM_GET_MODS)
+    @Rpc(RpcServerEvent.VEHICLE_CUSTOM_GET_MODS)
     public async getMods(source: number, vehicleNetworkId: number): Promise<VehicleConfiguration> {
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const state = this.vehicleStateService.getVehicleState(entityId);

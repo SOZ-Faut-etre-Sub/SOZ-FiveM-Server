@@ -1,7 +1,7 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { Rpc } from '@public/core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -25,12 +25,12 @@ export class LSMCProvider {
         this.ittRemovalCheck = checker;
     }
 
-    @Rpc(RpcEvent.LSMC_CAN_REMOVE_ITT)
+    @Rpc(RpcServerEvent.LSMC_CAN_REMOVE_ITT)
     public canRemoveITT(source: number, target: number) {
         return this.ittRemovalCheck(target);
     }
 
-    @Rpc(RpcEvent.LSMC_CAN_SET_ITT)
+    @Rpc(RpcServerEvent.LSMC_CAN_SET_ITT)
     public canSetITT(source: number, target: number) {
         const player = this.playerService.getPlayer(target);
         return !player.metadata.itt;
