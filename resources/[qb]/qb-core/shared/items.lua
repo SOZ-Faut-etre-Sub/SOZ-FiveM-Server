@@ -1282,7 +1282,7 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = '',
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Crash'
     },
     ['ammo_10'] = {
         ['name'] = 'ammo_10',
