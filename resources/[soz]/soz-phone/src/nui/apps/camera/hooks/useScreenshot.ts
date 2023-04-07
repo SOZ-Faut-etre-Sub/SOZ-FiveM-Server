@@ -78,6 +78,10 @@ const ThreeFx = (function () {
             }
             return instance;
         },
+
+        destroyInstance: function () {
+            instance = null;
+        },
     };
 })();
 
@@ -106,5 +110,6 @@ export const useScreenshot = () => {
         material,
         width,
         height,
+        destroy: () => ThreeFx.destroyInstance(),
     };
 };
