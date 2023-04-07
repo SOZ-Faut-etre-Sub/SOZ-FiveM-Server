@@ -82,6 +82,9 @@ export class VehicleDealershipProvider {
                 price: {
                     gt: 0,
                 },
+                stock: {
+                    gt: 0,
+                },
                 dealershipId: DealershipType.Luxury,
             },
         });
