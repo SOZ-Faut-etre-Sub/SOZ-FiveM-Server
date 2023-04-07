@@ -10,7 +10,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/vehicle/garage';
 import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
@@ -436,16 +436,16 @@ export class VehicleGarageProvider {
     }
 
     private async enterGarage(id: string, garage: Garage) {
-        const vehicles = await emitRpc<GarageVehicle[]>(RpcEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
+        const vehicles = await emitRpc<GarageVehicle[]>(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
 
         let free_places = null;
         if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-            free_places = await emitRpc<number>(RpcEvent.VEHICLE_GARAGE_GET_FREE_PLACES, id, garage);
+            free_places = await emitRpc<number>(RpcServerEvent.VEHICLE_GARAGE_GET_FREE_PLACES, id, garage);
         }
 
         let max_places = null;
         if (garage.type === GarageType.Private || garage.type === GarageType.House) {
-            max_places = await emitRpc<number>(RpcEvent.VEHICLE_GARAGE_GET_MAX_PLACES, garage);
+            max_places = await emitRpc<number>(RpcServerEvent.VEHICLE_GARAGE_GET_MAX_PLACES, garage);
         }
 
         const vehicleRenamed = vehicles.map(garageVehicle => {

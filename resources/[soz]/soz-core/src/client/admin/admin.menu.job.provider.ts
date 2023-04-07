@@ -5,7 +5,7 @@ import { emitRpc } from '../../core/rpc';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Job } from '../../shared/job';
 import { Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { Qbcore } from '../qbcore';
@@ -23,7 +23,7 @@ export class AdminMenuJobProvider {
 
     @OnNuiEvent(NuiEvent.AdminGetJobs)
     public async getJobs() {
-        const jobs = await emitRpc<Job[]>(RpcEvent.JOB_GET_JOBS);
+        const jobs = await emitRpc<Job[]>(RpcServerEvent.JOB_GET_JOBS);
         return Ok(jobs);
     }
 
@@ -31,7 +31,7 @@ export class AdminMenuJobProvider {
     public async setJob({ jobId, jobGrade }: { jobId: Job['id']; jobGrade: number }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_SET_JOB, jobId, jobGrade);
 
-        const jobs = await emitRpc<Job[]>(RpcEvent.JOB_GET_JOBS);
+        const jobs = await emitRpc<Job[]>(RpcServerEvent.JOB_GET_JOBS);
         const job = jobs.find(job => job.id === jobId);
         const grade = job.grades.find(value => value.id.toString() === jobGrade.toString()) || '';
 

@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { groupBy } from '../../shared/utils/array';
 import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
@@ -32,7 +32,7 @@ export class AdminMenuVehicleProvider {
 
     @OnNuiEvent(NuiEvent.AdminGetVehicles)
     public async getVehicles() {
-        const vehicles = await emitRpc<any[]>(RpcEvent.ADMIN_GET_VEHICLES);
+        const vehicles = await emitRpc<any[]>(RpcServerEvent.ADMIN_GET_VEHICLES);
 
         let catalog: Record<keyof VehicleCategory, Vehicle[]> = groupBy(vehicles, v => v.category);
 

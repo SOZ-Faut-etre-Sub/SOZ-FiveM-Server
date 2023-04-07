@@ -6,7 +6,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerData, PlayerServerStateExercise } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Hud } from '../hud';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
@@ -238,7 +238,7 @@ export class PlayerHealthProvider {
         await this.increaseStress(source, this.yogaAndNaturalMultiplier(source) * -8);
     }
 
-    @Rpc(RpcEvent.PLAYER_GET_HEALTH_BOOK)
+    @Rpc(RpcServerEvent.PLAYER_GET_HEALTH_BOOK)
     public getHealthBook(source: number, target: number): PlayerData | null {
         const targetPlayer = this.playerService.getPlayer(target);
 

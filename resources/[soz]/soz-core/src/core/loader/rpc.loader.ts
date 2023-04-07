@@ -1,3 +1,4 @@
+import { SOZ_CORE_IS_SERVER } from '../../globals';
 import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
 import { RpcMetadataKey } from '../decorators/rpc';
@@ -27,10 +28,19 @@ export class RpcLoader {
                 continue;
             }
 
-            const rpcMethod = async (source: number, responseEventName: string, ...args: any[]): Promise<void> => {
-                const result = await method(source, ...args);
-                TriggerClientEvent(responseEventName, source, result);
-            };
+            let rpcMethod = null;
+
+            if (SOZ_CORE_IS_SERVER) {
+                rpcMethod = async (source: number, responseEventName: string, ...args: any[]): Promise<void> => {
+                    const result = await method(source, ...args);
+                    TriggerClientEvent(responseEventName, source, result);
+                };
+            } else {
+                rpcMethod = async (responseEventName: string, ...args: any[]): Promise<void> => {
+                    const result = await method(...args);
+                    TriggerServerEvent(responseEventName, result);
+                };
+            }
 
             const methodWithMiddleware = this.middlewareFactory.create(
                 {

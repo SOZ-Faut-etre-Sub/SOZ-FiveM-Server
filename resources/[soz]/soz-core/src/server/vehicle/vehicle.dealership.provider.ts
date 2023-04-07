@@ -12,7 +12,7 @@ import { Monitor } from '../../shared/monitor';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItems } from '../../shared/random';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
 import { DealershipId } from '../../shared/vehicle/dealership';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
@@ -157,12 +157,12 @@ export class VehicleDealershipProvider {
         TriggerClientEvent(ClientEvent.VEHICLE_DEALERSHIP_AUCTION_UPDATE, -1, this.auctions);
     }
 
-    @Rpc(RpcEvent.VEHICLE_DEALERSHIP_GET_AUCTIONS)
+    @Rpc(RpcServerEvent.VEHICLE_DEALERSHIP_GET_AUCTIONS)
     public getAuctions(): Record<string, AuctionVehicle> {
         return this.auctions;
     }
 
-    @Rpc(RpcEvent.VEHICLE_DEALERSHIP_AUCTION_BID)
+    @Rpc(RpcServerEvent.VEHICLE_DEALERSHIP_AUCTION_BID)
     public async auctionBid(source: number, name: string, price: number) {
         const player = this.playerService.getPlayer(source);
 
@@ -288,7 +288,7 @@ export class VehicleDealershipProvider {
         }
     }
 
-    @Rpc(RpcEvent.VEHICLE_DEALERSHIP_GET_LIST)
+    @Rpc(RpcServerEvent.VEHICLE_DEALERSHIP_GET_LIST)
     public async getDealershipList(source: number, id: string): Promise<Vehicle[]> {
         const vehicles = await this.prismaService.vehicle.findMany({
             where: {
@@ -305,7 +305,7 @@ export class VehicleDealershipProvider {
         });
     }
 
-    @Rpc(RpcEvent.VEHICLE_DEALERSHIP_GET_LIST_JOB)
+    @Rpc(RpcServerEvent.VEHICLE_DEALERSHIP_GET_LIST_JOB)
     public async getDealershipListJob(source: number, job: JobType): Promise<Vehicle[]> {
         const jobVehicles = await this.prismaService.concess_entreprise.findMany({
             where: {
@@ -338,7 +338,7 @@ export class VehicleDealershipProvider {
         });
     }
 
-    @Rpc(RpcEvent.VEHICLE_DEALERSHIP_BUY)
+    @Rpc(RpcServerEvent.VEHICLE_DEALERSHIP_BUY)
     public async buyVehicle(
         source: number,
         vehicle: Vehicle,

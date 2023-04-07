@@ -1,10 +1,11 @@
 import { Logger } from '@core/logger';
+import { emitClientRpc } from '@core/rpc';
 import { PlayerVehicle } from '@prisma/client';
 import { DealershipConfig } from '@public/config/dealership';
 import { GarageRepository } from '@public/server/repository/garage.repository';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { MultiZone } from '@public/shared/polyzone/multi.zone';
-import PCancelable from 'p-cancelable';
+import { RpcClientEvent } from '@public/shared/rpc';
 
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -18,6 +19,7 @@ import {
     getDefaultVehicleState,
     VehicleEntityState,
     VehicleSpawn,
+    VehicleType,
 } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerService } from '../player/player.service';
@@ -96,9 +98,6 @@ export class VehicleSpawner {
 
     @Inject(GarageRepository)
     private garageRepository: GarageRepository;
-
-    private spawning: Record<string, (netId: number) => void> = {};
-    private deleting: Record<string, () => void> = {};
 
     private closestVehicleResolver: Record<string, (closestVehicle: null | ClosestVehicle) => void> = {};
 
@@ -298,49 +297,16 @@ export class VehicleSpawner {
     }
 
     private async spawn(player: number, vehicle: VehicleSpawn): Promise<number | null> {
-        const spawnId = uuidv4();
-        const promise = new PCancelable<number>(resolve => {
-            this.spawning[spawnId] = resolve;
-        });
-
         const radio = VEHICLE_HAS_RADIO.includes(vehicle.model);
 
-        // Cancel spawn after 10 seconds
-        setTimeout(() => {
-            try {
-                promise.cancel();
-            } catch {
-                // do nothing
-            }
-        }, 10000);
-
-        TriggerClientEvent(ClientEvent.VEHICLE_SPAWN, player, spawnId, vehicle);
-
         try {
-            const netId = await promise;
+            let [netId, entityId] = await this.spawnVehicleFromClient(player, vehicle);
 
-            // await some frame to be nice with state bag
-            // @see https://github.com/citizenfx/fivem/pull/1382
-            await wait(200);
-
-            let entityId = NetworkGetEntityFromNetworkId(netId);
-            let tries = 0;
-
-            while ((!entityId || !DoesEntityExist(entityId)) && tries < 150) {
-                this.logger.error(
-                    `Failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), try ${tries}, network entity id: ${netId}, entity id: ${entityId}`
-                );
-
-                entityId = NetworkGetEntityFromNetworkId(netId);
-                await wait(100);
-                tries += 1;
+            if (!netId || !entityId) {
+                [netId, entityId] = await this.spawnVehicleFromServer(player, vehicle);
             }
 
-            if (!entityId || !DoesEntityExist(entityId)) {
-                this.logger.error(
-                    `Failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), network entity id: ${netId}, entity id: ${entityId}`
-                );
-
+            if (!netId || !entityId) {
                 return null;
             }
 
@@ -383,75 +349,109 @@ export class VehicleSpawner {
             this.logger.error('failed to spawn vehicle', e);
 
             return null;
-        } finally {
-            delete this.spawning[spawnId];
         }
+    }
+
+    private async spawnVehicleFromClient(player: number, vehicle: VehicleSpawn): Promise<[number, number]> {
+        const netId = await emitClientRpc<number | null>(RpcClientEvent.VEHICLE_SPAWN, player, vehicle);
+
+        if (!netId) {
+            this.logger.error(`failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from client, no network id`);
+
+            return [0, 0];
+        }
+
+        // await some frame to be nice with state bag
+        // @see https://github.com/citizenfx/fivem/pull/1382
+        await wait(200);
+
+        const entityId = NetworkGetEntityFromNetworkId(netId);
+
+        if (!entityId || !DoesEntityExist(entityId)) {
+            this.logger.error(
+                `failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), entity does not exist on server,network entity id: ${netId}, entity id: ${entityId}`
+            );
+
+            return [0, 0];
+        }
+
+        return [netId, entityId];
+    }
+
+    private async spawnVehicleFromServer(player: number, vehicle: VehicleSpawn): Promise<[number, number]> {
+        const type = await emitClientRpc<VehicleType>(RpcClientEvent.VEHICLE_GET_TYPE, player, vehicle.hash);
+
+        if (!type) {
+            this.logger.error(`failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from server, no type`);
+
+            return [0, 0];
+        }
+
+        // const entity = CreateVehicleServerSetter(
+        //     vehicle.hash,
+        //     type,
+        //     vehicle.position[0],
+        //     vehicle.position[1],
+        //     vehicle.position[2],
+        //     vehicle.position[3]
+        // ); @TODO upgrade server version to have this native
+        const entity = 0;
+
+        if (!entity) {
+            this.logger.error(`failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from server, no entity`);
+
+            return [0, 0];
+        }
+
+        const networkId = NetworkGetNetworkIdFromEntity(entity);
+        const initialized = await emitClientRpc<boolean>(
+            RpcClientEvent.VEHICLE_SPAWN_FROM_SERVER,
+            player,
+            networkId,
+            vehicle
+        );
+
+        if (!initialized) {
+            this.logger.error(
+                `failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from server, not initialized`
+            );
+
+            return [0, 0];
+        }
+
+        return [networkId, entity];
     }
 
     public async delete(netId: number): Promise<boolean> {
         const entityId = NetworkGetEntityFromNetworkId(netId);
         let owner = NetworkGetEntityOwner(entityId);
+
         this.vehicleStateService.unregisterSpawned(netId);
-        const deletePromise = new PCancelable<void>(resolve => {
-            this.deleting[netId] = resolve;
-        });
 
-        // Be nice if there was an active check
-        await wait(200);
+        try {
+            let deleted = await emitClientRpc<boolean>(RpcClientEvent.VEHICLE_DELETE, owner, netId);
+            let deleteTry = 0;
 
-        let deleted = false;
-        let deleteTry = 0;
-
-        while (!deleted && deleteTry < 600) {
-            // Maybe owner change during delete
-            owner = NetworkGetEntityOwner(entityId);
-
-            setTimeout(() => {
-                try {
-                    deletePromise.cancel();
-                } catch {
-                    // do nothing
-                }
-            }, 10000);
-
-            TriggerClientEvent(ClientEvent.VEHICLE_DELETE, owner, netId);
-            await deletePromise;
-
-            try {
-                await deletePromise;
-                deleted = true;
+            while (!deleted && deleteTry < 10) {
+                owner = NetworkGetEntityOwner(entityId);
+                deleted = await emitClientRpc<boolean>(RpcClientEvent.VEHICLE_DELETE, owner, netId);
                 deleteTry++;
-            } catch (e) {
-                this.logger.error(`failed to delete vehicle with netId: ${netId}: ${e.toString()}`);
+
+                await wait(100);
             }
 
-            // Try to delete entity on server side
             if (!deleted && DoesEntityExist(entityId)) {
+                this.logger.error(`failed to delete vehicle with netId: ${netId}, use server delete`);
+
                 DeleteEntity(entityId);
                 deleted = DoesEntityExist(entityId);
             }
-        }
 
-        delete this.deleting[netId];
+            return deleted;
+        } catch (e) {
+            this.logger.error(`failed to delete vehicle with netId: ${netId}: ${e.toString()}`);
 
-        return deleted;
-    }
-
-    @OnEvent(ServerEvent.VEHICLE_SPAWNED)
-    private onVehicleSpawned(source: number, spawnId: string, netId: number): void {
-        const resolve = this.spawning[spawnId];
-
-        if (resolve) {
-            resolve(netId);
-        }
-    }
-
-    @OnEvent(ServerEvent.VEHICLE_DELETED)
-    private onVehicleDeleted(source: number, netId: number): void {
-        const resolve = this.deleting[netId];
-
-        if (resolve) {
-            resolve();
+            return false;
         }
     }
 }

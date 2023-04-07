@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
-import { RpcEvent } from '../../../shared/rpc';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario3 } from '../../../shared/story/halloween-2022/scenario3';
 import { Dialog } from '../../../shared/story/story';
 import { AnimationService } from '../../animation/animation.service';
@@ -88,7 +88,7 @@ export class Halloween2022Scenario3Provider {
                     icon: 'fas fa-comment',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 1),
                     action: async () => {
-                        const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO3, 'part1');
+                        const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO3, 'part1');
                         if (dialog) {
                             await this.storyService.launchDialog(dialog, true, 509.06, 5596.23, 794.22, 306.58);
                         }
@@ -99,7 +99,7 @@ export class Halloween2022Scenario3Provider {
                     icon: 'fas fa-comment',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 5),
                     action: async () => {
-                        const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO3, 'part5');
+                        const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO3, 'part5');
                         if (dialog) {
                             await this.storyService.launchDialog(dialog, true, 509.06, 5596.23, 794.22, 306.58);
                         }
@@ -139,7 +139,7 @@ export class Halloween2022Scenario3Provider {
                     icon: 'fas fa-comment',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 2),
                     action: async () => {
-                        const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO3, 'part2');
+                        const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO3, 'part2');
                         if (dialog) {
                             await this.storyService.launchDialog(dialog, true, 906.08, -3199.19, -97.19, 25.7);
                         }
@@ -150,7 +150,7 @@ export class Halloween2022Scenario3Provider {
                     icon: 'fas fa-comment',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 4),
                     action: async () => {
-                        const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO3, 'part4');
+                        const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO3, 'part4');
                         if (dialog) {
                             await this.storyService.launchDialog(dialog, true, 906.08, -3199.19, -97.19, 25.7);
                         }
@@ -189,7 +189,7 @@ export class Halloween2022Scenario3Provider {
                     icon: 'fas fa-comment',
                     canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 3),
                     action: async () => {
-                        const dialog = await emitRpc<Dialog | null>(RpcEvent.STORY_HALLOWEEN_SCENARIO3, 'part3');
+                        const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO3, 'part3');
                         if (dialog) {
                             await this.storyService.launchDialog(dialog, true, -322.72, -255.15, 34.39, 48.55);
                         }
