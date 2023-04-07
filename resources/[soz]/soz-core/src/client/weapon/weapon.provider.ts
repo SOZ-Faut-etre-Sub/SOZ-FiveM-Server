@@ -171,7 +171,7 @@ export class WeaponProvider {
         }
 
         const weaponGroup = GetWeapontypeGroup(weapon.name);
-        emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot, weaponGroup);
+        emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot, weaponGroup, GetAmmoInClip(player, weapon.name)[1]);
 
         if (
             !messageExclude.includes(GetHashKey(weapon.name)) &&
