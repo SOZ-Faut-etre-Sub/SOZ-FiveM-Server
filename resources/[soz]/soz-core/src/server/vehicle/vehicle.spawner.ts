@@ -1,13 +1,17 @@
 import { Logger } from '@core/logger';
 import { PlayerVehicle } from '@prisma/client';
+import { DealershipConfig } from '@public/config/dealership';
+import { GarageRepository } from '@public/server/repository/garage.repository';
+import { BoxZone } from '@public/shared/polyzone/box.zone';
+import { MultiZone } from '@public/shared/polyzone/multi.zone';
 import PCancelable from 'p-cancelable';
 
-import { OnEvent } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Vector4 } from '../../shared/polyzone/vector';
+import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import {
     getDefaultVehicleCondition,
@@ -90,10 +94,50 @@ export class VehicleSpawner {
     @Inject(Logger)
     private logger: Logger;
 
+    @Inject(GarageRepository)
+    private garageRepository: GarageRepository;
+
     private spawning: Record<string, (netId: number) => void> = {};
     private deleting: Record<string, () => void> = {};
 
     private closestVehicleResolver: Record<string, (closestVehicle: null | ClosestVehicle) => void> = {};
+
+    private noSpawnZone: MultiZone<BoxZone> = new MultiZone<BoxZone>([]);
+
+    @Once(OnceStep.RepositoriesLoaded)
+    public async onInit() {
+        const garages = await this.garageRepository.get();
+        const noSpawnZones = [];
+
+        for (const garage of Object.values(garages)) {
+            noSpawnZones.push(...garage.parkingPlaces);
+        }
+
+        for (const dealership of Object.values(DealershipConfig)) {
+            noSpawnZones.push(BoxZone.default(dealership.showroom.position, 4, 4));
+        }
+
+        this.noSpawnZone = new MultiZone<BoxZone>(noSpawnZones);
+    }
+
+    @On('entityCreating', false)
+    public async handleNoSpawnZone(entity: number) {
+        const position = GetEntityCoords(entity, false) as Vector3;
+        const entityType = GetEntityType(entity);
+        const scriptType = GetEntityPopulationType(entity);
+
+        if (entityType !== 2) {
+            return;
+        }
+
+        if (scriptType === 7) {
+            return;
+        }
+
+        if (this.noSpawnZone.isPointInside(position)) {
+            CancelEvent();
+        }
+    }
 
     @OnEvent(ServerEvent.VEHICLE_FREE_JOB_SPAWN)
     private async onVehicleServerSpawn(source: number, model: string, position: Vector4, event: string) {
@@ -295,6 +339,17 @@ export class VehicleSpawner {
             if (!entityId || !DoesEntityExist(entityId)) {
                 this.logger.error(
                     `Failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), network entity id: ${netId}, entity id: ${entityId}`
+                );
+
+                return null;
+            }
+
+            const scriptType = GetEntityPopulationType(entityId);
+            const model = GetEntityModel(entityId);
+
+            if (scriptType !== 7 || model !== vehicle.hash) {
+                this.logger.error(
+                    `Failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), another entity spawn for this net id, network entity id: ${netId}, entity id: ${entityId}, script type: ${scriptType}, model: ${model}`
                 );
 
                 return null;

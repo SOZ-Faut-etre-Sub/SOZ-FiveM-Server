@@ -397,30 +397,10 @@ export class VehicleDealershipProvider {
     public async openDealership(dealershipType: DealershipType, config: DealershipConfigItem) {
         const vehicles = await emitRpc<Vehicle[]>(RpcEvent.VEHICLE_DEALERSHIP_GET_LIST, dealershipType);
 
-        let vehicle = this.vehicleService.getClosestVehicle({
+        const vehicle = this.vehicleService.getClosestVehicle({
             position: config.showroom.position,
             maxDistance: 3.0,
         });
-        let vehicleDeleted = 0;
-
-        while (vehicle && vehicleDeleted < 10) {
-            const state = this.vehicleStateService.getVehicleState(vehicle);
-
-            if (state.id) {
-                this.notifier.notify('Un véhicule joueur est trop proche du showroom.', 'error');
-
-                return;
-            }
-
-            SetEntityAsMissionEntity(vehicle, true, true);
-            DeleteVehicle(vehicle);
-
-            vehicle = this.vehicleService.getClosestVehicle({
-                position: config.showroom.position,
-                maxDistance: 3.0,
-            });
-            vehicleDeleted++;
-        }
 
         if (vehicle) {
             this.notifier.notify('Un véhicule est trop proche du showroom.', 'error');
