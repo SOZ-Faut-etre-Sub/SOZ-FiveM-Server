@@ -3,6 +3,7 @@ import { fetchNui } from '@utils/fetchNui';
 import { isEnvBrowser } from '@utils/misc';
 import cn from 'classnames';
 import React, { forwardRef } from 'react';
+import NumberFormat from 'react-number-format';
 
 import { useConfig } from '../../hooks/usePhone';
 
@@ -37,6 +38,34 @@ export const TextField = forwardRef<HTMLInputElement, any>((props, ref) => {
         />
     );
 });
+
+export const NumberField = forwardRef<HTMLInputElement, any>((props, ref) => {
+    const config = useConfig();
+
+    return (
+        <NumberFormat
+            ref={ref}
+            {...props}
+            className={cn('w-full rounded-lg py-1 px-3 focus:bg-opacity-70 focus:outline-none', props.className, {
+                'bg-ios-700 text-white': config.theme.value === 'dark',
+                'bg-gray-300 text-black': config.theme.value === 'light',
+            })}
+            onMouseUp={e => {
+                toggleKeys(false);
+                if (props.onFocus) {
+                    props.onFocus(e);
+                }
+            }}
+            onBlur={e => {
+                toggleKeys(true);
+                if (props.onBlur) {
+                    props.onBlur(e);
+                }
+            }}
+        />
+    );
+});
+
 export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => {
     const config = useConfig();
 
