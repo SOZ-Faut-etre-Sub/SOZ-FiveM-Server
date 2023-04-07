@@ -10,4 +10,5 @@ export const useAppTwitchNewsService = () => {
     }, []);
 
     useNuiEvent('TWITCH_NEWS', TwitchNewsEvents.CREATE_NEWS_BROADCAST, store.dispatch.appTwitchNews.appendNews);
+    useNuiEvent('TWITCH_NEWS', TwitchNewsEvents.RELOAD_NEWS, store.dispatch.appTwitchNews.loadNews);
 };
