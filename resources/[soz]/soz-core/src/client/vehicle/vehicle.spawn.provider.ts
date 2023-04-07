@@ -1,10 +1,12 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { wait } from '../../core/utils';
+import { Rpc } from '../../core/decorators/rpc';
+import { Logger } from '../../core/logger';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
-import { VehicleSpawn } from '../../shared/vehicle/vehicle';
+import { RpcClientEvent } from '../../shared/rpc';
+import { VehicleClass, VehicleSpawn, VehicleType, VehicleTypeFromClass } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
@@ -24,6 +26,9 @@ export class VehicleSpawnProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(Logger)
+    private logger: Logger;
+
     @OnEvent(ClientEvent.VEHICLE_GET_CLOSEST)
     getClosestVehicle(responseId: string) {
         const vehicle = this.vehicleService.getClosestVehicle();
@@ -40,12 +45,67 @@ export class VehicleSpawnProvider {
         TriggerServerEvent(ServerEvent.VEHICLE_SET_CLOSEST, responseId, vehicleNetworkId, distance, isInside);
     }
 
-    @OnEvent(ClientEvent.VEHICLE_SPAWN)
-    async spawnVehicle(spawnId: string, vehicleSpawn: VehicleSpawn) {
+    @Rpc(RpcClientEvent.VEHICLE_GET_TYPE)
+    async getVehicleType(modelHash: number): Promise<VehicleType> {
+        const vehicleClass = GetVehicleClassFromName(modelHash) as VehicleClass;
+
+        if (modelHash === GetHashKey('submersible') || modelHash === GetHashKey('submersible2')) {
+            return VehicleType.Submarine;
+        }
+
+        return VehicleTypeFromClass[vehicleClass];
+    }
+
+    @Rpc(RpcClientEvent.VEHICLE_SPAWN_FROM_SERVER)
+    async spawnFromServerVehicle(networkId: number, vehicleSpawn: VehicleSpawn): Promise<boolean> {
+        if (!NetworkDoesEntityExistWithNetworkId(networkId) || !NetworkDoesNetworkIdExist(networkId)) {
+            this.logger.error(`network id ${networkId} does not exist, cannot spawn vehicle`);
+
+            return false;
+        }
+
+        const vehicle = NetworkGetEntityFromNetworkId(networkId);
+
+        if (!vehicle) {
+            this.logger.error(
+                `network id ${networkId} exist, but linked entity is not available, cannot spawn vehicle`
+            );
+
+            return false;
+        }
+
+        if (!vehicle || !DoesEntityExist(vehicle)) {
+            this.logger.error(
+                `network id ${networkId} exist, but linked entity is not available, cannot spawn vehicle`
+            );
+            return false;
+        }
+
+        if (!IsEntityAVehicle(vehicle)) {
+            this.logger.error(
+                `network id ${networkId} exist, but linked entity is not a vehicle, cannot spawn vehicle`
+            );
+            return false;
+        }
+
+        if (!NetworkHasControlOfEntity(vehicle)) {
+            this.logger.error(
+                `network id ${networkId} exist, but current player is not the owner, cannot spawn vehicle`
+            );
+            return false;
+        }
+
+        this.doSpawn(vehicle, networkId, vehicleSpawn);
+
+        return true;
+    }
+
+    @Rpc(RpcClientEvent.VEHICLE_SPAWN)
+    async spawnFromClientVehicle(vehicleSpawn: VehicleSpawn): Promise<number | null> {
         const player = this.playerService.getPlayer();
 
         if (!player) {
-            return;
+            return null;
         }
 
         let hash = vehicleSpawn.hash;
@@ -60,13 +120,12 @@ export class VehicleSpawnProvider {
                     vehicleSpawn.hash
                 );
 
-                return;
+                return null;
             }
         }
 
         await this.resourceLoader.loadModel(vehicleSpawn.model);
 
-        const ped = PlayerPedId();
         const vehicle = CreateVehicle(
             vehicleSpawn.model,
             vehicleSpawn.position[0],
@@ -77,45 +136,32 @@ export class VehicleSpawnProvider {
             true
         );
 
+        this.resourceLoader.unloadModel(vehicleSpawn.model);
+
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
 
+        if (!NetworkDoesEntityExistWithNetworkId(networkId) || !NetworkDoesNetworkIdExist(networkId)) {
+            this.logger.error(`network id ${networkId} does not exist, cannot spawn vehicle`);
+            DeleteVehicle(vehicle);
+
+            return null;
+        }
+
+        this.doSpawn(vehicle, networkId, vehicleSpawn);
+
+        return networkId;
+    }
+
+    private doSpawn(vehicle: number, networkId: number, vehicleSpawn: VehicleSpawn) {
         SetNetworkIdCanMigrate(networkId, true);
         SetEntityAsMissionEntity(vehicle, true, false);
         SetVehicleHasBeenOwnedByPlayer(vehicle, true);
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
 
-        TriggerServerEvent(ServerEvent.VEHICLE_SPAWNED, spawnId, networkId);
-
-        let confirmSpawn = false;
-        let confirmSpawnTry = 0;
-
-        while (!confirmSpawn && confirmSpawnTry < 30) {
-            await wait(500);
-            const state = this.vehicleService.getVehicleState(vehicle);
-
-            if (!state.spawned) {
-                TriggerServerEvent(ServerEvent.VEHICLE_SPAWNED, spawnId, networkId);
-            }
-
-            confirmSpawnTry++;
-            confirmSpawn = state.spawned;
-        }
-
-        if (!confirmSpawn) {
-            SetEntityAsMissionEntity(vehicle, true, true);
-            SetEntityAsNoLongerNeeded(vehicle);
-            DeleteVehicle(vehicle);
-            DeleteEntity(vehicle);
-
-            this.notifier.notify("Le véhicule n'a pas pu être sorti, veuillez ressayer", 'error');
-
-            return;
-        }
-
-        this.resourceLoader.unloadModel(vehicleSpawn.model);
-
         if (vehicleSpawn.warp) {
+            const ped = PlayerPedId();
+
             TaskWarpPedIntoVehicle(ped, vehicle, -1);
         }
 
@@ -126,19 +172,25 @@ export class VehicleSpawnProvider {
         this.vehicleService.syncVehicle(vehicle, vehicleSpawn.state);
     }
 
-    @OnEvent(ClientEvent.VEHICLE_DELETE)
+    @Rpc(RpcClientEvent.VEHICLE_DELETE)
     async deleteVehicle(netId: number) {
+        if (!NetworkDoesNetworkIdExist(netId)) {
+            return false;
+        }
+
         const vehicle = NetworkGetEntityFromNetworkId(netId);
+
+        if (!DoesEntityExist(vehicle)) {
+            return false;
+        }
 
         await this.vehicleService.getVehicleOwnership(vehicle, netId, 'deleting vehicle');
 
-        if (DoesEntityExist(vehicle)) {
-            SetEntityAsMissionEntity(vehicle, true, true);
-            SetEntityAsNoLongerNeeded(vehicle);
-            DeleteVehicle(vehicle);
-            DeleteEntity(vehicle);
+        SetEntityAsMissionEntity(vehicle, true, true);
+        SetEntityAsNoLongerNeeded(vehicle);
+        DeleteVehicle(vehicle);
+        DeleteEntity(vehicle);
 
-            TriggerServerEvent(ServerEvent.VEHICLE_DELETED, netId);
-        }
+        return true;
     }
 }

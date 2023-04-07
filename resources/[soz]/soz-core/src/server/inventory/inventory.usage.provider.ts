@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';
 import { InventoryManager } from './inventory.manager';
@@ -52,7 +52,7 @@ export class InventoryUsageProvider {
         this.notifier.notify(source, `Vous avez changé l'objet lié au raccourcis ~b~#${shortcut}`, 'info');
     }
 
-    @Rpc(RpcEvent.INVENTORY_GET_ITEM_BY_SHORTCUT)
+    @Rpc(RpcServerEvent.INVENTORY_GET_ITEM_BY_SHORTCUT)
     getItemByShortcut(source: number, shortcut: number): InventoryItem | null {
         const player = this.QBCore.getPlayer(source);
         if (!player) {

@@ -11,7 +11,7 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad, Vector3 } from '@public/shared/polyzone/vector';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD];
 const WEAPON_DIGISCANNER = -38085395;
@@ -212,7 +212,7 @@ export class PoliceProvider {
     public async breathanalyzer(data) {
         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(data.entity));
 
-        const alcoolLevel = await emitRpc<number>(RpcEvent.POLICE_ALCOOLLEVEL, target);
+        const alcoolLevel = await emitRpc<number>(RpcServerEvent.POLICE_ALCOOLLEVEL, target);
         this.dispatcher.dispatch('police', 'OpenBreathAnalyzer', alcoolLevel / 20);
     }
 

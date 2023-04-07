@@ -18,7 +18,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { PlayerWardrobe } from '../player/player.wardrobe';
 import { ProgressService } from '../progress.service';
@@ -64,7 +64,7 @@ export class JobCloakroomProvider {
         if (!completed) {
             return;
         }
-        const result = await emitRpc(RpcEvent.INVENTORY_SEARCH, storageId, 'work_clothes');
+        const result = await emitRpc(RpcServerEvent.INVENTORY_SEARCH, storageId, 'work_clothes');
         if (!result) {
             this.notifier.notify(`Il n'y a pas de tenue de travail dans le vestiaire.`, 'error');
             return;
@@ -82,7 +82,7 @@ export class JobCloakroomProvider {
         if (
             outfitSelection.outfit &&
             storageIdToSave &&
-            !(await emitRpc<boolean>(RpcEvent.JOBS_USE_WORK_CLOTHES, storageIdToSave))
+            !(await emitRpc<boolean>(RpcServerEvent.JOBS_USE_WORK_CLOTHES, storageIdToSave))
         ) {
             this.notifier.notify("Il n'y a pas de tenue de travail dans le vestiaire.", 'error');
             return;

@@ -3,12 +3,12 @@ import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 
 @Provider()
 export class InventoryUsageProvider {
     private async useItem(shortcut: number) {
-        const item = await emitRpc<InventoryItem | null>(RpcEvent.INVENTORY_GET_ITEM_BY_SHORTCUT, shortcut);
+        const item = await emitRpc<InventoryItem | null>(RpcServerEvent.INVENTORY_GET_ITEM_BY_SHORTCUT, shortcut);
         if (!item) {
             return;
         }
