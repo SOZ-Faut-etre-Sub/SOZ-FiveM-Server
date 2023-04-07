@@ -8,3 +8,7 @@ RegisterNuiProxy(TwitchNewsEvents.FETCH_NEWS);
 onNet(TwitchNewsEvents.CREATE_NEWS_BROADCAST, (result: TwitchNewsMessage) => {
     sendMessage(apps.TWITCH_NEWS, TwitchNewsEvents.CREATE_NEWS_BROADCAST, result);
 });
+
+onNet(TwitchNewsEvents.RELOAD_NEWS, () => {
+    sendMessage(apps.TWITCH_NEWS, TwitchNewsEvents.RELOAD_NEWS, null);
+});
