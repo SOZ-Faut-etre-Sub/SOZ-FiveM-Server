@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import useInterval from '../../../hooks/useInterval';
 import { useVisibility } from '../../../hooks/usePhone';
 import { usePhoto } from '../../../hooks/usePhoto';
+import { useCall } from '../../../hooks/useSimCard';
 import { useBackground } from '../../../ui/hooks/useBackground';
 import { useScreenshot } from '../hooks/useScreenshot';
 
@@ -22,6 +23,8 @@ const CameraApp: React.FC = () => {
     const backgroundClass = useBackground();
     const navigate = useNavigate();
     const [t] = useTranslation();
+
+    const call = useCall();
 
     const { getPhotos } = usePhoto();
     const photos = getPhotos();
@@ -75,6 +78,16 @@ const CameraApp: React.FC = () => {
             fetchNui<ServerPromiseResp<void>>(PhotoEvents.EXIT_CAMERA, {});
         };
     }, [visibility]);
+
+    useEffect(() => {
+        if (call) {
+            addAlert({
+                message: t('CAMERA.IS_NOT_AVAILABLE_DURING_CALL'),
+                type: 'error',
+            });
+            navigate('/', { replace: true });
+        }
+    }, [call]);
 
     return (
         <FullPageWithHeader className={backgroundClass}>
