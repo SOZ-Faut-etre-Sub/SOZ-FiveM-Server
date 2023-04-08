@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Logger } from '../../core/logger';
+import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcClientEvent } from '../../shared/rpc';
@@ -147,17 +148,31 @@ export class VehicleSpawnProvider {
             return null;
         }
 
-        this.doSpawn(vehicle, networkId, vehicleSpawn);
+        await this.doSpawn(vehicle, networkId, vehicleSpawn);
 
         return networkId;
     }
 
-    private doSpawn(vehicle: number, networkId: number, vehicleSpawn: VehicleSpawn) {
+    private async doSpawn(vehicle: number, networkId: number, vehicleSpawn: VehicleSpawn) {
         SetNetworkIdCanMigrate(networkId, true);
         SetEntityAsMissionEntity(vehicle, true, false);
         SetVehicleHasBeenOwnedByPlayer(vehicle, true);
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
+
+        while (IsEntityWaitingForWorldCollision(vehicle)) {
+            await wait(0);
+        }
+
+        SetVehicleOnGroundProperly(vehicle);
+
+        for (let i = -1; i < 1; i++) {
+            const ped = GetPedInVehicleSeat(vehicle, i);
+
+            if (!IsPedAPlayer(ped)) {
+                DeleteEntity(ped);
+            }
+        }
 
         if (vehicleSpawn.warp) {
             const ped = PlayerPedId();
