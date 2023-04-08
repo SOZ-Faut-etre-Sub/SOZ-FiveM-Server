@@ -128,22 +128,26 @@ export class AdminMenuInteractiveProvider {
     @OnNuiEvent(NuiEvent.AdminToggleDisplayPlayersOnMap)
     public async toggleDisplayPlayersOnMap(value: boolean): Promise<void> {
         if (!value) {
-            for (const value of Object.values(this.playerBlips)) {
-                RemoveBlip(value);
-            }
+            this.playerBlips.forEach((BlipValue, BlipKey) => {
+                this.QBCore.removeBlip('admin:player-blip:' + BlipKey);
+                this.playerBlips.delete(BlipKey);
+            });
+
             clearInterval(this.intervalHandlers.displayPlayersOnMap);
             return;
         }
-        this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
-            for (const value of Object.values(this.playerBlips)) {
-                RemoveBlip(value);
-            }
 
+        this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
             const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
+            this.playerBlips.forEach((BlipValue, BlipKey) => {
+                if (!players.some(player => player.citizenId === BlipKey)) {
+                    this.QBCore.removeBlip('admin:player-blip:' + BlipKey);
+                    this.playerBlips.delete(BlipKey);
+                }
+            });
 
             for (const player of players) {
                 const blipId = this.playerBlips.get(player.citizenId);
-
                 const coords = player.coords;
                 if (DoesBlipExist(blipId)) {
                     SetBlipCoords(blipId, coords[0], coords[1], coords[2]);
@@ -161,7 +165,6 @@ export class AdminMenuInteractiveProvider {
                     this.playerBlips.set(player.citizenId, createdBlip);
                 }
             }
-            this.previousPlayers = players.map(player => player.citizenId);
         }, 2500);
     }
 
