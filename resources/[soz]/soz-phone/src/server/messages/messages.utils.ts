@@ -9,16 +9,20 @@ export const messagesLogger = mainLogger.child({ module: 'messages' });
 export async function getConsolidatedMessageGroups(identifier: string): Promise<any> {
     const messageConversations = await MessagesDB.getMessageConversations(identifier);
     return messageConversations.reduce((mapping: any, conversation: any) => {
-        mapping[conversation.conversation_id] = {
-            unread: conversation.unread,
-            masked: conversation.masked,
-            phoneNumber: conversation.participant_identifier,
-            display: conversation.display,
-            avatar: conversation.avatar,
-            conversation_id: conversation.conversation_id,
-            user_identifier: identifier,
-            updatedAt: conversation.updatedAt,
-        };
+        const groupId = conversation.conversation_id;
+
+        if (conversation.participant_identifier != identifier) {
+            mapping[groupId] = {
+                unread: conversation.unread,
+                masked: conversation.masked,
+                phoneNumber: conversation.participant_identifier,
+                display: conversation.display,
+                avatar: conversation.avatar,
+                conversation_id: conversation.conversation_id,
+                user_identifier: identifier,
+                updatedAt: conversation.updatedAt,
+            };
+        }
 
         return mapping;
     }, {});
