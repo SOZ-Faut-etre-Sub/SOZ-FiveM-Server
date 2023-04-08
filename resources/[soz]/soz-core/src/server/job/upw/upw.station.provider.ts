@@ -181,24 +181,30 @@ export class UpwStationProvider {
         this.notifier.notify(source, `Vous avez changé le prix des chargeurs à $${price}/kWh.`);
     }
 
-    public async useCarCharger(source: number, item: CommonItem, inventoryItem: InventoryItem) {
+    public async useCarCharger(source: number) {
         const playerPosition = GetEntityCoords(GetPlayerPed(source)) as Vector3;
+
         await this.upwChargerRepository.refresh();
+
         const chargers = await this.upwChargerRepository.get();
         let chargerToCreate: UpwCharger;
+
         for (const charger of Object.values(chargers)) {
             if (getDistance(playerPosition, charger.position) < 3) {
                 chargerToCreate = charger;
             }
         }
+
         if (!chargerToCreate) {
             this.notifier.notify(source, 'Cet endroit ne semple pas adapté pour y mettre une borne.', 'error');
             return;
         }
+
         if (chargerToCreate.active) {
             this.notifier.notify(source, 'Il y a déjà une borne ici !', 'error');
             return;
         }
+
         TriggerClientEvent(ClientEvent.UPW_CREATE_CHARGER, source, chargerToCreate);
     }
 }
