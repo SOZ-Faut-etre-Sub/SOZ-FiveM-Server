@@ -248,4 +248,14 @@ export class VehicleService {
             GetPedPropTextureIndex(PlayerPedId(), 0)
         );
     }
+
+    public checkBackOfVehicle(vehicle: number): boolean {
+        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const model = GetEntityModel(vehicle);
+        const [min, max] = GetModelDimensions(model) as [Vector3, Vector3];
+        const vehicleLength = max[1] - min[1];
+        const backPosition = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -vehicleLength / 2, 0.0) as Vector3;
+        const distance = getDistance(backPosition, playerPosition);
+        return distance < 2.0;
+    }
 }

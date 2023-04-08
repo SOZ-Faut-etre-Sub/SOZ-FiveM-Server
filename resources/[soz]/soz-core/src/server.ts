@@ -25,6 +25,7 @@ import { MdrModule } from './server/job/mdr/mdr.module';
 import { OilModule } from './server/job/oil/oil.module';
 import { PoliceModule } from './server/job/police/police.module';
 import { StonkModule } from './server/job/stonk/stonk.module';
+import { UpwModule } from './server/job/upw/upw.module';
 import { MonitorModule } from './server/monitor/monitor.module';
 import { PlayerModule } from './server/player/player.module';
 import { RebootModule } from './server/reboot/reboot.module';
@@ -75,6 +76,7 @@ async function bootstrap() {
         MdrModule,
         SoundModule,
         PoliceModule,
+        UpwModule,
         ...PrivateModules
     );
 
