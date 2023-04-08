@@ -11,7 +11,7 @@ import { JobType } from '@public/shared/job';
 import { UpwFacility, UpwFacilityType } from '@public/shared/job/upw';
 import { MenuType } from '@public/shared/nui/menu';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 @Provider()
 export class UpwMenuProvider {
@@ -126,7 +126,7 @@ export class UpwMenuProvider {
             this.blipFactory.hide('job_upw_resell', !value);
             return;
         }
-        const facilities = await emitRpc<UpwFacility[]>(RpcEvent.UPW_GET_FACILITIES, facilityType);
+        const facilities = await emitRpc<UpwFacility[]>(RpcServerEvent.UPW_GET_FACILITIES, facilityType);
         for (const facility of facilities) {
             const data = JSON.parse(facility.data);
             const blip_id = 'job_upw_' + facility.identifier;

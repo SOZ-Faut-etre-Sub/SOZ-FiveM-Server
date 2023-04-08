@@ -40,4 +40,4 @@ export type UpwStation = {
     max_stock: number;
     price: number;
     position: Vector4;
-}
+};
