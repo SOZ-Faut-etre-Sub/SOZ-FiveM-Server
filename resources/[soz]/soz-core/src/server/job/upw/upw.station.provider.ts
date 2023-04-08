@@ -17,7 +17,7 @@ import { CommonItem, InventoryItem } from '@public/shared/item';
 import { JobPermission, JobType } from '@public/shared/job';
 import { UPW_CHARGER_REFILL_VALUES } from '@public/shared/job/upw';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 @Provider()
 export class UpwStationProvider {
@@ -84,7 +84,7 @@ export class UpwStationProvider {
         this.notifier.notify(source, "Vous avez ~g~terminé~s~ l'installation de la borne de recharge.", 'success');
     }
 
-    @Rpc(RpcEvent.UPW_GET_STATION)
+    @Rpc(RpcServerEvent.UPW_GET_STATION)
     public async onGetStation(source: number, name: string): Promise<UpwStation> {
         const station = await this.prismaService.upw_stations.findFirst({
             where: {
