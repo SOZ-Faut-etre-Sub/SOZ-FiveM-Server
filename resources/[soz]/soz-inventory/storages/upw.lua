@@ -41,7 +41,6 @@ Config.Storages["upw_cloakroom_1"] = {
 }
 
 Config.Storages["upw_cloakroom_2"] = {
-    label = "Vestiaire - UPW",
     type = "cloakroom",
     owner = "ffs",
     position = vector3(577.8, 2747.03, 41.86),
