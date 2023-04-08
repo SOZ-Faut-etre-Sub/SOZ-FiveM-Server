@@ -13,7 +13,6 @@ import { RepositoryProvider } from '@public/server/repository/repository.provide
 import { UpwChargerRepository } from '@public/server/repository/upw.station.repository';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwCharger, UpwStation } from '@public/shared/fuel';
-import { CommonItem, InventoryItem } from '@public/shared/item';
 import { JobPermission, JobType } from '@public/shared/job';
 import { UPW_CHARGER_REFILL_VALUES } from '@public/shared/job/upw';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
