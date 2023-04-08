@@ -9,7 +9,7 @@ import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwCharger, UpwStation } from '@public/shared/fuel';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 @Provider()
 export class UpwChargerProvider {
@@ -52,7 +52,7 @@ export class UpwChargerProvider {
         if (!charger || getDistance(position, charger.position) > 50) {
             return;
         }
-        const station = await emitRpc<UpwStation>(RpcEvent.UPW_GET_STATION, charger.station);
+        const station = await emitRpc<UpwStation>(RpcServerEvent.UPW_GET_STATION, charger.station);
         if (!station) {
             return;
         }

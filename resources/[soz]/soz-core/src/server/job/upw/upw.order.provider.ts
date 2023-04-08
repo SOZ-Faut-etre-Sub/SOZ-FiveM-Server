@@ -8,7 +8,7 @@ import { Rpc } from '../../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { uuidv4 } from '../../../core/utils';
 import { BennysConfig } from '../../../shared/job/bennys';
-import { RpcEvent } from '../../../shared/rpc';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { getDefaultVehicleCondition } from '../../../shared/vehicle/vehicle';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
@@ -43,12 +43,12 @@ export class UpwOrderProvider {
         }
     }
 
-    @Rpc(RpcEvent.UPW_GET_ORDERS)
+    @Rpc(RpcServerEvent.UPW_GET_ORDERS)
     public getOrders(): UpwOrder[] {
         return Array.from(this.ordersInProgress.values());
     }
 
-    @Rpc(RpcEvent.UPW_GET_CATALOG)
+    @Rpc(RpcServerEvent.UPW_GET_CATALOG)
     public async getCatalog(): Promise<Vehicle[]> {
         const catalog = await this.prismaService.vehicle.findMany({
             where: {
@@ -58,7 +58,7 @@ export class UpwOrderProvider {
         return catalog;
     }
 
-    @Rpc(RpcEvent.UPW_CANCEL_ORDER)
+    @Rpc(RpcServerEvent.UPW_CANCEL_ORDER)
     public async onCancelOrder(source: number, uuid: string) {
         const order = this.ordersInProgress.get(uuid);
         if (!order) {
@@ -69,7 +69,7 @@ export class UpwOrderProvider {
         this.notifier.notify(source, `Commande annulée.`);
     }
 
-    @Rpc(RpcEvent.UPW_ORDER_VEHICLE)
+    @Rpc(RpcServerEvent.UPW_ORDER_VEHICLE)
     public async onOrderVehicle(source: number, model: string) {
         const vehicle = await this.prismaService.vehicle.findFirst({
             where: {

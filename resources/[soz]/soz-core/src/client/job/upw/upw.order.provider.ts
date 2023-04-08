@@ -12,7 +12,7 @@ import { JobPermission, JobType } from '@public/shared/job';
 import { UpwConfig, UpwOrder } from '@public/shared/job/upw';
 import { MenuType } from '@public/shared/nui/menu';
 import { Err, Ok } from '@public/shared/result';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 import { Vehicle } from '@public/shared/vehicle/vehicle';
 
 import { JobPermissionService } from '../job.permission.service';
@@ -51,25 +51,25 @@ export class UpwOrderProvider {
         );
 
         if (value && value.toLowerCase() === 'oui') {
-            await emitRpc<string>(RpcEvent.UPW_CANCEL_ORDER, uuid);
+            await emitRpc<string>(RpcServerEvent.UPW_CANCEL_ORDER, uuid);
             await this.onGetOrders();
         }
     }
 
     @OnNuiEvent(NuiEvent.UpwGetOrders)
     public async onGetOrders() {
-        const orders = await emitRpc<UpwOrder[]>(RpcEvent.UPW_GET_ORDERS);
+        const orders = await emitRpc<UpwOrder[]>(RpcServerEvent.UPW_GET_ORDERS);
         this.nuiDispatch.dispatch('upw_order_menu', 'SetOrders', orders);
     }
 
     public async openOrderMenu() {
-        const vehicles = await emitRpc<Vehicle[]>(RpcEvent.UPW_GET_CATALOG);
+        const vehicles = await emitRpc<Vehicle[]>(RpcServerEvent.UPW_GET_CATALOG);
         this.nuiMenu.openMenu(MenuType.UpwOrderMenu, { catalog: vehicles });
     }
 
     @OnNuiEvent(NuiEvent.UpwOrder)
     public async onOrder(model: string) {
-        await emitRpc<string>(RpcEvent.UPW_ORDER_VEHICLE, model);
+        await emitRpc<string>(RpcServerEvent.UPW_ORDER_VEHICLE, model);
         await this.onGetOrders();
     }
 

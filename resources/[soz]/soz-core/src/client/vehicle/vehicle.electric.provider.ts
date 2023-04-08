@@ -4,7 +4,7 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwStation } from '@public/shared/fuel';
 import { JobType } from '@public/shared/job';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
-import { RpcEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
@@ -84,7 +84,7 @@ export class VehicleElectricProvider {
             return;
         }
 
-        const refreshStation = await emitRpc<UpwStation>(RpcEvent.UPW_GET_STATION, charger.station);
+        const refreshStation = await emitRpc<UpwStation>(RpcServerEvent.UPW_GET_STATION, charger.station);
 
         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
         await wait(500);
@@ -312,7 +312,7 @@ export class VehicleElectricProvider {
             return;
         }
 
-        const refreshStation = await emitRpc<UpwStation>(RpcEvent.UPW_GET_STATION, station);
+        const refreshStation = await emitRpc<UpwStation>(RpcServerEvent.UPW_GET_STATION, station);
 
         if (refreshStation.stock <= 0) {
             this.notifier.notify("La station n'a plus de courant.", 'error');

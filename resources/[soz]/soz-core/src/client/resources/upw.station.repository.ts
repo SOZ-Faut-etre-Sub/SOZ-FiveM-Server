@@ -3,14 +3,14 @@ import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
 import { UpwCharger } from '../../shared/fuel';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 
 @Injectable()
 export class UpwChargerRepository {
     private upwCharger: Record<number, UpwCharger> = {}; // name -> upwCharger
 
     public async load() {
-        this.upwCharger = await emitRpc(RpcEvent.REPOSITORY_GET_DATA, 'upwCharger');
+        this.upwCharger = await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA, 'upwCharger');
     }
 
     public update(charger: Record<number, UpwCharger>) {
