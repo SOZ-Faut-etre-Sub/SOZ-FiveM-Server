@@ -197,6 +197,11 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                                 {item?.shortcut}
                             </span>
                         )}
+                        {(item?.name == "vehicle_key") && (
+                            <span className={style.Key}>
+                                {item?.label.replace("Véhicule ", "")}
+                            </span>
+                        )}
                         <img
                             alt=""
                             className={style.Icon}
