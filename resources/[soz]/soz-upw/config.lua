@@ -85,4 +85,3 @@ Config.Upw.Resale = {
     EnergyCellPriceGlobal = {["energy_cell_fossil"] = 30, ["energy_cell_hydro"] = 18, ["energy_cell_wind"] = 12},
     Zone = {coords = vector3(291.97, -2885.82, 6.01), sx = 5.2, sy = 3.8, heading = 0, minZ = 5.01, maxZ = 8.21},
 }
-
