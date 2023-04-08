@@ -464,6 +464,14 @@ export class PlayerHealthProvider {
 
         const playerPed = PlayerPedId();
         const currentVehicle = GetVehiclePedIsIn(playerPed, false);
+
+        const IsInVehicleNotABike =
+            IsPedInAnyVehicle(playerPed, false) && !IsThisModelABicycle(GetEntityModel(currentVehicle));
+
+        if (IsInVehicleNotABike) {
+            return;
+        }
+
         const isRunning = IsPedRunning(playerPed) || IsPedSprinting(playerPed);
         const isSwimming = IsPedSwimming(playerPed);
         const isInBicycle = currentVehicle && IsThisModelABicycle(GetEntityModel(currentVehicle));
