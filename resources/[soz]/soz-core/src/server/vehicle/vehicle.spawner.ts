@@ -113,7 +113,7 @@ export class VehicleSpawner {
         }
 
         for (const dealership of Object.values(DealershipConfig)) {
-            noSpawnZones.push(BoxZone.default(dealership.showroom.position, 4, 4));
+            noSpawnZones.push(BoxZone.default(dealership.showroom.position, 10, 10));
         }
 
         this.noSpawnZone = new MultiZone<BoxZone>(noSpawnZones);
