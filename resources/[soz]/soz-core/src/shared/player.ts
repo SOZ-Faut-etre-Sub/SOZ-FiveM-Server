@@ -51,6 +51,11 @@ export type Skin = {
     };
 };
 
+export const PlayerPedHash = {
+    Male: 1885233650,
+    Female: -1667301416,
+};
+
 export type PlayerCharInfo = {
     firstname: string;
     lastname: string;
