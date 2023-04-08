@@ -1,7 +1,10 @@
 import { Component, Prop, WardrobeConfig } from '../cloth';
+import { PlayerPedHash } from '../player';
+import { NamedZone } from '../polyzone/box.zone';
+import { Vehicle } from '../vehicle/vehicle';
 
 export const UpwCloakroom: WardrobeConfig = {
-    [GetHashKey('mp_m_freemode_01')]: {
+    [PlayerPedHash.Male]: {
         ["Tenue d'apprenti pour été"]: {
             Components: {
                 [Component.Torso]: { Palette: 0, Drawable: 41, Texture: 0 },
@@ -94,7 +97,7 @@ export const UpwCloakroom: WardrobeConfig = {
             Props: { [Prop.Hat]: { Drawable: 145, Texture: 3, Palette: 0 } },
         },
     },
-    [GetHashKey('mp_f_freemode_01')]: {
+    [PlayerPedHash.Female]: {
         ["Tenue d'apprentie pour été"]: {
             Components: {
                 [Component.Torso]: { Texture: 0, Palette: 0, Drawable: 57 },
@@ -187,4 +190,64 @@ export const UpwCloakroom: WardrobeConfig = {
             Props: { [Prop.Hat]: { Drawable: 144, Texture: 3, Palette: 0 } },
         },
     },
+};
+
+export type UpwFacilityType =
+    | 'inverter'
+    | 'plant'
+    | 'resell'
+    | 'terminal'
+    | 'jobTerminal'
+    | 'globalTerminal'
+    | 'charger';
+
+export type UpwFacility = {
+    type: UpwFacilityType;
+    identifier: number;
+    data: string;
+};
+
+export type UpwOrder = {
+    uuid: string;
+    model: string;
+    orderDate: string;
+};
+
+const orderZone: NamedZone = {
+    name: 'upw_order',
+    center: [609.3484, 2759.589, 40.85264],
+    length: 1.15,
+    width: 2.5,
+    minZ: 41.7,
+    maxZ: 42.25,
+    heading: 365,
+    debugPoly: false,
+};
+
+export const UpwConfig = {
+    Order: {
+        zone: orderZone,
+        waitingTime: 60, // In minutes
+    },
+};
+
+export const UPW_CHARGER_REFILL_VALUES: Record<string, number> = {
+    ['energy_cell_fossil']: 40,
+    ['energy_cell_hydro']: 30,
+    ['energy_cell_wind']: 20,
+};
+
+export type MenuUpwData = {
+    blips: {
+        inverter: boolean;
+        jobTerminal: boolean;
+        globalTerminal: boolean;
+        plant: boolean;
+        resell: boolean;
+        charger: boolean;
+    };
+};
+
+export type UpwOrderMenuData = {
+    catalog: Vehicle[];
 };

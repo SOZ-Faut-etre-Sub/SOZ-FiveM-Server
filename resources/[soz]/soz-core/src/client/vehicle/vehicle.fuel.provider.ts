@@ -9,7 +9,7 @@ import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { VehicleClass } from '../../shared/vehicle/vehicle';
+import { isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -287,6 +287,15 @@ export class VehicleFuelProvider {
                     if (GetEntityHealth(entity) <= 0) {
                         return false;
                     }
+                    const model = GetEntityModel(entity);
+
+                    if (
+                        !IsThisModelAHeli(model) &&
+                        !IsThisModelAPlane(model) &&
+                        !this.vehicleService.checkBackOfVehicle(entity)
+                    ) {
+                        return false;
+                    }
 
                     return this.currentStationPistol !== null;
                 },
@@ -317,7 +326,10 @@ export class VehicleFuelProvider {
             return;
         }
 
-        if ((IsThisModelAHeli(model) || IsThisModelAPlane(model)) && station.fuel === FuelType.Essence) {
+        if (
+            (IsThisModelAHeli(model) || IsThisModelAPlane(model) || isVehicleModelElectric(model)) &&
+            station.fuel === FuelType.Essence
+        ) {
             this.notifier.notify("~r~Vous ne pouvez pas remplir ce véhicule avec de l'essence.", 'error');
             await this.disableStationPistol();
 
@@ -619,7 +631,10 @@ export class VehicleFuelProvider {
         }
 
         const multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
-        const consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.084 * multiplier;
+        let consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.084 * multiplier;
+        if (isVehicleModelElectric(model)) {
+            consumedFuel = consumedFuel / 3;
+        }
         const consumedOil = consumedFuel / 12;
 
         const state = this.vehicleService.getVehicleState(vehicle);

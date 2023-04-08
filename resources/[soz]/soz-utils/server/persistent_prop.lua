@@ -1,4 +1,5 @@
 local persistent_props = {}
+local car_chargers = {}
 
 --- Functions
 local function setPersistentProp(prop)
@@ -22,6 +23,16 @@ MySQL.ready(function()
     for _, prop in pairs(data) do
         setPersistentProp(prop)
     end
+
+    local chargers = MySQL.Sync.fetchAll("SELECT * FROM upw_chargers")
+
+    for _, prop in pairs(chargers) do
+        if (prop.active == 1) then
+            local position = json.decode(prop.position)
+            car_chargers[prop.id] = prop.id
+            CreateObject(GetHashKey("upwcarcharger"), position.x, position.y, position.z, position.w, 8000.0, true)
+        end
+    end
 end)
 
 QBCore.Functions.CreateCallback("core:server:getProps", function(source, cb)
@@ -34,6 +45,18 @@ RegisterNetEvent("core:server:refreshPersistentProp", function()
     for _, prop in pairs(data) do
         if persistent_props[prop.id] == nil then
             setPersistentProp(prop)
+        end
+    end
+end)
+
+RegisterNetEvent("core:server:refresh-charger-props", function()
+    local data = MySQL.Sync.fetchAll("SELECT * FROM upw_chargers")
+
+    for _, prop in pairs(data) do
+        if prop.active == 1 and car_chargers[prop.id] == nil then
+            local position = json.decode(prop.position)
+            car_chargers[prop.id] = prop.id
+            CreateObject(GetHashKey("upwcarcharger"), position.x, position.y, position.z, position.w, 8000.0, true)
         end
     end
 end)
