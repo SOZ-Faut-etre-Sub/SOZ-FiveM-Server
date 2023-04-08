@@ -6,6 +6,7 @@ import { RepairAnalyze } from '../../../shared/nui/repair';
 import { useBackspace } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useOutside } from '../../hook/outside';
+import IconBattery from '../../icons/repair/battery.svg';
 import IconBody from '../../icons/repair/body.svg';
 import IconDoor from '../../icons/repair/door.svg';
 import IconEngine from '../../icons/repair/engine.svg';
@@ -51,7 +52,7 @@ const EnginePage: FunctionComponent<PageProps> = ({ analyze }) => {
         <>
             <h3 className="text-3xl mb-4">Moteur</h3>
             <p>Etat du moteur : {analyze.condition.engineHealth.toFixed(2)} / 1000</p>
-            <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 100</p>
+            {!analyze.isElectric && <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 1000</p>}
             <p>Kilométrage : {(analyze.condition.mileage / 1000).toFixed(2)} km</p>
         </>
     );
@@ -142,10 +143,19 @@ const BodyPage: FunctionComponent<PageProps> = ({ analyze }) => {
 };
 
 const TankPage: FunctionComponent<PageProps> = ({ analyze }) => {
+    if (analyze.isElectric) {
+        return (
+            <>
+                <h3 className="text-3xl mb-4">Batterie</h3>
+                <p>Durabilité de la batterie : {analyze.condition.oilLevel.toFixed(2)} / 100</p>
+                <p>Charge : {(analyze.condition.fuelLevel * 0.6).toFixed(2)} / 60</p>
+            </>
+        );
+    }
     return (
         <>
             <h3 className="text-3xl mb-4">Réservoir</h3>
-            <p>Etat du réservoir : {((analyze.condition.tankHealth - 600) * 2.5).toFixed(2)} / 1000</p>
+            <p>Etat du réservoir : {((analyze.condition.tankHealth - 600) * 2.5).toFixed(2)} / 1000</p>;
             <p>Essence : {analyze.condition.fuelLevel.toFixed(2)} / 100</p>
         </>
     );
@@ -185,6 +195,11 @@ export const RepairApp: FunctionComponent = () => {
         'text-red-500': repairData.condition.tankHealth < 200,
         'text-green-500': repairData.condition.tankHealth > 900,
         'text-yellow-500': repairData.condition.tankHealth >= 200 && repairData.condition.tankHealth <= 900,
+    });
+    const batteryClass = cn(baseClass, {
+        'text-red-500': repairData.condition.oilLevel < 20,
+        'text-green-500': repairData.condition.oilLevel > 50,
+        'text-yellow-500': repairData.condition.oilLevel >= 20 && repairData.condition.tankHealth <= 50,
     });
 
     const numberOfBadDoor = Object.values(repairData.condition.doorStatus).filter(status => status).length;
@@ -308,18 +323,33 @@ export const RepairApp: FunctionComponent = () => {
                             <span>Vitres</span>
                             <IconGlass className="h-7 w-7 mt-3" />
                         </Link>
-                        <Link
-                            style={{
-                                top: '421px',
-                                left: '1014px',
-                                width: '100px',
-                            }}
-                            className={tankClass}
-                            to="/tank"
-                        >
-                            <IconTank className="h-8 w-8 mb-2" />
-                            <span>Réservoir</span>
-                        </Link>
+                        {repairData.isElectric ? (
+                            <Link
+                                style={{
+                                    top: '421px',
+                                    left: '1014px',
+                                    width: '100px',
+                                }}
+                                className={batteryClass}
+                                to="/tank"
+                            >
+                                <IconBattery className="h-8 w-8 mb-2" />
+                                <span>Batterie</span>
+                            </Link>
+                        ) : (
+                            <Link
+                                style={{
+                                    top: '421px',
+                                    left: '1014px',
+                                    width: '100px',
+                                }}
+                                className={tankClass}
+                                to="/tank"
+                            >
+                                <IconTank className="h-8 w-8 mb-2" />
+                                <span>Réservoir</span>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

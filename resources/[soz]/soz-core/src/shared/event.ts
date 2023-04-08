@@ -98,6 +98,11 @@ export enum ServerEvent {
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
 
+    UPW_CREATE_CHARGER = 'soz-core:server:job:upw:create-charger',
+    UPW_REFILL_STATION = 'soz-core:server:job:upw:refill-station',
+    UPW_CHANGE_BATTERY = 'soz-core:server:job:upw:change-battery',
+    UPW_SET_CHARGER_PRICE = 'soz-core:server:job:upw:set-charger-price',
+
     AFK_KICK = 'soz-core:server:afk:kick',
 
     // not core
@@ -151,6 +156,7 @@ export enum ServerEvent {
     VEHICLE_SET_DEAD = 'soz-core:server:vehicle:set-dead',
     VEHICLE_WASH = 'soz-core:server:vehicle:wash',
     VEHICLE_FUEL_START = 'soz-core:server:vehicle:fuel:start',
+    VEHICLE_CHARGE_START = 'soz-core:server:vehicle:charge:start',
     VEHICLE_OPEN_KEYS = 'soz-core:server:vehicle:open-keys',
     VEHICLE_GIVE_KEY = 'soz-core:server:vehicle:give-key',
     VEHICLE_ROUTE_EJECTION = 'soz-core:server:vehicle:route-ejection',
@@ -301,7 +307,9 @@ export enum ClientEvent {
     VEHICLE_DEALERSHIP_AUCTION_UPDATE = 'soz-core:client:vehicle:dealership:auction:update',
     VEHICLE_DELETE = 'soz-core:client:vehicle:delete',
     VEHICLE_FUEL_START = 'soz-core:client:vehicle:fuel:start',
+    VEHICLE_CHARGE_START = 'soz-core:client:vehicle:charge:start',
     VEHICLE_FUEL_STOP = 'soz-core:client:vehicle:fuel:stop',
+    VEHICLE_CHARGE_STOP = 'soz-core:client:vehicle:charge:stop',
     VEHICLE_GET_CLOSEST = 'soz-core:client:vehicle:get-closest',
     VEHICLE_SYNC_CONDITION = 'soz-core:client:vehicle:sync-condition',
     VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
@@ -311,6 +319,9 @@ export enum ClientEvent {
     VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
     VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
+
+    UPW_OPEN_CLOAKROOM = 'soz-core:client:job:upw:open-cloakroom',
+    UPW_CREATE_CHARGER = 'soz-core:client:job:upw:create-charger',
 
     RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
 
@@ -442,6 +453,7 @@ export enum NuiEvent {
     MenuClosed = 'menu_closed',
     JobBossShopBuyItem = 'soz-core:nui:job:boss-shop:buy-item',
     OilAskStationPrice = 'soz-core:nui:job:oil:ask-station-price',
+    UpwDisplayBlips = 'soz-core:nui:job:upw:display-blips',
 
     PanelClosed = 'soz-core:nui:panel:closed',
     SetFocusInput = 'soz-core:nui:set-focus-input',
@@ -474,6 +486,11 @@ export enum NuiEvent {
     VehicleGarageStore = 'soz-core:client:vehicle:garage:store',
     VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
+
+    UpwGetOrders = 'soz-core:client:job:upw:get-orders',
+    UpwOrder = 'soz-core:client:job:upw:order',
+    UpwGetCatalog = 'soz-core:client:job:upw:get-catalog',
+    UpwCancelOrder = 'soz-core:client:job:upw:cancel-order',
 
     GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
     GunSmithPreviewTint = 'soz-core:client:job:gunsmith:preview-tint',
