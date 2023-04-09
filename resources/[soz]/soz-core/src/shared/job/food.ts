@@ -200,6 +200,23 @@ const sausageProcesses: FoodCraftProcess[] = [
         ],
         output: { id: 'sausage5', amount: 4 },
     },
+    {
+        inputs: [
+            { id: 'chocolat_egg', amount: 2 },
+            { id: 'chocolat_milk_egg', amount: 2 },
+        ],
+        output: { id: 'easter_basket', amount: 1 },
+    },
+];
+
+const easterProcesses: FoodCraftProcess[] = [
+    {
+        inputs: [
+            { id: 'chocolat_egg', amount: 2 },
+            { id: 'chocolat_milk_egg', amount: 2 },
+        ],
+        output: { id: 'easter_basket', amount: 1 },
+    },
 ];
 
 export const FoodConfig = {
@@ -209,6 +226,7 @@ export const FoodConfig = {
         craftWine: 20000,
         craftCheese: 6000,
         craftJuice: 8000,
+        craftEaster: 5000,
     },
     zones: {
         wineCraftZones,
@@ -220,6 +238,7 @@ export const FoodConfig = {
         wineProcesses,
         cheeseProcesses,
         sausageProcesses,
+        easterProcesses,
     },
 };
 

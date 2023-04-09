@@ -1,9 +1,12 @@
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
-import { Inject } from '../../../core/decorators/injectable';
-import { Provider } from '../../../core/decorators/provider';
-import { ClientEvent, NuiEvent } from '../../../shared/event';
-import { FoodConfig, FoodCraftProcess, FoodRecipe } from '../../../shared/job/food';
-import { MenuType } from '../../../shared/nui/menu';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { TargetFactory } from '@public/client/target/target.factory';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { FoodConfig, FoodCraftProcess, FoodRecipe } from '@public/shared/job/food';
+import { MenuType } from '@public/shared/nui/menu';
+
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -27,8 +30,13 @@ export class FoodProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
+    @Inject(TargetFactory)
+    private targetFactory: TargetFactory;
+
     private state = {
         displayMilkBlip: false,
+        displayEasterEggBlip: false,
+        easterEnabled: false,
     };
 
     @OnNuiEvent(NuiEvent.FoodDisplayBlip)
@@ -47,6 +55,45 @@ export class FoodProvider {
         });
 
         this.blipFactory.hide('displayMilkBlip', true);
+
+        if (isFeatureEnabled(Feature.Easter)) {
+            this.state.easterEnabled = true;
+
+            this.blipFactory.create('displayEasterEggBlip', {
+                name: 'Point de collecte des oeufs',
+                coords: { x: 2253.42, y: 4835.86, z: 40.66 },
+                sprite: 809,
+                scale: 0.9,
+            });
+
+            this.blipFactory.hide('displayEasterEggBlip', true);
+
+            this.targetFactory.createForBoxZone(
+                'food:easter_harvest',
+                {
+                    center: [2253.42, 4835.86, 40.66],
+                    length: 33.2,
+                    width: 8.4,
+                    minZ: 38.66,
+                    maxZ: 40.66,
+                    heading: 45,
+                },
+                [
+                    {
+                        label: 'Récolter',
+                        icon: 'c:food/collecter.png',
+                        color: 'food',
+                        job: 'food',
+                        canInteract: () => {
+                            return this.playerService.isOnDuty();
+                        },
+                        action: () => {
+                            TriggerServerEvent(ServerEvent.FOOD_EASTER_HARVEST);
+                        },
+                    },
+                ]
+            );
+        }
     }
 
     @OnEvent(ClientEvent.JOBS_FOOD_OPEN_SOCIETY_MENU)
@@ -56,12 +103,20 @@ export class FoodProvider {
             return;
         }
         const sortFunction = (a, b) => a.output.label.localeCompare(b.output.label);
-        const processes = [
+        let processes = [
             ...this.computeRecipes(FoodConfig.processes.wineProcesses, '🍷').sort(sortFunction),
             ...this.computeRecipes(FoodConfig.processes.juiceProcesses, '🧃').sort(sortFunction),
             ...this.computeRecipes(FoodConfig.processes.cheeseProcesses, '🧀').sort(sortFunction),
             ...this.computeRecipes(FoodConfig.processes.sausageProcesses, '🌭').sort(sortFunction),
         ];
+
+        if (isFeatureEnabled(Feature.Easter)) {
+            processes = [
+                ...this.computeRecipes(FoodConfig.processes.easterProcesses, '🥚').sort(sortFunction),
+                ...processes,
+            ];
+        }
+
         this.nuiMenu.openMenu(MenuType.FoodJobMenu, {
             recipes: processes,
             state: this.state,
