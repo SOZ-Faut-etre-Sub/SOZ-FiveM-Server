@@ -32,7 +32,7 @@ export class WeatherProvider {
         GlobalState.time ||= { hour: 2, minute: 0, second: 0 } as Time;
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_SECOND, 'weather:time:advance')
     advanceTime(): void {
         const currentTime = { ...(GlobalState.time as Time) };
 
@@ -67,7 +67,7 @@ export class WeatherProvider {
         GlobalState.time = currentTime;
     }
 
-    @Tick(TickInterval.EVERY_FRAME)
+    @Tick(TickInterval.EVERY_FRAME, 'weather:next-weather')
     async updateWeather() {
         await wait((Math.random() * 5 + 10) * 60 * 1000);
 

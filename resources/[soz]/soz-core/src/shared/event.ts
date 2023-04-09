@@ -137,6 +137,8 @@ export enum ServerEvent {
     LSMC_ON_DEATH2 = 'soz-core:lsmc:server:on-death2',
     LSMC_SET_DEATH_REASON = 'soz-core:lsmc:server:set-death-reason',
 
+    METRICS_UPDATE = 'soz-core:server:metrics:update',
+
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
     VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
