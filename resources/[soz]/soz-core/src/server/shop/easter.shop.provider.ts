@@ -8,7 +8,9 @@ import { Monitor } from '../../shared/monitor';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
+import { PlayerAppearanceService } from '../player/player.appearance.service';
 import { PlayerMoneyService } from '../player/player.money.service';
+import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 
 @Provider()
@@ -25,6 +27,12 @@ export class EasterShopProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @Inject(PlayerAppearanceService)
+    private playerAppearanceService: PlayerAppearanceService;
+
     @Inject(ProgressService)
     private progressService: ProgressService;
 
@@ -33,19 +41,37 @@ export class EasterShopProvider {
 
     @Once()
     public onStart() {
-        this.itemService.setItemUseCallback('bunny_ear', this.useTShirt.bind(this));
+        this.itemService.setItemUseCallback('bunny_ear', this.useBunnyEar.bind(this));
     }
 
-    private async useTShirt(source: number) {
-        const { completed } = await this.progressService.progress(source, 'bunny_ear', '', 2000, {
-            dictionary: 'veh@common@fp_helmet@',
-            name: 'put_on_helmet',
-            flags: 15,
-        });
+    private async useBunnyEar(source: number) {
+        const progress = await this.progressService.progress(
+            source,
+            'switch_clothes',
+            "Changement d'habits...",
+            1000,
+            {
+                name: 'put_on_mask',
+                dictionary: 'mp_masks@on_foot',
+                options: {
+                    cancellable: false,
+                    enablePlayerControl: false,
+                },
+            },
+            {
+                disableCombat: true,
+                disableMovement: true,
+                canCancel: false,
+            }
+        );
 
-        if (!completed) {
+        if (!progress.completed) {
             return;
         }
+
+        const targetPlayer = this.playerService.getPlayer(source);
+        targetPlayer.cloth_config.Config.HideHead = false;
+        this.playerAppearanceService.setClothConfig(source, targetPlayer.cloth_config, true);
 
         TriggerClientEvent(ClientEvent.EASTER_EAR_TOGGLE, source);
     }

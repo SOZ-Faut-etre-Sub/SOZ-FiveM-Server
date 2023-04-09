@@ -8,10 +8,9 @@ import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
-import { SewingRawMaterial } from '@public/shared/job/ffs';
 
 const EasterHarvestDrop: Record<string, number> = {
-    golden_egg: 0.1,
+    golden_egg: 0.01,
     chocolat_egg: 0.5,
     chocolat_milk_egg: 1,
 };
@@ -57,11 +56,8 @@ export class FoodHarvestProvider {
     async onHarvest(source: number) {
         this.notifier.notify(source, 'Vous ~g~commencez~s~ à récolter');
 
-        while (this.inventoryManager.canCarryItem(source, SewingRawMaterial.COTTON_BALE, 1, {})) {
-            const hasHarvested = await this.doHarvest(source, 'Vous récoltez des oeufs.');
-            if (!hasHarvested) {
-                return;
-            }
+        while (await this.doHarvest(source, 'Vous récoltez des oeufs.')) {
+            /* empty */
         }
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de récolter.', 'success');
     }
