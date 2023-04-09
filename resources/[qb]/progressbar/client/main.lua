@@ -242,7 +242,9 @@ function ActionCleanup()
 
     if Action.animation ~= nil then
         if Action.animation.task ~= nil or (Action.animation.animDict ~= nil and Action.animation.anim ~= nil) then
-            ClearPedTasks(ped)
+            if Action.animation.animDict ~= "mp_player_inteat@burger" and Action.animation.animDict ~= "amb@world_human_drinking@coffee@male@idle_a" then
+                ClearPedTasks(ped)
+            end
             ClearPedSecondaryTask(ped)
             StopAnimTask(ped, Action.animDict, Action.anim, 1.0)
         else
@@ -256,11 +258,11 @@ function ActionCleanup()
     playerProps = {}
     playerHasProp = false
 
-    if prop_net then
+    if prop_net and NetworkDoesNetworkIdExist(prop_net) then
         DetachEntity(NetToObj(prop_net), 1, 1)
         DeleteEntity(NetToObj(prop_net))
     end
-    if propTwo_net then
+    if propTwo_net and NetworkDoesNetworkIdExist(propTwo_net) then
         DetachEntity(NetToObj(propTwo_net), 1, 1)
         DeleteEntity(NetToObj(propTwo_net))
     end

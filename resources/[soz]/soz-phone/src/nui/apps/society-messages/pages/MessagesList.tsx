@@ -82,6 +82,25 @@ const MessagesList = (): any => {
                                 <div className="flex-1 min-w-0 cursor-pointer">
                                     <span className="absolute inset-0" aria-hidden="true" />
                                     <p
+                                        className={cn('text-left text-xs font-bold', {
+                                            'text-white': config.theme.value === 'dark',
+                                            'text-gray-500': config.theme.value === 'light',
+                                        })}
+                                    >
+                                        {!message.source_phone ? (
+                                            <span
+                                                className={cn('rounded-full px-3 py-0', {
+                                                    'bg-gray-200': config.theme.value === 'light',
+                                                    'bg-gray-600': config.theme.value === 'dark',
+                                                })}
+                                            >
+                                                Anonyme
+                                            </span>
+                                        ) : (
+                                            <span></span>
+                                        )}
+                                    </p>
+                                    <p
                                         className={cn('text-left text-sm font-medium break-words', {
                                             'text-gray-100': config.theme.value === 'dark',
                                             'text-gray-700': config.theme.value === 'light',

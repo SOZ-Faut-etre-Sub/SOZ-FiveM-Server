@@ -179,35 +179,30 @@ end
 --
 -- METRICS
 --
-exports("GetUpwMetrics", function()
-    local metrics = {}
+exports("GetMetrics", function()
     if Pm == {} or Pm == nil then
-        return metrics
+        return {}
     end
 
-    -- Pollution Level
-    metrics["pollution_level"] = {{identifier = Pm.identifier, value = Pm:GetPollutionLevel()}}
-    metrics["pollution_percent"] = {{identifier = Pm.identifier, value = Pm:GetPollutionPercent()}}
-
-    -- Blackout Level
-    metrics["blackout_level"] = {{identifier = "blackout", value = GetBlackoutLevel()}}
-    metrics["blackout_percent"] = {{identifier = "blackout", value = GetBlackoutPercent()}}
+    local metrics = {
+        pollution_level = Pm:GetPollutionLevel(),
+        pollution_percent = Pm:GetPollutionPercent(),
+        blackout_level = GetBlackoutLevel(),
+        blackout_percent = GetBlackoutPercent(),
+        facilities = {},
+    }
 
     -- Facilities
     for type_, data in pairs(facilities) do
         for identifier, facility in pairs(data.arr) do
-            local metric = {["identifier"] = identifier, value = facility.capacity}
+            local metric = {["identifier"] = identifier, value = facility.capacity, type = type_}
 
             if type_ == "terminal" then
                 metric.scope = facility.scope
                 metric.job = facility.job or nil
             end
 
-            if type(metrics[type_]) == "table" then
-                table.insert(metrics[type_], metric)
-            else
-                metrics[type_] = {metric}
-            end
+            table.insert(metrics.facilities, metric)
         end
     end
 

@@ -15,27 +15,22 @@ function societyTaxCalculation(society, accounts)
         societyMoney = societyMoney + Account.GetMoney(account, "money")
     end
 
+    local percent = 0
+
     if societyMoney <= 1000000 then
-        return societyTaxPayment(society, 0, 0)
+        percent = 0
+    elseif societyMoney <= 2000000 then
+        percent = 4
+    elseif societyMoney <= 4000000 then
+        percent = 8
+    elseif societyMoney <= 6000000 then
+        percent = 12
+    else
+        percent = 16
     end
 
-    if societyMoney > 1000000 and societyMoney <= 3000000 then
-        societyTax = math.ceil(societyMoney * 0.02)
-        return societyTaxPayment(society, 2, societyTax)
-    end
-
-    if societyMoney > 3000000 and societyMoney <= 5000000 then
-        societyTax = math.ceil(societyMoney * 0.04)
-        return societyTaxPayment(society, 4, societyTax)
-    end
-
-    if societyMoney > 5000000 and societyMoney <= 6000000 then
-        societyTax = math.ceil(societyMoney * 0.08)
-        return societyTaxPayment(society, 8, societyTax)
-    end
-
-    societyTax = math.ceil(societyMoney * 0.10)
-    return societyTaxPayment(society, 10, societyTax)
+    societyTax = math.ceil(societyMoney * percent / 100)
+    return societyTaxPayment(society, percent, societyTax)
 end
 
 function societyTaxPayment(society, percentage, tax)

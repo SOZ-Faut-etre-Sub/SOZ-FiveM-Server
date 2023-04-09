@@ -4,7 +4,7 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 import { Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 
 @Injectable()
 export class FuelStationRepository {
@@ -12,7 +12,7 @@ export class FuelStationRepository {
     private models: number[];
 
     public async load() {
-        this.fuelStations = await emitRpc(RpcEvent.REPOSITORY_GET_DATA, 'fuelStation');
+        this.fuelStations = await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA, 'fuelStation');
         this.models = [];
         this.updateModels();
     }
@@ -67,6 +67,8 @@ export class FuelStationRepository {
                       maxZ: station.zone.maxZ + 2.0,
                   })
                 : BoxZone.fromZone(station.zone);
+
+            station.zone.minZ -= 2.0;
 
             if (zone.isPointInside(position)) {
                 return station;

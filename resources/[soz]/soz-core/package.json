@@ -50,8 +50,8 @@
         "webpack-dev-server": "^4.9.2"
     },
     "dependencies": {
-        "@citizenfx/client": "^2.0.5659-1",
-        "@citizenfx/server": "^2.0.5659-1",
+        "@citizenfx/client": "^2.0.6378-1",
+        "@citizenfx/server": "^2.0.6378-1",
         "@heroicons/react": "^1.0.6",
         "@prisma/client": "^4.4.0",
         "@reach/descendants": "^0.17.0",
@@ -63,9 +63,11 @@
         "inversify": "^6.0.1",
         "p-cancelable": "^4.0.1",
         "postcss": "^8.4.14",
+        "prom-client": "^14.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-icons": "^4.4.0",
+        "react-node-to-string": "^0.1.1",
         "react-redux": "^8.0.4",
         "react-router-dom": "^6.3.0",
         "redux": "^4.2.0",

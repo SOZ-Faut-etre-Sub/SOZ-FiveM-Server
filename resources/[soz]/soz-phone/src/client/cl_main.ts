@@ -14,6 +14,8 @@ global.isPhoneOpen = false;
 global.isPhoneDrowned = false;
 global.isPhoneDisabled = false;
 global.isPlayerLoaded = false;
+global.isPlayerHasItem = false;
+global.isBlackout = false;
 
 const exps = global.exports;
 
@@ -86,6 +88,29 @@ export const hidePhone = async (): Promise<void> => {
 
 /* * * * * * * * * * * * *
  *
+ *  Phone Availability Handling
+ *
+ * * * * * * * * * * * * */
+
+export const updateAvailability = async () => {
+    const avail =
+        (!global.isPhoneDrowned && !global.isPhoneDisabled && global.isPlayerHasItem && !global.isBlackout) ||
+        !!LocalPlayer.state.isdead;
+    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, avail);
+
+    if (!avail) {
+        if (global.isPhoneOpen) {
+            await hidePhone();
+        }
+        if (callService.isInCall()) {
+            callService.handleEndCall();
+            await animationService.endPhoneCall();
+        }
+    }
+};
+
+/* * * * * * * * * * * * *
+ *
  *  Misc. Helper Functions
  *
  * * * * * * * * * * * * */
@@ -107,6 +132,7 @@ async function togglePhone(): Promise<void> {
     }
 
     if (!LocalPlayer.state.isdead) {
+        if (global.isPhoneDrowned) return;
         if (global.isPhoneDisabled) return;
         if (cityIsInBlackOut()) return;
 
@@ -139,17 +165,15 @@ on('onResourceStop', (resource: string) => {
 
 onNet('QBCore:Client:OnPlayerLoaded', async () => {
     sendMessage('PHONE', 'phoneRestart', {});
-    const canAccess = await checkExportCanOpen();
-    const isdead = LocalPlayer.state.isdead;
-    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess || isdead);
-    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, isdead);
+    updateAvailability();
+    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, LocalPlayer.state.isdead);
 });
 
 onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
     if (typeof playerData.items === 'object') playerData.items = Object.values(playerData.items);
-    const hasItem = playerData.items.find(item => item.name === 'phone');
+    global.isPlayerHasItem = !!playerData.items.find(item => item.name === 'phone');
 
-    sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, !!hasItem || playerData.metadata['isdead']);
+    updateAvailability();
     sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, playerData.metadata['isdead']);
 });
 
@@ -200,31 +224,18 @@ RegisterNuiCB<void>(EmergencyEvents.UHU_CALL, async (_, cb) => {
 
 setInterval(async () => {
     const ped = PlayerPedId();
+    const isSwimming = IsPedSwimming(ped);
+    if (isSwimming && !global.isPhoneDrowned) {
+        global.isPhoneDrowned = true;
+        updateAvailability();
+    } else if (!isSwimming && global.isPhoneDrowned) {
+        global.isPhoneDrowned = false;
+        updateAvailability();
+    }
 
-    if (LocalPlayer.state.isdead) {
-        if (global.isPhoneDrowned) {
-            global.isPhoneDisabled = false;
-            global.isPhoneDrowned = false;
-            sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, true);
-        }
-    } else {
-        const isSwimming = IsPedSwimming(ped);
-        if (isSwimming) {
-            global.isPhoneDisabled = true;
-            global.isPhoneDrowned = true;
-            if (global.isPhoneOpen) await hidePhone();
-            callService.handleEndCall();
-            sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, false);
-        } else if (!isSwimming && global.isPhoneDrowned) {
-            global.isPhoneDisabled = false;
-            global.isPhoneDrowned = false;
-            sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, true);
-        }
-
-        if (global.isPhoneOpen && cityIsInBlackOut()) {
-            await hidePhone();
-            callService.handleEndCall();
-        }
+    if (global.isBlackout != cityIsInBlackOut()) {
+        global.isBlackout = cityIsInBlackOut();
+        updateAvailability();
     }
 }, 1000);
 

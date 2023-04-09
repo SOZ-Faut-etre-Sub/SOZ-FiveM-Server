@@ -999,15 +999,15 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@citizenfx/client@^2.0.5659-1":
-  version "2.0.5659-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.5659-1.tgz#7356b726c43693b8de6ce9b633ea5200fe348e7c"
-  integrity sha512-RVJ4IvFkNF/cXavtXh89dFqCAh7x3pmJTxPyBpmTUwRnwSAguT4b5kOZBz03hAdpfZhWMrxXvF1ZqIIsooQkbg==
+"@citizenfx/client@^2.0.6378-1":
+  version "2.0.6378-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.6378-1.tgz#6069051cde0798decccc505297c3f55cc75803f9"
+  integrity sha512-eCnjUscTx2NTIrUvEK0+e6UoSBScwTGejWH1UenEPh81dI0iVdbrkHfydLZWC5BtSFdb7Ws/PNFqZENGIepb7A==
 
-"@citizenfx/server@^2.0.5659-1":
-  version "2.0.5659-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.5659-1.tgz#ac5fc884ed91da0ee6fce73e13d3ad5479b46e89"
-  integrity sha512-oOQPFP4LxlE4T+pmLJMHVYaD3LcdxUDMo+ioV59bUcZeBEIzb7v27Bm9yrq0BbhmE1yHRLqx4sPCD7Ex6EbI1g==
+"@citizenfx/server@^2.0.6378-1":
+  version "2.0.6378-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.6378-1.tgz#7ac811789c8ffd4ea50c07fd79a68c2e47157e02"
+  integrity sha512-AzCQzFY9tb+hoyyryEWZlbUwlVh+eB3HSE5SeH1l13MA1LgQ7Xh0c6M1JhqgdjmpRfHTNMZ8CpVx1awYy3+YAg==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -2196,6 +2196,11 @@ binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
+
+bintrees@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/bintrees/-/bintrees-1.0.2.tgz#49f896d6e858a4a499df85c38fb399b9aff840f8"
+  integrity sha512-VOMgTMwjAaUG580SXn3LacVgjurrbMme7ZZNYGSSV7mmtY6QQRh0Eg3pwIcntQ77DErK1L0NxkbetjcoXzVwKw==
 
 body-parser@1.20.1:
   version "1.20.1"
@@ -4763,6 +4768,13 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
+prom-client@^14.2.0:
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/prom-client/-/prom-client-14.2.0.tgz#ca94504e64156f6506574c25fb1c34df7812cf11"
+  integrity sha512-sF308EhTenb/pDRPakm+WgiN+VdM/T1RaHj1x+MvAuT8UiQP8JmOEbxVqtkbfR4LrvOg5n7ic01kRBDGXjYikA==
+  dependencies:
+    tdigest "^0.1.1"
+
 prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
@@ -4851,6 +4863,11 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-node-to-string@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-node-to-string/-/react-node-to-string-0.1.1.tgz#857a5e223ef2ea75d5d10e72d3c6b0d9a31000ab"
+  integrity sha512-BufjWy2h2dOFcQp1IY/iXgdJzVbhAX6rM4/aNcmyp2VgMpUCU0py/t3MHRBLPxMULB6dCQeNebM+s6iI/46Xqw==
 
 react-redux@^8.0.4:
   version "8.0.5"
@@ -5526,6 +5543,13 @@ tapable@^2.1.1, tapable@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.2.1.tgz#1967a73ef4060a82f12ab96af86d52fdb76eeca0"
   integrity sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==
+
+tdigest@^0.1.1:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/tdigest/-/tdigest-0.1.2.tgz#96c64bac4ff10746b910b0e23b515794e12faced"
+  integrity sha512-+G0LLgjjo9BZX2MfdvPfH+MKLCrxlXSYec5DaPYP1fe6Iyhf0/fSmJ0bFiZ1F8BT6cGXl2LpltQptzjXKWEkKA==
+  dependencies:
+    bintrees "1.0.2"
 
 terser-webpack-plugin@^5.1.3:
   version "5.3.6"

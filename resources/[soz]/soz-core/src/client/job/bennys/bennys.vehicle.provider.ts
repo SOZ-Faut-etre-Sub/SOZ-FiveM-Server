@@ -10,7 +10,7 @@ import { MenuType } from '../../../shared/nui/menu';
 import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { MultiZone } from '../../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
-import { RpcEvent } from '../../../shared/rpc';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
 import { NuiDispatch } from '../../nui/nui.dispatch';
@@ -206,7 +206,7 @@ export class BennysVehicleProvider {
             },
             {
                 icon: 'c:mechanic/repair_wheel.png',
-                label: 'Changements de roues',
+                label: 'Changement des roues',
                 color: 'bennys',
                 action: this.repairVehicleWheel.bind(this),
                 blackoutGlobal: true,
@@ -308,7 +308,7 @@ export class BennysVehicleProvider {
         if (state.id) {
             const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
             vehicleConfiguration = await emitRpc<VehicleConfiguration>(
-                RpcEvent.VEHICLE_CUSTOM_GET_MODS,
+                RpcServerEvent.VEHICLE_CUSTOM_GET_MODS,
                 vehicleNetworkId
             );
         }

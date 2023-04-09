@@ -274,6 +274,23 @@ export const MenuItemSelectVehicleRGBColor: FunctionComponent<MenuItemSelectVehi
         }
     };
 
+    useEffect(() => {
+        let foundColor = false;
+
+        if (value) {
+            for (const choice of choices) {
+                if (choice.color[0] === value[0] && choice.color[1] === value[1] && choice.color[2] === value[2]) {
+                    foundColor = true;
+                    break;
+                }
+            }
+        }
+
+        if (!foundColor && choices.length > 0 && onChange) {
+            onChange(choices[0].color);
+        }
+    }, [value, choices, onConfirm]);
+
     return (
         <MenuItemSelect
             distance={3}
@@ -396,7 +413,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     )}
                     <MenuItemSelectVehicleColor
                         value={config?.color?.primary as VehicleColor}
-                        title="Couleur principal"
+                        title="Couleur principale"
                         useCategory={true}
                         initialValue={data.originalConfiguration?.color?.primary as VehicleColor}
                         onChange={color => {
@@ -584,7 +601,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                 <MenuContent>
                     {Object.keys(options.wheelType).length > 1 && (
                         <MenuItemSelect
-                            title="Type de roue"
+                            title="Type de roues"
                             value={config?.wheelType}
                             initialValue={data.originalConfiguration?.wheelType}
                             onChange={(index, value) => {
@@ -917,7 +934,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                     />
                     <MenuItemSelectVehicleColor
                         value={config?.xenonColor as VehicleXenonColor}
-                        title="Couleur xénon"
+                        title="Couleur xénons"
                         initialValue={data.originalConfiguration?.xenonColor as VehicleXenonColor}
                         onChange={color => {
                             setConfig({

@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 import { useConfig } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
-import { BankCard } from '../components/BankCard';
 import { Checkbox } from '../../../ui/components/Checkbox';
+import { BankCard } from '../components/BankCard';
 
 export const BankHome = memo(() => {
     const credentials = useSelector((state: RootState) => state.appBank);
@@ -84,7 +84,7 @@ export const BankHome = memo(() => {
                         'text-black': config.theme.value === 'light',
                     })}
                 >
-                    Paramètre de la carte
+                    Paramètres de la carte
                 </h2>
 
                 <Checkbox title="Activer les retraits distributeurs" enabled={true} />

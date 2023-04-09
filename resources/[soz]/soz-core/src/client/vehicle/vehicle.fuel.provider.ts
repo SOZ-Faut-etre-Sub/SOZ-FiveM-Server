@@ -8,7 +8,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
@@ -331,7 +331,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const refreshStation = await emitRpc<FuelStation>(RpcEvent.OIL_GET_STATION, station.id);
+        const refreshStation = await emitRpc<FuelStation>(RpcServerEvent.OIL_GET_STATION, station.id);
 
         if (refreshStation.stock <= 0) {
             this.notifier.notify("La station ne contient pas assez d'essence.", 'error');
@@ -566,7 +566,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const refreshStation = await emitRpc<FuelStation>(RpcEvent.OIL_GET_STATION, station.id);
+        const refreshStation = await emitRpc<FuelStation>(RpcServerEvent.OIL_GET_STATION, station.id);
 
         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
         await wait(500);
@@ -585,7 +585,7 @@ export class VehicleFuelProvider {
         );
 
         if (completed) {
-            this.notifier.notify(`Status de la cuve: ~b~${refreshStation.stock}L`, 'success');
+            this.notifier.notify(`Statut de la cuve: ~b~${refreshStation.stock}L`, 'success');
         }
     }
 

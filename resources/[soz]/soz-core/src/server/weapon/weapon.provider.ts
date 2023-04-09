@@ -6,7 +6,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
@@ -29,7 +29,7 @@ export class WeaponProvider {
     private monitor: Monitor;
 
     @OnEvent(ServerEvent.WEAPON_SHOOTING)
-    async onWeaponShooting(source: number, weaponSlot: number, weaponGroup: number) {
+    async onWeaponShooting(source: number, weaponSlot: number, weaponGroup: number, playerAmmo: number) {
         const weapon = this.inventoryManager.getSlot(source, weaponSlot);
         if (!weapon) {
             return;
@@ -37,6 +37,10 @@ export class WeaponProvider {
 
         if (weaponGroup == GetHashKey('GROUP_THROWN') && weapon.metadata.ammo <= 1) {
             this.inventoryManager.removeItemFromInventory(source, weapon.name, 1, weapon.metadata, weaponSlot);
+        } else if (weaponGroup == GetHashKey('GROUP_FIREEXTINGUISHER')) {
+            this.inventoryManager.updateMetadata(source, weapon.slot, {
+                ammo: playerAmmo || 0,
+            });
         } else {
             this.inventoryManager.updateMetadata(source, weapon.slot, {
                 ammo: weapon.metadata.ammo > 0 ? weapon.metadata.ammo - 1 : 0,
@@ -54,7 +58,7 @@ export class WeaponProvider {
         TriggerClientEvent(ClientEvent.WEAPON_USE_AMMO, source, item.name);
     }
 
-    @Rpc(RpcEvent.WEAPON_USE_AMMO)
+    @Rpc(RpcServerEvent.WEAPON_USE_AMMO)
     async onUseAmmo(
         source: number,
         weaponSlot: number,

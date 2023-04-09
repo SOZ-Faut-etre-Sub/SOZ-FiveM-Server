@@ -3,7 +3,7 @@ EmsJob.Functions.Menu = {}
 EmsJob.Menus = {}
 
 CreateThread(function()
-    EmsJob.Menus["lsmc"] = {menu = MenuV:CreateMenu(nil, "La sante !", "menu_job_lsmc", "soz", "lsmc:menu")}
+    EmsJob.Menus["lsmc"] = {menu = MenuV:CreateMenu(nil, "La santé !", "menu_job_lsmc", "soz", "lsmc:menu")}
 end)
 
 local function PropsEntity(menu)
@@ -11,7 +11,7 @@ local function PropsEntity(menu)
         icon = "🚧",
         label = "Poser un objet",
         value = nil,
-        values = {{label = "Cone de circulation", value = {item = "cone", props = "prop_roadcone02a"}}},
+        values = {{label = "Cône de circulation", value = {item = "cone", props = "prop_roadcone02a"}}},
         select = function(_, value)
             TriggerServerEvent("job:server:placeProps", value.item, value.props)
         end,

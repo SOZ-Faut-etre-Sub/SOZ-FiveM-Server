@@ -268,7 +268,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
                 ref.current.scrollIntoView();
             }
         }
-    }, [isSelected, ref]);
+    }, [isSelected, ref, description]);
 
     useEnter(() => {
         if (!isSelected) {
@@ -761,6 +761,7 @@ const useSelectOption = (
     helper?: ReactNode,
     helperRef?: any
 ): [(value) => void, boolean, boolean, (value) => void, boolean] => {
+    const isItemSelected = useContext(MenuSelectedContext);
     const { activeOptionIndex, distance, setDescription, setActiveOptionIndex, showAllOptions, activeValue } =
         useContext(MenuItemSelectContext);
     const ref = useRef(null);
@@ -790,7 +791,7 @@ const useSelectOption = (
     }, [setActiveOptionIndex, index]);
 
     useEffect(() => {
-        if (isSelected) {
+        if (isItemSelected && isSelected) {
             onSelected && onSelected();
             setDescription(description);
         }

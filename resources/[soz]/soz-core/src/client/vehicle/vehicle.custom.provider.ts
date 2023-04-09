@@ -7,7 +7,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { MultiZone } from '../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import {
     getVehicleConfigurationDiff,
     getVehicleCustomPrice,
@@ -161,7 +161,7 @@ export class VehicleCustomProvider {
 
         if (usePricing && (!vehicle || !vehicle.price)) {
             this.notifier.notify(
-                "Cette voiture n'est pas enregistré auprès des autorités et ne peut donc pas être modifiée, veuillez prendre contact avec les autorités.",
+                "Ce véhicule n'est pas enregistré auprès des autorités et ne peut donc pas être modifié, veuillez prendre contact avec les autorités.",
                 'error'
             );
 
@@ -179,7 +179,7 @@ export class VehicleCustomProvider {
             : 0;
 
         const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
-            RpcEvent.VEHICLE_CUSTOM_SET_MODS,
+            RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
             vehicleNetworkId,
             vehicleConfiguration,
             originalConfiguration,
@@ -199,7 +199,7 @@ export class VehicleCustomProvider {
 
         if (!vehicle || !vehicle.price) {
             this.notifier.notify(
-                "Cette voiture n'est pas enregistré auprès des autorités et ne peut donc pas être modifiée, veuillez prendre contact avec les autorités.",
+                "Ce véhicule n'est pas enregistré auprès des autorités et ne peut donc pas être modifié, veuillez prendre contact avec les autorités.",
                 'error'
             );
 

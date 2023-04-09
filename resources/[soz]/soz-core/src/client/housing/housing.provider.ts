@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { emitQBRpc } from '../../core/rpc';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -52,7 +52,7 @@ export class HousingProvider {
 
         if (price > 0 && zkeaPrice > 0)
             TriggerServerEvent('housing:server:UpgradePlayerApartmentTier', tier, price, zkeaPrice);
-        if (enableParking)
+        if (enableParking && hasParking)
             TriggerServerEvent('housing:server:SetPlayerApartmentParkingPlace', hasParking, parkingPrice);
         this.nuiMenu.closeMenu();
     }
@@ -65,7 +65,7 @@ export class HousingProvider {
             return;
         }
         const { id, tier, price, property_id } = player.apartment;
-        const properties = await emitQBRpc('housing:server:GetAllProperties' as RpcEvent);
+        const properties = await emitQBRpc('housing:server:GetAllProperties' as RpcServerEvent);
         const property = properties[property_id];
         if (!property) {
             this.notifier.notify("Cet appartement n'appartient à aucune propriété !", 'error');

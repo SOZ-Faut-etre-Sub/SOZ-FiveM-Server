@@ -38,6 +38,7 @@ export enum ServerEvent {
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
+    FOOD_EASTER_HARVEST = 'soz-core:server:job:food:easter-harvest',
 
     FFS_CRAFT = 'soz-core:server:job:ffs:craft',
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
@@ -97,6 +98,7 @@ export enum ServerEvent {
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
+    SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',
 
     AFK_KICK = 'soz-core:server:afk:kick',
 
@@ -132,7 +134,10 @@ export enum ServerEvent {
     LSMC_REVIVE = 'soz-core:lsmc:server:revive',
     LSMC_FREE_BED = 'soz-core:lsmc:server:free-bed',
     LSMC_ON_DEATH = 'soz-core:lsmc:server:on-death',
+    LSMC_ON_DEATH2 = 'soz-core:lsmc:server:on-death2',
     LSMC_SET_DEATH_REASON = 'soz-core:lsmc:server:set-death-reason',
+
+    METRICS_UPDATE = 'soz-core:server:metrics:update',
 
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
@@ -142,7 +147,6 @@ export enum ServerEvent {
     VEHICLE_FORCE_OPEN = 'soz-core:server:vehicle:force-open',
     VEHICLE_SET_OPEN = 'soz-core:server:vehicle:set-open',
     VEHICLE_SET_CLOSEST = 'soz-core:server:vehicle:set-closest',
-    VEHICLE_SPAWNED = 'soz-core:server:vehicle:spawned',
     VEHICLE_SWAP = 'soz-core:server:vehicle:swaped',
     VEHICLE_DELETED = 'soz-core:server:vehicle:deleted',
     VEHICLE_GARAGE_STORE = 'soz-core:server:vehicle:garage:store',
@@ -170,6 +174,7 @@ export enum ServerEvent {
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
 
     VANDALISM_END = 'soz-core:server:vandalism:end',
+    VANDALISM_UNLOCK = 'soz-core:server:vandalism:unlock',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
 
@@ -198,6 +203,7 @@ export enum ServerEvent {
     HUB_WASH = 'soz-core:server:hub:wash',
     HUB_SHOP_BUY = 'soz-core:server:hub:shop-buy',
     HUB_EXIT = 'soz-core:server:hub:exit',
+    HUB_RESELL = 'soz-core:server:hub:resell',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
@@ -301,7 +307,6 @@ export enum ClientEvent {
     VEHICLE_FUEL_START = 'soz-core:client:vehicle:fuel:start',
     VEHICLE_FUEL_STOP = 'soz-core:client:vehicle:fuel:stop',
     VEHICLE_GET_CLOSEST = 'soz-core:client:vehicle:get-closest',
-    VEHICLE_SPAWN = 'soz-core:client:vehicle:spawn',
     VEHICLE_SYNC_CONDITION = 'soz-core:client:vehicle:sync-condition',
     VEHICLE_UPDATE_DIRT_LEVEL = 'soz-core:client:vehicle:update-dirt-level',
     VEHICLE_GARAGE_HOUSE_OPEN_MENU = 'soz-core:client:vehicle:garage:house:open-menu',
@@ -340,6 +345,7 @@ export enum ClientEvent {
     HELICO_REMOVE_LIGHT = 'soz-core:client:police:del-light',
 
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:client:talent:disable-crimi',
+    TALENT_NEW_CRIMI = 'soz-core:client:talent:new-crimi',
 
     PLAYER_TELEPORT = 'soz-core:client:player:teleport',
 
@@ -347,6 +353,8 @@ export enum ClientEvent {
     HUB_REMOVE_STATUS = 'soz-core:client:hub:remove-status',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
+
+    EASTER_EAR_TOGGLE = 'soz-core:server:easter:toogle-ear',
 }
 
 export enum GameEvent {
@@ -495,4 +503,6 @@ export enum NuiEvent {
 
     WardrobeElementSelect = 'soz-core:client:wardrobe:element-select',
     WardrobeCustomSave = 'soz-core:client:wardrobe:custom-save',
+
+    EasterShopBuy = 'soz-core:client:eatershop:buy',
 }

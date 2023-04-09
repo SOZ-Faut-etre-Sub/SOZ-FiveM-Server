@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { Vehicle, VehicleMaxStock } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
@@ -21,7 +21,7 @@ export class AdminMenuVehicleProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
-    @Rpc(RpcEvent.ADMIN_GET_VEHICLES)
+    @Rpc(RpcServerEvent.ADMIN_GET_VEHICLES)
     public async getVehicles(): Promise<Vehicle[]> {
         return (await this.prismaService.vehicle.findMany())
             .sort((a, b) => a.name.localeCompare(b.name))

@@ -33,7 +33,6 @@ local function spawnPed(item, config)
             freeze = true,
             invincible = true,
             blockevents = true,
-            target = {options = getOptions(item), distance = 2.5},
         },
     })
 end
@@ -45,9 +44,8 @@ BaunJob.Functions.InitHarvestingZones = function()
             BaunJob.Harvest[config.options.name] = harvest
             if config.ped then
                 spawnPed(harvestConfig.item, config)
-            else
-                createTargetBoxZone(harvestConfig.item, config)
             end
+            createTargetBoxZone(harvestConfig.item, config)
         end
     end
 end

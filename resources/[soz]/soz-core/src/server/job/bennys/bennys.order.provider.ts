@@ -6,7 +6,7 @@ import { Rpc } from '../../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { uuidv4 } from '../../../core/utils';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
-import { RpcEvent } from '../../../shared/rpc';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { getDefaultVehicleCondition } from '../../../shared/vehicle/vehicle';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
@@ -31,7 +31,7 @@ export class BennysOrderProvider {
     private orderedVehicle = 0;
 
     // Tick every minute to check the orders to complete.
-    @Tick(TickInterval.EVERY_MINUTE)
+    @Tick(TickInterval.EVERY_MINUTE, 'bennys:orders:check')
     public async onTick() {
         for (const [uuid, bennyOrder] of this.ordersInProgress.entries()) {
             if (new Date(bennyOrder.orderDate).getTime() + 1000 * 60 * BennysConfig.Order.waitingTime < Date.now()) {
@@ -41,12 +41,12 @@ export class BennysOrderProvider {
         }
     }
 
-    @Rpc(RpcEvent.BENNYS_GET_ORDERS)
+    @Rpc(RpcServerEvent.BENNYS_GET_ORDERS)
     public getOrders(): BennysOrder[] {
         return Array.from(this.ordersInProgress.values());
     }
 
-    @Rpc(RpcEvent.BENNYS_CANCEL_ORDER)
+    @Rpc(RpcServerEvent.BENNYS_CANCEL_ORDER)
     public async onCancelOrder(source: number, uuid: string) {
         const order = this.ordersInProgress.get(uuid);
         if (!order) {
@@ -57,7 +57,7 @@ export class BennysOrderProvider {
         this.notifier.notify(source, `Commande annulée.`);
     }
 
-    @Rpc(RpcEvent.BENNYS_ORDER_VEHICLE)
+    @Rpc(RpcServerEvent.BENNYS_ORDER_VEHICLE)
     public async onOrderVehicle(source: number, model: string) {
         const vehicle = await this.prismaService.vehicle.findFirst({
             where: {

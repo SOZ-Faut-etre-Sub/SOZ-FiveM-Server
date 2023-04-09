@@ -255,6 +255,8 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
     self.Functions.UpdatePlayerData = function(dontUpdateChat)
         TriggerClientEvent('QBCore:Player:SetPlayerData', self.PlayerData.source, self.PlayerData)
+        TriggerEvent('QBCore:Server:PlayerUpdate', self.PlayerData)
+
         if dontUpdateChat == nil then
             QBCore.Commands.Refresh(self.PlayerData.source)
         end
@@ -262,7 +264,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
     self.Functions.SetFeatures = function(features)
         self.PlayerData.features = features or {}
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.SetJob = function(jobId, gradeId)
@@ -271,7 +273,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             grade = tostring(gradeId),
             onduty = self.PlayerData.job.onduty or false,
         }
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
 
         TriggerClientEvent('QBCore:Client:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
         TriggerEvent('QBCore:Server:OnJobUpdate', self.PlayerData.source, self.PlayerData.job)
@@ -308,21 +310,21 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
     self.Functions.SetJobDuty = function(onDuty)
         self.PlayerData.job.onduty = onDuty
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.SetMetaData = function(meta, val)
         local meta = meta:lower()
         if val ~= nil then
             self.PlayerData.metadata[meta] = val
-            self.Functions.UpdatePlayerData()
+            self.Functions.UpdatePlayerData(true)
         end
     end
 
     self.Functions.AddJobReputation = function(amount)
         local amount = tonumber(amount)
         self.PlayerData.metadata['jobrep'][self.PlayerData.job.id] = self.PlayerData.metadata['jobrep'][self.PlayerData.job.id] + amount
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.AddMoney = function(moneytype, amount, reason)
@@ -334,7 +336,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         end
         if self.PlayerData.money[moneytype] then
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] + amount
-            self.Functions.UpdatePlayerData()
+            self.Functions.UpdatePlayerData(true)
 
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, false)
 
@@ -359,7 +361,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
                 end
             end
             self.PlayerData.money[moneytype] = self.PlayerData.money[moneytype] - amount
-            self.Functions.UpdatePlayerData()
+            self.Functions.UpdatePlayerData(true)
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, true)
             if moneytype == 'bank' then
                 TriggerClientEvent('qb-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
@@ -380,7 +382,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
         if self.PlayerData.money[moneytype] then
             self.PlayerData.money[moneytype] = amount
-            self.Functions.UpdatePlayerData()
+            self.Functions.UpdatePlayerData(true)
 
             return true
         end
@@ -469,7 +471,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             SetPedArmour(ped, self.PlayerData.metadata["armor"].current)
         end
 
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.SetClothConfig = function(config, skipApply)
@@ -512,7 +514,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
     self.Functions.SetCreditCard = function(cardNumber)
         self.PlayerData.charinfo.card = cardNumber
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.GetCardSlot = function(cardNumber, cardType)
@@ -540,13 +542,13 @@ function QBCore.Player.CreatePlayer(PlayerData)
         local licences = self.PlayerData.metadata.licences
         if licences[licence] ~= nil then
             licences[licence] = tonumber(points)
-            self.Functions.UpdatePlayerData()
+            self.Functions.UpdatePlayerData(true)
         end
     end
 
     self.Functions.SetVehicleLimit = function (limit)
         self.PlayerData.metadata.vehiclelimit = limit
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.SetApartment = function(apartment)
@@ -556,17 +558,17 @@ function QBCore.Player.CreatePlayer(PlayerData)
             self.PlayerData.address = ""
         end
         self.PlayerData.apartment = apartment
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.SetApartmentTier = function(tier)
         self.PlayerData.apartment.tier = tier
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.SetApartmentHasParkingPlace = function(value)
         self.PlayerData.apartment.has_parking_place = value
-        self.Functions.UpdatePlayerData()
+        self.Functions.UpdatePlayerData(true)
     end
 
     self.Functions.Save = function()

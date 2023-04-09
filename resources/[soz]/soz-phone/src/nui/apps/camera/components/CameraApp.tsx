@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import useInterval from '../../../hooks/useInterval';
 import { useVisibility } from '../../../hooks/usePhone';
 import { usePhoto } from '../../../hooks/usePhoto';
+import { useCall } from '../../../hooks/useSimCard';
 import { useBackground } from '../../../ui/hooks/useBackground';
 import { useScreenshot } from '../hooks/useScreenshot';
 
@@ -23,11 +24,13 @@ const CameraApp: React.FC = () => {
     const navigate = useNavigate();
     const [t] = useTranslation();
 
+    const call = useCall();
+
     const { getPhotos } = usePhoto();
     const photos = getPhotos();
 
     const ref = useRef<HTMLCanvasElement>();
-    const { renderer, rtTexture, width, height } = useScreenshot();
+    const { renderer, rtTexture, width, height, destroy } = useScreenshot();
 
     const { addAlert } = useSnackbar();
     const { visibility } = useVisibility();
@@ -68,6 +71,10 @@ const CameraApp: React.FC = () => {
     }, 1);
 
     useEffect(() => {
+        return () => destroy();
+    }, []);
+
+    useEffect(() => {
         if (!visibility) navigate('/', { replace: true });
         fetchNui<ServerPromiseResp<void>>(PhotoEvents.ENTER_CAMERA, {});
 
@@ -75,6 +82,16 @@ const CameraApp: React.FC = () => {
             fetchNui<ServerPromiseResp<void>>(PhotoEvents.EXIT_CAMERA, {});
         };
     }, [visibility]);
+
+    useEffect(() => {
+        if (call) {
+            addAlert({
+                message: t('CAMERA.IS_NOT_AVAILABLE_DURING_CALL'),
+                type: 'error',
+            });
+            navigate('/', { replace: true });
+        }
+    }, [call]);
 
     return (
         <FullPageWithHeader className={backgroundClass}>

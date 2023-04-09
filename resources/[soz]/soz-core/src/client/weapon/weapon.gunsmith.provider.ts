@@ -6,7 +6,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { WeaponAttachment } from '../../shared/weapons/attachment';
 import { WeaponMk2TintColorChoices, WeaponTintColorChoices } from '../../shared/weapons/tint';
 import { WeaponConfiguration } from '../../shared/weapons/weapon';
@@ -188,7 +188,7 @@ export class WeaponGunsmithProvider {
                 }
             );
 
-            const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_LABEL, weapon.slot, weaponLabel);
+            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_SET_LABEL, weapon.slot, weaponLabel);
             if (applied) {
                 this.notifier.notify(`Vous avez renommé votre arme en ~b~${weaponLabel}`);
             } else {
@@ -197,7 +197,7 @@ export class WeaponGunsmithProvider {
         }
 
         if (repair) {
-            const applied = await emitRpc<boolean>(RpcEvent.WEAPON_REPAIR, weapon.slot);
+            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_REPAIR, weapon.slot);
             if (applied) {
                 this.notifier.notify(`Vous avez réparé votre arme (~b~${weapon.label}~s~)`);
             } else {
@@ -206,18 +206,15 @@ export class WeaponGunsmithProvider {
         }
 
         if (tint !== weapon.metadata.tint) {
-            if (tint !== 0 && weapon.metadata.tint !== undefined) {
-                const applied = await emitRpc<boolean>(RpcEvent.WEAPON_SET_TINT, weapon.slot, tint);
-                if (applied) {
-                    this.notifier.notify(
-                        `Vous avez changé la couleur de votre arme en ~b~${
-                            (weapon.name.includes('mk2') ? WeaponMk2TintColorChoices : WeaponTintColorChoices)[tint]
-                                .label
-                        }`
-                    );
-                } else {
-                    customValidated = false;
-                }
+            const applied = await emitRpc<boolean>(RpcServerEvent.WEAPON_SET_TINT, weapon.slot, tint);
+            if (applied) {
+                this.notifier.notify(
+                    `Vous avez changé la couleur de votre arme en ~b~${
+                        (weapon.name.includes('mk2') ? WeaponMk2TintColorChoices : WeaponTintColorChoices)[tint].label
+                    }`
+                );
+            } else {
+                customValidated = false;
             }
         }
 
@@ -225,7 +222,7 @@ export class WeaponGunsmithProvider {
             for (const [type, attachment] of Object.entries(attachments)) {
                 if (attachment !== weapon.metadata?.attachments?.[type]) {
                     const applied = await emitRpc<boolean>(
-                        RpcEvent.WEAPON_SET_ATTACHMENTS,
+                        RpcServerEvent.WEAPON_SET_ATTACHMENTS,
                         weapon.slot,
                         type,
                         attachment

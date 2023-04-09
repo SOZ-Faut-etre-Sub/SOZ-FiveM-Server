@@ -1,4 +1,5 @@
 import { uuidv4 } from '@public/core/utils';
+import { getRandomItem } from '@public/shared/random';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -7,8 +8,8 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
-import { RpcEvent } from '../../shared/rpc';
-import { GlobalWeaponConfig, WeaponName } from '../../shared/weapons/weapon';
+import { RpcServerEvent } from '../../shared/rpc';
+import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
 import { TalkService } from '../talk.service';
@@ -51,6 +52,22 @@ export class WeaponProvider {
         SetWeaponsNoAutoswap(true);
 
         await this.weapon.clear();
+
+        SetWeaponDamageModifier(WeaponName.BAT, 0.2);
+        SetWeaponDamageModifier(WeaponName.CROWBAR, 0.2);
+        SetWeaponDamageModifier(WeaponName.GOLFCLUB, 0.2);
+        SetWeaponDamageModifier(WeaponName.HAMMER, 0.2);
+        SetWeaponDamageModifier(WeaponName.NIGHTSTICK, 0.2);
+        SetWeaponDamageModifier(WeaponName.WRENCH, 0.2);
+        SetWeaponDamageModifier(WeaponName.KNUCKLE, 0.2);
+        SetWeaponDamageModifier(WeaponName.POOLCUE, 0.2);
+
+        SetWeaponDamageModifier('AMMO_SNOWBALL', 0.0);
+        SetWeaponDamageModifier('AMMO_FIREWORK', 0.0);
+        SetWeaponDamageModifier(WeaponName.SMOKEGRENADE, 0.0);
+        SetWeaponDamageModifier(WeaponName.BZGAS, 0.1);
+
+        SetWeaponDamageModifier(WeaponName.MUSKET, 0.5);
     }
 
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
@@ -80,7 +97,7 @@ export class WeaponProvider {
         LocalPlayer.state.set('inv_busy', true, true);
 
         const weapon = await emitRpc<InventoryItem | null>(
-            RpcEvent.WEAPON_USE_AMMO,
+            RpcServerEvent.WEAPON_USE_AMMO,
             this.weapon.getCurrentWeapon().slot,
             ammoName,
             this.weapon.getMaxAmmoInClip()
@@ -154,7 +171,7 @@ export class WeaponProvider {
         }
 
         const weaponGroup = GetWeapontypeGroup(weapon.name);
-        emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot, weaponGroup);
+        emitNet(ServerEvent.WEAPON_SHOOTING, weapon.slot, weaponGroup, GetAmmoInClip(player, weapon.name)[1]);
 
         if (
             !messageExclude.includes(GetHashKey(weapon.name)) &&
@@ -174,8 +191,8 @@ export class WeaponProvider {
             TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
                 anonymous: true,
                 number: '555-POLICE',
-                message: `${zone}: Un coup de feu a été entendu vers ${name}.`,
-                position: false,
+                message: `${zone}: ${getRandomItem(GunShotMessage).replace('${0}', name)}`,
+                position: true,
                 overrideIdentifier: 'System',
             });
         }
@@ -189,9 +206,10 @@ export class WeaponProvider {
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-POLICE',
-            message: `Une explosion a été entendue vers ${zone}.`,
+            message: getRandomItem(ExplosionMessage).replace('${0}', zone),
             position: false,
             overrideIdentifier: 'System',
+            pedPosition: JSON.stringify({ x: x, y: y, z: z }),
         });
     }
 

@@ -67,6 +67,25 @@
     text-shadow: rgba(0, 0, 0, 0.5) 0 1px 1px;
 }
 
+.Key {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0.25rem;
+    right: 0.25rem;
+    color: #ffffff;
+    z-index: 100;
+    pointer-events: none;
+    border: 1px solid rgba(52, 52, 52, 0.2);
+    background: rgba(52, 52, 52, 0.5);
+    padding: 0 0.2rem;
+    border-radius: 0.25rem;
+    font-size: 0.60rem;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 1px;
+    text-align: center;
+}
+
 .ContextMenu {
     position: absolute;
     height: auto;

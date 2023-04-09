@@ -7,7 +7,7 @@ import { JobPermission } from '../../../shared/job';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
 import { Err, Ok } from '../../../shared/result';
-import { RpcEvent } from '../../../shared/rpc';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { InputService } from '../../nui/input.service';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -54,13 +54,13 @@ export class BennysOrderProvider {
             return;
         }
 
-        await emitRpc<string>(RpcEvent.BENNYS_ORDER_VEHICLE, model);
+        await emitRpc<string>(RpcServerEvent.BENNYS_ORDER_VEHICLE, model);
         await this.onGetOrders();
     }
 
     @OnNuiEvent(NuiEvent.BennysGetOrders)
     public async onGetOrders() {
-        const orders = await emitRpc<BennysOrder[]>(RpcEvent.BENNYS_GET_ORDERS);
+        const orders = await emitRpc<BennysOrder[]>(RpcServerEvent.BENNYS_GET_ORDERS);
         this.nuiDispatch.dispatch('bennys_order_menu', 'SetOrders', orders);
     }
 
@@ -78,7 +78,7 @@ export class BennysOrderProvider {
         );
 
         if (value && value.toLowerCase() === 'oui') {
-            await emitRpc<string>(RpcEvent.BENNYS_CANCEL_ORDER, uuid);
+            await emitRpc<string>(RpcServerEvent.BENNYS_CANCEL_ORDER, uuid);
             await this.onGetOrders();
         }
     }

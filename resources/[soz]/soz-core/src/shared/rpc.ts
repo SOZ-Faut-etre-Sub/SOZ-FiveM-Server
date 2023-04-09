@@ -1,4 +1,4 @@
-export enum RpcEvent {
+export enum RpcServerEvent {
     ADMIN_GET_PLAYERS = 'soz-core:admin:get-players',
     ADMIN_GET_CHARACTERS = 'soz-core:admin:get-characters',
     ADMIN_GET_FULL_PLAYERS = 'soz-core:admin:get-full-players',
@@ -67,6 +67,7 @@ export enum RpcEvent {
 
     VANDALISM_END = 'soz-core:server:vandalism:end',
     VANDALISM_LOAD = 'soz-core:server:vandalism:load',
+    VANDALISM_LOCK = 'soz-core:server:vandalism:lock',
 
     HEIST_CHECK = 'soz-core:server:heist:check',
     HEIST_JEWELRY_IS_ZONE_UNLOCK = 'soz-core:server:heist:jewelry-check-unlock',
@@ -84,4 +85,15 @@ export enum RpcEvent {
 
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
+
+    BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',
+}
+
+export enum RpcClientEvent {
+    VEHICLE_GET_TYPE = 'soz-core:rpc:client:vehicle:get-type',
+    VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:spawn',
+    GET_LAST_VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:get-last-spawn',
+    DELETE_LAST_VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:delete-last-spawn',
+    VEHICLE_SPAWN_FROM_SERVER = 'soz-core:rpc:client:vehicle:spawn-from-server',
+    VEHICLE_DELETE = 'soz-core:rpc:client:vehicle:delete',
 }

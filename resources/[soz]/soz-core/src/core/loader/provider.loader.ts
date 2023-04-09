@@ -5,6 +5,7 @@ import { CommandLoader } from './command.loader';
 import { EventLoader } from './event.loader';
 import { ExportLoader } from './exports.loader';
 import { OnceLoader } from './once.loader';
+import { RpcLoader } from './rpc.loader';
 import { TickLoader } from './tick.loader';
 
 export abstract class ProviderLoader {
@@ -26,15 +27,19 @@ export abstract class ProviderLoader {
     @Inject(CommandLoader)
     private commandLoader: CommandLoader;
 
+    @Inject(RpcLoader)
+    private rpcLoader: RpcLoader;
+
     public load(provider): void {
         const providerMetadata = Reflect.getMetadata(ProviderMetadataKey, provider) as ProviderMetadata;
-        this.logger.debug('[soz-core] [provider] register:', providerMetadata.name);
+        this.logger.debug('[provider] register:', providerMetadata.name);
 
         this.tickLoader.load(provider);
         this.eventLoader.load(provider);
         this.onceLoader.load(provider);
         this.exportLoader.load(provider);
         this.commandLoader.load(provider);
+        this.rpcLoader.load(provider);
     }
 
     public unload(): void {
@@ -43,5 +48,6 @@ export abstract class ProviderLoader {
         this.onceLoader.unload();
         this.exportLoader.unload();
         this.commandLoader.unload();
+        this.rpcLoader.unload();
     }
 }

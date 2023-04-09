@@ -1,27 +1,44 @@
 Citizen.CreateThread(function()
-    --- Vehicles
+
+    -- Services
+
     AddTextEntryByHash(GetHashKey("ambcar"), "Granger du LSMC")
-    AddTextEntryByHash(GetHashKey("police5"), "Buffalo STX")
-    AddTextEntryByHash(GetHashKey("police6"), "Vapid Scout")
-    AddTextEntryByHash(GetHashKey("sheriff3"), "Buffalo Charger")
-    AddTextEntryByHash(GetHashKey("sheriff4"), "Albany Tahoe")
+    AddTextEntryByHash(GetHashKey("police5"), "Buffalo STX Police")
+    AddTextEntryByHash(GetHashKey("police6"), "Vapid Scout Police")
+    AddTextEntryByHash(GetHashKey("sheriff3"), "Buffalo Charger Sheriff")
+    AddTextEntryByHash(GetHashKey("sheriff4"), "Albany Tahoe Sheriff")
     AddTextEntryByHash(GetHashKey("policeb2"), "Moto de Police")
     AddTextEntryByHash(GetHashKey("sheriffb"), "Moto Sheriff")
     AddTextEntryByHash(GetHashKey("paragonfbi"), "Paragon FBI")
     AddTextEntryByHash(GetHashKey("cogfbi"), "Cognoscenti FBI")
-    AddTextEntryByHash(GetHashKey("dynasty2"), "Dynasty")
+
+    -- enterprises
+    AddTextEntryByHash(GetHashKey("baller8"), "Baller ST Blindé")
+    AddTextEntryByHash(GetHashKey("brickade1"), "Brickade UPW")
     AddTextEntryByHash(GetHashKey("burrito6"), "Burrito")
-    AddTextEntryByHash(GetHashKey("baller8"), "Baller ST")
-    AddTextEntryByHash(GetHashKey("flatbed3"), "Flatbed")
-    AddTextEntryByHash(GetHashKey("flatbed4"), "Flatbed")
-    AddTextEntryByHash(GetHashKey("mule6"), "Mule")
-    AddTextEntryByHash(GetHashKey("newsvan"), "Rumpo")
-    AddTextEntryByHash(GetHashKey("packer2"), "Packer")
-    AddTextEntryByHash(GetHashKey("stockade"), "Securicar")
-    AddTextEntryByHash(GetHashKey("utillitruck4"), "Utility Truck")
-    AddTextEntryByHash(GetHashKey("newsvan"), "Rumpo Twitch News") -- newsvan
+    AddTextEntryByHash(GetHashKey("coach2"), "Bus Zevent")
+    AddTextEntryByHash(GetHashKey("dynasty2"), "Carl Jr")
+    AddTextEntryByHash(GetHashKey("faggio4"), "Faggio Livraison")
+    AddTextEntryByHash(GetHashKey("flatbed4"), "Flatbed New Gahray")
+    AddTextEntryByHash(GetHashKey("frogger3"), "Twitch News")
+    AddTextEntryByHash(GetHashKey("hauler1"), "Hauler PAWL")
+    AddTextEntryByHash(GetHashKey("maverick2"), "Sheriff")
+    AddTextEntryByHash(GetHashKey("mule6"), "Mule Chateau Marius")
+    AddTextEntryByHash(GetHashKey("newsvan"), "Rumpo Twitch News")
+    AddTextEntryByHash(GetHashKey("packer2"), "MTP")
+    AddTextEntryByHash(GetHashKey("svolito1"), "SuperVolito Carl Jr")
+    AddTextEntryByHash(GetHashKey("taco1"), "Taco Van Chateau Marius")
+    AddTextEntryByHash(GetHashKey("stockade"), "Securicar Stonk")
+    AddTextEntryByHash(GetHashKey("utiltruckng"), "Camion Utilitaire New Gahray")
+
+    -- DLC 2
+
+    AddTextEntryByHash(GetHashKey("daemon2"), "Daemon Custom")
+    AddTextEntryByHash(GetHashKey("surfer2"), "Surfer Rouillé")
+    AddTextEntryByHash(GetHashKey("mixer"), "Bétonnière Rouillé")
 
     -- Liveries
+
     AddTextEntry("0xA4849CEF", "Numéro - 0") -- POLICE5_A0
     AddTextEntry("0xD083F4ED", "Numéro - 1") -- POLICE5_A1
     AddTextEntry("0xBE355050", "Numéro - 2") -- POLICE5_A2

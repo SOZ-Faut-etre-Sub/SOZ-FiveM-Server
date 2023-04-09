@@ -36,10 +36,15 @@ import { WeatherModule } from './client/weather/weather.module';
 import { WorldModule } from './client/world/world.module';
 import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
-import { unloadContainer } from './core/container';
+import { setService, unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
+import { ChainMiddlewareEventClientFactory } from './core/middleware/middleware.event.client';
+import { ChainMiddlewareTickClientFactory } from './core/middleware/middleware.tick.client';
 
 async function bootstrap() {
+    setService('MiddlewareFactory', ChainMiddlewareEventClientFactory);
+    setService('MiddlewareTickFactory', ChainMiddlewareTickClientFactory);
+
     const app = await Application.create(
         ProviderClientLoader,
         RepositoryModule,

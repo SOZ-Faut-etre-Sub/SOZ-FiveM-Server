@@ -5,6 +5,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
+import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { WeaponDrawPosition, Weapons } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 import { WeaponService } from './weapon.service';
@@ -136,6 +137,11 @@ export class WeaponDrawingProvider {
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     public async undrawWeapons() {
+        const vehicleClass = GetVehicleClass(GetVehiclePedIsIn(PlayerPedId(), false));
+        if (vehicleClass === VehicleClass.Motorcycles || vehicleClass === VehicleClass.Cycles) {
+            return;
+        }
+
         this.shouldDrawWeapon = false;
         await this.undrawWeapon();
     }

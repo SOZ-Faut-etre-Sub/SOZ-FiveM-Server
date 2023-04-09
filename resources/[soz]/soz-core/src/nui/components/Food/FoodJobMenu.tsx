@@ -23,6 +23,8 @@ type FoodStateProps = {
         recipes: FoodRecipe[];
         state: {
             displayMilkBlip: boolean;
+            displayEasterEggBlip: boolean;
+            easterEnabled: boolean;
         };
         onDuty: boolean;
     };
@@ -73,6 +75,14 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
                     >
                         Afficher le point de collecte de lait
                     </MenuItemCheckbox>
+                    {data.state.easterEnabled && (
+                        <MenuItemCheckbox
+                            checked={data.state.displayEasterEggBlip}
+                            onChange={value => displayBlip('displayEasterEggBlip', value)}
+                        >
+                            Afficher le point de collecte de Pâques
+                        </MenuItemCheckbox>
+                    )}
                 </MenuContent>
             </MainMenu>
             <SubMenu id="recipe">

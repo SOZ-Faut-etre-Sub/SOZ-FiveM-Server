@@ -166,8 +166,18 @@ function Property:IsTrailer()
     return string.find(self.identifier, "trailer") ~= nil
 end
 
-function Property:HasGarage()
-    return self.garage_zone ~= nil
+function Property:HasGarageForCitizenId(citizenid)
+    if self.garage_zone == nil then
+        return false
+    end
+
+    for _, apartment in pairs(self.apartments) do
+        if apartment:HasAccess(citizenid) and (not self:IsTrailer() or apartment:HasParkingPlace()) then
+            return true
+        end
+    end
+
+    return false
 end
 
 function Property:GetIdentifier()

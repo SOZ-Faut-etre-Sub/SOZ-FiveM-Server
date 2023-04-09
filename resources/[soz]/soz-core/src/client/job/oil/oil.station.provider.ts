@@ -7,7 +7,7 @@ import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
 import { FuelStation, FuelType } from '../../../shared/fuel';
 import { MenuType } from '../../../shared/nui/menu';
 import { Err, Ok } from '../../../shared/result';
-import { RpcEvent } from '../../../shared/rpc';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { Notifier } from '../../notifier';
 import { InputService } from '../../nui/input.service';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -33,7 +33,7 @@ export class OilStationProvider {
 
     @OnEvent(ClientEvent.OIL_REFILL_ESSENCE_STATION)
     public async onRefillEssenceStation(entity: number, stationId: number) {
-        const station = await emitRpc<FuelStation>(RpcEvent.OIL_GET_STATION, stationId);
+        const station = await emitRpc<FuelStation>(RpcServerEvent.OIL_GET_STATION, stationId);
 
         if (!station) {
             return;
@@ -66,7 +66,7 @@ export class OilStationProvider {
 
         const refill = await this.inputService.askInput(
             {
-                title: 'Quantité a ajouter (en Litre) :',
+                title: 'Quantité à ajouter (en litres) :',
                 maxCharacters: 4,
                 defaultValue: (2000 - station.stock).toString(),
             },
@@ -94,7 +94,7 @@ export class OilStationProvider {
 
     @OnEvent(ClientEvent.OIL_REFILL_KEROSENE_STATION)
     public async onRefillKeroseneStation(entity: number, stationId: number) {
-        const station = await emitRpc<FuelStation>(RpcEvent.OIL_GET_STATION, stationId);
+        const station = await emitRpc<FuelStation>(RpcServerEvent.OIL_GET_STATION, stationId);
 
         if (!station) {
             return;
@@ -112,7 +112,7 @@ export class OilStationProvider {
 
         const refill = await this.inputService.askInput(
             {
-                title: 'Quantité a ajouter (en Litre) :',
+                title: 'Quantité à ajouter (en litres) :',
                 maxCharacters: 4,
                 defaultValue: (2000 - station.stock).toString(),
             },
@@ -136,7 +136,7 @@ export class OilStationProvider {
 
     @OnEvent(ClientEvent.OIL_UPDATE_STATION_PRICE)
     public async updateStationPrice() {
-        const stationPrices = await emitRpc<Record<FuelType, number>>(RpcEvent.OIL_GET_STATION_PRICES);
+        const stationPrices = await emitRpc<Record<FuelType, number>>(RpcServerEvent.OIL_GET_STATION_PRICES);
 
         if (!stationPrices) {
             return;

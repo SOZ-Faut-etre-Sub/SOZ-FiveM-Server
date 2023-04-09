@@ -47,6 +47,12 @@ RegisterServerEvent("job:fire", function(target)
         return
     end
 
+    if targetPlayer.PlayerData.job.onduty then
+        targetPlayer.Functions.SetJobDuty(false)
+        TriggerClientEvent("QBCore:Client:SetDuty", targetPlayer.PlayerData.source, false)
+        TriggerEvent("QBCore:Server:SetDuty", targetPlayer.PlayerData.job.id, false)
+    end
+
     targetPlayer.Functions.SetJob(SozJobCore.JobType.Unemployed, GetJobDefaultGrade(SozJobCore.JobType.Unemployed))
 
     TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne fait plus partie de vos effectifs !"):format(targetPlayer.Functions.GetName()),
@@ -270,7 +276,7 @@ RegisterServerEvent("job:grade:add-permission", function(id, permission)
         ["@id"] = id,
         ["@permissions"] = json.encode(newPermissions),
     })
-    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été ajouté !")
+    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été ajoutée !")
     SynchroniseJob()
 end)
 
@@ -310,6 +316,6 @@ RegisterServerEvent("job:grade:remove-permission", function(id, permission)
         ["@id"] = id,
         ["@permissions"] = json.encode(newPermissions),
     })
-    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été supprimé !")
+    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été supprimée !")
     SynchroniseJob()
 end)

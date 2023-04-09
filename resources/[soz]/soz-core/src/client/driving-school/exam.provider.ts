@@ -16,7 +16,7 @@ import { EntityType } from '../../shared/entity';
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, isErr, isOk, Ok, Result } from '../../shared/result';
-import { RpcEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { PedFactory } from '../factory/ped.factory';
 import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
@@ -82,7 +82,7 @@ export class ExamProvider {
         await wait(200);
 
         const vehicleModel = this.examState.license.vehicle.model;
-        const vehicleNetId = await emitRpc<number>(RpcEvent.DRIVING_SCHOOL_SPAWN_VEHICLE, vehicleModel);
+        const vehicleNetId = await emitRpc<number>(RpcServerEvent.DRIVING_SCHOOL_SPAWN_VEHICLE, vehicleModel);
 
         const vehicle = NetToVeh(vehicleNetId);
         SetVehicleNumberPlateText(vehicle, DrivingSchoolConfig.vehiclePlateText);

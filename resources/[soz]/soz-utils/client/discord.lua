@@ -2,7 +2,7 @@
 CreateThread(function()
     while true do
         -- This is the Application ID (Replace this with you own)
-        SetDiscordAppId(926572229557383208)
+        SetDiscordAppId(958495562645270608)
 
         -- Here you will have to put the image name for the "large" icon.
         SetDiscordRichPresenceAsset("soz")
@@ -20,7 +20,7 @@ CreateThread(function()
 
         QBCore.Functions.TriggerCallback("smallresources:server:GetCurrentPlayers", function(result)
             -- SetRichPresence(result[1] .. "/" .. result[2])
-            SetRichPresence(result[1] .. "/150")
+            SetRichPresence(result[1] .. "/200")
         end)
 
         -- (26-02-2021) New Native:

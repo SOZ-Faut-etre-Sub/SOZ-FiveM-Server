@@ -7,7 +7,7 @@
             <modelName>ambcar</modelName>
             <txdName>ambcar</txdName>
             <handlingId>FBI2</handlingId>
-            <gameName>ambcar</gameName>
+            <gameName>AMBCAR</gameName>
             <vehicleMakeName />
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -112,7 +112,7 @@
             <modelName>cogfbi</modelName>
             <txdName>cogfbi</txdName>
             <handlingId>COG552</handlingId>
-            <gameName>cogfbi</gameName>
+            <gameName>COGFBI</gameName>
             <vehicleMakeName>ENUS</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -233,7 +233,7 @@
             <modelName>paragonfbi</modelName>
             <txdName>paragonfbi</txdName>
             <handlingId>PARAGON2</handlingId>
-            <gameName>paragonfbi</gameName>
+            <gameName>PARAGONFBI</gameName>
             <vehicleMakeName>ENUS</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -1025,7 +1025,7 @@
             <modelName>baller8</modelName>
             <txdName>baller8</txdName>
             <handlingId>BALLER4</handlingId>
-            <gameName>BALLER4</gameName>
+            <gameName>BALLER8</gameName>
             <vehicleMakeName>GALLIVAN</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -1146,7 +1146,7 @@
             <modelName>brickade1</modelName>
             <txdName>brickade1</txdName>
             <handlingId>BRICKADE</handlingId>
-            <gameName>BRICKADE</gameName>
+            <gameName>BRICKADE1</gameName>
             <vehicleMakeName>MTL</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -1259,7 +1259,7 @@
             <modelName>burrito6</modelName>
             <txdName>burrito6</txdName>
             <handlingId>BURRITO</handlingId>
-            <gameName>burrito6</gameName>
+            <gameName>BURRITO6</gameName>
             <vehicleMakeName>DECLASSE</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -1378,7 +1378,7 @@
             <modelName>coach2</modelName>
             <txdName>coach2</txdName>
             <handlingId>COACH</handlingId>
-            <gameName>COACH</gameName>
+            <gameName>COACH2</gameName>
             <vehicleMakeName>coach</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -1498,7 +1498,7 @@
             <modelName>dynasty2</modelName>
             <txdName>dynasty2</txdName>
             <handlingId>DYNASTY</handlingId>
-            <gameName>dynasty</gameName>
+            <gameName>DYNASTY2</gameName>
             <vehicleMakeName>dynasty</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -1617,7 +1617,7 @@
             <modelName>faggio4</modelName>
             <txdName>faggio4</txdName>
             <handlingId>FAGGIO</handlingId>
-            <gameName>FAGGIO</gameName>
+            <gameName>FAGGIO4</gameName>
             <vehicleMakeName>PEGASSI</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -1717,64 +1717,64 @@
             </firstPersonDrivebyData>
         </Item>
         <Item>
-            <modelName>flatbed3</modelName>
-            <txdName>flatbed3</txdName>
+            <modelName>flatbed4</modelName>
+            <txdName>flatbed4</txdName>
             <handlingId>FLATBED</handlingId>
-            <gameName>FLATBED</gameName>
-            <vehicleMakeName>MTL</vehicleMakeName>
+            <gameName>FLATBED4</gameName>
+            <vehicleMakeName>MTL4</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
             <animConvRoofDictName>null</animConvRoofDictName>
             <animConvRoofName>null</animConvRoofName>
-            <animConvRoofWindowsAffected />
+            <animConvRoofWindowsAffected/>
             <ptfxAssetName>null</ptfxAssetName>
             <audioNameHash>FLATBED</audioNameHash>
             <layout>LAYOUT_TRUCK</layout>
             <coverBoundOffsets>FLATBED_COVER_OFFSET_INFO</coverBoundOffsets>
             <explosionInfo>EXPLOSION_INFO_TRUCK</explosionInfo>
-            <scenarioLayout />
+            <scenarioLayout/>
             <cameraName>DEFAULT_FOLLOW_VEHICLE_CAMERA</cameraName>
             <aimCameraName>MID_BOX_VEHICLE_AIM_CAMERA</aimCameraName>
             <bonnetCameraName>VEHICLE_BONNET_CAMERA_MID</bonnetCameraName>
             <povCameraName>DEFAULT_POV_CAMERA_LOOKAROUND_MID</povCameraName>
-            <FirstPersonDriveByIKOffset x="-0.055000" y="-0.050000" z="-0.020000" />
-            <FirstPersonDriveByUnarmedIKOffset x="0.000000" y="0.000000" z="0.000000" />
-            <FirstPersonProjectileDriveByIKOffset x="0.063000" y="-0.058000" z="0.000000" />
-            <FirstPersonProjectileDriveByPassengerIKOffset x="-0.055000" y="-0.083000" z="0.033000" />
-            <FirstPersonProjectileDriveByRearLeftIKOffset x="0.000000" y="0.000000" z="0.000000" />
-            <FirstPersonProjectileDriveByRearRightIKOffset x="0.000000" y="0.000000" z="0.000000" />
-            <FirstPersonDriveByLeftPassengerIKOffset x="0.000000" y="0.000000" z="0.000000" />
-            <FirstPersonDriveByRightPassengerIKOffset x="0.000000" y="0.000000" z="0.000000" />
-            <FirstPersonDriveByRightRearPassengerIKOffset x="0.000000" y="0.000000" z="0.000000" />
-            <FirstPersonDriveByLeftPassengerUnarmedIKOffset x="0.000000" y="0.000000" z="0.000000" />
-            <FirstPersonDriveByRightPassengerUnarmedIKOffset x="0.000000" y="0.000000" z="0.000000" />
-            <FirstPersonMobilePhoneOffset x="0.155000" y="0.370000" z="0.461000" />
-            <FirstPersonPassengerMobilePhoneOffset x="0.136000" y="0.223000" z="0.425000" />
-            <PovCameraOffset x="0.000000" y="-0.081000" z="0.615000" />
-            <PovCameraVerticalAdjustmentForRollCage value="0.000000" />
-            <PovPassengerCameraOffset x="0.000000" y="0.000000" z="0.040000" />
-            <PovRearPassengerCameraOffset x="0.000000" y="0.000000" z="0.040000" />
+            <FirstPersonDriveByIKOffset x="-0.055000" y="-0.050000" z="-0.020000"/>
+            <FirstPersonDriveByUnarmedIKOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <FirstPersonProjectileDriveByIKOffset x="0.063000" y="-0.058000" z="0.000000"/>
+            <FirstPersonProjectileDriveByPassengerIKOffset x="-0.055000" y="-0.083000" z="0.033000"/>
+            <FirstPersonProjectileDriveByRearLeftIKOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <FirstPersonProjectileDriveByRearRightIKOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <FirstPersonDriveByLeftPassengerIKOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <FirstPersonDriveByRightPassengerIKOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <FirstPersonDriveByRightRearPassengerIKOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <FirstPersonDriveByLeftPassengerUnarmedIKOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <FirstPersonDriveByRightPassengerUnarmedIKOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <FirstPersonMobilePhoneOffset x="0.155000" y="0.370000" z="0.461000"/>
+            <FirstPersonPassengerMobilePhoneOffset x="0.136000" y="0.223000" z="0.425000"/>
+            <PovCameraOffset x="0.000000" y="-0.081000" z="0.615000"/>
+            <PovCameraVerticalAdjustmentForRollCage value="0.000000"/>
+            <PovPassengerCameraOffset x="0.000000" y="0.000000" z="0.040000"/>
+            <PovRearPassengerCameraOffset x="0.000000" y="0.000000" z="0.040000"/>
             <vfxInfoName>VFXVEHICLEINFO_TRUCK_HIDDEN_EXHAUST</vfxInfoName>
-            <shouldUseCinematicViewMode value="true" />
-            <shouldCameraTransitionOnClimbUpDown value="false" />
-            <shouldCameraIgnoreExiting value="false" />
-            <AllowPretendOccupants value="true" />
-            <AllowJoyriding value="false" />
-            <AllowSundayDriving value="false" />
-            <AllowBodyColorMapping value="true" />
-            <wheelScale value="0.354000" />
-            <wheelScaleRear value="0.320000" />
-            <dirtLevelMin value="0.300000" />
-            <dirtLevelMax value="1.000000" />
-            <envEffScaleMin value="0.000000" />
-            <envEffScaleMax value="1.000000" />
-            <envEffScaleMin2 value="0.000000" />
-            <envEffScaleMax2 value="1.000000" />
-            <damageMapScale value="0.600000" />
-            <damageOffsetScale value="1.000000" />
-            <diffuseTint value="0x00FFFFFF" />
-            <steerWheelMult value="1.000000" />
-            <HDTextureDist value="5.000000" />
+            <shouldUseCinematicViewMode value="true"/>
+            <shouldCameraTransitionOnClimbUpDown value="false"/>
+            <shouldCameraIgnoreExiting value="false"/>
+            <AllowPretendOccupants value="true"/>
+            <AllowJoyriding value="false"/>
+            <AllowSundayDriving value="false"/>
+            <AllowBodyColorMapping value="true"/>
+            <wheelScale value="0.354000"/>
+            <wheelScaleRear value="0.320000"/>
+            <dirtLevelMin value="0.300000"/>
+            <dirtLevelMax value="1.000000"/>
+            <envEffScaleMin value="0.000000"/>
+            <envEffScaleMax value="1.000000"/>
+            <envEffScaleMin2 value="0.000000"/>
+            <envEffScaleMax2 value="1.000000"/>
+            <damageMapScale value="0.600000"/>
+            <damageOffsetScale value="1.000000"/>
+            <diffuseTint value="0x00FFFFFF"/>
+            <steerWheelMult value="1.000000"/>
+            <HDTextureDist value="5.000000"/>
             <lodDistances content="float_array">
                 20.000000
                 90.000000
@@ -1783,48 +1783,51 @@
                 750.000000
                 750.000000
             </lodDistances>
-            <minSeatHeight value="1.213" />
-            <identicalModelSpawnDistance value="20" />
-            <maxNumOfSameColor value="10" />
-            <defaultBodyHealth value="1000.000000" />
-            <pretendOccupantsScale value="1.000000" />
-            <visibleSpawnDistScale value="1.000000" />
-            <trackerPathWidth value="2.000000" />
-            <weaponForceMult value="1.000000" />
-            <frequency value="10" />
+            <minSeatHeight value="1.213"/>
+            <identicalModelSpawnDistance value="20"/>
+            <maxNumOfSameColor value="10"/>
+            <defaultBodyHealth value="1000.000000"/>
+            <pretendOccupantsScale value="1.000000"/>
+            <visibleSpawnDistScale value="1.000000"/>
+            <trackerPathWidth value="2.000000"/>
+            <weaponForceMult value="1.000000"/>
+            <frequency value="10"/>
             <swankness>SWANKNESS_1</swankness>
-            <maxNum value="999" />
-            <flags>FLAG_BIG FLAG_CAN_HONK_WHEN_FLEEING FLAG_AVOID_TURNS FLAG_EXTRAS_REQUIRE FLAG_PEDS_CAN_STAND_ON_TOP FLAG_DONT_SPAWN_IN_CARGEN FLAG_USE_FAT_INTERIOR_LIGHT FLAG_IS_BULKY FLAG_BLOCK_FROM_ATTRACTOR_SCENARIO FLAG_CANNOT_TAKE_COVER_WHEN_STOOD_ON FLAG_HAS_LIVERY FLAG_EXTRAS_STRONG</flags>
+            <maxNum value="999"/>
+            <flags>FLAG_BIG FLAG_CAN_HONK_WHEN_FLEEING FLAG_AVOID_TURNS FLAG_EXTRAS_REQUIRE FLAG_PEDS_CAN_STAND_ON_TOP FLAG_DONT_SPAWN_IN_CARGEN
+                FLAG_USE_FAT_INTERIOR_LIGHT FLAG_IS_BULKY FLAG_BLOCK_FROM_ATTRACTOR_SCENARIO FLAG_CANNOT_TAKE_COVER_WHEN_STOOD_ON FLAG_HAS_LIVERY
+                FLAG_EXTRAS_STRONG
+            </flags>
             <type>VEHICLE_TYPE_CAR</type>
             <plateType>VPT_FRONT_PLATES</plateType>
             <dashboardType>VDT_TRUCK</dashboardType>
-            <vehicleClass>VC_UTILITY</vehicleClass>
+            <vehicleClass>VC_INDUSTRIAL</vehicleClass>
             <wheelType>VWT_SPORT</wheelType>
-            <trailers />
-            <additionalTrailers />
+            <trailers/>
+            <additionalTrailers/>
             <drivers>
                 <Item>
                     <driverName>S_M_M_Trucker_01</driverName>
-                    <npcName />
+                    <npcName/>
                 </Item>
             </drivers>
-            <extraIncludes />
+            <extraIncludes/>
             <doorsWithCollisionWhenClosed>
                 <Item>VEH_EXT_BONNET</Item>
             </doorsWithCollisionWhenClosed>
-            <driveableDoors />
-            <bumpersNeedToCollideWithMap value="true" />
-            <needsRopeTexture value="false" />
-            <requiredExtras />
-            <rewards />
+            <driveableDoors/>
+            <bumpersNeedToCollideWithMap value="true"/>
+            <needsRopeTexture value="false"/>
+            <requiredExtras/>
+            <rewards/>
             <cinematicPartCamera>
                 <Item>WHEEL_WIDE_REAR_RIGHT_CAMERA</Item>
                 <Item>WHEEL_WIDE_REAR_LEFT_CAMERA</Item>
             </cinematicPartCamera>
             <NmBraceOverrideSet>Truck</NmBraceOverrideSet>
-            <buoyancySphereOffset x="0.000000" y="0.000000" z="0.000000" />
-            <buoyancySphereSizeScale value="1.000000" />
-            <pOverrideRagdollThreshold type="NULL" />
+            <buoyancySphereOffset x="0.000000" y="0.000000" z="0.000000"/>
+            <buoyancySphereSizeScale value="1.000000"/>
+            <pOverrideRagdollThreshold type="NULL"/>
             <firstPersonDrivebyData>
                 <Item>TRUCK_PHANTOM_FRONT_LEFT</Item>
                 <Item>TRUCK_PACKER_FRONT_RIGHT</Item>
@@ -1834,7 +1837,7 @@
             <modelName>frogger3</modelName>
             <txdName>frogger3</txdName>
             <handlingId>FROGGER</handlingId>
-            <gameName>FROGGER</gameName>
+            <gameName>FROGGER3</gameName>
             <vehicleMakeName>FROGGER</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -1948,7 +1951,7 @@
             <modelName>hauler1</modelName>
             <txdName>hauler1</txdName>
             <handlingId>HAULER</handlingId>
-            <gameName>HAULER</gameName>
+            <gameName>HAULER1</gameName>
             <vehicleMakeName>JOBUILT</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -2070,7 +2073,7 @@
             <modelName>maverick2</modelName>
             <txdName>maverick2</txdName>
             <handlingId>MAVERICK</handlingId>
-            <gameName>maverick</gameName>
+            <gameName>MAVERICK2</gameName>
             <vehicleMakeName>maverick</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -2194,7 +2197,7 @@
             <modelName>mule6</modelName>
             <txdName>mule6</txdName>
             <handlingId>MULE</handlingId>
-            <gameName>MULE</gameName>
+            <gameName>MULE6</gameName>
             <vehicleMakeName>MAIBATSU</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -2428,7 +2431,7 @@
             <modelName>packer2</modelName>
             <txdName>packer2</txdName>
             <handlingId>PACKER</handlingId>
-            <gameName>packer</gameName>
+            <gameName>PACKER2</gameName>
             <vehicleMakeName>packer</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -2682,7 +2685,7 @@
             <modelName>supervolito1</modelName>
             <txdName>supervolito1</txdName>
             <handlingId>SVOLITO</handlingId>
-            <gameName>SVOLITO</gameName>
+            <gameName>SVOLITO1</gameName>
             <vehicleMakeName>BUCKING</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -2796,7 +2799,7 @@
             <modelName>taco1</modelName>
             <txdName>taco1</txdName>
             <handlingId>TACO</handlingId>
-            <gameName>TACO</gameName>
+            <gameName>TACO1</gameName>
             <vehicleMakeName />
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -3088,7 +3091,7 @@
         </Item>
         <Item>
             <parent>vehshare_truck</parent>
-            <child>flatbed3</child>
+            <child>flatbed4</child>
         </Item>
         <Item>
             <parent>vehicles_flyer_interior</parent>
