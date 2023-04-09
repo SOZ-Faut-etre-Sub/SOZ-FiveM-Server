@@ -353,7 +353,7 @@ export class VehicleSpawner {
     }
 
     private async spawnVehicleFromClient(player: number, vehicle: VehicleSpawn): Promise<[number, number]> {
-        const netId = await emitClientRpc<number | null>(RpcClientEvent.VEHICLE_SPAWN, player, vehicle);
+        let netId = await emitClientRpc<number | null>(RpcClientEvent.VEHICLE_SPAWN, player, vehicle);
 
         if (!netId) {
             this.logger.error(`failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from client, no network id`);
@@ -365,14 +365,39 @@ export class VehicleSpawner {
         // @see https://github.com/citizenfx/fivem/pull/1382
         await wait(200);
 
-        const entityId = NetworkGetEntityFromNetworkId(netId);
+        let entityId = NetworkGetEntityFromNetworkId(netId);
 
         if (!entityId || !DoesEntityExist(entityId)) {
             this.logger.error(
                 `failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), entity does not exist on server,network entity id: ${netId}, entity id: ${entityId}`
             );
 
-            return [0, 0];
+            // Try to get again the network id
+            netId = await emitClientRpc<number | null>(RpcClientEvent.GET_LAST_VEHICLE_SPAWN, player, vehicle);
+
+            if (!netId) {
+                this.logger.error(
+                    `failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from client, no network id`
+                );
+
+                return [0, 0];
+            }
+
+            entityId = NetworkGetEntityFromNetworkId(netId);
+
+            if (!entityId || !DoesEntityExist(entityId)) {
+                this.logger.error(
+                    `failed to spawn vehicle ${vehicle.model} (${vehicle.hash}), entity does not exist on server,network entity id: ${netId}, entity id: ${entityId}, even after retrying`
+                );
+
+                await emitClientRpc(RpcClientEvent.DELETE_LAST_VEHICLE_SPAWN, player, vehicle);
+
+                return [0, 0];
+            }
+
+            this.logger.error(
+                `Vehicle has finally been spawned ${vehicle.model} (${vehicle.hash}), network entity id: ${netId}, entity id: ${entityId}`
+            );
         }
 
         return [netId, entityId];
