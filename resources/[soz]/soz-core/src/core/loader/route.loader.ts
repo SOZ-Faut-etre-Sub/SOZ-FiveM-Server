@@ -1,15 +1,30 @@
-import { RouteMetadata, RouteMetadataKey } from '../decorators/http';
+import { RouteConfig, RouteMetadata, RouteMetadataKey } from '../decorators/http';
 import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
+import { Request } from '../http/request';
 import { Response } from '../http/response';
 import { Logger } from '../logger';
 
+type Route = {
+    handler: (request: Request) => Promise<Response> | Response;
+    config: RouteConfig;
+};
+
 @Injectable()
 export class RouteLoader {
-    private routeList: Record<string, Record<string, any>> = {};
+    private routeList: Record<string, Record<string, Route>> = {};
 
     @Inject(Logger)
     private logger: Logger;
+
+    private expectedAuthHeader = '';
+
+    public constructor() {
+        const username = GetConvar('soz_api_username', 'admin');
+        const password = GetConvar('soz_api_password', 'admin');
+
+        this.expectedAuthHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
+    }
 
     public load(provider): void {
         const routeMethodList = getMethodMetadata<RouteMetadata>(RouteMetadataKey, provider);
@@ -26,7 +41,10 @@ export class RouteLoader {
                 this.logger.warn(`route ${route.path} already exists with method ${route.method}`);
             }
 
-            this.routeList[route.path][route.method] = method;
+            this.routeList[route.path][route.method] = {
+                handler: method,
+                config: route.config,
+            };
         }
 
         SetHttpHandler(async (req, res) => {
@@ -37,7 +55,7 @@ export class RouteLoader {
                 headers[header.toLowerCase()] = req.headers[header];
             }
 
-            const body = new Promise(resolve => {
+            const body = new Promise<string>(resolve => {
                 req.setDataHandler(data => {
                     resolve(data);
                 });
@@ -50,12 +68,7 @@ export class RouteLoader {
                 body,
             };
 
-            let response = Response.notFound();
-
-            if (this.routeList[req.path] && this.routeList[req.path][req.method]) {
-                const handler = this.routeList[req.path][req.method];
-                response = await handler(request);
-            }
+            const response = await this.handleRequest(request);
 
             res.writeHead(response.getStatusCode(), response.getHeadersForCfx());
             res.write(response.getBody());
@@ -69,6 +82,28 @@ export class RouteLoader {
                 }]`
             );
         });
+    }
+
+    private async handleRequest(request: Request): Promise<Response> {
+        if (!this.routeList[request.path]) {
+            return Response.notFound();
+        }
+
+        const route = this.routeList[request.path][request.method];
+
+        if (!route) {
+            return Response.notFound();
+        }
+
+        if (route.config.auth) {
+            const authHeader = request.headers['authorization'] || '';
+
+            if (authHeader !== this.expectedAuthHeader) {
+                return Response.unauthorized();
+            }
+        }
+
+        return route.handler(request);
     }
 
     public unload(): void {}
