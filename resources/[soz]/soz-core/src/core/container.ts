@@ -23,4 +23,18 @@ export const unloadContainer = (): void => {
     Reflect.deleteMetadata(ContainerMetadata, global);
 };
 
+export const setService = (name: string, serviceIdentifier: any): void => {
+    const container = getContainer();
+
+    if (container.isBound(name)) {
+        container.unbind(name);
+    }
+
+    const service = container.get(serviceIdentifier);
+
+    console.log(`[soz-core] setServiceee: ${name} = ${serviceIdentifier}`);
+
+    container.bind(name).toConstantValue(service);
+};
+
 export const Container: ContainerInversify = getContainer();

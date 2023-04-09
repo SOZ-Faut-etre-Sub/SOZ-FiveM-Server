@@ -3,8 +3,10 @@ import 'reflect-metadata';
 import { modules as PrivateModules } from '@private/server/modules';
 
 import { Application } from './core/application';
-import { unloadContainer } from './core/container';
+import { setService, unloadContainer } from './core/container';
 import { ProviderServerLoader } from './core/loader/provider.server.loader';
+import { ChainMiddlewareEventServerFactory } from './core/middleware/middleware.event.server';
+import { ChainMiddlewareTickServerFactory } from './core/middleware/middleware.tick.server';
 import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
 import { DatabaseModule } from './server/database/database.module';
@@ -37,6 +39,8 @@ import { WeatherModule } from './server/weather/weather.module';
 import { ZEventModule } from './server/zevent/zevent.module';
 
 async function bootstrap() {
+    setService('MiddlewareFactory', ChainMiddlewareEventServerFactory);
+    setService('MiddlewareTickFactory', ChainMiddlewareTickServerFactory);
     const app = await Application.create(
         ProviderServerLoader,
         DatabaseModule,

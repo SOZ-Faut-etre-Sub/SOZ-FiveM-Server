@@ -31,7 +31,7 @@ export class BennysOrderProvider {
     private orderedVehicle = 0;
 
     // Tick every minute to check the orders to complete.
-    @Tick(TickInterval.EVERY_MINUTE)
+    @Tick(TickInterval.EVERY_MINUTE, 'bennys:orders:check')
     public async onTick() {
         for (const [uuid, bennyOrder] of this.ordersInProgress.entries()) {
             if (new Date(bennyOrder.orderDate).getTime() + 1000 * 60 * BennysConfig.Order.waitingTime < Date.now()) {

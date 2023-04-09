@@ -69,7 +69,7 @@ export class FieldProvider {
         field.refill.lastAction = new Date().getTime();
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_SECOND, 'field:refill')
     public async onTick() {
         this.fields.forEach(field => {
             if ((field.refill.lastAction || 0) + field.refill.delay < new Date().getTime()) {
@@ -77,7 +77,7 @@ export class FieldProvider {
             }
         });
     }
-    @Tick(TickInterval.EVERY_MINUTE)
+    @Tick(TickInterval.EVERY_MINUTE, 'field:save')
     public async saveTick() {
         for (const field of this.fields) {
             const fieldData = JSON.stringify({ ...field, identifier: undefined, owner: undefined });

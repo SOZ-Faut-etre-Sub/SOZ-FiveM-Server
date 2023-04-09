@@ -37,7 +37,7 @@ export class VehicleConditionProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_SECOND, 'vehicle:condition:update')
     public updateVehiclesCondition() {
         // Basically we keep tracks of all vehicles spawned and ask the current owner to update the condition of the vehicle
         const netIds = this.vehicleStateService.getSpawned();

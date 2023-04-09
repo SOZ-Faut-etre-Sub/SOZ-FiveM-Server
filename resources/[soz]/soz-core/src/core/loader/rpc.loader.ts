@@ -3,14 +3,14 @@ import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
 import { RpcMetadataKey } from '../decorators/rpc';
 import { Logger } from '../logger';
-import { ChaineMiddlewareFactory } from '../middleware/middleware';
+import { MiddlewareFactory } from '../middleware/middleware';
 
 @Injectable()
 export class RpcLoader {
     private rpcList: Record<string, any> = {};
 
-    @Inject(ChaineMiddlewareFactory)
-    private middlewareFactory: ChaineMiddlewareFactory;
+    @Inject('MiddlewareFactory')
+    private middlewareFactory: MiddlewareFactory;
 
     @Inject(Logger)
     private logger: Logger;
