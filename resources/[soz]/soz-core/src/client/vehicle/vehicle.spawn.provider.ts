@@ -30,6 +30,8 @@ export class VehicleSpawnProvider {
     @Inject(Logger)
     private logger: Logger;
 
+    private lastVehicleSpawn: number | null = null;
+
     @OnEvent(ClientEvent.VEHICLE_GET_CLOSEST)
     getClosestVehicle(responseId: string) {
         const vehicle = this.vehicleService.getClosestVehicle();
@@ -149,8 +151,73 @@ export class VehicleSpawnProvider {
         }
 
         await this.doSpawn(vehicle, networkId, vehicleSpawn);
+        this.lastVehicleSpawn = vehicle;
 
         return networkId;
+    }
+
+    @Rpc(RpcClientEvent.GET_LAST_VEHICLE_SPAWN)
+    async getLastVehicleSpawn(vehicleSpawn: VehicleSpawn): Promise<number> {
+        if (!this.lastVehicleSpawn) {
+            return null;
+        }
+
+        if (!DoesEntityExist(this.lastVehicleSpawn)) {
+            this.lastVehicleSpawn = null;
+
+            return null;
+        }
+
+        const model = GetEntityModel(this.lastVehicleSpawn);
+
+        if (model !== vehicleSpawn.hash) {
+            this.lastVehicleSpawn = null;
+
+            return null;
+        }
+
+        const networkId = NetworkGetNetworkIdFromEntity(this.lastVehicleSpawn);
+
+        if (!NetworkDoesEntityExistWithNetworkId(networkId) || !NetworkDoesNetworkIdExist(networkId)) {
+            this.logger.error(`network id ${networkId} does not exist, cannot get last vehicle spawn`);
+            DeleteVehicle(this.lastVehicleSpawn);
+
+            return null;
+        }
+
+        return networkId;
+    }
+
+    @Rpc(RpcClientEvent.DELETE_LAST_VEHICLE_SPAWN)
+    async deleteLastVehicleSpawn(vehicleSpawn: VehicleSpawn): Promise<boolean> {
+        if (this.lastVehicleSpawn) {
+            return false;
+        }
+
+        if (!DoesEntityExist(this.lastVehicleSpawn)) {
+            this.lastVehicleSpawn = null;
+
+            return false;
+        }
+
+        if (!IsEntityAVehicle(this.lastVehicleSpawn)) {
+            this.lastVehicleSpawn = null;
+
+            return false;
+        }
+
+        const model = GetEntityModel(this.lastVehicleSpawn);
+
+        if (model !== vehicleSpawn.hash) {
+            this.lastVehicleSpawn = null;
+
+            return false;
+        }
+
+        DeleteVehicle(this.lastVehicleSpawn);
+        this.lastVehicleSpawn = null;
+
+        return true;
     }
 
     private async doSpawn(vehicle: number, networkId: number, vehicleSpawn: VehicleSpawn) {
