@@ -55,6 +55,7 @@ export enum MenuType {
     LsmcPharmacy = 'lsmc_pharmacy',
     MandatoryJobMenu = 'mdr_job',
     IllegalShop = 'illegal_shop',
+    EasterShop = 'easter_shop',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -82,4 +83,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.LsmcPharmacy]: never;
     [MenuType.MandatoryJobMenu]: any;
     [MenuType.IllegalShop]: Map<string, ShopProduct[]>;
+    [MenuType.EasterShop]: ShopProduct[];
 }

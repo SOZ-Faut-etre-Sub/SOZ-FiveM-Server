@@ -23,10 +23,13 @@ export type PedOptions = {
     spawnNow?: boolean;
     model: string;
     coords: { x: number; y: number; z: number; w: number };
+    length?: number;
+    width?: number;
     minusOne?: boolean;
     freeze?: boolean;
     invincible?: boolean;
     blockevents?: boolean;
+    debugPoly?: boolean;
     scenario?: string;
     animDict?: string;
     anim?: string;
@@ -105,10 +108,11 @@ export class TargetFactory {
             {
                 center: [ped.coords.x, ped.coords.y, ped.coords.z],
                 heading: ped.coords.w,
-                width: 0.8,
-                length: 0.8,
+                width: ped.width || 0.8,
+                length: ped.length || 0.8,
                 minZ: ped.coords.z - 1,
                 maxZ: ped.coords.z + 2,
+                debugPoly: ped.debugPoly,
             },
             ped.target.options
         );

@@ -1,3 +1,5 @@
+import { Feature, isFeatureEnabled } from '@public/shared/features';
+
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -51,11 +53,21 @@ export class FoodCraftProvider {
             this.targetFactory.createForBoxZone(zone.name, zone, sausageTargets);
         });
 
-        const cheeseTargets: TargetOptions[] = FoodConfig.processes.cheeseProcesses.map(craftProcess => {
+        let cheeseTargets: TargetOptions[] = FoodConfig.processes.cheeseProcesses.map(craftProcess => {
             const method: (craft: FoodCraftProcess, icon: string, duration: number) => TargetOptions =
                 this.craftProcessToTarget.bind(this);
             return method(craftProcess, 'c:/food/craft_cheese.png', FoodConfig.duration.craftCheese);
         });
+
+        if (isFeatureEnabled(Feature.Easter)) {
+            const easterTargets: TargetOptions[] = FoodConfig.processes.easterProcesses.map(craftProcess => {
+                const method: (craft: FoodCraftProcess, icon: string, duration: number) => TargetOptions =
+                    this.craftProcessToTarget.bind(this);
+                return method(craftProcess, 'c:/food/craft_easter.png', FoodConfig.duration.craftEaster);
+            });
+
+            cheeseTargets = [...easterTargets, ...cheeseTargets];
+        }
 
         FoodConfig.zones.cheeseCraftZones.forEach(zone => {
             this.targetFactory.createForBoxZone(zone.name, zone, cheeseTargets);

@@ -38,6 +38,7 @@ export enum ServerEvent {
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
+    FOOD_EASTER_HARVEST = 'soz-core:server:job:food:easter-harvest',
 
     FFS_CRAFT = 'soz-core:server:job:ffs:craft',
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
@@ -97,6 +98,7 @@ export enum ServerEvent {
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
+    SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',
 
     AFK_KICK = 'soz-core:server:afk:kick',
 
@@ -349,6 +351,8 @@ export enum ClientEvent {
     HUB_REMOVE_STATUS = 'soz-core:client:hub:remove-status',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
+
+    EASTER_EAR_TOGGLE = 'soz-core:server:easter:toogle-ear',
 }
 
 export enum GameEvent {
@@ -497,4 +501,6 @@ export enum NuiEvent {
 
     WardrobeElementSelect = 'soz-core:client:wardrobe:element-select',
     WardrobeCustomSave = 'soz-core:client:wardrobe:custom-save',
+
+    EasterShopBuy = 'soz-core:client:eatershop:buy',
 }
