@@ -53,7 +53,6 @@ export class AdminMenuInteractiveProvider {
                 );
 
                 const state = this.vehicleService.getVehicleState(vehicle);
-                
 
                 if (dist < 50) {
                     let text = ' | OwnerNet: ';
