@@ -159,10 +159,3 @@ end)
 RegisterNetEvent("inventory:client:updateTargetStoragesState", function(targetInventory)
     SendNUIMessage({action = "updateInventory", targetInventory = targetInventory})
 end)
-
-CreateThread(function()
-    RequestStreamedTextureDict("soz-items", false)
-    while not HasStreamedTextureDictLoaded("soz-items") do
-        Wait(100)
-    end
-end)
