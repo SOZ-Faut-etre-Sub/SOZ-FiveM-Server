@@ -214,6 +214,40 @@ exports("GetUpwMetrics", function()
     return metrics
 end)
 
+exports("GetMetrics", function()
+    if Pm == {} or Pm == nil then
+        return {}
+    end
+
+    local metrics = {
+        pollution_level = Pm:GetPollutionLevel(),
+        pollution_percent = Pm:GetPollutionPercent(),
+        blackout_level = GetBlackoutLevel(),
+        blackout_percent = GetBlackoutPercent(),
+        facilities = {}
+    }
+
+    -- Facilities
+    for type_, data in pairs(facilities) do
+        for identifier, facility in pairs(data.arr) do
+            local metric = {
+                ["identifier"] = identifier,
+                value = facility.capacity,
+                type = type_
+            }
+
+            if type_ == "terminal" then
+                metric.scope = facility.scope
+                metric.job = facility.job or nil
+            end
+
+            table.insert(metrics.facilities, metric)
+        end
+    end
+
+    return metrics
+end)
+
 exports("GetUpwFacilities", function()
     return facilities
 end)
