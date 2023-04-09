@@ -92,6 +92,8 @@ export enum RpcServerEvent {
 export enum RpcClientEvent {
     VEHICLE_GET_TYPE = 'soz-core:rpc:client:vehicle:get-type',
     VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:spawn',
+    GET_LAST_VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:get-last-spawn',
+    DELETE_LAST_VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:delete-last-spawn',
     VEHICLE_SPAWN_FROM_SERVER = 'soz-core:rpc:client:vehicle:spawn-from-server',
     VEHICLE_DELETE = 'soz-core:rpc:client:vehicle:delete',
 }
