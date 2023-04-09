@@ -16,7 +16,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory } from '../target/target.factory';
 
-const coords = [2276.43, 4825.77, 39.68, 36.93] as Vector4;
+const coords = [-2032.2, 1974.44, 187.88, 292.23] as Vector4;
 
 @Provider()
 export class EasterShopProvider {
@@ -106,7 +106,7 @@ export class EasterShopProvider {
     };
 
     @OnEvent(ClientEvent.EASTER_EAR_TOGGLE)
-    public onToggleEar() {
+    public async onToggleEar() {
         const player = this.playerService.getPlayer();
         if (this.isWearingEar) {
             this.playerService.setTempClothes(null);
