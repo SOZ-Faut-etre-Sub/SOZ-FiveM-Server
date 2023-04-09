@@ -151,20 +151,22 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                         title="Blindage"
                         onChange={createOnChange('armor')}
                     />
-                    <MenuItemSelect
-                        value={!!configuration.modification.turbo}
-                        showAllOptions
-                        onChange={(index, value) => createOnChange('turbo')(value)}
-                        title={
-                            <div className="flex items-center w-[9.3rem]">
-                                <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.png" />
-                                <h3 className="ml-2 uppercase">Turbo</h3>
-                            </div>
-                        }
-                    >
-                        <MenuItemSelectOptionBox value={false}>Désactivé</MenuItemSelectOptionBox>
-                        <MenuItemSelectOptionBox value={true}>Activé</MenuItemSelectOptionBox>
-                    </MenuItemSelect>
+                    {data.options.modification.turbo && (
+                        <MenuItemSelect
+                            value={!!configuration.modification.turbo}
+                            showAllOptions
+                            onChange={(index, value) => createOnChange('turbo')(value)}
+                            title={
+                                <div className="flex items-center w-[9.3rem]">
+                                    <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.png" />
+                                    <h3 className="ml-2 uppercase">Turbo</h3>
+                                </div>
+                            }
+                        >
+                            <MenuItemSelectOptionBox value={false}>Désactivé</MenuItemSelectOptionBox>
+                            <MenuItemSelectOptionBox value={true}>Activé</MenuItemSelectOptionBox>
+                        </MenuItemSelect>
+                    )}
                     <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer les changements</span>
