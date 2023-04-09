@@ -9,7 +9,7 @@ import {
     VehicleUpgradeOptions,
     VehicleWheelType,
 } from '../../shared/vehicle/modification';
-import { VehicleClass } from '../../shared/vehicle/vehicle';
+import { isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
 import { ResourceLoader } from '../resources/resource.loader';
 
 const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
@@ -545,6 +545,9 @@ export class VehicleModificationService {
                     };
                 }
             }
+        }
+        if (isVehicleModelElectric(GetEntityModel(vehicle))) {
+            options.modification.turbo = null;
         }
 
         if (GetVehicleClass(vehicle) === VehicleClass.Motorcycles) {
