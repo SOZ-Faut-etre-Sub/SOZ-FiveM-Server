@@ -38,16 +38,16 @@ end)
 function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
     local tempAmount = amount
 
-    if amount >= 1 and keyModifier == 'CTRL' then
+    if amount >= 1 and keyModifier == "CTRL" then
         tempAmount = 1
         return tempAmount
-    elseif amount > 1 and keyModifier == 'ALT' then
+    elseif amount > 1 and keyModifier == "ALT" then
         SetNuiFocus(false, false)
-        tempAmount = exports["soz-hud"]:Input("Quantité", 5, math.floor(amount/2))
+        tempAmount = exports["soz-hud"]:Input("Quantité", 5, math.floor(amount / 2))
         SetNuiFocus(true, true)
         return tempAmount
 
-    elseif amount >= 1  then
+    elseif amount >= 1 then
         if not maxAmount then
             return amount
         end
@@ -60,7 +60,7 @@ function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
         end
 
         if maxAmount < amount then
-            exports["soz-hud"]:DrawNotification(maxAmount .." objets déplacés", "info")
+            exports["soz-hud"]:DrawNotification(maxAmount .. " objets déplacés", "info")
         end
 
         return tempAmount
