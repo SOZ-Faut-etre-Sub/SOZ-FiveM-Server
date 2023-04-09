@@ -471,13 +471,28 @@ export class VehicleConditionProvider {
             this.currentVehicleStatus.bodyHealth = lastVehicleStatus.bodyHealth - bodyHealthDiff;
             SetVehicleBodyHealth(vehicle, this.currentVehicleStatus.bodyHealth);
         }
-        if (tankHealthDiff > 0.1) {
-            if (isVehicleModelElectric(GetEntityModel(vehicle))) {
-                this.currentVehicleStatus.tankHealth = 1000;
-                SetVehiclePetrolTankHealth(vehicle, 1000); // Cancel tank leaking for electric vehicles
-            } else {
+        if (isVehicleModelElectric(GetEntityModel(vehicle))) {
+            this.currentVehicleStatus.tankHealth = 1000;
+            SetVehiclePetrolTankHealth(vehicle, 1000);
+        } else {
+            if (tankHealthDiff > 0.1) {
                 this.currentVehicleStatus.tankHealth = Math.max(lastVehicleStatus.tankHealth - tankHealthDiff, 600);
                 SetVehiclePetrolTankHealth(vehicle, this.currentVehicleStatus.tankHealth);
+            }
+        }
+    }
+
+    @Tick(500)
+    public async cancelElectricTankDamage() {
+        const vehicles: number[] = GetGamePool('CVehicle');
+        for (const vehicle of vehicles) {
+            if (GetPlayerServerId(NetworkGetEntityOwner(vehicle)) !== GetPlayerServerId(PlayerId())) {
+                continue;
+            }
+            if (isVehicleModelElectric(GetEntityModel(vehicle))) {
+                SetVehiclePetrolTankHealth(vehicle, 1000);
+                SetVehicleCanLeakOil(vehicle, false);
+                SetVehicleCanLeakPetrol(vehicle, false);
             }
         }
     }
