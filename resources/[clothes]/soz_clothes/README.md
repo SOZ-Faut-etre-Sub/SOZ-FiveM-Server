@@ -43,6 +43,8 @@
 0  stétho    //same as vanilla?
 1  pistol
 2  badge LSPD/BCSO
+3  harnais holster
+4  holster ceinture
 
     bag
 0  LSPD badge pectoraux
@@ -64,6 +66,7 @@
 2  chapeau BCSO
 3  casque pompier                   //same as vanilla?
 4  casque pilote LSPD/BCSO          //logo LSPD manquant
+5  oreille lapin
 
 
 
