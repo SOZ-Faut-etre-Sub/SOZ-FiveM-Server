@@ -215,6 +215,10 @@ export class VehicleLockProvider {
         if (!player.metadata.godmode && !state.open && !state.forced) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
 
+            const vehicleClass = GetVehicleClass(vehicle);
+            if (vehicleClass === VehicleClass.Motorcycles || vehicleClass === VehicleClass.Cycles) {
+                ClearPedTasksImmediately(ped);
+            }
             return;
         }
 
