@@ -189,17 +189,13 @@ exports("GetMetrics", function()
         pollution_percent = Pm:GetPollutionPercent(),
         blackout_level = GetBlackoutLevel(),
         blackout_percent = GetBlackoutPercent(),
-        facilities = {}
+        facilities = {},
     }
 
     -- Facilities
     for type_, data in pairs(facilities) do
         for identifier, facility in pairs(data.arr) do
-            local metric = {
-                ["identifier"] = identifier,
-                value = facility.capacity,
-                type = type_
-            }
+            local metric = {["identifier"] = identifier, value = facility.capacity, type = type_}
 
             if type_ == "terminal" then
                 metric.scope = facility.scope

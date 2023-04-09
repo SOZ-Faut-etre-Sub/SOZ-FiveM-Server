@@ -1,4 +1,4 @@
-import { Counter, Gauge, Histogram } from 'prom-client';
+import { Histogram } from 'prom-client';
 
 import { EventMetadata } from '../decorators/event';
 import { Injectable } from '../decorators/injectable';

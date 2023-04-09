@@ -1,6 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { CheckIcon } from '@heroicons/react/solid';
-import { useIsOverflow } from '@public/nui/hook/overflow';
 import {
     createDescendantContext,
     Descendant,

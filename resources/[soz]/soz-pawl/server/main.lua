@@ -275,10 +275,7 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
 end)
 
 exports("GetMetrics", function()
-    local metrics = {
-        degradation_percent = GetDegradationPercentage(),
-        fields = {},
-    }
+    local metrics = {degradation_percent = GetDegradationPercentage(), fields = {}}
 
     -- Fields
     for identifier, field in pairs(Fields) do
