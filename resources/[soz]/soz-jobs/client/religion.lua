@@ -9,6 +9,15 @@ local PrayersMax = 0
 local PrayersCount = 0
 local PrayersPed = {}
 
+Citizen.CreateThread(function()
+    QBCore.Functions.CreateBlip("infochat", {
+        name = "Eglise InfoChat",
+        coords = vector3(-766.98, -23.17, 41.08),
+        sprite = 739,
+        scale = 1.0,
+    })
+end)
+
 local function ResetPrayersState()
     PrayersMax = 0
     PrayersCount = 0
