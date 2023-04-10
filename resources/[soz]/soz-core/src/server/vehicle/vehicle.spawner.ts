@@ -1,5 +1,5 @@
 import { Logger } from '@core/logger';
-import { emitClientRpc } from '@core/rpc';
+import { emitClientRpc, emitClientRpcConfig } from '@core/rpc';
 import { PlayerVehicle } from '@prisma/client';
 import { DealershipConfig } from '@public/config/dealership';
 import { GarageRepository } from '@public/server/repository/garage.repository';
@@ -353,7 +353,12 @@ export class VehicleSpawner {
     }
 
     private async spawnVehicleFromClient(player: number, vehicle: VehicleSpawn): Promise<[number, number]> {
-        let netId = await emitClientRpc<number | null>(RpcClientEvent.VEHICLE_SPAWN, player, vehicle);
+        let netId = await emitClientRpcConfig<number | null>(
+            RpcClientEvent.VEHICLE_SPAWN,
+            player,
+            { timeout: 10000, retries: 0 },
+            vehicle
+        );
 
         if (!netId) {
             this.logger.error(`failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from client, no network id`);
@@ -377,7 +382,7 @@ export class VehicleSpawner {
 
             if (!netId) {
                 this.logger.error(
-                    `failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from client, no network id`
+                    `failed to spawn vehicle ${vehicle.model} (${vehicle.hash}) from client, no network id, even after retrying`
                 );
 
                 return [0, 0];
