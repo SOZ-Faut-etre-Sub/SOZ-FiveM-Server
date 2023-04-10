@@ -14,8 +14,8 @@ FoodConfig.Collect = {
 }
 
 FoodConfig.Categories = {
-    ["wine"] = {icon = "https://cfx-nui-soz-core/public/images/items/wine.png", label = "Vins"},
-    ["grapejuice"] = {icon = "https://cfx-nui-soz-core/public/images/items/grapejuice.png", label = "Jus"},
+    ["wine"] = {icon = "https://cfx-nui-soz-core/public/images/items/wine.webp", label = "Vins"},
+    ["grapejuice"] = {icon = "https://cfx-nui-soz-core/public/images/items/grapejuice.webp", label = "Jus"},
     ["cheese"] = {icon = "🧀", label = "Fromages"},
     ["sausage"] = {icon = "🐖", label = "Saucissons"},
 }

@@ -139,7 +139,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             path += `_${item.metadata?.tier}`
         }
 
-        return `https://cfx-nui-soz-core/public/images/items/${path}.png`
+        return `https://cfx-nui-soz-core/public/images/items/${path}.webp`
     }, []);
 
     if (!item && !money) {
