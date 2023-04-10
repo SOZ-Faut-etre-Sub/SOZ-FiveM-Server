@@ -35,10 +35,6 @@ export class PlayerService {
         return player.PlayerData;
     }
 
-    public getPlayersSources(): number[] | null {
-        return this.QBCore.getPlayersSources();
-    }
-
     public getPlayerJobAndGrade(source: number): [string, number] | null {
         const player = this.QBCore.getPlayer(source);
 
@@ -58,6 +54,14 @@ export class PlayerService {
 
         if (player) {
             player.Functions.SetMetaData(key, value);
+        }
+    }
+
+    public setPlayerMetaDatas(source: number, datas: Partial<PlayerMetadata>) {
+        const player = this.QBCore.getPlayer(source);
+
+        if (player) {
+            player.Functions.SetMetaDatas(datas);
         }
     }
 
@@ -97,28 +101,14 @@ export class PlayerService {
             return false;
         }
 
-        player.Functions.SetMetaData('disease', disease);
-        player.Functions.SetMetaData('last_disease_at', Date.now());
+        player.Functions.SetMetaDatas({
+            last_disease_at: Date.now(),
+            disease: disease,
+        });
 
         TriggerClientEvent(ClientEvent.LSMC_DISEASE_APPLY_CURRENT_EFFECT, player.PlayerData.source, disease);
 
         return disease;
-    }
-
-    public save(source: number): void {
-        const player = this.QBCore.getPlayer(source);
-
-        if (player) {
-            player.Functions.Save();
-        }
-    }
-
-    public updatePlayerData(source: number): void {
-        const player = this.QBCore.getPlayer(source);
-
-        if (player) {
-            player.Functions.UpdatePlayerData();
-        }
     }
 
     public incrementMetadata<K extends keyof PlayerMetadata>(

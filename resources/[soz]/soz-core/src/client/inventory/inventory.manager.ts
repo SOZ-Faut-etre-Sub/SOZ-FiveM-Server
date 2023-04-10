@@ -1,5 +1,6 @@
+import { ItemService } from '@public/client/item/item.service';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { ItemService } from '../../server/item/item.service';
 import { InventoryItem } from '../../shared/item';
 import { PlayerService } from '../player/player.service';
 
@@ -32,7 +33,7 @@ export class InventoryManager {
                         return true;
                     }
 
-                    if (skipExpiredItem && this.itemService.isItemExpired(item)) {
+                    if (skipExpiredItem && this.itemService.isExpired(item)) {
                         continue;
                     }
 
@@ -48,7 +49,7 @@ export class InventoryManager {
                         return true;
                     }
 
-                    if (skipExpiredItem && this.itemService.isItemExpired(item)) {
+                    if (skipExpiredItem && this.itemService.isExpired(item)) {
                         continue;
                     }
 

@@ -60,7 +60,6 @@ export class DrivingSchoolProvider {
         licenses[licenseType] = licenseData.points || true;
 
         this.playerService.setPlayerMetadata(source, 'licences', licenses);
-        this.playerService.save(source);
 
         this.notifier.notify(source, `Félicitations ! Vous venez d'obtenir votre ${licenseLabel}`, 'success');
     }
@@ -78,8 +77,6 @@ export class DrivingSchoolProvider {
         }
 
         this.playerService.setPlayerMetadata(source, 'vehiclelimit', limit);
-        this.playerService.save(source);
-        this.playerService.updatePlayerData(source);
 
         this.notifier.notify(
             source,

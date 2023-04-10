@@ -321,6 +321,15 @@ function QBCore.Player.CreatePlayer(PlayerData)
         end
     end
 
+    self.Functions.SetMetaDatas = function(metas)
+        for meta, val in pairs(metas) do
+            local meta = meta:lower()
+            self.Functions.SetMetaData(meta, val)
+        end
+
+        self.Functions.UpdatePlayerData(true)
+    end
+
     self.Functions.AddJobReputation = function(amount)
         local amount = tonumber(amount)
         self.PlayerData.metadata['jobrep'][self.PlayerData.job.id] = self.PlayerData.metadata['jobrep'][self.PlayerData.job.id] + amount

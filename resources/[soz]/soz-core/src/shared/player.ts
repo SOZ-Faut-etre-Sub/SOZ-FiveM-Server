@@ -10,9 +10,8 @@ import { Halloween2022 } from './story/halloween2022';
 export type QBCorePlayer = {
     Functions: {
         SetMetaData: (key: string, val: any) => void;
-        Save: () => void;
+        SetMetaDatas: (data: Record<string, any>) => void;
         UpdateMaxWeight: () => void;
-        UpdatePlayerData: () => void;
         AddMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         RemoveMoney: (type: 'money' | 'marked_money', amount: number) => boolean;
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
