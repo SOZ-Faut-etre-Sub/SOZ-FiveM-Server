@@ -147,6 +147,8 @@ export enum ServerEvent {
 
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
+    TAXI_NPC_PAY = 'soz-core:server:taxi:npc-pay',
+
     VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
     VEHICLE_USE_CLEANING_KIT = 'soz-core:server:vehicle:use-cleaning-kit',
     VEHICLE_USE_WHEEL_KIT = 'soz-core:server:vehicle:use-wheel-kit',
@@ -261,6 +263,8 @@ export enum ClientEvent {
     JOBS_FOOD_OPEN_SOCIETY_MENU = 'jobs:client:food:OpenSocietyMenu',
     JOBS_STONK_OPEN_SOCIETY_MENU = 'stonk:client:OpenSocietyMenu',
     JOBS_MDR_OPEN_SOCIETY_MENU = 'soz-jobs:client:mdr:OpenSocietyMenu',
+    JOBS_TAXI_OPEN_SOCIETY_MENU = 'soz-jobs:client:taxi:OpenSocietyMenu',
+
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
     JOB_DUTY_CHANGE = 'QBCore:Client:SetDuty',
@@ -526,4 +530,8 @@ export enum NuiEvent {
     WardrobeCustomSave = 'soz-core:client:wardrobe:custom-save',
 
     EasterShopBuy = 'soz-core:client:eatershop:buy',
+
+    TaxiSetMission = 'soz-core:client:taxi:set-mission',
+    TaxiSetHorodateur = 'soz-core:client:taxi:set-horodateur',
+    TaxiDisplayHorodateur = 'soz-core:client:taxi:display-horodateur',
 }

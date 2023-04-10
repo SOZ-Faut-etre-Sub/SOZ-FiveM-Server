@@ -253,7 +253,7 @@ SozJobCore.Jobs = {
         label = "Carl Jr Services",
         platePrefix = "CARL",
         grades = {},
-        menuCallback = "taxi:client:OpenSocietyMenu",
+        menuCallback = "soz-jobs:client:taxi:OpenSocietyMenu",
         canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},

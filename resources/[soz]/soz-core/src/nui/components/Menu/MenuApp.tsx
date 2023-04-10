@@ -21,6 +21,7 @@ import { BossShopMenu } from '../Shop/BossShopMenu';
 import { EasterShopMenu } from '../Shop/EasterShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
+import { TaxiJobMenu } from '../Taxi/TaxiJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
 import { MenuUpw } from './Job/MenuUpw';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
@@ -164,6 +165,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.MandatoryJobMenu}/*`} element={<MandatoryJobMenu data={menuData} />} />
             <Route path={`/${MenuType.IllegalShop}/*`} element={<MenuIllegalShop data={menuData} />} />
             <Route path={`/${MenuType.EasterShop}/*`} element={<EasterShopMenu data={menuData} />} />
+            <Route path={`/${MenuType.TaxiJobMenu}/*`} element={<TaxiJobMenu data={menuData} />} />
 
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route path={`/${MenuType.JobUpw}/*`} element={<MenuUpw data={menuData} />} />

@@ -20,6 +20,7 @@ import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
 import { RadarApp } from './Police/RadarApp';
 import { ProgressApp } from './Progress/ProgressApp';
 import { StateApp } from './StateApp';
+import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 
 export const App: FunctionComponent = () => {
     const [hide, setHide] = useState(false);
@@ -49,6 +50,7 @@ export const App: FunctionComponent = () => {
                 <BreathAnalyzerApp />
                 <CraftingApp />
                 <HoodApp />
+                <TaxiHorodateurApp />
             </div>
         </Provider>
     );
