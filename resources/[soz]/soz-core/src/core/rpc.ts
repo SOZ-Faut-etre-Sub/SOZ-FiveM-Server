@@ -2,6 +2,11 @@ import { SOZ_CORE_IS_CLIENT, SOZ_CORE_IS_SERVER } from '../globals';
 import { RpcClientEvent, RpcServerEvent } from '../shared/rpc';
 import { uuidv4 } from './utils';
 
+export type RpcConfig = {
+    timeout: number;
+    retries: number;
+};
+
 export const emitRpcTimeout = async <R>(name: RpcServerEvent, timeout: number, ...args: any[]): Promise<R> => {
     let rpcTry = 0;
 
@@ -25,17 +30,17 @@ export const emitRpc = async <R>(name: RpcServerEvent, ...args: any[]): Promise<
     return emitRpcTimeout(name, 3000, ...args);
 };
 
-export const emitClientRpcTimeout = async <R>(
+export const emitClientRpcConfig = async <R>(
     name: RpcClientEvent,
     source: number,
-    timeout: number,
+    config: RpcConfig,
     ...args: any[]
 ): Promise<R> => {
     let rpcTry = 0;
 
-    while (rpcTry < 3) {
+    while (rpcTry <= config.retries) {
         try {
-            return await doEmitClientRpc<R>(name, source, timeout, ...args);
+            return await doEmitClientRpc<R>(name, source, config.timeout, ...args);
         } catch (e) {
             console.error(`RPC ${name} failed`, e);
             rpcTry++;
@@ -49,7 +54,15 @@ export const emitClientRpcTimeout = async <R>(
     throw new Error(`RPC ${name} failed`);
 };
 export const emitClientRpc = async <R>(name: RpcClientEvent, source: number, ...args: any[]): Promise<R> => {
-    return emitClientRpcTimeout(name, source, 3000, ...args);
+    return emitClientRpcConfig(
+        name,
+        source,
+        {
+            timeout: 3000,
+            retries: 2,
+        },
+        ...args
+    );
 };
 
 const doEmitRpc = async <R>(name: RpcServerEvent, timeout: number, ...args: any[]): Promise<R> => {
