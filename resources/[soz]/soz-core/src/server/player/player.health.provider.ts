@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { PlayerData, PlayerServerStateExercise } from '../../shared/player';
+import { PlayerData, PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Hud } from '../hud';
@@ -77,10 +77,11 @@ export class PlayerHealthProvider {
             hungerDiff -= 4.0;
         }
 
-        this.playerService.incrementMetadata(source, 'hunger', hungerDiff, 0, 100);
-        this.playerService.incrementMetadata(source, 'thirst', thirstDiff, 0, 100);
-        this.playerService.incrementMetadata(source, 'alcohol', ALCOHOL_RATE, 0, 200);
-        this.playerService.incrementMetadata(source, 'drug', DRUG_RATE, 0, 200);
+        const datas: Partial<PlayerMetadata> = {};
+        datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', hungerDiff, 0, 100);
+        datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', thirstDiff, 0, 100);
+        datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', ALCOHOL_RATE, 0, 200);
+        datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', DRUG_RATE, 0, 200);
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
             const now = new Date().getTime();
@@ -93,8 +94,14 @@ export class PlayerHealthProvider {
                 playerState.exercise.completed < 4
             ) {
                 playerState.lastStrengthUpdate = new Date();
-                this.playerService.incrementMetadata(source, 'strength', STRENGTH_RATE, STRENGTH_MIN, STRENGTH_MAX);
-                this.playerService.updatePlayerMaxWeight(source);
+
+                datas.strength = this.playerService.getIncrementedMetadata(
+                    player,
+                    'strength',
+                    STRENGTH_RATE,
+                    STRENGTH_MIN,
+                    STRENGTH_MAX
+                );
 
                 playerState.lostStrength += 1;
 
@@ -105,8 +112,8 @@ export class PlayerHealthProvider {
 
             if (staminaTimeDiff > 60 * 60 * 1000 && playerState.lostStamina < 3 && playerState.runTime < 60 * 8) {
                 playerState.lastMaxStaminaUpdate = new Date();
-                this.playerService.incrementMetadata(
-                    source,
+                datas.max_stamina = this.playerService.getIncrementedMetadata(
+                    player,
                     'max_stamina',
                     MAX_STAMINA_RATE,
                     MAX_STAMINA_MIN,
@@ -122,8 +129,9 @@ export class PlayerHealthProvider {
 
             if (stressTimeDiff > 30 * 60 * 1000) {
                 playerState.lastStressLevelUpdate = new Date();
-                this.playerService.incrementMetadata(
-                    source,
+
+                datas.stress_level = this.playerService.getIncrementedMetadata(
+                    player,
                     'stress_level',
                     this.yogaAndNaturalMultiplier(source) * STRESS_RATE,
                     STRESS_MIN,
@@ -134,6 +142,7 @@ export class PlayerHealthProvider {
             }
         }
 
+        this.playerService.setPlayerMetaDatas(source, datas);
         this.hud.updateNeeds(source);
     }
 
