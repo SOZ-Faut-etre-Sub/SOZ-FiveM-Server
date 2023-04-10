@@ -17,6 +17,23 @@ export class PlayerStateService {
         return this.stateByCitizenId[citizenId];
     }
 
+    public getIdentifier(source: string): string {
+        if (GetConvar('soz_disable_steam_credential', 'false') === 'true') {
+            return GetPlayerIdentifierByType(source, 'license');
+        }
+
+        const steamIdentifier = GetPlayerIdentifierByType(source, 'steam');
+
+        if (!steamIdentifier) {
+            return null;
+        }
+
+        const steamHex = steamIdentifier.replace('steam:', '');
+        const steamId = parseInt(steamHex, 16);
+
+        return String(steamId);
+    }
+
     public get(source: number): PlayerServerState {
         const player = this.playerService.getPlayer(source);
 
