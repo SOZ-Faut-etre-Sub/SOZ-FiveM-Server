@@ -1,4 +1,3 @@
-import { BankService } from '../../client/bank/bank.service';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -18,9 +17,6 @@ export class BossShopProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
-
-    @Inject(BankService)
-    private bankService: BankService;
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;

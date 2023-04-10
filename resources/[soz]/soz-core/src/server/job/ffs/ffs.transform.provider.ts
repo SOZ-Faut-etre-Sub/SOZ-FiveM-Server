@@ -1,4 +1,3 @@
-import { TargetFactory } from '../../../client/target/target.factory';
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -13,9 +12,6 @@ import { ProgressService } from '../../player/progress.service';
 export class FightForStyleTransformProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
-
-    @Inject(TargetFactory)
-    private targetFactory: TargetFactory;
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;

@@ -14,4 +14,16 @@ export class BankService {
             });
         });
     }
+
+    public transferCashMoney(source: string, target: number, amount: number): Promise<Result<boolean, string>> {
+        return new Promise(resolve => {
+            exports['soz-bank'].TransferCashMoney(source, target, amount, (success, reason) => {
+                if (success) {
+                    resolve(Ok(true));
+                } else {
+                    resolve(Err(reason));
+                }
+            });
+        });
+    }
 }
