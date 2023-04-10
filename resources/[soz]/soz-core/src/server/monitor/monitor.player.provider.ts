@@ -10,6 +10,8 @@ export class MonitorPlayerProvider {
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
 
+    private lastPlayers: Record<string, Record<string, any>> = {};
+
     private playerCount: Gauge<string> = new Gauge({
         name: 'soz_player_count',
         help: 'Number of players connected',
@@ -54,6 +56,7 @@ export class MonitorPlayerProvider {
     @Tick(5000, 'monitor:player:metrics')
     public async onTick() {
         const players = this.serverStateService.getPlayers();
+        const currentPlayerIds: Record<string, Record<string, any>> = {};
 
         this.playerCount.set(players.length);
 
@@ -65,6 +68,20 @@ export class MonitorPlayerProvider {
                 job: player.job.id,
                 grade: player.job.grade,
             };
+            const previousLabels = this.lastPlayers[player.citizenid];
+
+            // If one label changes, we need to remove the old metric and create a new one
+            for (const key of Object.keys(labels)) {
+                if (previousLabels && previousLabels[key] !== labels[key]) {
+                    this.playerConnected.remove(previousLabels);
+                    this.playerHealth.remove(previousLabels);
+                    this.playerArmor.remove(previousLabels);
+                    this.playerHunger.remove(previousLabels);
+                    this.playerThirst.remove(previousLabels);
+                    this.playerOnDuty.remove(previousLabels);
+                    break;
+                }
+            }
 
             this.playerConnected.set(labels, 1);
             this.playerHealth.set(labels, player.metadata.health);
@@ -72,6 +89,20 @@ export class MonitorPlayerProvider {
             this.playerHunger.set(labels, player.metadata.hunger);
             this.playerThirst.set(labels, player.metadata.thirst);
             this.playerOnDuty.set(labels, player.job.onduty ? 1 : 0);
+
+            delete this.lastPlayers[player.citizenid];
+            currentPlayerIds[player.citizenid] = labels;
         }
+
+        for (const labels of Object.values(this.lastPlayers)) {
+            this.playerConnected.remove(labels);
+            this.playerHealth.remove(labels);
+            this.playerArmor.remove(labels);
+            this.playerHunger.remove(labels);
+            this.playerThirst.remove(labels);
+            this.playerOnDuty.remove(labels);
+        }
+
+        this.lastPlayers = currentPlayerIds;
     }
 }
