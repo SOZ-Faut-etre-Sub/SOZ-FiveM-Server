@@ -1,8 +1,9 @@
-import { BankService } from '../../../client/bank/bank.service';
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
+import { isOk } from '../../../shared/result';
+import { BankService } from '../../bank/bank.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 
@@ -46,8 +47,8 @@ export class FoodMealsProvider {
             this.notifier.notify(source, 'Une commande est déjà en cours.');
             return;
         }
-        const [transferred] = await this.bankService.transferBankMoney('food', 'farm_food', this.ORDER_PRICE);
-        if (transferred) {
+        const transferred = await this.bankService.transferBankMoney('food', 'farm_food', this.ORDER_PRICE);
+        if (isOk(transferred)) {
             const date = new Date();
             date.setTime(date.getTime() + 60 * 60 * 1000); // One hour later...
             this.orderReadyDate = date;

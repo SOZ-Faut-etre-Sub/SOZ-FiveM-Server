@@ -3,7 +3,6 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { VehicleStateService } from '../../server/vehicle/vehicle.state.service';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { JobPermission } from '../../shared/job';
@@ -36,9 +35,6 @@ export class VehicleDealershipProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
-
-    @Inject(VehicleStateService)
-    private vehicleStateService: VehicleStateService;
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;

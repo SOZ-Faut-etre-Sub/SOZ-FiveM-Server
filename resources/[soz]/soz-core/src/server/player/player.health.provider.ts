@@ -135,7 +135,6 @@ export class PlayerHealthProvider {
         }
 
         this.hud.updateNeeds(source);
-        this.playerService.save(source);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRENGTH)

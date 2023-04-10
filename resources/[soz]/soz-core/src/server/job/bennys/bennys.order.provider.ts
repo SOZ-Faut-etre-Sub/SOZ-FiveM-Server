@@ -1,4 +1,3 @@
-import { BankService } from '../../../client/bank/bank.service';
 import { Exportable } from '../../../core/decorators/exports';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -6,8 +5,10 @@ import { Rpc } from '../../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { uuidv4 } from '../../../core/utils';
 import { BennysConfig, BennysOrder } from '../../../shared/job/bennys';
+import { isErr } from '../../../shared/result';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { getDefaultVehicleCondition } from '../../../shared/vehicle/vehicle';
+import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -73,9 +74,9 @@ export class BennysOrderProvider {
             return;
         }
         const vehiclePrice = Math.ceil(vehicle.price * 0.01);
-        const [transferred] = await this.bankService.transferBankMoney('bennys', 'farm_bennys', vehiclePrice);
+        const transferred = await this.bankService.transferBankMoney('bennys', 'farm_bennys', vehiclePrice);
 
-        if (!transferred) {
+        if (isErr(transferred)) {
             this.notifier.notify(
                 source,
                 `Il faut ~r~${vehiclePrice.toLocaleString()}$~s~ sur le compte de l'entreprise.`
