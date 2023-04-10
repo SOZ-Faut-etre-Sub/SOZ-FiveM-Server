@@ -6,6 +6,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Logger } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
+import { joaat } from '../../shared/joaat';
 import { JobPermission, JobType } from '../../shared/job';
 import { Monitor } from '../../shared/monitor';
 import { PlayerData } from '../../shared/player';
@@ -172,6 +173,42 @@ export class VehicleGarageProvider {
                     parkingtime: Math.round(Date.now() / 1000),
                 },
             });
+        }
+
+        const playerVehicles = await this.prismaService.playerVehicle.findMany();
+
+        for (const v of playerVehicles) {
+            const hash = joaat(v.vehicle.toLowerCase());
+            const currentHash = parseInt(v.hash, 10);
+
+            if (hash !== currentHash) {
+                await this.prismaService.playerVehicle.update({
+                    where: {
+                        id: v.id,
+                    },
+                    data: {
+                        hash: hash.toString(),
+                    },
+                });
+            }
+        }
+
+        const vehicleData = await this.prismaService.vehicle.findMany();
+
+        for (const v of vehicleData) {
+            const hash = joaat(v.model.toLowerCase());
+            const currentHash = v.hash;
+
+            if (hash !== currentHash) {
+                await this.prismaService.vehicle.update({
+                    where: {
+                        model: v.model,
+                    },
+                    data: {
+                        hash: hash,
+                    },
+                });
+            }
         }
     }
 
