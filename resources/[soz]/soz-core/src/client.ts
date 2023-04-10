@@ -22,6 +22,7 @@ import { MandatoryModule } from './client/job/mdr/mdr.module';
 import { OilModule } from './client/job/oil/oil.module';
 import { PoliceModule } from './client/job/police/police.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
+import { TaxiModule } from './client/job/taxi/taxi.module';
 import { UpwModule } from './client/job/upw/upw.module';
 import { NuiModule } from './client/nui/nui.module';
 import { ObjectModule } from './client/object/object.module';
@@ -81,6 +82,7 @@ async function bootstrap() {
         MandatoryModule,
         PoliceModule,
         UpwModule,
+        TaxiModule,
         ...PrivateModules
     );
 

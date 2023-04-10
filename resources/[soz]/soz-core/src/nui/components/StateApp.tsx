@@ -21,5 +21,9 @@ export const StateApp: FunctionComponent = () => {
         dispatch.item.set(items);
     });
 
+    useNuiEvent('taxi', 'setStatus', status => {
+        dispatch.taxi.update(status);
+    });
+
     return null;
 };
