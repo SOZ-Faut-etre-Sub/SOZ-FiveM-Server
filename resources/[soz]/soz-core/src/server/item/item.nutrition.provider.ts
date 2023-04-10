@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { CocktailItem, DrinkItem, FoodItem, InventoryItem, LiquorItem } from '../../shared/item';
+import { PlayerMetadata } from '../../shared/player';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
@@ -122,9 +123,10 @@ export class ItemNutritionProvider {
             alcohol = 0 - item.nutrition.thirst * progress * 0.2;
         }
 
-        this.playerService.incrementMetadata(source, 'hunger', hunger, 0, 100);
-        this.playerService.incrementMetadata(source, 'thirst', thirst, 0, 100);
-        this.playerService.incrementMetadata(source, 'alcohol', alcohol, 0, 100);
+        const datas: Partial<PlayerMetadata> = {};
+        datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', hunger, 0, 100);
+        datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', thirst, 0, 100);
+        datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', alcohol, 0, 100);
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
             const fiber = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.fiber * progress;
@@ -132,30 +134,32 @@ export class ItemNutritionProvider {
             const protein = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.protein * progress;
             const lipid = dyspepsia || intoxicated ? DYSPEPSIA_NUTRITION_MALUS : item.nutrition.lipid * progress;
 
-            this.playerService.incrementMetadata(source, 'fiber', fiber, 0, 25);
-            this.playerService.incrementMetadata(source, 'sugar', sugar, 0, 25);
-            this.playerService.incrementMetadata(source, 'protein', protein, 0, 25);
-            this.playerService.incrementMetadata(source, 'lipid', lipid, 0, 25);
-            const newHealthLevel = this.playerService.incrementMetadata(
-                source,
+            datas.fiber = this.playerService.getIncrementedMetadata(player, 'fiber', fiber, 0, 25);
+            datas.sugar = this.playerService.getIncrementedMetadata(player, 'sugar', sugar, 0, 25);
+            datas.protein = this.playerService.getIncrementedMetadata(player, 'protein', protein, 0, 25);
+            datas.lipid = this.playerService.getIncrementedMetadata(player, 'lipid', lipid, 0, 25);
+            datas.health_level = this.playerService.getIncrementedMetadata(
+                player,
                 'health_level',
                 fiber + sugar + protein + lipid,
                 0,
                 100
             );
 
-            if (newHealthLevel !== null) {
+            if (datas.health_level !== null) {
                 let maxHealth = 200;
 
-                if (newHealthLevel < 20) {
+                if (datas.health_level < 20) {
                     maxHealth = 160;
-                } else if (newHealthLevel < 40) {
+                } else if (datas.health_level < 40) {
                     maxHealth = 180;
                 }
 
-                this.playerService.setPlayerMetadata(source, 'max_health', maxHealth);
+                datas.max_health = maxHealth;
             }
         }
+
+        this.playerService.setPlayerMetaDatas(source, datas);
 
         if (intoxicated) {
             this.playerService.setPlayerDisease(source, 'intoxication');

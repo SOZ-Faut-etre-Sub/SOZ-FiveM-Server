@@ -62,6 +62,10 @@ export class PlayerService {
 
         if (player) {
             player.Functions.SetMetaDatas(datas);
+
+            if (datas.strength) {
+                player.Functions.UpdateMaxWeight();
+            }
         }
     }
 
@@ -111,6 +115,27 @@ export class PlayerService {
         return disease;
     }
 
+    public getIncrementedMetadata<K extends keyof PlayerMetadata>(
+        player: PlayerData,
+        key: K,
+        value: number,
+        min: number,
+        max?: number
+    ): number {
+        const currentValue = player.metadata[key] as number;
+        let newValue = currentValue + value;
+
+        if (newValue < min) {
+            newValue = min;
+        }
+
+        if (max && newValue > max) {
+            newValue = max;
+        }
+
+        return newValue;
+    }
+
     public incrementMetadata<K extends keyof PlayerMetadata>(
         source: number,
         key: K,
@@ -121,16 +146,7 @@ export class PlayerService {
         const player = this.QBCore.getPlayer(source);
 
         if (player) {
-            const currentValue = player.PlayerData.metadata[key] as number;
-            let newValue = currentValue + value;
-
-            if (newValue < min) {
-                newValue = min;
-            }
-
-            if (max && newValue > max) {
-                newValue = max;
-            }
+            const newValue = this.getIncrementedMetadata(player.PlayerData, key, value, min, max);
 
             player.Functions.SetMetaData(key, newValue);
 
