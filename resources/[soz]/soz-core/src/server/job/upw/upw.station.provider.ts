@@ -113,33 +113,11 @@ export class UpwStationProvider {
             return;
         }
         if (stationToRefill.stock > stationToRefill.max_stock - 1) {
-            this.notifier.notify(source, 'Vous avez ~g~terminé~s~ la recharge de la station', 'info');
+            this.notifier.notify(source, 'La station est pleine !', 'success');
             return;
         }
-        if (!this.inventoryManager.removeItemFromInventory(source, cell)) {
-            this.notifier.notify(source, "Vous n'avez plus de cellule de ce type.");
-            return;
-        }
-        const { completed } = await this.progressService.progress(
-            source,
-            'refill_station',
-            'Vous rechargez la station...',
-            10000,
-            {
-                dictionary: 'anim@mp_radio@garage@low',
-                name: 'action_a',
-                options: {
-                    repeat: true,
-                },
-            },
-            {
-                disableMovement: true,
-                disableCarMovement: true,
-                disableMouse: false,
-                disableCombat: true,
-            }
-        );
-        if (!completed) {
+        if (!this.inventoryManager.removeItemFromInventory(source, cell, 1)) {
+            this.notifier.notify(source, "Une erreur s'est produite lors de la recharge.", 'error');
             return;
         }
         const newStock = Math.min(stationToRefill.stock + UPW_CHARGER_REFILL_VALUES[cell], stationToRefill.max_stock);
@@ -153,8 +131,7 @@ export class UpwStationProvider {
                 },
             },
         });
-        this.notifier.notify(source, `Charge... ~b~${newStock}/${stationToRefill.max_stock}kWh`);
-        this.onRefillStation(source, station, cell);
+        this.notifier.notify(source, `Charge... ~b~${newStock}/${stationToRefill.max_stock} kWh`);
     }
 
     @OnEvent(ServerEvent.UPW_SET_CHARGER_PRICE)
@@ -195,7 +172,7 @@ export class UpwStationProvider {
         }
 
         if (!chargerToCreate) {
-            this.notifier.notify(source, 'Cet endroit ne semple pas adapté pour y mettre une borne.', 'error');
+            this.notifier.notify(source, 'Cet endroit ne semble pas adapté pour y mettre une borne.', 'error');
             return;
         }
 
