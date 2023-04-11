@@ -1,4 +1,4 @@
-export const getRandomKeyWeighted = <T extends keyof any>(values: Record<T, number>): T => {
+export const getRandomKeyWeighted = <T extends keyof any>(values: Partial<Record<T, number>>, defaultValue?: T): T => {
     const totalWeight = Object.values(values).reduce((acc: number, value: number) => acc + value, 0) as number;
     const random = Math.random() * totalWeight;
     let currentWeight = 0;
@@ -11,7 +11,7 @@ export const getRandomKeyWeighted = <T extends keyof any>(values: Record<T, numb
         }
     }
 
-    return Object.keys(values)[0] as T;
+    return defaultValue !== null ? defaultValue : (Object.keys(values)[0] as T);
 };
 
 export const getRandomInt = (min: number, max: number) => {

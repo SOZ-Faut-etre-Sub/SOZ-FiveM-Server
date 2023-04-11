@@ -7,6 +7,7 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
+import { getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, Time, Weather } from '../../shared/weather';
 import { Pollution } from '../pollution';
 import { Polluted, SpringAutumn } from './forecast';
@@ -167,26 +168,6 @@ export class WeatherProvider {
             transitions = {};
         }
 
-        if (Object.keys(transitions).length === 0) {
-            return 'OVERCAST';
-        }
-
-        let totalWeight = 0;
-
-        for (const weight of Object.values(transitions)) {
-            totalWeight += weight;
-        }
-
-        let random = Math.round(Math.random() * totalWeight);
-
-        for (const [weather, weight] of Object.entries(transitions)) {
-            if (random < weight) {
-                return weather as Weather;
-            }
-
-            random -= weight;
-        }
-
-        return 'OVERCAST';
+        return getRandomKeyWeighted<Weather>(transitions, 'OVERCAST');
     }
 }
