@@ -62,6 +62,7 @@ export class JobProvider {
                     permissions: JSON.parse(grade.permissions),
                     weight: grade.weight,
                 });
+                job.id = grade.jobId;
             }
         }
 

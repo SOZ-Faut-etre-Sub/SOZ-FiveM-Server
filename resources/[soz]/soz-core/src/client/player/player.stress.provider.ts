@@ -135,7 +135,13 @@ export class PlayerStressProvider {
 
     @On('CEventShockingGunshotFired', false)
     public onCEventShockingGunshotFired(entities, eventEntity): void {
-        this.onStressfulGameEvent(StressLooseType.ShootingNearby, entities, eventEntity, 40.0, false);
+        const player = PlayerPedId();
+        const coords = GetEntityCoords(player);
+        const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+
+        if ('ARMYB' != zoneID) {
+            this.onStressfulGameEvent(StressLooseType.ShootingNearby, entities, eventEntity, 40.0, false);
+        }
     }
 
     @On('CEventShockingInjuredPed', false)

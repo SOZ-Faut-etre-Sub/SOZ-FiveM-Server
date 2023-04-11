@@ -179,22 +179,27 @@ export class WeaponProvider {
             Math.random() < 0.6 &&
             Date.now() - this.lastPoliceCall > 120000
         ) {
-            this.lastPoliceCall = Date.now();
             const coords = GetEntityCoords(player);
             const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
             let name = GetStreetNameFromHashKey(street);
             if (street2) {
                 name += ' et ' + GetStreetNameFromHashKey(street2);
             }
-            const zone = GetLabelText(GetNameOfZone(coords[0], coords[1], coords[2]));
 
-            TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-                anonymous: true,
-                number: '555-POLICE',
-                message: `${zone}: ${getRandomItem(GunShotMessage).replace('${0}', name)}`,
-                position: true,
-                overrideIdentifier: 'System',
-            });
+            const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+
+            if ('ARMYB' != zoneID) {
+                const zone = GetLabelText(zoneID);
+                this.lastPoliceCall = Date.now();
+
+                TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+                    anonymous: true,
+                    number: '555-POLICE',
+                    message: `${zone}: ${getRandomItem(GunShotMessage).replace('${0}', name)}`,
+                    position: true,
+                    overrideIdentifier: 'System',
+                });
+            }
         }
         await this.weapon.recoil();
     }

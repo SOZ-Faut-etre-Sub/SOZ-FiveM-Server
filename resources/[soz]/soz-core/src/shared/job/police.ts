@@ -230,6 +230,16 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {},
             },
+            ['Tenue Sportive']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 168, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 2, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 454, Texture: 1, Palette: 0 },
+                },
+                Props: {},
+            },
         },
         [GetHashKey('mp_f_freemode_01')]: {
             [DUTY_OUTFIT_NAME]: {
@@ -404,6 +414,16 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                     [Component.Undershirt]: { Drawable: 160, Texture: 0, Palette: 0 },
+                },
+                Props: {},
+            },
+            ['Tenue Sportive']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 179, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 487, Texture: 1, Palette: 0 },
                 },
                 Props: {},
             },
@@ -582,6 +602,16 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {},
             },
+            ['Tenue Sportive']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 168, Texture: 1, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 2, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 454, Texture: 0, Palette: 0 },
+                },
+                Props: {},
+            },
         },
         [GetHashKey('mp_f_freemode_01')]: {
             [DUTY_OUTFIT_NAME]: {
@@ -752,6 +782,16 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                     [Component.Undershirt]: { Drawable: 160, Texture: 0, Palette: 0 },
+                },
+                Props: {},
+            },
+            ['Tenue Sportive']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 179, Texture: 1, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 487, Texture: 0, Palette: 0 },
                 },
                 Props: {},
             },

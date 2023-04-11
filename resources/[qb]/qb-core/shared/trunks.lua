@@ -101,4 +101,7 @@ QBShared.Trunks = {
 
     -- FFS
     [GetHashKey('rumpo4')] = { slot = 10, weight = 200000 },
+    
+    -- Army
+    [GetHashKey('barracks')] = { slot = 50, weight = 1000000 },
 }
