@@ -30,11 +30,7 @@ export const setService = (name: string, serviceIdentifier: any): void => {
         container.unbind(name);
     }
 
-    const service = container.get(serviceIdentifier);
-
-    console.log(`[soz-core] setServiceee: ${name} = ${serviceIdentifier}`);
-
-    container.bind(name).toConstantValue(service);
+    container.bind(name).toConstantValue(container.get(serviceIdentifier));
 };
 
 export const Container: ContainerInversify = getContainer();
