@@ -1,3 +1,5 @@
+import { Histogram } from 'prom-client';
+
 import { RouteConfig, RouteMetadata, RouteMetadataKey } from '../decorators/http';
 import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
@@ -16,6 +18,12 @@ export class RouteLoader {
 
     @Inject(Logger)
     private logger: Logger;
+
+    private httpDurationHistogram: Histogram<string> = new Histogram({
+        name: 'soz_core_http',
+        help: 'Http route execution histogram',
+        labelNames: ['path', 'method'],
+    });
 
     private expectedAuthHeader = '';
 
@@ -68,7 +76,12 @@ export class RouteLoader {
                 body,
             };
 
+            const end = this.httpDurationHistogram.startTimer({
+                path: request.path,
+                method: request.method,
+            });
             const response = await this.handleRequest(request);
+            end();
 
             res.writeHead(response.getStatusCode(), response.getHeadersForCfx());
             res.write(response.getBody());
@@ -103,7 +116,13 @@ export class RouteLoader {
             }
         }
 
-        return route.handler(request);
+        try {
+            return route.handler(request);
+        } catch (e) {
+            this.logger.error(`[HTTP] Request failed for ${request.method} ${request.path} ${e.message}`, e);
+
+            return Response.internalServerError();
+        }
     }
 
     public unload(): void {}

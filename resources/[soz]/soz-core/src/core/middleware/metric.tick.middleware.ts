@@ -6,15 +6,11 @@ import { Middleware, MiddlewareTickFactory } from './middleware';
 
 @Injectable()
 export class MetricTickMiddlewareFactory implements MiddlewareTickFactory {
-    private tickHistogram: Histogram<string>;
-
-    public constructor() {
-        this.tickHistogram = new Histogram({
-            name: 'soz_core_tick',
-            help: 'Tick execution histogram',
-            labelNames: ['tick'],
-        });
-    }
+    private tickHistogram: Histogram<string> = new Histogram({
+        name: 'soz_core_tick',
+        help: 'Tick execution histogram',
+        labelNames: ['tick'],
+    });
 
     public create(tick: TickMetadata, next: Middleware): Middleware {
         return async (...args): Promise<void> => {
