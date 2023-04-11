@@ -44,6 +44,10 @@ export class Response {
         return new Response(401, body, headers);
     }
 
+    public static internalServerError(body = '', headers: Header[] = []): Response {
+        return new Response(500, body, headers);
+    }
+
     public static json(body: any, headers: Header[] = []): Response {
         headers.push({ name: 'Content-Type', value: 'application/json' });
 
