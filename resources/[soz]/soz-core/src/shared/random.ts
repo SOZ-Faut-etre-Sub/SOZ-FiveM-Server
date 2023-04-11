@@ -1,3 +1,19 @@
+export const getRandomKeyWeighted = <T extends keyof any>(values: Record<T, number>): T => {
+    const totalWeight = Object.values(values).reduce((acc: number, value: number) => acc + value, 0) as number;
+    const random = Math.random() * totalWeight;
+    let currentWeight = 0;
+
+    for (const [key, weight] of Object.entries(values)) {
+        currentWeight += weight as number;
+
+        if (random < currentWeight) {
+            return key as T;
+        }
+    }
+
+    return Object.keys(values)[0] as T;
+};
+
 export const getRandomInt = (min: number, max: number) => {
     min = Math.ceil(min);
     max = Math.floor(max);
