@@ -9,6 +9,7 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
 import { getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, Time, Weather } from '../../shared/weather';
+import { MonitorService } from '../monitor/monitor.service';
 import { Pollution } from '../pollution';
 import { Polluted, SpringAutumn } from './forecast';
 
@@ -23,6 +24,9 @@ export class WeatherProvider {
     @Inject(Pollution)
     private pollution: Pollution;
 
+    @Inject(MonitorService)
+    private monitorService: MonitorService;
+
     @Once()
     onStart(): void {
         GlobalState.blackout ||= false;
@@ -34,8 +38,10 @@ export class WeatherProvider {
     }
 
     @Tick(TickInterval.EVERY_SECOND, 'weather:time:advance')
-    advanceTime(): void {
-        const currentTime = { ...(GlobalState.time as Time) };
+    async advanceTime() {
+        const currentTime = await this.monitorService.doCall('advance_time_get', () => {
+            return { ...(GlobalState.time as Time) };
+        });
 
         currentTime.second += INCREMENT_SECOND;
 
@@ -65,7 +71,9 @@ export class WeatherProvider {
             }
         }
 
-        GlobalState.time = currentTime;
+        await this.monitorService.doCall('advance_time_set', () => {
+            GlobalState.time = currentTime;
+        });
     }
 
     @Tick(TickInterval.EVERY_FRAME, 'weather:next-weather')
