@@ -119,7 +119,6 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:restock", function(source,
         if not cbCalled then
             exports["soz-inventory"]:AddItem(storage, item.itemId, item.quantity, nil, nil, function(success, reason)
                 if not success and not cbCalled then
-                    print("Cannot add item: " .. json.encode(reason))
                     cbCalled = true
                     cb(success, reason)
                 end
