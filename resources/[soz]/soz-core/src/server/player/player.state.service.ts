@@ -17,12 +17,28 @@ export class PlayerStateService {
         return this.stateByCitizenId[citizenId];
     }
 
-    public getIdentifier(source: string): string {
-        if (GetConvar('soz_disable_steam_credential', 'false') === 'true') {
-            return GetPlayerIdentifierByType(source, 'license');
+    private getPlayerIdentifierByType(source: string, type: string): string | null {
+        if (GetPlayerIdentifierByType) {
+            return GetPlayerIdentifierByType(source, type);
         }
 
-        const steamIdentifier = GetPlayerIdentifierByType(source, 'steam');
+        const identifiers = getPlayerIdentifiers(source);
+
+        for (const identifier of identifiers) {
+            if (identifier.startsWith(`${type}:`)) {
+                return identifier;
+            }
+        }
+
+        return null;
+    }
+
+    public getIdentifier(source: string): string | null {
+        if (GetConvar('soz_disable_steam_credential', 'false') === 'true') {
+            return this.getPlayerIdentifierByType(source, 'license');
+        }
+
+        const steamIdentifier = this.getPlayerIdentifierByType(source, 'steam');
 
         if (!steamIdentifier) {
             return null;
