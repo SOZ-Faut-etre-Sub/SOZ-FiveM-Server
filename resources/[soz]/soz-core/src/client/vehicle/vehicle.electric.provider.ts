@@ -13,6 +13,7 @@ import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
@@ -37,6 +38,9 @@ export class VehicleElectricProvider {
 
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
@@ -132,7 +136,7 @@ export class VehicleElectricProvider {
                         return false;
                     }
 
-                    TriggerServerEvent(ServerEvent.UPW_REFILL_STATION, charger.station, 'energy_cell_fossil');
+                    this.refillStation(charger.station, 'energy_cell_fossil');
                 },
                 item: 'energy_cell_fossil',
             },
@@ -154,8 +158,7 @@ export class VehicleElectricProvider {
                     if (!charger) {
                         return false;
                     }
-
-                    TriggerServerEvent(ServerEvent.UPW_REFILL_STATION, charger.station, 'energy_cell_hydro');
+                    this.refillStation(charger.station, 'energy_cell_hydro');
                 },
                 item: 'energy_cell_hydro',
             },
@@ -177,8 +180,7 @@ export class VehicleElectricProvider {
                     if (!charger) {
                         return false;
                     }
-
-                    TriggerServerEvent(ServerEvent.UPW_REFILL_STATION, charger.station, 'energy_cell_wind');
+                    this.refillStation(charger.station, 'energy_cell_wind');
                 },
                 item: 'energy_cell_wind',
             },
@@ -277,6 +279,44 @@ export class VehicleElectricProvider {
                 },
             },
         ]);
+    }
+
+    private async refillStation(name: string, cell: string) {
+        const stationToRefill = await emitRpc<UpwStation>(RpcServerEvent.UPW_GET_STATION, name);
+        if (!stationToRefill) {
+            return;
+        }
+        if (stationToRefill.stock > stationToRefill.max_stock - 1) {
+            this.notifier.notify('La station est pleine !', 'success');
+            return;
+        }
+        if (!this.inventoryManager.hasEnoughItem(cell, 1)) {
+            this.notifier.notify("Vous n'avez plus de cellule de ce type.", 'warning');
+            return;
+        }
+        const { completed } = await this.progressService.progress(
+            'refill_station',
+            'Vous rechargez la station...',
+            10000,
+            {
+                dictionary: 'anim@mp_radio@garage@low',
+                name: 'action_a',
+                options: {
+                    repeat: true,
+                },
+            },
+            {
+                disableMovement: true,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
+            }
+        );
+        if (!completed) {
+            return;
+        }
+        TriggerServerEvent(ServerEvent.UPW_REFILL_STATION, name, cell);
+        this.refillStation(name, cell);
     }
 
     private async chargeVehicle(vehicle: number) {

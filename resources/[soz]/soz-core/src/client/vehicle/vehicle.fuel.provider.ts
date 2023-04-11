@@ -633,7 +633,7 @@ export class VehicleFuelProvider {
         const multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
         let consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.084 * multiplier;
         if (isVehicleModelElectric(model)) {
-            consumedFuel = consumedFuel / 3;
+            consumedFuel = consumedFuel / 2;
         }
         const consumedOil = consumedFuel / 12;
 
@@ -658,6 +658,10 @@ export class VehicleFuelProvider {
         }
 
         SetVehicleFuelLevel(vehicle, newFuel);
+
+        if (newFuel <= 0.1) {
+            SetVehicleEngineOn(vehicle, false, true, true);
+        }
 
         if (newOil <= 0.1) {
             const newEngineHealth = Math.max(0, GetVehicleEngineHealth(vehicle) - 50);

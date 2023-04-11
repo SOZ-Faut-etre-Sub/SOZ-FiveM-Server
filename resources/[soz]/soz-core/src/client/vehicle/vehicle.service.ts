@@ -232,6 +232,7 @@ export class VehicleService {
             tireBurstState,
             doorStatus,
             windowStatus,
+            dirtLevel: GetVehicleDirtLevel(vehicle),
         };
     }
 
