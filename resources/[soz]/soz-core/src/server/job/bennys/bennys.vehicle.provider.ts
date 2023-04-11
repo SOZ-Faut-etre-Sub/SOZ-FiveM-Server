@@ -82,6 +82,7 @@ export class BennysVehicleProvider {
             bodyHealth: 1000,
             doorStatus: {},
             windowStatus: {},
+            dirtLevel: 0,
         });
 
         this.monitor.publish(
