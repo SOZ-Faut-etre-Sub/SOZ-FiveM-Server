@@ -1345,8 +1345,8 @@ export const getVehicleCustomPrice = (
         }
 
         if (category.type === 'toggle') {
-            const hasCurrent = currentModification.modification[key];
-            const hasNew = newModification.modification[key];
+            const hasCurrent = Boolean(currentModification.modification[key]);
+            const hasNew = Boolean(newModification.modification[key]);
 
             if (hasCurrent !== hasNew) {
                 if (hasNew) {
