@@ -18,9 +18,10 @@ export class PlayerStateService {
     }
 
     private getPlayerIdentifierByType(source: string, type: string): string | null {
-        if (GetPlayerIdentifierByType) {
-            return GetPlayerIdentifierByType(source, type);
-        }
+        // @TODO: Enable when we upgrade server
+        // if (GetPlayerIdentifierByType) {
+        //     return GetPlayerIdentifierByType(source, type);
+        // }
 
         const identifiers = getPlayerIdentifiers(source);
 
