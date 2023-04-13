@@ -176,6 +176,6 @@ export class WeatherProvider {
             transitions = {};
         }
 
-        return getRandomKeyWeighted<Weather>(transitions, 'OVERCAST');
+        return getRandomKeyWeighted<Weather>(transitions, 'OVERCAST') as Weather;
     }
 }
