@@ -161,6 +161,7 @@ local Elevators = {
         upTo = "admin:0",
         downTo = nil,
         spawnPoint = vector4(2154.62, 2920.95, -81.08, 272.4),
+        job = {fbi = 0, lspd = 0, bcso = 0},
     },
     --- MTP
     ["mtp:0"] = {
@@ -221,6 +222,7 @@ local function CreateTargetOptions(elevatorData)
                         icon = dir.icon,
                         label = string.format(dir.label, destination.label),
                         event = elevatorData.event or "soz-utils:client:elevator",
+                        job = destination.job,
                         destination = dest,
                     })
                 end
