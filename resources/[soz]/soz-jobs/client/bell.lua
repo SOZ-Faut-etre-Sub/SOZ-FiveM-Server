@@ -85,28 +85,28 @@ CreateThread(function()
         maxZ = 76.27,
     }, {options = callSociety("555-PAWL"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bell:baun:bahama", vector3(-1393.46, -600.43, 30.32), 0.35, 0.25,
-                                    {name = "bell:baun:bahama", heading = 327, minZ = 30.32, maxZ = 30.47}, {
+    exports["qb-target"]:AddBoxZone("bell:baun:bahama", vector3(-1393.51, -600.42, 30.32), 0.35, 0.25,
+                                    {name = "bell:baun:bahama", heading = 120, minZ = 30.32, maxZ = 30.47}, {
         options = callSociety("555-BAUN"),
         distance = 2.5,
     })
 
     exports["qb-target"]:AddBoxZone("bell:baun:unicorn", vector3(130.04, -1287.28, 29.28), 0.25, 0.35,
-                                    {name = "bell:baun:unicorn", heading = 302, minZ = 29.28, maxZ = 29.43}, {
+                                    {name = "bell:baun:unicorn", heading = 325, minZ = 29.28, maxZ = 29.43}, {
         options = callSociety("555-BAUN"),
         distance = 2.5,
     })
 
     exports["qb-target"]:AddBoxZone("bell:ffs", vector3(719.65, -963.63, 30.38), 0.3, 0.2, {
         name = "bell:ffs",
-        heading = 74,
+        heading = 63,
         minZ = 30.4,
         maxZ = 30.5,
     }, {options = callSociety("555-FFS"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("bell:mdr", vector3(-555.83, -186.76, 38.26), 0.3, 0.4, {
+    exports["qb-target"]:AddBoxZone("bell:mdr", vector3(-555.79, -186.76, 38.26), 0.25, 0.35, {
         name = "bell:mdr",
-        heading = 27.79,
+        heading = 33,
         minZ = 38.11,
         maxZ = 38.42,
     }, {options = callSociety("555-MDR"), distance = 2.5})
