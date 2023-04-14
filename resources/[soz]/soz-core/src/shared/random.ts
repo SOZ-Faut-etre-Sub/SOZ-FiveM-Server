@@ -9,8 +9,6 @@ export const getRandomKeyWeighted = <T extends keyof any>(
     for (const [key, weight] of Object.entries(values)) {
         currentWeight += weight as number;
 
-        console.log(`key: ${key}, weight: ${weight}, currentWeight: ${currentWeight}, random: ${random}`);
-
         if (random < currentWeight) {
             return key;
         }
