@@ -25,6 +25,6 @@ export const convertTypeToName = function (type) {
         case 'fait-divers':
             return 'Fait Divers';
         case 'info-traffic':
-            return 'Info Traffic';
+            return 'Info Trafic';
     }
 };

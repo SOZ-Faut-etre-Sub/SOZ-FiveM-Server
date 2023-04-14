@@ -113,7 +113,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
             {label = "Breaking News", value = "breaking-news"},
             {label = "Publicité", value = "publicité"},
             {label = "Fait Divers", value = "fait-divers"},
-            {label = "Info Traffic", value = "info-traffic"},
+            {label = "Info Trafic", value = "info-traffic"},
         },
         select = function(_, value)
             local message = exports["soz-hud"]:Input("Message de la communication", 512)
