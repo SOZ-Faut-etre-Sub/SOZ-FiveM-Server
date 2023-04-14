@@ -46,9 +46,8 @@ export class PlayerStateService {
         }
 
         const steamHex = steamIdentifier.replace('steam:', '');
-        const steamId = parseInt(steamHex, 16);
 
-        return String(steamId);
+        return BigInt(`0x${steamHex}`).toString();
     }
 
     public get(source: number): PlayerServerState {
