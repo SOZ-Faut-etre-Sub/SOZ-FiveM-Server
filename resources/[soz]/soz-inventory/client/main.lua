@@ -89,31 +89,6 @@ RegisterNUICallback("transfertItem", function(data, cb)
     end, data.source, data.target, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot, data.slot)
 end)
 
-function indentation(s, indent)
-    for i = 1, indent do
-        s = "  " .. s
-    end
-    return s
-end
-
-function dump(o, indent)
-    if not indent then
-        indent = 0
-    end
-    if type(o) == "table" then
-        local s = "{\n"
-        for k, v in pairs(o) do
-            if type(k) ~= "number" then
-                k = "\"" .. k .. "\""
-            end
-            s = s .. indentation("[" .. k .. "] = " .. dump(v, indent + 1) .. ",\n", indent + 1)
-        end
-        return s .. indentation("}", indent)
-    else
-        return tostring(o)
-    end
-end
-
 RegisterNUICallback("transfertMoney", function(data, cb)
     SetNuiFocus(false, false)
     local amount = exports["soz-hud"]:Input("Quantité", 12)

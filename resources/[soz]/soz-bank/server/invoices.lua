@@ -41,8 +41,25 @@ local function PayInvoice(PlayerData, account, id)
     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
 
     if PlayerData.charinfo.account == account then
-        if Player.Functions.RemoveMoney("money", invoice.amount) then
-            Account.AddMoney(invoice.emitterSafe, invoice.amount)
+        local moneyAmount = Player.Functions.GetMoney("money")
+        local moneyMarkedAmount = Player.Functions.GetMoney("marked_money")
+
+        if (moneyAmount + moneyMarkedAmount) >= invoice.amount then
+            local moneyTake = 0
+            local markedMoneyTake = 0
+
+            if moneyMarkedAmount >= invoice.amount then
+                markedMoneyTake = invoice.amount
+            else
+                markedMoneyTake = moneyMarkedAmount
+                moneyTake = invoice.amount - moneyMarkedAmount
+            end
+
+            Player.Functions.RemoveMoney("money", moneyTake)
+            Player.Functions.RemoveMoney("marked_money", markedMoneyTake)
+
+            Account.AddMoney(invoice.emitterSafe, moneyTake, "money")
+            Account.AddMoney(invoice.emitterSafe, markedMoneyTake, "marked_money")
 
             MySQL.update.await("UPDATE invoices SET payed = true WHERE id = ? AND payed = false AND refused = false", {
                 invoice.id,
