@@ -207,6 +207,7 @@ export enum ServerEvent {
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
+    CRIMI_SMOKE_STRESS = 'soz-core:server:crimi:smoke-stress',
 }
 
 export enum ClientEvent {
@@ -353,6 +354,7 @@ export enum ClientEvent {
     HUB_REMOVE_STATUS = 'soz-core:client:hub:remove-status',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
+    CRIMI_SMOKE = 'soz-core:server:crimi:smoke',
 
     EASTER_EAR_TOGGLE = 'soz-core:server:easter:toogle-ear',
 }
