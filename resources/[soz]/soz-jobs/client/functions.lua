@@ -26,6 +26,15 @@ SozJobCore.Functions.GetDutyActions = function(job)
             end,
             job = job,
         },
+        {
+            type = "server",
+            event = "QBCore:GetEmployOnDuty",
+            icon = "fas fa-users",
+            label = "Employé(e)s en service",
+            canInteract = function()
+                return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.OnDutyView)
+            end,
+        },
     }
 end
 

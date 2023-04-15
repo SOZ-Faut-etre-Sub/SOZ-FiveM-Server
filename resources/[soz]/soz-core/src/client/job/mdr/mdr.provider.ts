@@ -8,6 +8,7 @@ import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 
+import { JobService } from '../../../server/job.service';
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -48,6 +49,9 @@ export class MandatoryProvider {
     @Inject(JobPermissionService)
     private jobPermissionService: JobPermissionService;
 
+    @Inject(JobService)
+    private jobService: JobService;
+
     private state = {
         radar: false,
     };
@@ -85,6 +89,20 @@ export class MandatoryProvider {
                         return this.playerService.isOnDuty();
                     },
                     job: JobType.MDR,
+                },
+                {
+                    icon: 'fas fa-users',
+                    label: 'Employé(e)s en service',
+                    action: () => {
+                        TriggerServerEvent('QBCore:GetEmployOnDuty');
+                    },
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return (
+                            this.playerService.isOnDuty() &&
+                            this.jobService.hasPermission(player, player.job.id, JobPermission.OnDutyView)
+                        );
+                    },
                 },
             ]
         );

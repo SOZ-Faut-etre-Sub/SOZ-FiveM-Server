@@ -1,3 +1,4 @@
+import { JobPermission, JobType } from '@public/shared/job';
 import { isVehicleModelElectric, isVehicleModelTrailer } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
@@ -5,8 +6,8 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { emitRpc } from '../../../core/rpc';
+import { JobService } from '../../../server/job.service';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
-import { JobType } from '../../../shared/job';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
 import { BoxZone } from '../../../shared/polyzone/box.zone';
@@ -56,6 +57,9 @@ export class BennysVehicleProvider {
 
     @Inject(PhoneService)
     private phoneService: PhoneService;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
@@ -119,6 +123,20 @@ export class BennysVehicleProvider {
                     return this.playerService.isOnDuty();
                 },
                 job: JobType.Bennys,
+            },
+            {
+                icon: 'fas fa-users',
+                label: 'Employé(e)s en service',
+                action: () => {
+                    TriggerServerEvent('QBCore:GetEmployOnDuty');
+                },
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+                    return (
+                        this.playerService.isOnDuty() &&
+                        this.jobService.hasPermission(player, player.job.id, JobPermission.OnDutyView)
+                    );
+                },
             },
         ];
 

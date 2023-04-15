@@ -16,6 +16,7 @@ import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
+import { JobOnDutyMenu } from '../Job/OnDutyMenu';
 import { LsmcJobMenu } from '../LSMC/LsmcJobMenu';
 import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
 import { EasterShopMenu } from '../Shop/EasterShopMenu';
@@ -168,6 +169,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.EasterShop}/*`} element={<EasterShopMenu data={menuData} />} />
             <Route path={`/${MenuType.TaxiJobMenu}/*`} element={<TaxiJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PlayerPersonal}/*`} element={<MenuPlayerPersonal data={menuData} />} />
+            <Route path={`/${MenuType.JobOnDutyMenu}/*`} element={<JobOnDutyMenu data={menuData} />} />
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route path={`/${MenuType.JobUpw}/*`} element={<MenuUpw data={menuData} />} />
             <Route path={`/${MenuType.UpwOrderMenu}/*`} element={<UpwOrderMenu data={menuData} />} />

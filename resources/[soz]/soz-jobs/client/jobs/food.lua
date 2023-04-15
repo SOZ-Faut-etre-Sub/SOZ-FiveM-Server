@@ -158,6 +158,15 @@ Citizen.CreateThread(function()
                     return PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty
                 end,
             },
+            {
+                type = "server",
+                event = "QBCore:GetEmployOnDuty",
+                icon = "fas fa-users",
+                label = "Employé(e)s en service",
+                canInteract = function()
+                    return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.OnDutyView)
+                end,
+            },
         },
     })
 end)
