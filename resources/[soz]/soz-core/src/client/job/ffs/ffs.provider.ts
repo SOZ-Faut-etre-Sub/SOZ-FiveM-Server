@@ -1,6 +1,9 @@
+import { JobPermission, JobType } from '@public/shared/job';
+
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
+import { JobService } from '../../../server/job.service';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { FfsConfig, FfsRecipe, Process } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
@@ -31,6 +34,9 @@ export class FightForStyleProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
+    @Inject(JobService)
+    private jobService: JobService;
+
     private state = {
         ffs_cotton_bale: false,
     };
@@ -57,7 +63,7 @@ export class FightForStyleProvider {
                     canInteract: () => {
                         return !this.playerService.isOnDuty();
                     },
-                    job: 'ffs',
+                    job: JobType.Ffs,
                 },
                 {
                     type: 'server',
@@ -67,7 +73,21 @@ export class FightForStyleProvider {
                     canInteract: () => {
                         return this.playerService.isOnDuty();
                     },
-                    job: 'ffs',
+                    job: JobType.Ffs,
+                },
+                {
+                    icon: 'fas fa-users',
+                    label: 'Employé(e)s en service',
+                    action: () => {
+                        TriggerServerEvent('QBCore:GetEmployOnDuty');
+                    },
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return (
+                            this.playerService.isOnDuty() &&
+                            this.jobService.hasPermission(player, player.job.id, JobPermission.OnDutyView)
+                        );
+                    },
                 },
             ]
         );

@@ -160,6 +160,13 @@ RegisterNetEvent('QBCore:ToggleDuty', function()
     TriggerEvent('QBCore:Server:SetDuty', player.PlayerData.job.id, player.PlayerData.job.onduty, src)
 end)
 
+RegisterNetEvent('QBCore:GetEmployOnDuty', function()
+    local player = QBCore.Functions.GetPlayer(source)
+    local player_names = QBCore.Functions.GetPlayerNamesOnDuty(player.PlayerData.job.id)
+    
+    TriggerClientEvent('soz-job:client:OpenOnDutyMenu', source, player_names, player.PlayerData.job.id)
+end)
+
 -- Items
 RegisterNetEvent('QBCore:Server:RemoveItem', function(itemName, amount, slot)
     local Player = QBCore.Functions.GetPlayer(source)
