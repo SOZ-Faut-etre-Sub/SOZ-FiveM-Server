@@ -339,6 +339,14 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Changer la réputation
                         </MenuItemButton>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetCrimi, player);
+                            }}
+                        >
+                            Reset Criminalité
+                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}

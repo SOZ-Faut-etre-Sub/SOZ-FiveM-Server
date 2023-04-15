@@ -229,4 +229,23 @@ export class AdminMenuPlayerProvider {
 
         TriggerServerEvent(ServerEvent.ADMIN_SET_REPUTATION, player.id, value);
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetCrimi)
+    public async handleResetCrimi(player: AdminPlayer): Promise<void> {
+        const value = await this.inputService.askInput(
+            {
+                title: `Entrer 'OUI' pour confirmer le Reset Criminalité de ce personnage`,
+                defaultValue: '',
+                maxCharacters: 7,
+            },
+            () => {
+                return Ok(true);
+            }
+        );
+
+        if (value === 'OUI') {
+            TriggerServerEvent(ServerEvent.ADMIN_RESET_CRIMI, player.id);
+        }
+        return;
+    }
 }
