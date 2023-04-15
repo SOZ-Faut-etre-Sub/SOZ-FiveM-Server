@@ -172,6 +172,21 @@ function QBCore.Functions.GetPlayersOnDuty(job)
     return players, count
 end
 
+--- Gets a list of all on duty player names of a specified job
+function QBCore.Functions.GetPlayerNamesOnDuty(job)
+    local player_names = {}
+
+    for _, Player in pairs(QBCore.Players) do
+        if Player.PlayerData.job.id == job then
+            if Player.PlayerData.job.onduty then
+                player_names[#player_names + 1] = Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname
+            end
+        end
+    end
+
+    return player_names
+end
+
 -- Returns only the amount of players on duty for the specified job
 function QBCore.Functions.GetDutyCount(job)
     local count = 0

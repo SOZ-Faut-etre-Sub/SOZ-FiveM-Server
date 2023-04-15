@@ -64,6 +64,7 @@ export enum MenuType {
     TaxiJobMenu = 'taxi_job',
     PlayerPersonal = 'player_personal',
     LsmcJobMenu = 'lsmc_job_menu',
+    JobOnDutyMenu = 'job_on_duty,',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -97,4 +98,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.TaxiJobMenu]: any;
     [MenuType.PlayerPersonal]: PlayerPersonalMenuData;
     [MenuType.LsmcJobMenu]: any;
+    [MenuType.JobOnDutyMenu]: Record<string, string[] | string>;
 }

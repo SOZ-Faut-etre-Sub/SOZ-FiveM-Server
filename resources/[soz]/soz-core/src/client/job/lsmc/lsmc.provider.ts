@@ -10,11 +10,12 @@ import { ResourceLoader } from '@public/client/resources/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { PlayerListStateService } from '../../player/player.list.state.service';
+import { JobService } from '../../../server/job.service';
 
 @Provider()
 export class LSMCProvider {
@@ -29,6 +30,9 @@ export class LSMCProvider {
 
     @Inject(ResourceLoader)
     public resourceLoader: ResourceLoader;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(Notifier)
     public notifier: Notifier;
@@ -81,6 +85,20 @@ export class LSMCProvider {
                         return this.playerService.isOnDuty();
                     },
                     job: JobType.LSMC,
+                },
+                {
+                    icon: 'fas fa-users',
+                    label: 'Employé(e)s en service',
+                    action: () => {
+                        TriggerServerEvent('QBCore:GetEmployOnDuty');
+                    },
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return (
+                            this.playerService.isOnDuty() &&
+                            this.jobService.hasPermission(player, player.job.id, JobPermission.OnDutyView)
+                        );
+                    },
                 },
             ]
         );

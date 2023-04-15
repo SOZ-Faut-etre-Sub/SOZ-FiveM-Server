@@ -63,6 +63,7 @@ export enum JobPermission {
     UpwOrder = 'order',
     UpwChangePrice = 'upw-change-price',
     FDOFedPound = 'fdo-fed-pound',
+    OnDutyView = 'view-employe-on-duty',
 }
 
 export const JobLabel: Record<JobType, string> = {
