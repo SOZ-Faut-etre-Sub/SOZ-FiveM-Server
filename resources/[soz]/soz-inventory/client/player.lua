@@ -11,6 +11,11 @@ RegisterCommand("inventory", function()
     TriggerEvent("soz-core:client:menu:close", false)
     QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
         if inventory ~= nil then
+            if LocalPlayer.state.inv_busy then
+                exports["soz-hud"]:DrawNotification("Inventaire en cours d'utilisation", "warning")
+                return
+            end
+
             SendNUIMessage({
                 action = "openPlayerInventory",
                 playerInventory = inventory,

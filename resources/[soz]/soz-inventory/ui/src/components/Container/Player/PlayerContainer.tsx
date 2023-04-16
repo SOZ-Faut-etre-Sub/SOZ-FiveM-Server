@@ -71,6 +71,8 @@ export const PlayerContainer = () => {
                     console.error(e, event.data.playerInventory, event.data.playerMoney);
                     closeNUI(() => closeMenu());
                 }
+            } else if (event.data.action === 'closeInventory') {
+                closeNUI(() => closeMenu());
             }
         },
         [setDisplay, closeMenu, setPlayerMoney, setPlayerInventory, setPlayerShortcuts]
