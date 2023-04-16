@@ -22,6 +22,7 @@ export type QBCorePlayer = {
 };
 
 export type PlayerData = {
+    address: string;
     apartment: any;
     citizenid: string;
     license: string;
@@ -59,6 +60,8 @@ export type PlayerCharInfo = {
     firstname: string;
     lastname: string;
     account: string;
+    gender: number;
+    phone: string;
 };
 
 export type PlayerJob = {

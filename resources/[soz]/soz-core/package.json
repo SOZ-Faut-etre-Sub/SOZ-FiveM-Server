@@ -52,6 +52,7 @@
     "dependencies": {
         "@citizenfx/client": "^2.0.6378-1",
         "@citizenfx/server": "^2.0.6378-1",
+        "@headlessui/react": "^1.7.14",
         "@heroicons/react": "^1.0.6",
         "@prisma/client": "^4.4.0",
         "@reach/descendants": "^0.17.0",

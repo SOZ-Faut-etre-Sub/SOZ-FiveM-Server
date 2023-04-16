@@ -45,6 +45,10 @@ module.exports = {
             animation: {
                 defilement: 'defilement 7s infinite linear',
             },
+            fontSize: {
+                '2xs': '.6rem',
+                xsm: '.8rem',
+            },
         },
     },
     plugins: [require('tailwind-scrollbar')],
