@@ -470,6 +470,7 @@ export enum NuiEvent {
     UpwDisplayBlips = 'soz-core:nui:job:upw:display-blips',
 
     PanelClosed = 'soz-core:nui:panel:closed',
+    PlayerGetMugshot = 'soz-core:client:player:get-mugshot',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 

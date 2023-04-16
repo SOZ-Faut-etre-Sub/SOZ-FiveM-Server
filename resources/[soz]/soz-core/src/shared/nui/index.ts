@@ -1,3 +1,4 @@
+import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
 import { NuiItemMethodMap } from '@public/shared/nui/item';
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
@@ -50,6 +51,7 @@ export interface NuiMethodMap {
     item: NuiItemMethodMap;
     hood: NuiHoodMethodMap;
     taxi: NuiTaxiMethodMap;
+    card: NuiCardMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(
