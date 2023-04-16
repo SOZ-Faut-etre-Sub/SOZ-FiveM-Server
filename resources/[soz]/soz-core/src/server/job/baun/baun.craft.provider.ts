@@ -2,7 +2,6 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
-import { InventoryItem } from '../../../shared/item';
 import { BaunConfig, BaunCraftProcess } from '../../../shared/job/baun';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -64,22 +63,18 @@ export class BaunCraftProvider {
             return false;
         }
 
+        const items = this.inventoryManager.getItems(source);
         for (const input of craftProcess.inputs) {
-            const predicate = (item: InventoryItem) => {
-                return item.name == input.id && item.amount >= input.amount && !this.itemService.isItemExpired(item);
-            };
-            const item = this.inventoryManager.findItem(source, predicate);
-            if (item) {
-                this.inventoryManager.removeItemFromInventory(
-                    source,
-                    item.name,
-                    input.amount,
-                    item.metadata,
-                    item.slot
-                );
-            } else {
-                this.notifier.notify(source, `Vous n'avez pas les matériaux nécessaires pour confectionner.`, 'error');
-                return false;
+            let amountToRemove = input.amount;
+            for (const item of items) {
+                if (amountToRemove == 0) {
+                    break;
+                }
+                if (item.name === input.id && !this.itemService.isItemExpired(item)) {
+                    const amount = item.amount > amountToRemove ? amountToRemove : item.amount;
+                    this.inventoryManager.removeItemFromInventory(source, item.name, amount, null, item.slot);
+                    amountToRemove -= amount;
+                }
             }
         }
         this.inventoryManager.addItemToInventory(source, craftProcess.output.id, craftProcess.output.amount);
@@ -88,10 +83,7 @@ export class BaunCraftProvider {
 
     private canCraft(source: number, craftProcess: BaunCraftProcess): boolean {
         for (const input of craftProcess.inputs) {
-            const predicate = (item: InventoryItem) => {
-                return item.name == input.id && item.amount >= input.amount && !this.itemService.isItemExpired(item);
-            };
-            if (!this.inventoryManager.findItem(source, predicate)) {
+            if (!this.inventoryManager.hasEnoughItem(source, input.id, input.amount, true)) {
                 return false;
             }
         }
