@@ -237,6 +237,12 @@ setInterval(async () => {
         global.isBlackout = cityIsInBlackOut();
         updateAvailability();
     }
+
+    if (exports['progressbar'].IsDoingAction()) {
+        if (global.isPhoneOpen) {
+            await hidePhone();
+        }
+    }
 }, 1000);
 
 setInterval(() => {
