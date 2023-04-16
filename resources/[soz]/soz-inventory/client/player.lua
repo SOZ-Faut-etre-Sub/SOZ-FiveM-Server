@@ -170,54 +170,6 @@ RegisterNetEvent("inventory:client:StoreWeapon", function()
     end
 end)
 
-RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
-    local ped = PlayerPedId()
-    local weaponName = tostring(weaponData.name)
-    if currentWeapon == weaponName then
-        local _, hash = GetCurrentPedWeapon(ped, true)
-        TriggerServerEvent("weapons:server:UpdateWeaponAmmo", weaponData, GetAmmoInPedWeapon(ped, hash))
-
-        SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
-        RemoveAllPedWeapons(ped, true)
-
-        TriggerEvent("weapons:client:SetCurrentWeapon", nil, shootbool)
-        currentWeapon = nil
-        currentWeaponData = nil
-    elseif weaponName == "weapon_stickybomb" or weaponName == "weapon_pipebomb" or weaponName == "weapon_smokegrenade" or weaponName == "weapon_flare" or
-        weaponName == "weapon_proxmine" or weaponName == "weapon_ball" or weaponName == "weapon_molotov" or weaponName == "weapon_grenade" or weaponName ==
-        "weapon_bzgas" then
-        GiveWeaponToPed(ped, GetHashKey(weaponName), 1, false, false)
-        SetPedAmmo(ped, GetHashKey(weaponName), 1)
-        SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-        TriggerEvent("weapons:client:SetCurrentWeapon", weaponData, shootbool)
-        currentWeapon = weaponName
-        currentWeaponData = weaponData
-    elseif weaponName == "weapon_snowball" then
-        GiveWeaponToPed(ped, GetHashKey(weaponName), 10, false, false)
-        SetPedAmmo(ped, GetHashKey(weaponName), 10)
-        SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-        TriggerServerEvent("QBCore:Server:RemoveItem", weaponName, 1)
-        TriggerEvent("weapons:client:SetCurrentWeapon", weaponData, shootbool)
-        currentWeapon = weaponName
-        currentWeaponData = weaponData
-    else
-        TriggerEvent("weapons:client:SetCurrentWeapon", weaponData, shootbool)
-        QBCore.Functions.TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
-            local ammo = tonumber(result)
-            GiveWeaponToPed(ped, GetHashKey(weaponName), 0, false, false)
-            SetPedAmmo(ped, GetHashKey(weaponName), ammo)
-            SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-            if weaponData.metadata.attachments ~= nil then
-                for _, attachment in pairs(weaponData.metadata.attachments) do
-                    GiveWeaponComponentToPed(ped, GetHashKey(weaponName), GetHashKey(attachment.component))
-                end
-            end
-            currentWeapon = weaponName
-            currentWeaponData = weaponData
-        end, weaponData)
-    end
-end)
-
 exports("hasPhone", function()
     if IsPauseMenuActive() then
         return false
