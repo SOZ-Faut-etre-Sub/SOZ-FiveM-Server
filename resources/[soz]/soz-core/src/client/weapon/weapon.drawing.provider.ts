@@ -56,7 +56,7 @@ export class WeaponDrawingProvider {
             this.weaponAttached[weapon.model] = object;
 
             SetEntityAsMissionEntity(object, true, true);
-            SetEntityCollision(object, false, false);
+            SetEntityCollision(object, false, true);
             SetNetworkIdCanMigrate(ObjToNet(object), false);
             AttachEntityToEntity(
                 object,
