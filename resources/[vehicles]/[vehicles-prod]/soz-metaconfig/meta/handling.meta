@@ -260,22 +260,22 @@
     </Item>
     <Item type="CHandlingData">
       <handlingName>POLICE6</handlingName>
-      <fMass value="2200.000000" />
-      <fInitialDragCoeff value="9.000000" />
+      <fMass value="2400.000000" />
+      <fInitialDragCoeff value="8.000000" />
       <fPercentSubmerged value="85.000000" />
       <vecCentreOfMassOffset x="0.000000" y="0.050000" z="0.000000" />
       <vecInertiaMultiplier x="1.000000" y="1.600000" z="1.600000" />
       <fDriveBiasFront value="0.400000" />
       <nInitialDriveGears value="8" />
       <fInitialDriveForce value="0.320000" />
-      <fDriveInertia value="1.000000" />
+      <fDriveInertia value="1.500000" />
       <fClutchChangeRateScaleUpShift value="5.800000" />
       <fClutchChangeRateScaleDownShift value="5.800000" />
       <fInitialDriveMaxFlatVel value="155.000000" />
-      <fBrakeForce value="0.800000" />
+      <fBrakeForce value="0.700000" />
       <fBrakeBiasFront value="0.600000" />
       <fHandBrakeForce value="0.320000" />
-      <fSteeringLock value="37.50000" />
+      <fSteeringLock value="40.00000" />
       <fTractionCurveMax value="2.300000" />
       <fTractionCurveMin value="2.00000" />
       <fTractionCurveLateral value="14.000000" />
