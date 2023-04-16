@@ -121,7 +121,11 @@ end
 
 function ActionStart()
     runProgThread = true
-    LocalPlayer.state:set("inv_busy", not Action.no_inv_busy, true) -- Busy
+    if not Action.no_inv_busy then
+        LocalPlayer.state:set("inv_busy", true, true) -- Busy
+        exports["soz-phone"]:setPhoneVisible(false)
+        TriggerEvent("inventory:client:closeInventory")
+    end
     CreateThread(function()
         while runProgThread do
             if isDoingAction then
