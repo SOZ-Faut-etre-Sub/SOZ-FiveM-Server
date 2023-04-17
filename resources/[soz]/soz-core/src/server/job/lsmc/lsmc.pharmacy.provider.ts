@@ -1,12 +1,12 @@
-import { OnEvent } from '../../../core/decorators/event';
-import { Inject } from '../../../core/decorators/injectable';
-import { Provider } from '../../../core/decorators/provider';
-import { ServerEvent } from '../../../shared/event';
-import { PHARMACY_PRICES } from '../../../shared/job/lsmc';
-import { InventoryManager } from '../../inventory/inventory.manager';
-import { Notifier } from '../../notifier';
-import { PlayerMoneyService } from '../../player/player.money.service';
-import { PlayerService } from '../../player/player.service';
+import { OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { Notifier } from '@public/server/notifier';
+import { PlayerMoneyService } from '@public/server/player/player.money.service';
+import { PlayerService } from '@public/server/player/player.service';
+import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
 
 @Provider()
 export class LSMCPharmacyProvider {
@@ -22,12 +22,12 @@ export class LSMCPharmacyProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @OnEvent(ServerEvent.LSMC_HEAL)
+    @OnEvent(ServerEvent.LSMC_NPC_HEAL)
     public async onLsmcHeal(source: number) {
         const price = PHARMACY_PRICES.heal;
 
         if (this.playerMoneyService.remove(source, price)) {
-            TriggerEvent(ServerEvent.LSMC_REVIVE, source);
+            TriggerClientEvent(ClientEvent.LSMC_HEAL, source, 100);
         } else {
             this.notifier.notify(
                 source,

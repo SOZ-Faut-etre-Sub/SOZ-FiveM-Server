@@ -58,9 +58,14 @@ export enum ServerEvent {
     LSMC_BLOOD_ANALYZE = 'soz-core:server:job:lsmc:blood-analyze',
     LSMC_BUY_ITEM = 'soz-core:server:job:lsmc:buy-item',
     LSMC_HEAL = 'soz-core:server:job:lsmc:heal',
+    LSMC_NPC_HEAL = 'soz-core:server:job:lsmc:npc-heal',
     LSMC_PEE_ANALYZE = 'soz-core:server:job:lsmc:pee-analyze',
     LSMC_HEALTH_CHECK = 'soz-core:server:job:lsmc:health-check',
     LSMC_SET_HEALTH_BOOK = 'soz-core:server:job:lsmc:set-health-book',
+    LSMC_TOOGLE_ITT = 'soz-core:server:job:lsmc:toggle-itt',
+    LSMC_SET_HAZMAT = 'soz-core:server:job:lsmc:set-hazmat',
+    LSMC_SET_CURRENT_ORGAN = 'soz-core:server:job:lsmc:set-organ',
+
     MISSIVE_CREATE_ITEM = 'soz-core:server:missive:create-item',
     MISSIVE_DELETE_ITEM = 'soz-core:server:missive:delete-item',
     MISSIVE_COMPLETE = 'soz-core:server:missive:complete',
@@ -139,6 +144,8 @@ export enum ServerEvent {
     LSMC_ON_DEATH = 'soz-core:lsmc:server:on-death',
     LSMC_ON_DEATH2 = 'soz-core:lsmc:server:on-death2',
     LSMC_SET_DEATH_REASON = 'soz-core:lsmc:server:set-death-reason',
+    LSMC_GIVE_BLOOD = 'soz-core:lsmc:server:give-blood',
+    LSMC_TELEPORTATION = 'soz-core:lsmc:server:teleportation',
 
     METRICS_UPDATE = 'soz-core:server:metrics:update',
 
@@ -262,6 +269,7 @@ export enum ClientEvent {
     JOBS_STONK_OPEN_SOCIETY_MENU = 'stonk:client:OpenSocietyMenu',
     JOBS_MDR_OPEN_SOCIETY_MENU = 'soz-jobs:client:mdr:OpenSocietyMenu',
     JOBS_TAXI_OPEN_SOCIETY_MENU = 'soz-jobs:client:taxi:OpenSocietyMenu',
+    JOBS_LSMC_OPEN_SOCIETY_MENU = 'soz-jobs:client:lsmc:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
@@ -269,14 +277,14 @@ export enum ClientEvent {
     JOB_OPEN_CLOAKROOM = 'soz-core:client:job::OpenCloakroomMenu',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
-    LSMC_DISEASE_APPLY_CONDITIONS = 'lsmc:maladie:client:ApplyConditions',
     LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
     LSMC_REVIVE = 'soz-core:lsmc:client:revive',
     LSMC_CALL = 'soz-core:lsmc:client:call',
-    LSMC_REAMINATE = 'soz-core:lsmc:reanimate',
     LSMC_APPLY_PATIENT_CLOTHING = 'soz-core:client:lsmc:applyPatientClothing',
     LSMC_REMOVE_PATIENT_CLOTHING = 'soz-core:client:lsmc:removePatientClothing',
     LSMC_APPLY_OUTFIT = 'soz-core:client:lsmc:ApplyDutyClothing',
+    LSMC_TELEPORTATION = 'soz-core:lsmc:client:teleportation',
+    LSMC_HEAL = 'soz-core:lsmc:client:heal',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',

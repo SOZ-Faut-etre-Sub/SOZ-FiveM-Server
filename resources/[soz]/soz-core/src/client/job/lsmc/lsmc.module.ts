@@ -5,6 +5,8 @@ import { LSMCDeathProvider } from './lsmc.death.provider';
 import { LSMCHalloweenProvider } from './lsmc.halloween.provider';
 import { LSMCInteractionProvider } from './lsmc.interaction.provider';
 import { LSMCPharmacyProvider } from './lsmc.pharmacy.provider';
+import { LSMCProvider } from './lsmc.provider';
+import { LSMCSurgeryProvider } from './lsmc.surgery.provider';
 
 @Module({
     providers: [
@@ -14,6 +16,8 @@ import { LSMCPharmacyProvider } from './lsmc.pharmacy.provider';
         LSMCDeathProvider,
         LSMCCloakroomProvider,
         LSMCInteractionProvider,
+        LSMCSurgeryProvider,
+        LSMCProvider,
     ],
 })
 export class LSMCModule {}

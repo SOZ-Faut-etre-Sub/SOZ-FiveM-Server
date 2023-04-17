@@ -15,6 +15,7 @@ import { OnEvent } from '@public/core/decorators/event';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { BedLocations, FailoverLocation, KillData, KillerVehData, PatientClothes } from '@public/shared/job/lsmc';
+import { Monitor } from '@public/shared/monitor';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
@@ -118,6 +119,9 @@ export class LSMCDeathProvider {
 
     @Inject(WeaponDrawingProvider)
     private weaponDrawingProvider: WeaponDrawingProvider;
+
+    @Inject(Monitor)
+    public monitor: Monitor;
 
     private IsDead = false;
 
@@ -397,14 +401,29 @@ export class LSMCDeathProvider {
         return [pos[0] - Math.cos(rad(w)), pos[1] - Math.sin(rad(w)), (w + 270) % 360];
     }
 
-    @OnEvent(ClientEvent.LSMC_REAMINATE, false)
-    public async reviveTarget(target: number) {
+    public async reviveTarget(target: number, bloodbag: boolean) {
         const coord = GetEntityCoords(target);
         const heading = GetEntityHeading(target);
         const array = this.loc(coord, heading);
         await this.animationService.walkToCoords([array[0], array[1], coord[2], array[2]], 3000);
 
-        TriggerServerEvent(ServerEvent.LSMC_REVIVE, GetPlayerServerId(NetworkGetPlayerIndexFromPed(target)));
+        TriggerServerEvent(
+            ServerEvent.LSMC_REVIVE,
+            GetPlayerServerId(NetworkGetPlayerIndexFromPed(target)),
+            false,
+            false,
+            bloodbag
+        );
+        this.monitor.publish(
+            bloodbag ? 'job_lsmc_revive_bloodbag' : 'job_lsmc_revive_defibrillator',
+            {},
+            {
+                target_source: GetPlayerServerId(NetworkGetPlayerIndexFromPed(target)),
+                position: GetEntityCoords(target),
+            },
+            true
+        );
+
         const reviveAnimPromise = this.animationService.playAnimation(reviveAnimDoc);
 
         await wait(20000);

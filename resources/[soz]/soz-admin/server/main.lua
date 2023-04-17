@@ -148,7 +148,7 @@ RegisterNetEvent("admin:server:kill", function(player)
         return
     end
 
-    TriggerClientEvent("soz_ems:client:KillPlayer", player.id)
+    TriggerClientEvent("admin:client:KillPlayer", player.id)
 end)
 
 RegisterNetEvent("admin:server:revive", function(player)
@@ -210,7 +210,7 @@ RegisterNetEvent("admin:server:disease", function(id, action)
     end
 
     local player = QBCore.Functions.GetPlayer(id or source)
-    player.Functions.SetMetaData("disease", false);
+    player.Functions.SetMetaData("disease", action);
 
     TriggerClientEvent("lsmc:maladie:client:ApplyCurrentDiseaseEffect", id, action)
 end)

@@ -16,6 +16,8 @@ import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
+import { LsmcJobMenu } from '../LSMC/LsmcJobMenu';
+import { MenuLsmcPharmacy } from '../LSMC/MenuLsmcPharmacy';
 import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
 import { BossShopMenu } from '../Shop/BossShopMenu';
 import { EasterShopMenu } from '../Shop/EasterShopMenu';
@@ -27,7 +29,6 @@ import { MenuUpw } from './Job/MenuUpw';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
 import { MenuDemo } from './MenuDemo';
 import { MenuGarage } from './MenuGarage';
-import { MenuLsmcPharmacy } from './MenuLsmcPharmacy';
 import { MenuOilSetPrice } from './MenuOilSetPrice';
 import { UpwOrderMenu } from './MenuOrderUpw';
 import { MenuPlayerPersonal } from './MenuPlayerPersonal';
@@ -163,6 +164,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.DrivingSchool}/*`} element={<DrivingSchoolMenu data={menuData} />} />
             <Route path={`/${MenuType.HousingUpgrades}/*`} element={<HousingUpgradesMenu data={menuData} />} />
             <Route path={`/${MenuType.LsmcPharmacy}/*`} element={<MenuLsmcPharmacy />} />
+            <Route path={`/${MenuType.LsmcJobMenu}/*`} element={<LsmcJobMenu data={menuData} />} />
             <Route path={`/${MenuType.MandatoryJobMenu}/*`} element={<MandatoryJobMenu data={menuData} />} />
             <Route path={`/${MenuType.IllegalShop}/*`} element={<MenuIllegalShop data={menuData} />} />
             <Route path={`/${MenuType.EasterShop}/*`} element={<EasterShopMenu data={menuData} />} />
