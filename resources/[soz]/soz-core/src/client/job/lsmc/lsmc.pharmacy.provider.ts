@@ -45,7 +45,7 @@ export class LSMCPharmacyProvider {
                         label: 'Soins médicaux',
                         icon: 'c:/ems/heal.png',
                         action: () => {
-                            TriggerServerEvent(ServerEvent.LSMC_HEAL);
+                            TriggerServerEvent(ServerEvent.LSMC_NPC_HEAL);
                         },
                     },
                 ],

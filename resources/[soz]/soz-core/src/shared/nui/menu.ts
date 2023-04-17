@@ -63,6 +63,7 @@ export enum MenuType {
     EasterShop = 'easter_shop',
     TaxiJobMenu = 'taxi_job',
     PlayerPersonal = 'player_personal',
+    LsmcJobMenu = 'lsmc_job_menu',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -95,4 +96,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.EasterShop]: ShopProduct[];
     [MenuType.TaxiJobMenu]: any;
     [MenuType.PlayerPersonal]: PlayerPersonalMenuData;
+    [MenuType.LsmcJobMenu]: any;
 }

@@ -93,6 +93,8 @@ export enum RpcServerEvent {
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
 
     BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',
+
+    LSMC_GET_CURRENT_ORGAN = 'soz-core:server:lsmc:get-organ',
 }
 
 export enum RpcClientEvent {

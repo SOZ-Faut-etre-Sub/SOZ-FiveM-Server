@@ -221,7 +221,7 @@ SozJobCore.Jobs = {
         label = "Los Santos Medical Center",
         platePrefix = "LSMC",
         grades = {},
-        menuCallback = "lsmc:client:OpenSocietyMenu",
+        menuCallback = "soz-jobs:client:lsmc:OpenSocietyMenu",
         canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},

@@ -39,7 +39,7 @@ export const MandatoryJobMenu: FunctionComponent<MandatoryStateProps> = ({ data 
     }
 
     return (
-        <Menu type={MenuType.FightForStyleJobMenu}>
+        <Menu type={MenuType.MandatoryJobMenu}>
             <MainMenu>
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>

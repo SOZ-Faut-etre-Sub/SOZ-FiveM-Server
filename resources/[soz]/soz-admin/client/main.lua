@@ -36,3 +36,8 @@ end
 
 RegisterKeyMapping("mapper", "MapperMenu", "keyboard", "F10")
 RegisterCommand("mapper", OpenMapperMenu, false)
+
+RegisterNetEvent("admin:client:KillPlayer")
+AddEventHandler("admin:client:KillPlayer", function()
+    SetEntityHealth(PlayerPedId(), 0)
+end)

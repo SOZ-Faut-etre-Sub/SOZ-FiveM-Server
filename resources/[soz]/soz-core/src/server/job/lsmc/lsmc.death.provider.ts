@@ -1,12 +1,13 @@
-import { On, OnEvent } from '../../../core/decorators/event';
-import { Inject } from '../../../core/decorators/injectable';
-import { Provider } from '../../../core/decorators/provider';
-import { ClientEvent, ServerEvent } from '../../../shared/event';
-import { BedLocations } from '../../../shared/job/lsmc';
-import { Monitor } from '../../../shared/monitor';
-import { PlayerMetadata } from '../../../shared/player';
-import { Notifier } from '../../notifier';
-import { PlayerService } from '../../player/player.service';
+import { On, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { Notifier } from '@public/server/notifier';
+import { PlayerService } from '@public/server/player/player.service';
+import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { BedLocations } from '@public/shared/job/lsmc';
+import { Monitor } from '@public/shared/monitor';
+import { PlayerMetadata } from '@public/shared/player';
 
 @Provider()
 export class LSMCDeathProvider {
@@ -19,12 +20,25 @@ export class LSMCDeathProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
     private occupiedBeds: Record<number, number> = {};
 
     @OnEvent(ServerEvent.LSMC_REVIVE)
-    public revive(source: number, targetid: number, skipanim: boolean, uniteHU: boolean) {
+    public revive(source: number, targetid: number, admin: boolean, uniteHU: boolean, bloodbag: boolean) {
         if (!targetid) {
             targetid = source;
+        }
+
+        if (!admin && !uniteHU) {
+            if (!this.inventoryManager.removeItemFromInventory(source, bloodbag ? 'bloodbag' : 'defibrillator')) {
+                return;
+            }
+
+            if (bloodbag) {
+                this.inventoryManager.addItemToInventory(source, 'used_bloodbag');
+            }
         }
 
         const player = this.playerService.getPlayer(targetid);
@@ -45,7 +59,7 @@ export class LSMCDeathProvider {
             this.notifier.notify(source, player.metadata.mort, 'success', 20000);
         }
 
-        TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, skipanim, uniteHU, uniteHUBed);
+        TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, admin, uniteHU, uniteHUBed);
 
         datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', 30, 0, 100);
         datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', 30, 0, 100);

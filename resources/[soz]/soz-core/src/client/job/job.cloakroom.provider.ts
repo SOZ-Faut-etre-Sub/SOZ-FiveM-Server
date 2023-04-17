@@ -111,7 +111,7 @@ export class JobCloakroomProvider {
                     break;
                 }
             }
-            TriggerServerEvent('lsmc:server:SetHazmat', hazmat);
+            TriggerServerEvent(ServerEvent.LSMC_SET_HAZMAT, hazmat);
         } else {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
         }

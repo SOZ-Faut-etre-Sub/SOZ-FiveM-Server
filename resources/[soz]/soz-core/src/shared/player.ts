@@ -2,7 +2,7 @@ import { SozRole } from '@core/permissions';
 import { Talent } from '@private/shared/talent';
 
 import { ClothConfig } from './cloth';
-import { Disease } from './disease';
+import { Disease, Organ } from './disease';
 import { InventoryItem } from './item';
 import { JobType } from './job';
 import { Halloween2022 } from './story/halloween2022';
@@ -148,7 +148,7 @@ export type PlayerMetadata = PlayerHealthBook & {
         current: number;
         hidden: boolean;
     };
-    organ: 'foie' | 'rein' | null;
+    organ: Organ | null;
     walk: string | null;
     disease: Disease | null;
     last_disease_at: number | null;
@@ -168,4 +168,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     injuries_count: number;
     injuries_date: number;
     itt: boolean;
+    hazmat: boolean;
 };

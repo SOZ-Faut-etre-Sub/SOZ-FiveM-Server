@@ -1,38 +1,32 @@
+import { ServerEvent } from '@public/shared/event';
 import { FunctionComponent } from 'react';
 
-import { NuiEvent, ServerEvent } from '../../../../shared/event';
-import { MenuType } from '../../../../shared/nui/menu';
-import { fetchNui, triggerServerEvent } from '../../../fetch';
-import { usePlayer } from '../../../hook/data';
+import { MenuType } from '../../../shared/nui/menu';
+import { triggerServerEvent } from '../../fetch';
 import {
     MainMenu,
     Menu,
     MenuContent,
-    MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemText,
     MenuTitle,
-} from '../../Styleguide/Menu';
+} from '../Styleguide/Menu';
 
-type MenuBennysProps = {
+type LSMCStateProps = {
     data: {
-        insideUpgradeZone: boolean;
+        onDuty: boolean;
     };
 };
 
-export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
-    const player = usePlayer();
+export const LsmcJobMenu: FunctionComponent<LSMCStateProps> = ({ data }) => {
+    const banner = 'https://nui-img/soz/menu_job_lsmc';
 
-    if (!data || !player) {
-        return null;
-    }
-
-    if (!player?.job.onduty) {
+    if (!data.onDuty) {
         return (
-            <Menu type={MenuType.JobBennys}>
+            <Menu type={MenuType.LsmcJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Services Bennys</MenuTitle>
+                    <MenuTitle banner={banner}></MenuTitle>
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -45,18 +39,11 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
         triggerServerEvent(ServerEvent.JOBS_PLACE_PROPS, item, props);
     };
 
-    const onUpgradeVehicle = () => {
-        fetchNui(NuiEvent.BennysUpgradeVehicle);
-    };
-
     return (
-        <Menu type={MenuType.JobBennys}>
+        <Menu type={MenuType.LsmcJobMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Services Bennys</MenuTitle>
+                <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
-                    {data.insideUpgradeZone && (
-                        <MenuItemButton onConfirm={onUpgradeVehicle}>🔧 Améliorer le véhicule</MenuItemButton>
-                    )}
                     <MenuItemSelect
                         onConfirm={(index, value) => onConfirm(value.item, value.props)}
                         title="🚧 Poser un objet"
