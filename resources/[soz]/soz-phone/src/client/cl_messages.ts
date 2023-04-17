@@ -22,6 +22,11 @@ RegisterNuiCB<void>(MessageEvents.SET_WAYPOINT, async (position: any, cb) => {
     cb({});
 });
 
+RegisterNuiCB<void>(MessageEvents.DELETE_WAYPOINT, async (any, cb) => {
+    DeleteWaypoint();
+    cb({});
+});
+
 RegisterNuiCB<void>(MessageEvents.GET_POSITION, async (position: any, cb) => {
     const [posX, posY] = GetEntityCoords(PlayerPedId(), true);
     cb({ data: { x: posX, y: posY } });
