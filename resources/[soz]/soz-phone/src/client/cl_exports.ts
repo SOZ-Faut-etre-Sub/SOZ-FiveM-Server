@@ -26,7 +26,7 @@ exps('setPhoneVisible', async (bool: boolean | number) => {
     const coercedType = !!bool;
 
     if (coercedType) await showPhone();
-    else await hidePhone();
+    else if (isPhoneOpen) await hidePhone();
 });
 
 // Getter equivalent of above
