@@ -76,11 +76,11 @@ export class AnimationService {
         }
     }
 
-    private handleCloseAnimation(playerPed: number) {
+    private async handleCloseAnimation(playerPed: number) {
         if (IsPedInAnyVehicle(playerPed, true)) {
-            this.handleCloseVehicleAnim(playerPed);
+            await this.handleCloseVehicleAnim(playerPed);
         } else {
-            this.handleCloseNormalAnim(playerPed);
+            await this.handleCloseNormalAnim(playerPed);
         }
     }
 
@@ -96,7 +96,7 @@ export class AnimationService {
         this.setPhoneState(AnimationState.PHONE_OPEN, false);
         if (!this.onCall) {
             removePhoneProp();
-            this.handleCloseAnimation(PlayerPedId());
+            await this.handleCloseAnimation(PlayerPedId());
         }
     }
 
