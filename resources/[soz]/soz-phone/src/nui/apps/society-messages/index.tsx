@@ -1,10 +1,13 @@
 import { Transition } from '@headlessui/react';
-import { ChatIcon } from '@heroicons/react/outline';
+import { ChatIcon, MapIcon } from '@heroicons/react/outline';
 import { useApp } from '@os/apps/hooks/useApps';
+import { ServerPromiseResp } from '@typings/common';
+import { MessageEvents } from '@typings/messages';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
+import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -31,6 +34,10 @@ export const SocietyMessagesApp = () => {
         navigate(`/society-contacts/${contactId}`);
     };
 
+    const deleteWaypoint = () => {
+        fetchNui<ServerPromiseResp<void>>(MessageEvents.DELETE_WAYPOINT, {});
+    };
+
     return (
         <FullPageWithHeader className={backgroundClass}>
             <Transition
@@ -46,6 +53,14 @@ export const SocietyMessagesApp = () => {
                 <AppWrapper>
                     <div className="flex flex-row justify-between pr-4">
                         <AppTitle app={messages} />
+                        <button onClick={() => deleteWaypoint()}>
+                            <MapIcon
+                                className={cn('h-5 w-5 mx-2', {
+                                    'text-white': config.theme.value === 'dark',
+                                    'text-black': config.theme.value === 'light',
+                                })}
+                            />
+                        </button>
                         <button onClick={() => openContactInfo(societyId)}>
                             <ChatIcon
                                 className={cn('h-5 w-5 mx-2', {

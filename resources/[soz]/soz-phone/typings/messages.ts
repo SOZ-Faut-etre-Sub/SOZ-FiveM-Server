@@ -100,5 +100,6 @@ export enum MessageEvents {
     GET_POSITION = 'phone:getCurrentPosition',
     GET_DESTINATION = 'phone:getCurrentDestination',
     SET_WAYPOINT = 'phone:setWaypoint',
+    DELETE_WAYPOINT = 'phone:deleteWaypoint',
     SET_CONVERSATION_ARCHIVED = 'phone:setConversationArchived',
 }
