@@ -1,8 +1,8 @@
 MicConfig = {
     enabled = false,
     prop = "p_ing_microphonel_01",
-    animDict = "anim@random@shop_clothes@watches",
-    anim = "base",
+    animDict = "anim@mp_player_intselfiethumbs_up",
+    anim = "idle_a",
     object = nil,
 }
 
@@ -16,7 +16,7 @@ local spawnMicObject = function()
 
     MicConfig.object = CreateObject(GetHashKey(MicConfig.prop), coords.x, coords.y, coords.z, 1, 1, 1)
     SetNetworkIdCanMigrate(ObjToNet(MicConfig.object), false)
-    AttachEntityToEntity(MicConfig.object, player, GetPedBoneIndex(player, 60309), 0.1, 0.05, 0.0, 20.0, 110.0, 70.0, 1, 0, 0, 0, 2, 1)
+    AttachEntityToEntity(MicConfig.object, player, GetPedBoneIndex(player, 36029), 0.08, 0.025, 0.034, 30.0, 95.0, 50.0, 1, 0, 0, 0, 2, 1)
 end
 
 local deleteMicObject = function()
