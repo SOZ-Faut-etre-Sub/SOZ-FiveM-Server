@@ -1,6 +1,8 @@
-import { Once } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
+import { Once } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { ClientEvent } from '@public/shared/event';
+
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { CocktailItem, DrinkItem, FoodItem, InventoryItem, LiquorItem } from '../../shared/item';
 import { PlayerMetadata } from '../../shared/player';
@@ -89,9 +91,13 @@ export class ItemNutritionProvider {
                       flags: 49,
                   });
 
-        const { progress } = await this.progressService.progress(source, name, '', 5000, animation, {
+        const { completed, progress } = await this.progressService.progress(source, name, '', 5000, animation, {
             firstProp: prop,
         });
+
+        if (completed) {
+            TriggerClientEvent(ClientEvent.ITEM_USE, source, item.name, item);
+        }
 
         let dyspepsiaLuck = 0.5;
 
