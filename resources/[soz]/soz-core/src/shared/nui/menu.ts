@@ -1,3 +1,5 @@
+import { PlayerPersonalMenuData } from '@public/shared/nui/player';
+
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
@@ -60,6 +62,7 @@ export enum MenuType {
     IllegalShop = 'illegal_shop',
     EasterShop = 'easter_shop',
     TaxiJobMenu = 'taxi_job',
+    PlayerPersonal = 'player_personal',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -91,4 +94,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.IllegalShop]: Map<string, ShopProduct[]>;
     [MenuType.EasterShop]: ShopProduct[];
     [MenuType.TaxiJobMenu]: any;
+    [MenuType.PlayerPersonal]: PlayerPersonalMenuData;
 }
