@@ -399,12 +399,14 @@ type MenuItemSubMenuLinkProps = PropsWithChildren<{
     id: string;
     onSelected?: () => void;
     disabled?: boolean;
+    description?: string;
 }>;
 
 export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = ({
     children,
     id,
     onSelected,
+    description = null,
     disabled = false,
 }) => {
     const location = useLocation();
@@ -424,6 +426,7 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
                 })
             }
             disabled={disabled}
+            description={description}
         >
             {children}
         </MenuItemContainer>
