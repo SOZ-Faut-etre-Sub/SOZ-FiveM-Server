@@ -19,14 +19,6 @@ local function ApplyPlayerModelHash(playerId, hash)
     SetPlayerModel(playerId, hash)
 end
 
-local function ApplyPlayerModel(playerId, model)
-    ApplyPlayerModelHash(playerId, model.Hash)
-
-    local ped = GetPlayerPed(playerId)
-
-    SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, model.ShapeMix, model.SkinMix, 0, false);
-end
-
 local function ApplyPedHair(ped, hair)
     SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, 0, 0);
     SetPedHairColor(ped, hair.HairColor, hair.HairSecondaryColor or 0);
@@ -38,7 +30,13 @@ local function ApplyPedHair(ped, hair)
     SetPedHeadOverlayColor(ped, HeadOverlayType.ChestHair, 1, hair.ChestHairColor, 0);
 end
 
-local function ApplyPedFaceTrait(ped, faceTrait)
+local function ApplyPedFaceTrait(ped, faceTrait, model)
+    if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
+        SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, model.ShapeMix, model.SkinMix, 0, false);
+    else
+        SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, model.ShapeMix, model.SkinMix, 0, false);
+    end
+
     SetPedEyeColor(ped, faceTrait.EyeColor);
     SetPedHeadOverlay(ped, HeadOverlayType.Blemishes, faceTrait.Blemish, 1.0);
     SetPedHeadOverlay(ped, HeadOverlayType.Ageing, faceTrait.Ageing, 1.0);
@@ -163,14 +161,14 @@ local function ApplyPedClothSet(ped, clothSet)
 end
 
 function ApplyPlayerBodySkin(playerId, bodySkin)
-    ApplyPlayerModel(playerId, bodySkin.Model)
+    ApplyPlayerModelHash(playerId, bodySkin.Model.Hash)
 
     -- Get ped id after changing model, as changing the model create a new ped instead of editing the existing one
     local ped = GetPlayerPed(playerId)
     ClearPedDecorations(ped)
 
+    ApplyPedFaceTrait(ped, bodySkin.FaceTrait, bodySkin.Model)
     ApplyPedHair(ped, bodySkin.Hair)
-    ApplyPedFaceTrait(ped, bodySkin.FaceTrait)
     ApplyPedMakeup(ped, bodySkin.Makeup)
     ApplyPedTattoos(ped, bodySkin.Tattoos or {})
     ApplyPedProps(ped, bodySkin)
@@ -247,7 +245,7 @@ function ClothConfigComputeToClothSet(clothConfig)
 
         if maskDrawable ~= mask then
             mask = maskDrawable
-            ApplyPedFaceTrait(PlayerPedId(), PlayerData.skin.FaceTrait)
+            ApplyPedFaceTrait(PlayerPedId(), PlayerData.skin.FaceTrait, PlayerData.skin.Model)
         end
     end
 
