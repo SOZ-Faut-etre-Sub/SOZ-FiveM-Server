@@ -14,6 +14,10 @@ export class ServerStateService {
         this.connectedPlayers[player.source] = player;
     }
 
+    public getPlayer(source: number): PlayerData | null {
+        return this.connectedPlayers[source] || null;
+    }
+
     public updatePlayer(player: PlayerData) {
         if (!this.connectedPlayers[player.source]) {
             return;

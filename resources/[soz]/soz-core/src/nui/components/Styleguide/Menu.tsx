@@ -428,7 +428,12 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
             disabled={disabled}
             description={description}
         >
-            {children}
+            <div className="flex items-center justify-between">
+                <div>{children}</div>
+                <div>
+                    <ChevronRightIcon className="h-5 w-5 p-0.5 ml-2 bg-black/20 rounded-full" />
+                </div>
+            </div>
         </MenuItemContainer>
     );
 };

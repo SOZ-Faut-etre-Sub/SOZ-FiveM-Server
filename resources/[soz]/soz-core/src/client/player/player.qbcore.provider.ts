@@ -31,7 +31,7 @@ export class PlayerQbcoreProvider {
         this.playerService.setPlayer(playerData);
     }
 
-    @Once()
+    @Once(OnceStep.NuiLoaded)
     async onStart(): Promise<void> {
         if (this.playerService.isLoggedIn()) {
             await wait(0);

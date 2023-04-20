@@ -1,41 +1,12 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { wait, waitUntil } from '@core/utils';
 import PCancelable from 'p-cancelable';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
-import { wait, waitUntil } from '../../core/utils';
+import { Animation, AnimationInfo, animationOptionsToFlags, PlayOptions, Scenario } from '../../shared/animation';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
-import { AnimationOptions, animationOptionsToFlags } from '../../shared/progress';
 import { WeaponName } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
-
-export type Animation = {
-    enter?: AnimationInfo;
-    base: AnimationInfo;
-    exit?: AnimationInfo;
-};
-
-export type Scenario = {
-    name: string;
-    duration?: number;
-};
-
-export type AnimationInfo = {
-    dictionary: string;
-    name: string;
-    duration?: number;
-    blendInSpeed?: number;
-    blendOutSpeed?: number;
-    playbackRate?: number;
-    lockX?: boolean;
-    lockY?: boolean;
-    lockZ?: boolean;
-    options?: AnimationOptions;
-};
-
-type PlayOptions = {
-    reset_weapon?: boolean;
-    noClearPedTask?: boolean;
-};
 
 type AnimationTask = {
     animation?: Animation;
@@ -43,6 +14,7 @@ type AnimationTask = {
     play_options?: PlayOptions;
     reject: (reason: any) => void;
     resolve: (cancelled: boolean) => void;
+    props: number[];
 };
 
 @Injectable()
@@ -156,6 +128,7 @@ export class AnimationService {
                 continue;
             }
 
+            const ped = PlayerPedId();
             const animationPromise = new PCancelable<void>(resolve => {
                 this.currentAnimationLoopResolve = resolve;
             });
@@ -169,6 +142,46 @@ export class AnimationService {
             let cancelled = false;
 
             if (this.currentAnimation.animation) {
+                if (this.currentAnimation.animation.props) {
+                    for (const prop of this.currentAnimation.animation.props) {
+                        await this.resourceLoader.loadModel(prop.model);
+
+                        const playerOffset = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0) as Vector3;
+                        const propId = CreateObject(
+                            GetHashKey(prop.model),
+                            playerOffset[0],
+                            playerOffset[1],
+                            playerOffset[2],
+                            true,
+                            true,
+                            false
+                        );
+
+                        SetEntityAsMissionEntity(propId, true, true);
+                        SetNetworkIdCanMigrate(NetworkGetNetworkIdFromEntity(propId), false);
+
+                        AttachEntityToEntity(
+                            propId,
+                            ped,
+                            GetPedBoneIndex(ped, prop.bone),
+                            prop.position[0],
+                            prop.position[1],
+                            prop.position[2],
+                            prop.rotation[0],
+                            prop.rotation[1],
+                            prop.rotation[2],
+                            true,
+                            true,
+                            false,
+                            true,
+                            0,
+                            true
+                        );
+
+                        this.currentAnimation.props.push(propId);
+                    }
+                }
+
                 if (this.currentAnimation.animation.enter) {
                     cancelled = await this.waitUntilCancelled(
                         this.currentAnimation.animation.enter,
@@ -195,14 +208,19 @@ export class AnimationService {
                 cancelled = await this.doScenario(this.currentAnimation.scenario, animationPromise);
             }
 
-            const ped = PlayerPedId();
-
             if (options.reset_weapon) {
                 SetCurrentPedWeapon(ped, GetHashKey(WeaponName.UNARMED), true);
             }
+
             this.currentAnimation.resolve(cancelled);
 
             const noClearPedTask = this.currentAnimation.play_options?.noClearPedTask;
+
+            for (const prop of this.currentAnimation.props) {
+                DetachEntity(prop, false, false);
+                DeleteEntity(prop);
+            }
+
             this.currentAnimation = null;
             this.currentAnimationLoopResolve = null;
 
@@ -241,6 +259,7 @@ export class AnimationService {
                 reject,
                 resolve,
                 play_options: options,
+                props: [],
             });
         });
 
@@ -271,6 +290,7 @@ export class AnimationService {
                 reject,
                 resolve,
                 play_options: options,
+                props: [],
             });
         });
 

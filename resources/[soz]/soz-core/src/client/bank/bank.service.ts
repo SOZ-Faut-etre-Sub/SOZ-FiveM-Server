@@ -1,4 +1,6 @@
 import { Injectable } from '@core/decorators/injectable';
+import { emitQBRpc } from '@core/rpc';
+import { Invoice } from '@public/shared/bank';
 import { getLocationHash } from '@public/shared/locationhash';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { Err, Ok, Result } from '@public/shared/result';
@@ -25,6 +27,18 @@ export class BankService {
                 }
             });
         });
+    }
+
+    public async getInvoices(): Promise<Invoice[]> {
+        return (await emitQBRpc('banking:server:getInvoices')) as Invoice[];
+    }
+
+    public payInvoice(id: number) {
+        TriggerServerEvent('banking:server:PayInvoice', id);
+    }
+
+    public rejectInvoice(id: number) {
+        TriggerServerEvent('banking:server:rejectInvoice', id);
     }
 
     public getBank() {

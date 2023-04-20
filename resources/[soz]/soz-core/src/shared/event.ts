@@ -201,6 +201,7 @@ export enum ServerEvent {
 
     SOUND_GLOBAL_INIT = 'soz-core:server:sound:init',
 
+    PLAYER_SHOW_IDENTITY = 'soz-core:server:player:show-identity',
     POLICE_TAKE_DOWN = 'soz-core:server:takedown',
 
     HELICO_ADD_LIGHT = 'soz-core:server:police:add-light',
@@ -307,6 +308,7 @@ export enum ClientEvent {
     PLAYER_UPDATE_WALK_STYLE = 'soz-core:client:player:update-walk-style',
     PLAYER_REFRESH_WALK_STYLE = 'soz-core:client:player:refresh-walk-style',
     PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
+    PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
 
     PROGRESS_START = 'soz-core:client:progress:start',
 
@@ -470,7 +472,23 @@ export enum NuiEvent {
     UpwDisplayBlips = 'soz-core:nui:job:upw:display-blips',
 
     PanelClosed = 'soz-core:nui:panel:closed',
-    PlayerGetMugshot = 'soz-core:client:player:get-mugshot',
+    PlayerGetMugshot = 'soz-core:nui:player:get-mugshot',
+    PlayerMenuOpenKeys = 'soz-core:nui:player:menu:open-keys',
+    PlayerMenuCardShow = 'soz-core:nui:player:menu:card-show',
+    PlayerMenuCardSee = 'soz-core:nui:player:menu:card-see',
+    PlayerMenuInvoicePay = 'soz-core:nui:player:menu:pay-invoice',
+    PlayerMenuInvoiceDeny = 'soz-core:nui:player:menu:deny-invoice',
+    PlayerMenuClothComponentUpdate = 'soz-core:nui:player:menu:cloth-component-update',
+    PlayerMenuAnimationPlay = 'soz-core:nui:player:menu:animation-play',
+    PlayerMenuAnimationStop = 'soz-core:nui:player:menu:animation-stop',
+    PlayerMenuHudComponentUpdate = 'soz-core:nui:player:menu:hud-component-update',
+    PlayerMenuJobGradeCreate = 'soz-core:nui:player:menu:job-grade-create',
+    PlayerMenuJobGradeDelete = 'soz-core:nui:player:menu:job-grade-delete',
+    PlayerMenuJobGradeSetDefault = 'soz-core:nui:player:menu:job-grade-set-default',
+    PlayerMenuJobGradeUpdateSalary = 'soz-core:nui:player:menu:job-grade-update-salary',
+    PlayerMenuJobGradeUpdateWeight = 'soz-core:nui:player:menu:job-grade-update-weight',
+    PlayerMenuJobGradePermissionUpdate = 'soz-core:nui:player:menu:job-grade-permission-update',
+    PlayerMenuVoipReset = 'soz-core:nui:player:menu:voip-reset',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 

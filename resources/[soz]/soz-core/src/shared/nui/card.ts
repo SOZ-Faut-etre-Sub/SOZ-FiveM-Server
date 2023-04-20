@@ -5,6 +5,8 @@ export interface NuiCardMethodMap {
 }
 
 export type CardData = {
-    type: 'identity' | 'license' | 'health';
+    type: CardType;
     player: PlayerData;
 };
+
+export type CardType = 'identity' | 'license' | 'health';
