@@ -201,15 +201,12 @@ export class AnimationService {
             }
             this.currentAnimation.resolve(cancelled);
 
-            const upperOnly = this.currentAnimation.animation.base.options?.onlyUpperBody;
             this.currentAnimation = null;
             this.currentAnimationLoopResolve = null;
 
             await wait(100);
 
-            if (!upperOnly) {
-                ClearPedTasks(ped);
-            }
+            ClearPedTasks(ped);
             ClearPedSecondaryTask(ped);
         }
     }
