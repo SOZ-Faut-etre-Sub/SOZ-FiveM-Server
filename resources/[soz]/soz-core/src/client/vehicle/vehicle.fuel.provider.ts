@@ -630,11 +630,26 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
-        let consumedFuel = GetVehicleCurrentRpm(vehicle) * 0.084 * multiplier;
+        let multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
+        let rpm = GetVehicleCurrentRpm(vehicle);
+
         if (isVehicleModelElectric(model)) {
-            consumedFuel = consumedFuel / 2;
+            if (rpm < 0.25) {
+                rpm = 0.08;
+            } else if (rpm < 0.35) {
+                rpm = rpm * 0.4;
+            } else if (rpm < 0.55) {
+                rpm = rpm * 0.45;
+            } else if (rpm < 0.7) {
+                rpm = rpm * 0.5;
+            } else if (rpm < 0.8) {
+                rpm = rpm * 0.75;
+            }
+
+            multiplier = 0.5;
         }
+
+        const consumedFuel = rpm * 0.084 * multiplier;
         const consumedOil = consumedFuel / 12;
 
         const state = this.vehicleService.getVehicleState(vehicle);
