@@ -548,8 +548,8 @@ export class VehicleElectricProvider {
             units: [
                 {
                     unit: 'kWh',
-                    start: amount,
-                    end: 60,
+                    start: 0,
+                    end: amount,
                 },
                 {
                     unit: '$',
