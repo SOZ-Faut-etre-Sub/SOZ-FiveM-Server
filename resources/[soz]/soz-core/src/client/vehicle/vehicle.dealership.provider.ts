@@ -1,3 +1,4 @@
+import { wait } from '@public/core/utils';
 import { DealershipConfig, DealershipConfigItem, DealershipJob, DealershipType } from '../../config/dealership';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -383,6 +384,26 @@ export class VehicleDealershipProvider {
         PointCamAtCoord(camera, config.showroom.position[0], config.showroom.position[1], config.showroom.position[2]);
         SetCamActive(camera, true);
         RenderScriptCams(true, true, 1, true, true);
+
+        while (IsCamActive(camera)) {
+            DisablePlayerFiring(PlayerId(), true); // Disable weapon firing
+            DisableControlAction(0, 24, true); // disable attack
+            DisableControlAction(0, 25, true); // disable aim
+            DisableControlAction(0, 29, true); // disable ability secondary (B)
+            DisableControlAction(0, 44, true); // disable cover
+            DisableControlAction(1, 37, true); // disable weapon select
+            DisableControlAction(0, 47, true); // disable weapon
+            DisableControlAction(0, 58, true); // disable weapon
+            DisableControlAction(0, 140, true); // disable melee
+            DisableControlAction(0, 141, true); // disable melee
+            DisableControlAction(0, 142, true); // disable melee
+            DisableControlAction(0, 143, true); // disable melee
+            DisableControlAction(0, 263, true); // disable melee
+            DisableControlAction(0, 264, true); // disable melee
+            DisableControlAction(0, 257, true); // disable melee
+
+            await wait(0);
+        }
     }
 
     public async openJobDealership() {
