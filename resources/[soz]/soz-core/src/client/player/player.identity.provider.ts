@@ -1,8 +1,9 @@
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
-import { NuiEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent } from '../../shared/event';
+import { CardType } from '../../shared/nui/card';
 import { PlayerData } from '../../shared/player';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from './player.service';
@@ -43,5 +44,13 @@ export class PlayerIdentityProvider {
         this.mugshotCache.set(player.citizenid, mugshotTxd);
 
         return mugshotTxd;
+    }
+
+    @OnEvent(ClientEvent.PLAYER_SHOW_IDENTITY)
+    public showIdentity(type: CardType, player: PlayerData) {
+        this.dispatcher.dispatch('card', 'addCard', {
+            type,
+            player,
+        });
     }
 }

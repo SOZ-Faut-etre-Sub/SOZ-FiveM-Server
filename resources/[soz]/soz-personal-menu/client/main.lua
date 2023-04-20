@@ -38,5 +38,5 @@ local function GenerateMenu()
     end
 end
 
-RegisterKeyMapping("personal", "Ouvrir le menu personnel", "keyboard", "F1")
-RegisterCommand("personal", GenerateMenu, false)
+--RegisterKeyMapping("personal", "Ouvrir le menu personnel", "keyboard", "F1")
+--RegisterCommand("personal", GenerateMenu, false)

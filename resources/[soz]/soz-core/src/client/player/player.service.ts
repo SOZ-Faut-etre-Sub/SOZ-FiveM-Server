@@ -1,3 +1,5 @@
+import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Outfit } from '../../shared/cloth';
 import { ClientEvent } from '../../shared/event';
@@ -47,5 +49,22 @@ export class PlayerService {
 
     public resetClothConfig() {
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+    }
+
+    public getPlayersAround(position: Vector3, distance: number): number[] {
+        const players = GetActivePlayers() as number[];
+        const closePlayers = [];
+
+        for (const player of players) {
+            const ped = GetPlayerPed(player);
+            const pedCoords = GetEntityCoords(ped) as Vector3;
+            const playerDistance = getDistance(position, pedCoords);
+
+            if (playerDistance <= distance) {
+                closePlayers.push(player);
+            }
+        }
+
+        return closePlayers;
     }
 }

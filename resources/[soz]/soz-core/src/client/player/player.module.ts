@@ -4,6 +4,7 @@ import { PlayerHealthProvider } from './player.health.provider';
 import { PlayerIdentityProvider } from './player.identity.provider';
 import { PlayerInjuryProvider } from './player.injury.provider';
 import { PlayerInOutProvider } from './player.inout.provider';
+import { PlayerMenuProvider } from './player.menu.provider';
 import { PlayerPositionProvider } from './player.position.provider';
 import { PlayerQbcoreProvider } from './player.qbcore.provider';
 import { PlayerStressProvider } from './player.stress.provider';
@@ -24,6 +25,7 @@ import { ProgressProvider } from './progress.provider';
         PlayerInOutProvider,
         PlayerPositionProvider,
         PlayerIdentityProvider,
+        PlayerMenuProvider,
     ],
 })
 export class PlayerModule {}

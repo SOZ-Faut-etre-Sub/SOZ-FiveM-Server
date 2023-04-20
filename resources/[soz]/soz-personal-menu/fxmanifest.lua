@@ -13,4 +13,8 @@ client_scripts {
     "client/components/*.lua",
 }
 
+server_scripts {
+    "server.lua",
+}
+
 dependencies {"qb-core", "soz-hud", "menuv"}

@@ -1,3 +1,6 @@
+import { PlayerStateService } from '@public/server/player/player.state.service';
+import { ServerStateService } from '@public/server/server.state.service';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Disease } from '../../shared/disease';
 import { ClientEvent } from '../../shared/event';
@@ -8,6 +11,9 @@ import { QBCore } from '../qbcore';
 export class PlayerService {
     @Inject(QBCore)
     private QBCore: QBCore;
+
+    @Inject(ServerStateService)
+    private serverStateService: ServerStateService;
 
     public getPlayerByCitizenId(citizenId: string): PlayerData | null {
         const player = this.QBCore.getPlayerByCitizenId(citizenId);
@@ -26,13 +32,13 @@ export class PlayerService {
     }
 
     public getPlayer(source: number): PlayerData | null {
-        const player = this.QBCore.getPlayer(source);
+        const player = this.serverStateService.getPlayer(source);
 
         if (!player) {
             return null;
         }
 
-        return player.PlayerData;
+        return player;
     }
 
     public getPlayerJobAndGrade(source: number): [string, number] | null {
