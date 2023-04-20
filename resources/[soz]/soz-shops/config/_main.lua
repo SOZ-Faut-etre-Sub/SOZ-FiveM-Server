@@ -19,7 +19,7 @@ else
         local numMakeupColors = GetNumMakeupColors();
 
         for i = 0, numHairColors - 1 do
-            local r, g, b = GetHairRgbColor(i);
+            local r, g, b = GetPedHairRgbColor(i);
 
             table.insert(Config.CharacterComponentColors.Hair, {
                 value = i,
@@ -31,7 +31,7 @@ else
         end
 
         for i = 0, numMakeupColors - 1 do
-            local r, g, b = GetMakeupRgbColor(i);
+            local r, g, b = GetPedMakeupRgbColor(i);
 
             table.insert(Config.CharacterComponentColors.Makeup, {
                 value = i,

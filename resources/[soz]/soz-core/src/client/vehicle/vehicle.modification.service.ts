@@ -607,11 +607,11 @@ export class VehicleModificationService {
         }
 
         if (configuration.dashboardColor !== null) {
-            SetVehicleDashboardColour(vehicle, configuration.dashboardColor);
+            SetVehicleDashboardColor(vehicle, configuration.dashboardColor);
         }
 
         if (configuration.interiorColor !== null) {
-            SetVehicleInteriorColour(vehicle, configuration.interiorColor);
+            SetVehicleInteriorColor(vehicle, configuration.interiorColor);
         }
 
         if (configuration.liveryRoof !== null) {
@@ -732,7 +732,7 @@ export class VehicleModificationService {
             livery,
             wheelType: GetVehicleWheelType(vehicle),
             windowTint: GetVehicleWindowTint(vehicle),
-            xenonColor: GetVehicleXenonLightsColour(vehicle),
+            xenonColor: GetVehicleXenonLightsColor(vehicle),
             liveryRoof: GetVehicleRoofLivery(vehicle),
             plateStyle: GetVehicleNumberPlateTextIndex(vehicle),
             neon: {

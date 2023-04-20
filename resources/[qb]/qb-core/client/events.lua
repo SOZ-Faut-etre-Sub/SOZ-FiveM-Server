@@ -120,19 +120,19 @@ end)
 -- Me command
 
 local function Draw3DText(coords, str)
-    local onScreen, worldX, worldY = World3dToScreen2d(coords.x, coords.y, coords.z)
-	local camCoords = GetGameplayCamCoord()
-	local scale = 200 / (GetGameplayCamFov() * #(camCoords - coords))
+    local onScreen, worldX, worldY = GetScreenCoordFromWorldCoord(coords.x, coords.y, coords.z)
+    local camCoords = GetGameplayCamCoord()
+    local scale = 200 / (GetGameplayCamFov() * #(camCoords - coords))
     if onScreen then
         SetTextScale(1.0, 0.5 * scale)
         SetTextFont(4)
         SetTextColour(255, 255, 255, 255)
         SetTextEdge(2, 0, 0, 0, 150)
-		SetTextProportional(1)
-		SetTextOutline()
-		SetTextCentre(1)
-        SetTextEntry("STRING")
-        AddTextComponentString(str)
+        SetTextProportional(1)
+        SetTextOutline()
+        SetTextCentre(1)
+        BeginTextCommandDisplayText("STRING")
+        AddTextComponentSubstringPlayerName(str)
         DrawText(worldX, worldY)
     end
 end

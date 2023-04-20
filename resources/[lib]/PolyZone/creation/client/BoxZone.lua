@@ -1,7 +1,7 @@
 local function handleInput(useZ, heading, length, width, center)
   if not useZ then
     local scaleDelta, headingDelta = 0.2, 5
-    BlockWeaponWheelThisFrame()
+    HudWeaponWheelIgnoreSelection()
     DisableControlAction(0, 36, true)
     if IsDisabledControlPressed(0, 36) then -- ctrl held down
       scaleDelta, headingDelta = 0.05, 1
@@ -43,7 +43,7 @@ function handleZ(minZ, maxZ)
     delta = 0.05
   end
 
-  BlockWeaponWheelThisFrame()
+  HudWeaponWheelIgnoreSelection()
   DisableControlAction(0, 81, true)
   if IsDisabledControlJustPressed(0, 81) then
     if IsControlPressed(0, 19) then -- alt held down
@@ -70,7 +70,7 @@ end
 
 function boxStart(name, heading, length, width, minHeight, maxHeight)
   local center = GetEntityCoords(PlayerPedId())
-  createdZone = BoxZone:Create(center, length, width, {name = tostring(name)})
+  createdZone = BoxZone:Create(center, length, width, { name = tostring(name) })
   local useZ, minZ, maxZ = false, center.z - 1.0, center.z + 3.0
   if minHeight then
     minZ = center.z - minHeight
@@ -85,9 +85,9 @@ function boxStart(name, heading, length, width, minHeight, maxHeight)
       if IsControlJustPressed(0, 137) then -- Caps Lock pressed
         useZ = not useZ
         if useZ then
-          createdZone.debugColors.walls = {255, 0, 0}
+          createdZone.debugColors.walls = { 255, 0, 0 }
         else
-          createdZone.debugColors.walls = {0, 255, 0}
+          createdZone.debugColors.walls = { 0, 255, 0 }
         end
       end
       heading, length, width, center = handleInput(useZ, heading, length, width, center)
@@ -107,15 +107,18 @@ end
 
 function boxFinish()
   TriggerServerEvent("polyzone:printBox",
-    {name=createdZone.name, center=createdZone.center, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ})
+    { name = createdZone.name, center = createdZone.center, length = createdZone.length, width = createdZone.width,
+      heading = createdZone.offsetRot, minZ = createdZone.minZ, maxZ = createdZone.maxZ })
 end
 
 local function EndZone()
-    if createdZone == nil then
-        return
-    end
+  if createdZone == nil then
+    return
+  end
 
-  TempZone = {name=createdZone.name, center= { x = createdZone.center.x, y = createdZone.center.y, z= createdZone.center.z }, length=createdZone.length, width=createdZone.width, heading=createdZone.offsetRot, minZ=createdZone.minZ, maxZ=createdZone.maxZ}
+  TempZone = { name = createdZone.name,
+    center = { x = createdZone.center.x, y = createdZone.center.y, z = createdZone.center.z }, length = createdZone
+  .length, width = createdZone.width, heading = createdZone.offsetRot, minZ = createdZone.minZ, maxZ = createdZone.maxZ }
   lastCreatedZoneType = createdZoneType
   lastCreatedZone = createdZone
 

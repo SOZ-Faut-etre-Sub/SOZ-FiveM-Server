@@ -4,7 +4,7 @@ DrawPolyZone = {}
 function DrawPolyZone:new()
     self.__index = self
 
-    return setmetatable({zones = {}, displayLabel = false}, self)
+    return setmetatable({ zones = {}, displayLabel = false }, self)
 end
 
 ---
@@ -28,16 +28,16 @@ end
 
 --- @private
 function DrawPolyZone:DrawText3D(x, y, z, text)
-    local onScreen, x, y = World3dToScreen2d(x, y, z)
+    local onScreen, x, y = GetScreenCoordFromWorldCoord(x, y, z)
 
     if onScreen then
         SetTextScale(0.35, 0.35)
         SetTextFont(4)
         SetTextProportional(1)
         SetTextColour(255, 255, 255, 215)
-        SetTextEntry("STRING")
+        BeginTextCommandDisplayText("STRING")
         SetTextCentre(1)
-        AddTextComponentString(text)
+        AddTextComponentSubstringPlayerName(text)
         DrawText(x, y)
     end
 end
@@ -56,13 +56,13 @@ function DrawPolyZone:Draw(zone, extra)
 
     local cp1, cp2, cp3, cp4 = self:CalculatePoints(vector3(zone.x, zone.y, zone.z), zone.sx, zone.sy)
     local p1 = vector2((math.cos(angle) * (cp1.x - zone.x) - math.sin(angle) * (cp1.y - zone.y) + zone.x),
-                       (math.sin(angle) * (cp1.x - zone.x) + math.cos(angle) * (cp1.y - zone.y) + zone.y))
+        (math.sin(angle) * (cp1.x - zone.x) + math.cos(angle) * (cp1.y - zone.y) + zone.y))
     local p2 = vector2((math.cos(angle) * (cp2.x - zone.x) - math.sin(angle) * (cp2.y - zone.y) + zone.x),
-                       (math.sin(angle) * (cp2.x - zone.x) + math.cos(angle) * (cp2.y - zone.y) + zone.y))
+        (math.sin(angle) * (cp2.x - zone.x) + math.cos(angle) * (cp2.y - zone.y) + zone.y))
     local p3 = vector2((math.cos(angle) * (cp3.x - zone.x) - math.sin(angle) * (cp3.y - zone.y) + zone.x),
-                       (math.sin(angle) * (cp3.x - zone.x) + math.cos(angle) * (cp3.y - zone.y) + zone.y))
+        (math.sin(angle) * (cp3.x - zone.x) + math.cos(angle) * (cp3.y - zone.y) + zone.y))
     local p4 = vector2((math.cos(angle) * (cp4.x - zone.x) - math.sin(angle) * (cp4.y - zone.y) + zone.x),
-                       (math.sin(angle) * (cp4.x - zone.x) + math.cos(angle) * (cp4.y - zone.y) + zone.y))
+        (math.sin(angle) * (cp4.x - zone.x) + math.cos(angle) * (cp4.y - zone.y) + zone.y))
 
     local wall1 = {
         bottomLeft = vector3(p1.x, p1.y, minZ),

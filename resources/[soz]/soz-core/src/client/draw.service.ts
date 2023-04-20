@@ -23,8 +23,8 @@ export class DrawService {
         SetTextEdge(2, 0, 0, 0, 255);
         SetTextDropShadow();
         SetTextOutline();
-        SetTextEntry('STRING');
-        AddTextComponentString(text);
+        BeginTextCommandDisplayText('STRING');
+        AddTextComponentSubstringPlayerName(text);
         DrawText(x - width / 2, y - height / 2 + 0.005);
     }
 
@@ -36,9 +36,9 @@ export class DrawService {
             SetTextFont(4);
             SetTextProportional(true);
             SetTextColour(255, 255, 255, 255);
-            SetTextEntry('STRING');
+            BeginTextCommandDisplayText('STRING');
             SetTextCentre(true);
-            AddTextComponentString(text);
+            AddTextComponentSubstringPlayerName(text);
             DrawText(_x, _y);
         }
     }

@@ -1,6 +1,6 @@
 local function handleInput(radius, center, useZ)
   local delta = 0.05
-  BlockWeaponWheelThisFrame()
+  HudWeaponWheelIgnoreSelection()
   DisableControlAction(0, 36, true)
   DisableControlAction(0, 81, true)
   if IsDisabledControlPressed(0, 36) then -- ctrl held down
@@ -33,7 +33,7 @@ end
 function circleStart(name, radius, useZ)
   local center = GetEntityCoords(PlayerPedId())
   useZ = useZ or false
-  createdZone = CircleZone:Create(center, radius, {name = tostring(name), useZ = useZ})
+  createdZone = CircleZone:Create(center, radius, { name = tostring(name), useZ = useZ })
   Citizen.CreateThread(function()
     while createdZone do
       radius, center, useZ = handleInput(radius, center, useZ)
@@ -47,5 +47,5 @@ end
 
 function circleFinish()
   TriggerServerEvent("polyzone:printCircle",
-    {name=createdZone.name, center=createdZone.center, radius=createdZone.radius, useZ=createdZone.useZ})
+    { name = createdZone.name, center = createdZone.center, radius = createdZone.radius, useZ = createdZone.useZ })
 end

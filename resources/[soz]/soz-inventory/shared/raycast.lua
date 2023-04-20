@@ -42,7 +42,7 @@ function ScreenToWorld()
     local cursor = vector2(posX, posY)
     local cam3DPos, forwardDir = ScreenRelToWorld(camPos, camRot, cursor)
     local direction = camPos + forwardDir * raycastLength
-    local rayHandle = StartShapeTestRay(cam3DPos, direction, 30, 0, 0)
+    local rayHandle = StartExpensiveSynchronousShapeTestLosProbe(cam3DPos, direction, 30, 0, 0)
     local _, hit, endCoords, surfaceNormal, entityHit = GetShapeTestResult(rayHandle)
     if entityHit >= 1 then
         entityType = GetEntityType(entityHit)

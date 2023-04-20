@@ -102,8 +102,8 @@ export class StoryProvider {
             SetTextEdge(1, 0, 0, 0, 255);
             SetTextColour(255, 255, 255, 215);
             SetTextJustification(0);
-            SetTextEntry('STRING');
-            AddTextComponentString(this.line);
+            BeginTextCommandDisplayText('STRING');
+            AddTextComponentSubstringPlayerName(this.line);
             DrawText(0.5, 0.95);
 
             DrawRect(0.25 + 0.5 / 2, 0.94 + 0.05 / 2, 0.5, 0.05, 11, 11, 11, 200);

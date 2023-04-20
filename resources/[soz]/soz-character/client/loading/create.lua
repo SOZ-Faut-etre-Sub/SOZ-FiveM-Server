@@ -12,7 +12,7 @@ function CreatePlayer(shutdownLoadingScreen)
 
     -- Select spawn on NUI
     SetNuiFocus(true, true)
-    SendNUIMessage({action = "open"})
+    SendNUIMessage({ action = "open" })
 
     -- set God mode
     TriggerServerEvent("soz-character:server:InCharacterMenu", true)
@@ -21,7 +21,7 @@ end
 RegisterNUICallback("SpawnPlayer", function(data)
     -- Player has choose the spawn
     SetNuiFocus(false, false)
-    SendNUIMessage({action = "close"})
+    SendNUIMessage({ action = "close" })
 
     local charInfo, character = CharacterPrepare()
 
@@ -31,12 +31,13 @@ end)
 
 function SpawnPlayer(SpawnId, skipFocusArea)
     if skipFocusArea ~= true then
-        SetFocusArea(Config.Locations[SpawnId]["Coords"]["X"], Config.Locations[SpawnId]["Coords"]["Y"],
-                     Config.Locations[SpawnId]["Coords"]["Z"] + Config.Locations[SpawnId]["Coords"]["Z-Offset"], 0.0, 0.0, 0.0)
+        SetFocusPosAndVel(Config.Locations[SpawnId]["Coords"]["X"], Config.Locations[SpawnId]["Coords"]["Y"],
+            Config.Locations[SpawnId]["Coords"]["Z"] + Config.Locations[SpawnId]["Coords"]["Z-Offset"], 0.0, 0.0, 0.0)
     end
 
-    SetEntityCoords(PlayerPedId(), Config.Locations[SpawnId]["Coords"]["X"], Config.Locations[SpawnId]["Coords"]["Y"], Config.Locations[SpawnId]["Coords"]["Z"],
-                    0, 0, 0, false)
+    SetEntityCoords(PlayerPedId(), Config.Locations[SpawnId]["Coords"]["X"], Config.Locations[SpawnId]["Coords"]["Y"],
+        Config.Locations[SpawnId]["Coords"]["Z"],
+        0, 0, 0, false)
     SetEntityHeading(PlayerPedId(), Config.Locations[SpawnId]["Coords"]["H"])
     SetPedMaxHealth(PlayerPedId(), 200)
 
@@ -68,7 +69,8 @@ function CharacterCreate(SpawnId, charInfo, character)
     -- Create character with menu (or other interface
     character = CreateCharacterWizard(SpawnId, character)
 
-    local connected = QBCore.Functions.TriggerRpc("soz-character:server:CreatePlayer", charInfo, character.Skin, character.ClothConfig);
+    local connected = QBCore.Functions.TriggerRpc("soz-character:server:CreatePlayer", charInfo, character.Skin,
+    character.ClothConfig);
 
     if connected then
         SetEntityVisible(PlayerPedId(), true)

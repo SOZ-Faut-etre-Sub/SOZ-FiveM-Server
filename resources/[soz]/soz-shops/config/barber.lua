@@ -5,7 +5,7 @@ Config.Products["barber"] = {
             category = "Hair",
             label = "Cheveux",
             overlay = "Hair",
-            components = {["HairType"] = true, ["HairColor"] = true, ["HairSecondaryColor"] = true},
+            components = { ["HairType"] = true,["HairColor"] = true,["HairSecondaryColor"] = true },
             items = Config.CharacterComponentList.HairMale,
         },
         {
@@ -13,7 +13,7 @@ Config.Products["barber"] = {
             category = "Beard",
             label = "Barbe",
             overlay = "Hair",
-            components = {["BeardType"] = true, ["BeardColor"] = true, ["BeardOpacity"] = true},
+            components = { ["BeardType"] = true,["BeardColor"] = true,["BeardOpacity"] = true },
             items = Config.CharacterComponentList.BeardMale,
         },
         {
@@ -37,7 +37,7 @@ Config.Products["barber"] = {
             category = "Hair",
             label = "Cheveux",
             overlay = "Hair",
-            components = {["HairType"] = true, ["HairColor"] = true, ["HairSecondaryColor"] = true},
+            components = { ["HairType"] = true,["HairColor"] = true,["HairSecondaryColor"] = true },
             items = Config.CharacterComponentList.HairFemale,
         },
         {
@@ -45,7 +45,7 @@ Config.Products["barber"] = {
             category = "Blush",
             label = "Blush",
             overlay = "Makeup",
-            components = {["BlushType"] = true, ["BlushColor"] = true, ["BlushOpacity"] = true},
+            components = { ["BlushType"] = true,["BlushColor"] = true,["BlushOpacity"] = true },
             items = Config.CharacterComponentList.Blush,
         },
         {
@@ -53,7 +53,7 @@ Config.Products["barber"] = {
             category = "Lipstick",
             label = "Rouge à lèvre",
             overlay = "Makeup",
-            components = {["LipstickType"] = true, ["LipstickColor"] = true, ["LipstickOpacity"] = true},
+            components = { ["LipstickType"] = true,["LipstickColor"] = true,["LipstickOpacity"] = true },
             items = Config.CharacterComponentList.Lipstick,
         },
         {
@@ -92,7 +92,7 @@ if not IsDuplicityVersion() then
         local numMakeupColors = GetNumMakeupColors();
 
         for i = 0, numHairColors - 1 do
-            local r, g, b = GetHairRgbColor(i);
+            local r, g, b = GetPedHairRgbColor(i);
 
             table.insert(Config.CharacterComponentColors.Hair, {
                 value = i,
@@ -104,7 +104,7 @@ if not IsDuplicityVersion() then
         end
 
         for i = 0, numMakeupColors - 1 do
-            local r, g, b = GetMakeupRgbColor(i);
+            local r, g, b = GetPedMakeupRgbColor(i);
 
             table.insert(Config.CharacterComponentColors.Makeup, {
                 value = i,

@@ -62,9 +62,9 @@ function QBCore.Functions.DrawText(x, y, width, height, scale, r, g, b, a, text)
     SetTextEdge(2, 0, 0, 0, 255)
     SetTextDropShadow()
     SetTextOutline()
-    SetTextEntry('STRING')
-    AddTextComponentString(text)
-    DrawText(x - width / 2, y - height / 2 + 0.005)
+    BeginTextCommandDisplayText('STRING')
+    AddTextComponentSubstringPlayerName(text)
+    EndTextCommandDisplayText(x - width / 2, y - height / 2 + 0.005)
 end
 
 function QBCore.Functions.DrawText3D(x, y, z, text)
@@ -73,11 +73,11 @@ function QBCore.Functions.DrawText3D(x, y, z, text)
     SetTextFont(4)
     SetTextProportional(1)
     SetTextColour(255, 255, 255, 215)
-    SetTextEntry('STRING')
+    BeginTextCommandDisplayText('STRING')
     SetTextCentre(true)
-    AddTextComponentString(text)
+    AddTextComponentSubstringPlayerName(text)
     SetDrawOrigin(x, y, z, 0)
-    DrawText(0.0, 0.0)
+    EndTextCommandDisplayText(0.0, 0.0)
     local factor = (string.len(text)) / 370
     DrawRect(0.0, 0.0 + 0.0125, 0.017 + factor, 0.03, 0, 0, 0, 75)
     ClearDrawOrigin()
@@ -104,10 +104,10 @@ function QBCore.Functions.CreateBlip(id, data)
     if data.scale then SetBlipScale(blip, data.scale) else SetBlipScale(blip, 0.8) end
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(data.name)
+    AddTextComponentSubstringPlayerName(data.name)
     EndTextCommandSetBlipName(blip)
 
-    Blips[id] = {blip = blip, data = data}
+    Blips[id] = { blip = blip, data = data }
     return blip
 end
 
@@ -147,13 +147,13 @@ function QBCore.Functions.RequestModel(model)
 end
 
 function QBCore.Functions.RequestAnimDict(animDict)
-	if not HasAnimDictLoaded(animDict) then
-		RequestAnimDict(animDict)
+    if not HasAnimDictLoaded(animDict) then
+        RequestAnimDict(animDict)
 
-		while not HasAnimDictLoaded(animDict) do
-			Wait(4)
-		end
-	end
+        while not HasAnimDictLoaded(animDict) do
+            Wait(4)
+        end
+    end
 end
 
 function QBCore.Debug(resource, obj, depth)
@@ -177,7 +177,7 @@ function QBCore.Functions.TriggerRpc(name, ...)
 
     QBCore.ServerRPC[eventResponseId] = {
         name = name,
-        args = {...},
+        args = { ... },
         promise = p,
         event = event,
     }
@@ -195,7 +195,8 @@ function QBCore.Functions.TriggerRpc(name, ...)
     return Citizen.Await(p)
 end
 
-function QBCore.Functions.Progressbar(name, label, duration, useWhileDead, canCancel, disableControls, animation, prop, propTwo, onFinish, onCancel)
+function QBCore.Functions.Progressbar(name, label, duration, useWhileDead, canCancel, disableControls, animation, prop,
+                                      propTwo, onFinish, onCancel)
     exports['progressbar']:Progress({
         name = name:lower(),
         duration = exports["soz-upw"]:CalculateDuration(duration),
@@ -224,9 +225,11 @@ end
 function QBCore.Functions.GetVehicles()
     return GetGamePool('CVehicle')
 end
+
 function QBCore.Functions.GetObjects()
     return GetGamePool('CObject')
 end
+
 function QBCore.Functions.GetPlayers()
     return GetActivePlayers()
 end
@@ -390,7 +393,7 @@ function QBCore.Functions.GetClosestBone(entity, list)
     end
 
     if not bone then
-        bone = {id = GetEntityBoneIndexByName(entity, "bodyshell"), type = "remains", name = "bodyshell"}
+        bone = { id = GetEntityBoneIndexByName(entity, "bodyshell"), type = "remains", name = "bodyshell" }
         coords = GetWorldPositionOfEntityBone(entity, bone.id)
         distance = #(coords - playerCoords)
     end
@@ -456,7 +459,7 @@ end
 function QBCore.Functions.SpawnClear(coords, radius)
     local vehicles = GetGamePool('CVehicle')
     local closeVeh = {}
-    for i=1, #vehicles, 1 do
+    for i = 1, #vehicles, 1 do
         local vehicleCoords = GetEntityCoords(vehicles[i])
         local distance = #(vehicleCoords - coords)
         if distance <= radius then
@@ -496,7 +499,7 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
         end
 
         local neons = {}
-        for i = 0,3 do
+        for i = 0, 3 do
             neons[i] = IsVehicleNeonLightEnabled(vehicle, i)
         end
 
@@ -507,7 +510,7 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
 
         local tireBurstState = {}
         for i = 0, 5 do
-           tireBurstState[i] = IsVehicleTyreBurst(vehicle, i, false)
+            tireBurstState[i] = IsVehicleTyreBurst(vehicle, i, false)
         end
 
         local tireBurstCompletely = {}
@@ -516,12 +519,12 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
         end
 
         local _windowStatus = {}
-        for i=0, 7 do
+        for i = 0, 7 do
             _windowStatus[i] = IsVehicleWindowIntact(vehicle, i) == 1
         end
 
         local _doorStatus = {}
-        for i=0, 5 do
+        for i = 0, 5 do
             _doorStatus[i] = IsVehicleDoorDamaged(vehicle, i) == 1
         end
 
@@ -552,7 +555,7 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
             windowTint = GetVehicleWindowTint(vehicle),
             windowStatus = _windowStatus,
             doorStatus = _doorStatus,
-            xenonColor = GetVehicleXenonLightsColour(vehicle),
+            xenonColor = GetVehicleXenonLightsColor(vehicle),
             neonEnabled = neons,
             neonColor = table.pack(GetVehicleNeonLightsColour(vehicle)),
             headlightColor = GetVehicleHeadlightsColour(vehicle),
@@ -619,7 +622,7 @@ function QBCore.Functions.GetVehicleProperties(vehicle)
 end
 
 function QBCore.Functions.SetVehicleProperties(vehicle, props)
-    if DoesEntityExist(vehicle) and  props then
+    if DoesEntityExist(vehicle) and props then
         if props.extras then
             for id, enabled in pairs(props.extras) do
                 if enabled then
@@ -698,7 +701,7 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
             SetVehicleInteriorColor(vehicle, props.interiorColor)
         end
         if props.dashboardColor then
-            SetVehicleDashboardColour(vehicle, props.dashboardColor)
+            SetVehicleDashboardColor(vehicle, props.dashboardColor)
         end
         if props.wheelColor then
             SetVehicleExtraColours(vehicle, props.pearlescentColor or pearlescentColor, props.wheelColor)
@@ -716,7 +719,7 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
         end
         if props.doorStatus then
             for doorIndex, breakDoor in pairs(props.doorStatus) do
-                if breakDoor then SetVehicleDoorBroken(vehicle, tonumber(doorIndex), true)  end
+                if breakDoor then SetVehicleDoorBroken(vehicle, tonumber(doorIndex), true) end
             end
         end
         if props.neonEnabled then
@@ -728,10 +731,10 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
             SetVehicleNeonLightsColour(vehicle, props.neonColor[1], props.neonColor[2], props.neonColor[3])
         end
         if props.headlightColor then
-            SetVehicleHeadlightsColour(vehicle, props.headlightColor)
+            SetVehicleXenonLightsColor(vehicle, props.headlightColor)
         end
         if props.interiorColor then
-            SetVehicleInteriorColour(vehicle, props.interiorColor)
+            SetVehicleInteriorColor(vehicle, props.interiorColor)
         end
         if props.wheelSize then
             SetVehicleWheelSize(vehicle, props.wheelSize)
@@ -912,41 +915,40 @@ function QBCore.Functions.SetVehicleProperties(vehicle, props)
     end
 end
 
-
 local function tablelength(T)
     local count = 0
     for _ in pairs(T) do count = count + 1 end
     return count
-  end
+end
 
 local function equals(o1, o2)
-   if o1 == o2 then
-      return true
-   end
-   if type(o1) == "table" and type(o2) == "table" then
-      if tablelength(o1) ~= tablelength(o2) then
-        return false
-      end
-      for k, v in pairs(o1) do
-         if k ==  "neonEnabled" then
-            for keyn, neon1 in pairs(v) do
-                for keyj, neon2 in pairs(o2[tostring(k)]) do
-                    if tonumber(keyn) == tonumber(keyj) and neon1 ~= neon2 then
-                        return false
+    if o1 == o2 then
+        return true
+    end
+    if type(o1) == "table" and type(o2) == "table" then
+        if tablelength(o1) ~= tablelength(o2) then
+            return false
+        end
+        for k, v in pairs(o1) do
+            if k == "neonEnabled" then
+                for keyn, neon1 in pairs(v) do
+                    for keyj, neon2 in pairs(o2[tostring(k)]) do
+                        if tonumber(keyn) == tonumber(keyj) and neon1 ~= neon2 then
+                            return false
+                        end
                     end
                 end
-            end
-        elseif k == "neonColor" or k == "tyreSmokeColor" then
-            if (tonumber(v[1]) ~= tonumber(o2[tostring(k)][1])) or (tonumber(v[2]) ~= tonumber(o2[tostring(k)][2])) or (tonumber(v[3]) ~= tonumber(o2[tostring(k)][3])) then
+            elseif k == "neonColor" or k == "tyreSmokeColor" then
+                if (tonumber(v[1]) ~= tonumber(o2[tostring(k)][1])) or (tonumber(v[2]) ~= tonumber(o2[tostring(k)][2])) or (tonumber(v[3]) ~= tonumber(o2[tostring(k)][3])) then
+                    return false
+                end
+            elseif not equals(v, o2[tostring(k)]) then
                 return false
             end
-        elseif not equals(v, o2[tostring(k)]) then
-            return false
-         end
-      end
-      return true
-   end
-   return false
+        end
+        return true
+    end
+    return false
 end
 
 function QBCore.Functions.AreModsEquale(old, new)
@@ -955,4 +957,3 @@ function QBCore.Functions.AreModsEquale(old, new)
     end
     return false
 end
-
