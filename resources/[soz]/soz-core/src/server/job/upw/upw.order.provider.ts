@@ -52,7 +52,7 @@ export class UpwOrderProvider {
     public async getCatalog(): Promise<Vehicle[]> {
         const catalog = await this.prismaService.vehicle.findMany({
             where: {
-                category: 'Electric',
+                dealershipId: 'electric',
             },
         });
         return catalog;
