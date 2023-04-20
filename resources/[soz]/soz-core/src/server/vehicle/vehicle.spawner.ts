@@ -300,11 +300,12 @@ export class VehicleSpawner {
         const radio = VEHICLE_HAS_RADIO.includes(vehicle.model);
 
         try {
-            let [netId, entityId] = await this.spawnVehicleFromClient(player, vehicle);
+            const [netId, entityId] = await this.spawnVehicleFromClient(player, vehicle);
 
-            if (!netId || !entityId) {
-                [netId, entityId] = await this.spawnVehicleFromServer(player, vehicle);
-            }
+            // Temporary disable server spawn as it is not working properly
+            // if (!netId || !entityId) {
+            //     [netId, entityId] = await this.spawnVehicleFromServer(player, vehicle);
+            // }
 
             if (!netId || !entityId) {
                 return null;
