@@ -67,6 +67,7 @@ export class PlayerDiseaseProvider {
             });
 
             TriggerScreenblurFadeOut(100);
+            ClearPedTasks(PlayerPedId());
 
             await wait(1000 * 10);
         }
@@ -94,6 +95,8 @@ export class PlayerDiseaseProvider {
                 },
             });
 
+            ClearPedTasks(PlayerPedId());
+
             await wait(45 * 1000);
         }
     }
@@ -111,6 +114,8 @@ export class PlayerDiseaseProvider {
                 },
             });
 
+            ClearPedTasks(PlayerPedId());
+
             await wait(45 * 1000);
         }
     }
@@ -119,6 +124,7 @@ export class PlayerDiseaseProvider {
     public applyCurrentDiseaseEffect(disease: Disease) {
         if (!disease) {
             TriggerScreenblurFadeOut(120);
+            ClearPedTasks(PlayerPedId());
 
             this.currentDisease = false;
             this.currentDiseaseLoop = null;
