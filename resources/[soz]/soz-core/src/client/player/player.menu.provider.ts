@@ -2,7 +2,8 @@ import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { AnimationConfigItem } from '../../shared/animation';
+import { Animation, AnimationConfigItem } from '../../shared/animation';
+import { ClothConfig } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
@@ -12,6 +13,7 @@ import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from './player.service';
+import { PlayerWardrobe } from './player.wardrobe';
 
 @Provider()
 export class PlayerMenuProvider {
@@ -32,6 +34,9 @@ export class PlayerMenuProvider {
 
     @Inject(BankService)
     private bankService: BankService;
+
+    @Inject(PlayerWardrobe)
+    private playerWardrobe: PlayerWardrobe;
 
     @Command('soz_core_toggle_personal_menu', {
         description: 'Ouvrir le menu personnel',
@@ -58,6 +63,8 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuOpenKeys)
     public async openKeys() {
         TriggerServerEvent(ServerEvent.VEHICLE_OPEN_KEYS);
+
+        this.menu.closeMenu();
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuCardShow)
@@ -106,8 +113,16 @@ export class PlayerMenuProvider {
         this.bankService.rejectInvoice(invoiceId);
     }
 
-    @OnNuiEvent(NuiEvent.PlayerMenuClothComponentUpdate)
-    public async clothComponentUpdate({ component, value }) {}
+    @OnNuiEvent(NuiEvent.PlayerMenuClothConfigUpdate)
+    public async clothComponentUpdate({ key, value }: { key: keyof ClothConfig['Config']; value: boolean }) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        await this.playerWardrobe.setClothConfig(key, value);
+    }
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationPlay)
     public async playAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {

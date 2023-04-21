@@ -478,7 +478,7 @@ export enum NuiEvent {
     PlayerMenuCardSee = 'soz-core:nui:player:menu:card-see',
     PlayerMenuInvoicePay = 'soz-core:nui:player:menu:pay-invoice',
     PlayerMenuInvoiceDeny = 'soz-core:nui:player:menu:deny-invoice',
-    PlayerMenuClothComponentUpdate = 'soz-core:nui:player:menu:cloth-component-update',
+    PlayerMenuClothConfigUpdate = 'soz-core:nui:player:menu:cloth-config-update',
     PlayerMenuAnimationPlay = 'soz-core:nui:player:menu:animation-play',
     PlayerMenuAnimationStop = 'soz-core:nui:player:menu:animation-stop',
     PlayerMenuHudComponentUpdate = 'soz-core:nui:player:menu:hud-component-update',

@@ -1,7 +1,10 @@
+import { AnimationService } from '@public/client/animation/animation.service';
+import { Animation } from '@public/shared/animation';
+
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Outfit, WardrobeConfig, WardRobeElements } from '../../shared/cloth';
+import { ClothConfig, Outfit, WardrobeConfig, WardRobeElements } from '../../shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
@@ -29,6 +32,9 @@ export class PlayerWardrobe {
 
     @Inject(ClothingService)
     private clothingService: ClothingService;
+
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     private customOutfit: Outfit;
 
@@ -96,6 +102,73 @@ export class PlayerWardrobe {
     @OnEvent(ClientEvent.PLAYER_SET_JOB_OUTFIT)
     public async onSetJobOutfit(outfit: Outfit, merge: boolean) {
         TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit, merge);
+    }
+
+    public async setClothConfig(key: keyof ClothConfig['Config'], value: boolean) {
+        if (LocalPlayer.state.is_in_hub) {
+            return;
+        }
+
+        const ped = PlayerPedId();
+        FreezeEntityPosition(ped, true);
+
+        let animation: Animation | null;
+
+        switch (key) {
+            case 'ShowHelmet':
+                animation = {
+                    base: {
+                        dictionary: 'veh@common@fp_helmet@',
+                        name: value ? 'take_off_helmet_stand' : 'put_on_helmet',
+                        duration: 2000,
+                        blendInSpeed: 8.0,
+                        blendOutSpeed: -8.0,
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                };
+                break;
+            case 'HideHead':
+            case 'HideGlasses':
+            case 'HideEar':
+            case 'HideLeftHand':
+            case 'HideRightHand':
+                animation = {
+                    base: {
+                        dictionary: 'mp_masks@on_foot',
+                        name: 'put_on_mask',
+                        duration: 2000,
+                        blendInSpeed: 8.0,
+                        blendOutSpeed: -8.0,
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                };
+                break;
+            default:
+                animation = {
+                    base: {
+                        dictionary: 'anim@mp_yacht@shower@male@',
+                        name: 'male_shower_towel_dry_to_get_dressed',
+                        duration: 3000,
+                        blendInSpeed: 8.0,
+                        blendOutSpeed: -8.0,
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                };
+        }
+
+        if (!animation) {
+            return;
+        }
+
+        await this.animationService.playAnimation(animation);
+        FreezeEntityPosition(PlayerPedId(), false);
+        TriggerServerEvent('soz-character:server:UpdateClothConfig', key, value);
     }
 
     @OnNuiEvent<Outfit>(NuiEvent.SetWardrobeOutfit)
