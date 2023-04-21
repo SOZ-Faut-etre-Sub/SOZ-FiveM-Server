@@ -23,7 +23,7 @@ export const TextField = forwardRef<HTMLInputElement, any>((props, ref) => {
                 'bg-ios-700 text-white': config.theme.value === 'dark',
                 'bg-gray-300 text-black': config.theme.value === 'light',
             })}
-            onMouseUp={e => {
+            onFocus={e => {
                 toggleKeys(false);
                 if (props.onFocus) {
                     props.onFocus(e);
@@ -50,7 +50,7 @@ export const NumberField = forwardRef<HTMLInputElement, any>((props, ref) => {
                 'bg-ios-700 text-white': config.theme.value === 'dark',
                 'bg-gray-300 text-black': config.theme.value === 'light',
             })}
-            onMouseUp={e => {
+            onFocus={e => {
                 toggleKeys(false);
                 if (props.onFocus) {
                     props.onFocus(e);
@@ -81,7 +81,7 @@ export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => {
                     'bg-gray-300 text-black': config.theme.value === 'light',
                 }
             )}
-            onMouseUp={e => {
+            onFocus={e => {
                 toggleKeys(false);
                 if (props.onFocus) {
                     props.onFocus(e);
@@ -101,7 +101,7 @@ export const InputBase: React.FC<any> = forwardRef((props, ref) => (
     <input
         ref={ref}
         {...props}
-        onMouseUp={e => {
+        onFocus={e => {
             toggleKeys(false);
             if (props.onFocus) {
                 props.onFocus(e);
