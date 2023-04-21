@@ -34,6 +34,7 @@ export type AnimationInfo = {
 
 type PlayOptions = {
     reset_weapon?: boolean;
+    noClearPedTask?: boolean;
 };
 
 type AnimationTask = {
@@ -201,12 +202,15 @@ export class AnimationService {
             }
             this.currentAnimation.resolve(cancelled);
 
+            const noClearPedTask = this.currentAnimation.play_options?.noClearPedTask;
             this.currentAnimation = null;
             this.currentAnimationLoopResolve = null;
 
             await wait(100);
 
-            ClearPedTasks(ped);
+            if (!noClearPedTask) {
+                ClearPedTasks(ped);
+            }
             ClearPedSecondaryTask(ped);
         }
     }
