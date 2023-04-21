@@ -8,4 +8,7 @@ export interface NuiPLayerMethodMap {
 
 export type PlayerPersonalMenuData = {
     invoices: Invoice[];
+    isCinematicMode: boolean;
+    isCinematicCameraActive: boolean;
+    isHudVisible: boolean;
 };

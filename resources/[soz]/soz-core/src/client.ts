@@ -10,6 +10,7 @@ import { BankModule } from './client/bank/bank.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
 import { HousingModule } from './client/housing/housing.module';
+import { HudModule } from './client/hud/hud.module';
 import { InventoryModule } from './client/inventory/inventory.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
@@ -50,6 +51,7 @@ async function bootstrap() {
     const app = await Application.create(
         ProviderClientLoader,
         RepositoryModule,
+        HudModule,
         WorldModule,
         ObjectModule,
         PlayerModule,

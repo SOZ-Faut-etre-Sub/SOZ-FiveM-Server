@@ -53,6 +53,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     <MenuItemSubMenuLink id="clothing">Gestion de la tenue</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="invoices">Gestion des factures</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
                         Redémarrer la voip
                     </MenuItemButton>
@@ -62,7 +63,32 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
             <MenuClothing />
             <MenuInvoice invoices={data.invoices} />
             <MenuAnimation />
-            <SubMenu id="hud"></SubMenu>
+            <SubMenu id="hud">
+                <MenuTitle banner="https://nui-img/soz/menu_personal">HUD</MenuTitle>
+                <MenuContent>
+                    <MenuItemCheckbox
+                        checked={data.isHudVisible}
+                        description="Active/Désactive le HUD"
+                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetGlobal, { value })}
+                    >
+                        HUD: Global
+                    </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        checked={data.isCinematicMode}
+                        description="Active/Désactive les barres noires"
+                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetCinematicMode, { value })}
+                    >
+                        HUD: Cinématique
+                    </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        checked={data.isCinematicCameraActive}
+                        description="Active/Désactive la caméra cinématique"
+                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetCinematicCameraActive, { value })}
+                    >
+                        Caméra: Cinématique
+                    </MenuItemCheckbox>
+                </MenuContent>
+            </SubMenu>
             <SubMenu id="job"></SubMenu>
             <SubMenu id="voip"></SubMenu>
         </Menu>
