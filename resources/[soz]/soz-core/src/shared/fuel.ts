@@ -25,3 +25,19 @@ export type FuelStation = {
     price: number | null;
     job: JobType | null;
 };
+
+export type UpwCharger = {
+    id: number;
+    station: string;
+    position: Vector4;
+    active: boolean;
+};
+
+export type UpwStation = {
+    id: number;
+    station: string;
+    stock: number;
+    max_stock: number;
+    price: number;
+    position: Vector4;
+};

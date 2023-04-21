@@ -8,7 +8,12 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomEnumValue, getRandomInt } from '../../shared/random';
 import { VehicleModType, VehicleXenonColor, VehicleXenonColorChoices } from '../../shared/vehicle/modification';
-import { VehicleClass, VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
+import {
+    isVehicleModelElectric,
+    VehicleClass,
+    VehicleCondition,
+    VehicleEntityState,
+} from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
@@ -466,10 +471,29 @@ export class VehicleConditionProvider {
             this.currentVehicleStatus.bodyHealth = lastVehicleStatus.bodyHealth - bodyHealthDiff;
             SetVehicleBodyHealth(vehicle, this.currentVehicleStatus.bodyHealth);
         }
+        if (isVehicleModelElectric(GetEntityModel(vehicle))) {
+            this.currentVehicleStatus.tankHealth = 1000;
+            SetVehiclePetrolTankHealth(vehicle, 1000);
+        } else {
+            if (tankHealthDiff > 0.1) {
+                this.currentVehicleStatus.tankHealth = Math.max(lastVehicleStatus.tankHealth - tankHealthDiff, 600);
+                SetVehiclePetrolTankHealth(vehicle, this.currentVehicleStatus.tankHealth);
+            }
+        }
+    }
 
-        if (tankHealthDiff > 0.1) {
-            this.currentVehicleStatus.tankHealth = Math.max(lastVehicleStatus.tankHealth - tankHealthDiff, 600);
-            SetVehiclePetrolTankHealth(vehicle, this.currentVehicleStatus.tankHealth);
+    @Tick(500)
+    public async cancelElectricTankDamage() {
+        const vehicles: number[] = GetGamePool('CVehicle');
+        for (const vehicle of vehicles) {
+            if (GetPlayerServerId(NetworkGetEntityOwner(vehicle)) !== GetPlayerServerId(PlayerId())) {
+                continue;
+            }
+            if (isVehicleModelElectric(GetEntityModel(vehicle))) {
+                SetVehiclePetrolTankHealth(vehicle, 1000);
+                SetVehicleCanLeakOil(vehicle, false);
+                SetVehicleCanLeakPetrol(vehicle, false);
+            }
         }
     }
 
