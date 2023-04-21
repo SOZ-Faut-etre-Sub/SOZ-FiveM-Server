@@ -9,6 +9,7 @@ import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
 import { BankService } from '../bank/bank.service';
+import { HudProvider } from '../hud/hud.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
@@ -38,6 +39,9 @@ export class PlayerMenuProvider {
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
 
+    @Inject(HudProvider)
+    private hudProvider: HudProvider;
+
     @Command('soz_core_toggle_personal_menu', {
         description: 'Ouvrir le menu personnel',
         keys: [
@@ -57,6 +61,9 @@ export class PlayerMenuProvider {
 
         this.menu.openMenu(MenuType.PlayerPersonal, {
             invoices,
+            isCinematicCameraActive: this.hudProvider.isCinematicCameraActive,
+            isCinematicMode: this.hudProvider.isCinematicMode,
+            isHudVisible: this.hudProvider.isHudVisible,
         });
     }
 
@@ -150,8 +157,28 @@ export class PlayerMenuProvider {
         this.animationService.purge();
     }
 
-    @OnNuiEvent(NuiEvent.PlayerMenuHudComponentUpdate)
-    public async hudComponentUpdate({ component, value }) {}
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetGlobal)
+    public async hudComponentSetGlobal({ value }: { value: boolean }) {
+        this.hudProvider.isHudVisible = value;
+        TriggerEvent(
+            'hud:client:OverrideVisibility',
+            this.hudProvider.isHudVisible && !this.hudProvider.isCinematicMode
+        );
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetCinematicMode)
+    public async hudComponentSetCinematicMode({ value }: { value: boolean }) {
+        this.hudProvider.isCinematicMode = value;
+        TriggerEvent(
+            'hud:client:OverrideVisibility',
+            this.hudProvider.isHudVisible && !this.hudProvider.isCinematicMode
+        );
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetCinematicCameraActive)
+    public async hudComponentSetCinematicCameraActive({ value }: { value: boolean }) {
+        this.hudProvider.isCinematicCameraActive = value;
+    }
 
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)
     public async resetVoip() {

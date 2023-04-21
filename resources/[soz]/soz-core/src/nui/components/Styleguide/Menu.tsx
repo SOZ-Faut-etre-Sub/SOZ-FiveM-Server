@@ -365,6 +365,7 @@ type MenuItemCheckboxProps = PropsWithChildren<{
     onChange?: (value: boolean) => void;
     checked?: boolean;
     disabled?: boolean;
+    description?: string;
 }>;
 
 export const MenuItemCheckbox: FunctionComponent<MenuItemCheckboxProps> = ({
@@ -373,6 +374,7 @@ export const MenuItemCheckbox: FunctionComponent<MenuItemCheckboxProps> = ({
     checked = false,
     onSelected,
     disabled = false,
+    description = null,
 }) => {
     const [isChecked, setIsChecked] = useState(checked);
 
@@ -382,7 +384,7 @@ export const MenuItemCheckbox: FunctionComponent<MenuItemCheckboxProps> = ({
     };
 
     return (
-        <MenuItemContainer onSelected={onSelected} onConfirm={onConfirm} disabled={disabled}>
+        <MenuItemContainer description={description} onSelected={onSelected} onConfirm={onConfirm} disabled={disabled}>
             <div className="flex justify-between items-center">
                 <h3>{children}</h3>
                 <div className="border border-white w-5 h-5 rounded bg-black/20">
