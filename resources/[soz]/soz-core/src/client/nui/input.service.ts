@@ -3,7 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent } from '../../shared/event';
 import { AskInput } from '../../shared/nui/input';
-import { isErr, Ok, Result } from '../../shared/result';
+import { Err, isErr, Ok, Result } from '../../shared/result';
 import { NuiDispatch } from './nui.dispatch';
 
 type ValidateInput = (input: string) => Result<any, string>;
@@ -32,6 +32,29 @@ export class InputService {
         this.nuiDispatch.dispatch('input', 'InInput', false);
 
         return value;
+    }
+
+    public async askConfirm(title: string): Promise<boolean> {
+        const confirmText = await this.askInput(
+            {
+                title,
+                defaultValue: '',
+                maxCharacters: 3,
+            },
+            input => {
+                if (input.toLowerCase() === 'oui' || input.toLowerCase() === 'non') {
+                    return Ok(null);
+                }
+
+                return Err('Vous devez écrire "oui" ou "non" pour confirmer');
+            }
+        );
+
+        if (!confirmText) {
+            return false;
+        }
+
+        return confirmText.toLowerCase() === 'oui';
     }
 
     @OnNuiEvent(NuiEvent.InputCancel)

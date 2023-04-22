@@ -30,11 +30,11 @@ export class BankService {
     }
 
     public async getInvoices(): Promise<Invoice[]> {
-        return (await emitQBRpc('banking:server:getInvoices')) as Invoice[];
+        return Object.values(await emitQBRpc('banking:server:getInvoices')) as Invoice[];
     }
 
     public payInvoice(id: number) {
-        TriggerServerEvent('banking:server:PayInvoice', id);
+        TriggerServerEvent('banking:server:payInvoice', id);
     }
 
     public rejectInvoice(id: number) {

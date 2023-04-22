@@ -1,13 +1,14 @@
-import { Fragment, FunctionComponent, ReactElement, useEffect, useState } from 'react';
+import { Fragment, FunctionComponent, ReactElement, useState } from 'react';
 
 import { Animations, Moods, Walks } from '../../../config/animation';
 import { AnimationConfigItem, WalkConfigItem } from '../../../shared/animation';
 import { Invoice } from '../../../shared/bank';
 import { ClothConfig } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
+import { JobPermission } from '../../../shared/job';
 import { CardType } from '../../../shared/nui/card';
 import { MenuType } from '../../../shared/nui/menu';
-import { PlayerPersonalMenuData, Shortcut } from '../../../shared/nui/player';
+import { JobMenuData, PlayerPersonalMenuData, Shortcut } from '../../../shared/nui/player';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
 import { useNuiEvent } from '../../hook/nui';
@@ -54,6 +55,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     <MenuItemSubMenuLink id="invoices">Gestion des factures</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
+                    {data.job.enabled && <MenuItemSubMenuLink id="job">Gestion de votre métier</MenuItemSubMenuLink>}
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
                         Redémarrer la voip
                     </MenuItemButton>
@@ -89,8 +91,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     </MenuItemCheckbox>
                 </MenuContent>
             </SubMenu>
-            <SubMenu id="job"></SubMenu>
-            <SubMenu id="voip"></SubMenu>
+            <MenuJob data={data.job} />
         </Menu>
     );
 };
@@ -304,7 +305,7 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({ shortcuts: intia
             <SubMenu id="favorite_list">
                 <MenuTitle banner="https://nui-img/soz/menu_personal">Mes raccourcis d'animations</MenuTitle>
                 <MenuContent>
-                    {Object.keys(shortcuts).map((key, i) => {
+                    {Object.keys(shortcuts).map(key => {
                         const shortcut = shortcuts[key];
 
                         if (!shortcut.animation) {
@@ -490,4 +491,116 @@ const createWalkLeafItem = (item: WalkConfigItem): ReactElement => {
 
 const createWalkItemMenu = (item: WalkConfigItem, prefix: string): [ReactElement, ReactElement[]] => {
     return createRecursiveSubMenu(item, prefix, createWalkLeafItem);
+};
+
+type MenuJobProps = {
+    data: JobMenuData;
+};
+
+const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
+    if (!data.enabled) {
+        return null;
+    }
+
+    return (
+        <>
+            <SubMenu id="job">
+                <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion du métier {data.job.label}</MenuTitle>
+                <MenuContent>
+                    <MenuItemButton
+                        onConfirm={() => {
+                            fetchNui(NuiEvent.PlayerMenuJobGradeCreate, {
+                                job: data.job.id,
+                            });
+                        }}
+                    >
+                        Ajouter un grade
+                    </MenuItemButton>
+
+                    {data.job.grades.map((grade, i) => {
+                        return (
+                            <MenuItemSubMenuLink key={i} id={`job_grade_${grade.id}`}>
+                                {grade.name} {!!grade.is_default && '(par défaut)'}
+                            </MenuItemSubMenuLink>
+                        );
+                    })}
+                </MenuContent>
+            </SubMenu>
+            {data.job.grades
+                .sort((a, b) => {
+                    return b.weight - a.weight;
+                })
+                .map(grade => {
+                    return (
+                        <SubMenu id={`job_grade_${grade.id}`} key={`job_grade_${grade.id}`}>
+                            <MenuTitle banner="https://nui-img/soz/menu_personal">
+                                Gestion du grade {grade.name}
+                            </MenuTitle>
+                            <MenuContent>
+                                <MenuItemButton
+                                    onConfirm={() => {
+                                        fetchNui(NuiEvent.PlayerMenuJobGradeUpdateWeight, {
+                                            gradeId: grade.id,
+                                        });
+                                    }}
+                                >
+                                    Changer l'importance ({grade.weight})
+                                </MenuItemButton>
+                                <MenuItemButton
+                                    onConfirm={() => {
+                                        fetchNui(NuiEvent.PlayerMenuJobGradeUpdateSalary, {
+                                            gradeId: grade.id,
+                                        });
+                                    }}
+                                >
+                                    Changer le salaire ({grade.salary}$)
+                                </MenuItemButton>
+                                {!grade.is_default && (
+                                    <MenuItemButton
+                                        onConfirm={() => {
+                                            fetchNui(NuiEvent.PlayerMenuJobGradeSetDefault, {
+                                                gradeId: grade.id,
+                                            });
+                                        }}
+                                    >
+                                        Définir comme grade par défaut
+                                    </MenuItemButton>
+                                )}
+                                <MenuItemButton
+                                    onConfirm={() => {
+                                        fetchNui(NuiEvent.PlayerMenuJobGradeDelete, {
+                                            grade,
+                                        });
+                                    }}
+                                >
+                                    Supprimer le grade
+                                </MenuItemButton>
+                                {Object.keys(data.job.permissions).map(permission => {
+                                    const permissionValue = data.job.permissions[permission];
+                                    const checked = grade.permissions
+                                        ? grade.permissions.includes(permission as JobPermission)
+                                        : false;
+
+                                    return (
+                                        <MenuItemCheckbox
+                                            onChange={value => {
+                                                fetchNui(NuiEvent.PlayerMenuJobGradePermissionUpdate, {
+                                                    gradeId: grade.id,
+                                                    permission,
+                                                    value,
+                                                });
+                                            }}
+                                            key={permission}
+                                            checked={checked}
+                                        >
+                                            {permissionValue.label}
+                                        </MenuItemCheckbox>
+                                    );
+                                })}
+                            </MenuContent>
+                        </SubMenu>
+                    );
+                })}
+        </>
+    );
 };

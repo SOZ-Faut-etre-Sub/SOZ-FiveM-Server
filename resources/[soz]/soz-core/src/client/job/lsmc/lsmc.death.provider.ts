@@ -1,7 +1,7 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4, wait } from '@core/utils';
-import { Animation, AnimationService } from '@public/client/animation/animation.service';
+import { AnimationService } from '@public/client/animation/animation.service';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
@@ -18,6 +18,8 @@ import { BedLocations, FailoverLocation, KillData, KillerVehData, PatientClothes
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
+
+import { Animation } from '../../../shared/animation';
 
 const deathAnim: Animation = {
     base: {

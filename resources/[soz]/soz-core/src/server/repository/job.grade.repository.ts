@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { JobGrade } from '../../shared/job';
+import { JobGrade, JobPermission } from '../../shared/job';
 import { PrismaService } from '../database/prisma.service';
 import { Repository } from './repository';
 
@@ -12,7 +12,7 @@ export class JobGradeRepository extends Repository<JobGrade[]> {
         return (await this.prismaService.job_grades.findMany()).map(jobGrade => ({
             ...jobGrade,
             is_default: jobGrade.is_default === 1,
-            permissions: JSON.parse(jobGrade.permissions) as string[],
+            permissions: JSON.parse(jobGrade.permissions) as JobPermission[],
         }));
     }
 }
