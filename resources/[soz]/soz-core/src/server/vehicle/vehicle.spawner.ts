@@ -80,6 +80,8 @@ const VEHICLE_HAS_RADIO = [
     'boxville',
     'youga3',
     'rumpo4',
+    'bcsogt500',
+    'lspdgallardo',
 ];
 
 @Provider()
