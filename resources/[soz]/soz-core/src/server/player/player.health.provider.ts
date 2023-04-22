@@ -1,12 +1,10 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Rpc } from '../../core/decorators/rpc';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { PlayerData, PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
+import { PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
-import { RpcServerEvent } from '../../shared/rpc';
 import { Hud } from '../hud';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
@@ -215,16 +213,6 @@ export class PlayerHealthProvider {
         }
     }
 
-    @OnEvent(ServerEvent.PLAYER_SHOW_HEALTH_BOOK)
-    public async showHealthBook(source: number, target: number): Promise<void> {
-        TriggerClientEvent(ClientEvent.PLAYER_REQUEST_HEALTH_BOOK, target, source, 'see');
-    }
-
-    @OnEvent(ServerEvent.IDENTITY_HIDE_AROUND)
-    public async identityHideAround(source: number, target: number): Promise<void> {
-        TriggerClientEvent(ClientEvent.IDENTITY_HIDE, target);
-    }
-
     @OnEvent(ServerEvent.PLAYER_DO_YOGA)
     public async doYoga(source: number): Promise<void> {
         const player = this.playerService.getPlayer(source);
@@ -244,17 +232,6 @@ export class PlayerHealthProvider {
         this.notifier.notify(source, 'Vous vous sentez moins ~g~angoissé~s~.', 'success');
 
         await this.increaseStress(source, this.yogaAndNaturalMultiplier(source) * -8);
-    }
-
-    @Rpc(RpcServerEvent.PLAYER_GET_HEALTH_BOOK)
-    public getHealthBook(source: number, target: number): PlayerData | null {
-        const targetPlayer = this.playerService.getPlayer(target);
-
-        if (targetPlayer === null) {
-            return null;
-        }
-
-        return targetPlayer;
     }
 
     @OnEvent(ServerEvent.PLAYER_HEALTH_GYM_SUBSCRIBE)

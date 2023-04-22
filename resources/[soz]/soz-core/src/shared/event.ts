@@ -82,7 +82,6 @@ export enum ServerEvent {
 
     PLAYER_NUTRITION_LOOP = 'soz-core:server:player:nutrition:loop',
     PLAYER_NUTRITION_CHECK = 'soz-core:server:player:nutrition:check',
-    PLAYER_SHOW_HEALTH_BOOK = 'soz-core:server:player:health:request-health-book',
     PLAYER_HEALTH_SET_EXERCISE_COMPLETED = 'soz-core:server:player:health:set-exercise-completed',
     PLAYER_HEALTH_GYM_SUBSCRIBE = 'soz-core:server:player:health:gym-subscribe',
 
@@ -132,8 +131,6 @@ export enum ServerEvent {
     QBCORE_TOGGLE_DUTY = 'QBCore:ToggleDuty',
     QBCORE_SET_DUTY = 'QBCore:Server:SetDuty',
     QBCORE_SET_METADATA = 'QBCore:Server:SetMetaData',
-
-    IDENTITY_HIDE_AROUND = 'soz-identity:server:hide-around',
 
     LSMC_CLEAR_DISEASE = 'lsmc:maladie:ClearDisease',
     LSMC_SET_CURRENT_DISEASE = 'lsmc:maladie:server:SetCurrentDisease',
@@ -222,6 +219,7 @@ export enum ServerEvent {
 
 export enum ClientEvent {
     ADMIN_OPEN_MENU = 'soz-core:client:admin:openMenu',
+    ANIMATION_SURRENDER = 'soz-core:client:animation:surrender',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
@@ -254,7 +252,6 @@ export enum ClientEvent {
 
     HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
 
-    IDENTITY_HIDE = 'soz-identity:client:hide',
     ITEM_USE = 'soz-core:client:item:use',
 
     PLAYER_ON_DEATH = 'ems:client:onDeath',
@@ -303,7 +300,6 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_YOGA = 'soz-core:client:player:health:yoga',
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
-    PLAYER_REQUEST_HEALTH_BOOK = 'soz-core:client:player:health:request-health-book',
     PLAYER_UPDATE = 'soz-core:client:player:update',
     PLAYER_UPDATE_WALK_STYLE = 'soz-core:client:player:update-walk-style',
     PLAYER_REFRESH_WALK_STYLE = 'soz-core:client:player:refresh-walk-style',

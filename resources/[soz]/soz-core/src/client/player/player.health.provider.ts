@@ -509,26 +509,6 @@ export class PlayerHealthProvider {
         }
     }
 
-    @OnEvent(ClientEvent.PLAYER_REQUEST_HEALTH_BOOK)
-    async requestHealthBook(target: number, action: 'see' | 'show'): Promise<void> {
-        if (action === 'show') {
-            TriggerServerEvent(ServerEvent.PLAYER_SHOW_HEALTH_BOOK, target);
-
-            return;
-        }
-
-        const targetPlayer = await emitRpc<PlayerData | null>(RpcServerEvent.PLAYER_GET_HEALTH_BOOK, target);
-
-        if (null !== targetPlayer) {
-            this.nuiDispatch.dispatch('health_book', 'ShowHealthBook', targetPlayer);
-        }
-    }
-
-    @OnEvent(ClientEvent.IDENTITY_HIDE)
-    async identityHide(): Promise<void> {
-        this.nuiDispatch.dispatch('health_book', 'HideHealthBook');
-    }
-
     @Once()
     async onStart(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {

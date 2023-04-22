@@ -10,7 +10,6 @@ import { NuiAudioMethodMap } from './audio';
 import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
-import { NuiHealthBookMethodMap } from './health_book';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
 import { NuiMaskShopMethodMap } from './mask_shop';
@@ -36,7 +35,6 @@ export interface NuiMethodMap {
     clipboard: NuiClipboardMethodMap;
     ffs_recipe_book: NuiFfsRecipeBookMethodMap;
     global: NuiGlobalMethodMap;
-    health_book: NuiHealthBookMethodMap;
     input: NuiInputMethodMap;
     mask_shop: NuiMaskShopMethodMap;
     menu: NuiMenuMethodMap;

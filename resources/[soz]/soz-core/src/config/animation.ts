@@ -1,7 +1,8 @@
 import { AnimationConfigList, MoodConfigList, WalkConfigList } from '../shared/animation';
 
 export const Walks: WalkConfigList = [
-    { type: 'walk', name: 'Démarche par défaut', walk: '' },
+    { type: 'walk', name: 'Démarche par défaut Homme', walk: 'move_m@multiplayer' },
+    { type: 'walk', name: 'Démarche par défaut Femme', walk: 'move_f@multiplayer' },
     {
         type: 'category',
         name: 'Alcool',
@@ -16836,7 +16837,7 @@ export const Animations: AnimationConfigList = [
                         name: 'Se rendre',
                         rightLabel: null,
                         icon: null,
-                        event: 'soz-personal-menu:client:animation:surrender',
+                        event: 'soz-core:client:animation:surrender',
                     },
                 ],
             },
