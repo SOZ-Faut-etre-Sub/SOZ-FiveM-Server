@@ -29,6 +29,8 @@ export class PlayerAnimationProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
+    private animationPlaying = new Set<string>();
+
     @Command('animation_stop', {
         description: "Stop l'animation en cours",
         keys: [
@@ -173,6 +175,12 @@ export class PlayerAnimationProvider {
     }
 
     public async doAnimationShortcut(key: string) {
+        if (this.animationPlaying.has(key)) {
+            this.animationService.stop();
+
+            return;
+        }
+
         const animationJson = GetResourceKvpString(key);
         let animation = null;
 
@@ -188,7 +196,9 @@ export class PlayerAnimationProvider {
             return;
         }
 
-        return this.playAnimation({ animationItem: animation });
+        this.animationPlaying.add(key);
+        await this.playAnimation({ animationItem: animation });
+        this.animationPlaying.delete(key);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationSetWalk)
@@ -315,7 +325,7 @@ export class PlayerAnimationProvider {
         }
 
         if (animationItem.type === 'scenario') {
-            return this.animationService.playScenario(animationItem.scenario);
+            return await this.animationService.playScenario(animationItem.scenario);
         }
 
         if (animationItem.type === 'event') {
