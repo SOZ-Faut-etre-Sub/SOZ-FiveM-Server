@@ -106,7 +106,7 @@ export class VehicleGarageProvider {
             UPDATE vehicles v SET v.stock = 3 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Helicopters';
             UPDATE vehicles v SET v.stock = 99 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Cycles';
             UPDATE vehicles v SET v.stock = 2 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.dealership_id = 'luxury';
-            UPDATE vehicles v SET v.stock = 50 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Electric';
+            UPDATE vehicles v SET v.stock = 100 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Electric';
             UPDATE vehicles v SET v.stock = 0 WHERE v.stock < 0;
         `
             .split(';')
