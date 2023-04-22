@@ -84,16 +84,16 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.MDR]: 'Mandatory',
 };
 
+export type JobPermissionData = {
+    label: string;
+};
+
 export type Job = {
     // Must use the getJobs method to generate the id from the object.
     id: JobType;
     grades: JobGrade[];
     label: string;
-    permissions: {
-        [key: string]: {
-            label: string;
-        };
-    };
+    permissions: Partial<Record<JobPermission, JobPermissionData>>;
     platePrefix?: string;
     // TODO: Complete when necessary
     temporary?: any;
@@ -112,7 +112,7 @@ export type JobGrade = {
     salary: number;
     owner: number;
     is_default: boolean;
-    permissions: string[];
+    permissions: JobPermission[];
 };
 
 export type JobCloakroomZoneData = {

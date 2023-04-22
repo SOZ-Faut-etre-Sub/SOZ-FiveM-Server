@@ -1,4 +1,3 @@
-import { Transition } from '@headlessui/react';
 import { FunctionComponent } from 'react';
 
 import { PlayerData, PlayerLicenceType } from '../../../shared/player';

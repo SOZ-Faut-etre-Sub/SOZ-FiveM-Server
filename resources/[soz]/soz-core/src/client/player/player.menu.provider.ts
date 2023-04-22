@@ -3,8 +3,6 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
-import { player } from '../../nui/models/player';
-import { Animation, AnimationConfigItem } from '../../shared/animation';
 import { ClothConfig } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
@@ -12,6 +10,7 @@ import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
 import { BankService } from '../bank/bank.service';
 import { HudProvider } from '../hud/hud.provider';
+import { JobMenuProvider } from '../job/job.menu.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
@@ -48,6 +47,9 @@ export class PlayerMenuProvider {
     @Inject(PlayerAnimationProvider)
     private playerAnimationProvider: PlayerAnimationProvider;
 
+    @Inject(JobMenuProvider)
+    private jobMenuProvider: JobMenuProvider;
+
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
@@ -74,6 +76,7 @@ export class PlayerMenuProvider {
             isCinematicMode: this.hudProvider.isCinematicMode,
             isHudVisible: this.hudProvider.isHudVisible,
             shortcuts: this.playerAnimationProvider.getShortcuts(),
+            job: this.jobMenuProvider.getJobMenuData(),
         });
     }
 

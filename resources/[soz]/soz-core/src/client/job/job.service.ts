@@ -11,13 +11,17 @@ export class JobService {
     }
 
     public getJobs(): Job[] {
-        const jobs = this.SozJobCore.Jobs as { [key in JobType]: Job };
+        const jobs = this.getJobsFromSozJobCore();
         if (!jobs) {
             return [];
         }
         return Object.entries(jobs)
             .sort((a, b) => a[1].label.localeCompare(b[1].label))
-            .map(([key, value]) => ({ ...value, id: key as JobType }));
+            .map(([key, value]) => ({
+                ...value,
+                id: key as JobType,
+                grades: Array.isArray(value.grades) ? value.grades : Object.values(value.grades),
+            }));
     }
 
     public hasPermission(job: string, permission: JobPermission): boolean {
@@ -25,12 +29,22 @@ export class JobService {
     }
 
     public getJob(jobId: string): Job | null {
-        const jobs = this.SozJobCore.Jobs as { [key in JobType]: Job };
+        const jobs = this.getJobsFromSozJobCore();
 
         if (!jobs) {
             return null;
         }
 
-        return jobs[jobId] || null;
+        const job = jobs[jobId] || null;
+
+        if (job && !Array.isArray(job.grades)) {
+            job.grades = Object.values(job.grades);
+        }
+
+        return job;
+    }
+
+    private getJobsFromSozJobCore(): { [key in JobType]: Job } {
+        return exports['soz-jobs'].GetCoreObject().Jobs;
     }
 }
