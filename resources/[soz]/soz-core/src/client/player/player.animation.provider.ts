@@ -1,9 +1,9 @@
 import { Command } from '../../core/decorators/command';
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { AnimationConfigItem, MoodConfigItem, WalkConfigItem } from '../../shared/animation';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Shortcut } from '../../shared/nui/player';
 import { Err, Ok } from '../../shared/result';
 import { AnimationService } from '../animation/animation.service';
@@ -28,6 +28,19 @@ export class PlayerAnimationProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Command('animation_stop', {
+        description: "Stop l'animation en cours",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationStop() {
+        return this.animationService.purge();
+    }
 
     @Command('animation_shortcut_01', {
         description: "Lancer l'animation personnalisée 01",
@@ -312,5 +325,71 @@ export class PlayerAnimationProvider {
         }
 
         return false;
+    }
+
+    @OnEvent(ClientEvent.ANIMATION_SURRENDER)
+    public async playBustedAnimation() {
+        const ped = PlayerPedId();
+
+        if (IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3)) {
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@arrests@busted',
+                    name: 'exit',
+                    duration: 3000,
+                    options: {
+                        freezeLastFrame: true,
+                    },
+                },
+            });
+
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@arrests',
+                    name: 'kneeling_arrest_get_up',
+                },
+            });
+        } else {
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@arrests',
+                    name: 'idle_2_hands_up',
+                    duration: 4000,
+                    options: {
+                        freezeLastFrame: true,
+                    },
+                },
+            });
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@arrests',
+                    name: 'kneeling_arrest_idle',
+                    duration: 500,
+                    options: {
+                        freezeLastFrame: true,
+                    },
+                },
+            });
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@arrests@busted',
+                    name: 'enter',
+                    duration: 1000,
+                    options: {
+                        freezeLastFrame: true,
+                    },
+                },
+            });
+
+            this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@arrests@busted',
+                    name: 'idle_a',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            });
+        }
     }
 }

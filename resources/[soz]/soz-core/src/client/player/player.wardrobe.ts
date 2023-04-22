@@ -119,7 +119,7 @@ export class PlayerWardrobe {
                 animation = {
                     base: {
                         dictionary: 'veh@common@fp_helmet@',
-                        name: value ? 'take_off_helmet_stand' : 'put_on_helmet',
+                        name: value ? 'put_on_helmet' : 'take_off_helmet_stand',
                         duration: 2000,
                         blendInSpeed: 8.0,
                         blendOutSpeed: -8.0,

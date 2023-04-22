@@ -13,7 +13,6 @@ import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
 import { RepairApp } from './Bennys/RepairApp';
 import { CardApp } from './Card/CardApp';
-import { HealthBookApp } from './HealthBook/HealthBookApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
@@ -40,7 +39,6 @@ export const App: FunctionComponent = () => {
                 <StateApp />
                 <MenuApp />
                 <CardApp />
-                <HealthBookApp />
                 <AudioApp />
                 <ProgressApp />
                 <PanelApp />
