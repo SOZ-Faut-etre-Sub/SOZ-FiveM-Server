@@ -6,10 +6,12 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
+import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { InputService } from '../nui/input.service';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleService } from './vehicle.service';
 
@@ -23,6 +25,9 @@ export class VehicleMenuProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(InputService)
+    private inputService: InputService;
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
@@ -57,6 +62,31 @@ export class VehicleMenuProvider {
         if (speedLimit === -1) {
             const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
             speedLimit = currentSpeed;
+        }
+        // -2 is for custom speed
+        else if (speedLimit === -2) {
+            const customSpeedLimit = await this.inputService.askInput(
+                {
+                    title: 'Limiter la vitesse à :',
+                    maxCharacters: 4,
+                    defaultValue: '',
+                },
+                (input: string) => {
+                    const value = parseInt(input);
+    
+                    if (isNaN(value) || value < 0) {
+                        return Err('Veuillez entrer un nombre supérieur à 0');
+                    }
+    
+                    return Ok(true);
+                }
+            );
+
+            if (!customSpeedLimit) {
+                return false;
+            }
+            
+            speedLimit = parseInt(customSpeedLimit);
         }
 
         this.vehicleService.updateVehicleState(vehicle, { speedLimit });
