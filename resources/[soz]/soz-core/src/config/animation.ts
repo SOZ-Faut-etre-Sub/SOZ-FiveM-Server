@@ -1,4 +1,99 @@
-import { AnimationConfigList } from '../shared/animation';
+import { AnimationConfigList, MoodConfigList, WalkConfigList } from '../shared/animation';
+
+export const Walks: WalkConfigList = [
+    { type: 'walk', name: 'Démarche par défaut', walk: '' },
+    {
+        type: 'category',
+        name: 'Alcool',
+        items: [
+            {
+                type: 'walk',
+                name: 'Trop bu',
+                walk: 'move_m@drunk@a',
+            },
+            {
+                type: 'walk',
+                name: 'Éméché',
+                walk: 'move_m@drunk@slightlydrunk',
+            },
+            {
+                type: 'walk',
+                name: 'Bourré',
+                walk: 'move_m@buzzed',
+            },
+            {
+                type: 'walk',
+                name: 'Déglingué',
+                walk: 'move_m@drunk@verydrunk',
+            },
+        ],
+    },
+    {
+        type: 'category',
+        name: 'Charme',
+        items: [
+            { type: 'walk', name: 'Allumeuse', walk: 'move_f@maneater' },
+            { type: 'walk', name: 'Charmante', walk: 'move_f@sexy@a' },
+            { type: 'walk', name: 'Flambeur', walk: 'move_m@sassy' },
+            { type: 'walk', name: 'Playboy', walk: 'move_m@swagger' },
+            { type: 'walk', name: 'Sexy', walk: 'move_f@heels@d' },
+        ],
+    },
+    {
+        type: 'category',
+        name: 'Street',
+        items: [
+            { type: 'walk', name: 'Assuré', walk: 'move_m@tough_guy@' },
+            { type: 'walk', name: 'Confiante', walk: 'move_f@tough_guy@' },
+            { type: 'walk', name: 'Frimeur', walk: 'move_m@shadyped@a' },
+            { type: 'walk', name: 'Gangster chill', walk: 'move_m@gangster@generic' },
+            { type: 'walk', name: 'Gangster lent', walk: 'move_m@gangster@var_e' },
+            { type: 'walk', name: 'Gangster', walk: 'move_m@gangster@ng' },
+            { type: 'walk', name: 'Gangster pressé', walk: 'move_m@gangster@var_i' },
+            { type: 'walk', name: 'Gros dur lent', walk: 'anim_group_move_ballistic' },
+            { type: 'walk', name: 'Gros dur rapide', walk: 'move_m@fire' },
+        ],
+    },
+    {
+        type: 'category',
+        name: 'Émotions',
+        items: [
+            { type: 'walk', name: 'Arrogant', walk: 'move_f@arrogant@a' },
+            { type: 'walk', name: 'Dépité', walk: 'move_m@hobo@a' },
+            { type: 'walk', name: 'Déprimé', walk: 'move_m@gangster@var_f' },
+            { type: 'walk', name: 'Déterminé', walk: 'move_m@brave' },
+            { type: 'walk', name: 'Enjoué', walk: 'anim@move_m@grooving@' },
+            { type: 'walk', name: 'Fier', walk: 'move_m@posh@' },
+            { type: 'walk', name: 'Apeuré', walk: 'move_f@flee@a' },
+            { type: 'walk', name: 'Inquiet', walk: 'move_f@scared' },
+            { type: 'walk', name: 'Maniéré', walk: 'move_f@posh@' },
+            { type: 'walk', name: 'Triste', walk: 'move_m@sad@a' },
+            { type: 'walk', name: 'Énervé', walk: 'move_p_m_zero_janitor' },
+        ],
+    },
+    { type: 'walk', name: 'Boiteux', walk: 'move_heist_lester' },
+    { type: 'walk', name: 'Marche très lente', walk: 'move_m@casual@d' },
+    { type: 'walk', name: 'Marche lente', walk: 'move_m@casual@a' },
+    { type: 'walk', name: 'Marche', walk: 'move_m@casual@b' },
+    { type: 'walk', name: 'Marche rapide', walk: 'move_m@casual@f' },
+    { type: 'walk', name: 'Marche très rapide', walk: 'move_m@casual@c' },
+    { type: 'walk', name: 'Menotté', walk: 'move_m@prisoner_cuffed' },
+    { type: 'walk', name: 'Pressé', walk: 'move_f@hurry@a' },
+    { type: 'walk', name: 'Trottiner', walk: 'move_m@quick' },
+    { type: 'walk', name: 'Accroupi', walk: 'move_ped_crouched' },
+];
+
+export const Moods: MoodConfigList = [
+    { name: 'Humeur par défaut', mood: 'mood_normal_1' },
+    { name: 'Suffisant', mood: 'mood_smug_1' },
+    { name: 'Stressé', mood: 'mood_stressed_1' },
+    { name: 'Pas content', mood: 'mood_drivefast_1' },
+    { name: 'Blessé', mood: 'mood_injured_1' },
+    { name: 'En colère', mood: 'mood_angry_1' },
+    { name: 'Bourré', mood: 'mood_drunk_1' },
+    { name: 'Joyeux', mood: 'mood_happy_1' },
+    { name: 'Boudeur', mood: 'mood_sulk_1' },
+];
 
 export const Animations: AnimationConfigList = [
     {

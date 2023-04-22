@@ -1,0 +1,316 @@
+import { Command } from '../../core/decorators/command';
+import { OnNuiEvent } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
+import { AnimationConfigItem, MoodConfigItem, WalkConfigItem } from '../../shared/animation';
+import { NuiEvent, ServerEvent } from '../../shared/event';
+import { Shortcut } from '../../shared/nui/player';
+import { Err, Ok } from '../../shared/result';
+import { AnimationService } from '../animation/animation.service';
+import { InputService } from '../nui/input.service';
+import { NuiDispatch } from '../nui/nui.dispatch';
+import { ProgressService } from '../progress.service';
+import { PlayerService } from './player.service';
+
+@Provider()
+export class PlayerAnimationProvider {
+    @Inject(AnimationService)
+    private animationService: AnimationService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
+
+    @Inject(InputService)
+    private inputService: InputService;
+
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
+    @Command('animation_shortcut_01', {
+        description: "Lancer l'animation personnalisée 01",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut01() {
+        return this.doAnimationShortcut('animation_shortcut_01');
+    }
+
+    @Command('animation_shortcut_02', {
+        description: "Lancer l'animation personnalisée 02",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut02() {
+        return this.doAnimationShortcut('animation_shortcut_02');
+    }
+
+    @Command('animation_shortcut_03', {
+        description: "Lancer l'animation personnalisée 03",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut03() {
+        return this.doAnimationShortcut('animation_shortcut_03');
+    }
+
+    @Command('animation_shortcut_04', {
+        description: "Lancer l'animation personnalisée 04",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut04() {
+        return this.doAnimationShortcut('animation_shortcut_04');
+    }
+
+    @Command('animation_shortcut_05', {
+        description: "Lancer l'animation personnalisée 05",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut05() {
+        return this.doAnimationShortcut('animation_shortcut_05');
+    }
+
+    @Command('animation_shortcut_06', {
+        description: "Lancer l'animation personnalisée 06",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut06() {
+        return this.doAnimationShortcut('animation_shortcut_06');
+    }
+
+    @Command('animation_shortcut_07', {
+        description: "Lancer l'animation personnalisée 07",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut07() {
+        return this.doAnimationShortcut('animation_shortcut_07');
+    }
+
+    @Command('animation_shortcut_08', {
+        description: "Lancer l'animation personnalisée 08",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut08() {
+        return this.doAnimationShortcut('animation_shortcut_08');
+    }
+
+    @Command('animation_shortcut_09', {
+        description: "Lancer l'animation personnalisée 09",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut09() {
+        return this.doAnimationShortcut('animation_shortcut_09');
+    }
+
+    @Command('animation_shortcut_10', {
+        description: "Lancer l'animation personnalisée 10",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: '',
+            },
+        ],
+    })
+    public async animationShortcut10() {
+        return this.doAnimationShortcut('animation_shortcut_10');
+    }
+
+    public async doAnimationShortcut(key: string) {
+        const animationJson = GetResourceKvpString(key);
+        let animation = null;
+
+        if (animationJson) {
+            try {
+                animation = JSON.parse(animationJson) as AnimationConfigItem;
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        if (!animation) {
+            return;
+        }
+
+        return this.playAnimation({ animationItem: animation });
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuAnimationSetWalk)
+    public async setWalkAnimation({ walkItem }: { walkItem: WalkConfigItem }) {
+        if (walkItem.type === 'category') {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.PLAYER_SET_CURRENT_WALKSTYLE, walkItem.walk);
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuAnimationSetMood)
+    public async setMoodAnimation({ moodItem }: { moodItem: MoodConfigItem }) {
+        TriggerServerEvent('QBCore:Server:SetMetaData', 'mood', moodItem.mood);
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuAnimationFavorite)
+    public async favoriteAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {
+        const input = await this.inputService.askInput(
+            {
+                title: 'Entrer le numéro du raccourci voulu (entre 1 et 10), laissez vide pour annuler',
+                defaultValue: '',
+                maxCharacters: 2,
+            },
+            value => {
+                const number = parseInt(value, 10);
+
+                if (number < 1 || number > 10) {
+                    return Err('Le numéro doit être compris entre 1 et 10');
+                }
+
+                return Ok(number);
+            }
+        );
+
+        if (!input) {
+            return;
+        }
+
+        const number = parseInt(input, 10);
+        const key = `animation_shortcut_${number.toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+        })}`;
+
+        const animationJson = JSON.stringify(animationItem);
+
+        SetResourceKvp(key, animationJson);
+        this.dispatchShortcuts();
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuAnimationFavoriteDelete)
+    public async deleteFavoriteAnimation({ key }: { key: string }) {
+        DeleteResourceKvp(key);
+        this.dispatchShortcuts();
+    }
+
+    private dispatchShortcuts() {
+        this.nuiDispatch.dispatch('player', 'UpdateAnimationShortcuts', this.getShortcuts());
+    }
+
+    public getShortcuts(): Record<string, Shortcut> {
+        const shortcuts = {};
+
+        for (let i = 1; i <= 10; i++) {
+            const key = `animation_shortcut_${i.toLocaleString('en-US', {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+            })}`;
+
+            const animationJson = GetResourceKvpString(key);
+            let animation = null;
+
+            if (animationJson) {
+                try {
+                    animation = JSON.parse(animationJson) as AnimationConfigItem;
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
+            shortcuts[key] = {
+                name: `${i.toLocaleString('en-US', {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false,
+                })} - ${animation?.name || 'Aucune'}`,
+                animation,
+            };
+        }
+
+        return shortcuts;
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuAnimationPlay)
+    public async playAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return false;
+        }
+
+        const ped = PlayerPedId();
+        const state = LocalPlayer.state;
+
+        if (
+            IsPedSittingInAnyVehicle(ped) ||
+            state.isEcorted ||
+            state.isEscorting ||
+            state.isInHospital ||
+            player.metadata.isdead ||
+            player.metadata.inlaststand ||
+            IsPedRagdoll(ped) ||
+            this.progressService.isDoingAction()
+        ) {
+            return false;
+        }
+
+        if (animationItem.type === 'category') {
+            return false;
+        }
+
+        if (animationItem.type === 'animation') {
+            return await this.animationService.playAnimation(animationItem.animation);
+        }
+
+        if (animationItem.type === 'scenario') {
+            return this.animationService.playScenario(animationItem.scenario);
+        }
+
+        if (animationItem.type === 'event') {
+            TriggerEvent(animationItem.event);
+
+            return true;
+        }
+
+        return false;
+    }
+}

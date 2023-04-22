@@ -35,6 +35,29 @@ export type AnimationConfigItem =
 
 export type AnimationConfigList = AnimationConfigItem[];
 
+export type WalkConfigBase = {
+    type: 'walk';
+    name: string;
+    walk: string;
+};
+
+export type WalkConfigCategory = {
+    type: 'category';
+    name: string;
+    items: WalkConfigItem[];
+};
+
+export type WalkConfigItem = WalkConfigBase | WalkConfigCategory;
+
+export type WalkConfigList = WalkConfigItem[];
+
+export type MoodConfigItem = {
+    name: string;
+    mood: string;
+};
+
+export type MoodConfigList = MoodConfigItem[];
+
 export type Animation = {
     props?: AnimationProps[];
     enter?: AnimationInfo;

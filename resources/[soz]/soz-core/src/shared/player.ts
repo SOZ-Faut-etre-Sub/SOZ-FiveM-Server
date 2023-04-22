@@ -129,6 +129,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     godmode: boolean;
     isdead: boolean;
     ishandcuffed: boolean;
+    inlaststand: boolean;
     health: number;
     hunger: number;
     thirst: number;
