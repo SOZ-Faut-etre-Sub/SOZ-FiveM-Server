@@ -1,16 +1,16 @@
-import { JSXElement } from '@swc/core';
-import { Fragment, FunctionComponent, ReactElement } from 'react';
+import { Fragment, FunctionComponent, ReactElement, useEffect, useState } from 'react';
 
-import { Animations } from '../../../config/animation';
-import { AnimationConfigItem } from '../../../shared/animation';
+import { Animations, Moods, Walks } from '../../../config/animation';
+import { AnimationConfigItem, WalkConfigItem } from '../../../shared/animation';
 import { Invoice } from '../../../shared/bank';
 import { ClothConfig } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
 import { CardType } from '../../../shared/nui/card';
 import { MenuType } from '../../../shared/nui/menu';
-import { PlayerPersonalMenuData } from '../../../shared/nui/player';
+import { PlayerPersonalMenuData, Shortcut } from '../../../shared/nui/player';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
+import { useNuiEvent } from '../../hook/nui';
 import {
     MainMenu,
     Menu,
@@ -62,7 +62,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
             <MenuIdentity />
             <MenuClothing />
             <MenuInvoice invoices={data.invoices} />
-            <MenuAnimation />
+            <MenuAnimation shortcuts={data.shortcuts} />
             <SubMenu id="hud">
                 <MenuTitle banner="https://nui-img/soz/menu_personal">HUD</MenuTitle>
                 <MenuContent>
@@ -231,7 +231,13 @@ type MenuInvoiceProps = {
     invoices: Invoice[];
 };
 
-const MenuInvoice: FunctionComponent<MenuInvoiceProps> = ({ invoices }) => {
+const MenuInvoice: FunctionComponent<MenuInvoiceProps> = ({ invoices: invoicesIntial }) => {
+    const [invoices, setInvoices] = useState(invoicesIntial);
+
+    useNuiEvent('player', 'UpdateInvoices', (invoices: Invoice[]) => {
+        setInvoices(invoices);
+    });
+
     return (
         <SubMenu id="invoices">
             <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion des factures</MenuTitle>
@@ -239,17 +245,18 @@ const MenuInvoice: FunctionComponent<MenuInvoiceProps> = ({ invoices }) => {
                 {invoices.map((invoice, i) => (
                     <MenuItemSelect
                         title={invoice.label}
+                        description={`Payer ${invoice.amount}$ pour ${invoice.emitterName}`}
                         key={i}
                         onConfirm={(i, value) => {
                             if (value === 'pay') {
                                 fetchNui(NuiEvent.PlayerMenuInvoicePay, { invoiceId: invoice.id });
-                            } else {
+                            } else if (value === 'deny') {
                                 fetchNui(NuiEvent.PlayerMenuInvoiceDeny, { invoiceId: invoice.id });
                             }
                         }}
                     >
                         <MenuItemSelectOption value="pay">Payer</MenuItemSelectOption>
-                        <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                        <MenuItemSelectOption value="deny">Refuser</MenuItemSelectOption>
                     </MenuItemSelect>
                 ))}
             </MenuContent>
@@ -257,15 +264,81 @@ const MenuInvoice: FunctionComponent<MenuInvoiceProps> = ({ invoices }) => {
     );
 };
 
-const MenuAnimation: FunctionComponent = () => {
+type MenuAnimationProps = {
+    shortcuts: Record<string, Shortcut>;
+};
+
+const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({ shortcuts: intialShortcuts }) => {
+    const [shortcuts, setShortcuts] = useState(intialShortcuts);
+
+    useNuiEvent('player', 'UpdateAnimationShortcuts', shortcuts => {
+        setShortcuts(shortcuts);
+    });
+
+    return (
+        <>
+            <SubMenu id="animations">
+                <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion des animations</MenuTitle>
+                <MenuContent>
+                    <MenuItemSubMenuLink id="animation_list">Animations</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="walk_list">Démarches</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="mood_list">Humeurs</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="favorite_list">Mes animations</MenuItemSubMenuLink>
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id="mood_list">
+                <MenuTitle banner="https://nui-img/soz/menu_personal">Humeurs</MenuTitle>
+                <MenuContent>
+                    {Moods.map((mood, i) => (
+                        <MenuItemButton
+                            onConfirm={() => {
+                                fetchNui(NuiEvent.PlayerMenuAnimationSetMood, { moodItem: mood });
+                            }}
+                            key={i}
+                        >
+                            {mood.name}
+                        </MenuItemButton>
+                    ))}
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id="favorite_list">
+                <MenuTitle banner="https://nui-img/soz/menu_personal">Mes raccourcis d'animations</MenuTitle>
+                <MenuContent>
+                    {Object.keys(shortcuts).map((key, i) => {
+                        const shortcut = shortcuts[key];
+
+                        if (!shortcut.animation) {
+                            return <MenuItemButton key={key}>{shortcut.name}</MenuItemButton>;
+                        }
+
+                        return (
+                            <MenuItemSelect
+                                title={shortcut.name}
+                                onConfirm={(i, value) => {
+                                    if (value === 'delete') {
+                                        fetchNui(NuiEvent.PlayerMenuAnimationFavoriteDelete, { key });
+                                    }
+                                }}
+                                key={key}
+                            >
+                                <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                            </MenuItemSelect>
+                        );
+                    })}
+                </MenuContent>
+            </SubMenu>
+            <MenuWalkList />
+            <MenuAnimationList />
+        </>
+    );
+};
+
+const MenuAnimationList: FunctionComponent = () => {
     const elements = [];
     const subMenus = [];
-    const playAnimation = (animationItem: AnimationConfigItem) => {
-        fetchNui(NuiEvent.PlayerMenuAnimationPlay, { animationItem });
-    };
 
     for (const item of Animations) {
-        const [element, newSubMenus] = createAnimationItemMenu(item, 'animation', playAnimation);
+        const [element, newSubMenus] = createAnimationItemMenu(item, 'animation');
 
         elements.push(element);
         subMenus.push(...newSubMenus);
@@ -273,8 +346,8 @@ const MenuAnimation: FunctionComponent = () => {
 
     return (
         <>
-            <SubMenu id="animations">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion des animations</MenuTitle>
+            <SubMenu id="animation_list">
+                <MenuTitle banner="https://nui-img/soz/menu_personal">Liste des animations</MenuTitle>
                 <MenuContent>
                     <MenuItemButton
                         onConfirm={() => {
@@ -295,24 +368,47 @@ const MenuAnimation: FunctionComponent = () => {
     );
 };
 
-const createAnimationItemMenu = (
-    item: AnimationConfigItem,
+const MenuWalkList: FunctionComponent = () => {
+    const elements = [];
+    const subMenus = [];
+
+    for (const item of Walks) {
+        const [element, newSubMenus] = createWalkItemMenu(item, 'walk');
+
+        elements.push(element);
+        subMenus.push(...newSubMenus);
+    }
+
+    return (
+        <>
+            <SubMenu id="walk_list">
+                <MenuTitle banner="https://nui-img/soz/menu_personal">Liste des démarches</MenuTitle>
+                <MenuContent>
+                    {elements.map((element, index) => {
+                        return <Fragment key={index}>{element}</Fragment>;
+                    })}
+                </MenuContent>
+            </SubMenu>
+            {subMenus.map((element, index) => {
+                return <Fragment key={index}>{element}</Fragment>;
+            })}
+        </>
+    );
+};
+
+type ItemCategory<T> = {
+    type: string;
+    name: string;
+    items?: T[];
+};
+
+const createRecursiveSubMenu = <T extends ItemCategory<T>>(
+    item: T,
     prefix: string,
-    playAnimation: (item: AnimationConfigItem) => void
+    createLeafItem: (item: T) => ReactElement
 ): [ReactElement, ReactElement[]] => {
-    if (item.type === 'animation' || item.type === 'scenario' || item.type === 'event') {
-        return [
-            <MenuItemButton onConfirm={() => playAnimation(item)}>
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                        {item.icon && <div className="mr-2">{item.icon}</div>}
-                        <div>{item.name}</div>
-                    </div>
-                    <div>{item.rightLabel}</div>
-                </div>
-            </MenuItemButton>,
-            [],
-        ];
+    if (item.type !== 'category') {
+        return [createLeafItem(item), []];
     }
 
     if (item.type === 'category') {
@@ -320,7 +416,7 @@ const createAnimationItemMenu = (
         const subMenus = [];
 
         for (const subItem of item.items) {
-            const [element, newSubMenus] = createAnimationItemMenu(subItem, `${prefix}_${item.name}`, playAnimation);
+            const [element, newSubMenus] = createRecursiveSubMenu(subItem, `${prefix}_${item.name}`, createLeafItem);
 
             elements.push(element);
             subMenus.push(...newSubMenus);
@@ -341,4 +437,57 @@ const createAnimationItemMenu = (
     }
 
     return [null, []];
+};
+
+const createAnimationLeafItem = (item: AnimationConfigItem): ReactElement => {
+    if (item.type === 'category') {
+        return null;
+    }
+
+    return (
+        <MenuItemSelect
+            onConfirm={(i, value) => {
+                if (value === 'play') {
+                    fetchNui(NuiEvent.PlayerMenuAnimationPlay, { animationItem: item });
+                } else if (value === 'favorite') {
+                    fetchNui(NuiEvent.PlayerMenuAnimationFavorite, {
+                        animationItem: item,
+                    });
+                }
+            }}
+            title={
+                <div className="flex items-center">
+                    {item.icon && <div className="mr-2">{item.icon}</div>}
+                    <div>{item.name}</div>
+                </div>
+            }
+        >
+            <MenuItemSelectOption value="play">Jouer</MenuItemSelectOption>
+            <MenuItemSelectOption value="favorite">Mettre en Raccourci</MenuItemSelectOption>
+        </MenuItemSelect>
+    );
+};
+
+const createAnimationItemMenu = (item: AnimationConfigItem, prefix: string): [ReactElement, ReactElement[]] => {
+    return createRecursiveSubMenu(item, prefix, createAnimationLeafItem);
+};
+
+const createWalkLeafItem = (item: WalkConfigItem): ReactElement => {
+    if (item.type === 'category') {
+        return null;
+    }
+
+    return (
+        <MenuItemButton
+            onConfirm={() => {
+                fetchNui(NuiEvent.PlayerMenuAnimationSetWalk, { walkItem: item });
+            }}
+        >
+            {item.name}
+        </MenuItemButton>
+    );
+};
+
+const createWalkItemMenu = (item: WalkConfigItem, prefix: string): [ReactElement, ReactElement[]] => {
+    return createRecursiveSubMenu(item, prefix, createWalkLeafItem);
 };

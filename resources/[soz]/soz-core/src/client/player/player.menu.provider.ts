@@ -2,6 +2,8 @@ import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { wait } from '../../core/utils';
+import { player } from '../../nui/models/player';
 import { Animation, AnimationConfigItem } from '../../shared/animation';
 import { ClothConfig } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
@@ -13,6 +15,7 @@ import { HudProvider } from '../hud/hud.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
+import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerService } from './player.service';
 import { PlayerWardrobe } from './player.wardrobe';
 
@@ -42,6 +45,12 @@ export class PlayerMenuProvider {
     @Inject(HudProvider)
     private hudProvider: HudProvider;
 
+    @Inject(PlayerAnimationProvider)
+    private playerAnimationProvider: PlayerAnimationProvider;
+
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
     @Command('soz_core_toggle_personal_menu', {
         description: 'Ouvrir le menu personnel',
         keys: [
@@ -64,6 +73,7 @@ export class PlayerMenuProvider {
             isCinematicCameraActive: this.hudProvider.isCinematicCameraActive,
             isCinematicMode: this.hudProvider.isCinematicMode,
             isHudVisible: this.hudProvider.isHudVisible,
+            shortcuts: this.playerAnimationProvider.getShortcuts(),
         });
     }
 
@@ -113,11 +123,19 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuInvoicePay)
     public async invoicePay({ invoiceId }) {
         this.bankService.payInvoice(invoiceId);
+
+        await wait(200);
+        const invoices = await this.bankService.getInvoices();
+        this.nuiDispatch.dispatch('player', 'UpdateInvoices', invoices);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuInvoiceDeny)
     public async invoiceDeny({ invoiceId }) {
         this.bankService.rejectInvoice(invoiceId);
+
+        await wait(200);
+        const invoices = await this.bankService.getInvoices();
+        this.nuiDispatch.dispatch('player', 'UpdateInvoices', invoices);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuClothConfigUpdate)
@@ -129,27 +147,6 @@ export class PlayerMenuProvider {
         }
 
         await this.playerWardrobe.setClothConfig(key, value);
-    }
-
-    @OnNuiEvent(NuiEvent.PlayerMenuAnimationPlay)
-    public async playAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {
-        if (animationItem.type === 'category') {
-            return;
-        }
-
-        if (animationItem.type === 'animation') {
-            this.animationService.playAnimation(animationItem.animation);
-            return;
-        }
-
-        if (animationItem.type === 'scenario') {
-            this.animationService.playScenario(animationItem.scenario);
-            return;
-        }
-
-        if (animationItem.type === 'event') {
-            TriggerEvent(animationItem.event);
-        }
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationStop)

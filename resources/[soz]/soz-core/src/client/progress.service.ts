@@ -1,9 +1,10 @@
 import { AudioService } from '@public/client/nui/audio.service';
+import { animationOptionsToFlags } from '@public/shared/animation';
 import PCancelable from 'p-cancelable';
 
 import { Inject, Injectable } from '../core/decorators/injectable';
 import { wait } from '../core/utils';
-import { animationOptionsToFlags, ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
+import { ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
 import { AnimationService } from './animation/animation.service';
 import { Notifier } from './notifier';
 
