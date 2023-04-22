@@ -55,7 +55,7 @@
             <AIHandling>AVERAGE</AIHandling>
             <SubHandlingData>
                 <Item type="CCarHandlingData">
-                    <strAdvancedFlags>0</strAdvancedFlags>
+                    <strAdvancedFlags>2000000</strAdvancedFlags>
                     <fBackEndPopUpCarImpulseMult value="0.075000"/>
                     <fBackEndPopUpBuildingImpulseMult value="0.030000"/>
                     <fBackEndPopUpMaxDeltaSpeed value="0.250000"/>
