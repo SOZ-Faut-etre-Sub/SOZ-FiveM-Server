@@ -83,7 +83,7 @@
             <swankness>SWANKNESS_5</swankness>
             <maxNum value="4"/>
             <flags>FLAG_HAS_LIVERY FLAG_SPORTS FLAG_RICH_CAR FLAG_AVERAGE_CAR FLAG_NO_BROKEN_DOWN_SCENARIO
-                FLAG_COUNT_AS_FACEBOOK_DRIVEN FLAG_HAS_INTERIOR_EXTRAS
+                FLAG_COUNT_AS_FACEBOOK_DRIVEN FLAG_HAS_INTERIOR_EXTRAS FLAG_EXTRAS_REQUIRE FLAG_EXTRAS_STRONG
             </flags>
             <type>VEHICLE_TYPE_CAR</type>
             <plateType>VPT_FRONT_AND_BACK_PLATES</plateType>
@@ -93,7 +93,11 @@
             <trailers/>
             <additionalTrailers/>
             <drivers/>
-            <extraIncludes/>
+            <extraIncludes>
+                <item>EXTRA_1</item>
+                <item>EXTRA_2</item>
+                <item>EXTRA_3</item>
+            </extraIncludes>
             <doorsWithCollisionWhenClosed/>
             <driveableDoors/>
             <bumpersNeedToCollideWithMap value="false"/>
