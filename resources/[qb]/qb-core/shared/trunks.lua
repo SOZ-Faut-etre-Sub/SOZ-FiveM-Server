@@ -38,6 +38,7 @@ QBShared.Trunks = {
     [GetHashKey('polmav')] = { slot = 5, weight = 200000 },
     [GetHashKey('lspdbana1')] = { slot = 5, weight = 80000 },
     [GetHashKey('lspdbana2')] = { slot = 5, weight = 80000 },
+    [GetHashKey('lspdgallardo')] = { slot = 5, weight = 40000 },
 
     --- BCSO
     [GetHashKey('sheriff3')] = { slot = 5, weight = 60000 },
@@ -48,6 +49,7 @@ QBShared.Trunks = {
     [GetHashKey('sheriffcara')] = { slot = 15, weight = 100000 },
     [GetHashKey('bcsobana1')] = { slot = 5, weight = 80000 },
     [GetHashKey('bcsobana2')] = { slot = 5, weight = 80000 },
+    [GetHashKey('bcsogt500')] = { slot = 5, weight = 40000 },
 
     --- LSMC
     [GetHashKey('ambulance')] = { slot = 5, weight = 100000 },
