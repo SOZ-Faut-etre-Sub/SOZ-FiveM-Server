@@ -1749,8 +1749,8 @@
             <plateProbabilities>
                 <Probabilities>
                     <Item>
-                        <Name>Standard White</Name>
-                        <Value value="100" />
+                        <Name>Police guv plate</Name>
+                        <Value value="100"/>
                     </Item>
                 </Probabilities>
             </plateProbabilities>
