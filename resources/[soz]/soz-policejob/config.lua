@@ -43,6 +43,7 @@ Config.SirenVehicle = {
     [GetHashKey("policeb2")] = true,
     [GetHashKey("lspdbana1")] = true,
     [GetHashKey("lspdbana2")] = true,
+    [GetHashKey("lspdgallardo")] = true,
     --- BCSO
     [GetHashKey("sheriff")] = true,
     [GetHashKey("sheriff2")] = true,
@@ -53,6 +54,7 @@ Config.SirenVehicle = {
     [GetHashKey("sheriffcara")] = true,
     [GetHashKey("bcsobana1")] = true,
     [GetHashKey("bcsobana2")] = true,
+    [GetHashKey("bcsogt500")] = true,
     --- LSPD / BCSO
     [GetHashKey("pbus")] = true,
     --- FBI
