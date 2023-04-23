@@ -102,7 +102,7 @@ export class TaxiMissionService {
             return;
         }
 
-        if (this.state.horodateurStarted) {
+        if (this.state.horodateurStarted && this.validVehicle()) {
             const start = this.lastLocation;
             this.lastLocation = GetEntityCoords(PlayerPedId());
 
@@ -123,15 +123,15 @@ export class TaxiMissionService {
     }
 
     public onToggleStart() {
+        this.setHorodateurStarted(!this.state.horodateurStarted);
+    }
+
+    public setHorodateurStarted(status: boolean) {
         if (!this.validVehicle()) {
             this.notifier.notify("Vous n'êtes pas dans un taxi", 'error');
             return;
         }
 
-        this.setHorodateurStarted(!this.state.horodateurStarted);
-    }
-
-    public setHorodateurStarted(status: boolean) {
         this.lastLocation = GetEntityCoords(PlayerPedId());
         this.updateState({
             horodateurStarted: status,
