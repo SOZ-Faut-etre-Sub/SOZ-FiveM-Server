@@ -4,17 +4,17 @@
         <Item type="CHandlingData">
             <handlingName>BCSOGT500</handlingName>
       <fMass value="2000.000000" />
-      <fInitialDragCoeff value="11.0000" />
+      <fInitialDragCoeff value="6.0000" />
       <fPercentSubmerged value="85.000000" />
       <vecCentreOfMassOffset x="0.000000" y="-0.125000" z="-0.2000000" />
       <vecInertiaMultiplier x="1.000000" y="1.300000" z="1.200000" />
       <fDriveBiasFront value="0.500000" />
       <nInitialDriveGears value="1" />
-      <fInitialDriveForce value="0.3000000" />
+      <fInitialDriveForce value="0.5000000" />
       <fDriveInertia value="1.000000" />
       <fClutchChangeRateScaleUpShift value="9.000000" />
       <fClutchChangeRateScaleDownShift value="9.000000" />
-      <fInitialDriveMaxFlatVel value="170.500000" />
+      <fInitialDriveMaxFlatVel value="200.500000" />
       <fBrakeForce value="1.60000" />
       <fBrakeBiasFront value="0.60000" />
       <fHandBrakeForce value="0.500000" />
