@@ -4,14 +4,14 @@
         <Item type="CHandlingData">
             <handlingName>lspdgallardo</handlingName>
       <fMass value="2000.000000" />
-      <fInitialDragCoeff value="6.0000" />
+      <fInitialDragCoeff value="3.0000" />
       <fPercentSubmerged value="85.000000" />
       <vecCentreOfMassOffset x="0.000000" y="-0.125000" z="-0.2000000" />
       <vecInertiaMultiplier x="1.000000" y="1.300000" z="1.200000" />
       <fDriveBiasFront value="0.500000" />
       <nInitialDriveGears value="1" />
-      <fInitialDriveForce value="0.5000000" />
-      <fDriveInertia value="1.000000" />
+      <fInitialDriveForce value="0.4000000" />
+      <fDriveInertia value="0.400000" />
       <fClutchChangeRateScaleUpShift value="9.000000" />
       <fClutchChangeRateScaleDownShift value="9.000000" />
       <fInitialDriveMaxFlatVel value="200.500000" />
@@ -23,7 +23,7 @@
       <fTractionCurveMin value="2.20000" />
       <fTractionCurveLateral value="22.500000" />
       <fTractionSpringDeltaMax value="0.150000" />
-      <fLowSpeedTractionLossMult value="1.00000" />
+      <fLowSpeedTractionLossMult value="0.30000" />
       <fCamberStiffnesss value="0.000000" />
       <fTractionBiasFront value="0.500000" />
       <fTractionLossMult value="1.000000" />
