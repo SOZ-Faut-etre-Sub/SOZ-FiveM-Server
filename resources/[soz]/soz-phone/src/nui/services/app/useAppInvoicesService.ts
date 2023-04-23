@@ -1,4 +1,4 @@
-import { InvoiceItem, InvoicesEvents } from '@typings/app/invoices';
+import { InvoicesEvents } from '@typings/app/invoices';
 import { useEffect } from 'react';
 
 import { useNuiEvent } from '../../../libs/nui/hooks/useNuiEvent';

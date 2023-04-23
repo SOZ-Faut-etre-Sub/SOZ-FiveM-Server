@@ -1,11 +1,8 @@
 import { Menu, Transition } from '@headlessui/react';
 import { CheckIcon, XIcon } from '@heroicons/react/outline';
-import { InvoicesEvents } from '@typings/app/invoices';
-import { ServerPromiseResp } from '@typings/common';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
-import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
