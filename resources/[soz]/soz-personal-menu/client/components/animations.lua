@@ -263,9 +263,15 @@ CreateThread(function()
 
     --- Walk style menu
     allWalksMenu:AddButton({
-        label = "Démarche par défaut",
+        label = "Démarche par défaut Homme",
         select = function()
-            TriggerServerEvent("soz-core:server:player:set-current-walkstyle", "")
+            TriggerServerEvent("soz-core:server:player:set-current-walkstyle", "move_m@multiplayer")
+        end,
+    })
+    allWalksMenu:AddButton({
+        label = "Démarche par défaut Femme",
+        select = function()
+            TriggerServerEvent("soz-core:server:player:set-current-walkstyle", "move_f@multiplayer")
         end,
     })
     for category, content in pairs(Config.WalkStyle) do
