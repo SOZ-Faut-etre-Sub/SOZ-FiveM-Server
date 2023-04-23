@@ -32,6 +32,8 @@ const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
 const ModExclusion: Record<number, VehicleModType[]> = {
     [GetHashKey('sentinel')]: [VehicleModType.ColumnShifterLevers, VehicleModType.Speakers],
     [GetHashKey('banshee')]: [VehicleModType.Speakers],
+    [GetHashKey('omnisegt')]: [VehicleModType.Trim, VehicleModType.FenderRight],
+    [GetHashKey('virtue')]: [VehicleModType.Trim, VehicleModType.FenderRight],
 };
 
 const ModValueExclusion: Record<number, Partial<Record<VehicleModType, number[]>>> = {
