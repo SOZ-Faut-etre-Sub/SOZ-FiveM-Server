@@ -21,7 +21,6 @@ export type JobMenuData = {
 };
 
 export type PlayerPersonalMenuData = {
-    invoices: Invoice[];
     isCinematicMode: boolean;
     isCinematicCameraActive: boolean;
     isHudVisible: boolean;

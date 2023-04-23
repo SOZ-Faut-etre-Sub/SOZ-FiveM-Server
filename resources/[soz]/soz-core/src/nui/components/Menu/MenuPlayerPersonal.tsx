@@ -2,7 +2,6 @@ import { Fragment, FunctionComponent, ReactElement, useState } from 'react';
 
 import { Animations, Moods, Walks } from '../../../config/animation';
 import { AnimationConfigItem, WalkConfigItem } from '../../../shared/animation';
-import { Invoice } from '../../../shared/bank';
 import { ClothConfig } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
 import { JobPermission } from '../../../shared/job';
@@ -52,7 +51,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     </MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={openKeys}>Gestion des clés</MenuItemButton>
                     <MenuItemSubMenuLink id="clothing">Gestion de la tenue</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="invoices">Gestion des factures</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
                     {data.job.enabled && <MenuItemSubMenuLink id="job">Gestion de votre métier</MenuItemSubMenuLink>}
@@ -63,7 +61,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
             </MainMenu>
             <MenuIdentity />
             <MenuClothing />
-            <MenuInvoice invoices={data.invoices} />
             <MenuAnimation shortcuts={data.shortcuts} />
             <SubMenu id="hud">
                 <MenuTitle banner="https://nui-img/soz/menu_personal">HUD</MenuTitle>
@@ -223,43 +220,6 @@ const MenuClothing: FunctionComponent = () => {
                 >
                     Chaussures
                 </MenuItemCheckbox>
-            </MenuContent>
-        </SubMenu>
-    );
-};
-
-type MenuInvoiceProps = {
-    invoices: Invoice[];
-};
-
-const MenuInvoice: FunctionComponent<MenuInvoiceProps> = ({ invoices: invoicesIntial }) => {
-    const [invoices, setInvoices] = useState(invoicesIntial);
-
-    useNuiEvent('player', 'UpdateInvoices', (invoices: Invoice[]) => {
-        setInvoices(invoices);
-    });
-
-    return (
-        <SubMenu id="invoices">
-            <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion des factures</MenuTitle>
-            <MenuContent>
-                {invoices.map((invoice, i) => (
-                    <MenuItemSelect
-                        title={invoice.label}
-                        description={`Payer ${invoice.amount}$ pour ${invoice.emitterName}`}
-                        key={i}
-                        onConfirm={(i, value) => {
-                            if (value === 'pay') {
-                                fetchNui(NuiEvent.PlayerMenuInvoicePay, { invoiceId: invoice.id });
-                            } else if (value === 'deny') {
-                                fetchNui(NuiEvent.PlayerMenuInvoiceDeny, { invoiceId: invoice.id });
-                            }
-                        }}
-                    >
-                        <MenuItemSelectOption value="pay">Payer</MenuItemSelectOption>
-                        <MenuItemSelectOption value="deny">Refuser</MenuItemSelectOption>
-                    </MenuItemSelect>
-                ))}
             </MenuContent>
         </SubMenu>
     );
