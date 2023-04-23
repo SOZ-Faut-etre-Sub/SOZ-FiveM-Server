@@ -40,7 +40,11 @@ RegisterNetEvent("housing:client:cloakroom", function()
                 icon = "👕",
                 label = clothe.name,
                 value = nil,
-                values = {{label = "Se changer", value = "apply"}, {label = "Renommer", value = "rename"}, {label = "Supprimer", value = "delete"}},
+                values = {
+                    {label = "Se changer", value = "apply"},
+                    {label = "Renommer", value = "rename"},
+                    {label = "Supprimer", value = "delete"},
+                },
                 select = function(_, value)
                     if value == "apply" then
                         QBCore.Functions.Progressbar("switch_clothes", "Changement d'habits...", 5000, false, true,

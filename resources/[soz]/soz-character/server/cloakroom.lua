@@ -132,11 +132,8 @@ QBCore.Functions.CreateCallback("soz-character:server:RenamePlayerClothe", funct
     end
 
     if Player then
-        local affectedRows = exports.oxmysql:update_async("UPDATE player_cloth_set SET name = ? WHERE id = ? AND citizenid = ?", {
-            newName,
-            id,
-            Player.PlayerData.citizenid,
-        })
+        local affectedRows = exports.oxmysql:update_async("UPDATE player_cloth_set SET name = ? WHERE id = ? AND citizenid = ?",
+                                                          {newName, id, Player.PlayerData.citizenid})
 
         if affectedRows then
             Cloakrooms[Player.PlayerData.citizenid][id].name = newName
