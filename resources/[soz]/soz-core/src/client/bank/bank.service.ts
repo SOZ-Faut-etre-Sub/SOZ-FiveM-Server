@@ -29,18 +29,6 @@ export class BankService {
         });
     }
 
-    public async getInvoices(): Promise<Invoice[]> {
-        return Object.values(await emitQBRpc('banking:server:getInvoices')) as Invoice[];
-    }
-
-    public payInvoice(id: number) {
-        TriggerServerEvent('banking:server:payInvoice', id);
-    }
-
-    public rejectInvoice(id: number) {
-        TriggerServerEvent('banking:server:rejectInvoice', id);
-    }
-
     public getBank() {
         return exports['soz-bank'].GetCurrentBank();
     }

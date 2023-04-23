@@ -2,13 +2,11 @@ import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { wait } from '../../core/utils';
 import { ClothConfig } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
-import { BankService } from '../bank/bank.service';
 import { HudProvider } from '../hud/hud.provider';
 import { JobMenuProvider } from '../job/job.menu.provider';
 import { Notifier } from '../notifier';
@@ -34,9 +32,6 @@ export class PlayerMenuProvider {
 
     @Inject(AnimationService)
     private animationService: AnimationService;
-
-    @Inject(BankService)
-    private bankService: BankService;
 
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
@@ -68,10 +63,7 @@ export class PlayerMenuProvider {
             return;
         }
 
-        const invoices = await this.bankService.getInvoices();
-
         this.menu.openMenu(MenuType.PlayerPersonal, {
-            invoices,
             isCinematicCameraActive: this.hudProvider.isCinematicCameraActive,
             isCinematicMode: this.hudProvider.isCinematicMode,
             isHudVisible: this.hudProvider.isHudVisible,
@@ -121,24 +113,6 @@ export class PlayerMenuProvider {
             type,
             player,
         });
-    }
-
-    @OnNuiEvent(NuiEvent.PlayerMenuInvoicePay)
-    public async invoicePay({ invoiceId }) {
-        this.bankService.payInvoice(invoiceId);
-
-        await wait(200);
-        const invoices = await this.bankService.getInvoices();
-        this.nuiDispatch.dispatch('player', 'UpdateInvoices', invoices);
-    }
-
-    @OnNuiEvent(NuiEvent.PlayerMenuInvoiceDeny)
-    public async invoiceDeny({ invoiceId }) {
-        this.bankService.rejectInvoice(invoiceId);
-
-        await wait(200);
-        const invoices = await this.bankService.getInvoices();
-        this.nuiDispatch.dispatch('player', 'UpdateInvoices', invoices);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuClothConfigUpdate)
