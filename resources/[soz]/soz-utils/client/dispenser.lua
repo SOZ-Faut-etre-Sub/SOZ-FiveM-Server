@@ -11,18 +11,35 @@ local dispenser_drink_price = 10
 local dispenser_cafe_price = 10
 
 exports["qb-target"]:AddTargetModel(vending_machine_drink, {
-    options = {{event = "soz-utils:client:dispenser:Drink", label = "Bouteille d'eau ($" .. dispenser_eat_price .. ")", icon = "c:food/bouteille.png"}},
+    options = {
+        {
+            event = "soz-utils:client:dispenser:Drink",
+            label = "Bouteille d'eau ($" .. dispenser_eat_price .. ")",
+            icon = "c:food/bouteille.png",
+        },
+    },
     distance = 1,
 })
 
 exports["qb-target"]:AddTargetModel(vending_machine_food, {
-    options = {{event = "soz-utils:client:dispenser:Eat", label = "Sandwich ($" .. dispenser_drink_price .. ")", icon = "c:food/baguette.png"}},
+    options = {
+        {
+            event = "soz-utils:client:dispenser:Eat",
+            label = "Sandwich ($" .. dispenser_drink_price .. ")",
+            icon = "c:food/baguette.png",
+        },
+    },
     distance = 1,
 })
 
-exports["qb-target"]:AddTargetModel(vending_cafe,
-                                    {
-    options = {{event = "soz-utils:client:dispenser:Cafe", label = "Café ($" .. dispenser_cafe_price .. ")", icon = "c:food/cafe.png"}},
+exports["qb-target"]:AddTargetModel(vending_cafe, {
+    options = {
+        {
+            event = "soz-utils:client:dispenser:Cafe",
+            label = "Café ($" .. dispenser_cafe_price .. ")",
+            icon = "c:food/cafe.png",
+        },
+    },
     distance = 1,
 })
 
