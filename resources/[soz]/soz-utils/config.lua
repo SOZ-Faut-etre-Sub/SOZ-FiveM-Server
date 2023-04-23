@@ -40,18 +40,6 @@ Config.BlacklistedPeds = {
     [GetHashKey("s_m_y_hwaycop_01")] = true,
 }
 
-Config.SeatChairOffset = {
-    [444105316] = {z = 0.5},
-    [1037469683] = {z = 0.4},
-    [-109356459] = {z = 0.5},
-    [49088219] = {z = 0.5, y = 0.4},
-    [-1173315865] = {z = 0.5},
-    [536071214] = {z = 0.5},
-    [603897027] = {z = 0.4},
-    [GetHashKey("soz_v_club_bahbarstool")] = {x = -0.1, z = 0.35},
-    [GetHashKey("soz_v_club_baham_bckt_chr")] = {z = 0.1},
-}
-
 Config.Teleports = {}
 
 Config.DisableSpawn = {
