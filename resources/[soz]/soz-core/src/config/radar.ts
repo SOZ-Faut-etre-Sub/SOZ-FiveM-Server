@@ -176,6 +176,7 @@ export const RadarAllowedVehicle: number[] = [
     GetHashKey('bcsobana1'),
     GetHashKey('bcsobana2'),
     GetHashKey('bcsogt500'),
+    GetHashKey('bcsomanchez'),
     // LSPD / BCSO
     GetHashKey('pbus'),
     // FBI

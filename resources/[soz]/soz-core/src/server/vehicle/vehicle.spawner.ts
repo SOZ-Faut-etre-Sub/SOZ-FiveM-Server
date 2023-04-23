@@ -82,6 +82,7 @@ const VEHICLE_HAS_RADIO = [
     'rumpo4',
     'bcsogt500',
     'lspdgallardo',
+    'bcsomanchez',
 ];
 
 @Provider()
