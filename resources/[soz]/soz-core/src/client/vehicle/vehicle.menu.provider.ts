@@ -9,9 +9,9 @@ import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
+import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { InputService } from '../nui/input.service';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleService } from './vehicle.service';
 
@@ -73,11 +73,11 @@ export class VehicleMenuProvider {
                 },
                 (input: string) => {
                     const value = parseInt(input);
-    
+
                     if (isNaN(value) || value < 0) {
                         return Err('Veuillez entrer un nombre supérieur à 0');
                     }
-    
+
                     return Ok(true);
                 }
             );
@@ -85,7 +85,7 @@ export class VehicleMenuProvider {
             if (!customSpeedLimit) {
                 return false;
             }
-            
+
             speedLimit = parseInt(customSpeedLimit);
         }
 
