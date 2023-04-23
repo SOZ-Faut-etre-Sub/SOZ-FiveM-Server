@@ -8,7 +8,6 @@ import { FullPageWithHeader } from '../../ui/layout/FullPageWithHeader';
 import InvoiceList from './pages/InvoiceList';
 
 export const InvoiceApp = memo(() => {
-
     const backgroundClass = useBackground();
 
     return (
