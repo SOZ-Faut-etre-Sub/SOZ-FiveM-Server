@@ -40,7 +40,9 @@ export const appInvoices = createModel<RootModel>()({
                 .then(messages => {
                     dispatch.appInvoices.set(messages.data || []);
                 })
-                .catch(() => { console.error('Failed to load invoices') });
+                .catch(() => {
+                    console.error('Failed to load invoices');
+                });
         },
     }),
 });

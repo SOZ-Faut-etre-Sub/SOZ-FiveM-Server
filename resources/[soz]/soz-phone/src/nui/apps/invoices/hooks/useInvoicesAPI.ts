@@ -10,18 +10,12 @@ interface InvoicesAPIValue {
 }
 
 export const useInvoicesAPI = (): InvoicesAPIValue => {
-    const payInvoice = useCallback(
-        async (id: number) => {
-            await fetchNui<ServerPromiseResp<number>>(InvoicesEvents.PAY_INVOICE, id);
-        },
-        []
-    );
-    const refuseInvoice = useCallback(
-        async (id: number) => {
-            await fetchNui<ServerPromiseResp<number>>(InvoicesEvents.REFUSE_INVOICE, id);
-        },
-        []
-    );
+    const payInvoice = useCallback(async (id: number) => {
+        await fetchNui<ServerPromiseResp<number>>(InvoicesEvents.PAY_INVOICE, id);
+    }, []);
+    const refuseInvoice = useCallback(async (id: number) => {
+        await fetchNui<ServerPromiseResp<number>>(InvoicesEvents.REFUSE_INVOICE, id);
+    }, []);
 
     return { payInvoice, refuseInvoice };
 };

@@ -1,8 +1,8 @@
 import { Models } from '@rematch/core';
 
 import { appBank } from './app/bank';
-import { appNotes } from './app/notes';
 import { appInvoices } from './app/invoices';
+import { appNotes } from './app/notes';
 import { appSociety } from './app/society';
 import { appTwitchNews } from './app/twitchNews';
 import { emergency } from './emergency';

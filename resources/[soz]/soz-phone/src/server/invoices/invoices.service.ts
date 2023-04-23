@@ -2,7 +2,6 @@ import { InvoiceItem } from '../../../typings/app/invoices';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import { invoicesLogger } from './invoices.utils';
 class _InvoicesService {
-
     constructor() {
         invoicesLogger.debug('Invoices service started');
     }
