@@ -27,5 +27,18 @@ export class HudProvider {
             DrawRect(0.5, 0.05, 1.0, 0.1, 0, 0, 0, 255);
             DrawRect(0.5, 0.95, 1.0, 0.1, 0, 0, 0, 255);
         }
+
+        HideHudComponentThisFrame(HudComponent.WantedStars);
+        HideHudComponentThisFrame(HudComponent.Cash);
+        HideHudComponentThisFrame(HudComponent.MpCash);
+        HideHudComponentThisFrame(HudComponent.AreaName);
+        HideHudComponentThisFrame(HudComponent.VehicleClass);
+        HideHudComponentThisFrame(HudComponent.StreetName);
+        HideHudComponentThisFrame(HudComponent.CashChange);
+        HideHudComponentThisFrame(HudComponent.SavingGame);
+        HideHudComponentThisFrame(HudComponent.WeaponWheel);
+        HideHudComponentThisFrame(HudComponent.WeaponWheelStats);
+        HideHudComponentThisFrame(HudComponent.HudComponents);
+        HideHudComponentThisFrame(HudComponent.HudWeapons);
     }
 }
