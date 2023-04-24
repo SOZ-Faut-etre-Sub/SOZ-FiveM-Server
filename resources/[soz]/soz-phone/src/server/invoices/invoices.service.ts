@@ -8,7 +8,13 @@ class _InvoicesService {
 
     async handleFetchInvoices(reqObj: PromiseRequest<void>, resp: PromiseEventResp<InvoiceItem[]>) {
         try {
-            resp({ status: 'ok', data: exports['soz-bank'].GetAllInvoicesForPlayer(reqObj.source) });
+            let invoices = exports['soz-bank'].GetAllInvoicesForPlayer(reqObj.source);
+
+            if (!Array.isArray(invoices)) {
+                invoices = Object.values(invoices);
+            }
+
+            resp({ status: 'ok', data: invoices });
         } catch (e) {
             invoicesLogger.error(`Error in handleFetchInvoices, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
