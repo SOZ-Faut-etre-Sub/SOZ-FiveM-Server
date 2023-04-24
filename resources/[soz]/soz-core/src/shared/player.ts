@@ -169,4 +169,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     injuries_date: number;
     itt: boolean;
     hazmat: boolean;
+    mood?: string | null;
 };

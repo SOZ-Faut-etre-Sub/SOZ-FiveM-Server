@@ -66,15 +66,33 @@ export class PlayerWalkstyleProvider {
         await this.applyWalkStyle(this.playerService.getPlayer().metadata.walk);
     }
 
+    async applyMood(mood: string | null): Promise<void> {
+        if (mood === null || mood === '') {
+            return;
+        }
+
+        SetFacialIdleAnimOverride(PlayerPedId(), mood, null);
+    }
+
     @Once(OnceStep.PlayerLoaded)
     async onPlayerLoaded(player: PlayerData): Promise<void> {
         if (player.metadata.walk) {
             await this.applyWalkStyle(player.metadata.walk);
         }
+
+        if (player.metadata.mood) {
+            await this.applyMood(player.metadata.mood);
+        }
     }
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(player: PlayerData): Promise<void> {
-        await this.applyWalkStyle(player.metadata.walk);
+        if (player.metadata.walk) {
+            await this.applyWalkStyle(player.metadata.walk);
+        }
+
+        if (player.metadata.mood) {
+            await this.applyMood(player.metadata.mood);
+        }
     }
 }
