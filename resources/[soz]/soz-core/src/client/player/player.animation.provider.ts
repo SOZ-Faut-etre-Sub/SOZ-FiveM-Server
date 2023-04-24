@@ -30,6 +30,7 @@ export class PlayerAnimationProvider {
     private nuiDispatch: NuiDispatch;
 
     private animationPlaying = new Set<string>();
+    private lastAnimationPlaying: AnimationConfigItem | null = null;
 
     @Command('animation_stop', {
         description: "Stop l'animation en cours",
@@ -294,6 +295,17 @@ export class PlayerAnimationProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationPlay)
     public async playAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {
+        if (
+            this.lastAnimationPlaying &&
+            this.lastAnimationPlaying.type === animationItem.type &&
+            this.lastAnimationPlaying.name === animationItem.name
+        ) {
+            this.animationService.stop();
+            this.lastAnimationPlaying = null;
+
+            return;
+        }
+
         const player = this.playerService.getPlayer();
 
         if (!player) {
@@ -320,18 +332,28 @@ export class PlayerAnimationProvider {
             return false;
         }
 
+        let animationPromise = null;
+        this.lastAnimationPlaying = animationItem;
+
         if (animationItem.type === 'animation') {
-            return await this.animationService.playAnimation(animationItem.animation);
+            animationPromise = await this.animationService.playAnimation(animationItem.animation);
         }
 
         if (animationItem.type === 'scenario') {
-            return await this.animationService.playScenario(animationItem.scenario);
+            animationPromise = await this.animationService.playScenario(animationItem.scenario);
         }
 
         if (animationItem.type === 'event') {
             TriggerEvent(animationItem.event);
 
             return true;
+        }
+
+        if (animationPromise) {
+            const result = await animationPromise;
+            this.lastAnimationPlaying = null;
+
+            return result;
         }
 
         return false;
