@@ -12,11 +12,9 @@ client_scripts {
     "client/utils/*.lua",
     "client/main.lua",
     "client/modules/*.lua",
-    "client/no_reticule.lua",
     "client/compass.lua",
     "client/streetname.lua",
     "client/minimap.lua",
-    "client/pause_menu.lua",
 }
 
 dependency "qb-core"
