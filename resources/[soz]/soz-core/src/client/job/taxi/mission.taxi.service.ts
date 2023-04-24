@@ -243,7 +243,7 @@ export class TaxiMissionService {
             const requiredDist = hasHonked ? 15 : 5;
 
             if (dist < requiredDist) {
-                if (IsVehicleStopped(GetVehiclePedIsIn(ped, false)) && this.validVehicle()) {
+                if (IsVehicleStopped(veh) && this.validVehicle()) {
                     const maxSeats = GetVehicleMaxNumberOfPassengers(veh);
                     let freeSeat = maxSeats;
 
@@ -256,7 +256,7 @@ export class TaxiMissionService {
 
                     ClearPedTasksImmediately(this.Npc);
                     FreezeEntityPosition(this.Npc, false);
-                    TaskEnterVehicle(this.Npc, veh, -1, freeSeat, 1.0, 0, 0);
+                    TaskEnterVehicle(this.Npc, veh, -1, freeSeat, 1.0, 1, 0);
                     let count = 0;
                     while (!IsPedInVehicle(this.Npc, veh, false)) {
                         if (count == 15 || dist > requiredDist) {
@@ -265,7 +265,7 @@ export class TaxiMissionService {
                             return;
                         }
                         await wait(1000);
-                        TaskEnterVehicle(this.Npc, veh, -1, freeSeat, 1.0, 0, 0);
+                        TaskEnterVehicle(this.Npc, veh, -1, freeSeat, 1.0, 1, 0);
                         count = count + 1;
                     }
                     this.notifier.notify('Amenez la personne à la destination spécifiée', 'success');
