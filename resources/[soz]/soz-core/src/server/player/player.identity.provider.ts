@@ -11,11 +11,13 @@ export class PlayerIdentityProvider {
     private playerService: PlayerService;
 
     @OnEvent(ServerEvent.PLAYER_SHOW_IDENTITY)
-    public showIdentity(type: CardType, targets: number[]) {
-        for (const target of targets) {
-            const player = this.playerService.getPlayer(target);
+    public showIdentity(source, type: CardType, targets: number[]) {
+        const player = this.playerService.getPlayer(source);
 
-            TriggerClientEvent(ClientEvent.PLAYER_SHOW_IDENTITY, target, type, player);
+        for (const target of targets) {
+            if (target !== source) {
+                TriggerClientEvent(ClientEvent.PLAYER_SHOW_IDENTITY, target, type, player);
+            }
         }
     }
 }

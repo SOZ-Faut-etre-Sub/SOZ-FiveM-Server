@@ -61,7 +61,7 @@ export class PlayerService {
             const playerDistance = getDistance(position, pedCoords);
 
             if (playerDistance <= distance) {
-                closePlayers.push(player);
+                closePlayers.push(GetPlayerServerId(player));
             }
         }
 
