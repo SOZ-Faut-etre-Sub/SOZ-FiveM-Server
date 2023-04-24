@@ -15346,6 +15346,7 @@ export const Animations: AnimationConfigList = [
                         icon: null,
                         scenario: {
                             name: 'PROP_HUMAN_SEAT_ARMCHAIR',
+                            fixPositionDelta: [-0.5, -0.5, -0.5],
                         },
                     },
                     {
@@ -15355,6 +15356,7 @@ export const Animations: AnimationConfigList = [
                         icon: null,
                         scenario: {
                             name: 'PROP_HUMAN_SEAT_BENCH',
+                            fixPositionDelta: [-0.5, -0.5, -0.5],
                         },
                     },
                     {
@@ -15364,6 +15366,7 @@ export const Animations: AnimationConfigList = [
                         icon: null,
                         scenario: {
                             name: 'PROP_HUMAN_SEAT_BUS_STOP_WAIT',
+                            fixPositionDelta: [-0.5, -0.5, -0.5],
                         },
                     },
                     {
@@ -15417,6 +15420,7 @@ export const Animations: AnimationConfigList = [
                         icon: null,
                         scenario: {
                             name: 'PROP_HUMAN_SEAT_CHAIR_UPRIGHT',
+                            fixPositionDelta: [-0.5, -0.5, -0.5],
                         },
                     },
                     {
@@ -15426,6 +15430,7 @@ export const Animations: AnimationConfigList = [
                         icon: null,
                         scenario: {
                             name: 'PROP_HUMAN_SEAT_CHAIR',
+                            fixPositionDelta: [-0.5, -0.5, -0.5],
                         },
                     },
                     {
@@ -15435,6 +15440,7 @@ export const Animations: AnimationConfigList = [
                         icon: null,
                         scenario: {
                             name: 'PROP_HUMAN_SEAT_DECKCHAIR',
+                            fixPositionDelta: [-0.5, -0.5, -0.5],
                         },
                     },
                     {
@@ -15444,6 +15450,7 @@ export const Animations: AnimationConfigList = [
                         icon: null,
                         scenario: {
                             name: 'PROP_HUMAN_SEAT_CHAIR_MP_PLAYER',
+                            fixPositionDelta: [-0.5, -0.5, -0.5],
                         },
                     },
                     {
@@ -15484,6 +15491,7 @@ export const Animations: AnimationConfigList = [
                         icon: null,
                         scenario: {
                             name: 'PROP_HUMAN_SEAT_STRIP_WATCH',
+                            fixPositionDelta: [-0.5, -0.5, -0.5],
                         },
                     },
                     {

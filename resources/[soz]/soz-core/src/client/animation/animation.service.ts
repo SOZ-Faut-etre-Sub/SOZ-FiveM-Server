@@ -93,7 +93,33 @@ export class AnimationService {
         const ped = PlayerPedId();
 
         ClearPedTasksImmediately(ped);
-        TaskStartScenarioInPlace(ped, scenario.name, 0, true);
+
+        await wait(500);
+
+        if (scenario.fixPositionDelta) {
+            const heading = GetEntityHeading(ped);
+            const headingAdjusted = heading % 90;
+            const position = GetEntityCoords(ped, false) as Vector3;
+            const headingRad = (headingAdjusted * Math.PI) / 180;
+
+            position[0] += scenario.fixPositionDelta[0] * Math.cos(headingRad);
+            position[1] += scenario.fixPositionDelta[1] * Math.sin(headingRad);
+            position[2] += scenario.fixPositionDelta[2];
+
+            TaskStartScenarioAtPosition(
+                ped,
+                scenario.name,
+                position[0],
+                position[1],
+                position[2],
+                heading,
+                0,
+                true,
+                false
+            );
+        } else {
+            TaskStartScenarioInPlace(ped, scenario.name, 0, true);
+        }
 
         const until = async () => {
             return !IsPedUsingAnyScenario(ped) || !IsPedUsingScenario(ped, scenario.name);
