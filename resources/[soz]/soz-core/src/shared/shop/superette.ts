@@ -11,7 +11,9 @@ const SuperetteContent: ShopContent = [
     { id: 'gps', type: 'item', price: 20 },
     { id: 'compass', type: 'item', price: 15 },
     { id: 'binoculars', type: 'item', price: 8 },
+    { id: 'protestsign', type: 'item', price: 200 },
     { id: 'phone', type: 'item', price: 499 },
+    { id: 'umbrella', type: 'item', price: 1000 },
     { id: 'diving_gear', type: 'item', price: 2600 },
     { id: 'zpad', type: 'item', price: 2400 },
 ];
