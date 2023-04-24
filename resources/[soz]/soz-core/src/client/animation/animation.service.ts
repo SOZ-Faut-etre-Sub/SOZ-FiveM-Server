@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { wait, waitUntil } from '@core/utils';
-import PCancelable from 'p-cancelable';
 
 import { Animation, AnimationInfo, animationOptionsToFlags, PlayOptions, Scenario } from '../../shared/animation';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -17,6 +16,12 @@ type AnimationTask = {
     props: number[];
 };
 
+export enum StopReason {
+    UserAbort,
+    ExternalAbort,
+    Finished,
+}
+
 @Injectable()
 export class AnimationService {
     @Inject(ResourceLoader)
@@ -26,11 +31,89 @@ export class AnimationService {
 
     private running = false;
 
-    private currentAnimation: AnimationTask | null = null;
-
     private currentAnimationLoopResolve: () => void;
 
-    private doAnimation(animation: AnimationInfo, forceDuration: boolean): number {
+    private async doCurrentAnimationTask(task: AnimationTask, animationPromise: Promise<void>) {
+        if (task.scenario) {
+            return this.doScenario(task.scenario, animationPromise);
+        }
+
+        if (task.animation) {
+            const ped = PlayerPedId();
+
+            if (task.animation.props) {
+                for (const prop of task.animation.props) {
+                    await this.resourceLoader.loadModel(prop.model);
+
+                    const playerOffset = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0) as Vector3;
+                    const propId = CreateObject(
+                        GetHashKey(prop.model),
+                        playerOffset[0],
+                        playerOffset[1],
+                        playerOffset[2],
+                        true,
+                        true,
+                        false
+                    );
+
+                    SetEntityAsMissionEntity(propId, true, true);
+                    SetNetworkIdCanMigrate(NetworkGetNetworkIdFromEntity(propId), false);
+
+                    AttachEntityToEntity(
+                        propId,
+                        ped,
+                        GetPedBoneIndex(ped, prop.bone),
+                        prop.position[0],
+                        prop.position[1],
+                        prop.position[2],
+                        prop.rotation[0],
+                        prop.rotation[1],
+                        prop.rotation[2],
+                        true,
+                        true,
+                        false,
+                        true,
+                        0,
+                        true
+                    );
+
+                    task.props.push(propId);
+                }
+            }
+
+            if (task.animation.enter) {
+                const stopReason = await this.doAnimation(task.animation.enter, true, animationPromise);
+
+                if (stopReason !== StopReason.Finished) {
+                    return stopReason;
+                }
+            }
+
+            const stopReason = await this.doAnimation(task.animation.base, false, animationPromise);
+
+            if (stopReason !== StopReason.Finished) {
+                return stopReason;
+            }
+
+            if (task.animation.exit) {
+                const stopReason = await this.doAnimation(task.animation.exit, true, animationPromise);
+
+                if (stopReason !== StopReason.Finished) {
+                    return stopReason;
+                }
+            }
+
+            return StopReason.Finished;
+        }
+
+        return StopReason.Finished;
+    }
+
+    private doAnimation(
+        animation: AnimationInfo,
+        forceDuration: boolean,
+        animationCancelPromise: Promise<void>
+    ): Promise<StopReason> {
         const duration = animation.duration
             ? animation.duration
             : forceDuration
@@ -61,35 +144,37 @@ export class AnimationService {
             lockZ
         );
 
-        return duration;
-    }
-
-    private async waitUntilCancelled(animation: AnimationInfo, duration: number | PCancelable<void>): Promise<boolean> {
         const ped = PlayerPedId();
         const until = async () => {
             return !IsEntityPlayingAnim(ped, animation.dictionary, animation.name, 3);
         };
 
-        if (typeof duration === 'number') {
-            return waitUntil(until, duration);
-        }
-
         const waitUntilPromise = waitUntil(until);
-        const durationPromise = async () => {
-            await duration;
 
-            return false;
-        };
+        return new Promise<StopReason>(resolve => {
+            if (duration > 0) {
+                wait(duration).then(() => {
+                    resolve(StopReason.Finished);
+                });
+            }
 
-        const cancelled = await Promise.race([waitUntilPromise, durationPromise()]);
+            waitUntilPromise.then(() => {
+                resolve(StopReason.ExternalAbort);
+            });
 
-        waitUntilPromise.cancel();
-        duration.cancel();
+            animationCancelPromise.then(() => {
+                resolve(StopReason.UserAbort);
+            });
+        }).then(reason => {
+            if (!waitUntilPromise.isCanceled) {
+                waitUntilPromise.cancel();
+            }
 
-        return cancelled;
+            return reason;
+        });
     }
 
-    private async doScenario(scenario: Scenario, stop: PCancelable<void>): Promise<boolean> {
+    private async doScenario(scenario: Scenario, animationCancelPromise: Promise<void>): Promise<StopReason> {
         const ped = PlayerPedId();
 
         ClearPedTasksImmediately(ped);
@@ -99,23 +184,29 @@ export class AnimationService {
             return !IsPedUsingAnyScenario(ped) || !IsPedUsingScenario(ped, scenario.name);
         };
 
-        if (scenario.duration) {
-            return waitUntil(until, scenario.duration);
-        }
-
         const waitUntilPromise = waitUntil(until);
-        const durationPromise = async () => {
-            await stop;
 
-            return false;
-        };
+        return new Promise<StopReason>(resolve => {
+            if (scenario.duration > 0) {
+                wait(scenario.duration).then(() => {
+                    resolve(StopReason.Finished);
+                });
+            }
 
-        const cancelled = await Promise.race([waitUntilPromise, durationPromise()]);
+            waitUntilPromise.then(() => {
+                resolve(StopReason.ExternalAbort);
+            });
 
-        waitUntilPromise.cancel();
-        stop.cancel();
+            animationCancelPromise.then(() => {
+                resolve(StopReason.UserAbort);
+            });
+        }).then(reason => {
+            if (!waitUntilPromise.isCanceled) {
+                waitUntilPromise.cancel();
+            }
 
-        return cancelled;
+            return reason;
+        });
     }
 
     public async loop() {
@@ -129,99 +220,30 @@ export class AnimationService {
             }
 
             const ped = PlayerPedId();
-            const animationPromise = new PCancelable<void>(resolve => {
+            const animationPromise = new Promise<void>(resolve => {
                 this.currentAnimationLoopResolve = resolve;
             });
 
-            this.currentAnimation = this.queue.shift();
-
-            const options = this.currentAnimation.play_options || {
+            const currentAnimation = this.queue.shift();
+            const options = currentAnimation.play_options || {
                 reset_weapon: true,
             };
 
-            let cancelled = false;
-
-            if (this.currentAnimation.animation) {
-                if (this.currentAnimation.animation.props) {
-                    for (const prop of this.currentAnimation.animation.props) {
-                        await this.resourceLoader.loadModel(prop.model);
-
-                        const playerOffset = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0) as Vector3;
-                        const propId = CreateObject(
-                            GetHashKey(prop.model),
-                            playerOffset[0],
-                            playerOffset[1],
-                            playerOffset[2],
-                            true,
-                            true,
-                            false
-                        );
-
-                        SetEntityAsMissionEntity(propId, true, true);
-                        SetNetworkIdCanMigrate(NetworkGetNetworkIdFromEntity(propId), false);
-
-                        AttachEntityToEntity(
-                            propId,
-                            ped,
-                            GetPedBoneIndex(ped, prop.bone),
-                            prop.position[0],
-                            prop.position[1],
-                            prop.position[2],
-                            prop.rotation[0],
-                            prop.rotation[1],
-                            prop.rotation[2],
-                            true,
-                            true,
-                            false,
-                            true,
-                            0,
-                            true
-                        );
-
-                        this.currentAnimation.props.push(propId);
-                    }
-                }
-
-                if (this.currentAnimation.animation.enter) {
-                    cancelled = await this.waitUntilCancelled(
-                        this.currentAnimation.animation.enter,
-                        this.doAnimation(this.currentAnimation.animation.enter, true)
-                    );
-                }
-
-                if (!cancelled) {
-                    const duration = this.doAnimation(this.currentAnimation.animation.base, false);
-
-                    cancelled = await this.waitUntilCancelled(
-                        this.currentAnimation.animation.base,
-                        duration !== -1 ? duration : animationPromise
-                    );
-                }
-
-                if (!cancelled && this.currentAnimation.animation.exit) {
-                    cancelled = await this.waitUntilCancelled(
-                        this.currentAnimation.animation.exit,
-                        this.doAnimation(this.currentAnimation.animation.exit, true)
-                    );
-                }
-            } else if (this.currentAnimation.scenario) {
-                cancelled = await this.doScenario(this.currentAnimation.scenario, animationPromise);
-            }
+            const stopReason = await this.doCurrentAnimationTask(currentAnimation, animationPromise);
 
             if (options.reset_weapon) {
                 SetCurrentPedWeapon(ped, GetHashKey(WeaponName.UNARMED), true);
             }
 
-            this.currentAnimation.resolve(cancelled);
+            currentAnimation.resolve(stopReason !== StopReason.Finished);
 
-            const noClearPedTask = this.currentAnimation.play_options?.noClearPedTask;
+            const noClearPedTask = currentAnimation.play_options?.noClearPedTask;
 
-            for (const prop of this.currentAnimation.props) {
+            for (const prop of currentAnimation.props) {
                 DetachEntity(prop, false, false);
                 DeleteEntity(prop);
             }
 
-            this.currentAnimation = null;
             this.currentAnimationLoopResolve = null;
 
             await wait(100);

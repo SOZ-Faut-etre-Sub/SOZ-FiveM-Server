@@ -42,6 +42,9 @@ export class PlayerAnimationProvider {
         ],
     })
     public async animationStop() {
+        this.lastAnimationPlaying = null;
+        this.animationPlaying.clear();
+
         return this.animationService.purge();
     }
 
@@ -178,6 +181,9 @@ export class PlayerAnimationProvider {
     public async doAnimationShortcut(key: string) {
         if (this.animationPlaying.has(key)) {
             this.animationService.stop();
+
+            this.lastAnimationPlaying = null;
+            this.animationPlaying.delete(key);
 
             return;
         }
@@ -332,21 +338,21 @@ export class PlayerAnimationProvider {
             return false;
         }
 
-        let animationPromise = null;
-        this.lastAnimationPlaying = animationItem;
-
-        if (animationItem.type === 'animation') {
-            animationPromise = await this.animationService.playAnimation(animationItem.animation);
-        }
-
-        if (animationItem.type === 'scenario') {
-            animationPromise = await this.animationService.playScenario(animationItem.scenario);
-        }
-
         if (animationItem.type === 'event') {
             TriggerEvent(animationItem.event);
 
             return true;
+        }
+
+        let animationPromise = null;
+        this.lastAnimationPlaying = animationItem;
+
+        if (animationItem.type === 'animation') {
+            animationPromise = this.animationService.playAnimation(animationItem.animation);
+        }
+
+        if (animationItem.type === 'scenario') {
+            animationPromise = this.animationService.playScenario(animationItem.scenario);
         }
 
         if (animationPromise) {
