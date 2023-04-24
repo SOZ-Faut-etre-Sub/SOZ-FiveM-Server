@@ -141,7 +141,7 @@ export class LSMCProvider {
 
     private getDeadPedInVehicle(entity: number) {
         const vehicleSeats = GetVehicleModelNumberOfSeats(GetEntityModel(entity));
-        for (let i = -1; vehicleSeats - 2; i++) {
+        for (let i = -1; i < vehicleSeats - 2; i++) {
             const ped = GetPedInVehicleSeat(entity, i);
             if (Player(GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped))).state.isdead) {
                 return ped;
