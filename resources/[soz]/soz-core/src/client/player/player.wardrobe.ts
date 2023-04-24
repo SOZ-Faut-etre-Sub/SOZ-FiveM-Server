@@ -109,9 +109,6 @@ export class PlayerWardrobe {
             return;
         }
 
-        const ped = PlayerPedId();
-        FreezeEntityPosition(ped, true);
-
         let animation: Animation | null;
 
         switch (key) {
@@ -125,6 +122,7 @@ export class PlayerWardrobe {
                         blendOutSpeed: -8.0,
                         options: {
                             onlyUpperBody: true,
+                            enablePlayerControl: true,
                         },
                     },
                 };
@@ -143,6 +141,7 @@ export class PlayerWardrobe {
                         blendOutSpeed: -8.0,
                         options: {
                             onlyUpperBody: true,
+                            enablePlayerControl: true,
                         },
                     },
                 };
@@ -157,6 +156,7 @@ export class PlayerWardrobe {
                         blendOutSpeed: -8.0,
                         options: {
                             onlyUpperBody: true,
+                            enablePlayerControl: true,
                         },
                     },
                 };
@@ -167,7 +167,7 @@ export class PlayerWardrobe {
         }
 
         await this.animationService.playAnimation(animation);
-        FreezeEntityPosition(PlayerPedId(), false);
+
         TriggerServerEvent('soz-character:server:UpdateClothConfig', key, value);
     }
 

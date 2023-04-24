@@ -18,6 +18,17 @@ export class CommandLoader {
             const commandMetadata = commandMethodList[methodName];
             const method = provider[methodName].bind(provider);
             const commandMethod = (source: number, args: string[]): void => {
+                if (SOZ_CORE_IS_CLIENT) {
+                    if (
+                        commandMetadata.keys &&
+                        commandMetadata.keys.length > 0 &&
+                        !commandMetadata.passthroughNuiFocus &&
+                        IsNuiFocused()
+                    ) {
+                        return;
+                    }
+                }
+
                 method(source, ...args);
             };
 
