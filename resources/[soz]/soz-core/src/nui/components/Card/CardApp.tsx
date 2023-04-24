@@ -71,6 +71,10 @@ export const CardApp: FunctionComponent = () => {
         }, 15000);
     });
 
+    if (cardQueue.length === 0) {
+        return null;
+    }
+
     return (
         <div className="absolute w-full h-full">
             <div className="flex flex-column justify-end h-full">

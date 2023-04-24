@@ -155,7 +155,7 @@ const TankPage: FunctionComponent<PageProps> = ({ analyze }) => {
     return (
         <>
             <h3 className="text-3xl mb-4">Réservoir</h3>
-            <p>Etat du réservoir : {((analyze.condition.tankHealth - 600) * 2.5).toFixed(2)} / 1000</p>;
+            <p>Etat du réservoir : {((analyze.condition.tankHealth - 600) * 2.5).toFixed(2)} / 1000</p>
             <p>Essence : {analyze.condition.fuelLevel.toFixed(2)} / 100</p>
         </>
     );
