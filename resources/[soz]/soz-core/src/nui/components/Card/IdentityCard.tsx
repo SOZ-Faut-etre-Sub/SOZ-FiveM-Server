@@ -32,7 +32,7 @@ export const IdentityCard: FunctionComponent<IdentityCardProps> = ({ player }) =
                     <div>
                         <h3 className="text-xs leading-none">Sexe</h3>
                         <p className="uppercase leading-none">
-                            {player.charinfo.gender === 0 ? 'Masculin' : 'Feminin'}
+                            {player.skin?.Model?.Hash === -1667301416 ? 'Feminin' : 'Masculin'}
                         </p>
                     </div>
                     <div>

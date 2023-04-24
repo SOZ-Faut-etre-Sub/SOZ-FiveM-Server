@@ -38,6 +38,8 @@ export const App: FunctionComponent = () => {
             <div className={classes}>
                 <StateApp />
                 <MenuApp />
+                <TalentApp />
+                <CraftingApp />
                 <CardApp />
                 <AudioApp />
                 <ProgressApp />
@@ -45,10 +47,8 @@ export const App: FunctionComponent = () => {
                 <RepairApp />
                 <InputApp />
                 <MissiveApp />
-                <TalentApp />
                 <RadarApp />
                 <BreathAnalyzerApp />
-                <CraftingApp />
                 <HoodApp />
                 <TaxiHorodateurApp />
             </div>
