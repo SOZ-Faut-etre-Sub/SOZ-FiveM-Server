@@ -13,7 +13,6 @@ client_scripts {
     "client/main.lua",
     "client/modules/*.lua",
     "client/no_reticule.lua",
-    "client/hud_components.lua",
     "client/compass.lua",
     "client/streetname.lua",
     "client/minimap.lua",
