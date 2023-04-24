@@ -22,6 +22,7 @@ export type Ped = {
     anim?: string;
     flag?: number;
     network?: boolean;
+    isScriptHostPed?: boolean;
 };
 
 export enum PedFaceFeature {
@@ -75,7 +76,16 @@ export class PedFactory {
 
         await this.resourceLoader.loadModel(hash);
 
-        const pedId = CreatePed(0, hash, ped.coords.x, ped.coords.y, ped.coords.z, ped.coords.w, ped.network, false);
+        const pedId = CreatePed(
+            0,
+            hash,
+            ped.coords.x,
+            ped.coords.y,
+            ped.coords.z,
+            ped.coords.w,
+            ped.network,
+            ped.isScriptHostPed || false
+        );
 
         SetPedDefaultComponentVariation(pedId);
 

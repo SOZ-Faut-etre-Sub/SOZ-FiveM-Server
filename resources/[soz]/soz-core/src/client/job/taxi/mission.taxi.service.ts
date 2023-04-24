@@ -203,17 +203,19 @@ export class TaxiMissionService {
             animDict: 'anim@amb@casino@valet_scenario@pose_d@',
             anim: 'base_a_m_y_vinewood_01',
             flag: 49,
-            network: true,
+            network: false,
+            isScriptHostPed: true,
         });
 
-        PlaceObjectOnGroundProperly_2(this.Npc);
-        await wait(100);
+        PlaceObjectOnGroundProperly(this.Npc);
         FreezeEntityPosition(this.Npc, true);
 
         if (this.NpcBlip) {
             RemoveBlip(this.NpcBlip);
         }
+
         this.NpcBlip = AddBlipForCoord(targetNPCLocation[0], targetNPCLocation[1], targetNPCLocation[2]);
+
         SetBlipColour(this.NpcBlip, 3);
         SetNewWaypoint(targetNPCLocation[0], targetNPCLocation[1]);
 
