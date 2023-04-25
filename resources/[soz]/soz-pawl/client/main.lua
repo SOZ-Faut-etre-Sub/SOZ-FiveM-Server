@@ -55,6 +55,8 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                     return not enabled and PlayerData.job.onduty
                 end,
                 job = "pawl",
+                blackoutGlobal = true,
+                blackoutJob = "pawl",
             },
             {
                 type = "server",
@@ -67,6 +69,8 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                     return enabled and PlayerData.job.onduty
                 end,
                 job = "pawl",
+                blackoutGlobal = true,
+                blackoutJob = "pawl",
             },
             {
                 type = "server",
@@ -78,6 +82,8 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
                     return PlayerData.job.onduty
                 end,
                 job = "pawl",
+                blackoutGlobal = true,
+                blackoutJob = "pawl",
             },
         },
         distance = 2.5,
