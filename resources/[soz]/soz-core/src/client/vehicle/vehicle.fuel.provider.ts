@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
+import { AnimationStopReason } from '../../shared/animation';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
@@ -449,7 +450,7 @@ export class VehicleFuelProvider {
         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
         await wait(500);
 
-        await this.animationService.playAnimation({
+        const stopReason = await this.animationService.playAnimation({
             base: {
                 dictionary: 'anim@mp_atm@enter',
                 name: 'enter',
@@ -462,7 +463,7 @@ export class VehicleFuelProvider {
             },
         });
 
-        if (this.currentStationPistol !== null) {
+        if (stopReason !== AnimationStopReason.Finished) {
             return;
         }
 

@@ -54,22 +54,17 @@ export class PlayerDiseaseProvider {
         while (this.currentDisease === 'rhume') {
             TriggerScreenblurFadeIn(100);
 
-            await this.animationService.playAnimation(
-                {
-                    base: {
-                        dictionary: 'amb@code_human_wander_idles_fat@female@idle_a',
-                        name: 'idle_b_sneeze',
-                        duration: 1800,
-                        options: {
-                            enablePlayerControl: true,
-                            onlyUpperBody: true,
-                        },
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'amb@code_human_wander_idles_fat@female@idle_a',
+                    name: 'idle_b_sneeze',
+                    duration: 1800,
+                    options: {
+                        enablePlayerControl: true,
+                        onlyUpperBody: true,
                     },
                 },
-                {
-                    noClearPedTask: true,
-                }
-            );
+            });
 
             TriggerScreenblurFadeOut(100);
             ClearPedTasks(PlayerPedId());
@@ -89,21 +84,16 @@ export class PlayerDiseaseProvider {
 
     private async intoxicationLoop(): Promise<void> {
         while (this.currentDisease === 'intoxication') {
-            await this.animationService.playAnimation(
-                {
-                    base: {
-                        dictionary: 'random@drunk_driver_1',
-                        name: 'vomit_outside',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                        duration: 1500,
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@drunk_driver_1',
+                    name: 'vomit_outside',
+                    options: {
+                        onlyUpperBody: true,
                     },
+                    duration: 1500,
                 },
-                {
-                    noClearPedTask: true,
-                }
-            );
+            });
 
             ClearPedTasks(PlayerPedId());
 
@@ -113,21 +103,16 @@ export class PlayerDiseaseProvider {
 
     private async dyspepsiaLoop(): Promise<void> {
         while (this.currentDisease === 'dyspepsie') {
-            await this.animationService.playAnimation(
-                {
-                    base: {
-                        dictionary: 'random@drunk_driver_1',
-                        name: 'drunk_fall_over',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                        duration: 1500,
+            await this.animationService.playAnimation({
+                base: {
+                    dictionary: 'random@drunk_driver_1',
+                    name: 'drunk_fall_over',
+                    options: {
+                        onlyUpperBody: true,
                     },
+                    duration: 1500,
                 },
-                {
-                    noClearPedTask: true,
-                }
-            );
+            });
 
             ClearPedTasks(PlayerPedId());
 
