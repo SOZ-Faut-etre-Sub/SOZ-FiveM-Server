@@ -85,7 +85,7 @@ export class WeaponGunsmithProvider {
             return;
         }
 
-        this.animationService.purge();
+        this.animationService.stop();
         await this.weaponService.clear();
 
         LocalPlayer.state.set('in_shop', false, true);
@@ -254,7 +254,7 @@ export class WeaponGunsmithProvider {
             return;
         }
 
-        this.animationService.purge();
+        this.animationService.stop();
         await wait(300);
         await this.animationService.playAnimation(
             {
@@ -268,7 +268,7 @@ export class WeaponGunsmithProvider {
                 },
             },
             {
-                reset_weapon: false,
+                resetWeapon: false,
             }
         );
     }

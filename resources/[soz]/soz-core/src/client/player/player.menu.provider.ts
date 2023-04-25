@@ -128,7 +128,7 @@ export class PlayerMenuProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationStop)
     public async stopAnimation() {
-        this.animationService.purge();
+        this.animationService.stop();
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetGlobal)

@@ -29,9 +29,6 @@ export class PlayerAnimationProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    private animationPlaying = new Set<string>();
-    private lastAnimationPlaying: AnimationConfigItem | null = null;
-
     @Command('animation_stop', {
         description: "Stop l'animation en cours",
         keys: [
@@ -41,11 +38,8 @@ export class PlayerAnimationProvider {
             },
         ],
     })
-    public async animationStop() {
-        this.lastAnimationPlaying = null;
-        this.animationPlaying.clear();
-
-        return this.animationService.purge();
+    public animationStop() {
+        this.animationService.stop();
     }
 
     @Command('animation_shortcut_01', {
@@ -179,15 +173,6 @@ export class PlayerAnimationProvider {
     }
 
     public async doAnimationShortcut(key: string) {
-        if (this.animationPlaying.has(key)) {
-            this.animationService.stop();
-
-            this.lastAnimationPlaying = null;
-            this.animationPlaying.delete(key);
-
-            return;
-        }
-
         const animationJson = GetResourceKvpString(key);
         let animation = null;
 
@@ -203,9 +188,7 @@ export class PlayerAnimationProvider {
             return;
         }
 
-        this.animationPlaying.add(key);
         await this.playAnimation({ animationItem: animation });
-        this.animationPlaying.delete(key);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationSetWalk)
@@ -301,17 +284,6 @@ export class PlayerAnimationProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationPlay)
     public async playAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {
-        if (
-            this.lastAnimationPlaying &&
-            this.lastAnimationPlaying.type === animationItem.type &&
-            this.lastAnimationPlaying.name === animationItem.name
-        ) {
-            this.animationService.stop();
-            this.lastAnimationPlaying = null;
-
-            return;
-        }
-
         const player = this.playerService.getPlayer();
 
         if (!player) {
@@ -344,22 +316,16 @@ export class PlayerAnimationProvider {
             return true;
         }
 
-        let animationPromise = null;
-        this.lastAnimationPlaying = animationItem;
-
         if (animationItem.type === 'animation') {
-            animationPromise = this.animationService.playAnimation(animationItem.animation);
+            this.animationService.toggleAnimation(animationItem.animation);
+
+            return true;
         }
 
         if (animationItem.type === 'scenario') {
-            animationPromise = this.animationService.playScenario(animationItem.scenario);
-        }
+            this.animationService.toggleScenario(animationItem.scenario);
 
-        if (animationPromise) {
-            const result = await animationPromise;
-            this.lastAnimationPlaying = null;
-
-            return result;
+            return true;
         }
 
         return false;
