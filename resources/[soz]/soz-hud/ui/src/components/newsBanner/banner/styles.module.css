@@ -9,7 +9,7 @@
     color: #fff;
     background: url("../../../assets/twitch-news/default.png") no-repeat;
     background-size: contain;
-    min-height: 20vh;
+    aspect-ratio: 2.5;
 }
 
 .news.lspd {
@@ -76,23 +76,32 @@
     padding-right: 2rem;
     text-transform: uppercase;
     font-size: 4rem;
-    height: 5vh;
 }
 
 .content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    height: 13.6vh;
+    height: 13.5vh;
     overflow: hidden;
 }
 
-.text {
+.researchContent, .announcementContent {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     grid-column: 2 / span 3;
     font-size: 1.8rem;
     padding: 1rem;
+}
+
+.announcementContent{
+    height: 10.5rem;
+    overflow: hidden;
+}
+
+.announcementText {
+    max-height: 10vh;
+    overflow: hidden;
 }
 
 .reporter {
@@ -105,7 +114,7 @@
     .header {
         font-size: 3rem;
     }
-    .text {
+    .researchContent, .announcementContent {
         font-size: 1.2rem;
         padding: .7rem;
     }
@@ -118,7 +127,7 @@
     .header {
         font-size: 2rem;
     }
-    .text {
+    .researchContent, .announcementContent {
         font-size: .95rem;
         padding: .5rem;
     }

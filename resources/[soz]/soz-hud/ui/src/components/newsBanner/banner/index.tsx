@@ -47,7 +47,7 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDele
             <h3 className={styles.header}>{newsTitle(news.type)}</h3>
             <div className={styles.content}>
                 {/(lspd|bcso)/.test(news.type) ? (
-                    <p className={styles.text}>
+                    <p className={styles.researchContent}>
                         <p>
                             Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
                         </p>
@@ -60,8 +60,8 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDele
                 ) : (
                     <>
                         {!news.type.includes('reboot') && (
-                            <div className={styles.text}>
-                                <p>{news.message}</p>
+                            <div className={styles.announcementContent}>
+                                <p className={styles.announcementText}>{news.message}</p>
                                 <p className={styles.reporter}>
                                     Reporter: <strong>{news.reporter}</strong>
                                 </p>
