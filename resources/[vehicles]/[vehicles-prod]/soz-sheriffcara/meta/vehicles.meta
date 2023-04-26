@@ -130,10 +130,10 @@
             </firstPersonDrivebyData>
         </Item>
         <Item>
-            <modelName>C7</modelName>
-            <txdName>C7</txdName>
-            <handlingId>C7</handlingId>
-            <gameName>C7</gameName>
+            <modelName>bcsoc7</modelName>
+            <txdName>bcsoc7</txdName>
+            <handlingId>bcsoc7</handlingId>
+            <gameName>bcsoc7</gameName>
             <vehicleMakeName>CHV</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -141,7 +141,7 @@
             <animConvRoofName>null</animConvRoofName>
             <animConvRoofWindowsAffected/>
             <ptfxAssetName>null</ptfxAssetName>
-            <audioNameHash>BULLET</audioNameHash>
+            <audioNameHash>bcsoc7</audioNameHash>
             <layout>LAYOUT_LOW</layout>
             <coverBoundOffsets>AIRTUG_COVER_OFFSET_INFO</coverBoundOffsets>
             <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
@@ -249,7 +249,7 @@
         </Item>
         <Item>
             <parent>vehicles_btype_interior</parent>
-            <child>C7</child>
+            <child>bcsoc7</child>
         </Item>
     </txdRelationships>
 </CVehicleModelInfo__InitDataList>

@@ -40,7 +40,7 @@
       <sirenSettings value="5012"/>
     </Item>
     <Item>
-      <modelName>c7</modelName>
+      <modelName>bcsoc7</modelName>
       <colors>
         <Item>
           <indices content="char_array">
@@ -64,7 +64,7 @@
         </Item>
       </colors>
       <kits>
-        <Item>946_c7_modkit</Item>
+        <Item>946_bcsoc7_modkit</Item>
       </kits>
       <windowsWithExposedEdges/>
       <plateProbabilities>
