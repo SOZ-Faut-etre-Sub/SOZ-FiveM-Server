@@ -2,7 +2,7 @@
 <CHandlingDataMgr>
     <HandlingData>
         <Item type="CHandlingData">
-            <handlingName>C7</handlingName>
+            <handlingName>bcsoc7</handlingName>
             <fMass value="1100.000000" />
             <fInitialDragCoeff value="8.500000" />
             <fPercentSubmerged value="85.000000" />

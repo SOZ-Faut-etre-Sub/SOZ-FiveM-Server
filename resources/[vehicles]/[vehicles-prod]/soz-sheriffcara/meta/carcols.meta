@@ -1961,7 +1961,7 @@
             <liveryNames/>
         </Item>
         <Item>
-            <kitName>946_c7_modkit</kitName>
+            <kitName>946_bcsoc7_modkit</kitName>
             <id value="946"/>
             <kitType>MKT_SPECIAL</kitType>
             <visibleMods>
