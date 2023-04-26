@@ -21,12 +21,49 @@ const defaultPlayOptions: PlayOptions = {
 };
 
 class AnimationCanceller {
+    public cancelReason: AnimationStopReason = null;
+
     public onCancel: (reason: AnimationStopReason) => void = () => {};
 
     public cancel(reason: AnimationStopReason): void {
+        this.cancelReason = reason;
         this.onCancel(reason);
     }
 }
+
+const fixPositionOffset = (position: Vector3, heading: number, delta: Vector3): Vector3 => {
+    const newPosition = [...position] as Vector3;
+
+    if (heading > 270) {
+        const headingAdjusted = Math.abs(heading - 360);
+        const headingRad = (headingAdjusted * Math.PI) / 180;
+
+        newPosition[0] += delta[0] * Math.cos(headingRad);
+        newPosition[1] += delta[1] * Math.sin(headingRad);
+    } else if (heading > 180) {
+        const headingAdjusted = Math.abs(heading - 360);
+        const headingRad = (headingAdjusted * Math.PI) / 180;
+
+        newPosition[0] -= delta[0] * Math.cos(headingRad);
+        newPosition[1] += delta[1] * Math.sin(headingRad);
+    } else if (heading > 90) {
+        const headingAdjusted = Math.abs(heading - 360);
+        const headingRad = (headingAdjusted * Math.PI) / 180;
+
+        newPosition[0] -= delta[0] * Math.cos(headingRad);
+        newPosition[1] -= delta[1] * Math.sin(headingRad);
+    } else {
+        const headingAdjusted = Math.abs(heading - 360);
+        const headingRad = (headingAdjusted * Math.PI) / 180;
+
+        newPosition[0] += delta[0] * Math.cos(headingRad);
+        newPosition[1] -= delta[1] * Math.sin(headingRad);
+    }
+
+    newPosition[2] += delta[2];
+
+    return newPosition;
+};
 
 export class AnimationRunner implements Promise<AnimationStopReason> {
     public running = true;
@@ -92,8 +129,8 @@ const doAnimation = async (
         ? -1
         : GetAnimDuration(animation.dictionary, animation.name) * 1000;
 
-    const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 1;
-    const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : 1;
+    const blendInSpeed = animation.blendInSpeed ? animation.blendInSpeed : 8.0;
+    const blendOutSpeed = animation.blendOutSpeed ? animation.blendOutSpeed : -8.0;
     const flags = animationOptionsToFlags(animation.options || {});
     const playbackRate = animation.playbackRate ? animation.playbackRate : 0.0;
     const lockX = animation.lockX ? animation.lockX : false;
@@ -244,36 +281,51 @@ export class AnimationFactory {
 
     public createScenario(scenario: Scenario, options: Partial<PlayOptions> = {}): AnimationRunner {
         return this.createFromCallback(async (animationCanceller, ped) => {
+            // If we launch over an existing scenario, we need to cancel it first
+            if (IsPedUsingAnyScenario(ped)) {
+                ClearPedTasks(ped);
+
+                await waitUntil(
+                    async () => !IsPedUsingAnyScenario(ped) || animationCanceller.cancelReason !== null,
+                    1000
+                );
+            }
+
+            // Check if cancelled while waiting for previous scenario to stop
+            if (animationCanceller.cancelReason !== null) {
+                return animationCanceller.cancelReason;
+            }
+
+            // Fix position for some scenarios
             if (scenario.fixPositionDelta) {
                 const heading = GetEntityHeading(ped);
-                const headingAdjusted = heading % 90;
                 const position = GetEntityCoords(ped, false) as Vector3;
-                const headingRad = (headingAdjusted * Math.PI) / 180;
-
-                position[0] += scenario.fixPositionDelta[0] * Math.cos(headingRad);
-                position[1] += scenario.fixPositionDelta[1] * Math.sin(headingRad);
-                position[2] += scenario.fixPositionDelta[2];
+                const scenarioPosition = fixPositionOffset(position, heading, scenario.fixPositionDelta);
 
                 TaskStartScenarioAtPosition(
                     ped,
                     scenario.name,
-                    position[0],
-                    position[1],
-                    position[2],
+                    scenarioPosition[0],
+                    scenarioPosition[1],
+                    scenarioPosition[2],
                     heading,
                     0,
                     true,
                     false
                 );
             } else {
-                TaskStartScenarioInPlace(ped, scenario.name, 0, true);
+                TaskStartScenarioInPlace(ped, scenario.name, -1, true);
             }
 
-            const until = async () => {
-                return !IsPedUsingAnyScenario(ped) || !IsPedUsingScenario(ped, scenario.name);
-            };
+            // Wait for scenario to start
+            await waitUntil(async () => IsPedUsingAnyScenario(ped) && IsPedUsingScenario(ped, scenario.name), 1000);
 
-            const waitUntilPromise = waitUntil(until);
+            // Promise that resolves when the scenario is finished
+            const waitUntilPromise = waitUntil(async () => {
+                return !IsPedUsingAnyScenario(ped) || !IsPedUsingScenario(ped, scenario.name);
+            });
+
+            // Promise that resolves when the scenario is cancelled, aborted or finished
             const promise = new Promise<AnimationStopReason>(resolve => {
                 if (scenario.duration > 0) {
                     wait(scenario.duration).then(() => {
@@ -305,11 +357,37 @@ export class AnimationFactory {
                 return reason;
             });
 
-            return promise.finally(() => {
-                if (IsPedUsingAnyScenario(ped)) {
-                    TaskStartScenarioInPlace(ped, scenario.name, 0, false);
+            promise.finally(() => {
+                if (IsPedUsingAnyScenario(ped) && IsPedUsingScenario(ped, scenario.name)) {
+                    ClearPedTasks(ped);
+                }
+
+                if (scenario.propsCreated) {
+                    const position = GetEntityCoords(ped, false) as Vector3;
+
+                    for (const prop of scenario.propsCreated) {
+                        const hash = GetHashKey(prop);
+                        const propId = GetClosestObjectOfType(
+                            position[0],
+                            position[1],
+                            position[2],
+                            1.0,
+                            hash,
+                            false,
+                            true,
+                            true
+                        );
+
+                        if (propId !== 0) {
+                            SetEntityAsMissionEntity(propId, false, false);
+                            DetachEntity(propId, false, false);
+                            DeleteObject(propId);
+                        }
+                    }
                 }
             });
+
+            return promise;
         }, options);
     }
 

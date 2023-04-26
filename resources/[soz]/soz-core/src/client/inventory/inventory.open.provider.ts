@@ -6,6 +6,7 @@ import { computeBinId } from '@public/shared/job/garbage';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Provider } from '../../core/decorators/provider';
+import { AnimationStopReason } from '../../shared/animation';
 import { AnimationService } from '../animation/animation.service';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
@@ -42,7 +43,10 @@ export class InventoryOpenProvider {
                             duration: 4000,
                         });
 
-                        if (!cancelled && (await emitRpc<boolean>(RpcServerEvent.BIN_IS_NOT_LOCKED, id))) {
+                        if (
+                            cancelled === AnimationStopReason.Finished &&
+                            (await emitRpc<boolean>(RpcServerEvent.BIN_IS_NOT_LOCKED, id))
+                        ) {
                             this.openTargetInventory('bin', id);
                         }
                     },
