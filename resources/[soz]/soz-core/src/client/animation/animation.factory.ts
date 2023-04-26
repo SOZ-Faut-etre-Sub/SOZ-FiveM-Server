@@ -274,8 +274,7 @@ export class AnimationFactory {
             };
 
             const waitUntilPromise = waitUntil(until);
-
-            return new Promise<AnimationStopReason>(resolve => {
+            const promise = new Promise<AnimationStopReason>(resolve => {
                 if (scenario.duration > 0) {
                     wait(scenario.duration).then(() => {
                         resolve(AnimationStopReason.Finished);
@@ -304,6 +303,12 @@ export class AnimationFactory {
                 }
 
                 return reason;
+            });
+
+            return promise.finally(() => {
+                if (IsPedUsingAnyScenario(ped)) {
+                    TaskStartScenarioInPlace(ped, scenario.name, 0, false);
+                }
             });
         }, options);
     }
