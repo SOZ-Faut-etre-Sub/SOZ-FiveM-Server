@@ -68,7 +68,8 @@ export class VehicleMenuProvider {
 
         // -1 is for current speed
         if (speedLimit === -1) {
-            speedLimit = GetEntitySpeed(vehicle) * 3.6;
+            const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
+            speedLimit = Math.round(currentSpeed);
         }
         // -2 is for custom speed
         else if (speedLimit === -2) {
@@ -97,6 +98,12 @@ export class VehicleMenuProvider {
         }
 
         this.vehicleStateService.updateVehicleState(vehicle, { speedLimit });
+
+        if (speedLimit == 0 || speedLimit == null) {
+            this.notifier.notify('Limiteur de vitesse ~r~désactivé~s~.');
+        } else {
+            this.notifier.notify(`Limiteur de vitesse ~g~activé~s~ à ${speedLimit} km/h.`);
+        }
 
         return true;
     }
