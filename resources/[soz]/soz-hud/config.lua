@@ -16,6 +16,8 @@ Config = {
         [1147287684] = "Caddy",
         [1560980623] = "Airtug",
         [989294410] = "Rocket Voltic",
+        [-2066002122] = "lspdgallardo",
+        [-107240429] = "bcsoc7",
     },
 
     AllowedReticuleWeapon = {
