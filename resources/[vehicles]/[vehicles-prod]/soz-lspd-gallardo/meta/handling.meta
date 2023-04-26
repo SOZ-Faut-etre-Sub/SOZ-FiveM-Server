@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CHandlingDataMgr>
-    <HandlingData>
-        <Item type="CHandlingData">
-            <handlingName>lspdgallardo</handlingName>
+  <HandlingData>
+    <Item type="CHandlingData">
+      <handlingName>lspdgallardo</handlingName>
       <fMass value="2000.000000" />
-      <fInitialDragCoeff value="3.0000" />
+      <fInitialDragCoeff value="3.2000" />
       <fPercentSubmerged value="85.000000" />
       <vecCentreOfMassOffset x="0.000000" y="-0.125000" z="-0.2000000" />
       <vecInertiaMultiplier x="1.000000" y="1.300000" z="1.200000" />
       <fDriveBiasFront value="0.500000" />
-      <nInitialDriveGears value="1" />
-      <fInitialDriveForce value="0.4000000" />
-      <fDriveInertia value="0.400000" />
-      <fClutchChangeRateScaleUpShift value="9.000000" />
-      <fClutchChangeRateScaleDownShift value="9.000000" />
-      <fInitialDriveMaxFlatVel value="200.500000" />
-      <fBrakeForce value="1.60000" />
-      <fBrakeBiasFront value="0.60000" />
-      <fHandBrakeForce value="0.500000" />
+      <nInitialDriveGears value="5" />
+      <fInitialDriveForce value="0.400000" />
+      <fDriveInertia value="0.450000" />
+      <fClutchChangeRateScaleUpShift value="2.200000" />
+      <fClutchChangeRateScaleDownShift value="2.200000" />
+      <fInitialDriveMaxFlatVel value="211.000000" />
+      <fBrakeForce value="13.000000" />
+      <fBrakeBiasFront value="0.550000" />
+      <fHandBrakeForce value="5.550000" />
       <fSteeringLock value="40.000000" />
-      <fTractionCurveMax value="2.275000" />
-      <fTractionCurveMin value="2.20000" />
+      <fTractionCurveMax value="7.550000" />
+      <fTractionCurveMin value="7.300000" />
       <fTractionCurveLateral value="22.500000" />
       <fTractionSpringDeltaMax value="0.150000" />
-      <fLowSpeedTractionLossMult value="0.30000" />
+      <fLowSpeedTractionLossMult value="0.10000" />
       <fCamberStiffnesss value="0.000000" />
       <fTractionBiasFront value="0.500000" />
       <fTractionLossMult value="1.000000" />
@@ -49,12 +49,9 @@
       <fSeatOffsetDistZ value="0.000000" />
       <nMonetaryValue value="35000" />
       <strModelFlags>441010</strModelFlags>
-      <strHandlingFlags>21002</strHandlingFlags>
+      <strHandlingFlags>20002</strHandlingFlags>
       <strDamageFlags>0</strDamageFlags>
       <AIHandling>AVERAGE</AIHandling>
-      <SubHandlingData>
-        <Item type="NULL" />
-        <Item type="NULL" />
-        <Item type="NULL" />
-      </SubHandlingData>
     </Item>
+  </HandlingData>
+</CHandlingDataMgr>
