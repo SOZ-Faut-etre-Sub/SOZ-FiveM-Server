@@ -3,13 +3,19 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { FabricMaterial, FfsConfig } from '../../../shared/job/ffs';
+import { Monitor } from '../../../shared/monitor';
+import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { InventoryManager } from '../../inventory/inventory.manager';
+import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
 
 @Provider()
 export class FightForStyleTransformProvider {
+    @Inject(ItemService)
+    private itemService: ItemService;
+
     @Inject(ProgressService)
     private progressService: ProgressService;
 
@@ -21,6 +27,9 @@ export class FightForStyleTransformProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private async doTransform(source: number, fabricMaterial: FabricMaterial): Promise<boolean> {
         const { completed } = await this.progressService.progress(source, 'ffs_transform', 'Transformation', 2000, {
@@ -88,6 +97,20 @@ export class FightForStyleTransformProvider {
                 this.notifier.notify(source, `Vous avez ~r~arrêté~s~ vos procédés chimiques et mécaniques.`, 'error');
                 return;
             }
+            const outputItemLabel = this.itemService.getItem(transformProcess.output.id).label;
+
+            this.monitor.publish(
+                'job_ffs_transform',
+                {
+                    item_id: transformProcess.output.id,
+                    player_source: source,
+                },
+                {
+                    item_label: outputItemLabel,
+                    quantity: transformProcess.output.amount,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                }
+            );
         }
 
         this.notifier.notify(source, `Vous avez ~r~terminé~s~ vos procédés chimiques et mécaniques.`);
