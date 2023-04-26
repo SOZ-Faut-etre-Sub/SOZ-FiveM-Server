@@ -67,7 +67,6 @@ export class PlayerDiseaseProvider {
             });
 
             TriggerScreenblurFadeOut(100);
-            ClearPedTasks(PlayerPedId());
 
             await wait(1000 * 10);
         }
@@ -95,8 +94,6 @@ export class PlayerDiseaseProvider {
                 },
             });
 
-            ClearPedTasks(PlayerPedId());
-
             await wait(45 * 1000);
         }
     }
@@ -113,8 +110,6 @@ export class PlayerDiseaseProvider {
                     duration: 1500,
                 },
             });
-
-            ClearPedTasks(PlayerPedId());
 
             await wait(45 * 1000);
         }

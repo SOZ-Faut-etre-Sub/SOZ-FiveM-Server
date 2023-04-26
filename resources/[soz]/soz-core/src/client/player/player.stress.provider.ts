@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
+import { AnimationStopReason } from '../../shared/animation';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { Item } from '../../shared/item';
@@ -247,9 +248,6 @@ export class PlayerStressProvider {
 
     @OnEvent(ClientEvent.PLAYER_HEALTH_DO_YOGA)
     async doYoga(): Promise<void> {
-        ClearPedTasksImmediately(PlayerPedId());
-        await wait(1);
-
         this.animationService
             .playAnimation({
                 base: {
@@ -262,7 +260,7 @@ export class PlayerStressProvider {
                 },
             })
             .then(cancelled => {
-                if (cancelled) {
+                if (cancelled !== AnimationStopReason.Finished) {
                     this.progressService.cancel();
                 }
             });

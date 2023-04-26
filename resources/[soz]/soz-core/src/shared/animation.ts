@@ -75,6 +75,7 @@ export type Scenario = {
     name: string;
     duration?: number;
     fixPositionDelta?: Vector3;
+    propsCreated?: string[];
 };
 
 export type AnimationProps = {

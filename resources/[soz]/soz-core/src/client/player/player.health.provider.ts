@@ -334,7 +334,6 @@ export class PlayerHealthProvider {
             return;
         }
 
-        ClearPedTasksImmediately(PlayerPedId());
         await wait(1);
 
         let progressEnd = false;
@@ -343,7 +342,7 @@ export class PlayerHealthProvider {
                 name: 'world_human_muscle_free_weights',
             })
             .then(cancelled => {
-                if (cancelled && !progressEnd) {
+                if (cancelled !== AnimationStopReason.Finished && !progressEnd) {
                     this.progressService.cancel();
                 }
             });
