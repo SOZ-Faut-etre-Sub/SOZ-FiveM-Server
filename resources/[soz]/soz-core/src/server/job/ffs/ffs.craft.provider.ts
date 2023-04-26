@@ -3,6 +3,8 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { FfsConfig, Process } from '../../../shared/job/ffs';
+import { Monitor } from '../../../shared/monitor';
+import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
@@ -26,6 +28,9 @@ export class FightForStyleCraftProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
     @OnEvent(ServerEvent.FFS_CRAFT)
     public async onCraft(source: number, craftProcess: Process) {
         if (!this.canCraft(source, craftProcess)) {
@@ -39,6 +44,18 @@ export class FightForStyleCraftProvider {
             const hasCrafted = await this.doCraft(source, craftProcess);
             const outputItemLabel = this.itemService.getItem(craftProcess.output.id).label;
             if (hasCrafted) {
+                this.monitor.publish(
+                    'job_ffs_craft',
+                    {
+                        item_id: craftProcess.output.id,
+                        player_source: source,
+                    },
+                    {
+                        item_label: outputItemLabel,
+                        quantity: craftProcess.output.amount,
+                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                    }
+                );
                 this.notifier.notify(source, `Vous avez confectionné un·e ~g~${outputItemLabel}~s~.`);
             } else {
                 this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de confectionner.');
