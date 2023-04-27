@@ -90,12 +90,9 @@ export class VehicleMenuProvider {
         }
 
         this.vehicleService.updateVehicleState(vehicle, { speedLimit });
-        if (speedLimit == 0 || speedLimit == null)
-        {
+        if (speedLimit == 0 || speedLimit == null) {
             this.notifier.notify('Limiteur de vitesse ~r~désactivé~s~.');
-        }
-        else
-        {
+        } else {
             this.notifier.notify(`Limiteur de vitesse ~g~activé~s~ à ${speedLimit} km/h.`);
         }
 
