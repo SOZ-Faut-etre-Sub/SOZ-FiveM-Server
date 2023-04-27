@@ -36,6 +36,7 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
             target.Functions.SetMetaData("ishandcuffed", false)
             Player(target.PlayerData.source).state:set("ishandcuffed", false, true)
             TriggerClientEvent("police:client:GetUnCuffed", target.PlayerData.source)
+            TriggerClientEvent("soz-talk:client:PowerOnRadio", target.PlayerData.source)
         else
             TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas de ~r~clé de menottes", "error")
         end
