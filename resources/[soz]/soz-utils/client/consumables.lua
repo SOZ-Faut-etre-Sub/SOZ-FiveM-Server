@@ -142,7 +142,7 @@ RegisterNetEvent("scuba:client:Toggle", function(scuba)
             disableCombat = true,
         }, {animDict = "anim@mp_yacht@shower@male@", anim = "male_shower_towel_dry_to_get_dressed", flags = 16}, {}, {}, function() -- Done
             SetEnableScuba(PlayerPedId(), true)
-            SetPedMaxTimeUnderwater(PlayerPedId(), 1500.00)
+            SetPedMaxTimeUnderwater(PlayerPedId(), 86400.00)
             TriggerServerEvent("soz-character:server:SetPlayerJobClothes", skin[PlayerData.skin.Model.Hash], false)
         end)
     else
@@ -162,6 +162,7 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     if PlayerData.metadata.scuba then
         local ped = PlayerPedId()
         SetEnableScuba(ped, true)
-        SetPedMaxTimeUnderwater(ped, 1500.00)
+        SetPedMaxTimeUnderwater(ped, 86400.00)
     end
 end)
+
