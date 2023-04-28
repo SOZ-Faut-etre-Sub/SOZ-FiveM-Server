@@ -21,7 +21,8 @@ export class PlayerIdentityProvider {
     @OnNuiEvent<{ player: PlayerData }, string>(NuiEvent.PlayerGetMugshot)
     public async getMugshot({ player }: { player: PlayerData }): Promise<string> {
         const currentPlayer = this.playerService.getPlayer();
-        const ped = GetPlayerPed(currentPlayer.source === player.source ? -1 : player.source);
+        const playerId = GetPlayerFromServerId(player.source);
+        const ped = GetPlayerPed(currentPlayer.source === player.source ? -1 : playerId);
 
         if (!ped) {
             return null;
