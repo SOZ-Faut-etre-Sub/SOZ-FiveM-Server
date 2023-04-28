@@ -18,6 +18,7 @@ Config = {
         [989294410] = "Rocket Voltic",
         [-2066002122] = "lspdgallardo",
         [-107240429] = "bcsoc7",
+        [GetHashKey("dilettante2")] = "Dilettante 2",
     },
 
     AllowedReticuleWeapon = {
