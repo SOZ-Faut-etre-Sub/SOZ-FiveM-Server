@@ -90,13 +90,16 @@ function ClothingShop:GenerateMenu(skipIntro)
     shopMenu:ClearItems()
     shopMenu:SetSubtitle(self.label)
 
+    self:deleteCam()
+
+    local products = QBCore.Functions.TriggerRpc("shops:server:GetShopContent", self.brand)
+
     if skipIntro ~= true and Config.ClothingLocationsInShop[currentShop] then
         local x, y, z, w = table.unpack(Config.ClothingLocationsInShop[currentShop])
         TaskGoStraightToCoord(PlayerPedId(), x, y, z, 1.0, 4000, w, 0.0)
         Wait(4000)
     end
 
-    self:deleteCam()
     self:setupCam()
 
     shopMenu:AddCheckbox({
@@ -111,8 +114,6 @@ function ClothingShop:GenerateMenu(skipIntro)
             end
         end,
     })
-
-    local products = QBCore.Functions.TriggerRpc("shops:server:GetShopContent", self.brand)
 
     local createProduct = function(menu, productId, product, categoryID, collectionID)
         if product.label == nil or product.price == nil then
