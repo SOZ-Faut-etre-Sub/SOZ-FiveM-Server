@@ -12,6 +12,7 @@ export class NuiMenuProvider {
 
     @Command('soz_menu_toggle_focus', {
         description: 'Active ou désactive la souris dans le menu',
+        passthroughNuiFocus: true,
         keys: [
             {
                 mapper: 'keyboard',

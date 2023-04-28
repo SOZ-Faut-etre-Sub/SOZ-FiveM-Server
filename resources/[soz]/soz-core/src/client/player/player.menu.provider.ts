@@ -50,6 +50,7 @@ export class PlayerMenuProvider {
 
     @Command('soz_core_toggle_personal_menu', {
         description: 'Ouvrir le menu personnel',
+        passthroughNuiFocus: true,
         keys: [
             {
                 mapper: 'keyboard',
