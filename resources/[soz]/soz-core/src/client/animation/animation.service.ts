@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { wait } from '@core/utils';
+import { wait, waitUntil } from '@core/utils';
 import { AnimationFactory, AnimationRunner } from '@public/client/animation/animation.factory';
 
 import { Animation, AnimationStopReason, PlayOptions, Scenario } from '../../shared/animation';
@@ -70,16 +70,14 @@ export class AnimationService {
         return this.animationFactory.createAnimation(animation, options);
     }
 
-    public stop(immediately = false, ped = PlayerPedId()) {
-        if (immediately) {
-            ClearPedTasksImmediately(ped);
-        } else {
-            ClearPedTasks(ped);
-            ClearPedSecondaryTask(ped);
-        }
+    public async stop(ped = PlayerPedId()): Promise<void> {
+        ClearPedTasks(ped);
+        ClearPedSecondaryTask(ped);
+
+        await waitUntil(async () => !IsPedUsingAnyScenario(ped), 1000);
     }
 
     public destroy() {
-        this.stop(true);
+        this.stop();
     }
 }

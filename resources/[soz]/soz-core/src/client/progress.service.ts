@@ -39,8 +39,7 @@ export class ProgressService {
             return { completed: false, progress: 0 };
         }
 
-        this.animationService.stop(true);
-        await wait(0);
+        await this.animationService.stop();
 
         if (options.headingEntity) {
             TaskTurnPedToFaceEntity(PlayerPedId(), options.headingEntity.entity, 1000);
@@ -83,7 +82,7 @@ export class ProgressService {
 
         if (options.useAnimationService && animation) {
             if (animation.task) {
-                runner = this.animationService.playScenario({ name: animation.task });
+                runner = this.animationService.playScenario({ name: animation.task, duration: duration });
             } else {
                 runner = this.animationService.playAnimation(
                     {
@@ -94,6 +93,7 @@ export class ProgressService {
                             blendOutSpeed: animation.blendOutSpeed,
                             playbackRate: animation.playbackRate,
                             options: animation.options,
+                            duration: duration,
                         },
                     },
                     {
