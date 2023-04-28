@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { NuiEvent } from '../../shared/event';
+import { Control } from '../../shared/input';
 import { FocusInput, SetFocusInput } from '../../shared/nui/focus';
 import { NuiDispatch } from './nui.dispatch';
 
@@ -13,6 +14,12 @@ export class NuiProvider {
     private dispatcher: NuiDispatch;
 
     private state: Record<string, FocusInput> = {};
+
+    private keyboard = false;
+
+    private cursor = false;
+
+    private keepInput = false;
 
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
@@ -50,18 +57,26 @@ export class NuiProvider {
         this.dispatcher.dispatch('global', 'PauseMenuActive', IsPauseMenuActive());
     }
 
+    @Tick(0)
+    public async disableCameraOnCursorFocus() {
+        if (this.cursor) {
+            DisableControlAction(0, Control.LookUpDown, true);
+            DisableControlAction(0, Control.LookLeftRight, true);
+        }
+    }
+
     private computeFocusInput() {
-        let keyboard = false;
-        let cursor = false;
-        let keepInput = true;
+        this.keyboard = false;
+        this.cursor = false;
+        this.keepInput = true;
 
         for (const focus of Object.values(this.state)) {
-            keyboard = keyboard || focus.keyboard;
-            cursor = cursor || focus.cursor;
-            keepInput = keepInput && focus.keepInput;
+            this.keyboard = this.keyboard || focus.keyboard;
+            this.cursor = this.cursor || focus.cursor;
+            this.keepInput = this.keepInput && focus.keepInput;
         }
 
-        SetNuiFocus(keyboard, cursor);
-        SetNuiFocusKeepInput(keepInput);
+        SetNuiFocus(this.keyboard, this.cursor);
+        SetNuiFocusKeepInput(this.keepInput);
     }
 }
