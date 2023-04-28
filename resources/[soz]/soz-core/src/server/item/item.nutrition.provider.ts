@@ -41,10 +41,6 @@ export class ItemNutritionProvider {
             return;
         }
 
-        if (!this.item.canPlayerUseItem(source, true)) {
-            return;
-        }
-
         if (
             !this.inventoryManager.removeItemFromInventory(
                 source,
@@ -184,7 +180,7 @@ export class ItemNutritionProvider {
         const foods = this.item.getItems<FoodItem>('food');
 
         for (const foodId of Object.keys(foods)) {
-            this.item.setItemUseCallback<FoodItem>(foodId, this.useFoodOrDrink.bind(this));
+            this.item.setItemUseCallback<FoodItem>(foodId, this.useFoodOrDrink.bind(this), false);
         }
 
         const drinks = this.item.getItems<DrinkItem>('drink');

@@ -27,6 +27,10 @@ export class ResourceLoader {
         }
     }
 
+    unloadAnimationDictionary(name: string): void {
+        RemoveAnimDict(name);
+    }
+
     async loadAnimationSet(name: string): Promise<void> {
         if (!HasAnimSetLoaded(name)) {
             RequestAnimSet(name);
@@ -37,7 +41,7 @@ export class ResourceLoader {
         }
     }
 
-    unloadedAnimationSet(name: string): void {
+    unloadAnimationSet(name: string): void {
         RemoveAnimSet(name);
     }
 
