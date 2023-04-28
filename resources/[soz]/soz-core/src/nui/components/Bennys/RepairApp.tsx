@@ -52,7 +52,7 @@ const EnginePage: FunctionComponent<PageProps> = ({ analyze }) => {
         <>
             <h3 className="text-3xl mb-4">Moteur</h3>
             <p>Etat du moteur : {analyze.condition.engineHealth.toFixed(2)} / 1000</p>
-            {!analyze.isElectric && <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 1000</p>}
+            {!analyze.isElectric && <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 100</p>}
             <p>Kilométrage : {(analyze.condition.mileage / 1000).toFixed(2)} km</p>
         </>
     );
