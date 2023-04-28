@@ -221,6 +221,10 @@ export type VehicleDealershipMenuData = {
     vehicles: Vehicle[];
 };
 
+export const VehicleMidDamageThreshold = 700;
+export const VehicleHighDamageThreshold = 400;
+export const VehicleCriticalDamageThreshold = 101;
+
 export const VehicleMaxStock: Record<keyof typeof VehicleCategory, number> = {
     Boats: 0,
     Commercial: 0,
