@@ -5,6 +5,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
+import { AnimationStopReason } from '../../shared/animation';
 import { Component, WardrobeConfig } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
@@ -333,7 +334,6 @@ export class PlayerHealthProvider {
             return;
         }
 
-        ClearPedTasksImmediately(PlayerPedId());
         await wait(1);
 
         let progressEnd = false;
@@ -342,7 +342,7 @@ export class PlayerHealthProvider {
                 name: 'world_human_muscle_free_weights',
             })
             .then(cancelled => {
-                if (cancelled && !progressEnd) {
+                if (cancelled !== AnimationStopReason.Finished && !progressEnd) {
                     this.progressService.cancel();
                 }
             });
@@ -429,7 +429,7 @@ export class PlayerHealthProvider {
                     : null,
             })
             .then(cancelled => {
-                if (cancelled && !progressEnd) {
+                if (cancelled !== AnimationStopReason.Finished && !progressEnd) {
                     this.progressService.cancel();
                 }
             });

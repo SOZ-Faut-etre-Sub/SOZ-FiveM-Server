@@ -1,5 +1,5 @@
 import { AudioService } from '@public/client/nui/audio.service';
-import { animationOptionsToFlags } from '@public/shared/animation';
+import { animationOptionsToFlags, AnimationStopReason } from '@public/shared/animation';
 import PCancelable from 'p-cancelable';
 
 import { Inject, Injectable } from '../core/decorators/injectable';
@@ -39,6 +39,9 @@ export class ProgressService {
             return { completed: false, progress: 0 };
         }
 
+        this.animationService.stop(true);
+        await wait(0);
+
         if (options.headingEntity) {
             TaskTurnPedToFaceEntity(PlayerPedId(), options.headingEntity.entity, 1000);
             await wait(1000);
@@ -61,11 +64,14 @@ export class ProgressService {
 
         const start = GetGameTimer();
         let promiseResolve;
+        const cancel = () => {
+            this.cancel();
+        };
         const promise = new PCancelable<ProgressResult>(function (resolve, reject, onCancel) {
             promiseResolve = resolve;
 
             onCancel(() => {
-                this.cancel();
+                cancel();
             });
         }).finally(() => {
             if (audioId) {
@@ -73,36 +79,35 @@ export class ProgressService {
             }
         });
 
+        let runner = null;
+
         if (options.useAnimationService && animation) {
             if (animation.task) {
-                this.animationService.playScenario({ name: animation.task }).then((cancelled: boolean) => {
-                    if (cancelled) {
-                        this.cancel();
-                    }
-                });
+                runner = this.animationService.playScenario({ name: animation.task });
             } else {
-                this.animationService
-                    .playAnimation(
-                        {
-                            base: {
-                                dictionary: animation.dictionary,
-                                name: animation.name,
-                                blendInSpeed: animation.blendInSpeed,
-                                blendOutSpeed: animation.blendOutSpeed,
-                                playbackRate: animation.playbackRate,
-                                options: animation.options,
-                            },
+                runner = this.animationService.playAnimation(
+                    {
+                        base: {
+                            dictionary: animation.dictionary,
+                            name: animation.name,
+                            blendInSpeed: animation.blendInSpeed,
+                            blendOutSpeed: animation.blendOutSpeed,
+                            playbackRate: animation.playbackRate,
+                            options: animation.options,
                         },
-                        {
-                            reset_weapon: false,
-                        }
-                    )
-                    .then((cancelled: boolean) => {
-                        if (cancelled) {
-                            this.cancel();
-                        }
-                    });
+                    },
+                    {
+                        resetWeapon: false,
+                    }
+                );
             }
+
+            runner.then((stopReason: AnimationStopReason) => {
+                if (stopReason !== AnimationStopReason.Finished) {
+                    cancel();
+                }
+            });
+
             animation = null;
         }
 
@@ -135,9 +140,10 @@ export class ProgressService {
             options.start,
             options.tick,
             (cancelled: boolean) => {
-                if (options.useAnimationService) {
-                    this.animationService.stop();
+                if (runner !== null) {
+                    runner.cancel();
                 }
+
                 if (cancelled) {
                     const elapsedBeforeCancel = (GetGameTimer() - start) / duration;
 

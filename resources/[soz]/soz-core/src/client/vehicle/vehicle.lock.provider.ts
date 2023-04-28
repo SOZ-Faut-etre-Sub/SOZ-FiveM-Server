@@ -497,7 +497,7 @@ export class VehicleLockProvider {
                 },
             },
             {
-                reset_weapon: false,
+                resetWeapon: false,
             }
         );
 

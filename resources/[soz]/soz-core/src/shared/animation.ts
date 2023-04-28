@@ -47,6 +47,12 @@ export type WalkConfigCategory = {
     items: WalkConfigItem[];
 };
 
+export enum AnimationStopReason {
+    Canceled, // Animation was canceled by the user
+    Aborted, // Animation was aborted by an external event (other animation, player died, etc.)
+    Finished, // Normal finish, animation is finished
+}
+
 export type WalkConfigItem = WalkConfigBase | WalkConfigCategory;
 
 export type WalkConfigList = WalkConfigItem[];
@@ -69,6 +75,7 @@ export type Scenario = {
     name: string;
     duration?: number;
     fixPositionDelta?: Vector3;
+    propsCreated?: string[];
 };
 
 export type AnimationProps = {
@@ -92,8 +99,10 @@ export type AnimationInfo = {
 };
 
 export type PlayOptions = {
-    reset_weapon?: boolean;
-    noClearPedTask?: boolean;
+    ped: number;
+    resetWeapon: boolean;
+    clearTasksBefore: boolean;
+    clearTasksAfter: boolean;
 };
 
 export type AnimationOptions = {
