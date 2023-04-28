@@ -1,3 +1,5 @@
+import { joaat } from '@public/shared/joaat';
+
 import { DealershipConfigItem, DealershipType } from '../../config/dealership';
 import { JobType } from '../job';
 import { Vector3, Vector4 } from '../polyzone/vector';
@@ -296,6 +298,7 @@ export const VehicleElectricModels: Record<number, string> = {
     [989294410]: 'Rocket Voltic',
     [-2066002122]: 'lspdgallardo',
     [-107240429]: 'bcsoc7',
+    [joaat('dilettante2')]: 'Dilettante 2',
 };
 
 export const isVehicleModelElectric = (model: number): boolean => {
