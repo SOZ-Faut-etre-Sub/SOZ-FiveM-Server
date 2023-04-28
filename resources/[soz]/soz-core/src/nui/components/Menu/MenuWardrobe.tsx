@@ -86,6 +86,7 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
 
                         return (
                             <MenuItemSelect
+                                key={wardRobeElementId}
                                 title={WardRobeElements[wardRobeElementId].label}
                                 onChange={async (index, item) => {
                                     await fetchNui(NuiEvent.WardrobeElementSelect, {

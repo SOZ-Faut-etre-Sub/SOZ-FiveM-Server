@@ -260,6 +260,7 @@ export enum ClientEvent {
     HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
 
     ITEM_USE = 'soz-core:client:item:use',
+    ITEM_UMBRELLA_TOGGLE = 'soz-core:client:item:umbrella:toggle',
 
     PLAYER_ON_DEATH = 'ems:client:onDeath',
 
