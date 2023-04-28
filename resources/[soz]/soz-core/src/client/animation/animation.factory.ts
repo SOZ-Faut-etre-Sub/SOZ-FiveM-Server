@@ -272,6 +272,16 @@ export class AnimationFactory {
                 return AnimationStopReason.Finished;
             } finally {
                 for (const prop of props) {
+                    if (animation.enter?.dictionary) {
+                        this.resourceLoader.unloadAnimationDictionary(animation.enter.dictionary);
+                    }
+
+                    this.resourceLoader.unloadAnimationDictionary(animation.base.dictionary);
+
+                    if (animation.exit?.dictionary) {
+                        this.resourceLoader.unloadAnimationDictionary(animation.exit.dictionary);
+                    }
+
                     DetachEntity(prop, false, false);
                     DeleteEntity(prop);
                 }
