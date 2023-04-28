@@ -51,7 +51,6 @@ const Banner: FunctionComponent<PropsWithChildren<any>> = ({ index, news, onDele
                         <p>
                             Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
                         </p>
-
                         <p>
                             Si vous avez des informations sur cette personne,
                             veuillez les communiquer au <strong style={{textTransform: 'uppercase'}}>555-{news.type}</strong>.
