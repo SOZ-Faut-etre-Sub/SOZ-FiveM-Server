@@ -223,7 +223,7 @@ export class LSMCDeathProvider {
                 NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2] + 0.5, heading, true, false);
             }
 
-            this.animationService.purge();
+            this.animationService.stop();
             ClearPedTasks(PlayerPedId());
             SetEntityInvincible(player, true);
             SetBlockingOfNonTemporaryEvents(player, true);
@@ -251,13 +251,15 @@ export class LSMCDeathProvider {
     private animationCheck(ped: number) {
         if (IsPedInAnyVehicle(ped, true)) {
             if (!IsEntityPlayingAnim(ped, deathVehcleAnim.base.dictionary, deathVehcleAnim.base.name, 3)) {
-                this.animationService.purge();
-                this.animationService.playAnimation(deathVehcleAnim);
+                this.animationService.playAnimation(deathVehcleAnim, {
+                    clearTasksBefore: true,
+                });
             }
         } else {
             if (!IsEntityPlayingAnim(ped, deathAnim.base.dictionary, deathAnim.base.name, 3)) {
-                this.animationService.purge();
-                this.animationService.playAnimation(deathAnim);
+                this.animationService.playAnimation(deathAnim, {
+                    clearTasksBefore: true,
+                });
             }
         }
     }
@@ -374,21 +376,23 @@ export class LSMCDeathProvider {
                 }
             );
 
-            ClearPedTasks(ped);
-            this.animationService.purge();
-            await wait(500);
-            this.animationService.playAnimation({
-                base: {
-                    dictionary: 'anim@gangops@morgue@table@',
-                    name: 'body_search',
-                    blendInSpeed: 8.0,
-                    blendOutSpeed: 8.0,
-                    options: {
-                        cancellable: true,
-                        repeat: true,
+            this.animationService.playAnimation(
+                {
+                    base: {
+                        dictionary: 'anim@gangops@morgue@table@',
+                        name: 'body_search',
+                        blendInSpeed: 8.0,
+                        blendOutSpeed: 8.0,
+                        options: {
+                            cancellable: true,
+                            repeat: true,
+                        },
                     },
                 },
-            });
+                {
+                    clearTasksBefore: true,
+                }
+            );
         }
         await wait(2000);
 

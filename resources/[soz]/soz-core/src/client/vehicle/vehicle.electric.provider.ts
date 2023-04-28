@@ -11,6 +11,7 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
+import { AnimationStopReason } from '../../shared/animation';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -429,7 +430,7 @@ export class VehicleElectricProvider {
         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
         await wait(500);
 
-        await this.animationService.playAnimation({
+        const stopReason = await this.animationService.playAnimation({
             base: {
                 dictionary: 'anim@amb@nightclub@mini@drinking@drinking_shots@ped_d@normal',
                 name: 'pickup',
@@ -441,6 +442,10 @@ export class VehicleElectricProvider {
                 lockZ: true,
             },
         });
+
+        if (stopReason !== AnimationStopReason.Finished) {
+            return;
+        }
 
         if (this.currentStationPlug !== null) {
             return;

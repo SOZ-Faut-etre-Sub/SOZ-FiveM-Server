@@ -3,6 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { wait } from '../../../core/utils';
+import { AnimationStopReason } from '../../../shared/animation';
 import { ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { getDistance, Vector3, Vector4 } from '../../../shared/polyzone/vector';
@@ -216,7 +217,7 @@ export class BennysFlatbedProvider {
         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 500);
         await wait(500);
 
-        await this.animationService.playAnimation({
+        const stopReason = await this.animationService.playAnimation({
             base: {
                 dictionary: 'anim@mp_atm@enter',
                 name: 'enter',
@@ -228,6 +229,10 @@ export class BennysFlatbedProvider {
                 lockZ: true,
             },
         });
+
+        if (stopReason !== AnimationStopReason.Finished) {
+            return;
+        }
 
         if (this.currentFlatbedAttach !== null) {
             return;
