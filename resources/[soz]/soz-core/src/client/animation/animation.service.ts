@@ -70,11 +70,16 @@ export class AnimationService {
         return this.animationFactory.createAnimation(animation, options);
     }
 
-    public stop(ped = PlayerPedId()) {
-        ClearPedTasks(ped);
+    public stop(immediately = false, ped = PlayerPedId()) {
+        if (immediately) {
+            ClearPedTasksImmediately(ped);
+        } else {
+            ClearPedTasks(ped);
+            ClearPedSecondaryTask(ped);
+        }
     }
 
     public destroy() {
-        this.stop();
+        this.stop(true);
     }
 }

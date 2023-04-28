@@ -39,6 +39,9 @@ export class ProgressService {
             return { completed: false, progress: 0 };
         }
 
+        this.animationService.stop(true);
+        await wait(0);
+
         if (options.headingEntity) {
             TaskTurnPedToFaceEntity(PlayerPedId(), options.headingEntity.entity, 1000);
             await wait(1000);
