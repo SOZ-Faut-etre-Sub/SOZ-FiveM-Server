@@ -1,4 +1,5 @@
 import { VehicleMidDamageThreshold } from '@public/shared/vehicle/vehicle';
+
 import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -225,7 +226,7 @@ export class PlayerStressProvider {
                 this.previousVehicleHealth = engineHealth;
             } else if (this.previousVehicleHealth !== engineHealth) {
                 if (
-                    this.previousVehicleHealth >= VehicleMidDamageThreshold && 
+                    this.previousVehicleHealth >= VehicleMidDamageThreshold &&
                     engineHealth < VehicleMidDamageThreshold
                 ) {
                     this.updateStress(StressLooseType.VehicleYellowEngine);
