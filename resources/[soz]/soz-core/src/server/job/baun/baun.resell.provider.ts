@@ -3,6 +3,8 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { BaunConfig } from '../../../shared/job/baun';
+import { Monitor } from '../../../shared/monitor';
+import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -21,6 +23,9 @@ export class BaunResellProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @OnEvent(ServerEvent.BAUN_RESELL)
     public async onResell(source: number) {
@@ -51,6 +56,19 @@ export class BaunResellProvider {
 
         const totalAmount = item.amount * BaunConfig.Resell.reward;
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_baun', 'safe_baun', totalAmount);
+
+        this.monitor.publish(
+            'job_baun_resell',
+            {
+                item_id: item.metadata.id,
+                player_source: source,
+            },
+            {
+                item_label: item.label,
+                quantity: item.amount,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
 
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de revendre.', 'success');
     }
