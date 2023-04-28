@@ -6,6 +6,7 @@ import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { HealthBookLabel, HealthBookMinMax } from '../../../shared/health';
 import { MenuType } from '../../../shared/nui/menu';
 import { PlayerHealthBook } from '../../../shared/player';
+import { Vector3 } from '../../../shared/polyzone/vector';
 import { Err, Ok } from '../../../shared/result';
 import { InputService } from '../../nui/input.service';
 import { NuiDispatch } from '../../nui/nui.dispatch';
@@ -137,7 +138,14 @@ export class LSMCCheckHealthProvider {
                 },
                 action: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    this.nuiMenu.openMenu(MenuType.SetHealthState, target);
+                    this.nuiMenu.openMenu(MenuType.SetHealthState, target, {
+                        position: {
+                            position: () => {
+                                return GetEntityCoords(entity) as Vector3;
+                            },
+                            distance: 3,
+                        },
+                    });
                 },
             },
         ]);

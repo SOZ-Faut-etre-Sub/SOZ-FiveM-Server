@@ -90,7 +90,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.VehicleDealership]: VehicleDealershipMenuData;
     [MenuType.Wardrobe]: WardrobeMenuData;
     [MenuType.GunSmith]: WeaponsMenuData;
-    [MenuType.LsmcPharmacy]: never;
+    [MenuType.LsmcPharmacy]: any;
     [MenuType.MandatoryJobMenu]: any;
     [MenuType.IllegalShop]: Map<string, ShopProduct[]>;
     [MenuType.EasterShop]: ShopProduct[];

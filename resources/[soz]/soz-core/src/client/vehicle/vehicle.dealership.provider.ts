@@ -413,12 +413,21 @@ export class VehicleDealershipProvider {
             return;
         }
 
-        this.nuiMenu.openMenu(MenuType.VehicleDealership, {
-            name: config.blip.name,
-            dealership: config,
-            dealershipId: dealershipType,
-            vehicles,
-        });
+        this.nuiMenu.openMenu(
+            MenuType.VehicleDealership,
+            {
+                name: config.blip.name,
+                dealership: config,
+                dealershipId: dealershipType,
+                vehicles,
+            },
+            {
+                position: {
+                    position: config.position,
+                    distance: 3.0,
+                },
+            }
+        );
 
         const camera = CreateCamWithParams(
             'DEFAULT_SCRIPTED_CAMERA',
@@ -473,11 +482,20 @@ export class VehicleDealershipProvider {
 
         const vehicles = await emitRpc<Vehicle[]>(RpcServerEvent.VEHICLE_DEALERSHIP_GET_LIST_JOB, player.job.id);
 
-        this.nuiMenu.openMenu(MenuType.VehicleDealership, {
-            name: 'Concessionnaire entreprise',
-            dealershipId: DealershipType.Job,
-            vehicles,
-        });
+        this.nuiMenu.openMenu(
+            MenuType.VehicleDealership,
+            {
+                name: 'Concessionnaire entreprise',
+                dealershipId: DealershipType.Job,
+                vehicles,
+            },
+            {
+                position: {
+                    position: DealershipJob.position,
+                    distance: 3.0,
+                },
+            }
+        );
     }
 
     public async openLuxuryDealership(name: string) {
@@ -506,9 +524,18 @@ export class VehicleDealershipProvider {
             return;
         }
 
-        this.nuiMenu.openMenu(MenuType.VehicleAuction, {
-            name,
-            auction,
-        });
+        this.nuiMenu.openMenu(
+            MenuType.VehicleAuction,
+            {
+                name,
+                auction,
+            },
+            {
+                position: {
+                    position: auction.windows.center,
+                    distance: 5.0,
+                },
+            }
+        );
     }
 }
