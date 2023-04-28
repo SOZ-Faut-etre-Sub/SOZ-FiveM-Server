@@ -42,6 +42,9 @@ end
 RegisterNetEvent("soz-talk:client:PowerOffRadio", function()
     powerOffRadio()
 end)
+RegisterNetEvent("soz-talk:client:PowerOnRadio", function()
+    powerOnRadio()
+end)
 
 local function toggleRadio(toggle)
     radioOpen = toggle
