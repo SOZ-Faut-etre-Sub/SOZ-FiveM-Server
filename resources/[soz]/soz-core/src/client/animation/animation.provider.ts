@@ -10,6 +10,6 @@ export class AnimationProvider {
 
     @Once(OnceStep.Stop)
     public stop() {
-        this.animationService.stop(true);
+        this.animationService.stop();
     }
 }
