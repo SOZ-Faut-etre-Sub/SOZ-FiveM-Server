@@ -18,6 +18,8 @@ import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
 import { TargetFactory } from '../target/target.factory';
 
+const SHOP_MASK_POSITION: Vector3 = [-1335.76, -1278.67, 4.86];
+
 @Provider()
 export class MaskShopProvider {
     @Inject(Qbcore)
@@ -71,7 +73,12 @@ export class MaskShopProvider {
     public async onShopMaskOpenMenu() {
         const categories = await emitRpc(RpcServerEvent.SHOP_MASK_GET_CATEGORIES);
 
-        this.nuiMenu.openMenu(MenuType.MaskShop, categories);
+        this.nuiMenu.openMenu(MenuType.MaskShop, categories, {
+            position: {
+                position: SHOP_MASK_POSITION,
+                distance: 3,
+            },
+        });
         FreezeEntityPosition(PlayerPedId(), true);
     }
 
@@ -98,7 +105,7 @@ export class MaskShopProvider {
         this.targetFactory.createForBoxZone(
             'shops:mask',
             {
-                center: [-1335.76, -1278.67, 4.86],
+                center: SHOP_MASK_POSITION,
                 length: 1.6,
                 width: 0.8,
                 minZ: 3.86,

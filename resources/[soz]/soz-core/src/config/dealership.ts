@@ -29,7 +29,7 @@ export type DealershipConfigItem = {
 };
 
 export const DealershipJob = {
-    position: [858.72, -3204.44, 4.99, 180.0],
+    position: [858.72, -3204.44, 4.99, 180.0] as Vector4,
     parkingPlaces: [
         new BoxZone([827.31, -3210.51, 5.9], 8, 6, {
             heading: 180,
