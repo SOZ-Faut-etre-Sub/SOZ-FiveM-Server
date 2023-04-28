@@ -38,7 +38,12 @@ export class LSMCPharmacyProvider {
                         label: 'Liste des médicaments',
                         icon: 'c:/ems/painkiller.png',
                         action: () => {
-                            this.nuiMenu.openMenu(MenuType.LsmcPharmacy);
+                            this.nuiMenu.openMenu(MenuType.LsmcPharmacy, null, {
+                                position: {
+                                    position: [356.64, -1419.74, 31.51],
+                                    distance: 2.5,
+                                },
+                            });
                         },
                     },
                     {

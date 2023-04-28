@@ -7,6 +7,7 @@ import { Provider } from '../../core/decorators/provider';
 import { DrivingSchoolConfig } from '../../shared/driving-school';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { BlipFactory } from '../blip';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -36,7 +37,14 @@ export class DrivingSchoolProvider {
             blockevents: true,
             spawnNow: true,
             scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
-            target: { options: this.getTargetOptions(), distance: 2.5 },
+            target: {
+                options: this.getTargetOptions([
+                    secretaryPedConfig.coords.x,
+                    secretaryPedConfig.coords.y,
+                    secretaryPedConfig.coords.z,
+                ]),
+                distance: 2.5,
+            },
         });
 
         const blipConfig = DrivingSchoolConfig.blip;
@@ -55,7 +63,7 @@ export class DrivingSchoolProvider {
         this.nuiMenu.closeMenu();
     }
 
-    private getTargetOptions(): TargetOptions[] {
+    private getTargetOptions(position: Vector3): TargetOptions[] {
         const targetOptions: TargetOptions[] = [
             {
                 label: `Carte grise`,
@@ -63,10 +71,19 @@ export class DrivingSchoolProvider {
                 blackoutGlobal: true,
                 action: async () => {
                     const remainingSlots = await emitRpc<number>(RpcServerEvent.DRIVING_SCHOOL_CHECK_REMAINING_SLOTS);
-                    this.nuiMenu.openMenu(MenuType.DrivingSchool, {
-                        currentVehicleLimit: this.playerService.getPlayer().metadata.vehiclelimit,
-                        remainingSlots,
-                    });
+                    this.nuiMenu.openMenu(
+                        MenuType.DrivingSchool,
+                        {
+                            currentVehicleLimit: this.playerService.getPlayer().metadata.vehiclelimit,
+                            remainingSlots,
+                        },
+                        {
+                            position: {
+                                position,
+                                distance: 2.5,
+                            },
+                        }
+                    );
                 },
             },
         ];

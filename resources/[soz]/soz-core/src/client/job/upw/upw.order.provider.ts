@@ -64,7 +64,16 @@ export class UpwOrderProvider {
 
     public async openOrderMenu() {
         const vehicles = await emitRpc<Vehicle[]>(RpcServerEvent.UPW_GET_CATALOG);
-        this.nuiMenu.openMenu(MenuType.UpwOrderMenu, { catalog: vehicles });
+        this.nuiMenu.openMenu(
+            MenuType.UpwOrderMenu,
+            { catalog: vehicles },
+            {
+                position: {
+                    position: UpwConfig.Order.zone.center,
+                    distance: 3,
+                },
+            }
+        );
     }
 
     @OnNuiEvent(NuiEvent.UpwOrder)
