@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { emitQBRpc } from '../../core/rpc';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
@@ -77,11 +78,23 @@ export class HousingProvider {
             const apartment = property.apartments[id.toString()];
             hasParking = apartment && apartment.has_parking_place === 1;
         }
-        this.nuiMenu.openMenu(MenuType.HousingUpgrades, {
-            apartmentPrice: price,
-            currentTier: tier,
-            hasParking,
-            enableParking,
-        });
+
+        const position = GetEntityCoords(GetPlayerPed(-1)) as Vector3;
+
+        this.nuiMenu.openMenu(
+            MenuType.HousingUpgrades,
+            {
+                apartmentPrice: price,
+                currentTier: tier,
+                hasParking,
+                enableParking,
+            },
+            {
+                position: {
+                    position,
+                    distance: 3,
+                },
+            }
+        );
     }
 }

@@ -8,7 +8,7 @@ import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { NuiDispatch } from './nui.dispatch';
 
 type MenuPosition = {
-    position: Vector3 | Vector4;
+    position: Vector3 | Vector4 | (() => Vector3 | Vector4);
     distance: number;
 };
 
@@ -45,7 +45,13 @@ export class NuiMenu {
         }
 
         const playerPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
-        const distance = getDistance(playerPosition, this.menuPosition.position);
+        let position = this.menuPosition.position;
+
+        if (typeof position === 'function') {
+            position = position();
+        }
+
+        const distance = getDistance(playerPosition, position);
 
         if (distance > this.menuPosition.distance) {
             this.closeMenu(false);

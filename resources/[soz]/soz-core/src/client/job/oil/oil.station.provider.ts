@@ -6,6 +6,7 @@ import { wait } from '../../../core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
 import { FuelStation, FuelType } from '../../../shared/fuel';
 import { MenuType } from '../../../shared/nui/menu';
+import { Vector3 } from '../../../shared/polyzone/vector';
 import { Err, Ok } from '../../../shared/result';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { Notifier } from '../../notifier';
@@ -142,7 +143,12 @@ export class OilStationProvider {
             return;
         }
 
-        this.nuiMenu.openMenu(MenuType.OilSetStationPrice, stationPrices);
+        this.nuiMenu.openMenu(MenuType.OilSetStationPrice, stationPrices, {
+            position: {
+                position: GetEntityCoords(PlayerPedId(), true) as Vector3,
+                distance: 3,
+            },
+        });
     }
 
     @OnNuiEvent(NuiEvent.OilAskStationPrice)
