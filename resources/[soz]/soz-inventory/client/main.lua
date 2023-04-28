@@ -129,6 +129,7 @@ RegisterNUICallback("sortInventoryAZ", function(data, cb)
 end)
 
 RegisterNUICallback("closeNUI", function(data, cb)
+    inventoryDisableControlsActions(false)
     SetNuiFocus(false, false)
     cb(true)
     if data.target then

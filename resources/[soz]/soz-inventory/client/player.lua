@@ -26,6 +26,7 @@ RegisterCommand("inventory", function()
 
             --- Force player to stop using weapon if input is pressed while inventory is open
             SetNuiFocusKeepInput(true)
+            inventoryDisableControlsActions(true)
             Wait(50)
             SetNuiFocusKeepInput(false)
         end
