@@ -5,6 +5,8 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { FfsConfig, Garment, LuxuryGarment } from '../../../shared/job/ffs';
+import { Monitor } from '../../../shared/monitor';
+import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { ClothingBrand } from '../../../shared/shop';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
@@ -24,6 +26,9 @@ export class FightForStyleRestockProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Once(OnceStep.DatabaseConnected)
     public async onOnceStart() {
@@ -57,6 +62,19 @@ export class FightForStyleRestockProvider {
 
         const totalAmount = item.amount * FfsConfig.restock.getRewardFromDeliveredGarment(garment);
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
+
+        this.monitor.publish(
+            'job_ffs_restock',
+            {
+                item_id: item.metadata.id,
+                player_source: source,
+            },
+            {
+                item_label: item.label,
+                quantity: item.amount,
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
 
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
     }
