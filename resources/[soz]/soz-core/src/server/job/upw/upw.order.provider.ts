@@ -125,7 +125,7 @@ export class UpwOrderProvider {
                 hash: GetHashKey(model).toString(),
                 mods: JSON.stringify(BennysConfig.UpgradeConfiguration),
                 condition: JSON.stringify(getDefaultVehicleCondition()),
-                plate: 'ESSAI ' + (this.orderedVehicle + 1),
+                plate: 'ESSAI UP' + (this.orderedVehicle + 1),
                 garage: 'upw',
                 job: 'upw',
                 category: category,
