@@ -81,7 +81,7 @@
 .content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    height: 13.5vh;
+    height: 11rem;
     overflow: hidden;
 }
 
@@ -100,8 +100,9 @@
 }
 
 .announcementText {
-    max-height: 10vh;
+    max-height: 10rem;
     overflow: hidden;
+    word-break: break-word;
 }
 
 .reporter {
@@ -118,6 +119,11 @@
         font-size: 1.2rem;
         padding: .7rem;
     }
+
+    .content{
+        height: 11rem;
+    }
+
     .reporter {
         font-size: 0.9rem;
     }
@@ -128,9 +134,21 @@
         font-size: 2rem;
     }
     .researchContent, .announcementContent {
-        font-size: .95rem;
+        font-size: .9rem;
         padding: .5rem;
     }
+    
+    .content{
+        height: 10rem;
+    }
+
+    .announcementContent{
+        height: 8.5rem;
+    }
+    .announcementText {
+        max-height: 11vh;
+    }
+       
     .reporter {
         font-size: 0.7rem;
     }

@@ -116,7 +116,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
             {label = "Info Trafic", value = "info-traffic"},
         },
         select = function(_, value)
-            local message = exports["soz-hud"]:Input("Message de la communication", 512)
+            local message = exports["soz-hud"]:Input("Message de la communication", 235)
             if message == nil or message == "" then
                 exports["soz-hud"]:DrawNotification("Vous devez spécifier un message", "error")
                 return
