@@ -25,8 +25,18 @@ export class LSMCPharmacyProvider {
     @OnEvent(ServerEvent.LSMC_NPC_HEAL)
     public async onLsmcHeal(source: number) {
         const price = PHARMACY_PRICES.heal;
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
 
         if (this.playerMoneyService.remove(source, price)) {
+            if (player.metadata.disease == 'grippe') {
+                this.playerService.setPlayerDisease(player.source, false);
+                this.notifier.notify(player.source, 'Vous êtes guéri!');
+            }
+
             TriggerClientEvent(ClientEvent.LSMC_HEAL, source, 100);
         } else {
             this.notifier.notify(
