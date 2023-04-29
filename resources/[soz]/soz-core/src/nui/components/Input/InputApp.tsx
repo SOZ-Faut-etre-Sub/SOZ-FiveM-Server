@@ -1,16 +1,27 @@
 import classNames from 'classnames';
-import { ChangeEvent, FormEvent, FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, FunctionComponent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { NuiEvent } from '../../../shared/event';
 import { AskInput } from '../../../shared/nui/input';
 import { isErr, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
 import { useInputNuiEvent, useNuiFocus } from '../../hook/nui';
+import { Dispatch } from '../../store';
 
 export const InputApp: FunctionComponent = () => {
     const [askInput, setAskInput] = useState<AskInput | null>(null);
     const [value, setValue] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+    const dispatch = useDispatch<Dispatch>();
+
+    const setInputAppRef = useCallback((element: HTMLDivElement | null) => {
+        if (element) {
+            dispatch.outside.add('input', element);
+        } else {
+            dispatch.outside.remove('input');
+        }
+    }, []);
 
     useNuiFocus(askInput !== null, askInput !== null, askInput === null);
 
@@ -78,7 +89,10 @@ export const InputApp: FunctionComponent = () => {
     );
 
     return (
-        <div className="absolute h-full w-full flex items-center justify-center bg-black bg-opacity-25">
+        <div
+            ref={setInputAppRef}
+            className="absolute h-full w-full flex items-center justify-center bg-black bg-opacity-25"
+        >
             <form onSubmit={handleSubmit} className="w-3/5 p-2 bg-black bg-opacity-75">
                 <h2 className="text-base text-white drop-shadow-md mb-2">{askInput.title}</h2>
 

@@ -1,4 +1,5 @@
-import { DependencyList, useEffect, useRef } from 'react';
+import { useAllowedOutside } from '@public/nui/hook/data';
+import { DependencyList, useCallback, useEffect, useRef } from 'react';
 
 type OutsideEvent = {
     click?: (event) => void;
@@ -7,25 +8,33 @@ type OutsideEvent = {
 };
 
 export const useOutside = (events: OutsideEvent, deps: DependencyList = []) => {
+    const allowedOutside = useAllowedOutside();
     const refContainer = useRef(null);
-    const eventFactory = eventFn => {
-        if (!eventFn) {
-            return () => {};
-        }
-
-        return event => {
-            if (!document.body.contains(event.target)) {
-                return;
+    const eventFactory = useCallback(
+        eventFn => {
+            if (!eventFn) {
+                return () => {};
             }
 
-            if (
-                (!refContainer.current || !refContainer.current.contains(event.target)) &&
-                document.contains(event.target)
-            ) {
-                eventFn(event);
-            }
-        };
-    };
+            return event => {
+                if (!document.body.contains(event.target)) {
+                    return;
+                }
+
+                if (Object.values(allowedOutside).some(ref => ref && ref.contains(event.target))) {
+                    return;
+                }
+
+                if (
+                    (!refContainer.current || !refContainer.current.contains(event.target)) &&
+                    document.contains(event.target)
+                ) {
+                    eventFn(event);
+                }
+            };
+        },
+        [refContainer, allowedOutside]
+    );
 
     const onClick = eventFactory(events.click);
     const onUp = eventFactory(events.up);
@@ -43,7 +52,7 @@ export const useOutside = (events: OutsideEvent, deps: DependencyList = []) => {
             document.removeEventListener('mouseup', onUp);
             document.removeEventListener('mousedown', onDown);
         };
-    }, [refContainer, ...deps]);
+    }, [refContainer, onClick, onUp, onDown, ...deps]);
 
     return refContainer;
 };
