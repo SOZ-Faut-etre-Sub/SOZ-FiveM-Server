@@ -1,4 +1,4 @@
-import { Vector3 } from './polyzone/vector';
+import { Vector2, Vector3 } from './polyzone/vector';
 
 type BaseAnimationConfigItem = {
     name: string;
@@ -74,7 +74,7 @@ export type Animation = {
 export type Scenario = {
     name: string;
     duration?: number;
-    fixPositionDelta?: Vector3;
+    fixPositionDelta?: Vector2;
     propsCreated?: string[];
 };
 
