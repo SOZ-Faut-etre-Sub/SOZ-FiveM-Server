@@ -436,10 +436,13 @@ export class VehicleElectricProvider {
                 name: 'pickup',
                 blendInSpeed: 8.0,
                 blendOutSpeed: -8.0,
-                duration: 3000,
+                duration: 2500,
                 lockX: true,
                 lockY: true,
                 lockZ: true,
+                options: {
+                    freezeLastFrame: true,
+                },
             },
         });
 
