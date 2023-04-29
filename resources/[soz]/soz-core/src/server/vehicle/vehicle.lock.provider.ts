@@ -93,12 +93,31 @@ export class VehicleLockProvider {
             return;
         }
 
-        const { completed } = await this.progressService.progress(source, 'Lockpick', 'Crochetage du véhicule', 10000, {
-            dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
-            name: 'machinic_loop_mechandplayer',
-        });
+        const { completed } = await this.progressService.progress(
+            source,
+            'Lockpick',
+            'Crochetage du véhicule',
+            10000,
+            {
+                dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+                name: 'machinic_loop_mechandplayer',
+            },
+            { useAnimationService: true }
+        );
 
         if (!completed) {
+            return;
+        }
+
+        const closestVehicleAfterLockpick = await this.vehicleSpawner.getClosestVehicle(source);
+
+        if (
+            closestVehicleAfterLockpick.vehicleEntityId !== closestVehicle.vehicleEntityId ||
+            (closestVehicleAfterLockpick.vehicleEntityId === closestVehicle.vehicleEntityId &&
+                closestVehicleAfterLockpick.distance > 3)
+        ) {
+            this.notifier.notify(source, 'Le véhicule est trop loin pour être crocheté', 'error');
+
             return;
         }
 
