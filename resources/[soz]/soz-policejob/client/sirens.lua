@@ -13,6 +13,10 @@ RegisterCommand("togglesirens", function()
     local vehicle = GetVehiclePedIsIn(ped, false)
     local lastState = Entity(vehicle).state.isSirenMuted
 
+    if GetPedInVehicleSeat(vehicle, -1) ~= ped then
+        return
+    end
+
     if vehicle ~= 0 then
         Entity(vehicle).state:set("isSirenMuted", not lastState, true)
     end
