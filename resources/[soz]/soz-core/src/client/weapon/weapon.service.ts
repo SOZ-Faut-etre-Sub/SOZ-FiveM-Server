@@ -46,7 +46,12 @@ export class WeaponService {
         const player = PlayerPedId();
         this.currentWeapon = null;
 
-        SetCurrentPedWeapon(player, GetHashKey(WeaponName.UNARMED), true);
+        const [, hash] = GetCurrentPedWeapon(player, false);
+
+        if (hash !== GetHashKey(WeaponName.UNARMED)) {
+            SetCurrentPedWeapon(player, GetHashKey(WeaponName.UNARMED), true);
+        }
+
         RemoveAllPedWeapons(player, true);
     }
 

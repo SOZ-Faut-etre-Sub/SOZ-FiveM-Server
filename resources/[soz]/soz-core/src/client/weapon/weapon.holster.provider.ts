@@ -41,6 +41,7 @@ export class WeaponHolsterProvider {
     public async loop() {
         const ped = PlayerPedId();
         const player = this.playerService.getPlayer();
+
         if (
             DoesEntityExist(ped) &&
             player &&
