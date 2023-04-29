@@ -90,6 +90,7 @@ export class ItemNutritionProvider {
 
         const { completed, progress } = await this.progressService.progress(source, name, '', 5000, animation, {
             firstProp: prop,
+            allowExistingAnimation: true,
         });
 
         if (completed) {

@@ -118,7 +118,7 @@ const doAnimation = async (
         animation.name,
         blendInSpeed,
         blendOutSpeed,
-        duration,
+        -1, // always loop, if there is a duration we will stop it manually, so we are sure than animation is always longer than the duration even on slow machines
         flags,
         playbackRate,
         lockX,

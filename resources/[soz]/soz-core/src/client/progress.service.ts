@@ -31,6 +31,7 @@ export class ProgressService {
             canCancel: true,
             disableCombat: true,
             disableNui: false,
+            allowExistingAnimation: false,
             ...options,
         };
 
@@ -39,7 +40,9 @@ export class ProgressService {
             return { completed: false, progress: 0 };
         }
 
-        await this.animationService.stop();
+        if (!options.allowExistingAnimation) {
+            await this.animationService.stop();
+        }
 
         if (options.headingEntity) {
             TaskTurnPedToFaceEntity(PlayerPedId(), options.headingEntity.entity, 1000);
