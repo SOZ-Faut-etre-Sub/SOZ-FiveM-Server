@@ -1,11 +1,12 @@
+import { Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Tick, TickInterval } from '@core/decorators/tick';
+import { emitRpc } from '@core/rpc';
 import { uuidv4 } from '@public/core/utils';
+import { Control } from '@public/shared/input';
 import { getRandomItem } from '@public/shared/random';
 
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
-import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -140,6 +141,16 @@ export class WeaponProvider {
     async onTick() {
         const player = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(player, false);
+
+        DisableControlAction(0, Control.SelectWeaponUnarmed, true);
+        DisableControlAction(0, Control.SelectWeaponMelee, true);
+        DisableControlAction(0, Control.SelectWeaponHandgun, true);
+        DisableControlAction(0, Control.SelectWeaponShotgun, true);
+        DisableControlAction(0, Control.SelectWeaponSmg, true);
+        DisableControlAction(0, Control.SelectWeaponAutoRifle, true);
+        DisableControlAction(0, Control.SelectWeaponSniper, true);
+        DisableControlAction(0, Control.SelectWeaponHeavy, true);
+        DisableControlAction(0, Control.SelectWeaponSpecial, true);
 
         const weapon = this.weapon.getCurrentWeapon();
         if (!weapon) {
