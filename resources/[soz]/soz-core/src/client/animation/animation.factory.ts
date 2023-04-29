@@ -9,7 +9,7 @@ import {
     PlayOptions,
     Scenario,
 } from '../../shared/animation';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { WeaponName } from '../../shared/weapons/weapon';
 import { ResourceLoader } from '../resources/resource.loader';
 
@@ -31,38 +31,13 @@ class AnimationCanceller {
     }
 }
 
-const fixPositionOffset = (position: Vector3, heading: number, delta: Vector3): Vector3 => {
-    const newPosition = [...position] as Vector3;
+const fixPositionOffset = (position: Vector3, heading: number, delta: Vector2): Vector3 => {
+    const headingInRad = (heading * Math.PI) / 180;
 
-    if (heading > 270) {
-        const headingAdjusted = Math.abs(heading - 360);
-        const headingRad = (headingAdjusted * Math.PI) / 180;
+    const [x, y] = transformForwardPoint2D([position[0], position[1]], headingInRad, delta[0]);
+    const z = position[2] + delta[1];
 
-        newPosition[0] += delta[0] * Math.cos(headingRad);
-        newPosition[1] += delta[1] * Math.sin(headingRad);
-    } else if (heading > 180) {
-        const headingAdjusted = Math.abs(heading - 360);
-        const headingRad = (headingAdjusted * Math.PI) / 180;
-
-        newPosition[0] -= delta[0] * Math.cos(headingRad);
-        newPosition[1] += delta[1] * Math.sin(headingRad);
-    } else if (heading > 90) {
-        const headingAdjusted = Math.abs(heading - 360);
-        const headingRad = (headingAdjusted * Math.PI) / 180;
-
-        newPosition[0] -= delta[0] * Math.cos(headingRad);
-        newPosition[1] -= delta[1] * Math.sin(headingRad);
-    } else {
-        const headingAdjusted = Math.abs(heading - 360);
-        const headingRad = (headingAdjusted * Math.PI) / 180;
-
-        newPosition[0] += delta[0] * Math.cos(headingRad);
-        newPosition[1] -= delta[1] * Math.sin(headingRad);
-    }
-
-    newPosition[2] += delta[2];
-
-    return newPosition;
+    return [x, y, z];
 };
 
 export class AnimationRunner implements Promise<AnimationStopReason> {
