@@ -12,17 +12,18 @@ export type ProgressOptions = {
     disableCarMovement: boolean;
     disableMouse: boolean;
     disableCombat: boolean;
-    firstProp: ProgressProp;
-    secondProp: ProgressProp;
+    firstProp?: ProgressProp;
+    secondProp?: ProgressProp;
     headingEntity?: {
         entity: number;
         heading: number;
     };
-    ignorePollution: boolean;
-    start: () => void;
-    tick: () => void;
-    useAnimationService: boolean;
-    no_inv_busy: boolean;
+    ignorePollution?: boolean;
+    start?: () => void;
+    tick?: () => void;
+    useAnimationService?: boolean;
+    allowExistingAnimation?: boolean;
+    no_inv_busy?: boolean;
 };
 
 export type ProgressAnimation = {

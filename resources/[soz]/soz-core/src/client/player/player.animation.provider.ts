@@ -7,6 +7,7 @@ import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Shortcut } from '../../shared/nui/player';
 import { Err, Ok } from '../../shared/result';
 import { AnimationService } from '../animation/animation.service';
+import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ProgressService } from '../progress.service';
@@ -28,6 +29,9 @@ export class PlayerAnimationProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     @Command('animation_stop', {
         description: "Stop l'animation en cours",
@@ -300,9 +304,14 @@ export class PlayerAnimationProvider {
             state.isInHospital ||
             player.metadata.isdead ||
             player.metadata.inlaststand ||
-            IsPedRagdoll(ped) ||
-            this.progressService.isDoingAction()
+            IsPedRagdoll(ped)
         ) {
+            return false;
+        }
+
+        if (this.progressService.isDoingAction()) {
+            this.notifier.notify('Une action est déjà en cours.', 'error');
+
             return false;
         }
 
