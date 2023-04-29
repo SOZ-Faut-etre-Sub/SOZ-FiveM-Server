@@ -15,3 +15,7 @@ export const useItems = (): Item[] => {
 export const useItem = (id: string): Item | null => {
     return useSelector((state: RootState) => state.item.find(item => item.name === id));
 };
+
+export const useAllowedOutside = (): Record<string, HTMLElement> => {
+    return useSelector((state: RootState) => state.outside);
+};
