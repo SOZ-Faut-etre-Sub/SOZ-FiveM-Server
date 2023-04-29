@@ -228,7 +228,7 @@ export const RepairApp: FunctionComponent = () => {
 
     return (
         <MemoryRouter>
-            <div className="w-full h-full grid h-screen place-items-center">
+            <div className="absolute w-full h-full grid h-screen place-items-center">
                 <div
                     ref={refOutside}
                     style={{
