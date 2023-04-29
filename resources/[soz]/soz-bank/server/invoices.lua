@@ -65,7 +65,7 @@ local function PayInvoice(PlayerData, account, id)
                 invoice.id,
             })
 
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture")
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture", "success", 10000)
             if Emitter then
                 TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
             end
@@ -95,7 +95,7 @@ local function PayInvoice(PlayerData, account, id)
                     invoice.id,
                 })
 
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ la facture de la société")
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ la facture de la société", "success", 10000)
                 if Emitter then
                     TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
                                        ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
@@ -140,7 +140,7 @@ local function RejectInvoice(PlayerData, account, id)
     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
 
     if PlayerData.charinfo.account == account then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture", "error", 10000)
 
         if Emitter then
             TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
@@ -159,7 +159,7 @@ local function RejectInvoice(PlayerData, account, id)
             title = invoice.label,
         })
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ la facture de la société", "error")
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ la facture de la société", "error", 10000)
 
         if Emitter then
             TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
