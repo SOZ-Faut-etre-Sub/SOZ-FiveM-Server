@@ -137,8 +137,7 @@ export class WeaponDrawingProvider {
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     public async undrawWeapons() {
-        const vehicleClass = GetVehicleClass(GetVehiclePedIsIn(PlayerPedId(), false));
-        if (vehicleClass === VehicleClass.Motorcycles || vehicleClass === VehicleClass.Cycles) {
+        if (IsThisModelABike(GetEntityModel(GetVehiclePedIsIn(PlayerPedId(), false)))) {
             return;
         }
 
