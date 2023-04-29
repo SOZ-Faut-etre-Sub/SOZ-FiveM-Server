@@ -98,6 +98,39 @@ export class InventoryManager {
         return this.removeItemFromInventory(source, item.name, amount, item.metadata, item.slot);
     }
 
+    public removeNotExpiredItem(source, itemId: string, amount = 1): boolean {
+        const items = this.getItems(source);
+        const countBySlot = new Map<number, number>();
+        let count = 0;
+
+        for (const item of items) {
+            if (item.name === itemId) {
+                if (this.itemService.isItemExpired(item)) {
+                    continue;
+                }
+
+                if (item.amount > amount) {
+                    count += amount;
+                    countBySlot.set(item.slot, amount);
+                    break;
+                } else {
+                    countBySlot.set(item.slot, item.amount);
+                    count += item.amount;
+                }
+            }
+        }
+
+        if (count !== amount) {
+            return false;
+        }
+
+        for (const [slot, amount] of countBySlot) {
+            this.removeItemFromInventory(source, itemId, amount, undefined, slot);
+        }
+
+        return true;
+    }
+
     public removeItemFromInventory(
         source: number | string,
         itemId: string,
