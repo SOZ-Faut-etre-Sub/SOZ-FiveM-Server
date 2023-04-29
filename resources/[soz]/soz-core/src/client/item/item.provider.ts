@@ -40,7 +40,7 @@ export class ItemProvider {
                     bone: 57005,
                     model: 'p_amb_brolly_01',
                     position: [0.12, 0.005, 0.0],
-                    rotation: [280.0, 10.0, 290.0],
+                    rotation: [280.0, 10.0, 350.0],
                 },
             ],
         });
