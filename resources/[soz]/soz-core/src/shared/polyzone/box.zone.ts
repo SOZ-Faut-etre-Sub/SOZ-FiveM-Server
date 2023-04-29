@@ -1,5 +1,5 @@
 import { PolygonZone, PolygonZoneOptions } from './polygon.zone';
-import { Point2D, Point3D, Vector2, Vector3, Vector4 } from './vector';
+import { Point3D, rotatePoint, Vector2, Vector3, Vector4 } from './vector';
 
 type BoxZoneOptions<T> = PolygonZoneOptions<T> & {
     heading?: number;
@@ -19,19 +19,6 @@ export type Zone<T = never> = {
 
 export type NamedZone<T = never> = Zone<T> & {
     name: string;
-};
-
-const rotatePoint = (center: Point2D | Point3D | Vector4, point: Point2D | Point3D, angleInRad: number): Point2D => {
-    const cos = Math.cos(angleInRad);
-    const sin = Math.sin(angleInRad);
-
-    const x = point[0] - center[0];
-    const y = point[1] - center[1];
-
-    const newX = x * cos - y * sin;
-    const newY = x * sin + y * cos;
-
-    return [newX + center[0], newY + center[1]];
 };
 
 export class BoxZone<T = never> extends PolygonZone<T> {
