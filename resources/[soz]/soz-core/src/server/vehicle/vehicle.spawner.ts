@@ -85,6 +85,8 @@ const VEHICLE_HAS_RADIO = [
     'bcsomanchez',
 ];
 
+const DISALLOWED_VEHICLE_MODELS = { [GetHashKey('dune2')]: true };
+
 @Provider()
 export class VehicleSpawner {
     @Inject(VehicleStateService)
@@ -134,6 +136,12 @@ export class VehicleSpawner {
 
         if (scriptType === 7) {
             return;
+        }
+
+        const model = GetEntityModel(entity);
+
+        if (DISALLOWED_VEHICLE_MODELS[model]) {
+            CancelEvent();
         }
 
         if (this.noSpawnZone.isPointInside(position)) {
