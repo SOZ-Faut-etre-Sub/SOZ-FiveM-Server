@@ -16,6 +16,7 @@ import { useAppSocietyService } from './services/app/useAppSocietyService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
 import { useTimeService } from './services/os/useTimeService';
 import { useVisibilityService } from './services/os/useVisibilityService';
+import { useApiService } from './services/useApiService';
 import { useCallService } from './services/useCallService';
 import { useContactService } from './services/useContactService';
 import { useDebugService } from './services/useDebugService';
@@ -38,6 +39,7 @@ function Phone() {
     usePhoneService();
     useTimeService();
     useVisibilityService();
+    useApiService();
 
     // System services
     useKeyboardService();
