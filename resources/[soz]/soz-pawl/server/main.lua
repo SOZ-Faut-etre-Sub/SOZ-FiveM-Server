@@ -177,6 +177,13 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
 
     Citizen.CreateThread(function()
         while Processing.Enabled do
+
+            if GlobalState.blackout_level > 3 or GlobalState.blackout == true then
+                Processing.StartedAt = 0
+                Processing.Enabled = false
+                return
+            end
+
             if GetGameTimer() - Processing.StartedAt >= Config.Processing.Duration then
                 if exports["soz-inventory"]:RemoveItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, Config.Processing.ProcessingAmount) then
                     exports["soz-inventory"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
