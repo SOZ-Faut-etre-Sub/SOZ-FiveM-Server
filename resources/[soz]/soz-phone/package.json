@@ -15,7 +15,6 @@
         "dev": "concurrently \"yarn run dev-module\" \"yarn run dev-nui\""
     },
     "dependencies": {
-        "@citizenfx/three": "^0.100.0",
         "@discordjs/collection": "^0.7.0",
         "@emoji-mart/data": "^1.0.6",
         "@emoji-mart/react": "^1.0.1",

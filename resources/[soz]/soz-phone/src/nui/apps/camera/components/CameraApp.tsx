@@ -8,71 +8,103 @@ import { AppContent } from '@ui/components/AppContent';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
 import { fetchNui } from '@utils/fetchNui';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import useInterval from '../../../hooks/useInterval';
+import { ApiEvents } from '../../../../../typings/api';
+import { useApiConfig } from '../../../hooks/useApi';
 import { useVisibility } from '../../../hooks/usePhone';
 import { usePhoto } from '../../../hooks/usePhoto';
 import { useCall } from '../../../hooks/useSimCard';
 import { useBackground } from '../../../ui/hooks/useBackground';
-import { useScreenshot } from '../hooks/useScreenshot';
+import { createGameView, GameView } from '../hooks/createGameView';
 
 const CameraApp: React.FC = () => {
     const backgroundClass = useBackground();
     const navigate = useNavigate();
     const [t] = useTranslation();
+    const apiConfig = useApiConfig();
 
     const call = useCall();
 
     const { getPhotos } = usePhoto();
     const photos = getPhotos();
 
-    const ref = useRef<HTMLCanvasElement>();
-    const { renderer, rtTexture, width, height, destroy } = useScreenshot();
-
     const { addAlert } = useSnackbar();
     const { visibility } = useVisibility();
+    const [gameView, setGameView] = React.useState<GameView>(null);
 
-    const handleTakePhoto = () => {
-        fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO).then(serverResp => {
+    useEffect(() => {
+        if (gameView !== null) {
+            gameView.startRender();
+        }
+
+        return () => {
+            if (gameView !== null) {
+                gameView.stopRender();
+            }
+        };
+    }, [gameView]);
+
+    const handleTakePhoto = async () => {
+        if (!gameView) {
+            return addAlert({
+                message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
+                type: 'error',
+            });
+        }
+
+        const blob = await gameView.takeScreenshot();
+        const formData = new FormData();
+        const file = new File([blob], 'screenshot.jpg', { type: 'image/jpeg' });
+
+        const operations = `{"operationName": "createScreenshot", "variables": {"file":null}, "query":"mutation createScreenshot($file: Upload!) { createScreenshot(file: $file) {url} }"}`;
+        formData.append('operations', operations);
+
+        const map = `{"0": ["variables.file"]}`;
+        formData.append('map', map);
+        formData.append('0', file);
+
+        const token = await fetchNui<string>(ApiEvents.FETCH_TOKEN, {});
+        const response = await fetch(apiConfig.apiEndpoint, {
+            method: 'POST',
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+            body: formData,
+        });
+
+        const responseJson = await response.json();
+        const url = responseJson?.data?.createScreenshot?.url;
+
+        if (url) {
+            const serverResp = await fetchNui<ServerPromiseResp<GalleryPhoto>>(PhotoEvents.TAKE_PHOTO, {
+                url: `${apiConfig.publicEndpoint}${url}`,
+            });
+
             if (serverResp.status !== 'ok') {
                 return addAlert({
                     message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
                     type: 'error',
                 });
             }
+
             return addAlert({
                 message: t('CAMERA.TAKE_PHOTO_SUCCESS'),
                 type: 'success',
             });
+        }
+
+        return addAlert({
+            message: t('CAMERA.FAILED_TO_TAKE_PHOTO'),
+            type: 'error',
         });
     };
 
     const toggleCameraPhotoMode = async () => {
         await fetchNui<ServerPromiseResp<void>>(PhotoEvents.TOGGLE_CAMERA, {});
     };
-
-    useInterval(() => {
-        const canvas = ref.current;
-        if (canvas) {
-            const read = new Uint8Array(width * height * 4);
-            renderer.readRenderTargetPixels(rtTexture, 0, 0, width, height, read);
-
-            const d = new Uint8ClampedArray(read.buffer);
-            const ctx = canvas.getContext('2d');
-
-            canvas.width = width;
-            canvas.height = height;
-
-            ctx.putImageData(new ImageData(d, width, height), 0, 0);
-        }
-    }, 1);
-
-    useEffect(() => {
-        return () => destroy();
-    }, []);
 
     useEffect(() => {
         if (!visibility) navigate('/', { replace: true });
@@ -120,7 +152,11 @@ const CameraApp: React.FC = () => {
                         </div>
 
                         <canvas
-                            ref={ref}
+                            ref={ref => {
+                                if (ref && !gameView) {
+                                    setGameView(createGameView(ref));
+                                }
+                            }}
                             className="object-cover h-full w-full"
                             style={{
                                 objectPosition: '-300px 0',

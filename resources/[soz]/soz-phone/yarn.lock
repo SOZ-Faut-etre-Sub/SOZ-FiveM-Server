@@ -1005,11 +1005,6 @@
   resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.5715-1.tgz#0f3c381c5819419d0b9e294a8028f39ee99cc183"
   integrity sha512-NHVs453bS8ZW3C2b9BNWWYUO/9DuWPrAU+Nz8JVS9wNNFZsVTt+qnK7vXRqCu1M7lp9tmIMMvazLiZDbOXI0rw==
 
-"@citizenfx/three@^0.100.0":
-  version "0.100.0"
-  resolved "https://registry.yarnpkg.com/@citizenfx/three/-/three-0.100.0.tgz#ac605a1f86863e25e5b3c50d9ae80a2ef2a2e361"
-  integrity sha512-qiJHVGNzhGfZP+poq4X3m9cDoi4H1mK4UgfbBTZoHmtSIiDRAIYEWsb93MHst+ADHtn0vJ8msMRQaAHC3horSA==
-
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
