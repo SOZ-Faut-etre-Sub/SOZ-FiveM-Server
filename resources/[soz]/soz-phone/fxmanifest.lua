@@ -10,4 +10,4 @@ server_script {"server.js", "build/server.js"}
 
 files {"config.json", "public/index.html", "public/**/*", "build/nui/*"}
 
-dependency {"screenshot-basic", "soz-props-phone"}
+dependency {"soz-props-phone"}

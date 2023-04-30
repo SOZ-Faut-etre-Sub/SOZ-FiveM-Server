@@ -16,7 +16,7 @@ if (hotReload) {
                 mode: 'dev',
             })
         );
-    }, 5000);
+    }, 1000);
 } else {
     setTimeout(() => {
         SendNuiMessage(
