@@ -1,4 +1,5 @@
 import './cl_main';
+import './cl_api';
 import './cl_contacts';
 import './cl_photo';
 import './cl_messages';

@@ -1,5 +1,6 @@
 import { Models } from '@rematch/core';
 
+import { api } from './api';
 import { appBank } from './app/bank';
 import { appInvoices } from './app/invoices';
 import { appNotes } from './app/notes';
@@ -18,6 +19,7 @@ export interface RootModel extends Models<RootModel> {
     phone: typeof phone;
     time: typeof time;
     visibility: typeof visibility;
+    api: typeof api;
 
     // System models
     simCard: typeof simCard;
@@ -37,6 +39,7 @@ export const models: RootModel = {
     phone,
     time,
     visibility,
+    api,
     simCard,
     avatar,
     photo,
