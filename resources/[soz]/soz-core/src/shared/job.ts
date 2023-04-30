@@ -56,6 +56,7 @@ export enum JobPermission {
     BennysOrder = 'order',
     MdrViewOtherJobs = 'view-other-jobs',
     MdrViewCitizenData = 'view-citizen-data',
+    MdrMarkedMoneyCleaning = 'marked-money-cleaning',
     UpwOrder = 'order',
     UpwChangePrice = 'upw-change-price',
 }

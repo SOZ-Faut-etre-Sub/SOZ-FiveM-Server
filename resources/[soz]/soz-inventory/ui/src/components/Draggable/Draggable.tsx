@@ -76,7 +76,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         }
 
         if (item?.metadata?.crafted) {
-            itemExtraLabel += ` [Confection]`
+            itemExtraLabel += ` [Illégal]`
         }
 
         if (item.illustrator && item.illustrator instanceof Object) {

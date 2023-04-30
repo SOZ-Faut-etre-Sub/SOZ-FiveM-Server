@@ -50,7 +50,11 @@ SozJobCore.JobPermission = {
     Baun = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Ffs = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Bennys = {Estimate = "estimate", Resell = "resell", Order = "order"},
-    Mdr = {ViewOtherJobs = "view-other-jobs", ViewCitizenData = "view-citizen-data"},
+    Mdr = {
+        ViewOtherJobs = "view-other-jobs",
+        ViewCitizenData = "view-citizen-data",
+        MarkedMoneyCleaning = "marked-money-cleaning",
+    },
     UPW = {Order = "order", ChangePrice = "upw-change-price"},
 }
 
@@ -627,6 +631,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
             [SozJobCore.JobPermission.Mdr.ViewOtherJobs] = {label = "Accès aux infos des entreprises"},
             [SozJobCore.JobPermission.Mdr.ViewCitizenData] = {label = "Accès aux infos des citoyens"},
+            [SozJobCore.JobPermission.Mdr.MarkedMoneyCleaning] = {label = "Accès à la réhabilitation des billets"},
         },
         bossZones = {
             {x = -546.36, y = -201.78, z = 47.66, sx = 8.0, sy = 17.0, heading = 30.0, minZ = 46.66, maxZ = 49.66},

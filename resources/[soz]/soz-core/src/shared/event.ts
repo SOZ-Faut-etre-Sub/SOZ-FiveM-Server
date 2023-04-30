@@ -190,6 +190,7 @@ export enum ServerEvent {
     VANDALISM_UNLOCK = 'soz-core:server:vandalism:unlock',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
+    MDR_MONEY_CLEANING = 'soz-core:server:mdr:money-cleaning',
 
     RACKET = 'soz-core:server:racket',
 

@@ -5,7 +5,7 @@ import { Notifier } from '@public/client/notifier';
 import { ResourceLoader } from '@public/client/resources/resource.loader';
 import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 
 import { BlipFactory } from '../../blip';
@@ -14,6 +14,7 @@ import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
+import { JobPermissionService } from '../job.permission.service';
 
 @Provider()
 export class MandatoryProvider {
@@ -43,6 +44,9 @@ export class MandatoryProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(JobPermissionService)
+    private jobPermissionService: JobPermissionService;
 
     private state = {
         radar: false,
@@ -81,6 +85,36 @@ export class MandatoryProvider {
                         return this.playerService.isOnDuty();
                     },
                     job: JobType.MDR,
+                },
+            ]
+        );
+
+        this.targetFactory.createForBoxZone(
+            'mdr:wash',
+            {
+                center: [240.9, -1097.43, 36.13],
+                length: 1.4,
+                width: 1.0,
+                heading: 0,
+                minZ: 35.63,
+                maxZ: 36.63,
+            },
+            [
+                {
+                    icon: 'c:stonk/collecter.png',
+                    label: 'Réhabilitation des billets',
+                    canInteract: () => {
+                        return (
+                            this.playerService.isOnDuty() &&
+                            this.jobPermissionService.hasPermission(JobType.MDR, JobPermission.MdrMarkedMoneyCleaning)
+                        );
+                    },
+                    job: JobType.MDR,
+                    action: () => {
+                        TriggerServerEvent(ServerEvent.MDR_MONEY_CLEANING);
+                    },
+                    blackoutJob: JobType.MDR,
+                    blackoutGlobal: true,
                 },
             ]
         );

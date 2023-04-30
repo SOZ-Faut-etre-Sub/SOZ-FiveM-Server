@@ -3313,7 +3313,7 @@ QBShared.Items = {
     },
     ['laptop'] = {
         ['name'] = 'laptop',
-        ['label'] = 'Ordinateur portable volé',
+        ['label'] = 'Ordinateur portable',
         ['weight'] = 1800,
         ['type'] = 'item_illegal',
         ['unique'] = false,
@@ -3324,7 +3324,7 @@ QBShared.Items = {
     },
     ['tablet'] = {
         ['name'] = 'tablet',
-        ['label'] = 'Tablette volée',
+        ['label'] = 'Tablette',
         ['weight'] = 500,
         ['type'] = 'item_illegal',
         ['unique'] = false,
@@ -3409,7 +3409,7 @@ QBShared.Items = {
     },
     ['10kgoldchain'] = {
         ['name'] = '10kgoldchain',
-        ['label'] = 'Chaîne en or volée',
+        ['label'] = 'Chaîne en or',
         ['weight'] = 500,
         ['type'] = 'item_illegal',
         ['unique'] = false,
@@ -6440,4 +6440,20 @@ QBShared.Items = {
         ['description'] = "Mignonne paire d'oreilles de lapin.e ! Idéale pour... Mmmmh.",
         ['illustrator'] = '.Poulpito'
     },
+    ['paycrimi_card'] = {
+        ['name'] = 'paycrimi_card',
+        ['label'] = "Carte PayCrimi™",
+        ['weight'] = 150,
+        ['type'] = 'item_illegal',
+        ['durability'] = 7,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Fabriquée à partir de plusieurs matériaux, cette carte bancaire assure à n'importe qui de pouvoir payer une seule transaction, que ça soit amende ou facture, à l'aide d'argent sale.",
+        ['illustrator'] = '.Poulpito'
+    },
+
+
+    
 }
