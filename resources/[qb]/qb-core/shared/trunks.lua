@@ -24,6 +24,7 @@ QBShared.Trunks = {
     [19] = { slot = 10, weight = 0 }, -- Military
     [20] = { slot = 10, weight = 0 }, -- Commercial
     [21] = { slot = 10, weight = 0 }, -- Trains
+    [22] = { slot = 10, weight = 20000 }, -- Quads
 
     --- Override for specific vehicle
 
@@ -106,4 +107,9 @@ QBShared.Trunks = {
     
     -- Army
     [GetHashKey('barracks')] = { slot = 50, weight = 1000000 },
+
+    -- Quads
+    [GetHashKey('blazer')] = { slot = 50, weight = 20000 },
+    [GetHashKey('blazer3')] = { slot = 50, weight = 20000 },
+    [GetHashKey('blazer4')] = { slot = 50, weight = 20000 },
 }
