@@ -12,6 +12,7 @@ import { JobMenuProvider } from '../job/job.menu.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
+import { ProgressService } from '../progress.service';
 import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerService } from './player.service';
 import { PlayerWardrobe } from './player.wardrobe';
@@ -47,6 +48,9 @@ export class PlayerMenuProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
 
     @Command('soz_core_toggle_personal_menu', {
         description: 'Ouvrir le menu personnel',
@@ -123,6 +127,8 @@ export class PlayerMenuProvider {
         if (!player) {
             return;
         }
+
+        this.progressService.cancel();
 
         await this.playerWardrobe.setClothConfig(key, value);
     }
