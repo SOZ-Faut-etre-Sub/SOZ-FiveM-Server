@@ -23,7 +23,7 @@ local function GetAllInvoices(PlayerData)
     return invoices
 end
 
-local function PayInvoice(PlayerData, account, id)
+local function PayInvoice(PlayerData, account, id, marked)
     if not PlayerHaveAccessToInvoices(PlayerData, account) then
         return false
     end
@@ -41,53 +41,84 @@ local function PayInvoice(PlayerData, account, id)
     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
 
     if PlayerData.charinfo.account == account then
-        local moneyAmount = Player.Functions.GetMoney("money")
-        local moneyMarkedAmount = Player.Functions.GetMoney("marked_money")
 
-        if (moneyAmount + moneyMarkedAmount) >= invoice.amount then
-            local moneyTake = 0
-            local markedMoneyTake = 0
+        if marked then
+            local moneyAmount = Player.Functions.GetMoney("money")
+            local moneyMarkedAmount = Player.Functions.GetMoney("marked_money")
 
-            if moneyMarkedAmount >= invoice.amount then
-                markedMoneyTake = invoice.amount
+            if (moneyAmount + moneyMarkedAmount) >= invoice.amount then
+                local moneyTake = 0
+                local markedMoneyTake = 0
+
+                if moneyMarkedAmount >= invoice.amount then
+                    markedMoneyTake = invoice.amount
+                else
+                    markedMoneyTake = moneyMarkedAmount
+                    moneyTake = invoice.amount - moneyMarkedAmount
+                end
+
+                Player.Functions.RemoveMoney("money", moneyTake)
+                Player.Functions.RemoveMoney("marked_money", markedMoneyTake)
+
+                local success = Account.AddMoney(invoice.emitterSafe, moneyTake, "money")
+                if not success then
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
+                                       "error")
+                    Player.Functions.AddMoney("money", moneyTake)
+                    Player.Functions.AddMoney("marked_money", markedMoneyTake)
+                    return false
+                end
+
+                success = Account.AddMoney(invoice.emitterSafe, markedMoneyTake, "marked_money")
+                if not success then
+                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
+                                       "error")
+                    Player.Functions.AddMoney("money", moneyTake)
+                    Player.Functions.AddMoney("marked_money", markedMoneyTake)
+                    Account.RemoveMoney(invoice.emitterSafe, moneyTake, "money")
+                    return false
+                end
+
             else
-                markedMoneyTake = moneyMarkedAmount
-                moneyTake = invoice.amount - moneyMarkedAmount
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+                return false
             end
-
-            Player.Functions.RemoveMoney("money", moneyTake)
-            Player.Functions.RemoveMoney("marked_money", markedMoneyTake)
-
-            Account.AddMoney(invoice.emitterSafe, moneyTake, "money")
-            Account.AddMoney(invoice.emitterSafe, markedMoneyTake, "marked_money")
-
-            MySQL.update.await("UPDATE invoices SET payed = true WHERE id = ? AND payed = false AND refused = false", {
-                invoice.id,
-            })
-
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture", "success", 10000)
-            if Emitter then
-                TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
+        elseif Player.Functions.RemoveMoney("money", invoice.amount) then
+            local success = Account.AddMoney(invoice.emitterSafe, invoice.amount)
+            if not success then
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
+                                   "error")
+                Player.Functions.AddMoney("money", invoice.amount)
+                return false
             end
-
-            TriggerEvent("monitor:server:event", "invoice_pay", {
-                player_source = Player.PlayerData.source,
-                invoice_kind = "invoice",
-                invoice_job = "",
-            }, {
-                target_source = Emitter and Emitter.PlayerData.source or nil,
-                id = id,
-                amount = tonumber(invoice.amount),
-                target_account = invoice.emitterSafe,
-                source_account = invoice.targetAccount,
-            })
-            Invoices[account][id] = nil
-            TriggerClientEvent("banking:client:invoicePaid", Player.PlayerData.source, id)
-            return true
+        else
+            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+            return false
         end
 
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
-        return false
+        MySQL.update.await("UPDATE invoices SET payed = true WHERE id = ? AND payed = false AND refused = false", {
+            invoice.id,
+        })
+
+        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture", "success", 10000)
+        if Emitter then
+            TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
+        end
+
+        TriggerEvent("monitor:server:event", "invoice_pay", {
+            player_source = Player.PlayerData.source,
+            invoice_kind = "invoice",
+            invoice_job = "",
+        }, {
+            target_source = Emitter and Emitter.PlayerData.source or nil,
+            id = id,
+            amount = tonumber(invoice.amount),
+            target_account = invoice.emitterSafe,
+            source_account = invoice.targetAccount,
+        })
+        Invoices[account][id] = nil
+        TriggerClientEvent("banking:client:invoicePaid", Player.PlayerData.source, id)
+        return true
     else
         Account.TransfertMoney(invoice.targetAccount, invoice.emitterSafe, invoice.amount, function(success, reason)
             if success then
@@ -115,6 +146,9 @@ local function PayInvoice(PlayerData, account, id)
                 })
                 TriggerClientEvent("banking:client:invoicePaid", Player.PlayerData.source, id)
                 Invoices[account][id] = nil
+            else
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Echec~s~ du payment la facture de la société", "success",
+                                   10000)
             end
             return success
         end)
@@ -322,7 +356,8 @@ RegisterNetEvent("banking:server:sendSocietyInvoice", function(target, label, am
     end
 end)
 
-function PayInvoiceFunction(source, invoiceId)
+function PayInvoiceFunction(source, invoiceId, marked)
+    print("PayInvoiceFunction", source, invoiceId, marked)
     local Player = QBCore.Functions.GetPlayer(source)
 
     if not Player then
@@ -332,7 +367,7 @@ function PayInvoiceFunction(source, invoiceId)
     for account, invoices in pairs(Invoices) do
         for id, _ in pairs(invoices) do
             if id == invoiceId then
-                PayInvoice(Player.PlayerData, account, invoiceId)
+                PayInvoice(Player.PlayerData, account, invoiceId, marked)
                 return
             end
         end

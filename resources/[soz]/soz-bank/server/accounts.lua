@@ -107,7 +107,7 @@ function Account.Create(id, label, accountType, owner, money, marked_money, coor
         if string.find(self.id, "safe_") == nil then
             self.id = "safe_" .. self.id
         end
-        self.max = 300000
+        self.max = 600000
     end
 
     if self.type == "house_safe" then
@@ -179,7 +179,7 @@ function Account.TransfertMoney(accSource, accTarget, money, cb)
     if accSource then
         if accTarget then
             if money <= accSource.money then
-                if (accTarget.type == "house_safe" or accTarget.type == "safestorages") and money > accTarget.max then
+                if (accTarget.type == "house_safe" or accTarget.type == "safestorages") and accSource.money + money > accTarget.max then
                     success, reason = false, "transfert_failed"
 
                     if cb then

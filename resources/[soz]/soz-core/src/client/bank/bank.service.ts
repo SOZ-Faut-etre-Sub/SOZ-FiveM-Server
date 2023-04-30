@@ -1,6 +1,4 @@
 import { Injectable } from '@core/decorators/injectable';
-import { emitQBRpc } from '@core/rpc';
-import { Invoice } from '@public/shared/bank';
 import { getLocationHash } from '@public/shared/locationhash';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { Err, Ok, Result } from '@public/shared/result';

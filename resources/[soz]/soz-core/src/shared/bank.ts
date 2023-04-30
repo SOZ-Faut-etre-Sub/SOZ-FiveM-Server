@@ -7,4 +7,7 @@ export type Invoice = {
     targetAccount: string;
     label: string;
     amount: number;
+    payed: boolean;
+    refused: boolean;
+    createdAt: number;
 };
