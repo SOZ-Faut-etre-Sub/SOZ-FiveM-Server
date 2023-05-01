@@ -47,10 +47,6 @@ export class PlayerWardrobe {
     ): Promise<OutfitSelection | null> {
         const model = GetEntityModel(PlayerPedId());
         const wardrobe = config[model];
-        this.customOutfit = {
-            Components: {},
-            Props: {},
-        };
 
         if (!wardrobe) {
             return null;
@@ -187,6 +183,7 @@ export class PlayerWardrobe {
     public async onCloseMenu() {
         if (this.customOutfit) {
             this.playerService.resetClothConfig();
+            this.customOutfit = null;
         }
 
         if (this.currentOutfitResolve) {
@@ -200,6 +197,13 @@ export class PlayerWardrobe {
     public async onWardrobeElementSelect({ outfit, wardRobeElementId }: { outfit: Outfit; wardRobeElementId: number }) {
         if (!outfit) {
             return;
+        }
+
+        if (!this.customOutfit) {
+            this.customOutfit = {
+                Components: {},
+                Props: {},
+            };
         }
 
         const wardRobeElement = WardRobeElements[wardRobeElementId];
@@ -220,10 +224,11 @@ export class PlayerWardrobe {
     }
 
     @OnNuiEvent(NuiEvent.WardrobeCustomSave)
-    public async onCustomWardrobeSabe() {
+    public async onCustomWardrobeSave() {
         if (this.currentOutfitResolve) {
             this.currentOutfitResolve({ outfit: this.customOutfit, canceled: false });
         }
+        this.customOutfit = null;
 
         this.nuiMenu.closeMenu();
         this.currentOutfitResolve = null;
