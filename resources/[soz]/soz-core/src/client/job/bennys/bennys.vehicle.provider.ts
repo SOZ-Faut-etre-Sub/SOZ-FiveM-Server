@@ -1,4 +1,4 @@
-import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
+import { isVehicleModelElectric, isVehicleModelTrailer } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -457,8 +457,16 @@ export class BennysVehicleProvider {
 
         const state = this.vehicleService.getVehicleState(vehicle);
         const model = GetEntityModel(vehicle);
-
         const doorExist = [];
+
+        let tabletType: 'car' | 'electric' | 'trailer' = 'car';
+
+        if (isVehicleModelElectric(model)) {
+            tabletType = 'electric';
+        }
+        if (isVehicleModelTrailer(model)) {
+            tabletType = 'trailer';
+        }
 
         const windowExist = [
             GetEntityBoneIndexByName(vehicle, 'window_lf') !== -1,
@@ -481,7 +489,7 @@ export class BennysVehicleProvider {
             condition: state.condition,
             doors: doorExist,
             windows: windowExist,
-            isElectric: isVehicleModelElectric(model),
+            tabletType: tabletType,
         });
     }
 }
