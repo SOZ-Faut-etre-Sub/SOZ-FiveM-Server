@@ -109,13 +109,18 @@ export class InventoryManager {
                     continue;
                 }
 
-                if (item.amount > amount) {
-                    count += amount;
-                    countBySlot.set(item.slot, amount);
+                if (count + item.amount > amount) {
+                    const countLeft = amount - count;
+                    count += countLeft;
+                    countBySlot.set(item.slot, countLeft);
                     break;
-                } else {
-                    countBySlot.set(item.slot, item.amount);
-                    count += item.amount;
+                }
+
+                countBySlot.set(item.slot, item.amount);
+                count += item.amount;
+
+                if (count === amount) {
+                    break;
                 }
             }
         }
