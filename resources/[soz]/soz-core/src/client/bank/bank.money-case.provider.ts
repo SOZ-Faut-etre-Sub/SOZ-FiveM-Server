@@ -59,7 +59,7 @@ export class BankMoneyCaseProvider {
     }
 
     private hasMoneyCase(): boolean {
-        return GetSelectedPedWeapon(PlayerPedId()) == MONEY_CASE_HASH;
+        return GetCurrentPedWeapon(PlayerPedId(), true)[1] == MONEY_CASE_HASH;
     }
 
     private addMoneyCase(): void {
