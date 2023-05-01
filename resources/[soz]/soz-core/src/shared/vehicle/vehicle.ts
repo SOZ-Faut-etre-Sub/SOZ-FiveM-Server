@@ -301,6 +301,15 @@ export const VehicleElectricModels: Record<number, string> = {
     [joaat('dilettante2')]: 'Dilettante 2',
 };
 
+export const VehicleTrailerModels: Record<number, string> = {
+    [joaat('tanker')]: 'Tanker',
+    [joaat('trailerlogs')]: 'Trailer Logs',
+};
+
+export const isVehicleModelTrailer = (model: number): boolean => {
+    return VehicleTrailerModels[model] != null;
+};
+
 export const isVehicleModelElectric = (model: number): boolean => {
     return VehicleElectricModels[model] != null;
 };
