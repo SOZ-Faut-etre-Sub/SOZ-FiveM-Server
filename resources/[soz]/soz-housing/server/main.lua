@@ -107,19 +107,29 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
         return
     end
 
-    local inside = Player.PlayerData.metadata["inside"]
-
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
         exports["soz-monitor"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
-    TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, apartment:GetInsideCoord())
+    local inside = Player.PlayerData.metadata["inside"]
+    inside.exitCoord = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
+    Player.Functions.SetMetaData("inside", inside)
+
+    TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, apartment:GetInsideCoord(), propertyId, apartmentId)
+end)
+
+RegisterNetEvent("housing:server:CompleteSetPlayerInApartment", function(propertyId, apartmentId)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not Player then
+        return
+    end
+
+    local inside = Player.PlayerData.metadata["inside"]
 
     inside.apartment = apartmentId
     inside.property = propertyId
-    inside.exitCoord = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
     Player.Functions.SetMetaData("inside", inside)
 end)
 
@@ -153,12 +163,7 @@ RegisterNetEvent("housing:server:ExitProperty", function(propertyId, apartmentId
         return
     end
 
-    TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, inside.exitCoord)
-
-    inside.apartment = false
-    inside.property = nil
-    inside.exitCoord = false
-    Player.Functions.SetMetaData("inside", inside)
+    TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, inside.exitCoord, nil, false)
 end)
 
 RegisterNetEvent("housing:server:InspectApartment", function(propertyId, apartmentId)

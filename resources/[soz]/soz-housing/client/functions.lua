@@ -43,7 +43,7 @@ Housing.Functions.GenerateMenu = function(cb)
     end
 end
 
-Housing.Functions.Teleport = function(title, coords)
+Housing.Functions.Teleport = function(title, coords, propertyId, apartmentId)
     QBCore.Functions.Progressbar("housing_action", title, 1000, false, false,
                                  {
         disableMovement = true,
@@ -60,6 +60,7 @@ Housing.Functions.Teleport = function(title, coords)
         SetEntityHeading(ped, coords.w or 0)
 
         DoScreenFadeIn(500)
+        TriggerServerEvent("housing:server:CompleteSetPlayerInApartment", propertyId, apartmentId)
     end)
 end
 
