@@ -5,14 +5,14 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
 import { VehicleClass } from '../../shared/vehicle/vehicle';
 
-const ALLOWED_AIR_CONTROL: VehicleClass[] = [
-    VehicleClass.Helicopters,
-    VehicleClass.Motorcycles,
-    VehicleClass.Cycles,
-    VehicleClass.Boats,
-    VehicleClass.Planes,
-    VehicleClass.Military,
-];
+const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
+    [VehicleClass.Helicopters]: true,
+    [VehicleClass.Motorcycles]: true,
+    [VehicleClass.Cycles]: true,
+    [VehicleClass.Boats]: true,
+    [VehicleClass.Planes]: true,
+    [VehicleClass.Military]: true,
+};
 
 @Provider()
 export class VehicleAirProvider {
@@ -69,7 +69,7 @@ export class VehicleAirProvider {
 
         const vehicleClass = GetVehicleClass(vehicle);
 
-        if (ALLOWED_AIR_CONTROL.includes(vehicleClass)) {
+        if (ALLOWED_AIR_CONTROL[vehicleClass]) {
             return;
         }
 
