@@ -38,7 +38,7 @@ export class WeaponHolsterProvider {
     }
 
     @Tick(5)
-    public async loop() {
+    public async checkWeaponLoop() {
         const ped = PlayerPedId();
         const player = this.playerService.getPlayer();
 

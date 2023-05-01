@@ -85,7 +85,7 @@ export class TaxiProvider {
     }
 
     @Tick(2000)
-    public loop() {
+    public checkTaxiMissionService() {
         this.taxiMissionService.update();
     }
 }
