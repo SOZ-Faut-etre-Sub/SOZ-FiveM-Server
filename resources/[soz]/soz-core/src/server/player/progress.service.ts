@@ -39,6 +39,10 @@ export class ProgressService {
         return promise;
     }
 
+    public async stopProgress(player: number): Promise<void> {
+        TriggerClientEvent(ClientEvent.PROGRESS_STOP, player);
+    }
+
     @OnEvent(ServerEvent.PROGRESS_FINISH)
     public onProgressFinish(player: number, id: string, result: ProgressResult): void {
         if (this.promises[id]) {

@@ -31,4 +31,9 @@ export class ProgressProvider {
 
         TriggerServerEvent(ServerEvent.PROGRESS_FINISH, id, result);
     }
+
+    @OnEvent(ClientEvent.PROGRESS_STOP)
+    async progressStop(): Promise<void> {
+        await this.progressService.cancel();
+    }
 }
