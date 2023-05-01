@@ -32,8 +32,8 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
 end)
 
 --- Main Functions
-RegisterNetEvent("housing:client:Teleport", function(coords)
-    Housing.Functions.Teleport("Ouvre la porte", coords)
+RegisterNetEvent("housing:client:Teleport", function(coords, propertyId, apartmentId)
+    Housing.Functions.Teleport("Ouvre la porte", coords, propertyId, apartmentId)
 
     Citizen.CreateThread(function()
         Citizen.Wait(2000)
