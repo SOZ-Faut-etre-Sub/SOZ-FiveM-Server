@@ -179,7 +179,7 @@ function Account.TransfertMoney(accSource, accTarget, money, cb)
     if accSource then
         if accTarget then
             if money <= accSource.money then
-                if (accTarget.type == "house_safe" or accTarget.type == "safestorages") and accSource.money + money > accTarget.max then
+                if (accTarget.type == "house_safe" or accTarget.type == "safestorages") and accTarget.money + money > accTarget.max then
                     success, reason = false, "transfert_failed"
 
                     if cb then

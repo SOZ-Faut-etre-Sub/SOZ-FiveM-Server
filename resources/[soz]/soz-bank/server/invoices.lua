@@ -147,8 +147,7 @@ local function PayInvoice(PlayerData, account, id, marked)
                 TriggerClientEvent("banking:client:invoicePaid", Player.PlayerData.source, id)
                 Invoices[account][id] = nil
             else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Echec~s~ du payment la facture de la société", "success",
-                                   10000)
+                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Echec~s~ du paiement la facture de la société", "error", 10000)
             end
             return success
         end)
