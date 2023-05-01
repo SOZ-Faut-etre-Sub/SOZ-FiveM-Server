@@ -13,6 +13,7 @@ import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
 import { RepairApp } from './Bennys/RepairApp';
 import { CardApp } from './Card/CardApp';
+import { HudApp } from './Hud/HudApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
@@ -37,6 +38,7 @@ export const App: FunctionComponent = () => {
         <Provider store={store}>
             <div className={classes}>
                 <StateApp />
+                <HudApp />
                 <MenuApp />
                 <TalentApp />
                 <CraftingApp />
