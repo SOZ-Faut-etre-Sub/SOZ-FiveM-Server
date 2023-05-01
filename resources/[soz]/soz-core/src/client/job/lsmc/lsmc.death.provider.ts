@@ -126,7 +126,7 @@ export class LSMCDeathProvider {
     private IsDead = false;
 
     @Tick(10)
-    public async loop() {
+    public async deathLoop() {
         if (this.playerService.isLoggedIn()) {
             const playerPed = PlayerPedId();
             if (IsEntityDead(playerPed)) {
@@ -265,7 +265,7 @@ export class LSMCDeathProvider {
     }
 
     @Tick(TickInterval.EVERY_FRAME)
-    public async controlLoop() {
+    public async controlDeathLoop() {
         if (!this.IsDead) {
             await wait(1000);
             return;

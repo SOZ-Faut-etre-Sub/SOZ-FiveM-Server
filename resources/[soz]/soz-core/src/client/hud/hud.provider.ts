@@ -21,7 +21,7 @@ export class HudProvider {
     public isCinematicCameraActive = false;
 
     @Tick()
-    public async tick(): Promise<void> {
+    public async disableHudLoop(): Promise<void> {
         // Basic components hide
         HideHudComponentThisFrame(HudComponent.WantedStars);
         HideHudComponentThisFrame(HudComponent.Cash);
