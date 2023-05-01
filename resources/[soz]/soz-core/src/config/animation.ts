@@ -11502,6 +11502,7 @@ export const Animations: AnimationConfigList = [
                             freezeLastFrame: true,
                             onlyUpperBody: true,
                             enablePlayerControl: true,
+                            repeat: true,
                         },
                     },
                 },
