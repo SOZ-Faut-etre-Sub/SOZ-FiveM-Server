@@ -1,5 +1,3 @@
-import * as async_hooks from 'async_hooks';
-
 import { EventMetadata } from '../decorators/event';
 import { Injectable } from '../decorators/injectable';
 import { TickMetadata } from '../decorators/tick';
