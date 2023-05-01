@@ -52,7 +52,7 @@ const EnginePage: FunctionComponent<PageProps> = ({ analyze }) => {
         <>
             <h3 className="text-3xl mb-4">Moteur</h3>
             <p>Etat du moteur : {analyze.condition.engineHealth.toFixed(2)} / 1000</p>
-            {!analyze.isElectric && <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 100</p>}
+            {analyze.tabletType === 'car' && <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 100</p>}
             <p>Kilométrage : {(analyze.condition.mileage / 1000).toFixed(2)} km</p>
         </>
     );
@@ -143,7 +143,7 @@ const BodyPage: FunctionComponent<PageProps> = ({ analyze }) => {
 };
 
 const TankPage: FunctionComponent<PageProps> = ({ analyze }) => {
-    if (analyze.isElectric) {
+    if (analyze.tabletType === 'electric') {
         return (
             <>
                 <h3 className="text-3xl mb-4">Batterie</h3>
@@ -182,9 +182,13 @@ export const RepairApp: FunctionComponent = () => {
 
     const baseClass = 'absolute flex flex-col items-center';
     const engineClass = cn(baseClass, {
-        'text-red-500': repairData.condition.engineHealth < 200,
-        'text-green-500': repairData.condition.engineHealth > 900,
-        'text-yellow-500': repairData.condition.engineHealth >= 200 && repairData.condition.engineHealth <= 900,
+        'text-red-500': repairData.tabletType !== 'trailer' && repairData.condition.engineHealth < 200,
+        'text-green-500': repairData.tabletType !== 'trailer' && repairData.condition.engineHealth > 900,
+        'text-yellow-500':
+            repairData.tabletType !== 'trailer' &&
+            repairData.condition.engineHealth >= 200 &&
+            repairData.condition.engineHealth <= 900,
+        'text-gray-500 pointer-events-none': repairData.tabletType === 'trailer',
     });
     const bodyClass = cn(baseClass, {
         'text-red-500': repairData.condition.bodyHealth < 200,
@@ -192,9 +196,13 @@ export const RepairApp: FunctionComponent = () => {
         'text-yellow-500': repairData.condition.bodyHealth >= 200 && repairData.condition.bodyHealth <= 900,
     });
     const tankClass = cn(baseClass, {
-        'text-red-500': repairData.condition.tankHealth < 200,
-        'text-green-500': repairData.condition.tankHealth > 900,
-        'text-yellow-500': repairData.condition.tankHealth >= 200 && repairData.condition.tankHealth <= 900,
+        'text-red-500': repairData.tabletType !== 'trailer' && repairData.condition.tankHealth < 200,
+        'text-green-500': repairData.tabletType !== 'trailer' && repairData.condition.tankHealth > 900,
+        'text-yellow-500':
+            repairData.tabletType !== 'trailer' &&
+            repairData.condition.tankHealth >= 200 &&
+            repairData.condition.tankHealth <= 900,
+        'text-gray-500 pointer-events-none': repairData.tabletType === 'trailer',
     });
     const batteryClass = cn(baseClass, {
         'text-red-500': repairData.condition.oilLevel < 20,
@@ -209,15 +217,17 @@ export const RepairApp: FunctionComponent = () => {
     const numberOfBadWheel = Object.values(repairData.condition.tireBurstState).filter(status => status).length;
 
     const doorClass = cn(baseClass, {
-        'text-red-500': numberOfBadDoor > 2,
-        'text-green-500': numberOfBadDoor === 0,
-        'text-yellow-500': numberOfBadDoor > 0 && numberOfBadDoor <= 2,
+        'text-red-500': repairData.tabletType !== 'trailer' && numberOfBadDoor > 2,
+        'text-green-500': repairData.tabletType !== 'trailer' && numberOfBadDoor === 0,
+        'text-yellow-500': repairData.tabletType !== 'trailer' && numberOfBadDoor > 0 && numberOfBadDoor <= 2,
+        'text-gray-500 pointer-events-none': repairData.tabletType === 'trailer',
     });
 
     const doorWindowClass = cn(baseClass, {
-        'text-red-500': numberOfBadDoorGlass > 2,
-        'text-green-500': numberOfBadDoorGlass === 0,
-        'text-yellow-500': numberOfBadDoorGlass > 0 && numberOfBadDoorGlass <= 2,
+        'text-red-500': repairData.tabletType !== 'trailer' && numberOfBadDoorGlass > 2,
+        'text-green-500': repairData.tabletType !== 'trailer' && numberOfBadDoorGlass === 0,
+        'text-yellow-500': repairData.tabletType !== 'trailer' && numberOfBadDoorGlass > 0 && numberOfBadDoorGlass <= 2,
+        'text-gray-500 pointer-events-none': repairData.tabletType === 'trailer',
     });
 
     const wheelClass = cn(baseClass, {
@@ -323,7 +333,7 @@ export const RepairApp: FunctionComponent = () => {
                             <span>Vitres</span>
                             <IconGlass className="h-7 w-7 mt-3" />
                         </Link>
-                        {repairData.isElectric ? (
+                        {repairData.tabletType === 'electric' ? (
                             <Link
                                 style={{
                                     top: '421px',
