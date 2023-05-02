@@ -14,6 +14,7 @@ export const vehicle = createModel<RootModel>()({
         lightState: 0,
         fuelType: 'essence',
         fuelLevel: 0,
+        rpm: 0,
     } as VehicleHud,
     reducers: {
         update(state, vehicle: Partial<VehicleHud>) {

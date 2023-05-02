@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useCallback } from 'react';
 
 import { useHud, usePlayer, usePlayerHealth, useVehicle } from '../../hook/data';
 import IconArmor from '../../icons/hud/armor.svg';
@@ -10,6 +10,21 @@ export const Minimap: FunctionComponent = () => {
     const player = usePlayer();
     let playerHealth = usePlayerHealth();
     const vehicle = useVehicle();
+
+    const hideHealthCondition = useCallback(
+        value => {
+            if (vehicle.seat !== null) {
+                return false;
+            }
+
+            return value < 61;
+        },
+        [vehicle.seat]
+    );
+
+    const hideArmorCondition = useCallback(() => {
+        return vehicle.seat === null;
+    }, [vehicle.seat]);
 
     if (!player) {
         return null;
@@ -34,9 +49,8 @@ export const Minimap: FunctionComponent = () => {
         >
             <div className="h-5 w-full">
                 <StatusBar
+                    hideCondition={hideHealthCondition}
                     percent={healthPercent}
-                    reverse
-                    showThreshold={vehicle.seat !== null ? 101 : 60}
                     backgroundPrimary="rgba(60,152,30,0.5)"
                     backgroundSecondary="linear-gradient(to top, rgba(71,190,32,0.6) 31%, rgba(79,228,30,0.6) 100%)"
                 >
@@ -46,7 +60,7 @@ export const Minimap: FunctionComponent = () => {
             <div className="h-5 w-full ml-2">
                 <StatusBar
                     percent={armorPercent}
-                    showThreshold={vehicle.seat !== null ? 0 : 100}
+                    hideCondition={hideArmorCondition}
                     backgroundPrimary="rgba(19,90,128,0.5)"
                     backgroundSecondary="linear-gradient(to top, rgba(19,120,187,0.6) 31%, rgba(23,147,218,0.6) 100%)"
                 >
