@@ -5,8 +5,7 @@ export type StatusBarProps = {
     percent: number;
     backgroundPrimary: string;
     backgroundSecondary: string;
-    showThreshold?: number;
-    reverse?: boolean;
+    hideCondition?: (value: number) => boolean;
 };
 
 export const StatusBar: FunctionComponent<PropsWithChildren<StatusBarProps>> = ({
@@ -14,10 +13,9 @@ export const StatusBar: FunctionComponent<PropsWithChildren<StatusBarProps>> = (
     backgroundPrimary,
     backgroundSecondary,
     children,
-    showThreshold = 0,
-    reverse = false,
+    hideCondition = value => value < 1,
 }) => {
-    const hide = (!reverse && percent <= showThreshold) || (reverse && percent >= showThreshold);
+    const hide = hideCondition(percent);
 
     const classes = classNames(
         'transition-all duration-500 flex h-full w-full rounded bg-black p-[0.3rem] mx-0 my-[0.3rem]',
@@ -26,6 +24,10 @@ export const StatusBar: FunctionComponent<PropsWithChildren<StatusBarProps>> = (
             'opacity-60': !hide,
         }
     );
+
+    if (hide) {
+        return null;
+    }
 
     return (
         <div className={classes}>

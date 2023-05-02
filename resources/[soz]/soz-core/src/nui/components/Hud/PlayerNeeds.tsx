@@ -32,8 +32,7 @@ export const PlayerNeeds: FunctionComponent = () => {
             </StatusBar>
             <StatusBar
                 percent={player.metadata.hunger}
-                showThreshold={50}
-                reverse
+                hideCondition={value => value > 50}
                 backgroundPrimary="rgba(251, 140, 0, 0.4)"
                 backgroundSecondary="linear-gradient(to top, rgba(251, 140, 0, 0.6) 31%, rgba(255, 168, 55, 0.6) 100%)"
             >
@@ -41,8 +40,7 @@ export const PlayerNeeds: FunctionComponent = () => {
             </StatusBar>
             <StatusBar
                 percent={player.metadata.thirst}
-                showThreshold={50}
-                reverse
+                hideCondition={value => value > 50}
                 backgroundPrimary="rgba(30, 135, 228, 0.4)"
                 backgroundSecondary="linear-gradient(to top, rgba(30, 135, 228, 0.6) 31%, rgba(94, 165, 239, 0.6) 100%)"
             >
