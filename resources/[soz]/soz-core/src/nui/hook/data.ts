@@ -1,6 +1,6 @@
 import { HudState } from '@public/shared/hud';
 import { Item } from '@public/shared/item';
-import { VehicleHud } from '@public/shared/vehicle/vehicle';
+import { VehicleHud, VehicleHudSpeed } from '@public/shared/vehicle/vehicle';
 import { useSelector } from 'react-redux';
 
 import { PlayerData } from '../../shared/player';
@@ -28,6 +28,10 @@ export const useAllowedOutside = (): Record<string, HTMLElement> => {
 
 export const useVehicle = (): VehicleHud => {
     return useSelector((state: RootState) => state.vehicle);
+};
+
+export const useVehicleSpeed = (): VehicleHudSpeed => {
+    return useSelector((state: RootState) => state.vehicleSpeed);
 };
 
 export const useHud = (): HudState => {

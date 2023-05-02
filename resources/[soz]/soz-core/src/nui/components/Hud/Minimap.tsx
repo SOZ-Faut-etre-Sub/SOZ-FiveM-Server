@@ -17,14 +17,17 @@ export const Minimap: FunctionComponent = () => {
                 return false;
             }
 
-            return value < 61;
+            return value > 60;
         },
         [vehicle.seat]
     );
 
-    const hideArmorCondition = useCallback(() => {
-        return vehicle.seat === null;
-    }, [vehicle.seat]);
+    const hideArmorCondition = useCallback(
+        value => {
+            return vehicle.seat === null || value < 1;
+        },
+        [vehicle.seat]
+    );
 
     if (!player) {
         return null;

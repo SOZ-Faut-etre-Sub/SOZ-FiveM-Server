@@ -8,7 +8,7 @@ import {
     VehicleLockStatus,
     VehicleMidDamageThreshold,
 } from '../../../shared/vehicle/vehicle';
-import { useVehicle } from '../../hook/data';
+import { useVehicle, useVehicleSpeed } from '../../hook/data';
 import BatteryIcon from '../../icons/hud/vehicle/battery.svg';
 import EnergyIcon from '../../icons/hud/vehicle/energy.svg';
 import FuelIcon from '../../icons/hud/vehicle/fuel.svg';
@@ -89,7 +89,9 @@ const SeatbeltIndicator: FunctionComponent<{ state: boolean }> = ({ state }) => 
     return <SeatbeltIcon className={classes} />;
 };
 
-const SpeedGauge: FunctionComponent<{ speed: number; rpm: number; hasFuel: boolean }> = ({ speed, rpm, hasFuel }) => {
+const SpeedGauge: FunctionComponent<{ hasFuel: boolean }> = ({ hasFuel }) => {
+    const vehicleSpeed = useVehicleSpeed();
+
     const classes = classNames(
         'font-prompt font-semibold flex absolute flex-col text-center top-[1.5rem] mr-[80px] w-[100px] text-white/80 uppercase text-sm tabular-nums',
         {
@@ -115,11 +117,11 @@ const SpeedGauge: FunctionComponent<{ speed: number; rpm: number; hasFuel: boole
                     strokeWidth="4"
                     strokeOpacity="1.0"
                     strokeDasharray="185"
-                    style={{ strokeDashoffset: -(185 - (rpm - 0.2) * 185) }}
+                    style={{ strokeDashoffset: -(205 - vehicleSpeed.rpm * 205) }}
                 />
             </svg>
             <div className={classes}>
-                <span className="text-white text-3xl">{speed.toFixed(0)}</span>
+                <span className="text-white text-3xl">{vehicleSpeed.speed.toFixed(0)}</span>
                 <span>km/h</span>
             </div>
         </>
@@ -183,7 +185,7 @@ export const SpeedoMeter: FunctionComponent = () => {
                 <LockIndicator state={vehicle.lockStatus} />
             </div>
             <div className="flex justify-center mr-[-40px]">
-                <SpeedGauge speed={vehicle.speed} rpm={vehicle.rpm} hasFuel={vehicle.fuelType !== 'none'} />
+                <SpeedGauge hasFuel={vehicle.fuelType !== 'none'} />
                 {vehicle.fuelType !== 'none' && <FuelGauge value={vehicle.fuelLevel} fuelType={vehicle.fuelType} />}
                 <MotorIndicator motor={vehicle.engineHealth} oil={vehicle.oilLevel} fuelType={vehicle.fuelType} />
             </div>

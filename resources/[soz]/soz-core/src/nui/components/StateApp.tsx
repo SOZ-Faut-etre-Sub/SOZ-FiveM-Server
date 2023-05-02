@@ -37,6 +37,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.vehicle.update(vehicle);
     });
 
+    useNuiEvent('hud', 'UpdateVehicleSpeed', vehicle => {
+        dispatch.vehicleSpeed.update(vehicle);
+    });
+
     useNuiEvent('player', 'UpdatePlayerHealth', health => {
         dispatch.playerHealth.update(health);
     });

@@ -5,7 +5,7 @@ import { item } from './item';
 import { outside } from './outside';
 import { player, playerHealth } from './player';
 import { taxi } from './taxi';
-import { vehicle } from './vehicle';
+import { vehicle, vehicleSpeed } from './vehicle';
 
 export interface RootModel extends Models<RootModel> {
     hud: typeof hud;
@@ -15,6 +15,7 @@ export interface RootModel extends Models<RootModel> {
     taxi: typeof taxi;
     outside: typeof outside;
     vehicle: typeof vehicle;
+    vehicleSpeed: typeof vehicleSpeed;
 }
 
 export const models: RootModel = {
@@ -25,4 +26,5 @@ export const models: RootModel = {
     taxi,
     outside,
     vehicle,
+    vehicleSpeed,
 };
