@@ -26,7 +26,7 @@ export class HudVehicleProvider {
     @Inject(VehicleSeatbeltProvider)
     private readonly vehicleSeatbeltProvider: VehicleSeatbeltProvider;
 
-    @Tick(5000)
+    @Tick(0)
     async updateVehicleHud() {
         const player = this.playerService.getPlayer();
 
@@ -60,6 +60,7 @@ export class HudVehicleProvider {
         const vehicleClass = GetVehicleClass(vehicle) as VehicleClass;
         const speed = GetEntitySpeed(vehicle) * 3.6;
         const state = this.vehicleService.getVehicleState(vehicle);
+        const rpm = GetVehicleCurrentRpm(vehicle);
         const fuelType =
             vehicleClass < 23 && vehicleClass != 13 ? (isVehicleModelElectric(hash) ? 'electric' : 'essence') : 'none';
 
@@ -67,8 +68,9 @@ export class HudVehicleProvider {
             seat,
             fuelType,
             speed,
+            rpm,
             fuelLevel: state.condition.fuelLevel,
-            engineHealth: state.condition.engineHealth,
+            engineHealth: GetVehicleEngineHealth(vehicle),
             seatbelt:
                 vehicleClass !== VehicleClass.Motorcycles &&
                 vehicleClass !== VehicleClass.Cycles &&

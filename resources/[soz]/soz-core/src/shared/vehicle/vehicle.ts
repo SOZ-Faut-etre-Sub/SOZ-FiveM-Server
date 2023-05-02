@@ -24,6 +24,7 @@ export type Vehicle = {
 export type VehicleHud = {
     seat: number | null;
     speed: number;
+    rpm: number;
     engineHealth: number;
     oilLevel: number;
     lockStatus: VehicleLockStatus;
@@ -123,7 +124,6 @@ export type VehicleEntityState = {
         right: boolean;
     };
     openWindows: boolean;
-
     dead: boolean;
     condition: VehicleCondition;
     hasRadio: boolean;
