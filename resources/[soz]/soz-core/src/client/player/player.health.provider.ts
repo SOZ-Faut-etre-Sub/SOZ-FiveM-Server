@@ -280,6 +280,13 @@ export class PlayerHealthProvider {
 
     private lastRunPosition = null;
 
+    @Tick(50)
+    private async updateNuiHealth(): Promise<void> {
+        const health = GetEntityHealth(PlayerPedId());
+
+        this.nuiDispatch.dispatch('player', 'UpdatePlayerHealth', health);
+    }
+
     @Tick(TickInterval.EVERY_MINUTE)
     private async nutritionLoop(): Promise<void> {
         if (this.playerService.isLoggedIn()) {

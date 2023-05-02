@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 
-import { useHud, usePlayer } from '../../hook/data';
+import { useHud, usePlayer, usePlayerHealth, useVehicle } from '../../hook/data';
 import IconArmor from '../../icons/hud/armor.svg';
 import IconHealth from '../../icons/hud/health.svg';
 import { StatusBar } from './StatusBar';
@@ -8,12 +8,18 @@ import { StatusBar } from './StatusBar';
 export const Minimap: FunctionComponent = () => {
     const { minimap } = useHud();
     const player = usePlayer();
+    let playerHealth = usePlayerHealth();
+    const vehicle = useVehicle();
 
     if (!player) {
         return null;
     }
 
-    const healthPercent = ((player.metadata.health - 100) * 100) / (player.metadata.max_health - 100);
+    if (player.metadata.isdead) {
+        playerHealth = 0;
+    }
+
+    const healthPercent = ((playerHealth - 100) * 100) / (player.metadata.max_health - 100);
     const armorPercent = player.metadata.armor.current;
 
     return (
@@ -29,6 +35,8 @@ export const Minimap: FunctionComponent = () => {
             <div className="h-5 w-full">
                 <StatusBar
                     percent={healthPercent}
+                    reverse
+                    showThreshold={vehicle.seat !== null ? 101 : 60}
                     backgroundPrimary="rgba(60,152,30,0.5)"
                     backgroundSecondary="linear-gradient(to top, rgba(71,190,32,0.6) 31%, rgba(79,228,30,0.6) 100%)"
                 >
@@ -38,6 +46,7 @@ export const Minimap: FunctionComponent = () => {
             <div className="h-5 w-full ml-2">
                 <StatusBar
                     percent={armorPercent}
+                    showThreshold={vehicle.seat !== null ? 0 : 100}
                     backgroundPrimary="rgba(19,90,128,0.5)"
                     backgroundSecondary="linear-gradient(to top, rgba(19,120,187,0.6) 31%, rgba(23,147,218,0.6) 100%)"
                 >
