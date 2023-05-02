@@ -4,6 +4,7 @@ import { FunctionComponent } from 'react';
 import {
     VehicleCriticalDamageThreshold,
     VehicleHighDamageThreshold,
+    VehicleLightState,
     VehicleLockStatus,
     VehicleMidDamageThreshold,
 } from '../../../shared/vehicle/vehicle';
@@ -18,11 +19,16 @@ import MotorIcon from '../../icons/hud/vehicle/motor.svg';
 import OilIcon from '../../icons/hud/vehicle/oil.svg';
 import SeatbeltIcon from '../../icons/hud/vehicle/seatbelt.svg';
 
-const LightIndicator: FunctionComponent<{ state: number }> = ({ state }) => {
+const LightIndicator: FunctionComponent<{ state: VehicleLightState }> = ({ state }) => {
     return (
-        <div className="min-width-3rem text-black/30">
-            {state == 1 && <LowBeamIcon className="w-2 h-2" style={{ color: '#2ecc71' }} />}
-            {state == 2 && <HighBeamIcon className="w-2 h-2" style={{ color: '#0984e3' }} />}
+        <div className="min-w-[18px] text-black-200">
+            {state == VehicleLightState.Off && <LowBeamIcon className="w-[1.5rem] h-[1.5rem] opacity-0" />}
+            {state == VehicleLightState.LowBeam && (
+                <LowBeamIcon className="w-[1.5rem] h-[1.5rem]" style={{ color: '#2ecc71' }} />
+            )}
+            {state == VehicleLightState.HighBeam && (
+                <HighBeamIcon className="w-[1.5rem] h-[1.5rem]" style={{ color: '#0984e3' }} />
+            )}
         </div>
     );
 };
@@ -32,19 +38,25 @@ const MotorIndicator: FunctionComponent<{ motor: number; oil: number; fuelType: 
     oil,
     fuelType,
 }) => {
-    const motorClasses = classNames('w-2 h-2 relative top-[75px] right-[6.5rem] my-1', {
-        'opacity-0': motor >= VehicleMidDamageThreshold,
-        'opacity-100': motor < VehicleMidDamageThreshold,
-        'text-yellow-500': motor >= VehicleHighDamageThreshold && motor < VehicleMidDamageThreshold,
-        'text-orange-500': motor < VehicleHighDamageThreshold && motor >= VehicleCriticalDamageThreshold,
-        'text-red-500': motor < VehicleCriticalDamageThreshold,
-    });
+    const motorClasses = classNames(
+        'transition-all w-[1.5rem] h-[1.5rem] relative top-[75px] right-[6.5rem] my-[0.25rem]',
+        {
+            'opacity-0': motor >= VehicleMidDamageThreshold,
+            'opacity-100': motor < VehicleMidDamageThreshold,
+            'text-yellow-300': motor >= VehicleHighDamageThreshold && motor < VehicleMidDamageThreshold,
+            'text-orange-500': motor < VehicleHighDamageThreshold && motor >= VehicleCriticalDamageThreshold,
+            'text-red-500': motor < VehicleCriticalDamageThreshold,
+        }
+    );
 
-    const oilClasses = classNames('w-2 h-2 relative top-[75px] right-[6.5rem] my-1', {
-        'opacity-0': oil > 10,
-        'opacity-100': oil <= 10,
-        'text-red-500': oil <= 10,
-    });
+    const oilClasses = classNames(
+        'transition-all w-[1.5rem] h-[1.5rem] relative top-[75px] right-[6.5rem] my-[0.25rem]',
+        {
+            'opacity-0': oil > 10,
+            'opacity-100': oil <= 10,
+            'text-red-500': oil <= 10,
+        }
+    );
 
     return (
         <>
@@ -56,9 +68,10 @@ const MotorIndicator: FunctionComponent<{ motor: number; oil: number; fuelType: 
 };
 
 const LockIndicator: FunctionComponent<{ state: VehicleLockStatus }> = ({ state }) => {
-    const classes = classNames('w-2 h-2', {
+    const classes = classNames('transition-all duration-1000 w-[1.5rem] h-[1.5rem] mr-[0.5rem]', {
         'opacity-0': state === VehicleLockStatus.Locked,
         'opacity-100': state !== VehicleLockStatus.Locked,
+        'text-green-500': state === VehicleLockStatus.Locked,
         'text-red-500': state !== VehicleLockStatus.Locked,
     });
 
@@ -66,19 +79,21 @@ const LockIndicator: FunctionComponent<{ state: VehicleLockStatus }> = ({ state 
 };
 
 const SeatbeltIndicator: FunctionComponent<{ state: boolean }> = ({ state }) => {
-    const classes = classNames('transition-opacity w-2 h-2 mr-1', {
-        'opacity-0': state,
-        'opacity-100': !state,
+    const classes = classNames('transition-all duration-1000 w-[1.5rem] h-[1.5rem] mr-1', {
+        'opacity-0': state === null || state === true,
+        'opacity-100': state === false,
+        'text-green-500': state === true,
+        'text-red-500': state === false,
     });
 
     return <SeatbeltIcon className={classes} />;
 };
 
-const SpeedGauge: FunctionComponent<{ speed: number; hasFuel: boolean }> = ({ speed, hasFuel }) => {
+const SpeedGauge: FunctionComponent<{ speed: number; rpm: number; hasFuel: boolean }> = ({ speed, rpm, hasFuel }) => {
     const classes = classNames(
-        'absolute flex flex-col text-center top-1 mr-16 w-[100px] text-white/80 text-uppercase',
+        'font-prompt font-semibold flex absolute flex-col text-center top-[1.5rem] mr-[80px] w-[100px] text-white/80 uppercase text-sm tabular-nums',
         {
-            'mr-8': hasFuel,
+            'mr-[50px]': !hasFuel,
         }
     );
 
@@ -100,11 +115,11 @@ const SpeedGauge: FunctionComponent<{ speed: number; hasFuel: boolean }> = ({ sp
                     strokeWidth="4"
                     strokeOpacity="1.0"
                     strokeDasharray="185"
-                    style={{ strokeDashoffset: -(185 - (speed / 250) * 185) }}
+                    style={{ strokeDashoffset: -(185 - (rpm - 0.2) * 185) }}
                 />
             </svg>
             <div className={classes}>
-                <span className="text-white">{speed}</span>
+                <span className="text-white text-3xl">{speed.toFixed(0)}</span>
                 <span>km/h</span>
             </div>
         </>
@@ -112,14 +127,14 @@ const SpeedGauge: FunctionComponent<{ speed: number; hasFuel: boolean }> = ({ sp
 };
 
 const FuelGauge: FunctionComponent<{ value: number; fuelType: string }> = ({ value, fuelType }) => {
-    const fuelTypeClasses = classNames('relative top-[5px] left-[10px] w-4 h-4');
+    const fuelTypeClasses = classNames('relative top-[7px] left-[10px] w-4 h-4 text-gray-400/60');
 
     return (
         <div className="relative right-[10px] top-[6px]">
             <svg
                 className={classNames('flex', {
                     'text-green-500': fuelType === 'essence' && value >= 60,
-                    'text-yellow-500': fuelType === 'electric' && value >= 60,
+                    'text-yellow-300': fuelType === 'electric' && value >= 60,
                     'text-orange-500': value < 60 && value >= 30,
                     'text-red-500': value < 30,
                 })}
@@ -154,7 +169,7 @@ export const SpeedoMeter: FunctionComponent = () => {
     const inVehicle = vehicle.seat !== null;
 
     const classes = classNames(
-        'absolute bottom-[1.2vh] left-[35vw] right-[30vw] flex items-center transition-opacity duration-500',
+        'absolute bottom-[1.2vh] left-[35vw] w-[30vw] flex justify-center transition-opacity duration-500',
         {
             'opacity-0': !inVehicle,
             'opacity-100': inVehicle,
@@ -163,16 +178,16 @@ export const SpeedoMeter: FunctionComponent = () => {
 
     return (
         <div className={classes}>
-            <div className="flex justify-end items-end pb-3">
+            <div className="flex justify-end items-end pb-[1.25rem]">
                 {vehicle.seatbelt !== null && <SeatbeltIndicator state={vehicle.seatbelt} />}
                 <LockIndicator state={vehicle.lockStatus} />
             </div>
-            <div className="flex justify-center items-end">
-                <SpeedGauge speed={vehicle.speed} hasFuel={vehicle.fuelType !== 'none'} />
+            <div className="flex justify-center mr-[-40px]">
+                <SpeedGauge speed={vehicle.speed} rpm={vehicle.rpm} hasFuel={vehicle.fuelType !== 'none'} />
                 {vehicle.fuelType !== 'none' && <FuelGauge value={vehicle.fuelLevel} fuelType={vehicle.fuelType} />}
                 <MotorIndicator motor={vehicle.engineHealth} oil={vehicle.oilLevel} fuelType={vehicle.fuelType} />
             </div>
-            <div className="fkex justify-start items-end">
+            <div className="flex justify-start items-end pb-[1.25rem]">
                 <LightIndicator state={vehicle.lightState} />
             </div>
         </div>
