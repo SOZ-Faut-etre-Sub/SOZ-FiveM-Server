@@ -1,6 +1,6 @@
 import { createModel } from '@rematch/core';
 
-import { VehicleHud } from '../../shared/vehicle/vehicle';
+import { VehicleHud, VehicleHudSpeed } from '../../shared/vehicle/vehicle';
 import type { RootModel } from './';
 
 export const vehicle = createModel<RootModel>()({
@@ -18,6 +18,19 @@ export const vehicle = createModel<RootModel>()({
     } as VehicleHud,
     reducers: {
         update(state, vehicle: Partial<VehicleHud>) {
+            return { ...state, ...vehicle };
+        },
+    },
+    effects: () => ({}),
+});
+
+export const vehicleSpeed = createModel<RootModel>()({
+    state: {
+        speed: 0,
+        rpm: 0,
+    } as VehicleHudSpeed,
+    reducers: {
+        update(state, vehicle: Partial<VehicleHudSpeed>) {
             return { ...state, ...vehicle };
         },
     },

@@ -27,6 +27,23 @@ export class HudVehicleProvider {
     private readonly vehicleSeatbeltProvider: VehicleSeatbeltProvider;
 
     @Tick(0)
+    async updateVehicleHudSpeed() {
+        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+
+        if (!vehicle) {
+            return;
+        }
+
+        const speed = GetEntitySpeed(vehicle) * 3.6;
+        const rpm = GetVehicleCurrentRpm(vehicle);
+
+        this.nuiDispatch.dispatch('hud', 'UpdateVehicleSpeed', {
+            speed,
+            rpm,
+        });
+    }
+
+    @Tick(500)
     async updateVehicleHud() {
         const player = this.playerService.getPlayer();
 
@@ -58,17 +75,13 @@ export class HudVehicleProvider {
         const [hasLight, lightOn, hasHighBeam] = GetVehicleLightsState(vehicle);
         const hash = GetEntityModel(vehicle);
         const vehicleClass = GetVehicleClass(vehicle) as VehicleClass;
-        const speed = GetEntitySpeed(vehicle) * 3.6;
         const state = this.vehicleService.getVehicleState(vehicle);
-        const rpm = GetVehicleCurrentRpm(vehicle);
         const fuelType =
             vehicleClass < 23 && vehicleClass != 13 ? (isVehicleModelElectric(hash) ? 'electric' : 'essence') : 'none';
 
         this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
             seat,
             fuelType,
-            speed,
-            rpm,
             fuelLevel: state.condition.fuelLevel,
             engineHealth: GetVehicleEngineHealth(vehicle),
             seatbelt:

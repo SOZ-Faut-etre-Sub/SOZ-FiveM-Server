@@ -23,8 +23,6 @@ export type Vehicle = {
 
 export type VehicleHud = {
     seat: number | null;
-    speed: number;
-    rpm: number;
     engineHealth: number;
     oilLevel: number;
     lockStatus: VehicleLockStatus;
@@ -32,6 +30,11 @@ export type VehicleHud = {
     lightState: number;
     fuelType: 'essence' | 'electric' | 'none';
     fuelLevel: number;
+};
+
+export type VehicleHudSpeed = {
+    speed: number;
+    rpm: number;
 };
 
 export type VehicleSpawn = {
