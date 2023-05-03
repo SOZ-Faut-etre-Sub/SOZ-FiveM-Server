@@ -60,7 +60,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, c
             if reason ~= "invalid_weight" then
                 message = string.format("Il y a eu une erreur : `%s`", reason)
             end
-            TriggerClientEvent("hud:client:DrawNotification", source, message, "error")
+            TriggerClientEvent("soz-core:client:notification:draw", source, message, "error")
             cb(false)
             return
         else
@@ -152,7 +152,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
         end
     end
     if cocktailsToRemove ~= 0 then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vous devez avoir au moins 10 cocktails pour créer une caisse.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vous devez avoir au moins 10 cocktails pour créer une caisse.", "error")
         cb(false)
         return
     end
@@ -165,7 +165,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
     end
 
     if not exports["soz-inventory"]:CanCarryItems(source, checkList) then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines.", "error")
         cb(false)
         return
     end
@@ -176,9 +176,9 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
 
     exports["soz-inventory"]:AddItem(source, "cocktail_box", 1, nil, nil, function(success, reason)
         if not success then
-            TriggerClientEvent("hud:client:DrawNotification", source, "Vos poches sont pleines...", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines...", "error")
         else
-            TriggerClientEvent("hud:client:DrawNotification", source, "Vous avez créé un assortiment de cocktails.", "success")
+            TriggerClientEvent("soz-core:client:notification:draw", source, "Vous avez créé un assortiment de cocktails.", "success")
         end
         cb(success)
     end)

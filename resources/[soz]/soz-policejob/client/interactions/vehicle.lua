@@ -55,7 +55,7 @@ RegisterNetEvent("police:client:getVehicleOwner", function(data)
         local plate = QBCore.Functions.GetPlate(data.entity)
         local playerName = QBCore.Functions.TriggerRpc("police:server:getVehicleOwner", plate)
 
-        exports["soz-hud"]:DrawAdvancedNotification("San Andres", "Vérification de plaque", ("Propriétaire: ~b~%s"):format(playerName), "CHAR_DAVE")
+        exports["soz-core"]:DrawAdvancedNotification("San Andres", "Vérification de plaque", ("Propriétaire: ~b~%s"):format(playerName), "CHAR_DAVE")
     end)
 end)
 

@@ -38,7 +38,7 @@ end
 
 local function selectModel(model)
     if model == nil then
-        model = exports["soz-hud"]:Input("Nom du modèle : ", 32)
+        model = exports["soz-core"]:Input("Nom du modèle : ", 32)
     end
 
     if model and model ~= "" then

@@ -44,7 +44,7 @@ function WeaponShop:GenerateMenu()
                 select = function(val)
                     local amount = 1
                     if item.type == "ammo" then
-                        amount = exports["soz-hud"]:Input("Quantité", 4, "1")
+                        amount = exports["soz-core"]:Input("Quantité", 4, "1")
                     end
 
                     if amount and tonumber(amount) > 0 then

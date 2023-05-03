@@ -17,7 +17,7 @@ RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
             TriggerClientEvent("police:client:GetCuffed", target.PlayerData.source, player.PlayerData.source, isSoftcuff)
             TriggerClientEvent("soz-talk:client:PowerOffRadio", target.PlayerData.source)
         else
-            TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas de ~r~menottes", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Vous n'avez pas de ~r~menottes", "error")
         end
     end
 end)
@@ -38,7 +38,7 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
             TriggerClientEvent("police:client:GetUnCuffed", target.PlayerData.source)
             TriggerClientEvent("soz-talk:client:PowerOnradio", target.PlayerData.source)
         else
-            TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas de ~r~clé de menottes", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Vous n'avez pas de ~r~clé de menottes", "error")
         end
     end
 end)
@@ -109,18 +109,18 @@ RegisterNetEvent("police:server:RemovePoint", function(targetId, licenseType, po
                     licenses[licenseType] = licenses[licenseType] - point
 
                     if licenses[licenseType] >= 1 then
-                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
                                            "Vous avez retiré ~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ sur le permis")
-                        TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
+                        TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source,
                                            "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retirés de votre permis !", "info")
                     else
-                        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous avez retiré le permis")
-                        TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source, "Votre permis vous a été retiré !", "info")
+                        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Vous avez retiré le permis")
+                        TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source, "Votre permis vous a été retiré !", "info")
                     end
 
                     target.Functions.SetMetaData("licences", licenses)
                 else
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Il n'y a pas assez de points sur le permis", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Il n'y a pas assez de points sur le permis", "error")
                 end
 
                 return
@@ -141,14 +141,14 @@ RegisterNetEvent("police:server:RemoveLicense", function(targetId, licenseType, 
                 if licenses[licenseType] then
                     licenses[licenseType] = false
 
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
                                        "Vous avez retiré le permis: ~b~" .. Config.Licenses[licenseType].label)
-                    TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source,
                                        "Votre permis ~b~" .. Config.Licenses[licenseType].label .. "~s~ vous a été retiré !", "info")
 
                     target.Functions.SetMetaData("licences", licenses)
                 else
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Ce permis est déjà invalide", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Ce permis est déjà invalide", "error")
                 end
 
                 return
@@ -169,14 +169,14 @@ RegisterNetEvent("police:server:GiveLicense", function(targetId, licenseType)
                 if not licenses[licenseType] then
                     licenses[licenseType] = true
 
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
                                        "Vous avez donné le permis: ~b~" .. Config.Licenses[licenseType].label)
-                    TriggerClientEvent("hud:client:DrawNotification", target.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source,
                                        "Vous avez reçu un nouveau permis : ~b~" .. Config.Licenses[licenseType].label .. "~s~ !", "info")
 
                     target.Functions.SetMetaData("licences", licenses)
                 else
-                    TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Ce permis est déjà valide", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Ce permis est déjà valide", "error")
                 end
 
                 return

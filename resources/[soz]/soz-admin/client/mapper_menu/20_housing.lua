@@ -65,13 +65,13 @@ houseMenu:On("open", function(menu)
         icon = "➕",
         label = "Ajouter un bâtiment",
         select = function()
-            local identifier = exports["soz-hud"]:Input("Nom du bâtiment:", 50)
+            local identifier = exports["soz-core"]:Input("Nom du bâtiment:", 50)
             if identifier == nil or #identifier == 0 then
-                exports["soz-hud"]:DrawNotification("Le nom ne peut pas être vide", "error")
+                exports["soz-core"]:DrawNotification("Le nom ne peut pas être vide", "error")
                 return
             end
             QBCore.Functions.TriggerRpc("admin:server:housing:CreateProperty", identifier)
-            exports["soz-hud"]:DrawNotification("Bâtiment ajouté", "success")
+            exports["soz-core"]:DrawNotification("Bâtiment ajouté", "success")
             menu:Close()
             menu:Open()
         end,
@@ -109,20 +109,20 @@ currentPropertyMenu:On("open", function(menu)
         icon = "➕",
         label = "Ajouter un intérieur",
         select = function()
-            local identifier = exports["soz-hud"]:Input("Identifiant de l'intérieur :", 50)
+            local identifier = exports["soz-core"]:Input("Identifiant de l'intérieur :", 50)
             if identifier == nil or #identifier == 0 then
-                exports["soz-hud"]:DrawNotification("Le nom ne peut pas être vide", "error")
+                exports["soz-core"]:DrawNotification("Le nom ne peut pas être vide", "error")
                 return
             end
 
-            local label = exports["soz-hud"]:Input("Nom de l'intérieur :", 50)
+            local label = exports["soz-core"]:Input("Nom de l'intérieur :", 50)
             if label == nil or #label == 0 then
-                exports["soz-hud"]:DrawNotification("Le nom ne peut pas être vide", "error")
+                exports["soz-core"]:DrawNotification("Le nom ne peut pas être vide", "error")
                 return
             end
 
             QBCore.Functions.TriggerRpc("admin:server:housing:CreateApartment", HouseOption.CurrentPropertyData.id, identifier, label)
-            exports["soz-hud"]:DrawNotification("Intérieur ajouté", "success")
+            exports["soz-core"]:DrawNotification("Intérieur ajouté", "success")
             menu:Close()
             menu:Open()
         end,
@@ -165,7 +165,7 @@ currentPropertyMenu:On("open", function(menu)
         label = "Supprimer la propriété",
         value = "n",
         confirm = function()
-            local confirm = exports["soz-hud"]:Input("Êtes-vous sûr de vouloir supprimer la propriété ?", 5, "yes/no")
+            local confirm = exports["soz-core"]:Input("Êtes-vous sûr de vouloir supprimer la propriété ?", 5, "yes/no")
             if confirm == "yes" then
                 QBCore.Functions.TriggerRpc("admin:server:housing:DeleteProperty", HouseOption.CurrentPropertyData.id)
                 menu:Close()
@@ -216,15 +216,15 @@ currentApartmentMenu:On("open", function(menu)
         label = "Identifiant de l'intérieur",
         rightLabel = HouseOption.CurrentApartmentData.identifier,
         select = function()
-            local identifier = exports["soz-hud"]:Input("Identifiant de l'intérieur:", 50, HouseOption.CurrentApartmentData.identifier)
+            local identifier = exports["soz-core"]:Input("Identifiant de l'intérieur:", 50, HouseOption.CurrentApartmentData.identifier)
             if identifier == nil or #identifier == 0 then
-                exports["soz-hud"]:DrawNotification("Le nom ne peut pas être vide", "error")
+                exports["soz-core"]:DrawNotification("Le nom ne peut pas être vide", "error")
                 return
             end
 
             QBCore.Functions.TriggerRpc("admin:server:housing:SetApartmentIdentifier", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id,
                                         identifier)
-            exports["soz-hud"]:DrawNotification("Identifiant de l'intérieur modifié", "success")
+            exports["soz-core"]:DrawNotification("Identifiant de l'intérieur modifié", "success")
             HouseOption.CurrentApartmentData.identifier = identifier
             menu:Close()
             menu:Open()
@@ -235,15 +235,15 @@ currentApartmentMenu:On("open", function(menu)
         label = "Nom d'affichage de l'intérieur",
         rightLabel = HouseOption.CurrentApartmentData.label,
         select = function()
-            local label = exports["soz-hud"]:Input("Nom de l'intérieur:", 50, HouseOption.CurrentApartmentData.label)
+            local label = exports["soz-core"]:Input("Nom de l'intérieur:", 50, HouseOption.CurrentApartmentData.label)
             if label == nil or #label == 0 then
-                exports["soz-hud"]:DrawNotification("Le nom ne peut pas être vide", "error")
+                exports["soz-core"]:DrawNotification("Le nom ne peut pas être vide", "error")
                 return
             end
 
             QBCore.Functions
                 .TriggerRpc("admin:server:housing:SetApartmentLabel", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id, label)
-            exports["soz-hud"]:DrawNotification("Le nom a été modifié", "success")
+            exports["soz-core"]:DrawNotification("Le nom a été modifié", "success")
             HouseOption.CurrentApartmentData.label = label
             menu:Close()
             menu:Open()
@@ -259,7 +259,7 @@ currentApartmentMenu:On("open", function(menu)
 
             QBCore.Functions.TriggerRpc("admin:server:housing:SetApartmentInsideCoord", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id,
                                         coord)
-            exports["soz-hud"]:DrawNotification("La position d'apparition a été modifiée", "success")
+            exports["soz-core"]:DrawNotification("La position d'apparition a été modifiée", "success")
         end,
     })
 
@@ -269,20 +269,20 @@ currentApartmentMenu:On("open", function(menu)
         values = Config.ApartmentPrices,
         select = function(_, value)
             if value == "custom" and PlayerData.role == "admin" then
-                local price = exports["soz-hud"]:Input("Prix de l'intérieur:", 50, HouseOption.CurrentApartmentData.price)
+                local price = exports["soz-core"]:Input("Prix de l'intérieur:", 50, HouseOption.CurrentApartmentData.price)
                 if price == nil or #price == 0 then
-                    exports["soz-hud"]:DrawNotification("Le prix ne peut pas être vide", "error")
+                    exports["soz-core"]:DrawNotification("Le prix ne peut pas être vide", "error")
                     return
                 end
                 value = price
             else
-                exports["soz-hud"]:DrawNotification("Vous n'avez pas accès a cette option", "error")
+                exports["soz-core"]:DrawNotification("Vous n'avez pas accès a cette option", "error")
                 return
             end
 
             QBCore.Functions
                 .TriggerRpc("admin:server:housing:SetApartmentPrice", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id, value)
-            exports["soz-hud"]:DrawNotification("Le prix a été modifié", "success")
+            exports["soz-core"]:DrawNotification("Le prix a été modifié", "success")
             HouseOption.CurrentApartmentData.price = value
             menu:Close()
             menu:Open()
@@ -293,7 +293,7 @@ currentApartmentMenu:On("open", function(menu)
         label = "Supprimer l'intérieur",
         value = "n",
         confirm = function()
-            local confirm = exports["soz-hud"]:Input("Êtes-vous sûr de vouloir supprimer l'intérieur ?", 5, "yes/no")
+            local confirm = exports["soz-core"]:Input("Êtes-vous sûr de vouloir supprimer l'intérieur ?", 5, "yes/no")
             if confirm == "yes" then
                 QBCore.Functions.TriggerRpc("admin:server:housing:DeleteApartment", HouseOption.CurrentPropertyData.id, HouseOption.CurrentApartmentData.id)
                 menu:Close()
@@ -366,7 +366,7 @@ currentEditingMenu:On("open", function(menu)
                 HouseOption.CurrentPropertyData[type] = zoneConfig
                 TriggerServerEvent("admin:server:housing:UpdatePropertyZone", HouseOption.CurrentPropertyData.id, type, zoneConfig)
             end
-            exports["soz-hud"]:DrawNotification("La zone a été modifiée", "success")
+            exports["soz-core"]:DrawNotification("La zone a été modifiée", "success")
             menu:Close()
         end,
     })

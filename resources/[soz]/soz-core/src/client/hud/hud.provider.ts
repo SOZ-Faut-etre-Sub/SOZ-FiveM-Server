@@ -1,10 +1,14 @@
-import { Once, OnceStep } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { HudComponent, Minimap } from '../../shared/hud';
+import { NotificationType } from '../../shared/notification';
+import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ResourceLoader } from '../resources/resource.loader';
+import { ClientEvent } from '../../shared/event';
 
 const ALLOWED_RETICLE_WEAPONS = new Set([
     GetHashKey('WEAPON_RPG'),
@@ -22,6 +26,9 @@ export class HudProvider {
 
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
+
+    @Inject(Notifier)
+    private readonly notifier: Notifier;
 
     private minimapHandle: number;
 
@@ -101,6 +108,43 @@ export class HudProvider {
     @Once(OnceStep.NuiLoaded)
     public async nuiLoaded(): Promise<void> {
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
+    }
+
+    @Exportable('EnableTwitchNewsOverlay')
+    public enableTwitchNewsOverlay(): void {
+        this.nuiDispatch.dispatch('hud', 'SetTwitchNewsOverlay', true);
+    }
+
+    @Exportable('DisableTwitchNewsOverlay')
+    public disableTwitchNewsOverlay(): void {
+        this.nuiDispatch.dispatch('hud', 'SetTwitchNewsOverlay', false);
+    }
+
+    @Exportable('DrawNotification')
+    @OnEvent(ClientEvent.NOTIFICATION_DRAW)
+    public drawNotification(message: string, type: NotificationType, delay = 10000): void {
+        console.log('drawNotification', message, type, delay);
+        this.notifier.notify(message, type, delay);
+    }
+
+    @Exportable('DrawAdvancedNotification')
+    @OnEvent(ClientEvent.NOTIFICATION_DRAW_ADVANCED)
+    public async drawAdvancedNotification(
+        title: string,
+        subtitle: string,
+        message: string,
+        image: string,
+        style: NotificationType,
+        delay = 10000
+    ) {
+        await this.notifier.notifyAdvanced({
+            title,
+            subtitle,
+            message,
+            image,
+            style,
+            delay,
+        });
     }
 
     private getMinimap(): Minimap {

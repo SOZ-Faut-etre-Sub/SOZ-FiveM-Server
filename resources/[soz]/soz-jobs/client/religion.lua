@@ -34,7 +34,7 @@ local function SetNPCAnimation(npcPed, shouldIdle)
             Wait(100)
         end
 
-        -- prevents ped from having walk anim while being frozen 
+        -- prevents ped from having walk anim while being frozen
         ClearPedTasksImmediately(npcPed)
         TaskPlayAnim(npcPed, animDict, "idle", 1.0, 1.0, -1, 1, 1, 0, 0, 0)
     else
@@ -109,7 +109,7 @@ RegisterNetEvent("jobs:religion:fix")
 AddEventHandler("jobs:religion:fix", function(npcPed)
     for _, p in ipairs(PrayersPed) do
         if p == npcPed then
-            exports["soz-hud"]:DrawNotification("Vous avez déjà parlé à cette personne", "warning")
+            exports["soz-core"]:DrawNotification("Vous avez déjà parlé à cette personne", "warning")
             return
         end
     end
@@ -126,8 +126,8 @@ AddEventHandler("jobs:religion:fix", function(npcPed)
         table.insert(PrayersPed, npcPed)
         SetNPCAnimation(npcPed, false)
         if PrayersCount >= PrayersMax then
-            exports["soz-hud"]:DrawNotification(string.format("Vous avez prêché %d infos chat dans cette zone", PrayersCount), "warning")
-            exports["soz-hud"]:DrawNotification("Retournez voir le prêtre", "info")
+            exports["soz-core"]:DrawNotification(string.format("Vous avez prêché %d infos chat dans cette zone", PrayersCount), "warning")
+            exports["soz-core"]:DrawNotification("Retournez voir le prêtre", "info")
             exports["qb-target"]:RemoveZone("religion_zone")
             destroyblip(job_blip)
             OnJob = false

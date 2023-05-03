@@ -60,7 +60,7 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
         end
         cb(false)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
         cb(false)
     end
 end)
@@ -103,7 +103,7 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTreeSap", function(source, c
         end
         cb(false)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
         cb(false)
     end
 end)
@@ -126,13 +126,13 @@ RegisterNetEvent("pawl:server:statusProcessingTree", function()
     end
 
     if Processing.Enabled then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Il reste " ..
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Il reste " ..
                                millisecondToMinuteDisplay(Processing.StartedAt + Config.Processing.Duration - GetGameTimer()) ..
                                " avant la fin du traitement de l'arbre.", "info")
         return
     end
 
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Aucun traitement n'est en cours.", "info")
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Aucun traitement n'est en cours.", "info")
 end)
 
 RegisterNetEvent("pawl:server:stopProcessingTree", function()
@@ -144,11 +144,11 @@ RegisterNetEvent("pawl:server:stopProcessingTree", function()
     if Processing.Enabled then
         Processing = {Enabled = false, StartedAt = 0}
 
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le traitement est arrêté.", "info")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le traitement est arrêté.", "info")
         return
     end
 
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Aucun traitement est en cours.", "info")
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Aucun traitement est en cours.", "info")
 end)
 
 RegisterNetEvent("pawl:server:startProcessingTree", function(data)
@@ -162,18 +162,18 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
     end
 
     if not exports["soz-inventory"]:CanCarryItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de planches est plein !", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le stockage de planches est plein !", "error")
         return
     end
 
     if not exports["soz-inventory"]:CanCarryItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le stockage de sciure est plein !", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le stockage de sciure est plein !", "error")
         return
     end
 
     Processing.Enabled = true
     Processing.StartedAt = GetGameTimer()
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le traitement ~g~commence~s~.")
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le traitement ~g~commence~s~.")
 
     Citizen.CreateThread(function()
         while Processing.Enabled do
@@ -239,14 +239,14 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
     end
 
     if not exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, craft.RewardItem, craft.RewardAmount) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas fabriquer d'objet en ce moment.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas fabriquer d'objet en ce moment.", "error")
         return
     end
 
     local craftItemInventory = exports["soz-inventory"]:GetItem(Player.PlayerData.source, craft.SourceItem, nil, true)
 
     if craftItemInventory < (craft.SourceItemAmount or 1) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez de planches !", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez de planches !", "error")
         return
     end
 
@@ -268,14 +268,14 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, craft.SourceItem, craft.SourceItemAmount or 1) then
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil, function(success, reason)
             if success then
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !", "success")
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !", "success")
 
                 TriggerEvent("monitor:server:event", "job_pawl_craft",
                              {player_source = Player.PlayerData.source, item = craft.RewardItem, tier = metadata.tier}, {
                     amount = craft.RewardAmount,
                 })
             else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas récupérer d'objet !", "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas récupérer d'objet !", "error")
             end
         end)
     end

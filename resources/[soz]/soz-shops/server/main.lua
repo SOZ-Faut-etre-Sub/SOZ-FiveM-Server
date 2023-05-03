@@ -141,7 +141,7 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
 
         if brand ~= "tattoo" and brand ~= "barber" and brand ~= "jewelry" and brand ~= "ponsonbys" and brand ~= "suburban" and brand ~= "binco" and item.amount <
             amount then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
             return
         end
 
@@ -150,7 +150,7 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
             local canCarryItem = exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, qbItem, amount)
 
             if not canCarryItem then
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez pas porter cette quantité...", "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas porter cette quantité...", "error")
                 return
             end
         end
@@ -166,7 +166,7 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 }
 
                 Player.Functions.SetSkin(skin, false)
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous venez de vous faire tatouer pour ~g~$%s"):format(price))
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous venez de vous faire tatouer pour ~g~$%s"):format(price))
             elseif brand == "barber" then
                 local barberShop = Config.Products[brand][Player.PlayerData.skin.Model.Hash][product.categoryIndex]
                 local skin = Player.PlayerData.skin
@@ -178,7 +178,7 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 end
 
                 Player.Functions.SetSkin(skin, false)
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez changé de coupe pour ~g~$%s"):format(price))
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez changé de coupe pour ~g~$%s"):format(price))
             elseif brand == "jewelry" then
                 local clothConfig = Player.PlayerData.cloth_config
 
@@ -195,13 +195,13 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 end
 
                 Player.Functions.SetClothConfig(clothConfig, false)
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un bijou pour ~g~$%s"):format(price))
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez acheté un bijou pour ~g~$%s"):format(price))
             elseif brand == "ponsonbys" or brand == "suburban" or brand == "binco" then
                 local clothConfig = Player.PlayerData.cloth_config
                 local hasStock, clothItem = checkStock(ShopsContent[Player.PlayerData.skin.Model.Hash][Shops[brand]], product.item, amount)
 
                 if not hasStock or clothItem == nil then
-                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Ce magasin n'a pas assez de stock", "error")
                     return
                 end
 
@@ -237,10 +237,10 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                 end
 
                 Player.Functions.SetClothConfig(clothConfig, false)
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez acheté un habit pour ~g~$%s"):format(price))
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez acheté un habit pour ~g~$%s"):format(price))
             else
                 if Config.Products[brand][product].requiredLicense and not Player.PlayerData.metadata["licences"]["weapon"] then
-                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas le permis de port d'arme", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas le permis de port d'arme", "error")
                     return
                 end
 
@@ -252,13 +252,13 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                         end
                         TriggerClientEvent("shops:client:SetShopItems", -1, brand, Config.Products[brand])
 
-                        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source,
+                        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                            ("Vous venez d'acheter ~b~%s %s~s~ pour ~g~$%s"):format(amount, QBCore.Shared.Items[item.name].label, price))
                     end
                 end)
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         end
     end
 end)
@@ -271,7 +271,7 @@ RegisterNetEvent("shops:server:resetTattoos", function()
         skin.Tattoos = {}
 
         Player.Functions.SetSkin(skin, false)
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez de vous faire retirer tous vos tatouages")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous venez de vous faire retirer tous vos tatouages")
     end
 end)
 
@@ -280,7 +280,7 @@ RegisterNetEvent("shops:server:CheckZkeaStock", function()
 
     if player then
         local amount = exports["soz-inventory"]:GetItem("cabinet_storage", "cabinet_zkea", nil, true)
-        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, ("Il reste %s meubles Zkea."):format(amount));
+        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, ("Il reste %s meubles Zkea."):format(amount));
     end
 end)
 

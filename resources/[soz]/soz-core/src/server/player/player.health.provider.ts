@@ -5,7 +5,6 @@ import { ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PlayerMetadata, PlayerServerStateExercise } from '../../shared/player';
 import { PollutionLevel } from '../../shared/pollution';
-import { Hud } from '../hud';
 import { Notifier } from '../notifier';
 import { Pollution } from '../pollution';
 import { PlayerMoneyService } from './player.money.service';
@@ -37,9 +36,6 @@ export class PlayerHealthProvider {
 
     @Inject(Pollution)
     private pollution: Pollution;
-
-    @Inject(Hud)
-    private hud: Hud;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -141,7 +137,6 @@ export class PlayerHealthProvider {
         }
 
         this.playerService.setPlayerMetaDatas(source, datas);
-        this.hud.updateNeeds(source);
     }
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRENGTH)

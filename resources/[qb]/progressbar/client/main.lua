@@ -112,10 +112,10 @@ function Process(action, start, tick, finish)
                 end
             end)
         else
-            TriggerEvent("hud:client:DrawNotification", "Une action est déjà en cours !", "error")
+            TriggerEvent("soz-core:client:notification:draw", "Une action est déjà en cours !", "error")
         end
     else
-        TriggerEvent("hud:client:DrawNotification", "Vous ne pouvez réaliser cette action !", "error")
+        TriggerEvent("soz-core:client:notification:draw", "Vous ne pouvez réaliser cette action !", "error")
     end
 end
 

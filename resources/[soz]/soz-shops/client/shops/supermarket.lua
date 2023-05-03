@@ -23,7 +23,7 @@ function SupermarketShop:GenerateMenu()
                 value = itemID,
                 rightLabel = "$" .. QBCore.Shared.GroupDigits(item.price),
                 select = function(val)
-                    local amount = exports["soz-hud"]:Input("Quantité", 4, "1")
+                    local amount = exports["soz-core"]:Input("Quantité", 4, "1")
 
                     if amount and tonumber(amount) > 0 then
                         TriggerServerEvent("shops:server:pay", self.brand, val.Value, tonumber(amount))

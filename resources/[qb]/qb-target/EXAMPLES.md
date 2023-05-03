@@ -231,7 +231,7 @@ exports['qb-target']:AddTargetModel(690372739, {
 
 RegisterNetEvent('coffee:buy',function(data)
     -- server event to buy the item here
-	exports["soz-hud"]:DrawNotification("You purchased a " .. data.label .. " for $" .. data.price .. ". Enjoy!")
+	exports["soz-core"]:DrawNotification("You purchased a " .. data.label .. " for $" .. data.price .. ". Enjoy!")
 end)
 ```
 

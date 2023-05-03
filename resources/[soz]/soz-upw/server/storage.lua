@@ -9,7 +9,7 @@ RegisterNetEvent("soz-upw:server:FacilityCapacity", function(data)
 
     local facility = getter(data.identifier)
     if facility then
-        TriggerClientEvent("hud:client:DrawNotification", source,
+        TriggerClientEvent("soz-core:client:notification:draw", source,
                            string.format("État d'énergie : %s%%", math.floor(facility.capacity / facility.maxCapacity * 100)))
     end
 end)

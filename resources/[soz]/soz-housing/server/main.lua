@@ -97,13 +97,13 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
     end
 
     if blockedCrimiDate[target] and blockedCrimiDate[target] > GetGameTimer() then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous devez attendre après avoir réalisé une action criminelle", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous devez attendre après avoir réalisé une action criminelle", "error")
         return
     end
 
     local vehicleId = GetVehiclePedIsIn(GetPlayerPed(Player.PlayerData.source), false)
     if vehicleId ~= 0 then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous devez d'abord descendre de votre véhicule.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous devez d'abord descendre de votre véhicule.", "error")
         return
     end
 
@@ -226,7 +226,7 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
         Player.PlayerData.citizenid,
     })
     if result[1].count > 0 then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous ne pouvez acheter plus d'une propriété.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez acheter plus d'une propriété.", "error")
         return
     end
 
@@ -262,9 +262,9 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
         Player.PlayerData.address = apartment:GetLabel()
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
 
@@ -302,7 +302,7 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
             local Target = QBCore.Functions.GetPlayerByCitizenId(roommateCitizenId)
             if Target then
                 Target.Functions.SetApartment(nil)
-                TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
             end
         end
         MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
@@ -323,9 +323,9 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
                      {house_id = apartment:GetIdentifier(), amount = resellPrice})
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. resellPrice)
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. resellPrice)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
 
@@ -339,7 +339,7 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
         return
     end
     if dist > 2.0 then
-        return TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Personne n'est à portée de vous", "error")
+        return TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Personne n'est à portée de vous", "error")
     end
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
@@ -348,7 +348,7 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
         Target.PlayerData.citizenid,
     })
     if result[1].count > 0 then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Cette personne a déjà une maison", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Cette personne a déjà une maison", "error")
         return
     end
 
@@ -387,8 +387,8 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
         tier = apartment:GetTier(),
     })
     Target.PlayerData.address = apartment:GetLabel()
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ajouté un partenaire à votre maison")
-    TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été ajouté à votre maison")
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ajouté un partenaire à votre maison")
+    TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous avez été ajouté à votre maison")
 
     TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
 end)
@@ -429,16 +429,16 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
     exports["soz-character"]:TruncatePlayerCloakroomFromTier(roommateCitizenId, 0)
 
     if apartment:IsOwner(Player.PlayerData.citizenid) then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez supprimé un partenaire de votre maison")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez supprimé un partenaire de votre maison")
     end
 
     local Target = QBCore.Functions.GetPlayerByCitizenId(roommateCitizenId)
     if Target then
         Target.Functions.SetApartment(nil)
         if roommateCitizenId == Player.PlayerData.citizenid then
-            TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez quitté la colocation")
+            TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous avez quitté la colocation")
         else
-            TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
+            TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
         end
     end
 
@@ -483,8 +483,8 @@ RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apar
 
     apartment:AddTemporaryAccess(Target.PlayerData.citizenid)
 
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez donné un accès à votre maison")
-    TriggerClientEvent("hud:client:DrawNotification", Target.PlayerData.source, "Vous avez reçu un accès à une maison")
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez donné un accès à votre maison")
+    TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous avez reçu un accès à une maison")
 
     TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
 end)
@@ -521,7 +521,7 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
             player.Functions.SetApartmentTier(tier)
             apartment:SetTier(tier)
             TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
-            TriggerClientEvent("hud:client:DrawNotification", playerData.source,
+            TriggerClientEvent("soz-core:client:notification:draw", playerData.source,
                                "Vous venez ~g~d'améliorer~s~ votre appartement au palier ~g~" .. tier .. "~s~ pour ~b~$" .. price)
 
             if apartment:HasRoommate() then
@@ -530,10 +530,10 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
             end
         else
             player.Functions.AddMoney("money", price)
-            TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", playerData.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock", "error")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", playerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
 
@@ -582,10 +582,10 @@ RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(hasPa
         player.Functions.SetApartmentHasParkingPlace(parkingValue)
         apartment:SetParkingPlace(parkingValue)
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
-        TriggerClientEvent("hud:client:DrawNotification", playerData.source,
+        TriggerClientEvent("soz-core:client:notification:draw", playerData.source,
                            "Vous venez ~g~d'ajouter~s~ une place de parking à votre caravane pour ~b~$" .. price)
     else
-        TriggerClientEvent("hud:client:DrawNotification", playerData.source, "Vous n'avez pas assez d'argent", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", playerData.source, "Vous n'avez pas assez d'argent", "error")
     end
 end)
 

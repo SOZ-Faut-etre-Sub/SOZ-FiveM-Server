@@ -47,7 +47,7 @@ RegisterNetEvent("soz-utils:client:dispenser:Eat")
 AddEventHandler("soz-utils:client:dispenser:Eat", function()
     local Player = QBCore.Functions.GetPlayerData()
     if Player.money.money < dispenser_eat_price then
-        exports["soz-hud"]:DrawNotification("Vous n'avez pas assez d'argent")
+        exports["soz-core"]:DrawNotification("Vous n'avez pas assez d'argent")
     else
         QBCore.Functions.Progressbar("dispenser_eat", "Achète à manger...", 5000, false, true,
                                      {
@@ -65,7 +65,7 @@ RegisterNetEvent("soz-utils:client:dispenser:Drink")
 AddEventHandler("soz-utils:client:dispenser:Drink", function()
     local Player = QBCore.Functions.GetPlayerData()
     if Player.money.money < dispenser_drink_price then
-        exports["soz-hud"]:DrawNotification("Vous n'avez pas assez d'argent")
+        exports["soz-core"]:DrawNotification("Vous n'avez pas assez d'argent")
     else
         QBCore.Functions.Progressbar("dispenser_drink", "Achète à boire...", 5000, false, true,
                                      {
@@ -83,7 +83,7 @@ RegisterNetEvent("soz-utils:client:dispenser:Cafe")
 AddEventHandler("soz-utils:client:dispenser:Cafe", function()
     local Player = QBCore.Functions.GetPlayerData()
     if Player.money.money < dispenser_cafe_price then
-        exports["soz-hud"]:DrawNotification("Vous n'avez pas assez d'argent")
+        exports["soz-core"]:DrawNotification("Vous n'avez pas assez d'argent")
     else
         QBCore.Functions.Progressbar("dispenser_cafe", "Achète un Café...", 5000, false, true,
                                      {

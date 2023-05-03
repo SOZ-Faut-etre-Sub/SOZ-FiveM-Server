@@ -11,15 +11,15 @@ function DisplayFieldHealth(newVisibility, field, health)
 end
 
 local function getTitleAndAmountForInvoice()
-    local title = exports["soz-hud"]:Input("Titre", 200)
+    local title = exports["soz-core"]:Input("Titre", 200)
     if title == nil or title == "" then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un titre", "error")
+        exports["soz-core"]:DrawNotification("Vous devez spécifier un titre", "error")
         return
     end
 
-    local amount = exports["soz-hud"]:Input("Montant", 10)
+    local amount = exports["soz-core"]:Input("Montant", 10)
     if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
-        exports["soz-hud"]:DrawNotification("Vous devez spécifier un montant", "error")
+        exports["soz-core"]:DrawNotification("Vous devez spécifier un montant", "error")
         return
     end
 
