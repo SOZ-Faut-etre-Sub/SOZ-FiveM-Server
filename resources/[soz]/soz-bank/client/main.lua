@@ -186,7 +186,7 @@ RegisterNetEvent("banking:client:displayAtmBlips", function(newAtmCoords)
 end)
 
 local function SafeStorageDeposit(money_type, safeStorage)
-    local amount = exports["soz-hud"]:Input("Quantité", 12)
+    local amount = exports["soz-core"]:Input("Quantité", 12)
 
     if amount and tonumber(amount) > 0 then
         TriggerServerEvent("banking:server:SafeStorageDeposit", money_type, safeStorage, tonumber(amount))
@@ -200,7 +200,7 @@ local function SafeStorageDepositAll(money_type, safeStorage)
 end
 
 local function SafeStorageWithdraw(money_type, safeStorage)
-    local amount = exports["soz-hud"]:Input("Quantité", 12)
+    local amount = exports["soz-core"]:Input("Quantité", 12)
 
     if amount and tonumber(amount) > 0 then
         TriggerServerEvent("banking:server:SafeStorageWithdraw", money_type, safeStorage, tonumber(amount))
@@ -320,7 +320,7 @@ RegisterNetEvent("banking:client:qTargetOpenSafe", function(data)
             if isAllowed then
                 OpenSafeStorageMenu(data.SafeId, money, black_money)
             else
-                exports["soz-hud"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
+                exports["soz-core"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
             end
         end, data.SafeId)
     end
@@ -331,7 +331,7 @@ RegisterNetEvent("banking:client:openHouseSafe", function(houseid)
         if isAllowed then
             OpenHouseSafeStorageMenu(houseid, money, black_money, max)
         else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
+            exports["soz-core"]:DrawNotification("Vous n'avez pas accès à ce coffre", "error")
         end
     end, houseid)
 end)

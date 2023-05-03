@@ -211,10 +211,10 @@ FoodJob.Functions.CollectIngredients = function(field)
                     end
 
                     local joined = table.concat(messages, ", ")
-                    exports["soz-hud"]:DrawNotification(string.format("Vous avez récolté ~g~%s", joined))
+                    exports["soz-core"]:DrawNotification(string.format("Vous avez récolté ~g~%s", joined))
 
                     if currentFieldHealth == 0 then
-                        exports["soz-hud"]:DrawNotification("Le champ est épuisé...", "warning")
+                        exports["soz-core"]:DrawNotification("Le champ est épuisé...", "warning")
                     else
                         TriggerEvent("soz-jobs:client:food-collect-ingredients")
                     end
@@ -222,7 +222,7 @@ FoodJob.Functions.CollectIngredients = function(field)
                 DisplayFieldHealth(true, currentField, currentFieldHealth)
             end, field)
         else
-            exports["soz-hud"]:DrawNotification("Vous n'avez pas récolté d'ingrédients", "error")
+            exports["soz-core"]:DrawNotification("Vous n'avez pas récolté d'ingrédients", "error")
         end
     end)
 end
@@ -237,7 +237,7 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {}, function()
         QBCore.Functions.TriggerCallback("soz-jobs:server:food-collect-milk", function(success, count, item)
             if success then
-                exports["soz-hud"]:DrawNotification(string.format("Vous avez récupéré ~g~%s pots de lait~s~", count))
+                exports["soz-core"]:DrawNotification(string.format("Vous avez récupéré ~g~%s pots de lait~s~", count))
                 Citizen.Wait(1000)
 
                 TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {item_id = item},
@@ -251,7 +251,7 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
             end
         end, GetClockHours())
     end, function()
-        exports["soz-hud"]:DrawNotification("Vous avez ~r~interrompu~s~ la collecte de pot de lait", "error")
+        exports["soz-core"]:DrawNotification("Vous avez ~r~interrompu~s~ la collecte de pot de lait", "error")
     end)
 end)
 
@@ -269,13 +269,13 @@ end
 
 FoodJob.Functions.CraftItem = function(itemId, item)
     if not inKitchen then
-        exports["soz-hud"]:DrawNotification("Vous n'êtes pas dans la cuisine", "error")
+        exports["soz-core"]:DrawNotification("Vous n'êtes pas dans la cuisine", "error")
         return
     end
 
     local recipe = FoodConfig.Recipes[itemId]
     if recipe == nil then
-        exports["soz-hud"]:DrawNotification("Recette invalide", "error")
+        exports["soz-core"]:DrawNotification("Recette invalide", "error")
         return
     end
 
@@ -283,12 +283,12 @@ FoodJob.Functions.CraftItem = function(itemId, item)
     for ingId, count in pairs(ingredients) do
         local ingredient = QBCore.Shared.Items[ingId]
         if ingredient == nil then
-            exports["soz-hud"]:DrawNotification("Ingrédient invalide", "error")
+            exports["soz-core"]:DrawNotification("Ingrédient invalide", "error")
             return
         end
         local countInInv = FoodJob.Functions.GetItemCountFromInventory(ingId) or 0
         if countInInv < count then
-            exports["soz-hud"]:DrawNotification("Il vous manque des ingrédients", "error")
+            exports["soz-core"]:DrawNotification("Il vous manque des ingrédients", "error")
             return
         end
     end
@@ -305,7 +305,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
             if not wasCancelled then
                 QBCore.Functions.TriggerCallback("soz-jobs:server:food-craft", function(success, reason)
                     if success then
-                        exports["soz-hud"]:DrawNotification(string.format("Vous avez préparé ~g~%s", item.label))
+                        exports["soz-core"]:DrawNotification(string.format("Vous avez préparé ~g~%s", item.label))
 
                         TriggerServerEvent("monitor:server:event", "job_cm_food_craft", {item_id = itemId},
                                            {
@@ -319,15 +319,15 @@ FoodJob.Functions.CraftItem = function(itemId, item)
                         if reason == nil then
                             return
                         elseif reason == "invalid_ingredient" then
-                            exports["soz-hud"]:DrawNotification("Il vous manque des ingrédients...", "error")
+                            exports["soz-core"]:DrawNotification("Il vous manque des ingrédients...", "error")
                         else
-                            exports["soz-hud"]:DrawNotification(string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason),
+                            exports["soz-core"]:DrawNotification(string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason),
                                                                 "error")
                         end
                     end
                 end, itemId)
             else
-                exports["soz-hud"]:DrawNotification("Vous n'avez pas terminé votre préparation", "error")
+                exports["soz-core"]:DrawNotification("Vous n'avez pas terminé votre préparation", "error")
             end
         end)
     end)
@@ -374,7 +374,7 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
     end
 
     if HasEntityBeenDamagedByAnyVehicle(data.entity) then
-        exports["soz-hud"]:DrawNotification("L'animal est tout écrabouillé, on ne pourra rien en tirer...", "warning")
+        exports["soz-core"]:DrawNotification("L'animal est tout écrabouillé, on ne pourra rien en tirer...", "warning")
         return
     end
 
@@ -404,7 +404,7 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
         if hasKnife then
             TriggerServerEvent("jobs:server:food:hunting", NetworkGetNetworkIdFromEntity(data.entity))
         else
-            exports["soz-hud"]:DrawNotification("L'animal ne respire plus...", "info")
+            exports["soz-core"]:DrawNotification("L'animal ne respire plus...", "info")
         end
     end)
 end)

@@ -1,3 +1,4 @@
+import { ClientEvent } from '@public/shared/event';
 import { PlayerData } from '@public/shared/player';
 
 import { Inject, Injectable } from '../core/decorators/injectable';
@@ -19,7 +20,7 @@ export class Notifier {
         type: 'error' | 'success' | 'warning' | 'info' = 'success',
         delay?: number
     ) {
-        TriggerClientEvent('hud:client:DrawNotification', source, message, type, delay);
+        TriggerClientEvent(ClientEvent.NOTIFICATION_DRAW, source, message, type, delay);
     }
 
     public error(source: number, message: string) {
@@ -35,7 +36,16 @@ export class Notifier {
         type: 'error' | 'success' | 'warning' | 'info' = 'success',
         delay?: number
     ) {
-        TriggerClientEvent('hud:client:DrawAdvancedNotification', source, title, subtitle, message, image, type, delay);
+        TriggerClientEvent(
+            ClientEvent.NOTIFICATION_DRAW_ADVANCED,
+            source,
+            title,
+            subtitle,
+            message,
+            image,
+            type,
+            delay
+        );
     }
 
     public advancedNotifyOnDutyWorkers(

@@ -119,7 +119,7 @@ local createCameraThread = function()
         SetCamFov(cam, fov)
         RenderScriptCams(true, false, 0, 1, 0)
 
-        exports["soz-hud"]:EnableTwitchNewsOverlay()
+        exports["soz-core"]:EnableTwitchNewsOverlay()
         while CameraConfig.enabled do
             if not IsPedSittingInAnyVehicle(player) then
                 SetEntityHeading(player, new_z)
@@ -155,7 +155,7 @@ local createCameraThread = function()
 
             Wait(1)
         end
-        exports["soz-hud"]:DisableTwitchNewsOverlay()
+        exports["soz-core"]:DisableTwitchNewsOverlay()
 
         fov = (fov_max + fov_min) * 0.5
         RenderScriptCams(false, false, 0, 1, 0)

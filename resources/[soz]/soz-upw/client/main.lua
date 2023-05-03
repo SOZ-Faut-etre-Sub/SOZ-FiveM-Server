@@ -180,7 +180,7 @@ RegisterNetEvent("soz-upw:client:CreateZone", function(identifier, zoneType, zon
     if conf.create then
         conf.create(identifier, zone, data)
     else
-        exports["soz-hud"]:DrawNotification("Erreur lors de la création de la zone", "error")
+        exports["soz-core"]:DrawNotification("Erreur lors de la création de la zone", "error")
     end
 end)
 

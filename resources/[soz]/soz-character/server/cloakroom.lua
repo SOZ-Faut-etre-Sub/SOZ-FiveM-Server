@@ -81,7 +81,7 @@ QBCore.Functions.CreateCallback("soz-character:server:DeletePlayerClothe", funct
     local Player = QBCore.Functions.GetPlayer(source)
 
     if id == nil then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Erreur d'identifiant", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Erreur d'identifiant", "error")
         cb(false)
     end
 
@@ -127,7 +127,7 @@ QBCore.Functions.CreateCallback("soz-character:server:RenamePlayerClothe", funct
     local Player = QBCore.Functions.GetPlayer(source)
 
     if id == nil then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Erreur d'identifiant", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Erreur d'identifiant", "error")
         cb(false)
     end
 

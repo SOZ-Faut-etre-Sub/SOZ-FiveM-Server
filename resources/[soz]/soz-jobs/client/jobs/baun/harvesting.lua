@@ -55,7 +55,7 @@ RegisterNetEvent("soz-jobs:client:baun:harvest", function(data)
         if canHarvest then
             harvest(data)
         else
-            exports["soz-hud"]:DrawNotification(reason, "error")
+            exports["soz-core"]:DrawNotification(reason, "error")
         end
     end, data.give_item)
 end)
@@ -64,7 +64,7 @@ function harvest(data)
     local item = QBCore.Shared.Items[data.give_item]
     local action_message = string.format("Vous récoltez des %s.", item.pluralLabel)
     local finished_message = string.format("Vous avez terminé de récolter des %s.", item.pluralLabel)
-    exports["soz-hud"]:DrawNotification(action_message)
+    exports["soz-core"]:DrawNotification(action_message)
     QBCore.Functions.Progressbar("harvest-crate", "Récolte en cours...", BaunConfig.Durations.Harvesting, false, true,
                                  {
         disableMovement = true,
@@ -77,13 +77,13 @@ function harvest(data)
                 TriggerEvent("soz-jobs:client:baun:harvest", data)
             else
                 if reason ~= "invalid_weight" then
-                    exports["soz-hud"]:DrawNotification(string.format("Il y a eu une erreur : `%s`", reason), "error")
+                    exports["soz-core"]:DrawNotification(string.format("Il y a eu une erreur : `%s`", reason), "error")
                 else
-                    exports["soz-hud"]:DrawNotification(finished_message)
+                    exports["soz-core"]:DrawNotification(finished_message)
                 end
             end
         end, data.give_item)
     end, function()
-        exports["soz-hud"]:DrawNotification(finished_message)
+        exports["soz-core"]:DrawNotification(finished_message)
     end)
 end

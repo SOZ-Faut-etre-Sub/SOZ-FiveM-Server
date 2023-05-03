@@ -8,7 +8,7 @@ end
 local function preventUsageWhileHoldingWeapon(source)
     local state = Player(source).state
     if state.CurrentWeaponData ~= nil then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Votre main est déjà occupée à porter une arme.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Votre main est déjà occupée à porter une arme.", "error")
         return false
     end
     return true

@@ -62,7 +62,7 @@ local function PayInvoice(PlayerData, account, id, marked)
 
                 local success = Account.AddMoney(invoice.emitterSafe, moneyTake, "money")
                 if not success then
-                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
                                        "error")
                     Player.Functions.AddMoney("money", moneyTake)
                     Player.Functions.AddMoney("marked_money", markedMoneyTake)
@@ -71,7 +71,7 @@ local function PayInvoice(PlayerData, account, id, marked)
 
                 success = Account.AddMoney(invoice.emitterSafe, markedMoneyTake, "marked_money")
                 if not success then
-                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
                                        "error")
                     Player.Functions.AddMoney("money", moneyTake)
                     Player.Functions.AddMoney("marked_money", markedMoneyTake)
@@ -80,19 +80,19 @@ local function PayInvoice(PlayerData, account, id, marked)
                 end
 
             else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
                 return false
             end
         elseif Player.Functions.RemoveMoney("money", invoice.amount) then
             local success = Account.AddMoney(invoice.emitterSafe, invoice.amount)
             if not success then
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
                                    "error")
                 Player.Functions.AddMoney("money", invoice.amount)
                 return false
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
             return false
         end
 
@@ -100,9 +100,9 @@ local function PayInvoice(PlayerData, account, id, marked)
             invoice.id,
         })
 
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture", "success", 10000)
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture", "success", 10000)
         if Emitter then
-            TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
+            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
         end
 
         TriggerEvent("monitor:server:event", "invoice_pay", {
@@ -126,9 +126,9 @@ local function PayInvoice(PlayerData, account, id, marked)
                     invoice.id,
                 })
 
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~g~payé~s~ la facture de la société", "success", 10000)
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~g~payé~s~ la facture de la société", "success", 10000)
                 if Emitter then
-                    TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source,
+                    TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source,
                                        ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
                 end
 
@@ -147,7 +147,7 @@ local function PayInvoice(PlayerData, account, id, marked)
                 TriggerClientEvent("banking:client:invoicePaid", Player.PlayerData.source, id)
                 Invoices[account][id] = nil
             else
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "~r~Echec~s~ du paiement la facture de la société", "error", 10000)
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "~r~Echec~s~ du paiement la facture de la société", "error", 10000)
             end
             return success
         end)
@@ -173,10 +173,10 @@ local function RejectInvoice(PlayerData, account, id)
     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
 
     if PlayerData.charinfo.account == account then
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture", "error", 10000)
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture", "error", 10000)
 
         if Emitter then
-            TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
+            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
         TriggerEvent("monitor:server:event", "invoice_refuse", {
@@ -192,10 +192,10 @@ local function RejectInvoice(PlayerData, account, id)
             title = invoice.label,
         })
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous avez ~r~refusé~s~ la facture de la société", "error", 10000)
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~r~refusé~s~ la facture de la société", "error", 10000)
 
         if Emitter then
-            TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
+            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
         TriggerEvent("monitor:server:event", "invoice_refuse",
@@ -226,7 +226,7 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
     local dist = #(GetEntityCoords(GetPlayerPed(Emitter.PlayerData.source)) - GetEntityCoords(GetPlayerPed(Target.PlayerData.source)))
 
     if dist > 5 then
-        TriggerClientEvent("hud:client:DrawNotification", Emitter.PlayerData.source, "Personne n'est à portée de vous", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source, "Personne n'est à portée de vous", "error")
         return false
     end
 
@@ -327,10 +327,10 @@ RegisterNetEvent("banking:server:sendInvoice", function(target, label, amount, k
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "paper", 1) then
         if CreateInvoice(Player, Target, Player.PlayerData.job.id, Target.PlayerData.charinfo.account, label, tonumber(amount), kind) then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre facture a bien été émise")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre facture a bien été émise")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de papier", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas de papier", "error")
     end
 end)
 
@@ -348,10 +348,10 @@ RegisterNetEvent("banking:server:sendSocietyInvoice", function(target, label, am
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "paper", 1) then
         if CreateInvoice(Player, Target, Player.PlayerData.job.id, Target.PlayerData.job.id, label, tonumber(amount), kind) then
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Votre facture a bien été émise")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre facture a bien été émise")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de papier", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas de papier", "error")
     end
 end)
 
@@ -371,7 +371,7 @@ function PayInvoiceFunction(source, invoiceId, marked)
             end
         end
     end
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture à payer", "info")
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas de facture à payer", "info")
 end
 RegisterNetEvent("banking:server:payInvoice", function(invoiceId)
     PayInvoiceFunction(source, invoiceId)
@@ -393,7 +393,7 @@ function RejectInvoiceFunction(source, invoiceId)
             end
         end
     end
-    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas de facture à payer", "info")
+    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas de facture à payer", "info")
 end
 RegisterNetEvent("banking:server:rejectInvoice", function(invoiceId)
     RejectInvoiceFunction(source, invoiceId)

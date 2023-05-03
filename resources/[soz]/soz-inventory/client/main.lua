@@ -43,7 +43,7 @@ function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
         return tempAmount
     elseif amount > 1 and keyModifier == "ALT" then
         SetNuiFocus(false, false)
-        tempAmount = exports["soz-hud"]:Input("Quantité", 5, math.floor(amount / 2))
+        tempAmount = exports["soz-core"]:Input("Quantité", 5, math.floor(amount / 2))
         SetNuiFocus(true, true)
         return tempAmount
 
@@ -55,12 +55,12 @@ function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
         local tempAmount = math.min(amount, maxAmount)
 
         if tempAmount <= 0 then
-            exports["soz-hud"]:DrawNotification("Cet inventaire est déjà plein", "error")
+            exports["soz-core"]:DrawNotification("Cet inventaire est déjà plein", "error")
             return amount
         end
 
         if maxAmount < amount then
-            exports["soz-hud"]:DrawNotification(maxAmount .. " objets déplacés", "info")
+            exports["soz-core"]:DrawNotification(maxAmount .. " objets déplacés", "info")
         end
 
         return tempAmount
@@ -80,7 +80,7 @@ RegisterNUICallback("transfertItem", function(data, cb)
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
         if not success then
-            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+            exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
         elseif success and (invSource.type == "bin" or invTarget.type == "bin") then
             QBCore.Functions.RequestAnimDict("missfbi4prepp1")
             TaskPlayAnim(PlayerPedId(), "missfbi4prepp1", "_bag_pickup_garbage_man", 6.0, -6.0, 2500, 49, 0, 1, 1, 0)
@@ -91,7 +91,7 @@ end)
 
 RegisterNUICallback("transfertMoney", function(data, cb)
     SetNuiFocus(false, false)
-    local amount = exports["soz-hud"]:Input("Quantité", 12)
+    local amount = exports["soz-core"]:Input("Quantité", 12)
     SetNuiFocus(true, true)
 
     if amount and tonumber(amount) > 0 then
@@ -114,7 +114,7 @@ RegisterNUICallback("sortItem", function(data, cb)
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
         if not success then
-            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+            exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
         end
     end, data.inventory, data.inventory, data.item.name, tonumber(amount) or 0, data.item.metadata, data.item.slot, data.slot, data.manualFilter)
 end)
@@ -123,7 +123,7 @@ RegisterNUICallback("sortInventoryAZ", function(data, cb)
     QBCore.Functions.TriggerCallback("inventory:server:SortInventoryAZ", function(success, reason, invSource)
         cb({status = success, sourceInventory = invSource})
         if not success then
-            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+            exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
         end
     end, data.inventory)
 end)
@@ -171,7 +171,7 @@ RegisterNetEvent("inventory:client:qTargetOpenInventory", function(data)
     if data.storage.owner == nil or (PlayerData.job ~= nil and PlayerData.job.id == data.storage.owner) then
         TriggerServerEvent("inventory:server:openInventory", data.storage.type, data.storageID)
     else
-        exports["soz-hud"]:DrawNotification("Vous ne pouvez pas utiliser ce stockage", "error")
+        exports["soz-core"]:DrawNotification("Vous ne pouvez pas utiliser ce stockage", "error")
     end
 end)
 

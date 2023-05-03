@@ -44,11 +44,12 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
     }, []);
 
     const classes = classNames(
-        'w-full relative px-3 py-2 overflow-hidden mb-2 transition-all rounded text-sm text-white bg-gradient-to-r from-black/60 to-black/25 border-l-4',
+        'w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-base text-white bg-gradient-to-r from-black/60 to-black/25 border-l-4',
         {
             'border-red-500': notification.style === 'error',
             'border-green-500': notification.style === 'success',
-            'border-blue-500': notification.style === 'info',
+            'border-blue-500':
+                notification.style !== 'error' && notification.style !== 'success' && notification.style !== 'warning',
             'border-orange-500': notification.style === 'warning',
         }
     );
@@ -65,21 +66,22 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
         >
             <div className={classes}>
                 {isAdvancedNotification(notification) && (
-                    <div className="flex items-center">
+                    <div className="flex items-center mb-2">
                         <img
                             src={
                                 notification.image.startsWith('http')
                                     ? notification.image
                                     : `https://nui-img/${notification.image}/${notification.image}`
                             }
+                            alt={notification.image}
                         />
-                        <div className="flex flex-col overflow-hidden">
+                        <div className="ml-4 flex flex-col overflow-hidden">
                             <p dangerouslySetInnerHTML={{ __html: formatText(notification.title) }} />
                             <p dangerouslySetInnerHTML={{ __html: formatText(notification.subtitle) }} />
                         </div>
                     </div>
                 )}
-                <p className="px-3 py-0" dangerouslySetInnerHTML={{ __html: formatText(notification.message) }} />
+                <p dangerouslySetInnerHTML={{ __html: formatText(notification.message) }} />
             </div>
         </Transition>
     );
@@ -104,7 +106,7 @@ export const Notifications: FunctionComponent = () => {
     );
 
     useNuiEvent(
-        'notification',
+        'hud',
         'DrawNotification',
         notification => {
             createNotification({

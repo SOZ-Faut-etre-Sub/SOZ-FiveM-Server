@@ -35,10 +35,12 @@ export type Minimap = {
 };
 
 export enum VoiceMode {
-    Normal = 0,
-    Shout = 1,
-    Whisper = 2,
-    Mute = 3,
+    Normal,
+    Shouting,
+    Whisper,
+    Mute,
+    Microphone,
+    Megaphone,
 }
 
 export type HudState = {

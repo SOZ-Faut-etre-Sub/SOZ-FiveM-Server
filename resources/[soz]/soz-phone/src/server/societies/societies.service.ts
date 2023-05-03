@@ -181,7 +181,7 @@ class _SocietyService {
                 if (player) {
                     if (societyMessage.isTaken && !societyMessage.isDone) {
                         emitNet(
-                            'hud:client:DrawNotification',
+                            'soz-core:client:notification:draw',
                             player.source,
                             `Votre ~b~appel~s~ au ${societyMessage.conversation_id} vient d'être pris !`,
                             'info',

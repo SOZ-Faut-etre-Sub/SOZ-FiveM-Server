@@ -43,7 +43,7 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
             TriggerServerEvent("housing:server:GiveTemporaryAccess", data.propertyId, data.apartmentId, playerHit)
         end
     else
-        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
     end
 
     cb(true)

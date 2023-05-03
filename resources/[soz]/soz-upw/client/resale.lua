@@ -24,7 +24,7 @@ AddEventHandler("soz-upw:client:ResaleEnergy", function()
     }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {})
 
     if not progress then
-        exports["soz-hud"]:DrawNotification("Il y a eu une erreur", "error")
+        exports["soz-core"]:DrawNotification("Il y a eu une erreur", "error")
         return
     end
 
@@ -32,9 +32,9 @@ AddEventHandler("soz-upw:client:ResaleEnergy", function()
     local success, message = table.unpack(res)
 
     if success then
-        exports["soz-hud"]:DrawNotification(message, "success")
+        exports["soz-core"]:DrawNotification(message, "success")
         TriggerEvent("soz-upw:client:ResaleEnergy")
     else
-        exports["soz-hud"]:DrawNotification(message, "error")
+        exports["soz-core"]:DrawNotification(message, "error")
     end
 end)

@@ -289,6 +289,8 @@ export enum ClientEvent {
     LSMC_HEAL = 'soz-core:lsmc:client:heal',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
+    NOTIFICATION_DRAW = 'soz-core:client:notification:draw',
+    NOTIFICATION_DRAW_ADVANCED = 'soz-core:client:notification:draw-advanced',
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
 
     NUI_HIDE_PANEL = 'soz-core:client:nui:hide-panel',
