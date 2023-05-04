@@ -2,8 +2,8 @@ RegisterNetEvent("banking:client:invoiceReceived", function(invoiceId, label, am
     CreateThread(function()
         local notificationTimer = GetGameTimer() + 10000
         exports["soz-core"]:DrawAdvancedNotification("Maze Facture", "Facture de ~r~$" .. amount,
-                                                    ("Raison : %s~n~~n~Faites ~g~Y~s~ pour accepter la facture ou ~r~N~s~ pour la refuser"):format(label),
-                                                    "CHAR_BANK_MAZE", "info", 10000)
+                                                     ("Raison : %s~n~~n~Faites ~g~Y~s~ pour accepter la facture ou ~r~N~s~ pour la refuser"):format(label),
+                                                     "CHAR_BANK_MAZE", "info", 10000)
 
         while notificationTimer > GetGameTimer() do
             DisableControlAction(0, 246, true)

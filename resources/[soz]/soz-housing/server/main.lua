@@ -97,7 +97,8 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
     end
 
     if blockedCrimiDate[target] and blockedCrimiDate[target] > GetGameTimer() then
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous devez attendre après avoir réalisé une action criminelle", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous devez attendre après avoir réalisé une action criminelle",
+                           "error")
         return
     end
 
@@ -262,7 +263,8 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
         Player.PlayerData.address = apartment:GetLabel()
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                           "Vous venez ~g~d'acquérir~s~ une maison pour ~b~$" .. apartment:GetPrice())
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end
@@ -530,7 +532,8 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
             end
         else
             player.Functions.AddMoney("money", price)
-            TriggerClientEvent("soz-core:client:notification:draw", playerData.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", playerData.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock",
+                               "error")
         end
     else
         TriggerClientEvent("soz-core:client:notification:draw", playerData.source, "Vous n'avez pas assez d'argent", "error")

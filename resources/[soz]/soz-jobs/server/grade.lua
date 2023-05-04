@@ -17,8 +17,8 @@ RegisterServerEvent("job:recruit", function(target)
 
     targetPlayer.Functions.SetJob(player.PlayerData.job.id, GetJobDefaultGrade(player.PlayerData.job.id))
 
-    TriggerClientEvent("soz-core:client:notification:draw", source, ("~g~%s~s~ fait maintenant partie de vos effectifs !"):format(targetPlayer.Functions.GetName()),
-                       "info")
+    TriggerClientEvent("soz-core:client:notification:draw", source,
+                       ("~g~%s~s~ fait maintenant partie de vos effectifs !"):format(targetPlayer.Functions.GetName()), "info")
     TriggerClientEvent("soz-core:client:notification:draw", targetPlayer.PlayerData.source, "Vous avez été ~g~embauché~s~ !", "info")
 end)
 
@@ -55,8 +55,8 @@ RegisterServerEvent("job:fire", function(target)
 
     targetPlayer.Functions.SetJob(SozJobCore.JobType.Unemployed, GetJobDefaultGrade(SozJobCore.JobType.Unemployed))
 
-    TriggerClientEvent("soz-core:client:notification:draw", source, ("~r~%s~s~ ne fait plus partie de vos effectifs !"):format(targetPlayer.Functions.GetName()),
-                       "info")
+    TriggerClientEvent("soz-core:client:notification:draw", source,
+                       ("~r~%s~s~ ne fait plus partie de vos effectifs !"):format(targetPlayer.Functions.GetName()), "info")
     TriggerClientEvent("soz-core:client:notification:draw", targetPlayer.PlayerData.source, "Vous avez été ~r~viré~s~ !", "info")
 end)
 
@@ -88,7 +88,8 @@ RegisterServerEvent("job:promote", function(target, gradeId)
     end
 
     targetPlayer.Functions.SetJob(targetPlayer.PlayerData.job.id, gradeId)
-    TriggerClientEvent("soz-core:client:notification:draw", source, ("~b~%s~s~ a été promu ~b~%s~s~ !"):format(targetPlayer.Functions.GetName(), grade.name), "info")
+    TriggerClientEvent("soz-core:client:notification:draw", source, ("~b~%s~s~ a été promu ~b~%s~s~ !"):format(targetPlayer.Functions.GetName(), grade.name),
+                       "info")
     TriggerClientEvent("soz-core:client:notification:draw", targetPlayer.PlayerData.source, ("Vous avez été promu ~b~%s~s~ !"):format(grade.name), "info")
 end)
 

@@ -2,7 +2,7 @@ RegisterNetEvent("housing:client:PlayerRequestEnter", function(propertyId, apart
     CreateThread(function()
         local notificationTimer = GetGameTimer() + 20000
         exports["soz-core"]:DrawNotification("Une personne souhaite entrer dans votre appartement.~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser",
-                                            "info", 20000)
+                                             "info", 20000)
 
         while notificationTimer > GetGameTimer() do
             DisableControlAction(0, 246, true)
