@@ -101,8 +101,6 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean; useRpm: boolean }> = ({ 
 
     let rpm;
 
-    console.log(useRpm);
-
     if (!useRpm) {
         rpm = vehicleSpeed.speed / 250;
     } else {

@@ -68,7 +68,7 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
 
     return (
         <div
-            className="absolute w-full bottom-0 overflow-hidden mb-[.3rem] transition-all text-base text-white bg-no-repeat bg-contain"
+            className="absolute w-full bottom-0 overflow-hidden mb-[.3rem] transition-all text-white bg-no-repeat bg-contain"
             style={{
                 transform: `translateX(${index * 0.5}rem) translateY(-${index * 0.5}rem)`,
                 opacity: `calc(1.0 - ${index * 0.3})`,
@@ -76,8 +76,8 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
                 aspectRatio: '2.5',
             }}
         >
-            <h3 className="flex h-20 justify-end items-center pr-8 uppercase text-5xl">{newsTitle(news.type)}</h3>
-            <div className="pl-[33%] h-44">
+            <h3 className="flex h-[25%] justify-end text-4xl items-center pr-8 uppercase">{newsTitle(news.type)}</h3>
+            <div className="pl-[33%] h-[60%] text-lg md:text-base">
                 {/(lspd|bcso)/.test(news.type) ? (
                     <p className="flex flex-col justify-between p-2 h-full">
                         <p>
