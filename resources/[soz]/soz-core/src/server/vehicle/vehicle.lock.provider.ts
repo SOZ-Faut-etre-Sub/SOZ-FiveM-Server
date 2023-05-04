@@ -1,5 +1,7 @@
 import { PlayerTalentService } from '@private/server/player/player.talent.service';
 import { Talent } from '@private/shared/talent';
+import { waitUntil } from '@public/core/utils';
+import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
 import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -64,6 +66,7 @@ export class VehicleLockProvider {
             return;
         }
 
+        const lockPickDuration = 10000; // 10 seconds
         const percentages = {
             lockpick_low: 40,
             lockpick_medium: 70,
@@ -93,10 +96,33 @@ export class VehicleLockProvider {
             return;
         }
 
-        const { completed } = await this.progressService.progress(source, 'Lockpick', 'Crochetage du véhicule', 10000, {
-            dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
-            name: 'machinic_loop_mechandplayer',
+        const ped = GetPlayerPed(source);
+
+        waitUntil(
+            async () =>
+                getDistance(
+                    GetEntityCoords(ped) as Vector3,
+                    GetEntityCoords(closestVehicle.vehicleEntityId) as Vector3
+                ) > 3.0,
+            lockPickDuration
+        ).then(isTooFar => {
+            if (isTooFar) {
+                this.notifier.notify(source, 'Le véhicule est trop loin pour être crocheté', 'error');
+                this.progressService.stopProgress(source);
+            }
         });
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'Lockpick',
+            'Crochetage du véhicule',
+            lockPickDuration,
+            {
+                dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+                name: 'machinic_loop_mechandplayer',
+            },
+            { useAnimationService: true }
+        );
 
         if (!completed) {
             return;

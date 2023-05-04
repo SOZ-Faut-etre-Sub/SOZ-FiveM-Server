@@ -317,6 +317,7 @@ export enum ClientEvent {
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
 
     PROGRESS_START = 'soz-core:client:progress:start',
+    PROGRESS_STOP = 'soz-core:client:progress:stop',
 
     REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
 
