@@ -274,6 +274,7 @@ export const VehicleMaxStock: Record<keyof typeof VehicleCategory, number> = {
     Openwheel: 0,
     Muscle: 3,
     Electric: 6, // I don't know what this is.
+    Quads: 6,
 };
 
 export enum VehicleCategory {
@@ -301,6 +302,7 @@ export enum VehicleCategory {
     Utility = 'Utilitaires',
     Vans = 'Vans',
     Electric = 'Electriques',
+    Quads = 'Quads',
 }
 
 export const VehicleElectricModels: Record<number, string> = {
