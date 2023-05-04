@@ -1,4 +1,4 @@
-import { Vector2, Vector3 } from './polyzone/vector';
+import { Vector2, Vector3, Vector4 } from './polyzone/vector';
 
 type BaseAnimationConfigItem = {
     name: string;
@@ -76,6 +76,9 @@ export type Scenario = {
     duration?: number;
     fixPositionDelta?: Vector2;
     propsCreated?: string[];
+    position?: Vector4;
+    isSittingScenario?: boolean;
+    shouldTeleport?: boolean;
 };
 
 export type AnimationProps = {
