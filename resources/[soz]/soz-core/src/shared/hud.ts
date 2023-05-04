@@ -22,3 +22,36 @@ export enum HudComponent {
     HudComponents = 21,
     HudWeapons = 22,
 }
+
+export type Minimap = {
+    X: number;
+    Y: number;
+    height: number;
+    width: number;
+    bottom: number;
+    left: number;
+    right: number;
+    top: number;
+};
+
+export enum VoiceMode {
+    Mute = -1,
+    Whisper,
+    Normal,
+    Shouting,
+    Microphone = 9,
+    Megaphone,
+}
+
+export type HudState = {
+    minimap: Minimap;
+    voiceMode: VoiceMode;
+};
+
+export enum Font {
+    ChaletLondon = 0,
+    HouseScript = 1,
+    Monospace = 2,
+    ChaletComprimeCologne = 4,
+    Pricedown = 7,
+}

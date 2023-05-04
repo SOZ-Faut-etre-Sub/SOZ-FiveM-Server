@@ -1,5 +1,6 @@
 import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
+import { NuiHudMethodMap } from '@public/shared/nui/hud';
 import { NuiItemMethodMap } from '@public/shared/nui/item';
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
 import { NuiTalentMethodMap } from '@public/shared/nui/talent';
@@ -24,6 +25,7 @@ import { NuiUpwOrderMenuMethodMap } from './upw_order_menu';
 
 export interface NuiGlobalMethodMap {
     PauseMenuActive: boolean;
+    HideHud: boolean;
 }
 
 export interface NuiMethodMap {
@@ -50,6 +52,7 @@ export interface NuiMethodMap {
     hood: NuiHoodMethodMap;
     taxi: NuiTaxiMethodMap;
     card: NuiCardMethodMap;
+    hud: NuiHudMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

@@ -126,8 +126,6 @@ export class VehicleSeatbeltProvider {
             this.soundService.play('seatbelt/buckle', 0.2);
         }
 
-        TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
-
         if (!this.isSeatbeltOn) {
             await wait(2000);
             await this.trySwitchingSeat();
@@ -137,7 +135,6 @@ export class VehicleSeatbeltProvider {
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     private async onBaseEnteredVehicle() {
         this.isSeatbeltOn = false;
-        TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
         const ped = PlayerPedId();
 
         SetPedConfigFlag(ped, 184, true);
@@ -171,7 +168,6 @@ export class VehicleSeatbeltProvider {
             this.lastVehicleSpeed = 0;
             this.lastVehiclePosition = null;
             this.isSeatbeltOn = false;
-            TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
 
             return;
         }
@@ -268,7 +264,6 @@ export class VehicleSeatbeltProvider {
         SetEntityVelocity(ped, velocity[0], velocity[1], velocity[2]);
 
         this.isSeatbeltOn = false;
-        TriggerEvent('hud:client:UpdateSeatbelt', this.isSeatbeltOn);
     }
 
     public getLastEjectTime(): number {

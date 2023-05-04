@@ -21,6 +21,23 @@ export type Vehicle = {
     maxStock: number;
 };
 
+export type VehicleHud = {
+    seat: number | null;
+    engineHealth: number;
+    oilLevel: number;
+    lockStatus: VehicleLockStatus;
+    seatbelt: boolean | null;
+    lightState: number;
+    fuelType: 'essence' | 'electric' | 'none';
+    fuelLevel: number;
+    useRpm: boolean;
+};
+
+export type VehicleHudSpeed = {
+    speed: number;
+    rpm: number;
+};
+
 export type VehicleSpawn = {
     hash: number;
     model: string;
@@ -29,6 +46,12 @@ export type VehicleSpawn = {
     state: VehicleEntityState;
     modification?: VehicleConfiguration;
 };
+
+export enum VehicleLightState {
+    Off,
+    LowBeam,
+    HighBeam,
+}
 
 export enum VehicleLockStatus {
     None,
@@ -105,7 +128,6 @@ export type VehicleEntityState = {
         right: boolean;
     };
     openWindows: boolean;
-
     dead: boolean;
     condition: VehicleCondition;
     hasRadio: boolean;

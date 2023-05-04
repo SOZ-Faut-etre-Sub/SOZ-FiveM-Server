@@ -126,7 +126,7 @@ RegisterNetEvent("housing:client:ShowAddRoommateMenu", function(propertyId)
 
     local player, distance = QBCore.Functions.GetClosestPlayer()
     if player == -1 or distance > 2.0 then
-        exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
         return
     end
 
@@ -147,7 +147,7 @@ RegisterNetEvent("housing:client:ShowAddRoommateMenu", function(propertyId)
                     select = function()
                         local player, distance = QBCore.Functions.GetClosestPlayer()
                         if player == -1 or distance > 2.0 then
-                            exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+                            exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
                             return
                         end
 

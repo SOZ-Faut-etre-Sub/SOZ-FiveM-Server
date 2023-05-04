@@ -5,14 +5,17 @@ import { HoodApp } from '@private/nui/hood/HoodApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
 import { TalentApp } from '@private/nui/Talent/TalentApp';
 import classNames from 'classnames';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 
+import { NuiEvent } from '../../shared/event';
+import { fetchNui } from '../fetch';
 import { useNuiEvent } from '../hook/nui';
 import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
 import { RepairApp } from './Bennys/RepairApp';
 import { CardApp } from './Card/CardApp';
+import { HudApp } from './Hud/HudApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
@@ -23,23 +26,33 @@ import { StateApp } from './StateApp';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 
 export const App: FunctionComponent = () => {
-    const [hide, setHide] = useState(false);
+    const [pauseMenuActive, setPauseMenuActive] = useState(false);
+    const [hideHud, setHideHud] = useState(false);
 
-    useNuiEvent('global', 'PauseMenuActive', active => {
-        setHide(active);
+    useNuiEvent('global', 'PauseMenuActive', setPauseMenuActive);
+    useNuiEvent('global', 'HideHud', setHideHud);
+
+    const classes = classNames('absolute transition-all duration-500 w-full h-full', {
+        'opacity-0': pauseMenuActive || hideHud,
+        'opacity-100': !pauseMenuActive && !hideHud,
     });
 
-    const classes = classNames('w-full h-full', {
-        hidden: hide,
-    });
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetchNui(NuiEvent.Ping);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <Provider store={store}>
-            <div className={classes}>
-                <StateApp />
+            <StateApp />
+            <div className="absolute w-full h-full">
                 <MenuApp />
-                <TalentApp />
-                <CraftingApp />
+            </div>
+            <div className={classes}>
+                <HudApp />
                 <CardApp />
                 <AudioApp />
                 <ProgressApp />
@@ -51,6 +64,8 @@ export const App: FunctionComponent = () => {
                 <BreathAnalyzerApp />
                 <HoodApp />
                 <TaxiHorodateurApp />
+                <TalentApp />
+                <CraftingApp />
             </div>
         </Provider>
     );

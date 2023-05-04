@@ -1,9 +1,34 @@
-import { Injectable } from '../core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { ResourceLoader } from '@public/client/resources/resource.loader';
+import { AdvancedNotification, NotificationType } from '@public/shared/notification';
 
 @Injectable()
 export class Notifier {
-    public notify(message: string, type: 'error' | 'success' | 'warning' | 'info' = 'success') {
-        exports['soz-hud'].DrawNotification(message, type);
+    @Inject(NuiDispatch)
+    private readonly nuiDispatch: NuiDispatch;
+
+    @Inject(ResourceLoader)
+    private readonly resourceLoader: ResourceLoader;
+
+    public notify(message: string, type: NotificationType = 'info', delay = 10000) {
+        this.nuiDispatch.dispatch('hud', 'DrawNotification', {
+            style: type,
+            message,
+            delay,
+        });
+    }
+
+    public async notifyAdvanced(notification: Omit<AdvancedNotification, 'id'>) {
+        if (notification.image) {
+            await this.resourceLoader.loadStreamedTextureDict(notification.image);
+        }
+
+        this.nuiDispatch.dispatch('hud', 'DrawNotification', {
+            style: 'info',
+            delay: 10000,
+            ...notification,
+        });
     }
 
     public error(source: number, message: string) {

@@ -13,7 +13,7 @@ function CreateEnergyZone(identifier, data)
             label = "Taux de pollution",
             action = function()
                 local pollution = QBCore.Functions.TriggerRpc("soz-upw:server:GetPollutionPercent", true)
-                exports["soz-hud"]:DrawNotification("Niveau de pollution : " .. pollution, "info")
+                exports["soz-core"]:DrawNotification("Niveau de pollution : " .. pollution, "info")
             end,
             canInteract = function()
                 return OnDuty()
@@ -78,9 +78,9 @@ local function Harvest(identifier, harvest)
         local harvested, message = table.unpack(result)
 
         if harvested then
-            exports["soz-hud"]:DrawNotification(message, "success")
+            exports["soz-core"]:DrawNotification(message, "success")
         else
-            exports["soz-hud"]:DrawNotification("Il y a eu une erreur : " .. message, "error")
+            exports["soz-core"]:DrawNotification("Il y a eu une erreur : " .. message, "error")
         end
 
         return harvested
@@ -102,7 +102,7 @@ local function HarvestLoop(data)
             HarvestLoop(data)
         end
     else
-        exports["soz-hud"]:DrawNotification(reason, "error")
+        exports["soz-core"]:DrawNotification(reason, "error")
     end
 end
 AddEventHandler("soz-upw:client:HarvestLoop", HarvestLoop)

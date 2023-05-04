@@ -124,7 +124,7 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, jo
 
     if scope and scope == "entreprise" then
         if job == nil then
-            TriggerClientEvent("hud:client:DrawNotification", source, "Pas d'entreprise sélectionnée", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", source, "Pas d'entreprise sélectionnée", "error")
         end
     end
 

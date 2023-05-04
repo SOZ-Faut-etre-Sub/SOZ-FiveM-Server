@@ -63,9 +63,9 @@ end)
 RegisterNUICallback("createOffshoreAccount", function(data, cb)
     QBCore.Functions.TriggerCallback("banking:server:createOffshoreAccount", function(success, reason)
         if success then
-            exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Création de compte", "Vous avez crée un nouveau compte", "CHAR_BANK_MAZE")
+            exports["soz-core"]:DrawAdvancedNotification("Maze Banque", "Création de compte", "Vous avez crée un nouveau compte", "CHAR_BANK_MAZE")
         else
-            exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+            exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
         end
         openBankScreen(data.account)
     end, data.account)
@@ -77,9 +77,9 @@ RegisterNUICallback("doDeposit", function(data, cb)
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransferMoney", function(success, reason)
             if success then
-                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
+                exports["soz-core"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+                exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.account, data.isATM, data.bankAtmAccount, data.atmType, data.atmName)
         end, "player", data.account, amount)
@@ -92,9 +92,9 @@ RegisterNUICallback("doOffshoreDeposit", function(data, cb)
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransfertOffshoreMoney", function(success, reason)
             if success then
-                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
+                exports["soz-core"]:DrawAdvancedNotification("Maze Banque", "Dépot: ~g~" .. amount .. "$", "Vous avez déposé de l'argent", "CHAR_BANK_MAZE")
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+                exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.account)
         end, data.account, amount)
@@ -109,7 +109,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
 
     if terminalConfig.maxWithdrawal then
         if amount > terminalConfig.maxWithdrawal then
-            exports["soz-hud"]:DrawNotification(string.format(Config.ErrorMessage["max_widthdrawal_limit"], terminalConfig.maxWithdrawal), "error")
+            exports["soz-core"]:DrawNotification(string.format(Config.ErrorMessage["max_widthdrawal_limit"], terminalConfig.maxWithdrawal), "error")
             return
         end
 
@@ -121,10 +121,10 @@ RegisterNUICallback("doWithdraw", function(data, cb)
             local limit = string.format(Config.ErrorMessage["limit"], terminalConfig.maxWithdrawal, math.ceil(terminalConfig.limit / 60000))
             if remainingTime > 0 then
                 if amountAvailableForWithdraw == 0 then
-                    exports["soz-hud"]:DrawNotification(limit .. string.format(Config.ErrorMessage["time_limit"], math.ceil(remainingTime / 60000)), "error")
+                    exports["soz-core"]:DrawNotification(limit .. string.format(Config.ErrorMessage["time_limit"], math.ceil(remainingTime / 60000)), "error")
                     return
                 elseif amount > amountAvailableForWithdraw then
-                    exports["soz-hud"]:DrawNotification(limit .. string.format(Config.ErrorMessage["withdrawal_limit"], amountAvailableForWithdraw), "error")
+                    exports["soz-core"]:DrawNotification(limit .. string.format(Config.ErrorMessage["withdrawal_limit"], amountAvailableForWithdraw), "error")
                     return
                 end
             end
@@ -135,9 +135,9 @@ RegisterNUICallback("doWithdraw", function(data, cb)
     QBCore.Functions.TriggerCallback("banking:server:hasEnoughLiquidity", function(result, reason)
         if not result then
             if reason == "invalid_liquidity" then
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+                exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage["unknown"], "error")
+                exports["soz-core"]:DrawNotification(Config.ErrorMessage["unknown"], "error")
             end
         end
         return p:resolve(result)
@@ -150,7 +150,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransferMoney", function(success, reason)
             if success then
-                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Retrait: ~r~" .. amount .. "$", "Vous avez retiré de l'argent", "CHAR_BANK_MAZE")
+                exports["soz-core"]:DrawAdvancedNotification("Maze Banque", "Retrait: ~r~" .. amount .. "$", "Vous avez retiré de l'argent", "CHAR_BANK_MAZE")
                 TriggerServerEvent("banking:server:RemoveLiquidity", data.bankAtmAccount, amount)
                 local newAmount = amount
                 if lastUse and lastUse.amountWithdrawn then
@@ -164,7 +164,7 @@ RegisterNUICallback("doWithdraw", function(data, cb)
                     amountWithdrawn = newAmount,
                 }
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+                exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.account, data.isATM, data.bankAtmAccount, data.atmType, data.atmName)
         end, data.account, "player", amount)
@@ -177,10 +177,10 @@ RegisterNUICallback("doTransfer", function(data, cb)
     if amount ~= nil and amount > 0 then
         QBCore.Functions.TriggerCallback("banking:server:TransferMoney", function(success, reason)
             if success then
-                exports["soz-hud"]:DrawAdvancedNotification("Maze Banque", "Transfert: ~r~" .. amount .. "$", "Vous avez transféré de l'argent sur un compte",
-                                                            "CHAR_BANK_MAZE")
+                exports["soz-core"]:DrawAdvancedNotification("Maze Banque", "Transfert: ~r~" .. amount .. "$",
+                                                             "Vous avez transféré de l'argent sur un compte", "CHAR_BANK_MAZE")
             else
-                exports["soz-hud"]:DrawNotification(Config.ErrorMessage[reason], "error")
+                exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason], "error")
             end
             openBankScreen(data.accountSource)
         end, data.accountSource, data.accountTarget, amount, true)

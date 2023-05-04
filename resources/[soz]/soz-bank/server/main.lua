@@ -104,7 +104,7 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
                 local Target = QBCore.Functions.GetPlayerByBankAccount(accountTarget)
 
                 if Target then
-                    TriggerClientEvent("hud:client:DrawAdvancedNotification", Target.PlayerData.source, "Maze Banque", "Mouvement bancaire",
+                    TriggerClientEvent("soz-core:client:notification:draw-advanced", Target.PlayerData.source, "Maze Banque", "Mouvement bancaire",
                                        "Un versement vient d'être réalisé sur votre compte", "CHAR_BANK_MAZE")
                 end
             end
@@ -134,14 +134,14 @@ RegisterNetEvent("banking:server:SafeStorageDeposit", function(money_type, safeS
             if Player.Functions.RemoveMoney(money_type, amount) then
                 local added = Account.AddMoney(safeStorage, amount, money_type)
                 if added ~= false then
-                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez déposé ~g~$%s"):format(amount))
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez déposé ~g~$%s"):format(amount))
                 else
                     Player.Functions.AddMoney(money_type, amount)
-                    TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Le coffre n'a plus de place", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le coffre n'a plus de place", "error")
                 end
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         end
     end
 end)
@@ -159,10 +159,10 @@ RegisterNetEvent("banking:server:SafeStorageWithdraw", function(money_type, safe
         if amount <= CurrentMoney then
             if Player.Functions.AddMoney(money_type, amount) then
                 Account.RemoveMoney(safeStorage, amount, money_type)
-                TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, ("Vous avez retiré ~g~$%s"):format(amount))
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez retiré ~g~$%s"):format(amount))
             end
         else
-            TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         end
     end
 end)
@@ -184,7 +184,7 @@ exports("TransferCashMoney", function(source, target, amount, cb)
             cb(false, "could_not_add_money")
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
         cb(false, "insufficient_funds")
     end
 end)

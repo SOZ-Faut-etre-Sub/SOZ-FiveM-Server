@@ -22,13 +22,13 @@ RegisterNetEvent("housing:client:cloakroom", function()
             icon = "➕",
             label = "Sauvegarder la tenue",
             select = function()
-                local name = exports["soz-hud"]:Input("Nom de la tenue", 64)
+                local name = exports["soz-core"]:Input("Nom de la tenue", 64)
 
                 local error = QBCore.Functions.TriggerRpc("soz-character:server:SavePlayerClothe", name)
                 if error == nil then
-                    exports["soz-hud"]:DrawNotification("Votre tenue a été sauvegardée.")
+                    exports["soz-core"]:DrawNotification("Votre tenue a été sauvegardée.")
                 else
-                    exports["soz-hud"]:DrawNotification(error, "error")
+                    exports["soz-core"]:DrawNotification(error, "error")
                     return
                 end
                 menu:Close()
@@ -59,23 +59,23 @@ RegisterNetEvent("housing:client:cloakroom", function()
                     elseif value == "delete" then
                         local success = QBCore.Functions.TriggerRpc("soz-character:server:DeletePlayerClothe", clothe.id)
                         if success then
-                            exports["soz-hud"]:DrawNotification("Votre tenue a été supprimée.")
+                            exports["soz-core"]:DrawNotification("Votre tenue a été supprimée.")
                         else
-                            exports["soz-hud"]:DrawNotification("Une erreur est survenue.", "error")
+                            exports["soz-core"]:DrawNotification("Une erreur est survenue.", "error")
                         end
                     elseif value == "rename" then
-                        local name = exports["soz-hud"]:Input("Nom de la tenue", 64)
+                        local name = exports["soz-core"]:Input("Nom de la tenue", 64)
 
                         if name == nil or name == "" then
-                            exports["soz-hud"]:DrawNotification("Veuillez entrer un nouveau nom pour votre tenue.", "error")
+                            exports["soz-core"]:DrawNotification("Veuillez entrer un nouveau nom pour votre tenue.", "error")
                             return
                         end
 
                         local success = QBCore.Functions.TriggerRpc("soz-character:server:RenamePlayerClothe", clothe.id, name)
                         if success then
-                            exports["soz-hud"]:DrawNotification("Votre tenue a été renommée.")
+                            exports["soz-core"]:DrawNotification("Votre tenue a été renommée.")
                         else
-                            exports["soz-hud"]:DrawNotification("Une erreur est survenue.", "error")
+                            exports["soz-core"]:DrawNotification("Une erreur est survenue.", "error")
                         end
                     end
                     menu:Close()

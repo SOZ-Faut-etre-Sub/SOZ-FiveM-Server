@@ -12,3 +12,13 @@ export const player = createModel<RootModel>()({
     },
     effects: () => ({}),
 });
+
+export const playerHealth = createModel<RootModel>()({
+    state: 200,
+    reducers: {
+        update(state, health: number) {
+            return health;
+        },
+    },
+    effects: () => ({}),
+});

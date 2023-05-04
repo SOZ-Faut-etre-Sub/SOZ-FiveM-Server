@@ -128,7 +128,6 @@ local createCameraThread = function()
 
             Wait(5)
         end
-        -- exports["soz-hud"]:DisableTwitchNewsOverlay()
 
         ClearPedTasks(PlayerPedId())
         RenderScriptCams(false, false, 0, 1, 0)

@@ -10,16 +10,16 @@ RegisterServerEvent("job:recruit", function(target)
     local targetPlayer = QBCore.Functions.GetPlayer(tonumber(target))
 
     if targetPlayer.PlayerData.job.id ~= SozJobCore.JobType.Unemployed then
-        TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
 
     targetPlayer.Functions.SetJob(player.PlayerData.job.id, GetJobDefaultGrade(player.PlayerData.job.id))
 
-    TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ fait maintenant partie de vos effectifs !"):format(targetPlayer.Functions.GetName()),
-                       "info")
-    TriggerClientEvent("hud:client:DrawNotification", targetPlayer.PlayerData.source, "Vous avez été ~g~embauché~s~ !", "info")
+    TriggerClientEvent("soz-core:client:notification:draw", source,
+                       ("~g~%s~s~ fait maintenant partie de vos effectifs !"):format(targetPlayer.Functions.GetName()), "info")
+    TriggerClientEvent("soz-core:client:notification:draw", targetPlayer.PlayerData.source, "Vous avez été ~g~embauché~s~ !", "info")
 end)
 
 RegisterServerEvent("job:fire", function(target)
@@ -36,13 +36,13 @@ RegisterServerEvent("job:fire", function(target)
     local targetGradeWeight = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[tostring(targetPlayer.PlayerData.job.grade)].weight
 
     if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
-        TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
 
     if targetGradeWeight > playerGradeWeight then
-        TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne peut pas être viré !"):format(targetPlayer.Functions.GetName()), "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, ("~r~%s~s~ ne peut pas être viré !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
@@ -55,9 +55,9 @@ RegisterServerEvent("job:fire", function(target)
 
     targetPlayer.Functions.SetJob(SozJobCore.JobType.Unemployed, GetJobDefaultGrade(SozJobCore.JobType.Unemployed))
 
-    TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne fait plus partie de vos effectifs !"):format(targetPlayer.Functions.GetName()),
-                       "info")
-    TriggerClientEvent("hud:client:DrawNotification", targetPlayer.PlayerData.source, "Vous avez été ~r~viré~s~ !", "info")
+    TriggerClientEvent("soz-core:client:notification:draw", source,
+                       ("~r~%s~s~ ne fait plus partie de vos effectifs !"):format(targetPlayer.Functions.GetName()), "info")
+    TriggerClientEvent("soz-core:client:notification:draw", targetPlayer.PlayerData.source, "Vous avez été ~r~viré~s~ !", "info")
 end)
 
 RegisterServerEvent("job:promote", function(target, gradeId)
@@ -74,7 +74,7 @@ RegisterServerEvent("job:promote", function(target, gradeId)
     local targetGradeWeight = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[tostring(targetPlayer.PlayerData.job.grade)].weight
 
     if targetPlayer.PlayerData.job.id ~= player.PlayerData.job.id then
-        TriggerClientEvent("hud:client:DrawNotification", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, ("~g~%s~s~ n'est pas embauchable !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
@@ -82,14 +82,15 @@ RegisterServerEvent("job:promote", function(target, gradeId)
     local grade = SozJobCore.Jobs[targetPlayer.PlayerData.job.id].grades[tostring(gradeId)]
 
     if grade.weight > playerGradeWeight or targetGradeWeight > playerGradeWeight then
-        TriggerClientEvent("hud:client:DrawNotification", source, ("~r~%s~s~ ne peut pas être promu !"):format(targetPlayer.Functions.GetName()), "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, ("~r~%s~s~ ne peut pas être promu !"):format(targetPlayer.Functions.GetName()), "error")
 
         return
     end
 
     targetPlayer.Functions.SetJob(targetPlayer.PlayerData.job.id, gradeId)
-    TriggerClientEvent("hud:client:DrawNotification", source, ("~b~%s~s~ a été promu ~b~%s~s~ !"):format(targetPlayer.Functions.GetName(), grade.name), "info")
-    TriggerClientEvent("hud:client:DrawNotification", targetPlayer.PlayerData.source, ("Vous avez été promu ~b~%s~s~ !"):format(grade.name), "info")
+    TriggerClientEvent("soz-core:client:notification:draw", source, ("~b~%s~s~ a été promu ~b~%s~s~ !"):format(targetPlayer.Functions.GetName(), grade.name),
+                       "info")
+    TriggerClientEvent("soz-core:client:notification:draw", targetPlayer.PlayerData.source, ("Vous avez été promu ~b~%s~s~ !"):format(grade.name), "info")
 end)
 
 RegisterServerEvent("job:grade:add", function(name)
@@ -111,7 +112,7 @@ RegisterServerEvent("job:grade:add", function(name)
         ["@name"] = name,
     })
 
-    TriggerClientEvent("hud:client:DrawNotification", source, "Le grade a été ajouté !")
+    TriggerClientEvent("soz-core:client:notification:draw", source, "Le grade a été ajouté !")
     SynchroniseJob()
 end)
 
@@ -136,20 +137,20 @@ RegisterServerEvent("job:grade:remove", function(id)
     end
 
     if grade.owner == 1 then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vous ne pouvez pas supprimer le grade de patron !", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vous ne pouvez pas supprimer le grade de patron !", "error")
 
         return
     end
 
     if grade.is_default == 1 then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Vous ne pouvez pas supprimer le grade par défaut !", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vous ne pouvez pas supprimer le grade par défaut !", "error")
 
         return
     end
 
     -- @TODO Check if there is player with this grade ?
     MySQL.execute.await("DELETE FROM `job_grades` WHERE `id` = @id", {["@id"] = id})
-    TriggerClientEvent("hud:client:DrawNotification", source, "Le grade a été supprimé ! !")
+    TriggerClientEvent("soz-core:client:notification:draw", source, "Le grade a été supprimé ! !")
     SynchroniseJob()
 end)
 
@@ -175,7 +176,7 @@ RegisterServerEvent("job:grade:set-default", function(id)
 
     MySQL.execute.await("UPDATE `job_grades` SET is_default = 0 WHERE jobId = @id", {["@id"] = player.PlayerData.job.id})
     MySQL.execute.await("UPDATE `job_grades` SET is_default = 1 WHERE id = @id", {["@id"] = id})
-    TriggerClientEvent("hud:client:DrawNotification", source, "Le grade a été défini par défaut !")
+    TriggerClientEvent("soz-core:client:notification:draw", source, "Le grade a été défini par défaut !")
     SynchroniseJob()
 end)
 
@@ -206,7 +207,7 @@ RegisterServerEvent("job:grade:set-salary", function(id, salary)
     end
 
     MySQL.execute.await("UPDATE `job_grades` SET salary = @salary WHERE id = @id", {["@id"] = id, ["@salary"] = salary})
-    TriggerClientEvent("hud:client:DrawNotification", source, "Le salaire a bien été défini !")
+    TriggerClientEvent("soz-core:client:notification:draw", source, "Le salaire a bien été défini !")
     SynchroniseJob()
 end)
 
@@ -234,7 +235,7 @@ RegisterServerEvent("job:grade:set-weight", function(id, weight)
     end
 
     MySQL.execute.await("UPDATE `job_grades` SET weight = @weight WHERE id = @id", {["@id"] = id, ["@weight"] = weight})
-    TriggerClientEvent("hud:client:DrawNotification", source, "Le poids a bien été défini !")
+    TriggerClientEvent("soz-core:client:notification:draw", source, "Le poids a bien été défini !")
     SynchroniseJob()
 end)
 
@@ -276,7 +277,7 @@ RegisterServerEvent("job:grade:add-permission", function(id, permission)
         ["@id"] = id,
         ["@permissions"] = json.encode(newPermissions),
     })
-    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été ajoutée !")
+    TriggerClientEvent("soz-core:client:notification:draw", source, "La permission a bien été ajoutée !")
     SynchroniseJob()
 end)
 
@@ -316,6 +317,6 @@ RegisterServerEvent("job:grade:remove-permission", function(id, permission)
         ["@id"] = id,
         ["@permissions"] = json.encode(newPermissions),
     })
-    TriggerClientEvent("hud:client:DrawNotification", source, "La permission a bien été supprimée !")
+    TriggerClientEvent("soz-core:client:notification:draw", source, "La permission a bien été supprimée !")
     SynchroniseJob()
 end)

@@ -73,7 +73,7 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
 
     Wait(3000)
 
-    exports["soz-hud"]:DrawNotification("Vous êtes en train de ~g~couper l’arbre~s~.")
+    exports["soz-core"]:DrawNotification("Vous êtes en train de ~g~couper l’arbre~s~.")
     local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous récoltez...", Config.Harvest.Duration, false, true,
                                                         {disableMovement = true, disableCombat = true},
                                                         {
@@ -90,9 +90,9 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
             local treeKey = ConcatPosition(data.position)
             SapHarvestedTrees[treeKey] = nil
 
-            exports["soz-hud"]:DrawNotification("Vous avez ~g~découpé~s~ l’arbre.")
+            exports["soz-core"]:DrawNotification("Vous avez ~g~découpé~s~ l’arbre.")
         else
-            exports["soz-hud"]:DrawNotification("Vous avez ~r~raté~s~ la découpe de l’arbre.")
+            exports["soz-core"]:DrawNotification("Vous avez ~r~raté~s~ la découpe de l’arbre.")
         end
     end
 
@@ -110,7 +110,7 @@ RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
 
     Wait(3000)
 
-    exports["soz-hud"]:DrawNotification("Vous êtes en train de ~g~récolter de la sève~s~.")
+    exports["soz-core"]:DrawNotification("Vous êtes en train de ~g~récolter de la sève~s~.")
     local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous récoltez...", Config.Harvest.SapDuration, false, true,
                                                         {disableMovement = true, disableCombat = true},
                                                         {
@@ -125,9 +125,9 @@ RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
             local treeKey = ConcatPosition(data.position)
             SapHarvestedTrees[treeKey] = true
 
-            exports["soz-hud"]:DrawNotification("Vous avez ~g~récolté~s~ de la sève.")
+            exports["soz-core"]:DrawNotification("Vous avez ~g~récolté~s~ de la sève.")
         else
-            exports["soz-hud"]:DrawNotification("Vous avez ~r~raté~s~ la récolte de la sève.")
+            exports["soz-core"]:DrawNotification("Vous avez ~r~raté~s~ la récolte de la sève.")
         end
     end
 

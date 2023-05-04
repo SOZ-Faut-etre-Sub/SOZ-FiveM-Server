@@ -2,7 +2,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 
 QBCore.Commands.Add("id", "Check Your ID #", {}, false, function(source, args)
     local src = source
-    TriggerClientEvent("hud:client:DrawNotification", src, "ID: " .. src)
+    TriggerClientEvent("soz-core:client:notification:draw", src, "ID: " .. src)
 end)
 
 QBCore.Functions.CreateCallback("smallresources:server:GetCurrentPlayers", function(source, cb)

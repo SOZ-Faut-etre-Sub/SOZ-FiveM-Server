@@ -26,4 +26,4 @@ server_scripts {
 ui_page("html/index.html")
 files {"html/index.html", "html/**/*"}
 
-dependencies {"oxmysql", "qb-core", "soz-hud", "menuv", "qb-target"}
+dependencies {"oxmysql", "qb-core", "menuv", "qb-target"}

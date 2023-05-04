@@ -6,6 +6,7 @@ import { PlayerData } from '../player';
 
 export interface NuiPLayerMethodMap {
     Update: PlayerData;
+    UpdatePlayerHealth: number;
     UpdateAnimationShortcuts: Record<string, Shortcut>;
     UpdateInvoices: Invoice[];
 }

@@ -241,7 +241,7 @@ RegisterNetEvent("voip:client:reset", function()
 
     TriggerServerEvent("monitor:server:event", "voip_restart", {}, {}, true)
 
-    exports["soz-hud"]:DrawNotification("Arret de la voip...", "info")
+    exports["soz-core"]:DrawNotification("Arret de la voip...", "info")
 
     -- Clear last state
     lastState = {}
@@ -271,5 +271,5 @@ RegisterNetEvent("voip:client:reset", function()
 
     -- Allow voice loop to reinit state
     restarting = false
-    exports["soz-hud"]:DrawNotification("Voip réactivée.", "info")
+    exports["soz-core"]:DrawNotification("Voip réactivée.", "info")
 end)

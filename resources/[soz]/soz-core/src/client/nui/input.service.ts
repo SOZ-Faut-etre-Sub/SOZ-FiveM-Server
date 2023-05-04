@@ -1,4 +1,5 @@
 import { OnNuiEvent } from '../../core/decorators/event';
+import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent } from '../../shared/event';
@@ -55,6 +56,15 @@ export class InputService {
         }
 
         return confirmText.toLowerCase() === 'oui';
+    }
+
+    @Exportable('Input')
+    public async askInputLegacy(title: string, maxCharacters: number, defaultValue: string): Promise<string> {
+        return this.askInput({
+            title,
+            maxCharacters,
+            defaultValue,
+        });
     }
 
     @OnNuiEvent(NuiEvent.InputCancel)

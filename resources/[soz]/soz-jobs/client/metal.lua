@@ -90,7 +90,7 @@ AddEventHandler("jobs:metal:vente", function()
         end
     end
 
-    local sellamount = exports["soz-hud"]:Input(("Combien de ferrailles voulez-vous vendre ?"), 2, count)
+    local sellamount = exports["soz-core"]:Input(("Combien de ferrailles voulez-vous vendre ?"), 2, count)
     TriggerServerEvent("job:remove:metal", sellamount)
     Counter = 0
 end)

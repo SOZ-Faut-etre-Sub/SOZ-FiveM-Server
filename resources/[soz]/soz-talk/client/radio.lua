@@ -164,7 +164,7 @@ end)
 
 RegisterCommand("radio_toggle", function()
     if LocalPlayer.state.inv_busy then
-        exports["soz-hud"]:DrawNotification("Action en cours", "error")
+        exports["soz-core"]:DrawNotification("Action en cours", "error")
         return
     end
 

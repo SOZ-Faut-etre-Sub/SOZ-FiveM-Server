@@ -12,5 +12,5 @@ RegisterNetEvent("admin:skin:UpdateClothes", function(cloth)
     clothConfig["BaseClothSet"] = cloth
     Player.Functions.SetClothConfig(clothConfig, false)
 
-    TriggerClientEvent("hud:client:DrawNotification", source, "Tenue sauvegardée")
+    TriggerClientEvent("soz-core:client:notification:draw", source, "Tenue sauvegardée")
 end)
