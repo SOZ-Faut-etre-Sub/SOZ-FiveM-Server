@@ -29,12 +29,10 @@ export class BankService {
     }
 
     public getAllInvoicesForPlayer(source: number): Record<string, Invoice> {
-        console.log('getAllInvoicesForPlayer');
         return exports['soz-bank'].GetAllInvoicesForPlayer(source);
     }
 
     public payInvoice(source: number, invoiceId: number, marked: boolean) {
-        console.log('payInvoice');
         return exports['soz-bank'].PayInvoice(source, invoiceId, marked);
     }
 }

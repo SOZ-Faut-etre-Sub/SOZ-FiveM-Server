@@ -3,6 +3,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { Font } from '../../shared/hud';
 import { Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
@@ -90,18 +91,11 @@ export class AdminMenuDeveloperProvider {
             const y = coords[1].toFixed(2);
             const z = coords[2].toFixed(2);
 
-            this.draw.drawText(
-                0.4,
-                0.01,
-                0,
-                0,
-                0.4,
-                66,
-                182,
-                245,
-                255,
-                `~w~Ped coordinates:~b~ vector4(${x}, ${y}, ${z}, ${heading})`
-            );
+            this.draw.drawText(`~w~Ped coordinates:~b~ vector4(${x}, ${y}, ${z}, ${heading})`, [0.4, 0.015], {
+                font: Font.ChaletComprimeCologne,
+                size: 0.4,
+                color: [66, 182, 245, 255],
+            });
         }, 1);
     }
 

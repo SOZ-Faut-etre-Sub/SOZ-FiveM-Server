@@ -37,6 +37,6 @@ server_scripts {
 
 ui_page "ui/index.html"
 
-files {"ui/images/logo.png", "ui/style.css", "ui/index.html", "ui/qb-banking.js"}
+files {"ui/images/logo.png", "ui/bootstrap.min.css", "ui/soz.css", "ui/style.css", "ui/index.html", "ui/qb-banking.js"}
 
-dependencies {"oxmysql", "cron", "qb-core", "soz-jobs", "soz-hud", "menuv", "PolyZone"}
+dependencies {"oxmysql", "cron", "qb-core", "soz-jobs", "menuv", "PolyZone"}

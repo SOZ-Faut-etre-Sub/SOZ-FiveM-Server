@@ -7,7 +7,7 @@ import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
-import { HudProvider } from '../hud/hud.provider';
+import { HudStateProvider } from '../hud/hud.state.provider';
 import { JobMenuProvider } from '../job/job.menu.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -37,8 +37,8 @@ export class PlayerMenuProvider {
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
 
-    @Inject(HudProvider)
-    private hudProvider: HudProvider;
+    @Inject(HudStateProvider)
+    private hudStateProvider: HudStateProvider;
 
     @Inject(PlayerAnimationProvider)
     private playerAnimationProvider: PlayerAnimationProvider;
@@ -69,9 +69,7 @@ export class PlayerMenuProvider {
         }
 
         this.menu.openMenu(MenuType.PlayerPersonal, {
-            isCinematicCameraActive: this.hudProvider.isCinematicCameraActive,
-            isCinematicMode: this.hudProvider.isCinematicMode,
-            isHudVisible: this.hudProvider.isHudVisible,
+            ...this.hudStateProvider.getState(),
             shortcuts: this.playerAnimationProvider.getShortcuts(),
             job: this.jobMenuProvider.getJobMenuData(),
         });
@@ -140,25 +138,17 @@ export class PlayerMenuProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetGlobal)
     public async hudComponentSetGlobal({ value }: { value: boolean }) {
-        this.hudProvider.isHudVisible = value;
-        TriggerEvent(
-            'hud:client:OverrideVisibility',
-            this.hudProvider.isHudVisible && !this.hudProvider.isCinematicMode
-        );
+        this.hudStateProvider.setHudVisible(value);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetCinematicMode)
     public async hudComponentSetCinematicMode({ value }: { value: boolean }) {
-        this.hudProvider.isCinematicMode = value;
-        TriggerEvent(
-            'hud:client:OverrideVisibility',
-            this.hudProvider.isHudVisible && !this.hudProvider.isCinematicMode
-        );
+        this.hudStateProvider.setCinematicMode(value);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetCinematicCameraActive)
     public async hudComponentSetCinematicCameraActive({ value }: { value: boolean }) {
-        this.hudProvider.isCinematicCameraActive = value;
+        this.hudStateProvider.setCinematicCameraActive(value);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)

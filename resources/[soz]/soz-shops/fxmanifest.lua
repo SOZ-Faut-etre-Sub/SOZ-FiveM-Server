@@ -23,4 +23,4 @@ client_scripts {
 }
 server_scripts {"@oxmysql/lib/MySQL.lua", "server/main.lua"}
 
-dependencies {"oxmysql", "qb-core", "qb-target", "soz-hud", "soz-locations", "menuv", "soz-character"}
+dependencies {"oxmysql", "qb-core", "qb-target", "soz-locations", "menuv", "soz-character"}

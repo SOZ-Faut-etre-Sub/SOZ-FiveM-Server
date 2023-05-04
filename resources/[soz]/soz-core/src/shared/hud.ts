@@ -35,11 +35,11 @@ export type Minimap = {
 };
 
 export enum VoiceMode {
+    Mute = -1,
+    Whisper,
     Normal,
     Shouting,
-    Whisper,
-    Mute,
-    Microphone,
+    Microphone = 9,
     Megaphone,
 }
 
@@ -47,3 +47,11 @@ export type HudState = {
     minimap: Minimap;
     voiceMode: VoiceMode;
 };
+
+export enum Font {
+    ChaletLondon = 0,
+    HouseScript = 1,
+    Monospace = 2,
+    ChaletComprimeCologne = 4,
+    Pricedown = 7,
+}

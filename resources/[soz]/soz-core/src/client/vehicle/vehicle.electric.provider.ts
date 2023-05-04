@@ -400,7 +400,6 @@ export class VehicleElectricProvider {
         const station = this.upwChargerRepository.getStationForEntity(entity);
 
         if (!station) {
-            console.log('No station found for entity', entity);
             return;
         }
 
