@@ -68,6 +68,7 @@ RegisterServerEvent("job:remove:metal", function(amount)
         local payout = amount * SozJobCore.metal_payout
         TriggerEvent("job:payout:metal", payout, source)
     else
-        TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous essayez de vendre plus que ce que vous ne possédez", amount), "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous essayez de vendre plus que ce que vous ne possédez", amount),
+                           "error")
     end
 end)

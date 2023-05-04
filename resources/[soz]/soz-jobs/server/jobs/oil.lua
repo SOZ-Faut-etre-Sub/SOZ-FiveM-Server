@@ -81,8 +81,8 @@ RegisterNetEvent("jobs:server:fueler:refiningTanker", function(tankerId)
                 position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
             })
         else
-            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre remorque ~r~ne peut plus~s~ recevoir de pétrole raffiné.",
-                               "error")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                               "Votre remorque ~r~ne peut plus~s~ recevoir de pétrole raffiné.", "error")
         end
     end
 end)
@@ -115,7 +115,8 @@ RegisterNetEvent("jobs:server:fueler:craftEssence", function()
                         position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
                     })
                 else
-                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le carburant.", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le carburant.",
+                                       "error")
                 end
             end)
         end
@@ -141,7 +142,8 @@ RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
                         position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
                     })
                 else
-                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.", "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.",
+                                       "error")
                 end
             end)
         end
@@ -156,7 +158,8 @@ RegisterNetEvent("jobs:server:fueler:craftKerosene", function()
     local petrolItemAmount = math.ceil(keroseneItemAmount * 4)
 
     if petrolItemAmount <= 1 then
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez de pétrole pour transformer en kérosène.", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez de pétrole pour transformer en kérosène.",
+                           "error")
         return
     end
 
@@ -175,7 +178,8 @@ RegisterNetEvent("jobs:server:fueler:craftKerosene", function()
                     player_source = Player.PlayerData.source,
                 }, {quantity = keroseneItemAmount, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
             else
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le kérosène.", "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le kérosène.",
+                                   "error")
             end
         end)
     end

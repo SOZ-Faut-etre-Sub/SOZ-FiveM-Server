@@ -62,8 +62,8 @@ local function PayInvoice(PlayerData, account, id, marked)
 
                 local success = Account.AddMoney(invoice.emitterSafe, moneyTake, "money")
                 if not success then
-                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
-                                       "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                                       "Le coffre de destination n'a pas de place pour cette somme", "error")
                     Player.Functions.AddMoney("money", moneyTake)
                     Player.Functions.AddMoney("marked_money", markedMoneyTake)
                     return false
@@ -71,8 +71,8 @@ local function PayInvoice(PlayerData, account, id, marked)
 
                 success = Account.AddMoney(invoice.emitterSafe, markedMoneyTake, "marked_money")
                 if not success then
-                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Le coffre de destination n'a pas de place pour cette somme",
-                                       "error")
+                    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                                       "Le coffre de destination n'a pas de place pour cette somme", "error")
                     Player.Functions.AddMoney("money", moneyTake)
                     Player.Functions.AddMoney("marked_money", markedMoneyTake)
                     Account.RemoveMoney(invoice.emitterSafe, moneyTake, "money")
@@ -102,7 +102,8 @@ local function PayInvoice(PlayerData, account, id, marked)
 
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~g~payé~s~ votre facture", "success", 10000)
         if Emitter then
-            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
+            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source,
+                               ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
         end
 
         TriggerEvent("monitor:server:event", "invoice_pay", {
@@ -126,7 +127,8 @@ local function PayInvoice(PlayerData, account, id, marked)
                     invoice.id,
                 })
 
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~g~payé~s~ la facture de la société", "success", 10000)
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~g~payé~s~ la facture de la société", "success",
+                                   10000)
                 if Emitter then
                     TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source,
                                        ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
@@ -147,7 +149,8 @@ local function PayInvoice(PlayerData, account, id, marked)
                 TriggerClientEvent("banking:client:invoicePaid", Player.PlayerData.source, id)
                 Invoices[account][id] = nil
             else
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "~r~Echec~s~ du paiement la facture de la société", "error", 10000)
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "~r~Echec~s~ du paiement la facture de la société", "error",
+                                   10000)
             end
             return success
         end)
@@ -176,7 +179,8 @@ local function RejectInvoice(PlayerData, account, id)
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture", "error", 10000)
 
         if Emitter then
-            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
+            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source,
+                               ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
         TriggerEvent("monitor:server:event", "invoice_refuse", {
@@ -195,7 +199,8 @@ local function RejectInvoice(PlayerData, account, id)
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~r~refusé~s~ la facture de la société", "error", 10000)
 
         if Emitter then
-            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source, ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
+            TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source,
+                               ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
         TriggerEvent("monitor:server:event", "invoice_refuse",

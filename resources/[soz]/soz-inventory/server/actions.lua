@@ -70,8 +70,10 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
 
         Inventory.TransfertItem(Player.PlayerData.source, Target.PlayerData.source, item.name, amount, item.metadata, item.slot, function(success, reason)
             if success then
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, string.format("Vous avez donné ~o~%s ~b~%s", amount, item.label))
-                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, string.format("Vous avez reçu ~o~%s ~b~%s", amount, item.label))
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                                   string.format("Vous avez donné ~o~%s ~b~%s", amount, item.label))
+                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source,
+                                   string.format("Vous avez reçu ~o~%s ~b~%s", amount, item.label))
 
                 giveAnimation(Player.PlayerData.source)
                 giveAnimation(Target.PlayerData.source)
@@ -81,7 +83,8 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
             end
         end)
     else
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne possédez pas le nombre d'items requis pour le transfert", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne possédez pas le nombre d'items requis pour le transfert",
+                           "error")
     end
 end)
 

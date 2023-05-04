@@ -321,8 +321,8 @@ FoodJob.Functions.CraftItem = function(itemId, item)
                         elseif reason == "invalid_ingredient" then
                             exports["soz-core"]:DrawNotification("Il vous manque des ingrédients...", "error")
                         else
-                            exports["soz-core"]:DrawNotification(string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason),
-                                                                "error")
+                            exports["soz-core"]:DrawNotification(
+                                string.format("Vous n'avez pas terminé votre préparation. Il y a eu une erreur : %s", reason), "error")
                         end
                     end
                 end, itemId)
