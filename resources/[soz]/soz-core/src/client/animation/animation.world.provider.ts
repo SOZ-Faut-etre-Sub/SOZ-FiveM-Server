@@ -1,32 +1,19 @@
-import { Command } from '@core/decorators/command';
-import { getDistance, Vector4 } from '@public/shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BarbecueList, EntityConfig, LoungerTargetList, SeatsTargetList } from '../../config/worldinterraction';
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { TargetFactory } from '../target/target.factory';
-let Px = 0.0,
-    Py = 0.0,
-    Pz = 0.0;
-let IsScenario = false;
+import { AnimationService } from './animation.service';
+
 @Provider()
 export class SeatAnimationProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
-    @Command('StopScenario', {
-        description: 'Se lever/Arrêter Anim',
-        keys: [{ mapper: 'keyboard', key: 'End' }],
-    })
-    public async StopScenario() {
-        if (isNaN(Px) || !IsScenario) {
-            return;
-        }
-        const ped = PlayerPedId();
-        SetPedCoordsKeepVehicle(ped, Px, Py, Pz);
-        IsScenario = false;
-    }
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     public Relative2Absolute(Ox: number, Oy: number, heading: number): [number, number] {
         heading = heading * (Math.PI / 180);
@@ -35,8 +22,8 @@ export class SeatAnimationProvider {
         return [x, y];
     }
 
-    public SeatCalculation(entity: number, ped: number) {
-        [Px, Py, Pz] = GetEntityCoords(ped);
+    public calculateSeatPosition(entity: number, position: Vector3): Vector4 {
+        const [Px, Py, Pz] = position;
         const [x, y, z] = GetEntityCoords(entity);
         let heading = GetEntityHeading(entity);
         if (heading >= 180) {
@@ -72,11 +59,28 @@ export class SeatAnimationProvider {
         return [x + x2, y + y2, z + Offset[2], heading + Offset[3]];
     }
 
-    public async PlaySitAnimation(entity: number, animation: string, siting: boolean, TP: boolean) {
+    public async playSitAnimation(
+        entity: number,
+        scenario: string,
+        isSittingScenario: boolean,
+        shouldTeleport: boolean
+    ) {
         const ped = PlayerPedId();
-        const [Cx, Cy, Cz, Ch] = this.SeatCalculation(entity, ped);
-        IsScenario = true;
-        TaskStartScenarioAtPosition(ped, animation, Cx, Cy, Cz, Ch, -1, siting, TP);
+        const position = GetEntityCoords(ped) as Vector3;
+        const heading = GetEntityHeading(ped);
+        const seatPosition = this.calculateSeatPosition(entity, position);
+
+        await this.animationService.playScenario({
+            name: scenario,
+            position: seatPosition,
+            isSittingScenario,
+            shouldTeleport,
+        });
+
+        if (shouldTeleport) {
+            SetPedCoordsKeepVehicle(ped, position[0], position[1], position[2]);
+            SetEntityHeading(ped, heading);
+        }
     }
 
     @Once(OnceStep.PlayerLoaded)
@@ -88,7 +92,7 @@ export class SeatAnimationProvider {
                     label: "S'asseoir",
                     icon: 'fas fa-chair',
                     action: async entity =>
-                        this.PlaySitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_MP_PLAYER', true, true),
+                        this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_MP_PLAYER', true, true),
                 },
             ],
             1.2
@@ -100,7 +104,7 @@ export class SeatAnimationProvider {
                     label: "S'asseoir et Boire",
                     icon: 'fas fa-beer',
                     action: async entity =>
-                        this.PlaySitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_DRINK_BEER', false, true),
+                        this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_DRINK_BEER', false, true),
                 },
             ],
             1.2
@@ -111,7 +115,7 @@ export class SeatAnimationProvider {
                 {
                     label: "S'asseoir et Manger",
                     icon: 'fas fa-hamburger',
-                    action: async entity => this.PlaySitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_FOOD', false, true),
+                    action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_CHAIR_FOOD', false, true),
                 },
             ],
             1.2
@@ -122,7 +126,7 @@ export class SeatAnimationProvider {
                 {
                     label: "S'allonger",
                     icon: 'fas fa-umbrella-beach',
-                    action: async entity => this.PlaySitAnimation(entity, 'PROP_HUMAN_SEAT_SUNLOUNGER', false, false),
+                    action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_SEAT_SUNLOUNGER', false, false),
                 },
             ],
             1.4
@@ -133,7 +137,7 @@ export class SeatAnimationProvider {
                 {
                     label: 'Cuisiner',
                     icon: 'fas fa-stroopwafel',
-                    action: async entity => this.PlaySitAnimation(entity, 'PROP_HUMAN_BBQ', false, false),
+                    action: async entity => this.playSitAnimation(entity, 'PROP_HUMAN_BBQ', false, false),
                 },
             ],
             1.0

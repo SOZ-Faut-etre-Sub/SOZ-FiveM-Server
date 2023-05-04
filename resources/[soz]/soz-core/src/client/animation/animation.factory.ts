@@ -298,6 +298,18 @@ export class AnimationFactory {
                     true,
                     false
                 );
+            } else if (scenario.position) {
+                TaskStartScenarioAtPosition(
+                    ped,
+                    scenario.name,
+                    scenario.position[0],
+                    scenario.position[1],
+                    scenario.position[2],
+                    scenario.position[3],
+                    0,
+                    scenario.isSittingScenario ?? false,
+                    scenario.shouldTeleport ?? false
+                );
             } else {
                 TaskStartScenarioInPlace(ped, scenario.name, -1, true);
             }
