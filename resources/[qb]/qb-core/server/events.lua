@@ -28,7 +28,7 @@ AddEventHandler('chatMessage', function(source, n, message)
                 table.remove(args, 1)
                 if isGod or hasPerm or isPrincipal then
                     if (QBCore.Commands.List[command].argsrequired and #QBCore.Commands.List[command].arguments ~= 0 and args[#QBCore.Commands.List[command].arguments] == nil) then
-                        TriggerClientEvent('hud:client:DrawNotification', src, 'Il vous manque des paramètres !', "error")
+                        TriggerClientEvent('soz-core:client:notification:draw', src, 'Il vous manque des paramètres !', "error")
                     else
                         QBCore.Commands.List[command].callback(src, args)
                     end
@@ -135,7 +135,6 @@ RegisterNetEvent('QBCore:Server:SetMetaData', function(meta, data)
     if Player then
         Player.Functions.SetMetaData(meta, data)
     end
-    TriggerClientEvent('hud:client:UpdateNeeds', src, Player.PlayerData.metadata['hunger'], Player.PlayerData.metadata['thirst'], Player.PlayerData.metadata['alcohol'], Player.PlayerData.metadata['drug'])
 end)
 
 RegisterNetEvent('QBCore:ToggleDuty', function()
@@ -144,16 +143,16 @@ RegisterNetEvent('QBCore:ToggleDuty', function()
     local itt = player.PlayerData.metadata["itt"]
 
     if itt then
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en interdiction de travail temporaire', "info")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Vous êtes en interdiction de travail temporaire', "info")
         return
     end
 
     if player.PlayerData.job.onduty then
         player.Functions.SetJobDuty(false)
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes hors service', "info")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Vous êtes hors service', "info")
     else
         player.Functions.SetJobDuty(true)
-        TriggerClientEvent('hud:client:DrawNotification', src, 'Vous êtes en service', "info")
+        TriggerClientEvent('soz-core:client:notification:draw', src, 'Vous êtes en service', "info")
     end
     Player(player.PlayerData.source).state.onDuty = player.PlayerData.job.onduty
     TriggerClientEvent('QBCore:Client:SetDuty', src, player.PlayerData.job.onduty)
@@ -179,7 +178,7 @@ RegisterNetEvent('QBCore:CallCommand', function(command, args)
             local isPrincipal = IsPlayerAceAllowed(src, 'command')
             if (QBCore.Commands.List[command].permission == Player.PlayerData.job.id) or isGod or hasPerm or isPrincipal then
                 if (QBCore.Commands.List[command].argsrequired and #QBCore.Commands.List[command].arguments ~= 0 and args[#QBCore.Commands.List[command].arguments] == nil) then
-                    TriggerClientEvent('hud:client:DrawNotification', src, 'Il vous manque des paramètres !', "error")
+                    TriggerClientEvent('soz-core:client:notification:draw', src, 'Il vous manque des paramètres !', "error")
                 else
                     QBCore.Commands.List[command].callback(src, args)
                 end

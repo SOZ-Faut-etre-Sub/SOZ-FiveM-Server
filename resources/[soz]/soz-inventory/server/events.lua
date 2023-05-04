@@ -16,7 +16,7 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
         TriggerClientEvent("inventory:client:openInventory", Player.PlayerData.source, Inventory.FilterItems(sourceInv, targetInv.type),
                            Inventory.FilterItems(targetInv, sourceInv.type), targetMoney)
     else
-        TriggerClientEvent("hud:client:DrawNotification", Player.PlayerData.source, "Vous n'avez pas accès à ce stockage", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas accès à ce stockage", "error")
     end
 end)
 
@@ -78,14 +78,14 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(sour
         TargetPlayer.Functions.AddMoney("marked_money", markedMoneyTake)
 
         if inverse then
-            TriggerClientEvent("hud:client:DrawNotification", SourcePlayer.PlayerData.source, string.format("On vous a pris ~r~%s$", amount))
-            TriggerClientEvent("hud:client:DrawNotification", TargetPlayer.PlayerData.source, string.format("Vous avez pris ~g~%s$", amount))
+            TriggerClientEvent("soz-core:client:notification:draw", SourcePlayer.PlayerData.source, string.format("On vous a pris ~r~%s$", amount))
+            TriggerClientEvent("soz-core:client:notification:draw", TargetPlayer.PlayerData.source, string.format("Vous avez pris ~g~%s$", amount))
         else
-            TriggerClientEvent("hud:client:DrawNotification", SourcePlayer.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
-            TriggerClientEvent("hud:client:DrawNotification", TargetPlayer.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
+            TriggerClientEvent("soz-core:client:notification:draw", SourcePlayer.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
+            TriggerClientEvent("soz-core:client:notification:draw", TargetPlayer.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
         end
     else
-        TriggerClientEvent("hud:client:DrawNotification", source, "Pas assez d'argent", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Pas assez d'argent", "error")
     end
 
     cb(SourcePlayer.Functions.GetMoney("money") + SourcePlayer.Functions.GetMoney("marked_money"),

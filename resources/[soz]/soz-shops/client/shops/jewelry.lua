@@ -89,7 +89,7 @@ function JewelryShop:GenerateMenu()
         shopMenu:AddButton({label = content.label, value = content.menu})
 
         if content.menu == nil then
-            TriggerEvent("hud:client:DrawNotification", string.format("Le vendeur est occupé, veuillez réessayer dans quelques instants."))
+            TriggerEvent("soz-core:client:notification:draw", string.format("Le vendeur est occupé, veuillez réessayer dans quelques instants."))
             self:deleteCam()
             FreezeEntityPosition(PlayerPedId(), false)
             return

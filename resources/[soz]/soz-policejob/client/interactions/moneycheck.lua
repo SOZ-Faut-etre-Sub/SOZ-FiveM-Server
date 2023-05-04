@@ -77,6 +77,6 @@ RegisterNetEvent("police:client:MoneyChecker", function()
             end)
         end, GetPlayerServerId(player))
     else
-        exports["soz-hud"]:DrawNotification("Aucun joueur à proximité", "error")
+        exports["soz-core"]:DrawNotification("Aucun joueur à proximité", "error")
     end
 end)

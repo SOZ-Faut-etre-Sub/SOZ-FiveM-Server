@@ -25,5 +25,25 @@ export const StateApp: FunctionComponent = () => {
         dispatch.taxi.update(status);
     });
 
+    useNuiEvent('hud', 'UpdateVoiceMode', voiceMode => {
+        dispatch.hud.update({ voiceMode });
+    });
+
+    useNuiEvent('hud', 'UpdateMinimap', minimap => {
+        dispatch.hud.update({ minimap });
+    });
+
+    useNuiEvent('hud', 'UpdateVehicle', vehicle => {
+        dispatch.vehicle.update(vehicle);
+    });
+
+    useNuiEvent('hud', 'UpdateVehicleSpeed', vehicle => {
+        dispatch.vehicleSpeed.update(vehicle);
+    });
+
+    useNuiEvent('player', 'UpdatePlayerHealth', health => {
+        dispatch.playerHealth.update(health);
+    });
+
     return null;
 };

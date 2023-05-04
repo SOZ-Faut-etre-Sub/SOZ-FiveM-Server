@@ -76,7 +76,7 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
 
     QBCore.Functions.CreateBlip("jobs:news:sell", {name = "Point de livraison", coords = delivery, route = true})
 
-    exports["soz-hud"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
+    exports["soz-core"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
 end)
 
 RegisterNetEvent("jobs:client:news:newspaperSold", function()
@@ -116,9 +116,9 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
             {label = "Info Trafic", value = "info-traffic"},
         },
         select = function(_, value)
-            local message = exports["soz-hud"]:Input("Message de la communication", 235)
+            local message = exports["soz-core"]:Input("Message de la communication", 235)
             if message == nil or message == "" then
-                exports["soz-hud"]:DrawNotification("Vous devez spécifier un message", "error")
+                exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
                 return
             end
 

@@ -64,7 +64,7 @@ function TattooShop:GenerateMenu(skipIntro)
         description = "Suite à une encre de mauvaise qualité, vous pouvez retirer tous vos tatouages.",
         value = nil,
         select = function(item)
-            local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
+            local validation = exports["soz-core"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
             if validation == "oui" then
                 TriggerServerEvent("shops:server:resetTattoos")
             end
@@ -115,7 +115,7 @@ function TattooShop:GenerateMenu(skipIntro)
                     value = {collection = tattoo["Collection"], overlay = tattoo[overlayField]},
                     rightLabel = "$" .. QBCore.Shared.GroupDigits(tattoo["Price"]),
                     select = function(item)
-                        local validation = exports["soz-hud"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
+                        local validation = exports["soz-core"]:Input("Voulez-vous vraiment ce tatouage ? [oui/non]", 3)
                         if validation == "oui" then
                             TriggerServerEvent("shops:server:pay", "tattoo", item:GetValue(), 1)
                         end

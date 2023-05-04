@@ -96,7 +96,7 @@ end)
 QBCore.Functions.CreateCallback("banking:server:hasEnoughLiquidity", function(source, cb, accountId, amount)
     local account = Account(accountId)
     if account == nil then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Compte invalide", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Compte invalide", "error")
         return
     end
 
@@ -110,7 +110,7 @@ end)
 RegisterNetEvent("banking:server:RemoveLiquidity", function(accountId, amount)
     local account = Account(accountId)
     if account == nil then
-        TriggerClientEvent("hud:client:DrawNotification", source, "Compte invalide", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Compte invalide", "error")
         return
     end
     Account.RemoveMoney(accountId, amount, "money")

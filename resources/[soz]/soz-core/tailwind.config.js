@@ -20,6 +20,7 @@ module.exports = {
             noto: ['Noto Serif', 'serif'],
             mono: ['input-mono', 'monospace'],
             lato: ['Lato', ...defaultTheme.fontFamily.sans],
+            prompt: ['Prompt', 'sans-serif'],
         },
         extend: {
             colors: {},
@@ -41,9 +42,20 @@ module.exports = {
                     '0%, 29%': { transform: 'translate(0%,0)' },
                     '100%': { transform: 'translate(-100%,0)' },
                 },
+                'display-in': {
+                    '0%': { opacity: '0' },
+                    '50%': { opacity: '1' },
+                    '100%': { opacity: '0' },
+                },
+                'display-persist': {
+                    '0%': { opacity: '0' },
+                    '100%': { opacity: '1' },
+                },
             },
             animation: {
                 defilement: 'defilement 7s infinite linear',
+                'display-in': 'display-in 3s',
+                'display-persist': 'display-persist 1s',
             },
             fontSize: {
                 '2xs': '.6rem',

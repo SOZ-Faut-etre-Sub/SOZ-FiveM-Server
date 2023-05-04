@@ -154,11 +154,11 @@ RegisterNetEvent("police:client:SearchPlayer", function(data)
                     position = plyCoords,
                 }, true)
             else
-                exports["soz-hud"]:DrawNotification("Personne n'est à portée de vous", "error")
+                exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
             end
         end, function() -- Cancel
             StopAnimTask(ped, "random@shop_robbery", "robbery_action_b", 1.0)
-            exports["soz-hud"]:DrawNotification("Fouille annulée", "error")
+            exports["soz-core"]:DrawNotification("Fouille annulée", "error")
         end)
     end
 end)
@@ -174,7 +174,7 @@ RegisterNetEvent("police:client:CuffPlayer", function(data)
             TriggerServerEvent("monitor:server:event", "job_police_cuff_player", {},
                                {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
         else
-            exports["soz-hud"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
+            exports["soz-core"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
         end
     else
         Wait(2000)
@@ -191,7 +191,7 @@ RegisterNetEvent("police:client:UnCuffPlayer", function(data)
             TriggerServerEvent("monitor:server:event", "job_police_uncuff_player", {},
                                {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
         else
-            exports["soz-hud"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
+            exports["soz-core"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
         end
     else
         Wait(2000)

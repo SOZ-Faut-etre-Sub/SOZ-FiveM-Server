@@ -22,13 +22,13 @@ function restock(data)
                 TriggerEvent("soz-jobs:client:baun:restock", data)
             else
                 if reason == "missing_ingredient" then
-                    exports["soz-hud"]:DrawNotification(finished_message)
+                    exports["soz-core"]:DrawNotification(finished_message)
                 else
-                    exports["soz-hud"]:DrawNotification(string.format("Une erreur est survenue: %s.", reason), "error")
+                    exports["soz-core"]:DrawNotification(string.format("Une erreur est survenue: %s.", reason), "error")
                 end
             end
         end, data.storage, data.item)
     end, function()
-        exports["soz-hud"]:DrawNotification(stopped_message)
+        exports["soz-core"]:DrawNotification(stopped_message)
     end)
 end

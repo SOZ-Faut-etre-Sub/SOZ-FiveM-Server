@@ -99,7 +99,7 @@ end
 
 local function toggleRadio(toggle)
     if toggle and Entity(currentVehicle).state.radioInUse then
-        exports["soz-hud"]:DrawNotification("La radio est déjà utilisée", "error")
+        exports["soz-core"]:DrawNotification("La radio est déjà utilisée", "error")
 
         return
     end

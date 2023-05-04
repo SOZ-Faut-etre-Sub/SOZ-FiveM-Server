@@ -77,7 +77,7 @@ function CreateCharacterWizard(spawnId, character)
         character = OpenCreateCharacterMenu(character.Skin, character.ClothConfig, spawnId);
         Camera.Deactivate()
 
-        local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32) or ""
+        local confirmWord = exports["soz-core"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32) or ""
 
         if confirmWord:lower() == "oui" then
             confirm = true
@@ -103,7 +103,7 @@ RegisterNetEvent("soz-character:client:RequestCharacterWizard", function()
         character = OpenCreateCharacterMenu(character.Skin, character.ClothConfig, "spawn2");
         Camera.Deactivate()
 
-        local confirmWord = exports["soz-hud"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32) or ""
+        local confirmWord = exports["soz-core"]:Input("Entrer 'OUI' pour confirmer le skin de ce personnage", 32) or ""
 
         if confirmWord:lower() == "oui" then
             confirm = true
@@ -111,5 +111,5 @@ RegisterNetEvent("soz-character:client:RequestCharacterWizard", function()
     end
 
     TriggerServerEvent("soz-character:server:set-skin", character.Skin, character.ClothConfig)
-    exports["soz-hud"]:DrawNotification("Votre chirurgie s'est bien passée !")
+    exports["soz-core"]:DrawNotification("Votre chirurgie s'est bien passée !")
 end)

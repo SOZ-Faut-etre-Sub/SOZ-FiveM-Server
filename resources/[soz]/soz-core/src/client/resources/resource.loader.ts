@@ -72,4 +72,14 @@ export class ResourceLoader {
         }
         return scaleform;
     }
+
+    async loadStreamedTextureDict(name: string): Promise<void> {
+        if (!HasStreamedTextureDictLoaded(name)) {
+            RequestStreamedTextureDict(name, true);
+
+            while (!HasStreamedTextureDictLoaded(name)) {
+                await wait(0);
+            }
+        }
+    }
 }
