@@ -20,7 +20,7 @@ module.exports = {
             noto: ['Noto Serif', 'serif'],
             mono: ['input-mono', 'monospace'],
             lato: ['Lato', ...defaultTheme.fontFamily.sans],
-            prompt: ['Prompt', ...defaultTheme.fontFamily.sans],
+            prompt: ['Prompt', 'sans-serif'],
         },
         extend: {
             colors: {},

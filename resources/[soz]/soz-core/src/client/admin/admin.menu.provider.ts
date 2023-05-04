@@ -9,10 +9,10 @@ import { MenuType } from '../../shared/nui/menu';
 import { PlayerCharInfo } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingService } from '../clothing/clothing.service';
+import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
-import { AdminMenuGameMasterProvider } from './admin.menu.game-master.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 
 @Provider()
@@ -32,8 +32,8 @@ export class AdminMenuProvider {
     @Inject(VehicleConditionProvider)
     private vehicleConditionProvider: VehicleConditionProvider;
 
-    @Inject(AdminMenuGameMasterProvider)
-    private adminMenuGameMasterProvider: AdminMenuGameMasterProvider;
+    @Inject(HudMinimapProvider)
+    private hudMinimapProvider: HudMinimapProvider;
 
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
@@ -70,7 +70,7 @@ export class AdminMenuProvider {
                     gameMaster: {
                         invisible: !IsEntityVisible(ped),
                         moneyCase: LocalPlayer.state.adminDisableMoneyCase || false,
-                        adminGPS: this.adminMenuGameMasterProvider.getAdminGPS(),
+                        adminGPS: this.hudMinimapProvider.hasAdminGps,
                     },
                     interactive: {
                         displayOwners: this.adminMenuInteractiveProvider.intervalHandlers.displayOwners !== null,

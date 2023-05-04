@@ -25,6 +25,7 @@ import { NuiUpwOrderMenuMethodMap } from './upw_order_menu';
 
 export interface NuiGlobalMethodMap {
     PauseMenuActive: boolean;
+    HideHud: boolean;
 }
 
 export interface NuiMethodMap {

@@ -6,4 +6,4 @@ shared_scripts {"config.lua"}
 
 client_scripts {"client/*.lua"}
 
-dependencies {"qb-core", "soz-hud"}
+dependencies {"qb-core"}

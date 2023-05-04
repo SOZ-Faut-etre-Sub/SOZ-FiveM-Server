@@ -227,6 +227,7 @@ export enum ServerEvent {
 
 export enum ClientEvent {
     ADMIN_OPEN_MENU = 'soz-core:client:admin:openMenu',
+    ADMIN_SHOW_GPS = 'soz-core:client:admin:show-gps',
     ANIMATION_SURRENDER = 'soz-core:client:animation:surrender',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
@@ -289,6 +290,7 @@ export enum ClientEvent {
     LSMC_HEAL = 'soz-core:lsmc:client:heal',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
+    NEWS_DRAW = 'soz-core:client:news:draw',
     NOTIFICATION_DRAW = 'soz-core:client:notification:draw',
     NOTIFICATION_DRAW_ADVANCED = 'soz-core:client:notification:draw-advanced',
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
@@ -340,6 +342,8 @@ export enum ClientEvent {
     VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
     VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
+
+    VOIP_UPDATE_MODE = 'soz-core:client:voip:update-mode',
 
     UPW_OPEN_CLOAKROOM = 'soz-core:client:job:upw:open-cloakroom',
     UPW_CREATE_CHARGER = 'soz-core:client:job:upw:create-charger',
@@ -481,6 +485,9 @@ export enum NuiEvent {
     UpwDisplayBlips = 'soz-core:nui:job:upw:display-blips',
 
     PanelClosed = 'soz-core:nui:panel:closed',
+
+    Ping = 'soz-core:nui:ping',
+
     PlayerGetMugshot = 'soz-core:nui:player:get-mugshot',
     PlayerMenuOpenKeys = 'soz-core:nui:player:menu:open-keys',
     PlayerMenuCardShow = 'soz-core:nui:player:menu:card-show',

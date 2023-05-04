@@ -16,15 +16,13 @@ export const VoiceIndicator: FunctionComponent = () => {
 
     return (
         <div className="fixed right-[13vw] bottom-[1.5rem] text-white/75">
-            {voiceMode === VoiceMode.Mute && <MuteIcon className="w-12 h-12 animation-display-persist opacity-100" />}
-            {voiceMode === VoiceMode.Whisper && <WhisperIcon className="w-12 h-12 animation-display-in opacity-0" />}
-            {voiceMode === VoiceMode.Normal && <NormalIcon className="w-12 h-12 animation-display-in opacity-0" />}
-            {voiceMode === VoiceMode.Shouting && <ShoutingIcon className="w-12 h-12 animation-display-in opacity-0" />}
-            {voiceMode === VoiceMode.Megaphone && (
-                <MegaphoneIcon className="w-12 h-12 animation-display-in opacity-0" />
-            )}
+            {voiceMode === VoiceMode.Mute && <MuteIcon className="w-12 h-12 animate-display-persist opacity-100" />}
+            {voiceMode === VoiceMode.Whisper && <WhisperIcon className="w-12 h-12 animate-display-in opacity-0" />}
+            {voiceMode === VoiceMode.Normal && <NormalIcon className="w-12 h-12 animate-display-in opacity-0" />}
+            {voiceMode === VoiceMode.Shouting && <ShoutingIcon className="w-12 h-12 animate-display-in opacity-0" />}
+            {voiceMode === VoiceMode.Megaphone && <MegaphoneIcon className="w-12 h-12 animate-display-in opacity-0" />}
             {voiceMode === VoiceMode.Microphone && (
-                <MicrophoneIcon className="w-12 h-12 animation-display-in opacity-0" />
+                <MicrophoneIcon className="w-12 h-12 animate-display-in opacity-0" />
             )}
         </div>
     );

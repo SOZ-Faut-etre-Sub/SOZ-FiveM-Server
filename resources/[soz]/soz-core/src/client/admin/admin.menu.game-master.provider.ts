@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -18,7 +19,8 @@ export class AdminMenuGameMasterProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
-    private adminGPS = false;
+    @Inject(HudMinimapProvider)
+    private hudMinimapProvider: HudMinimapProvider;
 
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
@@ -142,11 +144,6 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminSetAdminGPS)
     public async setAdminGPS(value: boolean): Promise<void> {
-        this.adminGPS = value;
-        TriggerEvent('hud:client:admingps', value);
-    }
-
-    public getAdminGPS() {
-        return this.adminGPS;
+        this.hudMinimapProvider.hasAdminGps = value;
     }
 }

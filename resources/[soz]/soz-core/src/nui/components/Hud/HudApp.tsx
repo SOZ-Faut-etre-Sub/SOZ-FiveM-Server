@@ -1,7 +1,5 @@
-import classNames from 'classnames';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 
-import { useNuiEvent } from '../../hook/nui';
 import { Minimap } from './Minimap';
 import { NewsBanner } from './NewsBanner';
 import { Notifications } from './Notifications';
@@ -11,17 +9,8 @@ import { TwitchNewsOverlay } from './TwitchNewsOverlay';
 import { VoiceIndicator } from './VoiceIndicator';
 
 export const HudApp: FunctionComponent = () => {
-    const [showHud, setShowHud] = useState(true);
-
-    useNuiEvent('hud', 'SetShowHud', setShowHud);
-
-    const classes = classNames('absolute h-full w-full transition-opacity duration-500', {
-        'opacity-0': !showHud,
-        'opacity-100': showHud,
-    });
-
     return (
-        <main className={classes}>
+        <main className="absolute h-full w-full">
             <Notifications />
             <NewsBanner />
             <Minimap />
