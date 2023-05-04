@@ -89,7 +89,7 @@ const SeatbeltIndicator: FunctionComponent<{ state: boolean }> = ({ state }) => 
     return <SeatbeltIcon className={classes} />;
 };
 
-const SpeedGauge: FunctionComponent<{ hasFuel: boolean }> = ({ hasFuel }) => {
+const SpeedGauge: FunctionComponent<{ hasFuel: boolean; useRpm: boolean }> = ({ hasFuel, useRpm }) => {
     const vehicleSpeed = useVehicleSpeed();
 
     const classes = classNames(
@@ -98,6 +98,20 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean }> = ({ hasFuel }) => {
             'mr-[50px]': !hasFuel,
         }
     );
+
+    let rpm;
+
+    console.log(useRpm);
+
+    if (!useRpm) {
+        rpm = vehicleSpeed.speed / 250;
+    } else {
+        rpm = vehicleSpeed.rpm - 0.2;
+    }
+
+    if (rpm < 0) {
+        rpm = 0;
+    }
 
     return (
         <>
@@ -117,7 +131,9 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean }> = ({ hasFuel }) => {
                     strokeWidth="4"
                     strokeOpacity="1.0"
                     strokeDasharray="185"
-                    style={{ strokeDashoffset: -(205 - vehicleSpeed.rpm * 205) }}
+                    style={{
+                        strokeDashoffset: Math.min(-(185 - rpm * 185), 0),
+                    }}
                 />
             </svg>
             <div className={classes}>
@@ -185,7 +201,7 @@ export const SpeedoMeter: FunctionComponent = () => {
                 <LockIndicator state={vehicle.lockStatus} />
             </div>
             <div className="flex justify-center mr-[-40px]">
-                <SpeedGauge hasFuel={vehicle.fuelType !== 'none'} />
+                <SpeedGauge hasFuel={vehicle.fuelType !== 'none'} useRpm={vehicle.useRpm} />
                 {vehicle.fuelType !== 'none' && <FuelGauge value={vehicle.fuelLevel} fuelType={vehicle.fuelType} />}
                 <MotorIndicator motor={vehicle.engineHealth} oil={vehicle.oilLevel} fuelType={vehicle.fuelType} />
             </div>

@@ -65,12 +65,15 @@ export class HudVehicleProvider {
         const ped = PlayerPedId();
 
         // Get seat for ped
-        for (let i = -1; i < GetVehicleMaxNumberOfPassengers(vehicle) - 1; i++) {
+        for (let i = -1; i < GetVehicleMaxNumberOfPassengers(vehicle); i++) {
             if (GetPedInVehicleSeat(vehicle, i) === ped) {
                 seat = i;
                 break;
             }
         }
+
+        const model = GetEntityModel(vehicle);
+        const useRpm = !IsThisModelAHeli(model) && !IsThisModelAPlane(model);
 
         const [hasLight, lightOn, hasHighBeam] = GetVehicleLightsState(vehicle);
         const hash = GetEntityModel(vehicle);
@@ -92,6 +95,7 @@ export class HudVehicleProvider {
                     : null,
             oilLevel: state.condition.oilLevel,
             lockStatus: state.open ? VehicleLockStatus.Unlocked : VehicleLockStatus.Locked,
+            useRpm,
             lightState: hasLight
                 ? hasHighBeam
                     ? VehicleLightState.HighBeam

@@ -18,7 +18,7 @@ export class Notifier {
         source: number,
         message: string,
         type: 'error' | 'success' | 'warning' | 'info' = 'success',
-        delay?: number
+        delay = 10000
     ) {
         TriggerClientEvent(ClientEvent.NOTIFICATION_DRAW, source, message, type, delay);
     }
@@ -34,7 +34,7 @@ export class Notifier {
         message: string,
         image: string,
         type: 'error' | 'success' | 'warning' | 'info' = 'success',
-        delay?: number
+        delay = 10000
     ) {
         TriggerClientEvent(
             ClientEvent.NOTIFICATION_DRAW_ADVANCED,

@@ -30,6 +30,7 @@ export type VehicleHud = {
     lightState: number;
     fuelType: 'essence' | 'electric' | 'none';
     fuelLevel: number;
+    useRpm: boolean;
 };
 
 export type VehicleHudSpeed = {
