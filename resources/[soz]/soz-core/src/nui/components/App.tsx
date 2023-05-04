@@ -48,10 +48,11 @@ export const App: FunctionComponent = () => {
     return (
         <Provider store={store}>
             <StateApp />
+            <div className="absolute w-full h-full">
+                <MenuApp />
+            </div>
             <div className={classes}>
                 <HudApp />
-                <TalentApp />
-                <CraftingApp />
                 <CardApp />
                 <AudioApp />
                 <ProgressApp />
@@ -63,9 +64,8 @@ export const App: FunctionComponent = () => {
                 <BreathAnalyzerApp />
                 <HoodApp />
                 <TaxiHorodateurApp />
-            </div>
-            <div className="absolute w-full h-full">
-                <MenuApp />
+                <TalentApp />
+                <CraftingApp />
             </div>
         </Provider>
     );
