@@ -25,6 +25,7 @@ export type PlayerPersonalMenuData = {
     isCinematicMode: boolean;
     isCinematicCameraActive: boolean;
     isHudVisible: boolean;
+    scaledNui: boolean;
     shortcuts: Record<string, Shortcut>;
     job: JobMenuData;
 };

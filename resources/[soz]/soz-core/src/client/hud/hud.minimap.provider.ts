@@ -30,6 +30,8 @@ export class HudMinimapProvider {
 
     private _inVehicle = GetVehiclePedIsIn(PlayerPedId(), false) !== 0;
 
+    private _scaledNui = GetResourceKvpInt('soz_scaled_nui') === 1;
+
     public get hasAdminGps(): boolean {
         return this._hasAdminGps;
     }
@@ -42,6 +44,16 @@ export class HudMinimapProvider {
     public set showHud(value: boolean) {
         this._showHud = value;
         this.updateShowRadar();
+    }
+
+    public get scaledNui(): boolean {
+        return this._scaledNui;
+    }
+
+    public set scaledNui(value: boolean) {
+        this._scaledNui = value;
+        SetResourceKvpInt('soz_scaled_nui', value ? 1 : 0);
+        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
     }
 
     @Once(OnceStep.PlayerLoaded)
@@ -139,6 +151,19 @@ export class HudMinimapProvider {
         }
 
         ResetScriptGfxAlign();
+
+        if (this.scaledNui) {
+            return {
+                X: 0.08091666683321,
+                Y: 0.88549252311906,
+                bottom: 0.97361377796573,
+                height: 0.17624250969333,
+                left: 0.01560416735708,
+                right: 0.15122916630934,
+                top: 0.79737126827239,
+                width: 0.14062499895226,
+            };
+        }
 
         return {
             width,

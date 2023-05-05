@@ -504,6 +504,7 @@ export enum NuiEvent {
     PlayerMenuHudSetGlobal = 'soz-core:nui:player:menu:hud-set-global',
     PlayerMenuHudSetCinematicMode = 'soz-core:nui:player:menu:hud-set-cinematic-mode',
     PlayerMenuHudSetCinematicCameraActive = 'soz-core:nui:player:menu:hud-set-cinematic-camera-active',
+    PlayerMenuHudSetScaledNui = 'soz-core:nui:player:menu:hud-set-scaled-nui',
     PlayerMenuJobGradeCreate = 'soz-core:nui:player:menu:job-grade-create',
     PlayerMenuJobGradeDelete = 'soz-core:nui:player:menu:job-grade-delete',
     PlayerMenuJobGradeSetDefault = 'soz-core:nui:player:menu:job-grade-set-default',

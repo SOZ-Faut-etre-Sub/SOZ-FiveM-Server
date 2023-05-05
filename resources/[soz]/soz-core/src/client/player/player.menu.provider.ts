@@ -7,6 +7,7 @@ import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
+import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { HudStateProvider } from '../hud/hud.state.provider';
 import { JobMenuProvider } from '../job/job.menu.provider';
 import { Notifier } from '../notifier';
@@ -40,6 +41,9 @@ export class PlayerMenuProvider {
     @Inject(HudStateProvider)
     private hudStateProvider: HudStateProvider;
 
+    @Inject(HudMinimapProvider)
+    private hudMinimapProvider: HudMinimapProvider;
+
     @Inject(PlayerAnimationProvider)
     private playerAnimationProvider: PlayerAnimationProvider;
 
@@ -70,6 +74,7 @@ export class PlayerMenuProvider {
 
         this.menu.openMenu(MenuType.PlayerPersonal, {
             ...this.hudStateProvider.getState(),
+            scaledNui: this.hudMinimapProvider.scaledNui,
             shortcuts: this.playerAnimationProvider.getShortcuts(),
             job: this.jobMenuProvider.getJobMenuData(),
         });
@@ -149,6 +154,11 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetCinematicCameraActive)
     public async hudComponentSetCinematicCameraActive({ value }: { value: boolean }) {
         this.hudStateProvider.setCinematicCameraActive(value);
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetScaledNui)
+    public async hudComponentSetScaledNui({ value }: { value: boolean }) {
+        this.hudMinimapProvider.scaledNui = value;
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)

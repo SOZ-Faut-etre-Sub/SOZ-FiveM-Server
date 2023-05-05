@@ -86,6 +86,13 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     >
                         Caméra: Cinématique
                     </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        checked={data.scaledNui}
+                        description="Active/Désactive le scaling NUI"
+                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetScaledNui, { value })}
+                    >
+                        Scaling NUI
+                    </MenuItemCheckbox>
                 </MenuContent>
             </SubMenu>
             <MenuJob data={data.job} />
