@@ -18,6 +18,7 @@ export type KillData = {
     killpos: Vector3;
     killerveh?: KillerVehData;
     ejection: boolean;
+    hungerThristDeath: boolean;
 };
 
 export const PHARMACY_PRICES = {
