@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
 import { Minimap } from '../../shared/hud';
+import { Vector2 } from '../../shared/polyzone/vector';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ResourceLoader } from '../resources/resource.loader';
@@ -27,7 +28,7 @@ export class HudMinimapProvider {
 
     private _showHud = true;
 
-    private _inVehicle = false;
+    private _inVehicle = GetVehiclePedIsIn(PlayerPedId(), false) !== 0;
 
     public get hasAdminGps(): boolean {
         return this._hasAdminGps;
@@ -65,18 +66,16 @@ export class HudMinimapProvider {
         this.updateShowRadar();
     }
 
-    @Once(OnceStep.NuiLoaded)
-    public async nuiLoaded(): Promise<void> {
-        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
-    }
-
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(): Promise<void> {
         this._haveGps = this.inventoryManager.hasEnoughItem('gps', 1, true);
     }
 
-    @Once(OnceStep.Start)
+    @Once(OnceStep.NuiLoaded)
     public async start(): Promise<void> {
+        ForceCloseTextInputBox();
+        DisplayRadar(false);
+
         AddTextEntry('PM_PANE_CFX', 'SO~g~Z~w~~italic~ ~s~(FiveM)');
         AddTextEntry('FE_THDR_GTAO', 'SO~g~Z~w~~italic~ - Serveur GTA RP Communautaire');
         AddTextEntry('PM_SCR_MAP', "CARTE DE L'ÎLE");
@@ -91,7 +90,9 @@ export class HudMinimapProvider {
         AddReplaceTexture('minimap', 'blips_texturesheet_ng', 'soz_minimap', 'blips_texturesheet_ng');
         AddReplaceTexture('minimap', 'blips_texturesheet_ng_2', 'soz_minimap', 'blips_texturesheet_ng_2');
 
-        this.minimapHandle = RequestScaleformMovie('minimap');
+        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
+        this.minimapHandle = await this.resourceLoader.loadScaleformMovie('minimap');
+
         SetRadarBigmapEnabled(false, false);
     }
 
@@ -121,12 +122,23 @@ export class HudMinimapProvider {
         const scaleX = 1.0 / x;
         const scaleY = 1.0 / y;
 
-        SetScriptGfxAlign('L'.charCodeAt(0), 'B'.charCodeAt(0));
-        const [rawX, rawY] = GetScriptGfxPosition(-0.0045, 0.002 + -0.188888);
-        ResetScriptGfxAlign();
+        let rawX;
+        let rawY;
+        let width;
+        let height;
 
-        const width = scaleX * (x / (4 * aspectRatio));
-        const height = scaleY * (y / 5.674);
+        SetScriptGfxAlign('L'.charCodeAt(0), 'B'.charCodeAt(0));
+        if (IsBigmapActive()) {
+            [rawX, rawY] = GetScriptGfxPosition(-0.003975, 0.022 - 0.460416666);
+            width = scaleX * (x / (2.52 * aspectRatio));
+            height = scaleY * (y / 2.3374);
+        } else {
+            [rawX, rawY] = GetScriptGfxPosition(-0.0045, 0.002 + -0.188888);
+            width = scaleX * (x / (4 * aspectRatio));
+            height = scaleY * (y / 5.674);
+        }
+
+        ResetScriptGfxAlign();
 
         return {
             width,
