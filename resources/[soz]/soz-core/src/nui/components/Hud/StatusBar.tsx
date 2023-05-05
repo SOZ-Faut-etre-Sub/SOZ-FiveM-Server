@@ -32,10 +32,7 @@ export const StatusBar: FunctionComponent<PropsWithChildren<StatusBarProps>> = (
     return (
         <div className={classes}>
             {children}
-            <div
-                className="flex h-full ml-1 grow-1 w-full rounded overflow-hidden"
-                style={{ background: backgroundPrimary }}
-            >
+            <div className="flex ml-1 grow-1 w-full rounded overflow-hidden" style={{ background: backgroundPrimary }}>
                 <div
                     className="flex h-full flex-col transition-width duration-1000 "
                     style={{ background: backgroundSecondary, width: `${percent}%` }}
