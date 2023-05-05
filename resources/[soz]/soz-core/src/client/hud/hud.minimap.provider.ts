@@ -52,7 +52,7 @@ export class HudMinimapProvider {
     public onBaseEnteredVehicle(): void {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
 
-        if (vehicle && !IsThisModelABicycle(GetEntityModel(vehicle))) {
+        if (vehicle) {
             this._inVehicle = true;
         }
 
