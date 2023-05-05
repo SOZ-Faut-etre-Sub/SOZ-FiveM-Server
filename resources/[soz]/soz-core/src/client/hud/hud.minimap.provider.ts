@@ -4,7 +4,6 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
 import { Minimap } from '../../shared/hud';
-import { Vector2 } from '../../shared/polyzone/vector';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ResourceLoader } from '../resources/resource.loader';
