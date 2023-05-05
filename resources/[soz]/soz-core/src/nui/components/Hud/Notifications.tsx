@@ -122,7 +122,7 @@ export const Notifications: FunctionComponent = () => {
             className="absolute flex flex-col-reverse"
             style={{
                 top: `calc((100vh * ${minimap.top}) - calc((100vh * ${minimap.height}) * 4) - .5rem )`,
-                left: `calc(100vw * ${minimap.left})`,
+                left: `calc(100vw * ${minimap.left + 0.004})`,
                 height: `calc((100vh * ${minimap.height}) * 4)`,
                 width: `calc(100vw * ${minimap.width})`,
             }}
