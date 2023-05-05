@@ -112,8 +112,8 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean; useRpm: boolean }> = ({ 
     }
 
     return (
-        <>
-            <svg width="100" height="100">
+        <div className="w-[100px] h-[100px] relative">
+            <svg className="h-full w-full">
                 <path
                     d="M97 47.8863C97 22.544 75.7335 2 49.5 2C23.2665 2 2 22.544 2 47.8863C2 60.389 7.17623 71.7238 15.5714 80"
                     fill="none"
@@ -138,7 +138,7 @@ const SpeedGauge: FunctionComponent<{ hasFuel: boolean; useRpm: boolean }> = ({ 
                 <span className="text-white text-3xl">{vehicleSpeed.speed.toFixed(0)}</span>
                 <span>km/h</span>
             </div>
-        </>
+        </div>
     );
 };
 
@@ -192,18 +192,22 @@ export const SpeedoMeter: FunctionComponent = () => {
         }
     );
 
+    const classesLight = classNames('flex justify-start items-end pb-[1.25rem]', {
+        'pl-[40px]': vehicle.fuelType === 'none',
+    });
+
     return (
         <div className={classes}>
             <div className="flex justify-end items-end pb-[1.25rem]">
                 {vehicle.seatbelt !== null && <SeatbeltIndicator state={vehicle.seatbelt} />}
                 <LockIndicator state={vehicle.lockStatus} />
             </div>
-            <div className="flex justify-center mr-[-40px]">
+            <div className="flex justify-center mr-[-50px]">
                 <SpeedGauge hasFuel={vehicle.fuelType !== 'none'} useRpm={vehicle.useRpm} />
                 {vehicle.fuelType !== 'none' && <FuelGauge value={vehicle.fuelLevel} fuelType={vehicle.fuelType} />}
                 <MotorIndicator motor={vehicle.engineHealth} oil={vehicle.oilLevel} fuelType={vehicle.fuelType} />
             </div>
-            <div className="flex justify-start items-end pb-[1.25rem]">
+            <div className={classesLight}>
                 <LightIndicator state={vehicle.lightState} />
             </div>
         </div>

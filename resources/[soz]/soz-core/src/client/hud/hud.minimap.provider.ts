@@ -110,6 +110,11 @@ export class HudMinimapProvider {
         DisplayRadar(showRadar);
     }
 
+    @Tick(1000)
+    public async updateMinimap(): Promise<void> {
+        this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
+    }
+
     private getMinimap(): Minimap {
         const [x, y] = GetActiveScreenResolution();
         const aspectRatio = GetAspectRatio(false);

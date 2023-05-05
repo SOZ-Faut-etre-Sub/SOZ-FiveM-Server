@@ -18,7 +18,7 @@ export const StatusBar: FunctionComponent<PropsWithChildren<StatusBarProps>> = (
     const hide = hideCondition(percent);
 
     const classes = classNames(
-        'transition-all duration-500 flex h-full w-full rounded bg-black p-[0.3rem] mx-0 my-[0.3rem]',
+        'transition-all duration-500 flex h-full w-full rounded bg-black p-[0.2rem] mx-0 my-[0.3rem]',
         {
             'opacity-0': hide,
             'opacity-60': !hide,
@@ -32,9 +32,12 @@ export const StatusBar: FunctionComponent<PropsWithChildren<StatusBarProps>> = (
     return (
         <div className={classes}>
             {children}
-            <div className="flex ml-1 grow-1 w-full rounded overflow-hidden" style={{ background: backgroundPrimary }}>
+            <div
+                className="flex h-full ml-1 grow-1 w-full rounded overflow-hidden"
+                style={{ background: backgroundPrimary }}
+            >
                 <div
-                    className="flex flex-col transition-width duration-1000 "
+                    className="flex h-full flex-col transition-width duration-1000 "
                     style={{ background: backgroundSecondary, width: `${percent}%` }}
                 />
             </div>

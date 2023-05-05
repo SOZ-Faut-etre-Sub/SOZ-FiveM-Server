@@ -54,7 +54,7 @@ export class HudVehicleProvider {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         let seat = null;
 
-        if (!vehicle || IsThisModelABicycle(GetEntityModel(vehicle))) {
+        if (!vehicle) {
             this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
                 seat,
             });
