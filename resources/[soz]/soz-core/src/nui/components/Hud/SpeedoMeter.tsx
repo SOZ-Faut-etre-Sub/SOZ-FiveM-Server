@@ -192,7 +192,7 @@ export const SpeedoMeter: FunctionComponent = () => {
         }
     );
 
-    const classesLight = classNames('flex justify-start items-end pb-[1.25rem]', {
+    const classesLight = classNames('flex justify-start items-end pb-[1.15rem]', {
         'pl-[40px]': vehicle.fuelType === 'none',
     });
 
