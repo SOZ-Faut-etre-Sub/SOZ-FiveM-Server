@@ -237,6 +237,8 @@ PoliceJob.Functions.Menu.GenerateInvoiceMenu = function(job, targetPlayer)
                     return
                 end
 
+                Citizen.Wait(100)
+
                 local amount = exports["soz-core"]:Input("Montant", 10)
                 if amount == nil or tonumber(amount) == nil or tonumber(amount) <= 0 then
                     exports["soz-core"]:DrawNotification("Vous devez spécifier un montant", "error")
