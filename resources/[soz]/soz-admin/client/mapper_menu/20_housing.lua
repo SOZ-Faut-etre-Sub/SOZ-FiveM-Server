@@ -115,6 +115,8 @@ currentPropertyMenu:On("open", function(menu)
                 return
             end
 
+            Citizen.Wait(100)
+
             local label = exports["soz-core"]:Input("Nom de l'intérieur :", 50)
             if label == nil or #label == 0 then
                 exports["soz-core"]:DrawNotification("Le nom ne peut pas être vide", "error")
