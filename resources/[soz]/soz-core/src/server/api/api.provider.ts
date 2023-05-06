@@ -48,12 +48,12 @@ export class ApiProvider {
         return Response.ok('Player kicked');
     }
 
-    @Post('/set-ctr')
-    public async ctr(request: Request): Promise<Response> {
+    @Post('/set-rpDeath')
+    public async rpDeath(request: Request): Promise<Response> {
         const data = JSON.parse(await request.body);
         const player = this.playerService.getPlayerByCitizenId(data.player);
         if (player && player.source) {
-            this.playerService.setPlayerMetadata(player.source, 'ctr', data.value);
+            this.playerService.setPlayerMetadata(player.source, 'rp_death', data.value);
         }
         return Response.ok();
     }

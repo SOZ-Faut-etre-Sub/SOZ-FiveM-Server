@@ -178,7 +178,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
 
     PlayerData.metadata['mort'] = PlayerData.metadata['mort'] or ''
     
-    PlayerData.metadata['ctr'] = PlayerData.metadata['ctr'] or false
+    PlayerData.metadata['rp_death'] = PlayerData.metadata['rp_death'] or false
 
     if not PlayerData.metadata.lastBidTime then
         PlayerData.metadata.canBid = true

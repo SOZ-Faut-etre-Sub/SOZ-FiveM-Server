@@ -8,9 +8,9 @@ import EmergencyLSMCContainer from './EmergencyLSMCContainer';
 import EmergencyUniteHUContainer from './EmergencyUniteHUContainer';
 
 export const EmergencyModal = memo(() => {
-    const deathRaison = useIsDead();
+    const deathReason = useIsDead();
 
-    if (!deathRaison.length) {
+    if (!deathReason.length) {
         return (
             <FullPageWithHeader className="bg-black bg-opacity-90">
                 <div style={{ fontFamily: 'Prompt' }}>
@@ -39,7 +39,7 @@ export const EmergencyModal = memo(() => {
                     <img className="m-auto pt-8" src={dead} alt="" />
                     <div className="flex flex-col justify-center items-center mt-10 text-white">
                         <div className="text-3xl font-light max-w-[90%] truncate">Status : MORT</div>
-                        <div className="text-xl font-light max-w-[90%] truncate">Cause : {deathRaison}</div>
+                        <div className="text-xl font-light max-w-[90%] truncate">Cause : {deathReason}</div>
                         <ul style={{ listStyleType: 'circle' }} className="text-1xl font-light w-3/4 mt-5 pl-5">
                             <li>Les services administratifs ont été prévenus</li>
                             <li>Les médecins seront alertés</li>
