@@ -190,11 +190,11 @@
             <HDTextureDist value="5.000000"/>
             <lodDistances content="float_array">
                 25.000000
-                50.000000
-                80.000000
                 100.000000
-                180.000000
-                250.000000
+                190.000000
+                230.000000
+                350.000000
+                500.000000
             </lodDistances>
             <minSeatHeight value="10"/>
             <identicalModelSpawnDistance value="20"/>
