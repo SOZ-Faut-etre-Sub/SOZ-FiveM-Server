@@ -41,9 +41,11 @@ import { MenuWardrobe } from './MenuWardrobe';
 
 export const MenuApp: FunctionComponent = () => {
     return (
-        <MemoryRouter>
-            <MenuRouter />
-        </MemoryRouter>
+        <div className="absolute w-full h-full overflow-hidden opacity-100">
+            <MemoryRouter>
+                <MenuRouter />
+            </MemoryRouter>
+        </div>
     );
 };
 

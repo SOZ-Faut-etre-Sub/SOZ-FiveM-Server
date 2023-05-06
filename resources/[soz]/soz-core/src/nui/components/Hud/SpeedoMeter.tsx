@@ -149,10 +149,10 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string }> = ({ val
         <div className="relative right-[10px] top-[6px]">
             <svg
                 className={classNames('flex', {
-                    'text-green-500': fuelType === 'essence' && value >= 60,
+                    'text-green-500': fuelType === 'essence',
                     'text-yellow-300': fuelType === 'electric' && value >= 60,
-                    'text-orange-500': value < 60 && value >= 30,
-                    'text-red-500': value < 30,
+                    'text-orange-500': fuelType === 'electric' && value < 60 && value >= 30,
+                    'text-red-500': fuelType === 'electric' && value < 30,
                 })}
                 width="30"
                 height="50"
