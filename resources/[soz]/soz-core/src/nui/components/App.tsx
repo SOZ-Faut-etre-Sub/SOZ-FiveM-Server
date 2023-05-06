@@ -32,7 +32,7 @@ export const App: FunctionComponent = () => {
     useNuiEvent('global', 'PauseMenuActive', setPauseMenuActive);
     useNuiEvent('global', 'HideHud', setHideHud);
 
-    const classes = classNames('absolute transition-all duration-500 w-full h-full overflow-hidden', {
+    const classes = classNames('transition-all duration-500overflow-hidden', {
         'opacity-0': pauseMenuActive || hideHud,
         'opacity-100': !pauseMenuActive && !hideHud,
     });
@@ -48,17 +48,18 @@ export const App: FunctionComponent = () => {
     return (
         <Provider store={store}>
             <StateApp />
-            <div className="absolute w-full h-full overflow-hidden">
-                <MenuApp />
-            </div>
+            <AudioApp />
             <div className={classes}>
                 <HudApp />
                 <CardApp />
-                <AudioApp />
+            </div>
+            <div className="overflow-hidden">
+                <MenuApp />
+            </div>
+            <div className={classes}>
                 <ProgressApp />
                 <PanelApp />
                 <RepairApp />
-                <InputApp />
                 <MissiveApp />
                 <RadarApp />
                 <BreathAnalyzerApp />
@@ -66,6 +67,7 @@ export const App: FunctionComponent = () => {
                 <TaxiHorodateurApp />
                 <TalentApp />
                 <CraftingApp />
+                <InputApp />
             </div>
         </Provider>
     );
