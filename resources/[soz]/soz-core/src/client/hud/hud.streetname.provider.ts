@@ -47,7 +47,7 @@ export class HudStreetNameProvider {
         }
 
         this.drawService.drawText(this.streetName, [0.5, 0.02], {
-            size: 0.45,
+            size: 0.35,
             outline: true,
             centered: true,
         });

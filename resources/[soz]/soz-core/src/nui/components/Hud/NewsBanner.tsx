@@ -76,10 +76,10 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
                 aspectRatio: '2.5',
             }}
         >
-            <h3 className="flex h-[25%] justify-end text-4xl items-center pr-8 uppercase">{newsTitle(news.type)}</h3>
-            <div className="pl-[33%] h-[60%] text-2xl xl:text-lg md:text-base">
+            <h3 className="flex h-[25%] justify-end text-4xl items-center pr-4 uppercase">{newsTitle(news.type)}</h3>
+            <div className="pl-[33%] h-[62%] text-2xl xl:text-base">
                 {/(lspd|bcso)/.test(news.type) ? (
-                    <p className="flex flex-col justify-between p-2 h-full">
+                    <p className="flex flex-col justify-between p-2 h-full overflow-hidden break-words">
                         <p>
                             Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.
                         </p>
@@ -91,9 +91,9 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
                 ) : (
                     <>
                         {!news.type.includes('reboot') && (
-                            <div className="flex flex-col justify-between p-2 h-44">
+                            <div className="flex flex-col justify-between p-1 h-full">
                                 <p className="max-h-40 overflow-hidden break-words">{news.message}</p>
-                                <p className="text-right pr-2 text-lg">
+                                <p className="text-right pr-4 text-lg">
                                     Reporter: <strong>{news.reporter}</strong>
                                 </p>
                             </div>
