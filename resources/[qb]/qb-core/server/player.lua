@@ -450,11 +450,15 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
         end
 
-        if (baseBag == 0 and jobBag == 0) or ((baseBag ~= 0 or jobBag ~= 0) and self.PlayerData.cloth_config.Config.HideBag) then
-            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(baseWeight))
-        else
-            exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(baseWeight + 40000))
+        if exports['soz-core']:HasTemporaryCrimiWeight(self.PlayerData.source) then
+            baseWeight = baseWeight + 40000
         end
+
+        if (baseBag ~= 0 or jobBag ~= 0) and not self.PlayerData.cloth_config.Config.HideBag then
+            baseWeight = baseWeight + 40000
+        end
+
+        exports["soz-inventory"]:SetMaxWeight(self.PlayerData.source, math.floor(baseWeight))
     end
 
     self.Functions.UpdateArmour = function()

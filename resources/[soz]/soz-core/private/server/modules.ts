@@ -1,1 +1,3 @@
-export const modules = [];
+import { MockModule } from './mock.module';
+
+export const modules = [MockModule];

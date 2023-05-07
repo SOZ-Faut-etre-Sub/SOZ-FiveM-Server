@@ -1,7 +1,8 @@
-import { On } from '../../core/decorators/event';
+import { On, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
+import { ClientEvent } from '../../shared/event';
 import { HudComponent } from '../../shared/hud';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { HudMinimapProvider } from './hud.minimap.provider';
@@ -31,6 +32,8 @@ export class HudStateProvider {
 
     private isCinematicCameraActive = false;
 
+    private isCrosshairVisible = false;
+
     private _isComputedHudVisible = true;
 
     public get isComputedHudVisible(): boolean {
@@ -58,6 +61,11 @@ export class HudStateProvider {
 
     public setCinematicCameraActive(enabled: boolean): void {
         this.isCinematicCameraActive = enabled;
+    }
+
+    @OnEvent(ClientEvent.PLAYER_UPDATE_CROSSHAIR)
+    public setCrosshairVisible(visible: boolean): void {
+        this.isCrosshairVisible = visible;
     }
 
     private updateHudState(): void {
@@ -103,7 +111,7 @@ export class HudStateProvider {
         const ped = PlayerPedId();
         const [, weapon] = GetCurrentPedWeapon(ped, true);
 
-        if (!ALLOWED_RETICLE_WEAPONS.has(weapon)) {
+        if (!this.isCrosshairVisible && !ALLOWED_RETICLE_WEAPONS.has(weapon)) {
             HideHudComponentThisFrame(HudComponent.Reticle);
         }
     }
