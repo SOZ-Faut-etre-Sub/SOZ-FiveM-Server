@@ -11,12 +11,17 @@
 9  hiver Stonks
 10 intervention LSPD/BCSO
 11 anti-emeute LSPD/BCSO
+12 blouse LSMC
+13 blouse chirurgie LSMC
+
+    Mask
+0  masque chirurgical
 
     Decalque
 0  chevron 0-4
 1  4 étoiles or 0
 2  col or et argent 0-7
-3  épaullete stonks
+3  épaulette stonks
 
     Armor
 0  stonks
@@ -51,7 +56,7 @@
 1  BCSO badge pectoraux
 
     pantalon
-0  patient  //don"t use, cause tatoo duplication between legs
+0  patient  //don"t use, cause tattoo duplication between legs
 1  service LSPD/BCSO
 2  stonk
 3  motard LSPD/BCSO
@@ -68,15 +73,9 @@
 4  casque pilote LSPD/BCSO          //logo LSPD manquant
 5  oreille lapin
 
-
-
-
-
-
-
 lowr pantalon 4        propMask 17
 hand bag/parachute 5   propMask 65
-teef Assesories 7      propMask 11
+teef Accessories 7      propMask 11
 accs undershirt 8      propMask 65
 task GPB 9             propMask 1 
 decl decal 10          propMask 5 
@@ -85,7 +84,7 @@ p_head chapeau/casque 1
 
 
 HEAD : 0,  // Head
-BERD : 1,  // Beard
+BERD : 1,  // Mask
 HAIR : 2,  // Hair
 UPPR : 3,  // Arms
 LOWR : 4,  // Pants
