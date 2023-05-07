@@ -40,33 +40,17 @@ local function CheckInputRotation(cam, zoomvalue)
 end
 
 local function HandleZoom(cam)
-    local lPed = PlayerPedId()
-    if not (IsPedSittingInAnyVehicle(lPed)) then
-
-        if IsControlJustPressed(0, 241) then
-            fov = math.max(fov - zoomspeed, fov_min)
-        end
-        if IsControlJustPressed(0, 242) then
-            fov = math.min(fov + zoomspeed, fov_max)
-        end
-        local current_fov = GetCamFov(cam)
-        if math.abs(fov - current_fov) < 0.1 then
-            fov = current_fov
-        end
-        SetCamFov(cam, current_fov + (fov - current_fov) * 0.05)
-    else
-        if IsControlJustPressed(0, 17) then
-            fov = math.max(fov - zoomspeed, fov_min)
-        end
-        if IsControlJustPressed(0, 16) then
-            fov = math.min(fov + zoomspeed, fov_max)
-        end
-        local current_fov = GetCamFov(cam)
-        if math.abs(fov - current_fov) < 0.1 then
-            fov = current_fov
-        end
-        SetCamFov(cam, current_fov + (fov - current_fov) * 0.05)
+    if IsControlJustPressed(0, 241) then
+        fov = math.max(fov - zoomspeed, fov_min)
     end
+    if IsControlJustPressed(0, 242) then
+        fov = math.min(fov + zoomspeed, fov_max)
+    end
+    local current_fov = GetCamFov(cam)
+    if math.abs(fov - current_fov) < 0.1 then
+        fov = current_fov
+    end
+    SetCamFov(cam, current_fov + (fov - current_fov) * 0.05)
 end
 
 local createCameraThread = function()
