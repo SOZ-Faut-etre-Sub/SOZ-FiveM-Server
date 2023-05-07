@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
 import { ItemService } from '../item/item.service';
+import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
 
 @Provider()
@@ -13,6 +14,9 @@ export class ApiProvider {
 
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @Get('/active-players')
     public async getActivePlayers(): Promise<Response> {
@@ -42,5 +46,15 @@ export class ApiProvider {
         DropPlayer(data.player, data.reason);
 
         return Response.ok('Player kicked');
+    }
+
+    @Post('/set-rpDeath')
+    public async rpDeath(request: Request): Promise<Response> {
+        const data = JSON.parse(await request.body);
+        const player = this.playerService.getPlayerByCitizenId(data.player);
+        if (player && player.source) {
+            this.playerService.setPlayerMetadata(player.source, 'rp_death', data.value);
+        }
+        return Response.ok();
     }
 }

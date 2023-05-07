@@ -192,8 +192,8 @@ onNet('soz-core:lsmc:client:revive', async () => {
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, canAccess);
 });
 
-onNet('soz-core:client:injury:death', async (value: boolean) => {
-    sendMessage('PHONE', EmergencyEvents.SET_DEAD, value);
+onNet('soz-core:client:injury:death', async (raison: string) => {
+    sendMessage('PHONE', EmergencyEvents.SET_DEAD, raison);
 });
 
 /* * * * * * * * * * * * *

@@ -6,7 +6,7 @@ export const emergency = createModel<RootModel>()({
     state: {
         lsmcCalled: false,
         emergency: false,
-        dead: false,
+        deathReason: '',
         emergencyStart: 0,
     },
     reducers: {
@@ -20,8 +20,8 @@ export const emergency = createModel<RootModel>()({
                 return { ...state, lsmcCalled: false, emergency: payload };
             }
         },
-        SET_DEAD(state, payload: boolean) {
-            return { ...state, dead: payload };
+        SET_DEAD(state, deathReason: string) {
+            return { ...state, deathReason: deathReason };
         },
     },
     effects: dispatch => ({
@@ -31,8 +31,8 @@ export const emergency = createModel<RootModel>()({
         async setEmergency(payload: boolean) {
             dispatch.emergency.SET_EMERGENCY(payload);
         },
-        async setDead(payload: boolean) {
-            dispatch.emergency.SET_DEAD(payload);
+        async setDead(deathReason: string) {
+            dispatch.emergency.SET_DEAD(deathReason);
         },
     }),
 });
