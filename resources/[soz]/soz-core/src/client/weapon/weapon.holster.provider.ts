@@ -18,6 +18,7 @@ const excludeWeapon = [
     GetHashKey('WEAPON_GADGETPISTOL'),
     966099553 /*WEAPON_OBJECT*/,
 ];
+const switchblade = GetHashKey('weapon_switchblade');
 
 const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD, JobType.SASP, JobType.LSCS];
 
@@ -93,6 +94,8 @@ export class WeaponHolsterProvider {
                 if (this.currWeapon != GetHashKey('WEAPON_UNARMED')) {
                     if (this.isWeaponHolsterable(this.currWeapon) && this.isFastAllowed(player, ped)) {
                         await this.putWeaponInHolster();
+                    } else if (this.currWeapon === switchblade) {
+                        await this.putWeaponSwitchblade();
                     } else {
                         await this.putWeaponBehind();
                     }
@@ -102,6 +105,8 @@ export class WeaponHolsterProvider {
                 if (newWeap != GetHashKey('WEAPON_UNARMED')) {
                     if (this.isWeaponHolsterable(newWeap) && this.isFastAllowed(player, ped)) {
                         await this.drawWeaponFromHolster(ped, newWeap);
+                    } else if (newWeap === switchblade) {
+                        await this.drawWeaponSwitchblade(ped, newWeap);
                     } else {
                         await this.drawWeaponFromBehind(ped, newWeap);
                     }
@@ -209,6 +214,41 @@ export class WeaponHolsterProvider {
             },
         });
         await wait(1400);
+    }
+
+    private async drawWeaponSwitchblade(ped: number, newWeap: number) {
+        SetCurrentPedWeapon(ped, newWeap, true);
+        this.animationService.playAnimation({
+            base: {
+                dictionary: 'modifiedholster@switchblade',
+                name: 'unholster',
+                blendInSpeed: 8.0,
+                blendOutSpeed: 3.0,
+                options: {
+                    onlyUpperBody: true,
+                    freezeLastFrame: true,
+                    enablePlayerControl: true,
+                },
+            },
+        });
+        await wait(800);
+    }
+
+    private async putWeaponSwitchblade() {
+        this.animationService.playAnimation({
+            base: {
+                dictionary: 'modifiedholster@switchblade',
+                name: 'holster',
+                blendInSpeed: 8.0,
+                blendOutSpeed: 3.0,
+                options: {
+                    onlyUpperBody: true,
+                    freezeLastFrame: true,
+                    enablePlayerControl: true,
+                },
+            },
+        });
+        await wait(1300);
     }
 
     public isInAnimation() {
