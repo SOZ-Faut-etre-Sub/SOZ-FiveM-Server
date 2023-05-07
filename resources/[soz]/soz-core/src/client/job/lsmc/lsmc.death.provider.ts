@@ -1,6 +1,7 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4, wait } from '@core/utils';
+import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
@@ -120,17 +121,21 @@ export class LSMCDeathProvider {
     @Inject(WeaponDrawingProvider)
     private weaponDrawingProvider: WeaponDrawingProvider;
 
+    @Inject(PlayerTalentService)
+    private playerTalentService: PlayerTalentService;
+
     @Inject(Monitor)
     public monitor: Monitor;
 
     private IsDead = false;
+    private hungerThristDeath = false;
 
     @Tick(10)
     public async deathLoop() {
         if (this.playerService.isLoggedIn()) {
             const playerPed = PlayerPedId();
             if (IsEntityDead(playerPed)) {
-                this.onDeath(playerPed);
+                await this.onDeath(playerPed);
             }
             if (this.IsDead) {
                 this.animationCheck(playerPed);
@@ -198,14 +203,18 @@ export class LSMCDeathProvider {
                 killpos: GetEntityCoords(player),
                 killerveh: killVehData,
                 ejection: Date.now() - this.vehicleSeatbeltProvider.getLastEjectTime() < 10000,
+                hungerThristDeath: this.hungerThristDeath,
             } as KillData;
+            this.hungerThristDeath = false;
 
+            LocalPlayer.state.set('isdead', true, true);
             TriggerEvent('inventory:client:StoreWeapon');
             TriggerEvent(ClientEvent.PLAYER_ON_DEATH, killData);
             TriggerServerEvent(ServerEvent.LSMC_ON_DEATH);
             TriggerServerEvent(ServerEvent.LSMC_ON_DEATH2, killData);
 
             let ragdollTime = 20000;
+            await wait(1000);
             while ((GetEntitySpeed(player) > 0.5 || IsPedRagdoll(player)) && ragdollTime > 0) {
                 await wait(10);
                 ragdollTime -= 10;
@@ -231,7 +240,13 @@ export class LSMCDeathProvider {
 
             LocalPlayer.state.set('inv_busy', false, true);
 
-            const status = this.playerService.getPlayer().metadata.injuries_count < 10 ? 'du coma' : 'de ton décès';
+            const playerMetadata = this.playerService.getPlayer().metadata;
+            const injuries = playerMetadata.injuries_count;
+            const status =
+                (playerMetadata.rp_death && !killData.hungerThristDeath) ||
+                injuries >= this.playerTalentService.getMaxInjuries()
+                    ? 'de ton décès'
+                    : 'du coma';
 
             this.inputService
                 .askInput(
@@ -249,18 +264,12 @@ export class LSMCDeathProvider {
     }
 
     private animationCheck(ped: number) {
-        if (IsPedInAnyVehicle(ped, true)) {
-            if (!IsEntityPlayingAnim(ped, deathVehcleAnim.base.dictionary, deathVehcleAnim.base.name, 3)) {
-                this.animationService.playAnimation(deathVehcleAnim, {
-                    clearTasksBefore: true,
-                });
-            }
-        } else {
-            if (!IsEntityPlayingAnim(ped, deathAnim.base.dictionary, deathAnim.base.name, 3)) {
-                this.animationService.playAnimation(deathAnim, {
-                    clearTasksBefore: true,
-                });
-            }
+        const anim = IsPedInAnyVehicle(ped, true) ? deathVehcleAnim : deathAnim;
+
+        if (!IsEntityPlayingAnim(ped, anim.base.dictionary, anim.base.name, 3)) {
+            this.animationService.playAnimation(anim, {
+                clearTasksBefore: true,
+            });
         }
     }
 
@@ -454,9 +463,44 @@ export class LSMCDeathProvider {
     }
 
     @OnEvent(ClientEvent.INJURY_DEATH)
-    public injuryDeath(value: boolean) {
-        if (value && LocalPlayer.state.isdead) {
+    public injuryDeath(value: string) {
+        if (value.length && LocalPlayer.state.isdead) {
             this.soundService.play('death', 0.1);
+        }
+    }
+
+    @Tick(5000)
+    public async hungerThirstCheckLoop() {
+        if (LocalPlayer.state.isLoggedIn) {
+            const playerData = this.playerService.getPlayer();
+
+            if (!playerData || playerData.metadata.isdead) {
+                return;
+            }
+
+            if (
+                playerData.metadata.hunger <= 0 ||
+                playerData.metadata['thirst'] <= 0 ||
+                playerData.metadata['alcohol'] >= 100
+            ) {
+                const ped = PlayerPedId();
+
+                if (GetEntityHealth(ped) > 0) {
+                    ClearPedTasksImmediately(ped);
+                    await this.animationService.playAnimation({
+                        base: {
+                            dictionary: 'move_m@_idles@out_of_breath',
+                            name: 'idle_c',
+                            blendInSpeed: 8.0,
+                            blendOutSpeed: -8.0,
+                            duration: 8000,
+                        },
+                    });
+
+                    this.hungerThristDeath = true;
+                    SetEntityHealth(ped, 0);
+                }
+            }
         }
     }
 }
