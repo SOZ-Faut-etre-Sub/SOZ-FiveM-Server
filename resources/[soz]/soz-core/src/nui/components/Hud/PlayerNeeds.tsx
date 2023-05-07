@@ -1,14 +1,56 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 
 import { usePlayer } from '../../hook/data';
+import { useNuiEvent } from '../../hook/nui';
 import AlcoholIcon from '../../icons/hud/alcohol.svg';
 import DrugIcon from '../../icons/hud/drug.svg';
 import HungerIcon from '../../icons/hud/hunger.svg';
+import SyringeIcon from '../../icons/hud/syringe.svg';
 import ThirstIcon from '../../icons/hud/thirst.svg';
 import { StatusBar } from './StatusBar';
 
+type SyringeDelay = {
+    delay: number;
+    interval: NodeJS.Timeout;
+    initialDelay: number;
+};
+
 export const PlayerNeeds: FunctionComponent = () => {
     const player = usePlayer();
+    const [syringeDelay, setSyringeDelay] = useState<SyringeDelay>(null);
+
+    useNuiEvent('hud', 'SetSyringeDelay', delay => {
+        setSyringeDelay(previousDelay => {
+            if (previousDelay) {
+                clearInterval(previousDelay.interval);
+            }
+
+            const interval = setInterval(() => {
+                setSyringeDelay(previousDelay => {
+                    if (!previousDelay) {
+                        return;
+                    }
+
+                    if (previousDelay.delay <= 0) {
+                        clearInterval(previousDelay.interval);
+                        return null;
+                    }
+
+                    return {
+                        delay: previousDelay.delay - 100,
+                        interval: previousDelay.interval,
+                        initialDelay: previousDelay.initialDelay,
+                    };
+                });
+            }, 100);
+
+            return {
+                delay,
+                interval,
+                initialDelay: delay,
+            };
+        });
+    });
 
     if (!player) {
         return null;
@@ -16,6 +58,13 @@ export const PlayerNeeds: FunctionComponent = () => {
 
     return (
         <div className="absolute w-[12vw] bottom-[2.2rem] right-[0.8vw]">
+            <StatusBar
+                percent={syringeDelay ? (syringeDelay.delay / syringeDelay.initialDelay) * 100 : 0}
+                backgroundPrimary="rgba(150, 8, 183, 0.6)"
+                backgroundSecondary="linear-gradient(to top, rgba(150, 8, 183, 0.8) 31%, rgba(184, 12, 223, 0.8) 100%)"
+            >
+                <SyringeIcon className="text-white w-3 h-3" />
+            </StatusBar>
             <StatusBar
                 percent={player.metadata.drug}
                 backgroundPrimary="rgba(79, 228, 30, 0.4)"

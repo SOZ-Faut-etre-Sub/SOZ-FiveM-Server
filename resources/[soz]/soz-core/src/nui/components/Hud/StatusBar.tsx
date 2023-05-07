@@ -13,7 +13,7 @@ export const StatusBar: FunctionComponent<PropsWithChildren<StatusBarProps>> = (
     backgroundPrimary,
     backgroundSecondary,
     children,
-    hideCondition = value => value < 1,
+    hideCondition = value => value < 0.01,
 }) => {
     const hide = hideCondition(percent);
 
