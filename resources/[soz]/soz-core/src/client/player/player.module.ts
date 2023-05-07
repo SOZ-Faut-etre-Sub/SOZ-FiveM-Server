@@ -1,6 +1,7 @@
 import { Module } from '../../core/decorators/module';
 import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerDiseaseProvider } from './player.disease.provider';
+import { PlayerEffectProvider } from './player.effect.provider';
 import { PlayerHealthProvider } from './player.health.provider';
 import { PlayerIdentityProvider } from './player.identity.provider';
 import { PlayerInjuryProvider } from './player.injury.provider';
@@ -20,6 +21,7 @@ import { ProgressProvider } from './progress.provider';
         ProgressProvider,
         PlayerHealthProvider,
         PlayerDiseaseProvider,
+        PlayerEffectProvider,
         PlayerStressProvider,
         PlayerWardrobe,
         PlayerWalkstyleProvider,
