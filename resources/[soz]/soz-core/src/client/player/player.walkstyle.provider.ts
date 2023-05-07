@@ -55,15 +55,14 @@ export class PlayerWalkstyleProvider {
 
     @OnEvent(ClientEvent.PLAYER_REFRESH_WALK_STYLE)
     async refresh(): Promise<void> {
-        if (!this.playerService.isLoggedIn()) {
-            return;
-        }
-        if (!this.playerService.getPlayer()) {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
             return;
         }
 
         this.overrideWalkStyle = false;
-        await this.applyWalkStyle(this.playerService.getPlayer().metadata.walk);
+        await this.applyWalkStyle(player.metadata.walk);
     }
 
     async applyMood(mood: string | null): Promise<void> {

@@ -9,6 +9,7 @@ import { AnimationStopReason } from '../../shared/animation';
 import { Component, WardrobeConfig } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
+import { Control } from '../../shared/input';
 import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
@@ -280,6 +281,10 @@ export class PlayerHealthProvider {
 
     private lastRunPosition = null;
 
+    private unlimitedSprint = false;
+
+    private disableSprint = false;
+
     @Tick(50)
     private async updateNuiHealth(): Promise<void> {
         const health = GetEntityHealth(PlayerPedId());
@@ -453,6 +458,25 @@ export class PlayerHealthProvider {
         await animationPromise;
     }
 
+    @OnEvent(ClientEvent.PLAYER_SET_UNLIMITED_SPRINT)
+    public setUnlimitedSprint(value: boolean): void {
+        this.unlimitedSprint = value;
+    }
+
+    @OnEvent(ClientEvent.PLAYER_SET_SPRINT)
+    public setDisabledSprint(value: boolean): void {
+        this.disableSprint = value;
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    async disableSprintLoop(): Promise<void> {
+        if (!this.disableSprint) {
+            return;
+        }
+
+        DisableControlAction(0, Control.Sprint, true); // disable sprint
+    }
+
     @Tick(TickInterval.EVERY_SECOND)
     async checkRunning(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
@@ -501,7 +525,10 @@ export class PlayerHealthProvider {
 
         const playerId = PlayerId();
         const stamina = GetPlayerStamina(playerId);
-        if (player.metadata.max_stamina >= 100.0) {
+
+        if (this.unlimitedSprint && stamina < 100) {
+            RestorePlayerStamina(playerId, 1.0);
+        } else if (player.metadata.max_stamina >= 100.0) {
             if (stamina >= 100 && stamina < player.metadata.max_stamina && !IsPedSprinting(playerPed)) {
                 const deltastam = isRunning ? 1.0 : 3.33;
                 const newstamina = Math.min(player.metadata.max_stamina, stamina + deltastam);

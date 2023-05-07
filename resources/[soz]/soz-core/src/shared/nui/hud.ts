@@ -9,6 +9,7 @@ export interface NuiHudMethodMap {
     UpdateVehicleSpeed: VehicleHudSpeed;
     UpdateMinimap: Minimap;
     UpdateVoiceMode: VoiceMode;
+    SetSyringeDelay: number;
     SetTwitchNewsOverlay: boolean;
     SetShowHud: boolean;
     DrawNotification: Omit<BasicNotification | AdvancedNotification, 'id'>;
