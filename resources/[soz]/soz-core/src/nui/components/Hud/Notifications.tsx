@@ -44,7 +44,7 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
     }, []);
 
     const classes = classNames(
-        'w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-base text-white bg-gradient-to-r from-black/60 to-black/25 border-l-4',
+        'w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-gradient-to-r from-black/60 to-black/25 border-l-4',
         {
             'border-red-500': notification.style === 'error',
             'border-green-500': notification.style === 'success',

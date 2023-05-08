@@ -463,7 +463,7 @@ export class PlayerHealthProvider {
         this.unlimitedSprint = value;
     }
 
-    @OnEvent(ClientEvent.PLAYER_SET_SPRINT)
+    @OnEvent(ClientEvent.PLAYER_DISABLE_SPRINT)
     public setDisabledSprint(value: boolean): void {
         this.disableSprint = value;
     }

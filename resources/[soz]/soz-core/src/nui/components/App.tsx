@@ -32,7 +32,7 @@ export const App: FunctionComponent = () => {
     useNuiEvent('global', 'PauseMenuActive', setPauseMenuActive);
     useNuiEvent('global', 'HideHud', setHideHud);
 
-    const classes = classNames('transition-all duration-500overflow-hidden', {
+    const classes = classNames('font-prompt transition-all duration-500overflow-hidden', {
         'opacity-0': pauseMenuActive || hideHud,
         'opacity-100': !pauseMenuActive && !hideHud,
     });
@@ -53,7 +53,7 @@ export const App: FunctionComponent = () => {
                 <HudApp />
                 <CardApp />
             </div>
-            <div className="overflow-hidden">
+            <div className="font-prompt overflow-hidden">
                 <MenuApp />
             </div>
             <div className={classes}>
