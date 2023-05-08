@@ -253,7 +253,7 @@ export enum ClientEvent {
     CRIMI_SET_TEMP_ADDITIONAL_WEIGHT = 'soz-core:client:crimi:set-temp-additional-weight',
     CRIMI_SET_TEMP_UNLIMITED_SPRINT = 'soz-core:client:crimi:set-temp-unlimited-sprint',
     CRIMI_USE_INJECTOR = 'soz-core:client:crimi:use-injector',
-    CRIMI_HEAL_OVER_TIME = 'soz-core:client:crimi:use-injector',
+    CRIMI_HEAL_OVER_TIME = 'soz-core:client:crimi:heal-over-time',
 
     DRIVING_SCHOOL_START_EXAM = 'soz-core:client:driving-school:start-exam',
     DRIVING_SCHOOL_SETUP_EXAM = 'soz-core:client:driving-school:spawn-veh',
@@ -314,6 +314,7 @@ export enum ClientEvent {
     // Temp event which should be internally used by a service when only soz core
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
 
+    PLAYER_DISABLE_SPRINT = 'soz-core:client:player:disable-sprint',
     PLAYER_FORCE_ALCOHOL_EFFECT = 'soz-core:client:player:force-alcohol-effect',
     PLAYER_FORCE_DRUG_EFFECT = 'soz-core:client:player:force-drug-effect',
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
@@ -325,7 +326,6 @@ export enum ClientEvent {
     PLAYER_REFRESH_WALK_STYLE = 'soz-core:client:player:refresh-walk-style',
     PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
     PLAYER_SET_UNLIMITED_SPRINT = 'soz-core:client:player:set-unlimited-sprint',
-    PLAYER_SET_SPRINT = 'soz-core:client:player:set-sprint',
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
     PLAYER_UPDATE_CROSSHAIR = 'soz-core:client:player:update-crosshair',
 

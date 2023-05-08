@@ -77,7 +77,7 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
             }}
         >
             <h3 className="flex h-[25%] justify-end text-4xl items-center pr-4 uppercase">{newsTitle(news.type)}</h3>
-            <div className="pl-[33%] h-[62%] text-2xl xl:text-base">
+            <div className="pl-[28%] h-[62%] text-[0.91rem] lg:text-lg">
                 {/(lspd|bcso)/.test(news.type) ? (
                     <p className="flex flex-col justify-between p-2 h-full overflow-hidden break-words">
                         <p>
