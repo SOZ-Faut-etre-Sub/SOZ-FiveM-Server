@@ -427,6 +427,7 @@ export class LSMCDeathProvider {
             false,
             bloodbag
         );
+        TriggerServerEvent(ServerEvent.LSMC_REVIVE2, GetPlayerServerId(NetworkGetPlayerIndexFromPed(target)));
         this.monitor.publish(
             bloodbag ? 'job_lsmc_revive_bloodbag' : 'job_lsmc_revive_defibrillator',
             {},
