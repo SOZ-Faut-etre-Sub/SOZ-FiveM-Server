@@ -1,5 +1,5 @@
 import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
-import { MessageEvents } from '@typings/messages';
+import { MessageConversation, MessageEvents } from '@typings/messages';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -10,10 +10,20 @@ import { store } from '../store';
 export const useMessagesService = () => {
     const { visibility } = useVisibility();
     const { pathname } = useLocation();
-    const { setNotification } = useMessageNotifications();
+    const { setNotification, setNotificationSilent } = useMessageNotifications();
 
     useEffect(() => {
-        store.dispatch.simCard.loadConversations();
+        store.dispatch.simCard.loadConversations((conversations: MessageConversation[]) => {
+            for (const conversation of conversations) {
+                if (conversation.unread > 0) {
+                    setNotificationSilent({
+                        conversationName: conversation.display,
+                        conversationId: conversation.conversation_id,
+                        message: `Message${conversation.unread > 1 ? 's' : ''} en absence`,
+                    });
+                }
+            }
+        });
         store.dispatch.simCard.loadMessages();
     }, []);
 
