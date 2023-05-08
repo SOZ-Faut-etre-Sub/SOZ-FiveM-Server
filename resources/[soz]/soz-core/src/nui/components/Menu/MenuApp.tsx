@@ -6,9 +6,10 @@ import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { useControl } from '../../hook/control';
-import { useMenuNuiEvent, useNuiFocus } from '../../hook/nui';
+import { useMenuNuiEvent, useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { usePrevious } from '../../hook/previous';
 import { AdminMenu } from '../Admin/AdminMenu';
+import { AdminMenuMapper } from '../Admin/Mapper/AdminMenuMapper';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
 import { DrivingSchoolMenu } from '../DrivingSchool/DrivingSchoolMenu';
@@ -57,11 +58,20 @@ const MenuRouter: FunctionComponent = () => {
     const [menuType, setMenuType] = useState<MenuType>(null);
     const prevMenuType = usePrevious(menuType);
     const [useFocus, setFocus] = useState(false);
+    const [visibility, setVisibility] = useState(true);
+
+    useNuiEvent('menu', 'SetMenuVisibility', (visibliity: boolean) => {
+        setVisibility(visibliity);
+
+        if (useFocus) {
+            setFocus(false);
+        }
+    });
 
     useNuiFocus(useFocus, useFocus, false);
 
     useControl(() => {
-        if (menuType !== null) {
+        if (menuType !== null && visibility) {
             setFocus(!useFocus);
         }
     });
@@ -145,6 +155,7 @@ const MenuRouter: FunctionComponent = () => {
     return (
         <Routes>
             <Route path={`/${MenuType.AdminMenu}/*`} element={<AdminMenu data={menuData} />} />
+            <Route path={`/${MenuType.AdminMapperMenu}/*`} element={<AdminMenuMapper data={menuData} />} />
             <Route path={`/${MenuType.BahamaUnicornJobMenu}/*`} element={<BahamaUnicornJobMenu data={menuData} />} />
             <Route path={`/${MenuType.BennysOrderMenu}`} element={<BennysOrderMenu />} />
             <Route path={`/${MenuType.Demo}/*`} element={<MenuDemo />} />

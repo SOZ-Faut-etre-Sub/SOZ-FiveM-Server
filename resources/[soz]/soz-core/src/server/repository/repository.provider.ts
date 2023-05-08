@@ -8,6 +8,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
+import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { Repository } from './repository';
 import { UpwChargerRepository } from './upw.charger.repository';
@@ -37,6 +38,9 @@ export class RepositoryProvider {
     @Inject(UpwStationRepository)
     private upwStationRepository: UpwStationRepository;
 
+    @Inject(HousingRepository)
+    private housingRepository: HousingRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -50,6 +54,7 @@ export class RepositoryProvider {
         this.repositories['fuelStation'] = this.fuelStationRepository;
         this.repositories['upwCharger'] = this.upwChargerRepository;
         this.repositories['upwStation'] = this.upwStationRepository;
+        this.repositories['housing'] = this.housingRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)
@@ -70,12 +75,15 @@ export class RepositoryProvider {
         return null;
     }
 
-    @OnEvent(ServerEvent.REPOSITORY_REFRESH_DATA)
-    public async refresh(repositoryName: string) {
+    public async refresh(repositoryName: string): Promise<any | null> {
         if (this.repositories[repositoryName]) {
             const data = await this.repositories[repositoryName].refresh();
 
             TriggerClientEvent(ClientEvent.REPOSITORY_SYNC_DATA, -1, repositoryName, data);
+
+            return data;
         }
+
+        return null;
     }
 }

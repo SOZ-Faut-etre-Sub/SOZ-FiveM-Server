@@ -17,6 +17,41 @@ export type Zone<T = never> = {
     data?: T;
 };
 
+export type LegacyHousingZone = {
+    x: number;
+    y: number;
+    z: number;
+    sx: number;
+    sy: number;
+    heading: number;
+    minZ?: number;
+    maxZ?: number;
+};
+
+export const createZoneFromLegacyData = (data: LegacyHousingZone): Zone => {
+    return {
+        center: [data.x, data.y, data.z],
+        length: data.sx,
+        width: data.sy,
+        heading: data.heading,
+        minZ: data.minZ,
+        maxZ: data.maxZ,
+    };
+};
+
+export const zoneToLegacyData = (zone: Zone): LegacyHousingZone => {
+    return {
+        x: zone.center[0],
+        y: zone.center[1],
+        z: zone.center[2],
+        sx: zone.length,
+        sy: zone.width,
+        heading: zone.heading,
+        minZ: zone.minZ,
+        maxZ: zone.maxZ,
+    };
+};
+
 export type NamedZone<T = never> = Zone<T> & {
     name: string;
 };
