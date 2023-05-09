@@ -29,6 +29,7 @@ export enum JobPermission {
     ManageGrade = 'manage-grade',
     SocietyDealershipVehicle = 'society-dealership-vehicle',
     SocietyPrivateStorage = 'society-private-storage',
+    SocietyMoneyStorage = 'society-money-storage',
     SocietyShop = 'society-shop',
     SocietyBankAccount = 'society-bank-account',
     SocietyBankInvoices = 'society-bank-invoices',
