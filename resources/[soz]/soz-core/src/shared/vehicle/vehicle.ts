@@ -121,7 +121,6 @@ export type VehicleEntityState = {
     defaultOwner: string | null;
     speedLimit: number | null;
     isPlayerVehicle: boolean;
-    yoloMode: boolean;
     lastPosition: Vector3 | null;
     indicators: {
         left: boolean;
@@ -207,7 +206,6 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     speedLimit: null,
     dead: false,
     isPlayerVehicle: false,
-    yoloMode: false,
     lastPosition: null,
     spawned: false,
     indicators: {
