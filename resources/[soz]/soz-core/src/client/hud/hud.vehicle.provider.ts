@@ -26,7 +26,7 @@ export class HudVehicleProvider {
     @Inject(VehicleSeatbeltProvider)
     private readonly vehicleSeatbeltProvider: VehicleSeatbeltProvider;
 
-    @Tick(0)
+    @Tick(50)
     async updateVehicleHudSpeed() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
 
