@@ -5,12 +5,13 @@ export type ShopConfig = {
     location: number[];
     positionInShop?: number[];
     cameraInShop?: number[];
+    cameraTarget?: number[];
 };
 
 export type BrandConfig = {
     label: string;
-    blipSprite: number;
-    blipColor: number;
+    blipSprite?: number;
+    blipColor?: number;
     pedModel?: string;
     banner?: string;
 };
@@ -19,6 +20,7 @@ export enum ShopBrand {
     Ponsonbys = 'ponsonbys',
     Suburban = 'suburban',
     Binco = 'binco',
+    Mask = 'mask',
     Jewelry = 'jewelry',
     Supermarket247North = '247supermarket-north',
     Supermarket247South = '247supermarket-south',
@@ -53,6 +55,11 @@ export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
         blipColor: 33,
         pedModel: 's_f_y_shop_low',
         banner: 'https://nui-img/soz/menu_shop_clothe_normal',
+    },
+    [ShopBrand.Mask]: {
+        label: 'Magasin de Masques',
+        blipSprite: 362,
+        banner: 'https://nui-img/soz/menu_shop_accessory',
     },
     [ShopBrand.Jewelry]: {
         label: 'Bijoutier',
@@ -243,6 +250,13 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     ['jewelry']: {
         brand: ShopBrand.Jewelry,
         location: [-623.22, -229.24, 38.06, 82.19],
+    },
+    ['mask']: {
+        brand: ShopBrand.Mask,
+        location: [-1335.76, -1278.67, 4.86, 316.75],
+        positionInShop: [-1337.08, -1279.66, 4.85, 316.75],
+        cameraInShop: [-1336.26, -1278.35, 5.65, 316.75],
+        cameraTarget: [-1337.08, -1279.66, 5.05],
     },
     ['247supermarket4']: {
         brand: ShopBrand.Supermarket247North,

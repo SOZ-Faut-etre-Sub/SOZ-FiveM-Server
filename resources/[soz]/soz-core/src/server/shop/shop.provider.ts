@@ -119,6 +119,7 @@ export class ShopProvider {
             case ShopBrand.Binco:
             case ShopBrand.Ponsonbys:
             case ShopBrand.Suburban:
+            case ShopBrand.Mask:
                 this.shopClothingBuy(source, product as ClothingShopItem, brand);
                 break;
             case ShopBrand.Tattoo:
@@ -249,11 +250,13 @@ export class ShopProvider {
         repo.shops[brand].stocks[product.id] -= 1;
         await this.clothingShopRepository.set(repo);
 
+        const clothSet = product.categoryId == 21 ? 'NakedClothSet' : 'BaseClothSet';
+
         // Update player cloth config
         const clothConfig = this.playerService.getPlayer(source).cloth_config;
         if (product.components && product.correspondingDrawables == null) {
             for (const componentId of Object.keys(product.components)) {
-                clothConfig.BaseClothSet.Components[componentId] = product.components[componentId];
+                clothConfig[clothSet].Components[componentId] = product.components[componentId];
                 const HideToReset = TenueIdToHide.Components[componentId];
                 if (HideToReset) {
                     clothConfig.Config[HideToReset] = false;
@@ -262,7 +265,7 @@ export class ShopProvider {
         }
         if (product.props && product.correspondingDrawables == null) {
             for (const propId of Object.keys(product.props)) {
-                clothConfig.BaseClothSet.Props[propId] = product.props[propId];
+                clothConfig[clothSet].Props[propId] = product.props[propId];
                 const HideToReset = TenueIdToHide.Props[propId];
                 if (HideToReset) {
                     clothConfig.Config[HideToReset] = false;

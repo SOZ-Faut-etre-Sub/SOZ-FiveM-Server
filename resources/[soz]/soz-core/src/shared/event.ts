@@ -111,7 +111,6 @@ export enum ServerEvent {
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
-    SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
     SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',
     SHOP_VALIDATE_CART = 'soz-core:server:shop:validate-cart',
@@ -589,9 +588,7 @@ export enum NuiEvent {
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
-    ShopMaskBuy = 'soz-core:client:shop:mask:buy',
-    ShopMaskPreview = 'soz-core:client:shop:mask:preview',
-    ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
+    BossShopBuy = 'soz-core:client:shop:boss:buy',
 
     SuperetteShopBuy = 'soz-core:client:shop:superette:buy',
     TattooShopResetTattos = 'soz-core:client:shop:tattoo:resetTattos',
