@@ -185,7 +185,7 @@ export const simCard = createModel<RootModel>()({
                 })
                 .catch(() => console.error('Failed to fetch contacts'));
         },
-        async loadConversations() {
+        async loadConversations(callback) {
             fetchNui<ServerPromiseResp<MessageConversation[]>>(
                 MessageEvents.FETCH_MESSAGE_CONVERSATIONS,
                 undefined,
@@ -193,6 +193,7 @@ export const simCard = createModel<RootModel>()({
             )
                 .then(conversations => {
                     dispatch.simCard.SET_CONVERSATIONS(conversations.data || []);
+                    callback(conversations.data || []);
                 })
                 .catch(() => console.error('Failed to fetch conversations'));
         },

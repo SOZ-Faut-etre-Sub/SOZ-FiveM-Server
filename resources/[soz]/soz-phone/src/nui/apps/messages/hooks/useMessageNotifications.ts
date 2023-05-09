@@ -37,10 +37,28 @@ export const useMessageNotifications = () => {
             }
         });
     };
+    const setNotificationSilent = ({ conversationName, conversationId, message }) => {
+        const group: MessageConversation = null;
+        const id = `${NOTIFICATION_ID}:${conversationId}`;
+
+        const notification = {
+            app: 'messages',
+            id,
+            sound: true,
+            title: group?.display || group?.phoneNumber || conversationName,
+            onClick: () => navigate(`/messages/${conversationId}`),
+            content: message,
+            Icon,
+            notificationIcon: Icon,
+        };
+
+        removeId(id);
+        addNotification(notification);
+    };
 
     const removeNotification = (conversationId: string) => {
         removeId(`${NOTIFICATION_ID}:${conversationId}`);
     };
 
-    return { setNotification, removeNotification };
+    return { setNotification, removeNotification, setNotificationSilent };
 };
