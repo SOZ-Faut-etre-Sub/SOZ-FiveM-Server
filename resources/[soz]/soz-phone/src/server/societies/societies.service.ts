@@ -66,11 +66,10 @@ class _SocietyService {
         }
 
         if (reqObj.data.number === '555-FBI') {
-            await global.exports['soz-utils'].SendHTTPRequest('discord_webhook_fbi', {
-                title: 'Federal Bureau of Investigation',
-                content: `**Nouveau message reçu : ** \`${player.getPhoneNumber()} - ${player.username}\` \`\`\`${
-                    reqObj.data.message
-                }\`\`\` `,
+            await global.exports['soz-utils'].SendHTTPRequest('soz_api_discord_fbi', {
+                phone: player.getPhoneNumber(),
+                username: player.username,
+                data: reqObj.data.message,
             });
         }
 
