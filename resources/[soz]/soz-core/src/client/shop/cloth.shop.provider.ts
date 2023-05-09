@@ -1,5 +1,6 @@
 import { ShopBrand, ShopsConfig, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { On, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
+import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
@@ -11,6 +12,7 @@ import { ClothingShopItem } from '@public/shared/shop';
 
 import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
+import { ClothingService } from '../clothing/clothing.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
@@ -36,12 +38,19 @@ export class ClothingShopProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
+    @Inject(ClothingService)
+    private clothingService: ClothingService;
+
     @On(ClientEvent.SHOP_OPEN_MENU)
     public async openShop(brand: ShopBrand, shop: string) {
-        if (brand != ShopBrand.Ponsonbys && brand != ShopBrand.Suburban && brand != ShopBrand.Binco) {
+        if (
+            brand != ShopBrand.Ponsonbys &&
+            brand != ShopBrand.Suburban &&
+            brand != ShopBrand.Binco &&
+            brand != ShopBrand.Mask
+        ) {
             return;
         }
-
         await this.clothingShopRepository.updateShopStock(brand);
         const shop_content = this.clothingShopRepository.getShop(brand);
         const modelHash = GetEntityModel(PlayerPedId());
@@ -65,7 +74,8 @@ export class ClothingShopProvider {
         SetPedCoordsKeepVehicle(ped, x, y, z - 1);
         SetEntityHeading(ped, w);
         FreezeEntityPosition(ped, true);
-        this.cameraService.setupCamera(ShopsConfig[shop].cameraInShop as Vector3, [x, y, z] as Vector3);
+        const target = (ShopsConfig[shop].cameraTarget || [x, y, z]) as Vector3;
+        this.cameraService.setupCamera(ShopsConfig[shop].cameraInShop as Vector3, target);
 
         // Play idle animation
         const animDict = 'anim@heists@heist_corona@team_idles@male_c';
@@ -97,6 +107,12 @@ export class ClothingShopProvider {
                 const drawable = comp.Drawable;
                 const texture = comp.Texture;
                 SetPedComponentVariation(ped, parseInt(compId), drawable, texture, 0);
+                if (Number(compId) == Component.Mask) {
+                    const hair = this.clothingService.displayHairWithMask(drawable)
+                        ? this.playerService.getPlayer().skin.Hair.HairType
+                        : 0;
+                    SetPedComponentVariation(ped, Component.Hair, hair, 0, 0);
+                }
             }
         }
         if (product.props) {
@@ -191,7 +207,12 @@ export class ClothingShopProvider {
 
     @OnEvent(ClientEvent.SHOP_UPDATE_STOCKS)
     public async onUpdateStocks(brand: ShopBrand) {
-        if (brand != ShopBrand.Ponsonbys && brand != ShopBrand.Suburban && brand != ShopBrand.Binco) {
+        if (
+            brand != ShopBrand.Ponsonbys &&
+            brand != ShopBrand.Suburban &&
+            brand != ShopBrand.Binco &&
+            brand != ShopBrand.Mask
+        ) {
             return;
         }
         await this.clothingShopRepository.updateShopStock(brand);
@@ -199,5 +220,10 @@ export class ClothingShopProvider {
         // Also update player data in case the player changed clothes
         const playerData = this.playerService.getPlayer();
         this.nuiDispatch.dispatch('cloth_shop', 'SetPlayerData', playerData);
+    }
+
+    @Exportable('DisplayHairWithMask')
+    displayHairWithMask(maskDrawable: number): boolean {
+        return this.clothingService.displayHairWithMask(maskDrawable);
     }
 }

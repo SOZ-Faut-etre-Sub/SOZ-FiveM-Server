@@ -48,13 +48,13 @@ export class FightForStyleRestockProvider {
                 return 1;
             case Garment.PANT:
             case LuxuryGarment.PANT:
-                return 6;
+                return 15;
             case Garment.SHOES:
             case LuxuryGarment.SHOES:
-                return 10;
+                return 25;
             case Garment.UNDERWEAR:
             case LuxuryGarment.UNDERWEAR:
-                return 19;
+                return 21;
             case Garment.BAG:
             case LuxuryGarment.BAG:
                 return 52;
@@ -133,7 +133,7 @@ export class FightForStyleRestockProvider {
                     shop_category.content != null &&
                     (shop_category.id == category || shop_category.parentId == category)
                 ) {
-                    shop_category.content.forEach(item => {
+                    Object.values(shop_category.content).forEach(item => {
                         allItemsByGender[genderHash].push(item);
                     });
                 }

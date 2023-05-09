@@ -23,11 +23,13 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
                     [1]: {},
                     [2]: {},
                     [3]: {},
+                    [4]: {},
                 },
                 [-1667301416]: {
                     [1]: {},
                     [2]: {},
                     [3]: {},
+                    [4]: {},
                 },
             },
             shopNameById: {},
@@ -37,7 +39,7 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
         const shops = await this.prismaService.shop.findMany({
             where: {
                 id: {
-                    in: [1, 2, 3],
+                    in: [1, 2, 3, 4],
                 },
             },
             select: {
@@ -63,7 +65,7 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
         const items = await this.prismaService.shop_content.findMany({
             where: {
                 shop_id: {
-                    in: [1, 2, 3],
+                    in: [1, 2, 3, 4],
                 },
             },
             select: {
@@ -83,7 +85,6 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
                 id: shop.id,
                 name: shop.name,
                 categories: {},
-                // products: {},
                 stocks: {},
             };
             for (const shopCategory of shop.shop_categories) {
@@ -100,12 +101,12 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
         // Loading categories
         for (const category of categories) {
             for (const modelHash of [1885233650, -1667301416]) {
-                for (const shop_id of [1, 2, 3]) {
+                for (const shop_id of [1, 2, 3, 4]) {
                     repository.categories[modelHash][shop_id][category.id] = {
                         id: category.id,
                         name: category.name,
                         parentId: category.parent_id,
-                        content: [],
+                        content: {},
                     };
                 }
             }
@@ -128,9 +129,21 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
                 modelLabel: shopItemData.modelLabel,
                 colorLabel: shopItemData.colorLabel,
             };
+            if (!shopItem.modelLabel) {
+                continue;
+            }
             const shopName = repository.shopNameById[item.shop_id];
             repository.shops[shopName].stocks[item.id] = item.stock;
-            repository.categories[shopItem.modelHash][shopItem.shopId][item.category_id].content.push(shopItem);
+            const genderToAdd = shopItem.modelHash ? [shopItem.modelHash] : [1885233650, -1667301416];
+            for (const modelHash of genderToAdd) {
+                if (!repository.categories[modelHash][shopItem.shopId][item.category_id].content[shopItem.modelLabel]) {
+                    repository.categories[modelHash][shopItem.shopId][item.category_id].content[shopItem.modelLabel] =
+                        [];
+                }
+                repository.categories[modelHash][shopItem.shopId][item.category_id].content[shopItem.modelLabel].push(
+                    shopItem
+                );
+            }
         }
         return repository;
     }
