@@ -18,22 +18,24 @@ export class ClothingShopRepository {
         for (const shop of Object.values(this.repoData.categories)) {
             for (const genderContent of Object.values(Object.values(shop))) {
                 for (const shopContent of Object.values(genderContent)) {
-                    for (const item of shopContent.content) {
-                        if (item.components[Component.Tops] != null) {
-                            item.components[Component.Torso] = {
-                                Drawable: ProperTorsos[item.modelHash][item.components[Component.Tops].Drawable],
-                                Texture: 0,
-                            };
-                            if (item.modelHash == -1667301416) {
-                                item.components[Component.Undershirt] = {
-                                    Drawable: 14, // This is without undershirt (for women)
+                    for (const itemModelList of Object.values(shopContent.content)) {
+                        for (const item of itemModelList) {
+                            if (item.components[Component.Tops] != null) {
+                                item.components[Component.Torso] = {
+                                    Drawable: ProperTorsos[item.modelHash][item.components[Component.Tops].Drawable],
                                     Texture: 0,
                                 };
-                            } else {
-                                item.components[Component.Undershirt] = {
-                                    Drawable: 15, // This is without undershirt (for men)
-                                    Texture: 0,
-                                };
+                                if (item.modelHash == -1667301416) {
+                                    item.components[Component.Undershirt] = {
+                                        Drawable: 14, // This is without undershirt (for women)
+                                        Texture: 0,
+                                    };
+                                } else {
+                                    item.components[Component.Undershirt] = {
+                                        Drawable: 15, // This is without undershirt (for men)
+                                        Texture: 0,
+                                    };
+                                }
                             }
                         }
                     }

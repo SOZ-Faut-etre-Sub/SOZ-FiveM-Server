@@ -4,7 +4,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
-import { Vector4 } from '@public/shared/polyzone/vector';
+import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
@@ -141,27 +141,54 @@ export class ShopProvider {
         for (const shop in ShopsConfig) {
             const config = ShopsConfig[shop];
             const brandConfig = BrandsConfig[config.brand];
-            this.blipFactory.create('shops_' + shop, {
-                name: brandConfig.label,
-                coords: { x: config.location[0], y: config.location[1], z: config.location[2] },
-                sprite: brandConfig.blipSprite,
-                color: brandConfig.blipColor,
-            });
-            const pedId = await this.pedFactory.createPed({
-                model: brandConfig.pedModel,
-                coords: {
-                    x: config.location[0],
-                    y: config.location[1],
-                    z: config.location[2] - 1,
-                    w: config.location[3],
-                },
-                freeze: true,
-                invincible: true,
-                blockevents: true,
-                scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
-            });
-            this.shopsPedEntity[shop] = { entity: pedId, location: config.location } as shopPedData;
+            if (brandConfig.blipSprite) {
+                this.blipFactory.create('shops_' + shop, {
+                    name: brandConfig.label,
+                    coords: { x: config.location[0], y: config.location[1], z: config.location[2] },
+                    sprite: brandConfig.blipSprite,
+                    color: brandConfig.blipColor,
+                });
+            }
+            if (brandConfig.pedModel) {
+                const pedId = await this.pedFactory.createPed({
+                    model: brandConfig.pedModel,
+                    coords: {
+                        x: config.location[0],
+                        y: config.location[1],
+                        z: config.location[2] - 1,
+                        w: config.location[3],
+                    },
+                    freeze: true,
+                    invincible: true,
+                    blockevents: true,
+                    scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
+                });
+                this.shopsPedEntity[shop] = { entity: pedId, location: config.location } as shopPedData;
+            }
         }
+        // Special for mask shop
+        this.targetFactory.createForBoxZone(
+            'shops:mask',
+            {
+                center: ShopsConfig[ShopBrand.Mask].location as Vector3,
+                length: 1.6,
+                width: 0.8,
+                minZ: 3.86,
+                maxZ: 5.26,
+                heading: 20,
+            },
+            [
+                {
+                    label: 'Acheter un masque',
+                    icon: 'c:shop/mask.png',
+                    blackoutGlobal: true,
+                    action: () => {
+                        this.currentShopBrand = ShopBrand.Mask;
+                        this.openShop();
+                    },
+                },
+            ]
+        );
         TriggerEvent('shops:client:shop:PedSpawned');
     }
 
@@ -228,6 +255,9 @@ export class ShopProvider {
             case ShopBrand.Suburban:
             case ShopBrand.Binco:
                 this.clothingShopProvider.openShop(this.currentShopBrand, this.currentShop);
+                break;
+            case ShopBrand.Mask:
+                this.clothingShopProvider.openShop(ShopBrand.Mask, 'mask');
                 break;
             case ShopBrand.Tattoo:
                 this.tattooShopProvider.openShop(this.currentShopBrand, this.currentShop);

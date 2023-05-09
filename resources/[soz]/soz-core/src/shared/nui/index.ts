@@ -15,7 +15,6 @@ import { NuiClothShopMethodMap } from './cloth_shop';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
-import { NuiMaskShopMethodMap } from './mask_shop';
 import { NuiMenuMethodMap } from './menu';
 import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
@@ -41,7 +40,6 @@ export interface NuiMethodMap {
     ffs_recipe_book: NuiFfsRecipeBookMethodMap;
     global: NuiGlobalMethodMap;
     input: NuiInputMethodMap;
-    mask_shop: NuiMaskShopMethodMap;
     menu: NuiMenuMethodMap;
     player: NuiPLayerMethodMap;
     progress: NuiProgressMethodMap;
