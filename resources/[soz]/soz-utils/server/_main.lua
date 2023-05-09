@@ -74,6 +74,9 @@ exports("SendHTTPRequest", function(convar, data)
     local authorization = GetAuthorizationHeader(GetConvar("soz_api_username", "admin"), GetConvar("soz_api_password", "admin"))
 
     if endpoint ~= "" then
-        PerformHttpRequest(url, nil, "POST", json.encode(data), {["Authorization"] = authorization, ["Content-Type"] = "application/json"})
+        PerformHttpRequest(url, nil, "POST", json.encode(data), {
+            ["Authorization"] = authorization,
+            ["Content-Type"] = "application/json",
+        })
     end
 end)
