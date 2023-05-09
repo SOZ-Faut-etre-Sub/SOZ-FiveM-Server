@@ -25,9 +25,9 @@ type VehicleStatus = {
     vehicle: number;
 };
 
-const ENGINE_DAMAGE_MULTIPLIER = 6.25;
-const BODY_DAMAGE_MULTIPLIER = 5.0;
-const TANK_DAMAGE_MULTIPLIER = 2.0;
+const ENGINE_DAMAGE_MULTIPLIER = 7.75;
+const BODY_DAMAGE_MULTIPLIER = 6.25;
+const TANK_DAMAGE_MULTIPLIER = 2.5;
 
 const STOP_ENGINE_THRESHOLD = 120;
 
@@ -130,43 +130,6 @@ export class VehicleConditionProvider {
         ]);
     }
 
-    @Tick(100)
-    public checkYoloMode() {
-        const ped = PlayerPedId();
-        const vehicle = GetVehiclePedIsIn(ped, false);
-
-        if (!vehicle) {
-            return;
-        }
-
-        if (!NetworkHasControlOfEntity(vehicle)) {
-            return;
-        }
-
-        const state = this.vehicleService.getVehicleState(vehicle);
-
-        if (!state.yoloMode) {
-            return;
-        }
-
-        const color = getRandomEnumValue(VehicleXenonColor);
-        const color2 = VehicleXenonColorChoices[getRandomEnumValue(VehicleXenonColor)];
-        const color3 = VehicleXenonColorChoices[getRandomEnumValue(VehicleXenonColor)];
-        ToggleVehicleMod(vehicle, VehicleModType.XenonHeadlights, true);
-        ToggleVehicleMod(vehicle, VehicleModType.TyreSmoke, true);
-        SetVehicleXenonLightsColour(vehicle, color);
-
-        DisableVehicleNeonLights(vehicle, false);
-        SetVehicleNeonLightEnabled(vehicle, 0, true);
-        SetVehicleNeonLightEnabled(vehicle, 1, true);
-        SetVehicleNeonLightEnabled(vehicle, 2, true);
-        SetVehicleNeonLightEnabled(vehicle, 3, true);
-        SetVehicleNeonLightsColour(vehicle, color2.color[0], color2.color[1], color2.color[2]);
-        SetVehicleTyreSmokeColor(vehicle, color3.color[0], color3.color[1], color3.color[2]);
-        // SetVehicleColours(vehicle, color4, color5);
-        // SetVehicleExtraColours(vehicle, color6, color7);
-    }
-
     @StateBagHandler('condition', null)
     private async onVehicleConditionChange(bag: string, key: string, value: VehicleCondition) {
         const split = bag.split(':');
@@ -210,7 +173,7 @@ export class VehicleConditionProvider {
             const waitTime = Math.min(
                 (previousState.condition.engineHealth / value.engineHealth +
                     previousState.condition.bodyHealth / value.bodyHealth) *
-                    getRandomInt(1000, 2000),
+                    getRandomInt(2000, 3000),
                 10000
             );
 

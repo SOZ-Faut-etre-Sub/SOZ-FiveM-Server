@@ -34,18 +34,6 @@ export class VehicleCommandProvider {
         }
     }
 
-    @Command('yolo', { role: ['admin'], description: 'Delete Vehicle (Admin Only)' })
-    async yoloCommand(source: number) {
-        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
-        const state = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
-
-        if (state) {
-            this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
-                yoloMode: !state.yoloMode,
-            });
-        }
-    }
-
     @Command('dirty', { role: ['admin'], description: 'Set vehicle dirty (Admin Only)' })
     async dirtyCommand(source: number) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
