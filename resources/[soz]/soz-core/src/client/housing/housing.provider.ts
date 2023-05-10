@@ -53,7 +53,7 @@ export class HousingProvider {
 
         if (price > 0 && zkeaPrice > 0)
             TriggerServerEvent('housing:server:UpgradePlayerApartmentTier', tier, price, zkeaPrice);
-        if (enableParking && hasParking)
+        if (enableParking && hasParking && parkingPrice > 0)
             TriggerServerEvent('housing:server:SetPlayerApartmentParkingPlace', hasParking, parkingPrice);
         this.nuiMenu.closeMenu();
     }
