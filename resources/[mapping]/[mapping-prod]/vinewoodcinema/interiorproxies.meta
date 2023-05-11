@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SInteriorOrderData>
+  <startFrom value="3110" />
+  <proxies>
+	<Item>v_cinemavine_milo_</Item>
+	<Item>cinemastreet</Item>
+  </proxies>
+</SInteriorOrderData>
