@@ -1,7 +1,8 @@
-import { Fragment, FunctionComponent } from 'react';
+import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../../shared/event';
+import { Property } from '../../../../shared/housing/housing';
 import { AdminMapperMenuData } from '../../../../shared/housing/menu';
 import { MenuType } from '../../../../shared/nui/menu';
 import { Zone } from '../../../../shared/polyzone/box.zone';
@@ -26,12 +27,17 @@ export type AdminMapperMenuStateProps = {
 export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ data }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [properties, setProperties] = useState<AdminMapperMenuData['properties']>([]);
+
+    useEffect(() => {
+        setProperties(data?.properties || []);
+    }, [data]);
 
     if (!data) {
         return null;
     }
 
-    const properties = data.properties.sort((a, b) => a.identifier.localeCompare(b.identifier));
+    const sortedProperties = properties.sort((a, b) => a.identifier.localeCompare(b.identifier));
 
     return (
         <Menu type={MenuType.AdminMapperMenu}>
@@ -68,7 +74,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                             });
                         }}
                     >
-                        {properties.map(property => (
+                        {sortedProperties.map(property => (
                             <MenuItemSelectOption
                                 key={property.id}
                                 helper={property.identifier}
@@ -79,8 +85,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                         ))}
                     </MenuItemSelect>
                     <MenuItemButton
-                        onConfirm={() => {
-                            fetchNui(NuiEvent.AdminMenuMapperAddProperty, {});
+                        onConfirm={async () => {
+                            const properties = await fetchNui<any, Property[]>(NuiEvent.AdminMenuMapperAddProperty, {});
+
+                            setProperties(properties);
                         }}
                     >
                         ➕ Ajouter un bâtiment
@@ -91,7 +99,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                 <MenuTitle banner="https://nui-img/soz/menu_mapper">Menu pour les mappeurs</MenuTitle>
                 <MenuContent></MenuContent>
             </SubMenu>
-            {properties.map(property => (
+            {sortedProperties.map(property => (
                 <Fragment key={property.id}>
                     <SubMenu id={`property_${property.identifier}`}>
                         <MenuTitle banner="https://nui-img/soz/menu_mapper">Batiment : {property.identifier}</MenuTitle>
@@ -101,12 +109,14 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                 type="entry"
                                 zone={property.entryZone}
                                 propertyId={property.id}
+                                setProperties={setProperties}
                             />
                             <ZoneMenuSelect
                                 title="🅿️ Zone garage"
                                 type="garage"
                                 zone={property.garageZone}
                                 propertyId={property.id}
+                                setProperties={setProperties}
                             />
                             {property.apartments.map(apartment => (
                                 <MenuItemSubMenuLink key={apartment.id} id={`apartment_${apartment.identifier}`}>
@@ -114,17 +124,27 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                 </MenuItemSubMenuLink>
                             ))}
                             <MenuItemButton
-                                onConfirm={() => {
-                                    fetchNui(NuiEvent.AdminMenuMapperAddApartment, { propertyId: property.id });
+                                onConfirm={async () => {
+                                    const properties = await fetchNui<any, Property[]>(
+                                        NuiEvent.AdminMenuMapperAddApartment,
+                                        { propertyId: property.id }
+                                    );
+
+                                    setProperties(properties);
                                 }}
                             >
                                 ➕ Ajouter un appartement
                             </MenuItemButton>
                             <MenuItemButton
-                                onConfirm={() => {
-                                    fetchNui(NuiEvent.AdminMenuMapperDeleteProperty, {
-                                        propertyId: property.id,
-                                    });
+                                onConfirm={async () => {
+                                    const properties = await fetchNui<any, Property[]>(
+                                        NuiEvent.AdminMenuMapperDeleteProperty,
+                                        {
+                                            propertyId: property.id,
+                                        }
+                                    );
+
+                                    setProperties(properties);
                                 }}
                             >
                                 ❌ Supprimer
@@ -136,36 +156,52 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                             <MenuTitle banner="https://nui-img/soz/menu_mapper">{apartment.label}</MenuTitle>
                             <MenuContent>
                                 <MenuItemButton
-                                    onConfirm={() => {
-                                        fetchNui(NuiEvent.AdminMenuMapperSetApartmentIdentifier, {
-                                            propertyId: property.id,
-                                            apartmentId: apartment.id,
-                                        });
+                                    onConfirm={async () => {
+                                        const properties = await fetchNui<any, Property[]>(
+                                            NuiEvent.AdminMenuMapperSetApartmentIdentifier,
+                                            {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                            }
+                                        );
+
+                                        setProperties(properties);
                                     }}
                                 >
                                     Changer l'identifiant
                                 </MenuItemButton>
                                 <MenuItemButton
-                                    onConfirm={() => {
-                                        fetchNui(NuiEvent.AdminMenuMapperSetApartmentName, {
-                                            propertyId: property.id,
-                                            apartmentId: apartment.id,
-                                        });
+                                    onConfirm={async () => {
+                                        const properties = await fetchNui<any, Property[]>(
+                                            NuiEvent.AdminMenuMapperSetApartmentName,
+                                            {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                            }
+                                        );
+
+                                        setProperties(properties);
                                     }}
                                 >
                                     Changer le nom
                                 </MenuItemButton>
                                 <MenuItemButton
-                                    onConfirm={() => {
-                                        fetchNui(NuiEvent.AdminMenuMapperSetApartmentPrice, {
-                                            propertyId: property.id,
-                                            apartmentId: apartment.id,
-                                        });
+                                    onConfirm={async () => {
+                                        const properties = await fetchNui<any, Property[]>(
+                                            NuiEvent.AdminMenuMapperSetApartmentPrice,
+                                            {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                                price: null,
+                                            }
+                                        );
+
+                                        setProperties(properties);
                                     }}
                                 >
                                     <div className="flex justify-between">
                                         <span>💲 Prix</span>
-                                        <span>${apartment.price.toLocaleString()}</span>
+                                        <span>${apartment.price?.toLocaleString()}</span>
                                     </div>
                                 </MenuItemButton>
                                 {/*<ZoneMenuSelect*/}
@@ -181,6 +217,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     zone={apartment.exitZone}
                                     propertyId={property.id}
                                     apartmentId={apartment.id}
+                                    setProperties={setProperties}
                                 />
                                 <ZoneMenuSelect
                                     title="❄️️ Zone frigo"
@@ -188,6 +225,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     zone={apartment.fridgeZone}
                                     propertyId={property.id}
                                     apartmentId={apartment.id}
+                                    setProperties={setProperties}
                                 />
                                 <ZoneMenuSelect
                                     title="🗄️ Zone du coffre"
@@ -195,6 +233,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     zone={apartment.stashZone}
                                     propertyId={property.id}
                                     apartmentId={apartment.id}
+                                    setProperties={setProperties}
                                 />
                                 <ZoneMenuSelect
                                     title="👕 Zone de la penderie"
@@ -202,6 +241,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     zone={apartment.closetZone}
                                     propertyId={property.id}
                                     apartmentId={apartment.id}
+                                    setProperties={setProperties}
                                 />
                                 <ZoneMenuSelect
                                     title="👛 Zone du coffre d'argent"
@@ -209,13 +249,19 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                     zone={apartment.moneyZone}
                                     propertyId={property.id}
                                     apartmentId={apartment.id}
+                                    setProperties={setProperties}
                                 />
                                 <MenuItemButton
-                                    onConfirm={() => {
-                                        fetchNui(NuiEvent.AdminMenuMapperDeleteApartment, {
-                                            propertyId: property.id,
-                                            apartmentId: apartment.id,
-                                        });
+                                    onConfirm={async () => {
+                                        const properties = await fetchNui<any, Property[]>(
+                                            NuiEvent.AdminMenuMapperDeleteApartment,
+                                            {
+                                                propertyId: property.id,
+                                                apartmentId: apartment.id,
+                                            }
+                                        );
+
+                                        setProperties(properties);
                                     }}
                                 >
                                     ❌ Supprimer
@@ -235,6 +281,7 @@ type ZoneMenuSelectProps = {
     type: string;
     propertyId: number;
     apartmentId?: number;
+    setProperties: (properties: Property[]) => void;
 };
 
 const ZoneMenuSelect: FunctionComponent<ZoneMenuSelectProps> = ({
@@ -243,25 +290,44 @@ const ZoneMenuSelect: FunctionComponent<ZoneMenuSelectProps> = ({
     type,
     propertyId,
     apartmentId = null,
+    setProperties,
 }) => {
-    const onConfirm = (index: number, value: string) => {
+    const onConfirm = async (index: number, value: string) => {
         if (value === 'teleport') {
             fetchNui(NuiEvent.AdminMenuMapperTeleportToZone, { zone });
         }
 
         if (value === 'update') {
+            let properties;
+
             if (apartmentId === null) {
-                fetchNui(NuiEvent.AdminMenuMapperUpdatePropertyZone, { zone, type, propertyId });
+                properties = await fetchNui<any, Property[]>(NuiEvent.AdminMenuMapperUpdatePropertyZone, {
+                    zone,
+                    type,
+                    propertyId,
+                });
             } else {
-                fetchNui(NuiEvent.AdminMenuMapperUpdateApartmentZone, { zone, type, propertyId, apartmentId });
+                properties = await fetchNui<any, Property[]>(NuiEvent.AdminMenuMapperUpdateApartmentZone, {
+                    zone,
+                    type,
+                    propertyId,
+                    apartmentId,
+                });
             }
+
+            setProperties(properties);
         }
 
         if (value === 'show') {
             if (apartmentId === null) {
-                fetchNui(NuiEvent.AdminMenuMapperShowPropertyZone, { type, propertyId, show: true });
+                fetchNui<any, Property[]>(NuiEvent.AdminMenuMapperShowPropertyZone, { type, propertyId, show: true });
             } else {
-                fetchNui(NuiEvent.AdminMenuMapperShowApartmentZone, { type, propertyId, apartmentId, show: true });
+                fetchNui<any, Property[]>(NuiEvent.AdminMenuMapperShowApartmentZone, {
+                    type,
+                    propertyId,
+                    apartmentId,
+                    show: true,
+                });
             }
         }
 

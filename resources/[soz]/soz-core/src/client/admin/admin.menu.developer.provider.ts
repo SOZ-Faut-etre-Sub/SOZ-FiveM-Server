@@ -47,8 +47,8 @@ export class AdminMenuDeveloperProvider {
                 2
             )}], ${zone.length.toFixed(2)}, ${zone.width.toFixed(2)}, {
                 heading: ${zone.heading.toFixed(2)},
-                minZ: ${(zone.center[2] - 1.0).toFixed(2)},
-                maxZ: ${(zone.center[2] + 2.0).toFixed(2)},
+                minZ: ${(zone.minZ || zone.center[2] - 1.0).toFixed(2)},
+                maxZ: ${(zone.maxZ || zone.center[2] + 2.0).toFixed(2)},
             });`
         );
     }
