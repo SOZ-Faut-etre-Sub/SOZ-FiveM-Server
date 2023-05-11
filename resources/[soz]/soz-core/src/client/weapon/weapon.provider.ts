@@ -11,6 +11,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { PhoneService } from '../phone/phone.service';
 import { ProgressService } from '../progress.service';
 import { TalkService } from '../talk.service';
@@ -39,6 +40,9 @@ export class WeaponProvider {
 
     @Inject(PhoneService)
     private phoneService: PhoneService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     @Inject(TalkService)
     private talkService: TalkService;
@@ -74,6 +78,14 @@ export class WeaponProvider {
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
     async clearCurrentWeapon() {
         await this.weapon.clear();
+    }
+
+    @OnEvent(ClientEvent.WEAPON_USE_WEAPON_NAME)
+    async onUseWeaponName(name: string | null) {
+        const item = this.inventoryManager.getItems().find(i => i.name == name && i.type == 'weapon');
+
+        this.onUseWeapon(item);
+        this.weaponDrawingProvider.onUseWeapon(item);
     }
 
     @OnEvent(ClientEvent.WEAPON_USE_WEAPON)
