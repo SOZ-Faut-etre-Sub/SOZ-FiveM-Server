@@ -17,6 +17,7 @@ export type DeveloperSubMenuProps = {
     state: {
         noClip: boolean;
         displayCoords: boolean;
+        displayMileage: boolean;
     };
 };
 
@@ -45,6 +46,14 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                     }}
                 >
                     Afficher les coordonnées
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
+                    checked={state.displayMileage}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminToggleShowMileage, value);
+                    }}
+                >
+                    Afficher le kilométrage
                 </MenuItemCheckbox>
                 <MenuItemSelect
                     title="📋 Copier les coords"

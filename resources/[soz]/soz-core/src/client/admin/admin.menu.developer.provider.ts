@@ -10,9 +10,13 @@ import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
+import { VehicleService } from '../vehicle/vehicle.service';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
+
     @Inject(ClipboardService)
     private clipboard: ClipboardService;
 
@@ -29,6 +33,8 @@ export class AdminMenuDeveloperProvider {
     private nuiMenu: NuiMenu;
 
     public showCoordinatesInterval = null;
+
+    public showMileageInterval = null;
 
     private isCreatingZone = false;
 
@@ -96,6 +102,46 @@ export class AdminMenuDeveloperProvider {
                 size: 0.4,
                 color: [66, 182, 245, 255],
             });
+        }, 1);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminToggleShowMileage)
+    public async toggleShowMileage(active: boolean): Promise<void> {
+        if (!active) {
+            clearInterval(this.showMileageInterval);
+            this.showMileageInterval = null;
+            return;
+        }
+        this.showMileageInterval = setInterval(() => {
+            const ped = PlayerPedId();
+            const vehicle = GetVehiclePedIsIn(ped, false);
+            if (vehicle) {
+                const state = this.vehicleService.getVehicleState(vehicle);
+
+                this.draw.drawText(
+                    `~w~Vehicle mileage :~b~ ${(state.condition.mileage / 1000).toFixed(2)}`,
+                    [0.4, 0.002],
+                    {
+                        font: Font.ChaletComprimeCologne,
+                        size: 0.4,
+                        color: [66, 182, 245, 255],
+                    }
+                );
+                const [isTrailerExists, trailerEntity] = GetVehicleTrailerVehicle(vehicle);
+                if (isTrailerExists) {
+                    const trailerState = this.vehicleService.getVehicleState(trailerEntity);
+
+                    this.draw.drawText(
+                        `~w~Trailer mileage :~b~ ${(trailerState.condition.mileage / 1000).toFixed(2)}`,
+                        [0.6, 0.002],
+                        {
+                            font: Font.ChaletComprimeCologne,
+                            size: 0.4,
+                            color: [66, 182, 245, 255],
+                        }
+                    );
+                }
+            }
         }, 1);
     }
 

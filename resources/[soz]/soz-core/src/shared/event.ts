@@ -447,6 +447,7 @@ export enum NuiEvent {
     AdminToggleMoneyCase = 'soz-core:client:admin:toggle-disable-money-case',
     AdminToggleNoClip = 'soz-core:client:admin:toggle-noclip',
     AdminToggleShowCoordinates = 'soz-core:client:admin:toggle-show-coordinates',
+    AdminToggleShowMileage = 'soz-core:client:admin:toggle-show-mileage',
     AdminUpdateState = 'soz-core:client:admin:update-state',
     AdminMenuGameMasterUncuff = 'soz-core:client:admin:game-master:uncuff',
     AdminMenuVehicleSpawn = 'soz-core:client:admin:vehicle:spawn',
