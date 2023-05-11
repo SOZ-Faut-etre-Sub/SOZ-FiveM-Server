@@ -66,10 +66,7 @@ end
 RegisterNetEvent("pawl:client:harvestTree", function(data)
     harvesting = true
     local ped = PlayerPedId()
-
-    local HatchetWeapon = GetHashKey(Config.Harvest.RequiredWeapon)
-    GiveWeaponToPed(ped, HatchetWeapon, 1, false, true)
-    SetCurrentPedWeapon(ped, HatchetWeapon, true)
+    TriggerEvent("soz-core:client:weapon:use-weapon-name", Config.Harvest.RequiredWeapon)
 
     Wait(3000)
 
@@ -96,17 +93,14 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
         end
     end
 
-    RemoveWeaponFromPed(ped, HatchetWeapon)
+    TriggerEvent("soz-core:client:weapon:use-weapon-name", Config.Harvest.RequiredWeapon)
     harvesting = false
 end)
 
 RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
     harvesting = true
     local ped = PlayerPedId()
-
-    local HatchetWeapon = GetHashKey(Config.Harvest.RequiredWeapon)
-    GiveWeaponToPed(ped, HatchetWeapon, 1, false, true)
-    SetCurrentPedWeapon(ped, HatchetWeapon, true)
+    TriggerEvent("soz-core:client:weapon:use-weapon-name", Config.Harvest.RequiredWeapon)
 
     Wait(3000)
 
@@ -131,7 +125,7 @@ RegisterNetEvent("pawl:client:harvestTreeSap", function(data)
         end
     end
 
-    RemoveWeaponFromPed(ped, HatchetWeapon)
+    TriggerEvent("soz-core:client:weapon:use-weapon-name", Config.Harvest.RequiredWeapon)
     harvesting = false
 end)
 

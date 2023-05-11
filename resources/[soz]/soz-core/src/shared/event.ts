@@ -363,6 +363,7 @@ export enum ClientEvent {
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
 
     WEAPON_USE_WEAPON = 'soz-core:client:weapon:use-weapon',
+    WEAPON_USE_WEAPON_NAME = 'soz-core:client:weapon:use-weapon-name',
     WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
     WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
     WEAPON_EXPLOSION = 'soz-core:client:weapon:explosion',
