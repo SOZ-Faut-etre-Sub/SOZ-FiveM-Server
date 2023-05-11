@@ -9,7 +9,6 @@ export class StreamProvider {
     @Once()
     onStart(): void {
         GlobalState.stream_url_bennys ||= BLACK_SCREEN_URL;
-        GlobalState.stream_url_cinema ||= BLACK_SCREEN_URL;
     }
 
     @Command('stream-url', { role: 'admin' })
@@ -18,8 +17,6 @@ export class StreamProvider {
 
         if (name === 'bennys') {
             GlobalState.stream_url_bennys = url;
-        } else if (name === 'cinema') {
-            GlobalState.stream_url_cinema = url;
         } else {
             console.log(`Stream inconnu: ${name}`);
         }
@@ -31,8 +28,6 @@ export class StreamProvider {
 
         if (name === 'bennys') {
             GlobalState.stream_url_bennys = BLACK_SCREEN_URL;
-        } else if (name === 'cinema') {
-            GlobalState.stream_url_cinema = BLACK_SCREEN_URL;
         } else {
             console.log(`Stream inconnu: ${name}`);
         }
