@@ -1,3 +1,5 @@
+import { RGBAColor, RGBColor } from '@public/shared/color';
+
 import { PolygonZone, PolygonZoneOptions } from './polygon.zone';
 import { Point3D, rotatePoint, Vector2, Vector3, Vector4 } from './vector';
 
@@ -103,5 +105,74 @@ export class BoxZone<T = never> extends PolygonZone<T> {
         this.length = length;
         this.width = width;
         this.heading = heading;
+    }
+
+    public draw(wallColor: RGBAColor | RGBColor, alpha?: number) {
+        super.draw(wallColor, alpha);
+
+        const angleInRad = (this.heading * Math.PI) / 180;
+
+        const a = rotatePoint(
+            this.center,
+            [this.center[0] + this.width / 2, this.center[1] - this.length / 2],
+            angleInRad
+        ) as Vector2;
+        const b = rotatePoint(
+            this.center,
+            [this.center[0] - this.width / 2, this.center[1] - this.length / 2],
+            angleInRad
+        ) as Vector2;
+
+        const collisionPosition = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+
+        DrawLine(
+            this.center[0],
+            this.center[1],
+            this.center[2],
+            collisionPosition[0],
+            collisionPosition[1],
+            this.maxZ,
+            255,
+            0,
+            0,
+            255
+        );
+        DrawLine(
+            this.center[0],
+            this.center[1],
+            this.center[2],
+            collisionPosition[0],
+            collisionPosition[1],
+            this.minZ,
+            255,
+            0,
+            0,
+            255
+        );
+        DrawLine(
+            collisionPosition[0],
+            collisionPosition[1],
+            this.maxZ,
+            collisionPosition[0],
+            collisionPosition[1],
+            this.minZ,
+            255,
+            0,
+            0,
+            255
+        );
+    }
+
+    public toZone(): Zone<T> {
+        return {
+            center: this.center,
+            length: this.length,
+            width: this.width,
+            heading: this.heading,
+            minZ: this.minZ,
+            maxZ: this.maxZ,
+            debugPoly: this.debugPoly,
+            data: this.data,
+        };
     }
 }
