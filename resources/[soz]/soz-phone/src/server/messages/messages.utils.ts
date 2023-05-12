@@ -102,6 +102,8 @@ export async function createMessageGroupsFromPhoneNumber(
     if (!existingConversation) {
         await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, sourcePhoneNumber);
         await MessagesDB.createMessageGroup(sourcePhoneNumber, conversationId, tgtPhoneNumber);
+    } else {
+        await MessagesDB.updateMessageGroupDate(conversationId);
     }
 
     // wrap this in a transaction to make sure ALL of these INSERTs succeed

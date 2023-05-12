@@ -69,7 +69,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                     {!emergency &&
                         icons.map(notifIcon => {
                             const Icon = notifIcon.icon;
-                            return <Icon className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />;
+                            return <Icon key={notifIcon.key} className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />;
                         })}
                 </div>
 
