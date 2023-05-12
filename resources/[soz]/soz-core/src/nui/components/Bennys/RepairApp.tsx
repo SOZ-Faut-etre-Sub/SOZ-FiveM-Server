@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { FunctionComponent, useState } from 'react';
-import { Link, MemoryRouter, Route, Routes } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { RepairAnalyze } from '../../../shared/nui/repair';
 import { useBackspace } from '../../hook/control';
@@ -161,8 +161,10 @@ const TankPage: FunctionComponent<PageProps> = ({ analyze }) => {
     );
 };
 
-export const RepairApp: FunctionComponent = () => {
+export const MenuRouter: FunctionComponent = () => {
     const [repairData, setRepairData] = useState<RepairAnalyze>(null);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useNuiFocus(repairData !== null, repairData !== null, false);
     useNuiEvent('repair', 'open', setRepairData);
@@ -178,6 +180,14 @@ export const RepairApp: FunctionComponent = () => {
 
     if (!repairData) {
         return null;
+    }
+
+    if (repairData.tabletType === 'trailer' && location.pathname === '/engine') {
+        navigate('/body', {
+            state: {
+                repairData,
+            },
+        });
     }
 
     const baseClass = 'absolute flex flex-col items-center';
@@ -237,132 +247,137 @@ export const RepairApp: FunctionComponent = () => {
     });
 
     return (
-        <MemoryRouter>
-            <div className="absolute w-full h-full grid h-screen place-items-center">
+        <div className="absolute w-full h-full grid h-screen place-items-center">
+            <div
+                ref={refOutside}
+                style={{
+                    backgroundImage: `url(/public/images/vehicle/repair_app.png)`,
+                    height: '720px',
+                    width: '1280px',
+                }}
+                className="font-mono font-thin tracking-tight text-lg relative bg-contain bg-no-repeat"
+            >
                 <div
-                    ref={refOutside}
                     style={{
-                        backgroundImage: `url(/public/images/vehicle/repair_app.png)`,
-                        height: '720px',
-                        width: '1280px',
+                        width: '480px',
+                        height: '470px',
+                        top: '130px',
+                        left: '133px',
                     }}
-                    className="font-mono font-thin tracking-tight text-lg relative bg-contain bg-no-repeat"
+                    className="p-2 text-white absolute flex flex-col justify-between"
                 >
-                    <div
-                        style={{
-                            width: '480px',
-                            height: '470px',
-                            top: '130px',
-                            left: '133px',
-                        }}
-                        className="p-2 text-white absolute flex flex-col justify-between"
-                    >
-                        <div>
-                            <Routes>
-                                <Route path="/" element={<EnginePage analyze={repairData} />} />
-                                <Route path="/engine" element={<EnginePage analyze={repairData} />} />
-                                <Route path="/wheel" element={<WheelPage analyze={repairData} />} />
-                                <Route path="/door" element={<DoorPage analyze={repairData} />} />
-                                <Route path="/window" element={<WindowsDoorPage analyze={repairData} />} />
-                                <Route path="/body" element={<BodyPage analyze={repairData} />} />
-                                <Route path="/tank" element={<TankPage analyze={repairData} />} />
-                            </Routes>
-                        </div>
-                        <a href="#" onClick={() => setRepairData(null)} className="hover:underline text-white text-lg">
-                            Quitter
-                        </a>
-                    </div>
                     <div>
-                        <Link
-                            style={{
-                                top: '247px',
-                                left: '659px',
-                                width: '100px',
-                            }}
-                            className={engineClass}
-                            to="/engine"
-                        >
-                            <span>Moteur</span>
-                            <IconEngine className="h-8 w-8 mt-2" />
-                        </Link>
-                        <Link
-                            style={{
-                                top: '482px',
-                                left: '721px',
-                                width: '100px',
-                            }}
-                            className={wheelClass}
-                            to="/wheel"
-                        >
-                            <IconWheel className="h-8 w-8 mb-2" />
-                            <span>Roues</span>
-                        </Link>
-                        <Link
-                            style={{
-                                top: '173px',
-                                left: '814px',
-                                width: '100px',
-                            }}
-                            className={doorClass}
-                            to="/door"
-                        >
-                            <span>Portières</span>
-                            <IconDoor className="h-8 w-8 mt-2" />
-                        </Link>
-                        <Link
-                            style={{
-                                top: '491px',
-                                left: '901px',
-                                width: '100px',
-                            }}
-                            className={bodyClass}
-                            to="/body"
-                        >
-                            <IconBody className="h-8 w-8 mb-2" />
-                            <span>Carrosserie</span>
-                        </Link>
-                        <Link
-                            style={{
-                                top: '173px',
-                                left: '1000px',
-                                width: '100px',
-                            }}
-                            className={doorWindowClass}
-                            to="/window"
-                        >
-                            <span>Vitres</span>
-                            <IconGlass className="h-7 w-7 mt-3" />
-                        </Link>
-                        {repairData.tabletType === 'electric' ? (
-                            <Link
-                                style={{
-                                    top: '421px',
-                                    left: '1014px',
-                                    width: '100px',
-                                }}
-                                className={batteryClass}
-                                to="/tank"
-                            >
-                                <IconBattery className="h-8 w-8 mb-2" />
-                                <span>Batterie</span>
-                            </Link>
-                        ) : (
-                            <Link
-                                style={{
-                                    top: '421px',
-                                    left: '1014px',
-                                    width: '100px',
-                                }}
-                                className={tankClass}
-                                to="/tank"
-                            >
-                                <IconTank className="h-8 w-8 mb-2" />
-                                <span>Réservoir</span>
-                            </Link>
-                        )}
+                        <Routes>
+                            <Route path="/" element={<EnginePage analyze={repairData} />} />
+                            <Route path="/engine" element={<EnginePage analyze={repairData} />} />
+                            <Route path="/wheel" element={<WheelPage analyze={repairData} />} />
+                            <Route path="/door" element={<DoorPage analyze={repairData} />} />
+                            <Route path="/window" element={<WindowsDoorPage analyze={repairData} />} />
+                            <Route path="/body" element={<BodyPage analyze={repairData} />} />
+                            <Route path="/tank" element={<TankPage analyze={repairData} />} />
+                        </Routes>
                     </div>
+                    <a href="#" onClick={() => setRepairData(null)} className="hover:underline text-white text-lg">
+                        Quitter
+                    </a>
+                </div>
+                <div>
+                    <Link
+                        style={{
+                            top: '247px',
+                            left: '659px',
+                            width: '100px',
+                        }}
+                        className={engineClass}
+                        to="/engine"
+                    >
+                        <span>Moteur</span>
+                        <IconEngine className="h-8 w-8 mt-2" />
+                    </Link>
+                    <Link
+                        style={{
+                            top: '482px',
+                            left: '721px',
+                            width: '100px',
+                        }}
+                        className={wheelClass}
+                        to="/wheel"
+                    >
+                        <IconWheel className="h-8 w-8 mb-2" />
+                        <span>Roues</span>
+                    </Link>
+                    <Link
+                        style={{
+                            top: '173px',
+                            left: '814px',
+                            width: '100px',
+                        }}
+                        className={doorClass}
+                        to="/door"
+                    >
+                        <span>Portières</span>
+                        <IconDoor className="h-8 w-8 mt-2" />
+                    </Link>
+                    <Link
+                        style={{
+                            top: '491px',
+                            left: '901px',
+                            width: '100px',
+                        }}
+                        className={bodyClass}
+                        to="/body"
+                    >
+                        <IconBody className="h-8 w-8 mb-2" />
+                        <span>Carrosserie</span>
+                    </Link>
+                    <Link
+                        style={{
+                            top: '173px',
+                            left: '1000px',
+                            width: '100px',
+                        }}
+                        className={doorWindowClass}
+                        to="/window"
+                    >
+                        <span>Vitres</span>
+                        <IconGlass className="h-7 w-7 mt-3" />
+                    </Link>
+                    {repairData.tabletType === 'electric' ? (
+                        <Link
+                            style={{
+                                top: '421px',
+                                left: '1014px',
+                                width: '100px',
+                            }}
+                            className={batteryClass}
+                            to="/tank"
+                        >
+                            <IconBattery className="h-8 w-8 mb-2" />
+                            <span>Batterie</span>
+                        </Link>
+                    ) : (
+                        <Link
+                            style={{
+                                top: '421px',
+                                left: '1014px',
+                                width: '100px',
+                            }}
+                            className={tankClass}
+                            to="/tank"
+                        >
+                            <IconTank className="h-8 w-8 mb-2" />
+                            <span>Réservoir</span>
+                        </Link>
+                    )}
                 </div>
             </div>
+        </div>
+    );
+};
+export const RepairApp: FunctionComponent = () => {
+    return (
+        <MemoryRouter>
+            <MenuRouter />
         </MemoryRouter>
     );
 };
