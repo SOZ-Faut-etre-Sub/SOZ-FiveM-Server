@@ -87,6 +87,17 @@ export class _MessagesDB {
     }
 
     /**
+     * Update a message group date
+     * @param conversationId - the unique group ID this corresponds to
+     */
+    async updateMessageGroupDate(conversationId: string): Promise<void> {
+        await exports.oxmysql.insert_async(
+            'UPDATE phone_messages_conversations SET updatedAt = current_timestamp() WHERE conversation_id = ?',
+            [conversationId]
+        );
+    }
+
+    /**
      * Find a players identifier from their phone number
      * @param phoneNumber - the phone number to search for
      */
