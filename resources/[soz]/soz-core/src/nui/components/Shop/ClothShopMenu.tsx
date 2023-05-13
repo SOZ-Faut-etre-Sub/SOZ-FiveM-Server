@@ -13,6 +13,7 @@ import {
     Menu,
     MenuContent,
     MenuItemButton,
+    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuTitle,
@@ -63,6 +64,13 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
             <MainMenu>
                 <MenuTitle banner={banner}>{shopName}</MenuTitle>
                 <MenuContent>
+                    <MenuItemCheckbox
+                        onChange={check => {
+                            fetchNui(NuiEvent.ClothShopToggleCamera, check);
+                        }}
+                    >
+                        Libérer la caméra
+                    </MenuItemCheckbox>
                     {Object.values(catalog.shop_content.categories)
                         .filter(
                             category =>

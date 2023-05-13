@@ -133,43 +133,42 @@ export class FightForStyleRestockProvider {
                     shop_category.content != null &&
                     (shop_category.id == category || shop_category.parentId == category)
                 ) {
-                    Object.values(shop_category.content).forEach(item => {
-                        allItemsByGender[genderHash].push(item);
+                    Object.values(shop_category.content).forEach(items => {
+                        items.forEach(item => allItemsByGender[parseInt(genderHash)].push(item));
                     });
                 }
             }
         }
+        console.log(allItemsByGender);
 
         let amountLeft = amount;
         while (amountLeft > 0) {
             const loopAmount = Math.min(5, amountLeft); // <--- LoopAmount decreased to 5 to increase the diversity of restocked items
             amountLeft -= loopAmount;
             const loopSex = sexes[Math.floor(Math.random() * 2)];
-            const loopItems = allItemsByGender[loopSex];
+            let loopItems = allItemsByGender[loopSex];
+            if (loopItems.length == 0) {
+                for (const items of Object.values(allItemsByGender)) {
+                    if (items.length > 0) {
+                        loopItems = items;
+                        break;
+                    }
+                }
+            }
             const randomItem = loopItems[Math.floor(Math.random() * loopItems.length)];
+            console.log('Restocking item ', randomItem);
             if (!randomItem || !loopItems) {
                 return;
             }
-            // If item has a modelLabel lag, use it to find other items with same modelLabel (for tops and undershirts)
             let sameModelsIds: number[] = [];
-            if (randomItem.modelLabel) {
+            if (randomItem.modelLabel != null) {
                 const sameModelLabelItems = loopItems.filter(
                     item => item.modelLabel != null && item.modelLabel === randomItem.modelLabel
                 );
+                console.log('Same model label items', sameModelLabelItems);
                 sameModelsIds = sameModelLabelItems.map(item => item.id);
             } else {
-                // Else use legacy method to find items with same drawable
-                const sameDrawableItems = loopItems.filter(item => {
-                    for (const [componentId, component] of Object.entries(randomItem.components)) {
-                        if (
-                            item.components[componentId] != null &&
-                            item.components[componentId].Drawable === component.Drawable
-                        ) {
-                            return true;
-                        }
-                    }
-                });
-                sameModelsIds = sameDrawableItems.map(item => item.id);
+                continue;
             }
 
             // Update SQL database
