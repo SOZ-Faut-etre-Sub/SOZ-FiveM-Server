@@ -4,6 +4,7 @@ import { Radar } from '../shared/vehicle/radar';
 
 // TODO: Move the radar configuration in database for the Chains Of Justice DLC
 export const RadarList: Record<number, Radar> = {
+    /* Temporary disabled to find source of crash in Paleto
     [1]: {
         props: [-54.77, 6338.8, 30.33, 155.46],
         zone: new CylinderZone([-60.35, 6321.91], 9, 22.3, 40.3),
@@ -11,6 +12,7 @@ export const RadarList: Record<number, Radar> = {
         isOnline: true,
         speed: 130,
     },
+    */
     //Freeway Radars, do not touch until migration in DB
     [2]: {
         props: [2365.11, 5763.63, 44.94, 236.35],
