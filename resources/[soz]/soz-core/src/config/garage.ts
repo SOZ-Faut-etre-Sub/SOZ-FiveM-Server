@@ -1228,11 +1228,17 @@ export const GarageList: Record<string, Garage> = {
                 heading: 90,
                 minZ: 30.22,
                 maxZ: 34.22,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
             }),
             new BoxZone([-163.44, -1305.2, 31.3], 12, 4, {
                 heading: 90,
                 minZ: 30.3,
                 maxZ: 34.3,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
             }),
         ],
     },
