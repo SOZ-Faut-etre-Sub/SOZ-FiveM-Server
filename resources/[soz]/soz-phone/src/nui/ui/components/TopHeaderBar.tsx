@@ -107,6 +107,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                                     })
                                 }
                                 onClick={() => {
+                                    setBarUncollapsed(false);
                                     navigate('/call');
                                 }}
                                 notificationIcon={() => <DialerIcon className="h-5 w-5 rounded-md" />}
