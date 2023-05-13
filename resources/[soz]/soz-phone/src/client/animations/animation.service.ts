@@ -65,7 +65,9 @@ export class AnimationService {
 
     private handleCallEndAnimation(playerPed: number) {
         if (!global.isPhoneOpen) {
-            this.handleCloseAnimation(playerPed);
+            if (this.onCall) {
+                this.handleCloseAnimation(playerPed);
+            }
             return;
         }
 
