@@ -3806,7 +3806,8 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.'
+        ['description'] = 'Du carburant conditionné servant à remplir les différentes stations services.',
+        ['illustrator'] = '.LeakFlood'
     },
     ['essence_jerrycan'] = {
         ['name'] = 'essence_jerrycan',
