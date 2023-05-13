@@ -8,7 +8,7 @@ import { StatusBar } from './StatusBar';
 export const Minimap: FunctionComponent = () => {
     const { minimap } = useHud();
     const player = usePlayer();
-    let playerHealth = usePlayerHealth();
+    const playerHealth = usePlayerHealth();
     const vehicle = useVehicle();
 
     const hideHealthCondition = useCallback(
@@ -33,11 +33,10 @@ export const Minimap: FunctionComponent = () => {
         return null;
     }
 
-    if (player.metadata.isdead) {
-        playerHealth = 0;
-    }
+    const healthPercent = player.metadata.isdead
+        ? 0
+        : ((playerHealth - 100) * 100) / (player.metadata.max_health - 100);
 
-    const healthPercent = ((playerHealth - 100) * 100) / (player.metadata.max_health - 100);
     const armorPercent = player.metadata.armor.current;
 
     // console.log(JSON.stringify(minimap, null, 4));
