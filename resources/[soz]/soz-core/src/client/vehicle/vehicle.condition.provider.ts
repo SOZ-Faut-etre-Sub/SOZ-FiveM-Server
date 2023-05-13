@@ -505,6 +505,17 @@ export class VehicleConditionProvider {
                 mileage: state.condition.mileage + diffDistance,
             },
         });
+
+        const [isTrailerExists, trailerEntity] = GetVehicleTrailerVehicle(vehicle);
+        if (isTrailerExists) {
+            const trailerState = this.vehicleService.getVehicleState(trailerEntity);
+            this.vehicleService.updateVehicleState(trailerEntity, {
+                condition: {
+                    ...trailerState.condition,
+                    mileage: trailerState.condition.mileage + diffDistance,
+                },
+            });
+        }
     }
 
     @Tick(500)
