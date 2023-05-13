@@ -58,6 +58,7 @@ export type SkinSubMenuState = {
 export type DeveloperSubMenuState = {
     noClip: boolean;
     displayCoords: boolean;
+    displayMileage: boolean;
 };
 
 export type VehicleSubMenuState = {
