@@ -41,6 +41,8 @@ export class ClothingShopProvider {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
+    private currentShop: string = undefined;
+
     @On(ClientEvent.SHOP_OPEN_MENU)
     public async openShop(brand: ShopBrand, shop: string) {
         if (
@@ -60,13 +62,14 @@ export class ClothingShopProvider {
             console.error(`Shop ${brand} not found`);
             return;
         }
-        await this.setupShop(brand, shop);
+        this.currentShop = shop;
+        await this.setupShop();
         this.nuiMenu.openMenu(MenuType.ClothShop, { brand, shop_content, shop_categories, player_data });
     }
 
-    public async setupShop(brand: ShopBrand, shop: string, skipIntro = false) {
+    public async setupShop(skipIntro = false) {
         const ped = PlayerPedId();
-        const [x, y, z, w] = ShopsConfig[shop].positionInShop;
+        const [x, y, z, w] = ShopsConfig[this.currentShop].positionInShop;
         if (!skipIntro) {
             await this.animationService.walkToCoordsAvoidObstacles([x, y, z] as Vector3, 7000);
         }
@@ -74,8 +77,8 @@ export class ClothingShopProvider {
         SetPedCoordsKeepVehicle(ped, x, y, z - 1);
         SetEntityHeading(ped, w);
         FreezeEntityPosition(ped, true);
-        const target = (ShopsConfig[shop].cameraTarget || [x, y, z]) as Vector3;
-        this.cameraService.setupCamera(ShopsConfig[shop].cameraInShop as Vector3, target);
+        const target = (ShopsConfig[this.currentShop].cameraTarget || [x, y, z]) as Vector3;
+        this.cameraService.setupCamera(ShopsConfig[this.currentShop].cameraInShop as Vector3, target);
 
         // Play idle animation
         const animDict = 'anim@heists@heist_corona@team_idles@male_c';
@@ -93,6 +96,15 @@ export class ClothingShopProvider {
         ClearPedTasks(ped);
         if (HasAnimDictLoaded('anim@heists@heist_corona@team_idles@male_c')) {
             RemoveAnimDict('anim@heists@heist_corona@team_idles@male_c');
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.ClothShopToggleCamera)
+    public async onToggleCamera(check: boolean) {
+        if (check) {
+            await this.cameraService.deleteCamera();
+        } else {
+            await this.setupShop(true);
         }
     }
 
@@ -126,10 +138,19 @@ export class ClothingShopProvider {
         const playerModel = GetEntityModel(ped);
         const player = this.playerService.getPlayer();
         const baseTorsoDrawable = player.cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
+        const nakedTorsoDrawable = player.cloth_config.NakedClothSet.Components[Component.Torso].Drawable;
         if (!baseTorsoDrawable) {
             return;
         }
-        if (product.undershirtType != null) {
+        if (product.undershirtType) {
+            // show the current top of the player to avoid a naked torso
+            SetPedComponentVariation(
+                ped,
+                Component.Tops,
+                player.cloth_config.BaseClothSet.Components[Component.Tops].Drawable,
+                player.cloth_config.BaseClothSet.Components[Component.Tops].Texture,
+                0
+            );
             if (UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType] != null) {
                 SetPedComponentVariation(
                     ped,
@@ -138,21 +159,15 @@ export class ClothingShopProvider {
                     0,
                     0
                 );
-                // Also show the current top of the player to avoid a naked torso
-                SetPedComponentVariation(
-                    ped,
-                    Component.Tops,
-                    player.cloth_config.BaseClothSet.Components[Component.Tops].Drawable,
-                    player.cloth_config.BaseClothSet.Components[Component.Tops].Texture,
-                    0
-                );
             } else {
                 SetPedComponentVariation(ped, Component.Torso, baseTorsoDrawable, 0, 0);
             }
         }
         // Preview gloves if selected
         if (product.correspondingDrawables) {
-            const correspondingGloveDrawable = product.correspondingDrawables[baseTorsoDrawable];
+            const correspondingGloveDrawable = player.cloth_config.Config.HideTop
+                ? product.correspondingDrawables[nakedTorsoDrawable]
+                : product.correspondingDrawables[baseTorsoDrawable];
             SetPedComponentVariation(
                 ped,
                 Component.Torso,
@@ -202,6 +217,7 @@ export class ClothingShopProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         await this.cameraService.deleteCamera();
         await this.clearAllAnimations();
+        this.currentShop = undefined;
         FreezeEntityPosition(PlayerPedId(), false);
     }
 
