@@ -232,7 +232,7 @@ export class AnimationFactory {
 
                 const stopReason = await doAnimation(ped, animation.base, false, animationCanceller);
 
-                if (stopReason !== AnimationStopReason.Finished) {
+                if (stopReason === AnimationStopReason.Aborted) {
                     return stopReason;
                 }
 
@@ -244,7 +244,7 @@ export class AnimationFactory {
                     }
                 }
 
-                return AnimationStopReason.Finished;
+                return stopReason;
             } finally {
                 for (const prop of props) {
                     if (animation.enter?.dictionary) {
