@@ -58,40 +58,41 @@ CreateThread(function()
     while true do
         Wait(1)
 
-        local playerState = exports["soz-core"]:GetPlayerState()
+        if PlayerData and PlayerData.metadata then
+            local playerState = exports["soz-core"]:GetPlayerState()
 
-        if playerStatee.isEscorted or PlayerData.metadata["ishandcuffed"] then
-            DisableAllControlActions(0)
+            if playerState.isEscorted or PlayerData.metadata["ishandcuffed"] then
+                DisableAllControlActions(0)
 
-            --- Camera
-            EnableControlAction(0, 0, true)
-            EnableControlAction(0, 1, true)
-            EnableControlAction(0, 2, true)
+                --- Camera
+                EnableControlAction(0, 0, true)
+                EnableControlAction(0, 1, true)
+                EnableControlAction(0, 2, true)
 
-            --- Push to talk
-            EnableControlAction(0, 249, true)
-            EnableControlAction(0, 46, true)
-        end
+                --- Push to talk
+                EnableControlAction(0, 249, true)
+                EnableControlAction(0, 46, true)
+            end
 
-        if PlayerData.metadata["ishandcuffed"] then
-            --- Movement
-            EnableControlAction(0, 30, true)
-            EnableControlAction(0, 31, true)
+            if PlayerData.metadata["ishandcuffed"] then
+                --- Movement
+                EnableControlAction(0, 30, true)
+                EnableControlAction(0, 31, true)
 
-            --- Vehicle enter
-            EnableControlAction(0, 23, true)
-            EnableControlAction(0, 75, true)
+                --- Vehicle enter
+                EnableControlAction(0, 23, true)
+                EnableControlAction(0, 75, true)
 
-            if (not IsEntityPlayingAnim(PlayerPedId(), "mp_arresting", "idle", 3) and
-                not IsEntityPlayingAnim(PlayerPedId(), "mp_arrest_paired", "crook_p2_back_right", 3)) and not PlayerData.metadata["isdead"] then
-                QBCore.Functions.RequestAnimDict("mp_arresting")
-                TaskPlayAnim(PlayerPedId(), "mp_arresting", "idle", 8.0, -8, -1, 49, 0, 0, 0, 0)
+                if (not IsEntityPlayingAnim(PlayerPedId(), "mp_arresting", "idle", 3) and
+                    not IsEntityPlayingAnim(PlayerPedId(), "mp_arrest_paired", "crook_p2_back_right", 3)) and not PlayerData.metadata["isdead"] then
+                    QBCore.Functions.RequestAnimDict("mp_arresting")
+                    TaskPlayAnim(PlayerPedId(), "mp_arresting", "idle", 8.0, -8, -1, 49, 0, 0, 0, 0)
+                end
+            end
+
+            if not PlayerData.metadata["ishandcuffed"] and not playerState.isEscorted then
+                Wait(2000)
             end
         end
-
-        if not PlayerData.metadata["ishandcuffed"] and not playerState.isEscorted then
-            Wait(2000)
-        end
-
     end
 end)
