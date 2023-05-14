@@ -23,3 +23,8 @@ export type Time = {
 };
 
 export type Forecast = Record<Weather, { [key in Weather]?: number }>;
+
+export type ForecastWithTemperature = Forecast & {
+    temperature: number;
+    duration: number;
+}

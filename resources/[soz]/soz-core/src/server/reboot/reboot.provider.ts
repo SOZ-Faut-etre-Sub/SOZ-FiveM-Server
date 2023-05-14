@@ -121,6 +121,8 @@ export class RebootProvider {
 
         await this.sendRebootMessage(15);
         this.weatherProvider.setWeather('CLEARING');
+        // TODO: Send storm alert on phones
+
         await wait(5 * 60 * 1000);
 
         this.weatherProvider.setWeather('RAIN');
