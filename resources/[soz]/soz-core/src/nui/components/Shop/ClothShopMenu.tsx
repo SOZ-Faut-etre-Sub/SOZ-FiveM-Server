@@ -141,11 +141,10 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                 .map(([modelLabel, items]) => (
                                     <MenuItemSelect
                                         keyDescendant={modelLabel}
+                                        key={items[0].id}
                                         title={modelLabel}
                                         titleWidth={60}
                                         value={items[0]}
-                                        initialValue={items[0]}
-                                        onChange={async (_, item) => await fetchNui(NuiEvent.ClothingShopPreview, item)}
                                         onConfirm={async (_, item) => await fetchNui(NuiEvent.ClothingShopBuy, item)}
                                         onSelectedValue={async (_, item) =>
                                             await fetchNui(NuiEvent.ClothingShopPreview, item)
@@ -160,6 +159,9 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                                 value={item}
                                                 description={`💸 Prix : $${item.price} - 📦 Stock : ${stocks[item.id]}`}
                                                 disabled={stocks[item.id] == 0}
+                                                onSelected={async () =>
+                                                    await fetchNui(NuiEvent.ClothingShopPreview, item)
+                                                }
                                             >
                                                 {item.colorLabel}
                                             </MenuItemSelectOption>
