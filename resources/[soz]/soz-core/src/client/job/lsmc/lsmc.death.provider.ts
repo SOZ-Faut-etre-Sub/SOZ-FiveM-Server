@@ -213,8 +213,10 @@ export class LSMCDeathProvider {
             } as KillData;
             this.hungerThristDeath = false;
 
-            LocalPlayer.state.set('isdead', true, true);
-            TriggerEvent('inventory:client:StoreWeapon');
+            this.playerService.updateState({
+                isDead: true,
+            });
+
             TriggerEvent(ClientEvent.PLAYER_ON_DEATH, killData);
             TriggerServerEvent(ServerEvent.LSMC_ON_DEATH);
             TriggerServerEvent(ServerEvent.LSMC_ON_DEATH2, killData);
@@ -244,7 +246,9 @@ export class LSMCDeathProvider {
             SetBlockingOfNonTemporaryEvents(player, true);
             SetEntityHealth(player, GetEntityMaxHealth(player));
 
-            LocalPlayer.state.set('inv_busy', false, true);
+            this.playerService.updateState({
+                isInventoryBusy: false,
+            });
 
             const playerMetadata = this.playerService.getPlayer().metadata;
             const injuries = playerMetadata.injuries_count;
@@ -460,42 +464,40 @@ export class LSMCDeathProvider {
 
     @OnEvent(ClientEvent.INJURY_DEATH)
     public injuryDeath(value: string) {
-        if (value.length && LocalPlayer.state.isdead) {
+        if (value.length && this.playerService.getState().isDead) {
             this.soundService.play('death', 0.1);
         }
     }
 
     @Tick(5000)
     public async hungerThirstCheckLoop() {
-        if (LocalPlayer.state.isLoggedIn) {
-            const playerData = this.playerService.getPlayer();
+        const playerData = this.playerService.getPlayer();
 
-            if (!playerData || playerData.metadata.isdead) {
-                return;
-            }
+        if (!playerData || playerData.metadata.isdead) {
+            return;
+        }
 
-            if (
-                playerData.metadata.hunger <= 0 ||
-                playerData.metadata['thirst'] <= 0 ||
-                playerData.metadata['alcohol'] >= 100
-            ) {
-                const ped = PlayerPedId();
+        if (
+            playerData.metadata.hunger <= 0 ||
+            playerData.metadata['thirst'] <= 0 ||
+            playerData.metadata['alcohol'] >= 100
+        ) {
+            const ped = PlayerPedId();
 
-                if (GetEntityHealth(ped) > 0) {
-                    ClearPedTasksImmediately(ped);
-                    await this.animationService.playAnimation({
-                        base: {
-                            dictionary: 'move_m@_idles@out_of_breath',
-                            name: 'idle_c',
-                            blendInSpeed: 8.0,
-                            blendOutSpeed: -8.0,
-                            duration: 8000,
-                        },
-                    });
+            if (GetEntityHealth(ped) > 0) {
+                ClearPedTasksImmediately(ped);
+                await this.animationService.playAnimation({
+                    base: {
+                        dictionary: 'move_m@_idles@out_of_breath',
+                        name: 'idle_c',
+                        blendInSpeed: 8.0,
+                        blendOutSpeed: -8.0,
+                        duration: 8000,
+                    },
+                });
 
-                    this.hungerThristDeath = true;
-                    SetEntityHealth(ped, 0);
-                }
+                this.hungerThristDeath = true;
+                SetEntityHealth(ped, 0);
             }
         }
     }

@@ -63,9 +63,12 @@ const getCurrentGameTime = () => {
 export const showPhone = async (): Promise<void> => {
     global.isPhoneOpen = true;
     const time = getCurrentGameTime();
-    if (!LocalPlayer.state.isdead) {
+    const state = exports['soz-core'].GetPlayerState();
+
+    if (!state.isDead) {
         await animationService.openPhone(); // Animation starts before the phone is open
     }
+
     emitNet(PhoneEvents.FETCH_CREDENTIALS);
     SetCursorLocation(0.9, 0.922); //Experimental
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
@@ -78,9 +81,12 @@ export const showPhone = async (): Promise<void> => {
 export const hidePhone = async (): Promise<void> => {
     global.isPhoneOpen = false;
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, false);
-    if (!LocalPlayer.state.isdead) {
+    const state = exports['soz-core'].GetPlayerState();
+
+    if (!state.isDead) {
         await animationService.closePhone();
     }
+
     SetNuiFocus(false, false);
     SetNuiFocusKeepInput(false);
     emit('phone:client:disableControlActions', false);
@@ -93,9 +99,10 @@ export const hidePhone = async (): Promise<void> => {
  * * * * * * * * * * * * */
 
 export const updateAvailability = async () => {
+    const state = exports['soz-core'].GetPlayerState();
     const avail =
         (!global.isPhoneDrowned && !global.isPhoneDisabled && global.isPlayerHasItem && !global.isBlackout) ||
-        !!LocalPlayer.state.isdead;
+        !!state.isDead;
     sendMessage('PHONE', PhoneEvents.SET_AVAILABILITY, avail);
 
     if (!avail) {
@@ -131,7 +138,9 @@ async function togglePhone(): Promise<void> {
         return await hidePhone();
     }
 
-    if (!LocalPlayer.state.isdead) {
+    const state = exports['soz-core'].GetPlayerState();
+
+    if (!state.isDead) {
         if (global.isPhoneDrowned) return;
         if (global.isPhoneDisabled) return;
         if (cityIsInBlackOut()) return;
@@ -166,7 +175,9 @@ on('onResourceStop', (resource: string) => {
 onNet('QBCore:Client:OnPlayerLoaded', async () => {
     sendMessage('PHONE', 'phoneRestart', {});
     updateAvailability();
-    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, LocalPlayer.state.isdead);
+    const state = exports['soz-core'].GetPlayerState();
+
+    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, state.isDead);
 });
 
 onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {

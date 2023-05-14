@@ -356,7 +356,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (LocalPlayer.state.inv_busy) {
+        if (this.playerService.getState().isInventoryBusy) {
             this.notifier.notify("Inventaire en cours d'utilisation.", 'warning');
 
             return;
@@ -452,7 +452,7 @@ export class VehicleLockProvider {
         if (player.metadata.ishandcuffed || player.metadata.isdead) {
             return;
         }
-        if (LocalPlayer.state.inv_busy) {
+        if (this.playerService.getState().isInventoryBusy) {
             this.notifier.notify('Une action est déjà en cours !', 'warning');
 
             return;

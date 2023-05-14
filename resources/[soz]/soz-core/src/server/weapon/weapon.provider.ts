@@ -11,6 +11,7 @@ import { GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
+import { PlayerStateService } from '../player/player.state.service';
 
 const DIR_WATER_HYDRANT = 13;
 
@@ -27,6 +28,9 @@ export class WeaponProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
 
     @OnEvent(ServerEvent.WEAPON_SHOOTING)
     async onWeaponShooting(source: number, weaponSlot: number, weaponGroup: number, playerAmmo: number) {
@@ -50,7 +54,7 @@ export class WeaponProvider {
     }
 
     private async useAmmo(source: number, item: InventoryItem) {
-        if (Player(source).state.inv_busy) {
+        if (this.playerStateService.getClientState(source).isInventoryBusy) {
             this.notifier.notify(source, "Inventaire en cours d'utilisation", 'warning');
             return;
         }

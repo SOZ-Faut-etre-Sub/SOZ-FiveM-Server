@@ -13,6 +13,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PhoneService } from '../phone/phone.service';
+import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { TalkService } from '../talk.service';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
@@ -49,6 +50,9 @@ export class WeaponProvider {
 
     @Inject(WeaponHolsterProvider)
     private weaponHolsterProvider: WeaponHolsterProvider;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     private lastPoliceCall = 0;
 
@@ -103,11 +107,11 @@ export class WeaponProvider {
             return;
         }
 
-        if (LocalPlayer.state.inv_busy === true) {
+        if (this.playerService.getState().isInventoryBusy) {
             return;
         }
 
-        LocalPlayer.state.set('inv_busy', true, true);
+        await this.playerService.updateState({ isInventoryBusy: true });
 
         const weapon = await emitRpc<InventoryItem | null>(
             RpcServerEvent.WEAPON_USE_AMMO,
@@ -117,7 +121,8 @@ export class WeaponProvider {
         );
 
         if (!weapon) {
-            LocalPlayer.state.set('inv_busy', false, true);
+            await this.playerService.updateState({ isInventoryBusy: false });
+
             return;
         }
 
@@ -142,7 +147,8 @@ export class WeaponProvider {
         if (weapon) {
             await this.weapon.set(weapon);
         }
-        LocalPlayer.state.set('inv_busy', false, true);
+
+        await this.playerService.updateState({ isInventoryBusy: false });
 
         if (weapon.metadata.ammo < this.weapon.getMaxAmmoInClip() * GlobalWeaponConfig.MaxAmmoRefill(weapon.name)) {
             await this.onUseAmmo(ammoName);

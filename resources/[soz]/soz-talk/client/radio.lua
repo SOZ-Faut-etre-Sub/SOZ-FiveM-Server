@@ -163,7 +163,9 @@ RegisterNetEvent("talk:radio:use", function()
 end)
 
 RegisterCommand("radio_toggle", function()
-    if LocalPlayer.state.inv_busy then
+    local playerState = exports["soz-core"]:GetPlayerState()
+
+    if playerState.isInventoryBusy then
         exports["soz-core"]:DrawNotification("Action en cours", "error")
         return
     end

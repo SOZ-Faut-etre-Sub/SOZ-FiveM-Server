@@ -1,3 +1,5 @@
+import { PlayerService } from '@public/client/player/player.service';
+
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -23,6 +25,9 @@ export class WeaponDrawingProvider {
     @Inject(WeaponService)
     private weaponService: WeaponService;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     private async updateWeaponDrawList(playerItem: Record<string, InventoryItem> | InventoryItem[]) {
         const weaponToDraw = Object.values(playerItem)
             .filter(
@@ -41,7 +46,11 @@ export class WeaponDrawingProvider {
     }
 
     private async drawWeapon() {
-        if (!this.shouldDrawWeapon || !this.shouldAdminDrawWeapon || LocalPlayer.state.isWearingPatientOutfit) {
+        if (
+            !this.shouldDrawWeapon ||
+            !this.shouldAdminDrawWeapon ||
+            this.playerService.getState().isWearingPatientOutfit
+        ) {
             return;
         }
 

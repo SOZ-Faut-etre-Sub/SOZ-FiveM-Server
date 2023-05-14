@@ -6,6 +6,7 @@ import { doLooting, Loot } from '../../../shared/loot';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
+import { PlayerStateService } from '../../player/player.state.service';
 import { ProgressService } from '../../player/progress.service';
 
 @Provider()
@@ -18,6 +19,9 @@ export class LsmcHalloweenProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -50,11 +54,13 @@ export class LsmcHalloweenProvider {
             return;
         }
 
-        if (Player(targetPlayerSource).state.get('isLooted') === true) {
+        if (this.playerStateService.getClientState(targetPlayerSource).isLooted) {
             return;
         }
 
-        Player(targetPlayerSource).state.set('isLooted', true, true);
+        this.playerStateService.setClientState(targetPlayerSource, {
+            isLooted: true,
+        });
 
         this.inventoryManager.addItemToInventory(source, doLooting(this.loots).value.toString(), 1);
 

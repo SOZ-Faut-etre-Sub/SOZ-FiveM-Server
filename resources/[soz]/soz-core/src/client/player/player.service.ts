@@ -1,15 +1,33 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Outfit } from '../../shared/cloth';
-import { ClientEvent } from '../../shared/event';
-import { PlayerData } from '../../shared/player';
+import { ClientEvent, ServerEvent } from '../../shared/event';
+import { PlayerClientState, PlayerData } from '../../shared/player';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { Qbcore } from '../qbcore';
 
 @Injectable()
 export class PlayerService {
     private player: PlayerData | null = null;
+
+    private state: PlayerClientState = {
+        isDead: false,
+        isEscorted: false,
+        isEscorting: false,
+        isHandcuffed: false,
+        isInHub: false,
+        isInHospital: false,
+        isInShop: false,
+        isInventoryBusy: false,
+        tankerEntity: null,
+        disableMoneyCase: false,
+        hasPrisonerClothes: false,
+        isWearingPatientOutfit: false,
+        isZipped: false,
+        isLooted: false,
+        escorting: null,
+    };
 
     @Inject(Qbcore)
     private qbcore: Qbcore;
@@ -24,11 +42,23 @@ export class PlayerService {
     }
 
     public isLoggedIn(): boolean {
-        return LocalPlayer.state.isLoggedIn;
+        return this.player !== null;
     }
 
     public getPlayer(): PlayerData | null {
         return this.player;
+    }
+
+    public getState(): PlayerClientState {
+        return { ...this.state };
+    }
+
+    public setState(state: PlayerClientState) {
+        this.state = { ...state };
+    }
+
+    public updateState(state: Partial<PlayerClientState>) {
+        TriggerServerEvent(ServerEvent.PLAYER_UPDATE_STATE, state);
     }
 
     public isOnDuty(): boolean {

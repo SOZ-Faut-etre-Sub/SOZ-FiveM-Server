@@ -23,6 +23,7 @@ export enum RpcServerEvent {
     OIL_GET_STATION = 'soz-core:job:oil:get-station',
     OIL_GET_STATION_PRICES = 'soz-core:job:oil:get-station-prices',
 
+    PLAYER_GET_CLIENT_STATE = 'soz-core:player:get-client-state',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
     PLAYER_GET_JWT_TOKEN = 'soz-core:player:get-jwt-token',
 
@@ -53,6 +54,7 @@ export enum RpcServerEvent {
     VEHICLE_HAS_KEY = 'soz-core:vehicle:has-key',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
+    VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',
 
     INVENTORY_GET_ITEM_BY_SHORTCUT = 'soz-core:inventory:get-item-by-shortcut',
 

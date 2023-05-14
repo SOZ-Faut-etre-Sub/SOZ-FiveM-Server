@@ -11,7 +11,7 @@ RegisterNetEvent("police:server:CuffPlayer", function(targetId, isSoftcuff)
             exports["soz-inventory"]:RemoveItem(player.PlayerData.source, "handcuffs", 1)
             target.Functions.SetMetaData("ishandcuffed", true)
             target.Functions.UpdatePlayerData()
-            Player(target.PlayerData.source).state:set("ishandcuffed", true, true)
+            exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isHandcuffed = true})
 
             TriggerClientEvent("police:client:HandCuffAnimation", player.PlayerData.source)
             TriggerClientEvent("police:client:GetCuffed", target.PlayerData.source, player.PlayerData.source, isSoftcuff)
@@ -34,7 +34,7 @@ RegisterNetEvent("police:server:UnCuffPlayer", function(targetId)
             Wait(3000)
 
             target.Functions.SetMetaData("ishandcuffed", false)
-            Player(target.PlayerData.source).state:set("ishandcuffed", false, true)
+            exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isHandcuffed = false})
             TriggerClientEvent("police:client:GetUnCuffed", target.PlayerData.source)
             TriggerClientEvent("soz-talk:client:PowerOnradio", target.PlayerData.source)
         else
@@ -49,9 +49,11 @@ RegisterNetEvent("police:server:EscortPlayer", function(playerId, crimi)
     local target = QBCore.Functions.GetPlayer(playerId)
 
     if player and target and player ~= target then
-        Player(player.PlayerData.source).state:set("isEscorting", true, true)
-        Player(player.PlayerData.source).state:set("escorting", target.PlayerData.source, true)
-        Player(target.PlayerData.source).state:set("isEscorted", true, true)
+        exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isEscorted = true})
+        exports["soz-core"]:SetPlayerState(player.PlayerData.source, {
+            isEscorting = true,
+            escorting = target.PlayerData.source,
+        })
 
         TriggerClientEvent("police:client:SetEscorting", player.PlayerData.source, target.PlayerData.source, crimi)
         TriggerClientEvent("police:client:GetEscorted", target.PlayerData.source, player.PlayerData.source, crimi)
@@ -64,14 +66,13 @@ RegisterNetEvent("police:server:DeEscortPlayer", function(playerId)
     local player = QBCore.Functions.GetPlayer(source)
     local target = QBCore.Functions.GetPlayer(playerId)
 
-    local playerState = Player(player.PlayerData.source).state
-    local targetState = Player(target.PlayerData.source).state
+    local playerState = exports["soz-core"]:GetPlayerState(player.PlayerData.source);
+    local targetState = exports["soz-core"]:GetPlayerState(target.PlayerData.source);
 
     if player and target and player ~= target then
         if playerState.isEscorting and playerState.escorting == target.PlayerData.source and targetState.isEscorted then
-            Player(player.PlayerData.source).state:set("isEscorting", false, true)
-            Player(player.PlayerData.source).state:set("escorting", nil, true)
-            Player(target.PlayerData.source).state:set("isEscorted", false, true)
+            exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isEscorted = false})
+            exports["soz-core"]:SetPlayerState(player.PlayerData.source, {isEscorting = false, escorting = nil})
 
             TriggerClientEvent("police:client:DeEscort", target.PlayerData.source)
 

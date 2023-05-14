@@ -50,9 +50,22 @@ Citizen.CreateThread(function()
                     event = "police:client:UnCuffPlayer",
                     item = "handcuffs_key",
                     canInteract = function(entity)
+                        if not PlayerData.job.onduty then
+                            return false
+                        end
+
+                        if not IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) then
+                            return false
+                        end
+
+                        if IsPedInAnyVehicle(entity) or IsPedInAnyVehicle(PlayerPedId()) then
+                            return false
+                        end
+
                         local target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                        return PlayerData.job.onduty and IsEntityPlayingAnim(entity, "mp_arresting", "idle", 3) and not IsPedInAnyVehicle(entity) and
-                                   not IsPedInAnyVehicle(PlayerPedId()) and not Player(target).state.zipped
+                        local targetState = exports["soz-core"]:GetSpecificPlayerState(target);
+
+                        return not targetState.isZipped
                     end,
                     job = jobId,
                 },
@@ -100,8 +113,19 @@ Citizen.CreateThread(function()
                                 return false
                             end
                         end
-                        return PlayerData.job.onduty and Player(GetPlayerServerId(player)).state.isEscorted ~= true and not IsPedInAnyVehicle(entity) and
-                                   not IsPedInAnyVehicle(PlayerPedId())
+
+                        if not PlayerData.job.onduty then
+                            return false
+                        end
+
+                        if IsPedInAnyVehicle(entity) or IsPedInAnyVehicle(PlayerPedId()) then
+                            return false
+                        end
+
+                        local target = GetPlayerServerId(player)
+                        local targetState = exports["soz-core"]:GetSpecificPlayerState(target)
+
+                        return not targetState.isEscorted
                     end,
                     job = jobId,
                 },
@@ -201,7 +225,6 @@ end)
 RegisterNetEvent("police:client:GetCuffed", function(playerId, isSoftcuff)
     local ped = PlayerPedId()
     ClearPedTasksImmediately(ped)
-    TriggerEvent("inventory:client:StoreWeapon")
 
     PoliceJob.Animations.GetCuffed(playerId)
     exports["soz-phone"]:setPhoneDisabled(true)
@@ -226,7 +249,9 @@ end)
 --- Escorted
 RegisterNetEvent("police:client:RequestEscortPlayer", function(data)
     local player = NetworkGetPlayerIndexFromPed(data.entity)
-    if not LocalPlayer.state.isEscorted and not LocalPlayer.state.isEscorting and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and
+    local playerState = exports["soz-core"]:GetPlayerState()
+
+    if not playerState.isEscorted and not playerState.isEscorting and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and
         not PlayerData.metadata["inlaststand"] then
         local playerId = GetPlayerServerId(player)
 
@@ -254,13 +279,15 @@ RegisterNetEvent("police:client:SetEscorting", function(target, crimi)
     CreateThread(function()
         Wait(1000)
 
-        while LocalPlayer.state.isEscorting do
+        local playerState = exports["soz-core"]:GetPlayerState()
+
+        while playerState.isEscorting do
             if not IsPedSwimming(ped) then
                 DisableControlAction(0, 21, true)
             end
             QBCore.Functions.ShowHelpNotification("~INPUT_FRONTEND_RRIGHT~ Pour lâcher")
 
-            if LocalPlayer.state.isEscorted or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] or
+            if playerState.isEscorted or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] or
                 IsControlJustReleased(0, 194) or (not crimi and IsControlJustReleased(0, 225)) or (crimi and not IsEntityPlayingAnim(ped, dict, anim, 3)) then
 
                 TriggerServerEvent("police:server:DeEscortPlayer", target)
@@ -269,6 +296,8 @@ RegisterNetEvent("police:client:SetEscorting", function(target, crimi)
                 ClearPedTasks(ped);
             end
             Wait(1)
+
+            playerState = exports["soz-core"]:GetPlayerState()
         end
     end)
 end)

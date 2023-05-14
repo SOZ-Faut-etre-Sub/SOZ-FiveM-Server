@@ -295,11 +295,11 @@ export class PlayerAnimationProvider {
         }
 
         const ped = PlayerPedId();
-        const state = LocalPlayer.state;
+        const state = this.playerService.getState();
 
         if (
             IsPedSittingInAnyVehicle(ped) ||
-            state.isEcorted ||
+            state.isEscorted ||
             state.isEscorting ||
             state.isInHospital ||
             player.metadata.isdead ||

@@ -7,6 +7,8 @@ local societyMenuState = {
 
 local Tanker = {hasPipe = false, vehicle = nil, entity = nil, rope = nil, nozzle = nil, using = false}
 local MaxFuelInStation, CurrentStation = 3000, nil
+local hasTankerPipe = false
+local tankerUsing = false
 
 local currentField
 local currentFieldHealth
@@ -51,7 +53,7 @@ local CreateTankerAction = function()
                         return false
                     end
 
-                    return PlayerData.job.onduty and not LocalPlayer.state.hasTankerPipe
+                    return PlayerData.job.onduty and not hasTankerPipe
                 end,
                 job = "oil",
                 blackoutGlobal = true,
@@ -67,7 +69,7 @@ local CreateTankerAction = function()
                         return false
                     end
 
-                    return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
+                    return PlayerData.job.onduty and hasTankerPipe
                 end,
                 job = "oil",
             },
@@ -106,7 +108,7 @@ local function SpawnFieldZones()
                             label = "Relier le Tanker",
                             color = "oil",
                             canInteract = function()
-                                return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
+                                return PlayerData.job.onduty and hasTankerPipe
                             end,
                             job = "oil",
                             blackoutGlobal = true,
@@ -216,7 +218,7 @@ CreateThread(function()
                 label = "Relier le Tanker",
                 color = "oil",
                 canInteract = function()
-                    return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
+                    return PlayerData.job.onduty and hasTankerPipe
                 end,
                 job = "oil",
                 blackoutGlobal = true,
@@ -255,7 +257,7 @@ AddEventHandler("locations:zone:enter", function(zone, station, isAKeroseneStati
                 label = "Relier le Tanker",
                 color = "oil",
                 canInteract = function()
-                    return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
+                    return PlayerData.job.onduty and hasTankerPipe
                 end,
                 job = "oil",
                 blackoutGlobal = true,
@@ -292,7 +294,7 @@ AddEventHandler("locations:zone:enter", function(zone, station, isAKeroseneStati
                     label = "Relier le Tanker",
                     color = "oil",
                     canInteract = function()
-                        return PlayerData.job.onduty and LocalPlayer.state.hasTankerPipe
+                        return PlayerData.job.onduty and hasTankerPipe
                     end,
                     job = "oil",
                     blackoutGlobal = true,
@@ -338,8 +340,8 @@ RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
         return
     end
 
-    LocalPlayer.state.hasTankerPipe = true
-    LocalPlayer.state.tankerEntity = vehicle
+    hasTankerPipe = true
+    exports["soz-core"]:SetPlayerState({tankerEntity = vehicle})
     Tanker.entity = vehicle
     Tanker.vehicle = vehicleNetId
     Tanker.hasPipe = true
@@ -385,9 +387,9 @@ RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
 end)
 
 RegisterNetEvent("jobs:client:fueler:CancelTankerRefill", function(data)
-    LocalPlayer.state.hasTankerPipe = false
-    LocalPlayer.state.tankerEntity = nil
-    LocalPlayer.state.tankerUsing = false
+    hasTankerPipe = false
+    tankerUsing = false
+    exports["soz-core"]:SetPlayerState({tankerEntity = nil})
     Tanker.hasPipe = false
 
     local playerPed = PlayerPedId()
@@ -429,13 +431,13 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
     end
     local canFillTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefill", Tanker.vehicle)
 
-    if LocalPlayer.state.tankerUsing then
+    if tankerUsing then
         exports["soz-core"]:DrawNotification("Vous utilisez deja le tanker.", "error")
 
         return
     end
 
-    LocalPlayer.state.tankerUsing = true
+    tankerUsing = true
 
     TaskTurnPedToFaceEntity(playerPed, data.entity, 500)
     Wait(500)
@@ -468,7 +470,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
         end
     end
 
-    LocalPlayer.state.tankerUsing = false
+    tankerUsing = false
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
     exports["soz-core"]:DrawNotification("La récolte est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
 end)
@@ -485,13 +487,13 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
         return
     end
 
-    if LocalPlayer.state.tankerUsing then
+    if tankerUsing then
         exports["soz-core"]:DrawNotification("Vous utilisez déjà le tanker.", "error")
 
         return
     end
 
-    LocalPlayer.state.tankerUsing = true
+    tankerUsing = true
 
     local canRefiningTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canRefining", Tanker.vehicle)
 
@@ -517,7 +519,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
         end
     end
 
-    LocalPlayer.state.tankerUsing = false
+    tankerUsing = false
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
     exports["soz-core"]:DrawNotification("Le raffinage est ~g~terminé~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
 end)
@@ -622,13 +624,13 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
         return
     end
 
-    if LocalPlayer.state.tankerUsing then
+    if tankerUsing then
         exports["soz-core"]:DrawNotification("Vous utilisez déjà le tanker.", "error")
 
         return
     end
 
-    LocalPlayer.state.tankerUsing = true
+    tankerUsing = true
 
     local canResellTanker = QBCore.Functions.TriggerRpc("jobs:server:fueler:canResell", Tanker.vehicle)
 
@@ -653,7 +655,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
         end
     end
 
-    LocalPlayer.state.tankerUsing = false
+    tankerUsing = false
     TriggerEvent("jobs:client:fueler:CancelTankerRefill")
     exports["soz-core"]:DrawNotification("Le remplissage est ~g~terminée~s~ ! Le tanker a été ~r~déconnecté~s~.", "info")
 end)

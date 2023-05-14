@@ -209,7 +209,6 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
 
     PlayerData.job.id = PlayerData.job.id or 'unemployed'
     PlayerData.job.onduty = false
-    Player(PlayerData.source).state.onDuty = PlayerData.job.onduty
     PlayerData.job.grade = tostring(PlayerData.job.grade) or "1"
     -- Gang
     PlayerData.gang = PlayerData.gang or {}
@@ -500,8 +499,12 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
         if not skipApply then
             TriggerClientEvent("soz-character:Client:ApplyCurrentClothConfig", self.PlayerData.source)
-            if Player(self.PlayerData.source).state.isWearingPatientOutfit then
-                Player(self.PlayerData.source).state.isWearingPatientOutfit = false
+            local playerState = exports['soz-core']:GetPlayerState(self.PlayerData.source)
+
+            if playerState.isWearingPatientOutfit then
+                exports['soz-core']:SetPlayerState(self.PlayerData.source, {
+                    isWearingPatientOutfit = false
+                })
             end
         end
 

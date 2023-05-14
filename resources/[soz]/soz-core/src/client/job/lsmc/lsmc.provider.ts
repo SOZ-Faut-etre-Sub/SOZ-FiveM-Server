@@ -14,6 +14,10 @@ import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
+import { emitRpc } from '../../../core/rpc';
+import { PlayerClientState } from '../../../shared/player';
+import { RpcServerEvent } from '../../../shared/rpc';
+
 @Provider()
 export class LSMCProvider {
     @Inject(TargetFactory)
@@ -124,12 +128,19 @@ export class LSMCProvider {
                 {
                     label: 'Extraire le mort',
                     icon: 'c:ems/sortir.png',
-                    canInteract: entity => {
-                        return this.playerService.isOnDuty() && this.getDeadPedInVehicle(entity) != null;
+                    canInteract: async entity => {
+                        if (!this.playerService.isOnDuty()) {
+                            return false;
+                        }
+
+                        const deadPed = await this.getDeadPedInVehicle(entity);
+
+                        return deadPed !== null;
                     },
-                    action: entity => {
-                        const ped = this.getDeadPedInVehicle(entity);
+                    action: async entity => {
+                        const ped = await this.getDeadPedInVehicle(entity);
                         const coords = GetEntityCoords(PlayerPedId());
+
                         TriggerServerEvent(
                             ServerEvent.LSMC_TELEPORTATION,
                             GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped)),
@@ -143,11 +154,20 @@ export class LSMCProvider {
         );
     }
 
-    private getDeadPedInVehicle(entity: number) {
+    private async getDeadPedInVehicle(entity: number) {
         const vehicleSeats = GetVehicleModelNumberOfSeats(GetEntityModel(entity));
         for (let i = -1; i < vehicleSeats - 2; i++) {
             const ped = GetPedInVehicleSeat(entity, i);
-            if (Player(GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped))).state.isdead) {
+
+            const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped));
+
+            if (!target) {
+                continue;
+            }
+
+            const targetState = await emitRpc<PlayerClientState>(RpcServerEvent.PLAYER_GET_CLIENT_STATE, target);
+
+            if (targetState.isDead) {
                 return ped;
             }
         }

@@ -1,5 +1,7 @@
+import { ClientEvent } from '@public/shared/event';
+
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { PlayerServerState } from '../../shared/player';
+import { PlayerClientState, PlayerServerState } from '../../shared/player';
 import { PlayerService } from './player.service';
 
 @Injectable()
@@ -7,31 +9,28 @@ export class PlayerStateService {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    private stateByCitizenId: Record<string, PlayerServerState> = {};
+    private serverStateByCitizenId: Record<string, PlayerServerState> = {};
 
-    public getByCitizenId(citizenId: string) {
-        if (!this.stateByCitizenId[citizenId]) {
-            this.stateByCitizenId[citizenId] = this.getDefaultPlayerSate();
+    private clientStateByCitizenId: Record<string, PlayerClientState> = {};
+
+    public getServerStateByCitizenId(citizenId: string) {
+        if (!this.serverStateByCitizenId[citizenId]) {
+            this.serverStateByCitizenId[citizenId] = this.getDefaultPlayerServerState();
         }
 
-        return this.stateByCitizenId[citizenId];
+        return this.serverStateByCitizenId[citizenId];
+    }
+
+    public getClientStateByCitizenId(citizenId: string) {
+        if (!this.serverStateByCitizenId[citizenId]) {
+            this.clientStateByCitizenId[citizenId] = this.getDefaultPlayerClientState();
+        }
+
+        return this.clientStateByCitizenId[citizenId];
     }
 
     private getPlayerIdentifierByType(source: string, type: string): string | null {
-        // @TODO: Enable when we upgrade server
-        // if (GetPlayerIdentifierByType) {
-        //     return GetPlayerIdentifierByType(source, type);
-        // }
-
-        const identifiers = getPlayerIdentifiers(source);
-
-        for (const identifier of identifiers) {
-            if (identifier.startsWith(`${type}:`)) {
-                return identifier;
-            }
-        }
-
-        return null;
+        return GetPlayerIdentifierByType(source, type);
     }
 
     public getIdentifier(source: string): string | null {
@@ -50,17 +49,61 @@ export class PlayerStateService {
         return BigInt(`0x${steamHex}`).toString();
     }
 
-    public get(source: number): PlayerServerState {
+    public getServerState(source: number): PlayerServerState {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
-            return this.getDefaultPlayerSate();
+            return this.getDefaultPlayerServerState();
         }
 
-        return this.getByCitizenId(player.citizenid);
+        return this.getServerStateByCitizenId(player.citizenid);
     }
 
-    private getDefaultPlayerSate(): PlayerServerState {
+    public getClientState(source: number): PlayerClientState {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return this.getDefaultPlayerClientState();
+        }
+
+        return this.getClientStateByCitizenId(player.citizenid);
+    }
+
+    public setServerState(source: number, state: Partial<PlayerServerState>) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const serverState = this.getServerStateByCitizenId(player.citizenid);
+
+        this.serverStateByCitizenId[player.citizenid] = {
+            ...serverState,
+            ...state,
+        };
+    }
+
+    public setClientState(source: number, state: Partial<PlayerClientState>) {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const clientState = this.getClientStateByCitizenId(player.citizenid);
+
+        this.clientStateByCitizenId[player.citizenid] = {
+            ...clientState,
+            ...state,
+        };
+
+        TriggerClientEvent(ClientEvent.PLAYER_UPDATE_STATE, source, this.clientStateByCitizenId[player.citizenid]);
+
+        return this.clientStateByCitizenId[player.citizenid];
+    }
+
+    private getDefaultPlayerServerState(): PlayerServerState {
         return {
             exercise: { chinUp: false, pushUp: false, sitUp: false, freeWeight: false, completed: 0 },
             exercisePushUp: false,
@@ -71,6 +114,26 @@ export class PlayerStateService {
             lastStrengthUpdate: new Date(),
             lastMaxStaminaUpdate: new Date(),
             lastStressLevelUpdate: new Date(),
+        };
+    }
+
+    private getDefaultPlayerClientState(): PlayerClientState {
+        return {
+            disableMoneyCase: false,
+            isDead: false,
+            isEscorted: false,
+            isEscorting: false,
+            isHandcuffed: false,
+            isInventoryBusy: false,
+            tankerEntity: null,
+            isInShop: false,
+            isInHub: false,
+            hasPrisonerClothes: false,
+            isInHospital: false,
+            isWearingPatientOutfit: false,
+            escorting: null,
+            isLooted: false,
+            isZipped: false,
         };
     }
 }

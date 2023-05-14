@@ -33,16 +33,9 @@ export class ItemService {
 
     public setItemUseCallback<T extends Item = Item>(
         itemId: string,
-        callback: (player: number, item: T, inventoryItem: InventoryItem) => void,
-        allowWeaponUsage = true
+        callback: (player: number, item: T, inventoryItem: InventoryItem) => void
     ) {
         this.qbcore.createUseableItem(itemId, (player: number, item: any) => {
-            if (!allowWeaponUsage && this.playerService.getPlayerWeapon(player) !== null) {
-                this.notifier.notify(player, 'Votre main est déjà occupée à porter une arme.', 'error');
-
-                return false;
-            }
-
             return callback(player, this.qbcore.getItem<T>(itemId), item as InventoryItem);
         });
     }

@@ -28,7 +28,7 @@ RegisterNetEvent("admin:gamemaster:unCuff", function()
     local player = QBCore.Functions.GetPlayer(source)
     if player then
         player.Functions.SetMetaData("ishandcuffed", false)
-        Player(source).state:set("ishandcuffed", false, true)
+        exports["soz-core"]:SetPlayerState(source, {isHandcuffed = false})
         TriggerClientEvent("police:client:GetUnCuffed", source)
     end
 end)

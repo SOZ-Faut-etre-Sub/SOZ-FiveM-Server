@@ -12,7 +12,9 @@ local function SetVoiceProximity(proximity)
 end
 
 local function MutePlayer(state)
-    if LocalPlayer.state["is_in_hub"] then
+    local playerState = exports["soz-core"]:GetPlayerState()
+
+    if playerState.isInHub then
         return
     end
 
@@ -54,7 +56,6 @@ local function SetPlayerMegaphoneInUse(state, range)
     else
         SetVoiceProximity(voiceProximity)
     end
-    LocalPlayer.state:set("megaphone", state, true)
 end
 
 local function SetPlayerMicrophoneInUse(state)

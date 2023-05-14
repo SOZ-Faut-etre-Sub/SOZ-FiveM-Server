@@ -7,6 +7,7 @@ import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
+import { PlayerService } from '../player/player.service';
 
 @Provider()
 export class AdminMenuGameMasterProvider {
@@ -21,6 +22,9 @@ export class AdminMenuGameMasterProvider {
 
     @Inject(HudMinimapProvider)
     private hudMinimapProvider: HudMinimapProvider;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
@@ -61,7 +65,7 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminToggleMoneyCase)
     public async toggleDisableMoneyCase(value: boolean): Promise<void> {
-        LocalPlayer.state.set('adminDisableMoneyCase', !value, false);
+        await this.playerService.updateState({ disableMoneyCase: !value });
     }
 
     @OnNuiEvent(NuiEvent.AdminSetVisible)

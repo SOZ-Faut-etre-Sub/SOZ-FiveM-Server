@@ -122,7 +122,7 @@ export class VehicleFuelProvider {
                         return false;
                     }
 
-                    if (!LocalPlayer.state.tankerEntity || !player.job.onduty) {
+                    if (!this.playerService.getState().tankerEntity || !player.job.onduty) {
                         return false;
                     }
 

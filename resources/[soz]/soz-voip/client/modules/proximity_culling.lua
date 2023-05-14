@@ -3,22 +3,15 @@ ModuleProximityCulling = {}
 local megaphoneUsers = {}
 
 Citizen.CreateThread(function()
-    local players = GetActivePlayers()
-    for _, player in pairs(players) do
-        local serverId = GetPlayerServerId(player)
-        if Player(serverId).state.megaphone then
-            megaphoneUsers[serverId] = true
-        end
+    local players = exports["soz-core"]:GetPlayersMegaphoneInUse()
+
+    for _, serverId in pairs(players) do
+        megaphoneUsers[serverId] = true
     end
 end)
 
-AddStateBagChangeHandler("megaphone", nil, function(bagName, key, value, _, _)
-    if key == "megaphone" and type(value) == "boolean" then
-        local player = GetPlayerFromStateBagName(bagName)
-        if player ~= 0 then
-            megaphoneUsers[GetPlayerServerId(player)] = value
-        end
-    end
+AddEventHandler("soz-core:client:voip:set-megaphone", function(playerServerId, value)
+    megaphoneUsers[playerServerId] = value
 end)
 
 function ModuleProximityCulling:new(range)

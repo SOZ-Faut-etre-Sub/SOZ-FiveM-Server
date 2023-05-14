@@ -11,6 +11,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingService } from '../clothing/clothing.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
+import { PlayerService } from '../player/player.service';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
@@ -34,6 +35,9 @@ export class AdminMenuProvider {
 
     @Inject(HudMinimapProvider)
     private hudMinimapProvider: HudMinimapProvider;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
@@ -69,7 +73,7 @@ export class AdminMenuProvider {
                 state: {
                     gameMaster: {
                         invisible: !IsEntityVisible(ped),
-                        moneyCase: LocalPlayer.state.adminDisableMoneyCase || false,
+                        moneyCase: this.playerService.getState().disableMoneyCase,
                         adminGPS: this.hudMinimapProvider.hasAdminGps,
                     },
                     interactive: {

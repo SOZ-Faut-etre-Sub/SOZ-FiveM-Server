@@ -244,26 +244,24 @@ CreateThread(function()
     while true do
         local ped = PlayerPedId()
 
-        if LocalPlayer.state.isLoggedIn then
-            if currentVehicle == 0 and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] and
-                IsPedInAnyVehicle(ped, false) then
-                currentVehicle = GetVehiclePedIsUsing(ped)
+        if currentVehicle == 0 and not PlayerData.metadata["isdead"] and not PlayerData.metadata["ishandcuffed"] and not PlayerData.metadata["inlaststand"] and
+            IsPedInAnyVehicle(ped, false) then
+            currentVehicle = GetVehiclePedIsUsing(ped)
 
-                if Entity(currentVehicle).state.hasRadio then
-                    isRegistered = vehicleRegisterHandlers()
-                end
+            if Entity(currentVehicle).state.hasRadio then
+                isRegistered = vehicleRegisterHandlers()
+            end
+        end
+
+        if currentVehicle ~= 0 and
+            (not IsPedInAnyVehicle(ped, false) or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"]) then
+
+            if isRegistered then
+                vehicleUnregisterHandlers()
+                isRegistered = false
             end
 
-            if currentVehicle ~= 0 and
-                (not IsPedInAnyVehicle(ped, false) or PlayerData.metadata["isdead"] or PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"]) then
-
-                if isRegistered then
-                    vehicleUnregisterHandlers()
-                    isRegistered = false
-                end
-
-                currentVehicle = 0
-            end
+            currentVehicle = 0
         end
 
         Wait(1000)

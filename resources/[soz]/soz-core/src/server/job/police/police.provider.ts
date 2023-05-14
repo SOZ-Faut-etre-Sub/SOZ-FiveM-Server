@@ -9,6 +9,8 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem, Item } from '@public/shared/item';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { PlayerStateService } from '../../player/player.state.service';
+
 @Provider()
 export class PoliceProvider {
     @Inject(ItemService)
@@ -19,6 +21,9 @@ export class PoliceProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
 
     @Once(OnceStep.Start)
     public init() {
@@ -73,7 +78,10 @@ export class PoliceProvider {
         } else if (item.metadata['type'] == 'stonk') {
             TriggerClientEvent(ClientEvent.STONK_APPLY_OUTFIT, source);
         } else if (item.metadata['type'] == 'patient') {
-            Player(source).state.isWearingPatientOutfit = true;
+            this.playerStateService.setClientState(source, {
+                isWearingPatientOutfit: true,
+            });
+
             TriggerClientEvent(ClientEvent.LSMC_APPLY_PATIENT_CLOTHING, source);
         }
 

@@ -156,7 +156,6 @@ RegisterNetEvent('QBCore:ToggleDuty', function()
         player.Functions.SetJobDuty(true)
         TriggerClientEvent('soz-core:client:notification:draw', src, 'Vous êtes en service', "info")
     end
-    Player(player.PlayerData.source).state.onDuty = player.PlayerData.job.onduty
     TriggerClientEvent('QBCore:Client:SetDuty', src, player.PlayerData.job.onduty)
     TriggerEvent('QBCore:Server:SetDuty', player.PlayerData.job.id, player.PlayerData.job.onduty, src)
 end)

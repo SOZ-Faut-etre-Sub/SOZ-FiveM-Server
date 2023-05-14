@@ -15,6 +15,6 @@ export class ItemToolsProvider {
 
     @Once()
     public onStart() {
-        this.item.setItemUseCallback('umbrella', this.useUmbrella.bind(this), false);
+        this.item.setItemUseCallback('umbrella', this.useUmbrella.bind(this));
     }
 }

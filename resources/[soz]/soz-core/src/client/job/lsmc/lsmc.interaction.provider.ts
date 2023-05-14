@@ -13,6 +13,7 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { PlayerClientState } from '../../../shared/player';
 import { LSMCDeathProvider } from './lsmc.death.provider';
 
 const hopital = BoxZone.fromZone({
@@ -56,14 +57,17 @@ export class LSMCInteractionProvider {
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
                 canInteract: async entity => {
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
+                    if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
+                        return false;
+                    }
+
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const canRemoveItt = await emitRpc<boolean>(RpcServerEvent.LSMC_CAN_REMOVE_ITT, target);
-                    return (
-                        this.playerService.isOnDuty() &&
-                        !Player(target).state.isdead &&
-                        hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3) &&
-                        canRemoveItt
-                    );
+
+                    return await emitRpc<boolean>(RpcServerEvent.LSMC_CAN_REMOVE_ITT, target);
                 },
                 action: entity => {
                     TriggerServerEvent(
@@ -80,14 +84,17 @@ export class LSMCInteractionProvider {
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
                 canInteract: async entity => {
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
+                    if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
+                        return false;
+                    }
+
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const canSetItt = await emitRpc<boolean>(RpcServerEvent.LSMC_CAN_SET_ITT, target);
-                    return (
-                        this.playerService.isOnDuty() &&
-                        !Player(target).state.isdead &&
-                        hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3) &&
-                        canSetItt
-                    );
+
+                    return await emitRpc<boolean>(RpcServerEvent.LSMC_CAN_SET_ITT, target);
                 },
                 action: entity => {
                     TriggerServerEvent(
@@ -101,12 +108,18 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/desabhiller.png',
                 job: JobType.LSMC,
-                canInteract: entity => {
+                canInteract: async entity => {
+                    if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
+                        return false;
+                    }
+
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    return (
-                        hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3) &&
-                        !Player(target).state.isWearingPatientOutfit
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        target
                     );
+
+                    return targetState.isWearingPatientOutfit;
                 },
                 action: entity => {
                     TriggerServerEvent(
@@ -121,12 +134,18 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/rhabiller.png',
                 job: JobType.LSMC,
-                canInteract: entity => {
+                canInteract: async entity => {
+                    if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
+                        return false;
+                    }
+
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    return (
-                        hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3) &&
-                        Player(target).state.isWearingPatientOutfit
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        target
                     );
+
+                    return targetState.isWearingPatientOutfit;
                 },
                 action: entity => {
                     TriggerServerEvent(
@@ -141,9 +160,18 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/heal.png',
                 job: JobType.LSMC,
-                canInteract: entity => {
+                canInteract: async entity => {
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    return this.playerService.isOnDuty() && !Player(target).state.isdead;
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        target
+                    );
+
+                    return !targetState.isDead;
                 },
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
@@ -189,13 +217,22 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/revive.png',
                 job: JobType.LSMC,
-                canInteract: entity => {
+                canInteract: async entity => {
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
                     if (!this.inventoryManager.hasEnoughItem('bloodbag', 1, true)) {
                         return false;
                     }
 
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    return this.playerService.isOnDuty() && Player(target).state.isdead;
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        target
+                    );
+
+                    return targetState.isDead;
                 },
                 action: entity => {
                     this.LSMCDeathProvider.reviveTarget(entity, true);
@@ -205,9 +242,14 @@ export class LSMCInteractionProvider {
                 label: 'Utiliser Défibrilateur',
                 color: JobType.LSMC,
                 icon: 'c:ems/revive.png',
-                canInteract: entity => {
+                canInteract: async entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    return Player(target).state.isdead;
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        target
+                    );
+
+                    return targetState.isDead;
                 },
                 action: entity => {
                     this.LSMCDeathProvider.reviveTarget(entity, false);
@@ -219,9 +261,19 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/take_blood.png',
                 job: JobType.LSMC,
-                canInteract: entity => {
+                canInteract: async entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    return this.playerService.isOnDuty() && !Player(target).state.isdead;
+
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
+                    const targetState = await emitRpc<PlayerClientState>(
+                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
+                        target
+                    );
+
+                    return targetState.isDead;
                 },
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
