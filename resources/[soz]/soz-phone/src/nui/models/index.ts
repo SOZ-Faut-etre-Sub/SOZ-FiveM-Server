@@ -13,6 +13,7 @@ import { phone } from './phone';
 import { photo } from './photo';
 import { avatar } from './sim/avatar';
 import { simCard } from './simCard';
+import { appWeather } from './app/weather';
 
 export interface RootModel extends Models<RootModel> {
     // Core models
@@ -33,6 +34,7 @@ export interface RootModel extends Models<RootModel> {
     appInvoices: typeof appInvoices;
     appTwitchNews: typeof appTwitchNews;
     appSociety: typeof appSociety;
+    appWeather: typeof appWeather;
 }
 
 export const models: RootModel = {
@@ -48,5 +50,6 @@ export const models: RootModel = {
     appInvoices,
     appTwitchNews,
     appSociety,
+    appWeather,
     emergency,
 };
