@@ -62,6 +62,7 @@ CreateThread(function()
                 DisableAllControlActions(0)
 
                 --- Camera
+                EnableControlAction(0, 0, true)
                 EnableControlAction(0, 1, true)
                 EnableControlAction(0, 2, true)
 
