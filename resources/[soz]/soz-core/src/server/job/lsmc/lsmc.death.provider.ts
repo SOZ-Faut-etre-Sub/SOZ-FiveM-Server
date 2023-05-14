@@ -56,7 +56,7 @@ export class LSMCDeathProvider {
         }
 
         if (player.metadata.mort) {
-            this.notifier.notify(source, player.metadata.mort, 'success', 20000);
+            this.notifier.notify(source, player.metadata.mort, 'success', 30000);
         }
 
         TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, admin, uniteHU, uniteHUBed);
