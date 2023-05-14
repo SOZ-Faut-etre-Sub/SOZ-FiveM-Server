@@ -181,7 +181,7 @@ export class ItemNutritionProvider {
         const foods = this.item.getItems<FoodItem>('food');
 
         for (const foodId of Object.keys(foods)) {
-            this.item.setItemUseCallback<FoodItem>(foodId, this.useFoodOrDrink.bind(this), false);
+            this.item.setItemUseCallback<FoodItem>(foodId, this.useFoodOrDrink.bind(this));
         }
 
         const drinks = this.item.getItems<DrinkItem>('drink');

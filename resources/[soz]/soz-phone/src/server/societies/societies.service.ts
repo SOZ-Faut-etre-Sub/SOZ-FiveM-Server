@@ -14,13 +14,17 @@ import { societiesLogger } from './societies.utils';
 
 class _SocietyService {
     private readonly contactsDB: _SocietiesDB;
+    private readonly qbCore: any;
 
     constructor() {
         this.contactsDB = SocietiesDb;
         societiesLogger.debug('Societies service started');
+        this.qbCore = global.exports['qb-core'].GetCoreObject();
     }
 
     createMessageBroadcastEvent(player: number, messageId: number, sourcePhone: string, data: PreDBSociety): void {
+        const qbCorePlayer = this.qbCore.Functions.GetPlayer(player);
+
         emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, {
             id: messageId,
             conversation_id: data.number,
@@ -29,7 +33,7 @@ class _SocietyService {
             position: data.pedPosition,
             isTaken: false,
             isDone: false,
-            muted: !Player(player).state.onDuty,
+            muted: !qbCorePlayer.PlayerData.job.onduty,
             createdAt: new Date().getTime(),
         });
     }

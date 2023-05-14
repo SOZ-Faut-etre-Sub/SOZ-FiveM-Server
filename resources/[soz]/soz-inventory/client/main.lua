@@ -2,7 +2,6 @@ QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
-    LocalPlayer.state:set("inv_busy", false, true)
     PlayerData = QBCore.Functions.GetPlayerData()
 end)
 
@@ -10,12 +9,7 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
     PlayerData = data
 end)
 
-RegisterNetEvent("QBCore:Client:OnPlayerUnload", function()
-    LocalPlayer.state:set("inv_busy", true, true)
-end)
-
 RegisterNetEvent("inventory:client:openInventory", function(playerInventory, targetInventory, targetMoney)
-    TriggerEvent("inventory:client:StoreWeapon")
     SendNUIMessage({
         action = "openInventory",
         playerInventory = playerInventory,

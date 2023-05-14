@@ -122,6 +122,8 @@ RegisterNetEvent("soz-character:server:UpdateClothConfig", function(key, value)
             player.Functions.SetArmour(not clothConfig.Config[key])
         end
 
-        player.Functions.SetClothConfig(clothConfig, Player(source).state.isWearingPatientOutfit)
+        local playerState = exports["soz-core"]:GetPlayerState(source)
+
+        player.Functions.SetClothConfig(clothConfig, playerState.isWearingPatientOutfit)
     end
 end)

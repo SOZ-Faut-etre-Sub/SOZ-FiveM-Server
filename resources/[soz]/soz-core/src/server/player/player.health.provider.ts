@@ -53,7 +53,7 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const playerState = this.playerStateService.getByCitizenId(player.citizenid);
+        const playerState = this.playerStateService.getServerStateByCitizenId(player.citizenid);
 
         let hungerDiff = HUNGER_RATE;
         let thirstDiff = THIRST_RATE;
@@ -147,7 +147,7 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const playerState = this.playerStateService.getByCitizenId(player.citizenid);
+        const playerState = this.playerStateService.getServerStateByCitizenId(player.citizenid);
 
         if (playerState.exercise[exercise]) {
             return;
@@ -162,7 +162,7 @@ export class PlayerHealthProvider {
 
     @OnEvent(ServerEvent.PLAYER_INCREASE_STRESS)
     public async increaseStress(source: number, stress: number): Promise<void> {
-        const playerState = this.playerStateService.get(source);
+        const playerState = this.playerStateService.getServerState(source);
         playerState.lastStressLevelUpdate = new Date();
         this.playerService.incrementMetadata(source, 'stress_level', stress, STRESS_MIN, STRESS_MAX);
     }
@@ -175,7 +175,7 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const playerState = this.playerStateService.getByCitizenId(player.citizenid);
+        const playerState = this.playerStateService.getServerStateByCitizenId(player.citizenid);
 
         playerState.runTime += 1;
 
@@ -216,7 +216,7 @@ export class PlayerHealthProvider {
             return;
         }
 
-        const playerState = this.playerStateService.getByCitizenId(player.citizenid);
+        const playerState = this.playerStateService.getServerStateByCitizenId(player.citizenid);
 
         if (playerState.yoga) {
             return;

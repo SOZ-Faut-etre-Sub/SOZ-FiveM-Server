@@ -185,7 +185,7 @@ end
 exports('CheckBones', CheckBones)
 
 local function EnableTarget()
-	if not AllowTarget or success or (not Config.Standalone and not LocalPlayer.state['isLoggedIn']) or IsNuiFocused() or (Config.DisableInVehicle and IsPedInAnyVehicle(playerPed or PlayerPedId(), false)) then return end
+	if not AllowTarget or success or (not Config.Standalone) or IsNuiFocused() or (Config.DisableInVehicle and IsPedInAnyVehicle(playerPed or PlayerPedId(), false)) then return end
 	if not CheckOptions then CheckOptions = _ENV.CheckOptions end
 	if not targetActive and CheckOptions then
 		targetActive = true
@@ -237,7 +237,9 @@ local function EnableTarget()
 					if entityType == 1 then
 						local data = Models[GetEntityModel(entity)]
 						if IsPedAPlayer(entity) then
-							if LocalPlayer.state.is_in_hub then
+							local playerState = exports["soz-core"]:GetPlayerState()
+
+							if playerState.isInHub then
 								data = nil
 							else
 								data = Players

@@ -251,7 +251,7 @@ end)
 
 function CheckOptions(data, entity, distance)
 	if not GlobalCheck() then return false end
-	if LocalPlayer.state.isEscorted then return false end
+	if exports["soz-core"]:GetPlayerState().isEscorted then return false end
 	if distance and data.distance and distance > data.distance then return false end
 	if data.job and not JobCheck(data.job) then return false end
 	if not data.allowVehicle and IsPedInAnyVehicle(PlayerPedId(), false) then return false end

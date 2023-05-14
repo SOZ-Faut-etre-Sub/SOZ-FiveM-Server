@@ -1,6 +1,3 @@
-local currentWeapon = nil
-local currentWeaponData = nil
-
 RegisterKeyMapping("inventory", "Ouvrir l'inventaire", "keyboard", "F2")
 RegisterCommand("inventory", function()
     if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] or IsPauseMenuActive() then
@@ -9,9 +6,12 @@ RegisterCommand("inventory", function()
 
     exports["menuv"]:SendNUIMessage({action = "KEY_CLOSE_ALL"})
     TriggerEvent("soz-core:client:menu:close", false)
+
     QBCore.Functions.TriggerCallback("inventory:server:openPlayerInventory", function(inventory)
         if inventory ~= nil then
-            if LocalPlayer.state.inv_busy then
+            local playerState = exports["soz-core"]:GetPlayerState()
+
+            if playerState.isInventoryBusy then
                 exports["soz-core"]:DrawNotification("Inventaire en cours d'utilisation", "warning")
                 return
             end
@@ -57,7 +57,6 @@ RegisterNUICallback("player/giveItem", function(data, cb)
         end
 
         if amount and tonumber(amount) > 0 then
-            TriggerEvent("inventory:client:StoreWeapon")
             TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(player), data, tonumber(amount))
         end
     else
@@ -75,7 +74,6 @@ RegisterNUICallback("player/giveMoney", function(data, cb)
         local amount = exports["soz-core"]:Input("Quantité", 12)
 
         if amount and tonumber(amount) > 0 then
-            TriggerEvent("inventory:client:StoreWeapon")
             TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "money", math.ceil(tonumber(amount)))
         end
     else
@@ -93,7 +91,6 @@ RegisterNUICallback("player/giveMarkedMoney", function(data, cb)
         local amount = exports["soz-core"]:Input("Quantité", 12)
 
         if amount and tonumber(amount) > 0 then
-            TriggerEvent("inventory:client:StoreWeapon")
             TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "marked_money", math.ceil(tonumber(amount)))
         end
     else
@@ -120,7 +117,6 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
         end
 
         if amount and tonumber(amount) > 0 then
-            TriggerEvent("inventory:client:StoreWeapon")
             local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
             if playerIdx == -1 then -- Is NPC
                 if currentResellZone ~= nil then
@@ -147,7 +143,6 @@ RegisterNUICallback("player/giveMoneyToTarget", function(data, cb)
         local amount = exports["soz-core"]:Input("Quantité", 12)
 
         if amount and tonumber(amount) > 0 then
-            TriggerEvent("inventory:client:StoreWeapon")
             local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
             if playerIdx == -1 then -- Is NPC
                 exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
@@ -160,20 +155,6 @@ RegisterNUICallback("player/giveMoneyToTarget", function(data, cb)
     end
 
     cb(true)
-end)
-
-RegisterNetEvent("inventory:client:StoreWeapon", function()
-    local ped = PlayerPedId()
-    if currentWeapon ~= nil then
-        local _, hash = GetCurrentPedWeapon(ped, true)
-        TriggerServerEvent("weapons:server:UpdateWeaponAmmo", currentWeaponData, GetAmmoInPedWeapon(ped, hash))
-
-        SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
-        RemoveAllPedWeapons(ped, true)
-        TriggerEvent("weapons:client:SetCurrentWeapon", nil, true)
-        currentWeapon = nil
-        currentWeaponData = nil
-    end
 end)
 
 exports("hasPhone", function()
@@ -194,7 +175,9 @@ exports("hasPhone", function()
         return false
     end
 
-    if LocalPlayer.state.inv_busy then
+    local playerState = exports["soz-core"]:GetPlayerState()
+
+    if playerState.isInventoryBusy then
         exports["soz-core"]:DrawNotification("Action en cours", "error")
         return false
     end

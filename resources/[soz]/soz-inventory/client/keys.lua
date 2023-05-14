@@ -35,7 +35,6 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
 
     if hit == 1 and entityType == 1 then
         local playerHit = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entityHit))
-        TriggerEvent("inventory:client:StoreWeapon")
 
         if data.target == "vehicle_key" then
             TriggerServerEvent("soz-core:server:vehicle:give-key", data.plate, playerHit)

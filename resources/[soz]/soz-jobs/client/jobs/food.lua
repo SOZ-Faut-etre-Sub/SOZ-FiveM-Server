@@ -381,9 +381,6 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
     local ped = PlayerPedId()
     local hasKnife = PlayerHasKnifeEquiped()
 
-    if not hasKnife then
-        TriggerEvent("inventory:client:StoreWeapon")
-    end
     TaskTurnPedToFaceEntity(ped, data.entity, 500)
 
     Citizen.CreateThread(function()

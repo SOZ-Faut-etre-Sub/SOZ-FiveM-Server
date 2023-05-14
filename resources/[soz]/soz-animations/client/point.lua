@@ -29,7 +29,9 @@ RegisterCommand("point", function()
     local ped = PlayerPedId()
     local PlayerData = QBCore.Functions.GetPlayerData()
 
-    if IsPedSittingInAnyVehicle(ped) or LocalPlayer.state.isEscorted or LocalPlayer.state.isEscorting or PlayerData.metadata["isdead"] or
+    local playerState = exports["soz-core"]:GetPlayerState()
+
+    if IsPedSittingInAnyVehicle(ped) or playerState.isEscorted or playerState.isEscorting or PlayerData.metadata["isdead"] or
         PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] or exports["progressbar"]:IsDoingAction() then
         return
     end

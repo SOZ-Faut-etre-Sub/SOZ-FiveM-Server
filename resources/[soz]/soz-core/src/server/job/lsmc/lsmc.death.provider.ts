@@ -9,10 +9,15 @@ import { BedLocations } from '@public/shared/job/lsmc';
 import { Monitor } from '@public/shared/monitor';
 import { PlayerMetadata } from '@public/shared/player';
 
+import { PlayerStateService } from '../../player/player.state.service';
+
 @Provider()
 export class LSMCDeathProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
 
     @Inject(Monitor)
     private monitor: Monitor;
@@ -26,7 +31,7 @@ export class LSMCDeathProvider {
     private occupiedBeds: Record<number, number> = {};
 
     @OnEvent(ServerEvent.LSMC_REVIVE)
-    public revive(source: number, targetid: number, admin: boolean, uniteHU: boolean, bloodbag: boolean) {
+    public async revive(source: number, targetid: number, admin: boolean, uniteHU: boolean, bloodbag: boolean) {
         if (!targetid) {
             targetid = source;
         }
@@ -48,7 +53,9 @@ export class LSMCDeathProvider {
 
         if (uniteHU) {
             uniteHUBed = this.getFreeBed(source);
-            Player(targetid).state.isWearingPatientOutfit = true;
+            this.playerStateService.setClientState(targetid, {
+                isWearingPatientOutfit: true,
+            });
             datas.inside = player.metadata.inside;
             datas.inside.exitCoord = false;
             datas.inside.apartment = false;
@@ -70,7 +77,9 @@ export class LSMCDeathProvider {
 
         this.playerService.setPlayerMetaDatas(targetid, datas);
 
-        Player(targetid).state.isdead = false;
+        this.playerStateService.setClientState(targetid, {
+            isDead: false,
+        });
     }
 
     public getFreeBed(source: number): number {
@@ -96,7 +105,10 @@ export class LSMCDeathProvider {
     @OnEvent(ServerEvent.LSMC_ON_DEATH)
     public onDeath(source: number) {
         this.playerService.setPlayerMetadata(source, 'isdead', true);
-        Player(source).state.isdead = true;
+
+        this.playerStateService.setClientState(source, {
+            isDead: true,
+        });
     }
 
     @OnEvent(ServerEvent.LSMC_SET_DEATH_REASON)

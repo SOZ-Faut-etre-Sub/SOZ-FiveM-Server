@@ -162,7 +162,9 @@ end)
 
 local function CreateTransmissionToggle(command, context, volumeKey, module)
     RegisterCommand("+" .. command, function()
-        if not LocalPlayer.state.isdead and module:startTransmission() then
+        local playerState = exports["soz-core"]:GetPlayerState()
+
+        if not playerState.isDead and module:startTransmission() then
             StartRadioAnimationTask()
             PlayLocalRadioClick(context, true, Config[volumeKey])
         end

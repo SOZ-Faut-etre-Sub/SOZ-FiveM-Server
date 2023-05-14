@@ -46,7 +46,7 @@ export class OilStationProvider {
             return;
         }
 
-        const vehicle = LocalPlayer.state.tankerEntity;
+        const vehicle = this.playerService.getState().tankerEntity;
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         if (!vehicle) {

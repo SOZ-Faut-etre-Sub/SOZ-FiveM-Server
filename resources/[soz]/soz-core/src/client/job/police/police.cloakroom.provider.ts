@@ -76,15 +76,18 @@ export class PoliceCloakRoomProvider {
         const playerPed = PlayerPedId();
         const playerPedModel = GetEntityModel(playerPed);
 
-        const havePrisonerClothes = LocalPlayer.state.havePrisonerClothes;
+        const hasPrisonerClothes = this.playerService.getState().hasPrisonerClothes;
 
         await this.playerWardrobe.waitProgress(false);
 
         TriggerServerEvent(
             ServerEvent.CHARACTER_SET_JOB_CLOTHES,
-            havePrisonerClothes ? null : PrisonerClothes[playerPedModel]
+            hasPrisonerClothes ? null : PrisonerClothes[playerPedModel]
         );
-        LocalPlayer.state.set('havePrisonerClothes', !havePrisonerClothes, true);
+
+        await this.playerService.updateState({
+            hasPrisonerClothes: !hasPrisonerClothes,
+        });
     }
 
     @OnEvent(ClientEvent.POLICE_SETUP_ARMOR)

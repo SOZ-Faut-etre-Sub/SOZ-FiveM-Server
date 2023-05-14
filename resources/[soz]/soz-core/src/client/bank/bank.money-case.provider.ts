@@ -25,7 +25,7 @@ export class BankMoneyCaseProvider {
             return false;
         }
 
-        if (LocalPlayer.state.adminDisableMoneyCase) {
+        if (this.playerService.getState().disableMoneyCase) {
             return false;
         }
 
@@ -33,7 +33,7 @@ export class BankMoneyCaseProvider {
             return false;
         }
 
-        if (LocalPlayer.state.in_shop) {
+        if (this.playerService.getState().isInShop) {
             return false;
         }
 
@@ -51,7 +51,6 @@ export class BankMoneyCaseProvider {
         }
 
         if (getVehicleTryingToEnter !== 0) {
-            TriggerEvent('inventory:client:StoreWeapon');
             return false;
         }
 
@@ -68,7 +67,6 @@ export class BankMoneyCaseProvider {
     }
 
     private removeMoneyCase(): void {
-        TriggerEvent('inventory:client:StoreWeapon');
         RemoveWeaponFromPed(PlayerPedId(), MONEY_CASE_HASH);
     }
 

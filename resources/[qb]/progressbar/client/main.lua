@@ -122,7 +122,9 @@ end
 function ActionStart()
     runProgThread = true
     if not Action.no_inv_busy then
-        LocalPlayer.state:set("inv_busy", true, true) -- Busy
+        exports["soz-core"]:SetPlayerState({
+            isInventoryBusy = true,
+        })
         exports["soz-phone"]:setPhoneVisible(false)
         TriggerEvent("inventory:client:closeInventory")
     end
@@ -227,7 +229,9 @@ end
 function Cancel()
     isDoingAction = false
     wasCancelled = true
-    LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
+    exports["soz-core"]:SetPlayerState({
+        isInventoryBusy = false,
+    })
     ActionCleanup()
 
     SendNUIMessage({
@@ -238,7 +242,9 @@ end
 function Finish()
     isDoingAction = false
     ActionCleanup()
-    LocalPlayer.state:set("inv_busy", false, true) -- Not Busy
+    exports["soz-core"]:SetPlayerState({
+        isInventoryBusy = false,
+    })
 end
 
 function ActionCleanup()

@@ -1,9 +1,9 @@
+import { OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { Animation } from '@public/shared/animation';
 
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
 import { ClothConfig, Outfit, WardrobeConfig, WardRobeElements } from '../../shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
@@ -105,7 +105,7 @@ export class PlayerWardrobe {
     }
 
     public async setClothConfig(key: keyof ClothConfig['Config'], value: boolean) {
-        if (LocalPlayer.state.is_in_hub) {
+        if (this.playerService.getState().isInHub) {
             return;
         }
 

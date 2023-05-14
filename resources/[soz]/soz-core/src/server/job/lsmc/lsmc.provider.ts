@@ -1,11 +1,13 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { PlayerInjuryProvider } from '@private/server/player/player.injuries.provider';
 import { Command } from '@public/core/decorators/command';
 import { OnEvent } from '@public/core/decorators/event';
 import { Rpc } from '@public/core/decorators/rpc';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
+import { PlayerStateService } from '@public/server/player/player.state.service';
 import { Organ } from '@public/shared/disease';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -16,29 +18,53 @@ export class LSMCProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
+
     @Inject(Notifier)
     private notifier: Notifier;
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    public ittRemovalCheck = (target: number): boolean => {
-        const player = this.playerService.getPlayer(target);
-        return player.metadata.itt;
-    };
-
-    public updateIttRemovalCheck(checker: (target: number) => boolean) {
-        this.ittRemovalCheck = checker;
-    }
+    @Inject(PlayerInjuryProvider)
+    private playerInjuryProvider: PlayerInjuryProvider;
 
     @Rpc(RpcServerEvent.LSMC_CAN_REMOVE_ITT)
     public canRemoveITT(source: number, target: number) {
-        return this.ittRemovalCheck(target);
+        const player = this.playerService.getPlayer(target);
+
+        if (!player) {
+            return false;
+        }
+
+        const state = this.playerStateService.getClientState(target);
+
+        if (state.isDead) {
+            return false;
+        }
+
+        if (this.playerInjuryProvider.hasMaxInjuries(target)) {
+            return false;
+        }
+
+        return player.metadata.itt;
     }
 
     @Rpc(RpcServerEvent.LSMC_CAN_SET_ITT)
     public canSetITT(source: number, target: number) {
         const player = this.playerService.getPlayer(target);
+
+        if (!player) {
+            return false;
+        }
+
+        const state = this.playerStateService.getClientState(target);
+
+        if (state.isDead) {
+            return false;
+        }
+
         return !player.metadata.itt;
     }
 
@@ -48,7 +74,10 @@ export class LSMCProvider {
         if (!player) {
             return;
         }
-        Player(player.source).state.isWearingPatientOutfit = useOutfit;
+
+        this.playerStateService.setClientState(player.source, {
+            isWearingPatientOutfit: useOutfit,
+        });
 
         if (useOutfit) {
             TriggerClientEvent(ClientEvent.LSMC_APPLY_PATIENT_CLOTHING, player.source);

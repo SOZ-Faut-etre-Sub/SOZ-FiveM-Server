@@ -24,12 +24,6 @@ export class PlayerService {
         return null;
     }
 
-    public getPlayerWeapon(source: number): any | null {
-        const state = Player(source).state;
-
-        return state.CurrentWeaponData || null;
-    }
-
     public getPlayer(source: number): PlayerData | null {
         const player = this.serverStateService.getPlayer(source);
 

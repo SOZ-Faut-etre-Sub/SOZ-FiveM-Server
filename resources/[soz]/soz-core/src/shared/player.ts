@@ -102,6 +102,24 @@ export type PlayerServerState = {
     lastStressLevelUpdate: Date;
 };
 
+export type PlayerClientState = {
+    isDead: boolean;
+    isInventoryBusy: boolean;
+    isHandcuffed: boolean;
+    isZipped: boolean;
+    isEscorted: boolean;
+    isEscorting: boolean;
+    escorting: number | null;
+    isInShop: boolean;
+    isInHospital: boolean;
+    isInHub: boolean;
+    disableMoneyCase: boolean;
+    tankerEntity: number | null;
+    hasPrisonerClothes: boolean;
+    isWearingPatientOutfit: boolean;
+    isLooted: boolean;
+};
+
 export enum PlayerLicenceType {
     Car = 'car',
     Truck = 'truck',

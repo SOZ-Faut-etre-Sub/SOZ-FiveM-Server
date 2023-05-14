@@ -88,7 +88,9 @@ export class WeaponGunsmithProvider {
         this.animationService.stop();
         await this.weaponService.clear();
 
-        LocalPlayer.state.set('in_shop', false, true);
+        await this.playerService.updateState({
+            isInShop: false,
+        });
 
         const weapon = this.weaponService.getCurrentWeapon();
         if (weapon) {
@@ -248,7 +250,10 @@ export class WeaponGunsmithProvider {
 
     private async setupAnimation() {
         const player = PlayerPedId();
-        LocalPlayer.state.set('in_shop', true, true);
+
+        await this.playerService.updateState({
+            isInShop: true,
+        });
 
         if (IsEntityPlayingAnim(player, 'missbigscore1guard_wait_rifle', 'wait_base', 3)) {
             return;

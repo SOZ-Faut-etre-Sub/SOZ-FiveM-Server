@@ -6,8 +6,7 @@ import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
-import { getRandomEnumValue, getRandomInt } from '../../shared/random';
-import { VehicleModType, VehicleXenonColor, VehicleXenonColorChoices } from '../../shared/vehicle/modification';
+import { getRandomInt } from '../../shared/random';
 import {
     isVehicleModelElectric,
     VehicleClass,
