@@ -87,11 +87,13 @@ export class PlayerProvider {
         }
 
         const url = GetConvar('soz_api_endpoint', 'https://api.soz.zerator.com') + '/accounts/create-token/' + steam;
+
         const response = await axios.get(url, {
             auth: {
                 username: GetConvar('soz_api_username', 'admin'),
                 password: GetConvar('soz_api_password', 'admin'),
             },
+            validateStatus: () => true,
         });
 
         if (response.status === 200) {

@@ -83,9 +83,9 @@ CreateThread(function()
             end
         end
         closestSpike = current
-    end
 
-    Wait(500)
+        Wait(500)
+    end
 end)
 
 CreateThread(function()
