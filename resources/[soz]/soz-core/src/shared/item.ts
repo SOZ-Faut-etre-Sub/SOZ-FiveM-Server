@@ -170,6 +170,7 @@ export type InventoryItemMetadata = {
     tier?: number;
     crafted?: boolean;
     id?: string;
+    model?: string;
 };
 
 export type InventoryItem = {
