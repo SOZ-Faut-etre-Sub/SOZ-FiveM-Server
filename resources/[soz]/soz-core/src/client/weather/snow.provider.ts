@@ -1,9 +1,8 @@
-import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { StateBagHandler } from '../../core/decorators/state';
 import { Weather } from '../../shared/weather';
 import { ResourceLoader } from '../resources/resource.loader';
+import { StateSelector, Store } from '../store/store';
 
 const WEATHER_WITH_SNOW: Weather[] = ['BLIZZARD', 'SNOWLIGHT', 'SNOW'];
 
@@ -11,6 +10,9 @@ const WEATHER_WITH_SNOW: Weather[] = ['BLIZZARD', 'SNOWLIGHT', 'SNOW'];
 export class SnowProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    @Inject('Store')
+    private store: Store;
 
     async applySnowForWeather(weather: Weather, needSnow?: boolean) {
         const applySnow = needSnow || WEATHER_WITH_SNOW.includes(weather);
@@ -28,18 +30,8 @@ export class SnowProvider {
         }
     }
 
-    @StateBagHandler('weather', 'global')
-    async onWeatherChange(_name, _key, weather: Weather) {
-        await this.applySnowForWeather(weather, GlobalState.snow);
-    }
-
-    @StateBagHandler('snow', 'global')
-    async onSnowChange(_name, _key, needSnow: boolean) {
-        await this.applySnowForWeather(GlobalState.weather, needSnow);
-    }
-
-    @Once()
-    async onStart() {
-        await this.applySnowForWeather(GlobalState.weather, GlobalState.snow);
+    @StateSelector(state => state.global.weather, state => state.global.snow)
+    async onWeatherChange(weather: Weather, snow: boolean) {
+        await this.applySnowForWeather(weather, snow);
     }
 }

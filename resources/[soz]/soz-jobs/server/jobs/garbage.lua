@@ -1,6 +1,8 @@
 Citizen.CreateThread(function()
     while true do
-        if GlobalState.blackout_level < 4 and GlobalState.blackout == false then
+        local globalState = exports["soz-core"]:GetGlobalState()
+
+        if globalState.blackoutLevel < 4 and globalState.blackout == false then
             local processingItems = exports["soz-inventory"]:GetAllItems(GarbageConfig.Processing.ProcessingStorage)
 
             if #processingItems > 0 then

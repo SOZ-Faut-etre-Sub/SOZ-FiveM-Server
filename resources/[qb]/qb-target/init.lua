@@ -201,7 +201,9 @@ CreateThread(function()
 		end
 
 		BlackoutGlobalCheck = function()
-			if GlobalState.blackout_level > 3 then
+			local globalState = exports["soz-core"]:GetGlobalState()
+
+			if globalState.blackoutLevel > 3 then
 				return false
 			end
 
@@ -209,7 +211,8 @@ CreateThread(function()
 		end
 
 		BlackoutJobCheck = function()
-			local jobEnergy = GlobalState.job_energy[PlayerData.job.id] or 100;
+			local globalState = exports["soz-core"]:GetGlobalState()
+			local jobEnergy = globalState.jobEnergy[PlayerData.job.id] or 100;
 
 			if jobEnergy <= 1 then
 				return false

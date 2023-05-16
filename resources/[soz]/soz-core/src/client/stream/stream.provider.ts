@@ -1,12 +1,17 @@
 import { Once } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { BLACK_SCREEN_URL, StreamScreen } from './stream.screen';
+import { Store } from '../store/store';
+import { StreamScreen } from './stream.screen';
 
 @Provider()
 export class StreamProvider {
+    @Inject('Store')
+    private store: Store;
+
     private cinemaScreen: StreamScreen;
 
     private bennysScreen: StreamScreen;
@@ -27,8 +32,9 @@ export class StreamProvider {
     @Tick(TickInterval.EVERY_SECOND)
     async updateUrl() {
         const position = GetEntityCoords(PlayerPedId(), false) as Vector3;
+        const streamUrls = this.store.getState().global.streamUrls;
 
-        this.bennysScreen.update(position, GlobalState.stream_url_bennys || BLACK_SCREEN_URL);
+        this.bennysScreen.update(position, streamUrls.bennys);
     }
 
     @Tick(TickInterval.EVERY_FRAME)

@@ -1,90 +1,83 @@
 import { Command } from '../../core/decorators/command';
-import { Once } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
+import { ClientEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
 import { getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, Time, Weather } from '../../shared/weather';
 import { MonitorService } from '../monitor/monitor.service';
 import { Pollution } from '../pollution';
+import { Store } from '../store/store';
 import { Polluted, SpringAutumn } from './forecast';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 
 @Provider()
 export class WeatherProvider {
-    private forecast: Forecast = SpringAutumn;
-
-    private shouldUpdateWeather = true;
-
     @Inject(Pollution)
     private pollution: Pollution;
 
     @Inject(MonitorService)
     private monitorService: MonitorService;
 
-    @Once()
-    onStart(): void {
-        GlobalState.blackout ||= false;
-        GlobalState.blackout_level ||= 0;
-        GlobalState.blackout_override = false;
-        GlobalState.weather ||= 'CLEAR' as Weather;
-        GlobalState.snow ||= false;
-        GlobalState.time ||= { hour: 2, minute: 0, second: 0 } as Time;
-    }
+    @Inject('Store')
+    private store: Store;
+
+    private forecast: Forecast = SpringAutumn;
+
+    private currentTime: Time = { hour: 2, minute: 0, second: 0 };
+
+    private shouldUpdateWeather = true;
 
     @Tick(TickInterval.EVERY_SECOND, 'weather:time:advance')
     async advanceTime() {
-        const currentTime = await this.monitorService.doCall('advance_time_get', () => {
-            return { ...(GlobalState.time as Time) };
-        });
+        this.currentTime.second += INCREMENT_SECOND;
 
-        currentTime.second += INCREMENT_SECOND;
+        if (this.currentTime.second >= 60) {
+            const incrementMinutes = Math.floor(this.currentTime.second / 60);
 
-        if (currentTime.second >= 60) {
-            const incrementMinutes = Math.floor(currentTime.second / 60);
+            this.currentTime.minute += incrementMinutes;
+            this.currentTime.second %= 60;
 
-            currentTime.minute += incrementMinutes;
-            currentTime.second %= 60;
+            if (this.currentTime.minute >= 60) {
+                const incrementHours = Math.floor(this.currentTime.minute / 60);
 
-            if (currentTime.minute >= 60) {
-                const incrementHours = Math.floor(currentTime.minute / 60);
+                this.currentTime.hour += incrementHours;
+                this.currentTime.minute %= 60;
 
-                currentTime.hour += incrementHours;
-                currentTime.minute %= 60;
-
-                if (currentTime.hour >= 24) {
-                    currentTime.hour %= 24;
+                if (this.currentTime.hour >= 24) {
+                    this.currentTime.hour %= 24;
                 }
             }
         }
 
         if (isFeatureEnabled(Feature.Halloween)) {
-            if (currentTime.hour >= 2 && currentTime.hour < 23) {
-                currentTime.hour = 23;
-                currentTime.minute = 0;
-                currentTime.second = 0;
+            if (this.currentTime.hour >= 2 && this.currentTime.hour < 23) {
+                this.currentTime.hour = 23;
+                this.currentTime.minute = 0;
+                this.currentTime.second = 0;
             }
         }
 
-        await this.monitorService.doCall('advance_time_set', () => {
-            GlobalState.time = currentTime;
-        });
+        TriggerClientEvent(ClientEvent.STATE_UPDATE_TIME, -1, this.currentTime);
     }
 
     @Tick(TickInterval.EVERY_FRAME, 'weather:next-weather')
     async updateWeather() {
         await wait((Math.random() * 5 + 10) * 60 * 1000);
 
-        const defaultWeather = isFeatureEnabled(Feature.Halloween) ? 'NEUTRAL' : 'OVERCAST';
-
-        if (this.shouldUpdateWeather) {
-            GlobalState.weather = this.getNextForecast(GlobalState.weather || defaultWeather);
+        if (!this.shouldUpdateWeather) {
+            return;
         }
+
+        const defaultWeather = isFeatureEnabled(Feature.Halloween) ? 'NEUTRAL' : 'OVERCAST';
+        const currentWeather = this.store.getState().global.weather || defaultWeather;
+
+        this.store.dispatch.global.update({ weather: this.getNextForecast(currentWeather) });
     }
 
     @Exportable('setWeatherUpdate')
@@ -107,11 +100,11 @@ export class WeatherProvider {
 
     @Command('snow', { role: 'admin' })
     setSnowCommand(source: number, needSnow?: string): void {
-        GlobalState.snow = needSnow === 'on' || needSnow === 'true';
+        this.store.dispatch.global.update({ snow: needSnow === 'on' || needSnow === 'true' });
     }
 
     public setWeather(weather: Weather): void {
-        GlobalState.weather = weather;
+        this.store.dispatch.global.update({ weather });
     }
 
     @Command('block_weather', { role: 'admin' })
@@ -128,22 +121,27 @@ export class WeatherProvider {
             return;
         }
 
-        GlobalState.time = { hour, minute, second: 0 };
+        this.currentTime = { hour, minute, second: 0 };
+        TriggerClientEvent(ClientEvent.STATE_UPDATE_TIME, -1, this.currentTime);
     }
 
     @Command('blackout', { role: 'admin' })
     setBlackout(source: number, status?: string): void {
-        GlobalState.blackout = status === 'on' || status === 'true';
+        this.store.dispatch.global.update({ blackout: status === 'on' || status === 'true' });
     }
 
     @Command('blackout_level', { role: 'admin' })
     setBlackoutLevel(source: number, level?: string): void {
         if (!level || level === 'default') {
-            GlobalState.blackout_level = 0;
-            GlobalState.blackout_override = false;
+            this.store.dispatch.global.update({
+                blackoutLevel: 0,
+                blackoutOverride: false,
+            });
         } else {
-            GlobalState.blackout_level = parseInt(level, 10) || 0;
-            GlobalState.blackout_override = true;
+            this.store.dispatch.global.update({
+                blackoutLevel: parseInt(level, 10) || 0,
+                blackoutOverride: true,
+            });
         }
     }
 

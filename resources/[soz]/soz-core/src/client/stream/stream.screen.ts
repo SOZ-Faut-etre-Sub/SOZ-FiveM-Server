@@ -1,7 +1,6 @@
+import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
-
-export const BLACK_SCREEN_URL = 'nui://soz-core/public/dui_twitch_stream.html';
 
 const createNamedRenderTargetForModel = (name, model): number => {
     let handle = 0;

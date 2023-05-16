@@ -21,7 +21,9 @@ const exps = global.exports;
 
 /* Functions */
 function cityIsInBlackOut(): boolean {
-    return GlobalState.blackout || GlobalState.blackout_level >= 3;
+    const globalState = exps['soz-core'].GetGlobalState();
+
+    return globalState.blackout || globalState.blackoutLevel >= 3;
 }
 
 /* * * * * * * * * * * * *

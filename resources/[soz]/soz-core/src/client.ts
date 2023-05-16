@@ -31,6 +31,8 @@ import { ObjectModule } from './client/object/object.module';
 import { PlayerModule } from './client/player/player.module';
 import { RepositoryModule } from './client/resources/repository.module';
 import { ShopModule } from './client/shop/shop.module';
+import { store } from './client/store/store';
+import { StoreModule } from './client/store/store.module';
 import { StoryModule } from './client/story/story.module';
 import { StreamModule } from './client/stream/stream.module';
 import { TargetModule } from './client/target/target.module';
@@ -41,17 +43,19 @@ import { WeatherModule } from './client/weather/weather.module';
 import { WorldModule } from './client/world/world.module';
 import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
-import { setService, unloadContainer } from './core/container';
+import { setService, setServiceInstance, unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
 import { ChainMiddlewareEventClientFactory } from './core/middleware/middleware.event.client';
 import { ChainMiddlewareTickClientFactory } from './core/middleware/middleware.tick.client';
 
 async function bootstrap() {
+    setServiceInstance('Store', store);
     setService('MiddlewareFactory', ChainMiddlewareEventClientFactory);
     setService('MiddlewareTickFactory', ChainMiddlewareTickClientFactory);
 
     const app = await Application.create(
         ProviderClientLoader,
+        StoreModule,
         RepositoryModule,
         HudModule,
         WorldModule,
