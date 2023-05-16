@@ -10,6 +10,7 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerCleanService } from '../player/player.clean.service';
 import { QBCore } from '../qbcore';
+import { Store } from '../store/store';
 import { VehicleDealershipProvider } from '../vehicle/vehicle.dealership.provider';
 import { WeatherProvider } from '../weather/weather.provider';
 
@@ -34,6 +35,9 @@ export class RebootProvider {
 
     @Inject(Logger)
     private logger: Logger;
+
+    @Inject('Store')
+    private store: Store;
 
     @OnEvent(ServerEvent.FIVEM_PLAYER_CONNECTING)
     public onPlayerConnecting(source, name, setKickReason, deferrals) {
@@ -121,14 +125,12 @@ export class RebootProvider {
         this.weatherProvider.setWeather('THUNDER');
         await wait(2 * 60 * 1000);
 
-        GlobalState.blackout = true;
+        this.store.dispatch.global.update({ blackout: true });
 
         if (isFeatureEnabled(Feature.HalloweenReboot)) {
-            GlobalState.time = { hour: 0, minute: 0, second: 0 };
             this.weatherProvider.setWeather('HALLOWEEN');
             await wait(60 * 1000);
 
-            GlobalState.time = { hour: 0, minute: 0, second: 0 };
             this.weatherProvider.setWeather('HALLOWEEN');
 
             TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 1.0);
@@ -138,7 +140,6 @@ export class RebootProvider {
             TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/wolf', 1.0);
             await wait(20 * 1000);
 
-            GlobalState.time = { hour: 0, minute: 0, second: 0 };
             this.weatherProvider.setWeather('HALLOWEEN');
             TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'halloween/laugh_witch', 0.8);
             TriggerClientEvent('InteractSound_CL:PlayOnOne', -1, 'system/reboot', 0.05);

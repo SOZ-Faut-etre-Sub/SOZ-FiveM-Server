@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { modules as PrivateModules } from '@private/server/modules';
 
 import { Application } from './core/application';
-import { setService, unloadContainer } from './core/container';
+import { setService, setServiceInstance, unloadContainer } from './core/container';
 import { ProviderServerLoader } from './core/loader/provider.server.loader';
 import { ChainMiddlewareEventServerFactory } from './core/middleware/middleware.event.server';
 import { ChainMiddlewareTickServerFactory } from './core/middleware/middleware.tick.server';
@@ -33,6 +33,8 @@ import { RebootModule } from './server/reboot/reboot.module';
 import { RepositoryModule } from './server/repository/repository.module';
 import { ShopModule } from './server/shop/shop.module';
 import { SoundModule } from './server/sound/sound.module';
+import { store } from './server/store/store';
+import { StoreModule } from './server/store/store.module';
 import { StoryModule } from './server/story/story.module';
 import { StreamModule } from './server/stream/stream.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
@@ -42,10 +44,13 @@ import { WeatherModule } from './server/weather/weather.module';
 import { ZEventModule } from './server/zevent/zevent.module';
 
 async function bootstrap() {
+    setServiceInstance('Store', store);
     setService('MiddlewareFactory', ChainMiddlewareEventServerFactory);
     setService('MiddlewareTickFactory', ChainMiddlewareTickServerFactory);
+
     const app = await Application.create(
         ProviderServerLoader,
+        StoreModule,
         DatabaseModule,
         RepositoryModule,
         MonitorModule,

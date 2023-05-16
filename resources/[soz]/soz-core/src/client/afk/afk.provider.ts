@@ -11,6 +11,7 @@ import { InputService } from '../nui/input.service';
 import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
+import { Store } from '../store/store';
 import { TalkService } from '../talk.service';
 
 const AFK_SECONDS_UNTIL_KICK = 900;
@@ -42,11 +43,14 @@ export class AfkProvider {
     @Inject(InputService)
     private inputService: InputService;
 
+    @Inject('Store')
+    private store: Store;
+
     @Tick(TickInterval.EVERY_FRAME)
     async verificationLoop() {
         const player = this.playerService.getPlayer();
 
-        if (!player || player.metadata.godmode || GlobalState.disableAFK) {
+        if (!player || player.metadata.godmode || this.store.getState().global.disableAFK) {
             return;
         }
 
@@ -113,7 +117,7 @@ export class AfkProvider {
         const player = this.playerService.getPlayer();
         const currentPosition: Vector3 = [0, 0, 0];
 
-        if (!player || player.metadata.godmode || GlobalState.disableAFK) {
+        if (!player || player.metadata.godmode || this.store.getState().global.disableAFK) {
             return;
         }
 

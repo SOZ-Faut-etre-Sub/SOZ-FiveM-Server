@@ -177,8 +177,9 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
 
     Citizen.CreateThread(function()
         while Processing.Enabled do
+            local globalState = exports["soz-core"]:GetGlobalState()
 
-            if GlobalState.blackout_level > 3 or GlobalState.blackout == true then
+            if globalState.blackoutLevel > 3 or globalState.blackout == true then
                 Processing.StartedAt = 0
                 Processing.Enabled = false
                 return

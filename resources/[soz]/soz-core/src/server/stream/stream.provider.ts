@@ -1,35 +1,31 @@
 import { Command } from '../../core/decorators/command';
-import { Once } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-
-const BLACK_SCREEN_URL = 'nui://soz-core/public/dui_twitch_stream.html';
+import { BLACK_SCREEN_URL } from '../../shared/global';
+import { Store } from '../store/store';
 
 @Provider()
 export class StreamProvider {
-    @Once()
-    onStart(): void {
-        GlobalState.stream_url_bennys ||= BLACK_SCREEN_URL;
-    }
+    @Inject('Store')
+    private store: Store;
 
     @Command('stream-url', { role: 'admin' })
-    setStreamUrlCommand(source: number, name: string, url = ''): void {
-        name = name.toLowerCase();
-
-        if (name === 'bennys') {
-            GlobalState.stream_url_bennys = url;
-        } else {
-            console.log(`Stream inconnu: ${name}`);
+    setStreamUrlCommand(source: number, stream: 'bennys' | 'cinema', url = ''): void {
+        if (stream !== 'bennys' && stream !== 'cinema') {
+            console.log(`Stream inconnu: ${stream}`);
+            return;
         }
+
+        this.store.dispatch.global.setStreamUrl({ stream, url });
     }
 
     @Command('stream-stop', { role: 'admin' })
-    stopStreamCommand(source: number, name: string): void {
-        name = name.toLowerCase();
-
-        if (name === 'bennys') {
-            GlobalState.stream_url_bennys = BLACK_SCREEN_URL;
-        } else {
-            console.log(`Stream inconnu: ${name}`);
+    stopStreamCommand(source: number, stream: 'bennys' | 'cinema'): void {
+        if (stream !== 'bennys' && stream !== 'cinema') {
+            console.log(`Stream inconnu: ${stream}`);
+            return;
         }
+
+        this.store.dispatch.global.setStreamUrl({ stream, url: BLACK_SCREEN_URL });
     }
 }

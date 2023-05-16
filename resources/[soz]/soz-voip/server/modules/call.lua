@@ -7,7 +7,9 @@ AddStateBagChangeHandler("blackout_level", "global", function(_, _, value, _, _)
 end)
 
 RegisterNetEvent("voip:server:call:start", function(caller, receiver)
-    if GlobalState.blackout_level > 2 then
+    local globalState = exports["soz-core"]:GetGlobalState()
+
+    if globalState.blackoutLevel > 2 then
         return
     end
 

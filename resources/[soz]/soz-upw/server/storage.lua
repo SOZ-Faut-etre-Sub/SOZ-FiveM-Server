@@ -128,7 +128,6 @@ end)
 function StartConsumptionLoop()
     Citizen.CreateThread(function()
         consumptionLoopRunning = true
-        GlobalState.job_energy = GlobalState.job_energy or {}
 
         while consumptionLoopRunning do
             local connectedPlayers = QBCore.Functions.TriggerRpc("smallresources:server:GetCurrentPlayers")[1]
@@ -159,10 +158,13 @@ function StartConsumptionLoop()
             end
 
             local newBlackoutLevel = GetBlackoutLevel()
+            local globalState = exports["soz-core"]:GetGlobalState()
 
             -- Blackout level has changed
-            if not GlobalState.blackout_override and GlobalState.blackout_level ~= newBlackoutLevel then
-                GlobalState.blackout_level = newBlackoutLevel
+            if not globalState.blackoutOverride and globalState.blackoutLevel ~= newBlackoutLevel then
+                exports["soz-core"]:SetGlobalState({
+                    blackoutLevel = newBlackoutLevel,
+                })
             end
 
             -- Handle job terminal consumption
@@ -177,9 +179,9 @@ function StartConsumptionLoop()
                         terminal:Consume(consumptionJobThisTick)
                     end
 
-                    GlobalState.job_energy[jobId] = terminal:GetEnergyPercent()
+                    exports["soz-core"]:SetJobEnergy(jobId, terminal:GetEnergyPercent())
                 else
-                    GlobalState.job_energy[jobId] = 100
+                    exports["soz-core"]:SetJobEnergy(jobId, 100)
                 end
             end
 

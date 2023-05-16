@@ -6,6 +6,7 @@ import { EventLoader } from './event.loader';
 import { ExportLoader } from './exports.loader';
 import { OnceLoader } from './once.loader';
 import { RpcLoader } from './rpc.loader';
+import { SelectorLoader } from './selector.loader';
 import { TickLoader } from './tick.loader';
 
 export abstract class ProviderLoader {
@@ -30,6 +31,9 @@ export abstract class ProviderLoader {
     @Inject(RpcLoader)
     private rpcLoader: RpcLoader;
 
+    @Inject(SelectorLoader)
+    private selectorLoader: SelectorLoader;
+
     public load(provider): void {
         const providerMetadata = Reflect.getMetadata(ProviderMetadataKey, provider) as ProviderMetadata;
         this.logger.debug('[provider] register:', providerMetadata.name);
@@ -40,6 +44,7 @@ export abstract class ProviderLoader {
         this.exportLoader.load(provider);
         this.commandLoader.load(provider);
         this.rpcLoader.load(provider);
+        this.selectorLoader.load(provider);
     }
 
     public unload(): void {
@@ -49,5 +54,6 @@ export abstract class ProviderLoader {
         this.exportLoader.unload();
         this.commandLoader.unload();
         this.rpcLoader.unload();
+        this.selectorLoader.unload();
     }
 }

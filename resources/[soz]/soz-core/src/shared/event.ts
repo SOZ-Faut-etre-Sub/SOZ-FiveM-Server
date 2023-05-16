@@ -342,6 +342,9 @@ export enum ClientEvent {
 
     REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
 
+    STATE_UPDATE_GLOBAL = 'soz-core:client:state:update-global',
+    STATE_UPDATE_TIME = 'soz-core:client:state:update-time',
+
     VEHICLE_CHECK_CONDITION = 'soz-core:client:vehicle:check-condition',
     VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
     VEHICLE_DEALERSHIP_AUCTION_UPDATE = 'soz-core:client:vehicle:dealership:auction:update',

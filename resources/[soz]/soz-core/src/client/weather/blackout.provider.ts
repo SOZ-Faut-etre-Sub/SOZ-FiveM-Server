@@ -1,15 +1,18 @@
 import { Once } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { StateBagHandler } from '../../core/decorators/state';
+import { StateSelector, Store } from '../store/store';
 
 @Provider()
 export class BlackoutProvider {
-    private blackout = false;
-    private blackoutLevel = 0;
+    @Inject('Store')
+    private store: Store;
+
     private isInBlackout: null | boolean = null;
 
     handleBlackoutChange() {
-        const shouldBeInBlackout = this.blackout || this.blackoutLevel > 0;
+        const global = this.store.getState().global;
+        const shouldBeInBlackout = global.blackout || global.blackoutLevel > 0;
 
         if (shouldBeInBlackout !== this.isInBlackout) {
             if (shouldBeInBlackout) {
@@ -23,23 +26,13 @@ export class BlackoutProvider {
         }
     }
 
-    @StateBagHandler('blackout', 'global')
-    async onBlackoutChange(_name, _key, value: boolean) {
-        this.blackout = value;
-        this.handleBlackoutChange();
-    }
-
-    @StateBagHandler('blackout_level', 'global')
-    async onBlackoutLevelChange(_name: string, _key: string, value: number) {
-        this.blackoutLevel = value;
+    @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
+    async onBlackoutChange() {
         this.handleBlackoutChange();
     }
 
     @Once()
     onStart(): void {
-        this.blackout = GlobalState.blackout || false;
-        this.blackoutLevel = GlobalState.blackout_level || 0;
-
         this.handleBlackoutChange();
         SetArtificialLightsStateAffectsVehicles(false);
     }
