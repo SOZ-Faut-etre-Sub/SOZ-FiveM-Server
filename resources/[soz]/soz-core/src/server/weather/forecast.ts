@@ -16,7 +16,6 @@ export const SpringAutumn: Forecast = {
     SNOWLIGHT: {},
     XMAS: {},
     HALLOWEEN: {},
-    LIGHT_SNOW: {},
 };
 
 export const Winter: Forecast = {
@@ -35,7 +34,6 @@ export const Winter: Forecast = {
     SNOWLIGHT: { XMAS: 60, FOGGY: 5, CLEAR: 5 },
     XMAS: { SNOWLIGHT: 60, FOGGY: 5 },
     HALLOWEEN: {},
-    LIGHT_SNOW: {},
 };
 
 export const Summer: Forecast = {
@@ -54,7 +52,6 @@ export const Summer: Forecast = {
     SNOWLIGHT: {},
     XMAS: {},
     HALLOWEEN: {},
-    LIGHT_SNOW: {},
 };
 
 export const Polluted: Forecast = {
@@ -73,7 +70,6 @@ export const Polluted: Forecast = {
     SNOWLIGHT: { SMOG: 80, FOGGY: 20 },
     XMAS: { SMOG: 80, FOGGY: 20 },
     HALLOWEEN: { SMOG: 80, FOGGY: 20 },
-    LIGHT_SNOW: { SMOG: 80, FOGGY: 20 },
 };
 
 export const Halloween: Forecast = {
@@ -92,5 +88,4 @@ export const Halloween: Forecast = {
     SNOWLIGHT: {},
     XMAS: {},
     HALLOWEEN: {},
-    LIGHT_SNOW: {},
 };

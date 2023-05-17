@@ -117,7 +117,9 @@ export class RebootProvider {
 
         this.sendRebootMessage(15);
         this.weatherProvider.setWeather('CLEARING');
-        // TODO: Send storm alert on phones
+        // Send the storm alert after resetting the weather forecasts
+        // Otherwise we won't see the current weather on the weather app of the phone
+        this.weatherProvider.setStormDeadline(Date.now() + 15 * 60 * 1000);
 
         await wait(5 * 60 * 1000);
 
