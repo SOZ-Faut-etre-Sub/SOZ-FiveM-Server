@@ -201,7 +201,10 @@
                 "DESCRIPTION": "Une tempête est en approche, veuillez rester à l'intérieur et vous mettre à l'abri."
             },
             "FORECASTS": {
-                "EXTRASUNNY": "Ensoleillé",
+                "EXTRASUNNY": {
+                    "DAY": "Ensoleillé",
+                    "NIGHT": "Enluné"
+                },
                 "CLEAR": "Clair",
                 "CLOUDS": "Nuageux",
                 "SMOG": "Brouillard",
@@ -209,14 +212,15 @@
                 "OVERCAST": "Couvert",
                 "RAIN": "Pluie",
                 "THUNDER": "Orage",
-                "CLEARING": "Éclaircies",
-                "NEUTRAL": "Neutre",
+                "CLEARING": "Éclaircies, rares averses",
+                "NEUTRAL": "Éclaircies",
                 "SNOW": "Neige",
                 "BLIZZARD": "Blizzard",
                 "SNOWLIGHT": "Neige légère",
                 "XMAS": "Neige",
                 "HALLOWEEN": "Apocalyptique"
-            }
+            },
+            "LOADING": "Récupération de la météo..."
         },
         "RELATIVE_TIME": {
             "future": "dans %s",
