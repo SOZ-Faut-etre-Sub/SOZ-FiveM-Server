@@ -39,6 +39,9 @@ export class FightForStyleRestockProvider {
         await this.prismaService.$queryRaw(
             Prisma.sql`UPDATE shop_content SET shop_content.stock = CEIL(shop_content.stock * 0.95) WHERE shop_content.shop_id IN (1, 2, 3)`
         );
+        await this.prismaService.$queryRaw(
+            Prisma.sql`UPDATE shop_content SET shop_content.stock = 50 WHERE shop_content.shop_id IN (4)`
+        );
     }
 
     public garmentToCategory(garment: Garment | LuxuryGarment): number {
