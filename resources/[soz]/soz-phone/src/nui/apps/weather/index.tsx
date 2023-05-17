@@ -1,34 +1,31 @@
-import { FullPageWithHeaderWithNavBar } from '../../ui/layout/FullPageWithHeaderWithNavBar';
-import { Route, Routes } from 'react-router-dom';
-import { AppWrapper } from '../../ui/components/AppWrapper';
 import { Transition } from '@headlessui/react';
-import { WeatherHome } from './pages/WeatherHome';
+import cn from 'classnames';
+import { Route, Routes } from 'react-router-dom';
+
 import { useWeather } from '../../hooks/app/useWeather';
 import { useTime } from '../../hooks/usePhone';
-
-const getBackgroundColor = (time) => {
-    const hours = parseInt(time, 10);
-    const isNight = hours >= 22 || hours < 6;
-    const isDay = hours >= 8 && hours <= 20;
-    if (isNight) {
-        return 'bg-gradient-to-t from-sky-900 to-indigo-900';
-    } else if (isDay) {
-        return 'bg-gradient-to-t from-sky-900 to-sky-400';
-    } else {
-        return 'bg-gradient-to-t from-sky-900 to-orange-500';
-    }
-}
+import { AppWrapper } from '../../ui/components/AppWrapper';
+import { FullPageWithHeaderWithNavBar } from '../../ui/layout/FullPageWithHeaderWithNavBar';
+import { WeatherList } from './pages/WeatherList';
 
 export const WeatherApp = () => {
     const { getAlert } = useWeather();
-    const alertInProgress = !!getAlert();
+    const alert = getAlert();
+    const alertInProgress = alert && alert.getTime() > Date.now();
     const time = useTime();
-    const backgroundClass = alertInProgress
-        ? 'bg-gradient-to-t from-red-900 to-red-600'
-        : getBackgroundColor(time);
+    const hours = parseInt(time.slice(0, 2), 10);
+    const isNight = hours >= 21 || hours < 6;
+    const isDay = hours >= 8 && hours < 20;
 
     return (
-        <FullPageWithHeaderWithNavBar className={backgroundClass}>
+        <FullPageWithHeaderWithNavBar
+            className={cn('bg-gradient-to-t', {
+                'from-red-900 to-red-600': alertInProgress,
+                'from-sky-900 to-indigo-900': !alertInProgress && isNight,
+                'from-sky-900 to-sky-400': !alertInProgress && isDay,
+                'from-sky-900 to-orange-500': !alertInProgress && !isDay && !isNight,
+            })}
+        >
             <Transition
                 appear={true}
                 show={true}
@@ -41,10 +38,10 @@ export const WeatherApp = () => {
             >
                 <AppWrapper>
                     <Routes>
-                        <Route index element={<WeatherHome />} />
+                        <Route index element={<WeatherList />} />
                     </Routes>
                 </AppWrapper>
             </Transition>
         </FullPageWithHeaderWithNavBar>
-    )
-}
+    );
+};

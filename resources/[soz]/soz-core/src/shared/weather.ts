@@ -13,7 +13,6 @@ export type Weather =
     | 'SNOW'
     | 'SNOWLIGHT'
     | 'THUNDER'
-    | 'LIGHT_SNOW'
     | 'XMAS';
 
 export type Time = {
@@ -24,7 +23,13 @@ export type Time = {
 
 export type Forecast = Record<Weather, { [key in Weather]?: number }>;
 
-export type ForecastWithTemperature = Forecast & {
+export type TemperatureRange = {
+    min: number;
+    max: number;
+};
+
+export type ForecastWithTemperature = {
+    weather: Weather;
     temperature: number;
     duration: number;
-}
+};
