@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 
-import { store } from '../../store';
-import { useNuiEvent } from '../../../libs/nui/hooks/useNuiEvent';
 import { WeatherEvents } from '../../../../typings/app/weather';
+import { useNuiEvent } from '../../../libs/nui/hooks/useNuiEvent';
+import { store } from '../../store';
 
 export const useAppWeatherService = () => {
     useEffect(() => {
-        console.log('Refresh the forecasts');
         store.dispatch.appWeather.refreshForecasts();
         store.dispatch.appWeather.refreshStormAlert();
     }, []);
