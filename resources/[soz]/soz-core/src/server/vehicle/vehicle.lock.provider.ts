@@ -11,6 +11,7 @@ import { ServerEvent } from '../../shared/event';
 import { InventoryItem, Item } from '../../shared/item';
 import { getRandomInt } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
+import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -49,6 +50,9 @@ export class VehicleLockProvider {
     @Inject(PlayerTalentService)
     private playerTalentService: PlayerTalentService;
 
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
+
     private trunkOpened: Record<number, Set<number>> = {};
 
     @Once()
@@ -82,6 +86,15 @@ export class VehicleLockProvider {
             return;
         }
 
+        if (item.name === 'lockpick' && inventoryItem.metadata?.type) {
+            const model = GetEntityModel(closestVehicle.vehicleEntityId);
+            if (GetHashKey(inventoryItem.metadata?.model) !== model) {
+                this.notifier.notify(source, 'Ce lockpick ne peux pas crocheter ce véhicule', 'error');
+
+                return;
+            }
+        }
+
         const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
 
         if (vehicleType !== 'automobile' && vehicleType !== 'bike' && vehicleType !== 'trailer') {
@@ -90,7 +103,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (!this.inventoryManager.removeItemFromInventory(source, item.name, 1)) {
+        if (!this.inventoryManager.removeInventoryItem(source, inventoryItem)) {
             this.notifier.notify(source, 'Aucun lockpick', 'error');
 
             return;
@@ -138,6 +151,25 @@ export class VehicleLockProvider {
             this.notifier.notify(source, "Vous n'avez pas réussi à crocheter le véhicule", 'error');
 
             return;
+        }
+
+        if (vehicleState.isPlayerVehicle) {
+            const playerVehicle = await this.prismaService.playerVehicle.findUnique({
+                where: { plate: vehicleState.plate },
+            });
+            if (playerVehicle.job) {
+                this.notifier.notify(
+                    source,
+                    '~r~Le véhicule déverrouillé appartient visiblement à une entreprise en ville',
+                    'warning'
+                );
+            } else {
+                this.notifier.notify(
+                    source,
+                    "~r~Le véhicule déverrouillé appartient visiblement à quelqu'un en ville",
+                    'warning'
+                );
+            }
         }
 
         this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
