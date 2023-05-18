@@ -6,6 +6,7 @@ export type CriminalCraftingRequirements = {
     talent: Talent;
     expire: boolean;
     metadata?: InventoryItemMetadata;
+    outputCount?: number;
 };
 
 export type CriminalCraftingCheckItem = {

@@ -73,7 +73,8 @@ export enum RpcServerEvent {
 
     VANDALISM_END = 'soz-core:server:vandalism:end',
     VANDALISM_LOAD = 'soz-core:server:vandalism:load',
-    VANDALISM_LOCK = 'soz-core:server:vandalism:lock',
+    VANDALISM_CHECK = 'soz-core:server:vandalism:check',
+    VANDALISM_ALERT_CHECK = 'soz-core:server:vandalism:alert-check',
 
     HEIST_CHECK = 'soz-core:server:heist:check',
     HEIST_JEWELRY_IS_ZONE_UNLOCK = 'soz-core:server:heist:jewelry-check-unlock',
