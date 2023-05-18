@@ -9,7 +9,7 @@ class _WeatherService {
             resp({ status: 'ok', data: forecasts });
         } catch (e) {
             weatherLogger.error(`Error in handleFetchForecasts, ${e.toString()}`);
-            resp({ status: 'error', errorMsg: 'DB_ERROR' });
+            resp({ status: 'error', errorMsg: e.toString() });
         }
     }
 
@@ -19,7 +19,7 @@ class _WeatherService {
             resp({ status: 'ok', data: alert });
         } catch (e) {
             weatherLogger.error(`Error in handleFetchStormAlert, ${e.toString()}`);
-            resp({ status: 'error', errorMsg: 'DB_ERROR' });
+            resp({ status: 'error', errorMsg: e.toString() });
         }
     }
 }
