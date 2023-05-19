@@ -19,6 +19,7 @@ export type CriminalCraftingCheck = {
     talent: boolean;
     amount: number;
     canCraft: boolean;
+    outputCount?: number;
 };
 
 export type CriminalCraftingSalvage = {
