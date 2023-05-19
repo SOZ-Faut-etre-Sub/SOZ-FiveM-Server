@@ -13,7 +13,6 @@ import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { AnimationStopReason } from '../../shared/animation';
 import { AnimationService } from '../animation/animation.service';
-import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -36,9 +35,6 @@ type CurrentStationPlug = {
 export class VehicleElectricProvider {
     @Inject(UpwChargerRepository)
     private upwChargerRepository: UpwChargerRepository;
-
-    @Inject(BlipFactory)
-    private blipFactory: BlipFactory;
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
