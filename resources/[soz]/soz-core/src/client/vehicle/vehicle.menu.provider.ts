@@ -14,6 +14,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
 export class VehicleMenuProvider {
@@ -34,6 +35,9 @@ export class VehicleMenuProvider {
 
     @Inject(VehicleCustomProvider)
     private vehicleCustomProvider: VehicleCustomProvider;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @OnNuiEvent<boolean, boolean>(NuiEvent.VehicleSetEngine)
     async setVehicleEngine(engineOn: boolean) {
@@ -89,7 +93,7 @@ export class VehicleMenuProvider {
             speedLimit = parseInt(customSpeedLimit);
         }
 
-        this.vehicleService.updateVehicleState(vehicle, { speedLimit });
+        this.vehicleStateService.updateVehicleState(vehicle, { speedLimit });
 
         return true;
     }
@@ -184,10 +188,9 @@ export class VehicleMenuProvider {
             return;
         }
 
-        const vehicleState = this.vehicleService.getVehicleState(vehicle);
-        const hasRadio = Entity(vehicle).state.hasRadio || false;
+        const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
 
-        if (isCopilot && !hasRadio) {
+        if (isCopilot && !vehicleState.hasRadio) {
             return;
         }
 
@@ -209,7 +212,7 @@ export class VehicleMenuProvider {
             engineOn: GetIsVehicleEngineRunning(vehicle),
             speedLimit: vehicleState.speedLimit,
             doorStatus,
-            hasRadio,
+            hasRadio: vehicleState.hasRadio,
             insideLSCustom: this.vehicleCustomProvider.isPedInsideCustomZone(),
             permission: isAllowed ? permission : null,
         });

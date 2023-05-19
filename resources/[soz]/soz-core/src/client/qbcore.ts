@@ -60,9 +60,4 @@ export class Qbcore {
     public hasJobPermission(job: string, permission: JobPermission): boolean {
         return this.SozJobCore.Functions.HasPermission(job, permission);
     }
-
-    // Temporary method that would be moved
-    public getVehicleProperties(vehicle: number): any {
-        return this.QBCore.Functions.GetVehicleProperties(vehicle);
-    }
 }

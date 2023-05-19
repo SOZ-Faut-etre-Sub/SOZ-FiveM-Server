@@ -16,6 +16,7 @@ import {
 import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 type VehicleStatus = {
     engineHealth: number;
@@ -69,6 +70,9 @@ type CurrentVehiclePosition = {
 export class VehicleConditionProvider {
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
@@ -130,6 +134,7 @@ export class VehicleConditionProvider {
     }
 
     @StateBagHandler('condition', null)
+    // @TODO Use listener
     private async onVehicleConditionChange(bag: string, key: string, value: VehicleCondition) {
         const split = bag.split(':');
 
@@ -202,6 +207,7 @@ export class VehicleConditionProvider {
 
     @OnEvent(ClientEvent.VEHICLE_SYNC_CONDITION)
     private async onVehicleSyncCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
+        // @TODO Add listener
         if (!NetworkDoesEntityExistWithNetworkId(vehicleNetworkId)) {
             return;
         }
@@ -220,16 +226,13 @@ export class VehicleConditionProvider {
             return;
         }
 
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
         const newCondition = {
             ...state.condition,
             ...condition,
         };
 
-        this.vehicleService.updateVehicleState(vehicle, {
-            condition: newCondition,
-        });
-
+        this.vehicleStateService.updateVehicleCondition(vehicle, condition);
         this.vehicleService.applyVehicleCondition(vehicle, newCondition);
     }
 
@@ -254,23 +257,16 @@ export class VehicleConditionProvider {
         }
 
         // Check dead status
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
 
         this.checkVehicleWater(vehicle, state);
 
-        const newCondition = {
-            ...state.condition,
-            ...this.vehicleService.getVehicleCondition(vehicle),
-        };
-
         // Check vehicle condition
-        this.vehicleService.updateVehicleState(vehicle, {
-            condition: newCondition,
-        });
+        this.vehicleStateService.updateVehicleCondition(vehicle, this.vehicleService.getVehicleCondition(vehicle));
     }
 
     @Tick(200)
-    public updateVehicleMaxSpeed(): void {
+    public async updateVehicleMaxSpeed() {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
@@ -284,7 +280,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
 
         if (state.speedLimit > 0) {
             const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
@@ -515,10 +511,11 @@ export class VehicleConditionProvider {
                 },
             });
         }
+        // @TODO send mileage diff to server instead of updating it here
     }
 
     @Tick(500)
-    public checkVehicleTireRepair() {
+    public async checkVehicleTireRepair() {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
@@ -534,7 +531,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
         const keys = Object.keys(state.condition.tireTemporaryRepairDistance).map(key => parseInt(key, 10));
 
         if (keys.length === 0) {
@@ -569,13 +566,11 @@ export class VehicleConditionProvider {
             lastVehiclePosition.position,
             this.currentVehiclePositionForTemporaryTire.position
         );
-        const newCondition = {
-            ...state.condition,
-        };
+        const newCondition: Partial<VehicleCondition> = {};
         let applyCondition = false;
 
         for (const tireKey of keys) {
-            const distance = newCondition.tireTemporaryRepairDistance[tireKey] + diffDistance;
+            const distance = state.condition.tireTemporaryRepairDistance[tireKey] + diffDistance;
 
             if (distance < TIRE_TEMPORARY_REPAIR_DISTANCE) {
                 newCondition.tireTemporaryRepairDistance[tireKey] = distance;
@@ -586,17 +581,19 @@ export class VehicleConditionProvider {
             }
         }
 
-        this.vehicleService.updateVehicleState(vehicle, {
-            condition: newCondition,
-        });
+        this.vehicleStateService.updateVehicleCondition(vehicle, newCondition);
 
         if (applyCondition) {
-            this.vehicleService.applyVehicleCondition(vehicle, newCondition);
+            this.vehicleService.applyVehicleCondition(vehicle, {
+                ...state.condition,
+                ...newCondition,
+            });
         }
     }
 
     @StateBagHandler('indicators', null)
     @StateBagHandler('windows', null)
+    // @TODO Use listener
     private async onVehicleIndicatorChange(bag: string) {
         const split = bag.split(':');
 
@@ -663,9 +660,9 @@ export class VehicleConditionProvider {
         const toggleWindowsDown = IsControlJustPressed(0, 187);
 
         if (toggleLeft || toggleRight || toggleWindowsUp || toggleWindowsDown) {
-            const state = this.vehicleService.getVehicleState(vehicle);
+            const state = await this.vehicleStateService.getVehicleState(vehicle);
 
-            this.vehicleService.updateVehicleState(vehicle, {
+            this.vehicleStateService.updateVehicleState(vehicle, {
                 indicators: {
                     left: toggleLeft ? !state.indicators.left : state.indicators.left,
                     right: toggleRight ? !state.indicators.right : state.indicators.right,

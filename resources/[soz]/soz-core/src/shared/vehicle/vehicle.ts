@@ -118,9 +118,9 @@ export type VehicleEntityState = {
     open: boolean;
     plate: string | null;
     owner: string | null;
-    defaultOwner: string | null;
     speedLimit: number | null;
     isPlayerVehicle: boolean;
+    isSirenMuted: boolean;
     lastPosition: Vector3 | null;
     indicators: {
         left: boolean;
@@ -141,6 +141,10 @@ export type VehicleEntityState = {
         frequency: number;
         volume: number;
         ear: number;
+    } | null;
+    spotlight: {
+        theta: number;
+        phi: number;
     } | null;
 };
 
@@ -201,11 +205,11 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     forced: false,
     open: false,
     owner: null,
-    defaultOwner: null,
     plate: null,
     speedLimit: null,
     dead: false,
     isPlayerVehicle: false,
+    isSirenMuted: false,
     lastPosition: null,
     spawned: false,
     indicators: {
@@ -219,6 +223,7 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     radioEnabled: false,
     primaryRadio: null,
     secondaryRadio: null,
+    spotlight: null,
 });
 
 export type VehicleMenuData = {

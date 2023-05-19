@@ -174,7 +174,9 @@ export enum ServerEvent {
     VEHICLE_GIVE_KEY = 'soz-core:server:vehicle:give-key',
     VEHICLE_ROUTE_EJECTION = 'soz-core:server:vehicle:route-ejection',
     VEHICLE_TAKE_OWNER = 'soz-core:server:vehicle:take-owner',
-    VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
+    VEHICLE_SET_TRUNK_STATE = 'soz-core:server:vehicle:set-trunk-state',
+    VEHICLE_UPDATE_STATE = 'soz-core:server:vehicle:update-state',
+    VEHICLE_UPDATE_CONDITION = 'soz-core:server:vehicle:update-condition',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
@@ -362,6 +364,7 @@ export enum ClientEvent {
     VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
     VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
+    VEHICLE_UPDATE_STATE = 'soz-core:client:vehicle:update-state',
 
     VOIP_UPDATE_MODE = 'soz-core:client:voip:update-mode',
     VOIP_SET_MEGAPHONE = 'soz-core:client:voip:set-megaphone',

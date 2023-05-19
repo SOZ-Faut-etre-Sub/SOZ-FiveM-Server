@@ -7,6 +7,8 @@ import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
 
+import { VehicleStateService } from '../../vehicle/vehicle.state.service';
+
 @Provider()
 export class UpwVehicleProvider {
     @Inject(Notifier)
@@ -17,6 +19,9 @@ export class UpwVehicleProvider {
 
     @Inject(ProgressService)
     private progressService: ProgressService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @OnEvent(ServerEvent.UPW_CHANGE_BATTERY)
     public async onChangeBattery(source: number, vehicleNetworkId: number) {
@@ -68,10 +73,8 @@ export class UpwVehicleProvider {
             return;
         }
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
-            oilLevel: 100,
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            oilLevel: 100.0,
         });
 
         this.notifier.notify(source, 'Vous avez ~g~changé~s~ la batterie du véhicule.', 'success');

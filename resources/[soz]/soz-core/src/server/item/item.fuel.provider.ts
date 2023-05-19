@@ -114,9 +114,8 @@ export class ItemFuelProvider {
             essence_jerrycan: 30,
         }[item.name];
         const filledFuel = Math.round(progress * amount);
-        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
             fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
         });
 
@@ -184,9 +183,8 @@ export class ItemFuelProvider {
         );
 
         const filledFuel = Math.round(progress * JERRYCAN_FUEL_AMOUNT);
-        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
             fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
         });
 
@@ -246,9 +244,8 @@ export class ItemFuelProvider {
         );
 
         const filledOil = Math.round(progress * (100 - vehicleState.condition.oilLevel));
-        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
             oilLevel: Math.min(vehicleState.condition.oilLevel + filledOil, 100),
         });
 
@@ -311,9 +308,8 @@ export class ItemFuelProvider {
         );
 
         const filledFuel = Math.round(progress * BATTERY_FUEL_AMOUNT);
-        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
             fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
         });
 

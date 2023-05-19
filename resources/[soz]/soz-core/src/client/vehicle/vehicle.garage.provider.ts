@@ -25,6 +25,7 @@ import { VehicleRepository } from '../resources/vehicle.repository';
 import { TargetFactory } from '../target/target.factory';
 import { ObjectFactory } from '../world/object.factory';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 type BlipConfig = {
     name: string;
@@ -84,6 +85,9 @@ export class VehicleGarageProvider {
 
     @Inject(JobService)
     private jobService: JobService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     private pounds: Record<string, Garage> = {};
 
@@ -393,10 +397,6 @@ export class VehicleGarageProvider {
     @OnNuiEvent(NuiEvent.VehicleGarageStoreTrailer)
     public async storeVehicleTrailer({ id, garage }) {
         const vehicle = this.vehicleService.getClosestVehicle({ maxDistance: 25 }, vehicle => {
-            const vehicleState = this.vehicleService.getVehicleState(vehicle);
-            if (!vehicleState.id) {
-                return false;
-            }
             return GetVehicleClass(vehicle) === VehicleClass.Utility;
         });
 

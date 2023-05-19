@@ -1,38 +1,56 @@
-import { Injectable } from '../../core/decorators/injectable';
-import { getDefaultVehicleState, VehicleEntityState } from '../../shared/vehicle/vehicle';
+import { Injectable } from '@core/decorators/injectable';
+import { ClientEvent } from '@public/shared/event';
+
+import { getDefaultVehicleState, VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
 
 @Injectable()
 export class VehicleStateService {
     private spawned: Set<number> = new Set();
 
-    private lastSpawnData: Record<number, VehicleEntityState> = {};
+    private state: Map<number, VehicleEntityState> = new Map<number, VehicleEntityState>();
 
     private vehicleKeys: Record<string, Set<string>> = {};
 
-    public setLastSpawnData(netId: number, data: VehicleEntityState): void {
-        this.lastSpawnData[netId] = data;
+    public getVehicleState(vehicleNetworkId: number): VehicleEntityState {
+        return this.state.get(vehicleNetworkId) || getDefaultVehicleState();
     }
 
-    public getLastSpawnData(netId: number): VehicleEntityState | null {
-        return this.lastSpawnData[netId] || null;
-    }
+    public updateVehicleState(vehicleNetworkId: number, state: Partial<VehicleEntityState>): void {
+        const previousState = this.state.get(vehicleNetworkId) || getDefaultVehicleState();
 
-    public getVehicleState(vehicleEntityId: number): VehicleEntityState {
-        const state = Entity(vehicleEntityId).state;
-        const defaultState = getDefaultVehicleState();
-        const returnState = {};
+        this.state.set(vehicleNetworkId, {
+            ...previousState,
+            ...state,
+        });
 
-        for (const key of Object.keys(defaultState)) {
-            returnState[key] = state[key] || defaultState[key];
+        const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+        if (!entityId) {
+            return;
         }
 
-        return returnState as VehicleEntityState;
+        const owner = NetworkGetEntityOwner(entityId);
+
+        if (!owner) {
+            return;
+        }
+
+        TriggerClientEvent(ClientEvent.VEHICLE_UPDATE_STATE, owner, vehicleNetworkId, state);
     }
 
-    public updateVehicleState(vehicle: number, state: Partial<VehicleEntityState>): void {
-        for (const [key, value] of Object.entries(state)) {
-            Entity(vehicle).state.set(key, value, true);
-        }
+    public updateVehicleCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>): void {
+        const previousState = this.getVehicleState(vehicleNetworkId);
+
+        this.updateVehicleState(vehicleNetworkId, {
+            condition: {
+                ...previousState.condition,
+                ...condition,
+            },
+        });
+    }
+
+    public deleteVehicleState(vehicleNetworkId: number): void {
+        this.state.delete(vehicleNetworkId);
     }
 
     public getSpawned(): number[] {

@@ -42,11 +42,9 @@ export class BennysVehicleProvider {
             return;
         }
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-
         this.notifier.notify(source, `Le moteur a été réparé.`);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             engineHealth: 1000,
         });
 
@@ -74,11 +72,9 @@ export class BennysVehicleProvider {
             return;
         }
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-
         this.notifier.notify(source, `La carrosserie a été réparée.`);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             bodyHealth: 1000,
             doorStatus: {},
             windowStatus: {},
@@ -109,11 +105,9 @@ export class BennysVehicleProvider {
             return;
         }
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-
         this.notifier.notify(source, `Le réservoir d'essence a été réparé.`);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             tankHealth: 1000,
         });
 
@@ -170,11 +164,9 @@ export class BennysVehicleProvider {
             return;
         }
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-
         this.notifier.notify(source, `Les roues ont été réparées.`);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             tireTemporaryRepairDistance: {},
             tireHealth: {},
             tireBurstCompletely: {},
@@ -263,8 +255,7 @@ export class BennysVehicleProvider {
 
         this.notifier.notify(source, `Le véhicule est bien lavé.`);
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             dirtLevel: 0,
         });
 

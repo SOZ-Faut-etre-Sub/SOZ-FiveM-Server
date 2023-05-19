@@ -9,6 +9,7 @@ import { BlipFactory } from '../blip';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
 export class VehicleCarWashProvider {
@@ -17,6 +18,9 @@ export class VehicleCarWashProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
@@ -87,7 +91,7 @@ export class VehicleCarWashProvider {
     }
 
     @OnEvent(ClientEvent.VEHICLE_UPDATE_DIRT_LEVEL)
-    onVehicleUpdateDirtLevel(vehicleId: number, dirtLevel: number) {
+    async onVehicleUpdateDirtLevel(vehicleId: number, dirtLevel: number) {
         const player = this.playerService.getPlayer();
 
         if (!player) {
@@ -100,19 +104,14 @@ export class VehicleCarWashProvider {
             return;
         }
 
-        const state = this.vehicleService.getVehicleState(vehicleEntityId);
-
         SetVehicleDirtLevel(vehicleEntityId, dirtLevel);
 
         if (dirtLevel === 0) {
             WashDecalsFromVehicle(vehicleEntityId, 1.0);
         }
 
-        this.vehicleService.updateVehicleState(vehicleEntityId, {
-            condition: {
-                ...state.condition,
-                dirtLevel,
-            },
+        this.vehicleStateService.updateVehicleCondition(vehicleEntityId, {
+            dirtLevel,
         });
     }
 }
