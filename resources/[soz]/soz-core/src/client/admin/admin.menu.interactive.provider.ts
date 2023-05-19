@@ -52,8 +52,6 @@ export class AdminMenuInteractiveProvider {
                     false
                 );
 
-                const state = this.vehicleService.getVehicleState(vehicle);
-
                 if (dist < 50) {
                     let text = ' | OwnerNet: ';
                     if (GetPlayerServerId(NetworkGetEntityOwner(vehicle)) === GetPlayerServerId(PlayerId())) {
@@ -62,8 +60,7 @@ export class AdminMenuInteractiveProvider {
                     const ownerInfo =
                         `${GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))} ` +
                         `| VehicleNet: ${NetworkGetNetworkIdFromEntity(vehicle)} ` +
-                        `${text} ${GetPlayerServerId(NetworkGetEntityOwner(vehicle))}` +
-                        `~w~| Open: ${state.open} | Forced: ${state.forced} `;
+                        `${text} ${GetPlayerServerId(NetworkGetEntityOwner(vehicle))}`;
                     const vehicleInfo =
                         `Veh Engine.: ${GetVehicleEngineHealth(vehicle).toFixed(2)} ` +
                         `| Veh Body: ${GetVehicleBodyHealth(vehicle).toFixed(2)}` +

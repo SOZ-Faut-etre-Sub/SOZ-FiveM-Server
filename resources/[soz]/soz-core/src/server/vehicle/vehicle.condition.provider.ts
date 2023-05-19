@@ -46,10 +46,14 @@ export class VehicleConditionProvider {
             const entityId = NetworkGetEntityFromNetworkId(netId);
 
             if (!entityId || !DoesEntityExist(entityId)) {
-                const lastState = this.vehicleStateService.getLastSpawnData(netId);
+                const lastState = this.vehicleStateService.getVehicleState(netId);
 
                 this.vehicleStateService.unregisterSpawned(netId);
-                this.vehicleStateService.setLastSpawnData(netId, null);
+                this.vehicleStateService.deleteVehicleState(netId);
+
+                if (!lastState.isPlayerVehicle) {
+                    continue;
+                }
 
                 await this.prismaService.playerVehicle.update({
                     where: {
@@ -85,9 +89,6 @@ export class VehicleConditionProvider {
                 continue;
             }
 
-            const state = this.vehicleStateService.getVehicleState(entityId);
-            this.vehicleStateService.setLastSpawnData(netId, state);
-
             TriggerClientEvent(ClientEvent.VEHICLE_CHECK_CONDITION, owner, netId);
         }
     }
@@ -109,11 +110,9 @@ export class VehicleConditionProvider {
             return;
         }
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-
         this.notifier.notify(source, 'Votre véhicule a été réparé.');
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             engineHealth: 1000,
             tankHealth: 1000,
             doorStatus: {},
@@ -154,8 +153,7 @@ export class VehicleConditionProvider {
 
         this.notifier.notify(source, 'Votre véhicule a été lavé.');
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             dirtLevel: 0,
         });
     }
@@ -212,14 +210,12 @@ export class VehicleConditionProvider {
             return;
         }
 
-        const owner = NetworkGetEntityOwner(vehicleEntity);
-
         this.notifier.notify(
             source,
             'Vos roues sont temporairement réparées, rendez vous rapidement chez un garagiste pour les changer.'
         );
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             tireTemporaryRepairDistance,
             tireHealth: {},
             tireBurstCompletely: {},

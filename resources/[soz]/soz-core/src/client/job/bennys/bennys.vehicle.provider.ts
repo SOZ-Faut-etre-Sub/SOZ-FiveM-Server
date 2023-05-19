@@ -23,6 +23,7 @@ import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
 import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
 import { VehicleService } from '../../vehicle/vehicle.service';
+import { VehicleStateService } from '../../vehicle/vehicle.state.service';
 
 @Provider()
 export class BennysVehicleProvider {
@@ -31,6 +32,9 @@ export class BennysVehicleProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
@@ -308,16 +312,11 @@ export class BennysVehicleProvider {
 
     public async upgradeVehicle(vehicleEntityId: number) {
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
-        const state = this.vehicleService.getVehicleState(vehicleEntityId);
-        let vehicleConfiguration = this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
-
-        if (state.id) {
-            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-            vehicleConfiguration = await emitRpc<VehicleConfiguration>(
-                RpcServerEvent.VEHICLE_CUSTOM_GET_MODS,
-                vehicleNetworkId
-            );
-        }
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+        const vehicleConfiguration = await emitRpc<VehicleConfiguration>(
+            RpcServerEvent.VEHICLE_CUSTOM_GET_MODS,
+            vehicleNetworkId
+        );
 
         SetVehicleUndriveable(vehicleEntityId, true);
         SetVehicleLights(vehicleEntityId, 2);
@@ -455,7 +454,7 @@ export class BennysVehicleProvider {
             return;
         }
 
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
         const model = GetEntityModel(vehicle);
         const doorExist = [];
 

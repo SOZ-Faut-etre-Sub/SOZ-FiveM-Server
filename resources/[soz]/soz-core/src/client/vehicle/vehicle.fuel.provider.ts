@@ -22,6 +22,7 @@ import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { ObjectFactory } from './../world/object.factory';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 type CurrentStationPistol = {
     object: number;
@@ -69,6 +70,9 @@ export class VehicleFuelProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     private currentStationPistol: CurrentStationPistol | null = null;
 
@@ -369,7 +373,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const vehicleState = this.vehicleService.getVehicleState(vehicle);
+        const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
 
         if (vehicleState.condition.fuelLevel > 99.0) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
@@ -656,17 +660,14 @@ export class VehicleFuelProvider {
         const consumedFuel = rpm * 0.084 * multiplier;
         const consumedOil = consumedFuel / 12;
 
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
 
         const newOil = Math.max(0, state.condition.oilLevel - consumedOil);
         const newFuel = Math.max(0, state.condition.fuelLevel - consumedFuel);
 
-        this.vehicleService.updateVehicleState(vehicle, {
-            condition: {
-                ...state.condition,
-                oilLevel: newOil,
-                fuelLevel: newFuel,
-            },
+        this.vehicleStateService.updateVehicleCondition(vehicle, {
+            oilLevel: newOil,
+            fuelLevel: newFuel,
         });
 
         const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');

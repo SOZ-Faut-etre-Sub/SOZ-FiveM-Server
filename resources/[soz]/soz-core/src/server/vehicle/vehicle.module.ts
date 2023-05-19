@@ -14,6 +14,7 @@ import { VehicleProvider } from './vehicle.provider';
 import { VehicleRadarProvider } from './vehicle.radar.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleSpawner } from './vehicle.spawner';
+import { VehicleStateProvider } from './vehicle.state.provider';
 
 @Module({
     providers: [
@@ -32,6 +33,7 @@ import { VehicleSpawner } from './vehicle.spawner';
         VehicleSpawner,
         VehicleRadarProvider,
         VehicleElectricProvider,
+        VehicleStateProvider,
     ],
 })
 export class VehicleModule {}

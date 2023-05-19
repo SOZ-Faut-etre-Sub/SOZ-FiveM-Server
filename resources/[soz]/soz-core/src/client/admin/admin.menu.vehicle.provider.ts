@@ -11,7 +11,7 @@ import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
-import { VehicleService } from '../vehicle/vehicle.service';
+import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
 @Provider()
 export class AdminMenuVehicleProvider {
@@ -21,8 +21,8 @@ export class AdminMenuVehicleProvider {
     @Inject(InputService)
     private inputService: InputService;
 
-    @Inject(VehicleService)
-    private vehicleService: VehicleService;
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(VehicleModificationService)
     private vehicleModificationService: VehicleModificationService;
@@ -94,13 +94,8 @@ export class AdminMenuVehicleProvider {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
 
         if (vehicle) {
-            const state = this.vehicleService.getVehicleState(vehicle);
-
-            this.vehicleService.updateVehicleState(vehicle, {
-                condition: {
-                    ...state.condition,
-                    fuelLevel: 100.0,
-                },
+            this.vehicleStateService.updateVehicleCondition(vehicle, {
+                fuelLevel: 100.0,
             });
         }
     }

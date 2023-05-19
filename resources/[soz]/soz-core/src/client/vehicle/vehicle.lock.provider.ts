@@ -5,7 +5,7 @@ import { Provider } from '../../core/decorators/provider';
 import { StateBagHandler } from '../../core/decorators/state';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { wait } from '../../core/utils';
+import { wait, waitUntil } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
@@ -18,6 +18,7 @@ import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 const DOOR_INDEX_CONFIG: Partial<Record<VehicleClass, Record<string, number>>> = {
     [VehicleClass.Helicopters]: {
@@ -114,6 +115,9 @@ export class VehicleLockProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
+
     private vehicleTrunkOpened: TrunkOpened | null = null;
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
@@ -153,6 +157,7 @@ export class VehicleLockProvider {
 
     @StateBagHandler('forced', null)
     @StateBagHandler('open', null)
+    // @TODO use listener
     private async onVehicleOpenChange(bag: string) {
         const split = bag.split(':');
 
@@ -181,7 +186,7 @@ export class VehicleLockProvider {
         }
 
         await wait(0);
-        const vehicleState = this.vehicleService.getVehicleState(vehicle);
+        const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
 
         if (vehicleState.open || vehicleState.forced) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
@@ -210,15 +215,22 @@ export class VehicleLockProvider {
             return;
         }
 
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
 
         if (!player.metadata.godmode && !state.open && !state.forced) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
 
             const vehicleClass = GetVehicleClass(vehicle);
+
             if (vehicleClass === VehicleClass.Motorcycles || vehicleClass === VehicleClass.Cycles) {
                 ClearPedTasksImmediately(ped);
             }
+
+            // avoid recalling this function until the player stops trying to enter the vehicle
+            await waitUntil(async () => {
+                return !GetVehiclePedIsTryingToEnter(ped);
+            });
+
             return;
         }
 
@@ -348,7 +360,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        const vehicleState = this.vehicleService.getVehicleState(vehicle);
+        const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
 
         if (!vehicleState.forced && !player.metadata.godmode && !vehicleState.open) {
             this.notifier.notify('Véhicule verrouillé.', 'error');
@@ -472,7 +484,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
         const hasVehicleKey = await this.hasVehicleKey(player, state);
 
         if (!hasVehicleKey) {

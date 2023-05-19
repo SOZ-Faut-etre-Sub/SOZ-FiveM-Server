@@ -1,13 +1,13 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
+import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
 import { ServerEvent } from '@public/shared/event';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
-import { emitRpc } from '../../core/rpc';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
-import { getDefaultVehicleState, VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
+import { VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
 import { VehicleModificationService } from './vehicle.modification.service';
@@ -49,43 +49,9 @@ export class VehicleService {
     }
 
     public async getVehicleConfiguration(vehicleEntityId: number): Promise<VehicleConfiguration> {
-        const state = this.getVehicleState(vehicleEntityId);
-        let vehicleConfiguration = this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
-        if (state.id) {
-            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-            vehicleConfiguration = await emitRpc<VehicleConfiguration>(
-                RpcServerEvent.VEHICLE_CUSTOM_GET_MODS,
-                vehicleNetworkId
-            );
-        }
-
-        return vehicleConfiguration;
-    }
-
-    public getVehicleState(vehicle: number): VehicleEntityState {
-        const state = Entity(vehicle).state;
-        const defaultState = getDefaultVehicleState();
-        const condition = this.getVehicleCondition(vehicle);
-
-        defaultState.condition = {
-            ...defaultState.condition,
-            ...condition,
-        };
-
-        const returnState = {};
-
-        for (const key of Object.keys(defaultState)) {
-            returnState[key] = state[key] || defaultState[key];
-        }
-
-        return returnState as VehicleEntityState;
-    }
-
-    public updateVehicleState(vehicle: number, state: Partial<VehicleEntityState>): void {
-        for (const [key, value] of Object.entries(state)) {
-            Entity(vehicle).state.set(key, value, true);
-        }
+        return await emitRpc<VehicleConfiguration>(RpcServerEvent.VEHICLE_CUSTOM_GET_MODS, vehicleNetworkId);
     }
 
     public getClosestVehicle(config?: ClosestVehicleConfig, filter?: (vehicle: number) => boolean): number | null {

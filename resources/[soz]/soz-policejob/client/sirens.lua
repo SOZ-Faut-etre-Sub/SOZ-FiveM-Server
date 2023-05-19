@@ -1,3 +1,4 @@
+-- @TODO Do all of this in soz core
 AddStateBagChangeHandler("isSirenMuted", nil, function(bagName, key, value, _, _)
     if key == "isSirenMuted" and type(value) == "boolean" then
         local vehicle = GetEntityFromStateBagName(bagName)

@@ -37,9 +37,8 @@ export class VehicleCommandProvider {
     @Command('dirty', { role: ['admin'], description: 'Set vehicle dirty (Admin Only)' })
     async dirtyCommand(source: number) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
-        const owner = NetworkGetEntityOwner(closestVehicle.vehicleEntityId);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_SYNC_CONDITION, owner, closestVehicle.vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
             dirtLevel: 15.0,
         });
     }

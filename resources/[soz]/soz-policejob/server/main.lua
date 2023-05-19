@@ -217,7 +217,7 @@ QBCore.Functions.CreateCallback("police:server:DeleteWantedPlayer", function(sou
     end
 end)
 
---- Other
+-- @TODO Set this in core
 AddEventHandler("entityCreating", function(handle)
     local entityModel = GetEntityModel(handle)
 

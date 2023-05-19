@@ -10,7 +10,7 @@ import {
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { VehicleSeatbeltProvider } from '../vehicle/vehicle.seatbelt.provider';
-import { VehicleService } from '../vehicle/vehicle.service';
+import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
 @Provider()
 export class HudVehicleProvider {
@@ -20,8 +20,8 @@ export class HudVehicleProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    @Inject(VehicleService)
-    private readonly vehicleService: VehicleService;
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(VehicleSeatbeltProvider)
     private readonly vehicleSeatbeltProvider: VehicleSeatbeltProvider;
@@ -78,7 +78,7 @@ export class HudVehicleProvider {
         const [hasLight, lightOn, hasHighBeam] = GetVehicleLightsState(vehicle);
         const hash = GetEntityModel(vehicle);
         const vehicleClass = GetVehicleClass(vehicle) as VehicleClass;
-        const state = this.vehicleService.getVehicleState(vehicle);
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
         const fuelType =
             vehicleClass < 23 && vehicleClass != 13 ? (isVehicleModelElectric(hash) ? 'electric' : 'essence') : 'none';
 
