@@ -323,7 +323,6 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     PLAYER_UPDATE = 'soz-core:client:player:update',
     PLAYER_UPDATE_WALK_STYLE = 'soz-core:client:player:update-walk-style',
-    PLAYER_REFRESH_WALK_STYLE = 'soz-core:client:player:refresh-walk-style',
     PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
     PLAYER_SET_UNLIMITED_SPRINT = 'soz-core:client:player:set-unlimited-sprint',
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',

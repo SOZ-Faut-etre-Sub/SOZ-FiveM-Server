@@ -8,6 +8,7 @@ import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { PlayerService } from '@public/client/player/player.service';
+import { PlayerWalkstyleProvider } from '@public/client/player/player.walkstyle.provider';
 import { ProgressService } from '@public/client/progress.service';
 import { SoundService } from '@public/client/sound.service';
 import { VehicleSeatbeltProvider } from '@public/client/vehicle/vehicle.seatbelt.provider';
@@ -123,6 +124,9 @@ export class LSMCDeathProvider {
 
     @Inject(PlayerTalentService)
     private playerTalentService: PlayerTalentService;
+
+    @Inject(PlayerWalkstyleProvider)
+    private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
     @Inject(Monitor)
     public monitor: Monitor;
@@ -331,7 +335,7 @@ export class LSMCDeathProvider {
 
         TriggerServerEvent(ServerEvent.PLAYER_SET_CURRENT_DISEASE, false);
 
-        TriggerEvent(ClientEvent.PLAYER_REFRESH_WALK_STYLE);
+        this.playerWalkstyleProvider.updateWalkStyle('injury', null);
 
         if (uniteHU) {
             this.uniteHU(uniteHUBed);
