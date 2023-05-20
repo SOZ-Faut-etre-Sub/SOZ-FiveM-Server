@@ -340,7 +340,9 @@ export class PlayerStressProvider {
             TriggerScreenblurFadeOut(500);
         };
 
-        blurAction();
+        if (GetScreenblurFadeCurrentTime() == 0) {
+            blurAction();
+        }
 
         if (player.metadata.stress_level <= 60) {
             await wait(1000 * 60 * 5);
