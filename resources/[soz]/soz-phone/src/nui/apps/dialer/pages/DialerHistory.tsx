@@ -63,77 +63,67 @@ export const DialerHistory: React.FC = () => {
                             const contactNumber = call.transmitter === myNumber ? call.receiver : call.transmitter;
                             const isContactRegistered = getDisplayByNumber(contactNumber) !== contactNumber;
                             return (
-                            <Menu
-                                key={call.id}
-                                as="li"
-                                className={cn('w-full cursor-pointer', {
-                                    'bg-ios-800': config.theme.value === 'dark',
-                                    'bg-ios-50': config.theme.value === 'light',
-                                })}
-                            >
-                                <Menu.Button className="w-full">
-                                    <div
-                                        className={cn('relative px-6 py-2 flex items-center space-x-3', {
-                                            'hover:bg-ios-600': config.theme.value === 'dark',
-                                            'hover:bg-gray-200': config.theme.value === 'light',
-                                        })}
-                                    >
-                                        <div className="flex-shrink-0">
-                                            <ContactPicture
-                                                picture={getPictureByNumber(
-                                                    contactNumber
-                                                )}
-                                            />
-                                        </div>
-                                        <div className="flex flex-1 min-w-0 cursor-pointer">
-                                            <div className="shrink self-center">
-                                                {!call.is_accepted ? (
-                                                    <PhoneMissedCallIcon className="h-5 w-5 text-red-500 mr-3" />
-                                                ) : call.transmitter === myNumber ? (
-                                                    <PhoneOutgoingIcon className="h-5 w-5 text-green-500 mr-3" />
-                                                ) : (
-                                                    <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3" />
-                                                )}
-                                            </div>
-                                            <p
-                                                className={cn('text-left text-sm font-medium truncate', {
-                                                    'text-gray-100': config.theme.value === 'dark',
-                                                    'text-gray-600': config.theme.value === 'light',
-                                                })}
-                                            >
-                                                {getDisplayByNumber(
-                                                    contactNumber
-                                                )}
-                                            </p>
-                                        </div>
-                                        <div className="text-gray-500 text-sm">
-                                            <DayAgo timestamp={call.start} />
-                                        </div>
-                                    </div>
-                                </Menu.Button>
-                                <Transition
-                                    enter="transition duration-100 ease-out"
-                                    enterFrom="transform scale-95 opacity-0"
-                                    enterTo="transform scale-100 opacity-100"
-                                    leave="transition duration-75 ease-out"
-                                    leaveFrom="transform scale-100 opacity-100"
-                                    leaveTo="transform scale-95 opacity-0"
-                                    className="absolute z-30 right-0"
+                                <Menu
+                                    key={call.id}
+                                    as="li"
+                                    className={cn('w-full cursor-pointer', {
+                                        'bg-ios-800': config.theme.value === 'dark',
+                                        'bg-ios-50': config.theme.value === 'light',
+                                    })}
                                 >
-                                    <Menu.Items className="w-64 mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
-                                        <Menu.Item>
-                                            <Button
-                                                className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                                onClick={() =>
-                                                    handleCall(
-                                                        contactNumber
-                                                    )
-                                                }
-                                            >
-                                                <PhoneIcon className="mx-3 h-5 w-5" /> Appeler
-                                            </Button>
-                                        </Menu.Item>
-                                        {!isContactRegistered && (
+                                    <Menu.Button className="w-full">
+                                        <div
+                                            className={cn('relative px-6 py-2 flex items-center space-x-3', {
+                                                'hover:bg-ios-600': config.theme.value === 'dark',
+                                                'hover:bg-gray-200': config.theme.value === 'light',
+                                            })}
+                                        >
+                                            <div className="flex-shrink-0">
+                                                <ContactPicture picture={getPictureByNumber(contactNumber)} />
+                                            </div>
+                                            <div className="flex flex-1 min-w-0 cursor-pointer">
+                                                <div className="shrink self-center">
+                                                    {!call.is_accepted ? (
+                                                        <PhoneMissedCallIcon className="h-5 w-5 text-red-500 mr-3" />
+                                                    ) : call.transmitter === myNumber ? (
+                                                        <PhoneOutgoingIcon className="h-5 w-5 text-green-500 mr-3" />
+                                                    ) : (
+                                                        <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3" />
+                                                    )}
+                                                </div>
+                                                <p
+                                                    className={cn('text-left text-sm font-medium truncate', {
+                                                        'text-gray-100': config.theme.value === 'dark',
+                                                        'text-gray-600': config.theme.value === 'light',
+                                                    })}
+                                                >
+                                                    {getDisplayByNumber(contactNumber)}
+                                                </p>
+                                            </div>
+                                            <div className="text-gray-500 text-sm">
+                                                <DayAgo timestamp={call.start} />
+                                            </div>
+                                        </div>
+                                    </Menu.Button>
+                                    <Transition
+                                        enter="transition duration-100 ease-out"
+                                        enterFrom="transform scale-95 opacity-0"
+                                        enterTo="transform scale-100 opacity-100"
+                                        leave="transition duration-75 ease-out"
+                                        leaveFrom="transform scale-100 opacity-100"
+                                        leaveTo="transform scale-95 opacity-0"
+                                        className="absolute z-30 right-0"
+                                    >
+                                        <Menu.Items className="w-64 mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                                            <Menu.Item>
+                                                <Button
+                                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                                    onClick={() => handleCall(contactNumber)}
+                                                >
+                                                    <PhoneIcon className="mx-3 h-5 w-5" /> Appeler
+                                                </Button>
+                                            </Menu.Item>
+                                            {!isContactRegistered && (
                                                 <Menu.Item>
                                                     <Button
                                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
@@ -152,9 +142,7 @@ export const DialerHistory: React.FC = () => {
                                                     <Button
                                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                         onClick={() =>
-                                                            navigate(
-                                                                `/contacts/${getIdByNumber(contactNumber)}`
-                                                            )
+                                                            navigate(`/contacts/${getIdByNumber(contactNumber)}`)
                                                         }
                                                     >
                                                         <UserAddIcon className="mx-3 h-5 w-5" /> Éditer
@@ -162,19 +150,18 @@ export const DialerHistory: React.FC = () => {
                                                 </Menu.Item>
                                             )}
                                             <Menu.Item>
-                                            <Button
-                                                className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
-                                                onClick={() =>
-                                                    navigate(`/messages/new/${contactNumber}`)
-                                                }
-                                            >
-                                                <PhoneIcon className="mx-3 h-5 w-5" /> Message
-                                            </Button>
-                                        </Menu.Item>
-                                    </Menu.Items>
-                                </Transition>
-                            </Menu>
-                        )})}
+                                                <Button
+                                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                                    onClick={() => navigate(`/messages/new/${contactNumber}`)}
+                                                >
+                                                    <PhoneIcon className="mx-3 h-5 w-5" /> Message
+                                                </Button>
+                                            </Menu.Item>
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
+                            );
+                        })}
                 </ul>
             </div>
         </nav>
