@@ -59,7 +59,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
     [joaat('mp_m_freemode_01')]: {
         ['Patron']: {
             Components: {
-                [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 17, Palette: 0 },
                 [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -165,7 +165,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
     [joaat('mp_f_freemode_01')]: {
         ['Patron']: {
             Components: {
-                [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 17, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -178,7 +178,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         },
         ["Chef d'atelier"]: {
             Components: {
-                [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -204,14 +204,14 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         },
         ['Mécano']: {
             Components: {
-                [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Tops]: { Drawable: 73, Texture: 1, Palette: 0 },
+                [Component.Tops]: { Drawable: 49, Texture: 1, Palette: 0 },
             },
             Props: {},
         },
@@ -243,7 +243,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         },
         ["Responsable d'atelier"]: {
             Components: {
-                [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
                 [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
