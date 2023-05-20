@@ -10,8 +10,8 @@ export const usePlayer = (): PlayerData | null => {
     return useSelector((state: RootState) => state.player);
 };
 
-export const usePlayerHealth = (): number => {
-    return useSelector((state: RootState) => state.playerHealth);
+export const usePlayerStats = (): [number, number] => {
+    return useSelector((state: RootState) => state.playerStats);
 };
 
 export const useItems = (): Item[] => {
