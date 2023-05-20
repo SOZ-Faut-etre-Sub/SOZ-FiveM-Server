@@ -86,7 +86,7 @@ QBCore.Functions.CreateCallback("housing:server:GetPlayerProperties", function(s
     cb(properties)
 end)
 
-RegisterNetEvent("housing:server:AddBlockedCrimiDate", function(citizenId, date)
+AddEventHandler("soz-core:server:crimi:block-date", function(citizenId, date)
     blockedCrimiDate[citizenId] = date
 end)
 
