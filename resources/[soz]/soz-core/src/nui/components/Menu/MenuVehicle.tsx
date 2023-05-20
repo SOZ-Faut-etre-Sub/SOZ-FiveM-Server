@@ -78,14 +78,15 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                                 }}
                                 value={data.speedLimit}
                                 title="Limiteur de vitesse"
+                                titleWidth={50}
                             >
-                                <MenuItemSelectOption value={null}>Aucune limite de vitesse</MenuItemSelectOption>
-                                <MenuItemSelectOption value={50}>Limiter la vitesse à 50km/h</MenuItemSelectOption>
-                                <MenuItemSelectOption value={90}>Limiter la vitesse à 90km/h</MenuItemSelectOption>
-                                <MenuItemSelectOption value={110}>Limiter la vitesse à 110km/h</MenuItemSelectOption>
-                                <MenuItemSelectOption value={130}>Limiter la vitesse à 130km/h</MenuItemSelectOption>
-                                <MenuItemSelectOption value={-1}>Limiter à la vitesse actuelle</MenuItemSelectOption>
-                                <MenuItemSelectOption value={-2}>Limiter la vitesse à ...</MenuItemSelectOption>
+                                <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
+                                <MenuItemSelectOption value={50}>50km/h</MenuItemSelectOption>
+                                <MenuItemSelectOption value={90}>90km/h</MenuItemSelectOption>
+                                <MenuItemSelectOption value={110}>110km/h</MenuItemSelectOption>
+                                <MenuItemSelectOption value={130}>130km/h</MenuItemSelectOption>
+                                <MenuItemSelectOption value={-1}>Vitesse actuelle</MenuItemSelectOption>
+                                <MenuItemSelectOption value={-2}>Personnalisé</MenuItemSelectOption>
                             </MenuItemSelect>
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
                             {data.insideLSCustom && (
