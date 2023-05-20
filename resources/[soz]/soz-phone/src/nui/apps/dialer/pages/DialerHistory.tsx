@@ -25,7 +25,7 @@ export const DialerHistory: React.FC = () => {
     const calls = useSelector((state: RootState) => state.simCard.callHistory);
 
     const myNumber = usePhoneNumber();
-    const { getDisplayByNumber, getPictureByNumber } = useContact();
+    const { getDisplayByNumber, getPictureByNumber, getIdByNumber } = useContact();
     const config = useConfig();
     const { initializeCall } = useCall();
     const navigate = useNavigate();
@@ -60,8 +60,8 @@ export const DialerHistory: React.FC = () => {
                     {calls
                         .sort((a, b) => b.start - a.start)
                         .map(call => {
-                            const contact = call.transmitter === myNumber ? call.receiver : call.transmitter;
-                            const isContactRegistered = getDisplayByNumber(contact) !== contact;
+                            const contactNumber = call.transmitter === myNumber ? call.receiver : call.transmitter;
+                            const isContactRegistered = getDisplayByNumber(contactNumber) !== contactNumber;
                             return (
                             <Menu
                                 key={call.id}
@@ -81,7 +81,7 @@ export const DialerHistory: React.FC = () => {
                                         <div className="flex-shrink-0">
                                             <ContactPicture
                                                 picture={getPictureByNumber(
-                                                    contact
+                                                    contactNumber
                                                 )}
                                             />
                                         </div>
@@ -102,7 +102,7 @@ export const DialerHistory: React.FC = () => {
                                                 })}
                                             >
                                                 {getDisplayByNumber(
-                                                    contact
+                                                    contactNumber
                                                 )}
                                             </p>
                                         </div>
@@ -126,7 +126,7 @@ export const DialerHistory: React.FC = () => {
                                                 className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                 onClick={() =>
                                                     handleCall(
-                                                        contact
+                                                        contactNumber
                                                     )
                                                 }
                                             >
@@ -139,7 +139,7 @@ export const DialerHistory: React.FC = () => {
                                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                         onClick={() =>
                                                             navigate(
-                                                                `/contacts/-1?addNumber=${contact}&referral=/phone/contacts`
+                                                                `/contacts/-1?addNumber=${contactNumber}&referral=/phone/contacts`
                                                             )
                                                         }
                                                     >
@@ -147,6 +147,30 @@ export const DialerHistory: React.FC = () => {
                                                     </Button>
                                                 </Menu.Item>
                                             )}
+                                            {isContactRegistered && (
+                                                <Menu.Item>
+                                                    <Button
+                                                        className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                                        onClick={() =>
+                                                            navigate(
+                                                                `/contacts/${getIdByNumber(contactNumber)}`
+                                                            )
+                                                        }
+                                                    >
+                                                        <UserAddIcon className="mx-3 h-5 w-5" /> Éditer
+                                                    </Button>
+                                                </Menu.Item>
+                                            )}
+                                            <Menu.Item>
+                                            <Button
+                                                className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                                onClick={() =>
+                                                    navigate(`/messages/new/${contactNumber}`)
+                                                }
+                                            >
+                                                <PhoneIcon className="mx-3 h-5 w-5" /> Message
+                                            </Button>
+                                        </Menu.Item>
                                     </Menu.Items>
                                 </Transition>
                             </Menu>
