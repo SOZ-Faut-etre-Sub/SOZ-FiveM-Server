@@ -84,6 +84,8 @@ export class VehicleGarageProvider {
     @Inject(Logger)
     private logger: Logger;
 
+    private blockedCrimiDate: Record<string, number> = {};
+
     @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
         const queries = `
@@ -279,6 +281,11 @@ export class VehicleGarageProvider {
         return Math.max(0, maxPlaces - count);
     }
 
+    @OnEvent(ServerEvent.CRIMI_BLOCK_DATE, false)
+    public onUpdateBlockedCrimiDate(citizenId: string, date: number) {
+        this.blockedCrimiDate[citizenId] = date;
+    }
+
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES)
     public async getGarageVehicles(source: number, id: string, garage: Garage): Promise<GarageVehicle[]> {
         const player = this.playerService.getPlayer(source);
@@ -288,6 +295,11 @@ export class VehicleGarageProvider {
         }
 
         const ids = [];
+
+        if (this.blockedCrimiDate[player.citizenid] && this.blockedCrimiDate[player.citizenid] > GetGameTimer()) {
+            this.notifier.notify(source, 'Vous devez attendre après avoir réalisé une action criminelle', 'error');
+            return null;
+        }
 
         if (garage.type === GarageType.House) {
             ids.push(`property_${id}`);
