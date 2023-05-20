@@ -59,7 +59,9 @@ export const DialerHistory: React.FC = () => {
                 >
                     {calls
                         .sort((a, b) => b.start - a.start)
-                        .map(call => (
+                        .map(call => {
+                            const contact = call.transmitter === myNumber ? call.receiver : call.transmitter;
+                            return (
                             <Menu
                                 key={call.id}
                                 as="li"
@@ -78,7 +80,7 @@ export const DialerHistory: React.FC = () => {
                                         <div className="flex-shrink-0">
                                             <ContactPicture
                                                 picture={getPictureByNumber(
-                                                    call.transmitter === myNumber ? call.receiver : call.transmitter
+                                                    contact
                                                 )}
                                             />
                                         </div>
@@ -99,7 +101,7 @@ export const DialerHistory: React.FC = () => {
                                                 })}
                                             >
                                                 {getDisplayByNumber(
-                                                    call.transmitter === myNumber ? call.receiver : call.transmitter
+                                                    contact
                                                 )}
                                             </p>
                                         </div>
@@ -123,7 +125,7 @@ export const DialerHistory: React.FC = () => {
                                                 className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                 onClick={() =>
                                                     handleCall(
-                                                        call.transmitter === myNumber ? call.receiver : call.transmitter
+                                                        contact
                                                     )
                                                 }
                                             >
@@ -163,7 +165,7 @@ export const DialerHistory: React.FC = () => {
                                     </Menu.Items>
                                 </Transition>
                             </Menu>
-                        ))}
+                        )})}
                 </ul>
             </div>
         </nav>
