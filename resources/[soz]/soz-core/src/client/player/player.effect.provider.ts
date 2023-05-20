@@ -52,8 +52,6 @@ export class PlayerEffectProvider {
         if (!this.forceDrugEffect && player.metadata.drug <= 0 && AnimpostfxIsRunning('DrugsMichaelAliensFight')) {
             AnimpostfxStopAndDoUnk('DrugsMichaelAliensFight');
             AnimpostfxStopAndDoUnk('DrugsMichaelAliensFightIn');
-
-            await this.playerWalkstyleProvider.refresh();
         }
 
         if (
@@ -67,8 +65,6 @@ export class PlayerEffectProvider {
         if (!this.forceAlcoholEffect && player.metadata.alcohol <= 0 && AnimpostfxIsRunning('DrugsTrevorClownsFight')) {
             AnimpostfxStopAndDoUnk('DrugsTrevorClownsFight');
             AnimpostfxStopAndDoUnk('DrugsTrevorClownsFightIn');
-
-            await this.playerWalkstyleProvider.refresh();
         }
 
         if (
@@ -80,20 +76,22 @@ export class PlayerEffectProvider {
             ShakeGameplayCam('DRUNK_SHAKE', 1.0);
             SetPedIsDrunk(PlayerPedId(), true);
 
-            await this.playerWalkstyleProvider.applyWalkStyle('move_m@drunk@verydrunk');
+            await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@verydrunk');
         } else if (player.metadata.drug > 40 || player.metadata.alcohol > 40) {
             ShakeGameplayCam('DRUNK_SHAKE', 0.5);
             SetPedIsDrunk(PlayerPedId(), true);
 
-            await this.playerWalkstyleProvider.applyWalkStyle('move_m@drunk@moderatedrunk');
+            await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@moderatedrunk');
         } else if (player.metadata.drug > 0 || player.metadata.alcohol > 0) {
             ShakeGameplayCam('DRUNK_SHAKE', 0.0);
             SetPedIsDrunk(PlayerPedId(), false);
 
-            await this.playerWalkstyleProvider.applyWalkStyle('move_m@drunk@slightlydrunk');
+            await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@slightlydrunk');
         } else {
             ShakeGameplayCam('DRUNK_SHAKE', 0.0);
             SetPedIsDrunk(PlayerPedId(), false);
+
+            await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', null);
         }
     }
 }
