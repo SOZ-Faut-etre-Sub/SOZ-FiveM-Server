@@ -62,6 +62,7 @@ export const DialerHistory: React.FC = () => {
                         .sort((a, b) => dayjs(b.start).valueOf() - dayjs(a.start).valueOf())
                         .map(call => {
                             const contact = call.transmitter === myNumber ? call.receiver : call.transmitter;
+                            const isContactRegistered = getDisplayByNumber(contact) !== contact;
                             return (
                             <Menu
                                 key={call.id}
@@ -133,29 +134,13 @@ export const DialerHistory: React.FC = () => {
                                                 <PhoneIcon className="mx-3 h-5 w-5" /> Appeler
                                             </Button>
                                         </Menu.Item>
-                                        {getDisplayByNumber(call.receiver) === call.receiver &&
-                                            myNumber !== call.receiver && (
+                                        {!isContactRegistered && (
                                                 <Menu.Item>
                                                     <Button
                                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                         onClick={() =>
                                                             navigate(
-                                                                `/contacts/-1?addNumber=${call.receiver}&referral=/phone/contacts`
-                                                            )
-                                                        }
-                                                    >
-                                                        <UserAddIcon className="mx-3 h-5 w-5" /> Ajouter le contact
-                                                    </Button>
-                                                </Menu.Item>
-                                            )}
-                                        {getDisplayByNumber(call.transmitter) === call.transmitter &&
-                                            myNumber !== call.transmitter && (
-                                                <Menu.Item>
-                                                    <Button
-                                                        className="flex items-center w-full text-gray-300 px-2 py-2 hover:text-gray-500"
-                                                        onClick={() =>
-                                                            navigate(
-                                                                `/contacts/-1?addNumber=${call.transmitter}&referral=/phone/contacts`
+                                                                `/contacts/-1?addNumber=${contact}&referral=/phone/contacts`
                                                             )
                                                         }
                                                     >
