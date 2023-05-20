@@ -287,7 +287,7 @@ export const Checkpoints: Checkpoint[] = [
     },
     {
         coords: [-222.02, -2053.33, 26.06],
-        message: 'L\'affiche dit : "ZEvent, du 8 au 11 Septembre 2022."',
+        message: 'L\'affiche dit : "ZLAN le 12, 13 et 14 Mai 2023."',
         licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
     },
     {
