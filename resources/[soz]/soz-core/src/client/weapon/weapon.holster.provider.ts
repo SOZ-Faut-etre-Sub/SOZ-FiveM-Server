@@ -11,7 +11,7 @@ import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
 
 const holsterableWeaponGroups = [GetHashKey('GROUP_PISTOL'), GetHashKey('GROUP_STUNGUN')];
-const excludeWeapon = [GetHashKey('WEAPON_BRIEFCASE'), 966099553 /*WEAPON_OBJECT*/];
+const excludeWeapon = [0, GetHashKey('WEAPON_BRIEFCASE'), 966099553 /*WEAPON_OBJECT*/];
 
 const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD];
 
