@@ -1,7 +1,7 @@
 import { Once } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { BlipFactory } from '@public/client/blip';
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
 import { TargetFactory } from '@public/client/target/target.factory';
@@ -39,8 +39,8 @@ export class LSMCInteractionProvider {
     @Inject(LSMCDeathProvider)
     public LSMCDeathProvider: LSMCDeathProvider;
 
-    @Inject(BlipFactory)
-    private blipFactory: BlipFactory;
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     @Inject(Monitor)
     public monitor: Monitor;
@@ -190,13 +190,16 @@ export class LSMCInteractionProvider {
                 icon: 'c:ems/revive.png',
                 job: JobType.LSMC,
                 canInteract: entity => {
+                    if (!this.inventoryManager.hasEnoughItem('bloodbag', 1, true)) {
+                        return false;
+                    }
+
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     return this.playerService.isOnDuty() && Player(target).state.isdead;
                 },
                 action: entity => {
                     this.LSMCDeathProvider.reviveTarget(entity, true);
                 },
-                item: 'bloodbag',
             },
             {
                 label: 'Utiliser Défibrilateur',

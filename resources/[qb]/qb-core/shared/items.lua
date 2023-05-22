@@ -3104,6 +3104,7 @@ QBShared.Items = {
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
+        ['durability'] = 21,
         ['combinable'] = nil,
         ['description'] = 'Utile pour réanimer',
         ['illustrator'] = '.Smogogo'
