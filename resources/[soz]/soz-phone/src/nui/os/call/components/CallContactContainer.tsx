@@ -11,19 +11,9 @@ const CallContactContainer = () => {
     let displayNumber = false;
 
     const getDisplayOrNumber = () => {
-        if(call.isTransmitter){
-            const receiver = getDisplayByNumber(call?.receiver);
-            if(!receiver.startsWith("555")){
-                displayNumber = true;
-            }
-        } else{
-            const transmitter = getDisplayByNumber(call?.transmitter);
-            if(!transmitter.startsWith("555")){
-                displayNumber = true;
-            }
-        }
-        return call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
-
+        const numberToCheck = call.isTransmitter ? call?.receiver : call?.transmitter;
+        displayNumber = numberToCheck == getDisplayByNumber(numberToCheck) ? false : true;
+        return getDisplayByNumber(numberToCheck);
     }
        
     return (
