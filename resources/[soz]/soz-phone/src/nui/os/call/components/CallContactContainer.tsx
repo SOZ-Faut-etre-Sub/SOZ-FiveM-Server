@@ -8,10 +8,24 @@ const CallContactContainer = () => {
     const { call } = useCall();
 
     const { getDisplayByNumber, getPictureByNumber } = useContact();
+    let displayNumber = false;
 
-    const getDisplayOrNumber = () =>
-        call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
+    const getDisplayOrNumber = () => {
+        if(call.isTransmitter){
+            const receiver = getDisplayByNumber(call?.receiver);
+            if(!receiver.startsWith("555")){
+                displayNumber = true;
+            }
+        } else{
+            const transmitter = getDisplayByNumber(call?.transmitter);
+            if(!transmitter.startsWith("555")){
+                displayNumber = true;
+            }
+        }
+        return call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
 
+    }
+       
     return (
         <div className="flex flex-col justify-center items-center mt-24 text-white">
             <ContactPicture
@@ -19,6 +33,7 @@ const CallContactContainer = () => {
                 picture={call.isTransmitter ? getPictureByNumber(call.receiver) : getPictureByNumber(call?.transmitter)}
             />
             <div className="text-3xl font-light max-w-[90%] truncate">{getDisplayOrNumber()}</div>
+            {displayNumber ? <p>{call.isTransmitter ? call.receiver : call?.transmitter}</p> : null}
         </div>
     );
 };
