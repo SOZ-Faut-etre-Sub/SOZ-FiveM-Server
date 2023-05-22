@@ -26,6 +26,7 @@ export enum ServerEvent {
     BENNYS_REPAIR_VEHICLE_WHEEL = 'soz-core:server:job:bennys:repair-vehicle-wheel',
     BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
     BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
+    BENNYS_FLATBED_DETACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:detach-vehicle',
 
     CRIMI_CONFIRM_REMOTE_WORKSHOP = 'soz-core:server:job:crimi:confirm-remote-workshop',
 
@@ -279,7 +280,7 @@ export enum ClientEvent {
     ITEM_USE = 'soz-core:client:item:use',
     ITEM_UMBRELLA_TOGGLE = 'soz-core:client:item:umbrella:toggle',
 
-    PLAYER_ON_DEATH = 'ems:client:onDeath',
+    HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 
     JOBS_FFS_OPEN_SOCIETY_MENU = 'soz-jobs:client:ffs:OpenSocietyMenu',
     JOBS_BAUN_OPEN_SOCIETY_MENU = 'soz-jobs:client:baun:OpenSocietyMenu',
@@ -339,6 +340,7 @@ export enum ClientEvent {
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
     PLAYER_UPDATE_CROSSHAIR = 'soz-core:client:player:update-crosshair',
     PLAYER_UPDATE_STATE = 'soz-core:client:player:update-state',
+    PLAYER_ON_DEATH = 'ems:client:onDeath',
 
     PROGRESS_START = 'soz-core:client:progress:start',
     PROGRESS_STOP = 'soz-core:client:progress:stop',

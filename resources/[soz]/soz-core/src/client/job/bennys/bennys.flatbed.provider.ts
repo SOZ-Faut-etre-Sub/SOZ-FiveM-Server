@@ -13,6 +13,7 @@ import { PlayerService } from '../../player/player.service';
 import { SoundService } from '../../sound.service';
 import { TargetFactory } from '../../target/target.factory';
 import { VehicleService } from '../../vehicle/vehicle.service';
+import { VehicleStateService } from '../../vehicle/vehicle.state.service';
 
 const FLATBED_OFFSET = [0.0, -2.2, 1.1] as Vector3;
 
@@ -32,6 +33,9 @@ export class BennysFlatbedProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(SoundService)
     private soundService: SoundService;
@@ -83,7 +87,7 @@ export class BennysFlatbedProvider {
                         return false;
                     }
 
-                    if (Entity(entity).state.flatbedAttachedVehicle) {
+                    if (!IsEntityAttachedToAnyVehicle(entity)) {
                         return false;
                     }
 
@@ -113,7 +117,7 @@ export class BennysFlatbedProvider {
                         return false;
                     }
 
-                    if (Entity(entity).state.flatbedAttachedVehicle) {
+                    if (IsEntityAttachedToAnyVehicle(entity)) {
                         return false;
                     }
 
@@ -145,9 +149,11 @@ export class BennysFlatbedProvider {
                         return false;
                     }
 
-                    const currentAttachedVehicle = Entity(entity).state.flatbedAttachedVehicle;
+                    if (!IsEntityAttachedToAnyVehicle(entity)) {
+                        return false;
+                    }
 
-                    return player.job.onduty && currentAttachedVehicle !== null;
+                    return player.job.onduty;
                 },
             },
         ]);
@@ -304,7 +310,7 @@ export class BennysFlatbedProvider {
     }
 
     @Tick(TickInterval.EVERY_SECOND)
-    public async onTick() {
+    public async checkAttachedEntityOwnershipLoop() {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
@@ -316,17 +322,17 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        const attachedNetworkId = Entity(vehicle).state.flatbedAttachedVehicle || 0;
+        const attachedVehicle = GetEntityAttachedTo(vehicle);
 
-        if (!attachedNetworkId) {
+        if (!attachedVehicle) {
             return;
         }
-
-        const attachedVehicle = NetworkGetEntityFromNetworkId(attachedNetworkId);
 
         if (NetworkHasControlOfEntity(attachedVehicle)) {
             return;
         }
+
+        const attachedNetworkId = NetworkGetNetworkIdFromEntity(attachedVehicle);
 
         await this.vehicleService.getVehicleOwnership(
             attachedVehicle,
@@ -336,7 +342,8 @@ export class BennysFlatbedProvider {
     }
 
     public async detachVehicle(flatbed: number) {
-        const attachedVehicleNetworkId = Entity(flatbed).state.flatbedAttachedVehicle;
+        const flatbedState = await this.vehicleStateService.getVehicleState(flatbed);
+        const attachedVehicleNetworkId = flatbedState.flatbedAttachedVehicle;
 
         if (!attachedVehicleNetworkId) {
             return;
@@ -366,10 +373,12 @@ export class BennysFlatbedProvider {
             false,
             false
         );
-        SetVehicleOnGroundProperly(attachedVehicle);
-        if (!SetVehicleOnGroundProperly(attachedVehicle)) SetEntityAsMissionEntity(attachedVehicle, true, true);
 
-        Entity(flatbed).state.set('flatbedAttachedVehicle', null, true);
+        if (!SetVehicleOnGroundProperly(attachedVehicle)) {
+            SetEntityAsMissionEntity(attachedVehicle, true, true);
+        }
+
+        TriggerServerEvent(ServerEvent.BENNYS_FLATBED_DETACH_VEHICLE, flatbedNetworkId);
 
         this.soundService.play('seatbelt/unbuckle', 0.2);
         this.notifier.notify('Le véhicule a été détaché du flatbed.');
@@ -388,13 +397,17 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        if (Entity(this.currentFlatbedAttach?.entity).state.flatbedAttachedVehicle) {
+        const flatbedState = await this.vehicleStateService.getVehicleState(this.currentFlatbedAttach?.entity);
+
+        if (flatbedState.flatbedAttachedVehicle) {
             this.notifier.notify('Un véhicule est déjà attaché au flatbed.', 'error');
 
             return;
         }
 
-        if (Entity(vehicle).state.flatbedAttachedVehicle) {
+        const state = await this.vehicleStateService.getVehicleState(vehicle);
+
+        if (state.flatbedAttachedVehicle) {
             this.notifier.notify('Les châteaux de flatbed sont interdits, merci de prendre un jeu de cartes.', 'error');
 
             return;

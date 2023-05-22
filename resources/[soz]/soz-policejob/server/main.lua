@@ -216,12 +216,3 @@ QBCore.Functions.CreateCallback("police:server:DeleteWantedPlayer", function(sou
         end
     end
 end)
-
--- @TODO Set this in core
-AddEventHandler("entityCreating", function(handle)
-    local entityModel = GetEntityModel(handle)
-
-    if Config.SirenVehicle[entityModel] then
-        Entity(handle).state:set("isSirenMuted", false, true)
-    end
-end)
