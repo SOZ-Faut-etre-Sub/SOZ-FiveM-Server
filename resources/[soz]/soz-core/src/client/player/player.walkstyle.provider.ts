@@ -6,11 +6,13 @@ import { PlayerData } from '../../shared/player';
 import { ResourceLoader } from '../resources/resource.loader';
 import { PlayerService } from './player.service';
 
-/**
- * Added here as missing in @citizenfx/client/natives_universal.d.ts
- * Returns The current movement clipset hash.
- */
-declare function GetPedMovementClipset(ped: number): number;
+export type WalkStyleConf = {
+    override: string;
+    injury: string;
+    drugAlcool: string;
+    stress: string;
+    item: string;
+};
 
 @Provider()
 export class PlayerWalkstyleProvider {
@@ -20,20 +22,34 @@ export class PlayerWalkstyleProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
-    private overrideWalkStyle = false;
+    private conf: WalkStyleConf = {
+        override: null,
+        injury: null,
+        drugAlcool: null,
+        stress: null,
+        item: null,
+    };
 
-    @OnEvent(ClientEvent.PLAYER_UPDATE_WALK_STYLE)
-    async applyWalkStyle(walkStyle: string | null, overrideWalkStyle = false, transitionSpeed = 1.0): Promise<void> {
+    private async applyWalkStyle(base: string, transitionSpeed = 1.0): Promise<void> {
         const ped = PlayerPedId();
+
+        let walkStyle = base;
+
+        if (this.conf.override) {
+            walkStyle = this.conf.override;
+        } else if (this.conf.injury) {
+            walkStyle = this.conf.injury;
+        } else if (this.conf.drugAlcool) {
+            walkStyle = this.conf.drugAlcool;
+        } else if (this.conf.stress) {
+            walkStyle = this.conf.stress;
+        } else if (this.conf.item) {
+            walkStyle = this.conf.item;
+        }
+
         if (GetPedMovementClipset(ped) == GetHashKey(walkStyle)) {
             return;
         }
-
-        if (this.overrideWalkStyle && !overrideWalkStyle) {
-            return;
-        }
-
-        this.overrideWalkStyle = overrideWalkStyle;
 
         ResetPedMovementClipset(ped, transitionSpeed);
 
@@ -53,16 +69,11 @@ export class PlayerWalkstyleProvider {
         }
     }
 
-    @OnEvent(ClientEvent.PLAYER_REFRESH_WALK_STYLE)
-    async refresh(): Promise<void> {
+    @OnEvent(ClientEvent.PLAYER_UPDATE_WALK_STYLE)
+    async updateWalkStyle(kind: keyof WalkStyleConf, walkStyle: string | null, transitionSpeed = 1.0): Promise<void> {
+        this.conf[kind] = walkStyle;
         const player = this.playerService.getPlayer();
-
-        if (!player) {
-            return;
-        }
-
-        this.overrideWalkStyle = false;
-        await this.applyWalkStyle(player.metadata.walk);
+        await this.applyWalkStyle(player.metadata.walk, transitionSpeed);
     }
 
     async applyMood(mood: string | null): Promise<void> {

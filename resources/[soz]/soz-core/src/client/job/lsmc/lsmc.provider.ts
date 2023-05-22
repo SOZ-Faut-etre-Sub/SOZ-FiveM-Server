@@ -5,6 +5,7 @@ import { BlipFactory } from '@public/client/blip';
 import { Notifier } from '@public/client/notifier';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { PlayerService } from '@public/client/player/player.service';
+import { PlayerWalkstyleProvider } from '@public/client/player/player.walkstyle.provider';
 import { ResourceLoader } from '@public/client/resources/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { wait } from '@public/core/utils';
@@ -32,6 +33,9 @@ export class LSMCProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(PlayerWalkstyleProvider)
+    private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
     @Once()
     public onStart() {
@@ -175,6 +179,6 @@ export class LSMCProvider {
         const ped = PlayerPedId();
         SetEntityHealth(ped, GetEntityHealth(ped) + value);
         this.notifier.notify(`Tu as été soigné.`);
-        TriggerEvent(ClientEvent.PLAYER_REFRESH_WALK_STYLE);
+        this.playerWalkstyleProvider.updateWalkStyle('injury', null);
     }
 }
