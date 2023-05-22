@@ -437,6 +437,9 @@ export class VehicleGarageProvider {
 
     private async enterGarage(id: string, garage: Garage) {
         const vehicles = await emitRpc<GarageVehicle[]>(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
+        if (vehicles === null) {
+            return;
+        }
 
         let free_places = null;
         if (garage.type === GarageType.Private || garage.type === GarageType.House) {
