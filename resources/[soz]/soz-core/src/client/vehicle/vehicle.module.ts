@@ -12,6 +12,7 @@ import { VehicleMenuProvider } from './vehicle.menu.provider';
 import { VehicleRadarProvider } from './vehicle.radar.provider';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleSpawnProvider } from './vehicle.spawn.provider';
+import { VehicleStateProvider } from './vehicle.state.provider';
 
 @Module({
     providers: [
@@ -28,6 +29,7 @@ import { VehicleSpawnProvider } from './vehicle.spawn.provider';
         VehicleSpawnProvider,
         VehicleRadarProvider,
         VehicleElectricProvider,
+        VehicleStateProvider,
     ],
 })
 export class VehicleModule {}

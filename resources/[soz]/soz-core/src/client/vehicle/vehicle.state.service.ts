@@ -24,7 +24,7 @@ export class VehicleStateService {
 
     public setVehicleState(vehicleEntityId: number, state: VehicleEntityState): void {
         this.state.set(vehicleEntityId, state);
-        this.selectors.forEach(selector => selector(state));
+        this.selectors.forEach(selector => selector(vehicleEntityId, state));
     }
 
     public updateVehicleState(vehicleEntityId: number, state: Partial<VehicleEntityState>): void {
@@ -39,7 +39,7 @@ export class VehicleStateService {
         TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION, vehicleNetworkId, condition);
     }
 
-    public addVehicleStateSelector<R>(selector: (state: VehicleEntityState) => R, method: (data: R) => void): void {
-        this.selectors.push(createSelector(selector, method));
+    public addVehicleStateSelector(method: (data) => void, ...selectors: ((state: VehicleEntityState) => any)[]): void {
+        this.selectors.push(createSelector(vehicleEntityId => vehicleEntityId, ...selectors, method));
     }
 }

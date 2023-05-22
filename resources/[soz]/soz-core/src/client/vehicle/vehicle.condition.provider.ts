@@ -66,6 +66,11 @@ type CurrentVehiclePosition = {
     position: Vector3;
 };
 
+type PreviousVehicleHealth = {
+    engineHealth: number;
+    bodyHealth: number;
+};
+
 @Provider()
 export class VehicleConditionProvider {
     @Inject(VehicleService)
@@ -87,6 +92,21 @@ export class VehicleConditionProvider {
     private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
     private adminNoStall = false;
+
+    private previousVehicleHealth: PreviousVehicleHealth | null = null;
+
+    public constructor() {
+        this.vehicleStateService.addVehicleStateSelector(
+            this.onVehicleSyncCondition.bind(this),
+            (state: VehicleEntityState) => state.condition
+        );
+
+        this.vehicleStateService.addVehicleStateSelector(
+            this.onVehicleIndicatorChange.bind(this),
+            (state: VehicleEntityState) => state.indicators,
+            (state: VehicleEntityState) => state.openWindows
+        );
+    }
 
     @Once(OnceStep.PlayerLoaded)
     public async init() {
@@ -133,87 +153,12 @@ export class VehicleConditionProvider {
         ]);
     }
 
-    @StateBagHandler('condition', null)
-    // @TODO Use listener
-    private async onVehicleConditionChange(bag: string, key: string, value: VehicleCondition) {
-        const split = bag.split(':');
-
-        if (!split[1]) {
-            return;
-        }
-
-        const vehicleId = parseInt(split[1]);
-
-        if (!vehicleId) {
-            return;
-        }
-
-        if (!NetworkDoesEntityExistWithNetworkId(vehicleId)) {
-            return;
-        }
-
-        const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
-
-        if (!vehicle || !DoesEntityExist(vehicle)) {
-            return;
-        }
-
-        if (!IsEntityAVehicle(vehicle)) {
-            return;
-        }
-
-        if (!NetworkHasControlOfEntity(vehicle)) {
-            return;
-        }
-
-        const previousState = this.vehicleService.getVehicleState(vehicle);
-        const healthDiff =
-            previousState.condition.engineHealth +
-            previousState.condition.bodyHealth -
-            value.engineHealth -
-            value.bodyHealth;
-
-        if (healthDiff > STOP_ENGINE_THRESHOLD && !this.adminNoStall) {
-            const waitTime = Math.min(
-                (previousState.condition.engineHealth / value.engineHealth +
-                    previousState.condition.bodyHealth / value.bodyHealth) *
-                    getRandomInt(2000, 3000),
-                10000
-            );
-
-            const end = GetGameTimer() + waitTime;
-
-            setTimeout(async () => {
-                SetVehicleUndriveable(vehicle, true);
-
-                while (GetGameTimer() < end) {
-                    if (IsPedInVehicle(PlayerPedId(), vehicle, false)) {
-                        DisableControlAction(0, 71, true);
-                        DisableControlAction(0, 72, true);
-                    }
-
-                    if (GetIsVehicleEngineRunning(vehicle)) {
-                        SetVehicleEngineOn(vehicle, false, true, false);
-                    }
-
-                    await wait(0);
-                }
-
-                SetVehicleUndriveable(vehicle, false);
-                SetVehicleEngineOn(vehicle, true, false, true);
-            }, 0);
-        }
+    @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
+    private async onBaseLeftVehicle() {
+        this.previousVehicleHealth = null;
     }
 
-    @OnEvent(ClientEvent.VEHICLE_SYNC_CONDITION)
-    private async onVehicleSyncCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
-        // @TODO Add listener
-        if (!NetworkDoesEntityExistWithNetworkId(vehicleNetworkId)) {
-            return;
-        }
-
-        const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-
+    private async onVehicleSyncCondition(vehicle: number, condition: VehicleCondition) {
         if (!vehicle || !DoesEntityExist(vehicle)) {
             return;
         }
@@ -226,14 +171,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
-        const newCondition = {
-            ...state.condition,
-            ...condition,
-        };
-
-        this.vehicleStateService.updateVehicleCondition(vehicle, condition);
-        this.vehicleService.applyVehicleCondition(vehicle, newCondition);
+        this.vehicleService.applyVehicleCondition(vehicle, condition);
     }
 
     @OnEvent(ClientEvent.VEHICLE_CHECK_CONDITION)
@@ -438,6 +376,43 @@ export class VehicleConditionProvider {
                 SetVehiclePetrolTankHealth(vehicle, this.currentVehicleStatus.tankHealth);
             }
         }
+
+        const healthDiff =
+            lastVehicleStatus.engineHealth +
+            lastVehicleStatus.bodyHealth -
+            this.currentVehicleStatus.engineHealth -
+            this.currentVehicleStatus.bodyHealth;
+
+        if (healthDiff > STOP_ENGINE_THRESHOLD && !this.adminNoStall) {
+            const waitTime = Math.min(
+                (lastVehicleStatus.engineHealth / this.currentVehicleStatus.engineHealth +
+                    lastVehicleStatus.bodyHealth / this.currentVehicleStatus.bodyHealth) *
+                    getRandomInt(2000, 3000),
+                10000
+            );
+
+            const end = GetGameTimer() + waitTime;
+
+            setTimeout(async () => {
+                SetVehicleUndriveable(vehicle, true);
+
+                while (GetGameTimer() < end) {
+                    if (IsPedInVehicle(PlayerPedId(), vehicle, false)) {
+                        DisableControlAction(0, 71, true);
+                        DisableControlAction(0, 72, true);
+                    }
+
+                    if (GetIsVehicleEngineRunning(vehicle)) {
+                        SetVehicleEngineOn(vehicle, false, true, false);
+                    }
+
+                    await wait(0);
+                }
+
+                SetVehicleUndriveable(vehicle, false);
+                SetVehicleEngineOn(vehicle, true, false, true);
+            }, 0);
+        }
     }
 
     @Tick(500)
@@ -492,26 +467,17 @@ export class VehicleConditionProvider {
         }
 
         const diffDistance = getDistance(lastVehiclePosition.position, this.currentVehiclePositionForMileage.position);
+        const networkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        const state = this.vehicleService.getVehicleState(vehicle);
-        this.vehicleService.updateVehicleState(vehicle, {
-            condition: {
-                ...state.condition,
-                mileage: state.condition.mileage + diffDistance,
-            },
-        });
+        TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_MILEAGE, networkId, diffDistance);
 
         const [isTrailerExists, trailerEntity] = GetVehicleTrailerVehicle(vehicle);
+
         if (isTrailerExists) {
-            const trailerState = this.vehicleService.getVehicleState(trailerEntity);
-            this.vehicleService.updateVehicleState(trailerEntity, {
-                condition: {
-                    ...trailerState.condition,
-                    mileage: trailerState.condition.mileage + diffDistance,
-                },
-            });
+            const trailerNetworkId = NetworkGetNetworkIdFromEntity(trailerEntity);
+
+            TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_MILEAGE, trailerNetworkId, diffDistance);
         }
-        // @TODO send mileage diff to server instead of updating it here
     }
 
     @Tick(500)
@@ -591,28 +557,11 @@ export class VehicleConditionProvider {
         }
     }
 
-    @StateBagHandler('indicators', null)
-    @StateBagHandler('windows', null)
-    // @TODO Use listener
-    private async onVehicleIndicatorChange(bag: string) {
-        const split = bag.split(':');
-
-        if (!split[1]) {
-            return;
-        }
-
-        const vehicleId = parseInt(split[1]);
-
-        if (!vehicleId) {
-            return;
-        }
-
-        if (!NetworkDoesEntityExistWithNetworkId(vehicleId)) {
-            return;
-        }
-
-        const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
-
+    private async onVehicleIndicatorChange(
+        vehicle: number,
+        indicators: VehicleEntityState['indicators'],
+        openWindows: VehicleEntityState['openWindows']
+    ) {
         if (!vehicle || !DoesEntityExist(vehicle)) {
             return;
         }
@@ -623,12 +572,10 @@ export class VehicleConditionProvider {
 
         await wait(0);
 
-        const state = this.vehicleService.getVehicleState(vehicle);
+        SetVehicleIndicatorLights(vehicle, 0, indicators.right);
+        SetVehicleIndicatorLights(vehicle, 1, indicators.left);
 
-        SetVehicleIndicatorLights(vehicle, 0, state.indicators.right);
-        SetVehicleIndicatorLights(vehicle, 1, state.indicators.left);
-
-        if (state.openWindows) {
+        if (openWindows) {
             RollDownWindow(vehicle, 0);
             RollDownWindow(vehicle, 1);
         } else {
