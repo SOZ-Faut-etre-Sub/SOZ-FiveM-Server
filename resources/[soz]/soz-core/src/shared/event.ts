@@ -177,6 +177,7 @@ export enum ServerEvent {
     VEHICLE_SET_TRUNK_STATE = 'soz-core:server:vehicle:set-trunk-state',
     VEHICLE_UPDATE_STATE = 'soz-core:server:vehicle:update-state',
     VEHICLE_UPDATE_CONDITION = 'soz-core:server:vehicle:update-condition',
+    VEHICLE_UPDATE_MILEAGE = 'soz-core:server:vehicle:update-mileage',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',

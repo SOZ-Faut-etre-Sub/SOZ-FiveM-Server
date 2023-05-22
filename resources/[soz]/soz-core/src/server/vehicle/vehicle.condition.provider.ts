@@ -347,4 +347,13 @@ export class VehicleConditionProvider {
             TriggerClientEvent(ClientEvent.VEHICLE_ROUTE_EJECTION, player, vehicleId, strength, velocity);
         }
     }
+
+    @OnEvent(ServerEvent.VEHICLE_UPDATE_MILEAGE)
+    public updateMileage(source: number, vehicleNetworkId: number, mileage: number) {
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            mileage: state.condition.mileage + mileage,
+        });
+    }
 }

@@ -43,7 +43,7 @@ export class HudVehicleProvider {
         });
     }
 
-    @Tick(500)
+    @Tick(100)
     async updateVehicleHud() {
         const player = this.playerService.getPlayer();
 
@@ -78,14 +78,14 @@ export class HudVehicleProvider {
         const [hasLight, lightOn, hasHighBeam] = GetVehicleLightsState(vehicle);
         const hash = GetEntityModel(vehicle);
         const vehicleClass = GetVehicleClass(vehicle) as VehicleClass;
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
+        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
         const fuelType =
             vehicleClass < 23 && vehicleClass != 13 ? (isVehicleModelElectric(hash) ? 'electric' : 'essence') : 'none';
 
         this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
             seat,
             fuelType,
-            fuelLevel: state.condition.fuelLevel,
+            fuelLevel: GetVehicleFuelLevel(vehicle),
             engineHealth: GetVehicleEngineHealth(vehicle),
             seatbelt:
                 vehicleClass !== VehicleClass.Motorcycles &&
@@ -93,8 +93,8 @@ export class HudVehicleProvider {
                 vehicleClass !== VehicleClass.Boats
                     ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
                     : null,
-            oilLevel: state.condition.oilLevel,
-            lockStatus: state.open ? VehicleLockStatus.Unlocked : VehicleLockStatus.Locked,
+            oilLevel: (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume,
+            lockStatus: GetVehicleDoorLockStatus(vehicle) as VehicleLockStatus,
             useRpm,
             lightState: hasLight
                 ? hasHighBeam
