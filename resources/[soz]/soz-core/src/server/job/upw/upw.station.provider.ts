@@ -10,7 +10,7 @@ import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { RepositoryProvider } from '@public/server/repository/repository.provider';
-import { UpwChargerRepository } from '@public/server/repository/upw.station.repository';
+import { UpwChargerRepository } from '@public/server/repository/upw.charger.repository';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwCharger, UpwStation } from '@public/shared/fuel';
 import { JobPermission, JobType } from '@public/shared/job';

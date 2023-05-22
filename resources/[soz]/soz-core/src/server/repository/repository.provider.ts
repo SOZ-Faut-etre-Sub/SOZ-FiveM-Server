@@ -10,7 +10,8 @@ import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { Repository } from './repository';
-import { UpwChargerRepository } from './upw.station.repository';
+import { UpwChargerRepository } from './upw.charger.repository';
+import { UpwStationRepository } from './upw.station.repository';
 import { VehicleRepository } from './vehicle.repository';
 
 @Provider()
@@ -33,6 +34,9 @@ export class RepositoryProvider {
     @Inject(UpwChargerRepository)
     private upwChargerRepository: UpwChargerRepository;
 
+    @Inject(UpwStationRepository)
+    private upwStationRepository: UpwStationRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -45,6 +49,7 @@ export class RepositoryProvider {
         this.repositories['jobGrade'] = this.jobGradeRepository;
         this.repositories['fuelStation'] = this.fuelStationRepository;
         this.repositories['upwCharger'] = this.upwChargerRepository;
+        this.repositories['upwStation'] = this.upwStationRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)
