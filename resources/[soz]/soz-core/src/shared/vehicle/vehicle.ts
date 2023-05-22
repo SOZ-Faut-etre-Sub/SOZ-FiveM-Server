@@ -142,10 +142,7 @@ export type VehicleEntityState = {
         volume: number;
         ear: number;
     } | null;
-    spotlight: {
-        theta: number;
-        phi: number;
-    } | null;
+    flatbedAttachedVehicle: number | null;
 };
 
 export enum VehicleClass {
@@ -223,7 +220,7 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     radioEnabled: false,
     primaryRadio: null,
     secondaryRadio: null,
-    spotlight: null,
+    flatbedAttachedVehicle: null,
 });
 
 export type VehicleMenuData = {

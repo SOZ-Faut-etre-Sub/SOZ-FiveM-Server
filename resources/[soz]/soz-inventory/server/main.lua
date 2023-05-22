@@ -858,7 +858,9 @@ function GetOrCreateInventory(storageType, invID, ctx)
                 trunkConfig = QBCore.Shared.Trunks[ctx.model]
             end
 
-            if Entity(NetworkGetEntityFromNetworkId(ctx.entity)).state.isPlayerVehicle ~= true then
+            local vehicleState = exports['soz-core']:GetVehicleState(ctx.entity)
+
+            if vehicleState.isPlayerVehicle ~= true then
                 storageType = "temporary_trunk"
             end
 

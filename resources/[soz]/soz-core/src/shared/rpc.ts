@@ -53,6 +53,7 @@ export enum RpcServerEvent {
     VEHICLE_GARAGE_GET_MAX_PLACES = 'soz-core:vehicle:garage:get-max-places',
     VEHICLE_HAS_KEY = 'soz-core:vehicle:has-key',
     VEHICLE_GET_STATE = 'soz-core:rpc:vehicle:get-state',
+    VEHICLE_GET_MUTED_SIRENS = 'soz-core:rpc:vehicle:get-muted-sirens',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
     VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',
