@@ -32,7 +32,7 @@ export class LSMCDeathProvider {
         }
 
         if (!admin && !uniteHU) {
-            if (!this.inventoryManager.removeItemFromInventory(source, bloodbag ? 'bloodbag' : 'defibrillator')) {
+            if (!this.inventoryManager.removeNotExpiredItem(source, bloodbag ? 'bloodbag' : 'defibrillator')) {
                 return;
             }
 
