@@ -283,7 +283,6 @@ export class PlayerStressProvider {
     @Tick(TickInterval.EVERY_FRAME)
     async onEachFrame(): Promise<void> {
         if (this.slowMode) {
-            await this.playerWalkstyleProvider.applyWalkStyle('move_m@casual@a');
             DisableControlAction(0, 21, true); // disable sprint
             DisableControlAction(0, 22, true); // disable jump
         }
@@ -315,6 +314,8 @@ export class PlayerStressProvider {
         }
 
         this.slowMode = player.metadata.stress_level > 60;
+        await this.playerWalkstyleProvider.updateWalkStyle('stress', this.slowMode ? 'move_m@casual@a' : null);
+
         this.invalidMode = player.metadata.stress_level > 80;
     }
 

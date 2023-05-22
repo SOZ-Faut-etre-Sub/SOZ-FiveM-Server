@@ -1,7 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ServerEvent } from '../../shared/event';
 import { PlayerService } from './player.service';
 
 @Provider()
@@ -17,6 +17,5 @@ export class PlayerWalkstyleProvider {
         }
 
         this.playerService.setPlayerMetadata(source, 'walk', walkstyle);
-        TriggerClientEvent(ClientEvent.PLAYER_UPDATE_WALK_STYLE, source, walkstyle);
     }
 }
