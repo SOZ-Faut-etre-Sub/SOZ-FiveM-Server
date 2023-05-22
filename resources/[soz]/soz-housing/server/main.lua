@@ -325,7 +325,8 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
                      {house_id = apartment:GetIdentifier(), amount = resellPrice})
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. resellPrice)
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                           "Vous venez de ~r~céder~s~ votre maison pour ~b~$" .. math.floor(resellPrice))
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
     end

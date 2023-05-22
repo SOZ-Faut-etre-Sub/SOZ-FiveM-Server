@@ -50,7 +50,12 @@ RegisterNetEvent("housing:client:ShowSellMenu", function(propertyId)
                 label = apartment:GetLabel(),
                 rightLabel = "$" .. QBCore.Shared.Round(apartment:GetResellPrice(property:IsTrailer())),
                 select = function()
-                    TriggerServerEvent("housing:server:SellApartment", propertyId, apartmentId)
+                    local confirmWord = exports["soz-core"]:Input("Entrer 'OUI' pour confirmer la vente", 32) or ""
+
+                    if confirmWord:lower() == "oui" then
+                        confirm = true
+                        TriggerServerEvent("housing:server:SellApartment", propertyId, apartmentId)
+                    end
                     menu:Close()
                 end,
             })
