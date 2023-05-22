@@ -288,8 +288,9 @@ export class PlayerHealthProvider {
     @Tick(50)
     private async updateNuiHealth(): Promise<void> {
         const health = GetEntityHealth(PlayerPedId());
+        const armor = GetPedArmour(PlayerPedId());
 
-        this.nuiDispatch.dispatch('player', 'UpdatePlayerHealth', health);
+        this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', [health, armor]);
     }
 
     @Tick(TickInterval.EVERY_MINUTE)

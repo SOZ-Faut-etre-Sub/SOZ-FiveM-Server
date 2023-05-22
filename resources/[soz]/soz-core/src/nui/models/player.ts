@@ -13,10 +13,10 @@ export const player = createModel<RootModel>()({
     effects: () => ({}),
 });
 
-export const playerHealth = createModel<RootModel>()({
-    state: 200,
+export const playerStats = createModel<RootModel>()({
+    state: [200, 100] as [number, number],
     reducers: {
-        update(state, health: number) {
+        update(state, health: [number, number]) {
             return health;
         },
     },
