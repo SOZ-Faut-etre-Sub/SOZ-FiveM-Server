@@ -1,6 +1,6 @@
 import { FunctionComponent, useCallback } from 'react';
 
-import { useHud, usePlayer, usePlayerHealth, useVehicle } from '../../hook/data';
+import { useHud, usePlayer, usePlayerStats, useVehicle } from '../../hook/data';
 import IconArmor from '../../icons/hud/armor.svg';
 import IconHealth from '../../icons/hud/health.svg';
 import { StatusBar } from './StatusBar';
@@ -8,7 +8,7 @@ import { StatusBar } from './StatusBar';
 export const Minimap: FunctionComponent = () => {
     const { minimap } = useHud();
     const player = usePlayer();
-    const playerHealth = usePlayerHealth();
+    const playerStats = usePlayerStats();
     const vehicle = useVehicle();
 
     const hideHealthCondition = useCallback(
@@ -35,9 +35,9 @@ export const Minimap: FunctionComponent = () => {
 
     const healthPercent = player.metadata.isdead
         ? 0
-        : ((playerHealth - 100) * 100) / (player.metadata.max_health - 100);
+        : ((playerStats[0] - 100) * 100) / (player.metadata.max_health - 100);
 
-    const armorPercent = player.metadata.armor.current;
+    const armorPercent = playerStats[1];
 
     // console.log(JSON.stringify(minimap, null, 4));
     const top = (minimap.bottom - 0.003) * 100;
