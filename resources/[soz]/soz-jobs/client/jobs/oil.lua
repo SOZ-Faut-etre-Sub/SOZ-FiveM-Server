@@ -6,7 +6,7 @@ local societyMenuState = {
 }
 
 local Tanker = {hasPipe = false, vehicle = nil, entity = nil, rope = nil, nozzle = nil, using = false}
-local MaxFuelInStation, CurrentStation = 2000, nil
+local MaxFuelInStation, CurrentStation = 3000, nil
 
 local currentField
 local currentFieldHealth
@@ -24,6 +24,18 @@ local function playerHasItem(item, amount)
     end
 
     return false
+end
+
+local function getItemAmount(item)
+    for _, slot in pairs(PlayerData.items) do
+        if slot.name == item then
+            if slot.amount then
+                return slot.amount
+            else
+                return 0
+            end
+        end
+    end
 end
 
 local CreateTankerAction = function()
@@ -491,7 +503,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
     while canRefiningTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("fill", "Vous raffinez...", 24000, false, true, {
+        local success, _ = exports["soz-utils"]:Progressbar("fill", "Vous raffinez...", 20000, false, true, {
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
@@ -513,6 +525,7 @@ end)
 RegisterNetEvent("jobs:client:fueler:StartCraftEssence", function(data)
     local playerPed = PlayerPedId()
     local canCraft = playerHasItem("petroleum_refined")
+    local totalAmount = getItemAmount("petroleum_refined")
 
     if not canCraft then
         return
@@ -522,7 +535,7 @@ RegisterNetEvent("jobs:client:fueler:StartCraftEssence", function(data)
     Wait(500)
 
     exports["soz-core"]:DrawNotification("Vous ~g~démarrez~s~ la transformation.", "info")
-    QBCore.Functions.Progressbar("fill", "Vous transformez...", 2 * 60 * 1000, false, true, {
+    QBCore.Functions.Progressbar("fill", "Vous transformez...", totalAmount * 1000, false, true, {
         disableMovement = true,
         disableCombat = true,
     }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
@@ -556,6 +569,8 @@ end)
 RegisterNetEvent("jobs:client:fueler:StartCraftKerosene", function(data)
     local playerPed = PlayerPedId()
     local canCraft = playerHasItem("petroleum_refined", 4)
+    local totalAmount = getItemAmount("petroleum_refined")
+
     if not canCraft then
         return
     end
@@ -564,7 +579,7 @@ RegisterNetEvent("jobs:client:fueler:StartCraftKerosene", function(data)
     Wait(500)
 
     exports["soz-core"]:DrawNotification("Vous ~g~démarrez~s~ la transformation.", "info")
-    QBCore.Functions.Progressbar("fill", "Vous transformez...", 2 * 60 * 1000, false, true, {
+    QBCore.Functions.Progressbar("fill", "Vous transformez...", (totalAmount / 4) * 2 * 1000, false, true, {
         disableMovement = true,
         disableCombat = true,
     }, {animDict = "amb@prop_human_bum_bin@base", anim = "base", flags = 1}, {}, {}, function() -- Done
@@ -625,7 +640,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
     while canResellTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("resell", "Vous remplissez...", 5000, false, true, {
+        local success, _ = exports["soz-utils"]:Progressbar("resell", "Vous remplissez...", 1000, false, true, {
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})

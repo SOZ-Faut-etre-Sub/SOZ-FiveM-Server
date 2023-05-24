@@ -153,6 +153,7 @@ export class OilStationProvider {
 
         const itemCount = Math.ceil(amount / 10);
         const availableCount = this.inventoryManager.getItemCount(`trunk_` + state.plate, 'essence');
+        const duration = itemCount * 500;
 
         if (itemCount > availableCount) {
             this.notifier.notify(source, "Vous n'avez pas assez d'essence dans la citerne.");
@@ -166,7 +167,7 @@ export class OilStationProvider {
             source,
             'fill',
             'Rechargement en cours',
-            20000,
+            duration,
             {
                 dictionary: 'timetable@gardener@filling_can',
                 name: 'gar_ig_5_filling_can',
