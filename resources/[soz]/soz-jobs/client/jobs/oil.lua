@@ -640,7 +640,7 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
     while canResellTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("resell", "Vous remplissez...", 1000, false, true, {
+        local success, _ = exports["soz-utils"]:Progressbar("resell", "Vous remplissez...", 3000, false, true, {
             disableMovement = true,
             disableCombat = true,
         }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
