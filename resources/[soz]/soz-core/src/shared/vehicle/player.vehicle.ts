@@ -9,9 +9,11 @@ export enum PlayerVehicleState {
     InJobGarage = 3,
     Missing = 4,
     Destroyed = 5,
+    InSoftPound = 6,
+    InFedPound = 7,
 }
 
-export type PlayerVehicle = {
+export type PlayerServerVehicle = {
     id: number;
     label?: string;
     license: string;

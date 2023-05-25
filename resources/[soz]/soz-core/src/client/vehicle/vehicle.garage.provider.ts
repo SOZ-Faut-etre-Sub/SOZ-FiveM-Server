@@ -5,7 +5,7 @@ import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { JobType } from '../../shared/job';
+import { JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
@@ -15,11 +15,13 @@ import { Garage, GarageCategory, GarageType, GarageVehicle } from '../../shared/
 import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { JobService } from '../job/job.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { GarageRepository } from '../resources/garage.repository';
+import { VehicleRepository } from '../resources/vehicle.repository';
 import { TargetFactory } from '../target/target.factory';
 import { ObjectFactory } from '../world/object.factory';
 import { VehicleService } from './vehicle.service';
@@ -56,6 +58,9 @@ export class VehicleGarageProvider {
     @Inject(GarageRepository)
     private garageRepository: GarageRepository;
 
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
+
     @Inject(ObjectFactory)
     private objectFactory: ObjectFactory;
 
@@ -76,6 +81,9 @@ export class VehicleGarageProvider {
 
     @Inject(InputService)
     private inputService: InputService;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     private pounds: Record<string, Garage> = {};
 
@@ -190,42 +198,135 @@ export class VehicleGarageProvider {
             }
         }
 
-        this.targetFactory.createForAllVehicle([
-            {
-                label: 'Fourriérer',
-                icon: 'c:mechanic/CarFourriere.png',
-                action: async entity => {
-                    const closestPound = this.getClosestPound();
+        this.targetFactory.createForAllVehicle(
+            [
+                {
+                    label: 'Fourriérer',
+                    icon: 'c:mechanic/CarFourriere.png',
+                    action: async entity => {
+                        const closestPound = this.getClosestPound();
 
-                    if (!closestPound) {
-                        return false;
-                    }
+                        if (!closestPound) {
+                            return false;
+                        }
 
-                    await this.doStoreVehicle(closestPound[0], closestPound[1], entity);
+                        await this.doStoreVehicle(closestPound[0], closestPound[1], entity);
+                    },
+                    blackoutGlobal: true,
+                    blackoutJob: JobType.Bennys,
+                    canInteract: (): boolean => {
+                        const player = this.playerService.getPlayer();
+
+                        if (!player) {
+                            return false;
+                        }
+
+                        if (player.job.id !== JobType.Bennys || !player.job.onduty) {
+                            return false;
+                        }
+
+                        const closestPound = this.getClosestPound();
+
+                        if (!closestPound) {
+                            return false;
+                        }
+
+                        return true;
+                    },
                 },
-                blackoutGlobal: true,
-                blackoutJob: JobType.Bennys,
-                canInteract: (): boolean => {
-                    const player = this.playerService.getPlayer();
+                {
+                    label: 'Fourrière Fédérale',
+                    icon: 'c:mechanic/CarFourriere.png',
+                    action: async entity => {
+                        const closestPound = this.getClosestPound();
 
-                    if (!player) {
-                        return false;
-                    }
+                        if (!closestPound) {
+                            return false;
+                        }
 
-                    if (player.job.id !== JobType.Bennys || !player.job.onduty) {
-                        return false;
-                    }
+                        const value = await this.inputService.askInput(
+                            {
+                                title: "Delai d'immobilisation du véhicule en heures (0-72)",
+                                defaultValue: '',
+                                maxCharacters: 30,
+                            },
+                            value => {
+                                if (!value) {
+                                    return Ok(true);
+                                }
+                                const int = parseInt(value);
+                                if (isNaN(int) || int < 0 || int > 72) {
+                                    return Err('Valeur incorrecte');
+                                }
+                                return Ok(true);
+                            }
+                        );
 
-                    const closestPound = this.getClosestPound();
+                        const intValue = parseInt(value);
+                        if (isNaN(intValue)) {
+                            return;
+                        }
 
-                    if (!closestPound) {
-                        return false;
-                    }
+                        await wait(50);
 
-                    return true;
+                        const model = GetEntityModel(entity);
+                        const vehConfig = this.vehicleRepository.getByModelHash(model);
+                        const maxPrice = Math.round(vehConfig.price * 0.15);
+
+                        const cost = await this.inputService.askInput(
+                            {
+                                title: `Coût de sortie (0-${maxPrice})`,
+                                defaultValue: '',
+                                maxCharacters: 30,
+                            },
+                            value => {
+                                if (!value) {
+                                    return Ok(true);
+                                }
+                                const int = parseInt(value);
+                                if (isNaN(int) || int < 0 || int > maxPrice) {
+                                    return Err('Valeur incorrecte');
+                                }
+                                return Ok(true);
+                            }
+                        );
+
+                        const intCost = parseInt(cost);
+                        if (isNaN(intCost)) {
+                            return;
+                        }
+
+                        await this.doStoreVehicle(closestPound[0], closestPound[1], entity, intValue, intCost);
+                    },
+                    job: { lspd: 0, bcso: 0 },
+                    blackoutGlobal: true,
+                    canInteract: (): boolean => {
+                        const player = this.playerService.getPlayer();
+
+                        if (!player) {
+                            return false;
+                        }
+
+                        if (!player.job.onduty) {
+                            return false;
+                        }
+
+                        if (!this.jobService.hasPermission(player.job.id, JobPermission.FDOFedPound)) {
+                            return false;
+                        }
+
+                        const closestPound = this.getClosestPound();
+
+                        if (!closestPound) {
+                            return false;
+                        }
+
+                        return true;
+                    },
                 },
-            },
-        ]);
+            ],
+            1.5
+        );
     }
 
     private getClosestPound(): [string, Garage] | null {
@@ -309,7 +410,7 @@ export class VehicleGarageProvider {
         this.nuiMenu.closeMenu();
     }
 
-    public async doStoreVehicle(id: string, garage: Garage, vehicle: number) {
+    public async doStoreVehicle(id: string, garage: Garage, vehicle: number, delai = 0, cost = 0) {
         if (IsVehicleAttachedToTrailer(vehicle)) {
             DetachVehicleFromTrailer(vehicle);
 
@@ -318,7 +419,7 @@ export class VehicleGarageProvider {
 
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId);
+        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_STORE, id, garage, networkId, delai, cost);
     }
 
     @OnNuiEvent(NuiEvent.VehicleGarageShowPlaces)

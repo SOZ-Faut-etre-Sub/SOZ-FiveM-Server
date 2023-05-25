@@ -1,6 +1,6 @@
 import { JobType } from '../job';
 import { Zone } from '../polyzone/box.zone';
-import { PlayerVehicle } from './player.vehicle';
+import { PlayerServerVehicle } from './player.vehicle';
 
 export enum GarageType {
     Public = 'public',
@@ -48,7 +48,7 @@ export type Garage = {
 };
 
 export type GarageVehicle = {
-    vehicle: PlayerVehicle;
+    vehicle: PlayerServerVehicle;
     price: number | null;
     name: string | null;
 };

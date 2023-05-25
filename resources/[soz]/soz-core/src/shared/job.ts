@@ -61,6 +61,7 @@ export enum JobPermission {
     MdrMarkedMoneyCleaning = 'marked-money-cleaning',
     UpwOrder = 'order',
     UpwChangePrice = 'upw-change-price',
+    FDOFedPound = 'fdo-fed-pound',
 }
 
 export const JobLabel: Record<JobType, string> = {
