@@ -1471,10 +1471,50 @@ export const GarageList: Record<string, Garage> = {
             maxZ: 74.09,
         }),
         parkingPlaces: [
-            new BoxZone([911.33, -162.69, 74.13], 6.2, 3.2, { heading: 15, minZ: 72.69, maxZ: 76.53 }),
-            new BoxZone([913.54, -159.2, 74.69], 6.6, 3.2, { heading: 15, minZ: 73.69, maxZ: 77.69 }),
-            new BoxZone([919.02, -167.06, 74.33], 3.0, 7.2, { heading: 10, minZ: 73.33, maxZ: 77.33 }),
-            new BoxZone([916.75, -170.56, 74.23], 3.2, 7.0, { heading: 10, minZ: 73.03, maxZ: 77.03 }),
+            new BoxZone([920.78, -163.29, 74.86], 4.8, 2.2, {
+                heading: 101.0,
+                minZ: 73.76,
+                maxZ: 76.76,
+            }),
+            new BoxZone([918.31, -166.81, 74.63], 4.8, 2.2, {
+                heading: 101.0,
+                minZ: 73.76,
+                maxZ: 76.76,
+            }),
+            new BoxZone([915.97, -170.38, 74.4], 4.8, 2.2, {
+                heading: 101.0,
+                minZ: 73.76,
+                maxZ: 76.76,
+            }),
+            new BoxZone([908.17, -182.93, 74.57], 2.6, 6.0, {
+                heading: 60,
+                minZ: 73.07,
+                maxZ: 74.07,
+            }),
+            new BoxZone([906.55, -186.02, 74.51], 2.6, 6.0, {
+                heading: 60,
+                minZ: 73.07,
+                maxZ: 74.07,
+            }),
+            new BoxZone([905.24, -189.17, 74.48], 2.6, 6.0, {
+                heading: 60,
+                minZ: 73.07,
+                maxZ: 74.07,
+            }),
+            new BoxZone([903.77, -191.84, 74.49], 2.6, 6.0, {
+                heading: 60,
+                minZ: 73.07,
+                maxZ: 74.07,
+            }),
+
+            new BoxZone([908.74, -176.58, 74.83], 10.4, 3.4, {
+                heading: 230.0,
+                minZ: 73.23,
+                maxZ: 74.23,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
         ],
     },
     taxi_air: {
