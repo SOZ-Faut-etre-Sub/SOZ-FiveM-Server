@@ -55,7 +55,7 @@ export class OilStationProvider {
             return;
         }
 
-        if (station.stock >= 2000) {
+        if (station.stock >= 3000) {
             this.notifier.notify('La station est déjà pleine.', 'error');
 
             return;
@@ -69,17 +69,17 @@ export class OilStationProvider {
             {
                 title: 'Quantité à ajouter (en litres) :',
                 maxCharacters: 4,
-                defaultValue: (2000 - station.stock).toString(),
+                defaultValue: (3000 - station.stock).toString(),
             },
             (input: string) => {
                 const value = parseInt(input);
 
-                if (isNaN(value) || value < 0 || value > 2000) {
-                    return Err('Veuillez entrer un nombre entre 0 et 2000');
+                if (isNaN(value) || value < 0 || value > 3000) {
+                    return Err('Veuillez entrer un nombre entre 0 et 3000');
                 }
 
-                if (value > 2000 - station.stock) {
-                    return Err('La station ne peut pas contenir plus de 2000 litres');
+                if (value > 3000 - station.stock) {
+                    return Err('La station ne peut pas contenir plus de 3000 litres');
                 }
 
                 return Ok(true);
@@ -115,17 +115,17 @@ export class OilStationProvider {
             {
                 title: 'Quantité à ajouter (en litres) :',
                 maxCharacters: 4,
-                defaultValue: (2000 - station.stock).toString(),
+                defaultValue: (3000 - station.stock).toString(),
             },
             (input: string) => {
                 const value = parseInt(input);
 
-                if (isNaN(value) || value < 0 || value > 2000) {
-                    return Err('Veuillez entrer un nombre entre 0 et 2000');
+                if (isNaN(value) || value < 0 || value > 3000) {
+                    return Err('Veuillez entrer un nombre entre 0 et 3000');
                 }
 
-                if (value > 2000 - station.stock) {
-                    return Err('La station ne peut pas contenir plus de 2000 litres');
+                if (value > 3000 - station.stock) {
+                    return Err('La station ne peut pas contenir plus de 3000 litres');
                 }
 
                 return Ok(true);
