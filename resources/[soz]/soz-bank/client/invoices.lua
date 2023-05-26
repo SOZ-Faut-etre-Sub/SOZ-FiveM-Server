@@ -7,14 +7,14 @@ RegisterNetEvent("banking:client:invoiceReceived", function(invoiceId, label, am
 
         while notificationTimer > GetGameTimer() do
             DisableControlAction(0, 246, true)
-            DisableControlAction(0, 249, true)
+            DisableControlAction(0, 306, true)
 
             if IsDisabledControlJustReleased(0, 246) then
                 TriggerServerEvent("banking:server:payInvoice", invoiceId)
                 return
             end
 
-            if IsDisabledControlJustReleased(0, 249) then
+            if IsDisabledControlJustReleased(0, 306) then
                 TriggerServerEvent("banking:server:rejectInvoice", invoiceId)
                 return
             end
