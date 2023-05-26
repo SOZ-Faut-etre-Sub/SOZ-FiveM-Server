@@ -17,6 +17,13 @@ export class StateGlobalProvider {
         TriggerClientEvent(ClientEvent.STATE_UPDATE_GLOBAL, -1, global);
     }
 
+    @StateSelector(state => state.global.blackoutLevel)
+    public stopPhoneCallOnLevel(level: number) {
+        if (level > 2) {
+            exports['soz-voip'].StopAllPhoneCall();
+        }
+    }
+
     @Exportable('GetGlobalState')
     getGlobalState(): GlobalState {
         return this.store.getState().global;
