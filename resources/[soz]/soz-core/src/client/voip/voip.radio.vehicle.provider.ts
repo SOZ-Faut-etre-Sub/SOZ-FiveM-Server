@@ -2,7 +2,7 @@ import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
-import { Ear, RadioChannel, RadioChannelType, RadioType } from '../../shared/voip';
+import { Ear, Radio, RadioChannel, RadioChannelType, RadioType } from '../../shared/voip';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { SoundService } from '../sound.service';
 import { StateSelector, Store } from '../store/store';
@@ -48,6 +48,8 @@ export class VoipRadioVehicleProvider {
 
             this.previousPrimaryFrequency = 0;
             this.previousSecondaryFrequency = 0;
+
+            this.soundService.play('radio/toggle', 0.2);
 
             return;
         }
@@ -145,6 +147,11 @@ export class VoipRadioVehicleProvider {
         const radioLongRange = this.store.getState().radioLongRange;
         this.voipService.setRadioVolume(RadioType.RadioLongRange, RadioChannelType.Secondary, volume);
         this.soundService.play('click', radioLongRange.secondary.volume / 100);
+    }
+
+    @StateSelector(state => state.radioLongRange)
+    public updateRadioShortRange(radioShortRange: Radio) {
+        this.nuiDispatch.dispatch('radio_vehicle', 'Update', radioShortRange);
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)

@@ -23,6 +23,7 @@ import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
 import { RadarApp } from './Police/RadarApp';
 import { ProgressApp } from './Progress/ProgressApp';
 import { RadioApp } from './Radio/RadioApp';
+import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { StateApp } from './StateApp';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
 
@@ -64,6 +65,7 @@ export const App: FunctionComponent = () => {
                 <MissiveApp />
                 <RadarApp />
                 <RadioApp />
+                <RadioVehicleApp />
                 <BreathAnalyzerApp />
                 <HoodApp />
                 <TaxiHorodateurApp />

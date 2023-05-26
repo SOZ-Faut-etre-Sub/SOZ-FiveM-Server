@@ -9,4 +9,5 @@ export interface NuiRadioMethodMap {
 export interface NuiRadioVehicleMethodMap {
     Open: Radio;
     Update: Radio;
+    Close: never;
 }

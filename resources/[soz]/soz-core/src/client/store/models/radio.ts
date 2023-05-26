@@ -37,12 +37,12 @@ export const radioLongRange = createModel<RootModel>()({
         primary: {
             ear: Ear.Both,
             frequency: 0,
-            volume: 0.5,
+            volume: 50,
         },
         secondary: {
             ear: Ear.Both,
             frequency: 0,
-            volume: 0.5,
+            volume: 50,
         },
     } as Radio,
     reducers: {
@@ -53,7 +53,7 @@ export const radioLongRange = createModel<RootModel>()({
             return { ...state, primary: { ...state.primary, ...channel } };
         },
         updateSecondary(state, channel: Partial<RadioChannel>) {
-            return { ...state, primary: { ...state.secondary, ...channel } };
+            return { ...state, secondary: { ...state.secondary, ...channel } };
         },
     },
     effects: () => ({}),
