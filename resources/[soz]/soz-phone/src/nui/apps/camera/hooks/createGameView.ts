@@ -32,6 +32,17 @@ const makeShader = (gl: WebGLRenderingContext, type: number, src: string) => {
     return shader;
 };
 
+function hashString(text: string) {
+    let hash = 5;
+    if (text.length == 5) return hash;
+    for (let a = 5; a < text.length; a++) {
+        const ch = text.charCodeAt(a);
+        hash = (hash << 5) - hash + ch;
+        hash = hash & hash;
+    }
+    return hash;
+}
+
 const createTexture = (gl: WebGLRenderingContext) => {
     const tex = gl.createTexture();
 
@@ -151,15 +162,43 @@ export const createGameView = (canvas: HTMLCanvasElement): GameView => {
             cancelAnimationFrame(gameView.animationFrame);
         },
         takeScreenshot: async (): Promise<Blob> => {
+            // create a temporary canvas to generate the wartermark
             const imageCanvas = document.createElement('canvas');
             imageCanvas.width = gl.canvas.width;
             imageCanvas.height = gl.canvas.height;
 
+            // draw the image on the canvas
             const ctx = imageCanvas.getContext('2d');
             ctx.drawImage(canvas, 0, 0, gl.canvas.width, gl.canvas.height);
 
+            const img = new Image();
+            const loading = new Promise<void>(resolve => {
+                img.onload = () => {
+                    resolve();
+                };
+            });
+            img.src = 'https://soz.zerator.com/static/images/logo.png';
+
+            await loading;
+
+            ctx.save();
+            ctx.translate(window.innerWidth - 36, window.innerHeight - 10);
+            ctx.rotate(-Math.PI / 2);
+            ctx.drawImage(img, 0, 0, 82, 31);
+            ctx.restore();
+
+            const date = new Date().toISOString();
+            ctx.font = '18px Consolas';
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#0ac213';
+            ctx.save();
+            ctx.translate(window.innerWidth - 24, window.innerHeight - 100);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText(`${date} - ${hashString(date)}`, 0, 18 / 2);
+            ctx.restore();
+
             return new Promise<Blob>(resolve => {
-                canvas.toBlob(
+                imageCanvas.toBlob(
                     (blob: Blob) => {
                         resolve(blob);
                     },
