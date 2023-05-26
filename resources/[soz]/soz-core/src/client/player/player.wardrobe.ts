@@ -84,13 +84,17 @@ export class PlayerWardrobe {
                 dictionary: 'anim@mp_yacht@shower@male@',
                 options: {
                     cancellable: false,
-                    enablePlayerControl: false,
+                    enablePlayerControl: true,
+                    onlyUpperBody: true,
                 },
             },
             {
-                disableCombat: true,
                 disableMovement: true,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
                 canCancel: canCancel,
+                useAnimationService: true,
             }
         );
     }
