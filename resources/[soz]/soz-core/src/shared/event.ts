@@ -183,6 +183,8 @@ export enum ServerEvent {
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
     VOIP_SET_MEGAPHONE = 'soz-core:server:voip:set-megaphone',
+    VOIP_RADIO_VEHICLE_ENABLE = 'soz-core:server:voip:radio-vehicle-enable',
+    VOIP_RADIO_VEHICLE_UPDATE = 'soz-core:server:voip:radio-vehicle-update',
 
     HALLOWEEN2022_HUNT = 'halloween2022:server:hunt',
     LSMC_HALLOWEEN_LOOT_PLAYER = 'lsmc:halloween:lootPlayer',
@@ -368,9 +370,15 @@ export enum ClientEvent {
     VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
     VEHICLE_UPDATE_STATE = 'soz-core:client:vehicle:update-state',
+    VEHICLE_DELETE_STATE = 'soz-core:client:vehicle:delete-state',
 
     VOIP_UPDATE_MODE = 'soz-core:client:voip:update-mode',
     VOIP_SET_MEGAPHONE = 'soz-core:client:voip:set-megaphone',
+    VOIP_ITEM_RADIO_TOGGLE = 'soz-core:client:voip:item-radio:toggle',
+    VOIP_ITEM_MEGAPHONE_TOGGLE = 'soz-core:client:voip:item-megaphone:toggle',
+    VOIP_ITEM_MICROPHONE_TOGGLE = 'soz-core:client:voip:item-microphone:toggle',
+    VOIP_RADIO_VEHICLE_ENABLE = 'soz-core:client:voip:radio-vehicle-enable',
+    VOIP_RADIO_VEHICLE_UPDATE = 'soz-core:client:voip:radio-vehicle-update',
 
     UPW_OPEN_CLOAKROOM = 'soz-core:client:job:upw:open-cloakroom',
     UPW_CREATE_CHARGER = 'soz-core:client:job:upw:create-charger',
@@ -576,6 +584,13 @@ export enum NuiEvent {
     VehicleGarageStore = 'soz-core:client:vehicle:garage:store',
     VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
+
+    VoipCloseRadio = 'soz-core:nui:voip:close-radio',
+    VoipEnableRadio = 'soz-core:nui:voip:enable-radio',
+    VoipUpdateRadioChannel = 'soz-core:nui:voip:update-radio-channel',
+
+    VoipEnableRadioVehicle = 'soz-core:nui:voip:enable-radio-vehicle',
+    VoipUpdateRadioVehicleChannel = 'soz-core:nui:voip:update-radio-vehicle-channel',
 
     UpwGetOrders = 'soz-core:client:job:upw:get-orders',
     UpwOrder = 'soz-core:client:job:upw:order',

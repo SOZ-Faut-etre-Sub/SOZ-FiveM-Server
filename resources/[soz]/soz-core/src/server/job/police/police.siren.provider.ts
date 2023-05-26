@@ -10,7 +10,7 @@ export class PoliceSirenProvider {
     private vehicleStateService: VehicleStateService;
 
     @Rpc(RpcServerEvent.VEHICLE_GET_MUTED_SIRENS)
-    async getMutedSirens(vehicles: number[]): Promise<{ vehicle: number; isSirenMuted: boolean }[]> {
+    async getMutedSirens(source: number, vehicles: number[]): Promise<{ vehicle: number; isSirenMuted: boolean }[]> {
         const muted = [];
 
         for (const vehicle of vehicles) {

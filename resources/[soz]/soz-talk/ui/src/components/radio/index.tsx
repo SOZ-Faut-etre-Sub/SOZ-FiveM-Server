@@ -216,15 +216,15 @@ const Radio: React.FC<{type: 'radio' | 'cibi'}> = (props) => {
                                         />}
                                 </div>
                                 <span className={screen.meta}>
-                            <div>
-                                <VolumeIcon/>
-                                {currentFrequency === 'primary' ? primaryFrequency.volume : secondaryFrequency.volume}%
-                            </div>
-                            <div>
-                                <HeadphoneIcon />
-                                {currentFrequency === 'primary' ? displayEar(primaryFrequency.ear) : displayEar(secondaryFrequency.ear)}
-                            </div>
-                        </span>
+                                <div>
+                                    <VolumeIcon/>
+                                    {currentFrequency === 'primary' ? primaryFrequency.volume : secondaryFrequency.volume}%
+                                </div>
+                                <div>
+                                    <HeadphoneIcon />
+                                    {currentFrequency === 'primary' ? displayEar(primaryFrequency.ear) : displayEar(secondaryFrequency.ear)}
+                                </div>
+                            </span>
                             </>
                         )}
                     </div>

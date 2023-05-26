@@ -28,13 +28,6 @@ export class VehicleStateProvider {
     @Exportable('UpdateVehicleCondition')
     @OnEvent(ServerEvent.VEHICLE_UPDATE_CONDITION)
     public updateVehicleCondition(source: number, vehicleNetworkId: number, condition: VehicleCondition): void {
-        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
-
-        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
-            condition: {
-                ...state.condition,
-                ...condition,
-            },
-        });
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, condition);
     }
 }

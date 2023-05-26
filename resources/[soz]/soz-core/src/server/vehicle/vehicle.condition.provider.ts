@@ -273,7 +273,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        this.vehicleStateService.updateVehicleState(vehicleEntity, {
+        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
             dead: true,
         });
 

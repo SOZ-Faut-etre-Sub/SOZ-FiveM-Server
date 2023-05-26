@@ -46,15 +46,9 @@ export class VehicleCommandProvider {
     @Command('fuel', { role: ['admin'], description: 'Set fuel level (Admin Only)' })
     async fuelCommand(source: number, newlevel: number) {
         const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
-        const state = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
 
-        if (state) {
-            this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
-                condition: {
-                    ...state.condition,
-                    fuelLevel: newlevel,
-                },
-            });
-        }
+        this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
+            fuelLevel: newlevel,
+        });
     }
 }

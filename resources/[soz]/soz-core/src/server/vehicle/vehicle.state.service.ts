@@ -12,16 +12,17 @@ export class VehicleStateService {
     private vehicleKeys: Record<string, Set<string>> = {};
 
     public getVehicleState(vehicleNetworkId: number): VehicleEntityState {
-        return this.state.get(vehicleNetworkId) || getDefaultVehicleState();
+        return { ...(this.state.get(vehicleNetworkId) || getDefaultVehicleState()) };
     }
 
     public updateVehicleState(vehicleNetworkId: number, state: Partial<VehicleEntityState>): void {
-        const previousState = this.state.get(vehicleNetworkId) || getDefaultVehicleState();
-
-        this.state.set(vehicleNetworkId, {
+        const previousState = this.getVehicleState(vehicleNetworkId);
+        const newState = {
             ...previousState,
             ...state,
-        });
+        };
+
+        this.state.set(vehicleNetworkId, newState);
 
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
@@ -35,7 +36,11 @@ export class VehicleStateService {
             return;
         }
 
-        TriggerClientEvent(ClientEvent.VEHICLE_UPDATE_STATE, owner, vehicleNetworkId, state);
+        // get stack trace
+        // const stack = new Error().stack;
+        // console.log(stack);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_UPDATE_STATE, owner, vehicleNetworkId, newState);
     }
 
     public updateVehicleCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>): void {
@@ -51,6 +56,7 @@ export class VehicleStateService {
 
     public deleteVehicleState(vehicleNetworkId: number): void {
         this.state.delete(vehicleNetworkId);
+        TriggerClientEvent(ClientEvent.VEHICLE_UPDATE_STATE, -1, vehicleNetworkId);
     }
 
     public getSpawned(): number[] {

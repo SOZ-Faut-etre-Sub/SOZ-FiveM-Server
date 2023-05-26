@@ -1,4 +1,5 @@
 import { joaat } from '@public/shared/joaat';
+import { RadioChannel } from '@public/shared/voip';
 
 import { DealershipConfigItem, DealershipType } from '../../config/dealership';
 import { JobType } from '../job';
@@ -130,18 +131,9 @@ export type VehicleEntityState = {
     dead: boolean;
     condition: VehicleCondition;
     hasRadio: boolean;
-    radioInUse: boolean;
     radioEnabled: boolean;
-    primaryRadio: {
-        frequency: number;
-        volume: number;
-        ear: number;
-    } | null;
-    secondaryRadio: {
-        frequency: number;
-        volume: number;
-        ear: number;
-    } | null;
+    primaryRadio: RadioChannel | null;
+    secondaryRadio: RadioChannel | null;
     flatbedAttachedVehicle: number | null;
 };
 
@@ -216,7 +208,6 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
     openWindows: false,
     condition: getDefaultVehicleCondition(),
     hasRadio: false,
-    radioInUse: false,
     radioEnabled: false,
     primaryRadio: null,
     secondaryRadio: null,

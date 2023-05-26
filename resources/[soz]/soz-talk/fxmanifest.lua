@@ -14,8 +14,4 @@ client_scripts {
     "client/main.lua",
     "client/radio.lua",
     "client/cibi.lua",
-    "client/megaphone.lua",
-    "client/microphone.lua",
 }
-
-server_script "server/main.lua"

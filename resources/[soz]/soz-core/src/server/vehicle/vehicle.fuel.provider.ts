@@ -41,8 +41,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const vehicleState = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const vehicleState = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const fuelToFill = Math.floor(100 - vehicleState.condition.fuelLevel);
 
         const [reservedFuel, station, maxFuelMoney] = await this.lockService.lock(
@@ -119,7 +118,7 @@ export class VehicleFuelProvider {
             TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
             leftOver = reservedFuel;
         } else {
-            this.vehicleStateService.updateVehicleState(vehicleEntity, {
+            this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
                 condition: {
                     ...vehicleState.condition,
                     fuelLevel: vehicleState.condition.fuelLevel + totalFilled,

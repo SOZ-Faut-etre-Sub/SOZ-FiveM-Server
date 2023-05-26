@@ -141,7 +141,7 @@ export class VehicleLockProvider {
         }
 
         const random = getRandomInt(0, 100);
-        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
         if (random > percentages[item.name] || (vehicleState.isPlayerVehicle && item.name != 'lockpick_high')) {
             this.notifier.notify(source, "Vous n'avez pas réussi à crocheter le véhicule", 'error');
@@ -168,7 +168,7 @@ export class VehicleLockProvider {
             }
         }
 
-        this.vehicleStateService.updateVehicleState(closestVehicle.vehicleEntityId, {
+        this.vehicleStateService.updateVehicleState(closestVehicle.vehicleNetworkId, {
             forced: true,
         });
 
@@ -210,7 +210,7 @@ export class VehicleLockProvider {
         const plate = GetVehicleNumberPlateText(vehicleEntityId);
 
         this.vehicleStateService.addVehicleKey(plate, player.citizenid);
-        this.vehicleStateService.updateVehicleState(vehicleEntityId, {
+        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
             open: true,
             owner: player.citizenid,
         });
@@ -246,18 +246,14 @@ export class VehicleLockProvider {
 
     @OnEvent(ServerEvent.VEHICLE_SET_OPEN)
     async onOpen(source: number, vehicleNetworkId: number, open: boolean) {
-        const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-
-        this.vehicleStateService.updateVehicleState(vehicleEntityId, {
+        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
             open,
         });
     }
 
     @OnEvent(ServerEvent.VEHICLE_FORCE_OPEN)
     async onForceOpen(source: number, vehicleNetworkId: number) {
-        const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-
-        this.vehicleStateService.updateVehicleState(vehicleEntityId, {
+        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
             forced: true,
         });
     }

@@ -1,5 +1,9 @@
+import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
 import { Logger } from '@core/logger';
 import { emitClientRpc, emitClientRpcConfig } from '@core/rpc';
+import { uuidv4, wait } from '@core/utils';
 import { PlayerVehicle } from '@prisma/client';
 import { DealershipConfig } from '@public/config/dealership';
 import { GarageRepository } from '@public/server/repository/garage.repository';
@@ -7,10 +11,6 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { MultiZone } from '@public/shared/polyzone/multi.zone';
 import { RpcClientEvent } from '@public/shared/rpc';
 
-import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
@@ -200,16 +200,7 @@ export class VehicleSpawner {
         newNetworkId: number,
         state: VehicleEntityState
     ) {
-        await wait(200);
-
-        let entityId = NetworkGetEntityFromNetworkId(newNetworkId);
-
-        while (!entityId || !DoesEntityExist(entityId)) {
-            entityId = NetworkGetEntityFromNetworkId(newNetworkId);
-            await wait(0);
-        }
-
-        this.vehicleStateService.updateVehicleState(entityId, state);
+        this.vehicleStateService.updateVehicleState(newNetworkId, state);
         this.vehicleStateService.registerSpawned(newNetworkId);
 
         await this.delete(originalNetworkId);
@@ -310,13 +301,29 @@ export class VehicleSpawner {
     private async spawn(player: number, vehicle: VehicleSpawn): Promise<number | null> {
         const radio = VEHICLE_HAS_RADIO.includes(vehicle.model);
 
+        vehicle.state = {
+            ...vehicle.state,
+            spawned: true,
+            hasRadio: radio,
+            radioEnabled: false,
+            primaryRadio: radio
+                ? {
+                      frequency: 0.0,
+                      volume: 100,
+                      ear: 1,
+                  }
+                : null,
+            secondaryRadio: radio
+                ? {
+                      frequency: 0.0,
+                      volume: 100,
+                      ear: 1,
+                  }
+                : null,
+        };
+
         try {
             const [netId, entityId] = await this.spawnVehicleFromClient(player, vehicle);
-
-            // Temporary disable server spawn as it is not working properly
-            // if (!netId || !entityId) {
-            //     [netId, entityId] = await this.spawnVehicleFromServer(player, vehicle);
-            // }
 
             if (!netId || !entityId) {
                 return null;
@@ -333,28 +340,8 @@ export class VehicleSpawner {
                 return null;
             }
 
+            this.vehicleStateService.updateVehicleState(netId, vehicle.state);
             this.vehicleStateService.registerSpawned(netId);
-            this.vehicleStateService.updateVehicleState(entityId, {
-                ...vehicle.state,
-                spawned: true,
-                hasRadio: radio,
-                radioInUse: false,
-                radioEnabled: false,
-                primaryRadio: radio
-                    ? {
-                          frequency: 0.0,
-                          volume: 100,
-                          ear: 1,
-                      }
-                    : null,
-                secondaryRadio: radio
-                    ? {
-                          frequency: 0.0,
-                          volume: 100,
-                          ear: 1,
-                      }
-                    : null,
-            });
 
             return netId;
         } catch (e) {
@@ -494,6 +481,7 @@ export class VehicleSpawner {
         let owner = NetworkGetEntityOwner(entityId);
 
         this.vehicleStateService.unregisterSpawned(netId);
+        this.vehicleStateService.deleteVehicleState(entityId);
 
         try {
             let deleted = await emitClientRpc<boolean>(RpcClientEvent.VEHICLE_DELETE, owner, netId);
