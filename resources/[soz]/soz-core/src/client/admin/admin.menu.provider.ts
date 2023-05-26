@@ -89,8 +89,8 @@ export class AdminMenuProvider {
                     },
                     developer: {
                         noClip: this.adminMenuDeveloperProvider.isIsNoClipMode(),
-                        displayCoords: this.adminMenuDeveloperProvider.showCoordinatesInterval !== null,
-                        displayMileage: this.adminMenuDeveloperProvider.showMileageInterval !== null,
+                        displayCoords: this.adminMenuDeveloperProvider.showCoordinates !== null,
+                        displayMileage: this.adminMenuDeveloperProvider.showMileage !== null,
                     },
                     vehicule: {
                         noStall: this.vehicleConditionProvider.getAdminNoStall(),
