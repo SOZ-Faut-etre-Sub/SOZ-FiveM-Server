@@ -89,9 +89,9 @@ export class BinocularsProvider {
 
         const scaleform = await this.resourceLoader.loadScaleformMovie('BINOCULARS');
 
-        while (this.binocularsConfig.enabled) {
-            LocalPlayer.state.set('inv_busy', true, true);
+        this.playerService.updateState({ isInventoryBusy: true });
 
+        while (this.binocularsConfig.enabled) {
             SetPauseMenuActive(false);
             if (!IsPedSittingInAnyVehicle(player)) {
                 SetEntityHeading(player, this.binocularsConfig.newZ);
@@ -138,7 +138,7 @@ export class BinocularsProvider {
         RenderScriptCams(false, false, 0, true, false);
         DestroyCam(cam, false);
 
-        LocalPlayer.state.set('inv_busy', false, true);
+        this.playerService.updateState({ isInventoryBusy: false });
     }
 
     private cameraOperator() {
