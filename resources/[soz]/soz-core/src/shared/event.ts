@@ -398,6 +398,9 @@ export enum ClientEvent {
     CRIMI_SMOKE = 'soz-core:server:crimi:smoke',
 
     EASTER_EAR_TOGGLE = 'soz-core:server:easter:toogle-ear',
+
+    BINOCULARS_TOGGLE = 'items:binoculars:toggle',
+    BINOCULARS_SET = 'items:binoculars:set',
 }
 
 export enum GameEvent {
