@@ -587,6 +587,7 @@ export enum NuiEvent {
     VoipEnableRadio = 'soz-core:nui:voip:enable-radio',
     VoipUpdateRadioChannel = 'soz-core:nui:voip:update-radio-channel',
 
+    VoipCloseRadioVehicle = 'soz-core:nui:voip:close-radio-vehicle',
     VoipEnableRadioVehicle = 'soz-core:nui:voip:enable-radio-vehicle',
     VoipUpdateRadioVehicleChannel = 'soz-core:nui:voip:update-radio-vehicle-channel',
 
