@@ -2,6 +2,7 @@ import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Tick } from '../../core/decorators/tick';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Font } from '../../shared/hud';
 import { Ok } from '../../shared/result';
@@ -10,12 +11,12 @@ import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
-import { VehicleService } from '../vehicle/vehicle.service';
+import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
-    @Inject(VehicleService)
-    private vehicleService: VehicleService;
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(ClipboardService)
     private clipboard: ClipboardService;
@@ -32,9 +33,9 @@ export class AdminMenuDeveloperProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
-    public showCoordinatesInterval = null;
+    public showCoordinates = false;
 
-    public showMileageInterval = null;
+    public showMileage = false;
 
     private isCreatingZone = false;
 
@@ -84,65 +85,67 @@ export class AdminMenuDeveloperProvider {
 
     @OnNuiEvent(NuiEvent.AdminToggleShowCoordinates)
     public async toggleShowCoordinates(active: boolean): Promise<void> {
-        if (!active) {
-            clearInterval(this.showCoordinatesInterval);
-            this.showCoordinatesInterval = null;
+        this.showCoordinates = active;
+    }
+
+    @Tick()
+    public async showCoords(): Promise<void> {
+        if (!this.showCoordinates) {
             return;
         }
-        this.showCoordinatesInterval = setInterval(() => {
-            const coords = GetEntityCoords(PlayerPedId(), true);
-            const heading = GetEntityHeading(PlayerPedId()).toFixed(2);
 
-            const x = coords[0].toFixed(2);
-            const y = coords[1].toFixed(2);
-            const z = coords[2].toFixed(2);
+        const coords = GetEntityCoords(PlayerPedId(), true);
+        const heading = GetEntityHeading(PlayerPedId()).toFixed(2);
 
-            this.draw.drawText(`~w~Ped coordinates:~b~ vector4(${x}, ${y}, ${z}, ${heading})`, [0.4, 0.015], {
-                font: Font.ChaletComprimeCologne,
-                size: 0.4,
-                color: [66, 182, 245, 255],
-            });
-        }, 1);
+        const x = coords[0].toFixed(2);
+        const y = coords[1].toFixed(2);
+        const z = coords[2].toFixed(2);
+
+        this.draw.drawText(`~w~Ped coordinates:~b~ vector4(${x}, ${y}, ${z}, ${heading})`, [0.4, 0.015], {
+            font: Font.ChaletComprimeCologne,
+            size: 0.4,
+            color: [66, 182, 245, 255],
+        });
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleShowMileage)
     public async toggleShowMileage(active: boolean): Promise<void> {
-        if (!active) {
-            clearInterval(this.showMileageInterval);
-            this.showMileageInterval = null;
+        this.showMileage = active;
+    }
+
+    @Tick()
+    public async showMileageTick(): Promise<void> {
+        if (!this.showMileage) {
             return;
         }
-        this.showMileageInterval = setInterval(() => {
-            const ped = PlayerPedId();
-            const vehicle = GetVehiclePedIsIn(ped, false);
-            if (vehicle) {
-                const state = this.vehicleService.getVehicleState(vehicle);
+
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        if (vehicle) {
+            const state = await this.vehicleStateService.getVehicleState(vehicle);
+
+            this.draw.drawText(`~w~Vehicle mileage :~b~ ${(state.condition.mileage / 1000).toFixed(2)}`, [0.4, 0.002], {
+                font: Font.ChaletComprimeCologne,
+                size: 0.4,
+                color: [66, 182, 245, 255],
+            });
+
+            const [isTrailerExists, trailerEntity] = GetVehicleTrailerVehicle(vehicle);
+
+            if (isTrailerExists) {
+                const trailerState = await this.vehicleStateService.getVehicleState(trailerEntity);
 
                 this.draw.drawText(
-                    `~w~Vehicle mileage :~b~ ${(state.condition.mileage / 1000).toFixed(2)}`,
-                    [0.4, 0.002],
+                    `~w~Trailer mileage :~b~ ${(trailerState.condition.mileage / 1000).toFixed(2)}`,
+                    [0.6, 0.002],
                     {
                         font: Font.ChaletComprimeCologne,
                         size: 0.4,
                         color: [66, 182, 245, 255],
                     }
                 );
-                const [isTrailerExists, trailerEntity] = GetVehicleTrailerVehicle(vehicle);
-                if (isTrailerExists) {
-                    const trailerState = this.vehicleService.getVehicleState(trailerEntity);
-
-                    this.draw.drawText(
-                        `~w~Trailer mileage :~b~ ${(trailerState.condition.mileage / 1000).toFixed(2)}`,
-                        [0.6, 0.002],
-                        {
-                            font: Font.ChaletComprimeCologne,
-                            size: 0.4,
-                            color: [66, 182, 245, 255],
-                        }
-                    );
-                }
             }
-        }, 1);
+        }
     }
 
     @OnNuiEvent(NuiEvent.AdminCopyCoords)
