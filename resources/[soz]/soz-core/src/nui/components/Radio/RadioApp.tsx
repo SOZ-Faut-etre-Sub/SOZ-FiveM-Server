@@ -1,6 +1,6 @@
 import { CSSProperties, FunctionComponent, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import NumberFormat, { PatternFormat } from 'react-number-format';
+import { PatternFormat } from 'react-number-format';
 
 import { NuiEvent } from '../../../shared/event';
 import { Ear, Radio, RadioChannelType } from '../../../shared/voip';

@@ -70,11 +70,15 @@ export class AdminMenuVehicleProvider {
     public async onAdminMenuVehicleRepair() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         if (vehicle) {
-            SetVehicleFixed(vehicle);
-            SetVehicleBodyHealth(vehicle, 1000);
-            SetVehicleEngineHealth(vehicle, 1000);
-            SetVehiclePetrolTankHealth(vehicle, 1000);
-            SetVehicleDeformationFixed(vehicle);
+            this.vehicleStateService.updateVehicleCondition(
+                vehicle,
+                {
+                    bodyHealth: 1000,
+                    engineHealth: 1000,
+                    tankHealth: 1000,
+                },
+                false
+            );
         }
         return Ok(true);
     }
@@ -83,8 +87,13 @@ export class AdminMenuVehicleProvider {
     public async onAdminMenuVehicleClean() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         if (vehicle) {
-            SetVehicleDirtLevel(vehicle, 0.1);
-            WashDecalsFromVehicle(vehicle, 1.0);
+            this.vehicleStateService.updateVehicleCondition(
+                vehicle,
+                {
+                    dirtLevel: 0.0,
+                },
+                false
+            );
         }
         return Ok(true);
     }
@@ -94,9 +103,13 @@ export class AdminMenuVehicleProvider {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
 
         if (vehicle) {
-            this.vehicleStateService.updateVehicleCondition(vehicle, {
-                fuelLevel: 100.0,
-            });
+            this.vehicleStateService.updateVehicleCondition(
+                vehicle,
+                {
+                    fuelLevel: 100.0,
+                },
+                false
+            );
         }
     }
 

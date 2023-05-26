@@ -128,7 +128,6 @@ export class VehicleConditionProvider {
             return;
         }
 
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const { completed } = await this.progressService.progress(
             source,
             'cleaning_vehicle',
@@ -322,9 +321,9 @@ export class VehicleConditionProvider {
                 }
             );
             if (completed) {
-                const entityId = NetworkGetEntityFromNetworkId(vehicleId);
-                const owner = NetworkGetEntityOwner(entityId);
-                TriggerClientEvent(ClientEvent.VEHICLE_UPDATE_DIRT_LEVEL, owner, vehicleId, 0);
+                this.vehicleStateService.updateVehicleCondition(vehicleId, {
+                    dirtLevel: 0,
+                });
 
                 this.notifier.notify(source, 'Votre véhicule a été lavé.', 'success');
             } else {
@@ -352,8 +351,12 @@ export class VehicleConditionProvider {
     public updateMileage(source: number, vehicleNetworkId: number, mileage: number) {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
-        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
-            mileage: state.condition.mileage + mileage,
-        });
+        this.vehicleStateService.updateVehicleCondition(
+            vehicleNetworkId,
+            {
+                mileage: state.condition.mileage + mileage,
+            },
+            source
+        );
     }
 }

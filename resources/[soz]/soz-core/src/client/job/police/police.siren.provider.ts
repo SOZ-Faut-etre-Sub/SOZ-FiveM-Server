@@ -51,8 +51,8 @@ export class PoliceSirenProvider {
     @Once()
     public initStateSelector() {
         this.vehicleStateService.addVehicleStateSelector(
-            this.handleSirenUpdate.bind(this),
-            state => state.isSirenMuted
+            [state => state.isSirenMuted],
+            this.handleSirenUpdate.bind(this)
         );
     }
 

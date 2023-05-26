@@ -15,7 +15,11 @@ export class VehicleStateService {
         return { ...(this.state.get(vehicleNetworkId) || getDefaultVehicleState()) };
     }
 
-    public updateVehicleState(vehicleNetworkId: number, state: Partial<VehicleEntityState>): void {
+    public updateVehicleState(
+        vehicleNetworkId: number,
+        state: Partial<VehicleEntityState>,
+        excludeSource: number | null = null
+    ): void {
         const previousState = this.getVehicleState(vehicleNetworkId);
         const newState = {
             ...previousState,
@@ -36,22 +40,30 @@ export class VehicleStateService {
             return;
         }
 
-        // get stack trace
-        // const stack = new Error().stack;
-        // console.log(stack);
+        if (owner === excludeSource) {
+            return;
+        }
 
         TriggerClientEvent(ClientEvent.VEHICLE_UPDATE_STATE, owner, vehicleNetworkId, newState);
     }
 
-    public updateVehicleCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>): void {
+    public updateVehicleCondition(
+        vehicleNetworkId: number,
+        condition: Partial<VehicleCondition>,
+        excludeSource: number | null = null
+    ): void {
         const previousState = this.getVehicleState(vehicleNetworkId);
 
-        this.updateVehicleState(vehicleNetworkId, {
-            condition: {
-                ...previousState.condition,
-                ...condition,
+        this.updateVehicleState(
+            vehicleNetworkId,
+            {
+                condition: {
+                    ...previousState.condition,
+                    ...condition,
+                },
             },
-        });
+            excludeSource
+        );
     }
 
     public deleteVehicleState(vehicleNetworkId: number): void {

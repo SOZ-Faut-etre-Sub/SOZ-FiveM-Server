@@ -660,10 +660,6 @@ export class VehicleFuelProvider {
         const consumedFuel = rpm * 0.084 * multiplier;
         const consumedOil = consumedFuel / 12;
 
-        if (consumedFuel < 0.02) {
-            return;
-        }
-
         const state = await this.vehicleStateService.getVehicleState(vehicle);
 
         const newOil = Math.max(0, state.condition.oilLevel - consumedOil);

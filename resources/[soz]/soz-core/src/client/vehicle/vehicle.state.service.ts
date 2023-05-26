@@ -6,15 +6,22 @@ import { ServerEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
 
+type VehicleStateItem = {
+    selectors: any[];
+    state: VehicleEntityState;
+};
+
 @Injectable()
 export class VehicleStateService {
-    private state: Map<number, VehicleEntityState> = new Map<number, VehicleEntityState>();
+    private state: Map<number, VehicleStateItem> = new Map<number, VehicleStateItem>();
 
-    private selectors = [];
+    private selectorCreators = [];
 
     public async getVehicleState(vehicleEntityId: number): Promise<VehicleEntityState> {
         if (this.state.has(vehicleEntityId)) {
-            return { ...this.state.get(vehicleEntityId) };
+            const item = this.state.get(vehicleEntityId);
+
+            return { ...item.state };
         }
 
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
@@ -23,8 +30,25 @@ export class VehicleStateService {
     }
 
     public setVehicleState(vehicleEntityId: number, state: VehicleEntityState): void {
-        this.state.set(vehicleEntityId, state);
-        this.selectors.forEach(selector => selector(state, vehicleEntityId));
+        let item = this.state.get(vehicleEntityId);
+
+        if (!item) {
+            const selectors = [];
+
+            for (const creator of this.selectorCreators) {
+                selectors.push(creator(vehicleEntityId));
+            }
+
+            item = {
+                selectors,
+                state: state,
+            };
+        } else {
+            item.state = state;
+        }
+
+        this.state.set(vehicleEntityId, item);
+        item.selectors.forEach(selector => selector(state, vehicleEntityId));
     }
 
     public deleteVehicleState(vehicleEntityId: number): void {
@@ -37,13 +61,21 @@ export class VehicleStateService {
         TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_STATE, vehicleNetworkId, state);
     }
 
-    public updateVehicleCondition(vehicleEntityId: number, condition: Partial<VehicleCondition>): void {
+    public updateVehicleCondition(
+        vehicleEntityId: number,
+        condition: Partial<VehicleCondition>,
+        disableSync = true
+    ): void {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
-        TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION, vehicleNetworkId, condition);
+        TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION, vehicleNetworkId, condition, disableSync);
     }
 
-    public addVehicleStateSelector(method: (data) => void, ...selectors: ((state: VehicleEntityState) => any)[]): void {
-        this.selectors.push(createSelector([(state, vehicleEntityId) => vehicleEntityId, ...selectors], method));
+    public addVehicleStateSelector(selectors: ((state: VehicleEntityState) => any)[], method: (...data) => void): void {
+        this.selectorCreators.push(vehicleEntityId => {
+            return createSelector(selectors, (...data) => {
+                return method(vehicleEntityId, ...data);
+            });
+        });
     }
 }

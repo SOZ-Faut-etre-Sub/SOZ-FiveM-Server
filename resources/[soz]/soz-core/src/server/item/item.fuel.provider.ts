@@ -3,7 +3,6 @@ import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
 import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent } from '../../shared/event';
 import { CommonItem, InventoryItem } from '../../shared/item';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
