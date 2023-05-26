@@ -162,9 +162,7 @@ function StartConsumptionLoop()
 
             -- Blackout level has changed
             if not globalState.blackoutOverride and globalState.blackoutLevel ~= newBlackoutLevel then
-                exports["soz-core"]:SetGlobalState({
-                    blackoutLevel = newBlackoutLevel,
-                })
+                exports["soz-core"]:SetGlobalState({blackoutLevel = newBlackoutLevel})
             end
 
             -- Handle job terminal consumption
