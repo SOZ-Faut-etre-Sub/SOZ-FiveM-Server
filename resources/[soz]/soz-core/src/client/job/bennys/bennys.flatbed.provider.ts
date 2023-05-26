@@ -367,6 +367,8 @@ export class BennysFlatbedProvider {
             false
         );
         SetVehicleOnGroundProperly(attachedVehicle);
+        if (!SetVehicleOnGroundProperly(attachedVehicle)) SetEntityAsMissionEntity(attachedVehicle, true, true);
+
         Entity(flatbed).state.set('flatbedAttachedVehicle', null, true);
 
         this.soundService.play('seatbelt/unbuckle', 0.2);
