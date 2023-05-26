@@ -3,6 +3,7 @@ import { VehicleAirProvider } from './vehicle.air.provider';
 import { VehicleCarWashProvider } from './vehicle.carwash.provider';
 import { VehicleConditionProvider } from './vehicle.condition.provider';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
+import { VehicleDamageProvider } from './vehicle.damage.provider';
 import { VehicleDealershipProvider } from './vehicle.dealership.provider';
 import { VehicleElectricProvider } from './vehicle.electric.provider';
 import { VehicleFuelProvider } from './vehicle.fuel.provider';
@@ -20,6 +21,7 @@ import { VehicleStateProvider } from './vehicle.state.provider';
         VehicleCarWashProvider,
         VehicleConditionProvider,
         VehicleCustomProvider,
+        VehicleDamageProvider,
         VehicleDealershipProvider,
         VehicleFuelProvider,
         VehicleGarageProvider,

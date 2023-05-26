@@ -244,13 +244,6 @@ export class VehicleLockProvider {
         return this.vehicleStateService.hasVehicleKey(vehicle.plate, player.citizenid);
     }
 
-    @OnEvent(ServerEvent.VEHICLE_SET_OPEN)
-    async onOpen(source: number, vehicleNetworkId: number, open: boolean) {
-        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
-            open,
-        });
-    }
-
     @OnEvent(ServerEvent.VEHICLE_FORCE_OPEN)
     async onForceOpen(source: number, vehicleNetworkId: number) {
         this.vehicleStateService.updateVehicleState(vehicleNetworkId, {

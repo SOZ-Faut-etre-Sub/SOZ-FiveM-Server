@@ -1,7 +1,7 @@
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ServerEvent } from '../../shared/event';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { MultiZone } from '../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
@@ -88,30 +88,5 @@ export class VehicleCarWashProvider {
                 scale: 0.8,
             });
         }
-    }
-
-    @OnEvent(ClientEvent.VEHICLE_UPDATE_DIRT_LEVEL)
-    async onVehicleUpdateDirtLevel(vehicleId: number, dirtLevel: number) {
-        const player = this.playerService.getPlayer();
-
-        if (!player) {
-            return;
-        }
-
-        const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleId);
-
-        if (!vehicleEntityId) {
-            return;
-        }
-
-        SetVehicleDirtLevel(vehicleEntityId, dirtLevel);
-
-        if (dirtLevel === 0) {
-            WashDecalsFromVehicle(vehicleEntityId, 1.0);
-        }
-
-        this.vehicleStateService.updateVehicleCondition(vehicleEntityId, {
-            dirtLevel,
-        });
     }
 }

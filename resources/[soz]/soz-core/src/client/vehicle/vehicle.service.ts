@@ -100,65 +100,6 @@ export class VehicleService {
         if (state.plate) {
             SetVehicleNumberPlateText(vehicle, state.plate);
         }
-
-        this.applyVehicleCondition(vehicle, state.condition);
-    }
-
-    public applyVehicleCondition(vehicle: number, condition: VehicleCondition): void {
-        SetVehicleFuelLevel(vehicle, condition.fuelLevel);
-
-        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
-
-        if (maxOilVolume) {
-            const realOilLevel = (condition.oilLevel * maxOilVolume) / 100;
-            SetVehicleOilLevel(vehicle, realOilLevel);
-        }
-
-        SetVehicleDirtLevel(vehicle, condition.dirtLevel);
-
-        if (condition.dirtLevel < 0.1) {
-            WashDecalsFromVehicle(vehicle, 1.0);
-        }
-
-        SetVehicleBodyHealth(vehicle, condition.bodyHealth);
-
-        if (condition.bodyHealth > 999.99) {
-            SetVehicleFixed(vehicle);
-            SetVehicleDeformationFixed(vehicle);
-        }
-
-        SetVehicleEngineHealth(vehicle, condition.engineHealth);
-        SetVehiclePetrolTankHealth(vehicle, condition.tankHealth);
-
-        const wheelNumber = 6;
-
-        for (let i = 0; i < wheelNumber; i++) {
-            SetVehicleWheelHealth(vehicle, i, condition.tireHealth[i] || 1000.0);
-        }
-
-        for (let i = 0; i < wheelNumber; i++) {
-            if (condition.tireBurstCompletely[i]) {
-                SetVehicleTyreBurst(vehicle, i, true, 1000.0);
-            } else if (condition.tireBurstState[i]) {
-                SetVehicleTyreBurst(vehicle, i, false, condition.tireHealth[i] || 1000.0);
-            } else {
-                SetVehicleTyreFixed(vehicle, i);
-            }
-        }
-
-        for (const [key, value] of Object.entries(condition.doorStatus)) {
-            if (value) {
-                SetVehicleDoorBroken(vehicle, parseInt(key, 10), true);
-            }
-        }
-
-        for (const [key, value] of Object.entries(condition.windowStatus)) {
-            if (value) {
-                SmashVehicleWindow(vehicle, parseInt(key, 10));
-            } else {
-                FixVehicleWindow(vehicle, parseInt(key, 10));
-            }
-        }
     }
 
     public getVehicleCondition(vehicle: number): Partial<VehicleCondition> {

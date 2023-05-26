@@ -1,7 +1,7 @@
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { ClientEvent, ServerEvent } from '../../../shared/event';
+import { ServerEvent } from '../../../shared/event';
 import { Monitor } from '../../../shared/monitor';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { ProgressAnimation, ProgressOptions } from '../../../shared/progress';

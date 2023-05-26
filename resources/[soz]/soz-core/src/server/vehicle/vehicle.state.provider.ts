@@ -27,7 +27,12 @@ export class VehicleStateProvider {
 
     @Exportable('UpdateVehicleCondition')
     @OnEvent(ServerEvent.VEHICLE_UPDATE_CONDITION)
-    public updateVehicleCondition(source: number, vehicleNetworkId: number, condition: VehicleCondition): void {
-        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, condition);
+    public updateVehicleCondition(
+        source: number,
+        vehicleNetworkId: number,
+        condition: VehicleCondition,
+        disableSync = true
+    ): void {
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, condition, disableSync ? source : null);
     }
 }

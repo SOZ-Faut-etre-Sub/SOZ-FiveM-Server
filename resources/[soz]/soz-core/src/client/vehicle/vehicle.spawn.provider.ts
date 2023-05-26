@@ -246,7 +246,6 @@ export class VehicleSpawnProvider {
         }
 
         if (vehicleSpawn.warp) {
-            this.vehicleStateService.setVehicleState(vehicle, vehicleSpawn.state);
             const ped = PlayerPedId();
 
             TaskWarpPedIntoVehicle(ped, vehicle, -1);

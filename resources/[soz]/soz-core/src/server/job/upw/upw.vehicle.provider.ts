@@ -4,7 +4,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
-import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { ServerEvent } from '@public/shared/event';
 import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
 
 import { VehicleStateService } from '../../vehicle/vehicle.state.service';

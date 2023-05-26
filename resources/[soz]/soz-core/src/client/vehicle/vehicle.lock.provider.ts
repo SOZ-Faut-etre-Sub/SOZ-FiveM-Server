@@ -1,8 +1,7 @@
 import { Command } from '../../core/decorators/command';
-import { OnEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { StateBagHandler } from '../../core/decorators/state';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait, waitUntil } from '../../core/utils';
@@ -120,6 +119,14 @@ export class VehicleLockProvider {
 
     private vehicleTrunkOpened: TrunkOpened | null = null;
 
+    @Once(OnceStep.Start)
+    private async initLockStateSelector() {
+        this.vehicleStateService.addVehicleStateSelector(
+            [state => state.open, state => state.forced],
+            this.onVehicleOpenChange.bind(this)
+        );
+    }
+
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public async onEnterLeaveVehicle() {
@@ -155,45 +162,13 @@ export class VehicleLockProvider {
         }
     }
 
-    @StateBagHandler('forced', null)
-    @StateBagHandler('open', null)
-    // @TODO use listener
-    private async onVehicleOpenChange(bag: string) {
-        const split = bag.split(':');
-
-        if (!split[1]) {
-            return;
-        }
-
-        const vehicleId = parseInt(split[1]);
-
-        if (!vehicleId) {
-            return;
-        }
-
-        if (!NetworkDoesEntityExistWithNetworkId(vehicleId)) {
-            return;
-        }
-
-        const vehicle = NetworkGetEntityFromNetworkId(vehicleId);
-
-        if (!vehicle) {
-            return;
-        }
-
-        if (!IsEntityAVehicle(vehicle)) {
-            return;
-        }
-
-        await wait(0);
-        const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
-
-        if (vehicleState.open || vehicleState.forced) {
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
+    private async onVehicleOpenChange(vehicleId: number, open: boolean, forced: boolean) {
+        if (open || forced) {
+            SetVehicleDoorsLocked(vehicleId, VehicleLockStatus.Unlocked);
         } else {
-            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
+            SetVehicleDoorsLocked(vehicleId, VehicleLockStatus.Locked);
 
-            if (this.vehicleTrunkOpened && this.vehicleTrunkOpened.vehicle === vehicle) {
+            if (this.vehicleTrunkOpened && this.vehicleTrunkOpened.vehicle === vehicleId) {
                 this.vehicleTrunkOpened = null;
                 TriggerEvent('inventory:client:closeInventory');
             }
@@ -513,14 +488,16 @@ export class VehicleLockProvider {
             }
         );
 
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
-
         if (state.open) {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
-            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, false);
+            this.vehicleStateService.updateVehicleState(vehicle, {
+                open: false,
+            });
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
-            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, true);
+            this.vehicleStateService.updateVehicleState(vehicle, {
+                open: true,
+            });
         }
 
         SetVehicleLights(vehicle, 2);

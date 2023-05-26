@@ -2,72 +2,38 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
-import { getRandomInt } from '../../shared/random';
-import {
-    isVehicleModelElectric,
-    VehicleClass,
-    VehicleCondition,
-    VehicleEntityState,
-} from '../../shared/vehicle/vehicle';
+import { VehicleEntityState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
-
-type VehicleStatus = {
-    engineHealth: number;
-    bodyHealth: number;
-    tankHealth: number;
-    vehicle: number;
-};
-
-const ENGINE_DAMAGE_MULTIPLIER = 7.75;
-const BODY_DAMAGE_MULTIPLIER = 6.25;
-const TANK_DAMAGE_MULTIPLIER = 2.5;
-
-const STOP_ENGINE_THRESHOLD = 120;
-
-const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
-const ENGINE_MIN_HEALTH = 100.0;
-
-const TIRE_TEMPORARY_REPAIR_DISTANCE = 10000.0;
-
-const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
-    [VehicleClass.Compacts]: 0.8,
-    [VehicleClass.Sedans]: 0.8,
-    [VehicleClass.SUVs]: 0.8,
-    [VehicleClass.Coupes]: 0.76,
-    [VehicleClass.Muscle]: 0.8,
-    [VehicleClass.SportsClassics]: 0.76,
-    [VehicleClass.Sports]: 0.76,
-    [VehicleClass.Super]: 0.76,
-    [VehicleClass.Motorcycles]: 0.216,
-    [VehicleClass.OffRoad]: 0.56,
-    [VehicleClass.Industrial]: 0.2,
-    [VehicleClass.Utility]: 0.28,
-    [VehicleClass.Vans]: 0.68,
-    [VehicleClass.Cycles]: 0.8,
-    [VehicleClass.Boats]: 0.32,
-    [VehicleClass.Helicopters]: 0.56,
-    [VehicleClass.Planes]: 0.56,
-    [VehicleClass.Service]: 0.6,
-    [VehicleClass.Emergency]: 0.68,
-    [VehicleClass.Military]: 0.536,
-    [VehicleClass.Commercial]: 0.344,
-    [VehicleClass.Trains]: 0.8,
-};
 
 type CurrentVehiclePosition = {
     vehicle: number;
     position: Vector3;
 };
 
-type PreviousVehicleHealth = {
-    engineHealth: number;
-    bodyHealth: number;
+export const createVehicleChangeCallback = (
+    callback: (vehicle: number, ...data) => void,
+    checkOwnership = true
+): ((vehicle: number) => void) => {
+    return (vehicle: number, ...data) => {
+        if (!vehicle || !DoesEntityExist(vehicle)) {
+            return;
+        }
+
+        if (!IsEntityAVehicle(vehicle)) {
+            return;
+        }
+
+        if (checkOwnership && !NetworkHasControlOfEntity(vehicle)) {
+            return;
+        }
+
+        callback(vehicle, ...data);
+    };
 };
 
 @Provider()
@@ -84,29 +50,160 @@ export class VehicleConditionProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
-    private currentVehicleStatus: VehicleStatus | null = null;
-
     private currentVehiclePositionForMileage: CurrentVehiclePosition | null = null;
-
-    private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
     private adminNoStall = false;
 
-    private previousVehicleHealth: PreviousVehicleHealth | null = null;
-
     @Once(OnceStep.Start)
     public initStateSelector() {
+        // Body health
         this.vehicleStateService.addVehicleStateSelector(
-            this.onVehicleSyncCondition.bind(this),
-            (state: VehicleEntityState) => state.condition
+            [(state: VehicleEntityState) => state.condition.bodyHealth],
+            createVehicleChangeCallback((vehicle: number, bodyHealth: number) => {
+                SetVehicleBodyHealth(vehicle, bodyHealth);
+
+                if (bodyHealth > 999.99) {
+                    SetVehicleDeformationFixed(vehicle);
+                }
+            })
+        );
+
+        // Fuel level
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.condition.fuelLevel],
+            createVehicleChangeCallback((vehicle: number, fuelLevel: number) => {
+                SetVehicleFuelLevel(vehicle, fuelLevel);
+            })
+        );
+
+        // Oil level
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.condition.oilLevel],
+            createVehicleChangeCallback((vehicle: number, oilLevel: number) => {
+                const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
+
+                if (maxOilVolume) {
+                    const realOilLevel = (oilLevel * maxOilVolume) / 100;
+                    SetVehicleOilLevel(vehicle, realOilLevel);
+                }
+            })
+        );
+
+        // Dirt level
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.condition.dirtLevel],
+            createVehicleChangeCallback((vehicle: number, dirtLevel: number) => {
+                SetVehicleDirtLevel(vehicle, dirtLevel);
+
+                if (dirtLevel < 0.1) {
+                    WashDecalsFromVehicle(vehicle, 1.0);
+                }
+            })
+        );
+
+        // Engine health
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.condition.engineHealth],
+            createVehicleChangeCallback((vehicle: number, engineHealth: number) => {
+                SetVehicleEngineHealth(vehicle, engineHealth);
+            })
+        );
+
+        // Petrol tank health
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.condition.tankHealth],
+            createVehicleChangeCallback((vehicle: number, tankHealth: number) => {
+                SetVehiclePetrolTankHealth(vehicle, tankHealth);
+            })
+        );
+
+        // Wheel
+        this.vehicleStateService.addVehicleStateSelector(
+            [
+                (state: VehicleEntityState) => state.condition.tireHealth,
+                (state: VehicleEntityState) => state.condition.tireBurstCompletely,
+                (state: VehicleEntityState) => state.condition.tireBurstState,
+            ],
+            createVehicleChangeCallback(this.applyVehicleTire.bind(this))
+        );
+
+        // Door broken
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.condition.doorStatus],
+            createVehicleChangeCallback((vehicle: number, doorStatus: { [key: number]: boolean }) => {
+                for (const [key, value] of Object.entries(doorStatus)) {
+                    if (value) {
+                        SetVehicleDoorBroken(vehicle, parseInt(key, 10), true);
+                    }
+                }
+            })
+        );
+
+        // Windows broken
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.condition.windowStatus],
+            createVehicleChangeCallback((vehicle: number, windowStatus: { [key: number]: boolean }) => {
+                for (const [key, value] of Object.entries(windowStatus)) {
+                    if (value) {
+                        SmashVehicleWindow(vehicle, parseInt(key, 10));
+                    } else {
+                        FixVehicleWindow(vehicle, parseInt(key, 10));
+                    }
+                }
+            })
+        );
+
+        // Indicators and lights
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.indicators.left],
+            createVehicleChangeCallback((vehicle: number, left: boolean) => {
+                SetVehicleIndicatorLights(vehicle, 1, left);
+            }, false)
         );
 
         this.vehicleStateService.addVehicleStateSelector(
-            this.onVehicleIndicatorChange.bind(this),
-            (state: VehicleEntityState) => state.indicators.left,
-            (state: VehicleEntityState) => state.indicators.right,
-            (state: VehicleEntityState) => state.openWindows
+            [(state: VehicleEntityState) => state.indicators.right],
+            createVehicleChangeCallback((vehicle: number, right: boolean) => {
+                SetVehicleIndicatorLights(vehicle, 1, right);
+            }, false)
         );
+
+        // Windows
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleEntityState) => state.openWindows],
+            createVehicleChangeCallback((vehicle: number, openWindows: boolean) => {
+                if (openWindows) {
+                    RollDownWindow(vehicle, 0);
+                    RollDownWindow(vehicle, 1);
+                } else {
+                    RollUpWindow(vehicle, 0);
+                    RollUpWindow(vehicle, 1);
+                }
+            }, false)
+        );
+    }
+
+    public applyVehicleTire(
+        vehicle: number,
+        tireHealth: { [key: number]: number },
+        tireBurstCompletely: { [key: number]: boolean },
+        tireBurstState: { [key: number]: boolean }
+    ) {
+        const wheelNumber = 6;
+
+        for (let i = 0; i < wheelNumber; i++) {
+            SetVehicleWheelHealth(vehicle, i, tireHealth[i] || 1000.0);
+        }
+
+        for (let i = 0; i < wheelNumber; i++) {
+            if (tireBurstCompletely[i]) {
+                SetVehicleTyreBurst(vehicle, i, true, 1000.0);
+            } else if (tireBurstState[i]) {
+                SetVehicleTyreBurst(vehicle, i, false, tireHealth[i] || 1000.0);
+            } else {
+                SetVehicleTyreFixed(vehicle, i);
+            }
+        }
     }
 
     @Once(OnceStep.PlayerLoaded)
@@ -152,28 +249,6 @@ export class VehicleConditionProvider {
                 },
             },
         ]);
-    }
-
-    @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
-    private async onBaseLeftVehicle() {
-        this.previousVehicleHealth = null;
-    }
-
-    private async onVehicleSyncCondition(vehicle: number, condition: VehicleCondition) {
-        if (!vehicle || !DoesEntityExist(vehicle)) {
-            return;
-        }
-
-        if (!IsEntityAVehicle(vehicle)) {
-            return;
-        }
-
-        if (!NetworkHasControlOfEntity(vehicle)) {
-            return;
-        }
-
-        // @TODO Fix this only apply condition that changes
-        this.vehicleService.applyVehicleCondition(vehicle, condition);
     }
 
     @OnEvent(ClientEvent.VEHICLE_CHECK_CONDITION)
@@ -261,177 +336,6 @@ export class VehicleConditionProvider {
         }
     }
 
-    @Tick(0)
-    public async preventVehicleFlip() {
-        if (!this.currentVehicleStatus) {
-            return;
-        }
-
-        const roll = GetEntityRoll(this.currentVehicleStatus.vehicle);
-
-        if ((roll > 75.0 || roll < -75.0) && GetEntitySpeed(this.currentVehicleStatus.vehicle) < 2) {
-            DisableControlAction(2, 59, true);
-            DisableControlAction(2, 60, true);
-        }
-    }
-
-    @Tick(0)
-    public async setVehiclePower() {
-        if (!this.currentVehicleStatus) {
-            return;
-        }
-
-        if (this.currentVehicleStatus.engineHealth < ENGINE_MIN_HEALTH + 1.0) {
-            SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, 0.05);
-        } else if (this.currentVehicleStatus.engineHealth < 500.0) {
-            const power = this.currentVehicleStatus.engineHealth / 500.0;
-
-            SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, power);
-        } else {
-            SetVehicleCheatPowerIncrease(this.currentVehicleStatus.vehicle, 1.0);
-        }
-    }
-
-    @Tick(50)
-    public updateVehicleDamage() {
-        const ped = PlayerPedId();
-        const vehicle = GetVehiclePedIsIn(ped, false);
-
-        if (!vehicle) {
-            this.currentVehicleStatus = null;
-
-            return;
-        }
-
-        if (!NetworkHasControlOfEntity(vehicle)) {
-            this.currentVehicleStatus = null;
-
-            return;
-        }
-
-        const lastVehicleStatus = this.currentVehicleStatus;
-        this.currentVehicleStatus = {
-            engineHealth: GetVehicleEngineHealth(vehicle),
-            bodyHealth: GetVehicleBodyHealth(vehicle),
-            tankHealth: GetVehiclePetrolTankHealth(vehicle),
-            vehicle,
-        };
-
-        if (!lastVehicleStatus || lastVehicleStatus.vehicle !== vehicle) {
-            return;
-        }
-
-        let engineHealthDiff = lastVehicleStatus.engineHealth - this.currentVehicleStatus.engineHealth;
-        let bodyHealthDiff = lastVehicleStatus.bodyHealth - this.currentVehicleStatus.bodyHealth;
-        let tankHealthDiff = lastVehicleStatus.tankHealth - this.currentVehicleStatus.tankHealth;
-
-        const vehicleClass = GetVehicleClass(vehicle);
-
-        // A reparation was done, do not trigger damage diff here
-        if (engineHealthDiff < 0 || bodyHealthDiff < 0 || tankHealthDiff < 0) {
-            return;
-        }
-
-        if (engineHealthDiff > 0) {
-            engineHealthDiff *= ENGINE_DAMAGE_MULTIPLIER * VEHICLE_CLASS_DAMAGE_MULTIPLIER[vehicleClass];
-        }
-
-        if (
-            this.currentVehicleStatus.engineHealth < ENGINE_THRESHOLD_AUTO_DEGRADE &&
-            this.currentVehicleStatus.engineHealth > ENGINE_MIN_HEALTH + 1.0
-        ) {
-            engineHealthDiff += 0.2;
-        }
-
-        if (bodyHealthDiff > 0) {
-            bodyHealthDiff *= BODY_DAMAGE_MULTIPLIER * VEHICLE_CLASS_DAMAGE_MULTIPLIER[vehicleClass];
-        }
-
-        if (tankHealthDiff > 0) {
-            tankHealthDiff *= TANK_DAMAGE_MULTIPLIER * VEHICLE_CLASS_DAMAGE_MULTIPLIER[vehicleClass];
-        }
-
-        const engineHealthDiffSharing = engineHealthDiff * 0.25;
-        const bodyHealthDiffSharing = bodyHealthDiff * 0.25;
-        const tankHealthDiffSharing = tankHealthDiff * 0.25;
-
-        engineHealthDiff += (bodyHealthDiffSharing + tankHealthDiffSharing) * 1.25;
-        bodyHealthDiff += engineHealthDiffSharing + tankHealthDiffSharing;
-        tankHealthDiff += (engineHealthDiffSharing + bodyHealthDiffSharing) * 0.4;
-
-        // set new health, only when diff is significant
-        if (engineHealthDiff > 0.1) {
-            this.currentVehicleStatus.engineHealth = lastVehicleStatus.engineHealth - engineHealthDiff;
-            SetVehicleEngineHealth(vehicle, this.currentVehicleStatus.engineHealth);
-        }
-
-        if (bodyHealthDiff > 0.1) {
-            this.currentVehicleStatus.bodyHealth = lastVehicleStatus.bodyHealth - bodyHealthDiff;
-            SetVehicleBodyHealth(vehicle, this.currentVehicleStatus.bodyHealth);
-        }
-        if (isVehicleModelElectric(GetEntityModel(vehicle))) {
-            this.currentVehicleStatus.tankHealth = 1000;
-            SetVehiclePetrolTankHealth(vehicle, 1000);
-        } else {
-            if (tankHealthDiff > 0.1) {
-                this.currentVehicleStatus.tankHealth = Math.max(lastVehicleStatus.tankHealth - tankHealthDiff, 600);
-                SetVehiclePetrolTankHealth(vehicle, this.currentVehicleStatus.tankHealth);
-            }
-        }
-
-        const healthDiff =
-            lastVehicleStatus.engineHealth +
-            lastVehicleStatus.bodyHealth -
-            this.currentVehicleStatus.engineHealth -
-            this.currentVehicleStatus.bodyHealth;
-
-        if (healthDiff > STOP_ENGINE_THRESHOLD && !this.adminNoStall) {
-            const waitTime = Math.min(
-                (lastVehicleStatus.engineHealth / this.currentVehicleStatus.engineHealth +
-                    lastVehicleStatus.bodyHealth / this.currentVehicleStatus.bodyHealth) *
-                    getRandomInt(2000, 3000),
-                10000
-            );
-
-            const end = GetGameTimer() + waitTime;
-
-            setTimeout(async () => {
-                SetVehicleUndriveable(vehicle, true);
-
-                while (GetGameTimer() < end) {
-                    if (IsPedInVehicle(PlayerPedId(), vehicle, false)) {
-                        DisableControlAction(0, 71, true);
-                        DisableControlAction(0, 72, true);
-                    }
-
-                    if (GetIsVehicleEngineRunning(vehicle)) {
-                        SetVehicleEngineOn(vehicle, false, true, false);
-                    }
-
-                    await wait(0);
-                }
-
-                SetVehicleUndriveable(vehicle, false);
-                SetVehicleEngineOn(vehicle, true, false, true);
-            }, 0);
-        }
-    }
-
-    @Tick(500)
-    public async cancelElectricTankDamage() {
-        const vehicles: number[] = GetGamePool('CVehicle');
-        for (const vehicle of vehicles) {
-            if (GetPlayerServerId(NetworkGetEntityOwner(vehicle)) !== GetPlayerServerId(PlayerId())) {
-                continue;
-            }
-            if (isVehicleModelElectric(GetEntityModel(vehicle))) {
-                SetVehiclePetrolTankHealth(vehicle, 1000);
-                SetVehicleCanLeakOil(vehicle, false);
-                SetVehicleCanLeakPetrol(vehicle, false);
-            }
-        }
-    }
-
     @Tick(500)
     public checkVehicleMileage() {
         const ped = PlayerPedId();
@@ -483,109 +387,6 @@ export class VehicleConditionProvider {
             const trailerNetworkId = NetworkGetNetworkIdFromEntity(trailerEntity);
 
             TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_MILEAGE, trailerNetworkId, diffDistance);
-        }
-    }
-
-    @Tick(500)
-    public async checkVehicleTireRepair() {
-        const ped = PlayerPedId();
-        const vehicle = GetVehiclePedIsIn(ped, false);
-
-        if (!vehicle) {
-            this.currentVehiclePositionForTemporaryTire = null;
-
-            return;
-        }
-
-        if (!NetworkHasControlOfEntity(vehicle)) {
-            this.currentVehiclePositionForTemporaryTire = null;
-
-            return;
-        }
-
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
-        const keys = Object.keys(state.condition.tireTemporaryRepairDistance).map(key => parseInt(key, 10));
-
-        if (keys.length === 0) {
-            this.currentVehiclePositionForTemporaryTire = null;
-
-            return;
-        }
-
-        if (
-            this.currentVehiclePositionForTemporaryTire &&
-            this.currentVehiclePositionForTemporaryTire.vehicle !== vehicle
-        ) {
-            this.currentVehiclePositionForTemporaryTire = {
-                vehicle,
-                position: GetEntityCoords(vehicle, true) as Vector3,
-            };
-
-            return;
-        }
-
-        const lastVehiclePosition = this.currentVehiclePositionForTemporaryTire;
-        this.currentVehiclePositionForTemporaryTire = {
-            vehicle,
-            position: GetEntityCoords(vehicle, true) as Vector3,
-        };
-
-        if (lastVehiclePosition === null) {
-            return;
-        }
-
-        const diffDistance = getDistance(
-            lastVehiclePosition.position,
-            this.currentVehiclePositionForTemporaryTire.position
-        );
-        const newCondition: Partial<VehicleCondition> = {};
-        let applyCondition = false;
-
-        for (const tireKey of keys) {
-            const distance = state.condition.tireTemporaryRepairDistance[tireKey] + diffDistance;
-
-            if (distance < TIRE_TEMPORARY_REPAIR_DISTANCE) {
-                newCondition.tireTemporaryRepairDistance[tireKey] = distance;
-            } else {
-                delete newCondition.tireTemporaryRepairDistance[tireKey];
-                newCondition.tireBurstCompletely[tireKey] = true;
-                applyCondition = true;
-            }
-        }
-
-        this.vehicleStateService.updateVehicleCondition(vehicle, newCondition);
-
-        if (applyCondition) {
-            this.vehicleService.applyVehicleCondition(vehicle, {
-                ...state.condition,
-                ...newCondition,
-            });
-        }
-    }
-
-    private async onVehicleIndicatorChange(
-        vehicle: number,
-        left: boolean,
-        right: boolean,
-        openWindows: VehicleEntityState['openWindows']
-    ) {
-        if (!vehicle || !DoesEntityExist(vehicle)) {
-            return;
-        }
-
-        if (!IsEntityAVehicle(vehicle)) {
-            return;
-        }
-
-        SetVehicleIndicatorLights(vehicle, 0, right);
-        SetVehicleIndicatorLights(vehicle, 1, left);
-
-        if (openWindows) {
-            RollDownWindow(vehicle, 0);
-            RollDownWindow(vehicle, 1);
-        } else {
-            RollUpWindow(vehicle, 0);
-            RollUpWindow(vehicle, 1);
         }
     }
 
