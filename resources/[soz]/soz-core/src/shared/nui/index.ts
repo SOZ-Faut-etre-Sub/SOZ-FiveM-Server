@@ -3,6 +3,7 @@ import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
 import { NuiHudMethodMap } from '@public/shared/nui/hud';
 import { NuiItemMethodMap } from '@public/shared/nui/item';
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
+import { NuiRadioMethodMap, NuiRadioVehicleMethodMap } from '@public/shared/nui/radio';
 import { NuiTalentMethodMap } from '@public/shared/nui/talent';
 
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
@@ -53,6 +54,8 @@ export interface NuiMethodMap {
     taxi: NuiTaxiMethodMap;
     card: NuiCardMethodMap;
     hud: NuiHudMethodMap;
+    radio: NuiRadioMethodMap;
+    radio_vehicle: NuiRadioVehicleMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

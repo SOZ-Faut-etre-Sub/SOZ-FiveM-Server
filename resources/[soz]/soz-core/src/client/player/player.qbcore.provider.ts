@@ -33,21 +33,26 @@ export class PlayerQbcoreProvider {
 
     @Once(OnceStep.NuiLoaded)
     async onNuiLoad(): Promise<void> {
-        if (this.playerService.isLoggedIn()) {
-            await wait(0);
-            const playerData = this.qbcore.getPlayer();
-            this.playerService.setPlayer(playerData);
+        await wait(0);
+        const playerData = this.qbcore.getPlayer();
+
+        if (!playerData) {
+            return;
         }
+
+        this.playerService.setPlayer(playerData);
     }
 
     @Once(OnceStep.Start)
     async onStart(): Promise<void> {
-        if (this.playerService.isLoggedIn()) {
-            await wait(0);
-            const playerData = this.qbcore.getPlayer();
+        await wait(0);
+        const playerData = this.qbcore.getPlayer();
 
-            this.playerService.setPlayer(playerData);
-            this.onceLoader.trigger(OnceStep.PlayerLoaded, playerData);
+        if (!playerData) {
+            return;
         }
+
+        this.playerService.setPlayer(playerData);
+        this.onceLoader.trigger(OnceStep.PlayerLoaded, playerData);
     }
 }

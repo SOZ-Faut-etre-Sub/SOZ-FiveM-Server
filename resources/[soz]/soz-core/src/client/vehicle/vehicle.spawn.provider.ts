@@ -12,6 +12,7 @@ import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
 export class VehicleSpawnProvider {
@@ -23,6 +24,9 @@ export class VehicleSpawnProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -242,6 +246,7 @@ export class VehicleSpawnProvider {
         }
 
         if (vehicleSpawn.warp) {
+            this.vehicleStateService.setVehicleState(vehicle, vehicleSpawn.state);
             const ped = PlayerPedId();
 
             TaskWarpPedIntoVehicle(ped, vehicle, -1);

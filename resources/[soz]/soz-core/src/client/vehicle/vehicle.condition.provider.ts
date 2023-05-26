@@ -1,7 +1,6 @@
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { StateBagHandler } from '../../core/decorators/state';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
@@ -95,7 +94,8 @@ export class VehicleConditionProvider {
 
     private previousVehicleHealth: PreviousVehicleHealth | null = null;
 
-    public constructor() {
+    @Once(OnceStep.Start)
+    public initStateSelector() {
         this.vehicleStateService.addVehicleStateSelector(
             this.onVehicleSyncCondition.bind(this),
             (state: VehicleEntityState) => state.condition
@@ -103,7 +103,8 @@ export class VehicleConditionProvider {
 
         this.vehicleStateService.addVehicleStateSelector(
             this.onVehicleIndicatorChange.bind(this),
-            (state: VehicleEntityState) => state.indicators,
+            (state: VehicleEntityState) => state.indicators.left,
+            (state: VehicleEntityState) => state.indicators.right,
             (state: VehicleEntityState) => state.openWindows
         );
     }
@@ -171,6 +172,7 @@ export class VehicleConditionProvider {
             return;
         }
 
+        // @TODO Fix this only apply condition that changes
         this.vehicleService.applyVehicleCondition(vehicle, condition);
     }
 
@@ -469,6 +471,10 @@ export class VehicleConditionProvider {
         const diffDistance = getDistance(lastVehiclePosition.position, this.currentVehiclePositionForMileage.position);
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
 
+        if (diffDistance < 0.1) {
+            return;
+        }
+
         TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_MILEAGE, networkId, diffDistance);
 
         const [isTrailerExists, trailerEntity] = GetVehicleTrailerVehicle(vehicle);
@@ -559,7 +565,8 @@ export class VehicleConditionProvider {
 
     private async onVehicleIndicatorChange(
         vehicle: number,
-        indicators: VehicleEntityState['indicators'],
+        left: boolean,
+        right: boolean,
         openWindows: VehicleEntityState['openWindows']
     ) {
         if (!vehicle || !DoesEntityExist(vehicle)) {
@@ -570,10 +577,8 @@ export class VehicleConditionProvider {
             return;
         }
 
-        await wait(0);
-
-        SetVehicleIndicatorLights(vehicle, 0, indicators.right);
-        SetVehicleIndicatorLights(vehicle, 1, indicators.left);
+        SetVehicleIndicatorLights(vehicle, 0, right);
+        SetVehicleIndicatorLights(vehicle, 1, left);
 
         if (openWindows) {
             RollDownWindow(vehicle, 0);

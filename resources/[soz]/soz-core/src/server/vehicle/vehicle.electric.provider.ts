@@ -41,8 +41,7 @@ export class VehicleElectricProvider {
             return;
         }
 
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const vehicleState = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const vehicleState = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const energyToFill = Math.floor((100 - vehicleState.condition.fuelLevel) * 0.6); // 100L <=> 60kWh
 
         const [reservedEnergy, station, maxEnergyForMoney] = await this.lockService.lock(
@@ -111,11 +110,8 @@ export class VehicleElectricProvider {
             TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
             leftOver = reservedEnergy;
         } else {
-            this.vehicleStateService.updateVehicleState(vehicleEntity, {
-                condition: {
-                    ...vehicleState.condition,
-                    fuelLevel: vehicleState.condition.fuelLevel + Math.ceil(totalFilled / 0.6),
-                },
+            this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+                fuelLevel: vehicleState.condition.fuelLevel + Math.ceil(totalFilled / 0.6),
             });
 
             this.notifier.notify(source, `Vous avez payé $${cost} pour ${totalFilled}kWh d'éléctricité.`, 'success');

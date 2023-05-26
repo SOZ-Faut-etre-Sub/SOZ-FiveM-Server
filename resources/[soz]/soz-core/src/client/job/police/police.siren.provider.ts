@@ -1,4 +1,5 @@
 import { Command } from '../../../core/decorators/command';
+import { Once } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick } from '../../../core/decorators/tick';
@@ -47,7 +48,8 @@ export class PoliceSirenProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
-    public constructor() {
+    @Once()
+    public initStateSelector() {
         this.vehicleStateService.addVehicleStateSelector(
             this.handleSirenUpdate.bind(this),
             state => state.isSirenMuted
@@ -94,7 +96,11 @@ export class PoliceSirenProvider {
 
         for (const { vehicle, isSirenMuted } of muted) {
             const vehicleId = NetworkGetEntityFromNetworkId(vehicle);
-            SetVehicleHasMutedSirens(vehicleId, isSirenMuted);
+            const hasSoundOn = IsVehicleSirenAudioOn(vehicleId);
+
+            if (!!hasSoundOn !== !isSirenMuted) {
+                SetVehicleHasMutedSirens(vehicleId, isSirenMuted);
+            }
         }
     }
 

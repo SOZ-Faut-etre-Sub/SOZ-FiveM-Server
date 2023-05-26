@@ -32,6 +32,27 @@ export class AnimationService {
         await wait(interval);
     }
 
+    public playAnimationIfNotRunning(animation: Animation, options?: Partial<PlayOptions>) {
+        const id = animation.base.dictionary + animation.base.name;
+
+        if (!this.runningAnimations.has(id)) {
+            const runner = this.animationFactory.createAnimation(animation, options);
+            this.runningAnimations.set(id, runner);
+
+            runner.finally(() => {
+                this.runningAnimations.delete(id);
+            });
+        }
+    }
+
+    public stopAnimationIfRunning(animation: Animation) {
+        const id = animation.base.dictionary + animation.base.name;
+
+        if (this.runningAnimations.has(id)) {
+            this.runningAnimations.get(id).cancel(AnimationStopReason.Canceled);
+        }
+    }
+
     public toggleAnimation(animation: Animation, options?: Partial<PlayOptions>) {
         const id = animation.base.dictionary + animation.base.name;
 

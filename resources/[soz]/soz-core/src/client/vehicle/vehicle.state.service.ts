@@ -14,7 +14,7 @@ export class VehicleStateService {
 
     public async getVehicleState(vehicleEntityId: number): Promise<VehicleEntityState> {
         if (this.state.has(vehicleEntityId)) {
-            return this.state.get(vehicleEntityId);
+            return { ...this.state.get(vehicleEntityId) };
         }
 
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
@@ -24,7 +24,11 @@ export class VehicleStateService {
 
     public setVehicleState(vehicleEntityId: number, state: VehicleEntityState): void {
         this.state.set(vehicleEntityId, state);
-        this.selectors.forEach(selector => selector(vehicleEntityId, state));
+        this.selectors.forEach(selector => selector(state, vehicleEntityId));
+    }
+
+    public deleteVehicleState(vehicleEntityId: number): void {
+        this.state.delete(vehicleEntityId);
     }
 
     public updateVehicleState(vehicleEntityId: number, state: Partial<VehicleEntityState>): void {
@@ -40,6 +44,6 @@ export class VehicleStateService {
     }
 
     public addVehicleStateSelector(method: (data) => void, ...selectors: ((state: VehicleEntityState) => any)[]): void {
-        this.selectors.push(createSelector(vehicleEntityId => vehicleEntityId, ...selectors, method));
+        this.selectors.push(createSelector([(state, vehicleEntityId) => vehicleEntityId, ...selectors], method));
     }
 }

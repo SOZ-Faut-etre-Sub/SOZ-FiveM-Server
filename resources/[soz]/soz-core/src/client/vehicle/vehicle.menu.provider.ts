@@ -12,6 +12,7 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { VoipRadioVehicleProvider } from '../voip/voip.radio.vehicle.provider';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
@@ -39,6 +40,9 @@ export class VehicleMenuProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
+    @Inject(VoipRadioVehicleProvider)
+    private voipRadioVehicleProvider: VoipRadioVehicleProvider;
+
     @OnNuiEvent<boolean, boolean>(NuiEvent.VehicleSetEngine)
     async setVehicleEngine(engineOn: boolean) {
         const ped = PlayerPedId();
@@ -64,8 +68,7 @@ export class VehicleMenuProvider {
 
         // -1 is for current speed
         if (speedLimit === -1) {
-            const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
-            speedLimit = currentSpeed;
+            speedLimit = GetEntitySpeed(vehicle) * 3.6;
         }
         // -2 is for custom speed
         else if (speedLimit === -2) {
@@ -125,7 +128,7 @@ export class VehicleMenuProvider {
             return false;
         }
 
-        TriggerEvent('talk:cibi:use');
+        this.voipRadioVehicleProvider.openRadioInterface();
 
         this.nuiMenu.closeMenu();
 
