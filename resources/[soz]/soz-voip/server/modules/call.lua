@@ -1,9 +1,7 @@
 local CallState = CallStateManager:new()
 
-AddStateBagChangeHandler("blackout_level", "global", function(_, _, value, _, _)
-    if value > 2 then
-        CallState:DestroyAll()
-    end
+exports("StopAllPhoneCall", function()
+    CallState:DestroyAll()
 end)
 
 RegisterNetEvent("voip:server:call:start", function(caller, receiver)
