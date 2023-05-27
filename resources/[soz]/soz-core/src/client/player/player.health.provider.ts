@@ -410,42 +410,41 @@ export class PlayerHealthProvider {
         await wait(1);
 
         let progressEnd = false;
-        const animationPromise = this.animationService
-            .playAnimation({
-                enter: enterduration
-                    ? {
-                          dictionary: dict + 'enter',
-                          name: 'enter',
-                          duration: enterduration,
-                          options: {
-                              enablePlayerControl: false,
-                          },
-                      }
-                    : null,
-                base: {
-                    dictionary: dict + 'base',
-                    name: 'base',
-                    options: {
-                        enablePlayerControl: false,
-                        repeat: true,
-                    },
+        const animationPromise = this.animationService.playAnimation({
+            enter: enterduration
+                ? {
+                      dictionary: dict + 'enter',
+                      name: 'enter',
+                      duration: enterduration,
+                      options: {
+                          enablePlayerControl: false,
+                      },
+                  }
+                : null,
+            base: {
+                dictionary: dict + 'base',
+                name: 'base',
+                options: {
+                    enablePlayerControl: false,
+                    repeat: true,
                 },
-                exit: exitduration
-                    ? {
-                          dictionary: dict + 'exit',
-                          name: 'exit',
-                          duration: exitduration,
-                          options: {
-                              enablePlayerControl: false,
-                          },
-                      }
-                    : null,
-            })
-            .then(cancelled => {
-                if (cancelled !== AnimationStopReason.Finished && !progressEnd) {
-                    this.progressService.cancel();
-                }
-            });
+            },
+            exit: exitduration
+                ? {
+                      dictionary: dict + 'exit',
+                      name: 'exit',
+                      duration: exitduration,
+                      options: {
+                          enablePlayerControl: false,
+                      },
+                  }
+                : null,
+        });
+        animationPromise.then(cancelled => {
+            if (cancelled !== AnimationStopReason.Finished && !progressEnd) {
+                this.progressService.cancel();
+            }
+        });
 
         const { completed } = await this.progressService.progress(type, message, EXERCISE_TIME);
         progressEnd = true;
@@ -454,7 +453,7 @@ export class PlayerHealthProvider {
             this.doStrengthExercise(type);
         }
 
-        this.animationService.stop();
+        animationPromise.cancel(AnimationStopReason.Canceled);
 
         await animationPromise;
     }

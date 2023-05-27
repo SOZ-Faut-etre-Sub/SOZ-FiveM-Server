@@ -105,7 +105,7 @@ export class LSMCProvider {
                             'anim@gangops@morgue@table@',
                             'body_search',
                             8.0,
-                            8.0,
+                            2.0,
                             -1,
                             1,
                             0,
