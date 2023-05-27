@@ -1491,17 +1491,17 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 73.07,
                 maxZ: 74.07,
             }),
-            new BoxZone([906.55, -186.02, 74.51], 2.6, 6.0, {
+            new BoxZone([905.94, -185.6, 74.01], 2.6, 6.0, {
                 heading: 60,
                 minZ: 73.07,
                 maxZ: 74.07,
             }),
-            new BoxZone([905.24, -189.17, 74.48], 2.6, 6.0, {
+            new BoxZone([904.43, -188.19, 73.81], 2.6, 6.0, {
                 heading: 60,
                 minZ: 73.07,
                 maxZ: 74.07,
             }),
-            new BoxZone([903.77, -191.84, 74.49], 2.6, 6.0, {
+            new BoxZone([902.66, -191.23, 73.79], 2.6, 6.0, {
                 heading: 60,
                 minZ: 73.07,
                 maxZ: 74.07,
