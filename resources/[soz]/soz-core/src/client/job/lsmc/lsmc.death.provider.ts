@@ -57,6 +57,7 @@ const reviveAnim: Animation = {
     base: {
         dictionary: 'mini@cpr@char_b@cpr_str',
         name: 'cpr_pumpchest',
+        duration: 5000.0,
         options: {
             cancellable: false,
             repeat: true,
@@ -78,6 +79,7 @@ const reviveAnimDoc: Animation = {
     base: {
         dictionary: 'mini@cpr@char_a@cpr_str',
         name: 'cpr_pumpchest',
+        duration: 5000.0,
         options: {
             cancellable: false,
             repeat: true,
@@ -320,12 +322,7 @@ export class LSMCDeathProvider {
             }
 
             if (!skipanim) {
-                const reviveAnimPromise = this.animationService.playAnimation(reviveAnim);
-                await wait(20000);
-
-                this.animationService.stop();
-
-                await reviveAnimPromise;
+                await this.animationService.playAnimation(reviveAnim);
             }
         }
 
@@ -442,13 +439,7 @@ export class LSMCDeathProvider {
             true
         );
 
-        const reviveAnimPromise = this.animationService.playAnimation(reviveAnimDoc);
-
-        await wait(20000);
-
-        this.animationService.stop();
-
-        await reviveAnimPromise;
+        await this.animationService.playAnimation(reviveAnimDoc);
     }
 
     @OnEvent(ClientEvent.LSMC_CALL, false)
