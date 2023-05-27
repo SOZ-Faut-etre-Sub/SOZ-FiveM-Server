@@ -900,15 +900,28 @@ export class VehicleGarageProvider {
         for (const veh of softVehicles) {
             const delta = timestamp - (veh.parkingtime + loseLifeDelay);
             if (delta > 0) {
+                const newState = veh.life_counter == 0 ? PlayerVehicleState.Missing : PlayerVehicleState.InPound;
                 await this.prismaService.playerVehicle.update({
                     where: { id: veh.id },
                     data: {
-                        state: PlayerVehicleState.InPound,
+                        state: newState,
                         life_counter: {
                             decrement: 1,
                         },
                     },
                 });
+                this.monitor.publish(
+                    'vehicle_softpound_lifelost',
+                    {
+                        player_source: source,
+                        vehicle_plate: veh.plate,
+                    },
+                    {
+                        life_counter_before: veh.life_counter,
+                        life_counter_after: veh.life_counter - 1,
+                        state: newState,
+                    }
+                );
             } else {
                 waitTime = Math.min(waitTime, -delta);
             }
