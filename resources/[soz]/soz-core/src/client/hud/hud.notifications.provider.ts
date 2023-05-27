@@ -3,7 +3,7 @@ import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
-import { NotificationType } from '../../shared/notification';
+import { NotificationPoliceLogoType, NotificationPoliceType, NotificationType } from '../../shared/notification';
 import { Notifier } from '../notifier';
 
 @Provider()
@@ -33,6 +33,27 @@ export class HudNotificationsProvider {
             message,
             image,
             style,
+            delay,
+        });
+    }
+
+    @Exportable('DrawAdvancedNotification')
+    @OnEvent(ClientEvent.NOTIFICATION_DRAW_POLICE)
+    public async drawPoliceNotification(
+        title: string,
+        message: string,
+        logo: NotificationPoliceLogoType,
+        type: NotificationPoliceType,
+        hour: string,
+        delay = 10000
+    ) {
+        await this.notifier.notifyPolice({
+            title,
+            message,
+            logo,
+            policeStyle: type,
+            style: 'info',
+            hour,
             delay,
         });
     }

@@ -1,3 +1,5 @@
+import { NotificationPoliceLogoType, NotificationPoliceType, NotificationType } from '@public/shared/notification';
+
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -185,6 +187,51 @@ export class AdminMenuDeveloperProvider {
 
         if (citizenId) {
             TriggerServerEvent(ServerEvent.ADMIN_CHANGE_PLAYER, citizenId);
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.AdminTriggerNotification)
+    public async triggerNotification(type: 'basic' | 'advanced' | 'police') {
+        const notificationStyle = await this.input.askInput(
+            {
+                title: 'Notification style',
+                defaultValue: 'info',
+                maxCharacters: 32,
+            },
+            () => {
+                return Ok(true);
+            }
+        );
+
+        if (notificationStyle) {
+            // this.notifier.notify('Message de notification' + style, notificationStyle as NotificationType);
+            if (type === 'basic') {
+                this.notifier.notify(
+                    `Message de notification ${notificationStyle}`,
+                    notificationStyle as NotificationType
+                );
+            }
+            if (type === 'advanced') {
+                await this.notifier.notifyAdvanced({
+                    title: 'Titre test',
+                    subtitle: 'Sous-titre de test',
+                    message: 'Message de notification',
+                    image: '',
+                    style: notificationStyle as NotificationType,
+                    delay: 5000,
+                });
+            }
+            if (type === 'police') {
+                await this.notifier.notifyPolice({
+                    message: 'Message de notification',
+                    policeStyle: notificationStyle as NotificationPoliceType,
+                    style: 'info' as NotificationType,
+                    delay: 5000,
+                    title: 'Titre test',
+                    hour: '00:24',
+                    logo: 'bcso' as NotificationPoliceLogoType,
+                });
+            }
         }
     }
 

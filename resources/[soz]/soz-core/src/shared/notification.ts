@@ -12,3 +12,14 @@ export type AdvancedNotification = BasicNotification & {
 };
 
 export type NotificationType = 'error' | 'success' | 'warning' | 'info';
+
+export type TPoliceNotification = BasicNotification & {
+    title: string | null;
+    policeStyle: NotificationPoliceType;
+    hour: string;
+    logo: NotificationPoliceLogoType;
+};
+
+export type NotificationPoliceType = 'default' | 'robbery' | 'vandalism' | 'racket' | 'shooting' | 'explosion' | 'auto-theft';
+
+export type NotificationPoliceLogoType = 'lspd' | 'bcso' | 'fib';
