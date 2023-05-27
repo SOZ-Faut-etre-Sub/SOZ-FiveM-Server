@@ -1,5 +1,5 @@
 import { News } from '@public/shared/news';
-import { AdvancedNotification, BasicNotification } from '@public/shared/notification';
+import { AdvancedNotification, BasicNotification, TPoliceNotification } from '@public/shared/notification';
 
 import { Minimap, VoiceMode } from '../hud';
 import { VehicleHud, VehicleHudSpeed } from '../vehicle/vehicle';
@@ -12,6 +12,6 @@ export interface NuiHudMethodMap {
     SetSyringeDelay: number;
     SetTwitchNewsOverlay: boolean;
     SetShowHud: boolean;
-    DrawNotification: Omit<BasicNotification | AdvancedNotification, 'id'>;
+    DrawNotification: Omit<BasicNotification | AdvancedNotification | TPoliceNotification, 'id'>;
     AddNews: Omit<News, 'id'>;
 }

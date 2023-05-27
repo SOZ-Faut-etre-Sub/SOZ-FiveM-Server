@@ -159,6 +159,13 @@ export const SettingsHome = () => {
                         value={config.handsFree}
                         onClick={curr => handleSettingChange('handsFree', !curr)}
                     />
+                    <SettingSwitch
+                        label={t('SETTINGS.OPTIONS.DYNAMIC_ALERTS')}
+                        icon={<BellIcon />}
+                        color="bg-orange-500"
+                        value={config.dynamicAlerts}
+                        onClick={curr => handleSettingChange('dynamicAlerts', !curr)}
+                    />
                 </List>
                 <List>
                     <SettingItem

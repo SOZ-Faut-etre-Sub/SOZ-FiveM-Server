@@ -1,263 +1,264 @@
 {
-  "translation": {
-    "MISC": {
-      "TOP_LEVEL_ERR_TITLE": "Erreur fatale",
-      "TOP_LEVEL_ERR_ACTION": "Rafraîchir",
-      "TOP_LEVEL_ERR_MSG": " Vous devez recharger la fenêtre NUI. L'erreur est affichée en dessous pour pouvoir la rapporter aux développeurs."
-    },
-    "NOTIFICATIONS": {
-      "NO_UNREAD": "Aucune notification(s)"
-    },
-    "DATE_FORMAT": "MM/JJ/AAAA",
-    "DATE_TIME_FORMAT": "MM/JJ/AAAA hh:mm A",
-    "CALLS": {
-      "MESSAGES": {
-        "RINGING": "Appel",
-        "OUTGOING": "Appel sortant",
-        "INCOMING": "Appel entrant"
-      },
-      "FEEDBACK": {
-        "UNAVAILABLE": "Le numéro est actuellement indisponible",
-        "ERROR_MYSELF": "Vous ne pouvez pas vous appeler vous-même !",
-        "ERROR": "Une erreur est survenue lors de cet appel"
-      }
-    },
-    "SETTINGS": {
-      "PHONE_NUMBER": "Numéro de téléphone",
-      "CATEGORY": {
-        "APPEARANCE": "Apparence",
-        "PHONE": "Téléphone",
-        "PROFILE": "Profil",
-        "ACTIONS": "Actions"
-      },
-      "OPTIONS": {
-        "THEME": "Thème",
-        "LANGUAGE": "Langage",
-        "FRAME": "Coque",
-        "ZOOM": "Zoom",
-        "TEXT_ZOOM": "Taille des SMS",
-        "WALLPAPER": "Fond d'écran",
-        "RESET_SETTINGS": "Réinitialiser toutes vos données",
-        "STREAMER_MODE": {
-          "TITLE": "Mode NSFW",
-          "DESCRIPTION": "Masquer les images par défaut"
+    "translation": {
+        "MISC": {
+            "TOP_LEVEL_ERR_TITLE": "Erreur fatale",
+            "TOP_LEVEL_ERR_ACTION": "Rafraîchir",
+            "TOP_LEVEL_ERR_MSG": " Vous devez recharger la fenêtre NUI. L'erreur est affichée en dessous pour pouvoir la rapporter aux développeurs."
         },
-        "HAND_FREE": "Kit mains libres",
-        "CUSTOM_WALLPAPER": {
-          "DIALOG_TITLE": "Fond d'écran personnalisé",
-          "DIALOG_CONTENT": "Choisissez un fond d'écran personnalisé en collant l'URL de l'image en dessous!",
-          "DIALOG_PLACEHOLDER": "Lien de l'image",
-          "DIALOG_SUCCESS": "Fond d'écran mis à jour",
-          "DIALOG_ERROR": "Image ou lien invalide"
+        "NOTIFICATIONS": {
+            "NO_UNREAD": "Aucune notification(s)"
         },
-        "RINGTONE": "Sonnerie",
-        "RINGTONE_VOLUME": "Volume de la sonnerie",
-        "NOTIFICATION": "Notification Messagerie",
-        "SOCIETY_NOTIFICATION": "Notification Répondeur",
-        "NOTIFICATION_VOLUME": "Volume des notifications",
-        "NOTIFICATION_FILTER": "Filtres des notifications"
-      },
-      "MESSAGES": {
-        "INVALID_SETTINGS": "Paramètres invalides stockés! Veuillez réinitialiser les paramètres.",
-        "SETTINGS_RESET": "Les paramètres ont été réinitialisés!"
-      },
-      "ZOOM": {
-        "WARNING": "Le zoom souhaité sur le téléphone est trop grand pour être affiché sur votre écran. Veuillez utiliser un zoom plus petit."
-      },
-      "FEEDBACK": {
-        "UPDATE_FAILED": "Mise a jour impossible",
-        "UPDATE_SUCCESS": "Image mise a jour"
-      }
-    },
-    "CAMERA": {
-      "SHARE_DESTINATION": "Où voulez-vous partager l'image ?",
-      "COPY_IMAGE": "Copiez le lien de l'image ici:",
-      "FAILED_TO_DELETE": "La photo n'a pas pu être supprimée :(",
-      "FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :(",
-      "TAKE_PHOTO_SUCCESS": "La photo est bien sauvegardée !",
-      "IS_NOT_AVAILABLE_DURING_CALL": "La caméra n'est pas disponible pendant un appel"
-    },
-    "PHOTO": {
-      "FEEDBACK": {
-        "NO_PHOTOS": "Vous n'avez pas de photos"
-      }
-    },
-    "CONTACTS": {
-      "FEEDBACK": {
-        "ADD_FAILED": "Erreur de création du contact!",
-        "ADD_SUCCESS": "Contact créé avec succès!",
-        "UPDATE_FAILED": "Erreur lors de la mise à jour du contact!",
-        "UPDATE_SUCCESS": "Contact mis à jour avec succès!",
-        "DELETE_FAILED": "Erreur lors de la suppression du contact!",
-        "DELETE_SUCCESS": "Contact supprimé avec succès!"
-      },
-      "PLACEHOLDER_SEARCH_CONTACTS": "Rechercher un contact...",
-      "FORM_NAME": "Nom",
-      "FORM_NUMBER": "Numéro",
-      "FORM_AVATAR": "URL Photo de profil",
-      "MODAL_BUTTON_ADD": "Ajouter contact"
-    },
-    "DIALER": {
-      "MESSAGES": {
-        "CURRENT_CALL_TITLE": "Appel en cours",
-        "INCOMING_CALL_TITLE": "Appel entrant",
-        "CURRENT_CALL_WITH": "En appel avec {{ transmitter }}",
-        "TRANSMITTER_IS_CALLING": "{{ transmitter }} vous appelle!"
-      },
-      "INPUT_PLACEHOLDER": "Entrer un numéro",
-      "NAVBAR_HISTORY": "Historique",
-      "NAVBAR_DIAL": "Clavier",
-      "NAVBAR_CONTACTS": "Contacts",
-      "NO_HISTORY": "Aucun historique d'appel"
-    },
-    "NOTES": {
-      "FEEDBACK": {
-        "NO_NOTES": "Vous n'avez pas de notes",
-        "ADD_FAILED": "La note n'a pas pu être sauvegardée.",
-        "ADD_SUCCESS": "Note sauvegardée avec succès.",
-        "DELETE_SUCCESS": "Note supprimée avec succès.",
-        "DELETE_FAILED": "Impossible de supprimer la note.",
-        "UPDATE_FAILED": "Impossible de mettre à jour la note.",
-        "UPDATE_SUCCESS": "Note mise à jour avec succès."
-      }
-    },
-    "INVOICES": {
-      "NO_INVOICES": "Vous n'avez pas de factures en attente."
-    },
-    "BANK": {
-      "HOME_TITLE": "Compte en banque",
-      "CHECKING": "Total :"
-    },
-    "MARKETPLACE": {
-      "FEEDBACK": {
-        "REQUIRED_FIELDS": "Tous les champs requis doivent être renseignés!",
-        "CREATE_LISTING_FAILED": "Échec lors de la création d'une nouvelle liste",
-        "CREATE_LISTING_SUCCESS": "Nouvelle liste créée avec succès!",
-        "DELETE_LISTING_FAILED": "Erreur lors de la suppression d'une liste",
-        "DELETE_LISTING_SUCCESS": "Liste supprimée avec succès",
-        "REPORT_LISTING_FAILED": "Cette liste a déjà été signalée",
-        "DUPLICATE_LISTING": "Vous ne pouvez pas créer une liste avec le même titre!",
-        "REPORT_LISTING_SUCCESS": "Liste signalée avec succès"
-      },
-      "NEW_LISTING": "Nouvelle annonce",
-      "CHOOSE_IMAGE": "Choisir une image",
-      "FORM_TITLE": "Titre",
-      "POST_LISTING": "Publier",
-      "FORM_IMAGE": "Image ou URL",
-      "FORM_DESCRIPTION": "Description",
-      "NO_IMAGE": "Aucune image fournie"
-    },
-    "MESSAGES": {
-      "MESSAGES": {
-        "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Aucun des numéros n'ont été trouvés!",
-        "UNREAD_MESSAGES": "Vous avez {{ count }} message(s) non lu(s)",
-        "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) ne sont pas attribués."
-      },
-      "FEEDBACK": {
-        "CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} n'est pas un numéro attribués",
-        "NEW_MESSAGE_FAILED": "Erreur d'envoi",
-        "INVALID_PHONE_NUMBER": "Numéro de téléphone invalide",
-        "MESSAGE_CONVERSATION_DUPLICATE": "Cette conversation existe déjà!",
-        "MESSAGE_GROUP_CREATE_FAILED": "Erreur lors de la création du groupe",
-        "MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-même !",
-        "FETCHED_MESSAGES_FAILED": "Impossible de retrouver les messages",
-        "DELETE_CONVERSATION_FAILED": "Impossible de supprimer la conversation"
-      },
-      "SEARCH_PLACEHOLDER": "Rechercher...",
-      "DELETE_CONVERSATION": "Supprimer la conversation",
-      "NEW_MESSAGE": "Message...",
-      "NEW_MESSAGE_GROUP": "Numéros de téléphone...",
-      "GROUP_CHAT_LABEL": "Nom du groupe...",
-      "MEDIA_OPTION": "Envoyer une image",
-      "POSITION_OPTION": "Envoyer votre position",
-      "DESTINATION_OPTION": "Envoyer votre destination",
-      "NEW_MESSAGE_GROUP_SUBMIT": "Envoyer",
-      "INPUT_NAME_OR_NUMBER": "Rechercher des contacts ou tapez un numéro et appuyez sur Entrée",
-      "ACTIONS_TITLE": "Actions",
-      "ME": "Moi"
-    },
-    "SOCIETY_CONTACTS": {
-      "FEEDBACK": {
-        "SEND_FAILED": "Erreur d'envoi du message !",
-        "SEND_SUCCESS": "Message envoyé avec succès !"
-      },
-      "PLACEHOLDER_SEARCH_CONTACTS": "Rechercher...",
-      "FORM_MESSAGE": "Message",
-      "SEND": "Envoyer le message",
-      "SEND_POSITION": "Envoyer + Position",
-      "SET_ANONYMOUS": "Être anonyme"
-    },
-    "SOCIETY_MESSAGES": {
-      "NOTIFICATION": {
-        "TITLE": "Appel de société"
-      }
-    },
-    "RELATIVE_TIME": {
-      "future": "dans %s",
-      "past": "%s plus tôt",
-      "s": "quelques secondes",
-      "m": "une minute",
-      "mm": "%d minutes",
-      "h": "une heure",
-      "hh": "%d heures",
-      "d": "un jour",
-      "dd": "%d jours",
-      "M": "un mois",
-      "MM": "%d mois",
-      "y": "un an",
-      "yy": "%d années"
-    },
-    "GENERIC": {
-      "LOADING": "Chargement...",
-      "WAIT": "Veuillez patienter...",
-      "SAVE": "Enregistrer",
-      "EDIT": "Éditer",
-      "UPDATE": "Mettre à jour",
-      "REQUIRED": "Requis",
-      "DELETE": "Supprimer",
-      "REPORT": "Signaler",
-      "CALL": "Appeler",
-      "MESSAGE": "Message",
-      "CLOSE": "Fermer",
-      "CANCEL": "Annuler",
-      "TITLE": "Titre",
-      "CONTENT": "Contenu",
-      "WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
-      "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
-    },
-    "COMING_SOON": "Coming soon...",
-    "INITIALIZING": "Initialisation",
-    "APPS_DIALER": "Téléphone",
-    "APPS_CONTACTS": "Contacts",
-    "APPS_MESSAGES": "Messages",
-    "APPS_SETTINGS": "Paramètres",
-    "APPS_BANK": "Fleeca Banque",
-    "APPS_NOTES": "Notes",
-    "APPS_INVOICES": "Factures",
-    "APPS_EXAMPLE": "Example app",
-    "APPS_MARKETPLACE": "Marketplace",
-    "APPS_CAMERA": "Caméra",
-    "APPS_PHOTO": "Galerie",
-    "APPS_SOCIETY_CONTACTS": "Annuaire Entreprise",
-    "APPS_SOCIETY_MESSAGES": "Répondeur Entreprise",
-    "APPS_TWITCH_NEWS": "Twitch News",
-    "APPS_ZUTOM": "Zutom",
-    "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
-    "GENERIC_LOADING": "Chargement...",
-    "GENERIC_WAIT": "Veuillez patienter...",
-    "GENERIC_SAVE": "Enregistrer",
-    "GENERIC_EDIT": "Éditer",
-    "GENERIC_UPDATE": "Mettre à jour",
-    "GENERIC_REQUIRED": "Requis",
-    "GENERIC_DELETE": "Supprimer",
-    "GENERIC_REPORT": "Signaler",
-    "GENERIC_CALL": "Appeler",
-    "GENERIC_MESSAGE": "Message",
-    "GENERIC_CLOSE": "Fermer",
-    "GENERIC_CANCEL": "Annuler",
-    "GENERIC_TITLE": "Titre",
-    "GENERIC_CONTENT": "Contenu",
-    "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
-  }
+        "DATE_FORMAT": "MM/JJ/AAAA",
+        "DATE_TIME_FORMAT": "MM/JJ/AAAA hh:mm A",
+        "CALLS": {
+            "MESSAGES": {
+                "RINGING": "Appel",
+                "OUTGOING": "Appel sortant",
+                "INCOMING": "Appel entrant"
+            },
+            "FEEDBACK": {
+                "UNAVAILABLE": "Le numéro est actuellement indisponible",
+                "ERROR_MYSELF": "Vous ne pouvez pas vous appeler vous-même !",
+                "ERROR": "Une erreur est survenue lors de cet appel"
+            }
+        },
+        "SETTINGS": {
+            "PHONE_NUMBER": "Numéro de téléphone",
+            "CATEGORY": {
+                "APPEARANCE": "Apparence",
+                "PHONE": "Téléphone",
+                "PROFILE": "Profil",
+                "ACTIONS": "Actions"
+            },
+            "OPTIONS": {
+                "THEME": "Thème",
+                "LANGUAGE": "Langage",
+                "FRAME": "Coque",
+                "ZOOM": "Zoom",
+                "TEXT_ZOOM": "Taille des SMS",
+                "WALLPAPER": "Fond d'écran",
+                "RESET_SETTINGS": "Réinitialiser toutes vos données",
+                "STREAMER_MODE": {
+                    "TITLE": "Mode NSFW",
+                    "DESCRIPTION": "Masquer les images par défaut"
+                },
+                "HAND_FREE": "Kit mains libres",
+                "DYNAMIC_ALERTS": "Alertes dynamiques",
+                "CUSTOM_WALLPAPER": {
+                    "DIALOG_TITLE": "Fond d'écran personnalisé",
+                    "DIALOG_CONTENT": "Choisissez un fond d'écran personnalisé en collant l'URL de l'image en dessous!",
+                    "DIALOG_PLACEHOLDER": "Lien de l'image",
+                    "DIALOG_SUCCESS": "Fond d'écran mis à jour",
+                    "DIALOG_ERROR": "Image ou lien invalide"
+                },
+                "RINGTONE": "Sonnerie",
+                "RINGTONE_VOLUME": "Volume de la sonnerie",
+                "NOTIFICATION": "Notification Messagerie",
+                "SOCIETY_NOTIFICATION": "Notification Répondeur",
+                "NOTIFICATION_VOLUME": "Volume des notifications",
+                "NOTIFICATION_FILTER": "Filtres des notifications"
+            },
+            "MESSAGES": {
+                "INVALID_SETTINGS": "Paramètres invalides stockés! Veuillez réinitialiser les paramètres.",
+                "SETTINGS_RESET": "Les paramètres ont été réinitialisés!"
+            },
+            "ZOOM": {
+                "WARNING": "Le zoom souhaité sur le téléphone est trop grand pour être affiché sur votre écran. Veuillez utiliser un zoom plus petit."
+            },
+            "FEEDBACK": {
+                "UPDATE_FAILED": "Mise a jour impossible",
+                "UPDATE_SUCCESS": "Image mise a jour"
+            }
+        },
+        "CAMERA": {
+            "SHARE_DESTINATION": "Où voulez-vous partager l'image ?",
+            "COPY_IMAGE": "Copiez le lien de l'image ici:",
+            "FAILED_TO_DELETE": "La photo n'a pas pu être supprimée :(",
+            "FAILED_TO_TAKE_PHOTO": "La photo n'a pas pu être sauvegardée :(",
+            "TAKE_PHOTO_SUCCESS": "La photo est bien sauvegardée !",
+            "IS_NOT_AVAILABLE_DURING_CALL": "La caméra n'est pas disponible pendant un appel"
+        },
+        "PHOTO": {
+            "FEEDBACK": {
+                "NO_PHOTOS": "Vous n'avez pas de photos"
+            }
+        },
+        "CONTACTS": {
+            "FEEDBACK": {
+                "ADD_FAILED": "Erreur de création du contact!",
+                "ADD_SUCCESS": "Contact créé avec succès!",
+                "UPDATE_FAILED": "Erreur lors de la mise à jour du contact!",
+                "UPDATE_SUCCESS": "Contact mis à jour avec succès!",
+                "DELETE_FAILED": "Erreur lors de la suppression du contact!",
+                "DELETE_SUCCESS": "Contact supprimé avec succès!"
+            },
+            "PLACEHOLDER_SEARCH_CONTACTS": "Rechercher un contact...",
+            "FORM_NAME": "Nom",
+            "FORM_NUMBER": "Numéro",
+            "FORM_AVATAR": "URL Photo de profil",
+            "MODAL_BUTTON_ADD": "Ajouter contact"
+        },
+        "DIALER": {
+            "MESSAGES": {
+                "CURRENT_CALL_TITLE": "Appel en cours",
+                "INCOMING_CALL_TITLE": "Appel entrant",
+                "CURRENT_CALL_WITH": "En appel avec {{ transmitter }}",
+                "TRANSMITTER_IS_CALLING": "{{ transmitter }} vous appelle!"
+            },
+            "INPUT_PLACEHOLDER": "Entrer un numéro",
+            "NAVBAR_HISTORY": "Historique",
+            "NAVBAR_DIAL": "Clavier",
+            "NAVBAR_CONTACTS": "Contacts",
+            "NO_HISTORY": "Aucun historique d'appel"
+        },
+        "NOTES": {
+            "FEEDBACK": {
+                "NO_NOTES": "Vous n'avez pas de notes",
+                "ADD_FAILED": "La note n'a pas pu être sauvegardée.",
+                "ADD_SUCCESS": "Note sauvegardée avec succès.",
+                "DELETE_SUCCESS": "Note supprimée avec succès.",
+                "DELETE_FAILED": "Impossible de supprimer la note.",
+                "UPDATE_FAILED": "Impossible de mettre à jour la note.",
+                "UPDATE_SUCCESS": "Note mise à jour avec succès."
+            }
+        },
+        "INVOICES": {
+            "NO_INVOICES": "Vous n'avez pas de factures en attente."
+        },
+        "BANK": {
+            "HOME_TITLE": "Compte en banque",
+            "CHECKING": "Total :"
+        },
+        "MARKETPLACE": {
+            "FEEDBACK": {
+                "REQUIRED_FIELDS": "Tous les champs requis doivent être renseignés!",
+                "CREATE_LISTING_FAILED": "Échec lors de la création d'une nouvelle liste",
+                "CREATE_LISTING_SUCCESS": "Nouvelle liste créée avec succès!",
+                "DELETE_LISTING_FAILED": "Erreur lors de la suppression d'une liste",
+                "DELETE_LISTING_SUCCESS": "Liste supprimée avec succès",
+                "REPORT_LISTING_FAILED": "Cette liste a déjà été signalée",
+                "DUPLICATE_LISTING": "Vous ne pouvez pas créer une liste avec le même titre!",
+                "REPORT_LISTING_SUCCESS": "Liste signalée avec succès"
+            },
+            "NEW_LISTING": "Nouvelle annonce",
+            "CHOOSE_IMAGE": "Choisir une image",
+            "FORM_TITLE": "Titre",
+            "POST_LISTING": "Publier",
+            "FORM_IMAGE": "Image ou URL",
+            "FORM_DESCRIPTION": "Description",
+            "NO_IMAGE": "Aucune image fournie"
+        },
+        "MESSAGES": {
+            "MESSAGES": {
+                "MESSAGE_CONVERSATION_CREATE_ALL_NUMBERS_FAILED": "Aucun des numéros n'ont été trouvés!",
+                "UNREAD_MESSAGES": "Vous avez {{ count }} message(s) non lu(s)",
+                "MESSAGE_GROUP_CREATE_SOME_NUMBERS_FAILED": "({{ numbers }}) ne sont pas attribués."
+            },
+            "FEEDBACK": {
+                "CONVERSATION_CREATE_ONE_NUMBER_FAILED": "{{ number }} n'est pas un numéro attribués",
+                "NEW_MESSAGE_FAILED": "Erreur d'envoi",
+                "INVALID_PHONE_NUMBER": "Numéro de téléphone invalide",
+                "MESSAGE_CONVERSATION_DUPLICATE": "Cette conversation existe déjà!",
+                "MESSAGE_GROUP_CREATE_FAILED": "Erreur lors de la création du groupe",
+                "MESSAGE_GROUP_CREATE_MINE": "Vous ne pouvez pas vous ajouter vous-même !",
+                "FETCHED_MESSAGES_FAILED": "Impossible de retrouver les messages",
+                "DELETE_CONVERSATION_FAILED": "Impossible de supprimer la conversation"
+            },
+            "SEARCH_PLACEHOLDER": "Rechercher...",
+            "DELETE_CONVERSATION": "Supprimer la conversation",
+            "NEW_MESSAGE": "Message...",
+            "NEW_MESSAGE_GROUP": "Numéros de téléphone...",
+            "GROUP_CHAT_LABEL": "Nom du groupe...",
+            "MEDIA_OPTION": "Envoyer une image",
+            "POSITION_OPTION": "Envoyer votre position",
+            "DESTINATION_OPTION": "Envoyer votre destination",
+            "NEW_MESSAGE_GROUP_SUBMIT": "Envoyer",
+            "INPUT_NAME_OR_NUMBER": "Rechercher des contacts ou tapez un numéro et appuyez sur Entrée",
+            "ACTIONS_TITLE": "Actions",
+            "ME": "Moi"
+        },
+        "SOCIETY_CONTACTS": {
+            "FEEDBACK": {
+                "SEND_FAILED": "Erreur d'envoi du message !",
+                "SEND_SUCCESS": "Message envoyé avec succès !"
+            },
+            "PLACEHOLDER_SEARCH_CONTACTS": "Rechercher...",
+            "FORM_MESSAGE": "Message",
+            "SEND": "Envoyer le message",
+            "SEND_POSITION": "Envoyer + Position",
+            "SET_ANONYMOUS": "Être anonyme"
+        },
+        "SOCIETY_MESSAGES": {
+            "NOTIFICATION": {
+                "TITLE": "Appel de société"
+            }
+        },
+        "RELATIVE_TIME": {
+            "future": "dans %s",
+            "past": "%s plus tôt",
+            "s": "quelques secondes",
+            "m": "une minute",
+            "mm": "%d minutes",
+            "h": "une heure",
+            "hh": "%d heures",
+            "d": "un jour",
+            "dd": "%d jours",
+            "M": "un mois",
+            "MM": "%d mois",
+            "y": "un an",
+            "yy": "%d années"
+        },
+        "GENERIC": {
+            "LOADING": "Chargement...",
+            "WAIT": "Veuillez patienter...",
+            "SAVE": "Enregistrer",
+            "EDIT": "Éditer",
+            "UPDATE": "Mettre à jour",
+            "REQUIRED": "Requis",
+            "DELETE": "Supprimer",
+            "REPORT": "Signaler",
+            "CALL": "Appeler",
+            "MESSAGE": "Message",
+            "CLOSE": "Fermer",
+            "CANCEL": "Annuler",
+            "TITLE": "Titre",
+            "CONTENT": "Contenu",
+            "WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
+            "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
+        },
+        "COMING_SOON": "Coming soon...",
+        "INITIALIZING": "Initialisation",
+        "APPS_DIALER": "Téléphone",
+        "APPS_CONTACTS": "Contacts",
+        "APPS_MESSAGES": "Messages",
+        "APPS_SETTINGS": "Paramètres",
+        "APPS_BANK": "Fleeca Banque",
+        "APPS_NOTES": "Notes",
+        "APPS_INVOICES": "Factures",
+        "APPS_EXAMPLE": "Example app",
+        "APPS_MARKETPLACE": "Marketplace",
+        "APPS_CAMERA": "Caméra",
+        "APPS_PHOTO": "Galerie",
+        "APPS_SOCIETY_CONTACTS": "Annuaire Entreprise",
+        "APPS_SOCIETY_MESSAGES": "Répondeur Entreprise",
+        "APPS_TWITCH_NEWS": "Twitch News",
+        "APPS_ZUTOM": "Zutom",
+        "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
+        "GENERIC_LOADING": "Chargement...",
+        "GENERIC_WAIT": "Veuillez patienter...",
+        "GENERIC_SAVE": "Enregistrer",
+        "GENERIC_EDIT": "Éditer",
+        "GENERIC_UPDATE": "Mettre à jour",
+        "GENERIC_REQUIRED": "Requis",
+        "GENERIC_DELETE": "Supprimer",
+        "GENERIC_REPORT": "Signaler",
+        "GENERIC_CALL": "Appeler",
+        "GENERIC_MESSAGE": "Message",
+        "GENERIC_CLOSE": "Fermer",
+        "GENERIC_CANCEL": "Annuler",
+        "GENERIC_TITLE": "Titre",
+        "GENERIC_CONTENT": "Contenu",
+        "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
+        "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
+    }
 }

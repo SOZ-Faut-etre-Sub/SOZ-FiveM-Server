@@ -464,6 +464,7 @@ export enum GameEvent {
 export enum NuiEvent {
     AdminAutoPilot = 'soz-core:client:admin:autopilot',
     AdminChangePlayer = 'soz-core:client:admin:change-player',
+    AdminTriggerNotification = 'soz-core:client:admin:trigger-notification',
     AdminCopyCoords = 'soz-core:client:admin:copy-coords',
     AdminCreateZone = 'soz-core:client:admin:create-zone',
     AdminGetJobs = 'soz-core:client:admin:get-jobs',

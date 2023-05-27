@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { ResourceLoader } from '@public/client/resources/resource.loader';
-import { AdvancedNotification, NotificationType } from '@public/shared/notification';
+import { AdvancedNotification, NotificationType, TPoliceNotification } from '@public/shared/notification';
 
 @Injectable()
 export class Notifier {
@@ -27,6 +27,14 @@ export class Notifier {
         this.nuiDispatch.dispatch('hud', 'DrawNotification', {
             style: 'info',
             delay: 10000,
+            ...notification,
+        });
+    }
+
+    public async notifyPolice(notification: Omit<TPoliceNotification, 'id'>) {
+        this.nuiDispatch.dispatch('hud', 'DrawNotification', {
+            style: 'info',
+            delay: 5000,
             ...notification,
         });
     }
