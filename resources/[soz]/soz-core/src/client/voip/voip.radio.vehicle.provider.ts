@@ -26,13 +26,13 @@ export class VoipRadioVehicleProvider {
     @Inject('Store')
     private store: Store;
 
-    private previousPrimaryFrequency = 0;
-
-    private previousSecondaryFrequency = 0;
-
     @StateSelector(state => state.radioLongRange.enabled)
-    public toggleRadio(enabled: boolean) {
+    public toggleRadio(enabled: boolean, wasEnabled?: boolean) {
         const radioLongRange = this.store.getState().radioLongRange;
+
+        if (wasEnabled !== undefined) {
+            this.soundService.play('radio/toggle', 0.2);
+        }
 
         if (!enabled) {
             this.voipService.disconnectRadio(
@@ -45,11 +45,6 @@ export class VoipRadioVehicleProvider {
                 RadioChannelType.Secondary,
                 radioLongRange.secondary.frequency
             );
-
-            this.previousPrimaryFrequency = 0;
-            this.previousSecondaryFrequency = 0;
-
-            this.soundService.play('radio/toggle', 0.2);
 
             return;
         }
@@ -69,84 +64,88 @@ export class VoipRadioVehicleProvider {
                 radioLongRange.secondary.frequency
             );
         }
-
-        this.soundService.play('radio/toggle', 0.2);
     }
 
     @StateSelector(state => state.radioLongRange.primary.frequency)
-    public updatePrimaryFrequency(frequency: number) {
+    public updatePrimaryFrequency(frequency: number, previousFrequency?: number) {
         const radioLongRange = this.store.getState().radioLongRange;
 
         if (!radioLongRange.enabled) {
             return;
         }
 
-        if (this.previousPrimaryFrequency > 0) {
-            this.voipService.disconnectRadio(
-                RadioType.RadioLongRange,
-                RadioChannelType.Primary,
-                this.previousPrimaryFrequency
-            );
+        if (previousFrequency > 0) {
+            this.voipService.disconnectRadio(RadioType.RadioLongRange, RadioChannelType.Primary, previousFrequency);
         }
 
         if (frequency >= 0) {
             this.voipService.connectRadio(RadioType.RadioLongRange, RadioChannelType.Primary, frequency);
         }
 
-        this.soundService.play('click', radioLongRange.primary.volume / 100);
-        this.previousPrimaryFrequency = frequency;
+        if (previousFrequency > 0 || frequency > 0) {
+            this.soundService.play('click', radioLongRange.primary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioLongRange.secondary.frequency)
-    public updateSecondaryFrequency(frequency: number) {
+    public updateSecondaryFrequency(frequency: number, previousFrequency?: number) {
         const radioLongRange = this.store.getState().radioLongRange;
 
         if (!radioLongRange.enabled) {
             return;
         }
 
-        if (this.previousSecondaryFrequency > 0) {
-            this.voipService.disconnectRadio(
-                RadioType.RadioLongRange,
-                RadioChannelType.Secondary,
-                this.previousSecondaryFrequency
-            );
+        if (previousFrequency > 0) {
+            this.voipService.disconnectRadio(RadioType.RadioLongRange, RadioChannelType.Secondary, previousFrequency);
         }
 
         if (frequency >= 0) {
             this.voipService.connectRadio(RadioType.RadioLongRange, RadioChannelType.Secondary, frequency);
         }
 
-        this.soundService.play('click', radioLongRange.secondary.volume / 100);
-        this.previousSecondaryFrequency = frequency;
+        if (previousFrequency > 0 || frequency > 0) {
+            this.soundService.play('click', radioLongRange.secondary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioLongRange.primary.ear)
-    public updatePrimaryEar(ear: Ear) {
+    public updatePrimaryEar(ear: Ear, previousEar?: Ear) {
         const radioLongRange = this.store.getState().radioLongRange;
         this.voipService.setRadioEar(RadioType.RadioLongRange, RadioChannelType.Primary, ear);
-        this.soundService.play('click', radioLongRange.primary.volume / 100);
+
+        if (previousEar !== undefined) {
+            this.soundService.play('click', radioLongRange.primary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioLongRange.secondary.ear)
-    public updateSecondaryEar(ear: Ear) {
+    public updateSecondaryEar(ear: Ear, previousEar?: Ear) {
         const radioLongRange = this.store.getState().radioLongRange;
         this.voipService.setRadioEar(RadioType.RadioLongRange, RadioChannelType.Secondary, ear);
-        this.soundService.play('click', radioLongRange.secondary.volume / 100);
+
+        if (previousEar !== undefined) {
+            this.soundService.play('click', radioLongRange.secondary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioLongRange.primary.volume)
-    public updatePrimaryVolume(volume: number) {
+    public updatePrimaryVolume(volume: number, previousVolume?: number) {
         const radioLongRange = this.store.getState().radioLongRange;
         this.voipService.setRadioVolume(RadioType.RadioLongRange, RadioChannelType.Primary, volume);
-        this.soundService.play('click', radioLongRange.primary.volume / 100);
+
+        if (previousVolume !== undefined) {
+            this.soundService.play('click', radioLongRange.primary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioLongRange.secondary.volume)
-    public updateSecondaryVolume(volume: number) {
+    public updateSecondaryVolume(volume: number, previousVolume?: number) {
         const radioLongRange = this.store.getState().radioLongRange;
         this.voipService.setRadioVolume(RadioType.RadioLongRange, RadioChannelType.Secondary, volume);
-        this.soundService.play('click', radioLongRange.secondary.volume / 100);
+
+        if (previousVolume !== undefined) {
+            this.soundService.play('click', radioLongRange.secondary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioLongRange)
@@ -176,9 +175,11 @@ export class VoipRadioVehicleProvider {
         this.store.dispatch.radioLongRange.updatePrimary(vehicleState.primaryRadio);
         this.store.dispatch.radioLongRange.updateSecondary(vehicleState.secondaryRadio);
     }
+
     @OnEvent(ClientEvent.BASE_LEFT_VEHICLE)
     public async onLeaveVehicle() {
         this.store.dispatch.radioLongRange.enable(false);
+        this.nuiDispatch.dispatch('radio_vehicle', 'Close');
     }
 
     @OnNuiEvent(NuiEvent.VoipEnableRadioVehicle)

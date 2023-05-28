@@ -10,6 +10,7 @@ import { GarageRepository } from '@public/server/repository/garage.repository';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { MultiZone } from '@public/shared/polyzone/multi.zone';
 import { RpcClientEvent } from '@public/shared/rpc';
+import { Ear } from '@public/shared/voip';
 
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
@@ -309,15 +310,15 @@ export class VehicleSpawner {
             primaryRadio: radio
                 ? {
                       frequency: 0.0,
-                      volume: 100,
-                      ear: 1,
+                      volume: 50,
+                      ear: Ear.Both,
                   }
                 : null,
             secondaryRadio: radio
                 ? {
                       frequency: 0.0,
-                      volume: 100,
-                      ear: 1,
+                      volume: 50,
+                      ear: Ear.Both,
                   }
                 : null,
         };

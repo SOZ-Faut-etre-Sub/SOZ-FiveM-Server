@@ -11,6 +11,8 @@ export const displayEar = (ear: Ear) => {
         case Ear.Right:
             return 'R';
     }
+
+    return 'L/R';
 };
 
 type RadioButtonProps = {

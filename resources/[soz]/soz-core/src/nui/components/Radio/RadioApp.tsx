@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { PatternFormat } from 'react-number-format';
 
 import { NuiEvent } from '../../../shared/event';
+import { Control } from '../../../shared/input';
 import { Ear, Radio, RadioChannelType } from '../../../shared/voip';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
@@ -29,7 +30,7 @@ export const RadioApp: FunctionComponent = () => {
         [radio]
     );
     useNuiEvent('radio', 'Close', () => setRadio(null));
-    useNuiFocus(radio !== null, radio !== null, radio !== null);
+    useNuiFocus(radio !== null, radio !== null, radio !== null, radio !== null ? [Control.Attack] : []);
 
     useEffect(() => {
         if (!radio) {

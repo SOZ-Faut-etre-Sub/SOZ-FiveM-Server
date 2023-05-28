@@ -59,7 +59,7 @@ const MenuRouter: FunctionComponent = () => {
     const prevMenuType = usePrevious(menuType);
     const [useFocus, setFocus] = useState(false);
 
-    useNuiFocus(useFocus, useFocus, !useFocus);
+    useNuiFocus(useFocus, useFocus, false);
 
     useControl(() => {
         if (menuType !== null) {
