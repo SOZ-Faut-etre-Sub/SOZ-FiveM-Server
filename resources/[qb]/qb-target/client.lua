@@ -185,7 +185,7 @@ end
 exports('CheckBones', CheckBones)
 
 local function EnableTarget()
-	if not AllowTarget or success or (not Config.Standalone) or IsNuiFocused() or (Config.DisableInVehicle and IsPedInAnyVehicle(playerPed or PlayerPedId(), false)) then return end
+	if not AllowTarget or success or IsNuiFocused() or (Config.DisableInVehicle and IsPedInAnyVehicle(playerPed or PlayerPedId(), false)) then return end
 	if not CheckOptions then CheckOptions = _ENV.CheckOptions end
 	if not targetActive and CheckOptions then
 		targetActive = true
