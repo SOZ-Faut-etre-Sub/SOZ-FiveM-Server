@@ -69,8 +69,6 @@ export enum RpcServerEvent {
     WEAPON_SET_TINT = 'soz-core:server:weapon:setTint',
     WEAPON_SET_ATTACHMENTS = 'soz-core:server:weapon:setAttachments',
 
-    RACKET_LAST_RACKET_TIME = 'soz-core:server:racket:last-time',
-
     VANDALISM_END = 'soz-core:server:vandalism:end',
     VANDALISM_LOAD = 'soz-core:server:vandalism:load',
     VANDALISM_CHECK = 'soz-core:server:vandalism:check',
@@ -86,7 +84,7 @@ export enum RpcServerEvent {
 
     TALENT_TREE_UNLOCK = 'soz-core:server:talent:unlock',
     TALENT_TREE_RESET = 'soz-core:server:talent:reset',
-    TALENT_TREE_CAN_CRIMI_BE_ENABLED = 'soz-core:server:talent:can-crimi-be-enabled',
+    TALENT_TREE_ENABLE_CRIMI = 'soz-core:server:talent:enable-crimi',
 
     HELICO_INIT_LIGHT = 'soz-core:server:helico:init-spotlight',
 
@@ -96,6 +94,9 @@ export enum RpcServerEvent {
     BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',
 
     LSMC_GET_CURRENT_ORGAN = 'soz-core:server:lsmc:get-organ',
+
+    RACKET_COOP_CHECK_CRIMI = 'soz-core:server:racket:check-crimi',
+    RACKET_LOCK_PED = 'soz-core:server:racket:lock-ped',
 }
 
 export enum RpcClientEvent {

@@ -62,10 +62,10 @@ export class WeaponHolsterProvider {
                 const pos = GetEntityCoords(ped, true) as Vector3;
                 const rot = GetEntityHeading(ped);
 
-                this.resourceLoader.loadAnimationDictionary('reaction@intimidation@1h');
-                this.resourceLoader.loadAnimationDictionary('reaction@intimidation@cop@unarmed');
-                this.resourceLoader.loadAnimationDictionary('rcmjosh4');
-                this.resourceLoader.loadAnimationDictionary('weapons@pistol@');
+                await this.resourceLoader.loadAnimationDictionary('reaction@intimidation@1h');
+                await this.resourceLoader.loadAnimationDictionary('reaction@intimidation@cop@unarmed');
+                await this.resourceLoader.loadAnimationDictionary('rcmjosh4');
+                await this.resourceLoader.loadAnimationDictionary('weapons@pistol@');
 
                 if (this.currWeapon != GetHashKey('WEAPON_UNARMED')) {
                     if (
