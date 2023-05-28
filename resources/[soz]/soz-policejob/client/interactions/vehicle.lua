@@ -52,7 +52,7 @@ RegisterNetEvent("police:client:getVehicleOwner", function(data)
         disableMouse = false,
         disableCombat = true,
     }, {task = "CODE_HUMAN_MEDIC_KNEEL"}, {}, {}, function()
-        local plate = QBCore.Functions.GetPlate(data.entity)
+        local plate = GetVehicleNumberPlateText(data.entity)
         local playerName = QBCore.Functions.TriggerRpc("police:server:getVehicleOwner", plate)
 
         exports["soz-core"]:DrawAdvancedNotification("San Andres", "Vérification de plaque", ("Propriétaire: ~b~%s"):format(playerName), "CHAR_DAVE")
@@ -67,7 +67,7 @@ RegisterNetEvent("police:client:SearchVehicle", function(data)
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "amb@prop_human_bum_bin@idle_a", anim = "idle_a", flags = 16}, {}, {}, function()
-        local plate = QBCore.Functions.GetPlate(data.entity)
+        local plate = GetVehicleNumberPlateText(data.entity)
         local model = GetEntityModel(data.entity)
         local class = GetVehicleClass(data.entity)
 
