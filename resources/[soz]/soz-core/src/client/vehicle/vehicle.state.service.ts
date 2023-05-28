@@ -58,6 +58,13 @@ export class VehicleStateService {
     public updateVehicleState(vehicleEntityId: number, state: Partial<VehicleEntityState>): void {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
+        // Update state locally has we won't receive the event
+        if (this.state.has(vehicleEntityId)) {
+            const item = this.state.get(vehicleEntityId);
+
+            item.state = { ...item.state, ...state };
+        }
+
         TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_STATE, vehicleNetworkId, state);
     }
 
@@ -67,6 +74,13 @@ export class VehicleStateService {
         disableSync = true
     ): void {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+
+        // Update state locally has we won't receive the event
+        if (this.state.has(vehicleEntityId)) {
+            const item = this.state.get(vehicleEntityId);
+
+            item.state.condition = { ...item.state.condition, ...condition };
+        }
 
         TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION, vehicleNetworkId, condition, disableSync);
     }

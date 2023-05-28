@@ -2,7 +2,6 @@ import { On, Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { OnceLoader } from '../../core/loader/once.loader';
-import { wait } from '../../core/utils';
 import { PlayerData } from '../../shared/player';
 import { Qbcore } from '../qbcore';
 import { PlayerService } from './player.service';
@@ -31,12 +30,22 @@ export class PlayerQbcoreProvider {
         this.playerService.setPlayer(playerData);
     }
 
-    @Once(OnceStep.NuiLoaded)
-    async onNuiLoad(): Promise<void> {
-        await wait(0);
+    @Once(OnceStep.Start)
+    async onStart(): Promise<void> {
         const playerData = this.qbcore.getPlayer();
 
-        if (!playerData) {
+        if (!playerData || !playerData.metadata) {
+            return;
+        }
+
+        this.playerService.setPlayer(playerData);
+    }
+
+    @Once(OnceStep.NuiLoaded)
+    async onNuiLoad(): Promise<void> {
+        const playerData = this.qbcore.getPlayer();
+
+        if (!playerData || !playerData.metadata) {
             return;
         }
 
