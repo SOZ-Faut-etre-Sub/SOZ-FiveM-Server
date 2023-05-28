@@ -2,7 +2,7 @@
 local QBCore = exports["qb-core"]:GetCoreObject()
 local PlayerData = QBCore.Functions.GetPlayerData()
 
-AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
 end)
 

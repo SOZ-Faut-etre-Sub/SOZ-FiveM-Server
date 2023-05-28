@@ -101,8 +101,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const damageDiff = 2000 - state.condition.engineHealth - state.condition.tankHealth;
         const repairTime = (damageDiff * 20000) / 2000 + 10000; // Between 10s and 30s
 
@@ -159,8 +158,7 @@ export class VehicleConditionProvider {
 
     @OnEvent(ServerEvent.VEHICLE_USE_WHEEL_KIT)
     public async onVehicleUseWheelKit(source: number, vehicleNetworkId: number) {
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const tireTemporaryRepairDistance = {};
         let repairTime = 10000;
 
@@ -265,8 +263,7 @@ export class VehicleConditionProvider {
 
     @OnEvent(ServerEvent.VEHICLE_SET_DEAD)
     public async onVehicleDead(source: number, vehicleNetworkId: number, reason: string) {
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         if (state.dead || !state.isPlayerVehicle) {
             return;

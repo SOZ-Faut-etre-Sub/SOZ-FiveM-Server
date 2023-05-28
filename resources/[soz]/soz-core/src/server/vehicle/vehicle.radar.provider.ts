@@ -50,7 +50,7 @@ export class VehicleRadarProvider {
         const radar = RadarList[radarID];
         const vehicle = NetworkGetEntityFromNetworkId(vehicleID);
         const vehicleSpeed = Math.round(GetEntitySpeed(vehicle) * 3.6);
-        const state = this.vehicleStateService.getVehicleState(vehicle);
+        const state = this.vehicleStateService.getVehicleState(vehicleID);
         const vehiclePlate = state.plate || GetVehicleNumberPlateText(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
         const fine = Math.round((vehicleSpeed - radar.speed) * 1.5);

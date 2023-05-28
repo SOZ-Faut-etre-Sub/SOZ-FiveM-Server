@@ -530,7 +530,7 @@ export class VehicleGarageProvider {
         }
 
         const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const vehicleState = this.vehicleStateService.getVehicleState(vehicleEntityId);
+        const vehicleState = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         if (!vehicleState.id) {
             if (garage.type === GarageType.Depot) {

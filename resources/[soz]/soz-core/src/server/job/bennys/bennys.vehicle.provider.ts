@@ -33,8 +33,7 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_ENGINE)
     public async onRepairVehicleEngine(source: number, vehicleNetworkId: number) {
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const damageDiff = 1000 - state.condition.engineHealth;
         const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
 
@@ -63,8 +62,7 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_BODY)
     public async onRepairVehicleEngineBody(source: number, vehicleNetworkId: number) {
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const damageDiff = 1000 - state.condition.bodyHealth;
         const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
 
@@ -96,8 +94,7 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_TANK)
     public async onRepairVehicleEngineTank(source: number, vehicleNetworkId: number) {
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const damageDiff = 1000 - state.condition.tankHealth;
         const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
 
@@ -126,8 +123,7 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_WHEEL)
     public async onRepairVehicleEngineWheel(source: number, vehicleNetworkId: number) {
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         let repairTime = 10000;
 
         for (const wheelIndexStr of Object.keys(state.condition.tireHealth)) {
@@ -229,8 +225,7 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_WASH_VEHICLE)
     public async onWashVehicle(source: number, vehicleNetworkId: number) {
-        const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntity);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const { completed } = await this.progressService.progress(
             source,
             'cleaning_vehicle',

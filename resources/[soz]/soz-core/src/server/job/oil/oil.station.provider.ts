@@ -145,7 +145,7 @@ export class OilStationProvider {
         vehicleNetworkId: number
     ): Promise<void> {
         const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(vehicleEntityId);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         if (!state) {
             return;
