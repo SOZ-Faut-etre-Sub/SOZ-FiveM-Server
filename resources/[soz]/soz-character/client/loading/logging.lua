@@ -78,6 +78,5 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
     end
 
     -- Display ui and trigger last events
-    TriggerServerEvent("QBCore:Server:OnPlayerLoaded")
     TriggerEvent("QBCore:Client:OnPlayerLoaded")
 end
