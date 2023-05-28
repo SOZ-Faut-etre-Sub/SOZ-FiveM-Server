@@ -42,17 +42,4 @@ export class PlayerQbcoreProvider {
 
         this.playerService.setPlayer(playerData);
     }
-
-    @Once(OnceStep.Start)
-    async onStart(): Promise<void> {
-        await wait(0);
-        const playerData = this.qbcore.getPlayer();
-
-        if (!playerData) {
-            return;
-        }
-
-        this.playerService.setPlayer(playerData);
-        this.onceLoader.trigger(OnceStep.PlayerLoaded, playerData);
-    }
 }

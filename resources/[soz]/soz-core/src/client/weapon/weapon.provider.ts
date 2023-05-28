@@ -15,7 +15,7 @@ import { InventoryManager } from '../inventory/inventory.manager';
 import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
-import { TalkService } from '../talk.service';
+import { VoipRadioProvider } from '../voip/voip.radio.provider';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
 import { WeaponHolsterProvider } from './weapon.holster.provider';
 import { WeaponService } from './weapon.service';
@@ -45,8 +45,8 @@ export class WeaponProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    @Inject(TalkService)
-    private talkService: TalkService;
+    @Inject(VoipRadioProvider)
+    private voipRadioProvider: VoipRadioProvider;
 
     @Inject(WeaponHolsterProvider)
     private weaponHolsterProvider: WeaponHolsterProvider;
@@ -259,7 +259,7 @@ export class WeaponProvider {
             await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
-        if (this.talkService.isRadioOpen()) {
+        if (this.voipRadioProvider.isRadioOpen()) {
             await this.weapon.clear();
             await this.weaponDrawingProvider.refreshDrawWeapons();
         }

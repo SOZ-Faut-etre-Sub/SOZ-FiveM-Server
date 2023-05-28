@@ -214,6 +214,10 @@ export class VoipRadioProvider {
         }
     }
 
+    public isRadioOpen() {
+        return this.radioInUse;
+    }
+
     public openRadioInterface() {
         const player = this.playerService.getPlayer();
 

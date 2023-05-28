@@ -12,7 +12,7 @@ import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { Store } from '../store/store';
-import { TalkService } from '../talk.service';
+import { VoipRadioProvider } from '../voip/voip.radio.provider';
 
 const AFK_SECONDS_UNTIL_KICK = 900;
 const AFK_SECONDS_UNTIL_WARNING = 300;
@@ -37,8 +37,8 @@ export class AfkProvider {
     @Inject(PhoneService)
     private phoneService: PhoneService;
 
-    @Inject(TalkService)
-    private talkService: TalkService;
+    @Inject(VoipRadioProvider)
+    private voipRadioProvider: VoipRadioProvider;
 
     @Inject(InputService)
     private inputService: InputService;
@@ -69,8 +69,8 @@ export class AfkProvider {
                 this.phoneService.setPhoneFocus(false);
             }
 
-            if (this.talkService.isRadioOpen()) {
-                this.talkService.setRadioOpen(false);
+            if (this.voipRadioProvider.isRadioOpen()) {
+                this.voipRadioProvider.closeRadioInterface();
             }
 
             if (GetPauseMenuState() != 0) {

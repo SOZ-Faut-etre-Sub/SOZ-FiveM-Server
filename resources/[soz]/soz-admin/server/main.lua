@@ -168,7 +168,6 @@ RegisterNetEvent("admin:server:ChangePlayer", function(citizenid)
     QBCore.Player.Logout(src)
 
     if QBCore.Player.Login(src, citizenid) then
-        TriggerEvent("QBCore:Server:OnPlayerLoaded")
         TriggerClientEvent("QBCore:Client:OnPlayerLoaded", src)
 
         TriggerClientEvent("soz-character:Client:ApplyCurrentSkin", src)
