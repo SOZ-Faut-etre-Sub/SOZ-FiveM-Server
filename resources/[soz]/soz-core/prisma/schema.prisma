@@ -357,6 +357,7 @@ model PlayerVehicle {
   status          String? @db.Text
   boughttime      Int     @default(0)
   parkingtime     Int     @default(0)
+  pound_price     Int?    @default(0)
   player          player? @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playervehicles_players")
 
   @@index([citizenid], map: "citizenid")

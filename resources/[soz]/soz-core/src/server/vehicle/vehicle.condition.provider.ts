@@ -38,7 +38,7 @@ export class VehicleConditionProvider {
     private monitor: Monitor;
 
     @Tick(TickInterval.EVERY_SECOND, 'vehicle:condition:update')
-    public updateVehiclesCondition() {
+    public async updateVehiclesCondition() {
         // Basically we keep tracks of all vehicles spawned and ask the current owner to update the condition of the vehicle
         const netIds = this.vehicleStateService.getSpawned();
 
@@ -50,6 +50,17 @@ export class VehicleConditionProvider {
 
                 this.vehicleStateService.unregisterSpawned(netId);
                 this.vehicleStateService.setLastSpawnData(netId, null);
+
+                await this.prismaService.playerVehicle.update({
+                    where: {
+                        id: lastState?.id,
+                    },
+                    data: {
+                        state: PlayerVehicleState.InSoftPound,
+                        garage: 'pound',
+                        parkingtime: Math.round(Date.now() / 1000),
+                    },
+                });
 
                 this.monitor.publish(
                     'vehicle_despawn',

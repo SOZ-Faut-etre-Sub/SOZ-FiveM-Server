@@ -1,4 +1,6 @@
 import { PlayerVehicle, Prisma } from '@prisma/client';
+import { Tick, TickInterval } from '@public/core/decorators/tick';
+import { wait } from '@public/core/utils';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -23,7 +25,7 @@ import {
     PlaceCapacity,
 } from '../../shared/vehicle/garage';
 import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
-import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
+import { PlayerServerVehicle, PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -41,6 +43,15 @@ const ALLOWED_VEHICLE_TYPE: Record<GarageCategory, string[]> = {
     [GarageCategory.Car]: ['automobile', 'bike', 'trailer'],
     [GarageCategory.Air]: ['heli', 'plane'],
     [GarageCategory.Sea]: ['boat', 'submarine'],
+};
+
+const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZone: 'CET',
 };
 
 @Provider()
@@ -120,7 +131,15 @@ export class VehicleGarageProvider {
 
         const vehicles = await this.prismaService.playerVehicle.findMany({
             where: {
-                state: { in: [PlayerVehicleState.InGarage, PlayerVehicleState.InPound, PlayerVehicleState.Missing] },
+                state: {
+                    in: [
+                        PlayerVehicleState.InGarage,
+                        PlayerVehicleState.InPound,
+                        PlayerVehicleState.InSoftPound,
+                        PlayerVehicleState.InFedPound,
+                        PlayerVehicleState.Missing,
+                    ],
+                },
             },
         });
 
@@ -271,7 +290,7 @@ export class VehicleGarageProvider {
                 garage: { in: ids },
                 citizenid: isPropertyGarage ? { in: citizenIds } : undefined,
                 state: {
-                    in: [PlayerVehicleState.InGarage, PlayerVehicleState.InPound, PlayerVehicleState.InJobGarage],
+                    in: [PlayerVehicleState.InGarage, PlayerVehicleState.InJobGarage],
                 },
             },
         });
@@ -287,7 +306,9 @@ export class VehicleGarageProvider {
     }
 
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES)
-    public async getGarageVehicles(source: number, id: string, garage: Garage): Promise<GarageVehicle[]> {
+    public async getGarageVehicles(source: number, id: string): Promise<GarageVehicle[]> {
+        const garage = (await this.garageRepository.get())[id];
+
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -320,7 +341,13 @@ export class VehicleGarageProvider {
                 {
                     garage: { in: ids },
                     state: {
-                        in: [PlayerVehicleState.InGarage, PlayerVehicleState.InPound, PlayerVehicleState.InJobGarage],
+                        in: [
+                            PlayerVehicleState.InGarage,
+                            PlayerVehicleState.InPound,
+                            PlayerVehicleState.InJobGarage,
+                            PlayerVehicleState.InSoftPound,
+                            PlayerVehicleState.InFedPound,
+                        ],
                     },
                 },
             ],
@@ -375,14 +402,25 @@ export class VehicleGarageProvider {
                 job: vehicle.job as JobType,
                 category: vehicle.category as VehicleCategory,
                 state: vehicle.state,
-            };
-
+            } as PlayerServerVehicle;
             let price: number | null = null;
 
             if (garage.type === GarageType.Depot) {
-                const vehiclePrice = (await this.vehicleRepository.findByModel(playerVehicle.modelName))?.price || 0;
-
-                price = Math.round(vehiclePrice * 0.15);
+                const vehiclePrice = (await this.vehicleRepository.findByHash(parseInt(vehicle.hash)))?.price || 0;
+                if (vehicle.state == PlayerVehicleState.InSoftPound) {
+                    const hours = (timestamp - vehicle.parkingtime) / 3600;
+                    if (hours > 1) {
+                        price = Math.round(vehiclePrice * 0.15);
+                    } else if (hours > 0.5) {
+                        price = Math.round(vehiclePrice * 0.1);
+                    } else {
+                        price = Math.round(vehiclePrice * 0.05);
+                    }
+                } else if (vehicle.state == PlayerVehicleState.InFedPound) {
+                    price = vehicle.pound_price;
+                } else {
+                    price = Math.round(vehiclePrice * 0.15);
+                }
             }
 
             if (garage.type === GarageType.Private) {
@@ -394,7 +432,7 @@ export class VehicleGarageProvider {
                 vehicle: playerVehicle,
                 price,
                 name: null,
-            });
+            } as GarageVehicle);
         }
 
         return playerVehiclesMapped;
@@ -425,7 +463,12 @@ export class VehicleGarageProvider {
             return Err("ce véhicule n'est pas à vous");
         } else if (garage.type === GarageType.Job && garage.job !== player.job.id) {
             return Err("vous n'avez pas accès à ce garage entreprise");
-        } else if (garage.type === GarageType.Depot && player.job.id !== JobType.Bennys) {
+        } else if (
+            garage.type === GarageType.Depot &&
+            player.job.id !== JobType.Bennys &&
+            player.job.id !== JobType.LSPD &&
+            player.job.id !== JobType.BCSO
+        ) {
             return Err("vous n'avez pas accès à ce garage fourrière");
         } else if (
             garage.type === GarageType.JobLuxury &&
@@ -472,7 +515,14 @@ export class VehicleGarageProvider {
     }
 
     @OnEvent(ServerEvent.VEHICLE_GARAGE_STORE)
-    public async storeVehicle(source: number, id: string, garage: Garage, vehicleNetworkId: number): Promise<void> {
+    public async storeVehicle(
+        source: number,
+        id: string,
+        garage: Garage,
+        vehicleNetworkId: number,
+        delay: number,
+        cost: number
+    ): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -531,6 +581,15 @@ export class VehicleGarageProvider {
             return;
         }
 
+        let state = PlayerVehicleState.InGarage;
+        if (garage.type === GarageType.Depot) {
+            if (player.job.id == JobType.Bennys) {
+                state = PlayerVehicleState.InPound;
+            } else if (player.job.id == JobType.LSPD || player.job.id == JobType.BCSO) {
+                state = PlayerVehicleState.InFedPound;
+            }
+        }
+
         if (await this.vehicleSpawner.delete(vehicleNetworkId)) {
             this.monitor.publish(
                 'vehicle_garage_in',
@@ -543,6 +602,9 @@ export class VehicleGarageProvider {
                     garage_type: garage.type,
                     condition: vehicleState.condition,
                     position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                    state: state,
+                    delay: delay,
+                    pound_price: cost,
                 }
             );
 
@@ -551,10 +613,11 @@ export class VehicleGarageProvider {
                 await this.prismaService.playerVehicle.update({
                     where: { id: vehicle.ok.id },
                     data: {
-                        state: PlayerVehicleState.InGarage,
+                        state: state,
                         condition: JSON.stringify(vehicleState.condition),
                         garage: id,
-                        parkingtime: Math.floor(Date.now() / 1000),
+                        parkingtime: Math.floor(Date.now() / 1000) + delay * 3600,
+                        pound_price: cost,
                     },
                 });
             }
@@ -637,7 +700,9 @@ export class VehicleGarageProvider {
                 if (
                     playerVehicle.state !== PlayerVehicleState.InGarage &&
                     playerVehicle.state !== PlayerVehicleState.InJobGarage &&
-                    playerVehicle.state !== PlayerVehicleState.InPound
+                    playerVehicle.state !== PlayerVehicleState.InPound &&
+                    playerVehicle.state !== PlayerVehicleState.InSoftPound &&
+                    playerVehicle.state !== PlayerVehicleState.InFedPound
                 ) {
                     this.notifier.notify(source, 'Ce véhicule est déjà sorti.', 'error');
 
@@ -659,13 +724,38 @@ export class VehicleGarageProvider {
                 const parkingPlace = getRandomItem(parkingPlaces);
 
                 let price = 0;
+                const timestamp = Math.floor(Date.now() / 1000);
 
                 if (garage.type === GarageType.Depot) {
-                    price = vehiclePrice * 0.15;
+                    if (playerVehicle.state == PlayerVehicleState.InSoftPound) {
+                        const hours = (timestamp - playerVehicle.parkingtime) / 3600;
+                        if (hours > 1) {
+                            price = Math.round(vehiclePrice * 0.15);
+                        } else if (hours > 0.5) {
+                            price = Math.round(vehiclePrice * 0.1);
+                        } else {
+                            price = Math.round(vehiclePrice * 0.05);
+                        }
+                    } else if (playerVehicle.state == PlayerVehicleState.InFedPound) {
+                        if (playerVehicle.parkingtime > timestamp) {
+                            this.notifier.notify(
+                                source,
+                                `Ce véhicule est immobilisé jusqu'au ${new Date(
+                                    playerVehicle.parkingtime * 1000
+                                ).toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}`,
+                                'error'
+                            );
+
+                            return;
+                        }
+                        price = playerVehicle.pound_price;
+                    } else {
+                        price = Math.round(vehiclePrice * 0.15);
+                    }
                 }
 
                 if (garage.type === GarageType.Private) {
-                    const hours = Math.floor((Date.now() / 1000 - playerVehicle.parkingtime) / 3600);
+                    const hours = Math.floor((timestamp - playerVehicle.parkingtime) / 3600);
                     price = Math.min(200, hours * 20);
                 }
 
@@ -795,5 +885,48 @@ export class VehicleGarageProvider {
         }
 
         return citizenIds;
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE, 'soft-pound-check')
+    public async loop() {
+        const softVehicles = await this.prismaService.playerVehicle.findMany({
+            where: { state: PlayerVehicleState.InSoftPound },
+        });
+
+        const timestamp = Math.floor(Date.now() / 1000);
+
+        const loseLifeDelay = 3600;
+        let waitTime = loseLifeDelay;
+        for (const veh of softVehicles) {
+            const delta = timestamp - (veh.parkingtime + loseLifeDelay);
+            if (delta > 0) {
+                const newState = veh.life_counter == 0 ? PlayerVehicleState.Missing : PlayerVehicleState.InPound;
+                await this.prismaService.playerVehicle.update({
+                    where: { id: veh.id },
+                    data: {
+                        state: newState,
+                        life_counter: {
+                            decrement: 1,
+                        },
+                    },
+                });
+                this.monitor.publish(
+                    'vehicle_softpound_lifelost',
+                    {
+                        player_source: source,
+                        vehicle_plate: veh.plate,
+                    },
+                    {
+                        life_counter_before: veh.life_counter,
+                        life_counter_after: veh.life_counter - 1,
+                        state: newState,
+                    }
+                );
+            } else {
+                waitTime = Math.min(waitTime, -delta);
+            }
+        }
+
+        await wait(waitTime * 1000);
     }
 }

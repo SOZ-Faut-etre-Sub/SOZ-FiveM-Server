@@ -110,7 +110,7 @@ export class AdminMenuVehicleProvider {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
-        const vehicleName = GetDisplayNameFromVehicleModel(vehicleModel);
+        const vehicleName = GetDisplayNameFromVehicleModel(vehicleModel).toLowerCase();
 
         TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, configuration);
         return Ok(true);
