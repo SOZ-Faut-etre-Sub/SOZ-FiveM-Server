@@ -58,6 +58,7 @@ SozJobCore.JobPermission = {
         MarkedMoneyCleaning = "marked-money-cleaning",
     },
     UPW = {Order = "order", ChangePrice = "upw-change-price"},
+    FDO = {FedPound = "fdo-fed-pound"},
 }
 
 SozJobCore.Jobs = {
@@ -171,6 +172,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès au registre des véhicules"},
             [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
             [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
+            [SozJobCore.JobPermission.FDO.FedPound] = {label = "Mise en fourrière fédérale"},
         },
         bossZones = {
             {
@@ -208,6 +210,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès au registre des véhicules"},
             [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
             [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
+            [SozJobCore.JobPermission.FDO.FedPound] = {label = "Mise en fourrière fédérale"},
         },
         bossZones = {
             {

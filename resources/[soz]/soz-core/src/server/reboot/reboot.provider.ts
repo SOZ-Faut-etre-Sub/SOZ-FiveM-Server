@@ -1,3 +1,4 @@
+import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 import { Command } from '../../core/decorators/command';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -59,10 +60,10 @@ export class RebootProvider {
 
         await this.prismaService.playerVehicle.updateMany({
             where: {
-                state: 0,
+                state: PlayerVehicleState.Out,
             },
             data: {
-                state: 2,
+                state: PlayerVehicleState.InPound,
                 garage: 'fourriere',
                 parkingtime: Math.round(Date.now() / 1000),
                 life_counter: {
@@ -76,7 +77,7 @@ export class RebootProvider {
                 life_counter: -1,
             },
             data: {
-                state: 4,
+                state: PlayerVehicleState.Missing,
                 parkingtime: Math.round(Date.now() / 1000),
             },
         });
