@@ -23,7 +23,7 @@ export const InputApp: FunctionComponent = () => {
         }
     }, []);
 
-    useNuiFocus(askInput !== null, askInput !== null, askInput === null);
+    useNuiFocus(askInput !== null, askInput !== null, false);
 
     useInputNuiEvent('AskInput', askInput => {
         setAskInput(askInput);

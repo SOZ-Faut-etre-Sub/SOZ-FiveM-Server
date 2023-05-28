@@ -1,3 +1,4 @@
+import { Control } from '@public/shared/input';
 import { DependencyList, MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 import { uuidv4 } from '../../core/utils';
@@ -125,8 +126,15 @@ export const useNuiFetch = <I, R>(event: NuiEvent): UseNuiResponse<I, R> => {
  * Allow a component to self register it's nui focus
  * @param keyboard {boolean} if keyboard should be focus
  * @param cursor {boolean} if cursor should be focus
+ * @param keepInput {boolean} if input should be forwarded to game
+ * @param disableKeepInputControls
  */
-export const useNuiFocus = (keyboard: boolean, cursor: boolean, keepInput: boolean) => {
+export const useNuiFocus = (
+    keyboard: boolean,
+    cursor: boolean,
+    keepInput: boolean,
+    disableKeepInputControls: Control[] = []
+) => {
     useEffect(() => {
         const id = uuidv4();
 
@@ -136,6 +144,7 @@ export const useNuiFocus = (keyboard: boolean, cursor: boolean, keepInput: boole
                 keyboard,
                 cursor,
                 keepInput,
+                disableKeepInputControls,
             },
         });
 

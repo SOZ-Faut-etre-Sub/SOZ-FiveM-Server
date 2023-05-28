@@ -37,10 +37,6 @@ export class VoipRadioProvider {
 
     private radioInUse = false;
 
-    private previousPrimaryFrequency = 0;
-
-    private previousSecondaryFrequency = 0;
-
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(): Promise<void> {
         const hasRadio = this.inventoryManager.hasEnoughItem('radio', 1, true);
@@ -49,14 +45,18 @@ export class VoipRadioProvider {
             this.closeRadioInterface();
         }
 
-        this.store.dispatch.radioShortRange.enable(false);
+        if (!hasRadio) {
+            this.store.dispatch.radioShortRange.enable(false);
+        }
     }
 
     @StateSelector(state => state.radioShortRange.enabled)
-    public toggleRadio(enabled: boolean) {
+    public toggleRadio(enabled: boolean, wasEnabled?: boolean) {
         const radioShortRange = this.store.getState().radioShortRange;
 
-        this.soundService.play('radio/toggle', 0.2);
+        if (wasEnabled !== undefined) {
+            this.soundService.play('radio/toggle', 0.2);
+        }
 
         if (!enabled) {
             this.voipService.disconnectRadio(
@@ -69,9 +69,6 @@ export class VoipRadioProvider {
                 RadioChannelType.Secondary,
                 radioShortRange.secondary.frequency
             );
-
-            this.previousPrimaryFrequency = 0;
-            this.previousSecondaryFrequency = 0;
 
             return;
         }
@@ -94,79 +91,85 @@ export class VoipRadioProvider {
     }
 
     @StateSelector(state => state.radioShortRange.primary.frequency)
-    public updatePrimaryFrequency(frequency: number) {
+    public updatePrimaryFrequency(frequency: number, previousFrequency: number) {
         const radioShortRange = this.store.getState().radioShortRange;
 
         if (!radioShortRange.enabled) {
             return;
         }
 
-        if (this.previousPrimaryFrequency > 0) {
-            this.voipService.disconnectRadio(
-                RadioType.RadioShortRange,
-                RadioChannelType.Primary,
-                this.previousPrimaryFrequency
-            );
+        if (previousFrequency > 0) {
+            this.voipService.disconnectRadio(RadioType.RadioShortRange, RadioChannelType.Primary, previousFrequency);
         }
 
         if (frequency >= 0) {
             this.voipService.connectRadio(RadioType.RadioShortRange, RadioChannelType.Primary, frequency);
         }
 
-        this.soundService.play('click', radioShortRange.primary.volume / 100);
-        this.previousPrimaryFrequency = frequency;
+        if (previousFrequency > 0 || frequency > 0) {
+            this.soundService.play('click', radioShortRange.primary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioShortRange.secondary.frequency)
-    public updateSecondaryFrequency(frequency: number) {
+    public updateSecondaryFrequency(frequency: number, previousFrequency: number) {
         const radioShortRange = this.store.getState().radioShortRange;
 
         if (!radioShortRange.enabled) {
             return;
         }
 
-        if (this.previousSecondaryFrequency > 0) {
-            this.voipService.disconnectRadio(
-                RadioType.RadioShortRange,
-                RadioChannelType.Secondary,
-                this.previousSecondaryFrequency
-            );
+        if (previousFrequency > 0) {
+            this.voipService.disconnectRadio(RadioType.RadioShortRange, RadioChannelType.Secondary, previousFrequency);
         }
 
         if (frequency >= 0) {
             this.voipService.connectRadio(RadioType.RadioShortRange, RadioChannelType.Secondary, frequency);
         }
 
-        this.soundService.play('click', radioShortRange.secondary.volume / 100);
-        this.previousSecondaryFrequency = frequency;
+        if (previousFrequency > 0 || frequency > 0) {
+            this.soundService.play('click', radioShortRange.secondary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioShortRange.primary.ear)
-    public updatePrimaryEar(ear: Ear) {
+    public updatePrimaryEar(ear: Ear, previousEar?: Ear) {
         const radioShortRange = this.store.getState().radioShortRange;
         this.voipService.setRadioEar(RadioType.RadioShortRange, RadioChannelType.Primary, ear);
-        this.soundService.play('click', radioShortRange.primary.volume / 100);
+
+        if (previousEar !== undefined) {
+            this.soundService.play('click', radioShortRange.primary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioShortRange.secondary.ear)
-    public updateSecondaryEar(ear: Ear) {
+    public updateSecondaryEar(ear: Ear, previousEar?: Ear) {
         const radioShortRange = this.store.getState().radioShortRange;
         this.voipService.setRadioEar(RadioType.RadioShortRange, RadioChannelType.Secondary, ear);
-        this.soundService.play('click', radioShortRange.secondary.volume / 100);
+
+        if (previousEar !== undefined) {
+            this.soundService.play('click', radioShortRange.secondary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioShortRange.primary.volume)
-    public updatePrimaryVolume(volume: number) {
+    public updatePrimaryVolume(volume: number, previousVolume?: number) {
         const radioShortRange = this.store.getState().radioShortRange;
         this.voipService.setRadioVolume(RadioType.RadioShortRange, RadioChannelType.Primary, volume);
-        this.soundService.play('click', radioShortRange.primary.volume / 100);
+
+        if (previousVolume !== undefined) {
+            this.soundService.play('click', radioShortRange.primary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioShortRange.secondary.volume)
-    public updateSecondaryVolume(volume: number) {
+    public updateSecondaryVolume(volume: number, previousVolume?: number) {
         const radioShortRange = this.store.getState().radioShortRange;
         this.voipService.setRadioVolume(RadioType.RadioShortRange, RadioChannelType.Secondary, volume);
-        this.soundService.play('click', radioShortRange.secondary.volume / 100);
+
+        if (previousVolume !== undefined) {
+            this.soundService.play('click', radioShortRange.secondary.volume / 100);
+        }
     }
 
     @StateSelector(state => state.radioShortRange)
@@ -234,6 +237,12 @@ export class VoipRadioProvider {
             return;
         }
 
+        const hasRadio = this.inventoryManager.hasEnoughItem('radio', 1, true);
+
+        if (!hasRadio) {
+            return;
+        }
+
         this.radioInUse = true;
         this.animationService.playAnimationIfNotRunning({
             base: {
@@ -249,8 +258,8 @@ export class VoipRadioProvider {
                 {
                     model: 'prop_cs_hand_radio',
                     bone: 57005,
-                    position: [0.14, 0.01, -0.02],
-                    rotation: [110.0, 120.0, -15.0],
+                    position: [0.14, 0.03, -0.04],
+                    rotation: [110.0, -15.0, 120.0],
                 },
             ],
         });

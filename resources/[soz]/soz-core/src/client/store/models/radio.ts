@@ -44,7 +44,7 @@ export const radioLongRange = createModel<RootModel>()({
             frequency: 0,
             volume: 50,
         },
-    } as Radio,
+    } as Radio | null,
     reducers: {
         enable(state, enabled: boolean) {
             return { ...state, enabled };
