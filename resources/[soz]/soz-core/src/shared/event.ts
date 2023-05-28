@@ -193,6 +193,8 @@ export enum ServerEvent {
     MDR_MONEY_CLEANING = 'soz-core:server:mdr:money-cleaning',
 
     RACKET = 'soz-core:server:racket',
+    RACKET_RELEASE_PED = 'soz-core:server:racket:release-ped',
+    RACKET_START_PHASE = 'soz-core:server:racket:start-phase',
 
     HEIST_ADD_ITEM = 'soz-core:server:heist:add-item',
     HEIST_JEWELRY_UNLOCK = 'soz-core:server:heist:unlock',
@@ -224,6 +226,8 @@ export enum ServerEvent {
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
     CRIMI_SMOKE_STRESS = 'soz-core:server:crimi:smoke-stress',
     CRIMI_BLOCK_DATE = 'soz-core:server:crimi:block-date',
+
+    TALENT_TREE_DISABLE_CRIMI = 'soz-core:server:talent:disable-crimi',
 }
 
 export enum ClientEvent {
@@ -402,6 +406,8 @@ export enum ClientEvent {
 
     BINOCULARS_TOGGLE = 'items:binoculars:toggle',
     BINOCULARS_SET = 'items:binoculars:set',
+
+    RACKET_START_PHASE = 'soz-core:client:racket:start-phase',
 }
 
 export enum GameEvent {

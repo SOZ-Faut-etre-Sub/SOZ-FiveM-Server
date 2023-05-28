@@ -1,5 +1,4 @@
 import { PlayerTalentService } from '@private/server/player/player.talent.service';
-import { Talent } from '@private/shared/talent';
 import { waitUntil } from '@public/core/utils';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
@@ -72,8 +71,8 @@ export class VehicleLockProvider {
 
         const lockPickDuration = 10000; // 10 seconds
         const percentages = {
-            lockpick_low: 40,
-            lockpick_medium: 70,
+            lockpick_low: 75,
+            lockpick_medium: 95,
             lockpick_high: 100,
             lockpick: 100,
         };
@@ -144,10 +143,7 @@ export class VehicleLockProvider {
         const random = getRandomInt(0, 100);
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
 
-        if (
-            random > percentages[item.name] ||
-            (vehicleState.isPlayerVehicle && !this.playerTalentService.hasTalent(source, Talent.AllowJobCarjacking))
-        ) {
+        if (random > percentages[item.name] || (vehicleState.isPlayerVehicle && item.name != 'lockpick_high')) {
             this.notifier.notify(source, "Vous n'avez pas réussi à crocheter le véhicule", 'error');
 
             return;
