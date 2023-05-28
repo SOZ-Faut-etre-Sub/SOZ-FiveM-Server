@@ -71,7 +71,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
         if (vehicleState.condition.fuelLevel >= 70) {
             this.notifier.notify(source, "Vous avez ~r~trop d'essence~s~ pour utiliser un jerrycan.", 'error');
@@ -144,7 +144,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
         if (vehicleState.condition.fuelLevel >= 70) {
             this.notifier.notify(source, 'Vous avez ~r~trop de kérosène~s~ pour utiliser un jerrycan.', 'error');
@@ -211,7 +211,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
         if (
             !this.inventoryManager.removeItemFromInventory(
@@ -265,7 +265,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleEntityId);
+        const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
         if (vehicleState.condition.fuelLevel >= 67) {
             this.notifier.notify(

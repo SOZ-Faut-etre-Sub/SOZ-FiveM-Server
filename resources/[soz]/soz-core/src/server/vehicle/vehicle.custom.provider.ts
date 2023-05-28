@@ -30,8 +30,7 @@ export class VehicleCustomProvider {
         originalConfiguration: VehicleConfiguration,
         price: number | null
     ) {
-        const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(entityId);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         const playerVehicle = state.id
             ? await this.prismaService.playerVehicle.findUnique({
@@ -69,8 +68,7 @@ export class VehicleCustomProvider {
 
     @Rpc(RpcServerEvent.VEHICLE_CUSTOM_GET_MODS)
     public async getMods(source: number, vehicleNetworkId: number): Promise<VehicleConfiguration> {
-        const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
-        const state = this.vehicleStateService.getVehicleState(entityId);
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         if (!state.id) {
             return getDefaultVehicleConfiguration();
