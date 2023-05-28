@@ -53,7 +53,6 @@ export class BinocularsProvider {
     }
 
     public HandleZoom(cam) {
-        console.log('HandleZoom');
         if (IsControlJustPressed(0, 241)) {
             this.binocularsConfig.fov = Math.max(this.binocularsConfig.fov - ZOOMSPEED, FOV_MIN);
         }
@@ -64,8 +63,6 @@ export class BinocularsProvider {
         if (Math.abs(this.binocularsConfig.fov - currentFov) < 0.1) {
             this.binocularsConfig.fov = currentFov;
         }
-        console.log(`${currentFov} + (${this.binocularsConfig.fov} - ${currentFov})`);
-        console.log('set cam FOV  toooo:', currentFov + (this.binocularsConfig.fov - currentFov) * 0.05);
         SetCamFov(cam, currentFov + (this.binocularsConfig.fov - currentFov) * 0.05);
     }
 
@@ -133,7 +130,6 @@ export class BinocularsProvider {
             camHeading = (camHeading + 180.0) / 360.0;
             SetTaskMoveNetworkSignalFloat(player, 'Pitch', camPitch);
             SetTaskMoveNetworkSignalFloat(player, 'Heading', camHeading * -1.0 + 1.0);
-            console.log('BINOCULARS', this.binocularsConfig.enabled);
 
             await wait(5);
         }
