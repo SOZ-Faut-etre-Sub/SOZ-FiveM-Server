@@ -3,7 +3,7 @@ PoliceJob.Animations = {}
 RegisterNetEvent("police:client:HandCuffAnimation", function()
     local ped = PlayerPedId()
     local lib = "mp_arrest_paired"
-    local playerState = exports["soz-core"]:getPlayerState()
+    local playerState = exports["soz-core"]:GetPlayerState()
 
     TriggerServerEvent("InteractSound_SV:PlayOnSource", playerState.isHandcuffed and "Cuff" or "Uncuff", 0.2)
     QBCore.Functions.RequestAnimDict(lib)
