@@ -16,8 +16,8 @@ RegisterCommand("hu", function()
 
     local playerState = exports["soz-core"]:GetPlayerState()
 
-    if IsPedSittingInAnyVehicle(ped) or playerState.isEscorted or playerState.isEscorting or playerState.isDead or
-        PlayerData.metadata["ishandcuffed"] or PlayerData.metadata["inlaststand"] then
+    if IsPedSittingInAnyVehicle(ped) or playerState.isEscorted or playerState.isEscorting or playerState.isDead or PlayerData.metadata["ishandcuffed"] or
+        PlayerData.metadata["inlaststand"] then
         return
     end
 
