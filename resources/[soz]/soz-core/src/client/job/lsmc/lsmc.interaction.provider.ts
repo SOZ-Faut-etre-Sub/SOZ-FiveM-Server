@@ -119,7 +119,7 @@ export class LSMCInteractionProvider {
                         target
                     );
 
-                    return targetState.isWearingPatientOutfit;
+                    return !targetState.isWearingPatientOutfit;
                 },
                 action: entity => {
                     TriggerServerEvent(

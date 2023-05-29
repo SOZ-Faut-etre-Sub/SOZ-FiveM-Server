@@ -10,7 +10,7 @@ import { PlayerData } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { VehicleClass, VehicleEntityState, VehicleLockStatus } from '../../shared/vehicle/vehicle';
+import { VehicleClass, VehicleLockStatus, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -494,14 +494,24 @@ export class VehicleLockProvider {
 
         if (state.open) {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
-            this.vehicleStateService.updateVehicleState(vehicle, {
-                open: false,
-            });
+            this.vehicleStateService.updateVehicleState(
+                vehicle,
+                {
+                    open: false,
+                },
+                true,
+                true
+            );
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
-            this.vehicleStateService.updateVehicleState(vehicle, {
-                open: true,
-            });
+            this.vehicleStateService.updateVehicleState(
+                vehicle,
+                {
+                    open: true,
+                },
+                true,
+                true
+            );
         }
 
         SetVehicleLights(vehicle, 2);
@@ -511,7 +521,7 @@ export class VehicleLockProvider {
         SetVehicleLights(vehicle, 0);
     }
 
-    private async hasVehicleKey(player: PlayerData, state: VehicleEntityState) {
+    private async hasVehicleKey(player: PlayerData, state: VehicleVolatileState) {
         // Case for temporary care, only owner can unlock / lock vehicle
         if (state.id === null) {
             return state.owner === player.citizenid;

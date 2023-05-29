@@ -7,7 +7,7 @@ import { ServerEvent } from '@public/shared/event';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
-import { VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
+import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
 import { VehicleModificationService } from './vehicle.modification.service';
@@ -15,6 +15,265 @@ import { VehicleModificationService } from './vehicle.modification.service';
 type ClosestVehicleConfig = {
     maxDistance?: number;
     position?: Vector3 | Vector4 | null;
+};
+
+type VehicleConditionItemHelper<T extends keyof VehicleCondition, V extends VehicleCondition[T]> = {
+    apply: (vehicle: number, value: V, condition: VehicleCondition) => void;
+    get: (vehicle: number, state: VehicleVolatileState) => V;
+    compare?: (a: V, b: V) => boolean;
+};
+
+type VehicleConditionHelper<T extends keyof VehicleCondition> = Record<
+    T,
+    VehicleConditionItemHelper<T, VehicleCondition[T]>
+>;
+
+const applyVehicleTire = (
+    vehicle: number,
+    tireHealth: { [key: number]: number },
+    tireBurstCompletely: { [key: number]: boolean },
+    tireBurstState: { [key: number]: boolean }
+) => {
+    const wheelNumber = 6;
+
+    for (let i = 0; i < wheelNumber; i++) {
+        SetVehicleWheelHealth(vehicle, i, tireHealth[i] || 1000.0);
+    }
+
+    for (let i = 0; i < wheelNumber; i++) {
+        if (tireBurstCompletely[i]) {
+            SetVehicleTyreBurst(vehicle, i, true, 1000.0);
+        } else if (tireBurstState[i]) {
+            SetVehicleTyreBurst(vehicle, i, false, tireHealth[i] || 1000.0);
+        } else {
+            SetVehicleTyreFixed(vehicle, i);
+        }
+    }
+};
+
+const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondition>> = {
+    bodyHealth: {
+        apply: (vehicle, value: number) => {
+            SetVehicleBodyHealth(vehicle, value);
+
+            if (value > 999.99) {
+                const previousFuel = GetVehicleFuelLevel(vehicle);
+                const previousOil = GetVehicleOilLevel(vehicle);
+
+                SetVehicleDeformationFixed(vehicle);
+                SetVehicleFixed(vehicle);
+
+                SetVehicleFuelLevel(vehicle, previousFuel);
+                SetVehicleOilLevel(vehicle, previousOil);
+            }
+        },
+        get: vehicle => GetVehicleBodyHealth(vehicle),
+    },
+    engineHealth: {
+        apply: (vehicle, value: number) => {
+            SetVehicleEngineHealth(vehicle, value);
+        },
+        get: vehicle => GetVehicleEngineHealth(vehicle),
+    },
+    fuelLevel: {
+        apply: (vehicle, value: number) => {
+            SetVehicleFuelLevel(vehicle, value);
+        },
+        get: vehicle => GetVehicleFuelLevel(vehicle),
+    },
+    oilLevel: {
+        apply: (vehicle, value: number) => {
+            const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
+
+            if (maxOilVolume) {
+                const realOilLevel = (value * maxOilVolume) / 100;
+                SetVehicleOilLevel(vehicle, realOilLevel);
+            }
+        },
+        get: vehicle => {
+            const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
+
+            if (maxOilVolume) {
+                return (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume;
+            }
+
+            return 100;
+        },
+    },
+    dirtLevel: {
+        apply: (vehicle, value: number) => {
+            SetVehicleDirtLevel(vehicle, value);
+
+            if (value < 0.1) {
+                WashDecalsFromVehicle(vehicle, 1.0);
+            }
+        },
+        get: vehicle => GetVehicleDirtLevel(vehicle),
+    },
+    tankHealth: {
+        apply: (vehicle, value: number) => {
+            SetVehiclePetrolTankHealth(vehicle, value);
+        },
+        get: vehicle => GetVehiclePetrolTankHealth(vehicle),
+    },
+    tireHealth: {
+        apply: (vehicle, value: { [key: number]: number }, condition) => {
+            applyVehicleTire(vehicle, value, condition.tireBurstCompletely, condition.tireBurstState);
+        },
+        get: vehicle => {
+            const wheelNumber = 6;
+            const result: { [key: number]: number } = {};
+
+            for (let i = 0; i < wheelNumber; i++) {
+                result[i] = GetTyreHealth(vehicle, i);
+            }
+
+            return result;
+        },
+        compare: (newValue: { [key: number]: number }, previousValue: { [key: number]: number }): boolean => {
+            for (const key in newValue) {
+                if (!Object.prototype.hasOwnProperty.call(newValue, key)) {
+                    return true;
+                }
+
+                if (newValue[key] !== previousValue[key]) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+    },
+    tireBurstCompletely: {
+        apply: (vehicle, value: { [key: number]: boolean }, condition) => {
+            applyVehicleTire(vehicle, condition.tireHealth, value, condition.tireBurstState);
+        },
+        get: vehicle => {
+            const wheelNumber = 6;
+            const result: { [key: number]: boolean } = {};
+
+            for (let i = 0; i < wheelNumber; i++) {
+                result[i] = IsVehicleTyreBurst(vehicle, i, true);
+            }
+
+            return result;
+        },
+        compare: (newValue: { [key: number]: boolean }, previousValue: { [key: number]: boolean }): boolean => {
+            for (const key in newValue) {
+                if (!Object.prototype.hasOwnProperty.call(newValue, key)) {
+                    return true;
+                }
+
+                if (newValue[key] !== previousValue[key]) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+    },
+    tireBurstState: {
+        apply: (vehicle, value: { [key: number]: boolean }, condition) => {
+            applyVehicleTire(vehicle, condition.tireHealth, condition.tireBurstCompletely, value);
+        },
+        get: vehicle => {
+            const wheelNumber = 6;
+            const result: { [key: number]: boolean } = {};
+
+            for (let i = 0; i < wheelNumber; i++) {
+                result[i] = IsVehicleTyreBurst(vehicle, i, false);
+            }
+
+            return result;
+        },
+        compare: (newValue: { [key: number]: boolean }, previousValue: { [key: number]: boolean }): boolean => {
+            for (const key in newValue) {
+                if (!Object.prototype.hasOwnProperty.call(newValue, key)) {
+                    return true;
+                }
+
+                if (newValue[key] !== previousValue[key]) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+    },
+    windowStatus: {
+        apply: (vehicle, value: { [key: number]: boolean }) => {
+            const windowNumber = 8;
+
+            for (let i = 0; i < windowNumber; i++) {
+                if (value[i]) {
+                    SmashVehicleWindow(vehicle, i);
+                } else {
+                    RollUpWindow(vehicle, i);
+                }
+            }
+        },
+        get: (vehicle, state) => {
+            const windowNumber = 8;
+            const result: { [key: number]: boolean } = {};
+
+            for (let i = 0; i < windowNumber; i++) {
+                if (state.openWindows && (i === 0 || i === 1)) {
+                    continue;
+                }
+
+                result[i] = !IsVehicleWindowIntact(vehicle, i);
+            }
+
+            return result;
+        },
+        compare: (newValue: { [key: number]: boolean }, previousValue: { [key: number]: boolean }): boolean => {
+            for (const key in newValue) {
+                if (!Object.prototype.hasOwnProperty.call(newValue, key)) {
+                    return true;
+                }
+
+                if (newValue[key] !== previousValue[key]) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+    },
+    doorStatus: {
+        apply: (vehicle, value: { [key: number]: boolean }) => {
+            const doorNumber = 6;
+
+            for (let i = 0; i < doorNumber; i++) {
+                if (value[i]) {
+                    SetVehicleDoorBroken(vehicle, i, true);
+                }
+            }
+        },
+        get: vehicle => {
+            const doorNumber = 6;
+            const result: { [key: number]: boolean } = {};
+
+            for (let i = 0; i < doorNumber; i++) {
+                result[i] = IsVehicleDoorDamaged(vehicle, i);
+            }
+
+            return result;
+        },
+        compare: (newValue: { [key: number]: boolean }, previousValue: { [key: number]: boolean }): boolean => {
+            for (const key in newValue) {
+                if (!Object.prototype.hasOwnProperty.call(newValue, key)) {
+                    return true;
+                }
+
+                if (newValue[key] !== previousValue[key]) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+    },
 };
 
 @Injectable()
@@ -94,7 +353,7 @@ export class VehicleService {
         return closestVehicle;
     }
 
-    public syncVehicle(vehicle: number, state: VehicleEntityState): void {
+    public syncVehicle(vehicle: number, state: VehicleVolatileState): void {
         SetVehicleModKit(vehicle, 0);
 
         if (state.plate) {
@@ -102,45 +361,41 @@ export class VehicleService {
         }
     }
 
-    public getVehicleCondition(vehicle: number): Partial<VehicleCondition> {
-        const tireHealth = {};
-        const tireBurstState = {};
-        const tireBurstCompletely = {};
-        const windowStatus = {};
-        const doorStatus = {};
-        const wheelNumber = 6;
+    public getVehicleConditionDiff(
+        vehicle: number,
+        previousCondition: Partial<VehicleCondition>,
+        state: VehicleVolatileState
+    ): Partial<VehicleCondition> {
+        const condition: Partial<VehicleCondition> = {};
 
-        for (let i = 0; i < wheelNumber; i++) {
-            tireHealth[i] = GetTyreHealth(vehicle, i);
+        for (const [key, helper] of Object.entries(VehicleConditionHelpers)) {
+            const newValue = helper.get(vehicle, state);
+            const hasChange = helper.compare
+                ? helper.compare(newValue, previousCondition[key])
+                : newValue !== previousCondition[key];
+
+            if (hasChange) {
+                condition[key] = newValue;
+            }
         }
 
-        for (let i = 0; i < wheelNumber; i++) {
-            tireBurstState[i] = IsVehicleTyreBurst(vehicle, i, false);
-        }
+        return condition;
+    }
 
-        for (let i = 0; i < wheelNumber; i++) {
-            tireBurstCompletely[i] = IsVehicleTyreBurst(vehicle, i, true);
-        }
+    public applyVehicleCondition(
+        vehicle: number,
+        applyCondition: Partial<VehicleCondition>,
+        condition: VehicleCondition
+    ): void {
+        for (const [key, value] of Object.entries(applyCondition)) {
+            const helper = VehicleConditionHelpers[key] as VehicleConditionItemHelper<any, any>;
 
-        for (let i = 0; i < 8; i++) {
-            windowStatus[i] = !IsVehicleWindowIntact(vehicle, i);
-        }
+            if (!helper) {
+                continue;
+            }
 
-        for (let i = 0; i < 6; i++) {
-            doorStatus[i] = IsVehicleDoorDamaged(vehicle, i);
+            helper.apply(vehicle, value, condition);
         }
-
-        return {
-            bodyHealth: GetVehicleBodyHealth(vehicle),
-            engineHealth: GetVehicleEngineHealth(vehicle),
-            tankHealth: GetVehiclePetrolTankHealth(vehicle),
-            tireHealth,
-            tireBurstCompletely,
-            tireBurstState,
-            doorStatus,
-            windowStatus,
-            dirtLevel: GetVehicleDirtLevel(vehicle),
-        };
     }
 
     public applyVehicleConfiguration(vehicle: number, modification: VehicleConfiguration): void {

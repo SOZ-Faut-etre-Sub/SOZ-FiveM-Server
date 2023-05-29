@@ -7,7 +7,14 @@ import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcClientEvent } from '../../shared/rpc';
-import { VehicleClass, VehicleSpawn, VehicleType, VehicleTypeFromClass } from '../../shared/vehicle/vehicle';
+import {
+    VehicleClass,
+    VehicleCondition,
+    VehicleSpawn,
+    VehicleType,
+    VehicleTypeFromClass,
+    VehicleVolatileState,
+} from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
@@ -64,7 +71,12 @@ export class VehicleSpawnProvider {
     }
 
     @Rpc(RpcClientEvent.VEHICLE_SPAWN_FROM_SERVER)
-    async spawnFromServerVehicle(networkId: number, vehicleSpawn: VehicleSpawn): Promise<boolean> {
+    async spawnFromServerVehicle(
+        networkId: number,
+        vehicleSpawn: VehicleSpawn,
+        volatile: VehicleVolatileState,
+        condition: VehicleCondition
+    ): Promise<boolean> {
         if (!NetworkDoesEntityExistWithNetworkId(networkId) || !NetworkDoesNetworkIdExist(networkId)) {
             this.logger.error(`network id ${networkId} does not exist, cannot spawn vehicle`);
 
@@ -102,13 +114,17 @@ export class VehicleSpawnProvider {
             return false;
         }
 
-        this.doSpawn(vehicle, networkId, vehicleSpawn);
+        this.doSpawn(vehicle, networkId, vehicleSpawn, volatile, condition);
 
         return true;
     }
 
     @Rpc(RpcClientEvent.VEHICLE_SPAWN)
-    async spawnFromClientVehicle(vehicleSpawn: VehicleSpawn): Promise<number | null> {
+    async spawnFromClientVehicle(
+        vehicleSpawn: VehicleSpawn,
+        volatile: VehicleVolatileState,
+        condition: VehicleCondition
+    ): Promise<number | null> {
         const player = this.playerService.getPlayer();
 
         if (!player) {
@@ -154,7 +170,7 @@ export class VehicleSpawnProvider {
             return null;
         }
 
-        await this.doSpawn(vehicle, networkId, vehicleSpawn);
+        await this.doSpawn(vehicle, networkId, vehicleSpawn, volatile, condition);
         this.lastVehicleSpawn = vehicle;
 
         return networkId;
@@ -224,7 +240,13 @@ export class VehicleSpawnProvider {
         return true;
     }
 
-    private async doSpawn(vehicle: number, networkId: number, vehicleSpawn: VehicleSpawn) {
+    private async doSpawn(
+        vehicle: number,
+        networkId: number,
+        vehicleSpawn: VehicleSpawn,
+        volatile: VehicleVolatileState,
+        condition: VehicleCondition
+    ) {
         SetNetworkIdCanMigrate(networkId, true);
         SetEntityAsMissionEntity(vehicle, true, false);
         SetVehicleHasBeenOwnedByPlayer(vehicle, true);
@@ -255,7 +277,8 @@ export class VehicleSpawnProvider {
             this.vehicleService.applyVehicleConfiguration(vehicle, vehicleSpawn.modification);
         }
 
-        this.vehicleService.syncVehicle(vehicle, vehicleSpawn.state);
+        this.vehicleService.syncVehicle(vehicle, volatile);
+        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
     }
 
     @Rpc(RpcClientEvent.VEHICLE_DELETE)

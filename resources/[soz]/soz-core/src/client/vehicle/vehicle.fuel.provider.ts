@@ -36,6 +36,12 @@ const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
     [VehicleClass.Helicopters]: 6.33,
 };
 
+type CurrentLevel = {
+    vehicle: number;
+    fuel: number;
+    oil: number;
+};
+
 @Provider()
 export class VehicleFuelProvider {
     @Inject(VehicleService)
@@ -75,6 +81,8 @@ export class VehicleFuelProvider {
     private vehicleStateService: VehicleStateService;
 
     private currentStationPistol: CurrentStationPistol | null = null;
+
+    private currentLevel: CurrentLevel | null = null;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoryLoaded() {
@@ -373,9 +381,9 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
+        const fuelLevel = GetVehicleFuelLevel(vehicle);
 
-        if (vehicleState.condition.fuelLevel > 99.0) {
+        if (fuelLevel > 99.0) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
             await this.disableStationPistol();
 
@@ -615,26 +623,53 @@ export class VehicleFuelProvider {
         const vehicle = GetVehiclePedIsIn(ped, false);
 
         if (!vehicle) {
+            this.currentLevel = null;
+
             return;
         }
 
         if (!IsEntityAVehicle(vehicle)) {
+            this.currentLevel = null;
+
             return;
         }
 
         if (!IsVehicleEngineOn(vehicle)) {
+            this.currentLevel = null;
+
             return;
         }
 
         const owner = NetworkGetEntityOwner(vehicle);
 
         if (owner !== PlayerId()) {
+            this.currentLevel = null;
+
             return;
         }
 
         const model = GetEntityModel(vehicle);
 
         if (IsThisModelABicycle(model)) {
+            this.currentLevel = null;
+
+            return;
+        }
+
+        if (this.currentLevel === null || this.currentLevel.vehicle !== vehicle) {
+            const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
+            let oilLevel = 100;
+
+            if (maxOilVolume) {
+                oilLevel = (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume;
+            }
+
+            this.currentLevel = {
+                fuel: GetVehicleFuelLevel(vehicle),
+                oil: oilLevel,
+                vehicle,
+            };
+
             return;
         }
 
@@ -660,15 +695,8 @@ export class VehicleFuelProvider {
         const consumedFuel = rpm * 0.084 * multiplier;
         const consumedOil = consumedFuel / 12;
 
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
-
-        const newOil = Math.max(0, state.condition.oilLevel - consumedOil);
-        const newFuel = Math.max(0, state.condition.fuelLevel - consumedFuel);
-
-        this.vehicleStateService.updateVehicleCondition(vehicle, {
-            oilLevel: newOil,
-            fuelLevel: newFuel,
-        });
+        const newOil = Math.max(0, this.currentLevel.oil - consumedOil);
+        const newFuel = Math.max(0, this.currentLevel.fuel - consumedFuel);
 
         const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
 
@@ -688,5 +716,8 @@ export class VehicleFuelProvider {
             SetVehicleEngineHealth(vehicle, newEngineHealth);
             SetVehicleEngineOn(vehicle, false, true, true);
         }
+
+        this.currentLevel.oil = newOil;
+        this.currentLevel.fuel = newFuel;
     }
 }

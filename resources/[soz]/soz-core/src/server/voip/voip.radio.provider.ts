@@ -32,7 +32,7 @@ export class VoipRadioProvider {
             TriggerClientEvent(ClientEvent.VOIP_RADIO_VEHICLE_ENABLE, copilotServerId, vehicleNetworkId, enable);
         }
 
-        this.vehicleStateService.updateVehicleState(vehicleNetworkId, { radioEnabled: enable });
+        this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, { radioEnabled: enable });
     }
 
     @OnEvent(ServerEvent.VOIP_RADIO_VEHICLE_UPDATE)
@@ -65,16 +65,16 @@ export class VoipRadioProvider {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         if (type === RadioChannelType.Primary) {
-            this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
+            this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
                 primaryRadio: {
-                    ...state.primaryRadio,
+                    ...state.volatile.primaryRadio,
                     ...channel,
                 },
             });
         } else {
-            this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
+            this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
                 secondaryRadio: {
-                    ...state.secondaryRadio,
+                    ...state.volatile.secondaryRadio,
                     ...channel,
                 },
             });

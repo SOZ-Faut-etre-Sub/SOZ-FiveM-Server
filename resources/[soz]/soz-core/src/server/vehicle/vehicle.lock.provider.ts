@@ -143,15 +143,18 @@ export class VehicleLockProvider {
         const random = getRandomInt(0, 100);
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
-        if (random > percentages[item.name] || (vehicleState.isPlayerVehicle && item.name != 'lockpick_high')) {
+        if (
+            random > percentages[item.name] ||
+            (vehicleState.volatile.isPlayerVehicle && item.name != 'lockpick_high')
+        ) {
             this.notifier.notify(source, "Vous n'avez pas réussi à crocheter le véhicule", 'error');
 
             return;
         }
 
-        if (vehicleState.isPlayerVehicle) {
+        if (vehicleState.volatile.isPlayerVehicle) {
             const playerVehicle = await this.prismaService.playerVehicle.findUnique({
-                where: { plate: vehicleState.plate },
+                where: { plate: vehicleState.volatile.plate },
             });
             if (playerVehicle.job) {
                 this.notifier.notify(
@@ -168,7 +171,7 @@ export class VehicleLockProvider {
             }
         }
 
-        this.vehicleStateService.updateVehicleState(closestVehicle.vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleVolatileState(closestVehicle.vehicleNetworkId, {
             forced: true,
         });
 
@@ -210,7 +213,7 @@ export class VehicleLockProvider {
         const plate = GetVehicleNumberPlateText(vehicleEntityId);
 
         this.vehicleStateService.addVehicleKey(plate, player.citizenid);
-        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
             open: true,
             owner: player.citizenid,
         });
@@ -246,7 +249,7 @@ export class VehicleLockProvider {
 
     @OnEvent(ServerEvent.VEHICLE_FORCE_OPEN)
     async onForceOpen(source: number, vehicleNetworkId: number) {
-        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
             forced: true,
         });
     }

@@ -11,14 +11,14 @@ export class BennysFlatbedProvider {
 
     @OnEvent(ServerEvent.BENNYS_FLATBED_ATTACH_VEHICLE)
     public setAttachedVehicle(source: number, flatbedNetworkId: number, attachedNetworkId: number) {
-        this.vehicleStateService.updateVehicleState(flatbedNetworkId, {
+        this.vehicleStateService.updateVehicleVolatileState(flatbedNetworkId, {
             flatbedAttachedVehicle: attachedNetworkId,
         });
     }
 
     @OnEvent(ServerEvent.BENNYS_FLATBED_DETACH_VEHICLE)
     public detachVehicle(source: number, flatbedNetworkId: number) {
-        this.vehicleStateService.updateVehicleState(flatbedNetworkId, {
+        this.vehicleStateService.updateVehicleVolatileState(flatbedNetworkId, {
             flatbedAttachedVehicle: null,
         });
     }

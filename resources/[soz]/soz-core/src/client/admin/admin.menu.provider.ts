@@ -12,7 +12,7 @@ import { ClothingService } from '../clothing/clothing.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
+import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 
@@ -30,8 +30,8 @@ export class AdminMenuProvider {
     @Inject(AdminMenuDeveloperProvider)
     private adminMenuDeveloperProvider: AdminMenuDeveloperProvider;
 
-    @Inject(VehicleConditionProvider)
-    private vehicleConditionProvider: VehicleConditionProvider;
+    @Inject(VehicleDamageProvider)
+    private vehicleDamageProvider: VehicleDamageProvider;
 
     @Inject(HudMinimapProvider)
     private hudMinimapProvider: HudMinimapProvider;
@@ -93,7 +93,7 @@ export class AdminMenuProvider {
                         displayMileage: this.adminMenuDeveloperProvider.showMileage !== null,
                     },
                     vehicule: {
-                        noStall: this.vehicleConditionProvider.getAdminNoStall(),
+                        noStall: this.vehicleDamageProvider.getAdminNoStall(),
                     },
                 },
             },

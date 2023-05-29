@@ -11,12 +11,12 @@ import { DrawService } from '../draw.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
-import { VehicleStateService } from '../vehicle/vehicle.state.service';
+import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 
 @Provider()
 export class AdminMenuDeveloperProvider {
-    @Inject(VehicleStateService)
-    private vehicleStateService: VehicleStateService;
+    @Inject(VehicleConditionProvider)
+    private vehicleConditionProvider: VehicleConditionProvider;
 
     @Inject(ClipboardService)
     private clipboard: ClipboardService;
@@ -122,9 +122,10 @@ export class AdminMenuDeveloperProvider {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
         if (vehicle) {
-            const state = await this.vehicleStateService.getVehicleState(vehicle);
+            const networkId = NetworkGetNetworkIdFromEntity(vehicle);
+            const condition = this.vehicleConditionProvider.getVehicleCondition(networkId);
 
-            this.draw.drawText(`~w~Vehicle mileage :~b~ ${(state.condition.mileage / 1000).toFixed(2)}`, [0.4, 0.002], {
+            this.draw.drawText(`~w~Vehicle mileage :~b~ ${(condition.mileage / 1000).toFixed(2)}`, [0.4, 0.002], {
                 font: Font.ChaletComprimeCologne,
                 size: 0.4,
                 color: [66, 182, 245, 255],
@@ -133,10 +134,11 @@ export class AdminMenuDeveloperProvider {
             const [isTrailerExists, trailerEntity] = GetVehicleTrailerVehicle(vehicle);
 
             if (isTrailerExists) {
-                const trailerState = await this.vehicleStateService.getVehicleState(trailerEntity);
+                const trailerNetworkId = NetworkGetNetworkIdFromEntity(trailerEntity);
+                const trailerCondition = this.vehicleConditionProvider.getVehicleCondition(trailerNetworkId);
 
                 this.draw.drawText(
-                    `~w~Trailer mileage :~b~ ${(trailerState.condition.mileage / 1000).toFixed(2)}`,
+                    `~w~Trailer mileage :~b~ ${(trailerCondition.mileage / 1000).toFixed(2)}`,
                     [0.6, 0.002],
                     {
                         font: Font.ChaletComprimeCologne,

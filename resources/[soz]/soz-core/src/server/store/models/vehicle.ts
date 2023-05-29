@@ -1,11 +1,11 @@
 import { createModel } from '@rematch/core';
 
-import { getDefaultVehicleState, VehicleEntityState } from '../../../shared/vehicle/vehicle';
+import { getDefaultVehicleVolatileState, VehicleVolatileState } from '../../../shared/vehicle/vehicle';
 import type { RootModel } from './';
 
 type VehicleState = {
     subscribers: number[];
-    vehicle: VehicleEntityState;
+    vehicle: VehicleVolatileState;
 };
 
 export const vehicle = createModel<RootModel>()({
@@ -18,10 +18,10 @@ export const vehicle = createModel<RootModel>()({
                 vehicle,
             }: {
                 id: number;
-                vehicle: Partial<VehicleEntityState>;
+                vehicle: Partial<VehicleVolatileState>;
             }
         ) {
-            return { ...state, [id]: { ...getDefaultVehicleState(), ...state[id], ...vehicle } };
+            return { ...state, [id]: { ...getDefaultVehicleVolatileState(), ...state[id], ...vehicle } };
         },
     },
     effects: () => ({}),

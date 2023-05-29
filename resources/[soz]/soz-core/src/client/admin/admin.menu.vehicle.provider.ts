@@ -9,7 +9,7 @@ import { groupBy } from '../../shared/utils/array';
 import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
-import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
+import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
@@ -27,8 +27,8 @@ export class AdminMenuVehicleProvider {
     @Inject(VehicleModificationService)
     private vehicleModificationService: VehicleModificationService;
 
-    @Inject(VehicleConditionProvider)
-    private vehicleConditionProvider: VehicleConditionProvider;
+    @Inject(VehicleDamageProvider)
+    private vehicleDamageProvider: VehicleDamageProvider;
 
     @OnNuiEvent(NuiEvent.AdminGetVehicles)
     public async getVehicles() {
@@ -70,15 +70,13 @@ export class AdminMenuVehicleProvider {
     public async onAdminMenuVehicleRepair() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         if (vehicle) {
-            this.vehicleStateService.updateVehicleCondition(
-                vehicle,
-                {
-                    bodyHealth: 1000,
-                    engineHealth: 1000,
-                    tankHealth: 1000,
-                },
-                false
-            );
+            this.vehicleStateService.updateVehicleCondition(vehicle, {
+                bodyHealth: 1000,
+                engineHealth: 1000,
+                tankHealth: 1000,
+                windowStatus: {},
+                doorStatus: {},
+            });
         }
         return Ok(true);
     }
@@ -87,13 +85,9 @@ export class AdminMenuVehicleProvider {
     public async onAdminMenuVehicleClean() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         if (vehicle) {
-            this.vehicleStateService.updateVehicleCondition(
-                vehicle,
-                {
-                    dirtLevel: 0.0,
-                },
-                false
-            );
+            this.vehicleStateService.updateVehicleCondition(vehicle, {
+                dirtLevel: 0.0,
+            });
         }
         return Ok(true);
     }
@@ -103,13 +97,9 @@ export class AdminMenuVehicleProvider {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
 
         if (vehicle) {
-            this.vehicleStateService.updateVehicleCondition(
-                vehicle,
-                {
-                    fuelLevel: 100.0,
-                },
-                false
-            );
+            this.vehicleStateService.updateVehicleCondition(vehicle, {
+                fuelLevel: 100.0,
+            });
         }
     }
 
@@ -177,6 +167,6 @@ export class AdminMenuVehicleProvider {
 
     @OnNuiEvent(NuiEvent.AdminToggleNoStall)
     public async setNoStall(value: boolean): Promise<void> {
-        this.vehicleConditionProvider.setAdminNoStall(value);
+        this.vehicleDamageProvider.setAdminNoStall(value);
     }
 }

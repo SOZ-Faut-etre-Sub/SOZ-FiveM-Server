@@ -454,7 +454,7 @@ export class BennysVehicleProvider {
             return;
         }
 
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
+        const condition = await this.vehicleStateService.getVehicleCondition(vehicle);
         const model = GetEntityModel(vehicle);
         const doorExist = [];
 
@@ -478,14 +478,14 @@ export class BennysVehicleProvider {
             GetEntityBoneIndexByName(vehicle, 'windscreen_r') !== -1,
         ];
 
-        for (const index of Object.keys(state.condition.doorStatus)) {
+        for (const index of Object.keys(condition.doorStatus)) {
             if (GetIsDoorValid(vehicle, parseInt(index))) {
                 doorExist.push(index);
             }
         }
 
         this.nuiDispatch.dispatch('repair', 'open', {
-            condition: state.condition,
+            condition: condition,
             doors: doorExist,
             windows: windowExist,
             tabletType: tabletType,

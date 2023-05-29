@@ -8,6 +8,7 @@ import { VehicleDealershipProvider } from './vehicle.dealership.provider';
 import { VehicleElectricProvider } from './vehicle.electric.provider';
 import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
+import { VehicleItemProvider } from './vehicle.item.provider';
 import { VehicleLockProvider } from './vehicle.lock.provider';
 import { VehicleMenuProvider } from './vehicle.menu.provider';
 import { VehicleRadarProvider } from './vehicle.radar.provider';
@@ -25,6 +26,7 @@ import { VehicleStateProvider } from './vehicle.state.provider';
         VehicleDealershipProvider,
         VehicleFuelProvider,
         VehicleGarageProvider,
+        VehicleItemProvider,
         VehicleLockProvider,
         VehicleMenuProvider,
         VehicleSeatbeltProvider,

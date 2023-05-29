@@ -17,10 +17,11 @@ import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import {
     getDefaultVehicleCondition,
-    getDefaultVehicleState,
-    VehicleEntityState,
+    getDefaultVehicleVolatileState,
+    VehicleCondition,
     VehicleSpawn,
     VehicleType,
+    VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerService } from '../player/player.service';
@@ -159,18 +160,21 @@ export class VehicleSpawner {
         }
 
         const modelHash = GetHashKey(model);
-        const vehicleNetId = await this.spawn(source, {
-            hash: modelHash,
-            model,
-            position,
-            warp: false,
-            state: {
-                ...getDefaultVehicleState(),
+        const vehicleNetId = await this.spawn(
+            source,
+            {
+                hash: modelHash,
+                model,
+                position,
+                warp: false,
+            },
+            {
                 isPlayerVehicle: true,
                 owner: player.citizenid,
                 open: true,
             },
-        });
+            getDefaultVehicleCondition()
+        );
 
         TriggerClientEvent(event, source, vehicleNetId);
     }
@@ -192,19 +196,6 @@ export class VehicleSpawner {
         TriggerClientEvent(ClientEvent.VEHICLE_GET_CLOSEST, source, id);
 
         return promise;
-    }
-
-    @OnEvent(ServerEvent.VEHICLE_SWAP)
-    private async onVehicleSwap(
-        source: number,
-        originalNetworkId: number,
-        newNetworkId: number,
-        state: VehicleEntityState
-    ) {
-        this.vehicleStateService.updateVehicleState(newNetworkId, state);
-        this.vehicleStateService.registerSpawned(newNetworkId);
-
-        await this.delete(originalNetworkId);
     }
 
     @OnEvent(ServerEvent.VEHICLE_SET_CLOSEST)
@@ -240,12 +231,12 @@ export class VehicleSpawner {
             return null;
         }
 
-        const state = {
-            ...getDefaultVehicleState(),
-            condition: {
-                ...getDefaultVehicleCondition(),
-                ...JSON.parse(vehicle.condition || '{}'),
-            },
+        const condition = {
+            ...getDefaultVehicleCondition(),
+            ...JSON.parse(vehicle.condition || '{}'),
+        };
+
+        const volatile = {
             isPlayerVehicle: true,
             plate: vehicle.plate,
             id: vehicle.id,
@@ -260,17 +251,21 @@ export class VehicleSpawner {
             return null;
         }
 
-        return this.spawn(source, {
-            hash,
-            model: vehicle.vehicle,
-            position,
-            warp: false,
-            modification: {
-                ...getDefaultVehicleConfiguration(),
-                ...(JSON.parse(vehicle.mods || '{}') as VehicleConfiguration),
+        return this.spawn(
+            source,
+            {
+                hash,
+                model: vehicle.vehicle,
+                position,
+                warp: false,
+                modification: {
+                    ...getDefaultVehicleConfiguration(),
+                    ...(JSON.parse(vehicle.mods || '{}') as VehicleConfiguration),
+                },
             },
-            state,
-        });
+            volatile,
+            condition
+        );
     }
 
     public async spawnTemporaryVehicle(source: number, model: string): Promise<null | number> {
@@ -284,47 +279,37 @@ export class VehicleSpawner {
         position[3] = GetEntityHeading(GetPlayerPed(source));
 
         const modelHash = GetHashKey(model);
+        const volatileState = {
+            ...getDefaultVehicleVolatileState(),
+            isPlayerVehicle: true,
+            owner: player.citizenid,
+            open: true,
+        };
+        const condition = getDefaultVehicleCondition();
 
-        return this.spawn(source, {
-            hash: modelHash,
-            model,
-            position,
-            warp: true,
-            state: {
-                ...getDefaultVehicleState(),
-                isPlayerVehicle: true,
-                owner: player.citizenid,
-                open: true,
+        return this.spawn(
+            source,
+            {
+                hash: modelHash,
+                model,
+                position,
+                warp: true,
             },
-        });
+            volatileState,
+            condition
+        );
     }
 
-    private async spawn(player: number, vehicle: VehicleSpawn): Promise<number | null> {
-        const radio = VEHICLE_HAS_RADIO.includes(vehicle.model);
-
-        vehicle.state = {
-            ...vehicle.state,
-            spawned: true,
-            hasRadio: radio,
-            radioEnabled: false,
-            primaryRadio: radio
-                ? {
-                      frequency: 0.0,
-                      volume: 50,
-                      ear: Ear.Both,
-                  }
-                : null,
-            secondaryRadio: radio
-                ? {
-                      frequency: 0.0,
-                      volume: 50,
-                      ear: Ear.Both,
-                  }
-                : null,
-        };
+    private async spawn(
+        player: number,
+        vehicle: VehicleSpawn,
+        volatileState: Partial<VehicleVolatileState>,
+        condition: VehicleCondition
+    ): Promise<number | null> {
+        const volatile = this.getSpawnVolatileState(vehicle, volatileState);
 
         try {
-            const [netId, entityId] = await this.spawnVehicleFromClient(player, vehicle);
+            const [netId, entityId] = await this.spawnVehicleFromClient(player, vehicle, volatile, condition);
 
             if (!netId || !entityId) {
                 return null;
@@ -341,8 +326,7 @@ export class VehicleSpawner {
                 return null;
             }
 
-            this.vehicleStateService.updateVehicleState(netId, vehicle.state);
-            this.vehicleStateService.registerSpawned(netId);
+            this.vehicleStateService.register(netId, player, vehicle.position, volatile, condition);
 
             return netId;
         } catch (e) {
@@ -352,12 +336,19 @@ export class VehicleSpawner {
         }
     }
 
-    private async spawnVehicleFromClient(player: number, vehicle: VehicleSpawn): Promise<[number, number]> {
+    private async spawnVehicleFromClient(
+        player: number,
+        vehicle: VehicleSpawn,
+        volatile: VehicleVolatileState,
+        condition: VehicleCondition
+    ): Promise<[number, number]> {
         let netId = await emitClientRpcConfig<number | null>(
             RpcClientEvent.VEHICLE_SPAWN,
             player,
             { timeout: 10000, retries: 0 },
-            vehicle
+            vehicle,
+            volatile,
+            condition
         );
 
         if (!netId) {
@@ -408,7 +399,12 @@ export class VehicleSpawner {
         return [netId, entityId];
     }
 
-    private async spawnVehicleFromServer(player: number, vehicle: VehicleSpawn): Promise<[number, number]> {
+    private async spawnVehicleFromServer(
+        player: number,
+        vehicle: VehicleSpawn,
+        volatile: VehicleVolatileState,
+        condition: VehicleCondition
+    ): Promise<[number, number]> {
         const type = await emitClientRpc<VehicleType>(RpcClientEvent.VEHICLE_GET_TYPE, player, vehicle.hash);
 
         if (!type) {
@@ -463,7 +459,9 @@ export class VehicleSpawner {
             RpcClientEvent.VEHICLE_SPAWN_FROM_SERVER,
             owner,
             networkId,
-            vehicle
+            vehicle,
+            volatile,
+            condition
         );
 
         if (!initialized) {
@@ -477,12 +475,37 @@ export class VehicleSpawner {
         return [networkId, entity];
     }
 
+    private getSpawnVolatileState(vehicle: VehicleSpawn, state: Partial<VehicleVolatileState>): VehicleVolatileState {
+        const radio = VEHICLE_HAS_RADIO.includes(vehicle.model);
+
+        return {
+            ...getDefaultVehicleVolatileState(),
+            ...state,
+            spawned: true,
+            hasRadio: radio,
+            radioEnabled: false,
+            primaryRadio: radio
+                ? {
+                      frequency: 0.0,
+                      volume: 50,
+                      ear: Ear.Both,
+                  }
+                : null,
+            secondaryRadio: radio
+                ? {
+                      frequency: 0.0,
+                      volume: 50,
+                      ear: Ear.Both,
+                  }
+                : null,
+        };
+    }
+
     public async delete(netId: number): Promise<boolean> {
         const entityId = NetworkGetEntityFromNetworkId(netId);
         let owner = NetworkGetEntityOwner(entityId);
 
-        this.vehicleStateService.unregisterSpawned(netId);
-        this.vehicleStateService.deleteVehicleState(entityId);
+        this.vehicleStateService.unregister(netId);
 
         try {
             let deleted = await emitClientRpc<boolean>(RpcClientEvent.VEHICLE_DELETE, owner, netId);

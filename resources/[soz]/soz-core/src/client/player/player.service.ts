@@ -81,6 +81,10 @@ export class PlayerService {
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
     }
 
+    public canDoAction(): boolean {
+        return !this.state.isDead && !this.state.isHandcuffed && !this.state.isZipped && !this.state.isEscorting;
+    }
+
     public getPlayersAround(position: Vector3, distance: number): number[] {
         const players = GetActivePlayers() as number[];
         const closePlayers = [];

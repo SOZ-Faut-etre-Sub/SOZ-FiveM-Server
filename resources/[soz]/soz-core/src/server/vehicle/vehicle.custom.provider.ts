@@ -32,10 +32,10 @@ export class VehicleCustomProvider {
     ) {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
-        const playerVehicle = state.id
+        const playerVehicle = state.volatile.id
             ? await this.prismaService.playerVehicle.findUnique({
                   where: {
-                      id: state.id,
+                      id: state.volatile.id,
                   },
               })
             : null;
@@ -70,13 +70,13 @@ export class VehicleCustomProvider {
     public async getMods(source: number, vehicleNetworkId: number): Promise<VehicleConfiguration> {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
-        if (!state.id) {
+        if (!state.volatile.id) {
             return getDefaultVehicleConfiguration();
         }
 
         const playerVehicle = await this.prismaService.playerVehicle.findUnique({
             where: {
-                id: state.id,
+                id: state.volatile.id,
             },
         });
 
