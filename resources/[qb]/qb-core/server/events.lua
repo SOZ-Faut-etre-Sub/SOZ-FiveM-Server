@@ -41,7 +41,6 @@ end)
 -- Player Connecting
 
 local function OnPlayerConnecting(name, setKickReason, deferrals)
-    -- @TODO we will validate in another way using steam and a specific queue system, bypass this code ATM
     deferrals.defer()
     local src = source
     local steam = QBCore.Functions.GetSozIdentifier(src)
@@ -63,7 +62,8 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
         end
     end
 
-    local account = QBCore.Functions.GetUserAccount(src)
+    local useTestMode = GetConvar("soz_enable_test_auth", "false") == "true"
+    local account = QBCore.Functions.GetUserAccount(src, useTestMode)
 
     if not account then
         if not allowAnonymous then
@@ -73,6 +73,8 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
         end
 
         QBCore.Functions.SetPermission(steam, defaultAnonymousRole)
+    elseif useTestMode then
+        QBCore.Functions.SetPermission(steam, 'admin')
     else
         QBCore.Functions.SetPermission(steam, account.role or 'user')
     end

@@ -13,10 +13,15 @@ function QBCore.Player.Login(source, citizenid, newData)
             local PlayerData = exports.oxmysql:singleSync('SELECT * FROM player where citizenid = ?', { citizenid })
             local apartment = exports.oxmysql:singleSync('SELECT id,property_id,label,price,owner,tier,has_parking_place FROM housing_apartment where ? IN (owner, roommate)', { citizenid })
             local role = GetConvar("soz_anonymous_default_role", "user")
-            local account = QBCore.Functions.GetUserAccount(src)
+            local useTestMode = GetConvar("soz_enable_test_auth", "false") == "true"
+            local account = QBCore.Functions.GetUserAccount(src, useTestMode)
 
             if account then
                 role = account.role:lower()
+            end
+
+            if useTestMode then
+                role = 'admin'
             end
 
             if PlayerData and (license == PlayerData.license or role == 'admin') then
@@ -177,7 +182,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['injuries_date'] = PlayerData.metadata['injuries_date'] or 0
 
     PlayerData.metadata['mort'] = PlayerData.metadata['mort'] or ''
-    
+
     PlayerData.metadata['rp_death'] = PlayerData.metadata['rp_death'] or false
 
     if not PlayerData.metadata.lastBidTime then

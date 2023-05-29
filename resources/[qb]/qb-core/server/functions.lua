@@ -39,21 +39,32 @@ function QBCore.Functions.GetSozIdentifier(source)
 end
 
 -- This is the default function for getting a player account, change this method to do your own auth system
-function QBCore.Functions.GetUserAccount(source)
+function QBCore.Functions.GetUserAccount(source, useTestMode)
     local steam = QBCore.Functions.GetSozIdentifier(source)
 
     local status, result = pcall(function()
         local p = promise.new()
         local resolved = false
 
-        MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
-            if resolved then
-                return
-            end
+        if useTestMode then
+            MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? AND (a.vip = 1 OR a.role IN ('ADMIN', 'STAFF', 'GAMEMASTER', 'HELPER')) LIMIT 1", {steam}, function(result)
+                if resolved then
+                    return
+                end
 
-            p:resolve(result)
-            resolved = true
-        end)
+                p:resolve(result)
+                resolved = true
+            end)
+        else
+            MySQL.single("SELECT a.* FROM soz_api.accounts a LEFT JOIN soz_api.account_identities ai ON a.id = ai.accountId WHERE a.whitelistStatus = 'ACCEPTED' AND ai.identityType = 'STEAM' AND ai.identityId = ? LIMIT 1", {steam}, function(result)
+                if resolved then
+                    return
+                end
+
+                p:resolve(result)
+                resolved = true
+            end)
+        end
 
         Citizen.SetTimeout(1000, function()
             resolved = true
