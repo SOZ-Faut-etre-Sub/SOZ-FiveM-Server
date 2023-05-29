@@ -4,7 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { ClientEvent } from '@public/shared/event';
 
 import { Feature, isFeatureEnabled } from '../../shared/features';
-import { CocktailItem, DrinkItem, FoodItem, InventoryItem, LiquorItem } from '../../shared/item';
+import { CocktailItem, DrinkItem, FoodItem, InventoryItem, Item, LiquorItem } from '../../shared/item';
 import { PlayerMetadata } from '../../shared/player';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PlayerService } from '../player/player.service';
@@ -176,6 +176,13 @@ export class ItemNutritionProvider {
         this.lastItemEatByPlayer[player.citizenid] = item.name;
     }
 
+    private useLunchbox(source: number, item: Item, itemInv: InventoryItem) {
+        this.inventoryManager.removeItemFromInventory(source, item.name, 1, itemInv.metadata, itemInv.slot);
+        itemInv.metadata.crateElements.map(meal => {
+            this.inventoryManager.addItemToInventory(source, meal.name, meal.amount, { ...meal.mealMetadata });
+        });
+    }
+
     @Once()
     public onStart() {
         const foods = this.item.getItems<FoodItem>('food');
@@ -201,5 +208,7 @@ export class ItemNutritionProvider {
         for (const liquorId of Object.keys(liquors)) {
             this.item.setItemUseCallback<LiquorItem>(liquorId, this.useFoodOrDrink.bind(this));
         }
+
+        this.item.setItemUseCallback('lunchbox', this.useLunchbox.bind(this));
     }
 }

@@ -151,6 +151,12 @@ export type CocktailItem = BaseItem & {
     prop?: PropItem;
 };
 
+export type MealMetadata = {
+    name: string;
+    mealMetadata: InventoryItemMetadata;
+    amount: number;
+};
+
 export type InventoryItemMetadata = {
     label?: string;
     type?: string;
@@ -171,6 +177,7 @@ export type InventoryItemMetadata = {
     crafted?: boolean;
     id?: string;
     model?: string;
+    crateElements?: MealMetadata[];
 };
 
 export type InventoryItem = {
