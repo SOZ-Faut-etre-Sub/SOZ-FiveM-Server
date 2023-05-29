@@ -1,7 +1,13 @@
+import { OnEvent } from '@public/core/decorators/event';
+import { ServerEvent } from '@public/shared/event';
+import { JobType } from '@public/shared/job';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Job } from '../../shared/job';
+import { Monitor } from '../../shared/monitor';
+import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -10,7 +16,6 @@ import { JobService } from '../job.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
-
 @Provider()
 export class JobProvider {
     @Inject(PrismaService)
@@ -33,6 +38,9 @@ export class JobProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Rpc(RpcServerEvent.JOB_GET_JOBS)
     public async getJobs(): Promise<Job[]> {
@@ -72,5 +80,18 @@ export class JobProvider {
     @Rpc(RpcServerEvent.JOBS_USE_WORK_CLOTHES)
     public async useWorkClothes(source: number, storageId: string) {
         return this.inventoryManager.removeItemFromInventory(storageId, 'work_clothes', 1);
+    }
+
+    @OnEvent(ServerEvent.QBCORE_SET_DUTY, false)
+    public onToggleDuty(jobid: JobType, onDuty: boolean, source: number) {
+        this.monitor.publish(
+            onDuty ? 'job_onduty' : 'job_offduty',
+            {
+                player_source: source,
+            },
+            {
+                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            }
+        );
     }
 }
