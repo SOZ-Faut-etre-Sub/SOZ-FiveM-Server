@@ -23,6 +23,7 @@ import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
 
 import { Animation } from '../../../shared/animation';
+import { VoipService } from '../../voip/voip.service';
 
 const deathAnim: Animation = {
     base: {
@@ -133,6 +134,9 @@ export class LSMCDeathProvider {
     @Inject(Monitor)
     public monitor: Monitor;
 
+    @Inject(VoipService)
+    public voipService: VoipService;
+
     private IsDead = false;
     private hungerThristDeath = false;
 
@@ -167,6 +171,7 @@ export class LSMCDeathProvider {
             StartScreenEffect('DeathFailOut', 0, true);
 
             this.nuiMenu.closeAll(false);
+            this.voipService.mutePlayer(true);
 
             const playerid = PlayerId();
             let [killer, killerweapon] = NetworkGetEntityKillerOfPlayer(playerid);
@@ -333,6 +338,8 @@ export class LSMCDeathProvider {
         SetEntityHealth(player, 200);
         ClearPedBloodDamage(player);
         SetPlayerSprint(PlayerId(), true);
+
+        this.voipService.mutePlayer(false);
 
         TriggerServerEvent(ServerEvent.PLAYER_SET_CURRENT_DISEASE, false);
 
