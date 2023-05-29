@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
     DBSocietyUpdate,
     PreDBSociety,
@@ -65,13 +67,22 @@ class _SocietyService {
             identifier = `#${identifier}`;
         }
 
-        if (reqObj.data.number === '555-FBI') {
-            await global.exports['soz-utils'].SendHTTPRequest('discord_webhook_fbi', {
-                title: 'Federal Bureau of Investigation',
-                content: `**Nouveau message reçu : ** \`${player.getPhoneNumber()} - ${player.username}\` \`\`\`${
-                    reqObj.data.message
-                }\`\`\` `,
-            });
+        if (reqObj.data.number === '555-FBI' && player?.username) {
+            const url = GetConvar('soz_api_endpoint', 'https://api.soz.zerator.com') + '/discord/send-fbi';
+            await axios.post(
+                url,
+                {
+                    phone: player.getPhoneNumber(),
+                    username: player.username,
+                    data: reqObj.data.message,
+                },
+                {
+                    auth: {
+                        username: GetConvar('soz_api_username', 'admin'),
+                        password: GetConvar('soz_api_password', 'admin'),
+                    },
+                }
+            );
         }
 
         try {
