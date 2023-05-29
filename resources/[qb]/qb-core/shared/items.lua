@@ -6455,7 +6455,26 @@ QBShared.Items = {
         ['description'] = "Fabriquée à partir de plusieurs matériaux, cette carte bancaire assure à n'importe qui de pouvoir payer une seule transaction, que ça soit amende ou facture, à l'aide d'argent sale.",
         ['illustrator'] = '.Poulpito'
     },
-
-
-    
+    ['empty_lunchbox'] = {
+        ['name'] = 'empty_lunchbox',
+        ['label'] = "Panier-Repas vide",
+        ['weight'] = 200,
+        ['type'] = 'crate',
+        ['unique'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Idéal pour y ajouter nourritures et boissons !",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['lunchbox'] = {
+        ['name'] = 'lunchbox',
+        ['label'] = "Panier-Repas",
+        ['weight'] = 200,
+        ['useable'] = true,
+        ['type'] = 'crate',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Panier-repas contenant :",
+        ['illustrator'] = '.Poulpito'
+    },
 }
