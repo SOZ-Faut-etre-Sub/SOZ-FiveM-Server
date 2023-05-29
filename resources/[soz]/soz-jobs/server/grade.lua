@@ -50,7 +50,7 @@ RegisterServerEvent("job:fire", function(target)
     if targetPlayer.PlayerData.job.onduty then
         targetPlayer.Functions.SetJobDuty(false)
         TriggerClientEvent("QBCore:Client:SetDuty", targetPlayer.PlayerData.source, false)
-        TriggerEvent("QBCore:Server:SetDuty", targetPlayer.PlayerData.job.id, false)
+        TriggerEvent("QBCore:Server:SetDuty", targetPlayer.PlayerData.job.id, false, targetPlayer.PlayerData.source)
     end
 
     targetPlayer.Functions.SetJob(SozJobCore.JobType.Unemployed, GetJobDefaultGrade(SozJobCore.JobType.Unemployed))
