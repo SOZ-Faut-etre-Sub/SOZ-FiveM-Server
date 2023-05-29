@@ -46,6 +46,7 @@ const DEFAULT_DISTANCE = 2.5;
 export class TargetFactory {
     private zones: { [id: string]: any } = {};
     private players: { [id: string]: any } = {};
+    private vehicles: { [id: string]: any } = {};
 
     @Inject(PedFactory)
     private pedFactory: PedFactory;
@@ -97,6 +98,14 @@ export class TargetFactory {
             exports['qb-target'].RemoveZone(id);
         }
 
+        for (const id of Object.keys(this.players)) {
+            exports['qb-target'].RemoveGlobalPlayer(id);
+        }
+
+        for (const id of Object.keys(this.vehicles)) {
+            exports['qb-target'].RemoveGlobalVehicle(id);
+        }
+
         //exports['qb-target'].DeletePeds();
     }
 
@@ -134,6 +143,10 @@ export class TargetFactory {
             options: targets,
             distance: distance,
         });
+
+        for (const target of targets) {
+            this.vehicles[target.label] = target;
+        }
     }
 
     public createForAllPed(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {

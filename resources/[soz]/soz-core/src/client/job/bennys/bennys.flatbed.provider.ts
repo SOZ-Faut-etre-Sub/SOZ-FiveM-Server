@@ -78,16 +78,12 @@ export class BennysFlatbedProvider {
                 action: (entity: number) => {
                     this.toggleFlatbedAttach(entity);
                 },
-                canInteract: entity => {
+                canInteract: async entity => {
                     if (GetEntityModel(entity) !== GetHashKey('flatbed4')) {
                         return false;
                     }
 
                     if (this.currentFlatbedAttach !== null) {
-                        return false;
-                    }
-
-                    if (!IsEntityAttachedToAnyVehicle(entity)) {
                         return false;
                     }
 
@@ -97,7 +93,14 @@ export class BennysFlatbedProvider {
                         return false;
                     }
 
-                    return player.job.onduty;
+                    if (!player.job.onduty) {
+                        return false;
+                    }
+
+                    const flatbedState = await this.vehicleStateService.getVehicleState(entity);
+                    const attachedVehicleNetworkId = flatbedState.flatbedAttachedVehicle;
+
+                    return !attachedVehicleNetworkId;
                 },
             },
             {
@@ -138,7 +141,7 @@ export class BennysFlatbedProvider {
                 action: (entity: number) => {
                     this.detachVehicle(entity);
                 },
-                canInteract: (entity: number) => {
+                canInteract: async (entity: number) => {
                     if (GetEntityModel(entity) !== GetHashKey('flatbed4')) {
                         return false;
                     }
@@ -149,11 +152,13 @@ export class BennysFlatbedProvider {
                         return false;
                     }
 
-                    if (!IsEntityAttachedToAnyVehicle(entity)) {
+                    if (!player.job.onduty) {
                         return false;
                     }
 
-                    return player.job.onduty;
+                    const flatbedState = await this.vehicleStateService.getVehicleState(entity);
+
+                    return flatbedState.flatbedAttachedVehicle !== null;
                 },
             },
         ]);
