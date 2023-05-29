@@ -98,10 +98,10 @@ export const RadioApp: FunctionComponent = () => {
                     }}
                 >
                     <div
-                        className="flex flex-col justify-around w-full h-full"
+                        className="flex flex-col justify-between w-full h-full"
                         style={{
                             background: radio.enabled ? 'rgb(157, 150, 28)' : 'rgb(133, 141, 122)',
-                            padding: '0.5vh 0vw',
+                            padding: '0.8vh 0vw',
                         }}
                     >
                         {radio.enabled && (
@@ -109,20 +109,20 @@ export const RadioApp: FunctionComponent = () => {
                                 <div
                                     className="flex justify-between items-center"
                                     style={{
-                                        padding: '0 .55vw',
+                                        padding: '0 .6vw',
+                                        fontSize: '1.2vh',
                                     }}
                                 >
-                                    <span className="text-xl">
-                                        {currentChannelType === RadioChannelType.Primary ? 'F1' : 'F2'}
-                                    </span>
+                                    <span>{currentChannelType === RadioChannelType.Primary ? 'F1' : 'F2'}</span>
                                     <Controller
                                         control={control}
                                         name="frequency"
                                         render={({ field: { onChange, name, value } }) => (
                                             <PatternFormat
-                                                className="z-20 relative text-xl bg-transparent text-right border-0 outline-none w-full"
+                                                className="z-20 relative bg-transparent text-right border-0 outline-none w-full"
                                                 style={{
                                                     fontFamily: 'VT323, sans-serif',
+                                                    fontSize: '1.3vh',
                                                 }}
                                                 format="###.##"
                                                 defaultValue="000.00"
@@ -136,37 +136,41 @@ export const RadioApp: FunctionComponent = () => {
                                     />
                                 </div>
                                 <div
-                                    className="grid grid-rows-2 gap-2"
+                                    className="flex items-center justify-between"
                                     style={{
                                         padding: '0 .6vw',
-                                        fontSize: '0.8rem',
+                                        fontSize: '1.2vh',
+                                        lineHeight: '1.8vh',
                                     }}
                                 >
-                                    <div className="flex items-center">
-                                        <VolumeIcon
-                                            style={{
-                                                height: '1.2vh',
-                                                width: '1.2vh',
-                                                marginRight: '0.2rem',
-                                            }}
-                                        />
-                                        {currentChannelType === RadioChannelType.Primary
-                                            ? radio.primary.volume
-                                            : radio.secondary.volume}
-                                        %
-                                    </div>
-                                    <div className="flex items-center">
-                                        <HeadphoneIcon
-                                            style={{
-                                                height: '1.2vh',
-                                                width: '1.2vh',
-                                                marginRight: '0.2rem',
-                                            }}
-                                        />
-                                        {currentChannelType === RadioChannelType.Primary
-                                            ? displayEar(radio.primary.ear)
-                                            : displayEar(radio.secondary.ear)}
-                                    </div>
+                                    <VolumeIcon
+                                        style={{
+                                            height: '1vh',
+                                            width: '1vh',
+                                        }}
+                                    />
+                                    {currentChannelType === RadioChannelType.Primary
+                                        ? radio.primary.volume
+                                        : radio.secondary.volume}
+                                    %
+                                </div>
+                                <div
+                                    className="flex items-center justify-between"
+                                    style={{
+                                        padding: '0 .6vw',
+                                        fontSize: '1.2vh',
+                                        lineHeight: '1.8vh',
+                                    }}
+                                >
+                                    <HeadphoneIcon
+                                        style={{
+                                            height: '1vh',
+                                            width: '1vh',
+                                        }}
+                                    />
+                                    {currentChannelType === RadioChannelType.Primary
+                                        ? displayEar(radio.primary.ear)
+                                        : displayEar(radio.secondary.ear)}
                                 </div>
                             </>
                         )}
