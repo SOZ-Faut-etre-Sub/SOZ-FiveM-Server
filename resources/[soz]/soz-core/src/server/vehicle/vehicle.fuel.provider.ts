@@ -118,11 +118,8 @@ export class VehicleFuelProvider {
             TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
             leftOver = reservedFuel;
         } else {
-            this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
-                condition: {
-                    ...vehicleState.condition,
-                    fuelLevel: vehicleState.condition.fuelLevel + totalFilled,
-                },
+            this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+                fuelLevel: vehicleState.condition.fuelLevel + totalFilled,
             });
 
             this.notifier.notify(source, `Vous avez payé $${cost} pour ${totalFilled}L de carburant.`, 'success');

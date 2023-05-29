@@ -152,7 +152,7 @@ export class OilStationProvider {
         }
 
         const itemCount = Math.ceil(amount / 10);
-        const availableCount = this.inventoryManager.getItemCount(`trunk_` + state.plate, 'essence');
+        const availableCount = this.inventoryManager.getItemCount(`trunk_` + state.volatile.plate, 'essence');
         const duration = itemCount * 500;
 
         if (itemCount > availableCount) {
@@ -183,7 +183,7 @@ export class OilStationProvider {
 
         const refilled = Math.ceil(amount * progress);
         const itemUsed = Math.ceil(refilled / 10);
-        const plate = state.plate || GetVehicleNumberPlateText(vehicleEntityId);
+        const plate = state.volatile.plate || GetVehicleNumberPlateText(vehicleEntityId);
 
         if (!this.inventoryManager.removeItemFromInventory(`trunk_` + plate, 'essence', itemUsed)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'essence dans la citerne.");

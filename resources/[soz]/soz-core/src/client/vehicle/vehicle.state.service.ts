@@ -4,11 +4,11 @@ import { Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
 import { ServerEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
-import { VehicleCondition, VehicleEntityState } from '../../shared/vehicle/vehicle';
+import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 
 type VehicleStateItem = {
     selectors: any[];
-    state: VehicleEntityState;
+    state: VehicleVolatileState;
 };
 
 @Injectable()
@@ -17,7 +17,7 @@ export class VehicleStateService {
 
     private selectorCreators = [];
 
-    public async getVehicleState(vehicleEntityId: number): Promise<VehicleEntityState> {
+    public async getVehicleState(vehicleEntityId: number): Promise<VehicleVolatileState> {
         if (this.state.has(vehicleEntityId)) {
             const item = this.state.get(vehicleEntityId);
 
@@ -26,10 +26,16 @@ export class VehicleStateService {
 
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
-        return await emitRpc<VehicleEntityState>(RpcServerEvent.VEHICLE_GET_STATE, vehicleNetworkId);
+        return await emitRpc<VehicleVolatileState>(RpcServerEvent.VEHICLE_GET_STATE, vehicleNetworkId);
     }
 
-    public setVehicleState(vehicleEntityId: number, state: VehicleEntityState): void {
+    public async getVehicleCondition(vehicleEntityId: number): Promise<VehicleCondition> {
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+
+        return await emitRpc<VehicleCondition>(RpcServerEvent.VEHICLE_GET_CONDITION, vehicleNetworkId);
+    }
+
+    public setVehicleState(vehicleEntityId: number, state: VehicleVolatileState, registerState = true): void {
         let item = this.state.get(vehicleEntityId);
 
         if (!item) {
@@ -47,7 +53,10 @@ export class VehicleStateService {
             item.state = state;
         }
 
-        this.state.set(vehicleEntityId, item);
+        if (registerState) {
+            this.state.set(vehicleEntityId, item);
+        }
+
         item.selectors.forEach(selector => selector(state, vehicleEntityId));
     }
 
@@ -55,7 +64,12 @@ export class VehicleStateService {
         this.state.delete(vehicleEntityId);
     }
 
-    public updateVehicleState(vehicleEntityId: number, state: Partial<VehicleEntityState>): void {
+    public updateVehicleState(
+        vehicleEntityId: number,
+        state: Partial<VehicleVolatileState>,
+        disableSelfSync = true,
+        enableAroundSync = false
+    ): void {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
         // Update state locally has we won't receive the event
@@ -65,27 +79,25 @@ export class VehicleStateService {
             item.state = { ...item.state, ...state };
         }
 
-        TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_STATE, vehicleNetworkId, state);
+        TriggerServerEvent(
+            ServerEvent.VEHICLE_UPDATE_STATE,
+            vehicleNetworkId,
+            state,
+            disableSelfSync,
+            enableAroundSync
+        );
     }
 
-    public updateVehicleCondition(
-        vehicleEntityId: number,
-        condition: Partial<VehicleCondition>,
-        disableSync = true
-    ): void {
+    public updateVehicleCondition(vehicleEntityId: number, condition: Partial<VehicleCondition>): void {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
-        // Update state locally has we won't receive the event
-        if (this.state.has(vehicleEntityId)) {
-            const item = this.state.get(vehicleEntityId);
-
-            item.state.condition = { ...item.state.condition, ...condition };
-        }
-
-        TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION, vehicleNetworkId, condition, disableSync);
+        TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION, vehicleNetworkId, condition);
     }
 
-    public addVehicleStateSelector(selectors: ((state: VehicleEntityState) => any)[], method: (...data) => void): void {
+    public addVehicleStateSelector(
+        selectors: ((state: VehicleVolatileState) => any)[],
+        method: (...data) => void
+    ): void {
         this.selectorCreators.push(vehicleEntityId => {
             return createSelector(selectors, (...data) => {
                 return method(vehicleEntityId, ...data);

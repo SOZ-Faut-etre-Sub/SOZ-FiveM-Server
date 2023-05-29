@@ -44,7 +44,6 @@ export type VehicleSpawn = {
     model: string;
     position: Vector4;
     warp: boolean;
-    state: VehicleEntityState;
     modification?: VehicleConfiguration;
 };
 
@@ -112,7 +111,8 @@ export type VehicleCondition = {
     mileage: number;
 };
 
-export type VehicleEntityState = {
+// state not sync to database, only in memory
+export type VehicleVolatileState = {
     id: number | null;
     spawned: boolean;
     forced: boolean;
@@ -129,7 +129,6 @@ export type VehicleEntityState = {
     };
     openWindows: boolean;
     dead: boolean;
-    condition: VehicleCondition;
     hasRadio: boolean;
     radioEnabled: boolean;
     primaryRadio: RadioChannel | null;
@@ -189,7 +188,7 @@ export const getDefaultVehicleCondition = (): VehicleCondition => ({
     mileage: 0,
 });
 
-export const getDefaultVehicleState = (): VehicleEntityState => ({
+export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     id: null,
     forced: false,
     open: false,
@@ -206,7 +205,6 @@ export const getDefaultVehicleState = (): VehicleEntityState => ({
         right: false,
     },
     openWindows: false,
-    condition: getDefaultVehicleCondition(),
     hasRadio: false,
     radioEnabled: false,
     primaryRadio: null,

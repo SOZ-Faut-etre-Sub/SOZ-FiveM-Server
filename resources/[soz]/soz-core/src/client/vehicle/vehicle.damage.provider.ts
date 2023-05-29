@@ -2,7 +2,6 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
-import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
 import { isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
 import { VehicleConditionProvider } from './vehicle.condition.provider';
@@ -23,8 +22,6 @@ const STOP_ENGINE_THRESHOLD = 120;
 
 const ENGINE_THRESHOLD_AUTO_DEGRADE = 250.0;
 const ENGINE_MIN_HEALTH = 100.0;
-
-const TIRE_TEMPORARY_REPAIR_DISTANCE = 10000.0;
 
 const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
     [VehicleClass.Compacts]: 0.8,
@@ -51,11 +48,6 @@ const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
     [VehicleClass.Trains]: 0.8,
 };
 
-type CurrentVehiclePosition = {
-    vehicle: number;
-    position: Vector3;
-};
-
 @Provider()
 export class VehicleDamageProvider {
     @Inject(VehicleConditionProvider)
@@ -65,8 +57,6 @@ export class VehicleDamageProvider {
     private vehicleStateService: VehicleStateService;
 
     private currentVehicleStatus: VehicleStatus | null = null;
-
-    private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
     private adminNoStall = false;
 
@@ -188,7 +178,7 @@ export class VehicleDamageProvider {
             }
         }
 
-        if (this.vehicleConditionProvider.getAdminNoStall()) {
+        if (this.adminNoStall) {
             return;
         }
 
@@ -245,88 +235,11 @@ export class VehicleDamageProvider {
         }
     }
 
-    @Tick(500)
-    public async checkVehicleTireRepair() {
-        const ped = PlayerPedId();
-        const vehicle = GetVehiclePedIsIn(ped, false);
+    public setAdminNoStall(value: boolean) {
+        this.adminNoStall = value;
+    }
 
-        if (!vehicle) {
-            this.currentVehiclePositionForTemporaryTire = null;
-
-            return;
-        }
-
-        if (!NetworkHasControlOfEntity(vehicle)) {
-            this.currentVehiclePositionForTemporaryTire = null;
-
-            return;
-        }
-
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
-        const keys = Object.keys(state.condition.tireTemporaryRepairDistance).map(key => parseInt(key, 10));
-
-        if (keys.length === 0) {
-            this.currentVehiclePositionForTemporaryTire = null;
-
-            return;
-        }
-
-        if (
-            this.currentVehiclePositionForTemporaryTire &&
-            this.currentVehiclePositionForTemporaryTire.vehicle !== vehicle
-        ) {
-            this.currentVehiclePositionForTemporaryTire = {
-                vehicle,
-                position: GetEntityCoords(vehicle, true) as Vector3,
-            };
-
-            return;
-        }
-
-        const lastVehiclePosition = this.currentVehiclePositionForTemporaryTire;
-        this.currentVehiclePositionForTemporaryTire = {
-            vehicle,
-            position: GetEntityCoords(vehicle, true) as Vector3,
-        };
-
-        if (lastVehiclePosition === null) {
-            return;
-        }
-
-        const diffDistance = getDistance(
-            lastVehiclePosition.position,
-            this.currentVehiclePositionForTemporaryTire.position
-        );
-
-        const tireBurstCompletely = { ...state.condition.tireBurstCompletely };
-        const tireTemporaryRepairDistance = { ...state.condition.tireTemporaryRepairDistance };
-
-        let applyCondition = false;
-
-        for (const tireKey of keys) {
-            const distance = tireTemporaryRepairDistance[tireKey] + diffDistance;
-
-            if (distance < TIRE_TEMPORARY_REPAIR_DISTANCE) {
-                tireTemporaryRepairDistance[tireKey] = distance;
-            } else {
-                delete tireTemporaryRepairDistance[tireKey];
-                tireBurstCompletely[tireKey] = true;
-                applyCondition = true;
-            }
-        }
-
-        this.vehicleStateService.updateVehicleCondition(vehicle, {
-            tireBurstCompletely,
-            tireTemporaryRepairDistance,
-        });
-
-        if (applyCondition) {
-            this.vehicleConditionProvider.applyVehicleTire(
-                vehicle,
-                state.condition.tireHealth,
-                tireBurstCompletely,
-                state.condition.tireBurstState
-            );
-        }
+    public getAdminNoStall(): boolean {
+        return this.adminNoStall;
     }
 }

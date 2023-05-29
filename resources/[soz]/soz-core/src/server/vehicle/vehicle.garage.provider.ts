@@ -532,7 +532,7 @@ export class VehicleGarageProvider {
         const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const vehicleState = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
-        if (!vehicleState.id) {
+        if (!vehicleState.volatile.id) {
             if (garage.type === GarageType.Depot) {
                 if (await this.vehicleSpawner.delete(vehicleNetworkId)) {
                     this.notifier.notify(source, 'Le véhicule a été mis en fourrière.', 'success');
@@ -558,7 +558,7 @@ export class VehicleGarageProvider {
             return;
         }
 
-        const vehicle = await this.checkCanManageVehicle(player, id, garage, vehicleState.id);
+        const vehicle = await this.checkCanManageVehicle(player, id, garage, vehicleState.volatile.id);
 
         if (isErr(vehicle)) {
             this.notifier.notify(

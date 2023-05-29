@@ -54,7 +54,7 @@ export class BennysVehicleProvider {
                 repair_type: 'engine',
             },
             {
-                vehicle_plate: state.plate,
+                vehicle_plate: state.volatile.plate,
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
@@ -86,7 +86,7 @@ export class BennysVehicleProvider {
                 repair_type: 'body',
             },
             {
-                vehicle_plate: state.plate,
+                vehicle_plate: state.volatile.plate,
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
@@ -115,7 +115,7 @@ export class BennysVehicleProvider {
                 repair_type: 'tank',
             },
             {
-                vehicle_plate: state.plate,
+                vehicle_plate: state.volatile.plate,
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
@@ -176,7 +176,7 @@ export class BennysVehicleProvider {
                 repair_type: 'wheel',
             },
             {
-                vehicle_plate: state.plate,
+                vehicle_plate: state.volatile.plate,
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
@@ -260,7 +260,7 @@ export class BennysVehicleProvider {
                 player_source: source,
             },
             {
-                vehicle_plate: state.plate,
+                vehicle_plate: state.volatile.plate,
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );

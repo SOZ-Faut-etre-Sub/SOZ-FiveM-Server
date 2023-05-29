@@ -16,7 +16,7 @@ export class PoliceSirenProvider {
         for (const vehicle of vehicles) {
             const state = this.vehicleStateService.getVehicleState(vehicle);
 
-            muted.push({ vehicle, isSirenMuted: state.isSirenMuted });
+            muted.push({ vehicle, isSirenMuted: state.volatile.isSirenMuted });
         }
 
         return muted;

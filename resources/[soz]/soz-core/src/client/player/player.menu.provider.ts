@@ -131,6 +131,10 @@ export class PlayerMenuProvider {
             return;
         }
 
+        if (!this.playerService.canDoAction()) {
+            return;
+        }
+
         this.progressService.cancel();
 
         await this.playerWardrobe.setClothConfig(key, value);
@@ -138,6 +142,10 @@ export class PlayerMenuProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationStop)
     public async stopAnimation() {
+        if (!this.playerService.canDoAction()) {
+            return;
+        }
+
         this.animationService.stop();
     }
 

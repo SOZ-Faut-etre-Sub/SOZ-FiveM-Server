@@ -43,6 +43,10 @@ export class PlayerAnimationProvider {
         ],
     })
     public animationStop() {
+        if (!this.playerService.canDoAction()) {
+            return;
+        }
+
         this.animationService.stop();
     }
 
@@ -177,6 +181,10 @@ export class PlayerAnimationProvider {
     }
 
     public async doAnimationShortcut(key: string) {
+        if (!this.playerService.canDoAction()) {
+            return;
+        }
+
         const animationJson = GetResourceKvpString(key);
         let animation = null;
 
@@ -197,6 +205,10 @@ export class PlayerAnimationProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationSetWalk)
     public async setWalkAnimation({ walkItem }: { walkItem: WalkConfigItem }) {
+        if (!this.playerService.canDoAction()) {
+            return;
+        }
+
         if (walkItem.type === 'category') {
             return;
         }
@@ -294,6 +306,10 @@ export class PlayerAnimationProvider {
             return false;
         }
 
+        if (!this.playerService.canDoAction()) {
+            return;
+        }
+
         const ped = PlayerPedId();
         const state = this.playerService.getState();
 
@@ -302,7 +318,7 @@ export class PlayerAnimationProvider {
             state.isEscorted ||
             state.isEscorting ||
             state.isInHospital ||
-            player.metadata.isdead ||
+            state.isDead ||
             player.metadata.inlaststand ||
             IsPedRagdoll(ped)
         ) {
@@ -342,6 +358,10 @@ export class PlayerAnimationProvider {
 
     @OnEvent(ClientEvent.ANIMATION_SURRENDER)
     public async playBustedAnimation() {
+        if (!this.playerService.canDoAction()) {
+            return;
+        }
+
         const ped = PlayerPedId();
 
         if (IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3)) {

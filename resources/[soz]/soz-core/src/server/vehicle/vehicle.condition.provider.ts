@@ -40,24 +40,23 @@ export class VehicleConditionProvider {
     @Tick(TickInterval.EVERY_SECOND, 'vehicle:condition:update')
     public async updateVehiclesCondition() {
         // Basically we keep tracks of all vehicles spawned and ask the current owner to update the condition of the vehicle
-        const netIds = this.vehicleStateService.getSpawned();
+        const states = this.vehicleStateService.getStates().keys();
 
-        for (const netId of netIds) {
+        for (const netId of states) {
+            const state = this.vehicleStateService.getVehicleState(netId);
             const entityId = NetworkGetEntityFromNetworkId(netId);
 
+            // entity has despawn
             if (!entityId || !DoesEntityExist(entityId)) {
-                const lastState = this.vehicleStateService.getVehicleState(netId);
+                this.vehicleStateService.unregister(netId);
 
-                this.vehicleStateService.unregisterSpawned(netId);
-                this.vehicleStateService.deleteVehicleState(netId);
-
-                if (!lastState.isPlayerVehicle) {
+                if (!state.volatile.isPlayerVehicle || !state.volatile.id) {
                     continue;
                 }
 
                 await this.prismaService.playerVehicle.update({
                     where: {
-                        id: lastState?.id,
+                        id: state.volatile.id,
                     },
                     data: {
                         state: PlayerVehicleState.InSoftPound,
@@ -69,27 +68,26 @@ export class VehicleConditionProvider {
                 this.monitor.publish(
                     'vehicle_despawn',
                     {
-                        vehicle_id: lastState?.id || null,
+                        vehicle_id: state.volatile.id || null,
                         vehicle_net_id: netId,
-                        vehicle_plate: lastState?.plate || null,
+                        vehicle_plate: state.volatile.plate || null,
                     },
                     {
-                        owner: lastState?.owner || null,
-                        condition: lastState?.condition || null,
-                        position: toVector3Object(lastState?.lastPosition || [0, 0, 0]),
+                        owner: state.owner || null,
+                        condition: state.condition || null,
+                        position: toVector3Object(state.position || [0, 0, 0]),
                     }
                 );
 
                 continue;
             }
 
+            // check if the vehicle is owned by the same player
             const owner = NetworkGetEntityOwner(entityId);
 
-            if (!owner) {
-                continue;
+            if (owner !== state.owner) {
+                this.vehicleStateService.switchOwner(netId, owner);
             }
-
-            TriggerClientEvent(ClientEvent.VEHICLE_CHECK_CONDITION, owner, netId);
         }
     }
 
@@ -265,21 +263,21 @@ export class VehicleConditionProvider {
     public async onVehicleDead(source: number, vehicleNetworkId: number, reason: string) {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
-        if (state.dead || !state.isPlayerVehicle) {
+        if (state.volatile.dead || !state.volatile.isPlayerVehicle) {
             return;
         }
 
-        this.vehicleStateService.updateVehicleState(vehicleNetworkId, {
+        this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
             dead: true,
         });
 
-        if (!state.id) {
+        if (!state.volatile.id) {
             return;
         }
 
         const vehicle = await this.prismaService.playerVehicle.update({
             where: {
-                id: state.id,
+                id: state.volatile.id,
             },
             data: {
                 state: PlayerVehicleState.Destroyed,
@@ -348,12 +346,8 @@ export class VehicleConditionProvider {
     public updateMileage(source: number, vehicleNetworkId: number, mileage: number) {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
-        this.vehicleStateService.updateVehicleCondition(
-            vehicleNetworkId,
-            {
-                mileage: state.condition.mileage + mileage,
-            },
-            source
-        );
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            mileage: state.condition.mileage + mileage,
+        });
     }
 }
