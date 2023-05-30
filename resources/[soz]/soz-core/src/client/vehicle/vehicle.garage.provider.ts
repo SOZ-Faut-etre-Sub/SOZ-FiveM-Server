@@ -558,6 +558,8 @@ export class VehicleGarageProvider {
 
                 return { ...garageVehicle, name };
             }
+
+            return garageVehicle;
         });
 
         this.nuiMenu.openMenu(

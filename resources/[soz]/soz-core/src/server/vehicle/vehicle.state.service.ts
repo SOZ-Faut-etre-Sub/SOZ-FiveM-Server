@@ -147,7 +147,10 @@ export class VehicleStateService {
 
         const state = this.state.get(netId);
 
-        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER, state.owner, netId);
+        // can be null if stolen car
+        if (state.owner) {
+            TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER, state.owner, netId);
+        }
 
         this.state.set(netId, {
             ...state,
