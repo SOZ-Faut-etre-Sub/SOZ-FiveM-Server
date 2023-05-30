@@ -384,6 +384,20 @@ export class VehicleGarageProvider {
             where,
         });
 
+        const vehicles = await this.prismaService.vehicle.findMany({
+            where: {
+                model: {
+                    in: playerVehicles.map(v => v.vehicle),
+                },
+            },
+        });
+
+        const vehiclesByModel = {};
+
+        for (const vehicle of vehicles) {
+            vehiclesByModel[vehicle.model] = vehicle;
+        }
+
         const timestamp = Math.floor(Date.now() / 1000);
         const playerVehiclesMapped = [];
 
@@ -431,7 +445,7 @@ export class VehicleGarageProvider {
             playerVehiclesMapped.push({
                 vehicle: playerVehicle,
                 price,
-                name: null,
+                name: vehiclesByModel[playerVehicle.modelName]?.name || null,
             } as GarageVehicle);
         }
 
