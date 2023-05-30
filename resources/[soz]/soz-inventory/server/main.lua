@@ -362,8 +362,8 @@ function Inventory.handleLunchbox(inv, slotItem, metadata, amount, item, slotId)
 
     if slotItem.name == "empty_lunchbox" then
         Inventory.RemoveItem(inv, slotItem.name, 1, nil, slotId)
-        local lunchboxItem = QBCore.Shared.Items['lunchbox']
-        _,_, slot = Inventory.AddItem(inv, lunchboxItem, 1, {crateElements = {}})
+        local lunchboxItem = QBCore.Shared.Items["lunchbox"]
+        _, _, slot = Inventory.AddItem(inv, lunchboxItem, 1, {crateElements = {}})
         slotItem = inv.items[slot]
     end
 
@@ -375,9 +375,8 @@ function Inventory.handleLunchbox(inv, slotItem, metadata, amount, item, slotId)
     end
 
     table.insert(slotItem.metadata.crateElements, {name = item.name, metadata = metadata, amount = amount})
-    return slotItem.metadata, true, slot   
+    return slotItem.metadata, true, slot
 end
-
 
 function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
     if type(inv) ~= "table" then
@@ -412,18 +411,19 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
 
                 if Inventory.CanCarryItem(inv, item, amount, metadata) then
                     local existing = false
-                    local weight = (item.type == 'crate' and metadata and metadata.crateElements and Inventory.getCrateWeight(metadata) + item.weight  or  item.weight) * amount
+                    local weight = (item.type == "crate" and metadata and metadata.crateElements and Inventory.getCrateWeight(metadata) + item.weight or
+                                       item.weight) * amount
                     if slot then
                         local slotItem = inv.items[slot]
                         if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
                             existing = nil
-                        elseif item.type == 'food' and slotItem and slotItem.type == 'crate' then
+                        elseif item.type == "food" and slotItem and slotItem.type == "crate" then
                             metadata, success, slot = Inventory.handleLunchbox(inv, slotItem, metadata, amount, item, slot)
                             if success then
-                                item = QBCore.Shared.Items['lunchbox']
+                                item = QBCore.Shared.Items["lunchbox"]
                                 amount = 0
                                 existing = nil
-                            else 
+                            else
                                 goto lunchbox_false
                             end
                         end
@@ -538,7 +538,9 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOw
             end
         end
 
-        inv.weight = inv.weight - (item.type == 'crate' and metadata and metadata.crateElements and Inventory.getCrateWeight(metadata) + item.weight or  item.weight) * removed
+        inv.weight = inv.weight -
+                         (item.type == "crate" and metadata and metadata.crateElements and Inventory.getCrateWeight(metadata) + item.weight or item.weight) *
+                         removed
         if removed > 0 and inv.type == "player" then
             local array = table.create(#slots, 0)
 
