@@ -350,7 +350,6 @@ end)
 
 function Inventory.getCrateWeight(metadata)
     local crateTotalWeight = 0
-    print(json.encode(metadata), 'TA MERE')
     for _, crateItem in pairs(metadata.crateElements) do
         local item = QBCore.Shared.Items[crateItem.name]
         crateTotalWeight = crateTotalWeight + item.weight * crateItem.amount
@@ -361,7 +360,7 @@ end
 function Inventory.handleLunchbox(inv, slotItem, metadata, amount, item, slotId)
     local slot = -1
 
-    if slotItem.name =='empty_lunchbox' then
+    if slotItem.name == "empty_lunchbox" then
         Inventory.RemoveItem(inv, slotItem.name, 1, nil, slotId)
         local lunchboxItem = QBCore.Shared.Items['lunchbox']
         _,_, slot = Inventory.AddItem(inv, lunchboxItem, 1, {crateElements = {}})
@@ -414,7 +413,6 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
                 if Inventory.CanCarryItem(inv, item, amount, metadata) then
                     local existing = false
                     local weight = (item.type == 'crate' and metadata and metadata.crateElements and Inventory.getCrateWeight(metadata) + item.weight  or  item.weight) * amount
-                    print(inv.weight, item.name, 'INV WEIGHT BEFORE')
                     if slot then
                         local slotItem = inv.items[slot]
                         if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
@@ -444,11 +442,8 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
                         end
                         slot = toSlot
                     end
-                    print(weight, 'WEIGHT after')
-                    print(inv.weight, 'INV WEIGHT before')
 
                     inv.weight = inv.weight + weight
-                    print(inv.weight, 'INV WEIGHT after')
                     Inventory.SetSlot(inv, item, amount, metadata, slot)
                     success = true
 
@@ -543,7 +538,6 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOw
             end
         end
 
-        print(inv.weight, item.weight, removed, item.name, 'REMOVE ITEM')
         inv.weight = inv.weight - (item.type == 'crate' and metadata and metadata.crateElements and Inventory.getCrateWeight(metadata) + item.weight or  item.weight) * removed
         if removed > 0 and inv.type == "player" then
             local array = table.create(#slots, 0)
