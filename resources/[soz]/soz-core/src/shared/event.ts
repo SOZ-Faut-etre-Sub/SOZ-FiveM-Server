@@ -230,6 +230,7 @@ export enum ClientEvent {
     ADMIN_OPEN_MENU = 'soz-core:client:admin:openMenu',
     ADMIN_SHOW_GPS = 'soz-core:client:admin:show-gps',
     ANIMATION_SURRENDER = 'soz-core:client:animation:surrender',
+    ANIMATION_GIVE = 'animation:client:give',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',

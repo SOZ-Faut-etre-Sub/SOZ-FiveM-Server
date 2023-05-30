@@ -1,7 +1,7 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
@@ -46,6 +46,9 @@ export class VehicleKeysProvider {
         }
 
         this.vehicleStateService.addVehicleKey(plate, targetPlayer.citizenid);
+
+        TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
+        TriggerClientEvent(ClientEvent.ANIMATION_GIVE, target);
 
         this.notifier.notify(source, `Vous avez donné la clé du véhicule ${plate}.`, 'success');
         this.notifier.notify(target, `Vous avez reçu la clé du véhicule ${plate}.`, 'success');

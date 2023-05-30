@@ -39,6 +39,10 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
             sourceInventory = Inventory.FilterItems(sourceInv, manualFilter)
         end
 
+        if sourceInv.type == "trunk" or targetInv.type == "trunk" then
+            TriggerClientEvent("animation:client:give", source)
+        end
+
         cb(success, reason, sourceInventory, Inventory.FilterItems(targetInv, sourceInv.type))
     end, targetSlot, manualFilter)
 end)
