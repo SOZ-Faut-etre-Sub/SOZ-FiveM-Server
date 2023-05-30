@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CMapData>
+ <name>soz_cayo_247_milo_</name>
+ <parent />
+ <flags value="0" />
+ <contentFlags value="9" />
+ <streamingExtentsMin x="4911.96729" y="-5320.088" z="-198.470062" />
+ <streamingExtentsMax x="5381.211" y="-4850.71" z="205.205841" />
+ <entitiesExtentsMin x="5137.061" y="-5094.994" z="1.5299443" />
+ <entitiesExtentsMax x="5156.117" y="-5075.80371" z="5.20584536" />
+ <entities>
+  <Item type="CMloInstanceDef">
+   <archetypeName>v_shop_247</archetypeName>
+   <flags value="32" />
+   <guid value="0" />
+   <position x="5146.181" y="-5085.096" z="1.53872931" />
+   <rotation x="0" y="0" z="-0.753181" w="-0.65781343" />
+   <scaleXY value="1" />
+   <scaleZ value="1" />
+   <parentIndex value="-1" />
+   <lodDist value="200" />
+   <childLodDist value="0" />
+   <lodLevel>LODTYPES_DEPTH_ORPHANHD</lodLevel>
+   <numChildren value="0" />
+   <priorityLevel>PRI_REQUIRED</priorityLevel>
+   <extensions />
+   <ambientOcclusionMultiplier value="255" />
+   <artificialAmbientOcclusion value="255" />
+   <tintValue value="0" />
+   <groupId value="0" />
+   <floorId value="0" />
+   <defaultEntitySets />
+   <numExitPortals value="0" />
+   <MLOInstflags value="0" />
+  </Item>
+ </entities>
+ <containerLods itemType="rage__fwContainerLodDef" />
+ <boxOccluders itemType="BoxOccluder" />
+ <occludeModels itemType="OccludeModel" />
+ <physicsDictionaries />
+ <instancedData>
+  <ImapLink />
+  <PropInstanceList itemType="rage__fwPropInstanceListDef" />
+  <GrassInstanceList itemType="rage__fwGrassInstanceListDef" />
+ </instancedData>
+ <timeCycleModifiers itemType="CTimeCycleModifier" />
+ <carGenerators itemType="CCarGen" />
+ <LODLightsSOA>
+  <direction itemType="FloatXYZ" />
+  <falloff />
+  <falloffExponent />
+  <timeAndStateFlags />
+  <hash />
+  <coneInnerAngle />
+  <coneOuterAngleOrCapExt />
+  <coronaIntensity />
+ </LODLightsSOA>
+ <DistantLODLightsSOA>
+  <position itemType="FloatXYZ" />
+  <RGBI />
+  <numStreetLights value="0" />
+  <category value="0" />
+ </DistantLODLightsSOA>
+ <block>
+  <version value="0" />
+  <flags value="0" />
+  <name>soz_cayo_247_milo_</name>
+  <exportedBy>CodeWalker</exportedBy>
+  <owner></owner>
+  <time>29 mai 2023 12:57</time>
+ </block>
+</CMapData>
