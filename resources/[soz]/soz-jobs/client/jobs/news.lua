@@ -52,8 +52,7 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
 
     local delivery = NewsConfig.Deliveries[math.random(#NewsConfig.Deliveries)]
 
-    exports["qb-target"]:AddBoxZone("jobs:news:sell", delivery, 1.0, 1.0,
-        {
+    exports["qb-target"]:AddBoxZone("jobs:news:sell", delivery, 1.0, 1.0, {
             name = "jobs:news:sell",
             heading = delivery.w,
             minZ = delivery.z - 1.5,
@@ -86,8 +85,7 @@ RegisterNetEvent("jobs:client:news:newspaperSold", function()
 end)
 
 RegisterNetEvent("jobs:client:news:farmNewspaper", function()
-    QBCore.Functions.Progressbar("farmNewspaper", "Récupération de journaux", 10000, false, false,
-        {
+    QBCore.Functions.Progressbar("farmNewspaper", "Récupération de journaux", 10000, false, false, {
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
@@ -133,10 +131,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         image = exports["soz-hud"]:Input("Lien de l'image de la communication", 255, image)
     end)
 
-    local messageButton = newsCreationSubMenu:AddButton({
-        label = "Message",
-        length = 235,
-    })
+    local messageButton = newsCreationSubMenu:AddButton({label = "Message",length = 235})
 
     local message = ""
 
@@ -164,14 +159,11 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
             })
 
             TriggerServerEvent("monitor:server:event", "job_news_create_flash", {flash_type = value},
-                {message = message, position = GetEntityCoords(PlayerPedId())}, true)
-        end
+                                {message = message, position = GetEntityCoords(PlayerPedId())}, true)
+        end,
     })
 
-    societyMenu:AddButton({
-        label = "Faire une communication",
-        value = newsCreationSubMenu,
-    })
+    societyMenu:AddButton({label = "Faire une communication",value = newsCreationSubMenu})
 
     societyMenu:AddSlider({
         label = "Poser un objet",
