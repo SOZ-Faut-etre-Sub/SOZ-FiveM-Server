@@ -1,5 +1,5 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu")
-local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_light_01", "v_ilev_fos_mic"}
+local removalObject = { "prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_light_01", "v_ilev_fos_mic" }
 
 --- Targets
 CreateThread(function()
@@ -8,7 +8,7 @@ CreateThread(function()
         heading = 32,
         minZ = 23.72,
         maxZ = 24.32,
-    }, {options = SozJobCore.Functions.GetDutyActions("news"), distance = 2.5})
+    }, { options = SozJobCore.Functions.GetDutyActions("news"), distance = 2.5 })
 
     exports["qb-target"]:AddTargetModel(removalObject, {
         options = {
@@ -53,28 +53,28 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
     local delivery = NewsConfig.Deliveries[math.random(#NewsConfig.Deliveries)]
 
     exports["qb-target"]:AddBoxZone("jobs:news:sell", delivery, 1.0, 1.0,
-                                    {
-        name = "jobs:news:sell",
-        heading = delivery.w,
-        minZ = delivery.z - 1.5,
-        maxZ = delivery.z + 1.5,
-    }, {
-        options = {
-            {
-                label = "Livrer",
-                color = "news",
-                icon = "c:news/livrer.png",
-                event = "jobs:client:news:newspaperSold",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-                job = "news",
+        {
+            name = "jobs:news:sell",
+            heading = delivery.w,
+            minZ = delivery.z - 1.5,
+            maxZ = delivery.z + 1.5,
+        }, {
+            options = {
+                {
+                    label = "Livrer",
+                    color = "news",
+                    icon = "c:news/livrer.png",
+                    event = "jobs:client:news:newspaperSold",
+                    canInteract = function()
+                        return PlayerData.job.onduty
+                    end,
+                    job = "news",
+                },
             },
-        },
-        distance = 2.5,
-    })
+            distance = 2.5,
+        })
 
-    QBCore.Functions.CreateBlip("jobs:news:sell", {name = "Point de livraison", coords = delivery, route = true})
+    QBCore.Functions.CreateBlip("jobs:news:sell", { name = "Point de livraison", coords = delivery, route = true })
 
     exports["soz-core"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
 end)
@@ -87,15 +87,15 @@ end)
 
 RegisterNetEvent("jobs:client:news:farmNewspaper", function()
     QBCore.Functions.Progressbar("farmNewspaper", "Récupération de journaux", 10000, false, false,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function()
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
-        TriggerServerEvent("jobs:server:news:newspaperFarm")
-    end)
+        {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true,
+        }, { animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16 }, {}, {}, function()
+            StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+            TriggerServerEvent("jobs:server:news:newspaperFarm")
+        end)
 end)
 
 RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
@@ -105,43 +105,84 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
     end
     societyMenu:ClearItems()
 
-    societyMenu:AddSlider({
-        label = "Faire une communication",
-        value = "nil",
+    local newsCreationSubMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu:create-news")
+
+    local typeSlider = newsCreationSubMenu:AddSlider({
+        label = "Type de communication",
+        value = "annonce",
         values = {
-            {label = "Annonce", value = "annonce"},
-            {label = "Breaking News", value = "breaking-news"},
-            {label = "Publicité", value = "publicité"},
-            {label = "Fait Divers", value = "fait-divers"},
-            {label = "Info Trafic", value = "info-traffic"},
+            { label = "Annonce", value = "annonce" },
+            { label = "Breaking News", value = "breaking-news" },
+            { label = "Publicité", value = "publicité" },
+            { label = "Fait Divers", value = "fait-divers" },
+            { label = "Info Trafic", value = "info-traffic" },
         },
-        select = function(_, value)
-            local message = exports["soz-core"]:Input("Message de la communication", 235)
-            if message == nil or message == "" then
-                exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
+    })
+
+    local newsType = "annonce"
+
+    typeSlider:On('select', function(_, newValue, _)
+        newsType = newValue
+    end)
+
+    local imageButton = newsCreationSubMenu:AddButton({
+        label = "Lien de l'image (facultatif)"
+    })
+
+    local image = ""
+
+    imageButton:On('select', function()
+        image = exports["soz-hud"]:Input("Lien de l'image de la communication", 255, image)
+    end)
+
+    local messageButton = newsCreationSubMenu:AddButton({
+        label = "Message",
+        length = 235,
+    })
+
+    local message = ""
+
+    messageButton:On('select', function()
+        message = exports["soz-hud"]:Input("Message de la communication", 235, message)
+    end)
+
+    newsCreationSubMenu:AddButton({
+        label = "Envoyer",
+        select = function()
+            if newsType == nil or newsType == "" then
+                exports["soz-hud"]:Notification("Vous devez choisir un type de communication", "error")
                 return
             end
-
+            if message == nil or message == "" then
+                exports["soz-hud"]:Notification("Vous devez entrer un message", "error")
+                return
+            end
             TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
-                type = value,
+                type = newsType,
                 message = message,
                 reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
                 reporterId = PlayerData.citizenid,
+                image = image,
             })
 
-            TriggerServerEvent("monitor:server:event", "job_news_create_flash", {flash_type = value},
-                               {message = message, position = GetEntityCoords(PlayerPedId())}, true)
-        end,
+            TriggerServerEvent("monitor:server:event", "job_news_create_flash", { flash_type = value },
+                { message = message, position = GetEntityCoords(PlayerPedId()) }, true)
+        end
+    })
+
+    societyMenu:AddButton({
+        label = "Faire une communication",
+        value = newsCreationSubMenu,
     })
 
     societyMenu:AddSlider({
         label = "Poser un objet",
         value = nil,
         values = {
-            {label = "Fond vert", value = {item = "n_fix_greenscreen", props = "prop_ld_greenscreen_01"}},
-            {label = "Caméra fixe", value = {item = "n_fix_camera", props = "prop_tv_cam_02", rotation = 180.0}},
-            {label = "Lumière fixe", value = {item = "n_fix_light", props = "prop_kino_light_01", rotation = 180.0}},
-            {label = "Micro sur pied", value = {item = "n_fix_mic", props = "v_ilev_fos_mic"}},
+            { label = "Fond vert", value = { item = "n_fix_greenscreen", props = "prop_ld_greenscreen_01" } },
+            { label = "Caméra fixe", value = { item = "n_fix_camera", props = "prop_tv_cam_02", rotation = 180.0 } },
+            { label = "Lumière fixe", value = { item = "n_fix_light", props = "prop_kino_light_01", rotation = 180.0 } },
+            { label = "Micro sur pied", value = { item = "n_fix_mic", props = "v_ilev_fos_mic" } },
         },
         select = function(_, value)
             TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation)
@@ -153,9 +194,9 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         label = "Utiliser un objet mobile",
         value = nil,
         values = {
-            {label = "Caméra", value = {item = "n_camera", event = "jobs:utils:camera:toggle"}},
-            {label = "Micro main", value = {item = "n_mic", event = "jobs:utils:mic:toggle"}},
-            {label = "Micro sur une perche", value = {item = "n_bmic", event = "jobs:utils:bmic:toggle"}},
+            { label = "Caméra", value = { item = "n_camera", event = "jobs:utils:camera:toggle" } },
+            { label = "Micro main", value = { item = "n_mic", event = "jobs:utils:mic:toggle" } },
+            { label = "Micro sur une perche", value = { item = "n_bmic", event = "jobs:utils:bmic:toggle" } },
         },
         select = function(_, value)
             TriggerServerEvent("jobs:server:news:UseMobileItem", value.item, value.event)
