@@ -150,11 +150,11 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
         label = "Envoyer",
         select = function()
             if newsType == nil or newsType == "" then
-                exports["soz-hud"]:Notification("Vous devez choisir un type de communication", "error")
+                exports["soz-hud"]:DrawNotification("Vous devez choisir un type de communication", "error")
                 return
             end
             if message == nil or message == "" then
-                exports["soz-hud"]:Notification("Vous devez entrer un message", "error")
+                exports["soz-hud"]:DrawNotification("Vous devez spécifier un message", "error")
                 return
             end
             TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
