@@ -1,12 +1,13 @@
 import { PlayerTalentService } from '@private/server/player/player.talent.service';
 import { waitUntil } from '@public/core/utils';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
+import { LockPickAlertChance } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem, Item } from '../../shared/item';
 import { getRandomInt } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -123,6 +124,10 @@ export class VehicleLockProvider {
                 this.progressService.stopProgress(source);
             }
         });
+
+        if (Math.random() < LockPickAlertChance) {
+            TriggerClientEvent(ClientEvent.VEHICLE_LOCKPICK, source, 'lockpick');
+        }
 
         const { completed } = await this.progressService.progress(
             source,
