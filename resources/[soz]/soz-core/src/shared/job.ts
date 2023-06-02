@@ -34,6 +34,7 @@ export enum JobPermission {
     SocietyBankAccount = 'society-bank-account',
     SocietyBankInvoices = 'society-bank-invoices',
     SocietyTakeOutPound = 'society-take-out-pound',
+    SocietyViewCompanyPanel = 'society-view-company-panel',
     NewsManageArticle = 'manage-article',
     CashTransfer_CollectBags = 'collect-bags',
     CashTransfer_CollectSecure = 'collect-secure',
