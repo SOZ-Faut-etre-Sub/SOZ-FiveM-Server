@@ -173,6 +173,14 @@ export class VehicleLockProvider {
                 TriggerEvent('inventory:client:closeInventory');
             }
         }
+
+        if (NetworkHasControlOfEntity(vehicleId)) {
+            SetVehicleLights(vehicleId, 2);
+            await wait(250);
+            SetVehicleLights(vehicleId, 1);
+            await wait(200);
+            SetVehicleLights(vehicleId, 0);
+        }
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -513,12 +521,6 @@ export class VehicleLockProvider {
                 true
             );
         }
-
-        SetVehicleLights(vehicle, 2);
-        await wait(250);
-        SetVehicleLights(vehicle, 1);
-        await wait(200);
-        SetVehicleLights(vehicle, 0);
     }
 
     private async hasVehicleKey(player: PlayerData, state: VehicleVolatileState) {

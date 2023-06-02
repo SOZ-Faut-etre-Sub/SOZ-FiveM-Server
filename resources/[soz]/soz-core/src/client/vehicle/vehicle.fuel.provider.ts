@@ -656,21 +656,32 @@ export class VehicleFuelProvider {
             return;
         }
 
+        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
+        const vehicleFuelLevel = GetVehicleFuelLevel(vehicle);
+
+        let oilLevel = 100;
+
+        if (maxOilVolume) {
+            oilLevel = (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume;
+        }
+
         if (this.currentLevel === null || this.currentLevel.vehicle !== vehicle) {
-            const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
-            let oilLevel = 100;
-
-            if (maxOilVolume) {
-                oilLevel = (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume;
-            }
-
             this.currentLevel = {
-                fuel: GetVehicleFuelLevel(vehicle),
+                fuel: vehicleFuelLevel,
                 oil: oilLevel,
                 vehicle,
             };
 
             return;
+        }
+
+        // case where the vehicle is refueled
+        if (vehicleFuelLevel > this.currentLevel.fuel) {
+            this.currentLevel.fuel = vehicleFuelLevel;
+        }
+
+        if (oilLevel > this.currentLevel.oil) {
+            this.currentLevel.oil = oilLevel;
         }
 
         let multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
@@ -692,13 +703,13 @@ export class VehicleFuelProvider {
             multiplier = 0.5;
         }
 
+        multiplier = multiplier * 10;
+
         const consumedFuel = rpm * 0.084 * multiplier;
         const consumedOil = consumedFuel / 12;
 
         const newOil = Math.max(0, this.currentLevel.oil - consumedOil);
         const newFuel = Math.max(0, this.currentLevel.fuel - consumedFuel);
-
-        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
 
         if (maxOilVolume) {
             const realOilLevel = (newOil * maxOilVolume) / 100;

@@ -290,8 +290,12 @@ export class VehicleService {
     @Inject(Logger)
     private logger: Logger;
 
-    public async getVehicleOwnership(vehicle: number, vehicleNetworkId: number, context: string): Promise<void> {
+    public async getVehicleOwnership(vehicle: number, vehicleNetworkId: number, context: string): Promise<boolean> {
         let tryCount = 0;
+
+        if (NetworkHasControlOfEntity(vehicle) && NetworkHasControlOfNetworkId(vehicleNetworkId)) {
+            return true;
+        }
 
         while (
             !NetworkRequestControlOfEntity(vehicle) &&
@@ -304,7 +308,14 @@ export class VehicleService {
 
         if (!NetworkHasControlOfEntity(vehicle) || !NetworkHasControlOfNetworkId(vehicleNetworkId)) {
             this.logger.error(`failed to get ownership of vehicle ${vehicle} / ${vehicleNetworkId} [${context}]`);
+
+            return false;
         }
+
+        SetEntityAsMissionEntity(vehicle, true, false);
+        SetVehicleHasBeenOwnedByPlayer(vehicle, true);
+
+        return true;
     }
 
     public async getVehicleConfiguration(vehicleEntityId: number): Promise<VehicleConfiguration> {

@@ -98,13 +98,13 @@ export class TargetFactory {
             exports['qb-target'].RemoveZone(id);
         }
 
-        for (const id of Object.keys(this.players)) {
-            exports['qb-target'].RemoveGlobalPlayer(id);
-        }
-
-        for (const id of Object.keys(this.vehicles)) {
-            exports['qb-target'].RemoveGlobalVehicle(id);
-        }
+        // for (const id of Object.keys(this.players)) {
+        //     exports['qb-target'].RemoveGlobalPlayer(id);
+        // }
+        //
+        // for (const id of Object.keys(this.vehicles)) {
+        //     exports['qb-target'].RemoveGlobalVehicle(id);
+        // }
 
         //exports['qb-target'].DeletePeds();
     }

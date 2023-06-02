@@ -47,6 +47,25 @@ export type VehicleSpawn = {
     modification?: VehicleConfiguration;
 };
 
+export enum VehicleSeat {
+    Driver = -1,
+    Copilot = 0,
+    BackLeft = 1,
+    BackRight = 2,
+    ExtraSeat1 = 3,
+    ExtraSeat2 = 4,
+    ExtraSeat3 = 5,
+    ExtraSeat4 = 6,
+    ExtraSeat5 = 7,
+}
+
+export enum VehicleSyncStrategy {
+    None, // no need to sync
+    Copilot, // copilot only
+    AllInVehicle, // all players in vehicle
+    AllServer, // all players in server
+}
+
 export enum VehicleLightState {
     Off,
     LowBeam,

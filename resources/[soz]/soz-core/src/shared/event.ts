@@ -14,6 +14,10 @@ export enum ServerEvent {
     ADMIN_VEHICLE_SPAWN = 'soz-core:server:admin:vehicle:spawn',
     ADMIN_VEHICLE_DELETE = 'soz-core:server:admin:vehicle:delete',
 
+    BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
+    BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
+    BASE_CHANGE_VEHICLE_SEAT = 'baseevents:changeVehicleSeat',
+
     BAUN_CRAFT = 'soz-core:server:job:baun:craft',
     BAUN_RESELL = 'soz-core:server:job:baun:resell',
 
@@ -27,6 +31,7 @@ export enum ServerEvent {
     BENNYS_WASH_VEHICLE = 'soz-core:server:job:bennys:wash-vehicle',
     BENNYS_FLATBED_ATTACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:attach-vehicle',
     BENNYS_FLATBED_DETACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:detach-vehicle',
+    BENNYS_FLATBED_ASK_DETACH_VEHICLE = 'soz-core:server:job:bennys:flatbed:ask-detach-vehicle',
 
     CRIMI_CONFIRM_REMOTE_WORKSHOP = 'soz-core:server:job:crimi:confirm-remote-workshop',
 
@@ -247,6 +252,7 @@ export enum ClientEvent {
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
 
     BENNYS_OPEN_CLOAKROOM = 'soz-core:client:job:bennys:open-cloakroom',
+    BENNYS_FLATBED_DETACH_VEHICLE = 'soz-core:client:job:bennys:flatbed:detach-vehicle',
 
     CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
 
@@ -354,6 +360,7 @@ export enum ClientEvent {
     VEHICLE_CONDITION_REGISTER = 'soz-core:client:vehicle:condition:register',
     VEHICLE_CONDITION_UNREGISTER = 'soz-core:client:vehicle:condition:unregister',
     VEHICLE_CONDITION_APPLY = 'soz-core:client:vehicle:condition:apply',
+    VEHICLE_CONDITION_SYNC = 'soz-core:client:vehicle:condition:sync',
     VEHICLE_CLOSE_TRUNK = 'soz-core:client:vehicle:close-trunk',
     VEHICLE_DEALERSHIP_AUCTION_UPDATE = 'soz-core:client:vehicle:dealership:auction:update',
     VEHICLE_DELETE = 'soz-core:client:vehicle:delete',

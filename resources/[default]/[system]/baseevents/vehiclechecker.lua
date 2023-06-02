@@ -28,24 +28,28 @@ Citizen.CreateThread(function()
 				isInVehicle = true
 				currentVehicle = GetVehiclePedIsUsing(ped)
 				currentSeat = GetPedVehicleSeat(ped)
-				local model = GetEntityModel(currentVehicle)
-				local name = GetDisplayNameFromVehicleModel()
 				local netId = VehToNet(currentVehicle)
-				TriggerEvent('baseevents:enteredVehicle', currentVehicle, currentSeat, GetDisplayNameFromVehicleModel(GetEntityModel(currentVehicle)), netId)
-				TriggerServerEvent('baseevents:enteredVehicle', currentVehicle, currentSeat, GetDisplayNameFromVehicleModel(GetEntityModel(currentVehicle)), netId)
+				TriggerEvent('baseevents:enteredVehicle', currentVehicle, currentSeat)
+				TriggerServerEvent('baseevents:enteredVehicle', netId, currentSeat)
 			end
 		elseif isInVehicle then
 			if not IsPedInAnyVehicle(ped, false) or IsPlayerDead(PlayerId()) then
-				-- bye, vehicle
-				local model = GetEntityModel(currentVehicle)
-				local name = GetDisplayNameFromVehicleModel()
 				local netId = VehToNet(currentVehicle)
-				TriggerEvent('baseevents:leftVehicle', currentVehicle, currentSeat, GetDisplayNameFromVehicleModel(GetEntityModel(currentVehicle)), netId)
-				TriggerServerEvent('baseevents:leftVehicle', currentVehicle, currentSeat, GetDisplayNameFromVehicleModel(GetEntityModel(currentVehicle)), netId)
+				TriggerEvent('baseevents:leftVehicle', currentVehicle, currentSeat)
+				TriggerServerEvent('baseevents:leftVehicle', netId, currentSeat)
 				isInVehicle = false
 				currentVehicle = 0
 				currentSeat = 0
 			end
+
+            local pedInSeat = GetPedInVehicleSeat(currentVehicle, currentSeat)
+
+            if pedInSeat ~= ped then
+                currentSeat = GetPedVehicleSeat(ped)
+                local netId = VehToNet(currentVehicle)
+                TriggerEvent('baseevents:changedVehicleSeat', currentVehicle, currentSeat)
+                TriggerServerEvent('baseevents:changedVehicleSeat', netId, currentSeat)
+            end
 		end
 		Citizen.Wait(50)
 	end

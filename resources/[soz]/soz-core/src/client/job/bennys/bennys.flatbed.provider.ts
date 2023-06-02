@@ -1,10 +1,10 @@
-import { Once, OnceStep } from '../../../core/decorators/event';
+import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
 import { wait } from '../../../core/utils';
 import { AnimationStopReason } from '../../../shared/animation';
-import { ServerEvent } from '../../../shared/event';
+import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { getDistance, Vector3, Vector4 } from '../../../shared/polyzone/vector';
 import { AnimationService } from '../../animation/animation.service';
@@ -111,16 +111,12 @@ export class BennysFlatbedProvider {
                 action: entity => {
                     this.toggleFlatbedAttach(entity);
                 },
-                canInteract: entity => {
+                canInteract: async entity => {
                     if (GetEntityModel(entity) !== GetHashKey('flatbed4')) {
                         return false;
                     }
 
                     if (this.currentFlatbedAttach === null || this.currentFlatbedAttach.entity !== entity) {
-                        return false;
-                    }
-
-                    if (IsEntityAttachedToAnyVehicle(entity)) {
                         return false;
                     }
 
@@ -139,7 +135,10 @@ export class BennysFlatbedProvider {
                 job: JobType.Bennys,
                 label: 'Démorquer',
                 action: (entity: number) => {
-                    this.detachVehicle(entity);
+                    TriggerServerEvent(
+                        ServerEvent.BENNYS_FLATBED_ASK_DETACH_VEHICLE,
+                        NetworkGetNetworkIdFromEntity(entity)
+                    );
                 },
                 canInteract: async (entity: number) => {
                     if (GetEntityModel(entity) !== GetHashKey('flatbed4')) {
@@ -327,7 +326,14 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        const attachedVehicle = GetEntityAttachedTo(vehicle);
+        const flatbedState = await this.vehicleStateService.getVehicleState(vehicle);
+        const attachedVehicleNetworkId = flatbedState.flatbedAttachedVehicle;
+
+        if (!attachedVehicleNetworkId) {
+            return;
+        }
+
+        const attachedVehicle = NetworkGetEntityFromNetworkId(attachedVehicleNetworkId);
 
         if (!attachedVehicle) {
             return;
@@ -346,26 +352,25 @@ export class BennysFlatbedProvider {
         );
     }
 
-    public async detachVehicle(flatbed: number) {
-        const flatbedState = await this.vehicleStateService.getVehicleState(flatbed);
-        const attachedVehicleNetworkId = flatbedState.flatbedAttachedVehicle;
+    @OnEvent(ClientEvent.BENNYS_FLATBED_DETACH_VEHICLE)
+    public async detachVehicle(flatbedNetworkId: number, attachedVehicleNetworkId: number) {
+        const flatbed = NetworkGetEntityFromNetworkId(flatbedNetworkId);
 
-        if (!attachedVehicleNetworkId) {
+        if (!flatbed) {
             return;
         }
 
-        const flatbedNetworkId = NetworkGetNetworkIdFromEntity(flatbed);
         await this.vehicleService.getVehicleOwnership(flatbed, flatbedNetworkId, 'flatbed while detaching');
 
         const attachedVehicle = NetworkGetEntityFromNetworkId(attachedVehicleNetworkId);
+
+        if (!attachedVehicle) {
+            return;
+        }
+
         const flatbedPosition = GetEntityCoords(flatbed, true) as Vector4;
         const attachedVehiclePosition = GetEntityCoords(attachedVehicle, true) as Vector4;
 
-        await this.vehicleService.getVehicleOwnership(
-            attachedVehicle,
-            attachedVehicleNetworkId,
-            'flatbedAttachedVehicle while detaching'
-        );
         DetachEntity(attachedVehicle, true, true);
 
         SetEntityCoords(
@@ -376,12 +381,14 @@ export class BennysFlatbedProvider {
             false,
             false,
             false,
-            false
+            true
         );
 
-        if (!SetVehicleOnGroundProperly(attachedVehicle)) {
-            SetEntityAsMissionEntity(attachedVehicle, true, true);
-        }
+        SetVehicleOnGroundProperly(attachedVehicle);
+
+        // if (!SetVehicleOnGroundProperly(attachedVehicle)) {
+        //     SetEntityAsMissionEntity(attachedVehicle, true, true);
+        // }
 
         TriggerServerEvent(ServerEvent.BENNYS_FLATBED_DETACH_VEHICLE, flatbedNetworkId);
 
