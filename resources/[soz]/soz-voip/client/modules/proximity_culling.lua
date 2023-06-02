@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-AddEventHandler("soz-core:client:voip:set-megaphone", function(playerServerId, value)
+RegisterNetEvent("soz-core:client:voip:set-megaphone", function(playerServerId, value)
     megaphoneUsers[playerServerId] = value
 end)
 

@@ -6,6 +6,8 @@ import {
     getDefaultVehicleCondition,
     getDefaultVehicleVolatileState,
     VehicleCondition,
+    VehicleSeat,
+    VehicleSyncStrategy,
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
 
@@ -16,11 +18,29 @@ type VehicleState = {
     owner: number;
 };
 
+const VehicleConditionSyncStrategy: Record<keyof VehicleCondition, VehicleSyncStrategy> = {
+    fuelLevel: VehicleSyncStrategy.Copilot,
+    oilLevel: VehicleSyncStrategy.Copilot,
+    engineHealth: VehicleSyncStrategy.None,
+    bodyHealth: VehicleSyncStrategy.None,
+    tankHealth: VehicleSyncStrategy.None,
+    dirtLevel: VehicleSyncStrategy.AllServer,
+    doorStatus: VehicleSyncStrategy.None,
+    windowStatus: VehicleSyncStrategy.None,
+    tireHealth: VehicleSyncStrategy.None,
+    tireBurstState: VehicleSyncStrategy.None,
+    tireBurstCompletely: VehicleSyncStrategy.None,
+    tireTemporaryRepairDistance: VehicleSyncStrategy.None,
+    mileage: VehicleSyncStrategy.None,
+};
+
 @Injectable()
 export class VehicleStateService {
     private state: Map<number, VehicleState> = new Map<number, VehicleState>();
 
     private vehicleKeys: Record<string, Set<string>> = {};
+
+    private vehicleSeats: Map<number, Map<number, VehicleSeat>> = new Map<number, Map<number, VehicleSeat>>();
 
     public getVehicleState(vehicleNetworkId: number): Readonly<VehicleState> {
         if (this.state.has(vehicleNetworkId)) {
@@ -33,6 +53,27 @@ export class VehicleStateService {
             owner: null,
             position: null,
         };
+    }
+
+    public setVehicleSeat(vehicleNetworkId: number, playerNetworkId: number, seat: VehicleSeat): void {
+        const vehicleSeats = this.vehicleSeats.get(vehicleNetworkId) ?? new Map<number, VehicleSeat>();
+        vehicleSeats.set(playerNetworkId, seat);
+
+        this.vehicleSeats.set(vehicleNetworkId, vehicleSeats);
+    }
+
+    public removeVehicleSeat(vehicleNetworkId: number, playerNetworkId: number): void {
+        const vehicleSeats = this.vehicleSeats.get(vehicleNetworkId);
+
+        if (!vehicleSeats) {
+            return;
+        }
+
+        vehicleSeats.delete(playerNetworkId);
+
+        if (vehicleSeats.size === 0) {
+            this.vehicleSeats.delete(vehicleNetworkId);
+        }
     }
 
     public getStates(): Readonly<Map<number, VehicleState>> {
@@ -121,6 +162,58 @@ export class VehicleStateService {
         };
 
         this.state.set(vehicleNetworkId, newState);
+
+        const conditionToCopilot = {};
+        const conditionToAllInVehicle = {};
+        const conditionToAllServer = {};
+
+        // sync to other players if needed
+        for (const key of Object.keys(condition)) {
+            if (VehicleConditionSyncStrategy[key] === VehicleSyncStrategy.None) {
+                continue;
+            }
+
+            if (VehicleConditionSyncStrategy[key] === VehicleSyncStrategy.Copilot) {
+                conditionToCopilot[key] = condition[key];
+            }
+
+            if (VehicleConditionSyncStrategy[key] === VehicleSyncStrategy.AllInVehicle) {
+                conditionToAllInVehicle[key] = condition[key];
+            }
+
+            if (VehicleConditionSyncStrategy[key] === VehicleSyncStrategy.AllServer) {
+                conditionToAllServer[key] = condition[key];
+            }
+        }
+
+        if (Object.keys(conditionToCopilot).length > 0) {
+            // get copilot
+            const copilot = this.getPlayerInVehicleSeat(vehicleNetworkId, VehicleSeat.Copilot);
+
+            if (copilot) {
+                TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_SYNC, copilot, vehicleNetworkId, conditionToCopilot);
+            }
+        }
+
+        if (Object.keys(conditionToAllInVehicle).length > 0) {
+            // get all in vehicle
+            const seats = this.vehicleSeats.get(vehicleNetworkId);
+
+            if (seats) {
+                for (const player of seats.keys()) {
+                    TriggerClientEvent(
+                        ClientEvent.VEHICLE_CONDITION_SYNC,
+                        player,
+                        vehicleNetworkId,
+                        conditionToAllInVehicle
+                    );
+                }
+            }
+        }
+
+        if (Object.keys(conditionToAllServer).length > 0) {
+            TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_SYNC, -1, vehicleNetworkId, conditionToAllServer);
+        }
     }
 
     public register(
@@ -190,5 +283,21 @@ export class VehicleStateService {
         }
 
         return Array.from(this.vehicleKeys[citizenId]);
+    }
+
+    private getPlayerInVehicleSeat(vehicleNetworkId: number, seat: VehicleSeat): number | null {
+        const vehicleSeats = this.vehicleSeats.get(vehicleNetworkId);
+
+        if (!vehicleSeats) {
+            return null;
+        }
+
+        for (const [playerNetworkId, vehicleSeat] of vehicleSeats.entries()) {
+            if (vehicleSeat === seat) {
+                return playerNetworkId;
+            }
+        }
+
+        return null;
     }
 }

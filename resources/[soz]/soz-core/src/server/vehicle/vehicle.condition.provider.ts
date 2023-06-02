@@ -1,7 +1,6 @@
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Monitor } from '../../shared/monitor';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
@@ -36,60 +35,6 @@ export class VehicleConditionProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
-
-    @Tick(TickInterval.EVERY_SECOND, 'vehicle:condition:update')
-    public async updateVehiclesCondition() {
-        // Basically we keep tracks of all vehicles spawned and ask the current owner to update the condition of the vehicle
-        const states = this.vehicleStateService.getStates().keys();
-
-        for (const netId of states) {
-            const state = this.vehicleStateService.getVehicleState(netId);
-            const entityId = NetworkGetEntityFromNetworkId(netId);
-
-            // entity has despawn
-            if (!entityId || !DoesEntityExist(entityId)) {
-                this.vehicleStateService.unregister(netId);
-
-                if (!state.volatile.isPlayerVehicle || !state.volatile.id) {
-                    continue;
-                }
-
-                await this.prismaService.playerVehicle.update({
-                    where: {
-                        id: state.volatile.id,
-                    },
-                    data: {
-                        state: PlayerVehicleState.InSoftPound,
-                        garage: 'pound',
-                        parkingtime: Math.round(Date.now() / 1000),
-                    },
-                });
-
-                this.monitor.publish(
-                    'vehicle_despawn',
-                    {
-                        vehicle_id: state.volatile.id || null,
-                        vehicle_net_id: netId,
-                        vehicle_plate: state.volatile.plate || null,
-                    },
-                    {
-                        owner: state.owner || null,
-                        condition: state.condition || null,
-                        position: toVector3Object(state.position || [0, 0, 0]),
-                    }
-                );
-
-                continue;
-            }
-
-            // check if the vehicle is owned by the same player
-            const owner = NetworkGetEntityOwner(entityId);
-
-            if (owner !== state.owner) {
-                this.vehicleStateService.switchOwner(netId, owner);
-            }
-        }
-    }
 
     @OnEvent(ServerEvent.VEHICLE_USE_REPAIR_KIT)
     public async onVehicleUseRepairKit(source: number, vehicleNetworkId: number) {

@@ -131,7 +131,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        // cannot check a vehicle where we are not the owner
+        // cannot apply a vehicle where we are not the owner
         if (!NetworkHasControlOfEntity(entityId)) {
             return;
         }
@@ -145,6 +145,27 @@ export class VehicleConditionProvider {
         this.vehicleService.applyVehicleCondition(entityId, condition, newCondition);
 
         this.currentVehicleCondition.set(vehicleNetworkId, newCondition);
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_CONDITION_SYNC)
+    private async syncVehicleCondition(
+        vehicleNetworkId: number,
+        condition: Partial<VehicleCondition>,
+        fullCondition: VehicleCondition
+    ) {
+        const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+        // cannot check a vehicle that does not exist
+        if (!entityId) {
+            return;
+        }
+
+        // if we are the owner, we do not need to sync
+        if (NetworkHasControlOfEntity(entityId) || this.currentVehicleCondition.has(vehicleNetworkId)) {
+            return;
+        }
+
+        this.vehicleService.applyVehicleCondition(entityId, condition, fullCondition);
     }
 
     @Tick(500)
