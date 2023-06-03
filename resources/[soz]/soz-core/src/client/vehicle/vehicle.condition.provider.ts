@@ -123,7 +123,11 @@ export class VehicleConditionProvider {
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_APPLY)
-    private async applyVehicleCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
+    private async applyVehicleCondition(
+        vehicleNetworkId: number,
+        condition: Partial<VehicleCondition>,
+        fullCondition: VehicleCondition
+    ) {
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         // cannot check a vehicle that does not exist
@@ -136,8 +140,9 @@ export class VehicleConditionProvider {
             return;
         }
 
+        // resync state for owner if needed
         if (!this.currentVehicleCondition.has(vehicleNetworkId)) {
-            return;
+            this.currentVehicleCondition.set(vehicleNetworkId, fullCondition);
         }
 
         const newCondition = { ...this.currentVehicleCondition.get(vehicleNetworkId), ...condition };

@@ -21,6 +21,7 @@ import { FuelStationRepository } from '../resources/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { ObjectFactory } from './../world/object.factory';
+import { VehicleConditionProvider } from './vehicle.condition.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -34,12 +35,6 @@ type CurrentStationPistol = {
 
 const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
     [VehicleClass.Helicopters]: 6.33,
-};
-
-type CurrentLevel = {
-    vehicle: number;
-    fuel: number;
-    oil: number;
 };
 
 @Provider()
@@ -80,9 +75,10 @@ export class VehicleFuelProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
-    private currentStationPistol: CurrentStationPistol | null = null;
+    @Inject(VehicleConditionProvider)
+    private vehicleConditionProvider: VehicleConditionProvider;
 
-    private currentLevel: CurrentLevel | null = null;
+    private currentStationPistol: CurrentStationPistol | null = null;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoryLoaded() {
@@ -623,66 +619,33 @@ export class VehicleFuelProvider {
         const vehicle = GetVehiclePedIsIn(ped, false);
 
         if (!vehicle) {
-            this.currentLevel = null;
-
             return;
         }
 
         if (!IsEntityAVehicle(vehicle)) {
-            this.currentLevel = null;
-
             return;
         }
 
         if (!IsVehicleEngineOn(vehicle)) {
-            this.currentLevel = null;
-
-            return;
-        }
-
-        const owner = NetworkGetEntityOwner(vehicle);
-
-        if (owner !== PlayerId()) {
-            this.currentLevel = null;
-
             return;
         }
 
         const model = GetEntityModel(vehicle);
 
         if (IsThisModelABicycle(model)) {
-            this.currentLevel = null;
+            return;
+        }
 
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+        const vehicleCondition = this.vehicleConditionProvider.getVehicleCondition(vehicleNetworkId);
+
+        if (!vehicleCondition) {
             return;
         }
 
         const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
-        const vehicleFuelLevel = GetVehicleFuelLevel(vehicle);
-
-        let oilLevel = 100;
-
-        if (maxOilVolume) {
-            oilLevel = (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume;
-        }
-
-        if (this.currentLevel === null || this.currentLevel.vehicle !== vehicle) {
-            this.currentLevel = {
-                fuel: vehicleFuelLevel,
-                oil: oilLevel,
-                vehicle,
-            };
-
-            return;
-        }
-
-        // case where the vehicle is refueled
-        if (vehicleFuelLevel > this.currentLevel.fuel) {
-            this.currentLevel.fuel = vehicleFuelLevel;
-        }
-
-        if (oilLevel > this.currentLevel.oil) {
-            this.currentLevel.oil = oilLevel;
-        }
+        const fuelLevel = vehicleCondition.fuelLevel;
+        const oilLevel = vehicleCondition.oilLevel;
 
         let multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
         let rpm = GetVehicleCurrentRpm(vehicle);
@@ -703,13 +666,11 @@ export class VehicleFuelProvider {
             multiplier = 0.5;
         }
 
-        multiplier = multiplier * 10;
-
         const consumedFuel = rpm * 0.084 * multiplier;
         const consumedOil = consumedFuel / 12;
 
-        const newOil = Math.max(0, this.currentLevel.oil - consumedOil);
-        const newFuel = Math.max(0, this.currentLevel.fuel - consumedFuel);
+        const newOil = Math.max(0, oilLevel - consumedOil);
+        const newFuel = Math.max(0, fuelLevel - consumedFuel);
 
         if (maxOilVolume) {
             const realOilLevel = (newOil * maxOilVolume) / 100;
@@ -727,8 +688,5 @@ export class VehicleFuelProvider {
             SetVehicleEngineHealth(vehicle, newEngineHealth);
             SetVehicleEngineOn(vehicle, false, true, true);
         }
-
-        this.currentLevel.oil = newOil;
-        this.currentLevel.fuel = newFuel;
     }
 }

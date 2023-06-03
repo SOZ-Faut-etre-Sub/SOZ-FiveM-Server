@@ -142,13 +142,16 @@ export class VehicleStateService {
             return;
         }
 
-        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_APPLY, owner, vehicleNetworkId, condition);
-
         // Also sync here as owner will not send back to server (same diff)
-        this.updateVehicleConditionState(vehicleNetworkId, condition);
+        const fullCondition = this.updateVehicleConditionState(vehicleNetworkId, condition);
+
+        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_APPLY, owner, vehicleNetworkId, condition, fullCondition);
     }
 
-    public updateVehicleConditionState(vehicleNetworkId: number, condition: Partial<VehicleCondition>): void {
+    public updateVehicleConditionState(
+        vehicleNetworkId: number,
+        condition: Partial<VehicleCondition>
+    ): VehicleCondition {
         const previousState = this.getVehicleState(vehicleNetworkId);
 
         const newState = {
@@ -214,6 +217,8 @@ export class VehicleStateService {
         if (Object.keys(conditionToAllServer).length > 0) {
             TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_SYNC, -1, vehicleNetworkId, conditionToAllServer);
         }
+
+        return newState.condition;
     }
 
     public register(

@@ -43,7 +43,7 @@ export class HudVehicleProvider {
         });
     }
 
-    @Tick(2000)
+    @Tick(200)
     async updateVehicleHud() {
         const player = this.playerService.getPlayer();
 
