@@ -182,13 +182,13 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string }> = ({ val
 
 export const SpeedoMeter: FunctionComponent = () => {
     const vehicle = useVehicle();
-    const inVehicle = vehicle.seat !== null;
+    const isPilotOrCopilot = vehicle.seat === -1 || vehicle.seat === 0;
 
     const classes = classNames(
         'absolute bottom-[1.2vh] left-[35vw] w-[30vw] flex justify-center transition-opacity duration-500',
         {
-            'opacity-0': !inVehicle,
-            'opacity-100': inVehicle,
+            'opacity-0': !isPilotOrCopilot,
+            'opacity-100': isPilotOrCopilot,
         }
     );
 
