@@ -141,7 +141,9 @@ const doAnimation = async (
         }
 
         waitUntilPromise.then(() => {
-            resolve(AnimationStopReason.Aborted);
+            setTimeout(() => {
+                resolve(AnimationStopReason.Aborted);
+            }, 200);
         });
 
         animationCanceller.onCancel = reason => {
