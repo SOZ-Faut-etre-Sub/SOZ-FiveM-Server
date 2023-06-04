@@ -370,3 +370,19 @@ export const VehicleTypeFromClass: Record<VehicleClass, VehicleType> = {
     [VehicleClass.Commercial]: VehicleType.Automobile,
     [VehicleClass.Trains]: VehicleType.Train,
 };
+
+export const LockPickAlertChance = 0.5;
+
+export const LockPickAlertMessage = {
+    all: [
+        'Dans ${0}, ça essaye de tirer une caisse, juste devant moi là ! Juste là !',
+        "Encore un clodo qui essaye de dormir au chaud ce soir à ${0} , mais ce n'est pas dans sa voiture…",
+        'BORDEL MA CAISSE ! ON ME VOLE MA CAISSE ! JE SUIS PROCHE DE ${0} !',
+        "Hey ! J'ai un vol de voiture sous les yeux, venez vite à ${0} !",
+        "Mais où êtes vous ?! Quelqu'un vole des véhicules aux alentours de ${0} !",
+    ],
+    carjack: [
+        "J'viens de me faire carjacker ! Mais oui, on m'a carjacké l'auto j'vous dis ! Cela s'est déroulé à ${0} !",
+    ],
+    lockpick: ["Une personne louche tripote la poignée d'une voiture proche de ${0} !"],
+};

@@ -377,6 +377,7 @@ export enum ClientEvent {
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
     VEHICLE_UPDATE_STATE = 'soz-core:client:vehicle:update-state',
     VEHICLE_DELETE_STATE = 'soz-core:client:vehicle:delete-state',
+    VEHICLE_LOCKPICK = 'soz-core:client:vehicle:lockpick',
 
     VOIP_UPDATE_MODE = 'soz-core:client:voip:update-mode',
     VOIP_SET_MEGAPHONE = 'soz-core:client:voip:set-megaphone',

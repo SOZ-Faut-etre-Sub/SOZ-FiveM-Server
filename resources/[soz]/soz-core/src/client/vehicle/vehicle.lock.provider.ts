@@ -1,16 +1,23 @@
+import { getRandomItem } from '@public/shared/random';
+
 import { Command } from '../../core/decorators/command';
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { wait, waitUntil } from '../../core/utils';
+import { uuidv4, wait, waitUntil } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { VehicleClass, VehicleLockStatus, VehicleVolatileState } from '../../shared/vehicle/vehicle';
+import {
+    LockPickAlertMessage,
+    VehicleClass,
+    VehicleLockStatus,
+    VehicleVolatileState,
+} from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -534,5 +541,22 @@ export class VehicleLockProvider {
         }
 
         return await emitRpc<boolean>(RpcServerEvent.VEHICLE_HAS_KEY, state.id);
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_LOCKPICK)
+    public onLockpick(type: string) {
+        const coords = GetEntityCoords(PlayerPedId());
+        const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+        const zone = GetLabelText(zoneID);
+
+        const messages = [...LockPickAlertMessage.all, ...LockPickAlertMessage[type]];
+
+        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+            anonymous: true,
+            number: '555-POLICE',
+            message: getRandomItem(messages).replace('${0}', zone),
+            position: true,
+            overrideIdentifier: 'System',
+        });
     }
 }
