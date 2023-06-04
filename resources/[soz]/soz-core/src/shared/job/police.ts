@@ -813,7 +813,7 @@ export const RankOutfit = {
         [70]: [0, 2], // Senior
         [69]: [0, 3], // Major
         [68]: [2, 5], // Major Chief
-        [67]: [2, 6], // Assistant Sheriff
+        [201]: [2, 6], // Division Sheriff - previously 67 - Assistant Sheriff
         [66]: [2, 7], // Undersheriff
         [38]: [1, 0], // Sheriff
     },
