@@ -54,8 +54,6 @@ const applyVehicleTire = (
 const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondition>> = {
     bodyHealth: {
         apply: (vehicle, value: number) => {
-            const previousFuel = GetVehicleFuelLevel(vehicle);
-            const previousOil = GetVehicleOilLevel(vehicle);
             const previousEngineHealth = GetVehicleEngineHealth(vehicle);
             const previousTankHealth = GetVehiclePetrolTankHealth(vehicle);
 
@@ -66,8 +64,6 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
                 SetVehicleFixed(vehicle);
             }
 
-            SetVehicleFuelLevel(vehicle, previousFuel);
-            SetVehicleOilLevel(vehicle, previousOil);
             SetVehicleEngineHealth(vehicle, previousEngineHealth);
             SetVehiclePetrolTankHealth(vehicle, previousTankHealth);
         },
@@ -78,31 +74,6 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
             SetVehicleEngineHealth(vehicle, value);
         },
         get: vehicle => GetVehicleEngineHealth(vehicle),
-    },
-    fuelLevel: {
-        apply: (vehicle, value: number) => {
-            SetVehicleFuelLevel(vehicle, value);
-        },
-        get: vehicle => GetVehicleFuelLevel(vehicle),
-    },
-    oilLevel: {
-        apply: (vehicle, value: number) => {
-            const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
-
-            if (maxOilVolume) {
-                const realOilLevel = (value * maxOilVolume) / 100;
-                SetVehicleOilLevel(vehicle, realOilLevel);
-            }
-        },
-        get: vehicle => {
-            const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
-
-            if (maxOilVolume) {
-                return (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume;
-            }
-
-            return 100;
-        },
     },
     dirtLevel: {
         apply: (vehicle, value: number) => {

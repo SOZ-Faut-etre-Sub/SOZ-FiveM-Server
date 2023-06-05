@@ -63,6 +63,19 @@ export class VehicleConditionProvider {
         return this.currentVehicleCondition.get(vehicleNetworkId) || null;
     }
 
+    public setVehicleCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
+        const currentCondition = this.getVehicleCondition(vehicleNetworkId);
+
+        if (null === currentCondition) {
+            return;
+        }
+
+        this.currentVehicleCondition.set(vehicleNetworkId, {
+            ...currentCondition,
+            ...condition,
+        });
+    }
+
     @Tick(TickInterval.EVERY_SECOND)
     private async checkConditionLoop() {
         // loop through all vehicles we have to check

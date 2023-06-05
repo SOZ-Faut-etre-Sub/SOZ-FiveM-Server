@@ -183,15 +183,15 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string }> = ({ val
 export const SpeedoMeter: FunctionComponent = () => {
     const vehicle = useVehicle();
     const inVehicle = vehicle.seat !== null;
-    const [isPilotOrCopilot, setIsPilotOrCopilot] = useState(false);
+    const [isPilot, setIsPilot] = useState(false);
 
     useEffect(() => {
         if (vehicle.seat === null) {
             setTimeout(() => {
-                setIsPilotOrCopilot(false);
+                setIsPilot(false);
             }, 1000);
         } else {
-            setIsPilotOrCopilot(vehicle.seat === -1 || vehicle.seat === 0);
+            setIsPilot(vehicle.seat === -1);
         }
     }, [vehicle.seat]);
 
@@ -207,7 +207,7 @@ export const SpeedoMeter: FunctionComponent = () => {
         'pl-[40px]': vehicle.fuelType === 'none',
     });
 
-    if (!isPilotOrCopilot) {
+    if (!isPilot) {
         return (
             <div className={classes}>
                 <div className="flex justify-end items-end pb-[1.25rem]">
