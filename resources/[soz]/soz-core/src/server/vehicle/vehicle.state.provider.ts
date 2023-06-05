@@ -84,7 +84,6 @@ export class VehicleStateProvider {
         return this.vehicleStateService.getVehicleState(vehicleNetworkId).volatile;
     }
 
-    @Exportable('GetVehicleState')
     @Rpc(RpcServerEvent.VEHICLE_GET_CONDITION)
     public getVehicleCondition(source: number, vehicleNetworkId: number): VehicleCondition {
         return this.vehicleStateService.getVehicleState(vehicleNetworkId).condition;
