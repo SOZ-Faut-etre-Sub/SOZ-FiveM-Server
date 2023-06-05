@@ -13,7 +13,7 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { PlayerClientState } from '../../../shared/player';
+import { PlayerListStateService } from '../../player/player.list.state.service';
 import { LSMCDeathProvider } from './lsmc.death.provider';
 
 const hopital = BoxZone.fromZone({
@@ -45,6 +45,9 @@ export class LSMCInteractionProvider {
 
     @Inject(Monitor)
     public monitor: Monitor;
+
+    @Inject(PlayerListStateService)
+    private playerListStateService: PlayerListStateService;
 
     @Once()
     public onStart() {
@@ -108,18 +111,14 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/desabhiller.png',
                 job: JobType.LSMC,
-                canInteract: async entity => {
+                canInteract: entity => {
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
                     }
 
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const targetState = await emitRpc<PlayerClientState>(
-                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
-                        target
-                    );
 
-                    return !targetState.isWearingPatientOutfit;
+                    return !this.playerListStateService.isWearingPatientOutfit(target);
                 },
                 action: entity => {
                     TriggerServerEvent(
@@ -134,18 +133,14 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/rhabiller.png',
                 job: JobType.LSMC,
-                canInteract: async entity => {
+                canInteract: entity => {
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
                     }
 
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const targetState = await emitRpc<PlayerClientState>(
-                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
-                        target
-                    );
 
-                    return targetState.isWearingPatientOutfit;
+                    return this.playerListStateService.isWearingPatientOutfit(target);
                 },
                 action: entity => {
                     TriggerServerEvent(
@@ -160,18 +155,14 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/heal.png',
                 job: JobType.LSMC,
-                canInteract: async entity => {
+                canInteract: entity => {
                     if (!this.playerService.isOnDuty()) {
                         return false;
                     }
 
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const targetState = await emitRpc<PlayerClientState>(
-                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
-                        target
-                    );
 
-                    return !targetState.isDead;
+                    return !this.playerListStateService.isDead(target);
                 },
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
@@ -217,7 +208,7 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/revive.png',
                 job: JobType.LSMC,
-                canInteract: async entity => {
+                canInteract: entity => {
                     if (!this.playerService.isOnDuty()) {
                         return false;
                     }
@@ -227,12 +218,8 @@ export class LSMCInteractionProvider {
                     }
 
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const targetState = await emitRpc<PlayerClientState>(
-                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
-                        target
-                    );
 
-                    return targetState.isDead;
+                    return this.playerListStateService.isDead(target);
                 },
                 action: entity => {
                     this.LSMCDeathProvider.reviveTarget(entity, true);
@@ -242,14 +229,10 @@ export class LSMCInteractionProvider {
                 label: 'Utiliser Défibrilateur',
                 color: JobType.LSMC,
                 icon: 'c:ems/revive.png',
-                canInteract: async entity => {
+                canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-                    const targetState = await emitRpc<PlayerClientState>(
-                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
-                        target
-                    );
 
-                    return targetState.isDead;
+                    return this.playerListStateService.isDead(target);
                 },
                 action: entity => {
                     this.LSMCDeathProvider.reviveTarget(entity, false);
@@ -261,19 +244,14 @@ export class LSMCInteractionProvider {
                 color: JobType.LSMC,
                 icon: 'c:ems/take_blood.png',
                 job: JobType.LSMC,
-                canInteract: async entity => {
+                canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
                     if (!this.playerService.isOnDuty()) {
                         return false;
                     }
 
-                    const targetState = await emitRpc<PlayerClientState>(
-                        RpcServerEvent.PLAYER_GET_CLIENT_STATE,
-                        target
-                    );
-
-                    return targetState.isDead;
+                    return !this.playerListStateService.isDead(target);
                 },
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
