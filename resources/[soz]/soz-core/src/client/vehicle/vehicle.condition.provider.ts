@@ -158,6 +158,10 @@ export class VehicleConditionProvider {
         condition: Partial<VehicleCondition>,
         fullCondition: VehicleCondition
     ) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         // cannot check a vehicle that does not exist
