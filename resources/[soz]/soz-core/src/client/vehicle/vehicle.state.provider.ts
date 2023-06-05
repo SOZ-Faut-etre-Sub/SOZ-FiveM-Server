@@ -2,6 +2,7 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
+import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
@@ -70,12 +71,19 @@ export class VehicleStateProvider {
         // Windows
         this.vehicleStateService.addVehicleStateSelector(
             [(state: VehicleVolatileState) => state.speedLimit],
-            createVehicleChangeCallback((vehicle: number, speedLimit: number) => {
+            createVehicleChangeCallback(async (vehicle: number, speedLimit: number) => {
                 if (speedLimit > 0) {
-                    const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
-                    const maxSpeed = Math.max(speedLimit, currentSpeed - 5);
+                    let currentSpeed = GetEntitySpeed(vehicle) * 3.6;
 
-                    SetVehicleMaxSpeed(vehicle, maxSpeed / 3.6 - 0.25);
+                    while (currentSpeed > speedLimit) {
+                        const maxSpeed = Math.max(speedLimit, currentSpeed - 2);
+                        currentSpeed = GetEntitySpeed(vehicle) * 3.6;
+
+                        SetVehicleMaxSpeed(vehicle, maxSpeed / 3.6 - 0.25);
+                        await wait(50);
+                    }
+
+                    SetVehicleMaxSpeed(vehicle, speedLimit / 3.6 - 0.25);
                 } else {
                     const maxSpeed = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fInitialDriveMaxFlatVel');
                     SetVehicleMaxSpeed(vehicle, maxSpeed);
