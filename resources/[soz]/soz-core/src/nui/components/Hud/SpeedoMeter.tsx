@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 import {
     VehicleCriticalDamageThreshold,
@@ -182,8 +182,18 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string }> = ({ val
 
 export const SpeedoMeter: FunctionComponent = () => {
     const vehicle = useVehicle();
-    const isPilotOrCopilot = vehicle.seat === -1 || vehicle.seat === 0;
     const inVehicle = vehicle.seat !== null;
+    const [isPilotOrCopilot, setIsPilotOrCopilot] = useState(false);
+
+    useEffect(() => {
+        if (vehicle.seat === null) {
+            setTimeout(() => {
+                setIsPilotOrCopilot(false);
+            }, 1000);
+        } else {
+            setIsPilotOrCopilot(vehicle.seat === -1 || vehicle.seat === 0);
+        }
+    }, [vehicle.seat]);
 
     const classes = classNames(
         'absolute bottom-[1.2vh] left-[35vw] w-[30vw] flex justify-center transition-opacity duration-500',
