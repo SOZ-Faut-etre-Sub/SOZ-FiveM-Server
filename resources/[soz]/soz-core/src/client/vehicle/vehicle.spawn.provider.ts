@@ -278,6 +278,7 @@ export class VehicleSpawnProvider {
         }
 
         this.vehicleService.syncVehicle(vehicle, volatile);
+        this.vehicleStateService.setVehicleState(vehicle, volatile, true);
         this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
     }
 

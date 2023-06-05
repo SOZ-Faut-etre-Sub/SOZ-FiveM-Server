@@ -96,7 +96,7 @@ export class VehicleMenuProvider {
             speedLimit = parseInt(customSpeedLimit);
         }
 
-        this.vehicleStateService.updateVehicleState(vehicle, { speedLimit });
+        this.vehicleStateService.updateVehicleState(vehicle, { speedLimit }, false);
 
         return true;
     }
