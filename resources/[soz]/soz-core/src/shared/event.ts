@@ -250,6 +250,7 @@ export enum ClientEvent {
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
+    BASE_CHANGE_VEHICLE_SEAT = 'baseevents:changedVehicleSeat',
 
     BENNYS_OPEN_CLOAKROOM = 'soz-core:client:job:bennys:open-cloakroom',
     BENNYS_FLATBED_DETACH_VEHICLE = 'soz-core:client:job:bennys:flatbed:detach-vehicle',

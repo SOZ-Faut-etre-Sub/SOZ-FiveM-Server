@@ -377,9 +377,9 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const fuelLevel = GetVehicleFuelLevel(vehicle);
+        const condition = await this.vehicleStateService.getVehicleCondition(vehicle);
 
-        if (fuelLevel > 99.0) {
+        if (condition.fuelLevel > 99.0) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
             await this.disableStationPistol();
 
@@ -643,7 +643,6 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
         const fuelLevel = vehicleCondition.fuelLevel;
         const oilLevel = vehicleCondition.oilLevel;
 
@@ -672,12 +671,15 @@ export class VehicleFuelProvider {
         const newOil = Math.max(0, oilLevel - consumedOil);
         const newFuel = Math.max(0, fuelLevel - consumedFuel);
 
-        if (maxOilVolume) {
-            const realOilLevel = (newOil * maxOilVolume) / 100;
-            SetVehicleOilLevel(vehicle, realOilLevel);
-        }
+        TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER, vehicleNetworkId, {
+            fuelLevel: newFuel,
+            oilLevel: newOil,
+        });
 
-        SetVehicleFuelLevel(vehicle, newFuel);
+        this.vehicleConditionProvider.setVehicleCondition(vehicleNetworkId, {
+            fuelLevel: newFuel,
+            oilLevel: newOil,
+        });
 
         if (newFuel <= 0.1) {
             SetVehicleEngineOn(vehicle, false, true, true);
