@@ -27,12 +27,8 @@ export class VoipRadioVehicleProvider {
     private store: Store;
 
     @StateSelector(state => state.radioLongRange.enabled)
-    public toggleRadio(enabled: boolean, wasEnabled?: boolean) {
+    public toggleRadio(enabled: boolean) {
         const radioLongRange = this.store.getState().radioLongRange;
-
-        if (wasEnabled !== undefined) {
-            this.soundService.play('radio/toggle', 0.2);
-        }
 
         if (!enabled) {
             this.voipService.disconnectRadio(
@@ -81,10 +77,6 @@ export class VoipRadioVehicleProvider {
         if (frequency >= 0) {
             this.voipService.connectRadio(RadioType.RadioLongRange, RadioChannelType.Primary, frequency);
         }
-
-        if (previousFrequency > 0 || frequency > 0) {
-            this.soundService.play('click', radioLongRange.primary.volume / 100);
-        }
     }
 
     @StateSelector(state => state.radioLongRange.secondary.frequency)
@@ -102,50 +94,26 @@ export class VoipRadioVehicleProvider {
         if (frequency >= 0) {
             this.voipService.connectRadio(RadioType.RadioLongRange, RadioChannelType.Secondary, frequency);
         }
-
-        if (previousFrequency > 0 || frequency > 0) {
-            this.soundService.play('click', radioLongRange.secondary.volume / 100);
-        }
     }
 
     @StateSelector(state => state.radioLongRange.primary.ear)
-    public updatePrimaryEar(ear: Ear, previousEar?: Ear) {
-        const radioLongRange = this.store.getState().radioLongRange;
+    public updatePrimaryEar(ear: Ear) {
         this.voipService.setRadioEar(RadioType.RadioLongRange, RadioChannelType.Primary, ear);
-
-        if (previousEar !== undefined) {
-            this.soundService.play('click', radioLongRange.primary.volume / 100);
-        }
     }
 
     @StateSelector(state => state.radioLongRange.secondary.ear)
-    public updateSecondaryEar(ear: Ear, previousEar?: Ear) {
-        const radioLongRange = this.store.getState().radioLongRange;
+    public updateSecondaryEar(ear: Ear) {
         this.voipService.setRadioEar(RadioType.RadioLongRange, RadioChannelType.Secondary, ear);
-
-        if (previousEar !== undefined) {
-            this.soundService.play('click', radioLongRange.secondary.volume / 100);
-        }
     }
 
     @StateSelector(state => state.radioLongRange.primary.volume)
-    public updatePrimaryVolume(volume: number, previousVolume?: number) {
-        const radioLongRange = this.store.getState().radioLongRange;
+    public updatePrimaryVolume(volume: number) {
         this.voipService.setRadioVolume(RadioType.RadioLongRange, RadioChannelType.Primary, volume);
-
-        if (previousVolume !== undefined) {
-            this.soundService.play('click', radioLongRange.primary.volume / 100);
-        }
     }
 
     @StateSelector(state => state.radioLongRange.secondary.volume)
-    public updateSecondaryVolume(volume: number, previousVolume?: number) {
-        const radioLongRange = this.store.getState().radioLongRange;
+    public updateSecondaryVolume(volume: number) {
         this.voipService.setRadioVolume(RadioType.RadioLongRange, RadioChannelType.Secondary, volume);
-
-        if (previousVolume !== undefined) {
-            this.soundService.play('click', radioLongRange.secondary.volume / 100);
-        }
     }
 
     @StateSelector(state => state.radioLongRange)
@@ -203,6 +171,7 @@ export class VoipRadioVehicleProvider {
     @OnNuiEvent(NuiEvent.VoipUpdateRadioVehicleChannel)
     public async onUpdateRadioChannel({ channel, type }: { channel: Partial<RadioChannel>; type: RadioChannelType }) {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+        const volume = channel?.volume || this.store.getState().radioLongRange[type].volume;
 
         if (!vehicle) {
             return;
@@ -216,6 +185,7 @@ export class VoipRadioVehicleProvider {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         TriggerServerEvent(ServerEvent.VOIP_RADIO_VEHICLE_UPDATE, vehicleNetworkId, type, channel);
+        this.soundService.play('click', volume / 100);
     }
 
     @OnEvent(ClientEvent.VOIP_RADIO_VEHICLE_ENABLE)
