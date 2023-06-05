@@ -6,13 +6,17 @@ import { emitRpc } from '@core/rpc';
 import { PlayerService } from '@public/client/player/player.service';
 import { ClientEvent } from '@public/shared/event';
 
-import { PlayerClientState } from '../../shared/player';
+import { PlayerClientState, PlayerListStateKey } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
+import { PlayerListStateService } from './player.list.state.service';
 
 @Provider()
 export class PlayerStateProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PlayerListStateService)
+    private playerListStateService: PlayerListStateService;
 
     @Once(OnceStep.PlayerLoaded)
     public async onStart() {
@@ -37,5 +41,10 @@ export class PlayerStateProvider {
     @OnEvent(ClientEvent.PLAYER_UPDATE_STATE)
     public onStateUpdate(state: PlayerClientState) {
         this.playerService.setState(state);
+    }
+
+    @OnEvent(ClientEvent.PLAYER_UPDATE_LIST_STATE)
+    public onListStateUpdate(key: PlayerListStateKey, players: number[]) {
+        this.playerListStateService.updateList(key, players);
     }
 }
