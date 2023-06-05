@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 import {
     VehicleCriticalDamageThreshold,
@@ -182,19 +182,40 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string }> = ({ val
 
 export const SpeedoMeter: FunctionComponent = () => {
     const vehicle = useVehicle();
-    const isPilotOrCopilot = vehicle.seat === -1 || vehicle.seat === 0;
+    const inVehicle = vehicle.seat !== null;
+    const [isPilot, setIsPilot] = useState(false);
+
+    useEffect(() => {
+        if (vehicle.seat === null) {
+            setTimeout(() => {
+                setIsPilot(false);
+            }, 1000);
+        } else {
+            setIsPilot(vehicle.seat === -1);
+        }
+    }, [vehicle.seat]);
 
     const classes = classNames(
         'absolute bottom-[1.2vh] left-[35vw] w-[30vw] flex justify-center transition-opacity duration-500',
         {
-            'opacity-0': !isPilotOrCopilot,
-            'opacity-100': isPilotOrCopilot,
+            'opacity-0': !inVehicle,
+            'opacity-100': inVehicle,
         }
     );
 
     const classesLight = classNames('flex justify-start items-end pb-[1.15rem]', {
         'pl-[40px]': vehicle.fuelType === 'none',
     });
+
+    if (!isPilot) {
+        return (
+            <div className={classes}>
+                <div className="flex justify-end items-end pb-[1.25rem]">
+                    {vehicle.seatbelt !== null && <SeatbeltIndicator state={vehicle.seatbelt} />}
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={classes}>

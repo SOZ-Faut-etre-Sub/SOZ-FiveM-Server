@@ -30,7 +30,12 @@ export const RadioVehicleApp: FunctionComponent = () => {
         [radio]
     );
     useNuiEvent('radio_vehicle', 'Close', () => setRadio(null));
-    useNuiFocus(radio !== null, radio !== null, radio !== null, radio !== null ? [Control.Attack] : []);
+    useNuiFocus(
+        radio !== null,
+        radio !== null,
+        radio !== null,
+        radio !== null ? [Control.Attack, Control.NextCamera] : []
+    );
 
     useEffect(() => {
         if (!radio) {
