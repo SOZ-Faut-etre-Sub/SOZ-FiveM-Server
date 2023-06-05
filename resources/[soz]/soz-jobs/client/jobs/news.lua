@@ -1,4 +1,5 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu")
+local newsCreationSubMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu:create-news")
 local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_light_01", "v_ilev_fos_mic"}
 
 --- Targets
@@ -105,7 +106,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
     end
     societyMenu:ClearItems()
 
-    local newsCreationSubMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu:create-news")
+    newsCreationSubMenu:ClearItems()
 
     local typeSlider = newsCreationSubMenu:AddSlider({
         label = "Type de communication",
@@ -130,7 +131,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
     local image = ""
 
     imageButton:On("select", function()
-        image = exports["soz-hud"]:Input("Lien de l'image de la communication", 255, image)
+        image = exports["soz-core"]:Input("Lien de l'image de la communication", 255, image)
     end)
 
     local messageButton = newsCreationSubMenu:AddButton({label = "Message", length = 235})
@@ -138,18 +139,18 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
     local message = ""
 
     messageButton:On("select", function()
-        message = exports["soz-hud"]:Input("Message de la communication", 235, message)
+        message = exports["soz-core"]:Input("Message de la communication", 235, message)
     end)
 
     newsCreationSubMenu:AddButton({
         label = "Envoyer",
         select = function()
             if newsType == nil or newsType == "" then
-                exports["soz-hud"]:DrawNotification("Vous devez choisir un type de communication", "error")
+                exports["soz-core"]:DrawNotification("Vous devez choisir un type de communication", "error")
                 return
             end
             if message == nil or message == "" then
-                exports["soz-hud"]:DrawNotification("Vous devez spécifier un message", "error")
+                exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
                 return
             end
             TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
