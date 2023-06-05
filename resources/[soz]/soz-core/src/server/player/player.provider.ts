@@ -7,10 +7,11 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Permissions } from '../../core/permissions';
 import { ServerEvent } from '../../shared/event';
-import { PlayerClientState, PlayerServerState } from '../../shared/player';
+import { PlayerClientState, PlayerData, PlayerServerState } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
 import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
+import { PlayerListStateService } from './player.list.state.service';
 import { PlayerStateService } from './player.state.service';
 
 @Provider()
@@ -27,6 +28,9 @@ export class PlayerProvider {
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
 
+    @Inject(PlayerListStateService)
+    private playerListStateService: PlayerListStateService;
+
     private jwtTokenCache: Record<string, string> = {};
 
     @On('QBCore:Server:PlayerLoaded', false)
@@ -34,16 +38,22 @@ export class PlayerProvider {
         // This is an event from qb when player is fully loaded but screen is not faded out so we dont' trigger client event
         this.permissions.addPlayerRole(player.PlayerData.source, player.PlayerData.role);
         this.serverStateService.addPlayer(player.PlayerData);
+        this.playerListStateService.handlePlayer(
+            player.PlayerData,
+            this.playerStateService.getClientState(player.PlayerData.source)
+        );
     }
 
     @On('QBCore:Server:PlayerUpdate', false)
-    onPlayerUpdate(player: any) {
+    onPlayerUpdate(player: PlayerData) {
         this.serverStateService.updatePlayer(player);
+        this.playerListStateService.handlePlayer(player, this.playerStateService.getClientState(player.source));
     }
 
     @On('QBCore:Server:PlayerUnload', false)
     onPlayerUnload(source: number) {
         this.serverStateService.removePlayer(source);
+        this.playerListStateService.removePlayer(source);
     }
 
     @Once()
@@ -55,6 +65,10 @@ export class PlayerProvider {
 
             this.serverStateService.addPlayer(player.PlayerData);
             this.permissions.addPlayerRole(source, player.PlayerData.role);
+            this.playerListStateService.handlePlayer(
+                player.PlayerData,
+                this.playerStateService.getClientState(player.PlayerData.source)
+            );
 
             // Trigger client event to existing clieant (only useful for dev)
             TriggerClientEvent('QBCore:Client:OnPlayerLoaded', player.PlayerData.source);

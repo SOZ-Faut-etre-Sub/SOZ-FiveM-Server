@@ -250,6 +250,7 @@ export enum ClientEvent {
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
+    BASE_CHANGE_VEHICLE_SEAT = 'baseevents:changedVehicleSeat',
 
     BENNYS_OPEN_CLOAKROOM = 'soz-core:client:job:bennys:open-cloakroom',
     BENNYS_FLATBED_DETACH_VEHICLE = 'soz-core:client:job:bennys:flatbed:detach-vehicle',
@@ -347,6 +348,7 @@ export enum ClientEvent {
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
     PLAYER_UPDATE_CROSSHAIR = 'soz-core:client:player:update-crosshair',
     PLAYER_UPDATE_STATE = 'soz-core:client:player:update-state',
+    PLAYER_UPDATE_LIST_STATE = 'soz-core:client:player:update-list-state',
     PLAYER_ON_DEATH = 'ems:client:onDeath',
 
     PROGRESS_START = 'soz-core:client:progress:start',
