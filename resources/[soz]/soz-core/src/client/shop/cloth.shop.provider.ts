@@ -3,8 +3,7 @@ import { On, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { wait } from '@public/core/utils';
-import { Component } from '@public/shared/cloth';
+import { Component, GlovesItem } from '@public/shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -16,6 +15,7 @@ import { ClothingService } from '../clothing/clothing.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { ResourceLoader } from '../resources/resource.loader';
 import { ClothingShopRepository } from '../resources/shop.repository';
 
 @Provider()
@@ -41,6 +41,9 @@ export class ClothingShopProvider {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
     private currentShop: string = undefined;
 
     @On(ClientEvent.SHOP_OPEN_MENU)
@@ -58,13 +61,15 @@ export class ClothingShopProvider {
         const modelHash = GetEntityModel(PlayerPedId());
         const shop_categories = this.clothingShopRepository.getModelCategoriesOfShop(brand, modelHash);
         const player_data = this.playerService.getPlayer();
+        const under_types = this.clothingShopRepository.getAllUnderTypes();
+        console.log(under_types);
         if (!shop_content) {
             console.error(`Shop ${brand} not found`);
             return;
         }
         this.currentShop = shop;
         await this.setupShop();
-        this.nuiMenu.openMenu(MenuType.ClothShop, { brand, shop_content, shop_categories, player_data });
+        this.nuiMenu.openMenu(MenuType.ClothShop, { brand, shop_content, shop_categories, player_data, under_types });
     }
 
     public async setupShop(skipIntro = false) {
@@ -82,11 +87,8 @@ export class ClothingShopProvider {
 
         // Play idle animation
         const animDict = 'anim@heists@heist_corona@team_idles@male_c';
+        this.resourceLoader.loadAnimationDictionary(animDict);
 
-        while (!HasAnimDictLoaded(animDict)) {
-            RequestAnimDict(animDict);
-            await wait(100);
-        }
         ClearPedTasksImmediately(ped);
         TaskPlayAnim(ped, animDict, 'idle', 1.0, 1.0, -1, 1, 1, false, false, false);
     }
@@ -94,9 +96,7 @@ export class ClothingShopProvider {
     public async clearAllAnimations() {
         const ped = PlayerPedId();
         ClearPedTasks(ped);
-        if (HasAnimDictLoaded('anim@heists@heist_corona@team_idles@male_c')) {
-            RemoveAnimDict('anim@heists@heist_corona@team_idles@male_c');
-        }
+        this.resourceLoader.unloadAnimationDictionary('anim@heists@heist_corona@team_idles@male_c');
     }
 
     @OnNuiEvent(NuiEvent.ClothShopToggleCamera)
@@ -177,20 +177,20 @@ export class ClothingShopProvider {
             );
         } else {
             // Else preview current gloves of the player
-            if (
-                !player.cloth_config.Config.HideGloves &&
-                player.cloth_config.BaseClothSet.Gloves &&
-                player.cloth_config.BaseClothSet.Gloves[baseTorsoDrawable]
-            ) {
+            if (player.cloth_config.BaseClothSet.GlovesID == null || player.cloth_config.Config.HideGloves) {
+                return;
+            }
+            const gloves = await this.clothingShopRepository.getGloves(player.cloth_config.BaseClothSet.GlovesID);
+            if (gloves && gloves.correspondingDrawables) {
                 const currentTorso = GetPedDrawableVariation(ped, Component.Torso);
-                if (!player.cloth_config.BaseClothSet.Gloves[currentTorso]) {
+                if (!gloves.correspondingDrawables[currentTorso]) {
                     return;
                 }
                 SetPedComponentVariation(
                     ped,
                     Component.Torso,
-                    player.cloth_config.BaseClothSet.Gloves[currentTorso].Drawable,
-                    player.cloth_config.BaseClothSet.Gloves[currentTorso].Texture,
+                    gloves.correspondingDrawables[currentTorso],
+                    gloves.texture,
                     0
                 );
             }
@@ -241,5 +241,10 @@ export class ClothingShopProvider {
     @Exportable('DisplayHairWithMask')
     displayHairWithMask(maskDrawable: number): boolean {
         return this.clothingService.displayHairWithMask(maskDrawable);
+    }
+
+    @Exportable('GetGloves')
+    async getGloves(glovesId: number): Promise<GlovesItem> {
+        return await this.clothingShopRepository.getGloves(glovesId);
     }
 }

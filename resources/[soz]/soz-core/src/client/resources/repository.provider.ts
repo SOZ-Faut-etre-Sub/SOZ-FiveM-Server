@@ -27,6 +27,7 @@ export class RepositoryProvider {
 
     @Inject(UpwChargerRepository)
     private upwChargerRepository: UpwChargerRepository;
+
     @Inject(ClothingShopRepository)
     private clothingShopRepository: ClothingShopRepository;
 

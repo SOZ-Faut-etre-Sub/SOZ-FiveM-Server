@@ -29,11 +29,17 @@ export type OutfitItem = {
     Clear?: boolean;
 };
 
+export type GlovesItem = {
+    id: number;
+    correspondingDrawables: Record<number, number>;
+    texture: number;
+};
+
 export type Outfit = {
     Components: Partial<Record<Component, OutfitItem>>;
     Props: Partial<Record<Prop, OutfitItem>>;
-    Gloves?: Partial<Record<number, OutfitItem>>;
-    underTypes?: number[];
+    GlovesID?: number;
+    TopID?: number;
 };
 
 export type ClothConfig = {

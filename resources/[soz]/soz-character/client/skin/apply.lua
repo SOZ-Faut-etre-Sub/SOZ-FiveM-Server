@@ -316,11 +316,15 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, override)
     end
 
-    -- Fetch gloves from BaseClothSet.Gloves and copy it to clothset.Components
-    if not clothConfig.Config.HideGloves and clothConfig.BaseClothSet.Gloves ~= nil then
+    if not clothConfig.Config.HideGloves and clothConfig.BaseClothSet.GlovesID ~= nil then
+        local gloves = exports["soz-core"]:GetGloves(clothConfig.BaseClothSet.GlovesID)
         local currentTorsoDrawable = clothSet.Components["3"].Drawable
-        if clothConfig.BaseClothSet.Gloves[tostring(currentTorsoDrawable)] ~= nil then
-            clothSet.Components["3"] = clothConfig.BaseClothSet.Gloves[tostring(currentTorsoDrawable)]
+
+        if gloves ~= nil then
+            local glovesDrawable = gloves.correspondingDrawables[tostring(currentTorsoDrawable)]
+            if glovesDrawable ~= nil then
+                clothSet.Components["3"] = {Drawable = glovesDrawable, Texture = gloves.texture, Palette = 0}
+            end
         end
     end
 
