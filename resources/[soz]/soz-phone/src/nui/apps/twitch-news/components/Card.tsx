@@ -4,6 +4,7 @@ import React, { FunctionComponent, memo } from 'react';
 
 import { TwitchNewsMessage } from '../../../../../typings/twitch-news';
 import { useConfig } from '../../../hooks/usePhone';
+import { PictureReveal } from '../../../ui/old_components/PictureReveal';
 import { convertTypeToName, isBCSOMessage, isLSPDMessage, isPoliceMessage } from '../utils/isPolice';
 import { PoliceContent } from './PoliceContent';
 
@@ -32,10 +33,9 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
                             {convertTypeToName(type)}
                         </h2>
                         {image && (
-                            <div
-                                className="bg-center bg-cover h-48 w-full rounded-lg shadow my-2"
-                                style={{ backgroundImage: `url(${image})` }}
-                            />
+                            <PictureReveal image={image}>
+                                <img src={image} />
+                            </PictureReveal>
                         )}
                         <p
                             className={cn('text-left text-sm font-medium', {

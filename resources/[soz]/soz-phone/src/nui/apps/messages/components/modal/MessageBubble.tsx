@@ -59,7 +59,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
             >
                 {isImage(message.message) && (
                     <PictureReveal image={message.message}>
-                        <img src={message.message} className="rounded-lg" alt="message multimedia" />
+                        <img src={message.message} className="rounded-lg max-h-[87vh]" alt="message multimedia" />
                     </PictureReveal>
                 )}
                 {isPosition(message.message) && (

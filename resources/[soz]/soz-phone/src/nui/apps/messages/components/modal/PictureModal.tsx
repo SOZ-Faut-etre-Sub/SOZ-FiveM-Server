@@ -38,7 +38,7 @@ export function PictureModal({ open, setOpen, children }) {
                         >
                             <Dialog.Panel
                                 className={cn(
-                                    'relative transform overflow-hidden rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 w-full max-w-[90%] sm:p-6',
+                                    'relative transform rounded-lg px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 max-w-[90%] max-h-[90vh] sm:p-6',
                                     {
                                         'bg-ios-800': config.theme.value === 'dark',
                                         'bg-ios-50': config.theme.value === 'light',
