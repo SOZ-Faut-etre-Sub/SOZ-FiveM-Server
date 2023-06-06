@@ -78,6 +78,23 @@ export type ClothingShopItemData = {
     colorLabel?: string;
 };
 
+export const ClothingCategoryID = {
+    TOPS: 1,
+    LEGS: 15,
+    UNDERWEARS: 21,
+    SHOES: 25,
+    GLOVES: 50,
+    BAGS: 52,
+    UNDERSHIRTS: 60,
+};
+
+export const ClothingShopID = {
+    BINCO: 1,
+    SUBURBAN: 2,
+    PONSONBYS: 3,
+    MASK: 4,
+};
+
 // Tattoo
 export type TattooShopItem = {
     Name?: string;

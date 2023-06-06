@@ -1,7 +1,7 @@
 import { BrandsConfig, ShopBrand } from '@public/config/shops';
 import { useNuiEvent } from '@public/nui/hook/nui';
 import { PlayerData } from '@public/shared/player';
-import { ClothingShop, ClothingShopCategory } from '@public/shared/shop';
+import { ClothingCategoryID, ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 import { FunctionComponent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -26,6 +26,7 @@ type MenuClothShopStateProps = {
         shop_content: ClothingShop;
         shop_categories: Record<number, ClothingShopCategory>;
         player_data: PlayerData;
+        under_types: Record<number, number[]>;
     };
 };
 
@@ -78,9 +79,10 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                     Object.values(catalog.shop_categories).filter(
                                         childCat => childCat.parentId == category.id
                                     ).length > 0) &&
-                                (category.id != 60 ||
-                                    (playerData.cloth_config.BaseClothSet.underTypes != null &&
-                                        playerData.cloth_config.BaseClothSet.underTypes.length > 0))
+                                (category.id != ClothingCategoryID.UNDERSHIRTS ||
+                                    (playerData.cloth_config.BaseClothSet.TopID != null &&
+                                        catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] != null &&
+                                        catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0))
                         )
                         .map(category => (
                             <MenuItemButton
@@ -111,10 +113,13 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                             Object.values(childCat.content).filter(
                                                 product =>
                                                     !product[0].undershirtType ||
-                                                    (playerData.cloth_config.BaseClothSet.underTypes != null &&
-                                                        playerData.cloth_config.BaseClothSet.underTypes.includes(
-                                                            product[0].undershirtType
-                                                        ))
+                                                    (playerData.cloth_config.BaseClothSet.TopID != null &&
+                                                        catalog.under_types[
+                                                            playerData.cloth_config.BaseClothSet.TopID
+                                                        ] &&
+                                                        catalog.under_types[
+                                                            playerData.cloth_config.BaseClothSet.TopID
+                                                        ].includes(product[0].undershirtType))
                                             ).length > 0)
                                 )
                                 .map(childCat => (
@@ -132,10 +137,11 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                 .filter(
                                     ([, items]) =>
                                         !items[0].undershirtType ||
-                                        (playerData.cloth_config.BaseClothSet.underTypes != null &&
-                                            playerData.cloth_config.BaseClothSet.underTypes.includes(
+                                        (playerData.cloth_config.BaseClothSet.TopID != null &&
+                                            catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                                            catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].includes(
                                                 items[0].undershirtType
-                                            )) // Compatible undershirt types
+                                            ))
                                 )
                                 .sort((a, b) => a[0].localeCompare(b[0]))
                                 .map(([modelLabel, items]) => (

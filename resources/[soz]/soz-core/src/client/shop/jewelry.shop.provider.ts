@@ -3,7 +3,6 @@ import { ShopBrand } from '@public/config/shops';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { wait } from '@public/core/utils';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -13,6 +12,7 @@ import { CameraService } from '../camera';
 import { ClothingService } from '../clothing/clothing.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { ResourceLoader } from '../resources/resource.loader';
 import { ClothingShopRepository } from '../resources/shop.repository';
 
 @Provider()
@@ -28,6 +28,9 @@ export class JewelryShopProvider {
 
     @Inject(CameraService)
     private cameraService: CameraService;
+
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
 
     @Inject(ClothingService)
     private clothingService: ClothingService;
@@ -52,11 +55,8 @@ export class JewelryShopProvider {
 
         // Play idle animation
         const animDict = 'anim@heists@heist_corona@team_idles@male_c';
+        this.resourceLoader.loadAnimationDictionary(animDict);
 
-        while (!HasAnimDictLoaded(animDict)) {
-            RequestAnimDict(animDict);
-            await wait(100);
-        }
         ClearPedTasksImmediately(ped);
         TaskPlayAnim(ped, animDict, 'idle', 1.0, 1.0, -1, 1, 1, false, false, false);
     }
@@ -64,9 +64,7 @@ export class JewelryShopProvider {
     public async clearAllAnimations() {
         const ped = PlayerPedId();
         ClearPedTasks(ped);
-        if (HasAnimDictLoaded('anim@heists@heist_corona@team_idles@male_c')) {
-            RemoveAnimDict('anim@heists@heist_corona@team_idles@male_c');
-        }
+        this.resourceLoader.unloadAnimationDictionary('anim@heists@heist_corona@team_idles@male_c');
     }
 
     @OnNuiEvent(NuiEvent.JewelryShopToggleCamera)
