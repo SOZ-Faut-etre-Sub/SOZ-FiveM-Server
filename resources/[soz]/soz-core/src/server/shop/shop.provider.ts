@@ -2,7 +2,14 @@ import { ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/co
 import { Component, OutfitItem, Prop } from '@public/shared/cloth';
 import { InventoryItemMetadata, ItemType } from '@public/shared/item';
 import { Skin, TenueIdToHide } from '@public/shared/player';
-import { BarberShopItem, ClothingShopItem, JewelryShopItem, ShopProduct, TattooShopItem } from '@public/shared/shop';
+import {
+    BarberShopItem,
+    ClothingCategoryID,
+    ClothingShopItem,
+    JewelryShopItem,
+    ShopProduct,
+    TattooShopItem,
+} from '@public/shared/shop';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -210,6 +217,7 @@ export class ShopProvider {
                 }
             }
         }
+        console.log(clothConfig);
 
         // Update player cloth config through QBCore
         this.qbcore.getPlayer(source).Functions.SetClothConfig(clothConfig, false);
@@ -250,7 +258,7 @@ export class ShopProvider {
         repo.shops[brand].stocks[product.id] -= 1;
         await this.clothingShopRepository.set(repo);
 
-        const clothSet = product.categoryId == 21 ? 'NakedClothSet' : 'BaseClothSet';
+        const clothSet = product.categoryId == ClothingCategoryID.UNDERWEARS ? 'NakedClothSet' : 'BaseClothSet';
 
         // Update player cloth config
         const clothConfig = this.playerService.getPlayer(source).cloth_config;
@@ -272,21 +280,16 @@ export class ShopProvider {
                 }
             }
         }
+
         if (product.correspondingDrawables) {
-            clothConfig.BaseClothSet.Gloves = {};
-            for (const baseTorsoDrawable of Object.keys(product.correspondingDrawables)) {
-                clothConfig.BaseClothSet.Gloves[baseTorsoDrawable] = {
-                    Drawable: product.correspondingDrawables[baseTorsoDrawable],
-                    Texture: product.components[Component.Torso].Texture,
-                    Palette: 0,
-                } as OutfitItem;
-            }
+            clothConfig.BaseClothSet.GlovesID = product.id;
             clothConfig.Config.HideGloves = false;
         }
-        // This is for undershirt/top compatibility
-        if (product.underTypes != null) {
-            clothConfig.BaseClothSet.underTypes = product.underTypes;
+
+        if (product.underTypes) {
+            clothConfig.BaseClothSet.TopID = product.id;
         }
+
         // Adapt torso to undershirt
         const playerModel = this.playerService.getPlayer(source).skin.Model.Hash;
         if (product.undershirtType && UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType]) {
@@ -297,16 +300,6 @@ export class ShopProvider {
                 clothConfig.BaseClothSet.Components[Component.Torso] = {
                     Drawable: replacementTorsoDrawable,
                     Texture: 0,
-                    Palette: 0,
-                } as OutfitItem;
-            }
-        }
-        if (product.correspondingDrawables) {
-            clothConfig.BaseClothSet.Gloves = {};
-            for (const baseTorsoDrawable of Object.keys(product.correspondingDrawables)) {
-                clothConfig.BaseClothSet.Gloves[baseTorsoDrawable] = {
-                    Drawable: product.correspondingDrawables[baseTorsoDrawable],
-                    Texture: product.components[Component.Torso].Texture,
                     Palette: 0,
                 } as OutfitItem;
             }

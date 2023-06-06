@@ -1,5 +1,13 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
-import { ClothingShop, ClothingShopCategory, ClothingShopItem, ClothingShopItemData } from '@public/shared/shop';
+import { GlovesItem } from '@public/shared/cloth';
+import { PlayerPedHash } from '@public/shared/player';
+import {
+    ClothingShop,
+    ClothingShopCategory,
+    ClothingShopID,
+    ClothingShopItem,
+    ClothingShopItemData,
+} from '@public/shared/shop';
 
 import { PrismaService } from '../database/prisma.service';
 import { Repository } from './repository';
@@ -8,6 +16,8 @@ export type ClothingShopRepositoryData = {
     shops: Record<string, ClothingShop>;
     categories: Record<number, Record<number, Record<number, ClothingShopCategory>>>; // Map modelHash -> shopId -> categoryId -> category
     shopNameById: Record<number, string>;
+    underTypes: Record<number, number[]>; // Map ID -> list of compatible underTypes
+    gloves: Record<number, GlovesItem>; // Map ID of gloves -> Gloves data
 };
 
 @Injectable()
@@ -19,27 +29,29 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
         const repository: ClothingShopRepositoryData = {
             shops: {},
             categories: {
-                [1885233650]: {
-                    [1]: {},
-                    [2]: {},
-                    [3]: {},
-                    [4]: {},
+                [PlayerPedHash.Male]: {
+                    [ClothingShopID.BINCO]: {},
+                    [ClothingShopID.SUBURBAN]: {},
+                    [ClothingShopID.PONSONBYS]: {},
+                    [ClothingShopID.MASK]: {},
                 },
-                [-1667301416]: {
-                    [1]: {},
-                    [2]: {},
-                    [3]: {},
-                    [4]: {},
+                [PlayerPedHash.Female]: {
+                    [ClothingShopID.BINCO]: {},
+                    [ClothingShopID.SUBURBAN]: {},
+                    [ClothingShopID.PONSONBYS]: {},
+                    [ClothingShopID.MASK]: {},
                 },
             },
             shopNameById: {},
+            underTypes: {},
+            gloves: {},
         };
 
         // Fetching shops
         const shops = await this.prismaService.shop.findMany({
             where: {
                 id: {
-                    in: [1, 2, 3, 4],
+                    in: [ClothingShopID.BINCO, ClothingShopID.SUBURBAN, ClothingShopID.PONSONBYS, ClothingShopID.MASK],
                 },
             },
             select: {
@@ -65,7 +77,7 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
         const items = await this.prismaService.shop_content.findMany({
             where: {
                 shop_id: {
-                    in: [1, 2, 3, 4],
+                    in: [ClothingShopID.BINCO, ClothingShopID.SUBURBAN, ClothingShopID.PONSONBYS, ClothingShopID.MASK],
                 },
             },
             select: {
@@ -100,8 +112,13 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
 
         // Loading categories
         for (const category of categories) {
-            for (const modelHash of [1885233650, -1667301416]) {
-                for (const shop_id of [1, 2, 3, 4]) {
+            for (const modelHash of [PlayerPedHash.Female, PlayerPedHash.Male]) {
+                for (const shop_id of [
+                    ClothingShopID.BINCO,
+                    ClothingShopID.SUBURBAN,
+                    ClothingShopID.PONSONBYS,
+                    ClothingShopID.MASK,
+                ]) {
                     repository.categories[modelHash][shop_id][category.id] = {
                         id: category.id,
                         name: category.name,
@@ -112,6 +129,7 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
             }
         }
 
+        // Loading items
         for (const item of items) {
             const shopItemData: ClothingShopItemData = JSON.parse(item.data) as ClothingShopItemData;
             const shopItem: ClothingShopItem = {
@@ -132,9 +150,19 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
             if (!shopItem.modelLabel) {
                 continue;
             }
+            if (shopItem.underTypes) {
+                repository.underTypes[shopItem.id] = shopItem.underTypes;
+            }
+            if (shopItem.correspondingDrawables) {
+                repository.gloves[shopItem.id] = {
+                    id: shopItem.id,
+                    correspondingDrawables: shopItem.correspondingDrawables,
+                    texture: shopItemData.components[3].Texture,
+                };
+            }
             const shopName = repository.shopNameById[item.shop_id];
             repository.shops[shopName].stocks[item.id] = item.stock;
-            const genderToAdd = shopItem.modelHash ? [shopItem.modelHash] : [1885233650, -1667301416];
+            const genderToAdd = shopItem.modelHash ? [shopItem.modelHash] : [PlayerPedHash.Male, PlayerPedHash.Female];
             for (const modelHash of genderToAdd) {
                 if (!repository.categories[modelHash][shopItem.shopId][item.category_id].content[shopItem.modelLabel]) {
                     repository.categories[modelHash][shopItem.shopId][item.category_id].content[shopItem.modelLabel] =

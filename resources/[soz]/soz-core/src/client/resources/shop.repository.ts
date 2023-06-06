@@ -1,6 +1,6 @@
 import { ProperTorsos } from '@public/config/shops';
 import { ClothingShopRepositoryData } from '@public/server/repository/cloth.shop.repository';
-import { Component } from '@public/shared/cloth';
+import { Component, GlovesItem } from '@public/shared/cloth';
 import { ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 
 import { Injectable } from '../../core/decorators/injectable';
@@ -70,5 +70,27 @@ export class ClothingShopRepository {
 
     public getShopNameById(id: number): string {
         return this.repoData.shopNameById[id];
+    }
+
+    public getUnderTypes(id: number): number[] {
+        return this.repoData.underTypes[id];
+    }
+
+    public getAllUnderTypes(): Record<number, number[]> {
+        return this.repoData.underTypes;
+    }
+
+    public async getGloves(id: number): Promise<GlovesItem> {
+        if (!this.repoData) {
+            this.repoData = await emitRpc<ClothingShopRepositoryData>(
+                RpcServerEvent.REPOSITORY_GET_DATA,
+                'clothingShop'
+            );
+        }
+        return this.repoData.gloves[id];
+    }
+
+    public getAllGloves(): Record<number, GlovesItem> {
+        return this.repoData.gloves;
     }
 }
