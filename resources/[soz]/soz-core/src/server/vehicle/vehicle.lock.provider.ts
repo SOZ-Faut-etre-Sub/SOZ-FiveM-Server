@@ -63,6 +63,25 @@ export class VehicleLockProvider {
         this.item.setItemUseCallback('lockpick_high', this.useLockpick.bind(this));
     }
 
+    @OnEvent(ServerEvent.VEHICLE_SET_OPEN)
+    public onVehicleSetOpen(source: number, vehicleNetworkId: number, isOpen: boolean) {
+        this.vehicleStateService.updateVehicleVolatileState(
+            vehicleNetworkId,
+            {
+                open: isOpen,
+            },
+            null,
+            true
+        );
+
+        this.vehicleStateService.handleVehicleOpenChange(vehicleNetworkId);
+    }
+
+    @Rpc(RpcServerEvent.VEHICLE_GET_OPENED)
+    public getVehicleOpened(): number[] {
+        return [...this.vehicleStateService.vehicleOpened];
+    }
+
     public async useLockpick(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
         if (this.item.isItemExpired(inventoryItem)) {
             this.notifier.notify(source, 'Le lockpick est cassé', 'error');
@@ -180,6 +199,8 @@ export class VehicleLockProvider {
             forced: true,
         });
 
+        this.vehicleStateService.handleVehicleOpenChange(closestVehicle.vehicleNetworkId);
+
         this.notifier.notify(source, 'Le véhicule a été forcé.', 'success');
     }
 
@@ -196,7 +217,16 @@ export class VehicleLockProvider {
         this.trunkOpened[vehicleNetworkId] = set;
 
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+        if (!entityId) {
+            return;
+        }
+
         const owner = NetworkGetEntityOwner(entityId);
+
+        if (!owner) {
+            return;
+        }
 
         if (set.size > 0) {
             TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, true);
@@ -222,6 +252,8 @@ export class VehicleLockProvider {
             open: true,
             owner: player.citizenid,
         });
+
+        this.vehicleStateService.handleVehicleOpenChange(vehicleNetworkId);
     }
 
     @OnEvent(ServerEvent.PLAYER_UPDATE_HAT_VEHICLE)
@@ -257,5 +289,7 @@ export class VehicleLockProvider {
         this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
             forced: true,
         });
+
+        this.vehicleStateService.handleVehicleOpenChange(vehicleNetworkId);
     }
 }

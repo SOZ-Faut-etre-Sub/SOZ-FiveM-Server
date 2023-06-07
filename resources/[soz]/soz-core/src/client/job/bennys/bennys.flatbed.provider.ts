@@ -333,6 +333,10 @@ export class BennysFlatbedProvider {
             return;
         }
 
+        if (!NetworkDoesNetworkIdExist(attachedVehicleNetworkId)) {
+            return;
+        }
+
         const attachedVehicle = NetworkGetEntityFromNetworkId(attachedVehicleNetworkId);
 
         if (!attachedVehicle) {

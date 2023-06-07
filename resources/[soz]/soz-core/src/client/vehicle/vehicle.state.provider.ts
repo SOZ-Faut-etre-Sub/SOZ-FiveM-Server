@@ -1,7 +1,7 @@
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { Tick } from '../../core/decorators/tick';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { VehicleVolatileState } from '../../shared/vehicle/vehicle';
@@ -97,6 +97,10 @@ export class VehicleStateProvider {
 
     @OnEvent(ClientEvent.VEHICLE_UPDATE_STATE)
     public updateVehicleState(vehicleNetworkId: number, state: VehicleVolatileState, registerState = true): void {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!vehicleEntityId || !state) {
@@ -108,11 +112,20 @@ export class VehicleStateProvider {
 
     @OnEvent(ClientEvent.VEHICLE_DELETE_STATE)
     public deleteVehicleState(vehicleNetworkId: number): void {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (vehicleEntityId) {
             this.vehicleStateService.deleteVehicleState(vehicleEntityId);
         }
+    }
+
+    @Tick(TickInterval.EVERY_5_MINUTE)
+    public async checkState() {
+        this.vehicleStateService.checkState();
     }
 
     @Tick(0)

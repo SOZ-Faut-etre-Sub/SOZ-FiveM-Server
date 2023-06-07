@@ -72,7 +72,7 @@ RegisterNetEvent("police:server:DeEscortPlayer", function(playerId)
     if player and target and player ~= target then
         if playerState.isEscorting and playerState.escorting == target.PlayerData.source and targetState.isEscorted then
             exports["soz-core"]:SetPlayerState(target.PlayerData.source, {isEscorted = false})
-            exports["soz-core"]:SetPlayerState(player.PlayerData.source, {isEscorting = false, escorting = nil})
+            exports["soz-core"]:SetPlayerState(player.PlayerData.source, {isEscorting = false, escorting = 0})
 
             TriggerClientEvent("police:client:DeEscort", target.PlayerData.source)
 

@@ -176,6 +176,8 @@ export class VehicleSpawner {
             getDefaultVehicleCondition()
         );
 
+        this.vehicleStateService.handleVehicleOpenChange(vehicleNetId);
+
         TriggerClientEvent(event, source, vehicleNetId);
     }
 
