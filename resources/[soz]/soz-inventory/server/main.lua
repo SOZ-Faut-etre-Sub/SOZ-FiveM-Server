@@ -372,7 +372,7 @@ function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item,
 
     local lunchboxTotalWeight = Inventory.getCrateWeight(slotItem.metadata)
 
-    table.insert(slotItem.metadata.crateElements, {name = item.name, metadata = metadata, amount = amount})
+    table.insert(slotItem.metadata.crateElements, {name = item.name, label = item.label, metadata = metadata, amount = amount})
     return slotItem.metadata, true, slot
 end
 

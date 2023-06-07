@@ -153,8 +153,9 @@ export type CocktailItem = BaseItem & {
 
 export type MealMetadata = {
     name: string;
-    mealMetadata: InventoryItemMetadata;
+    metadata: InventoryItemMetadata;
     amount: number;
+    label: string;
 };
 
 export type InventoryItemMetadata = {
