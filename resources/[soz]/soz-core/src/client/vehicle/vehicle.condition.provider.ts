@@ -7,6 +7,7 @@ import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
+import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -27,6 +28,9 @@ export class VehicleConditionProvider {
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(VehicleFuelProvider)
+    private vehicleFuelProvider: VehicleFuelProvider;
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
@@ -102,7 +106,12 @@ export class VehicleConditionProvider {
 
             // get the current condition of the vehicle
             const state = await this.vehicleStateService.getVehicleState(entityId);
-            const condition = this.vehicleService.getVehicleConditionDiff(entityId, currentCondition, state);
+            const fuelCondition = this.vehicleFuelProvider.checkVehicleFuel(entityId, currentCondition);
+
+            const condition = {
+                ...fuelCondition,
+                ...this.vehicleService.getVehicleConditionDiff(entityId, currentCondition, state),
+            };
 
             // if not empty
             if (Object.keys(condition).length > 0) {
