@@ -196,7 +196,16 @@ export class VehicleLockProvider {
         this.trunkOpened[vehicleNetworkId] = set;
 
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+        if (!entityId) {
+            return;
+        }
+
         const owner = NetworkGetEntityOwner(entityId);
+
+        if (!owner) {
+            return;
+        }
 
         if (set.size > 0) {
             TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, true);
