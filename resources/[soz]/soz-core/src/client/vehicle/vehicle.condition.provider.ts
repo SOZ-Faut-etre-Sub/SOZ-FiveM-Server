@@ -39,6 +39,10 @@ export class VehicleConditionProvider {
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_REGISTER)
     private registerVehicleCondition(vehicleNetworkId: number, condition: VehicleCondition): void {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         // cannot check a vehicle that does not exist
@@ -80,6 +84,10 @@ export class VehicleConditionProvider {
     private async checkConditionLoop() {
         // loop through all vehicles we have to check
         for (const [vehicleNetworkId, currentCondition] of this.currentVehicleCondition) {
+            if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+                continue;
+            }
+
             const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
             // cannot check a vehicle that does not exist
@@ -141,6 +149,10 @@ export class VehicleConditionProvider {
         condition: Partial<VehicleCondition>,
         fullCondition: VehicleCondition
     ) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         // cannot check a vehicle that does not exist

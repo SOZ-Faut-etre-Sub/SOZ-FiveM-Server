@@ -418,6 +418,10 @@ export class VehicleLockProvider {
 
     @OnEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE)
     async setVehicleTrunkState(vehicleNetworkId: number, state: boolean) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!DoesEntityExist(entityId)) {
