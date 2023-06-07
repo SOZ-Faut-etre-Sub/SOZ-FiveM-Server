@@ -68,7 +68,7 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
             amount = item.amount
         end
 
-        Inventory.TransfertItem(Player.PlayerData.source, Target.PlayerData.source, item.name, amount, item.metadata, item.slot, function(success, reason)
+        Inventory.TransfertItem(source, Player.PlayerData.source, Target.PlayerData.source, item.name, amount, item.metadata, item.slot, function(success, reason)
             if success then
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                    string.format("Vous avez donné ~o~%s ~b~%s", amount, item.label))
@@ -200,11 +200,11 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         local zkeaAmount = itemSpec.resellZkeaQty[tier] * amount
         local msg = string.format("%s meuble(s) ajouté(s) au stock Zkea.", zkeaAmount)
 
-        local s, r = Inventory.AddItem("cabinet_storage", item.name, zkeaAmount, {}, nil, nil)
+        local s, r = Inventory.AddItem(Player.PlayerData.source, "cabinet_storage", item.name, zkeaAmount, {}, nil, nil)
         if not s and r == "invalid_weight" then
             local availableAmount = math.floor(Inventory.CalculateAvailableWeight("cabinet_storage") / itemSpec.weight)
             if availableAmount > 0 then
-                Inventory.AddItem("cabinet_storage", item.name, availableAmount, {}, nil, nil)
+                Inventory.AddItem(Player.PlayerData.source ,"cabinet_storage", item.name, availableAmount, {}, nil, nil)
                 msg = string.format("%s meuble(s) ajouté(s) au stock Zkea. Le stock est maintenant plein.", availableAmount)
             else
                 msg = string.format("Aucun meuble ajouté au stock Zkea. Le stock est déjà plein.", availableAmount)

@@ -350,6 +350,9 @@ end)
 
 function Inventory.getCrateWeight(metadata)
     local crateTotalWeight = 0
+    if not metadata or not metadata.crateElements then
+        return crateTotalWeight
+    end
     for _, crateItem in pairs(metadata.crateElements) do
         local item = QBCore.Shared.Items[crateItem.name]
         crateTotalWeight = crateTotalWeight + item.weight * crateItem.amount
@@ -357,28 +360,23 @@ function Inventory.getCrateWeight(metadata)
     return crateTotalWeight
 end
 
-function Inventory.handleLunchbox(inv, slotItem, metadata, amount, item, slotId)
+function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slotId)
     local slot = -1
 
     if slotItem.name == "empty_lunchbox" then
         Inventory.RemoveItem(inv, slotItem.name, 1, nil, slotId)
         local lunchboxItem = QBCore.Shared.Items["lunchbox"]
-        _, _, slot = Inventory.AddItem(inv, lunchboxItem, 1, {crateElements = {}})
+        _, _, slot = Inventory.AddItem(source, inv, lunchboxItem, 1, {crateElements = {}})
         slotItem = inv.items[slot]
     end
 
     local lunchboxTotalWeight = Inventory.getCrateWeight(slotItem.metadata)
 
-    -- CONFIGURER POIDS VARIABLE
-    if lunchboxTotalWeight + amount * item.weight >= 10000 then
-        return nil, false
-    end
-
     table.insert(slotItem.metadata.crateElements, {name = item.name, metadata = metadata, amount = amount})
     return slotItem.metadata, true, slot
 end
 
-function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
+function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
     if type(inv) ~= "table" then
         inv = Inventory(inv)
     end
@@ -418,13 +416,17 @@ function Inventory.AddItem(inv, item, amount, metadata, slot, cb)
                         if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
                             existing = nil
                         elseif item.type == "food" and slotItem and slotItem.type == "crate" then
-                            metadata, success, slot = Inventory.handleLunchbox(inv, slotItem, metadata, amount, item, slot)
-                            if success then
-                                item = QBCore.Shared.Items["lunchbox"]
-                                amount = 0
-                                existing = nil
+                            if ((item.weight * amount) + Inventory.getCrateWeight(slotItem.metadata)) < Config.crateMaxWeight then
+                                metadata, success, slot = Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slot)
+                                if success then
+                                    item = QBCore.Shared.Items["lunchbox"]
+                                    amount = 0
+                                    existing = nil
+                                else
+                                    goto lunchbox_false
+                                end 
                             else
-                                goto lunchbox_false
+                                TriggerClientEvent("soz-core:client:notification:draw", source, "Ça ne rentre pas !", "warning")
                             end
                         end
                     end
@@ -562,7 +564,7 @@ end
 RegisterNetEvent("inventory:server:RemoveItem", Inventory.RemoveItem)
 exports("RemoveItem", Inventory.RemoveItem)
 
-function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, slot, cb, targetSlot)
+function Inventory.TransfertItem(source, invSource, invTarget, item, amount, metadata, slot, cb, targetSlot)
     local success, reason = false, nil
     if type(invSource) ~= "table" then
         invSource = Inventory(invSource)
@@ -655,7 +657,7 @@ function Inventory.TransfertItem(invSource, invTarget, item, amount, metadata, s
     })
 
     if Inventory.RemoveItem(invSource, item, amount, metadata, slot) then
-        Inventory.AddItem(invTarget, item, amount, metadata, targetSlot, function(s, r)
+        Inventory.AddItem(source, invTarget, item, amount, metadata, targetSlot, function(s, r)
             success, reason = s, r
         end)
 
@@ -978,7 +980,7 @@ local function purgeBinLoop()
             local items = getBinItems()
             for item, amount in pairs(items) do
                 for i = 1, amount do
-                    Inventory.AddItem(inv, item, 1)
+                    Inventory.AddItem(0, inv, item, 1)
                 end
             end
         end

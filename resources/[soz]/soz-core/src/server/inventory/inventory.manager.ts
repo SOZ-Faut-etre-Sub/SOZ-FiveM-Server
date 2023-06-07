@@ -155,7 +155,7 @@ export class InventoryManager {
     ): { success: boolean; reason?: string } {
         let success, reason;
 
-        this.sozInventory.AddItem(source, itemId, amount, metadata, slot, (s, r) => {
+        this.sozInventory.AddItem(source, source, itemId, amount, metadata, slot, (s, r) => {
             success = s;
             reason = r;
         });
