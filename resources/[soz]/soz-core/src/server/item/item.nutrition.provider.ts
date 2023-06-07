@@ -179,7 +179,7 @@ export class ItemNutritionProvider {
     private useLunchbox(source: number, item: Item, itemInv: InventoryItem) {
         this.inventoryManager.removeItemFromInventory(source, item.name, 1, itemInv.metadata, itemInv.slot);
         itemInv.metadata.crateElements.map(meal => {
-            this.inventoryManager.addItemToInventory(source, meal.name, meal.amount, { ...meal.mealMetadata });
+            this.inventoryManager.addItemToInventory(source, meal.name, meal.amount, { ...meal.metadata });
         });
     }
 

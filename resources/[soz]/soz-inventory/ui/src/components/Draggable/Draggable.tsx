@@ -51,6 +51,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         const itemLabel = item?.metadata?.label ? `${item.metadata.label} <small>${item.label}</small>` : item.label;
         let itemExtraLabel = '';
         let contextExtraLabel = '';
+        let crateContent = '';
 
         let illustrator = item.illustrator || ''
 
@@ -61,6 +62,12 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if (WeaponAmmo[item.name]) {
                 contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
             }
+        } else if( item.type === 'crate' && item.metadata?.crateElements?.length){         
+            item.metadata.crateElements.map(meal => {
+                const expiration = new Date(meal?.metadata?.expiration ?? '')
+                crateContent += `<br>- ${meal.amount} ${meal.label} [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
+            })
+            
         } else if (item?.metadata?.expiration) {
             const currentTime = new Date().getTime();
             const expiration = new Date(item.metadata['expiration'])
@@ -88,6 +95,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         onItemHover?.(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description ? item.description : ''}
+            <div>${crateContent}</div>
             <div><span>${contextExtraLabel}</span> <span>${illustrator}</span></div>
         `);
     }, [item, onItemHover]);
