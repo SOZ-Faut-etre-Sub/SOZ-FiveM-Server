@@ -190,6 +190,10 @@ export class VoipRadioVehicleProvider {
 
     @OnEvent(ClientEvent.VOIP_RADIO_VEHICLE_ENABLE)
     public onEnableRadioVehicle(vehicleNetworkId: number, enable: boolean) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!vehicle) {
@@ -209,6 +213,10 @@ export class VoipRadioVehicleProvider {
 
     @OnEvent(ClientEvent.VOIP_RADIO_VEHICLE_UPDATE)
     public onUpdateRadioVehicle(vehicleNetworkId: number, type: RadioChannelType, channel: Partial<RadioChannel>) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const vehicle = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!vehicle) {
