@@ -21,7 +21,6 @@ import { FuelStationRepository } from '../resources/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { ObjectFactory } from './../world/object.factory';
-import { VehicleConditionProvider } from './vehicle.condition.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
