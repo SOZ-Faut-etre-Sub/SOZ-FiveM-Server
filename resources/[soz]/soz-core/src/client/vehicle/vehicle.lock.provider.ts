@@ -126,12 +126,26 @@ export class VehicleLockProvider {
 
     private vehicleTrunkOpened: TrunkOpened | null = null;
 
+    private vehicleOpened: Set<number> = new Set();
+
+    @Once(OnceStep.PlayerLoaded)
+    public async onPlayerLoaded() {
+        const vehicleOpened = await emitRpc<number[]>(RpcServerEvent.VEHICLE_GET_OPENED);
+
+        this.vehicleOpened = new Set(vehicleOpened);
+    }
+
     @Once(OnceStep.Start)
     private async initLockStateSelector() {
         this.vehicleStateService.addVehicleStateSelector(
             [state => state.open, state => state.forced],
             this.onVehicleOpenChange.bind(this)
         );
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_SET_OPEN_LIST)
+    private async onVehicleOpenList(vehicles: number[]) {
+        this.vehicleOpened = new Set(vehicles);
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
@@ -205,9 +219,13 @@ export class VehicleLockProvider {
             return;
         }
 
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        if (!player.metadata.godmode && !state.open && !state.forced) {
+        if (!vehicleNetworkId) {
+            return;
+        }
+
+        if (!player.metadata.godmode && !this.vehicleOpened.has(vehicleNetworkId)) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
 
             const vehicleClass = GetVehicleClass(vehicle);
@@ -511,26 +529,14 @@ export class VehicleLockProvider {
             );
         }
 
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+
         if (state.open) {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
-            this.vehicleStateService.updateVehicleState(
-                vehicle,
-                {
-                    open: false,
-                },
-                true,
-                true
-            );
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, false);
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
-            this.vehicleStateService.updateVehicleState(
-                vehicle,
-                {
-                    open: true,
-                },
-                true,
-                true
-            );
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, true);
         }
     }
 

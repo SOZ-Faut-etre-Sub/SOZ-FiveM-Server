@@ -183,6 +183,7 @@ export enum ServerEvent {
     VEHICLE_UPDATE_CONDITION = 'soz-core:server:vehicle:update-condition',
     VEHICLE_UPDATE_CONDITION_FROM_OWNER = 'soz-core:server:vehicle:update-condition-from-owner',
     VEHICLE_UPDATE_MILEAGE = 'soz-core:server:vehicle:update-mileage',
+    VEHICLE_SET_OPEN = 'soz-core:server:vehicle:set-open',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
@@ -380,6 +381,7 @@ export enum ClientEvent {
     VEHICLE_UPDATE_STATE = 'soz-core:client:vehicle:update-state',
     VEHICLE_DELETE_STATE = 'soz-core:client:vehicle:delete-state',
     VEHICLE_LOCKPICK = 'soz-core:client:vehicle:lockpick',
+    VEHICLE_SET_OPEN_LIST = 'soz-core:client:vehicle:set-open-list',
 
     VOIP_UPDATE_MODE = 'soz-core:client:voip:update-mode',
     VOIP_SET_MEGAPHONE = 'soz-core:client:voip:set-megaphone',

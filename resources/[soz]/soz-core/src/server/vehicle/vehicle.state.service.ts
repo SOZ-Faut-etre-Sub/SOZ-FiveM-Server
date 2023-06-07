@@ -42,6 +42,8 @@ export class VehicleStateService {
 
     private vehicleSeats: Map<number, Map<number, VehicleSeat>> = new Map<number, Map<number, VehicleSeat>>();
 
+    public vehicleOpened: Set<number> = new Set();
+
     public getVehicleState(vehicleNetworkId: number): Readonly<VehicleState> {
         if (this.state.has(vehicleNetworkId)) {
             return this.state.get(vehicleNetworkId);
@@ -262,6 +264,11 @@ export class VehicleStateService {
         this.state.delete(netId);
         TriggerClientEvent(ClientEvent.VEHICLE_DELETE_STATE, -1, netId);
         TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER, -1, netId);
+
+        if (this.vehicleOpened.has(netId)) {
+            this.vehicleOpened.delete(netId);
+            TriggerClientEvent(ClientEvent.VEHICLE_SET_OPEN_LIST, -1, [...this.vehicleOpened]);
+        }
     }
 
     public hasVehicleKey(vehiclePlate: string, citizenId: string): boolean {
@@ -304,5 +311,20 @@ export class VehicleStateService {
         }
 
         return null;
+    }
+
+    public handleVehicleOpenChange(vehicleNetworkId: number) {
+        const state = this.getVehicleState(vehicleNetworkId);
+        const isOpen = state.volatile.open || state.volatile.forced;
+
+        if (isOpen && !this.vehicleOpened.has(vehicleNetworkId)) {
+            this.vehicleOpened.add(vehicleNetworkId);
+            TriggerClientEvent(ClientEvent.VEHICLE_SET_OPEN_LIST, -1, [...this.vehicleOpened]);
+        }
+
+        if (!isOpen && this.vehicleOpened.has(vehicleNetworkId)) {
+            this.vehicleOpened.delete(vehicleNetworkId);
+            TriggerClientEvent(ClientEvent.VEHICLE_SET_OPEN_LIST, -1, [...this.vehicleOpened]);
+        }
     }
 }
