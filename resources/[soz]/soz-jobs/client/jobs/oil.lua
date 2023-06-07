@@ -389,7 +389,7 @@ end)
 RegisterNetEvent("jobs:client:fueler:CancelTankerRefill", function(data)
     hasTankerPipe = false
     tankerUsing = false
-    exports["soz-core"]:SetPlayerState({tankerEntity = nil})
+    exports["soz-core"]:SetPlayerState({tankerEntity = 0})
     Tanker.hasPipe = false
 
     local playerPed = PlayerPedId()
