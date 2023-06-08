@@ -194,7 +194,7 @@ function Inventory.SlotWeight(item, slot)
         end
     end
 
-    if item.type == 'crate' then
+    if item.type == "crate" then
         weight = item.weight + Inventory.getCrateWeight(slot.metadata)
     end
 
@@ -376,7 +376,12 @@ function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item,
 
     local lunchboxTotalWeight = Inventory.getCrateWeight(slotItem.metadata)
 
-    table.insert(slotItem.metadata.crateElements, {name = item.name, label = item.label, metadata = metadata, amount = amount})
+    table.insert(slotItem.metadata.crateElements, {
+        name = item.name,
+        label = item.label,
+        metadata = metadata,
+        amount = amount,
+    })
     return slotItem.metadata, true, slot
 end
 
@@ -410,7 +415,7 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
                 elseif item.durability and metadata.expiration == nil then
                     metadata.expiration = os.date("%Y-%m-%d", os.time() + (item.durability * 60 * 60 * 24))
                 end
-                
+
                 if Inventory.CanCarryItem(inv, item, amount, metadata) then
                     local existing = false
                     local weight = (item.type == "crate" and metadata and metadata.crateElements and Inventory.getCrateWeight(metadata) + item.weight or
@@ -428,7 +433,7 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
                                     existing = nil
                                 else
                                     goto lunchbox_false
-                                end 
+                                end
                             else
                                 TriggerClientEvent("soz-core:client:notification:draw", source, "Ça ne rentre pas !", "warning")
                             end

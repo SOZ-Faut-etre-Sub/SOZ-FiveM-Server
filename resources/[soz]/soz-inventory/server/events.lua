@@ -119,7 +119,7 @@ end)
 
 RegisterServerEvent("inventory:server:renameItem", function(label, item)
     local inventorySource = Inventory(source)
-    local metadata = item.metadata  
+    local metadata = item.metadata
     metadata.label = label
 
     Inventory.SetMetadata(inventorySource, item.slot, metadata)

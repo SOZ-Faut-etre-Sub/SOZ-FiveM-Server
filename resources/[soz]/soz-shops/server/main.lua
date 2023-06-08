@@ -244,7 +244,7 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
                     return
                 end
 
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source,Player.PlayerData.source, item.name, amount, nil, nil, function(success, reason)
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, amount, nil, nil, function(success, reason)
                     if success then
                         Config.Products[brand][product].amount = Config.Products[brand][product].amount - amount
                         if Config.Products[brand][product].amount <= 0 then
