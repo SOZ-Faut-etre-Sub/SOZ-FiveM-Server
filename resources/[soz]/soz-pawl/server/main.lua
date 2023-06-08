@@ -43,7 +43,8 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
                 if cbSent then
                     return
                 end
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, nil, nil, function(success, reason)
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, nil, nil, function(success,
+                                                                                                                                                reason)
                     if not success then
                         cb(false)
                         cbSent = true
@@ -86,7 +87,8 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTreeSap", function(source, c
                 if cbSent then
                     return
                 end
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, nil, nil, function(success, reason)
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, nil, nil, function(success,
+                                                                                                                                                reason)
                     if not success then
                         cb(false)
                         cbSent = true
@@ -267,7 +269,8 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
     end
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, craft.SourceItem, craft.SourceItemAmount or 1) then
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil, function(success, reason)
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil,
+                                         function(success, reason)
             if success then
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !",
                                    "success")

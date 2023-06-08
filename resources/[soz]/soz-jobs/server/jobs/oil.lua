@@ -103,7 +103,8 @@ RegisterNetEvent("jobs:server:fueler:craftEssence", function()
 
     if exports["soz-inventory"]:CanSwapItem(Player.PlayerData.source, "petroleum_refined", essenceItemAmount, "essence", essenceItemAmount) then
         if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "petroleum_refined", essenceItemAmount) then
-            exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "essence", essenceItemAmount, nil, nil, function(success, _)
+            exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "essence", essenceItemAmount, nil, nil, function(success,
+                                                                                                                                                  _)
                 if success then
                     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                        ("Vous avez ~g~transformé~s~ %dL en carburant"):format(essenceItemAmount))
@@ -131,7 +132,8 @@ RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
 
     if exports["soz-inventory"]:CanSwapItem(Player.PlayerData.source, "essence", essenceItemAmount * 3, "essence_jerrycan", essenceItemAmount) then
         if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "essence", essenceItemAmount * 3) then
-            exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "essence_jerrycan", essenceItemAmount, nil, nil, function(success, _)
+            exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "essence_jerrycan", essenceItemAmount, nil, nil,
+                                             function(success, _)
                 if success then
                     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                        ("Vous avez ~g~transformé~s~ %dL en JerryCan"):format(essenceItemAmount))
@@ -196,7 +198,8 @@ RegisterNetEvent("jobs:server:fueler:craftKeroseneJerryCan", function()
     end
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "kerosene", keroseneItemAmount) then
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "kerosene_jerrycan", jerrycanItemAmount, nil, nil, function(success, _)
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "kerosene_jerrycan", jerrycanItemAmount, nil, nil,
+                                         function(success, _)
             if success then
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                    ("Vous avez ~g~transformé~s~ %dL en JerryCan"):format(jerrycanItemAmount))

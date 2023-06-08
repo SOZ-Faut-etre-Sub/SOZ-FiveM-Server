@@ -44,7 +44,12 @@ Config.Craft = {
         RewardAmount = 1,
     },
     ["paper"] = {Name = "Feuilles de papier", SourceItem = "wood_plank", RewardItem = "paper", RewardAmount = 10},
-    ["empty_lunchbox"] = {Name = "Paniers-repas", SourceItem = "wood_plank", RewardItem = "empty_lunchbox", RewardAmount = 4},
+    ["empty_lunchbox"] = {
+        Name = "Paniers-repas",
+        SourceItem = "wood_plank",
+        RewardItem = "empty_lunchbox",
+        RewardAmount = 4,
+    },
     ["cabinet_zkea"] = {
         Name = "Meuble ZKEA",
         SourceItem = "wood_plank",

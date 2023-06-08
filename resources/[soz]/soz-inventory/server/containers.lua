@@ -62,7 +62,7 @@ Container["trunk"] = InventoryContainer:new({
         "furniture",
         "flavor",
         "outfit",
-        "crate"
+        "crate",
     },
 })
 
@@ -84,7 +84,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "furniture",
         "flavor",
         "outfit",
-        "crate"
+        "crate",
     },
 })
 
@@ -110,7 +110,7 @@ Container["trash"] = InventoryContainer:new({
         "furniture",
         "liquor",
         "outfit",
-        "crate"
+        "crate",
     },
 })
 
@@ -178,7 +178,7 @@ Container["bin"] = InventoryDatastore:new({
         "furniture",
         "liquor",
         "outfit",
-        "crate"
+        "crate",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -225,7 +225,7 @@ Container["house_stash"] = InventoryContainer:new({
         "log",
         "oil_and_item",
         "plank",
-        "sawdust"
+        "sawdust",
     },
 })
 Container["house_fridge"] = InventoryContainer:new({
@@ -309,7 +309,7 @@ Container["recycler_processing"] = InventoryContainer:new({
         "flavor",
         "furniture",
         "liquor",
-        "crate"
+        "crate",
     },
     inventoryPermissionCallback = playerHaveJobAndDuty,
     inventoryGetContentCallback = function()
