@@ -48,7 +48,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             return null
         }
 
-        const itemLabel = item?.metadata?.label ? `${item.metadata.label} <small>${item.label}</small>` : item.label;
+        let itemLabel = item?.metadata?.label ? `${item.metadata.label} <small>${item.label}</small>` : item.label;
         let itemExtraLabel = '';
         let contextExtraLabel = '';
         let crateContent = '';
@@ -63,6 +63,11 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
             }
         } else if( item.type === 'crate' && item.metadata?.crateElements?.length){         
+
+            if(item.metadata.label){
+                itemLabel = `${item.label} "${item.metadata.label}"`
+            }
+
             item.metadata.crateElements.map(meal => {
                 const expiration = new Date(meal?.metadata?.expiration ?? '')
                 crateContent += `<br>- ${meal.amount} ${meal.label} [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
@@ -251,6 +256,11 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                                     Définir comme arme secondaire
                                 </li>
                             </>
+                        )}
+                        {(item && item.type === 'crate' && item.metadata?.crateElements?.length) && (
+                            <li className={style.OptionListItem} onClick={createInteractAction('renameItem')}>
+                                Renommer
+                            </li>
                         )}
                         {(item && item.useable && item.type !== 'weapon') && (
                             <>

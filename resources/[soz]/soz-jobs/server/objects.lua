@@ -32,7 +32,7 @@ RegisterNetEvent("job:server:CollectObject", function(ref, model)
 
     if item then
         if exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, item, 1) then
-            exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1)
+            exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, 1)
             TriggerEvent("job:server:RemoveObject", ref)
         else
             TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas récupérer cet objet", "error")
