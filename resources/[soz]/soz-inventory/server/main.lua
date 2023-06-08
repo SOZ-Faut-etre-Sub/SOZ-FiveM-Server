@@ -194,6 +194,10 @@ function Inventory.SlotWeight(item, slot)
         end
     end
 
+    if item.type == 'crate' then
+        weight = item.weight + Inventory.getCrateWeight(slot.metadata)
+    end
+
     return weight
 end
 
