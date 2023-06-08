@@ -46,7 +46,7 @@ end)
 RegisterServerEvent("job:get:metal", function(amount)
     local Player = QBCore.Functions.GetPlayer(tonumber(source))
     local metadata = {}
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, "metalscrap", amount, metadata, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "metalscrap", amount, metadata, nil, function(success, reason)
         if success then
             TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous avez ramassé %d ferrailles", amount))
         else

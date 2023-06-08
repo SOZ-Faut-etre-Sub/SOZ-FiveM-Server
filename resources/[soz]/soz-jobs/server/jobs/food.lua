@@ -24,7 +24,7 @@ local function AddItem(source, item, itemCount)
     end
 
     local receivedItem = false
-    exports["soz-inventory"]:AddItem(source, item, count, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, item, count, nil, nil, function(success, reason)
         if success then
             receivedItem = true
         else
@@ -134,7 +134,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:food-craft", function(source, c
         end
     end
 
-    exports["soz-inventory"]:AddItem(source, itemId, recipe.output or 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, itemId, recipe.output or 1, nil, nil, function(success, reason)
         if not success then
             local message = "Vos poches sont pleines..."
             if reason ~= "invalid_weight" then
@@ -165,7 +165,7 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
     for item, reward in pairs(FoodConfig.HuntingReward) do
         local amount = math.random(reward.min, reward.max)
 
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, amount, nil, nil, function(success, reason)
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, amount, nil, nil, function(success, reason)
             if success then
                 TriggerEvent("monitor:server:event", "job_cm_food_hunting", {
                     item_id = item,
@@ -194,10 +194,10 @@ QBCore.Functions.CreateUseableItem("meal_box", function(source, item)
         {name = "royal_vegetables", amount = 5},
     }) then
         exports["soz-inventory"]:RemoveItem(source, "meal_box", 1)
-        exports["soz-inventory"]:AddItem(source, "vegan_meal", 5, item.metadata)
-        exports["soz-inventory"]:AddItem(source, "onigiri_assortment", 5, item.metadata)
-        exports["soz-inventory"]:AddItem(source, "meat_festival", 5, item.metadata)
-        exports["soz-inventory"]:AddItem(source, "royal_vegetables", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, source, "vegan_meal", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, source, "onigiri_assortment", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, source, "meat_festival", 5, item.metadata)
+        exports["soz-inventory"]:AddItem(source, source, "royal_vegetables", 5, item.metadata)
     else
         TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont trop pleines pour ouvrir la caisse.", "error")
     end

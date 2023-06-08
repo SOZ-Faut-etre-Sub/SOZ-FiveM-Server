@@ -6,6 +6,6 @@ AddEventHandler("soz-utils:server:dispenser:pay", function(amount, item)
     local CurrentMoney = Player.Functions.GetMoney("money")
     if tonumber(amount) <= tonumber(CurrentMoney) then
         Player.Functions.RemoveMoney("money", amount)
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, 1, nil)
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source,Player.PlayerData.source, item, 1, nil)
     end
 end)

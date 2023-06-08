@@ -45,6 +45,13 @@ RegisterNUICallback("player/setItemUsage", function(data, cb)
     cb(true)
 end)
 
+RegisterNUICallback("player/renameItem", function(data, cb)
+    SetNuiFocus(false, false)
+    local label = exports["soz-core"]:Input("Étiquette", 20, '')
+    TriggerServerEvent("inventory:server:renameItem", label, data)
+    cb(true)
+end)
+
 RegisterNUICallback("player/giveItem", function(data, cb)
     SetNuiFocus(false, false)
 

@@ -406,7 +406,7 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
                 elseif item.durability and metadata.expiration == nil then
                     metadata.expiration = os.date("%Y-%m-%d", os.time() + (item.durability * 60 * 60 * 24))
                 end
-
+                
                 if Inventory.CanCarryItem(inv, item, amount, metadata) then
                     local existing = false
                     local weight = (item.type == "crate" and metadata and metadata.crateElements and Inventory.getCrateWeight(metadata) + item.weight or

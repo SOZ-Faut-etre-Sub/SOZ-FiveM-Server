@@ -116,3 +116,12 @@ RegisterServerEvent("inventory:server:closeInventory", function(invID)
         targetInv.users[source] = nil
     end
 end)
+
+RegisterServerEvent("inventory:server:renameItem", function(label, item)
+    local inventorySource = Inventory(source)
+    local metadata = item.metadata  
+    metadata.label = label
+
+    Inventory.SetMetadata(inventorySource, item.slot, metadata)
+    TriggerClientEvent("soz-core:client:notification:draw", SourcePlayer.PlayerData.source, string.format(`Vous avez ajouté l'étiquette ~g~%s$`, label))
+end)
