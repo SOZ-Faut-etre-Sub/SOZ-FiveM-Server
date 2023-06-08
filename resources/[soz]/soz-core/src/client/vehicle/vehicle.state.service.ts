@@ -37,6 +37,12 @@ export class VehicleStateService {
         return await emitRpc<VehicleVolatileState>(RpcServerEvent.VEHICLE_GET_STATE, vehicleNetworkId);
     }
 
+    public async getServerVehicleState(vehicleEntityId: number): Promise<VehicleVolatileState> {
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+
+        return await emitRpc<VehicleVolatileState>(RpcServerEvent.VEHICLE_GET_STATE, vehicleNetworkId);
+    }
+
     public async getVehicleCondition(vehicleEntityId: number): Promise<VehicleCondition> {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
