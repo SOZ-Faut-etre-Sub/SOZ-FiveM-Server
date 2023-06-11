@@ -41,9 +41,10 @@ export class VehicleStateProvider {
                     continue;
                 }
 
-                await this.prismaService.playerVehicle.update({
+                await this.prismaService.playerVehicle.updateMany({
                     where: {
                         id: state.volatile.id,
+                        state: PlayerVehicleState.Out,
                     },
                     data: {
                         state: PlayerVehicleState.InSoftPound,
