@@ -88,6 +88,11 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(sour
             TriggerClientEvent("soz-core:client:notification:draw", SourcePlayer.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
             TriggerClientEvent("soz-core:client:notification:draw", TargetPlayer.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
         end
+
+        TriggerEvent("monitor:server:event", "give_money", {
+            src = SourcePlayer.PlayerData.citizenid,
+            target = TargetPlayer.PlayerData.citizenid,
+        }, {money = moneyTake, marked_money = markedMoneyTake})
     else
         TriggerClientEvent("soz-core:client:notification:draw", source, "Pas assez d'argent", "error")
     end
