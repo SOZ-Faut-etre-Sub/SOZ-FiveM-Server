@@ -234,6 +234,7 @@ export enum ServerEvent {
     HUB_SHOP_BUY = 'soz-core:server:hub:shop-buy',
     HUB_EXIT = 'soz-core:server:hub:exit',
     HUB_RESELL = 'soz-core:server:hub:resell',
+    HUB_SHOP_RESELL = 'soz-core:server:hub:shop-resell',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
@@ -241,6 +242,8 @@ export enum ServerEvent {
     CRIMI_BLOCK_DATE = 'soz-core:server:crimi:block-date',
 
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:server:talent:disable-crimi',
+
+    CRAFTING_TRAINING = 'soz-core:crafting:craft-training',
 }
 
 export enum ClientEvent {
