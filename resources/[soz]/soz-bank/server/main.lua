@@ -85,6 +85,13 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
         if amount <= CurrentMoney then
             if Player.Functions.RemoveMoney("money", amount) then
                 Account.AddMoney(accountTarget, amount)
+
+                TriggerEvent("monitor:server:event", "transfer_money", {
+                    player_source = source,
+                    accountSource = accountSource,
+                    accountTarget = accountTarget,
+                }, {money = amount})
+
                 cb(true)
                 return
             end
@@ -94,6 +101,13 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
         if amount <= AccountMoney then
             if Player.Functions.AddMoney("money", amount) then
                 Account.RemoveMoney(accountSource, amount)
+
+                TriggerEvent("monitor:server:event", "transfer_money", {
+                    player_source = source,
+                    accountSource = accountSource,
+                    accountTarget = accountTarget,
+                }, {money = amount})
+
                 cb(true)
                 return
             end
@@ -134,6 +148,12 @@ RegisterNetEvent("banking:server:SafeStorageDeposit", function(money_type, safeS
             if Player.Functions.RemoveMoney(money_type, amount) then
                 local added = Account.AddMoney(safeStorage, amount, money_type)
                 if added ~= false then
+                    TriggerEvent("monitor:server:event", "safe_deposit", {
+                        player_source = source,
+                        safeStorage = safeStorage,
+                        money_type = money_type,
+                    }, {money = amount})
+
                     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez déposé ~g~$%s"):format(amount))
                 else
                     Player.Functions.AddMoney(money_type, amount)
@@ -159,6 +179,13 @@ RegisterNetEvent("banking:server:SafeStorageWithdraw", function(money_type, safe
         if amount <= CurrentMoney then
             if Player.Functions.AddMoney(money_type, amount) then
                 Account.RemoveMoney(safeStorage, amount, money_type)
+
+                TriggerEvent("monitor:server:event", "safe_withdraw", {
+                    player_source = source,
+                    safeStorage = safeStorage,
+                    money_type = money_type,
+                }, {money = amount})
+
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez retiré ~g~$%s"):format(amount))
             end
         else

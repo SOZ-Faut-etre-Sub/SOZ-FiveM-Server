@@ -1,6 +1,7 @@
 import { PlayerTalentService } from '@private/server/player/player.talent.service';
 import { waitUntil } from '@public/core/utils';
-import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
+import { Monitor } from '@public/shared/monitor';
+import { getDistance, toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { LockPickAlertChance } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnEvent } from '../../core/decorators/event';
@@ -52,6 +53,9 @@ export class VehicleLockProvider {
 
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private trunkOpened: Record<number, Set<number>> = {};
 
@@ -194,6 +198,19 @@ export class VehicleLockProvider {
                 );
             }
         }
+
+        this.monitor.publish(
+            'vehicle_lockpick',
+            {
+                player_source: source,
+            },
+            {
+                item: item.name,
+                location: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                vehicle_plate: GetVehicleNumberPlateText(closestVehicle.vehicleEntityId),
+                player_vehicle: vehicleState.volatile.isPlayerVehicle,
+            }
+        );
 
         this.vehicleStateService.updateVehicleVolatileState(closestVehicle.vehicleNetworkId, {
             forced: true,
