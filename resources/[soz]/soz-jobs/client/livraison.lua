@@ -191,7 +191,7 @@ local function close()
     TriggerServerEvent("job:set:unemployed")
     local money = SozJobCore.livraison_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    QBCore.Functions.DeleteVehicle(livraison_vehicule)
+    DeleteVehicule(livraison_vehicule)
     exports["qb-target"]:RemoveZone("livraison_zone")
     destroyblip(job_blip)
     OnJob = false
