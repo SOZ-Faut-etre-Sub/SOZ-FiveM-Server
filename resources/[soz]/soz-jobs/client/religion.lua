@@ -248,7 +248,7 @@ local function close()
     TriggerServerEvent("job:set:unemployed")
     local money = SozJobCore.religion_payout * payout_counter
     TriggerServerEvent("job:payout", money)
-    QBCore.Functions.DeleteVehicle(religion_vehicule)
+    DeleteVehicule(religion_vehicule)
     exports["qb-target"]:RemoveZone("adsl_zone")
     destroyblip(job_blip)
     if IsWaypointActive() then
