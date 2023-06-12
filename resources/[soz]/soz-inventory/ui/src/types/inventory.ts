@@ -13,6 +13,7 @@ export type SozInventoryModel = {
     items: InventoryItem[];
 }
 
+
 /*
  * Get from gta-server/resources/[soz]/soz-core/src/shared/item.ts
  * Can be removed after soz-inventory moves to soz-core
