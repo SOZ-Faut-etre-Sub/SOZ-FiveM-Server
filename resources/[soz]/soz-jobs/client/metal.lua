@@ -207,7 +207,7 @@ end)
 
 local function close()
     TriggerServerEvent("job:set:unemployed")
-    QBCore.Functions.DeleteVehicle(metal_vehicule)
+    DeleteVehicule(metal_vehicule)
     exports["qb-target"]:RemoveZone("metal_zone")
     destroyblip(job_blip)
     SetGpsMultiRouteRender(false)
