@@ -134,6 +134,14 @@ RegisterNUICallback("closeNUI", function(data, cb)
     end
 end)
 
+RegisterNUICallback("player/askForAmount", function(data,cb)
+    SetNuiFocus(false, false)
+    amount = exports["soz-core"]:Input("Quantité", 5, '')
+    SetNuiFocus(true, true)
+    cb(amount)
+end)
+
+
 CreateThread(function()
     for id, storage in pairs(Config.Storages) do
         local options = {
@@ -176,3 +184,11 @@ end)
 RegisterNetEvent("inventory:client:updateTargetStoragesState", function(targetInventory)
     SendNUIMessage({action = "updateInventory", targetInventory = targetInventory})
 end)
+
+-- SUPERMARKET SHOP
+
+exports("openShop", function (shopContent)
+    SendNUIMessage({ action = "openShop", shopContent = shopContent})
+    SetNuiFocus(true, true)
+end)
+
