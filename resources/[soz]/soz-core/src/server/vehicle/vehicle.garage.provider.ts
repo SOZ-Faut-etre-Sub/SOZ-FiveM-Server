@@ -851,6 +851,10 @@ export class VehicleGarageProvider {
                         'Une erreur est survenue lors du spawn du véhicule, veuillez ressayer.',
                         'error'
                     );
+
+                    if (!use_ticket && price !== 0) {
+                        this.playerMoneyService.add(source, price);
+                    }
                 }
             },
             1000
