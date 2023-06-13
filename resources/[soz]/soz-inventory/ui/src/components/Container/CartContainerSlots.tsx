@@ -1,18 +1,21 @@
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
-import style from './ShopContainerSlots.module.css';
-import { InventoryItem } from '../../types/inventory';
+import style from './CartContainerSlots.module.css';
 import Draggable from '../Draggable/Draggable';
 import { Droppable } from '../Droppable/Droppable';
+import { ShoppingBagIcon } from '@heroicons/react/24/outline'
+import { ShopItem } from '../../types/shop';
 
 type Props = {
     id: string;
     columns?: number;
     rows: number;
-    items: (InventoryItem & {id: number})[]
-    action?: (action: string, item: InventoryItem, shortcut: number) => void;
+    items: (ShopItem & {id: number})[]
+    action?: (action: string, item: ShopItem, shortcut: number) => void;
+    cartAmount: number;
+    cartContent: ShopItem[]
 }
 
-export const CartContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, action}) => {
+export const CartContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, action, cartAmount, cartContent}) => {
     const [description, setDescription] = useState<string|null>('');
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
@@ -32,6 +35,10 @@ export const CartContainerSlots: FunctionComponent<Props> = ({id, columns = 5, r
 
     return (
         <>
+            <div className={style.CartHeader}>
+                <ShoppingBagIcon className={style.CartHeaderIcon} /> 
+                    <p>Glisse et dépose dans ton panier</p>
+            </div>
             <div
                 className={style.Wrapper}
                 style={{
@@ -39,6 +46,7 @@ export const CartContainerSlots: FunctionComponent<Props> = ({id, columns = 5, r
                     gridTemplateRows: `repeat(${rows+1}, 1fr)`,
                 }}
             >
+   
                 {[...Array((columns*(rows+1)) - ( 0))].map((_, i) => (
                     <Droppable key={i} id={`${id}_${i - 1}`} containerName={id} slot={i+1}>
                         <Draggable
@@ -51,6 +59,18 @@ export const CartContainerSlots: FunctionComponent<Props> = ({id, columns = 5, r
                         />
                     </Droppable>
                 ))}
+            </div>
+            <div className={style.CartFooter}>
+                    <p>PRIX : {cartAmount.toLocaleString('fr-fr') ?? cartAmount} $</p>
+                    <button
+                        disabled={cartAmount == 0}
+                        className={style.CartButton}
+                        onClick={() => {
+                            console.log(cartContent)
+                        }}
+                    >
+                        Acheter
+                    </button>
             </div>
             {description && (
                 <footer className={style.Description} dangerouslySetInnerHTML={{__html: description}} />

@@ -310,6 +310,7 @@ export const StorageContainer = () => {
 
     return (
         <div className={style.Wrapper}>
+                        {display &&
             <DndContext
                 autoScroll={{
                     enabled: false,
@@ -317,10 +318,7 @@ export const StorageContainer = () => {
                 collisionDetection={rectIntersection}
                 onDragEnd={transfertItem}
             >
-                <div className={clsx(style.PlayerContainer, {
-                    [style.Show]: display,
-                    [style.Hide]: !display,
-                })}>
+                <div className={clsx(style.PlayerContainer)}>
                     <ContainerWrapper
                         display={true}
                         banner={playerBanner}
@@ -336,10 +334,7 @@ export const StorageContainer = () => {
                     </ContainerWrapper>
                 </div>
 
-                <div className={clsx(style.StorageContainer, {
-                    [style.Show]: display,
-                    [style.Hide]: !display,
-                })}>
+                <div className={clsx(style.StorageContainer)}>
                     <ContainerWrapper
                         display={true}
                         banner={targetInventoryBanner}
@@ -356,6 +351,7 @@ export const StorageContainer = () => {
                     </ContainerWrapper>
                 </div>
             </DndContext>
+}
         </div>
     );
 };

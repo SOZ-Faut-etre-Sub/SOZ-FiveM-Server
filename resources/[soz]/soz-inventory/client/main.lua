@@ -136,7 +136,7 @@ end)
 
 RegisterNUICallback("player/askForAmount", function(data,cb)
     SetNuiFocus(false, false)
-    amount = exports["soz-core"]:Input("Quantité", 5, '')
+    amount = exports["soz-core"]:Input("Quantité", 5, 1)
     SetNuiFocus(true, true)
     cb(amount)
 end)

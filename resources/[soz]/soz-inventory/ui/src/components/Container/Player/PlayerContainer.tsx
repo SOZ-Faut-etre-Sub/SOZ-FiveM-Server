@@ -185,10 +185,8 @@ export const PlayerContainer = () => {
             collisionDetection={rectIntersection}
             onDragEnd={handleDragAndDrop}
         >
-            <div className={clsx(style.Wrapper, {
-                [style.Show]: display,
-                [style.Hide]: !display,
-            })}>
+            {display &&
+            <div className={clsx(style.Wrapper)}>
                 <ContainerWrapper
                     display={true}
                     banner={playerBanner}
@@ -205,6 +203,7 @@ export const PlayerContainer = () => {
                     />
                 </ContainerWrapper>
             </div>
+            }
         </DndContext>
     )
 }
