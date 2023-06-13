@@ -7,6 +7,7 @@ export type CriminalCraftingRequirements = {
     expire: boolean;
     metadata?: InventoryItemMetadata;
     outputCount?: number;
+    resell: number;
 };
 
 export type CriminalCraftingCheckItem = {
