@@ -13,6 +13,7 @@
     "@dnd-kit/modifiers": "^6.0.1",
     "@dnd-kit/sortable": "^7.0.1",
     "@dnd-kit/utilities": "^3.2.0",
+    "@heroicons/react": "^2.0.18",
     "clsx": "^1.2.1",
     "inter-ui": "^3.19.3",
     "prop-types": "^15.8.1",

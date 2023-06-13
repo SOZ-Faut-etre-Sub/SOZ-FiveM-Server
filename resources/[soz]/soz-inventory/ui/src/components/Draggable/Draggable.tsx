@@ -19,12 +19,13 @@ type Props = {
     interactAction?: any;
     setInContext?: (inContext: boolean) => void;
     onItemHover?: (description: string | null) => void;
+    price?: number
 }
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
 const FORMAT_CURRENCY: Intl.NumberFormatOptions = {style: "currency", currency: 'USD', maximumFractionDigits: 0}
 
-const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, onItemHover }) => {
+const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, onItemHover, price }) => {
     const {attributes, listeners, setNodeRef, transform, isDragging} = useDraggable({
         id: `${id}_${item?.slot ?? ''}`,
         data: {
@@ -202,9 +203,12 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             >
                 {item && (
                     <>
+                        {price ?
                         <span className={style.Amount}>
+                            {price > 1 && price} $
+                        </span> : <span className={style.Amount}>
                             {item.amount > 1 && item.amount}
-                        </span>
+                        </span>}
                         {(item?.shortcut) && (
                             <span className={style.Shortcut}>
                                 {item?.shortcut}

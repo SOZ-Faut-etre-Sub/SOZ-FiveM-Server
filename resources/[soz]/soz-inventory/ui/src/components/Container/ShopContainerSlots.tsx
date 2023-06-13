@@ -1,6 +1,6 @@
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import style from './ShopContainerSlots.module.css';
-import { InventoryItem } from '../../types/inventory';
+import { ShopItem } from '../../types/shop';
 import Draggable from '../Draggable/Draggable';
 import { Droppable } from '../Droppable/Droppable';
 
@@ -8,8 +8,8 @@ type Props = {
     id: string;
     columns?: number;
     rows: number;
-    items: (InventoryItem & {id: number})[]
-    action?: (action: string, item: InventoryItem, shortcut: number) => void;
+    items: (ShopItem & {id: number})[]
+    action?: (action: string, item: ShopItem, shortcut: number) => void;
 }
 
 export const ShopContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, action}) => {
@@ -50,6 +50,7 @@ export const ShopContainerSlots: FunctionComponent<Props> = ({id, columns = 5, r
                             setInContext={createInContext(i)}
                             interactAction={action}
                             onItemHover={setDescription}
+                            price={items.find(it => (it.slot -1) === i)?.price}
                         />
                     </Droppable>
                 ))}
