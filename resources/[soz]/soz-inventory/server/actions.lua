@@ -178,6 +178,11 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         return
     end
 
+    if resellZone.ZoneName == "Resell:hub" then
+        TriggerEvent("soz-core:server:hub:shop-resell", source, item, amount)
+        return
+    end
+
     local itemSpec = QBCore.Shared.Items[item.name]
     if itemSpec == nil or not itemSpec.resellPrice or not itemSpec.resellZone or itemSpec.resellZone ~= resellZone.ZoneName then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Cet item ne peut pas être revendu", "error")
