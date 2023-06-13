@@ -193,6 +193,15 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         return `w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-gradient-to-r from-black/60 to-black/25 border-l-4 ${classColor()}`;
     };
 
+    
+    const hours = (): string => {
+        const currentDate = new Date();
+        
+        const messageHours = `0${currentDate.getHours()}`.slice(-2);
+        const messageMinutes = `0${currentDate.getMinutes()}`.slice(-2);
+        return `${messageHours}:${messageMinutes}`;
+    }
+
     return (
         <Transition
             show={!isClosing && !isOpening}
@@ -207,7 +216,7 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
                 <div className="flex items-center mb-2 justify-between">
                     <img className="w-5" src={image()} alt={image()} />
                     <p className="uppercase" dangerouslySetInnerHTML={{ __html: formatText(title()) }} />
-                    <p dangerouslySetInnerHTML={{ __html: formatText(notification.hour) }} />
+                    <p dangerouslySetInnerHTML={{ __html: hours() }} />
                 </div>
                 <p dangerouslySetInnerHTML={{ __html: formatText(notification.message) }} />
             </div>

@@ -3,6 +3,7 @@ export interface PreDBSociety {
     anonymous: boolean;
     message: string;
     position: boolean;
+    info?: {type?: string, serviceNumber?: string};
     pedPosition?: string;
     overrideIdentifier?: string;
 }

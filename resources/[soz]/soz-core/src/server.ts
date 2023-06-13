@@ -9,6 +9,7 @@ import { ChainMiddlewareEventServerFactory } from './core/middleware/middleware.
 import { ChainMiddlewareTickServerFactory } from './core/middleware/middleware.tick.server';
 import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
+import { AlertModule } from './server/alert/alert.module';
 import { ApiModule } from './server/api/api.module';
 import { DatabaseModule } from './server/database/database.module';
 import { DrivingSchoolModule } from './server/driving-school/ds.module';
@@ -84,6 +85,7 @@ async function bootstrap() {
         PoliceModule,
         UpwModule,
         TaxiModule,
+        AlertModule,
         ...PrivateModules
     );
 

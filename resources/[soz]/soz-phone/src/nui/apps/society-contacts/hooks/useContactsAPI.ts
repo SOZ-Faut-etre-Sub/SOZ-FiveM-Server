@@ -10,13 +10,14 @@ export const useContactsAPI = () => {
     const [t] = useTranslation();
 
     const sendSocietyMessage = useCallback(
-        ({ number, message, anonymous, position }: PreDBSociety) => {
+        ({ number, message, anonymous, position, info }: PreDBSociety) => {
             setTimeout(() => {
                 fetchNui<ServerPromiseResp<Society>>(SocietyEvents.SEND_SOCIETY_MESSAGE, {
                     number,
                     anonymous,
                     message,
                     position,
+                    info,
                 }).then(serverResp => {
                     if (serverResp.status !== 'ok') {
                         return addAlert({
