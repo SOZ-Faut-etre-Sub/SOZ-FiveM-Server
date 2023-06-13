@@ -25,10 +25,29 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
     const [emojiKeyboard, setEmojiKeyboard] = useState(false);
     const { sendMessage } = useMessageAPI();
 
+    const maxMessageLength = 512; // column length in DB
+
+    const messageLenth = message.trim().length;
+    let messagesCount;
+    if (messageLenth == 0) {
+        messagesCount = '0/0';
+    } else {
+        messagesCount =
+            '' +
+            (maxMessageLength - ((messageLenth - 1) % maxMessageLength) - 1) +
+            '/' +
+            (Math.floor((messageLenth - 1) / maxMessageLength) + 1);
+    }
+
     const handleSubmit = async () => {
         if (message.trim()) {
             setEmojiKeyboard(false);
-            await sendMessage({ conversationId: messageConversationId, message });
+            for (let i = 0; i < Math.floor((messageLenth - 1) / maxMessageLength) + 1; i++) {
+                await sendMessage({
+                    conversationId: messageConversationId,
+                    message: message.substring(i * maxMessageLength, (i + 1) * maxMessageLength),
+                });
+            }
             setMessage('');
         }
     };
@@ -90,6 +109,14 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
             >
                 <SendIcon className="w-5 h-5 m-2 pt-0.5 text-white -rotate-45" />
             </button>
+            <div
+                className={cn('w-12 shrink-0', {
+                    'text-white': config.theme.value === 'dark',
+                    'text-black': config.theme.value === 'light',
+                })}
+            >
+                {messagesCount}
+            </div>
         </div>
     );
 };
