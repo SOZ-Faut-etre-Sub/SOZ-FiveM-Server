@@ -32,6 +32,8 @@ export const LICENCES = [
     { label: 'Moto', value: 'motorcycle' },
     { label: 'Hélicoptère', value: 'heli' },
     { label: 'Bateau', value: 'boat' },
+    { label: 'Bateau', value: 'boat' },
+    { label: 'Arme', value: 'weapon' },
 ];
 
 export type GameMasterSubMenuState = {

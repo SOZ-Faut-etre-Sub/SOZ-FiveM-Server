@@ -22,10 +22,15 @@ class _SocietyService {
         this.qbCore = global.exports['qb-core'].GetCoreObject();
     }
 
-    createMessageBroadcastEvent(player: number, messageId: number, sourcePhone: string, data: PreDBSociety): void {
+    createMessageBroadcastEvent(
+        player: number,
+        messageId: number,
+        sourcePhone: string,
+        data: PreDBSociety,
+    ): void {
         const qbCorePlayer = this.qbCore.Functions.GetPlayer(player);
 
-        emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, {
+        const messageData = {
             id: messageId,
             conversation_id: data.number,
             source_phone: sourcePhone.includes('#') ? '' : sourcePhone,
@@ -35,7 +40,10 @@ class _SocietyService {
             isDone: false,
             muted: !qbCorePlayer.PlayerData.job.onduty,
             createdAt: new Date().getTime(),
-        });
+        };
+
+        emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, messageData);
+        emit(SocietyEvents.CREATE_MESSAGE_BROADCAST, { ...messageData, player, info: data.info });
     }
 
     replaceSocietyPhoneNumber(data: PreDBSociety, phoneSocietyNumber: string): PreDBSociety {
@@ -163,11 +171,13 @@ class _SocietyService {
                 [lspd, bcso, fbi]
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
+                        const data = this.addTagForSocietyMessage(reqObj.data, originalMessageNumber);
+                        data.info = {...data.info, serviceNumber: player.getSocietyPhoneNumber()};
                         this.createMessageBroadcastEvent(
                             player.source,
                             message[player.getSocietyPhoneNumber()],
                             identifier,
-                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber)
+                            data
                         );
                     });
             }

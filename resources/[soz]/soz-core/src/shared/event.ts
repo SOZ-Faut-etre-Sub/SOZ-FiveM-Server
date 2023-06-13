@@ -250,6 +250,9 @@ export enum ServerEvent {
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:server:talent:disable-crimi',
 
     CRAFTING_TRAINING = 'soz-core:crafting:craft-training',
+
+    ALERT_POLICE = 'soz-core:alert:notification:draw-police',
+    ALERT_MESSAGE = 'phone:createSocietyMessagesBroadcast',
 }
 
 export enum ClientEvent {
@@ -329,6 +332,7 @@ export enum ClientEvent {
     NEWS_DRAW = 'soz-core:client:news:draw',
     NOTIFICATION_DRAW = 'soz-core:client:notification:draw',
     NOTIFICATION_DRAW_ADVANCED = 'soz-core:client:notification:draw-advanced',
+    NOTIFICATION_DRAW_POLICE = 'soz-core:client:notification:draw-police',
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
 
     NUI_HIDE_PANEL = 'soz-core:client:nui:hide-panel',
