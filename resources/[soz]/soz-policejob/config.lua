@@ -115,7 +115,6 @@ Config.Fines = {
             },
         },
     },
-}
     ["bcso"] = {
         [1] = {
             label = "Catégorie 1",
