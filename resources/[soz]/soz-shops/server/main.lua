@@ -263,6 +263,10 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
     end
 end)
 
+local giveAnimation = function(src)
+    TriggerClientEvent("animation:client:give", src)
+end
+
 RegisterNetEvent("shops:server:validateCart", function(cartContent)
     local Player = QBCore.Functions.GetPlayer(source)
     local cartAmount = 0
@@ -275,6 +279,7 @@ RegisterNetEvent("shops:server:validateCart", function(cartContent)
 
     if Player then
         local canCarryCart = exports["soz-inventory"]:CanCarryItems(Player.PlayerData.source, cartContent)
+        giveAnimation(Player.PlayerData.source)
 
         if not canCarryCart then
             TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas porter cette quantité...", "error")

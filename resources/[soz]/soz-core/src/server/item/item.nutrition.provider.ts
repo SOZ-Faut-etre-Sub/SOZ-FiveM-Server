@@ -7,6 +7,7 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { CocktailItem, DrinkItem, FoodItem, InventoryItem, Item, LiquorItem } from '../../shared/item';
 import { PlayerMetadata } from '../../shared/player';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { ItemService } from './item.service';
@@ -27,6 +28,9 @@ export class ItemNutritionProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     private lastItemEatByPlayer: Record<string, string> = {};
 
@@ -181,6 +185,12 @@ export class ItemNutritionProvider {
         itemInv.metadata.crateElements.map(meal => {
             this.inventoryManager.addItemToInventory(source, meal.name, meal.amount, { ...meal.metadata });
         });
+        let notificationLunchboxLabel = item.label;
+        if (itemInv.metadata.label) {
+            notificationLunchboxLabel = item.label + ' "' + itemInv.metadata.label + '"';
+        }
+
+        this.notifier.notify(source, 'Vous avez ouvert votre ~g~' + notificationLunchboxLabel + '~s~ !', 'success');
     }
 
     @Once()
