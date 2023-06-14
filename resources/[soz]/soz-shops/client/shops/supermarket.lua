@@ -19,7 +19,7 @@ local function table_deepclone(tbl)
         end
     end
     return tbl
-end 
+end
 
 function SupermarketShop:GenerateMenu()
     local shopTexture = "menu_shop_supermarket"
@@ -27,7 +27,7 @@ function SupermarketShop:GenerateMenu()
 
     for itemID, item in pairs(self:getShopProducts()) do
         local sharedItem = QBCore.Shared.Items[item.name]
-        if sharedItem and item.amount > 0 then 
+        if sharedItem and item.amount > 0 then
             local shopItem = table_deepclone(sharedItem)
             shopItem.price = item.price
             shopItem.amount = item.amount
@@ -37,7 +37,7 @@ function SupermarketShop:GenerateMenu()
         end
     end
 
-    exports['soz-inventory']:openShop(shopContent)
+    exports["soz-inventory"]:openShop(shopContent)
 end
 
 --- Exports shop

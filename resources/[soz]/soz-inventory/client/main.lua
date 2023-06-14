@@ -134,13 +134,12 @@ RegisterNUICallback("closeNUI", function(data, cb)
     end
 end)
 
-RegisterNUICallback("player/askForAmount", function(data,cb)
+RegisterNUICallback("player/askForAmount", function(data, cb)
     SetNuiFocus(false, false)
     amount = exports["soz-core"]:Input("Quantité", 5, 1)
     SetNuiFocus(true, true)
     cb(amount)
 end)
-
 
 CreateThread(function()
     for id, storage in pairs(Config.Storages) do
@@ -187,8 +186,17 @@ end)
 
 -- SUPERMARKET SHOP
 
-exports("openShop", function (shopContent)
-    SendNUIMessage({ action = "openShop", shopContent = shopContent})
+exports("openShop", function(shopContent)
+    SendNUIMessage({action = "openShop", shopContent = shopContent})
     SetNuiFocus(true, true)
 end)
 
+RegisterNUICallback("player/validateCart", function(data, cb)
+    SetNuiFocus(false, false)
+    local cartContent = data
+
+    TriggerServerEvent("shops:server:validateCart", cartContent)
+
+    SetNuiFocus(true, true)
+    cb(amount)
+end)
