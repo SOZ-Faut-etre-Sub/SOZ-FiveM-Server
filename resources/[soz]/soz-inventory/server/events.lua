@@ -7,7 +7,7 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
         targetMoney = Target.PlayerData.money
     end
 
-    local sourceInv = Inventory(source)
+    local sourceInv = Func(source)
     local targetInv = GetOrCreateInventory(storageType, invID, ctx)
 
     if Inventory.AccessGranted(targetInv, Player.PlayerData.source) then

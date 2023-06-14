@@ -263,6 +263,37 @@ RegisterNetEvent("shops:server:pay", function(brand, product, amount)
     end
 end)
 
+RegisterNetEvent("shops:server:validateCart", function(cartContent)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local cartAmount = 0
+    local cartWeight = 0
+
+    for itemID, item in pairs(cartContent) do
+        cartAmount = cartAmount + (item.amount * item.price)
+        cartWeight = cartWeight + (item.amount * item.weight)
+    end
+
+    if Player then
+        local canCarryCart = exports["soz-inventory"]:CanCarryItems(Player.PlayerData.source, cartContent)
+
+        if not canCarryCart then
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas porter cette quantité...", "error")
+            return
+        end
+
+        if Player.Functions.RemoveMoney("money", cartAmount) then
+            for _, item in pairs(cartContent) do
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, false, false)
+            end
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                               ("Votre achat a bien été validé ! Merci. Prix : ~g~$%s"):format(cartAmount))
+
+        else
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez d'argent", "error")
+        end
+    end
+end)
+
 RegisterNetEvent("shops:server:resetTattoos", function()
     local Player = QBCore.Functions.GetPlayer(source)
 

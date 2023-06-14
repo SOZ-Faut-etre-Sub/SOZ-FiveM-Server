@@ -53,25 +53,23 @@ export const ShopContainer = () => {
         [closeMenu],
     );
 
-    const askForAmount = useCallback((event: any) => {
-        if (!event.active.data.current) return;
-
-        fetch(`https://soz-inventory/player/askForAmount`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: JSON.stringify({})
-        }).then((amount) => {
-            return amount;
-        });
-    }, []);
-
     const calcCartPrice = (cartContent: ShopItem[]) => {
         return cartContent.reduce((accumulator: number, cartItem: ShopItem) => {
             return accumulator + (cartItem.amount * cartItem.price);
         }, 0);
     };
+
+    const validateCart = useCallback((cartContent: ShopItem[]) => {
+        fetch(`https://soz-inventory/player/validateCart`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(cartContent)
+        }).then(() => {
+            closeNUI(() => closeMenu());
+        });
+    }, [closeMenu]);
 
     const putInCart = useCallback((event: DragEndEvent) => {
         if (!event.active.data.current) return;
@@ -208,6 +206,7 @@ export const ShopContainer = () => {
                                 id='cart'
                                 rows={2}
                                 items={cartContent.map((item, i) => ({ ...item, id: i }))}
+                                validateAction={validateCart}
                             />
                         </ContainerWrapper>
                     </div>
