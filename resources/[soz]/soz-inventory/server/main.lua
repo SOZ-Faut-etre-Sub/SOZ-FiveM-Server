@@ -380,7 +380,7 @@ function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item,
         label = item.label,
         metadata = metadata,
         amount = amount,
-        weight = item.weight
+        weight = item.weight,
     })
     return slotItem.metadata, true, slot
 end
