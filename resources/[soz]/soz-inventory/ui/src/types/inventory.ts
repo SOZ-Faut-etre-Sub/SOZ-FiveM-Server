@@ -62,6 +62,7 @@ export type MealMetadata = {
         metadata: InventoryItemMetadata;
         amount: number;
         label: string;
+        weight: number;
 };
     
 export type InventoryItemMetadata = {

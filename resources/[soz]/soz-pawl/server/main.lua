@@ -272,7 +272,7 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil,
                                          function(success, reason)
             if success then
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !",
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez fabriqué  ~g~" .. craft.RewardAmount .. " " .. craft.Name .. "~s~ !",
                                    "success")
 
                 TriggerEvent("monitor:server:event", "job_pawl_craft",
