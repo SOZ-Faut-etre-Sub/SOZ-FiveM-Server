@@ -382,6 +382,14 @@ function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item,
         amount = amount,
         weight = item.weight,
     })
+
+    local notificationLunchboxLabel = tostring(slotItem.label)
+    if slotItem.metadata.label then
+        notificationLunchboxLabel = notificationLunchboxLabel .. " \"" .. slotItem.metadata.label .. "\""
+    end
+
+    TriggerClientEvent("soz-core:client:notification:draw", source,
+                       "Vous avez ajouté ~b~" .. item.label .. "~s~ dans ~g~" .. notificationLunchboxLabel .. "~s~ !", "success")
     return slotItem.metadata, true, slot
 end
 
