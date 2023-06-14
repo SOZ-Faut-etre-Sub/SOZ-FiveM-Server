@@ -53,6 +53,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         let itemExtraLabel = '';
         let contextExtraLabel = '';
         let crateContent = '';
+        let crateWeight = 0;
 
         let illustrator = item.illustrator || ''
 
@@ -68,11 +69,13 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if(item.metadata.label){
                 itemLabel = `${item.label} "${item.metadata.label}"`
             }
-
             item.metadata.crateElements.map(meal => {
                 const expiration = new Date(meal?.metadata?.expiration ?? '')
                 crateContent += `<br>- ${meal.amount} ${meal.label} [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
+                crateWeight = crateWeight + (meal.amount * meal.weight)
             })
+            
+            itemExtraLabel = `[${crateWeight/1000}/10 Kg]`
             
         } else if (item?.metadata?.expiration) {
             const currentTime = new Date().getTime();

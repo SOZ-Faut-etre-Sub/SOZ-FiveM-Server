@@ -6,8 +6,8 @@ RegisterServerEvent("inventory:server:openInventory", function(storageType, invI
         local Target = QBCore.Functions.GetPlayer(invID)
         targetMoney = Target.PlayerData.money
     end
-
-    local sourceInv = Func(source)
+    
+    local sourceInv = Inventory(source)
     local targetInv = GetOrCreateInventory(storageType, invID, ctx)
 
     if Inventory.AccessGranted(targetInv, Player.PlayerData.source) then
