@@ -2,6 +2,8 @@ import { Injectable } from '@core/decorators/injectable';
 import { Invoice } from '@public/shared/bank';
 import { Err, Ok, Result } from '@public/shared/result';
 
+import BankTransferDB from './banktransfer.db';
+
 @Injectable()
 export class BankService {
     public transferBankMoney(source: string, target: string, amount: number): Promise<Result<boolean, string>> {
@@ -26,6 +28,10 @@ export class BankService {
                 }
             });
         });
+    }
+
+    async handleBankTransfer(transmitter: string, receiver: string, amount: number) {
+        await BankTransferDB.createTransfer(transmitter, receiver, amount);
     }
 
     public getAllInvoicesForPlayer(source: number): Record<string, Invoice> {
