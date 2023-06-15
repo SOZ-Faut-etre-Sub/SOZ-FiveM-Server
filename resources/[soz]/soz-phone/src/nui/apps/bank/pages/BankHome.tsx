@@ -27,7 +27,7 @@ export const BankHome = memo(() => {
     }
 
     return (
-        <AppContent>
+        <AppContent scrollable={false}>
             <div className="m-auto pt-1 pb-3 flex flex-col w-5/6">
                 <h2
                     className={cn('text-3xl', {

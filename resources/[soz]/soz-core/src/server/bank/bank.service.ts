@@ -39,7 +39,7 @@ export class BankService {
             amount: amount,
             transmitterAccount: transmitter,
             receiverAccount: receiver,
-            createdAt: new Date().getTime(),
+            createdAt: Date.now(),
         });
     }
 

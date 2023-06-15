@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 import { useConfig } from '../../hooks/usePhone';
 
-export const NavBarContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
+export const NavBarContainer: FunctionComponent<any> = ({ children, nbColumns = 3 }) => {
     const config = useConfig();
 
     return (
         <div
-            className={cn('absolute -bottom-3.5 inset-x-0 grid grid-cols-3 content-start h-20', {
+            className={cn(`absolute -bottom-3.5 inset-x-0 grid grid-cols-${nbColumns} content-start h-20`, {
                 'bg-ios-700 text-white': config.theme.value === 'dark',
                 'bg-white text-black': config.theme.value === 'light',
             })}

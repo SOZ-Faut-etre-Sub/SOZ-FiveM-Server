@@ -1,3 +1,4 @@
+import { AppContent } from '@ui/components/AppContent';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -8,11 +9,13 @@ const TransfersList = (): any => {
     const transfersList = useSelector((state: RootState) => state.appBankTransfersList);
 
     return (
-        <ul className={`p-2`}>
-            {transfersList.map(transfer => (
-                <TransferCard key={transfer.id} {...transfer} />
-            ))}
-        </ul>
+        <AppContent scrollable={true}>
+            <ul className={`p-2`}>
+                {transfersList.map(transfer => (
+                    <TransferCard key={transfer.id} {...transfer} />
+                ))}
+            </ul>
+        </AppContent>
     );
 };
 

@@ -216,6 +216,15 @@ class _PlayerService {
     }
 
     /**
+     * Return the character name for a given account
+     * @param account The account to return name for
+     **/
+    async getNameFromAccount(account: string): Promise<string | null> {
+        // Whether we fetch from database if not found in online players
+        return await this.playerDB.getNameFromAccount(account);
+    }
+
+    /**
      * Return all player with the given society number
      * @param phoneNumber The phone number to return identifier for
      **/

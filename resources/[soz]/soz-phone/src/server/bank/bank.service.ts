@@ -34,10 +34,8 @@ class _BankService {
                     transfer.receiverName = transfer.receiverAccount;
                     transfer.transmitterName = transfer.transmitterAccount;
 
-                    transfer.receiverName = await this.bankTransferDB.getNameFromAccount(transfer.receiverAccount);
-                    transfer.transmitterName = await this.bankTransferDB.getNameFromAccount(
-                        transfer.transmitterAccount
-                    );
+                    transfer.receiverName = await PlayerService.getNameFromAccount(transfer.receiverAccount);
+                    transfer.transmitterName = await PlayerService.getNameFromAccount(transfer.transmitterAccount);
                 })
             );
 
@@ -55,8 +53,8 @@ class _BankService {
         const transmitterIdentifier = await PlayerService.getIdentifierByAccount(reqObj.data.transmitterAccount);
         const transmitterPlayer = PlayerService.getPlayerFromIdentifier(transmitterIdentifier);
 
-        const receiverName = await this.bankTransferDB.getNameFromAccount(reqObj.data.receiverAccount);
-        const transmitterName = await this.bankTransferDB.getNameFromAccount(reqObj.data.transmitterAccount);
+        const receiverName = await PlayerService.getNameFromAccount(reqObj.data.receiverAccount);
+        const transmitterName = await PlayerService.getNameFromAccount(reqObj.data.transmitterAccount);
 
         if (receiverPlayer) {
             emitNet(TransfersListEvents.TRANSFER_BROADCAST, receiverPlayer.source, {
@@ -66,7 +64,7 @@ class _BankService {
                 receiverAccount: reqObj.data.receiverAccount,
                 receiverName: receiverName,
                 transmitterName: transmitterName,
-                createdAt: reqObj.data.id,
+                createdAt: reqObj.data.createdAt,
             });
         }
 
@@ -78,7 +76,7 @@ class _BankService {
                 receiverAccount: reqObj.data.receiverAccount,
                 receiverName: receiverName,
                 transmitterName: transmitterName,
-                createdAt: reqObj.data.id,
+                createdAt: reqObj.data.createdAt,
             });
         }
         resp({ status: 'ok', data: 1 });
