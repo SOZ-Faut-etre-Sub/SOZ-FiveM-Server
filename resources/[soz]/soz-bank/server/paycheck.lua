@@ -1,6 +1,7 @@
 function NotifyPaycheck(playerID, isOnDuty, amount)
-    TriggerClientEvent("soz-core:client:notification:draw-advanced", playerID, "Maze Banque", "Mouvement bancaire",
-                       "Votre salaire ~g~" .. (isOnDuty and "en service" or "hors-service") .. "~s~ de ~g~" .. amount .. "$~s~ vient d'être versé sur votre compte", "CHAR_BANK_MAZE")
+    TriggerClientEvent("soz-core:client:notification:draw-advanced", playerID, "Maze Banque", "Mouvement bancaire", "Votre salaire ~g~" ..
+                           (isOnDuty and "en service" or "hors-service") .. "~s~ de ~g~" .. amount .. "$~s~ vient d'être versé sur votre compte",
+                       "CHAR_BANK_MAZE")
 end
 
 function PaycheckLoop()
