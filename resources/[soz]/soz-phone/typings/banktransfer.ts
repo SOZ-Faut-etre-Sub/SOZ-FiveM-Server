@@ -10,4 +10,5 @@ export interface BankTransfer {
 
 export enum TransfersListEvents {
     FETCH_TRANSFERS = 'phone:app:bank:fetchTransfers',
+    TRANSFER_BROADCAST = 'phone:app:bank:transferBroadcast',
 }

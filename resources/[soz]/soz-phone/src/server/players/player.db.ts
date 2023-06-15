@@ -6,6 +6,14 @@ export class PlayerRepo {
 
         return result?.citizenid || null;
     }
+
+    async fetchIdentifierFromAccount(account: string): Promise<string | null> {
+        const result = await exports.oxmysql.single_async(`SELECT citizenid FROM player WHERE charinfo LIKE ?`, [
+            '%"account":"' + account + '"%',
+        ]);
+
+        return result?.citizenid || null;
+    }
 }
 
 export default new PlayerRepo();

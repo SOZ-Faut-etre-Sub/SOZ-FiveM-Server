@@ -1,6 +1,7 @@
 import { IBankCredentials } from '../../../typings/app/bank';
-import { BankTransfer } from '../../../typings/banktransfer';
+import { BankTransfer, TransfersListEvents } from '../../../typings/banktransfer';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
+import PlayerService from '../players/player.service';
 import { bankLogger } from './bank.utils';
 import BankTransferDB, { _BankTransferDB } from './bankTransfer.db';
 
@@ -28,12 +29,6 @@ class _BankService {
             const account = exports['soz-bank'].GetPlayerAccount(reqObj.source);
             const transfers = await this.bankTransferDB.getTransfers(account.account);
 
-            let players = this.qbCore.Functions.GetQBPlayers();
-
-            if (!Array.isArray(players)) {
-                players = Object.values(players);
-            }
-
             await Promise.all(
                 transfers.map(async transfer => {
                     transfer.receiverName = transfer.receiverAccount;
@@ -51,6 +46,42 @@ class _BankService {
             bankLogger.error(`Error in fetchTransfers, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
+    }
+
+    async handleNewTransfer(reqObj: PromiseRequest<BankTransfer>, resp: PromiseEventResp<number>): Promise<void> {
+        const receiverIdentifier = await PlayerService.getIdentifierByAccount(reqObj.data.receiverAccount);
+        const receiverPlayer = PlayerService.getPlayerFromIdentifier(receiverIdentifier);
+
+        const transmitterIdentifier = await PlayerService.getIdentifierByAccount(reqObj.data.transmitterAccount);
+        const transmitterPlayer = PlayerService.getPlayerFromIdentifier(transmitterIdentifier);
+
+        const receiverName = await this.bankTransferDB.getNameFromAccount(reqObj.data.receiverAccount);
+        const transmitterName = await this.bankTransferDB.getNameFromAccount(reqObj.data.transmitterAccount);
+
+        if (receiverPlayer) {
+            emitNet(TransfersListEvents.TRANSFER_BROADCAST, receiverPlayer.source, {
+                id: reqObj.data.id,
+                amount: reqObj.data.amount,
+                transmitterAccount: reqObj.data.transmitterAccount,
+                receiverAccount: reqObj.data.receiverAccount,
+                receiverName: receiverName,
+                transmitterName: transmitterName,
+                createdAt: reqObj.data.id,
+            });
+        }
+
+        if (transmitterPlayer) {
+            emitNet(TransfersListEvents.TRANSFER_BROADCAST, transmitterPlayer.source, {
+                id: reqObj.data.id,
+                amount: reqObj.data.amount,
+                transmitterAccount: reqObj.data.transmitterAccount,
+                receiverAccount: reqObj.data.receiverAccount,
+                receiverName: receiverName,
+                transmitterName: transmitterName,
+                createdAt: reqObj.data.id,
+            });
+        }
+        resp({ status: 'ok', data: 1 });
     }
 }
 

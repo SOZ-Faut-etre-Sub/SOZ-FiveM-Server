@@ -17,3 +17,10 @@ onNetPromise<string, BankTransfer[]>(TransfersListEvents.FETCH_TRANSFERS, (reqOb
         resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });
 });
+
+onNetPromise<BankTransfer, number>(TransfersListEvents.TRANSFER_BROADCAST, (reqObj, resp) => {
+    BankService.handleNewTransfer(reqObj, resp).catch(e => {
+        bankLogger.error(`Error occured in new transfer event (${reqObj.source}), Error:  ${e.message}`);
+        resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
+    });
+});

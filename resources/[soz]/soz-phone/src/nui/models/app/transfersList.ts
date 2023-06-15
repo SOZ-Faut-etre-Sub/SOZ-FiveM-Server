@@ -18,9 +18,6 @@ export const appBankTransfersList = createModel<RootModel>()({
         },
     },
     effects: dispatch => ({
-        async setTransfer(payload: BankTransfer[]) {
-            dispatch.appBankTransfersList.set(payload);
-        },
         async appendTransfer(payload: BankTransfer) {
             dispatch.appBankTransfersList.add(payload);
         },
