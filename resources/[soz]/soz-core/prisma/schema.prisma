@@ -27,11 +27,11 @@ model bank_accounts {
 }
 
 model bank_transfers {
-  id              Int      @id @default(autoincrement())
-  amount          BigInt   @default(0)
-  transmitter     String   @db.VarChar(50)
-  receiver        String   @db.VarChar(50)
-  createdAt       DateTime @default(now()) @db.Timestamp(0)
+  id                    Int      @id @default(autoincrement())
+  amount                BigInt   @default(0)
+  transmitterAccount    String   @db.VarChar(50)
+  receiverAccount       String   @db.VarChar(50)
+  createdAt             DateTime @default(now()) @db.Timestamp(0)
 }
 
 model bank_statements {

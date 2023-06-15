@@ -7,7 +7,7 @@ export class _BankTransferDB {
      */
     async createTransfer(transmitter: string, receiver: string, amount: number): Promise<number> {
         const id = await exports.oxmysql.insert_async(
-            'INSERT INTO bank_transfers (amount, transmitter, receiver) VALUES (?, ?, ?)',
+            'INSERT INTO bank_transfers (amount, transmitterAccount, receiverAccount) VALUES (?, ?, ?)',
             [amount, transmitter, receiver]
         );
 
