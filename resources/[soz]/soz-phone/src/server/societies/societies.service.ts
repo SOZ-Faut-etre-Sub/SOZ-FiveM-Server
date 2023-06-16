@@ -22,12 +22,7 @@ class _SocietyService {
         this.qbCore = global.exports['qb-core'].GetCoreObject();
     }
 
-    createMessageBroadcastEvent(
-        player: number,
-        messageId: number,
-        sourcePhone: string,
-        data: PreDBSociety,
-    ): void {
+    createMessageBroadcastEvent(player: number, messageId: number, sourcePhone: string, data: PreDBSociety): void {
         const qbCorePlayer = this.qbCore.Functions.GetPlayer(player);
 
         const messageData = {
@@ -40,10 +35,10 @@ class _SocietyService {
             isDone: false,
             muted: !qbCorePlayer.PlayerData.job.onduty,
             createdAt: new Date().getTime(),
+            info: data.info,
         };
 
         emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, messageData);
-        emit(SocietyEvents.CREATE_MESSAGE_BROADCAST, { ...messageData, player, info: data.info });
     }
 
     replaceSocietyPhoneNumber(data: PreDBSociety, phoneSocietyNumber: string): PreDBSociety {
@@ -172,7 +167,7 @@ class _SocietyService {
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
                         const data = this.addTagForSocietyMessage(reqObj.data, originalMessageNumber);
-                        data.info = {...data.info, serviceNumber: player.getSocietyPhoneNumber()};
+                        data.info = { ...data.info, serviceNumber: player.getSocietyPhoneNumber() };
                         this.createMessageBroadcastEvent(
                             player.source,
                             message[player.getSocietyPhoneNumber()],

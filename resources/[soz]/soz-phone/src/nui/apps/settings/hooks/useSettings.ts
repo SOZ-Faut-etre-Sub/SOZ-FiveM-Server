@@ -23,7 +23,9 @@ export interface IPhoneSettings {
     societyNotification: SettingOption;
     societyNotificationVol: number;
     handsFree: boolean;
-    dynamicAlerts: boolean;
+    dynamicAlert: boolean;
+    dynamicAlertVol: number;
+    dynamicAlertDuration: SettingOption;
 }
 
 export const useSettingsAPI = () => {

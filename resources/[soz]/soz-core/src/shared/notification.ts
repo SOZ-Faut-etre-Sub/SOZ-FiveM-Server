@@ -20,6 +20,13 @@ export type TPoliceNotification = BasicNotification & {
     logo: NotificationPoliceLogoType;
 };
 
-export type NotificationPoliceType = 'default' | 'robbery' | 'vandalism' | 'racket' | 'shooting' | 'explosion' | 'auto-theft';
+export type NotificationPoliceType =
+    | 'default'
+    | 'robbery'
+    | 'vandalism'
+    | 'racket'
+    | 'shooting'
+    | 'explosion'
+    | 'auto-theft';
 
 export type NotificationPoliceLogoType = 'lspd' | 'bcso' | 'fib';

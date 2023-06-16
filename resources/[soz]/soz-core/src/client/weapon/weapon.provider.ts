@@ -228,7 +228,7 @@ export class WeaponProvider {
                     number: '555-POLICE',
                     message: `${zone}: ${getRandomItem(GunShotMessage).replace('${0}', name)}`,
                     position: true,
-                    info: {type: 'shooting'},
+                    info: { type: 'shooting' },
                     overrideIdentifier: 'System',
                 });
             }
@@ -245,7 +245,7 @@ export class WeaponProvider {
             number: '555-POLICE',
             message: getRandomItem(ExplosionMessage).replace('${0}', zone),
             position: false,
-            info: {type: 'explosion'},
+            info: { type: 'explosion' },
             overrideIdentifier: 'System',
             pedPosition: JSON.stringify({ x: x, y: y, z: z }),
         });

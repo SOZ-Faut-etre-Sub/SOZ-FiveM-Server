@@ -531,7 +531,7 @@ export class VehicleLockProvider {
             number: '555-POLICE',
             message: getRandomItem(messages).replace('${0}', zone),
             position: true,
-            info: {type: 'auto-theft'},
+            info: { type: 'auto-theft' },
             overrideIdentifier: 'System',
         });
     }

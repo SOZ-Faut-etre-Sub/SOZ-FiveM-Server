@@ -22,7 +22,7 @@ import { useQueryParams } from '../../../common/hooks/useQueryParams';
 import { deleteQueryFromLocation } from '../../../common/utils/deleteQueryFromLocation';
 import { usePhoneConfig } from '../../../config/hooks/usePhoneConfig';
 import { useConfig } from '../../../hooks/usePhone';
-import { useAvatar, usePhoneNumber } from '../../../hooks/useSimCard';
+import { useAvatar, usePhoneNumber, usePhoneSocietyNumber } from '../../../hooks/useSimCard';
 import { useApp } from '../../../os/apps/hooks/useApps';
 import { useSnackbar } from '../../../os/snackbar/hooks/useSnackbar';
 import { store } from '../../../store';
@@ -41,6 +41,7 @@ export const SettingsHome = () => {
     const settingsApp = useApp('settings');
     const { pathname, search } = useLocation();
     const navigate = useNavigate();
+    const societyNumber = usePhoneSocietyNumber();
 
     const phoneConfig = usePhoneConfig();
     const myNumber = usePhoneNumber();
@@ -52,6 +53,10 @@ export const SettingsHome = () => {
     const { updateProfilePicture } = useSettingsAPI();
 
     const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
+
+    const canShowDynamicAlerts = (): boolean => {
+        return ['555-LSPD', '555-BCSO', '555-FBI'].some(allowedNumber => allowedNumber === societyNumber);
+    };
 
     const handleSettingChange = (key: string | number, value: any) => {
         if (key === 'zoom') {
@@ -68,6 +73,11 @@ export const SettingsHome = () => {
     };
     const themes = phoneConfig.themes.map(
         MapSettingItem(config.theme, (val: SettingOption) => handleSettingChange('theme', val))
+    );
+    const dynamicAlertDurationOptions = phoneConfig.dynamicAlertDurationOptions.map(
+        MapSettingItem(config.dynamicAlertDuration, (val: SettingOption) =>
+            handleSettingChange('dynamicAlertDuration', val)
+        )
     );
     const zoomOptions = phoneConfig.zoomOptions.map(
         MapSettingItem(config.zoom, (val: SettingOption) => handleSettingChange('zoom', val))
@@ -159,14 +169,35 @@ export const SettingsHome = () => {
                         value={config.handsFree}
                         onClick={curr => handleSettingChange('handsFree', !curr)}
                     />
-                    <SettingSwitch
-                        label={t('SETTINGS.OPTIONS.DYNAMIC_ALERTS')}
-                        icon={<BellIcon />}
-                        color="bg-orange-500"
-                        value={config.dynamicAlerts}
-                        onClick={curr => handleSettingChange('dynamicAlerts', !curr)}
-                    />
                 </List>
+                {canShowDynamicAlerts() && (
+                    <>
+                        <List>
+                            <SettingSwitch
+                                label={t('SETTINGS.OPTIONS.DYNAMIC_ALERTS')}
+                                icon={<BellIcon />}
+                                color="bg-orange-500"
+                                value={config.dynamicAlert}
+                                onClick={curr => handleSettingChange('dynamicAlert', !curr)}
+                            />
+                            <SettingItem
+                                label={t('SETTINGS.OPTIONS.DYNAMIC_ALERTS_DURATION')}
+                                value={config.dynamicAlertDuration.label}
+                                options={dynamicAlertDurationOptions}
+                                onClick={openMenu}
+                                icon={<AdjustmentsIcon />}
+                                color="bg-[#5756CE]"
+                            />
+                            <SettingItemSlider
+                                label={t('SETTINGS.OPTIONS.DYNAMIC_ALERTS_VOLUME')}
+                                iconStart={<VolumeOffIcon />}
+                                iconEnd={<VolumeUpIcon />}
+                                value={config.dynamicAlertVol}
+                                onCommit={e => handleSettingChange('dynamicAlertVol', parseInt(e.target.value))}
+                            />
+                        </List>
+                    </>
+                )}
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.RINGTONE')}

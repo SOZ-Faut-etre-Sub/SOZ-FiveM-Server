@@ -40,6 +40,24 @@
             "value": "default.png"
         }
     ],
+    "dynamicAlertDurationOptions": [
+        {
+            "label": "2 secondes",
+            "value": 2000
+        },
+        {
+            "label": "5 secondes",
+            "value": 5000
+        },
+        {
+            "label": "10 secondes",
+            "value": 10000
+        },
+        {
+            "label": "15 secondes",
+            "value": 15000
+        }
+    ],
     "zoomOptions": [
         {
             "label": "200%",
@@ -197,7 +215,12 @@
         "notiSoundVol": 50,
         "societyNotificationVol": 50,
         "handsFree": false,
-        "dynamicAlerts": false
+        "dynamicAlert": false,
+        "dynamicAlertVol": 50,
+        "dynamicAlertDuration": {
+            "label": "5 secondes",
+            "value": 5000
+        }
     },
     "themes": [
         {

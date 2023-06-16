@@ -3,7 +3,7 @@ import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
-import { NotificationPoliceLogoType, NotificationPoliceType, NotificationType } from '../../shared/notification';
+import { NotificationType } from '../../shared/notification';
 import { Notifier } from '../notifier';
 
 @Provider()
@@ -37,24 +37,28 @@ export class HudNotificationsProvider {
         });
     }
 
-    @Exportable('DrawAdvancedNotification')
-    @OnEvent(ClientEvent.NOTIFICATION_DRAW_POLICE)
-    public async drawPoliceNotification(
-        title: string,
-        message: string,
-        logo: NotificationPoliceLogoType,
-        type: NotificationPoliceType,
-        hour: string,
-        delay = 10000
-    ) {
+    @Exportable('SendPoliceNotification')
+    public async getPoliceNotification(message) {
+        let messageLogo: 'bcso' | 'lspd' | 'fib' = 'lspd';
+        if (message.info && message.info.serviceNumber) {
+            if (message.info.serviceNumber === '555-BCSO') {
+                messageLogo = 'bcso';
+            }
+            if (message.info.serviceNumber === '555-FBI') {
+                messageLogo = 'fib';
+            }
+        }
+        const duration =
+            message.info !== undefined && message.info.duration !== undefined ? message.info.duration : 5000;
+
         await this.notifier.notifyPolice({
-            title,
-            message,
-            logo,
-            policeStyle: type,
+            title: '',
+            message: message.message,
+            logo: messageLogo,
+            policeStyle: message.info.type,
             style: 'info',
-            hour,
-            delay,
+            hour: message.createdAt,
+            delay: duration,
         });
     }
 }
