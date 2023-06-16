@@ -69,7 +69,7 @@ export class InputService {
 
     @OnNuiEvent(NuiEvent.InputCancel)
     public async cancelInput(): Promise<void> {
-        if (this.currentInputValidate) {
+        if (this.currentInputResolve) {
             this.currentInputResolve(null);
         }
 
