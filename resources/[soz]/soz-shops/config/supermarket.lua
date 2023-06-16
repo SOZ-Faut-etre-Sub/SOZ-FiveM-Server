@@ -8,10 +8,11 @@ Config.Products["supermarket"] = {
     [7] = {name = "phone", price = 499, amount = 2000},
     [8] = {name = "umbrella", price = 1000, amount = 2000},
     [9] = {name = "diving_gear", price = 2600, amount = 2000},
-    [10] = {name = "instantazouille", price = 10, amount = 2000},
-    [11] = {name = "mini_zigmac", price = 10, amount = 2000},
-    [12] = {name = "zait_fruite", price = 10, amount = 2000},
-    [13] = {name = "zanta_glace_energetique", price = 10, amount = 2000},
+    [10] = {name = "zpad", price = 2400, amount = 2000},
+    [11] = {name = "instantazouille", price = 10, amount = 2000},
+    [12] = {name = "mini_zigmac", price = 10, amount = 2000},
+    [13] = {name = "zait_fruite", price = 10, amount = 2000},
+    [14] = {name = "zanta_glace_energetique", price = 10, amount = 2000},
 }
 
 Config.Products["247supermarket-north"] = Config.Products["supermarket"]
