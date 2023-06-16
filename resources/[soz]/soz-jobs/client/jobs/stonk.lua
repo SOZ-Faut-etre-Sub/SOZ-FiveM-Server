@@ -8,7 +8,7 @@ StonkJob.CollectedShops = {} -- In-memory, player-based save
 Citizen.CreateThread(function()
     -- MENU
     StonkJob.Menus["cash-transfer"] = {
-        menu = MenuV:CreateMenu(nil, "Stonk Depository", "menu_job_carrier", "soz", "stonk:menu"),
+        menu = MenuV:CreateMenu(nil, "Stonk Security", "menu_job_carrier", "soz", "stonk:menu"),
     }
     -- DUTY
     exports["qb-target"]:AddBoxZone("stonk:duty", vector2(-18.74, -707.44), 0.2, 0.5, {

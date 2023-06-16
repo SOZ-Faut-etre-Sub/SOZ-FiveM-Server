@@ -57,7 +57,7 @@ Config.SocietyTaxes = {
 
 Config.SafeStorages = {
     ["safe_cash-transfer"] = {
-        label = "Coffre STONK Depository",
+        label = "Coffre STONK Security",
         owner = "cash-transfer",
         position = vector3(-33.94, -715.14, 40.62),
         size = vector2(1.0, 3.0),

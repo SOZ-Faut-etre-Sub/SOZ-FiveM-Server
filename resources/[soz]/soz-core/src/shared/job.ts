@@ -79,7 +79,7 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.News]: 'Twitch News',
     [JobType.Garbage]: 'BlueBird',
     [JobType.Oil]: 'Michel Transport Petrol',
-    [JobType.CashTransfer]: 'STONK Depository',
+    [JobType.CashTransfer]: 'STONK Security',
     [JobType.Bennys]: 'New Gahray',
     [JobType.Upw]: 'Unexpected Power & Water',
     [JobType.Pawl]: 'Pipe And Wooden Leg',
