@@ -443,7 +443,7 @@ SozJobCore.Jobs = {
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.CashTransfer] = {
-        label = "STONK Depository",
+        label = "STONK Security",
         platePrefix = "STNK",
         grades = {},
         menuCallback = "stonk:client:OpenSocietyMenu",

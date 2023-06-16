@@ -252,7 +252,7 @@ export const Checkpoints: Checkpoint[] = [
     },
     {
         coords: [31.24, -767.01, 42.67],
-        message: 'Connaissez-vous Stonk Depository ?',
+        message: 'Connaissez-vous Stonk Security ?',
         licenses: [DrivingSchoolLicenseType.Car, DrivingSchoolLicenseType.Truck, DrivingSchoolLicenseType.Moto],
     },
     {
