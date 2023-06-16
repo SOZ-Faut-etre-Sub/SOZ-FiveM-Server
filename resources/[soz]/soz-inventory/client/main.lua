@@ -71,6 +71,10 @@ RegisterNUICallback("transfertItem", function(data, cb)
 
     amount = getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
 
+    if (not amount) then
+        return
+    end
+
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
         if not success then
@@ -104,6 +108,10 @@ RegisterNUICallback("sortItem", function(data, cb)
     local keyModifier = data.keyModifier
 
     amount = getAmountFromShortcutModifier(keyModifier, amount)
+
+    if (not amount) then
+        return
+    end
 
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
