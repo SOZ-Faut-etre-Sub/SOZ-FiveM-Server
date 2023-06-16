@@ -821,7 +821,7 @@ export const RankOutfit = {
 
 export const Armors = {
     [GetHashKey('mp_m_freemode_01')]: {
-        ['unmark']: { Drawable: 27, Texture: 0, Palette: 0 },
+        ['unmark']: { Drawable: 59, Texture: 0, Palette: 0 },
         ['lspd']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 1,
             Texture: 0,
@@ -832,7 +832,7 @@ export const Armors = {
             Texture: 3,
             Palette: 0,
         },
-        ['lsmc']: { Drawable: 27, Texture: 0, Palette: 0 }, // is unmarked, need reskin
+        ['lsmc']: { Drawable: 27, Texture: 8, Palette: 0 }, // is unmarked, need reskin
         ['stonk']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor],
             Texture: 0,
@@ -843,10 +843,10 @@ export const Armors = {
             Texture: 2,
             Palette: 0,
         },
-        ['news']: { Drawable: 27, Texture: 0, Palette: 0 }, // is unmarked, need reskin
+        ['news']: { Drawable: 27, Texture: 2, Palette: 0 }, // is unmarked, need reskin
     },
     [GetHashKey('mp_f_freemode_01')]: {
-        ['unmark']: { Drawable: 31, Texture: 7, Palette: 0 },
+        ['unmark']: { Drawable: 59, Texture: 7, Palette: 0 },
         ['lspd']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] + 1,
             Texture: 0,
@@ -857,7 +857,7 @@ export const Armors = {
             Texture: 3,
             Palette: 0,
         },
-        ['lsmc']: { Drawable: 31, Texture: 7, Palette: 0 }, // is unmarked, need reskin
+        ['lsmc']: { Drawable: 31, Texture: 8, Palette: 0 }, // is unmarked, need reskin
         ['stonk']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor],
             Texture: 0,
@@ -868,7 +868,7 @@ export const Armors = {
             Texture: 2,
             Palette: 0,
         },
-        ['news']: { Drawable: 31, Texture: 7, Palette: 0 }, // is unmarked, need reskin
+        ['news']: { Drawable: 31, Texture: 2, Palette: 0 }, // is unmarked, need reskin
     },
 };
 
