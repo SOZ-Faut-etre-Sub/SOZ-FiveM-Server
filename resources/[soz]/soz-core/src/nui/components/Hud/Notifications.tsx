@@ -39,13 +39,20 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
     }, []);
 
     useEffect(() => {
-        if (isClosing) {
-            const timeoutId = setTimeout(onDelete, 300);
+        let timeoutId = null;
 
-            return () => {
-                clearTimeout(timeoutId);
-            };
+        if (isClosing) {
+            timeoutId = setTimeout(() => {
+                onDelete();
+                timeoutId = null;
+            }, 300);
         }
+
+        return () => {
+            if (timeoutId !== null) {
+                clearTimeout(timeoutId);
+            }
+        };
     }, [isClosing, onDelete]);
 
     useEffect(() => {
@@ -107,13 +114,20 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
     }, []);
 
     useEffect(() => {
-        if (isClosing) {
-            const timeoutId = setTimeout(onDelete, 300);
+        let timeoutId = null;
 
-            return () => {
-                clearTimeout(timeoutId);
-            };
+        if (isClosing) {
+            timeoutId = setTimeout(() => {
+                onDelete();
+                timeoutId = null;
+            }, 300);
         }
+
+        return () => {
+            if (timeoutId !== null) {
+                clearTimeout(timeoutId);
+            }
+        };
     }, [isClosing, onDelete]);
 
     useEffect(() => {
@@ -193,14 +207,13 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         return `w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-gradient-to-r from-black/60 to-black/25 border-l-4 ${classColor()}`;
     };
 
-    
     const hours = (): string => {
         const currentDate = new Date();
-        
+
         const messageHours = `0${currentDate.getHours()}`.slice(-2);
         const messageMinutes = `0${currentDate.getMinutes()}`.slice(-2);
         return `${messageHours}:${messageMinutes}`;
-    }
+    };
 
     return (
         <Transition

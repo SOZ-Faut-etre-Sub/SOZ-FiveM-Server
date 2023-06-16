@@ -3,7 +3,7 @@ export interface PreDBSociety {
     anonymous: boolean;
     message: string;
     position: boolean;
-    info?: {type?: string, serviceNumber?: string};
+    info?: { type?: string; serviceNumber?: string };
     pedPosition?: string;
     overrideIdentifier?: string;
 }
@@ -36,6 +36,11 @@ export interface SocietyMessage {
     createdAt: number;
     updatedAt: number;
     muted?: boolean;
+    info?: {
+        type?: string;
+        serviceNumber?: string;
+        duration?: number;
+    };
 }
 
 export enum SocietiesDatabaseLimits {
@@ -50,6 +55,7 @@ export enum SocietyEvents {
     RESET_SOCIETY_MESSAGES = 'phone:resetSocietyMessage',
     SEND_SOCIETY_MESSAGE_SUCCESS = 'phone:sendSocietyMessageSuccess',
     CREATE_MESSAGE_BROADCAST = 'phone:createSocietyMessagesBroadcast',
+    SEND_CLIENT_POLICE_NOTIFICATION = 'phone:sendClientPoliceNotification',
 }
 
 type SocietyNumber = {

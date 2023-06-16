@@ -62,16 +62,4 @@ export class Notifier {
             }
         }
     }
-
-    public policeNotify(
-        source: number,
-        title: string,
-        message: string,
-        logo: 'lspd' | 'bcso' | 'fib',
-        type: 'default' | 'robbery' | 'vandalism' | 'racket' | 'shooting' | 'auto-theft' | 'explosion',
-        hour: string,
-        delay = 5000
-    ) {
-        TriggerClientEvent(ClientEvent.NOTIFICATION_DRAW_POLICE, source, title, message, logo, type, hour, delay);
-    }
 }
