@@ -125,6 +125,7 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
 
             cb(success, reason)
         end)
+        return
     end
 
     cb(false, "unknown")
