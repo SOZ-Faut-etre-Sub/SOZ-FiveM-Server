@@ -37,10 +37,10 @@ local function PayInvoice(PlayerData, account, id, marked)
     end
 
     local invoice = Invoices[account][id]
-    local Player = QBCore.Functions.GetPlayerByCitizenId(invoice.citizenid)
     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
 
     if PlayerData.charinfo.account == account then
+        local Player = QBCore.Functions.GetPlayerByCitizenId(invoice.citizenid)
 
         if marked then
             local moneyAmount = Player.Functions.GetMoney("money")
@@ -127,8 +127,7 @@ local function PayInvoice(PlayerData, account, id, marked)
                     invoice.id,
                 })
 
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~g~payé~s~ la facture de la société", "success",
-                                   10000)
+                TriggerClientEvent("soz-core:client:notification:draw", PlayerData.source, "Vous avez ~g~payé~s~ la facture de la société", "success", 10000)
                 if Emitter then
                     TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source,
                                        ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
@@ -136,9 +135,9 @@ local function PayInvoice(PlayerData, account, id, marked)
 
                 TriggerEvent("monitor:server:event", "invoice_pay",
                              {
-                    player_source = Player.PlayerData.source,
+                    player_source = PlayerData.source,
                     invoice_kind = "invoice",
-                    invoice_job = Player.PlayerData.job.id,
+                    invoice_job = PlayerData.job.id,
                 }, {
                     target_source = Emitter and Emitter.PlayerData.source or nil,
                     id = id,
@@ -146,11 +145,10 @@ local function PayInvoice(PlayerData, account, id, marked)
                     target_account = invoice.emitterSafe,
                     source_account = invoice.targetAccount,
                 })
-                TriggerClientEvent("banking:client:invoicePaid", Player.PlayerData.source, id)
+                TriggerClientEvent("banking:client:invoicePaid", PlayerData.source, id)
                 Invoices[account][id] = nil
             else
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "~r~Echec~s~ du paiement la facture de la société", "error",
-                                   10000)
+                TriggerClientEvent("soz-core:client:notification:draw", PlayerData.source, "~r~Echec~s~ du paiement la facture de la société", "error", 10000)
             end
             return success
         end)
@@ -172,10 +170,10 @@ local function RejectInvoice(PlayerData, account, id)
     end
 
     local invoice = Invoices[account][id]
-    local Player = QBCore.Functions.GetPlayerByCitizenId(invoice.citizenid)
     local Emitter = QBCore.Functions.GetPlayerByCitizenId(invoice.emitter)
 
     if PlayerData.charinfo.account == account then
+        local Player = QBCore.Functions.GetPlayerByCitizenId(invoice.citizenid)
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~r~refusé~s~ votre facture", "error", 10000)
 
         if Emitter then
@@ -196,18 +194,17 @@ local function RejectInvoice(PlayerData, account, id)
             title = invoice.label,
         })
     else
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~r~refusé~s~ la facture de la société", "error", 10000)
+        TriggerClientEvent("soz-core:client:notification:draw", PlayerData.source, "Vous avez ~r~refusé~s~ la facture de la société", "error", 10000)
 
         if Emitter then
             TriggerClientEvent("soz-core:client:notification:draw", Emitter.PlayerData.source,
                                ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
-        TriggerEvent("monitor:server:event", "invoice_refuse",
-                     {
-            player_source = Player.PlayerData.source,
+        TriggerEvent("monitor:server:event", "invoice_refuse", {
+            player_source = PlayerData.source,
             invoice_kind = "invoice",
-            invoice_job = Player.PlayerData.job.id,
+            invoice_job = PlayerData.job.id,
         }, {
             target_source = Emitter and Emitter.PlayerData.source or nil,
             id = id,
@@ -222,7 +219,7 @@ local function RejectInvoice(PlayerData, account, id)
         invoice.id,
     })
     Invoices[account][id] = nil
-    TriggerClientEvent("banking:client:invoiceRejected", Player.PlayerData.source, id)
+    TriggerClientEvent("banking:client:invoiceRejected", PlayerData.source, id)
 
     return true
 end
@@ -361,7 +358,6 @@ RegisterNetEvent("banking:server:sendSocietyInvoice", function(target, label, am
 end)
 
 function PayInvoiceFunction(source, invoiceId, marked)
-    print("PayInvoiceFunction", source, invoiceId, marked)
     local Player = QBCore.Functions.GetPlayer(source)
 
     if not Player then
