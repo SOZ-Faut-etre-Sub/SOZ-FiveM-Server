@@ -50,9 +50,8 @@ export class WeaponService {
 
         if (hash !== GetHashKey(WeaponName.UNARMED)) {
             SetCurrentPedWeapon(player, GetHashKey(WeaponName.UNARMED), true);
+            RemoveWeaponFromPed(player, hash);
         }
-
-        RemoveAllPedWeapons(player, true);
     }
 
     getMaxAmmoInClip(): number {
