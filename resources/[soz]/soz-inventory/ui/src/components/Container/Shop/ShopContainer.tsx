@@ -130,8 +130,12 @@ export const ShopContainer = () => {
                 body: JSON.stringify({})
             }).then((res) => res.json())
                 .then((amount) => {
+                    const amountInt = parseInt(amount);
+                    if (isNaN(amountInt) || amountInt <= 0) {
+                        return;
+                    }
 
-                    draggedItem.amount = parseInt(amount)
+                    draggedItem.amount = amountInt
                     let newCartAmount = cartAmount + (draggedItem.amount * draggedItem.price)
                     let updatedCart: ShopItem[] = []
 
