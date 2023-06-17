@@ -168,7 +168,7 @@ export class TaxiMissionService {
             }
 
             this.notifier.notify('Mission annulée', 'error');
-            this.clearMission();
+            await this.clearMission();
             return false;
         }
         return true;
@@ -184,6 +184,9 @@ export class TaxiMissionService {
             this.notifier.notify('Vous êtes déjà en mission', 'error');
             return;
         }
+
+        await this.clearMission();
+
         this.updateState({
             missionInprogress: true,
         });
@@ -262,7 +265,7 @@ export class TaxiMissionService {
                     let count = 0;
                     while (!IsPedInVehicle(this.Npc, veh, false)) {
                         if (count == 15 || dist > requiredDist) {
-                            this.clearMission();
+                            await this.clearMission();
                             this.notifier.notify('Ouvre ton véhicule la prochaine fois ?', 'error');
                             return;
                         }
@@ -308,7 +311,7 @@ export class TaxiMissionService {
                 if (IsVehicleStopped(GetVehiclePedIsIn(ped, false)) && this.validVehicle()) {
                     const veh = GetVehiclePedIsIn(ped, false);
                     if (!IsPedInVehicle(this.Npc, veh, false)) {
-                        this.clearMission();
+                        await this.clearMission();
                         this.notifier.notify("Vous n'avez pas la personne dans votre véhicule", 'error');
                         return;
                     }
@@ -326,7 +329,7 @@ export class TaxiMissionService {
                     this.notifier.notify('Vous avez déposé la personne', 'success');
 
                     this.setHorodateurStarted(false);
-                    this.clearMission();
+                    await this.clearMission();
                     break;
                 }
             }
