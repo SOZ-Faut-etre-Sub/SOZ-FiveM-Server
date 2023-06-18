@@ -9,7 +9,6 @@ import {
 import { useCall } from '@os/call/hooks/useCall';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
-import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -59,7 +58,7 @@ export const DialerHistory: React.FC = () => {
                     })}
                 >
                     {calls
-                        .sort((a, b) => dayjs(b.start).valueOf() - dayjs(a.start).valueOf())
+                        .sort((a, b) => b.start - a.start)
                         .map(call => (
                             <Menu
                                 key={call.id}

@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import { format } from 'date-fns';
 import { useEffect } from 'react';
 
 import { PhoneEvents } from '../../../typings/phone';
@@ -21,7 +21,7 @@ export const useDebugService = () => {
             {
                 app: 'PHONE',
                 method: PhoneEvents.SET_TIME,
-                data: dayjs().format('hh:mm'),
+                data: format(new Date(), 'HH:mm'),
             },
             {
                 app: 'SIMCARD',
