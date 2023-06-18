@@ -562,6 +562,11 @@ export class VehicleModificationService {
             options.wheelType[VehicleWheelType.Offroad] = 'Offroad';
             options.wheelType[VehicleWheelType.Tuner] = 'Tuner';
             options.wheelType[VehicleWheelType.HighEnd] = 'HighEnd';
+            options.wheelType[VehicleWheelType.BennysOriginal] = 'Bennys Original';
+            options.wheelType[VehicleWheelType.BennysBespoke] = 'Bennys Bespoke';
+            options.wheelType[VehicleWheelType.OpenWheel] = 'Open Wheel';
+            options.wheelType[VehicleWheelType.Street] = 'Street';
+            options.wheelType[VehicleWheelType.Track] = 'Track';
         }
 
         for (let i = 1; i < 15; i++) {

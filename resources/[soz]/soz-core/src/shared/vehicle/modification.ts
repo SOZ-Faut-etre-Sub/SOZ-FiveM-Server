@@ -241,8 +241,11 @@ export enum VehicleWheelType {
     Tuner,
     BikeWheels,
     HighEnd,
-    BennysOriginals,
+    BennysOriginal,
     BennysBespoke,
+    OpenWheel,
+    Street,
+    Track,
 }
 
 export type VehicleNeon = {
