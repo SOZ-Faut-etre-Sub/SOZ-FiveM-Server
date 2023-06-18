@@ -54,3 +54,5 @@ export class Logger {
         }
     }
 }
+
+export const StaticLogger = new Logger();

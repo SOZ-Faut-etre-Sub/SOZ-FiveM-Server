@@ -1,10 +1,12 @@
+import { HTTPMethod } from '@egoist/router';
+
 import { setMethodMetadata } from './reflect';
 
 export const RouteMetadataKey = 'soz_core.decorator.http-route';
 
 export type RouteMetadata = {
     path: string;
-    method: string;
+    method: HTTPMethod;
     config: RouteConfig;
 };
 
