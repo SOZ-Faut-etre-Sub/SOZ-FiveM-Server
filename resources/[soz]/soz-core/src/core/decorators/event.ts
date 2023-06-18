@@ -4,6 +4,8 @@ import { addMethodMetadata, setMethodMetadata } from './reflect';
 export type EventMetadata = {
     name: string;
     net: boolean;
+    context: boolean;
+    methodName: string;
 };
 
 export const EventMetadataKey = 'soz_core.decorator.event';
@@ -14,13 +16,15 @@ export const OnEvent = (event: ServerEvent | ClientEvent, net = true): MethodDec
     return On(event.toString(), net);
 };
 
-export const On = (name?: string, net = true): MethodDecorator => {
+export const On = (name?: string, net = true, context = false): MethodDecorator => {
     return (target, propertyKey) => {
         addMethodMetadata(
             EventMetadataKey,
             {
                 name: name || propertyKey.toString(),
                 net,
+                context,
+                methodName: propertyKey.toString(),
             },
             target,
             propertyKey
@@ -28,13 +32,15 @@ export const On = (name?: string, net = true): MethodDecorator => {
     };
 };
 
-export const OnNuiEvent = <T = any, R = any>(event: NuiEvent) => {
+export const OnNuiEvent = <T = any, R = any>(event: NuiEvent, context = false) => {
     return (target, propertyKey, descriptor: TypedPropertyDescriptor<(data?: T) => Promise<R>>) => {
         addMethodMetadata(
             NuiEventMetadataKey,
             {
                 name: event.toString(),
                 net: false,
+                context,
+                methodName: propertyKey.toString(),
             },
             target,
             propertyKey
@@ -44,13 +50,15 @@ export const OnNuiEvent = <T = any, R = any>(event: NuiEvent) => {
     };
 };
 
-export const OnGameEvent = (event: GameEvent): MethodDecorator => {
+export const OnGameEvent = (event: GameEvent, context = false): MethodDecorator => {
     return (target, propertyKey) => {
         addMethodMetadata(
             GameEventMetadataKey,
             {
                 name: event.toString(),
                 net: false,
+                context,
+                methodName: propertyKey.toString(),
             },
             target,
             propertyKey
