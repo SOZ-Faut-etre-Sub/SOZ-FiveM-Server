@@ -112,4 +112,5 @@ export enum RpcClientEvent {
     DELETE_LAST_VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:delete-last-spawn',
     VEHICLE_SPAWN_FROM_SERVER = 'soz-core:rpc:client:vehicle:spawn-from-server',
     VEHICLE_DELETE = 'soz-core:rpc:client:vehicle:delete',
+    MONITOR_GET_TRACES = 'soz-core:rpc:client:monitor:get-traces',
 }

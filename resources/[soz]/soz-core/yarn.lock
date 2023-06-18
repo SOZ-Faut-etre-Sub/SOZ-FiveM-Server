@@ -1127,6 +1127,11 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
+"@egoist/router@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@egoist/router/-/router-1.2.3.tgz#dc287e307d1b428016a0fd1785c234ee226f0e87"
+  integrity sha512-RByBTvI0gTDV5IuVA9C+r7RXvM0xTAK6NdoVDNprVze1kgLdoVa7WthHCwizXWKltaP9XdbPx3bJQQ/3zZ/PJg==
+
 "@eslint/eslintrc@^1.3.3":
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.3.3.tgz#2b044ab39fdfa75b4688184f9e573ce3c5b0ff95"

@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '../decorators/injectable';
 import { TickMetadata } from '../decorators/tick';
+import { ContextTickMiddlewareFactory } from './context.middleware';
 import { Middleware, MiddlewareTickFactory } from './middleware';
-import { ProfilerTickMiddlewareFactory } from './profiler.middleware';
 
 @Injectable()
 export class ChainMiddlewareTickClientFactory implements MiddlewareTickFactory {
-    @Inject(ProfilerTickMiddlewareFactory)
-    private profilerTickMiddlewareFactory: ProfilerTickMiddlewareFactory;
+    @Inject(ContextTickMiddlewareFactory)
+    private contextTickMiddlewareFactory: ContextTickMiddlewareFactory;
 
     create(tick: TickMetadata, next: Middleware): Middleware {
-        return this.profilerTickMiddlewareFactory.create(tick, next);
+        return this.contextTickMiddlewareFactory.create(tick, next);
     }
 }
