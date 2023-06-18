@@ -46,6 +46,8 @@ export class RpcLoader {
                 {
                     name: rpcName,
                     net: true,
+                    methodName: methodName,
+                    context: false,
                 },
                 rpcMethod
             );
