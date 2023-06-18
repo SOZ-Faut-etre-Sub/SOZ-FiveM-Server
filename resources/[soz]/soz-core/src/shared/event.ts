@@ -318,6 +318,8 @@ export enum ClientEvent {
     LSMC_HEAL = 'soz-core:lsmc:client:heal',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
+    MONITOR_START_TRACING = 'soz-core:client:monitor:start-tracing',
+
     NEWS_DRAW = 'soz-core:client:news:draw',
     NOTIFICATION_DRAW = 'soz-core:client:notification:draw',
     NOTIFICATION_DRAW_ADVANCED = 'soz-core:client:notification:draw-advanced',
