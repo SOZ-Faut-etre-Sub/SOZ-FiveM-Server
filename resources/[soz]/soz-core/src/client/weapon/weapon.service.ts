@@ -44,6 +44,12 @@ export class WeaponService {
 
     async clear() {
         const player = PlayerPedId();
+        if (this.currentWeapon) {
+            const currhash = GetHashKey(this.currentWeapon.name);
+            if (currhash !== GetHashKey(WeaponName.UNARMED)) {
+                RemoveWeaponFromPed(player, currhash);
+            }
+        }
         this.currentWeapon = null;
 
         const [, hash] = GetCurrentPedWeapon(player, false);
