@@ -50,10 +50,10 @@ async function bootstrap() {
 
     const app = await Application.create(
         ProviderServerLoader,
+        MonitorModule,
         StoreModule,
         DatabaseModule,
         RepositoryModule,
-        MonitorModule,
         ApiModule,
         WeatherModule,
         PlayerModule,

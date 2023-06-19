@@ -5,12 +5,12 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ServerEvent } from '../../shared/event';
-import { Monitor } from '../../shared/monitor';
 import { toVector3Object } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { VehicleCondition, VehicleSeat, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
+import { Monitor } from '../monitor/monitor';
 import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()

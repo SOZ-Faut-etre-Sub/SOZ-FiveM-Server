@@ -8,6 +8,7 @@ import { Logger } from '../../core/logger';
 import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
+import { ApiClient } from '../api/api.client';
 import { PrismaService } from '../database/prisma.service';
 import { PlayerCleanService } from '../player/player.clean.service';
 import { QBCore } from '../qbcore';
@@ -33,6 +34,9 @@ export class RebootProvider {
 
     @Inject(PlayerCleanService)
     private playerCleanService: PlayerCleanService;
+
+    @Inject(ApiClient)
+    private apiClient: ApiClient;
 
     @Inject(Logger)
     private logger: Logger;
@@ -115,14 +119,14 @@ export class RebootProvider {
     private async thunder() {
         this.weatherProvider.setWeatherUpdate(false);
 
-        this.sendRebootMessage(15);
+        await this.sendRebootMessage(15);
         this.weatherProvider.setWeather('CLEARING');
         await wait(5 * 60 * 1000);
 
         this.weatherProvider.setWeather('RAIN');
         await wait(5 * 60 * 1000);
 
-        this.sendRebootMessage(5);
+        await this.sendRebootMessage(5);
         this.weatherProvider.setWeather('THUNDER');
         await wait(2 * 60 * 1000);
 
@@ -168,14 +172,15 @@ export class RebootProvider {
             await wait(30 * 1000);
         }
 
-        exports['soz-api'].RemoveRebootMessage();
+        await this.apiClient.removeRebootMessage();
 
         await this.reboot();
     }
 
-    private sendRebootMessage(minutes: 5 | 15) {
-        exports['soz-api'].RemoveRebootMessage();
-        exports['soz-api'].AddRebootMessage(minutes);
+    private async sendRebootMessage(minutes: 5 | 15) {
+        await this.apiClient.removeRebootMessage();
+        await this.apiClient.addRebootMessage(minutes);
+
         emit(
             ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
             `${ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST}:${uuidv4()}`,

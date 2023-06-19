@@ -151,7 +151,7 @@ RegisterServerEvent("inventory:server:GiveMoney", function(target, moneyType, am
         giveAnimation(Player.PlayerData.source)
         giveAnimation(Target.PlayerData.source)
 
-        TriggerEvent("monitor:server:event", "give_money", {player_source = source, target = target}, {
+        exports["soz-core"]:Event("give_money", {player_source = source, target = target}, {
             money = moneyTake,
             marked_money = markedMoneyTake,
         })

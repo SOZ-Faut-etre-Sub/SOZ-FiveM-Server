@@ -4,9 +4,9 @@ import { Provider } from '@core/decorators/provider';
 import { EasterShopContent } from '@public/shared/shop/easter';
 
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Monitor } from '../../shared/monitor';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerAppearanceService } from '../player/player.appearance.service';
 import { PlayerMoneyService } from '../player/player.money.service';

@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { MonitorBankProvider } from './monitor.bank.provider';
+import { MonitorLokiProvider } from './monitor.loki.provider';
 import { MonitorMtpProvider } from './monitor.mtp.provider';
 import { MonitorPawlProvider } from './monitor.pawl.provider';
 import { MonitorPlayerProvider } from './monitor.player.provider';
@@ -16,6 +17,7 @@ import { MonitorUpwProvider } from './monitor.upw.provider';
         MonitorMtpProvider,
         MonitorPlayerProvider,
         MonitorTraceProvider,
+        MonitorLokiProvider,
     ],
 })
 export class MonitorModule {}
