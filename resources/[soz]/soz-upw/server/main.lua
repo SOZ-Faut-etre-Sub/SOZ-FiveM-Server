@@ -180,7 +180,7 @@ end
 -- METRICS
 --
 exports("GetMetrics", function()
-    if Pm == {} or Pm == nil then
+    if Pm == nil or #Pm == 0 then
         return {}
     end
 

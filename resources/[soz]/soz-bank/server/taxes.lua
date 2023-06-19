@@ -34,17 +34,17 @@ function societyTaxCalculation(society, accounts)
 end
 
 function societyTaxPayment(society, percentage, tax)
-    exports["soz-monitor"]:Log("INFO", "Society " .. society .. " paid " .. tax .. "$ tax. Percentage: " .. percentage .. "%")
+    exports["soz-core"]:Log("INFO", "Society " .. society .. " paid " .. tax .. "$ tax. Percentage: " .. percentage .. "%")
 
     for account, repartition in pairs(Config.SocietyTaxes.taxRepartition) do
         local money = math.ceil(tax * repartition / 100)
 
         Account.TransfertMoney(society, account, money, function(success, reason)
             if success then
-                exports["soz-monitor"]:Log("INFO", "Public society " .. account .. " receive " .. money .. "$ tax. Percentage: " .. repartition .. "%")
+                exports["soz-core"]:Log("INFO", "Public society " .. account .. " receive " .. money .. "$ tax. Percentage: " .. repartition .. "%")
             else
-                exports["soz-monitor"]:Log("ERROR", "Public society " .. account .. " can't receive " .. money .. "$ tax. Percentage: " .. repartition .. "%" ..
-                                               " | Reason: " .. reason)
+                exports["soz-core"]:Log("ERROR", "Public society " .. account .. " can't receive " .. money .. "$ tax. Percentage: " .. repartition .. "%" ..
+                                            " | Reason: " .. reason)
             end
         end)
     end

@@ -42,8 +42,8 @@ RegisterNetEvent("jobs:server:news:newspaperSold", function()
     exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "newspaper", newspaperAmount)
     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez vendu ~g~" .. newspaperAmount .. " journaux")
 
-    TriggerEvent("monitor:server:event", "job_news_sell_newspaper", {player_source = Player.PlayerData.source},
-                 {
+    exports["soz-core"]:Event("job_news_sell_newspaper", {player_source = Player.PlayerData.source},
+                              {
         quantity = tonumber(newspaperAmount),
         position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
     })
@@ -59,8 +59,8 @@ RegisterNetEvent("jobs:server:news:newspaperFarm", function()
         end
     end)
 
-    TriggerEvent("monitor:server:event", "job_news_print_newspaper", {player_source = Player.PlayerData.source},
-                 {
+    exports["soz-core"]:Event("job_news_print_newspaper", {player_source = Player.PlayerData.source},
+                              {
         quantity = tonumber(newspaperAmount),
         position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
     })

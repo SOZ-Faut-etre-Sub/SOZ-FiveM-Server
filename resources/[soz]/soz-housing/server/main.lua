@@ -8,11 +8,11 @@ local blockedCrimiDate = {}
 local function IsPropertyValid(house)
     house = decode_json(house)
     if house.identifier == nil then
-        exports["soz-monitor"]:Log("DEBUG", ("Entry #%s skipped because it has no identifier"):format(house.id))
+        exports["soz-core"]:Log("DEBUG", ("Entry #%s skipped because it has no identifier"):format(house.id))
         return false
     end
     if house.entry_zone == nil then
-        exports["soz-monitor"]:Log("DEBUG", ("Entry %s skipped because it has no entry_zone"):format(house.identifier))
+        exports["soz-core"]:Log("DEBUG", ("Entry %s skipped because it has no entry_zone"):format(house.identifier))
         return false
     end
     return true
@@ -21,15 +21,15 @@ end
 local function IsApartmentValid(house)
     house = decode_json(house)
     if house.price == nil then
-        exports["soz-monitor"]:Log("DEBUG", ("Entry %s skipped because it has no price"):format(house.label))
+        exports["soz-core"]:Log("DEBUG", ("Entry %s skipped because it has no price"):format(house.label))
         return false
     end
     if house.inside_coord == nil then
-        exports["soz-monitor"]:Log("DEBUG", ("Entry %s skipped because it has no inside_coord"):format(house.label))
+        exports["soz-core"]:Log("DEBUG", ("Entry %s skipped because it has no inside_coord"):format(house.label))
         return false
     end
     if house.exit_zone == nil then
-        exports["soz-monitor"]:Log("DEBUG", ("Entry %s skipped because it has no exit_zone"):format(house.label))
+        exports["soz-core"]:Log("DEBUG", ("Entry %s skipped because it has no exit_zone"):format(house.label))
         return false
     end
     return true
@@ -110,7 +110,7 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
@@ -142,12 +142,12 @@ RegisterNetEvent("housing:server:EnterApartment", function(propertyId, apartment
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:HasAccess(Player.PlayerData.citizenid) then
-        exports["soz-monitor"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("EnterApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
         return
     end
 
@@ -160,7 +160,7 @@ RegisterNetEvent("housing:server:ExitProperty", function(propertyId, apartmentId
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("ExitProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("ExitProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
@@ -175,12 +175,12 @@ RegisterNetEvent("housing:server:InspectApartment", function(propertyId, apartme
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("InspectApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("InspectApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("InspectApartment %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("InspectApartment %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
         return
     end
 
@@ -192,12 +192,12 @@ RegisterNetEvent("housing:server:BellProperty", function(propertyId, apartmentId
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("BellProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("BellProperty %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("BellProperty %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("BellProperty %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
         return
     end
 
@@ -233,12 +233,12 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("BuyApartment %s - Apartment %s | skipped because it is not available"):format(propertyId, apartmentId))
         return
     end
 
@@ -249,8 +249,10 @@ RegisterNetEvent("housing:server:BuyApartment", function(propertyId, apartmentId
         })
         apartment:SetOwner(Player.PlayerData.citizenid)
 
-        TriggerEvent("monitor:server:event", "house_buy", {player_source = Player.PlayerData.source},
-                     {house_id = apartment:GetIdentifier(), amount = apartment:GetPrice()})
+        exports["soz-core"]:Event("house_buy", {player_source = Player.PlayerData.source}, {
+            house_id = apartment:GetIdentifier(),
+            amount = apartment:GetPrice(),
+        })
 
         Player.Functions.SetApartment({
             id = apartmentId,
@@ -276,17 +278,17 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
     local property = Properties[propertyId]
     local apartment = property:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:IsOwner(Player.PlayerData.citizenid) then
-        exports["soz-monitor"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("SellApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
         return
     end
 
@@ -321,8 +323,10 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
         Player.Functions.SetApartment(nil)
 
         exports["soz-character"]:TruncatePlayerCloakroomFromTier(Player.PlayerData.citizenid, 0)
-        TriggerEvent("monitor:server:event", "house_sell", {player_source = Player.PlayerData.source},
-                     {house_id = apartment:GetIdentifier(), amount = resellPrice})
+        exports["soz-core"]:Event("house_sell", {player_source = Player.PlayerData.source}, {
+            house_id = apartment:GetIdentifier(),
+            amount = resellPrice,
+        })
 
         TriggerClientEvent("housing:client:UpdateApartment", -1, propertyId, apartmentId, apartment)
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
@@ -356,23 +360,22 @@ RegisterNetEvent("housing:server:AddRoommateApartment", function(propertyId, apa
     end
 
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:IsOwner(Player.PlayerData.citizenid) then
-        exports["soz-monitor"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
         return
     end
 
     if apartment:GetRoomMate() then
-        exports["soz-monitor"]:Log("ERROR",
-                                   ("AddRoommateApartment %s - Apartment %s | skipped because it already has a roommate"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("AddRoommateApartment %s - Apartment %s | skipped because it already has a roommate"):format(propertyId, apartmentId))
         return
     end
 
@@ -402,22 +405,22 @@ RegisterNetEvent("housing:server:RemoveRoommateApartment", function(propertyId, 
     local property = Properties[propertyId]
     local apartment = property:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:IsOwner(Player.PlayerData.citizenid) and not apartment:IsRoommate(Player.PlayerData.citizenid) then
-        exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:GetRoomMate() then
-        exports["soz-monitor"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it has no roommate"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("RemoveRoommateApartment %s - Apartment %s | skipped because it has no roommate"):format(propertyId, apartmentId))
         return
     end
 
@@ -470,17 +473,17 @@ RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apar
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
     if apartment:IsAvailable() then
-        exports["soz-monitor"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because it is available"):format(propertyId, apartmentId))
         return
     end
 
     if not apartment:IsOwner(Player.PlayerData.citizenid) and not apartment:IsRoommate(Player.PlayerData.citizenid) then
-        exports["soz-monitor"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("GiveTemporaryAccess %s - Apartment %s | skipped because player has no access"):format(propertyId, apartmentId))
         return
     end
 
@@ -514,7 +517,7 @@ RegisterNetEvent("housing:server:UpgradePlayerApartmentTier", function(tier, pri
 
     local apartment = Properties[propertyId]:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("UpgradeApartmentTier %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("UpgradeApartmentTier %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 
@@ -568,16 +571,16 @@ RegisterNetEvent("housing:server:SetPlayerApartmentParkingPlace", function(hasPa
 
     local property = Properties[propertyId]
     if property == nil then
-        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it has no property"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it has no property"):format(propertyId, apartmentId))
         return
     end
     if not property:IsTrailer() then
-        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it is not a trailer"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it is not a trailer"):format(propertyId, apartmentId))
         return
     end
     local apartment = property:GetApartment(apartmentId)
     if apartment == nil then
-        exports["soz-monitor"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
+        exports["soz-core"]:Log("ERROR", ("SetApartmentParkingPlace %s - Apartment %s | skipped because it has no apartment"):format(propertyId, apartmentId))
         return
     end
 

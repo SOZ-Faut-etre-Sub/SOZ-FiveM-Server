@@ -58,8 +58,8 @@ function CallStateManager:createCall(emitter, receiver)
     TriggerClientEvent("voip:client:call:start", call.callerId, call.receiverId, callId)
     TriggerClientEvent("voip:client:call:start", call.receiverId, call.callerId, callId)
 
-    TriggerEvent("monitor:server:event", "voip_call", {player_source = source.PlayerData.source, call_type = "emitter"}, call)
-    TriggerEvent("monitor:server:event", "voip_call", {player_source = target.PlayerData.source, call_type = "receiver"}, call)
+    exports["soz-core"]:Event("voip_call", {player_source = source.PlayerData.source, call_type = "emitter"}, call)
+    exports["soz-core"]:Event("voip_call", {player_source = target.PlayerData.source, call_type = "receiver"}, call)
 
     return callId
 end
@@ -80,8 +80,8 @@ function CallStateManager:destroyCall(callId)
     TriggerClientEvent("voip:client:call:end", call.callerId, call.receiverId, callId)
     TriggerClientEvent("voip:client:call:end", call.receiverId, call.callerId, callId)
 
-    TriggerEvent("monitor:server:event", "voip_call", {player_source = call.callerId, type = "ended"}, CallList[callId])
-    TriggerEvent("monitor:server:event", "voip_call", {player_source = call.receiverId, type = "ended"}, CallList[callId])
+    exports["soz-core"]:Event("voip_call", {player_source = call.callerId, type = "ended"}, CallList[callId])
+    exports["soz-core"]:Event("voip_call", {player_source = call.receiverId, type = "ended"}, CallList[callId])
 
     CallList[callId] = nil
 end

@@ -2,11 +2,11 @@ import { On, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
+import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { BedLocations } from '@public/shared/job/lsmc';
-import { Monitor } from '@public/shared/monitor';
 import { PlayerMetadata } from '@public/shared/player';
 
 import { PlayerStateService } from '../../player/player.state.service';

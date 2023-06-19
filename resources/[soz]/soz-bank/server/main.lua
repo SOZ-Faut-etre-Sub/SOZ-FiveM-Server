@@ -86,7 +86,7 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
             if Player.Functions.RemoveMoney("money", amount) then
                 Account.AddMoney(accountTarget, amount)
 
-                TriggerEvent("monitor:server:event", "transfer_money", {
+                exports["soz-core"]:Event("transfer_money", {
                     player_source = source,
                     accountSource = accountSource,
                     accountTarget = accountTarget,
@@ -102,7 +102,7 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
             if Player.Functions.AddMoney("money", amount) then
                 Account.RemoveMoney(accountSource, amount)
 
-                TriggerEvent("monitor:server:event", "transfer_money", {
+                exports["soz-core"]:Event("transfer_money", {
                     player_source = source,
                     accountSource = accountSource,
                     accountTarget = accountTarget,
@@ -149,7 +149,7 @@ RegisterNetEvent("banking:server:SafeStorageDeposit", function(money_type, safeS
             if Player.Functions.RemoveMoney(money_type, amount) then
                 local added = Account.AddMoney(safeStorage, amount, money_type)
                 if added ~= false then
-                    TriggerEvent("monitor:server:event", "safe_deposit", {
+                    exports["soz-core"]:Event("safe_deposit", {
                         player_source = source,
                         safeStorage = safeStorage,
                         money_type = money_type,
@@ -181,7 +181,7 @@ RegisterNetEvent("banking:server:SafeStorageWithdraw", function(money_type, safe
             if Player.Functions.AddMoney(money_type, amount) then
                 Account.RemoveMoney(safeStorage, amount, money_type)
 
-                TriggerEvent("monitor:server:event", "safe_withdraw", {
+                exports["soz-core"]:Event("safe_withdraw", {
                     player_source = source,
                     safeStorage = safeStorage,
                     money_type = money_type,

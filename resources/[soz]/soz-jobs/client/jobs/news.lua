@@ -129,7 +129,7 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
                 reporterId = PlayerData.citizenid,
             })
 
-            TriggerServerEvent("monitor:server:event", "job_news_create_flash", {flash_type = value},
+            TriggerServerEvent("soz-core:server:monitor:add-event", "job_news_create_flash", {flash_type = value},
                                {message = message, position = GetEntityCoords(PlayerPedId())}, true)
         end,
     })

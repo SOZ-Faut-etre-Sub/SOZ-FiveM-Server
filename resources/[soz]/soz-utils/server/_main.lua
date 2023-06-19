@@ -40,8 +40,8 @@ RegisterNetEvent("core:server:zoneIntrusion", function(zone)
         print(("[SOZ REPORTER] Intrusion de %s dans la zone: %s"):format(Player.Functions.GetName(), zone))
     end
 
-    TriggerEvent("monitor:server:event", "zone_intrusion", {player_source = Player.PlayerData.source, zone = zone},
-                 {position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+    exports["soz-core"]:Event("zone_intrusion", {player_source = Player.PlayerData.source, zone = zone},
+                              {position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
 end)
 
 exports("SendHTTPRequest", function(convar, data)

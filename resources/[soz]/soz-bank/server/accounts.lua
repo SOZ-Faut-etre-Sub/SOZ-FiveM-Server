@@ -194,8 +194,7 @@ function Account.TransfertMoney(accSource, accTarget, money, cb)
 
                     success = true
 
-                    TriggerEvent("monitor:server:event", "transfer_money",
-                                 {
+                    exports["soz-core"]:Event("transfer_money", {
                         source_owner = accSource.owner,
                         target_owner = accTarget.owner,
                         source_id = accSource.id,

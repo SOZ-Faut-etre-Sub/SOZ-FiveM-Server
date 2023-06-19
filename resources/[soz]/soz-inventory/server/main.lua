@@ -660,10 +660,7 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
         end
     end
 
-    TriggerEvent("monitor:server:event", "inventory_transfer", {
-        inventory_id = invSource.id,
-        inventory_type = invSource.type,
-    }, {
+    exports["soz-core"]:Event("inventory_transfer", {inventory_id = invSource.id, inventory_type = invSource.type}, {
         source = invSource,
         slot = slot,
         item = item.name,

@@ -167,7 +167,7 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
 
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, amount, nil, nil, function(success, reason)
             if success then
-                TriggerEvent("monitor:server:event", "job_cm_food_hunting", {
+                exports["soz-core"]:Event("job_cm_food_hunting", {
                     item_id = item,
                     player_source = Player.PlayerData.source,
                 }, {item_label = item.label, quantity = amount, position = position})
