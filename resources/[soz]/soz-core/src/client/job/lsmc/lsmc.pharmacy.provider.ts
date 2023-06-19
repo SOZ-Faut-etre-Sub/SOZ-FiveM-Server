@@ -1,8 +1,12 @@
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { ItemService } from '@public/client/item/item.service';
+import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
+
 import { Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../../shared/event';
-import { MenuType } from '../../../shared/nui/menu';
 import { NuiMenu } from '../../nui/nui.menu';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -14,6 +18,15 @@ export class LSMCPharmacyProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
+    @Inject(ItemService)
+    private itemService: ItemService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(NuiDispatch)
+    private dispatcher: NuiDispatch;
+
     @OnNuiEvent(NuiEvent.LsmcPharmacyBuyItem)
     async buyItem({ item }: { item: string }) {
         TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, item);
@@ -21,6 +34,25 @@ export class LSMCPharmacyProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {
+        const products = [
+            { name: 'tissue', price: PHARMACY_PRICES.tissue, amount: 2000 },
+            { name: 'antibiotic', price: PHARMACY_PRICES.antibiotic, amount: 2000 },
+            { name: 'pommade', price: PHARMACY_PRICES.pommade, amount: 2000 },
+            { name: 'painkiller', price: PHARMACY_PRICES.painkiller, amount: 2000 },
+            { name: 'antiacide', price: PHARMACY_PRICES.antiacide, amount: 2000 },
+            { name: 'health_book', price: PHARMACY_PRICES.health_book, amount: 2000 },
+        ];
+
+        const getLsmcShopProduct = products => {
+            const hydratedProducts = products.map((product, id) => ({
+                ...this.itemService.getItem(product.name),
+                ...product,
+                slot: id,
+            }));
+
+            return hydratedProducts;
+        };
+
         const model = 's_m_m_doctor_01';
         this.targetFactory.createForPed({
             model: model,
@@ -38,12 +70,7 @@ export class LSMCPharmacyProvider {
                         label: 'Liste des médicaments',
                         icon: 'c:/ems/painkiller.png',
                         action: () => {
-                            this.nuiMenu.openMenu(MenuType.LsmcPharmacy, null, {
-                                position: {
-                                    position: [356.64, -1419.74, 31.51],
-                                    distance: 2.5,
-                                },
-                            });
+                            this.inventoryManager.openShopInventory(getLsmcShopProduct(products), 'menu_shop_pharmacy');
                         },
                     },
                     {

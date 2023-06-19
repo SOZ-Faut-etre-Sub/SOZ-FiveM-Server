@@ -192,10 +192,16 @@ RegisterNetEvent("inventory:client:updateTargetStoragesState", function(targetIn
     SendNUIMessage({action = "updateInventory", targetInventory = targetInventory})
 end)
 
--- SUPERMARKET SHOP
+-- SHOPS
 
-exports("openShop", function(shopContent)
-    SendNUIMessage({action = "openShop", shopContent = shopContent})
+RegisterNetEvent("inventory:client:openShop", function(shopContent, shopHeaderTexture)
+
+    SendNUIMessage({action = "openShop", shopContent = shopContent, shopHeaderTexture = shopHeaderTexture})
+    SetNuiFocus(true, true)
+end)
+
+exports("openShop", function(shopContent, shopHeaderTexture)
+    SendNUIMessage({action = "openShop", shopContent = shopContent, shopHeaderTexture = shopHeaderTexture})
     SetNuiFocus(true, true)
 end)
 
