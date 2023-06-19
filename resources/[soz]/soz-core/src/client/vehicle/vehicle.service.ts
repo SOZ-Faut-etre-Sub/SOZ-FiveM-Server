@@ -295,8 +295,16 @@ export class VehicleService {
 
     public async getVehicleConfiguration(vehicleEntityId: number): Promise<VehicleConfiguration> {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+        const configuration = await emitRpc<VehicleConfiguration>(
+            RpcServerEvent.VEHICLE_CUSTOM_GET_MODS,
+            vehicleNetworkId
+        );
 
-        return await emitRpc<VehicleConfiguration>(RpcServerEvent.VEHICLE_CUSTOM_GET_MODS, vehicleNetworkId);
+        if (!configuration) {
+            return this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
+        }
+
+        return configuration;
     }
 
     public getClosestVehicle(config?: ClosestVehicleConfig, filter?: (vehicle: number) => boolean): number | null {

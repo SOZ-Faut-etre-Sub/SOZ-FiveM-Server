@@ -69,9 +69,20 @@ export class TaxiMissionService {
         }
 
         if (this.NpcTaken && this.Npc) {
-            TaskLeaveVehicle(this.Npc, GetVehiclePedIsIn(this.Npc, false), 0);
+            const veh = GetVehiclePedIsIn(this.Npc, false);
+            let doorIndex = 2;
+
+            for (let i = -1; i < 5; i++) {
+                if (GetPedInVehicleSeat(veh, i) == this.Npc) {
+                    doorIndex = i + 1;
+                    break;
+                }
+            }
+
+            TaskLeaveVehicle(this.Npc, veh, 0);
             this.NpcTaken = false;
             await wait(1000);
+            SetVehicleDoorShut(veh, doorIndex, false);
         }
 
         if (this.Npc) {
