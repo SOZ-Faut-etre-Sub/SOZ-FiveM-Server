@@ -89,7 +89,7 @@ export const RadioVehicleApp: FunctionComponent = () => {
             >
                 <img
                     className="relative"
-                    style={{ width: '40vw', zIndex: 5 }}
+                    style={{ width: '40vw', zIndex: 5, height: '21vh' }}
                     src="/public/images/radio/vehicle.png"
                     alt="radio"
                 />
