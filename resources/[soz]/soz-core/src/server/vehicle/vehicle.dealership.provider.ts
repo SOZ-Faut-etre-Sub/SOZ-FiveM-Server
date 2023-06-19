@@ -56,26 +56,8 @@ export class VehicleDealershipProvider {
 
     @Once(OnceStep.DatabaseConnected)
     public async initAuction() {
-        const lastPurchases = await this.prismaService.player_purchases.groupBy({
-            where: {
-                shop_type: 'dealership',
-                shop_id: DealershipType.Luxury,
-            },
-            by: ['item_id'],
-            having: {
-                item_id: {
-                    _count: {
-                        gte: 2,
-                    },
-                },
-            },
-        });
-
         const vehicles = await this.prismaService.vehicle.findMany({
             where: {
-                model: {
-                    notIn: lastPurchases.map(purchase => purchase.item_id),
-                },
                 category: {
                     in: ['Sports', 'Sportsclassic'],
                 },
