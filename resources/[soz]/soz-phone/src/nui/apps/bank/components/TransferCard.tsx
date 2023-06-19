@@ -1,6 +1,7 @@
 import { AppContent } from '@ui/components/AppContent';
 import cn from 'classnames';
-import dayjs from 'dayjs';
+import { formatDistance } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import React, { FunctionComponent, memo } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -70,7 +71,11 @@ export const TransferCard: FunctionComponent<BankTransfer> = memo(
                             })}
                         >
                             <div className={cn('float-left')}>{contactName}</div>
-                            <div className={cn('float-right')}>{dayjs().to(createdAt)}</div>
+                            <div className={cn('float-right')}>
+                                {formatDistance(new Date(createdAt), new Date(), {
+                                    locale: fr,
+                                })}
+                            </div>
                         </p>
                         <br />
                         <p
