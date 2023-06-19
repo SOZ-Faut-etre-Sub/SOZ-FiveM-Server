@@ -91,11 +91,11 @@ model upw_stations {
 
 model upw_chargers {
   id              Int              @id @default(autoincrement())
-  station         String           
-  position        String      
+  station         String
+  position        String
   active          Int              @default(0)
   upw_station     upw_stations     @relation(fields: [station], references: [station], onDelete: Cascade, onUpdate: Restrict, map: "FK_upw_chargers_soz_test.upw_stations")
-  
+
   @@index([station], map: "FK_upw_chargers_soz_test.upw_stations")
 }
 
@@ -376,6 +376,7 @@ model storages {
 
   @@index([owner], map: "owner")
   @@index([type], map: "type")
+  @@index([name, type, owner], name: "storageTypeOwner")
 }
 
 model upw_facility {
@@ -383,6 +384,8 @@ model upw_facility {
   type       String  @db.VarChar(50)
   identifier String  @db.VarChar(50)
   data       String? @db.LongText
+
+  @@index([identifier], map: "identifier")
 }
 
 model Vehicle {
