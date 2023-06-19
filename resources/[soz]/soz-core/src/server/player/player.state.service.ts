@@ -38,6 +38,12 @@ export class PlayerStateService {
     }
 
     public getIdentifier(source: string): string | null {
+        const forcedIdentifier = GetConvar('soz_force_player_identifier', '');
+
+        if (forcedIdentifier !== '') {
+            return forcedIdentifier;
+        }
+
         if (GetConvar('soz_disable_steam_credential', 'false') === 'true') {
             return this.getPlayerIdentifierByType(source, 'license');
         }

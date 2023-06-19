@@ -23,6 +23,12 @@ function QBCore.Functions.GetIdentifier(source, idtype)
 end
 
 function QBCore.Functions.GetSozIdentifier(source)
+    local forcedIdentifier = GetConvar('soz_force_player_identifier', '')
+
+    if forcedIdentifier ~= '' then
+        return forcedIdentifier
+    end
+
     if GetConvar("soz_disable_steam_credential", "false") == "true" then
         return QBCore.Functions.GetIdentifier(source, 'license')
     end
