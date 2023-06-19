@@ -9,9 +9,7 @@ client_scripts {
     "@soz-character/client/skin/clothing.lua",
 
     "client/main.lua",
-    "client/noclip.lua",
     "client/polyzone.lua",
-    "client/admin_menu/*.lua",
     "client/mapper_menu/*.lua",
     "client/spectate.lua",
     "client/feature.lua",
