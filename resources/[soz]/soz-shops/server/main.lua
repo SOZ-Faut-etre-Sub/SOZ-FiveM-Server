@@ -288,7 +288,13 @@ RegisterNetEvent("shops:server:validateCart", function(cartContent)
 
         if Player.Functions.RemoveMoney("money", cartAmount) then
             for _, item in pairs(cartContent) do
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, false, false)
+                if not item.unique then
+                    exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, false, false)
+                else
+                    for i = item.amount, 1, -1 do
+                        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, 1, false, false)
+                    end
+                end
             end
             TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                ("Votre achat a bien été validé ! Merci. Prix : ~g~$%s"):format(cartAmount))
