@@ -49,6 +49,10 @@ export class MonitorUpwProvider {
     public async onTick() {
         const metrics = exports['soz-upw'].GetMetrics() as UpwMetrics;
 
+        if (!metrics.pollution_level) {
+            return;
+        }
+
         this.blackoutPercent.set(metrics.blackout_percent);
         this.blackoutLevel.set(metrics.blackout_level);
         this.pollutionPercent.set(metrics.pollution_percent);

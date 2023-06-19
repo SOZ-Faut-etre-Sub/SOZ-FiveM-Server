@@ -91,7 +91,7 @@ local function CreateClothMenuItems(clothMenu, playerId, shopConfig, clothConfig
     local configModel = shopConfig[modelHash] or nil
 
     if configModel == nil then
-        exports["soz-monitor"]:Log("ERROR", "Opening cloth menu with unsupported model hash: " .. modelHash)
+        exports["soz-core"]:Log("ERROR", "Opening cloth menu with unsupported model hash: " .. modelHash)
 
         return clothSet
     end

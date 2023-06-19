@@ -1,6 +1,6 @@
 import { PlayerTalentService } from '@private/server/player/player.talent.service';
 import { waitUntil } from '@public/core/utils';
-import { Monitor } from '@public/shared/monitor';
+import { Monitor } from '@public/server/monitor/monitor';
 import { getDistance, toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { LockPickAlertChance } from '@public/shared/vehicle/vehicle';
 

@@ -1,14 +1,15 @@
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
+import { Logger } from '../../../core/logger';
 import { ServerEvent } from '../../../shared/event';
 import { JobPermission, JobType } from '../../../shared/job';
 import { StonkBagType, StonkConfig } from '../../../shared/job/stonk';
-import { Monitor } from '../../../shared/monitor';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { BankService } from '../../bank/bank.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
+import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
@@ -39,6 +40,9 @@ export class StonkFillInProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @OnEvent(ServerEvent.STONK_FILL_IN)
     public async onFillIn(
@@ -93,11 +97,14 @@ export class StonkFillInProvider {
                     StonkConfig.collection[item].refill_value * fillAmount
                 );
                 if (!transfer) {
-                    this.monitor.log('ERROR', 'Failed to transfer money to safe', {
-                        account_source: StonkConfig.bankAccount.bankRefill,
-                        account_destination: bank.includes('atm') ? bank : `bank_${bank}`,
-                        amount: StonkConfig.collection[item].refill_value * fillAmount,
-                    });
+                    this.logger.error(
+                        'Failed to transfer money to safe',
+                        JSON.stringify({
+                            account_source: StonkConfig.bankAccount.bankRefill,
+                            account_destination: bank.includes('atm') ? bank : `bank_${bank}`,
+                            amount: StonkConfig.collection[item].refill_value * fillAmount,
+                        })
+                    );
                 }
 
                 const transferSociety = await this.bankService.transferBankMoney(
@@ -106,11 +113,14 @@ export class StonkFillInProvider {
                     StonkConfig.collection[item].society_gain * fillAmount
                 );
                 if (!transferSociety) {
-                    this.monitor.log('ERROR', 'Failed to transfer money to safe', {
-                        account_source: StonkConfig.bankAccount.farm,
-                        account_destination: StonkConfig.bankAccount.safe,
-                        amount: StonkConfig.collection[item].society_gain * fillAmount,
-                    });
+                    this.logger.error(
+                        'Failed to transfer money to safe',
+                        JSON.stringify({
+                            account_source: StonkConfig.bankAccount.farm,
+                            account_destination: StonkConfig.bankAccount.safe,
+                            amount: StonkConfig.collection[item].society_gain * fillAmount,
+                        })
+                    );
                 }
 
                 currentBalance += StonkConfig.collection[item].refill_value * fillAmount;
