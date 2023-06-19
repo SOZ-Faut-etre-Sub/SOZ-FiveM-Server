@@ -13,6 +13,9 @@ import { Notifier } from '../notifier';
 import { PlayerStateService } from '../player/player.state.service';
 
 const DIR_WATER_HYDRANT = 13;
+const EXP_TAG_RAYGUN = 70;
+
+const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN];
 
 @Provider()
 export class WeaponProvider {
@@ -124,11 +127,11 @@ export class WeaponProvider {
 
     @On('explosionEvent')
     public onExplosion(unk: any, source: number, explosionData) {
-        if (explosionData.explosionType == DIR_WATER_HYDRANT) {
+        this.logger.info('Explosion ' + JSON.stringify(explosionData));
+
+        if (excludeExplosionAlert.includes(explosionData.explosionType)) {
             return;
         }
-
-        this.logger.info('Explosion ' + JSON.stringify(explosionData));
 
         if (!explosionData.f208) {
             TriggerClientEvent(

@@ -26,7 +26,7 @@ const messageExcludeGroups = [
     GetHashKey('GROUP_STUNGUN'),
 ];
 
-const messageExclude = [GetHashKey('weapon_musket')];
+const messageExclude = [GetHashKey('weapon_musket'), GetHashKey('weapon_raypistol')];
 
 @Provider()
 export class WeaponProvider {
