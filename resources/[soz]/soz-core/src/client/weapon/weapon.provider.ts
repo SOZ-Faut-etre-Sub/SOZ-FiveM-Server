@@ -103,15 +103,20 @@ export class WeaponProvider {
 
     @OnEvent(ClientEvent.WEAPON_USE_AMMO)
     async onUseAmmo(ammoName: string) {
-        if (!this.weapon.getCurrentWeapon()) {
-            return;
-        }
-
         if (this.playerService.getState().isInventoryBusy) {
             return;
         }
 
-        await this.playerService.updateState({ isInventoryBusy: true });
+        this.playerService.updateState({ isInventoryBusy: true });
+        await this.onUseAmmoLoop(ammoName);
+
+        this.playerService.updateState({ isInventoryBusy: false });
+    }
+
+    private async onUseAmmoLoop(ammoName: string) {
+        if (!this.weapon.getCurrentWeapon()) {
+            return;
+        }
 
         const weapon = await emitRpc<InventoryItem | null>(
             RpcServerEvent.WEAPON_USE_AMMO,
@@ -121,8 +126,6 @@ export class WeaponProvider {
         );
 
         if (!weapon) {
-            await this.playerService.updateState({ isInventoryBusy: false });
-
             return;
         }
 
@@ -139,6 +142,7 @@ export class WeaponProvider {
             {
                 canCancel: false,
                 disableCombat: true,
+                allowExistingAnimation: true,
             }
         );
 
@@ -148,10 +152,8 @@ export class WeaponProvider {
             await this.weapon.set(weapon);
         }
 
-        await this.playerService.updateState({ isInventoryBusy: false });
-
         if (weapon.metadata.ammo < this.weapon.getMaxAmmoInClip() * GlobalWeaponConfig.MaxAmmoRefill(weapon.name)) {
-            await this.onUseAmmo(ammoName);
+            await this.onUseAmmoLoop(ammoName);
         }
     }
 
