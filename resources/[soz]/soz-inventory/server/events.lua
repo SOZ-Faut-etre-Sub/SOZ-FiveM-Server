@@ -25,7 +25,7 @@ RegisterServerEvent("inventory:server:bin-vandalism", function(invID, ctx)
     local binInv = GetOrCreateInventory(storageType, invID, ctx)
     local count = Inventory.Search(binInv, "amount", "garbagebag")
     Inventory.RemoveItem(binInv, "garbagebag", count)
-    Inventory.AddItem(Player.PlayerData.source, binInv, "torn_garbagebag", math.ceil(count / 2))
+    Inventory.AddItem(source, binInv, "torn_garbagebag", math.floor(count / 2))
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
