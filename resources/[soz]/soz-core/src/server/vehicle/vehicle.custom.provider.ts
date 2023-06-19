@@ -71,7 +71,7 @@ export class VehicleCustomProvider {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         if (!state.volatile.id) {
-            return getDefaultVehicleConfiguration();
+            return null;
         }
 
         const playerVehicle = await this.prismaService.playerVehicle.findUnique({
@@ -81,7 +81,7 @@ export class VehicleCustomProvider {
         });
 
         if (!playerVehicle) {
-            return getDefaultVehicleConfiguration();
+            return null;
         }
 
         return {

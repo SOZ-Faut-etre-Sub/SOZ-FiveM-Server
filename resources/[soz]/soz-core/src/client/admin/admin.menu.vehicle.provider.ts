@@ -6,6 +6,7 @@ import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { groupBy } from '../../shared/utils/array';
+import { VehicleConfiguration, VehicleModType } from '../../shared/vehicle/modification';
 import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -118,16 +119,27 @@ export class AdminMenuVehicleProvider {
     public async onAdminMenuVehicleSetFBIConfig() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         if (vehicle) {
-            SetVehicleModKit(vehicle, 0);
+            const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
+            const fbiConfiguration: VehicleConfiguration = {
+                ...configuration,
+                color: {
+                    primary: 12,
+                    secondary: 12,
+                    pearlescent: 12,
+                    rim: 12,
+                },
+                windowTint: 1,
+                modification: {
+                    turbo: true,
+                    engine: GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1,
+                    brakes: GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1,
+                    transmission: GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
+                    suspension: GetNumVehicleMods(vehicle, VehicleModType.Suspension) - 1,
+                    armor: GetNumVehicleMods(vehicle, VehicleModType.Armor) - 1,
+                },
+            };
 
-            [11, 12, 13, 15, 16].forEach(modCategory => {
-                SetVehicleMod(vehicle, modCategory, GetNumVehicleMods(vehicle, modCategory) - 1, false);
-            });
-
-            ToggleVehicleMod(vehicle, 18, true);
-            SetVehicleColours(vehicle, 12, 12);
-            SetVehicleExtraColours(vehicle, 12, 12);
-            SetVehicleWindowTint(vehicle, 1);
+            this.vehicleModificationService.applyVehicleConfiguration(vehicle, fbiConfiguration);
         }
         return Ok(true);
     }
