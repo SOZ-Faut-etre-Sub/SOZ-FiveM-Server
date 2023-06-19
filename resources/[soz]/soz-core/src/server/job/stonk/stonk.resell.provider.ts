@@ -1,14 +1,15 @@
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
+import { Logger } from '../../../core/logger';
 import { ServerEvent } from '../../../shared/event';
 import { JobPermission, JobType } from '../../../shared/job';
 import { StonkBagType, StonkConfig } from '../../../shared/job/stonk';
-import { Monitor } from '../../../shared/monitor';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { BankService } from '../../bank/bank.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
+import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
@@ -39,6 +40,9 @@ export class StonkResellProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @OnEvent(ServerEvent.STONK_RESELL)
     public async onResell(source: number, item: StonkBagType) {
@@ -82,11 +86,14 @@ export class StonkResellProvider {
                     StonkConfig.collection[item].society_gain * resellAmount
                 );
                 if (!transfer) {
-                    this.monitor.log('ERROR', 'Failed to transfer money to safe', {
-                        account_source: StonkConfig.bankAccount.farm,
-                        account_destination: StonkConfig.bankAccount.safe,
-                        amount: StonkConfig.collection[item].society_gain * resellAmount,
-                    });
+                    this.logger.error(
+                        'Failed to transfer money to safe',
+                        JSON.stringify({
+                            account_source: StonkConfig.bankAccount.farm,
+                            account_destination: StonkConfig.bankAccount.safe,
+                            amount: StonkConfig.collection[item].society_gain * resellAmount,
+                        })
+                    );
                 }
 
                 this.notifier.notify(source, `Vous avez déposé ${resellAmount} ~g~${outputItemLabel}~s~.`);

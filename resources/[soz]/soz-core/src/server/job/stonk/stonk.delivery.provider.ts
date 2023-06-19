@@ -1,10 +1,10 @@
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
+import { Logger } from '../../../core/logger';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobPermission, JobType } from '../../../shared/job';
 import { StonkConfig } from '../../../shared/job/stonk';
-import { Monitor } from '../../../shared/monitor';
 import { NamedZone } from '../../../shared/polyzone/box.zone';
 import { BankService } from '../../bank/bank.service';
 import { FieldProvider } from '../../farm/field.provider';
@@ -41,8 +41,8 @@ export class StonkDeliveryProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(Monitor)
-    private monitor: Monitor;
+    @Inject(Logger)
+    private logger: Logger;
 
     private fieldIdentifier = 'stonk_delivery';
 
@@ -174,11 +174,14 @@ export class StonkDeliveryProvider {
                 StonkConfig.delivery.society_gain
             );
             if (!transfer) {
-                this.monitor.log('ERROR', 'Failed to transfer money to safe', {
-                    account_source: StonkConfig.bankAccount.farm,
-                    account_destination: StonkConfig.bankAccount.safe,
-                    amount: StonkConfig.delivery.society_gain,
-                });
+                this.logger.error(
+                    'Failed to transfer money to safe',
+                    JSON.stringify({
+                        account_source: StonkConfig.bankAccount.farm,
+                        account_destination: StonkConfig.bankAccount.safe,
+                        amount: StonkConfig.delivery.society_gain,
+                    })
+                );
             }
         } else {
             this.notifier.notify(source, `Impossible de ~r~déposer~s~ une caisse.`, 'error');

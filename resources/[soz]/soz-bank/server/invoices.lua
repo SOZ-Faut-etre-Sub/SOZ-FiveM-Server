@@ -106,7 +106,7 @@ local function PayInvoice(PlayerData, account, id, marked)
                                ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
         end
 
-        TriggerEvent("monitor:server:event", "invoice_pay", {
+        exports["soz-core"]:Event("invoice_pay", {
             player_source = Player.PlayerData.source,
             invoice_kind = "invoice",
             invoice_job = "",
@@ -133,8 +133,7 @@ local function PayInvoice(PlayerData, account, id, marked)
                                        ("Votre facture ~b~%s~s~ a été ~g~payée"):format(invoice.label))
                 end
 
-                TriggerEvent("monitor:server:event", "invoice_pay",
-                             {
+                exports["soz-core"]:Event("invoice_pay", {
                     player_source = PlayerData.source,
                     invoice_kind = "invoice",
                     invoice_job = PlayerData.job.id,
@@ -181,7 +180,7 @@ local function RejectInvoice(PlayerData, account, id)
                                ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
-        TriggerEvent("monitor:server:event", "invoice_refuse", {
+        exports["soz-core"]:Event("invoice_refuse", {
             player_source = Player.PlayerData.source,
             invoice_kind = "invoice",
             invoice_job = "",
@@ -201,7 +200,7 @@ local function RejectInvoice(PlayerData, account, id)
                                ("Votre facture ~b~%s~s~ a été ~r~refusée"):format(invoice.label))
         end
 
-        TriggerEvent("monitor:server:event", "invoice_refuse", {
+        exports["soz-core"]:Event("invoice_refuse", {
             player_source = PlayerData.source,
             invoice_kind = "invoice",
             invoice_job = PlayerData.job.id,
@@ -268,8 +267,7 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
             invoiceJob = Target.PlayerData.job.id
         end
 
-        TriggerEvent("monitor:server:event", "invoice_emit",
-                     {
+        exports["soz-core"]:Event("invoice_emit", {
             player_source = Emitter.PlayerData.source,
             invoice_kind = kind or "invoice",
             invoice_job = invoiceJob,

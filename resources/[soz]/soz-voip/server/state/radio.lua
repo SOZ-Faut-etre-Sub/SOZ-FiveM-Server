@@ -26,7 +26,7 @@ function RadioStateManager:broadcastToConsumers(channel, cb)
     local channelNumber = tonumber(channel)
 
     if channelNumber == nil then
-        exports["soz-monitor"]:Log("ERROR", "nil error when converting channel to number, original value: " .. channel, {})
+        exports["soz-core"]:Log("ERROR", "nil error when converting channel to number, original value: " .. channel, {})
 
         return
     end

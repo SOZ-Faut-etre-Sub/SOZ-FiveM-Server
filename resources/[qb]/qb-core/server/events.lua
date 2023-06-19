@@ -4,7 +4,7 @@ AddEventHandler('playerDropped', function()
     local src = source
     if QBCore.Players[src] then
         local Player = QBCore.Players[src]
-        exports['soz-monitor']:Event('player_disconnect', { player_source = src }, {})
+        exports['soz-core']:Event('player_disconnect', { player_source = src }, {})
         Player.Functions.Save()
         _G.Player_Buckets[Player.PlayerData.license] = nil
         TriggerEvent('inventory:DropPlayerInventory', src)
@@ -51,7 +51,7 @@ local function OnPlayerConnecting(name, setKickReason, deferrals)
     local defaultAnonymousRole = GetConvar("soz_anonymous_default_role", "user")
 
     if not steam then
-        exports["soz-monitor"]:Log("ERROR", name .. ": error finding steam id for this user.", {
+        exports["soz-core"]:Log("ERROR", name .. ": error finding steam id for this user.", {
             event = "playerConnecting"
         })
 
@@ -163,7 +163,7 @@ end)
 -- Items
 RegisterNetEvent('QBCore:Server:RemoveItem', function(itemName, amount, slot)
     local Player = QBCore.Functions.GetPlayer(source)
-    exports['soz-monitor']:Log('FATAL', 'DEPRECATED use of QBCore:Server:RemoveItem ! item: '.. itemName, Player)
+    exports['soz-core']:Log('ERROR', 'DEPRECATED use of QBCore:Server:RemoveItem ! item: '.. itemName, Player)
     exports['soz-inventory']:RemoveItem(Player.PlayerData.source, itemName, amount, false, slot)
 end)
 

@@ -2,11 +2,11 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ServerEvent } from '../../shared/event';
-import { Monitor } from '../../shared/monitor';
 import { BossShop } from '../../shared/shop/boss';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';
 

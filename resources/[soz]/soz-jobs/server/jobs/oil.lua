@@ -41,8 +41,8 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:refillTanker", function(sour
         if success then
             TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez ~g~rempli~s~ %dL de pétrole"):format(quantity))
 
-            TriggerEvent("monitor:server:event", "job_mtp_fill_oil_tanker", {player_source = Player.PlayerData.source},
-                         {
+            exports["soz-core"]:Event("job_mtp_fill_oil_tanker", {player_source = Player.PlayerData.source},
+                                      {
                 quantity = tonumber(quantity),
                 position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
             })
@@ -75,8 +75,8 @@ RegisterNetEvent("jobs:server:fueler:refiningTanker", function(tankerId)
         if refinedSuccess then
             TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, ("Vous avez ~g~raffiné~s~ %dL de pétrole"):format(itemToRefill))
 
-            TriggerEvent("monitor:server:event", "job_mtp_refining_oil", {player_source = Player.PlayerData.source},
-                         {
+            exports["soz-core"]:Event("job_mtp_refining_oil", {player_source = Player.PlayerData.source},
+                                      {
                 quantity = tonumber(itemToRefill),
                 position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
             })
@@ -109,9 +109,8 @@ RegisterNetEvent("jobs:server:fueler:craftEssence", function()
                     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                        ("Vous avez ~g~transformé~s~ %dL en carburant"):format(essenceItemAmount))
 
-                    TriggerEvent("monitor:server:event", "job_mtp_create_gasoline", {
-                        player_source = Player.PlayerData.source,
-                    }, {
+                    exports["soz-core"]:Event("job_mtp_create_gasoline", {player_source = Player.PlayerData.source},
+                                              {
                         quantity = essenceItemAmount,
                         position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
                     })
@@ -137,9 +136,8 @@ RegisterNetEvent("jobs:server:fueler:craftEssenceJerryCan", function()
                 if success then
                     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                        ("Vous avez ~g~transformé~s~ %dL en JerryCan"):format(essenceItemAmount))
-                    TriggerEvent("monitor:server:event", "job_mtp_create_jerrycan", {
-                        player_source = Player.PlayerData.source,
-                    }, {
+                    exports["soz-core"]:Event("job_mtp_create_jerrycan", {player_source = Player.PlayerData.source},
+                                              {
                         quantity = essenceItemAmount,
                         position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
                     })
@@ -176,9 +174,11 @@ RegisterNetEvent("jobs:server:fueler:craftKerosene", function()
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                    ("Vous avez ~g~transformé~s~ %dL en kérosène"):format(keroseneItemAmount))
 
-                TriggerEvent("monitor:server:event", "job_mtp_create_gasoline", {
-                    player_source = Player.PlayerData.source,
-                }, {quantity = keroseneItemAmount, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+                exports["soz-core"]:Event("job_mtp_create_gasoline", {player_source = Player.PlayerData.source},
+                                          {
+                    quantity = keroseneItemAmount,
+                    position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+                })
             else
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le kérosène.",
                                    "error")
@@ -203,9 +203,11 @@ RegisterNetEvent("jobs:server:fueler:craftKeroseneJerryCan", function()
             if success then
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
                                    ("Vous avez ~g~transformé~s~ %dL en JerryCan"):format(jerrycanItemAmount))
-                TriggerEvent("monitor:server:event", "job_mtp_create_jerrycan", {
-                    player_source = Player.PlayerData.source,
-                }, {quantity = jerrycanItemAmount, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+                exports["soz-core"]:Event("job_mtp_create_jerrycan", {player_source = Player.PlayerData.source},
+                                          {
+                    quantity = jerrycanItemAmount,
+                    position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+                })
             else
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~récupérer~s~ le JerryCan.", "error")
             end
@@ -226,8 +228,11 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:resellTanker", function(sour
         if exports["soz-inventory"]:RemoveItem(tankerInv, "essence", 10) then
             TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
             TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 100L d'essence")
-            TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
-                         {quantity = 10, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+            exports["soz-core"]:Event("job_mtp_sell_oil", {player_source = Player.PlayerData.source},
+                                      {
+                quantity = 10,
+                position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+            })
 
             cb(true)
             return
@@ -238,8 +243,11 @@ QBCore.Functions.CreateCallback("jobs:server:fueler:resellTanker", function(sour
         if exports["soz-inventory"]:RemoveItem(tankerInv, "kerosene", 10) then
             TriggerEvent("banking:server:TransferMoney", "farm_mtp", "safe_oil", 10 * FuelerConfig.SellPrice)
             TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez ~g~revendu~s~ 100L de kérosène")
-            TriggerEvent("monitor:server:event", "job_mtp_sell_oil", {player_source = Player.PlayerData.source},
-                         {quantity = 10, position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))})
+            exports["soz-core"]:Event("job_mtp_sell_oil", {player_source = Player.PlayerData.source},
+                                      {
+                quantity = 10,
+                position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+            })
 
             cb(true)
             return
