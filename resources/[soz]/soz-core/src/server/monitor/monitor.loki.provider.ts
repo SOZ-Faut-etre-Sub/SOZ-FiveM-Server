@@ -97,6 +97,8 @@ export class MonitorLokiProvider {
                     license: player.license,
                 },
             };
+
+            message = `[Player ${player.citizenid}] ${message}`;
         }
 
         this.handleLog(level, message, content);
