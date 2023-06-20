@@ -4,8 +4,8 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Monitor } from '../../shared/monitor';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
@@ -30,7 +30,6 @@ type CartElement = {
 
 @Provider()
 export class ShopProvider {
-
     @Inject(Notifier)
     private notifier: Notifier;
 
