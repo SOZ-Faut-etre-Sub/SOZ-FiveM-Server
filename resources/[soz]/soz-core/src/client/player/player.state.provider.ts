@@ -21,6 +21,11 @@ export class PlayerStateProvider {
     @Once(OnceStep.PlayerLoaded)
     public async onStart() {
         this.playerService.setState(await emitRpc<PlayerClientState>(RpcServerEvent.PLAYER_GET_CLIENT_STATE));
+        const stateList = await emitRpc<Record<PlayerListStateKey, number[]>>(RpcServerEvent.PLAYER_GET_LIST_STATE);
+
+        for (const key in stateList) {
+            this.playerListStateService.updateList(key as PlayerListStateKey, stateList[key]);
+        }
     }
 
     @Exportable('GetPlayerState')

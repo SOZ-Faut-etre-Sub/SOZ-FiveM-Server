@@ -7,7 +7,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Permissions } from '../../core/permissions';
 import { ServerEvent } from '../../shared/event';
-import { PlayerClientState, PlayerData, PlayerServerState } from '../../shared/player';
+import { PlayerClientState, PlayerData, PlayerListStateKey, PlayerServerState } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
 import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
@@ -83,6 +83,11 @@ export class PlayerProvider {
     @Rpc(RpcServerEvent.PLAYER_GET_CLIENT_STATE)
     public getClientState(source: number, target: number | null): PlayerClientState {
         return this.playerStateService.getClientState(target === null ? source : target);
+    }
+
+    @Rpc(RpcServerEvent.PLAYER_GET_LIST_STATE)
+    public getListState(): Record<PlayerListStateKey, number[]> {
+        return this.playerListStateService.getStates();
     }
 
     @Exportable('GetPlayerState')
