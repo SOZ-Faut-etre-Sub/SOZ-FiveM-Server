@@ -279,12 +279,9 @@ class CallsService {
 
             if (
                 currentCall.receiverSource !== null &&
-                ((currentCall.receiverSource !== 0 &&
-                    currentCall?.identifier === transmitterCall?.identifier &&
-                    currentCall?.is_accepted) ||
-                    (currentCall?.identifier === transmitterCall?.identifier &&
-                        currentCall?.is_accepted === false &&
-                        !this.isPlayerAlreadyInCall(transmitterCall?.receiver)))
+                currentCall.receiverSource !== 0 &&
+                currentCall?.identifier === transmitterCall?.identifier &&
+                (currentCall?.is_accepted || !this.isPlayerAlreadyInCall(transmitterCall?.receiver))
             ) {
                 emitNet(CallEvents.WAS_ENDED, currentCall.receiverSource);
             }
