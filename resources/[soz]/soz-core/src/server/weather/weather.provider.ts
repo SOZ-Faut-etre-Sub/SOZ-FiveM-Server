@@ -13,7 +13,7 @@ import { Forecast, Time, Weather } from '../../shared/weather';
 import { MonitorService } from '../monitor/monitor.service';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
-import { Polluted, SpringAutumn } from './forecast';
+import { Polluted, Summer } from './forecast';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 
@@ -28,7 +28,7 @@ export class WeatherProvider {
     @Inject('Store')
     private store: Store;
 
-    private forecast: Forecast = SpringAutumn;
+    private forecast: Forecast = Summer;
 
     private currentTime: Time = { hour: 2, minute: 0, second: 0 };
 
