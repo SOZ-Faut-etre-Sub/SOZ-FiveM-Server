@@ -103,6 +103,10 @@ export class PlayerMenuProvider {
                 name: 'givetake2_a',
                 blendInSpeed: 8.0,
                 blendOutSpeed: 8.0,
+                options: {
+                    enablePlayerControl: true,
+                    onlyUpperBody: true,
+                },
             },
         });
 
