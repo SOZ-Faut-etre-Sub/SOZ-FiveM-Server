@@ -40,4 +40,18 @@ export class PlayerListStateService {
             TriggerClientEvent(ClientEvent.PLAYER_UPDATE_LIST_STATE, -1, key, Array.from(this.lists[key]));
         }
     }
+
+    public getStates(): Record<PlayerListStateKey, number[]> {
+        const states: Record<PlayerListStateKey, number[]> = {
+            dead: [],
+            zipped: [],
+            wearingPatientOutfit: [],
+        };
+
+        for (const key in this.lists) {
+            states[key] = Array.from(this.lists[key]);
+        }
+
+        return states;
+    }
 }
