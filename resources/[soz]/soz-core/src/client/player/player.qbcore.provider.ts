@@ -38,6 +38,7 @@ export class PlayerQbcoreProvider {
             return;
         }
 
+        this.onceLoader.trigger(OnceStep.PlayerLoaded, playerData);
         this.playerService.setPlayer(playerData);
     }
 
