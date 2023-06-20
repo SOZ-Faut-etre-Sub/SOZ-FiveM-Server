@@ -30,7 +30,7 @@ export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, 'que
         });
 
         this.$on('query', e => {
-            if (e.duration >= 200) {
+            if (e.duration >= 50) {
                 this.logger.warn(`[Prisma] [slow query] [${e.duration}ms] ${e.query.trim()} ${e.params} `);
             } else {
                 this.logger.debug(`[Prisma] [${e.duration}ms] ${e.query.trim()} ${e.params}`);
