@@ -209,7 +209,7 @@ RegisterNUICallback("player/validateCart", function(data, cb)
     SetNuiFocus(false, false)
     local cartContent = data
 
-    TriggerServerEvent("shops:server:validateCart", cartContent)
+    TriggerServerEvent("soz-core:server:shop:validate-cart", cartContent)
 
     SetNuiFocus(true, true)
     cb(amount)

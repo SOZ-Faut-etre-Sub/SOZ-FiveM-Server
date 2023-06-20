@@ -1,12 +1,11 @@
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ItemService } from '@public/client/item/item.service';
-import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
 
-import { Once, OnceStep, OnNuiEvent } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { NuiEvent, ServerEvent } from '../../../shared/event';
+import { ServerEvent } from '../../../shared/event';
 import { NuiMenu } from '../../nui/nui.menu';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -23,14 +22,6 @@ export class LSMCPharmacyProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
-
-    @Inject(NuiDispatch)
-    private dispatcher: NuiDispatch;
-
-    @OnNuiEvent(NuiEvent.LsmcPharmacyBuyItem)
-    async buyItem({ item }: { item: string }) {
-        TriggerServerEvent(ServerEvent.LSMC_BUY_ITEM, item);
-    }
 
     @Once(OnceStep.PlayerLoaded)
     public onPlayerLoaded() {

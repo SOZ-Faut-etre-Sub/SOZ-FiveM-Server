@@ -2,13 +2,11 @@ import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { NuiEvent, ServerEvent } from '../../shared/event';
-import { JobPermission, JobType } from '../../shared/job';
-import { MenuType } from '../../shared/nui/menu';
-import { Zone } from '../../shared/polyzone/box.zone';
+import { JobPermission } from '../../shared/job';
 import { ShopProduct } from '../../shared/shop';
 import { BossShop } from '../../shared/shop/boss';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
-import { NuiMenu } from '../nui/nui.menu';
 import { Qbcore } from '../qbcore';
 import { TargetFactory } from '../target/target.factory';
 
@@ -20,30 +18,19 @@ export class BossShopProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
-    @Inject(NuiMenu)
-    private nuiMenu: NuiMenu;
-
     @Inject(ItemService)
     private itemService: ItemService;
 
-    public async onOpenMenu(job: JobType, products: ShopProduct[], zone: Zone) {
-        const hydratedProducts = products.map(product => ({ ...product, item: this.itemService.getItem(product.id) }));
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
-        this.nuiMenu.openMenu(
-            MenuType.BossShop,
-            { job, products: hydratedProducts },
-            {
-                position: {
-                    position: zone.center,
-                    distance: 5.0,
-                },
-            }
-        );
-    }
-
-    @OnNuiEvent(NuiEvent.BossShopBuy)
-    public async onShopBuy({ job, id }: { job: string; id: string }) {
-        TriggerServerEvent(ServerEvent.SHOP_BOSS_BUY, job, id);
+    public getHydratedProducts(products: ShopProduct[]){
+        const hydratedProducts = products.map((product, id) => ({
+            ...this.itemService.getItem(product.id),
+            ...product,
+            slot: id,
+        }));
+        return hydratedProducts;
     }
 
     @Once(OnceStep.PlayerLoaded)
@@ -61,7 +48,12 @@ export class BossShopProvider {
                         canInteract: () => {
                             return this.qbCore.hasJobPermission(shop.job, JobPermission.SocietyShop);
                         },
-                        action: this.onOpenMenu.bind(this, shop.job, shop.products, shop.zone),
+                        action: () => {
+                            this.inventoryManager.openShopInventory(
+                                this.getHydratedProducts(shop.products),
+                                'menu_shop_society'
+                            );
+                        },
                     },
                 ],
                 2.5
