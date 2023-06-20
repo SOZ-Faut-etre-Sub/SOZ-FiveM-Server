@@ -39,14 +39,14 @@ export const Winter: Forecast = {
 };
 
 export const Summer: Forecast = {
-    EXTRASUNNY: { CLOUDS: 10, OVERCAST: 90 },
-    CLEAR: {},
+    EXTRASUNNY: { CLOUDS: 10, OVERCAST: 40, CLEAR: 50 },
+    CLEAR: { EXTRASUNNY: 50, CLOUDS: 50 },
     NEUTRAL: {},
     SMOG: {},
     FOGGY: {},
-    OVERCAST: { CLOUDS: 5, EXTRASUNNY: 95 },
-    CLOUDS: { OVERCAST: 50, EXTRASUNNY: 50 },
-    CLEARING: {},
+    OVERCAST: { CLOUDS: 15, CLEAR: 80, CLEARING: 5 },
+    CLOUDS: { OVERCAST: 10, EXTRASUNNY: 50, CLEAR: 30, CLEARING: 5 },
+    CLEARING: { CLOUDS: 50, OVERCAST: 50 },
     RAIN: {},
     THUNDER: {},
     SNOW: {},
