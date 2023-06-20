@@ -54,4 +54,6 @@ Config.ErrorMessage = {
 
 Config.crateMaxWeight = 12000
 
+Config.crateTypeAllowed = {"food", "liquor", "drink", "cocktail"}
+
 Config.Storages = {}
