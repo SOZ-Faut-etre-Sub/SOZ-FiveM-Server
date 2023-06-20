@@ -42,12 +42,13 @@ export const emitClientRpcConfig = async <R>(
         try {
             return await doEmitClientRpc<R>(name, source, config.timeout, ...args);
         } catch (e) {
-            console.error(`RPC ${name} failed`, e);
             rpcTry++;
 
             if (rpcTry === 3) {
                 throw e;
             }
+
+            console.error(`rpc ${name} timeout (${rpcTry}) retrying...`);
         }
     }
 

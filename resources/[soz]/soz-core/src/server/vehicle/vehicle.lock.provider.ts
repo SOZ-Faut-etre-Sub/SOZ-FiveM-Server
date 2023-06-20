@@ -285,20 +285,14 @@ export class VehicleLockProvider {
     }
 
     @Rpc(RpcServerEvent.VEHICLE_HAS_KEY)
-    public async hasVehicleKey(source: number, vehicleId: number): Promise<boolean> {
+    public async hasVehicleKey(source: number, plate: string): Promise<boolean> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
             return false;
         }
 
-        const vehicle = await this.vehiclePlayerRepository.find(vehicleId);
-
-        if (!vehicle) {
-            return false;
-        }
-
-        return this.vehicleStateService.hasVehicleKey(vehicle.plate, player.citizenid);
+        return this.vehicleStateService.hasVehicleKey(plate, player.citizenid);
     }
 
     @OnEvent(ServerEvent.VEHICLE_FORCE_OPEN)

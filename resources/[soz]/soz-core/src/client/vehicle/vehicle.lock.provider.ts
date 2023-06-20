@@ -543,7 +543,7 @@ export class VehicleLockProvider {
             return true;
         }
 
-        return await emitRpc<boolean>(RpcServerEvent.VEHICLE_HAS_KEY, state.id);
+        return await emitRpc<boolean>(RpcServerEvent.VEHICLE_HAS_KEY, state.plate);
     }
 
     @OnEvent(ClientEvent.VEHICLE_LOCKPICK)
