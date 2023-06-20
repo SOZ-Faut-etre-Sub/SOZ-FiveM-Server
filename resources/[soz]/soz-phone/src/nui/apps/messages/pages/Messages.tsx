@@ -6,6 +6,7 @@ import { AppWrapper } from '@ui/components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -62,7 +63,10 @@ export const Messages = () => {
             .filter(conversation => conversation.conversation_id === groupId)
             .sort((a, b) => b.id - a.id)
             .forEach(message => {
-                const date = format(new Date(message.createdAt), 'LL');
+                const date = format(new Date(message.createdAt), 'PP', {
+                    locale: fr,
+                });
+
                 if (messagesByDate[date] === undefined) {
                     messagesByDate[date] = [];
                 }
@@ -159,8 +163,8 @@ export const Messages = () => {
                             }}
                         >
                             <div id="scrollableDiv" className="flex flex-col-reverse h-[650px] overflow-auto">
-                                {Object.keys(filteredMessages).map(date => (
-                                    <>
+                                {Object.keys(filteredMessages).map((date, id) => (
+                                    <React.Fragment key={id}>
                                         {filteredMessages[date].map(message => (
                                             <MessageBubble key={message.id} message={message} />
                                         ))}
@@ -185,7 +189,7 @@ export const Messages = () => {
                                                 </span>
                                             </div>
                                         </div>
-                                    </>
+                                    </React.Fragment>
                                 ))}
                             </div>
                         </div>
