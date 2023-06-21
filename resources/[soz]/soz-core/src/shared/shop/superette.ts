@@ -1,9 +1,34 @@
 import { ShopBrand } from '@public/config/shops';
 
+import { InventoryItemMetadata, Item, ItemType } from '../item';
 import { PlayerLicenceType } from '../player';
 import { ShopProduct } from '../shop';
 
 export type ShopContent = ShopProduct[];
+
+export type SuperetteItem = Item & {
+    price?: number;
+    amount?: number;
+    slot?: number;
+};
+
+export type ShopItem = {
+    name: string;
+    label: string;
+    description: string;
+    weight: number;
+    slot: number;
+    useable: boolean;
+    unique: boolean;
+    type: ItemType;
+    amount: number;
+    metadata?: InventoryItemMetadata;
+    shouldClose?: boolean;
+    illustrator?: Record<string, string> | string;
+    disabled?: boolean; // added by inventory on the fly
+    shortcut?: string | null; // added by inventory on the fly
+    price: number;
+};
 
 const SuperetteContent: ShopContent = [
     { id: 'sandwich', type: 'food', price: 4 },
@@ -16,6 +41,10 @@ const SuperetteContent: ShopContent = [
     { id: 'umbrella', type: 'item', price: 1000 },
     { id: 'diving_gear', type: 'item', price: 2600 },
     { id: 'zpad', type: 'item', price: 2400 },
+    { id: 'instantazouille', type: 'food', price: 10 },
+    { id: 'mini_zigmac', type: 'food', price: 10 },
+    { id: 'zait_fruite', type: 'drink', price: 10 },
+    { id: 'zanta_glace_energetique', type: 'drink', price: 10 },
 ];
 
 const AmmunationContent: ShopContent = [
