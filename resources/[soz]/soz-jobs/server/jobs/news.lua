@@ -53,7 +53,7 @@ RegisterNetEvent("jobs:server:news:newspaperFarm", function()
     local Player = QBCore.Functions.GetPlayer(source)
     local newspaperAmount = math.random(NewsConfig.SellAmount.min * NewsConfig.FarmMultiplier, NewsConfig.SellAmount.max * NewsConfig.FarmMultiplier)
 
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, "newspaper", newspaperAmount, nil, nil, function(success)
+    exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "newspaper", newspaperAmount, nil, nil, function(success)
         if success then
             TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez récupéré ~g~" .. newspaperAmount .. " journaux")
         end

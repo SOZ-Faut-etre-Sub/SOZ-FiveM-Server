@@ -11,33 +11,33 @@ function SupermarketShop:getShopProducts()
     return Config.Products[self.brand]
 end
 
+local function table_deepclone(tbl)
+    tbl = table.clone(tbl)
+    for k, v in pairs(tbl) do
+        if type(v) == "table" then
+            tbl[k] = table_deepclone(v)
+        end
+    end
+    return tbl
+end
+
 function SupermarketShop:GenerateMenu()
-    shopMenu.Texture = "menu_shop_supermarket"
-    shopMenu:ClearItems()
-    shopMenu:SetSubtitle(self.label)
+    local shopTexture = "menu_shop_supermarket"
+    local shopContent = {}
 
     for itemID, item in pairs(self:getShopProducts()) do
-        if QBCore.Shared.Items[item.name] and item.amount > 0 then
-            shopMenu:AddButton({
-                label = QBCore.Shared.Items[item.name].label,
-                value = itemID,
-                rightLabel = "$" .. QBCore.Shared.GroupDigits(item.price),
-                select = function(val)
-                    local amount = exports["soz-core"]:Input("Quantité", 4, "1")
+        local sharedItem = QBCore.Shared.Items[item.name]
+        if sharedItem and item.amount > 0 then
+            local shopItem = table_deepclone(sharedItem)
+            shopItem.price = item.price
+            shopItem.amount = item.amount
+            shopItem.slot = itemID
 
-                    if amount and tonumber(amount) > 0 then
-                        TriggerServerEvent("shops:server:pay", self.brand, val.Value, tonumber(amount))
-
-                        shopMenu:Close()
-                        self:GenerateMenu()
-                    end
-
-                end,
-            })
+            table.insert(shopContent, shopItem)
         end
     end
 
-    shopMenu:Open()
+    exports["soz-inventory"]:openShop(shopContent)
 end
 
 --- Exports shop

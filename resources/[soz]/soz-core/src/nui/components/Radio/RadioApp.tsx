@@ -30,7 +30,12 @@ export const RadioApp: FunctionComponent = () => {
         [radio]
     );
     useNuiEvent('radio', 'Close', () => setRadio(null));
-    useNuiFocus(radio !== null, radio !== null, radio !== null, radio !== null ? [Control.Attack] : []);
+    useNuiFocus(
+        radio !== null,
+        radio !== null,
+        radio !== null,
+        radio !== null ? [Control.Attack, Control.NextCamera] : []
+    );
 
     useEffect(() => {
         if (!radio) {

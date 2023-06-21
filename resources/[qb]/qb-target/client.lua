@@ -970,32 +970,34 @@ RegisterNUICallback('selectTarget', function(option, cb)
 	targetActive, success, hasFocus = false, false, false
 	if sendData then
 		local data = sendData[option]
-		table_wipe(sendData)
-		CreateThread(function()
-			Wait(0)
+		if data then
+			table_wipe(sendData)
+			CreateThread(function()
+				Wait(0)
 
-			if data.blackoutGlobal then
-				exports["soz-phone"]:stopPhoneCall()
-			end
-
-			if data.action then
-				data.action(data.entity)
-			elseif data.event then
-				if data.type == "client" then
-					TriggerEvent(data.event, data)
-				elseif data.type == "server" then
-					TriggerServerEvent(data.event, data)
-				elseif data.type == "command" then
-					ExecuteCommand(data.event)
-				elseif data.type == "qbcommand" then
-					TriggerServerEvent('QBCore:CallCommand', data.event, data)
-				else
-					TriggerEvent(data.event, data)
+				if data.blackoutGlobal then
+					exports["soz-phone"]:stopPhoneCall()
 				end
-			else
-				print("No trigger setup")
-			end
-		end)
+
+				if data.action then
+					data.action(data.entity)
+				elseif data.event then
+					if data.type == "client" then
+						TriggerEvent(data.event, data)
+					elseif data.type == "server" then
+						TriggerServerEvent(data.event, data)
+					elseif data.type == "command" then
+						ExecuteCommand(data.event)
+					elseif data.type == "qbcommand" then
+						TriggerServerEvent('QBCore:CallCommand', data.event, data)
+					else
+						TriggerEvent(data.event, data)
+					end
+				else
+					print("No trigger setup")
+				end
+			end)
+		end
 	end
 	cb('ok')
 end)

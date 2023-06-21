@@ -1,3 +1,4 @@
+import { Context } from '../../core/context';
 import { Command } from '../../core/decorators/command';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
@@ -51,8 +52,8 @@ export class WeatherProvider {
 
     private stormDeadline = 0; // timestamp
 
-    @Tick(TickInterval.EVERY_SECOND, 'weather:time:advance')
-    async advanceTime() {
+    @Tick(TickInterval.EVERY_SECOND, 'weather:time:advance', true)
+    async advanceTime(context: Context) {
         this.currentTime.second += INCREMENT_SECOND;
 
         if (this.currentTime.second >= 60) {
@@ -73,6 +74,8 @@ export class WeatherProvider {
             }
         }
 
+        await context.wait(100);
+
         if (isFeatureEnabled(Feature.Halloween)) {
             if (this.currentTime.hour >= 2 && this.currentTime.hour < 23) {
                 this.currentTime.hour = 23;
@@ -80,6 +83,8 @@ export class WeatherProvider {
                 this.currentTime.second = 0;
             }
         }
+
+        await context.wait(100);
 
         TriggerClientEvent(ClientEvent.STATE_UPDATE_TIME, -1, this.currentTime);
     }

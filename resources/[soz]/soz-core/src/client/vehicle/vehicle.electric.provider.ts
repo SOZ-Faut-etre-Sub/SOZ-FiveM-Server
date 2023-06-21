@@ -22,6 +22,7 @@ import { UpwChargerRepository } from '../resources/upw.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
+import { VehicleStateService } from './vehicle.state.service';
 
 type CurrentStationPlug = {
     object: number;
@@ -59,6 +60,9 @@ export class VehicleElectricProvider {
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
+
+    @Inject(VehicleStateService)
+    private vehicleStateService: VehicleStateService;
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
@@ -374,9 +378,9 @@ export class VehicleElectricProvider {
             return;
         }
 
-        const fuelLevel = GetVehicleFuelLevel(vehicle);
+        const condition = await this.vehicleStateService.getVehicleCondition(vehicle);
 
-        if (fuelLevel > 97.0) {
+        if (condition.fuelLevel > 97.0) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
             await this.disableStationPlug();
 

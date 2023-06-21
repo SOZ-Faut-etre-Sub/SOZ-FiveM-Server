@@ -39,9 +39,9 @@ export class TaxiMenuProvider {
     @OnNuiEvent(NuiEvent.TaxiSetMission)
     public async takeMission(status: boolean) {
         if (status) {
-            this.taxiMissionService.doTaxiNpc();
+            await this.taxiMissionService.doTaxiNpc();
         } else {
-            this.taxiMissionService.clearMission();
+            await this.taxiMissionService.clearMission();
         }
     }
 

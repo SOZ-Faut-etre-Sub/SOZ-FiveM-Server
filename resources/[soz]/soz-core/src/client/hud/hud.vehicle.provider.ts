@@ -6,9 +6,11 @@ import {
     VehicleClass,
     VehicleLightState,
     VehicleLockStatus,
+    VehicleSeat,
 } from '../../shared/vehicle/vehicle';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
+import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 import { VehicleSeatbeltProvider } from '../vehicle/vehicle.seatbelt.provider';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
@@ -25,6 +27,9 @@ export class HudVehicleProvider {
 
     @Inject(VehicleSeatbeltProvider)
     private readonly vehicleSeatbeltProvider: VehicleSeatbeltProvider;
+
+    @Inject(VehicleConditionProvider)
+    private readonly vehicleConditionProvider: VehicleConditionProvider;
 
     @Tick(0)
     async updateVehicleHudSpeed() {
@@ -72,20 +77,50 @@ export class HudVehicleProvider {
             }
         }
 
+        const vehicleClass = GetVehicleClass(vehicle) as VehicleClass;
+
+        if (seat !== VehicleSeat.Driver) {
+            this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
+                seat,
+                seatbelt:
+                    vehicleClass !== VehicleClass.Motorcycles &&
+                    vehicleClass !== VehicleClass.Cycles &&
+                    vehicleClass !== VehicleClass.Boats
+                        ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
+                        : null,
+            });
+
+            return;
+        }
+
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+        const condition = this.vehicleConditionProvider.getVehicleCondition(vehicleNetworkId);
+
+        if (null === condition) {
+            this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
+                seat,
+                seatbelt:
+                    vehicleClass !== VehicleClass.Motorcycles &&
+                    vehicleClass !== VehicleClass.Cycles &&
+                    vehicleClass !== VehicleClass.Boats
+                        ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
+                        : null,
+            });
+
+            return;
+        }
+
         const model = GetEntityModel(vehicle);
         const useRpm = !IsThisModelAHeli(model) && !IsThisModelAPlane(model);
-
         const [hasLight, lightOn, hasHighBeam] = GetVehicleLightsState(vehicle);
         const hash = GetEntityModel(vehicle);
-        const vehicleClass = GetVehicleClass(vehicle) as VehicleClass;
-        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
         const fuelType =
             vehicleClass < 23 && vehicleClass != 13 ? (isVehicleModelElectric(hash) ? 'electric' : 'essence') : 'none';
 
         this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
             seat,
             fuelType,
-            fuelLevel: GetVehicleFuelLevel(vehicle),
+            fuelLevel: condition.fuelLevel,
             engineHealth: GetVehicleEngineHealth(vehicle),
             seatbelt:
                 vehicleClass !== VehicleClass.Motorcycles &&
@@ -93,7 +128,7 @@ export class HudVehicleProvider {
                 vehicleClass !== VehicleClass.Boats
                     ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
                     : null,
-            oilLevel: (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume,
+            oilLevel: condition.oilLevel,
             lockStatus: GetVehicleDoorLockStatus(vehicle) as VehicleLockStatus,
             useRpm,
             lightState: hasLight

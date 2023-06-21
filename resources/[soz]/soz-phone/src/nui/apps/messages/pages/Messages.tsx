@@ -5,8 +5,7 @@ import { AppTitle } from '@ui/components/AppTitle';
 import { AppWrapper } from '@ui/components/AppWrapper';
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { format } from 'date-fns';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -24,8 +23,6 @@ import MessageInput from '../components/form/MessageInput';
 import { MessageBubble } from '../components/modal/MessageBubble';
 import { MessageImageModal } from '../components/modal/MessageImageModal';
 import { useMessageNotifications } from '../hooks/useMessageNotifications';
-
-dayjs.extend(localizedFormat);
 
 export const Messages = () => {
     const config = useConfig();
@@ -65,7 +62,7 @@ export const Messages = () => {
             .filter(conversation => conversation.conversation_id === groupId)
             .sort((a, b) => b.id - a.id)
             .forEach(message => {
-                const date = dayjs(message.createdAt).locale('fr').format('LL');
+                const date = format(new Date(message.createdAt), 'LL');
                 if (messagesByDate[date] === undefined) {
                     messagesByDate[date] = [];
                 }

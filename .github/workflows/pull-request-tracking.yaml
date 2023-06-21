@@ -1,0 +1,17 @@
+name: "Automatic Pull Request tracking"
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+
+    name: Add pull request to project
+    steps:
+      - uses: actions/add-to-project@v0.1.0
+        with:
+          project-url: https://github.com/orgs/SOZ-Faut-etre-Sub/projects/3
+          github-token: ${{ secrets.GH_ADD_TO_PROJECT_TOKEN }}

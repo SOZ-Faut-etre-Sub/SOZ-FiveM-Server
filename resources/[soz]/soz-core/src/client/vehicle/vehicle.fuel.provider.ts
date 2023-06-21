@@ -10,7 +10,7 @@ import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
+import { isVehicleModelElectric, VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -21,7 +21,6 @@ import { FuelStationRepository } from '../resources/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { ObjectFactory } from './../world/object.factory';
-import { VehicleConditionProvider } from './vehicle.condition.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -74,9 +73,6 @@ export class VehicleFuelProvider {
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
-
-    @Inject(VehicleConditionProvider)
-    private vehicleConditionProvider: VehicleConditionProvider;
 
     private currentStationPistol: CurrentStationPistol | null = null;
 
@@ -377,9 +373,9 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const fuelLevel = GetVehicleFuelLevel(vehicle);
+        const condition = await this.vehicleStateService.getVehicleCondition(vehicle);
 
-        if (fuelLevel > 99.0) {
+        if (condition.fuelLevel > 99.0) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
             await this.disableStationPistol();
 
@@ -613,42 +609,22 @@ export class VehicleFuelProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
-    private async onTick() {
-        const ped = PlayerPedId();
-        const vehicle = GetVehiclePedIsIn(ped, false);
-
-        if (!vehicle) {
-            return;
+    public checkVehicleFuel(vehicleEntityId: number, vehicleCondition: VehicleCondition): Partial<VehicleCondition> {
+        if (!IsVehicleEngineOn(vehicleEntityId)) {
+            return {};
         }
 
-        if (!IsEntityAVehicle(vehicle)) {
-            return;
-        }
-
-        if (!IsVehicleEngineOn(vehicle)) {
-            return;
-        }
-
-        const model = GetEntityModel(vehicle);
+        const model = GetEntityModel(vehicleEntityId);
 
         if (IsThisModelABicycle(model)) {
-            return;
+            return {};
         }
 
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
-        const vehicleCondition = this.vehicleConditionProvider.getVehicleCondition(vehicleNetworkId);
-
-        if (!vehicleCondition) {
-            return;
-        }
-
-        const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
         const fuelLevel = vehicleCondition.fuelLevel;
         const oilLevel = vehicleCondition.oilLevel;
 
-        let multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicle)] || 1.0;
-        let rpm = GetVehicleCurrentRpm(vehicle);
+        let multiplier = VehicleClassFuelMultiplier[GetVehicleClass(vehicleEntityId)] || 1.0;
+        let rpm = GetVehicleCurrentRpm(vehicleEntityId);
 
         if (isVehicleModelElectric(model)) {
             if (rpm < 0.25) {
@@ -672,21 +648,19 @@ export class VehicleFuelProvider {
         const newOil = Math.max(0, oilLevel - consumedOil);
         const newFuel = Math.max(0, fuelLevel - consumedFuel);
 
-        if (maxOilVolume) {
-            const realOilLevel = (newOil * maxOilVolume) / 100;
-            SetVehicleOilLevel(vehicle, realOilLevel);
-        }
-
-        SetVehicleFuelLevel(vehicle, newFuel);
-
         if (newFuel <= 0.1) {
-            SetVehicleEngineOn(vehicle, false, true, true);
+            SetVehicleEngineOn(vehicleEntityId, false, true, true);
         }
 
         if (newOil <= 0.1) {
-            const newEngineHealth = Math.max(0, GetVehicleEngineHealth(vehicle) - 50);
-            SetVehicleEngineHealth(vehicle, newEngineHealth);
-            SetVehicleEngineOn(vehicle, false, true, true);
+            const newEngineHealth = Math.max(0, GetVehicleEngineHealth(vehicleEntityId) - 50);
+            SetVehicleEngineHealth(vehicleEntityId, newEngineHealth);
+            SetVehicleEngineOn(vehicleEntityId, false, true, true);
         }
+
+        return {
+            fuelLevel: newFuel,
+            oilLevel: newOil,
+        };
     }
 }

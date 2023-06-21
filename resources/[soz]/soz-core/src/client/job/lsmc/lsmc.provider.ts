@@ -14,9 +14,7 @@ import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
-import { emitRpc } from '../../../core/rpc';
-import { PlayerClientState } from '../../../shared/player';
-import { RpcServerEvent } from '../../../shared/rpc';
+import { PlayerListStateService } from '../../player/player.list.state.service';
 
 @Provider()
 export class LSMCProvider {
@@ -40,6 +38,9 @@ export class LSMCProvider {
 
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
+
+    @Inject(PlayerListStateService)
+    private playerListStateService: PlayerListStateService;
 
     @Once()
     public onStart() {
@@ -128,12 +129,12 @@ export class LSMCProvider {
                 {
                     label: 'Extraire le mort',
                     icon: 'c:ems/sortir.png',
-                    canInteract: async entity => {
+                    canInteract: entity => {
                         if (!this.playerService.isOnDuty()) {
                             return false;
                         }
 
-                        const deadPed = await this.getDeadPedInVehicle(entity);
+                        const deadPed = this.getDeadPedInVehicle(entity);
 
                         return deadPed !== null;
                     },
@@ -154,7 +155,7 @@ export class LSMCProvider {
         );
     }
 
-    private async getDeadPedInVehicle(entity: number) {
+    private getDeadPedInVehicle(entity: number) {
         const vehicleSeats = GetVehicleModelNumberOfSeats(GetEntityModel(entity));
         for (let i = -1; i < vehicleSeats - 2; i++) {
             const ped = GetPedInVehicleSeat(entity, i);
@@ -165,9 +166,7 @@ export class LSMCProvider {
                 continue;
             }
 
-            const targetState = await emitRpc<PlayerClientState>(RpcServerEvent.PLAYER_GET_CLIENT_STATE, target);
-
-            if (targetState.isDead) {
+            if (this.playerListStateService.isDead(target)) {
                 return ped;
             }
         }

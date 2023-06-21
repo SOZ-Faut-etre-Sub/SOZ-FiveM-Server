@@ -55,6 +55,7 @@ export enum RpcServerEvent {
     VEHICLE_GET_STATE = 'soz-core:rpc:vehicle:get-state',
     VEHICLE_GET_CONDITION = 'soz-core:rpc:vehicle:get-condition',
     VEHICLE_GET_MUTED_SIRENS = 'soz-core:rpc:vehicle:get-muted-sirens',
+    VEHICLE_GET_OPENED = 'soz-core:rpc:vehicle:get-opened',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
     VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',
@@ -111,4 +112,5 @@ export enum RpcClientEvent {
     DELETE_LAST_VEHICLE_SPAWN = 'soz-core:rpc:client:vehicle:delete-last-spawn',
     VEHICLE_SPAWN_FROM_SERVER = 'soz-core:rpc:client:vehicle:spawn-from-server',
     VEHICLE_DELETE = 'soz-core:rpc:client:vehicle:delete',
+    MONITOR_GET_TRACES = 'soz-core:rpc:client:monitor:get-traces',
 }

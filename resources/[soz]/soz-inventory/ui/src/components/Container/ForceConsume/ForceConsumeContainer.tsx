@@ -29,7 +29,7 @@ export const ForceConsumeContainer = () => {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
-            body: JSON.stringify({item: event.active.data.current.item, targetId: targetId})
+            body: JSON.stringify({ item: event.active.data.current.item, targetId: targetId })
         }).then(() => {
             closeNUI(() => closeMenu());
         });
@@ -38,8 +38,8 @@ export const ForceConsumeContainer = () => {
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === "openForceConsume") {
             setPlayerInventory(event.data.playerInventory.items
-                .filter((i: InventoryItem) => i !== null )
-                .map((i: InventoryItem) => ({...i, disabled: (i.type != 'food' && i.type != 'drink' && i.type != 'cocktail' && i.type != 'liquor')}))
+                .filter((i: InventoryItem) => i !== null)
+                .map((i: InventoryItem) => ({ ...i, disabled: (i.type != 'food' && i.type != 'drink' && i.type != 'cocktail' && i.type != 'liquor') }))
             );
             targetId = event.data.targetId;
             setDisplay(true);
@@ -53,7 +53,7 @@ export const ForceConsumeContainer = () => {
     }, [display, closeMenu])
 
     const onClickReceived = useCallback((event: MouseEvent) => {
-        if (display &&menuRef.current && !menuRef.current.contains(event.target as Node)){
+        if (display && menuRef.current && !menuRef.current.contains(event.target as Node)) {
             event.preventDefault();
             closeNUI(() => closeMenu());
         }
@@ -80,30 +80,33 @@ export const ForceConsumeContainer = () => {
     }
 
     return (
-        <DndContext
-            autoScroll={{
-                enabled: false,
-            }}
-            collisionDetection={rectIntersection}
-            onDragEnd={transfertItem}
-        >
-            <div className={clsx(style.Wrapper, {
-                [style.Show]: display,
-                [style.Hide]: !display,
-            })}>
-                <ContainerWrapper
-                    display={true}
-                    banner={playerBanner}
-                    maxWeight={-1}
+        <>
+            {display &&
+                <DndContext
+                    autoScroll={{
+                        enabled: false,
+                    }}
+                    collisionDetection={rectIntersection}
+                    onDragEnd={transfertItem}
                 >
-                    <ContainerSlots
-                        id="player"
-                        rows={inventoryRow}
-                        items={playerInventory.map((item, i) => ({...item, id: i}))}
-                        money={-1}
-                    />
-                </ContainerWrapper>
-            </div>
-        </DndContext>
+                    {display &&
+                        <div className={clsx(style.Wrapper)}>
+                            <ContainerWrapper
+                                display={true}
+                                banner={playerBanner}
+                                maxWeight={-1}
+                            >
+                                <ContainerSlots
+                                    id="player"
+                                    rows={inventoryRow}
+                                    items={playerInventory.map((item, i) => ({ ...item, id: i }))}
+                                    money={-1}
+                                />
+                            </ContainerWrapper>
+                        </div>
+                    }
+                </DndContext>
+            }
+        </>
     )
 }

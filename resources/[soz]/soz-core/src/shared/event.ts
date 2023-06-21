@@ -183,6 +183,7 @@ export enum ServerEvent {
     VEHICLE_UPDATE_CONDITION = 'soz-core:server:vehicle:update-condition',
     VEHICLE_UPDATE_CONDITION_FROM_OWNER = 'soz-core:server:vehicle:update-condition-from-owner',
     VEHICLE_UPDATE_MILEAGE = 'soz-core:server:vehicle:update-mileage',
+    VEHICLE_SET_OPEN = 'soz-core:server:vehicle:set-open',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
@@ -233,6 +234,7 @@ export enum ServerEvent {
     HUB_SHOP_BUY = 'soz-core:server:hub:shop-buy',
     HUB_EXIT = 'soz-core:server:hub:exit',
     HUB_RESELL = 'soz-core:server:hub:resell',
+    HUB_SHOP_RESELL = 'soz-core:server:hub:shop-resell',
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
@@ -240,6 +242,8 @@ export enum ServerEvent {
     CRIMI_BLOCK_DATE = 'soz-core:server:crimi:block-date',
 
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:server:talent:disable-crimi',
+
+    CRAFTING_TRAINING = 'soz-core:crafting:craft-training',
 }
 
 export enum ClientEvent {
@@ -250,6 +254,7 @@ export enum ClientEvent {
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
+    BASE_CHANGE_VEHICLE_SEAT = 'baseevents:changedVehicleSeat',
 
     BENNYS_OPEN_CLOAKROOM = 'soz-core:client:job:bennys:open-cloakroom',
     BENNYS_FLATBED_DETACH_VEHICLE = 'soz-core:client:job:bennys:flatbed:detach-vehicle',
@@ -313,6 +318,8 @@ export enum ClientEvent {
     LSMC_HEAL = 'soz-core:lsmc:client:heal',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
+    MONITOR_START_TRACING = 'soz-core:client:monitor:start-tracing',
+
     NEWS_DRAW = 'soz-core:client:news:draw',
     NOTIFICATION_DRAW = 'soz-core:client:notification:draw',
     NOTIFICATION_DRAW_ADVANCED = 'soz-core:client:notification:draw-advanced',
@@ -350,6 +357,7 @@ export enum ClientEvent {
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
     PLAYER_UPDATE_CROSSHAIR = 'soz-core:client:player:update-crosshair',
     PLAYER_UPDATE_STATE = 'soz-core:client:player:update-state',
+    PLAYER_UPDATE_LIST_STATE = 'soz-core:client:player:update-list-state',
     PLAYER_ON_DEATH = 'ems:client:onDeath',
 
     PROGRESS_START = 'soz-core:client:progress:start',
@@ -381,6 +389,7 @@ export enum ClientEvent {
     VEHICLE_UPDATE_STATE = 'soz-core:client:vehicle:update-state',
     VEHICLE_DELETE_STATE = 'soz-core:client:vehicle:delete-state',
     VEHICLE_LOCKPICK = 'soz-core:client:vehicle:lockpick',
+    VEHICLE_SET_OPEN_LIST = 'soz-core:client:vehicle:set-open-list',
 
     VOIP_UPDATE_MODE = 'soz-core:client:voip:update-mode',
     VOIP_SET_MEGAPHONE = 'soz-core:client:voip:set-megaphone',

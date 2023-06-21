@@ -82,6 +82,10 @@ const DOOR_INDEX_DEFAULT_CONFIG = {
     handle_pside_f: 0,
     handle_dside_r: 1,
     handle_pside_r: 2,
+    seat_dside_f: -1,
+    seat_pside_f: 0,
+    seat_dside_r: 1,
+    seat_pside_r: 2,
     wheel_lr: 3,
     wheel_rr: 4,
 };
@@ -126,12 +130,26 @@ export class VehicleLockProvider {
 
     private vehicleTrunkOpened: TrunkOpened | null = null;
 
+    private vehicleOpened: Set<number> = new Set();
+
+    @Once(OnceStep.PlayerLoaded)
+    public async onPlayerLoaded() {
+        const vehicleOpened = await emitRpc<number[]>(RpcServerEvent.VEHICLE_GET_OPENED);
+
+        this.vehicleOpened = new Set(vehicleOpened);
+    }
+
     @Once(OnceStep.Start)
     private async initLockStateSelector() {
         this.vehicleStateService.addVehicleStateSelector(
             [state => state.open, state => state.forced],
             this.onVehicleOpenChange.bind(this)
         );
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_SET_OPEN_LIST)
+    private async onVehicleOpenList(vehicles: number[]) {
+        this.vehicleOpened = new Set(vehicles);
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
@@ -205,9 +223,13 @@ export class VehicleLockProvider {
             return;
         }
 
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        if (!player.metadata.godmode && !state.open && !state.forced) {
+        if (!vehicleNetworkId) {
+            return;
+        }
+
+        if (!player.metadata.godmode && !this.vehicleOpened.has(vehicleNetworkId)) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
 
             const vehicleClass = GetVehicleClass(vehicle);
@@ -224,72 +246,59 @@ export class VehicleLockProvider {
             return;
         }
 
-        const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
-        const playerPosition = GetEntityCoords(ped, false) as Vector3;
-        const minDistance = 2.0;
-        let closestDoor = null;
-        const vehicleClass = GetVehicleClass(vehicle);
-        const DOOR_CONFIG = DOOR_INDEX_CONFIG[vehicleClass] || DOOR_INDEX_DEFAULT_CONFIG;
+        if (GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped)) {
+            const playerPosition = GetEntityCoords(ped, false) as Vector3;
+            const minDistance = 5.0;
+            let closestDoor = null;
+            const vehicleClass = GetVehicleClass(vehicle);
+            const DOOR_CONFIG = DOOR_INDEX_CONFIG[vehicleClass] || DOOR_INDEX_DEFAULT_CONFIG;
 
-        for (const [door, seatIndex] of Object.entries(DOOR_CONFIG)) {
-            let useSeat = false;
-            const availableSeatIndex = seatIndex as number;
-
-            const ped = GetPedInVehicleSeat(vehicle, availableSeatIndex);
-            useSeat = ped == 0 || !IsPedAPlayer(ped);
-
-            if (availableSeatIndex > maxSeats - 1) {
-                useSeat = false;
-            }
-
-            if (useSeat) {
+            for (const [door, seatIndex] of Object.entries(DOOR_CONFIG)) {
+                const availableSeatIndex = seatIndex as number;
                 const doorPosition = GetWorldPositionOfEntityBone(
                     vehicle,
                     GetEntityBoneIndexByName(vehicle, door)
                 ) as Vector3;
                 const distance = getDistance(playerPosition, doorPosition);
+                if (
+                    distance > minDistance ||
+                    (!DoesVehicleHaveDoor(vehicle, availableSeatIndex) && door.includes('handle_')) ||
+                    (GetVehicleMaxNumberOfPassengers(vehicle) < 4 && door.includes('wheel_')) ||
+                    (!IsVehicleSeatFree(vehicle, availableSeatIndex) &&
+                        IsPedAPlayer(GetPedInVehicleSeat(vehicle, availableSeatIndex)))
+                ) {
+                    continue;
+                }
 
                 if (closestDoor === null) {
-                    if (distance <= minDistance) {
-                        closestDoor = {
-                            door,
-                            distance,
-                            doorPosition,
-                            seatIndex: availableSeatIndex,
-                        };
-                    }
+                    closestDoor = {
+                        distance,
+                        BestseatIndex: availableSeatIndex,
+                    };
                 } else {
                     if (distance < closestDoor.distance) {
                         closestDoor = {
-                            door,
                             distance,
-                            doorPosition,
-                            seatIndex: availableSeatIndex,
+                            BestseatIndex: availableSeatIndex,
                         };
                     }
                 }
             }
-        }
+            const start = GetGameTimer();
 
-        const start = GetGameTimer();
-
-        if (closestDoor !== null) {
-            TaskEnterVehicle(ped, vehicle, -1, closestDoor.seatIndex, 1.0, 1, 0);
-
-            await wait(200);
-
-            let enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
-            let time = GetGameTimer() - start;
-
-            while (enteringVehicle !== 0 && time < 10000) {
+            if (closestDoor !== null) {
+                TaskEnterVehicle(ped, vehicle, -1, closestDoor.BestseatIndex, 1.0, 1, 0);
                 await wait(200);
-                time = GetGameTimer() - start;
-
-                enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
-            }
-
-            if (enteringVehicle !== 0) {
-                ClearPedTasksImmediately(ped);
+                let enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
+                let time = GetGameTimer() - start;
+                while (enteringVehicle !== 0 && time < 10000) {
+                    await wait(200);
+                    time = GetGameTimer() - start;
+                    enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
+                }
+                if (enteringVehicle !== 0) {
+                    ClearPedTasksImmediately(ped);
+                }
             }
         }
     }
@@ -350,7 +359,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
+        const vehicleState = await this.vehicleStateService.getServerVehicleState(vehicle);
 
         if (!vehicleState.forced && !player.metadata.godmode && !vehicleState.open) {
             this.notifier.notify('Véhicule verrouillé.', 'error');
@@ -418,6 +427,10 @@ export class VehicleLockProvider {
 
     @OnEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE)
     async setVehicleTrunkState(vehicleNetworkId: number, state: boolean) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!DoesEntityExist(entityId)) {
@@ -507,26 +520,14 @@ export class VehicleLockProvider {
             );
         }
 
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+
         if (state.open) {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
-            this.vehicleStateService.updateVehicleState(
-                vehicle,
-                {
-                    open: false,
-                },
-                true,
-                true
-            );
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, false);
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
-            this.vehicleStateService.updateVehicleState(
-                vehicle,
-                {
-                    open: true,
-                },
-                true,
-                true
-            );
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, true);
         }
     }
 
