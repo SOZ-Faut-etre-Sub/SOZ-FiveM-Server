@@ -8,6 +8,7 @@ import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { StonkCollectProvider } from '../job/stonk/stonk.collect.provider';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
@@ -54,6 +55,9 @@ export class ShopProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     private currentShop: string = null;
     private currentShopBrand: ShopBrand = null;
@@ -185,6 +189,20 @@ export class ShopProvider {
                     action: () => {
                         this.currentShopBrand = ShopBrand.Mask;
                         this.openShop();
+                    },
+                },
+                {
+                    label: 'Restock: Masques',
+                    icon: 'c:/ffs/restock.png',
+                    color: 'ffs',
+                    job: 'ffs',
+                    blackoutGlobal: true,
+                    blackoutJob: 'ffs',
+                    canInteract: () => {
+                        return this.playerService.isOnDuty() && this.inventoryManager.hasEnoughItem('garment_mask', 1);
+                    },
+                    action: () => {
+                        TriggerServerEvent(ServerEvent.FFS_RESTOCK, ShopBrand.Mask, 'garment_mask');
                     },
                 },
             ]

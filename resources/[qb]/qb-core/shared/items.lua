@@ -5085,6 +5085,19 @@ QBShared.Items = {
         ['description'] = "Marre d'être torse nu ?",
         ['illustrator'] = '.Smogogo'
     },
+    ['garment_mask'] = {
+        ['name'] = 'garment_mask',
+        ['label'] = "Masque",
+        ['pluralLabel'] = "Masques",
+        ['weight'] = 900,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Parfait pour les soirées déguisées. Ou pour autre chose...",
+        ['illustrator'] = '.Smogogo'
+    },
     ['luxury_garment_top'] = {
         ['name'] = 'luxury_garment_top',
         ['label'] = "Haut de vêtement luxueux",

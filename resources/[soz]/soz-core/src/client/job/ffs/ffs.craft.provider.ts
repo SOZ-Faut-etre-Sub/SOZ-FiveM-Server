@@ -4,7 +4,6 @@ import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { FfsConfig, Process } from '../../../shared/job/ffs';
 import { InventoryManager } from '../../inventory/inventory.manager';
-import { ItemService } from '../../item/item.service';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory, TargetOptions } from '../../target/target.factory';
 
@@ -12,9 +11,6 @@ import { TargetFactory, TargetOptions } from '../../target/target.factory';
 export class FightForStyleCraftProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
-
-    @Inject(ItemService)
-    private itemService: ItemService;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
