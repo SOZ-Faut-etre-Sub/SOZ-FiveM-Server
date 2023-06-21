@@ -257,6 +257,7 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
             targetAccount = targetAccount,
             label = label,
             amount = amount,
+            created_at = os.time() * 1000,
         }
 
         TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id, label, amount, SozJobCore.Jobs[Emitter.PlayerData.job.id].label)
