@@ -6,7 +6,7 @@ import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { Err, Ok } from '@public/shared/result';
 import { ShopProduct } from '@public/shared/shop';
-import { ShopsContent } from '@public/shared/shop/superette';
+import { ShopsContent, SuperetteItem } from '@public/shared/shop/superette';
 
 import { ItemService } from '../item/item.service';
 import { InputService } from '../nui/input.service';
@@ -28,18 +28,33 @@ export class SuperetteShopProvider {
     private playerService: PlayerService;
 
     public openShop(brand: ShopBrand) {
-        const licences = this.playerService.getPlayer().metadata.licences;
-        const products = ShopsContent[brand]
-            .filter(product => !product.requiredLicense || licences[product.requiredLicense])
-            .map(product => ({
-                ...product,
-                item: this.itemService.getItem(product.id),
-            }));
-        if (!products) {
-            console.error(`Shop ${brand} not found`);
-            return;
+        if (brand != ShopBrand.Zkea && brand != ShopBrand.Ammunation) {
+            const superetteContent: SuperetteItem[] = [];
+            for (let i = 0; i < ShopsContent[brand].length; i++) {
+                const sharedItem = {
+                    ...this.itemService.getItem(ShopsContent[brand][i].id),
+                    price: ShopsContent[brand][i].price,
+                    amount: 2000,
+                    slot: i,
+                } as SuperetteItem;
+                superetteContent.push(sharedItem);
+            }
+            exports['soz-inventory'].openShop(superetteContent); // Superettes are handled by soz-inventory
+        } else {
+            // Zkea and Ammunation are handled by soz-core here
+            const licences = this.playerService.getPlayer().metadata.licences;
+            const products = ShopsContent[brand]
+                .filter(product => !product.requiredLicense || licences[product.requiredLicense])
+                .map(product => ({
+                    ...product,
+                    item: this.itemService.getItem(product.id),
+                }));
+            if (!products) {
+                console.error(`Shop ${brand} not found`);
+                return;
+            }
+            this.nuiMenu.openMenu(MenuType.SuperetteShop, { brand, products });
         }
-        this.nuiMenu.openMenu(MenuType.SuperetteShop, { brand, products });
     }
 
     @OnNuiEvent(NuiEvent.SuperetteShopBuy)
@@ -66,6 +81,6 @@ export class SuperetteShopProvider {
             quantity = parseInt(value);
         }
 
-        TriggerServerEvent(ServerEvent.SHOP_BUY, product, ShopBrand.Supermarket247North, quantity);
+        TriggerServerEvent(ServerEvent.SHOP_BUY, product, ShopBrand.Zkea, quantity);
     }
 }

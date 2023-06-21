@@ -142,7 +142,6 @@ export class FightForStyleRestockProvider {
                 }
             }
         }
-        console.log(allItemsByGender);
 
         let amountLeft = amount;
         while (amountLeft > 0) {
@@ -159,7 +158,6 @@ export class FightForStyleRestockProvider {
                 }
             }
             const randomItem = loopItems[Math.floor(Math.random() * loopItems.length)];
-            console.log('Restocking item ', randomItem);
             if (!randomItem || !loopItems) {
                 return;
             }
@@ -168,7 +166,6 @@ export class FightForStyleRestockProvider {
                 const sameModelLabelItems = loopItems.filter(
                     item => item.modelLabel != null && item.modelLabel === randomItem.modelLabel
                 );
-                console.log('Same model label items', sameModelLabelItems);
                 sameModelsIds = sameModelLabelItems.map(item => item.id);
             } else {
                 continue;

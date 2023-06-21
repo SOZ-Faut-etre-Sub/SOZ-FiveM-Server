@@ -62,7 +62,6 @@ export class ClothingShopProvider {
         const shop_categories = this.clothingShopRepository.getModelCategoriesOfShop(brand, modelHash);
         const player_data = this.playerService.getPlayer();
         const under_types = this.clothingShopRepository.getAllUnderTypes();
-        console.log(under_types);
         if (!shop_content) {
             console.error(`Shop ${brand} not found`);
             return;
