@@ -118,6 +118,8 @@ export const StorageContainer = () => {
                         target: targetInventory?.id,
                     },
                 );
+            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+                closeMenu();
             }
         },
         [closeMenu, setPlayerInventory, setTargetInventory, setPlayerMoney, setTargetMoney],

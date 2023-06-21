@@ -34,6 +34,8 @@ export const ShopContainer = () => {
                 } catch (e: any) {
                     closeNUI(() => { closeMenu(); })
                 }
+            } else if (event.data.action === 'openPlayerInventory' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+                closeMenu();
             }
         },
         [closeMenu, setShopContent],
@@ -130,7 +132,7 @@ export const ShopContainer = () => {
                         return;
                     }
 
-                    draggedItem.amount = amountInt
+                    draggedItem.amount = amountInt;
                     let newCartAmount = cartAmount + (draggedItem.amount * draggedItem.price)
                     let updatedCart: ShopItem[] = []
 
@@ -138,13 +140,13 @@ export const ShopContainer = () => {
                         updatedCart = cartContent.map(item => {
                             {
                                 if (item.name === draggedItem.name) {
-                                    return { ...item, amount: item.amount + parseInt(amount) }
+                                    return { ...item, amount: item.amount + draggedItem.amount }
                                 }
                                 return item
                             }
                         })
 
-                        newCartAmount = calcCartPrice(cartContent) + draggedItem.price * amount
+                        newCartAmount = calcCartPrice(cartContent) + draggedItem.price * draggedItem.amount
                     }
 
                     setCartContent(existingItem ? updatedCart : cartContent => [...cartContent, draggedItem])
