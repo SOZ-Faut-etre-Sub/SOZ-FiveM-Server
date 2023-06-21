@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { ClothingShopRepository } from '@public/server/repository/cloth.shop.repository';
+import { PlayerPedHash } from '@public/shared/player';
 
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -39,9 +40,6 @@ export class FightForStyleRestockProvider {
         await this.prismaService.$queryRaw(
             Prisma.sql`UPDATE shop_content SET shop_content.stock = CEIL(shop_content.stock * 0.95) WHERE shop_content.shop_id IN (1, 2, 3)`
         );
-        await this.prismaService.$queryRaw(
-            Prisma.sql`UPDATE shop_content SET shop_content.stock = 50 WHERE shop_content.shop_id IN (4)`
-        );
     }
 
     public garmentToCategory(garment: Garment | LuxuryGarment): number {
@@ -67,6 +65,8 @@ export class FightForStyleRestockProvider {
             case Garment.UNDERWEAR_TOP:
             case LuxuryGarment.UNDERWEAR_TOP:
                 return 60;
+            case Garment.MASK:
+                return 41;
             default:
                 return -1;
         }
@@ -116,7 +116,7 @@ export class FightForStyleRestockProvider {
     }
 
     public async restockLoop(brand: ClothingBrand, garment: Garment | LuxuryGarment, amount: number) {
-        const sexes = [1885233650, -1667301416];
+        const sexes = [PlayerPedHash.Male, PlayerPedHash.Female];
         const category = this.garmentToCategory(garment);
         if (category == -1) {
             console.error('Invalid category for item ', garment);
@@ -127,14 +127,15 @@ export class FightForStyleRestockProvider {
 
         // Fetch all items from this category
         const allItemsByGender: Record<number, ClothingShopItem[]> = {
-            [1885233650]: [],
-            [-1667301416]: [],
+            [PlayerPedHash.Male]: [],
+            [PlayerPedHash.Female]: [],
         };
         for (const [genderHash, shop_content] of Object.entries(repo.categories)) {
             for (const shop_category of Object.values(shop_content[shopId])) {
                 if (
-                    shop_category.content != null &&
-                    (shop_category.id == category || shop_category.parentId == category)
+                    (shop_category.content != null &&
+                        (shop_category.id == category || shop_category.parentId == category)) ||
+                    (category === 41 && [33, 34, 35, 36, 37, 38, 39, 40].includes(shop_category.id)) // Masks don't have a parent category
                 ) {
                     Object.values(shop_category.content).forEach(items => {
                         items.forEach(item => allItemsByGender[parseInt(genderHash)].push(item));
