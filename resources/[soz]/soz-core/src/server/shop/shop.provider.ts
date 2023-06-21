@@ -70,6 +70,7 @@ export class ShopProvider {
 
         if (!this.playerMoneyService.remove(source, cartAmount, 'money')) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
+            return;
         }
 
         cartContent.map(item => {
