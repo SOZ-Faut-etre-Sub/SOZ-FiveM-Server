@@ -389,8 +389,6 @@ export class ShopProvider {
         for (const product of cartContent) {
             cartAmount += product.price * product.amount;
         }
-        console.log(cartContent);
-        console.log(cartAmount);
 
         if (!this.inventoryManager.canCarryItems(source, cartContent)) {
             this.notifier.notify(source, 'Vous ne pouvez pas porter cette quantité...', 'error');

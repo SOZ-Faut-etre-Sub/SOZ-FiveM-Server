@@ -109,6 +109,7 @@ export enum Garment {
     BAG = 'garment_bag',
     GLOVES = 'garment_gloves',
     UNDERWEAR_TOP = 'garment_underwear_top',
+    MASK = 'garment_mask',
 }
 
 export enum LuxuryGarment {
@@ -548,6 +549,27 @@ const shoesCraftProcesses: Process[] = [
             amount: 1,
         },
     },
+    {
+        label: '🎭 Masque',
+        inputs: [
+            {
+                id: FabricMaterial.LATEX,
+                amount: 2,
+            },
+            {
+                id: FabricMaterial.NATURAL_FIBER,
+                amount: 10,
+            },
+            {
+                id: FabricMaterial.SYNTHETIC_FIBER,
+                amount: 10,
+            },
+        ],
+        output: {
+            id: Garment.MASK,
+            amount: 1,
+        },
+    },
 ];
 
 const getRewardFromDeliveredGarment = (garment: Garment | LuxuryGarment): number => {
@@ -555,6 +577,7 @@ const getRewardFromDeliveredGarment = (garment: Garment | LuxuryGarment): number
         case Garment.TOP:
         case Garment.PANT:
         case Garment.BAG:
+        case Garment.MASK:
             return 50;
         case Garment.UNDERWEAR_TOP:
             return 30;
