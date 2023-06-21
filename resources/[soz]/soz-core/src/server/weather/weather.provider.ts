@@ -12,8 +12,8 @@ import { Forecast, ForecastWithTemperature, TemperatureRange, Time, Weather } fr
 import { MonitorService } from '../monitor/monitor.service';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
-import { Polluted, SpringAutumn } from './forecast';
-import { DaySpringTemperature, ForecastAdderTemperatures, NightSpringTemperature } from './temperature';
+import { Polluted, Summer } from './forecast';
+import { DaySummerTemperature, ForecastAdderTemperatures, NightSummerTemperature } from './temperature';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 const MAX_FORECASTS = 5;
@@ -43,11 +43,11 @@ export class WeatherProvider {
     ];
 
     // See forecast.ts for the list of available forecasts
-    private forecast: Forecast = SpringAutumn;
+    private forecast: Forecast = Summer;
     // See temperature.ts for the list of available temperature ranges,
     // please ensure that the day and night temperature ranges are using the same season
-    private dayTemperatureRange: TemperatureRange = DaySpringTemperature;
-    private nightTemperatureRange: TemperatureRange = NightSpringTemperature;
+    private dayTemperatureRange: TemperatureRange = DaySummerTemperature;
+    private nightTemperatureRange: TemperatureRange = NightSummerTemperature;
 
     private stormDeadline = 0; // timestamp
 
