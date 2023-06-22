@@ -73,7 +73,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 4,
                         Texture: 0,
                         Palette: 0,
@@ -93,7 +93,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                }
+                },
             },
             ['Tenue Hiver']: {
                 Components: {
@@ -110,7 +110,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 4,
                         Texture: 0,
                         Palette: 0,
@@ -130,7 +130,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                }
+                },
             },
             /*["Tenue SWAT"]:  {
                 Components:  {
@@ -165,7 +165,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 2,
                         Texture: 0,
                         Palette: 0,
@@ -206,7 +206,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 4,
                         Texture: 0,
                         Palette: 0,
@@ -233,7 +233,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Accessories]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Accessories
+                                Component.Accessories
                             ] + 2,
                         Texture: 0,
                         Palette: 0,
@@ -273,7 +273,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 4,
                         Texture: 0,
                         Palette: 0,
@@ -293,7 +293,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                }
+                },
             },
             ['Tenue Hiver']: {
                 Components: {
@@ -310,7 +310,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 4,
                         Texture: 0,
                         Palette: 0,
@@ -330,7 +330,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                }
+                },
             },
             /* ["Tenue SWAT"]:  {
             Components:  {
@@ -365,7 +365,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 2,
                         Texture: 0,
                         Palette: 0,
@@ -406,7 +406,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 4,
                         Texture: 0,
                         Palette: 0,
@@ -433,7 +433,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Accessories]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Accessories
+                                Component.Accessories
                             ] + 2,
                         Texture: 0,
                         Palette: 0,
@@ -476,7 +476,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 3,
                         Texture: 0,
                         Palette: 0,
@@ -513,7 +513,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 3,
                         Texture: 0,
                         Palette: 0,
@@ -549,7 +549,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 6,
                         Texture: 0,
                         Palette: 0,
@@ -591,7 +591,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 3,
                         Texture: 0,
                         Palette: 0,
@@ -618,7 +618,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Accessories]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Accessories
+                                Component.Accessories
                             ] + 2,
                         Texture: 1,
                         Palette: 0,
@@ -659,7 +659,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 3,
                         Texture: 0,
                         Palette: 0,
@@ -696,7 +696,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 3,
                         Texture: 0,
                         Palette: 0,
@@ -732,7 +732,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 6,
                         Texture: 0,
                         Palette: 0,
@@ -774,7 +774,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 3,
                         Texture: 0,
                         Palette: 0,
@@ -801,7 +801,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Accessories]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Accessories
+                                Component.Accessories
                             ] + 2,
                         Texture: 1,
                         Palette: 0,
@@ -916,7 +916,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Accessories]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Accessories
+                                Component.Accessories
                             ] + 1,
                         Texture: 0,
                         Palette: 0,
@@ -958,7 +958,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 4,
                         Texture: 0,
                         Palette: 0,
@@ -1000,7 +1000,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Accessories]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Accessories
+                                Component.Accessories
                             ] + 1,
                         Texture: 0,
                         Palette: 0,
@@ -1042,7 +1042,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 4,
                         Texture: 0,
                         Palette: 0,
@@ -1086,7 +1086,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Accessories]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Accessories
+                                Component.Accessories
                             ] + 1,
                         Texture: 0,
                         Palette: 0,
@@ -1128,7 +1128,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 3,
                         Texture: 0,
                         Palette: 0,
@@ -1170,7 +1170,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Accessories]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Accessories
+                                Component.Accessories
                             ] + 1,
                         Texture: 0,
                         Palette: 0,
@@ -1212,7 +1212,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
-                            Component.Undershirt
+                                Component.Undershirt
                             ] + 3,
                         Texture: 0,
                         Palette: 0,
