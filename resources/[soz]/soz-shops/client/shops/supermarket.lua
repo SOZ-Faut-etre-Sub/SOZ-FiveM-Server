@@ -22,7 +22,7 @@ local function table_deepclone(tbl)
 end
 
 function SupermarketShop:GenerateMenu()
-    local shopTexture = "menu_shop_supermarket"
+    local shopHeaderTexture = "menu_shop_supermarket"
     local shopContent = {}
 
     for itemID, item in pairs(self:getShopProducts()) do
@@ -37,7 +37,7 @@ function SupermarketShop:GenerateMenu()
         end
     end
 
-    exports["soz-inventory"]:openShop(shopContent)
+    exports["soz-inventory"]:openShop(shopContent, shopHeaderTexture)
 end
 
 --- Exports shop

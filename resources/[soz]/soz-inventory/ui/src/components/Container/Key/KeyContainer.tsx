@@ -39,6 +39,8 @@ export const KeyContainer = () => {
 
             setPlayerInventory(event.data.keys.filter((i: InventoryItem) => i !== null).map((item: InventoryItem) => ({ ...item, id: `key_${item.slot}` })));
             setDisplay(true);
+        } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerInventory') {
+            closeMenu();
         }
     }, [setDisplay, setPlayerInventory]);
 
