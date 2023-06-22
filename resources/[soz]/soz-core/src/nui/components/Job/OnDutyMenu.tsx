@@ -16,7 +16,7 @@ export const JobOnDutyMenu: FunctionComponent<any> = ({ data }) => {
                 <MenuTitle banner={banner}>Employé(e)s en service</MenuTitle>
                 <MenuContent>
                     {Object.values(data.state).map(player_name => (
-                        <MenuItemText>{`${player_name}`}</MenuItemText>
+                        <MenuItemText>{player_name}</MenuItemText>
                     ))}
                 </MenuContent>
             </MainMenu>
