@@ -73,6 +73,8 @@ export const PlayerContainer = () => {
                 }
             } else if (event.data.action === 'closeInventory') {
                 closeNUI(() => closeMenu());
+            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+                closeMenu();
             }
         },
         [setDisplay, closeMenu, setPlayerMoney, setPlayerInventory, setPlayerShortcuts]

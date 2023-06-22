@@ -114,6 +114,7 @@ export enum ServerEvent {
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
     SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',
+    SHOP_VALIDATE_CART = 'soz-core:server:shop:validate-cart',
 
     UPW_CREATE_CHARGER = 'soz-core:server:job:upw:create-charger',
     UPW_REFILL_STATION = 'soz-core:server:job:upw:refill-station',
@@ -579,7 +580,6 @@ export enum NuiEvent {
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
     ShopMaskBuy = 'soz-core:client:shop:mask:buy',
-    BossShopBuy = 'soz-core:client:shop:boss:buy',
     ShopMaskPreview = 'soz-core:client:shop:mask:preview',
     ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
 
