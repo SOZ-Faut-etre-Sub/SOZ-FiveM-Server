@@ -24,7 +24,7 @@ export class BossShopProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    public getHydratedProducts(products: ShopProduct[]){
+    public getHydratedProducts(products: ShopProduct[]) {
         const hydratedProducts = products.map((product, id) => ({
             ...this.itemService.getItem(product.id),
             ...product,
