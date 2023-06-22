@@ -76,8 +76,8 @@ export class VehicleFuelProvider {
 
     private currentStationPistol: CurrentStationPistol | null = null;
 
-    private publicOilStationPrice: number = 0;
-    private publicKeroseneStationPrice: number = 0;
+    private publicOilStationPrice = 0;
+    private publicKeroseneStationPrice = 0;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoryLoaded() {
