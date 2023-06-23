@@ -318,7 +318,6 @@ RegisterNetEvent("police:client:GetEscorted", function(playerId, crimi)
         ClearPedTasksImmediately(ped)
     end
 
-    SetEntityCoords(ped, GetOffsetFromEntityInWorldCoords(dragger, delta_x, delta_y, 0.0))
     AttachEntityToEntity(ped, dragger, 11816, delta_x, delta_y, 0.0, 0.0, 0.0, rota_z, false, false, true, true, 2, true)
 
     if crimi then
@@ -334,5 +333,7 @@ end)
 RegisterNetEvent("police:client:DeEscort", function()
     local ped = PlayerPedId()
     DetachEntity(ped, true, false)
-    ClearPedTasks(ped)
+    if not PlayerData.metadata["isdead"] then
+        ClearPedTasks(ped)
+    end
 end)
