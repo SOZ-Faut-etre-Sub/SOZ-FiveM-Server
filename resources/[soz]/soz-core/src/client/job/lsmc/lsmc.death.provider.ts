@@ -148,7 +148,7 @@ export class LSMCDeathProvider {
                 await this.onDeath(playerPed);
             }
             if (this.IsDead) {
-                this.animationCheck(playerPed);
+                await this.animationCheck(playerPed);
             }
         }
     }
@@ -278,13 +278,14 @@ export class LSMCDeathProvider {
         }
     }
 
-    private animationCheck(ped: number) {
+    private async animationCheck(ped: number) {
         const anim = IsPedInAnyVehicle(ped, true) ? deathVehcleAnim : deathAnim;
 
         if (!IsEntityPlayingAnim(ped, anim.base.dictionary, anim.base.name, 3)) {
             this.animationService.playAnimation(anim, {
                 clearTasksBefore: true,
             });
+            await wait(500);
         }
     }
 
