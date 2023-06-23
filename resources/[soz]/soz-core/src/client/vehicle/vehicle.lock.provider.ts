@@ -26,68 +26,17 @@ import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
-const DOOR_INDEX_CONFIG: Partial<Record<VehicleClass, Record<string, number>>> = {
-    [VehicleClass.Helicopters]: {
-        window_lf: -1,
-        window_rf: 0,
-        seat_dside_r: 1,
-        seat_pside_r: 2,
-        handle_dside_f: -1,
-        handle_pside_f: 0,
-        handle_dside_r: 1,
-        handle_pside_r: 2,
-    },
-    [VehicleClass.Motorcycles]: {
-        seat_f: -1,
-        seat_r: 0,
-    },
-    [VehicleClass.Boats]: {
-        seat_dside_f: -1,
-        seat_pside_f: 0,
-        seat_dside_r: 1,
-        seat_pside_r: 2,
-    },
-    [VehicleClass.Service]: {
-        seat_dside_f: -1,
-        seat_pside_f: 0,
-        seat_dside_r1: 1,
-        seat_pside_r1: 2,
-        seat_dside_r2: 3,
-        seat_pside_r2: 4,
-        handle_dside_f: -1,
-        handle_pside_f: 0,
-        handle_dside_r: 1,
-        handle_pside_r: 2,
-        wheel_lr: 5,
-        wheel_rr: 6,
-    },
-    [VehicleClass.Commercial]: {
-        seat_dside_f: -1,
-        seat_pside_f: 0,
-        seat_dside_r1: 1,
-        seat_pside_r1: 2,
-        seat_dside_r2: 3,
-        seat_pside_r2: 4,
-        handle_dside_f: -1,
-        handle_pside_f: 0,
-        handle_dside_r: 1,
-        handle_pside_r: 2,
-        wheel_lr: 5,
-        wheel_rr: 6,
-    },
-};
-
-const DOOR_INDEX_DEFAULT_CONFIG = {
-    handle_dside_f: -1,
-    handle_pside_f: 0,
-    handle_dside_r: 1,
-    handle_pside_r: 2,
+const DOOR_INDEX_CONFIG = {
     seat_dside_f: -1,
     seat_pside_f: 0,
     seat_dside_r: 1,
     seat_pside_r: 2,
-    wheel_lr: 3,
-    wheel_rr: 4,
+    door_dside_f: -1,
+    door_pside_f: 0,
+    door_dside_r: 1,
+    door_pside_r: 2,
+    wheel_lr: [3, 5],
+    wheel_rr: [4, 6],
 };
 
 const VEHICLE_TRUNK_TYPES = {
@@ -246,59 +195,82 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped)) {
-            const playerPosition = GetEntityCoords(ped, false) as Vector3;
-            const minDistance = 5.0;
-            let closestDoor = null;
-            const vehicleClass = GetVehicleClass(vehicle);
-            const DOOR_CONFIG = DOOR_INDEX_CONFIG[vehicleClass] || DOOR_INDEX_DEFAULT_CONFIG;
+        const maxSeats = GetVehicleMaxNumberOfPassengers(vehicle);
+        const playerPosition = GetEntityCoords(ped, false) as Vector3;
+        const minDistance = 2.0;
+        let closestDoor = null;
 
-            for (const [door, seatIndex] of Object.entries(DOOR_CONFIG)) {
-                const availableSeatIndex = seatIndex as number;
+        for (const [door, seatIndex] of Object.entries(DOOR_INDEX_CONFIG)) {
+            let useSeat = false;
+            let availableSeatIndex = 0;
+
+            if (typeof seatIndex === 'number') {
+                availableSeatIndex = seatIndex;
+                const ped = GetPedInVehicleSeat(vehicle, seatIndex);
+                useSeat = ped == 0 || !IsPedAPlayer(ped);
+            } else {
+                availableSeatIndex = maxSeats;
+
+                for (const seat of seatIndex) {
+                    if (!useSeat && GetPedInVehicleSeat(vehicle, seat) == 0) {
+                        useSeat = true;
+                        availableSeatIndex = seat;
+                    }
+                }
+            }
+
+            if (availableSeatIndex > maxSeats - 1) {
+                useSeat = false;
+            }
+
+            if (useSeat) {
                 const doorPosition = GetWorldPositionOfEntityBone(
                     vehicle,
                     GetEntityBoneIndexByName(vehicle, door)
                 ) as Vector3;
                 const distance = getDistance(playerPosition, doorPosition);
-                if (
-                    distance > minDistance ||
-                    (!DoesVehicleHaveDoor(vehicle, availableSeatIndex) && door.includes('handle_')) ||
-                    (GetVehicleMaxNumberOfPassengers(vehicle) < 4 && door.includes('wheel_')) ||
-                    (!IsVehicleSeatFree(vehicle, availableSeatIndex) &&
-                        IsPedAPlayer(GetPedInVehicleSeat(vehicle, availableSeatIndex)))
-                ) {
-                    continue;
-                }
 
                 if (closestDoor === null) {
-                    closestDoor = {
-                        distance,
-                        BestseatIndex: availableSeatIndex,
-                    };
+                    if (distance <= minDistance) {
+                        closestDoor = {
+                            door,
+                            distance,
+                            doorPosition,
+                            seatIndex: availableSeatIndex,
+                        };
+                    }
                 } else {
                     if (distance < closestDoor.distance) {
                         closestDoor = {
+                            door,
                             distance,
-                            BestseatIndex: availableSeatIndex,
+                            doorPosition,
+                            seatIndex: availableSeatIndex,
                         };
                     }
                 }
             }
-            const start = GetGameTimer();
+        }
 
-            if (closestDoor !== null) {
-                TaskEnterVehicle(ped, vehicle, -1, closestDoor.BestseatIndex, 1.0, 1, 0);
+        const start = GetGameTimer();
+
+        if (closestDoor !== null) {
+            TaskEnterVehicle(ped, vehicle, -1, closestDoor.seatIndex, 1.0, 1, 0);
+
+            await wait(200);
+
+            let enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
+            let time = GetGameTimer() - start;
+
+            while (enteringVehicle !== 0 && time < 10000) {
                 await wait(200);
-                let enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
-                let time = GetGameTimer() - start;
-                while (enteringVehicle !== 0 && time < 10000) {
-                    await wait(200);
-                    time = GetGameTimer() - start;
-                    enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
-                }
-                if (enteringVehicle !== 0) {
-                    ClearPedTasksImmediately(ped);
-                }
+                time = GetGameTimer() - start;
+
+                enteringVehicle = GetVehiclePedIsEntering(ped) || GetVehiclePedIsTryingToEnter(ped);
+            }
+
+            if (enteringVehicle !== 0) {
+                ClearPedTasksImmediately(ped);
             }
         }
     }
