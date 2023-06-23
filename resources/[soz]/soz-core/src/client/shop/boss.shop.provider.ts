@@ -1,7 +1,6 @@
-import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { NuiEvent, ServerEvent } from '../../shared/event';
 import { JobPermission } from '../../shared/job';
 import { ShopProduct } from '../../shared/shop';
 import { BossShop } from '../../shared/shop/boss';
@@ -28,7 +27,7 @@ export class BossShopProvider {
         const hydratedProducts = products.map((product, id) => ({
             ...this.itemService.getItem(product.id),
             ...product,
-            slot: id,
+            slot: id + 1,
         }));
         return hydratedProducts;
     }
