@@ -206,8 +206,9 @@ FoodJob.Functions.CollectIngredients = function(field)
                         local item = QBCore.Shared.Items[itemId]
                         table.insert(messages, string.format("%d %s", n, item.label))
 
-                        TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {item_id = itemId},
-                                           {item_label = item.label, quantity = tonumber(n), position = position}, true)
+                        TriggerServerEvent("soz-core:server:monitor:add-event", "job_cm_food_collect", {
+                            item_id = itemId,
+                        }, {item_label = item.label, quantity = tonumber(n), position = position}, true)
                     end
 
                     local joined = table.concat(messages, ", ")
@@ -240,7 +241,7 @@ AddEventHandler("jobs:client:food-harvest-milk", function()
                 exports["soz-core"]:DrawNotification(string.format("Vous avez récupéré ~g~%s pots de lait~s~", count))
                 Citizen.Wait(1000)
 
-                TriggerServerEvent("monitor:server:event", "job_cm_food_collect", {item_id = item},
+                TriggerServerEvent("soz-core:server:monitor:add-event", "job_cm_food_collect", {item_id = item},
                                    {
                     item_label = "Pot de lait",
                     quantity = tonumber(count),
@@ -307,7 +308,7 @@ FoodJob.Functions.CraftItem = function(itemId, item)
                     if success then
                         exports["soz-core"]:DrawNotification(string.format("Vous avez préparé ~g~%s", item.label))
 
-                        TriggerServerEvent("monitor:server:event", "job_cm_food_craft", {item_id = itemId},
+                        TriggerServerEvent("soz-core:server:monitor:add-event", "job_cm_food_craft", {item_id = itemId},
                                            {
                             item_label = item.label,
                             quantity = 1,

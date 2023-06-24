@@ -24,6 +24,7 @@ export enum RpcServerEvent {
     OIL_GET_STATION_PRICES = 'soz-core:job:oil:get-station-prices',
 
     PLAYER_GET_CLIENT_STATE = 'soz-core:player:get-client-state',
+    PLAYER_GET_LIST_STATE = 'soz-core:player:get-list-state',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
     PLAYER_GET_JWT_TOKEN = 'soz-core:player:get-jwt-token',
 

@@ -100,11 +100,8 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                                 player.rpFullName.toLowerCase().includes(search)
                             );
                         })
-                        .map(player => (
-                            <MenuItemSubMenuLink
-                                id={'player_' + player.citizenId}
-                                key={'player_link_' + player.citizenId}
-                            >
+                        .map((player, i) => (
+                            <MenuItemSubMenuLink id={'player_' + player.citizenId} key={i}>
                                 [{player.id}] {player.rpFullName} | {player.name}
                             </MenuItemSubMenuLink>
                         ))}

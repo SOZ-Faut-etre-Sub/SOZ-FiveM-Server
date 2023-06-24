@@ -13,7 +13,6 @@ shared_scripts {
     'shared/jobs.lua',
     'shared/vehicles.lua',
     'shared/gangs.lua',
-    'shared/weapons.lua',
     'shared/uuid.lua',
     'shared/trunks.lua',
     'shared/upw.lua',
@@ -22,7 +21,6 @@ shared_scripts {
 client_scripts {
     'client/main.lua',
     'client/functions.lua',
-    'client/loops.lua',
     'client/events.lua'
 }
 

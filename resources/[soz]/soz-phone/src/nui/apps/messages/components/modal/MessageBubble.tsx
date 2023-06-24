@@ -77,12 +77,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                                 'text-2xl': config.textZoom.value === 1.6,
                             })}
                         >
-                            {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map(text => {
+                            {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map((text, i) => {
                                 if (text.startsWith(':') && text.endsWith(':')) {
-                                    return <Emoji emoji={text} />;
+                                    return <Emoji key={i} emoji={text} />;
                                 }
 
-                                return text;
+                                return <React.Fragment key={i}>{text}</React.Fragment>;
                             })}
                         </p>
                     </Menu.Button>

@@ -52,6 +52,8 @@ Config.ErrorMessage = {
     ["put_not_allowed"] = "Ce stockage ne peut pas accepter votre objet !",
 }
 
-Config.crateMaxWeight = 10000
+Config.crateMaxWeight = 12000
+
+Config.crateTypeAllowed = {"food", "liquor", "drink", "cocktail"}
 
 Config.Storages = {}

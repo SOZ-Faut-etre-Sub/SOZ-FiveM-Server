@@ -76,6 +76,9 @@ export enum ServerEvent {
     MISSIVE_DELETE_ITEM = 'soz-core:server:missive:delete-item',
     MISSIVE_COMPLETE = 'soz-core:server:missive:complete',
 
+    MONITOR_ADD_EVENT = 'soz-core:server:monitor:add-event',
+    MONITOR_LOG = 'soz-core:server:monitor:log',
+
     LSMC_SET_PATIENT_OUTFIT = 'soz-core:server:job:lsmc:set-patient-outfit',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
@@ -160,6 +163,8 @@ export enum ServerEvent {
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
     TAXI_NPC_PAY = 'soz-core:server:taxi:npc-pay',
+
+    TWITCH_ADD_FLASH_NEWS = 'soz-core:server:twitch:add-flash-news',
 
     VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
     VEHICLE_USE_CLEANING_KIT = 'soz-core:server:vehicle:use-cleaning-kit',

@@ -11,7 +11,6 @@ client_scripts {
     "client/main.lua",
     "client/nui.lua",
     "client/invoices.lua",
-    "client/moneycase.lua",
 }
 
 server_scripts {

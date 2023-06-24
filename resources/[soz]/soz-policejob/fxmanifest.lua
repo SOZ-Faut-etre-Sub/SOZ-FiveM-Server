@@ -16,18 +16,14 @@ client_scripts {
     "client/animations.lua",
     "client/interactions/*.lua",
     "client/stations/*.lua",
-    "client/radar.lua",
-    "client/clothings.lua",
 }
 
 server_scripts {
     "@oxmysql/lib/MySQL.lua",
     "server/main.lua",
-    "server/radar.lua",
     "server/vehicle.lua",
     "server/spike.lua",
     "server/moneycheck.lua",
-    "server/clothings.lua",
 }
 
 dependencies {"qb-target", "soz-jobs"}

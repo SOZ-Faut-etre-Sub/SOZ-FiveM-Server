@@ -15,9 +15,17 @@ export const DayAgo: FunctionComponent<Props> = ({ timestamp }) => {
         setCurrentDate(new Date());
     }, 1000);
 
+    let date;
+
+    try {
+        date = new Date(timestamp);
+    } catch (e) {
+        date = new Date();
+    }
+
     return (
         <>
-            {formatDistance(currentDate, new Date(timestamp), {
+            {formatDistance(currentDate, date, {
                 locale: fr,
             })}
         </>

@@ -525,9 +525,11 @@ export class VehicleLockProvider {
         if (state.open) {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
             TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, false);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
             TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, true);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
         }
     }
 
@@ -541,7 +543,7 @@ export class VehicleLockProvider {
             return true;
         }
 
-        return await emitRpc<boolean>(RpcServerEvent.VEHICLE_HAS_KEY, state.id);
+        return await emitRpc<boolean>(RpcServerEvent.VEHICLE_HAS_KEY, state.plate);
     }
 
     @OnEvent(ClientEvent.VEHICLE_LOCKPICK)

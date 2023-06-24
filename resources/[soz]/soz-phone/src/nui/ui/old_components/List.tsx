@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useConfig } from '../../hooks/usePhone';
 
-export const List = ({ ...props }) => {
+export const List = ({ children }) => {
     const config = useConfig();
 
     return (
@@ -19,7 +19,7 @@ export const List = ({ ...props }) => {
                     'divide-[#ECECED]': config.theme.value === 'light',
                 })}
             >
-                {props.children}
+                {children}
             </ul>
         </div>
     );

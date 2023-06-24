@@ -1,5 +1,5 @@
 import { SOZ_CORE_IS_PRODUCTION } from '../globals';
-import { Injectable } from './decorators/injectable';
+import { Inject, Injectable } from './decorators/injectable';
 
 enum LogColor {
     Red = 1,
@@ -11,15 +11,19 @@ enum LogColor {
     White = 7,
 }
 
-enum LogLevel {
-    Debug = 1,
-    Info = 2,
-    Warn = 3,
-    Error = 4,
+export enum LogLevel {
+    Debug = 'DEBUG',
+    Info = 'INFO',
+    Warn = 'WARN',
+    Error = 'ERROR',
+}
+
+export interface LogHandler {
+    write(level: LogLevel, ...message: string[]): void;
 }
 
 @Injectable()
-export class Logger {
+export class LogConsoleHandler implements LogHandler {
     private level: LogLevel = LogLevel.Debug;
 
     public constructor() {
@@ -28,30 +32,70 @@ export class Logger {
         }
     }
 
+    private format(color: LogColor, ...message: string[]): string {
+        return `^${color.valueOf().toString()}[${new Date().toISOString()}] ${message.join(' ')}^7`;
+    }
+
+    public write(level: LogLevel, ...message: string[]): void {
+        if (this.level <= level) {
+            console.log(this.format(levelToColors[level], ...message));
+        }
+    }
+}
+
+@Injectable()
+export class LogChainHandler implements LogHandler {
+    private handlers: LogHandler[] = [];
+
+    public constructor(@Inject(LogConsoleHandler) consoleHandler: LogConsoleHandler) {
+        this.handlers.push(consoleHandler);
+    }
+
+    public addHandler(handler: LogHandler): void {
+        this.handlers.push(handler);
+    }
+
+    public write(level: LogLevel, ...message: string[]): void {
+        for (const handler of this.handlers) {
+            handler.write(level, ...message);
+        }
+    }
+}
+
+const levelToColors = {
+    [LogLevel.Debug]: LogColor.White,
+    [LogLevel.Info]: LogColor.Blue,
+    [LogLevel.Warn]: LogColor.Yellow,
+    [LogLevel.Error]: LogColor.Red,
+};
+
+@Injectable()
+export class Logger {
+    @Inject(LogChainHandler)
+    private handler: LogChainHandler;
+
     public info(...message: string[]): void {
-        this.write(LogLevel.Info, this.format(LogColor.White, ...message));
+        this.write(LogLevel.Info, ...message);
     }
 
     public debug(...message: string[]): void {
-        this.write(LogLevel.Debug, this.format(LogColor.Blue, ...message));
+        this.write(LogLevel.Debug, ...message);
     }
 
     public warn(...message: string[]): void {
-        this.write(LogLevel.Warn, this.format(LogColor.Yellow, ...message));
+        this.write(LogLevel.Warn, ...message);
     }
 
     public error(...message: string[]): void {
-        this.write(LogLevel.Error, this.format(LogColor.Red, ...message));
+        this.write(LogLevel.Error, ...message);
     }
 
-    private format(color: LogColor, ...message: string[]): string {
-        return `^${color.valueOf().toString()}[${new Date().toLocaleString()}] ${message.join(' ')}^7`;
+    public log(level: LogLevel, ...message: string[]): void {
+        this.write(level, ...message);
     }
 
-    private write(level: LogLevel, message: string) {
-        if (this.level <= level) {
-            console.log(message);
-        }
+    private write(level: LogLevel, ...message: string[]) {
+        this.handler.write(level, ...message);
     }
 }
 

@@ -64,6 +64,8 @@ export class VehicleStateProvider {
                 } else {
                     RollUpWindow(vehicle, 0);
                     RollUpWindow(vehicle, 1);
+                    RollUpWindow(vehicle, 2);
+                    RollUpWindow(vehicle, 3);
                 }
             }, false)
         );

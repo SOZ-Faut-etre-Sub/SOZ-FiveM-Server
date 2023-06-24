@@ -432,7 +432,7 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
                         local slotItem = inv.items[slot]
                         if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
                             existing = nil
-                        elseif (item.type == "food" or item.type == "liquor" or item.type == "drink") and slotItem and slotItem.type == "crate" then
+                        elseif (table.contains(Config.crateTypeAllowed, item.type)) and slotItem and slotItem.type == "crate" then
                             if ((item.weight * amount) + Inventory.getCrateWeight(slotItem.metadata)) < Config.crateMaxWeight then
                                 metadata, success, slot = Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slot)
                                 if success then
@@ -660,10 +660,7 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
         end
     end
 
-    TriggerEvent("monitor:server:event", "inventory_transfer", {
-        inventory_id = invSource.id,
-        inventory_type = invSource.type,
-    }, {
+    exports["soz-core"]:Event("inventory_transfer", {inventory_id = invSource.id, inventory_type = invSource.type}, {
         source = invSource,
         slot = slot,
         item = item.name,

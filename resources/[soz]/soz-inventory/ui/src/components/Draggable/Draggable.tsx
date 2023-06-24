@@ -75,7 +75,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 crateWeight = crateWeight + (meal.amount * meal.weight)
             })
             
-            itemExtraLabel = `[${crateWeight/1000}/10 Kg]`
+            itemExtraLabel = `[${crateWeight/1000}/12 Kg]`
             
         } else if (item?.metadata?.expiration) {
             const currentTime = new Date().getTime();

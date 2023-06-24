@@ -2,13 +2,13 @@ import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Provider } from '@core/decorators/provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { ItemService } from '@public/server/item/item.service';
+import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { PlayerMoneyService } from '@public/server/player/player.money.service';
 import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem } from '@public/shared/item';
-import { Monitor } from '@public/shared/monitor';
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
     day: 'numeric',

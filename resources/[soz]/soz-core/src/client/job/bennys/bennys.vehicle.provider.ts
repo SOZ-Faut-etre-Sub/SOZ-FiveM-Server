@@ -312,11 +312,7 @@ export class BennysVehicleProvider {
 
     public async upgradeVehicle(vehicleEntityId: number) {
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-        const vehicleConfiguration = await emitRpc<VehicleConfiguration>(
-            RpcServerEvent.VEHICLE_CUSTOM_GET_MODS,
-            vehicleNetworkId
-        );
+        const vehicleConfiguration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
 
         SetVehicleUndriveable(vehicleEntityId, true);
         SetVehicleLights(vehicleEntityId, 2);

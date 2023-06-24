@@ -25,7 +25,7 @@ RegisterServerEvent("inventory:server:bin-vandalism", function(invID, ctx)
     local binInv = GetOrCreateInventory(storageType, invID, ctx)
     local count = Inventory.Search(binInv, "amount", "garbagebag")
     Inventory.RemoveItem(binInv, "garbagebag", count)
-    Inventory.AddItem(Player.PlayerData.source, binInv, "torn_garbagebag", math.ceil(count / 2))
+    Inventory.AddItem(source, binInv, "torn_garbagebag", math.floor(count / 2))
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
@@ -89,7 +89,7 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(sour
             TriggerClientEvent("soz-core:client:notification:draw", TargetPlayer.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
         end
 
-        TriggerEvent("monitor:server:event", "give_money", {
+        exports["soz-core"]:Event("give_money", {
             src = SourcePlayer.PlayerData.citizenid,
             target = TargetPlayer.PlayerData.citizenid,
         }, {money = moneyTake, marked_money = markedMoneyTake})

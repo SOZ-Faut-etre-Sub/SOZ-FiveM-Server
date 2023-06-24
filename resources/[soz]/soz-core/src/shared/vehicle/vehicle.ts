@@ -331,6 +331,8 @@ export const VehicleElectricModels: Record<number, string> = {
     [-2066002122]: 'lspdgallardo',
     [-107240429]: 'bcsoc7',
     [joaat('dilettante2')]: 'Dilettante 2',
+    [joaat('virtue')]: 'Virtue',
+    [joaat('powersurge')]: 'Dilettante 2',
 };
 
 export const VehicleTrailerModels: Record<number, string> = {

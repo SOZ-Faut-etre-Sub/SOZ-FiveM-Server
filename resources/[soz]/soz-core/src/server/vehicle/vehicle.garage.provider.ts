@@ -10,7 +10,6 @@ import { Logger } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
 import { joaat } from '../../shared/joaat';
 import { JobPermission, JobType } from '../../shared/job';
-import { Monitor } from '../../shared/monitor';
 import { PlayerData } from '../../shared/player';
 import { toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItem } from '../../shared/random';
@@ -31,6 +30,7 @@ import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { JobService } from '../job.service';
 import { LockService } from '../lock.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
@@ -118,8 +118,8 @@ export class VehicleGarageProvider {
             UPDATE vehicles v SET v.stock = 10 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Motorcycles';
             UPDATE vehicles v SET v.stock = 3 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Helicopters';
             UPDATE vehicles v SET v.stock = 99 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Cycles';
-            UPDATE vehicles v SET v.stock = 2 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.dealership_id = 'luxury';
             UPDATE vehicles v SET v.stock = 100 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Electric';
+            UPDATE vehicles v SET v.stock = 2 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.dealership_id = 'luxury';
             UPDATE vehicles v SET v.stock = 0 WHERE v.stock < 0;
         `
             .split(';')
