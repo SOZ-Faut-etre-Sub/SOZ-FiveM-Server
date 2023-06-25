@@ -660,7 +660,7 @@ local function AddGlobalPlayer(parameters)
 	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
 	for k, v in pairs(options) do
 		if not v.distance or v.distance > distance then v.distance = distance end
-		local key = v.label .. (v.job or "")
+		local key = v.label .. (v.job or "") .. (v.color or "")
 		Players[key] = v
 	end
 end
