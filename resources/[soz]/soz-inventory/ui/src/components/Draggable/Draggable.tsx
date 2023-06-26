@@ -52,7 +52,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         let itemLabel = item?.metadata?.label ? `${item.metadata.label} <small>${item.label}</small>` : item.label;
         let itemExtraLabel = '';
         let contextExtraLabel = '';
-        let crateContent = '';
+        let secondaryDescription = '';
         let crateWeight = 0;
 
         let illustrator = item.illustrator || ''
@@ -64,6 +64,18 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if (WeaponAmmo[item.name]) {
                 contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
             }
+        } else if(item.type === 'fishing_rod'){
+            if (item?.metadata?.bait) {
+                itemExtraLabel += ` [${item.metadata.bait?.label}]`
+            }
+        } else if(item.type === 'fish'){
+            if(item?.metadata?.weight && item?.metadata?.length){
+                secondaryDescription += '<div style="display:flex;flex-direction:column;margin-top:0.5rem;">'
+                secondaryDescription += `<span><b>Poids :</b> ${item?.metadata?.weight} grammes </span>`
+                secondaryDescription += `<span><b>Taille :</b> ${item?.metadata?.length} centimètres </span>`
+                secondaryDescription += `</div>`
+
+            }        
         } else if( item.type === 'crate' && item.metadata?.crateElements?.length){         
 
             if(item.metadata.label){
@@ -71,7 +83,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             }
             item.metadata.crateElements.map(meal => {
                 const expiration = new Date(meal?.metadata?.expiration ?? '')
-                crateContent += `<br>- ${meal.amount} ${meal.label} [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
+                secondaryDescription += `<br>- ${meal.amount} ${meal.label} [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
                 crateWeight = crateWeight + (meal.amount * meal.weight)
             })
             
@@ -104,7 +116,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         onItemHover?.(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description ? item.description : ''}
-            <div>${crateContent}</div>
+            <div>${secondaryDescription}</div>
             <div><span>${contextExtraLabel}</span> <span>${illustrator}</span></div>
         `);
     }, [item, onItemHover]);

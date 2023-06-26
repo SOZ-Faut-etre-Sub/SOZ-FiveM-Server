@@ -21,6 +21,8 @@ export type ItemType =
     | 'flavor'
     | 'furniture'
     | 'liquor'
+    | 'fish'
+    | 'fishing_garbage'
     | 'outfit';
 
 type BaseItem = {
@@ -98,6 +100,23 @@ export type LiquorItem = BaseItem & {
     nutrition: Nutrition;
     animation?: AnimationItem;
     prop?: PropItem;
+};
+
+export type FishItem = BaseItem & {
+    type: 'fish';
+    fishing_area: Array<string>;
+    fishing_weather: Array<string>;
+    fishing_period: Array<string>;
+    min_weight: number;
+    max_weight: number;
+    min_length: number;
+    max_length: number;
+    sozedex_id: number;
+    fishman_status: string;
+};
+
+export type FishingGarbageItem = BaseItem & {
+    type: 'fishing_garbage';
 };
 
 // Fight For Style
@@ -179,6 +198,10 @@ export type InventoryItemMetadata = {
     id?: string;
     model?: string;
     crateElements?: MealMetadata[];
+    // Fishing
+    weight?: number;
+    length?: number;
+    bait?: any;
 };
 
 export type InventoryItem = {
@@ -214,4 +237,6 @@ export type Item =
     | SewingRawMaterialItem
     | FabricItem
     | GarmentItem
-    | OutfitItem;
+    | OutfitItem
+    | FishItem
+    | FishingGarbageItem;

@@ -13,6 +13,7 @@ import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
 import { NuiClothShopMethodMap } from './cloth_shop';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
+import { NuiFishingMethodMap } from './fishing';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
 import { NuiMenuMethodMap } from './menu';
@@ -49,6 +50,7 @@ export interface NuiMethodMap {
     missive: NuiMissiveMethodMap;
     police: NuiPoliceMethodMap;
     crafting: NuiCraftingMethodMap;
+    fishing: NuiFishingMethodMap;
     item: NuiItemMethodMap;
     hood: NuiHoodMethodMap;
     taxi: NuiTaxiMethodMap;

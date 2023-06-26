@@ -1,6 +1,7 @@
 import '../styles/index.scss';
 
 import { CraftingApp } from '@private/nui/crafting/CraftingApp';
+import { FishingApp } from '@private/nui/fishing/FishingApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
 import { TalentApp } from '@private/nui/Talent/TalentApp';
@@ -76,6 +77,7 @@ export const App: FunctionComponent = () => {
                 <TaxiHorodateurApp />
                 <TalentApp />
                 <CraftingApp />
+                <FishingApp />
                 <InputApp />
             </div>
         </Provider>
