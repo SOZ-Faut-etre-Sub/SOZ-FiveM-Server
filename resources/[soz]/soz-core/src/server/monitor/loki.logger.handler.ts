@@ -1,5 +1,5 @@
 import { Injectable } from '@core/decorators/injectable';
-import { LogHandler, LogLevel } from '@core/logger';
+import { LogHandler, LogLevel, shouldLog } from '@core/logger';
 
 import { LokiEvent } from '../../shared/monitor';
 
@@ -16,7 +16,7 @@ export class LokiLoggerHandler implements LogHandler {
             return;
         }
 
-        if (this.logLevel > level) {
+        if (!shouldLog(level, this.logLevel)) {
             return;
         }
 

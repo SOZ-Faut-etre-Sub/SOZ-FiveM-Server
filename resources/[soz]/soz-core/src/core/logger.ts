@@ -18,6 +18,17 @@ export enum LogLevel {
     Error = 'ERROR',
 }
 
+const LogLevelOrder: Record<LogLevel, number> = {
+    [LogLevel.Debug]: 0,
+    [LogLevel.Info]: 1,
+    [LogLevel.Warn]: 2,
+    [LogLevel.Error]: 3,
+};
+
+export const shouldLog = (level: LogLevel, minLevel: LogLevel): boolean => {
+    return LogLevelOrder[level] >= LogLevelOrder[minLevel];
+};
+
 export interface LogHandler {
     write(level: LogLevel, ...message: string[]): void;
 }
@@ -37,7 +48,7 @@ export class LogConsoleHandler implements LogHandler {
     }
 
     public write(level: LogLevel, ...message: string[]): void {
-        if (this.level <= level) {
+        if (shouldLog(level, this.level)) {
             console.log(this.format(levelToColors[level], ...message));
         }
     }
