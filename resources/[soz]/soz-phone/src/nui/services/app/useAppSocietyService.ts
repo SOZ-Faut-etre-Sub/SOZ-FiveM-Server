@@ -26,8 +26,10 @@ export const useAppSocietyService = () => {
     const handleMessageBroadcast = (message: SocietyMessage) => {
         store.dispatch.appSociety.appendSocietyMessages(message);
 
+        const policeNumbers = ['555-POLICE', '555-BCSO', '555-LSPD', '555-FBI'];
+
         // Send notificaiton to client (if it's police message only)
-        if (message.conversation_id === '555-POLICE' && config.dynamicAlert === true) {
+        if (policeNumbers.includes(message.conversation_id) && config.dynamicAlert === true) {
             fetchNui(SocietyEvents.SEND_CLIENT_POLICE_NOTIFICATION, {
                 ...message,
                 info: { ...message.info, duration: config.dynamicAlertDuration.value },

@@ -136,21 +136,6 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         return () => clearTimeout(timeoutId);
     }, []);
 
-    const image = (): string => {
-        if (isPoliceNotification(notification)) {
-            switch (notification.logo) {
-                case 'bcso':
-                    return 'https://soz.zerator.com/static/images/bcso.png';
-                case 'fib':
-                    return 'https://soz.zerator.com/static/images/fbi.png';
-                case 'lspd':
-                default:
-                    return 'https://soz.zerator.com/static/images/lspd.png';
-            }
-        }
-        return '';
-    };
-
     const title = (): string => {
         if (notification.title !== null) {
             let titleType = '';
@@ -175,10 +160,10 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
                     break;
                 case 'default':
                 default:
-                    titleType = "à l'aide";
+                    titleType = 'message';
                     break;
             }
-            return `Alerte : ~h~${titleType}~h~`;
+            return titleType;
         }
         return '';
     };
@@ -186,25 +171,25 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
     const classColor = (): string => {
         switch (notification.policeStyle) {
             case 'robbery':
-                return 'border-red-500';
+                return 'border-red-500/70';
             case 'vandalism':
-                return 'border-yellow-300';
+                return 'border-yellow-400/70';
             case 'racket':
-                return 'border-orange-500';
+                return 'border-orange-500/70';
             case 'shooting':
-                return 'border-indigo-500';
+                return 'border-indigo-500/70';
             case 'auto-theft':
-                return 'border-cyan-500';
+                return 'border-cyan-500/70';
             case 'explosion':
-                return 'border-pink-500';
+                return 'border-pink-500/70';
             case 'default':
             default:
-                return 'border-green-500';
+                return 'border-green-500/70';
         }
     };
 
     const classes = (): string => {
-        return `w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-gradient-to-r from-black/60 to-black/25 border-l-4 ${classColor()}`;
+        return `w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-[#131313]/70 border-l-8 ${classColor()}`;
     };
 
     const hours = (): string => {
@@ -227,9 +212,17 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         >
             <div className={classes()}>
                 <div className="flex items-center mb-2 justify-between">
-                    <img className="w-5" src={image()} alt={image()} />
-                    <p className="uppercase" dangerouslySetInnerHTML={{ __html: formatText(title()) }} />
-                    <p dangerouslySetInnerHTML={{ __html: hours() }} />
+                    <div className="flex items-center">
+                        <img className="w-6 mr-4" src="/public/images/hud/notification/fdo.webp" alt="Logo FDO" />
+                        <p className="uppercase text-base lg:text-xl">
+                            <span>Alerte : </span>
+                            <span className="font-semibold" dangerouslySetInnerHTML={{ __html: formatText(title()) }} />
+                        </p>
+                    </div>
+                    <div className="flex items-center">
+                        <p className="italic" dangerouslySetInnerHTML={{ __html: hours() }} />
+                        <span className="w-10"></span>
+                    </div>
                 </div>
                 <p dangerouslySetInnerHTML={{ __html: formatText(notification.message) }} />
             </div>
@@ -296,8 +289,8 @@ export const Notifications: FunctionComponent = () => {
                 style={{
                     top: `calc(0.5rem)`,
                     right: `0`,
-                    height: `35vh`,
-                    width: `calc(100vw * ${minimap.width})`,
+                    height: `50vh`,
+                    width: `calc(100vw * ${minimap.width * 1.4})`,
                 }}
             >
                 {notifications.map(

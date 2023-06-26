@@ -51,11 +51,13 @@ export class HudNotificationsProvider {
         const duration =
             message.info !== undefined && message.info.duration !== undefined ? message.info.duration : 5000;
 
+        const messageType = message.info.type ?? 'default';
+
         await this.notifier.notifyPolice({
             title: '',
             message: message.message,
             logo: messageLogo,
-            policeStyle: message.info.type,
+            policeStyle: messageType,
             style: 'info',
             hour: message.createdAt,
             delay: duration,
