@@ -256,6 +256,12 @@ export enum ServerEvent {
 
     ALERT_POLICE = 'soz-core:alert:notification:draw-police',
     ALERT_MESSAGE = 'phone:createSocietyMessagesBroadcast',
+
+    FISHING_SUCCESS = 'soz-core:server:fishing:success',
+    FISHING_GARBAGE = 'soz-core:server:fishing:garbage',
+    FISHING_RESELL = 'soz-core:server:fishing:resell',
+    FISHING_RENT_BOAT = 'soz-core:server:fishing:rent-boat',
+    FISHING_REMOVE_BAIT = 'soz-core:server:fishing:remove-bait',
 }
 
 export enum ClientEvent {
@@ -457,6 +463,9 @@ export enum ClientEvent {
 
     CRIMI_HOOD = 'soz-core:server:crimi:hood',
     CRIMI_SMOKE = 'soz-core:server:crimi:smoke',
+
+    FISHING_ROD_TOGGLE = 'soz-core:server:fishing:toggle-rod',
+    FISHING_BAIT_TOGGLE = 'soz-core:server:fishing:toggle-bait',
 
     EASTER_EAR_TOGGLE = 'soz-core:server:easter:toogle-ear',
 
@@ -701,4 +710,9 @@ export enum NuiEvent {
 
     AlbumPlay = 'soz-core:client:album:play',
     AlbumVolume = 'soz-core:client:album:volume',
+    SuccessFishing = 'soz-core:client:fishing:success',
+    StopFishing = 'soz-core:client:fishing:stop',
+    FishingSuccessHit = 'soz-core:client:fishing:success-hit',
+
+    RentBoat = 'soz-core:client:fishing:rent-boat',
 }

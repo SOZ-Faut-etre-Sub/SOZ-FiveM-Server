@@ -55,7 +55,11 @@ export type ItemType =
     | 'liquor'
     | 'outfit'
     | 'key'
-    | 'crate';
+    | 'fishing_rod'
+    | 'fishing_bait'
+    | 'crate'
+    | 'fish'
+    | 'fishing_garbage';
 
 export type MealMetadata = {
         name: string;
@@ -63,6 +67,12 @@ export type MealMetadata = {
         amount: number;
         label: string;
         weight: number;
+};
+
+export type BaitMetadata = {
+    name: string;
+    metadata: InventoryItemMetadata;
+    label: string;
 };
     
 export type InventoryItemMetadata = {
@@ -80,6 +90,9 @@ export type InventoryItemMetadata = {
     attachments?: Record<string, string | null>;
     crafted?: boolean;
     crateElements?: MealMetadata[];
+    bait?: BaitMetadata;
+    weight?: number;
+    length?:number;
 };
 
 

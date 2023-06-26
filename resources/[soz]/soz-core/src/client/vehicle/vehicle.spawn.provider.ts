@@ -267,7 +267,9 @@ export class VehicleSpawnProvider {
             await wait(0);
         }
 
-        SetVehicleOnGroundProperly(vehicle);
+        if (!IsThisModelABoat(vehicleSpawn.model)) {
+            SetVehicleOnGroundProperly(vehicle);
+        }
 
         for (let i = -1; i < 1; i++) {
             const ped = GetPedInVehicleSeat(vehicle, i);

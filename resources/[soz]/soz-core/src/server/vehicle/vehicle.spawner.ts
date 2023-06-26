@@ -299,7 +299,6 @@ export class VehicleSpawner {
             open: true,
         };
         const condition = getDefaultVehicleCondition();
-
         return this.spawn(
             source,
             {
@@ -307,6 +306,35 @@ export class VehicleSpawner {
                 model,
                 position,
                 warp: true,
+            },
+            volatileState,
+            condition
+        );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    public async spawnRentVehicle(source: number, model: string, position: Vector4): Promise<null | number | {}> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return null;
+        }
+
+        const modelHash = GetHashKey(model);
+        const volatileState = {
+            ...getDefaultVehicleVolatileState(),
+            isPlayerVehicle: false,
+            owner: player.citizenid,
+            open: false,
+        };
+        const condition = getDefaultVehicleCondition();
+        return this.spawn(
+            source,
+            {
+                hash: modelHash,
+                model,
+                position,
+                warp: false,
             },
             volatileState,
             condition
