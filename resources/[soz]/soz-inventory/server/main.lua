@@ -660,16 +660,6 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
         end
     end
 
-    exports["soz-core"]:Event("inventory_transfer", {inventory_id = invSource.id, inventory_type = invSource.type}, {
-        source = invSource,
-        slot = slot,
-        item = item.name,
-        amount = amount,
-        metadata = metadata,
-        target = invTarget,
-        targetSlot = targetSlot,
-    })
-
     if Inventory.RemoveItem(invSource, item, amount, metadata, slot) then
         Inventory.AddItem(source, invTarget, item, amount, metadata, targetSlot, function(s, r)
             success, reason = s, r
