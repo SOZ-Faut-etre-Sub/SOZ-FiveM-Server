@@ -10,7 +10,6 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
 import { getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, Time, Weather } from '../../shared/weather';
-import { MonitorService } from '../monitor/monitor.service';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
 import { Polluted, Summer } from './forecast';
@@ -21,9 +20,6 @@ const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 export class WeatherProvider {
     @Inject(Pollution)
     private pollution: Pollution;
-
-    @Inject(MonitorService)
-    private monitorService: MonitorService;
 
     @Inject('Store')
     private store: Store;
