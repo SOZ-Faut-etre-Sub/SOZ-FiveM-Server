@@ -3,7 +3,7 @@
 <CVehicleModelInfoVariation>
     <variationData>
         <Item>
-            <modelName>dodge</modelName>
+            <modelName>dodgebana</modelName>
             <colors>
                 <Item>
                     <indices content="char_array">
@@ -26,7 +26,7 @@
             </colors>
             <kits>
                 <Item>0_default_modkit</Item>
-                <Item>1010_dodge_modkit</Item>
+                <Item>1010_dodgebana_modkit</Item>
             </kits>
             <windowsWithExposedEdges/>
             <plateProbabilities>
@@ -38,7 +38,7 @@
                 </Probabilities>
             </plateProbabilities>
             <lightSettings value="1"/>
-            <sirenSettings value="0"/>
+            <sirenSettings value="1"/>
         </Item>
     </variationData>
 </CVehicleModelInfoVariation>

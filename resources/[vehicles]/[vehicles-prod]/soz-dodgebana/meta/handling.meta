@@ -3,7 +3,7 @@
 <CHandlingDataMgr>
     <HandlingData>
         <Item type="CHandlingData">
-            <handlingName>dodge</handlingName>
+            <handlingName>dodgebana</handlingName>
             <fMass value="1860.000000"/>
             <fInitialDragCoeff value="8.600000"/>
             <fPercentSubmerged value="85.000000"/>
