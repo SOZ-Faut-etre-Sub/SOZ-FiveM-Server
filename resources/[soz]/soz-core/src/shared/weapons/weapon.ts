@@ -513,7 +513,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
 
     // SMGs
     [WeaponName.MICROSMG]: {
-        recoil: 0.1,
+        recoil: 0.05,
         ammo: 'ammo_01',
         attachments: [
             { label: 'Grand chargeur', component: 'COMPONENT_MICROSMG_CLIP_02', type: WeaponComponentType.Clip },
@@ -523,7 +523,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.SMG]: {
-        recoil: 0.1,
+        recoil: 0.05,
         ammo: 'ammo_01',
         drawPosition: { model: GetHashKey('w_sb_smg'), ...DrawPositions['SMG'] },
         attachments: [
@@ -535,7 +535,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.ASSAULTSMG]: {
-        recoil: 0.1,
+        recoil: 0.05,
         ammo: 'ammo_04',
         drawPosition: { model: GetHashKey('w_sb_assaultsmg'), ...DrawPositions['SMG'] },
         attachments: [
@@ -547,7 +547,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.COMBATPDW]: {
-        recoil: 0.1,
+        recoil: 0.05,
         ammo: 'ammo_01',
         drawPosition: { model: GetHashKey('w_sb_pdw'), ...DrawPositions['SMG'] },
         attachments: [
@@ -559,7 +559,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.SMG_MK2]: {
-        recoil: 0.1,
+        recoil: 0.05,
         ammo: 'ammo_04',
         attachments: [
             { label: 'Grand chargeur', component: 'COMPONENT_SMG_MK2_CLIP_02', type: WeaponComponentType.Clip },
@@ -571,7 +571,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.MACHINEPISTOL]: {
-        recoil: 0.1,
+        recoil: 0.05,
         ammo: 'ammo_01',
         attachments: [
             { label: 'Grand chargeur', component: 'COMPONENT_MACHINEPISTOL_CLIP_02', type: WeaponComponentType.Clip },
@@ -584,14 +584,14 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.MINISMG]: {
-        recoil: 0.1,
+        recoil: 0.05,
         ammo: 'ammo_01',
         attachments: [
             { label: 'Grand chargeur', component: 'COMPONENT_MINISMG_CLIP_02', type: WeaponComponentType.Clip },
         ],
     },
     [WeaponName.RAYCARBINE]: {
-        recoil: 0.1,
+        recoil: 0.05,
         ammo: 'ammo_14',
         drawPosition: { model: GetHashKey('w_sb_assaultsmg'), ...DrawPositions['SMG'] },
         attachments: [
@@ -604,7 +604,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
 
     // Assault Rifles
     [WeaponName.ASSAULTRIFLE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_05',
         drawPosition: { model: GetHashKey('w_ar_assaultrifle'), ...DrawPositions['AR'] },
         attachments: [
@@ -621,7 +621,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.ASSAULTRIFLE_MK2]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_05',
         drawPosition: { model: GetHashKey('w_ar_assaultriflemk2'), ...DrawPositions['AR'] },
         attachments: [
@@ -639,7 +639,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.CARBINERIFLE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_carbinerifle'), ...DrawPositions['AR'] },
         attachments: [
@@ -656,7 +656,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.CARBINERIFLE_MK2]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_carbineriflemk2'), ...DrawPositions['AR'] },
         attachments: [
@@ -674,7 +674,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.ADVANCEDRIFLE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_ar_advancedrifle'), ...DrawPositions['AR'] },
         attachments: [
@@ -685,7 +685,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.SPECIALCARBINE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_specialcarbine'), ...DrawPositions['AR'] },
         attachments: [
@@ -702,7 +702,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.BULLPUPRIFLE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_bullpuprifle'), ...DrawPositions['AR'] },
         attachments: [
@@ -714,7 +714,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.COMPACTRIFLE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_06',
         attachments: [
             { label: 'Grand chargeur', component: 'COMPONENT_COMPACTRIFLE_CLIP_02', type: WeaponComponentType.Clip },
@@ -726,7 +726,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.SPECIALCARBINE_MK2]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_specialcarbinemk2'), ...DrawPositions['AR'] },
         attachments: [
@@ -744,7 +744,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.BULLPUPRIFLE_MK2]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_05',
         attachments: [
             {
@@ -761,7 +761,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.MILITARYRIFLE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_07',
         attachments: [
             { label: 'Grand chargeur', component: 'COMPONENT_MILITARYRIFLE_CLIP_02', type: WeaponComponentType.Clip },
@@ -772,12 +772,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         ],
     },
     [WeaponName.HEAVYRIFLE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_07',
         drawPosition: { model: GetHashKey('w_ar_heavyrifleh'), ...DrawPositions['AR'] },
     },
     [WeaponName.TACTICALRIFLE]: {
-        recoil: 0.4,
+        recoil: 0.1,
         ammo: 'ammo_06',
         drawPosition: { model: GetHashKey('w_ar_carbinerifle_reh'), ...DrawPositions['AR'] },
         attachments: [
