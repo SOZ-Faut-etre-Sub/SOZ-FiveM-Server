@@ -4,10 +4,10 @@
     <residentAnims/>
     <InitDatas>
         <Item>
-            <modelName>dodge</modelName>
-            <txdName>dodge</txdName>
-            <handlingId>dodge</handlingId>
-            <gameName>dodge</gameName>
+            <modelName>dodgebana</modelName>
+            <txdName>dodgebana</txdName>
+            <handlingId>dodgebana</handlingId>
+            <gameName>dodgebana</gameName>
             <vehicleMakeName/>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -113,7 +113,7 @@
     <txdRelationships>
         <Item>
             <parent>vehicles_schaf_brown_interior</parent>
-            <child>dodge</child>
+            <child>dodgebana</child>
         </Item>
     </txdRelationships>
 </CVehicleModelInfo__InitDataList>
