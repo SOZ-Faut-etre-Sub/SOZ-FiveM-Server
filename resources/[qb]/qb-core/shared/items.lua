@@ -6591,4 +6591,16 @@ QBShared.Items = {
         ['description'] = "Panier-repas contenant :",
         ['illustrator'] = '.Poulpito'
     },
+    ['fleeca_money_bag'] = {
+        ['name'] = 'fleeca_money_bag',
+        ['label'] = "Sac de FLEECA",
+        ['weight'] = 5000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Money money money !',
+        ['illustrator'] = '.Poulpito'
+    },
 }
