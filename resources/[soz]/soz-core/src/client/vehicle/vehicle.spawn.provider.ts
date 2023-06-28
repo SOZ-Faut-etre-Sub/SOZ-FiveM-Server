@@ -160,6 +160,20 @@ export class VehicleSpawnProvider {
         );
 
         this.resourceLoader.unloadModel(hash);
+        let attempts = 0;
+
+        while (!NetworkGetEntityIsNetworked(vehicle) && attempts < 10) {
+            NetworkRegisterEntityAsNetworked(vehicle);
+            attempts += 1;
+            await wait(100);
+        }
+
+        if (!NetworkGetEntityIsNetworked(vehicle)) {
+            this.logger.error(`could not create vehicle on network, try again latter`);
+            DeleteVehicle(vehicle);
+
+            return null;
+        }
 
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
 
