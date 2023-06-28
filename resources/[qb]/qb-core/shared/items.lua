@@ -6603,4 +6603,16 @@ QBShared.Items = {
         ['description'] = 'Money money money !',
         ['illustrator'] = '.Poulpito'
     },
+    ['medal_of_merit'] = {
+        ['name'] = 'medal_of_merit',
+        ['label'] = "Médaille du mérite",
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Décernée aux membres des forces de l'ordre ainsi qu'aux civils travaillant pour la Défense qui se sont distingués par leur conduite et leur manière de servir ou par des prestations occasionnelles qui revêtent un caractère exceptionnel.",
+        ['illustrator'] = '.Poulpito'
+    },
 }
