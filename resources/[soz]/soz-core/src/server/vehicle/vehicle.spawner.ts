@@ -89,6 +89,13 @@ const VEHICLE_HAS_RADIO = [
 
 const DISALLOWED_VEHICLE_MODELS = { [GetHashKey('dune2')]: true };
 
+//Prevent police bike to spawn inside custom BCSO mapping
+const frontBCSO = new BoxZone([1865.68, 3682.6, 33.57], 10.0, 6.4, {
+    heading: 300.0,
+    minZ: 32.57,
+    maxZ: 35.57,
+});
+
 @Provider()
 export class VehicleSpawner {
     @Inject(VehicleStateService)
@@ -122,6 +129,8 @@ export class VehicleSpawner {
         for (const dealership of Object.values(DealershipConfig)) {
             noSpawnZones.push(BoxZone.default(dealership.showroom.position, 10, 10));
         }
+
+        noSpawnZones.push(frontBCSO);
 
         this.noSpawnZone = new MultiZone<BoxZone>(noSpawnZones);
     }

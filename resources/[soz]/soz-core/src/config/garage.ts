@@ -1164,33 +1164,34 @@ export const GarageList: Record<string, Garage> = {
             maxZ: 35.83,
         }),
         parkingPlaces: [
-            new BoxZone([1880.6, 3698.22, 33.32], 6.0, 3.2, {
-                heading: 20.0,
+            new BoxZone([1879.49, 3697.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+            new BoxZone([1877.25, 3701.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+            new BoxZone([1875.0, 3705.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+
+            new BoxZone([1867.12, 3693.23, 33.71], 6.0, 3.0, {
+                heading: 210.0,
                 minZ: 32.73,
                 maxZ: 35.73,
             }),
-            new BoxZone([1875.74, 3695.93, 33.43], 6.0, 3.2, {
-                heading: 20.0,
-                minZ: 32.73,
-                maxZ: 35.73,
-            }),
-            new BoxZone([1866.94, 3695.74, 33.65], 5.2, 3.4, {
-                heading: 330.0,
-                minZ: 32.65,
-                maxZ: 35.65,
-            }),
-            new BoxZone([1865.08, 3699.11, 33.73], 6.0, 3.0, {
-                heading: 329.0,
-                minZ: 32.73,
-                maxZ: 35.73,
-            }),
-            new BoxZone([1863.16, 3702.3, 33.6], 5.8, 3.2, {
-                heading: 331.0,
+            new BoxZone([1863.21, 3699.52, 33.66], 6.0, 3.0, {
+                heading: 210.0,
                 minZ: 32.6,
                 maxZ: 35.6,
             }),
-            new BoxZone([1861.48, 3705.73, 33.47], 6.0, 3.0, {
-                heading: 330.0,
+            new BoxZone([1860.17, 3705.15, 33.47], 6.0, 3.0, {
+                heading: 30.0,
                 minZ: 32.47,
                 maxZ: 35.47,
             }),
