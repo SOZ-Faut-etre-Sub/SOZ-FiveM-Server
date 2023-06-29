@@ -2,6 +2,7 @@ export interface PreDBSociety {
     number: string;
     anonymous: boolean;
     message: string;
+    htmlMessage?: string;
     position: boolean;
     info?: { type?: string; serviceNumber?: string };
     pedPosition?: string;
@@ -28,6 +29,7 @@ export interface SocietyMessage {
     conversation_id: string;
     source_phone: string;
     message: string;
+    htmlMessage?: string;
     position: string;
     isTaken: boolean;
     takenBy: string | null;

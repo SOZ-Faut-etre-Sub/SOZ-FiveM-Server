@@ -30,6 +30,7 @@ class _SocietyService {
             conversation_id: data.number,
             source_phone: sourcePhone.includes('#') ? '' : sourcePhone,
             message: data.message,
+            htmlMessage: data.htmlMessage,
             position: data.pedPosition,
             isTaken: false,
             isDone: false,

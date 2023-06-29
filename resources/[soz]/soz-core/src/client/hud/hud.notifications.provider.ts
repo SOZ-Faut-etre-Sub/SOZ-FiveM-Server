@@ -55,7 +55,7 @@ export class HudNotificationsProvider {
 
         await this.notifier.notifyPolice({
             title: '',
-            message: message.message,
+            message: message.htmlMessage ?? message.message,
             logo: messageLogo,
             policeStyle: messageType,
             style: 'info',
