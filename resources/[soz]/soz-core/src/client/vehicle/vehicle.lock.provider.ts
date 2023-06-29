@@ -526,11 +526,15 @@ export class VehicleLockProvider {
 
         const messages = [...LockPickAlertMessage.all, ...LockPickAlertMessage[type]];
 
+        const message = getRandomItem(messages);
+
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-POLICE',
-            message: getRandomItem(messages).replace('${0}', zone),
+            message: message.replace('${0}', zone),
+            htmlMessage: message.replace('${0}', `<span {class}>${zone}</span>`),
             position: true,
+            info: { type: 'auto-theft' },
             overrideIdentifier: 'System',
         });
     }

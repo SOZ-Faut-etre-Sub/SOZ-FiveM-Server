@@ -3,14 +3,10 @@ import { PlayerData } from '@public/shared/player';
 
 import { Inject, Injectable } from '../core/decorators/injectable';
 import { JobType } from '../shared/job';
-import { PlayerService } from './player/player.service';
 import { ServerStateService } from './server.state.service';
 
 @Injectable()
 export class Notifier {
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
 
