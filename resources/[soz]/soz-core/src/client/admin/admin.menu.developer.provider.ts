@@ -230,6 +230,7 @@ export class AdminMenuDeveloperProvider {
                     title: 'Titre test',
                     hour: '00:24',
                     logo: 'bcso' as NotificationPoliceLogoType,
+                    notificationId: 777,
                 });
             }
         }

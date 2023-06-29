@@ -32,8 +32,14 @@ RegisterNetEvent("police:client:RedCall", function(societyNumber, msg, htmlMsg)
         disableMouse = false,
         disableCombat = true,
     }, {animDict = "oddjobs@assassinate@guard", anim = "unarmed_earpiece_a", flags = 48}, {}, {}, function() -- Done
-        TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(),
-                           {anonymous = false, number = societyNumber, message = msg, htmlMessage = htmlMsg, info = { type = 'red-alert' }, position = true})
+        TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(), {
+            anonymous = false,
+            number = societyNumber,
+            message = msg,
+            htmlMessage = htmlMsg,
+            info = {type = "red-alert"},
+            position = true,
+        })
     end)
 end)
 
