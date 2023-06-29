@@ -5,6 +5,7 @@ import { appBank } from './app/bank';
 import { appInvoices } from './app/invoices';
 import { appNotes } from './app/notes';
 import { appSociety } from './app/society';
+import { appBankTransfersList } from './app/transfersList';
 import { appTwitchNews } from './app/twitchNews';
 import { emergency } from './emergency';
 import { time } from './os/time';
@@ -32,6 +33,7 @@ export interface RootModel extends Models<RootModel> {
     appNotes: typeof appNotes;
     appInvoices: typeof appInvoices;
     appTwitchNews: typeof appTwitchNews;
+    appBankTransfersList: typeof appBankTransfersList;
     appSociety: typeof appSociety;
 }
 
@@ -47,6 +49,7 @@ export const models: RootModel = {
     appNotes,
     appInvoices,
     appTwitchNews,
+    appBankTransfersList,
     appSociety,
     emergency,
 };

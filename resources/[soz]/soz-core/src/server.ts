@@ -10,6 +10,7 @@ import { ChainMiddlewareTickServerFactory } from './core/middleware/middleware.t
 import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
 import { ApiModule } from './server/api/api.module';
+import { BankModule } from './server/bank/bank.module';
 import { DatabaseModule } from './server/database/database.module';
 import { DrivingSchoolModule } from './server/driving-school/ds.module';
 import { FieldModule } from './server/farm/field.module';
@@ -84,6 +85,7 @@ async function bootstrap() {
         PoliceModule,
         UpwModule,
         TaxiModule,
+        BankModule,
         ...PrivateModules
     );
 

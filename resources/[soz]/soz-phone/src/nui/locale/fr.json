@@ -126,7 +126,9 @@
     },
     "BANK": {
       "HOME_TITLE": "Compte en banque",
-      "CHECKING": "Total :"
+      "CHECKING": "Total :",
+      "NAVBAR_ACCOUNT": "Compte",
+      "NAVBAR_HISTORY": "Historique"
     },
     "MARKETPLACE": {
       "FEEDBACK": {

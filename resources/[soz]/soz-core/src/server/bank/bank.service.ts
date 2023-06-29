@@ -2,6 +2,9 @@ import { Injectable } from '@core/decorators/injectable';
 import { Invoice } from '@public/shared/bank';
 import { Err, Ok, Result } from '@public/shared/result';
 
+import { uuidv4 } from '../../core/utils';
+import BankTransferDB from './banktransfer.db';
+
 @Injectable()
 export class BankService {
     public transferBankMoney(source: string, target: string, amount: number): Promise<Result<boolean, string>> {
@@ -25,6 +28,18 @@ export class BankService {
                     resolve(Err(reason));
                 }
             });
+        });
+    }
+
+    async handleBankTransfer(transmitter: string, receiver: string, amount: number) {
+        const id = await BankTransferDB.createTransfer(transmitter, receiver, amount);
+
+        TriggerEvent('phone:app:bank:transferBroadcast', `phone:app:bank:transferBroadcast:${uuidv4()}`, {
+            id: id,
+            amount: amount,
+            transmitterAccount: transmitter,
+            receiverAccount: receiver,
+            createdAt: Date.now(),
         });
     }
 
