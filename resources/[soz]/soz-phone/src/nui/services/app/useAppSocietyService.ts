@@ -18,6 +18,7 @@ export const useAppSocietyService = () => {
     const { pathname } = useLocation();
     const config = useConfig();
     const settings = useSelector((state: RootState) => state.phone.config);
+    const available = useSelector((state: RootState) => state.phone.available);
 
     useEffect(() => {
         store.dispatch.appSociety.loadSocietyMessages();
@@ -29,7 +30,12 @@ export const useAppSocietyService = () => {
         const policeNumbers = ['555-POLICE', '555-BCSO', '555-LSPD', '555-FBI'];
 
         // Send notificaiton to client (if it's police message only)
-        if (policeNumbers.includes(message.conversation_id) && config.dynamicAlert === true) {
+        if (
+            policeNumbers.includes(message.conversation_id) &&
+            config.dynamicAlert === true &&
+            !message.muted &&
+            available
+        ) {
             fetchNui(SocietyEvents.SEND_CLIENT_POLICE_NOTIFICATION, {
                 ...message,
                 info: { ...message.info, duration: config.dynamicAlertDuration.value },
