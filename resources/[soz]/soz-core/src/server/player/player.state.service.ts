@@ -26,7 +26,7 @@ export class PlayerStateService {
     }
 
     public getClientStateByCitizenId(citizenId: string) {
-        if (!this.serverStateByCitizenId[citizenId]) {
+        if (!this.clientStateByCitizenId[citizenId]) {
             this.clientStateByCitizenId[citizenId] = this.getDefaultPlayerClientState();
         }
 
