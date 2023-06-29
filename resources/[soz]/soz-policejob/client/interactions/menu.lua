@@ -19,8 +19,7 @@ local function RedAlertEntity(menu, societyNumber)
             if not (IsWarningMessageActive() and tonumber(GetWarningMessageTitleHash()) == 1246147334) then
                 TriggerEvent("police:client:RedCall", societyNumber,
                              ("Code Rouge !!! Un agent a besoin d'aide vers %s"):format(GetStreetNameFromHashKey(street)),
-                             ("Code Rouge !!! Un agent a besoin d'aide vers <span {class}>%s</span>"):format(GetStreetNameFromHashKey(street))
-                            )
+                             ("Code Rouge !!! Un agent a besoin d'aide vers <span {class}>%s</span>"):format(GetStreetNameFromHashKey(street)))
             end
         end,
     })
