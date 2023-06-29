@@ -170,7 +170,8 @@ export class MandatoryProvider {
             TriggerEvent(
                 'police:client:RedCall',
                 '555-POLICE',
-                `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`
+                `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`,
+                `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers <span {class}>${name}</span>`
             );
         }
 

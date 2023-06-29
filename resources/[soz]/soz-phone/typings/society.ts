@@ -4,7 +4,7 @@ export interface PreDBSociety {
     message: string;
     htmlMessage?: string;
     position: boolean;
-    info?: { type?: string; serviceNumber?: string };
+    info?: { type?: string; serviceNumber?: string; notificationId: number };
     pedPosition?: string;
     overrideIdentifier?: string;
 }

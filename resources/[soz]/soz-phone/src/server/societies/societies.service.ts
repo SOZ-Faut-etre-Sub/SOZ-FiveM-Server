@@ -15,15 +15,21 @@ import { societiesLogger } from './societies.utils';
 class _SocietyService {
     private readonly contactsDB: _SocietiesDB;
     private readonly qbCore: any;
+    private policeMessageCount: number;
 
     constructor() {
         this.contactsDB = SocietiesDb;
         societiesLogger.debug('Societies service started');
         this.qbCore = global.exports['qb-core'].GetCoreObject();
+        this.policeMessageCount = 0;
     }
 
     createMessageBroadcastEvent(player: number, messageId: number, sourcePhone: string, data: PreDBSociety): void {
         const qbCorePlayer = this.qbCore.Functions.GetPlayer(player);
+
+        if (['555-LSPD', '555-BCSO', '555-POLICE'].includes(data.number)) {
+            this.policeMessageCount++;
+        }
 
         const messageData = {
             id: messageId,
@@ -36,7 +42,7 @@ class _SocietyService {
             isDone: false,
             muted: !qbCorePlayer.PlayerData.job.onduty,
             createdAt: new Date().getTime(),
-            info: data.info,
+            info: { ...data.info, notificationId: this.policeMessageCount, serviceNumber: data.number },
         };
 
         emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, messageData);
@@ -168,7 +174,6 @@ class _SocietyService {
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
                         const data = this.addTagForSocietyMessage(reqObj.data, originalMessageNumber);
-                        data.info = { ...data.info, serviceNumber: player.getSocietyPhoneNumber() };
                         this.createMessageBroadcastEvent(
                             player.source,
                             message[player.getSocietyPhoneNumber()],

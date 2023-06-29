@@ -18,10 +18,12 @@ export type TPoliceNotification = BasicNotification & {
     policeStyle: NotificationPoliceType;
     hour: string;
     logo: NotificationPoliceLogoType;
+    notificationId: number;
 };
 
 export type NotificationPoliceType =
     | 'default'
+    | 'red-alert'
     | 'robbery'
     | 'vandalism'
     | 'racket'
@@ -29,4 +31,4 @@ export type NotificationPoliceType =
     | 'explosion'
     | 'auto-theft';
 
-export type NotificationPoliceLogoType = 'lspd' | 'bcso' | 'fib';
+export type NotificationPoliceLogoType = 'lspd' | 'bcso' | 'police';
