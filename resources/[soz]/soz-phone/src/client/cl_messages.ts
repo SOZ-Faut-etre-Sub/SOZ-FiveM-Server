@@ -4,6 +4,7 @@ import {
     MessageEvents,
     PreDBMessage,
 } from '../../typings/messages';
+import { SocietyEvents } from '../../typings/society';
 import { sendMessageEvent } from '../utils/messages';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
@@ -35,6 +36,10 @@ RegisterNuiCB<void>(MessageEvents.GET_POSITION, async (position: any, cb) => {
 RegisterNuiCB<void>(MessageEvents.GET_DESTINATION, async (position: any, cb) => {
     const [posX, posY] = GetBlipInfoIdCoord(GetFirstBlipInfoId(8));
     cb({ data: { x: posX, y: posY } });
+});
+
+RegisterNuiCB<void>(SocietyEvents.SEND_CLIENT_POLICE_NOTIFICATION, async (message: any, cb) => {
+    cb(exports['soz-core'].SendPoliceNotification(message));
 });
 
 onNet(MessageEvents.SEND_MESSAGE_SUCCESS, (messageDto: PreDBMessage) => {

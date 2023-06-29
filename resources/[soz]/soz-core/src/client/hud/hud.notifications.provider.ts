@@ -36,4 +36,32 @@ export class HudNotificationsProvider {
             delay,
         });
     }
+
+    @Exportable('SendPoliceNotification')
+    public async getPoliceNotification(message) {
+        let messageLogo: 'bcso' | 'lspd' | 'police' = 'police';
+        if (message.info && message.info.serviceNumber) {
+            if (message.info.serviceNumber === '555-BCSO') {
+                messageLogo = 'bcso';
+            }
+            if (message.info.serviceNumber === '555-LSPD') {
+                messageLogo = 'lspd';
+            }
+        }
+        const duration =
+            message.info !== undefined && message.info.duration !== undefined ? message.info.duration : 5000;
+
+        const messageType = message.info.type ?? 'default';
+
+        await this.notifier.notifyPolice({
+            title: '',
+            message: message.htmlMessage ?? message.message,
+            logo: messageLogo,
+            policeStyle: messageType,
+            style: 'info',
+            hour: message.createdAt,
+            delay: duration,
+            notificationId: message.info.notificationId,
+        });
+    }
 }

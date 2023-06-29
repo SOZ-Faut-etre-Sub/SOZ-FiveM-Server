@@ -26,6 +26,12 @@ const coordOptions = [
     { label: 'Vector 4', value: 'coords4' },
 ];
 
+const notificationTypeOptions = [
+    { label: 'Basic', value: 'basic' },
+    { label: 'Advanced', value: 'advanced' },
+    { label: 'Police', value: 'police' },
+];
+
 export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ banner, state }) => {
     return (
         <SubMenu id="developer">
@@ -72,6 +78,18 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ ban
                 >
                     🧑 Changer de joueur
                 </MenuItemButton>
+                <MenuItemSelect
+                    title="Déclencher une notification"
+                    onConfirm={async selectedIndex => {
+                        await fetchNui(NuiEvent.AdminTriggerNotification, notificationTypeOptions[selectedIndex].value);
+                    }}
+                >
+                    {notificationTypeOptions.map(option => (
+                        <MenuItemSelectOption key={'trigger_notification_' + option.value}>
+                            {option.label}
+                        </MenuItemSelectOption>
+                    ))}
+                </MenuItemSelect>
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminResetHealthData);
