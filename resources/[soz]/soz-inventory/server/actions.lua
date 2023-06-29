@@ -7,10 +7,10 @@ QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function
         id = source
     end
 
-    local ply = Player(id)
+    local playerState = exports["soz-core"]:GetPlayerState(source)
     local Player = QBCore.Functions.GetPlayer(id)
 
-    if Player and not ply.state.inv_busy then
+    if Player and not playerState.isInventoryBusy then
         cb(Inventory(id))
     else
         TriggerClientEvent("soz-core:client:notification:draw", source, "Inventaire en cours d'utilisation", "warning")
@@ -19,7 +19,7 @@ QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function
 end)
 
 RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
-    local ply = Player(source)
+    local playerState = exports["soz-core"]:GetPlayerState(source)
     local Player = QBCore.Functions.GetPlayer(source)
     local itemData = Player.Functions.GetItemBySlot(slot)
 
@@ -31,7 +31,7 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
         return
     end
 
-    if ply.state.inv_busy then
+    if playerState.isInventoryBusy then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Une action est déjà en cours !", "warning")
         return
     end
@@ -39,7 +39,7 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
     itemData.slot = slot
 
     if itemData.type == "weapon" then
-        if not ply.state.is_in_hub then
+        if not playerState.isInHub then
             TriggerClientEvent("soz-core:client:weapon:use-weapon", Player.PlayerData.source, itemData)
         end
     elseif itemData.useable then
