@@ -140,6 +140,9 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         if (notification.title !== null) {
             let titleType = '';
             switch (notification.policeStyle) {
+                case 'red-alert':
+                    titleType = 'code rouge';
+                    break;
                 case 'robbery':
                     titleType = 'braquage';
                     break;
@@ -170,8 +173,10 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
 
     const borderColor = (): string => {
         switch (notification.policeStyle) {
-            case 'robbery':
+            case 'red-alert':
                 return 'border-red-500/70';
+            case 'robbery':
+                return 'border-lime-500/70';
             case 'vandalism':
                 return 'border-yellow-400/70';
             case 'racket':
@@ -190,8 +195,10 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
 
     const textColor = (): string => {
         switch (notification.policeStyle) {
-            case 'robbery':
+            case 'red-alert':
                 return 'text-red-500';
+            case 'robbery':
+                return 'text-lime-500';
             case 'vandalism':
                 return 'text-yellow-400';
             case 'racket':
@@ -224,6 +231,19 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         return notification.message.replace(/{class}/g, `class="uppercase ${textColor()}"`);
     };
 
+    const image = (): string => {
+        let image = '/public/images/hud/notification/fdo.webp';
+
+        if (notification.logo === 'lspd') {
+            image = '/public/images/hud/notification/lspd.webp';
+        }
+
+        if (notification.logo === 'bcso') {
+            image = '/public/images/hud/notification/bcso.webp';
+        }
+        return image;
+    };
+
     return (
         <Transition
             show={!isClosing && !isOpening}
@@ -237,10 +257,11 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
             <div className={classes()}>
                 <div className="flex items-center mb-2 justify-between">
                     <div className="flex items-center">
-                        <img className="w-6 mr-4" src="/public/images/hud/notification/fdo.webp" alt="Logo FDO" />
-                        <p className="uppercase text-base lg:text-xl">
-                            <span>Alerte : </span>
+                        <img className="w-6 mr-4" src={image()} alt="Blason des forces de l'ordre" />
+                        <p className="flex items-center uppercase text-base lg:text-xl">
+                            <span>Alerte :&nbsp;</span>
                             <span className="font-semibold" dangerouslySetInnerHTML={{ __html: formatText(title()) }} />
+                            <span className="ml-4 normal-case text-sm">#{notification.notificationId}</span>
                         </p>
                     </div>
                     <div className="flex items-center">
@@ -314,7 +335,7 @@ export const Notifications: FunctionComponent = () => {
                     top: `calc(0.5rem)`,
                     right: `0`,
                     height: `50vh`,
-                    width: `calc(100vw * ${minimap.width * 1.4})`,
+                    width: `calc(100vw * ${minimap.width * 1.5})`,
                 }}
             >
                 {notifications.map(

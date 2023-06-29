@@ -24,7 +24,7 @@ RegisterNetEvent("police:client:UnCuffAnimation", function()
     TaskPlayAnim(ped, lib, "a_uncuff", 8.0, -8.0, 3000, 48, 0, 0, 0, 0)
 end)
 
-RegisterNetEvent("police:client:RedCall", function(societyNumber, msg)
+RegisterNetEvent("police:client:RedCall", function(societyNumber, msg, htmlMsg)
     QBCore.Functions.Progressbar("job:police:red-call", "Code rouge en cours ...", 5000, true, true,
                                  {
         disableMovement = true,
@@ -33,7 +33,7 @@ RegisterNetEvent("police:client:RedCall", function(societyNumber, msg)
         disableCombat = true,
     }, {animDict = "oddjobs@assassinate@guard", anim = "unarmed_earpiece_a", flags = 48}, {}, {}, function() -- Done
         TriggerServerEvent("phone:sendSocietyMessage", "phone:sendSocietyMessage:" .. QBCore.Shared.UuidV4(),
-                           {anonymous = false, number = societyNumber, message = msg, position = true})
+                           {anonymous = false, number = societyNumber, message = msg, htmlMessage = htmlMsg, info = { type = 'red-alert' }, position = true})
     end)
 end)
 

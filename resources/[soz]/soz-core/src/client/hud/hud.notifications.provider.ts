@@ -39,13 +39,13 @@ export class HudNotificationsProvider {
 
     @Exportable('SendPoliceNotification')
     public async getPoliceNotification(message) {
-        let messageLogo: 'bcso' | 'lspd' | 'fib' = 'lspd';
+        let messageLogo: 'bcso' | 'lspd' | 'police' = 'police';
         if (message.info && message.info.serviceNumber) {
             if (message.info.serviceNumber === '555-BCSO') {
                 messageLogo = 'bcso';
             }
-            if (message.info.serviceNumber === '555-FBI') {
-                messageLogo = 'fib';
+            if (message.info.serviceNumber === '555-LSPD') {
+                messageLogo = 'lspd';
             }
         }
         const duration =
@@ -61,6 +61,7 @@ export class HudNotificationsProvider {
             style: 'info',
             hour: message.createdAt,
             delay: duration,
+            notificationId: message.info.notificationId,
         });
     }
 }
