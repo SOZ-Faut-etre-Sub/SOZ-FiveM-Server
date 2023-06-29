@@ -168,7 +168,7 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         return '';
     };
 
-    const classColor = (): string => {
+    const borderColor = (): string => {
         switch (notification.policeStyle) {
             case 'robbery':
                 return 'border-red-500/70';
@@ -188,8 +188,28 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         }
     };
 
+    const textColor = (): string => {
+        switch (notification.policeStyle) {
+            case 'robbery':
+                return 'text-red-500';
+            case 'vandalism':
+                return 'text-yellow-400';
+            case 'racket':
+                return 'text-orange-500';
+            case 'shooting':
+                return 'text-indigo-500';
+            case 'auto-theft':
+                return 'text-cyan-500';
+            case 'explosion':
+                return 'text-pink-500';
+            case 'default':
+            default:
+                return 'text-green-500';
+        }
+    };
+
     const classes = (): string => {
-        return `w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-[#131313]/70 border-l-8 ${classColor()}`;
+        return `w-full relative px-2 py-3 overflow-hidden mb-2 transition-all rounded text-sm lg:text-lg text-white bg-[#131313]/70 border-l-8 ${borderColor()}`;
     };
 
     const hours = (): string => {
@@ -198,6 +218,10 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         const messageHours = `0${currentDate.getHours()}`.slice(-2);
         const messageMinutes = `0${currentDate.getMinutes()}`.slice(-2);
         return `${messageHours}:${messageMinutes}`;
+    };
+
+    const message = () => {
+        return notification.message.replace(/{class}/g, `class="uppercase ${textColor()}"`);
     };
 
     return (
@@ -224,7 +248,7 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
                         <span className="w-10"></span>
                     </div>
                 </div>
-                <p dangerouslySetInnerHTML={{ __html: formatText(notification.message) }} />
+                <p dangerouslySetInnerHTML={{ __html: formatText(message()) }} />
             </div>
         </Transition>
     );
