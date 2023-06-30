@@ -9,11 +9,15 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerMetadata } from '../../shared/player';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
+import { PlayerStateService } from '../player/player.state.service';
 
 @Provider()
 export class AdminMenuPlayerProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -100,5 +104,12 @@ export class AdminMenuPlayerProvider {
     @Rpc(RpcServerEvent.ADMIN_GET_REPUTATION)
     public getReputation(source: number, target: number) {
         return this.playerService.getPlayer(target).metadata.criminal_reputation;
+    }
+
+    @OnEvent(ServerEvent.ADMIN_RESET_CLIENT_STATE)
+    public async onResetClientState(source: number, target: number) {
+        this.playerStateService.resetClientState(target);
+
+        this.notifier.notify(source, `L'état client du joueur a été réinitialisée.`, 'info');
     }
 }

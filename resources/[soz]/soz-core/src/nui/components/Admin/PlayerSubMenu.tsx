@@ -344,6 +344,13 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Reset Criminalité
                         </MenuItemButton>
+                        <MenuItemButton
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetClientState, player);
+                            }}
+                        >
+                            Reset Client State
+                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}
