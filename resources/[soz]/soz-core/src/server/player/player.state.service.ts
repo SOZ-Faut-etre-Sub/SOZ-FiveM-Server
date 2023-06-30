@@ -148,4 +148,8 @@ export class PlayerStateService {
             isZipped: false,
         };
     }
+
+    public resetClientState(source: number) {
+        this.setClientState(source, this.getDefaultPlayerClientState());
+    }
 }
