@@ -29,15 +29,13 @@ local function playerHasItem(item, amount)
 end
 
 local function getItemAmount(item)
+    local ret = 0
     for _, slot in pairs(PlayerData.items) do
-        if slot.name == item then
-            if slot.amount then
-                return slot.amount
-            else
-                return 0
-            end
+        if slot.name == item and slot.amount then
+            ret = ret + slot.amount
         end
     end
+    return ret
 end
 
 local CreateTankerAction = function()
