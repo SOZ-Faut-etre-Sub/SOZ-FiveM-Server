@@ -18,6 +18,7 @@ export const useAppSocietyService = () => {
     const { pathname } = useLocation();
     const config = useConfig();
     const settings = useSelector((state: RootState) => state.phone.config);
+    const emergency = useSelector((state: RootState) => state.emergency.emergency);
     const available = useSelector((state: RootState) => state.phone.available);
 
     useEffect(() => {
@@ -34,13 +35,14 @@ export const useAppSocietyService = () => {
             policeNumbers.includes(message.conversation_id) &&
             config.dynamicAlert === true &&
             !message.muted &&
-            available
+            available &&
+            !emergency
         ) {
             fetchNui(SocietyEvents.SEND_CLIENT_POLICE_NOTIFICATION, {
                 ...message,
                 info: { ...message.info, duration: config.dynamicAlertDuration.value },
             });
-            const { sound } = getSoundSettings('notiSound', settings, 'messages');
+            const { sound } = getSoundSettings('societyNotification', settings);
             const volume = config.dynamicAlertVol / 100;
             mount(sound, volume, false).then(({ url }) => play(url));
         }
