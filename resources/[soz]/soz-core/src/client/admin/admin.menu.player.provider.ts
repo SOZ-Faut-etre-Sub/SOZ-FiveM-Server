@@ -248,4 +248,10 @@ export class AdminMenuPlayerProvider {
         }
         return;
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetClientState)
+    public async handleResetClientState(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_RESET_CLIENT_STATE, player.id);
+        return;
+    }
 }
