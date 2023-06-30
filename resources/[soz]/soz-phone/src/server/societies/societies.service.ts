@@ -27,10 +27,6 @@ class _SocietyService {
     createMessageBroadcastEvent(player: number, messageId: number, sourcePhone: string, data: PreDBSociety): void {
         const qbCorePlayer = this.qbCore.Functions.GetPlayer(player);
 
-        if (['555-LSPD', '555-BCSO', '555-POLICE'].includes(data.number)) {
-            this.policeMessageCount++;
-        }
-
         const messageData = {
             id: messageId,
             conversation_id: data.number,
@@ -103,6 +99,10 @@ class _SocietyService {
             const contact = await this.contactsDB.addSociety(identifier, reqObj.data);
             resp({ status: 'ok', data: contact });
 
+            if (['555-LSPD', '555-BCSO', '555-POLICE'].includes(reqObj.data.number)) {
+                this.policeMessageCount++;
+            }
+
             const players = await PlayerService.getPlayersFromSocietyNumber(reqObj.data.number);
             players.forEach(player => {
                 this.createMessageBroadcastEvent(player.source, contact, identifier, reqObj.data);
@@ -129,6 +129,8 @@ class _SocietyService {
                     ),
                 };
 
+                this.policeMessageCount++;
+
                 [lspd, bcso]
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
@@ -136,7 +138,10 @@ class _SocietyService {
                             player.source,
                             message[player.getSocietyPhoneNumber()],
                             identifier,
-                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber)
+                            this.replaceSocietyPhoneNumber(
+                                this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                                player.getSocietyPhoneNumber()
+                            )
                         );
                     });
             }
