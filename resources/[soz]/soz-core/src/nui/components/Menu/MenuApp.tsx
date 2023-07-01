@@ -1,3 +1,6 @@
+import { MenuDrugAdminLocation } from '@private/nui/drug/MenuDrugAdminLocation';
+import { DrugGardenMenu } from '@private/nui/drug/MenuDrugGarden';
+import { DrugShopMenu } from '@private/nui/drug/MenuDrugShop';
 import { MenuIllegalShop } from '@private/nui/illegalshop/MenuIllegalShop';
 import { FunctionComponent, useLayoutEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -190,6 +193,10 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.TaxiJobMenu}/*`} element={<TaxiJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PlayerPersonal}/*`} element={<MenuPlayerPersonal data={menuData} />} />
             <Route path={`/${MenuType.JobOnDutyMenu}/*`} element={<JobOnDutyMenu data={menuData} />} />
+            <Route path={`/${MenuType.DrugShop}/*`} element={<DrugShopMenu data={menuData} />} />
+            <Route path={`/${MenuType.DrugGarden}/*`} element={<DrugGardenMenu data={menuData} />} />
+            <Route path={`/${MenuType.DrugAdmin}/*`} element={<MenuDrugAdminLocation />} />
+
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route path={`/${MenuType.JobUpw}/*`} element={<MenuUpw data={menuData} />} />
             <Route path={`/${MenuType.UpwOrderMenu}/*`} element={<UpwOrderMenu data={menuData} />} />

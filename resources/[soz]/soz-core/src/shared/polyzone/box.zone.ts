@@ -109,6 +109,7 @@ export class BoxZone<T = never> extends PolygonZone<T> {
         this.length = length;
         this.width = width;
         this.heading = heading;
+        this.debugPoly = options?.debugPoly;
     }
 
     public draw(wallColor: RGBAColor | RGBColor, alpha?: number, text?: string) {
@@ -195,3 +196,13 @@ export class BoxZone<T = never> extends PolygonZone<T> {
         };
     }
 }
+
+export const zoneToString = (zone: Zone<any>): string => {
+    return `{"center": [${zone.center[0].toFixed(2)}, ${zone.center[1].toFixed(2)}, ${zone.center[2].toFixed(
+        2
+    )}], "heading": ${zone.heading.toFixed(2)}, "length": ${(zone.length || 1.0).toFixed(2)}, "maxZ": ${(
+        zone.maxZ || zone.center[2] + 2.0
+    ).toFixed(2)}, "minZ": ${(zone.minZ || zone.center[2] - 1.0).toFixed(2)}, "width": ${(zone.width || 1.0).toFixed(
+        2
+    )}}`;
+};

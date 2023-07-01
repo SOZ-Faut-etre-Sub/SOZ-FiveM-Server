@@ -111,6 +111,10 @@ export enum RpcServerEvent {
 
     RACKET_COOP_CHECK_CRIMI = 'soz-core:server:racket:check-crimi',
     RACKET_LOCK_PED = 'soz-core:server:racket:lock-ped',
+
+    DRUGS_GET_GARDEN_INFO = 'soz-core:server:drugs:garden-info',
+    DRUGS_GARDEN_ENTER = 'soz-core:server:drugs:garden-enter',
+    DRUGS_GARDEN_EXIT = 'soz-core:server:drugs:garden-exit',
 }
 
 export enum RpcClientEvent {
@@ -121,4 +125,5 @@ export enum RpcClientEvent {
     VEHICLE_SPAWN_FROM_SERVER = 'soz-core:rpc:client:vehicle:spawn-from-server',
     VEHICLE_DELETE = 'soz-core:rpc:client:vehicle:delete',
     MONITOR_GET_TRACES = 'soz-core:rpc:client:monitor:get-traces',
+    DRUG_CHECK_ZONE = 'soz-core:rpc:client:drug:check-zone',
 }

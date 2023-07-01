@@ -58,6 +58,22 @@ local function TreeInteraction(identifier, position)
                 identifier = identifier,
                 position = position,
             },
+            {
+                color = "crimi",
+                label = "Récolter des champignons",
+                icon = "c:pawl/harvest.png",
+                event = "soz-core:client:drugs:harvest-champi",
+                position = position,
+                canInteract = function()
+                    for _, value in ipairs(PlayerData.metadata.drugs_skills) do
+                        -- 1 is Botanite
+                        if value == 1 then
+                            return true
+                        end
+                    end
+                    return false
+                end,
+            },
         },
         distance = 2.5,
     })

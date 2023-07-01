@@ -1,3 +1,6 @@
+import { DrugSeedlingRepository } from '@private/client/resources/drug.seedling.repository';
+import { DrugSellLocationRepository } from '@private/client/resources/drug.sell.location.repository';
+
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -34,6 +37,12 @@ export class RepositoryProvider {
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
 
+    @Inject(DrugSeedlingRepository)
+    private drugSeedlingRepository: DrugSeedlingRepository;
+
+    @Inject(DrugSellLocationRepository)
+    private drugSellLocationRepository: DrugSellLocationRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -46,6 +55,8 @@ export class RepositoryProvider {
         await this.upwChargerRepository.load();
         await this.housingRepository.load();
         await this.underTypesShopRepository.load();
+        await this.drugSeedlingRepository.load();
+        await this.drugSellLocationRepository.load();
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
@@ -73,6 +84,12 @@ export class RepositoryProvider {
                 break;
             case 'underTypesShop':
                 this.underTypesShopRepository.update(data);
+                break;
+            case 'drugSeedling':
+                this.drugSeedlingRepository.update(data);
+                break;
+            case 'drugSellLocation':
+                this.drugSellLocationRepository.update(data);
                 break;
         }
     }

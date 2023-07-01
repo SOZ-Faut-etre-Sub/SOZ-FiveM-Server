@@ -39,6 +39,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
         setProperties(data?.properties || []);
     }, [data]);
 
+    const onDrugAdminMenuOpen = () => {
+        fetchNui(NuiEvent.DrugAdminMenuOpen);
+    };
+
     if (!data) {
         return null;
     }
@@ -60,6 +64,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     >
                         🚧 Voir les informations de l'interieur
                     </MenuItemCheckbox>
+                    <MenuItemButton onConfirm={onDrugAdminMenuOpen}>💊 Drogue</MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">

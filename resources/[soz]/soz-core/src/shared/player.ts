@@ -1,4 +1,5 @@
 import { SozRole } from '@core/permissions';
+import { DrugSkill } from '@private/shared/drugs';
 import { Talent } from '@private/shared/talent';
 
 import { ClothConfig } from './cloth';
@@ -245,6 +246,8 @@ export type PlayerMetadata = PlayerHealthBook & {
     criminal_state: PlayerCriminalState;
     criminal_reputation: number;
     criminal_talents: Talent[];
+    drugs_skills: DrugSkill[];
+    drugs_heavy_contract_date: number;
     vehiclelimit: number;
     inside: PlayerInsideState;
     injuries_count: number;

@@ -558,3 +558,32 @@ enum report_type {
   report
   complaint
 }
+
+model drugs_seedling {
+  id          Int       @id @default(autoincrement())
+  drug        String
+  location    String   @db.Text
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  nb_water    Int
+  garden      String?  @db.VarChar(50)
+  citizenid   String   @db.VarChar(50)
+  skillBoost  Boolean
+  property    Int?
+}
+
+model drugs_sell_location {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(50)
+  type        String    @db.VarChar(50)
+  zone        String    @db.Text
+
+  @@unique([name, type])
+}
+
+model drugs_garden_guest {
+  id          Int      @id @default(autoincrement())
+  citizenid   String   @db.VarChar(50)
+  guest       String   @db.VarChar(50)
+  
+  @@unique([citizenid, guest])
+}
