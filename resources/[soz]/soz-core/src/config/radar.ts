@@ -186,6 +186,7 @@ export const RadarAllowedVehicle: number[] = [
     GetHashKey('fbi2'),
     GetHashKey('cogfbi'),
     GetHashKey('paragonfbi'),
+    GetHashKey('dodgebana'),
 ];
 
 export const RadarInformedVehicle: number[] = [

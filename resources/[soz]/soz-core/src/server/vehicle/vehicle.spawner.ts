@@ -76,6 +76,7 @@ const VEHICLE_HAS_RADIO = [
     'fbi2',
     'cogfbi',
     'paragonfbi',
+    'dodgebana',
     'sadler1',
     'hauler1',
     'brickade1',
