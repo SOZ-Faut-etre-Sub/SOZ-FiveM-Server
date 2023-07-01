@@ -14,8 +14,9 @@ import { PlayerStateService } from '../player/player.state.service';
 
 const DIR_WATER_HYDRANT = 13;
 const EXP_TAG_RAYGUN = 70;
+const FLARE = 22;
 
-const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN];
+const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN, FLARE];
 
 @Provider()
 export class WeaponProvider {
