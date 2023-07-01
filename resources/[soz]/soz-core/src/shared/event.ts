@@ -262,6 +262,23 @@ export enum ServerEvent {
     FISHING_RESELL = 'soz-core:server:fishing:resell',
     FISHING_RENT_BOAT = 'soz-core:server:fishing:rent-boat',
     FISHING_REMOVE_BAIT = 'soz-core:server:fishing:remove-bait',
+
+    DRUGS_SHOP_BUY = 'soz-core:server:drug:shop-buy',
+    DRUGS_ADD_SKILL = 'soz-core:server:drug:add-skill',
+    DRUGS_HARVEST_FIELDS = 'soz-core:server:drugs:harvest-fields',
+    DRUGS_WATER = 'soz-core:server:drugs:water',
+    DRUGS_CHECK = 'soz-core:server:drugs:check',
+    DRUGS_HARVEST = 'soz-core:server:drugs:harvest',
+    DRUGS_DESTROY = 'soz-core:server:drugs:destroy',
+    DRUGS_SELL_PED = 'soz-core:server:drugs:sell-ped',
+    DRUGS_SELL_CONTRACT = 'soz-core:server:drugs:sell-contract',
+    DRUGS_STOLEN = 'soz-core:server:drugs:stolen',
+    DRUGS_GARDEN_ADD = 'soz-core:server:drugs:garden-add',
+    DRUGS_GARDEN_REMOVE = 'soz-core:server:drugs:garden-remove',
+    DRUGS_TRANSFORM = 'soz-core:server:drugs:transform',
+    DRUGS_ZONE_ADD = 'soz-core:server:drugs:zone-add',
+    DRUGS_ZONE_DELETE = 'soz-core:server:drugs:zone-delete',
+    DRUGS_ZONE_UPDATE = 'soz-core:server:drugs:zone-update',
 }
 
 export enum ClientEvent {
@@ -461,13 +478,13 @@ export enum ClientEvent {
     HUB_ENTER = 'soz-core:client:hub:enter',
     HUB_REMOVE_STATUS = 'soz-core:client:hub:remove-status',
 
-    CRIMI_HOOD = 'soz-core:server:crimi:hood',
-    CRIMI_SMOKE = 'soz-core:server:crimi:smoke',
+    CRIMI_HOOD = 'soz-core:client:crimi:hood',
+    CRIMI_SMOKE = 'soz-core:client:crimi:smoke',
 
     FISHING_ROD_TOGGLE = 'soz-core:server:fishing:toggle-rod',
     FISHING_BAIT_TOGGLE = 'soz-core:server:fishing:toggle-bait',
 
-    EASTER_EAR_TOGGLE = 'soz-core:server:easter:toogle-ear',
+    EASTER_EAR_TOGGLE = 'soz-core:client:easter:toogle-ear',
 
     BINOCULARS_TOGGLE = 'items:binoculars:toggle',
     BINOCULARS_SET = 'items:binoculars:set',
@@ -481,6 +498,17 @@ export enum ClientEvent {
     // Sozedex
     NUI_SHOW_SOZEDEX = 'soz-core:client:nui:show-sozedex',
     NUI_HIDE_SOZEDEX = 'soz-core:client:nui:hide-sozedex',
+
+    DRUGS_SHOW_CONTRACT = 'soz-core:client:drug:show-contract',
+    DRUGS_HARVEST_CHAMPI = 'soz-core:client:drugs:harvest-champi',
+    DRUGS_HARVEST_ZEED = 'soz-core:client:drugs:harvest-zeed',
+    DRUGS_DELETE = 'soz-core:client:drugs:delete',
+    DRUGS_ADD = 'soz-core:client:drugs:add',
+    DRUGS_UPDATE_SEED = 'soz-core:client:drugs:update-seed',
+    DRUGS_POLICE_ALERT = 'soz-core:client:drugs:police-alert',
+    DRUGS_CONSUME = 'soz-core:client:drugs:consume',
+    DRUGS_ZONE_ADD_UPDATE = 'soz-core:client:drugs:zone-add',
+    DRUGS_ZONE_DELETE = 'soz-core:client:drugs:zone-delete',
 }
 
 export enum GameEvent {
@@ -720,4 +748,15 @@ export enum NuiEvent {
 
     RentBoat = 'soz-core:client:fishing:rent-boat',
     SozedexClosed = 'soz-core:nui:sozedex:closed',
+
+    DrugShopBuy = 'soz-core:client:drug:shop-buy',
+    DrugSkillTreeBuy = 'soz-core:client:drug:skill-buy',
+    DrugLocationGps = 'soz-core:client:drug:location-gps',
+    DrugGardenEnter = 'soz-core:client:drug:garden-enter',
+    DrugGardenAdd = 'soz-core:client:drug:garden-add',
+    DrugGardenRemove = 'soz-core:client:drug:garden-remove',
+    DrugZoneHide = 'soz-core:client:drug:zone-hide',
+    DrugZoneAdd = 'soz-core:client:drug:zone-add',
+    DrugUpdateZone = 'soz-core:client:drug:zone-update',
+    DrugAdminMenuOpen = 'soz-core:client:drug:admin-menu-open',
 }

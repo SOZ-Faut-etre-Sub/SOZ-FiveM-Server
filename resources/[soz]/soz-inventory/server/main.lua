@@ -432,100 +432,111 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
     end
     amount = math.floor(amount + 0.5)
     local success, reason = false, nil
-    if amount > 0 then
-        if item then
-            if inv then
-                metadata, amount = metadata or {}, amount
+    local existing = false
+    local weight = Inventory.GetItemWeight(item, metadata, amount)
 
-                if item.type == "weapon" then
-                    if metadata.serial == nil then
-                        metadata.serial = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) ..
-                                                       QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
-                    end
-                    if metadata.health == nil then
-                        metadata.health = 2000
-                    end
-                    if metadata.maxHealth == nil then
-                        metadata.maxHealth = 2000
-                    end
-                elseif item.expiresIn and metadata.expiration == nil then
-                    metadata.expiration = os.date("%Y-%m-%dT%H:%M:00Z", os.time() + (item.expiresIn * 60))
-                elseif item.durability and metadata.expiration == nil then
-                    metadata.expiration = os.date("%Y-%m-%d", os.time() + (item.durability * 60 * 60 * 24))
-                end
+    if amount <= 0 then
+        reason = "invalid_quantity"
+        goto endAddItem
+    end
 
-                if Inventory.CanCarryItem(inv, item, amount, metadata) then
-                    local existing = false
-                    local weight = Inventory.GetItemWeight(item, metadata, amount)
-                    if slot then
-                        local slotItem = inv.items[slot]
-                        if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
-                            existing = nil
-                        elseif (table.contains(Config.crateTypeAllowed, item.type)) and slotItem and slotItem.type == "crate" then
-                            if (Inventory.GetItemWeight(item, metadata, amount) + Inventory.getCrateWeight(slotItem.metadata)) < Config.crateMaxWeight then
-                                metadata, success, slot = Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slot)
-                                if success then
-                                    item = QBCore.Shared.Items["lunchbox"]
-                                    amount = 0
-                                    existing = nil
-                                else
-                                    goto lunchbox_false
-                                end
-                            else
-                                TriggerClientEvent("soz-core:client:notification:draw", source, "Ça ne rentre pas !", "warning")
-                            end
-                        elseif item.type == "fishing_bait" and slotItem and slotItem.type == "fishing_rod" then
-                            local metadata = {bait = item}
-                            if slotItem.metadata.bait ~= item then
-                                Inventory.SetMetadata(inv, slotItem.slot, metadata)
-                                amount = amount - 1
-                                weight = Inventory.GetItemWeight(item, metadata, amount)
-                                TriggerClientEvent("soz-core:client:notification:draw", source,
-                                                   "Vous avez attaché un ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "success")
-                                if amount == 0 then
-                                    success = true
-                                    goto bait_end
-                                end
-                            else
-                                TriggerClientEvent("soz-core:client:notification:draw", source,
-                                                   "Impossible d'attacher ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "error")
-                            end
-                        end
-                    end
+    if not item then
+        reason = "invalid_item"
+        goto endAddItem
+    end
 
-                    if existing == false then
-                        local items, toSlot = inv.items, nil
-                        for i = 1, inv.slots do
-                            local slotItem = items[i]
-                            if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
-                                toSlot, existing = i, true
-                                break
-                            elseif not toSlot and slotItem == nil then
-                                toSlot = i
-                            end
-                        end
-                        slot = toSlot
-                    end
-                    inv.weight = inv.weight + weight
-                    Inventory.SetSlot(inv, item, amount, metadata, slot)
-                    success = true
+    if not inv then
+        reason = "invalid_inventory"
+        goto endAddItem
+    end
 
-                    inv.changed = true
-                    _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
+    metadata, amount = metadata or {}, amount
+
+    if item.type == "weapon" then
+        if metadata.serial == nil then
+            metadata.serial = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) ..
+                                           QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+        end
+        if metadata.health == nil then
+            metadata.health = 2000
+        end
+        if metadata.maxHealth == nil then
+            metadata.maxHealth = 2000
+        end
+    elseif item.expiresIn and metadata.expiration == nil then
+        metadata.expiration = os.date("%Y-%m-%dT%H:%M:00Z", os.time() + (item.expiresIn * 60))
+    elseif item.durability and metadata.expiration == nil then
+        metadata.expiration = os.date("%Y-%m-%d", os.time() + (item.durability * 60 * 60 * 24))
+    end
+
+    if not Inventory.CanCarryItem(inv, item, amount, metadata) then
+        reason = "invalid_weight"
+        goto endAddItem
+    end
+
+    if item.onlyone and inv.type == "player" and Inventory.Search(inv, "amount", item.name) > 0 then
+        reason = "invalid_alreadyhaveone"
+        goto endAddItem
+    end
+
+    if slot then
+        local slotItem = inv.items[slot]
+        if not slotItem or not item.unique and slotItem and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
+            existing = nil
+        elseif (table.contains(Config.crateTypeAllowed, item.type)) and slotItem and slotItem.type == "crate" then
+            if (Inventory.GetItemWeight(item, metadata, amount) + Inventory.getCrateWeight(slotItem.metadata)) < Config.crateMaxWeight then
+                metadata, success, slot = Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slot)
+                if success then
+                    item = QBCore.Shared.Items["lunchbox"]
+                    amount = 0
+                    existing = nil
                 else
-                    success, reason = false, "invalid_weight"
+                    goto endAddItem
                 end
             else
-                success, reason = false, "invalid_inventory"
+                TriggerClientEvent("soz-core:client:notification:draw", source, "Ça ne rentre pas !", "warning")
             end
-        else
-            success, reason = false, "invalid_item"
+        elseif item.type == "fishing_bait" and slotItem and slotItem.type == "fishing_rod" then
+            local metadata = {bait = item}
+            if slotItem.metadata.bait ~= item then
+                Inventory.SetMetadata(inv, slotItem.slot, metadata)
+                amount = amount - 1
+                weight = Inventory.GetItemWeight(item, metadata, amount)
+                TriggerClientEvent("soz-core:client:notification:draw", source,
+                                   "Vous avez attaché un ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "success")
+                if amount == 0 then
+                    success = true
+                    goto endAddItem
+                end
+            else
+                TriggerClientEvent("soz-core:client:notification:draw", source,
+                                   "Impossible d'attacher ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "error")
+            end
         end
-    else
-        success, reason = false, "invalid_quantity"
     end
-    ::lunchbox_false::
-    ::bait_end::
+
+    if existing == false then
+        local items, toSlot = inv.items, nil
+        for i = 1, inv.slots do
+            local slotItem = items[i]
+            if not item.unique and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, metadata) then
+                toSlot, existing = i, true
+                break
+            elseif not toSlot and slotItem == nil then
+                toSlot = i
+            end
+        end
+        slot = toSlot
+    end
+
+    inv.weight = inv.weight + weight
+    Inventory.SetSlot(inv, item, amount, metadata, slot)
+    success = true
+
+    inv.changed = true
+    _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
+
+    ::endAddItem::
     if cb then
         cb(success, reason)
     else
@@ -704,6 +715,10 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
 
     if Inventory.RemoveItem(invSource, item, amount, metadata, slot) then
         Inventory.AddItem(source, invTarget, item, amount, metadata, targetSlot, function(s, r)
+            if not s then
+                TriggerClientEvent("soz-core:client:notification:draw", source, Config.ErrorMessage[reason] or reason, "error")
+                Inventory.AddItem(source, invSource, item, amount, metadata, slot)
+            end
             success, reason = s, r
         end)
 

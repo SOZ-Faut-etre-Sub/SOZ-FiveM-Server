@@ -21,6 +21,7 @@ local function SpawnFieldZones()
 
         exports["qb-target"]:AddPolyZone(zoneName, points, {
             name = zoneName,
+            debugPoly = false,
             minZ = minZ - 2.0,
             maxZ = maxZ + 2.0,
             onPlayerInOut = function(isIn)
@@ -49,6 +50,26 @@ local function SpawnFieldZones()
                         local hasPermission = SozJobCore.Functions.HasPermission("food", SozJobCore.JobPermission.Food.Harvest)
                         return hasPermission and PlayerData.job.onduty and currentField and not IsEntityAVehicle(entity) and not IsEntityAPed(entity)
                     end,
+                },
+                {
+                    label = "Récolter de la Zeed",
+                    icon = "c:crimi/zeed.png",
+                    color = "crimi",
+                    event = "soz-core:client:drugs:harvest-zeed",
+                    canInteract = function(entity)
+                        if IsEntityAVehicle(entity) or IsEntityAPed(entity) then
+                            return false
+                        end
+
+                        for _, value in ipairs(PlayerData.metadata.drugs_skills) do
+                            -- 1 is Botanite
+                            if value == 1 then
+                                return true
+                            end
+                        end
+                        return false
+                    end,
+                    location = zoneName,
                 },
             },
             distance = 1.5,
@@ -112,12 +133,11 @@ end
 local function InitJob()
     Citizen.CreateThread(function()
         SpawnJobZones()
-        SpawnFieldZones()
     end)
 end
 
 local function DestroyJob()
-    local zoneNames = {"food:cloakroom", "food:craft", "food:milk_harvest", table.unpack(FoodJob.Zones)}
+    local zoneNames = {"food:cloakroom", "food:craft", "food:milk_harvest"}
     for _, name in ipairs(zoneNames) do
         exports["qb-target"]:RemoveZone(name)
     end
@@ -169,6 +189,8 @@ Citizen.CreateThread(function()
             },
         },
     })
+
+    SpawnFieldZones()
 end)
 
 RegisterNetEvent("QBCore:Client:SetDuty", function(duty)

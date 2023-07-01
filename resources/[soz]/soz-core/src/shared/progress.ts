@@ -1,4 +1,4 @@
-import { AnimationOptions } from '@public/shared/animation';
+import { AnimationOptions, AnimationProps } from '@public/shared/animation';
 
 export type ProgressOptions = {
     audio?: {
@@ -35,6 +35,7 @@ export type ProgressAnimation = {
     blendOutSpeed?: number;
     playbackRate?: number;
     options?: AnimationOptions;
+    props?: AnimationProps[];
 };
 
 export type ProgressResult = {

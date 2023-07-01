@@ -70,6 +70,7 @@
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.43.9",
         "react-icons": "^4.4.0",
+        "react-img-mapper": "^1.5.1",
         "react-node-to-string": "^0.1.1",
         "react-number-format": "^5.2.2",
         "react-redux": "^8.0.4",

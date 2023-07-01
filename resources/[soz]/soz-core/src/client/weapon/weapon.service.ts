@@ -6,6 +6,7 @@ import { PlayerService } from '../player/player.service';
 @Injectable()
 export class WeaponService {
     private currentWeapon: InventoryItem | null = null;
+    private disabledReasons = new Set<string>();
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -21,6 +22,10 @@ export class WeaponService {
     }
 
     async set(weapon: InventoryItem) {
+        if (this.disabledReasons.size > 0) {
+            return;
+        }
+
         const player = PlayerPedId();
         const weaponHash = GetHashKey(weapon.name);
         const ammo = weapon.metadata.ammo >= 0 ? weapon.metadata.ammo : 0;
@@ -95,5 +100,14 @@ export class WeaponService {
 
     getWeaponConfig(weaponName: string): WeaponConfig | null {
         return Weapons[weaponName.toUpperCase()] ?? null;
+    }
+
+    setDisabled(reason: string, value: boolean): void {
+        if (value) {
+            this.disabledReasons.add(reason);
+            this.clear();
+        } else {
+            this.disabledReasons.delete(reason);
+        }
     }
 }

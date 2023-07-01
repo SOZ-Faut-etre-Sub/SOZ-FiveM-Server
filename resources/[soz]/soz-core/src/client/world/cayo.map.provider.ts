@@ -3,7 +3,6 @@ import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
-import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../blip';
 
@@ -34,31 +33,12 @@ export class CayoMapProvider {
         });
     }
 
-    @Tick(5000)
-    public distanceLoop() {
-        const newIsCloseToCayo =
-            getDistance(GetEntityCoords(PlayerPedId()) as Vector3, [4858.0, -5171.0, 2.0]) < 2200.0;
-
-        if (newIsCloseToCayo != this.isCloseToCayo) {
-            this.isCloseToCayo = newIsCloseToCayo;
-            this.isCayoMinimapLoaded = newIsCloseToCayo;
-
-            SetToggleMinimapHeistIsland(newIsCloseToCayo);
-        }
-    }
-
     @Tick(TickInterval.EVERY_FRAME)
     public async displayLoop() {
         if (IsPauseMenuActive() && !IsMinimapInInterior()) {
-            if (this.isCayoMinimapLoaded) {
-                this.isCayoMinimapLoaded = false;
-                SetToggleMinimapHeistIsland(false);
-            }
             SetRadarAsExteriorThisFrame();
             SetRadarAsInteriorThisFrame(GetHashKey('h4_fake_islandx'), 4700.0, -5145.0, 0, 0);
-        } else if (!this.isCayoMinimapLoaded && this.isCloseToCayo) {
-            this.isCayoMinimapLoaded = true;
-            SetToggleMinimapHeistIsland(true);
+        } else {
             await wait(500);
         }
     }

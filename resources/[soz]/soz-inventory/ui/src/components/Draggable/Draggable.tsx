@@ -261,7 +261,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                      style={{display: `${contextData.visible ? 'block' : 'none'}`, left: contextData.posX, top: contextData.posY}}>
                     <div className={style.OptionsList}>
                         {item && (item.useable || item.type === 'weapon') && <li className={style.OptionListItem} onClick={createInteractAction('useItem')}>
-                            {item.type === 'weapon' ? 'Équiper' : 'Utiliser'}
+                            {item.type === 'weapon' ? 'Équiper' : item.usableLabel || 'Utiliser'}
                         </li>}
                         {item && <li className={style.OptionListItem} onClick={createInteractAction('giveItem')}>
                             Donner

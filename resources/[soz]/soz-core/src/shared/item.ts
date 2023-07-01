@@ -1,3 +1,4 @@
+import { DrugContractInfo } from '@private/shared/drugs';
 import { MissiveType } from '@private/shared/missive';
 
 import { WeaponComponentType } from './weapons/attachment';
@@ -33,6 +34,7 @@ type BaseItem = {
     description: string;
     unique: boolean;
     useable: boolean;
+    carrybox: boolean;
 };
 
 export type Nutrition = {
@@ -202,6 +204,7 @@ export type InventoryItemMetadata = {
     weight?: number;
     length?: number;
     bait?: any;
+    drugContract?: DrugContractInfo;
 };
 
 export type InventoryItem = {

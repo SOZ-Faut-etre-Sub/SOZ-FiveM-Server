@@ -45,5 +45,17 @@ export const StateApp: FunctionComponent = () => {
         dispatch.playerStats.update(stats);
     });
 
+    useNuiEvent('drug', 'SetLocations', data => {
+        dispatch.drugLocation.setZones(data);
+    });
+
+    useNuiEvent('drug', 'AddUpdateLocation', data => {
+        dispatch.drugLocation.addUpdateZone(data);
+    });
+
+    useNuiEvent('drug', 'DeleteLocation', data => {
+        dispatch.drugLocation.removeZone(data);
+    });
+
     return null;
 };

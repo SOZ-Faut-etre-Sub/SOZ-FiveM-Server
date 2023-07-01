@@ -46,6 +46,10 @@ export const getDistance = (a: Vector2 | Vector3 | Vector4, b: Vector2 | Vector3
     return Math.sqrt(x * x + y * y);
 };
 
+export const fromVector3Object = ({ x, y, z }: { x: number; y: number; z: number }): Vector3 => {
+    return [x, y, z];
+};
+
 export const toVector3Object = (vector: Vector3 | Vector4) => {
     return {
         x: vector[0],

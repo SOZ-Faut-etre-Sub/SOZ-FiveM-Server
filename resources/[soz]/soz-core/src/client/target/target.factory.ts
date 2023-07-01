@@ -137,6 +137,17 @@ export class TargetFactory {
         });
     }
 
+    public createForEntity(
+        entities: string[] | number[] | string | number,
+        targets: TargetOptions[],
+        distance = DEFAULT_DISTANCE
+    ) {
+        exports['qb-target'].AddTargetEntity(entities, {
+            options: targets,
+            distance: distance,
+        });
+    }
+
     public createForAllVehicle(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         exports['qb-target'].AddGlobalVehicle({
             options: targets,

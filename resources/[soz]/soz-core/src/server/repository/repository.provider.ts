@@ -1,3 +1,6 @@
+import { DrugSeedlingRepository } from '@private/server/resources/drug.seedling.repository';
+import { DrugSellLocationRepository } from '@private/server/resources/drug.sell.location.repository';
+
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -49,6 +52,12 @@ export class RepositoryProvider {
     @Inject(ObjectRepository)
     private objectRepository: ObjectRepository;
 
+    @Inject(DrugSeedlingRepository)
+    private drugSeedlingRepository: DrugSeedlingRepository;
+
+    @Inject(DrugSellLocationRepository)
+    private drugSellLocationRepository: DrugSellLocationRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -76,6 +85,8 @@ export class RepositoryProvider {
         this.repositories['clothingShop'] = this.clothingShopRepository;
         this.repositories['gloveShop'] = this.gloveShopRepository;
         this.repositories['underTypesShop'] = this.underTypesShopRepository;
+        this.repositories['drugSeedling'] = this.drugSeedlingRepository;
+        this.repositories['drugSellLocation'] = this.drugSellLocationRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)

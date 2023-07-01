@@ -107,6 +107,24 @@ function Field:RunBackgroundTasks()
             Citizen.Wait(60 * 1000)
         end
     end)
+    Citizen.CreateThread(function()
+        local delta = 60
+        while true do
+            local syncNeeded = false
+            for _, tree in pairs(self.field) do
+                if (os.time() - tree.harvestTime) * 1000 > self.refillDelay and (os.time() - tree.harvestTime - delta) * 1000 <= self.refillDelay then
+                    syncNeeded = true
+                    TriggerEvent("pawl:server-tree-respawn", tree.position)
+                end
+            end
+
+            if syncNeeded then
+                self:SyncField()
+            end
+
+            Citizen.Wait(delta * 1000)
+        end
+    end)
 end
 
 function Field:SyncField()

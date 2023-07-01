@@ -12,6 +12,7 @@ import { NuiAudioMethodMap } from './audio';
 import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
 import { NuiClothShopMethodMap } from './cloth_shop';
+import { NuiDrugMethodMap } from './drug';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiFishingMethodMap } from './fishing';
 import { NuiHoodMethodMap } from './hood';
@@ -60,6 +61,7 @@ export interface NuiMethodMap {
     radio: NuiRadioMethodMap;
     radio_vehicle: NuiRadioVehicleMethodMap;
     sozedex: NuiSozedexMethodMap;
+    drug: NuiDrugMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

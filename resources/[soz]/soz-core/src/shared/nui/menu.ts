@@ -73,6 +73,9 @@ export enum MenuType {
     LsmcJobMenu = 'lsmc_job_menu',
     JobOnDutyMenu = 'job_on_duty,',
     Album = 'album',
+    DrugShop = 'drug_shop',
+    DrugGarden = 'drug_garden',
+    DrugAdmin = 'drug_admin',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -109,4 +112,6 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.LsmcJobMenu]: any;
     [MenuType.JobOnDutyMenu]: NuiJobEmployeeOnDuty;
     [MenuType.Album]: { tracks: Record<string, string>; volume: number };
+    [MenuType.DrugShop]: ShopProduct[];
+    [MenuType.DrugAdmin]: never;
 }

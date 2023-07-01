@@ -39,15 +39,9 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
     itemData.slot = slot
 
     if itemData.type == "weapon" then
-        if not playerState.isInHub then
-            TriggerClientEvent("soz-core:client:weapon:use-weapon", Player.PlayerData.source, itemData)
-        end
-    elseif itemData.useable then
-        if itemData and itemData.amount > 0 then
-            if QBCore.Functions.CanUseItem(itemData.name) then
-                QBCore.Functions.UseItem(Player.PlayerData.source, itemData)
-            end
-        end
+        TriggerClientEvent("soz-core:client:weapon:use-weapon", Player.PlayerData.source, itemData)
+    elseif itemData and itemData.amount > 0 and QBCore.Functions.CanUseItem(itemData.name) then
+        QBCore.Functions.UseItem(Player.PlayerData.source, itemData)
     end
 end)
 
@@ -79,8 +73,10 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
                 giveAnimation(Player.PlayerData.source)
                 giveAnimation(Target.PlayerData.source)
             else
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas donner cet objet !", "error")
-                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                                   "Vous ne pouvez pas donner cet objet !" .. Config.ErrorMessage[reason] or reason, "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source,
+                                   "Vous ne pouvez pas recevoir d'objet !" .. Config.ErrorMessage[reason] or reason, "error")
             end
         end)
     else

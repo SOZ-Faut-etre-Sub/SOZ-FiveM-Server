@@ -1,6 +1,8 @@
 import '../styles/index.scss';
 
 import { CraftingApp } from '@private/nui/crafting/CraftingApp';
+import { DrugContractApp } from '@private/nui/drug/DrugContractApp';
+import { DrugSkillApp } from '@private/nui/drug/DrugSkillApp';
 import { FishingApp } from '@private/nui/fishing/FishingApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
@@ -70,6 +72,7 @@ export const App: FunctionComponent = () => {
                 <PanelApp />
                 <RepairApp />
                 <MissiveApp />
+                <DrugContractApp />
                 <RadarApp />
                 <RadioApp />
                 <RadioVehicleApp />
@@ -81,6 +84,7 @@ export const App: FunctionComponent = () => {
                 <FishingApp />
                 <InputApp />
                 <SozedexApp />
+                <DrugSkillApp />
             </div>
         </Provider>
     );

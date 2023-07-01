@@ -1,9 +1,10 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { wait } from '@core/utils';
 import { AudioService } from '@public/client/nui/audio.service';
-import { animationOptionsToFlags, AnimationStopReason } from '@public/shared/animation';
+import { animationOptionsToFlags, AnimationProps, AnimationStopReason } from '@public/shared/animation';
+import { fromVector3Object } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
 
-import { Inject, Injectable } from '../core/decorators/injectable';
-import { wait } from '../core/utils';
 import { ProgressAnimation, ProgressOptions, ProgressResult } from '../shared/progress';
 import { AnimationService } from './animation/animation.service';
 import { Notifier } from './notifier';
@@ -87,6 +88,31 @@ export class ProgressService {
             if (animation.task) {
                 runner = this.animationService.playScenario({ name: animation.task, duration: duration });
             } else {
+                const props: AnimationProps[] = animation.props ? [...animation.props] : [];
+                if (options.firstProp) {
+                    props.push({
+                        bone: options.firstProp.bone,
+                        model: options.firstProp.model,
+                        position: fromVector3Object(options.firstProp.coords),
+                        rotation: options.firstProp.rotation
+                            ? fromVector3Object(options.firstProp.rotation)
+                            : [0, 0, 0],
+                    });
+                    options.firstProp = null;
+                }
+
+                if (options.secondProp) {
+                    props.push({
+                        bone: options.secondProp.bone,
+                        model: options.secondProp.model,
+                        position: fromVector3Object(options.secondProp.coords),
+                        rotation: options.secondProp.rotation
+                            ? fromVector3Object(options.secondProp.rotation)
+                            : [0, 0, 0],
+                    });
+                    options.secondProp = null;
+                }
+
                 runner = this.animationService.playAnimation(
                     {
                         base: {
@@ -98,6 +124,7 @@ export class ProgressService {
                             options: animation.options,
                             duration: duration,
                         },
+                        props: props,
                     },
                     {
                         resetWeapon: false,
