@@ -1,8 +1,10 @@
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { useConfig } from '../../../hooks/usePhone';
+import { RootState } from '../../../store';
 
 interface IUseInterval {
     (callback: () => void, interval: number): void;
@@ -33,7 +35,7 @@ const SnakeBoard = () => {
     const [direction, setDirection] = useState('right');
     const [nextDirection, setNextDirection] = useState('right'); // buffer to avoid some problems with half-turn
     const [food, setFood] = useState(randomPosition);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(useSelector((state: RootState) => state.appSnake));
     const [isMoving, setMoving] = useState(false);
 
     const changeDirectionWithKeys = (e: KeyboardEvent) => {
