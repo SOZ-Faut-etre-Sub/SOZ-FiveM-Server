@@ -10,7 +10,6 @@ import {
     ShopProduct,
     TattooShopItem,
 } from '@public/shared/shop';
-import { ShopItem } from '@public/shared/shop/superette';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -374,35 +373,6 @@ export class ShopProvider {
             );
         } else {
             this.notifier.notify(source, `Oups, une erreur est survenue... Réessaye !`, 'error');
-        }
-    }
-
-    @OnEvent(ServerEvent.SUPERETTE_VALIDATE_CART)
-    public async superetteValidateCart(source: number, cartContent: ShopItem[]) {
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return;
-        }
-
-        let cartAmount = 0;
-
-        for (const product of cartContent) {
-            cartAmount += product.price * product.amount;
-        }
-
-        if (!this.inventoryManager.canCarryItems(source, cartContent)) {
-            this.notifier.notify(source, 'Vous ne pouvez pas porter cette quantité...', 'error');
-            return;
-        }
-        if (!this.shopPay(source, cartAmount)) {
-            this.notifier.notify(source, `Vous n'avez pas assez d'argent.`, 'error');
-            return;
-        }
-        TriggerClientEvent('animation:client:give', source);
-        this.notifier.notify(source, `Votre achat a bien été validé ! Merci. Prix : ~g~$${cartAmount}`, 'success');
-
-        for (const product of cartContent) {
-            this.inventoryManager.addItemToInventory(source, product.name, product.amount, product.metadata);
         }
     }
 

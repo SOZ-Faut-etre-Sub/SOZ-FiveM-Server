@@ -39,7 +39,7 @@ export class SuperetteShopProvider {
                 } as SuperetteItem;
                 superetteContent.push(sharedItem);
             }
-            exports['soz-inventory'].openShop(superetteContent); // Superettes are handled by soz-inventory
+            exports['soz-inventory'].openShop(superetteContent, 'menu_shop_supermarket'); // Superettes are handled by soz-inventory
         } else {
             // Zkea and Ammunation are handled by soz-core here
             const licences = this.playerService.getPlayer().metadata.licences;
