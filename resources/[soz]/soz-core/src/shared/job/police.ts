@@ -846,7 +846,11 @@ export const RankOutfit = {
 
 export const Armors = {
     [GetHashKey('mp_m_freemode_01')]: {
-        ['unmark']: { Drawable: 59, Texture: 0, Palette: 0 },
+        ['unmark']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 2,
+            Texture: 0,
+            Palette: 0,
+        },
         ['lspd']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 1,
             Texture: 0,
@@ -871,7 +875,11 @@ export const Armors = {
         ['news']: { Drawable: 27, Texture: 2, Palette: 0 }, // is unmarked, need reskin
     },
     [GetHashKey('mp_f_freemode_01')]: {
-        ['unmark']: { Drawable: 59, Texture: 7, Palette: 0 },
+        ['unmark']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] + 2,
+            Texture: 7,
+            Palette: 0,
+        },
         ['lspd']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] + 1,
             Texture: 0,
