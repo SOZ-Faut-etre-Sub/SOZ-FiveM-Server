@@ -276,6 +276,7 @@
         "APPS_ZUTOM": "Zutom",
         "APPS_WEATHER": "Météo",
         "APPS_TETRIS": "Tetris",
+        "APPS_SNAKE": "Snake",
         "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
         "GENERIC_LOADING": "Chargement...",
         "GENERIC_WAIT": "Veuillez patienter...",

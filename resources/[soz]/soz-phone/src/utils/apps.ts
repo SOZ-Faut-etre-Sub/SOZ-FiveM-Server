@@ -11,4 +11,5 @@ export default {
     TWITCH_NEWS: 'TWITCH_NEWS',
     WEATHER: 'WEATHER',
     TETRIS: 'TETRIS',
+    SNAKE: 'SNAKE',
 };
