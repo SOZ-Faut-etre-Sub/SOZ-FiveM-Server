@@ -1,15 +1,12 @@
 import { Button } from '@ui/old_components/Button';
 import cn from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useConfig } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
 import { useSnakeAPI } from '../hooks/useSnakeAPI';
-
-interface IUseInterval {
-    (callback: () => void, interval: number): void;
-}
+import { useInterval } from '../utils/interval';
 
 const SnakeBoard = () => {
     const config = useConfig();
@@ -151,26 +148,6 @@ const SnakeBoard = () => {
             displaySnake();
         }
     };
-
-    const useInterval: IUseInterval = (callback, interval) => {
-        const savedCallback = useRef<(() => void) | null>(null);
-        // After every render, save the latest callback into our ref.
-        useEffect(() => {
-            savedCallback.current = callback;
-        });
-
-        useEffect(() => {
-            function tick() {
-                if (savedCallback.current) {
-                    savedCallback.current();
-                }
-            }
-
-            const id = setInterval(tick, interval);
-            return () => clearInterval(id);
-        }, [interval]);
-    };
-
     useInterval(moveSnake, 100);
 
     const displayRows = rows.map(row => (
@@ -240,7 +217,7 @@ const SnakeBoard = () => {
                         'text-black': config.theme.value === 'light',
                     })}
                 >
-                    Score: {snake.length}
+                    Score: <br /> {snake.length}
                 </div>
                 <div
                     className={cn('w-1/2 mx-auto text-center', {
@@ -248,7 +225,7 @@ const SnakeBoard = () => {
                         'text-black': config.theme.value === 'light',
                     })}
                 >
-                    High Score: {highScore}
+                    High Score: <br /> {highScore}
                 </div>
             </div>
         </>
