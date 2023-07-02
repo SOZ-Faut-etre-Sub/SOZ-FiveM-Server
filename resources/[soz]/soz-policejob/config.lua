@@ -62,6 +62,7 @@ Config.SirenVehicle = {
     [GetHashKey("fbi2")] = true,
     [GetHashKey("cogfbi")] = true,
     [GetHashKey("paragonfbi")] = true,
+    [GetHashKey("dodgebana")] = true,
 }
 --- Fines
 Config.Fines = {
