@@ -1,3 +1,4 @@
+import { SnakeEvents } from '../../../typings/snake';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import SnakeDB, { _SnakeDB } from './snake.db';
@@ -10,10 +11,20 @@ class _SnakeService {
         this.snakeDB = SnakeDB;
     }
 
-    async handleGetHighscoreMessage(reqObj: PromiseRequest<void>, resp: PromiseEventResp<number>) {
+    async handleGetHighscore(reqObj: PromiseRequest<void>, resp: PromiseEventResp<number>) {
         snakeLogger.debug(`Get snake highscore event (${reqObj.source})`);
 
         resp({ status: 'ok', data: await this.snakeDB.getHighscore(PlayerService.getIdentifier(reqObj.source)) });
+    }
+
+    async handleSetHighscore(reqObj: PromiseRequest<number>, resp: PromiseEventResp<void>): Promise<void> {
+        snakeLogger.debug(`Set snake highscore event (${reqObj.source})`);
+        const result = await this.snakeDB.updateHighscore(PlayerService.getIdentifier(reqObj.source), reqObj.data);
+        if (result === 0) {
+            await this.snakeDB.insertHighscore(PlayerService.getIdentifier(reqObj.source), reqObj.data);
+        }
+        resp({ status: 'ok' });
+        emitNet(SnakeEvents.UPDATE_HIGHSCORE, reqObj.source, undefined);
     }
 }
 

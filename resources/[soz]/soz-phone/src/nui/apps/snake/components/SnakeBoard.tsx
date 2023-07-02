@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { useConfig } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
+import { useSnakeAPI } from '../hooks/useSnakeAPI';
 
 interface IUseInterval {
     (callback: () => void, interval: number): void;
@@ -21,8 +22,10 @@ const SnakeBoard = () => {
         }
     }
 
+    const { updateHighscore } = useSnakeAPI();
+
     const handleNewHighScore = async (newHighscore: number) => {
-        setHighScore(newHighscore);
+        updateHighscore(newHighscore);
     };
 
     const randomPosition = () => {
@@ -35,7 +38,7 @@ const SnakeBoard = () => {
     const [direction, setDirection] = useState('right');
     const [nextDirection, setNextDirection] = useState('right'); // buffer to avoid some problems with half-turn
     const [food, setFood] = useState(randomPosition);
-    const [highScore, setHighScore] = useState(useSelector((state: RootState) => state.appSnake));
+    const highScore = useSelector((state: RootState) => state.appSnake);
     const [isMoving, setMoving] = useState(false);
 
     const changeDirectionWithKeys = (e: KeyboardEvent) => {

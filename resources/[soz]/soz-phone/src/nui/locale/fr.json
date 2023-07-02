@@ -197,6 +197,11 @@
                 "TITLE": "Appel de société"
             }
         },
+        "SNAKE": {
+          "FEEDBACK": {
+            "UPDATE_HIGHSCORE_FAILED": "Erreur lors de la mise à jour du high score!"
+          }
+        },
         "WEATHER": {
             "ALERT": {
                 "TITLE": "Alerte tempête",
