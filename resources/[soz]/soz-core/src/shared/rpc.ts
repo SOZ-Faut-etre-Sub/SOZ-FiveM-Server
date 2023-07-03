@@ -104,6 +104,9 @@ export enum RpcServerEvent {
 
     RACKET_COOP_CHECK_CRIMI = 'soz-core:server:racket:check-crimi',
     RACKET_LOCK_PED = 'soz-core:server:racket:lock-ped',
+
+    PROP_GET_COLLECTION_DATA = 'soz-core:server:prop:get-collection-names',
+    PROP_GET_COLLECTION_CONTENT = 'soz-core:server:prop:get-collection',
 }
 
 export enum RpcClientEvent {

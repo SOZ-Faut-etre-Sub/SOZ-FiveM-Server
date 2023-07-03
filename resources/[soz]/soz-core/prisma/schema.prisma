@@ -173,6 +173,15 @@ model persistent_prop {
   position String  @db.LongText
 }
 
+model placed_prop {
+  id            BigInt  @id @default(autoincrement())
+  unique_id     String  @db.VarChar(255) @unique
+  model         String
+  collection    String? @db.VarChar(50)
+  position      String  @db.LongText
+  matrix        String? @db.LongText
+}
+
 model phone_calls {
   id          Int      @id @default(autoincrement())
   identifier  String?  @db.VarChar(48)

@@ -110,6 +110,16 @@ export enum ServerEvent {
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
+    // Takes array of WorldPlacedProp objects
+    PROP_REQUEST_CREATE_PROPS = 'soz-core:server:prop:request-create',
+    PROP_REQUEST_DELETE_PROPS = 'soz-core:server:prop:request-delete',
+    PROP_REQUEST_CREATE_COLLECTION = 'soz-core:server:prop:request-create-collection',
+    PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:request-delete-collection',
+    PROP_REQUEST_LOAD_PROPS = 'soz-core:server:prop:request-load',
+    PROP_REQUEST_UNLOAD_PROPS = 'soz-core:server:prop:request-unload',
+    PROP_REQUEST_LOAD_COLLECTION = 'soz-core:server:prop:request-load-collection',
+    PROP_REQUEST_UNLOAD_COLLECTION = 'soz-core:server:prop:request-unload-collection',
+
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
@@ -335,6 +345,9 @@ export enum ClientEvent {
 
     OBJECT_CREATE = 'soz-core:client:object:create',
     OBJECT_DELETE = 'soz-core:client:object:delete',
+
+    PROP_CREATE_CLIENTSIDE = 'soz-core:client:prop:create',
+    PROP_DELETE_CLIENTSIDE = 'soz-core:client:prop:delete',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
