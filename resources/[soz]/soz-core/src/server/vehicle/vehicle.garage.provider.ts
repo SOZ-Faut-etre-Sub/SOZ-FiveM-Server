@@ -641,6 +641,23 @@ export class VehicleGarageProvider {
             } else {
                 this.notifier.notify(source, 'Le véhicule a été rangé dans le garage.', 'success');
             }
+        } else {
+            this.monitor.publish(
+                'vehicle_garage_error_in',
+                {
+                    player_source: source,
+                    vehicle_plate: vehicle.ok.plate,
+                },
+                {
+                    garage: id,
+                    garage_type: garage.type,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                    state: state,
+                    delay: delay,
+                    pound_price: cost,
+                }
+            );
+            this.notifier.notify(source, '~r~ERREUR~s~ du rangement du véhicule.', 'error');
         }
     }
 
