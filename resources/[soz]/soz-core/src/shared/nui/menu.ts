@@ -1,3 +1,4 @@
+import { NuiJobEmployeeOnDuty } from '@public/shared/nui/job';
 import { PlayerPersonalMenuData } from '@public/shared/nui/player';
 
 import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
@@ -98,5 +99,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.TaxiJobMenu]: any;
     [MenuType.PlayerPersonal]: PlayerPersonalMenuData;
     [MenuType.LsmcJobMenu]: any;
-    [MenuType.JobOnDutyMenu]: Record<string, string[] | string>;
+    [MenuType.JobOnDutyMenu]: NuiJobEmployeeOnDuty;
 }

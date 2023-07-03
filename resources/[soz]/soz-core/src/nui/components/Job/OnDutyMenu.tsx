@@ -1,9 +1,14 @@
 import { FunctionComponent } from 'react';
 
+import { NuiJobEmployeeOnDuty } from '../../../shared/nui/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { MainMenu, Menu, MenuContent, MenuItemText, MenuTitle } from '../Styleguide/Menu';
 
-export const JobOnDutyMenu: FunctionComponent<any> = ({ data }) => {
+type MenuJobOnDutyProps = {
+    data: NuiJobEmployeeOnDuty;
+};
+
+export const JobOnDutyMenu: FunctionComponent<MenuJobOnDutyProps> = ({ data }) => {
     const banner = `https://nui-img/soz/menu_job_${data.job}`;
 
     if (!data.state.length) {
