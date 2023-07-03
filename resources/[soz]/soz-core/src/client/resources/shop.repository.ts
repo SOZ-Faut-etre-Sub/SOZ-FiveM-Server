@@ -1,6 +1,7 @@
 import { ProperTorsos } from '@public/config/shops';
 import { ClothingShopRepositoryData } from '@public/server/repository/cloth.shop.repository';
 import { Component, GlovesItem } from '@public/shared/cloth';
+import { PlayerPedHash } from '@public/shared/player';
 import { ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 
 import { Injectable } from '../../core/decorators/injectable';
@@ -25,7 +26,7 @@ export class ClothingShopRepository {
                                     Drawable: ProperTorsos[item.modelHash][item.components[Component.Tops].Drawable],
                                     Texture: 0,
                                 };
-                                if (item.modelHash == -1667301416) {
+                                if (item.modelHash == PlayerPedHash.Female) {
                                     item.components[Component.Undershirt] = {
                                         Drawable: 14, // This is without undershirt (for women)
                                         Texture: 0,
@@ -82,10 +83,7 @@ export class ClothingShopRepository {
 
     public async getGloves(id: number): Promise<GlovesItem> {
         if (!this.repoData) {
-            this.repoData = await emitRpc<ClothingShopRepositoryData>(
-                RpcServerEvent.REPOSITORY_GET_DATA,
-                'clothingShop'
-            );
+            await this.load();
         }
         return this.repoData.gloves[id];
     }

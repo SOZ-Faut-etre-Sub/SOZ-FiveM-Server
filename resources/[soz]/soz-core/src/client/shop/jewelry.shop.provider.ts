@@ -1,10 +1,11 @@
-import { FemaleJewelryItems, MaleJewelryItems } from '@public/config/jewelry';
+import { FemaleJewelryItems, MaleJewelryItems, PositionInJewelryShop } from '@public/config/jewelry';
 import { ShopBrand } from '@public/config/shops';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
+import { PlayerPedHash } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { JewelryShopItem } from '@public/shared/shop';
 
@@ -14,6 +15,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
 import { ClothingShopRepository } from '../resources/shop.repository';
+import { ShopService } from './shop.service';
 
 @Provider()
 export class JewelryShopProvider {
@@ -32,12 +34,15 @@ export class JewelryShopProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
+    @Inject(ShopService)
+    private shopService: ShopService;
+
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
     public async openShop() {
         const modelHash = GetEntityModel(PlayerPedId());
-        const shop_content = modelHash == 1885233650 ? MaleJewelryItems : FemaleJewelryItems;
+        const shop_content = modelHash == PlayerPedHash.Male ? MaleJewelryItems : FemaleJewelryItems;
 
         await this.setupShop();
 
@@ -46,12 +51,19 @@ export class JewelryShopProvider {
 
     public async setupShop() {
         const ped = PlayerPedId();
-        SetEntityHeading(ped, 199.156);
+        SetEntityHeading(ped, PositionInJewelryShop.PLAYER_HEADING);
         FreezeEntityPosition(ped, true);
 
         // Setup cam
         const [x, y, z] = GetEntityCoords(ped);
-        await this.cameraService.setupCamera([x, y - 0.5, z + 0.7] as Vector3, [x, y, z + 0.6] as Vector3);
+        await this.cameraService.setupCamera(
+            [
+                x + PositionInJewelryShop.CAMERA_OFFSET_X,
+                y + PositionInJewelryShop.CAMERA_OFFSET_Y,
+                z + PositionInJewelryShop.CAMERA_OFFSET_Z,
+            ] as Vector3,
+            [x, y, z + PositionInJewelryShop.CAMERA_TARGET_Z] as Vector3
+        );
 
         // Play idle animation
         const animDict = 'anim@heists@heist_corona@team_idles@male_c';
@@ -59,12 +71,6 @@ export class JewelryShopProvider {
 
         ClearPedTasksImmediately(ped);
         TaskPlayAnim(ped, animDict, 'idle', 1.0, 1.0, -1, 1, 1, false, false, false);
-    }
-
-    public async clearAllAnimations() {
-        const ped = PlayerPedId();
-        ClearPedTasks(ped);
-        this.resourceLoader.unloadAnimationDictionary('anim@heists@heist_corona@team_idles@male_c');
     }
 
     @OnNuiEvent(NuiEvent.JewelryShopToggleCamera)
@@ -106,7 +112,7 @@ export class JewelryShopProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         await this.cameraService.deleteCamera();
-        await this.clearAllAnimations();
+        await this.shopService.clearAllAnimations();
         FreezeEntityPosition(PlayerPedId(), false);
     }
 }
