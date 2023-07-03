@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
 import axios from 'axios';
+import { Counter, Histogram } from 'prom-client';
 
 import { LokiEvent } from '../../shared/monitor';
 import { PlayerService } from '../player/player.service';
@@ -46,6 +47,28 @@ export class Monitor {
 
     private lokiEndpoint: string = GetConvar('log_handler_loki', '');
 
+    private callDurationHistogram: Histogram<string> = new Histogram({
+        name: 'soz_core_call',
+        help: 'Specific call execution histogram',
+        labelNames: ['name'],
+    });
+
+    private lokiEventSent: Counter<string> = new Counter({
+        name: 'soz_core_event_sent',
+        help: 'Number of loki event sents',
+    });
+
+    public async doCall<T>(name: string, callback: () => T | Promise<T>): Promise<T> {
+        const end = this.callDurationHistogram.startTimer({
+            name,
+        });
+        const result = await callback();
+
+        end();
+
+        return result;
+    }
+
     public async flush() {
         if (this.lokiEndpoint === '') {
             return;
@@ -60,18 +83,27 @@ export class Monitor {
             buffer.push(...logBuffer);
         }
 
+        this.lokiEventSent.inc(buffer.length);
+
         if (buffer.length === 0) {
             return;
         }
 
-        const response = await axios.post(
-            this.lokiEndpoint,
-            {
+        const json = await this.doCall('monitor_flush_json', () =>
+            JSON.stringify({
                 streams: buffer,
-            },
-            {
-                validateStatus: () => true,
-            }
+            })
+        );
+
+        const response = await this.doCall(
+            'monitor_flush_http_call',
+            async () =>
+                await axios.post(this.lokiEndpoint, json, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    validateStatus: () => true,
+                })
         );
 
         if (response.status !== 204) {

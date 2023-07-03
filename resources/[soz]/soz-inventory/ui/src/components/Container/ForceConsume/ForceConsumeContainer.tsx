@@ -37,12 +37,23 @@ export const ForceConsumeContainer = () => {
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
         if (event.data.action === "openForceConsume") {
-            setPlayerInventory(event.data.playerInventory.items
-                .filter((i: InventoryItem) => i !== null)
-                .map((i: InventoryItem) => ({ ...i, disabled: (i.type != 'food' && i.type != 'drink' && i.type != 'cocktail' && i.type != 'liquor') }))
-            );
-            targetId = event.data.targetId;
-            setDisplay(true);
+
+            try {
+                if (typeof event.data.playerInventory === "object") {
+                    event.data.playerInventory.items = Object.values(event.data.playerInventory.items);
+                }
+            
+                setPlayerInventory(event.data.playerInventory.items
+                    .filter((i: InventoryItem) => i !== null)
+                    .map((i: InventoryItem) => ({ ...i, disabled: (i.type != 'food' && i.type != 'drink' && i.type != 'cocktail' && i.type != 'liquor') }))
+                );
+                targetId = event.data.targetId;
+                setDisplay(true);
+            } catch (e: any) {
+                console.error(e, event.data.playerInventory, JSON.stringify(event.data.playerInventory));
+                closeNUI(() => closeMenu());
+            }
+
         }
     }, [setDisplay, setPlayerInventory]);
 

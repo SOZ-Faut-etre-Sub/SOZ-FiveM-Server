@@ -24,9 +24,6 @@ export class WeatherProvider {
     @Inject(Pollution)
     private pollution: Pollution;
 
-    @Inject(MonitorService)
-    private monitorService: MonitorService;
-
     @Inject('Store')
     private store: Store;
 

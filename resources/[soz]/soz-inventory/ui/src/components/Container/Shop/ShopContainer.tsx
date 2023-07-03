@@ -1,17 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { InventoryItem, SozInventoryModel } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
 import style from './ShopContainer.module.css';
 import { ShopContainerSlots } from '../ShopContainerSlots';
 import { closeNUI, askForAmount } from '../../../hooks/nui';
 import { clsx } from 'clsx';
-import playerBanner from '/banner/player.jpg';
 import { DndContext, DragEndEvent, rectIntersection, } from '@dnd-kit/core';
-import { getKeyModifier } from '../../../hooks/getKeyModifier'
 import { useShopRow } from '../../../hooks/useShopRow';
-import { object } from 'prop-types';
 import { CartContainerSlots } from '../CartContainerSlots';
-import { dragged } from 'sortablejs';
 import { ShopItem } from '../../../types/shop';
 
 export const ShopContainer = () => {
@@ -19,6 +14,7 @@ export const ShopContainer = () => {
     const [cartAmount, setCartAmount] = useState<number>(0);
     const [shopContent, setShopContent] = useState<ShopItem[] | null>();
     const [cartContent, setCartContent] = useState<ShopItem[]>([]);
+    const [shopHeaderTexture, setShopHeaderTexture] = useState<string>('')
 
     const closeMenu = useCallback(() => {
         setDisplay(false)
@@ -27,18 +23,19 @@ export const ShopContainer = () => {
         setCartAmount(0);
     }, [setShopContent, setCartContent, setCartAmount, setDisplay]);
 
-    const targetInventoryBanner = 'https://nui-img/soz/menu_shop_supermarket'
-
     const onMessageReceived = useCallback(
         (event: MessageEvent) => {
             if (event.data.action === 'openShop') {
                 if (event.data.shopContent === undefined) return;
                 try {
                     setShopContent(event.data.shopContent);
+                    setShopHeaderTexture(event.data.shopHeaderTexture)
                     setDisplay(true);
                 } catch (e: any) {
                     closeNUI(() => { closeMenu(); })
                 }
+            } else if (event.data.action === 'openPlayerInventory' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+                closeMenu();
             }
         },
         [closeMenu, setShopContent],
@@ -135,7 +132,7 @@ export const ShopContainer = () => {
                         return;
                     }
 
-                    draggedItem.amount = amountInt
+                    draggedItem.amount = amountInt;
                     let newCartAmount = cartAmount + (draggedItem.amount * draggedItem.price)
                     let updatedCart: ShopItem[] = []
 
@@ -143,13 +140,13 @@ export const ShopContainer = () => {
                         updatedCart = cartContent.map(item => {
                             {
                                 if (item.name === draggedItem.name) {
-                                    return { ...item, amount: item.amount + parseInt(amount) }
+                                    return { ...item, amount: item.amount + draggedItem.amount }
                                 }
                                 return item
                             }
                         })
 
-                        newCartAmount = calcCartPrice(cartContent) + draggedItem.price * amount
+                        newCartAmount = calcCartPrice(cartContent) + draggedItem.price * draggedItem.amount
                     }
 
                     setCartContent(existingItem ? updatedCart : cartContent => [...cartContent, draggedItem])
@@ -195,7 +192,7 @@ export const ShopContainer = () => {
                     <div className={clsx(style.StorageContainer)}>
                         <ContainerWrapper
                             display={true}
-                            banner={targetInventoryBanner}
+                            banner={`https://nui-img/soz/${shopHeaderTexture}`}
                             maxWeight={-1}
                         >
                             <ShopContainerSlots

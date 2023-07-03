@@ -17,9 +17,7 @@ import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
 import { LsmcJobMenu } from '../LSMC/LsmcJobMenu';
-import { MenuLsmcPharmacy } from '../LSMC/MenuLsmcPharmacy';
 import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
-import { BossShopMenu } from '../Shop/BossShopMenu';
 import { EasterShopMenu } from '../Shop/EasterShopMenu';
 import { MaskShopMenu } from '../Shop/MaskShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
@@ -153,7 +151,6 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.StonkJobMenu}/*`} element={<StonkJobMenu data={menuData} />} />
             <Route path={`/${MenuType.FoodJobMenu}/*`} element={<FoodJobMenu data={menuData} />} />
             <Route path={`/${MenuType.MaskShop}/*`} element={<MaskShopMenu catalog={menuData} />} />
-            <Route path={`/${MenuType.BossShop}/*`} element={<BossShopMenu data={menuData} />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />
             <Route path={`/${MenuType.GunSmith}/*`} element={<MenuGunSmith data={menuData} />} />
@@ -165,14 +162,12 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.OilSetStationPrice}/*`} element={<MenuOilSetPrice data={menuData} />} />
             <Route path={`/${MenuType.DrivingSchool}/*`} element={<DrivingSchoolMenu data={menuData} />} />
             <Route path={`/${MenuType.HousingUpgrades}/*`} element={<HousingUpgradesMenu data={menuData} />} />
-            <Route path={`/${MenuType.LsmcPharmacy}/*`} element={<MenuLsmcPharmacy />} />
             <Route path={`/${MenuType.LsmcJobMenu}/*`} element={<LsmcJobMenu data={menuData} />} />
             <Route path={`/${MenuType.MandatoryJobMenu}/*`} element={<MandatoryJobMenu data={menuData} />} />
             <Route path={`/${MenuType.IllegalShop}/*`} element={<MenuIllegalShop data={menuData} />} />
             <Route path={`/${MenuType.EasterShop}/*`} element={<EasterShopMenu data={menuData} />} />
             <Route path={`/${MenuType.TaxiJobMenu}/*`} element={<TaxiJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PlayerPersonal}/*`} element={<MenuPlayerPersonal data={menuData} />} />
-
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route path={`/${MenuType.JobUpw}/*`} element={<MenuUpw data={menuData} />} />
             <Route path={`/${MenuType.UpwOrderMenu}/*`} element={<UpwOrderMenu data={menuData} />} />
