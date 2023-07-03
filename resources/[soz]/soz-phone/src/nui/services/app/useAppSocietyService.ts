@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { SocietyEvents, SocietyMessage } from '../../../../typings/society';
 import { useMessageNotifications } from '../../apps/society-messages/hooks/useMessageNotifications';
 import { useConfig, useVisibility } from '../../hooks/usePhone';
+import { usePhoneSocietyNumber } from '../../hooks/useSimCard';
 import { RootState, store } from '../../store';
 
 export const useAppSocietyService = () => {
@@ -20,6 +21,7 @@ export const useAppSocietyService = () => {
     const settings = useSelector((state: RootState) => state.phone.config);
     const emergency = useSelector((state: RootState) => state.emergency.emergency);
     const available = useSelector((state: RootState) => state.phone.available);
+    const societyNumber = usePhoneSocietyNumber();
 
     useEffect(() => {
         store.dispatch.appSociety.loadSocietyMessages();
@@ -51,7 +53,7 @@ export const useAppSocietyService = () => {
             return;
         }
 
-        if (!message.muted && config.dynamicAlert === false) {
+        if (!message.muted && (config.dynamicAlert === false || !policeNumbers.includes(societyNumber))) {
             setNotification({ message: message.message });
         }
     };
