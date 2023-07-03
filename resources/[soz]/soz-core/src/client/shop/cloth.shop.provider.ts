@@ -17,6 +17,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
 import { ClothingShopRepository } from '../resources/shop.repository';
+import { ShopService } from './shop.service';
 
 @Provider()
 export class ClothingShopProvider {
@@ -43,6 +44,9 @@ export class ClothingShopProvider {
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    @Inject(ShopService)
+    private shopService: ShopService;
 
     private currentShop: string = undefined;
 
@@ -90,12 +94,6 @@ export class ClothingShopProvider {
 
         ClearPedTasksImmediately(ped);
         TaskPlayAnim(ped, animDict, 'idle', 1.0, 1.0, -1, 1, 1, false, false, false);
-    }
-
-    public async clearAllAnimations() {
-        const ped = PlayerPedId();
-        ClearPedTasks(ped);
-        this.resourceLoader.unloadAnimationDictionary('anim@heists@heist_corona@team_idles@male_c');
     }
 
     @OnNuiEvent(NuiEvent.ClothShopToggleCamera)
@@ -215,7 +213,7 @@ export class ClothingShopProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         await this.cameraService.deleteCamera();
-        await this.clearAllAnimations();
+        await this.shopService.clearAllAnimations();
         this.currentShop = undefined;
         FreezeEntityPosition(PlayerPedId(), false);
     }

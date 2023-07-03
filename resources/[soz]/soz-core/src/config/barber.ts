@@ -1,7 +1,16 @@
+import { PlayerPedHash } from '@public/shared/player';
 import { BarberShopContent } from '@public/shared/shop';
 
+export const PositionInBarberShop = {
+    PLAYER_HEADING: 199.156,
+    CAMERA_OFFSET_X: 0.0,
+    CAMERA_OFFSET_Y: -0.5,
+    CAMERA_OFFSET_Z: 0.7,
+    CAMERA_TARGET_Z: 0.7,
+};
+
 export const BarberShopItems: BarberShopContent = {
-    [1885233650]: [
+    [PlayerPedHash.Male]: [
         {
             price: 30,
             category: 'Hair',
@@ -33,7 +42,7 @@ export const BarberShopItems: BarberShopContent = {
             items: undefined,
         },
     ],
-    [-1667301416]: [
+    [PlayerPedHash.Female]: [
         {
             price: 30,
             category: 'Hair',
