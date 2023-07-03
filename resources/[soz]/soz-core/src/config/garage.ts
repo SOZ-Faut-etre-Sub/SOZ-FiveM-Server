@@ -1968,4 +1968,33 @@ export const GarageList: Record<string, Garage> = {
         }),
         parkingPlaces: [],
     },
+    cayo_air: {
+        name: 'Cayo Perico Air Parking',
+        legacyId: 'cayo_air',
+        type: GarageType.Public,
+        category: GarageCategory.Air,
+        zone: new BoxZone([4458.52, -4463.34, 4.2], 1, 0.8, {
+            heading: 209.86,
+            minZ: 35.6,
+            maxZ: 38.6,
+        }),
+        parkingPlaces: [
+            new BoxZone([4470.46, -4461.85, 4.23], 15.8, 15.8, {
+                heading: 20.0,
+                minZ: 3.23,
+                maxZ: 6.23,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([4487.8, -4455.43, 4.22], 15.8, 15.8, {
+                heading: 290.0,
+                minZ: 3.22,
+                maxZ: 6.22,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
 };

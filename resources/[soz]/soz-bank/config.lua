@@ -188,6 +188,7 @@ Config.BankPedLocations = {
     ["fleeca5"] = vector4(-2961.13, 482.98, 15.7, 85.95),
     ["fleeca6"] = vector4(1175.01, 2708.3, 38.09, 176.68),
     ["fleeca7"] = vector4(-112.26, 6471.04, 31.63, 132.8),
+    ["fleeca8"] = vector4(5057.64, -5193.98, 2.48, 99.10),
 }
 
 Config.BankAtmDefault = {
