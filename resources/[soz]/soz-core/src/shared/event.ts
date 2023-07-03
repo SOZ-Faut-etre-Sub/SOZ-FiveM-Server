@@ -647,4 +647,9 @@ export enum NuiEvent {
     TaxiSetMission = 'soz-core:client:taxi:set-mission',
     TaxiSetHorodateur = 'soz-core:client:taxi:set-horodateur',
     TaxiDisplayHorodateur = 'soz-core:client:taxi:display-horodateur',
+
+    SelectPlacementProp = 'soz-core:client:placement:select-prop',
+    SetPlacementProp = 'soz-core:client:placement:set-prop',
+    LeavePlacementMode = 'soz-core:client:placement:leave-mode',
+    PropPlacementReset = 'soz-core:client:placement:reset',
 }

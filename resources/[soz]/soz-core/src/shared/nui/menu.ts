@@ -11,6 +11,7 @@ import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
 import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
 import { WeaponsMenuData } from '../weapons/weapon';
+import { PropPlacementMenuData } from './prop_placement';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -63,6 +64,7 @@ export enum MenuType {
     EasterShop = 'easter_shop',
     TaxiJobMenu = 'taxi_job',
     PlayerPersonal = 'player_personal',
+    PropPlacementMenu = 'prop_placement_menu',
     LsmcJobMenu = 'lsmc_job_menu',
 }
 
@@ -97,4 +99,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.TaxiJobMenu]: any;
     [MenuType.PlayerPersonal]: PlayerPersonalMenuData;
     [MenuType.LsmcJobMenu]: any;
+    [MenuType.PropPlacementMenu]: PropPlacementMenuData;
 }
