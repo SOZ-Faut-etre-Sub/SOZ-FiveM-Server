@@ -1,11 +1,11 @@
-import { BarberShopItems } from '@public/config/barber';
+import { BarberShopItems, PositionInBarberShop } from '@public/config/barber';
 import { ShopBrand } from '@public/config/shops';
 import { Once, OnceStep, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
-import { PlayerData, Skin } from '@public/shared/player';
+import { PlayerData, PlayerPedHash, Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { BarberConfiguration, BarberShopColors, BarberShopItem, BarberShopLabels } from '@public/shared/shop';
 
@@ -13,6 +13,7 @@ import { CameraService } from '../camera';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
+import { ShopService } from './shop.service';
 
 @Provider()
 export class BarberShopProvider {
@@ -27,6 +28,9 @@ export class BarberShopProvider {
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    @Inject(ShopService)
+    private shopService: ShopService;
 
     private barberShopLabels: BarberShopLabels;
     private barberShopColors: BarberShopColors;
@@ -66,13 +70,13 @@ export class BarberShopProvider {
             });
         }
 
-        this.barberShopContent[1885233650][0].items = this.barberShopLabels.HairMale;
-        this.barberShopContent[1885233650][1].items = this.barberShopLabels.BeardMale;
-        this.barberShopContent[1885233650][2].items = this.barberShopLabels.Makeup;
-        this.barberShopContent[-1667301416][0].items = this.barberShopLabels.HairFemale;
-        this.barberShopContent[-1667301416][1].items = this.barberShopLabels.Blush;
-        this.barberShopContent[-1667301416][2].items = this.barberShopLabels.Lipstick;
-        this.barberShopContent[-1667301416][3].items = this.barberShopLabels.Makeup;
+        this.barberShopContent[PlayerPedHash.Male][0].items = this.barberShopLabels.HairMale;
+        this.barberShopContent[PlayerPedHash.Male][1].items = this.barberShopLabels.BeardMale;
+        this.barberShopContent[PlayerPedHash.Male][2].items = this.barberShopLabels.Makeup;
+        this.barberShopContent[PlayerPedHash.Female][0].items = this.barberShopLabels.HairFemale;
+        this.barberShopContent[PlayerPedHash.Female][1].items = this.barberShopLabels.Blush;
+        this.barberShopContent[PlayerPedHash.Female][2].items = this.barberShopLabels.Lipstick;
+        this.barberShopContent[PlayerPedHash.Female][3].items = this.barberShopLabels.Makeup;
     }
 
     public async openShop() {
@@ -121,12 +125,19 @@ export class BarberShopProvider {
 
     public async setupShop() {
         const ped = PlayerPedId();
-        SetEntityHeading(ped, 199.156);
+        SetEntityHeading(ped, PositionInBarberShop.PLAYER_HEADING);
         FreezeEntityPosition(ped, true);
 
         // Setup cam
         const [x, y, z] = GetEntityCoords(ped);
-        await this.cameraService.setupCamera([x, y - 0.5, z + 0.7] as Vector3, [x, y, z + 0.7] as Vector3);
+        await this.cameraService.setupCamera(
+            [
+                x + PositionInBarberShop.CAMERA_OFFSET_X,
+                y + PositionInBarberShop.CAMERA_OFFSET_Y,
+                z + PositionInBarberShop.CAMERA_OFFSET_Z,
+            ] as Vector3,
+            [x, y, z + PositionInBarberShop.CAMERA_TARGET_Z] as Vector3
+        );
 
         // Play idle animation
         const animDict = 'anim@heists@heist_corona@team_idles@male_c';
@@ -136,12 +147,6 @@ export class BarberShopProvider {
         TaskPlayAnim(ped, animDict, 'idle', 1.0, 1.0, -1, 1, 1, false, false, false);
     }
 
-    public async clearAllAnimations() {
-        const ped = PlayerPedId();
-        ClearPedTasks(ped);
-        this.resourceLoader.unloadAnimationDictionary('anim@heists@heist_corona@team_idles@male_c');
-    }
-
     @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
     public async onMenuClose({ menuType }) {
         if (menuType !== MenuType.BarberShop) {
@@ -149,7 +154,7 @@ export class BarberShopProvider {
         }
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         await this.cameraService.deleteCamera();
-        await this.clearAllAnimations();
+        await this.shopService.clearAllAnimations();
         FreezeEntityPosition(PlayerPedId(), false);
     }
 }

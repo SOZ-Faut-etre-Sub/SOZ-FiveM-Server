@@ -1,5 +1,13 @@
 import { ShopJewelryContent } from '@public/shared/shop';
 
+export const PositionInJewelryShop = {
+    PLAYER_HEADING: 199.156,
+    CAMERA_OFFSET_X: 0.0,
+    CAMERA_OFFSET_Y: -0.5,
+    CAMERA_OFFSET_Z: 0.7,
+    CAMERA_TARGET_Z: 0.6,
+};
+
 export const FemaleJewelryItems: ShopJewelryContent = {
     Oreilles: {
         categoryId: 1,

@@ -7,7 +7,7 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
-import { Skin } from '@public/shared/player';
+import { PlayerPedHash, Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
 import { TattooShopItem } from '@public/shared/shop';
@@ -51,7 +51,7 @@ export class TattooShopProvider {
     public async openShop(brand: ShopBrand, shop: string) {
         const categories = ShopTattooConfig;
         const ped = PlayerPedId();
-        const overlayField = GetEntityModel(ped) === GetHashKey('mp_m_freemode_01') ? 'HashNameMale' : 'HashNameFemale';
+        const overlayField = GetEntityModel(ped) === PlayerPedHash.Male ? 'HashNameMale' : 'HashNameFemale';
         const products = ShopTattooProducts.filter(
             product => product[overlayField] != null && product[overlayField] != ''
         ).map(
