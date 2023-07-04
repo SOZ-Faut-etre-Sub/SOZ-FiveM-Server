@@ -67,6 +67,13 @@ export class AnimationService {
         ClearPedTasks(ped);
     }
 
+    public async clearShopAnimations(ped: number) {
+        ClearPedTasks(ped);
+        ClearPedSecondaryTask(ped);
+        RemoveAnimDict('anim@heists@heist_corona@team_idles@male_c');
+        RemoveAnimDict('anim@heists@heist_corona@team_idles@female_a');
+    }
+
     public toggleAnimation(animation: Animation, options?: Partial<PlayOptions>) {
         const id = animation.base.dictionary + animation.base.name;
 

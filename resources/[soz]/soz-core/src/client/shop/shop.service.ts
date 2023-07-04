@@ -30,11 +30,4 @@ export class ShopService {
     public GetShopPedEntity(shopid: string): ShopPedEntity {
         return this.shopProvider.getShopPedEntity(shopid);
     }
-
-    public async clearAllAnimations() {
-        const ped = PlayerPedId();
-        ClearPedTasks(ped);
-        this.resourceLoader.unloadAnimationDictionary('anim@heists@heist_corona@team_idles@male_c');
-        this.resourceLoader.unloadAnimationDictionary('anim@heists@heist_corona@team_idles@female_a');
-    }
 }

@@ -9,22 +9,13 @@ import { PlayerPedHash } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { JewelryShopItem } from '@public/shared/shop';
 
+import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
-import { ClothingService } from '../clothing/clothing.service';
 import { NuiMenu } from '../nui/nui.menu';
-import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
-import { ClothingShopRepository } from '../resources/shop.repository';
-import { ShopService } from './shop.service';
 
 @Provider()
 export class JewelryShopProvider {
-    @Inject(ClothingShopRepository)
-    private clothingShopRepository: ClothingShopRepository;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
@@ -34,11 +25,8 @@ export class JewelryShopProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
-    @Inject(ShopService)
-    private shopService: ShopService;
-
-    @Inject(ClothingService)
-    private clothingService: ClothingService;
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     public async openShop() {
         const modelHash = GetEntityModel(PlayerPedId());
@@ -112,7 +100,7 @@ export class JewelryShopProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         await this.cameraService.deleteCamera();
-        await this.shopService.clearAllAnimations();
+        await this.animationService.clearShopAnimations(PlayerPedId());
         FreezeEntityPosition(PlayerPedId(), false);
     }
 }
