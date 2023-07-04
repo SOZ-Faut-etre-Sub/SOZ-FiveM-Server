@@ -1,5 +1,6 @@
 import { BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
+import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
@@ -288,6 +289,7 @@ export class ShopProvider {
         }
     }
 
+    @Exportable('GetCurrentShop')
     public getCurrentShop(): ShopInfo {
         const entity =
             this.currentShop && this.shopsPedEntity[this.currentShop]
@@ -296,6 +298,7 @@ export class ShopProvider {
         return { shopId: this.currentShop, shopbrand: this.currentShopBrand, shopPedEntity: entity } as ShopInfo;
     }
 
+    @Exportable('GetShopPedEntity')
     public getShopPedEntity(shopId: string): ShopPedEntity {
         const entity = shopId && this.shopsPedEntity[shopId] ? this.shopsPedEntity[shopId].entity : 0;
         const location = shopId && this.shopsPedEntity[shopId] ? this.shopsPedEntity[shopId].location : [0, 0, 0, 0];
