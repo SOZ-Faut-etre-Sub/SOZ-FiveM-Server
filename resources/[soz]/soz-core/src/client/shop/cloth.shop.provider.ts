@@ -6,7 +6,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Component, GlovesItem } from '@public/shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
-import { Vector3 } from '@public/shared/polyzone/vector';
+import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { ClothingShopItem } from '@public/shared/shop';
 
 import { AnimationService } from '../animation/animation.service';
@@ -77,8 +77,13 @@ export class ClothingShopProvider {
     public async setupShop(skipIntro = false) {
         const ped = PlayerPedId();
         const [x, y, z, w] = ShopsConfig[this.currentShop].positionInShop;
+        // binco4 and binco7 and binco2 are bugged on walkToCoordsAvoidObstacles. Use waltkToCoords instead
         if (!skipIntro) {
-            await this.animationService.walkToCoordsAvoidObstacles([x, y, z] as Vector3, 7000);
+            if (this.currentShop == 'binco4' || this.currentShop == 'binco7' || this.currentShop == 'binco2') {
+                await this.animationService.walkToCoords([x, y, z, w] as Vector4, 3000);
+            } else {
+                await this.animationService.walkToCoordsAvoidObstacles([x, y, z] as Vector3, 7000);
+            }
         }
         // TP and setup cam
         SetPedCoordsKeepVehicle(ped, x, y, z - 1);
