@@ -1,6 +1,6 @@
 import { ShopBrand } from '@public/config/shops';
 
-import { InventoryItemMetadata, Item, ItemType } from '../item';
+import { InventoryItem, Item } from '../item';
 import { PlayerLicenceType } from '../player';
 import { ShopProduct } from '../shop';
 
@@ -12,21 +12,7 @@ export type SuperetteItem = Item & {
     slot?: number;
 };
 
-export type ShopItem = {
-    name: string;
-    label: string;
-    description: string;
-    weight: number;
-    slot: number;
-    useable: boolean;
-    unique: boolean;
-    type: ItemType;
-    amount: number;
-    metadata?: InventoryItemMetadata;
-    shouldClose?: boolean;
-    illustrator?: Record<string, string> | string;
-    disabled?: boolean; // added by inventory on the fly
-    shortcut?: string | null; // added by inventory on the fly
+export type CartElement = InventoryItem & {
     price: number;
 };
 

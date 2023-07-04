@@ -1029,8 +1029,8 @@ export const ProperTorsos = {
         [416]: 6,
         [417]: 15,
         [418]: 0,
-        [419]: 15,
-        [420]: 15,
+        [419]: 0, // Needs an undershirt
+        [420]: 0, // Needs an undershirt
         [421]: 14,
         [422]: 14,
         [423]: 1,
