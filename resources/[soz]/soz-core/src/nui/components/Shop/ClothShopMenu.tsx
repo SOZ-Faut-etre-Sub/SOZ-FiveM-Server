@@ -60,6 +60,19 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
         setPlayerData(playerData);
     });
 
+    const CategoriesNotEmpty = Object.values(catalog.shop_content.categories).filter(
+        category =>
+            // Check if the category is not empty
+            (Object.values(catalog.shop_categories[category.id].content).length > 0 ||
+                Object.values(catalog.shop_categories).filter(childCat => childCat.parentId == category.id).length >
+                    0) &&
+            // Check if the category is not an undershirt or if it is, check if the player can where undershirts with his top
+            (category.id != ClothingCategoryID.UNDERSHIRTS ||
+                (playerData.cloth_config.BaseClothSet.TopID != null &&
+                    catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] != null &&
+                    catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0))
+    );
+
     return (
         <Menu type={MenuType.ClothShop}>
             <MainMenu>
@@ -72,67 +85,53 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                     >
                         Libérer la caméra
                     </MenuItemCheckbox>
-                    {Object.values(catalog.shop_content.categories)
-                        .filter(
-                            category =>
-                                (Object.values(catalog.shop_categories[category.id].content).length > 0 ||
-                                    Object.values(catalog.shop_categories).filter(
-                                        childCat => childCat.parentId == category.id
-                                    ).length > 0) &&
-                                (category.id != ClothingCategoryID.UNDERSHIRTS ||
-                                    (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                        catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] != null &&
-                                        catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0))
-                        )
-                        .map(category => (
-                            <MenuItemButton
-                                key={category.id}
-                                onConfirm={async () => {
-                                    selectCategory(category.id);
-                                }}
-                            >
-                                {category.name}
-                            </MenuItemButton>
-                        ))}
+                    {CategoriesNotEmpty.map(category => (
+                        <MenuItemButton
+                            key={category.id}
+                            onConfirm={async () => {
+                                selectCategory(category.id);
+                            }}
+                        >
+                            {category.name}
+                        </MenuItemButton>
+                    ))}
                 </MenuContent>
             </MainMenu>
             {Object.values(catalog.shop_categories).map(cat => {
+                // For each category, filter its subcategories
+                const ChildrenCatehoriesNotEmpty = Object.values(catalog.shop_categories).filter(
+                    childCat =>
+                        // is child
+                        childCat.parentId == cat.id &&
+                        // has sub category
+                        (Object.values(catalog.shop_categories).filter(
+                            childchildCat => childchildCat.parentId == childCat.id
+                        ).length > 0 || // or has items
+                            Object.values(childCat.content).filter(
+                                product =>
+                                    !product[0].undershirtType ||
+                                    (playerData.cloth_config.BaseClothSet.TopID != null &&
+                                        catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                                        catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].includes(
+                                            product[0].undershirtType
+                                        ))
+                            ).length > 0)
+                );
                 return (
                     <SubMenu key={cat.id} id={String(cat.id)}>
                         <MenuTitle banner={banner}>{cat.name}</MenuTitle>
                         <MenuContent>
-                            {Object.values(catalog.shop_categories)
-                                .filter(
-                                    childCat =>
-                                        // is child
-                                        childCat.parentId == cat.id &&
-                                        // has sub category
-                                        (Object.values(catalog.shop_categories).filter(
-                                            childchildCat => childchildCat.parentId == childCat.id
-                                        ).length > 0 || // or has items
-                                            Object.values(childCat.content).filter(
-                                                product =>
-                                                    !product[0].undershirtType ||
-                                                    (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                                        catalog.under_types[
-                                                            playerData.cloth_config.BaseClothSet.TopID
-                                                        ] &&
-                                                        catalog.under_types[
-                                                            playerData.cloth_config.BaseClothSet.TopID
-                                                        ].includes(product[0].undershirtType))
-                                            ).length > 0)
-                                )
-                                .map(childCat => (
-                                    <MenuItemButton
-                                        key={childCat.id}
-                                        onConfirm={async () => {
-                                            selectCategory(childCat.id);
-                                            fetchNui(NuiEvent.ClothingShopBackspace);
-                                        }}
-                                    >
-                                        {childCat.name}
-                                    </MenuItemButton>
-                                ))}
+                            {ChildrenCatehoriesNotEmpty.map(childCat => (
+                                <MenuItemButton
+                                    key={childCat.id}
+                                    onConfirm={async () => {
+                                        selectCategory(childCat.id);
+                                        fetchNui(NuiEvent.ClothingShopBackspace);
+                                    }}
+                                >
+                                    {childCat.name}
+                                </MenuItemButton>
+                            ))}
                             {Object.entries(cat.content)
                                 .filter(
                                     ([, items]) =>

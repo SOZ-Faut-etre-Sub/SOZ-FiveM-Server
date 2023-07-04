@@ -1,6 +1,5 @@
 import { ShopBrand, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { Component, OutfitItem, Prop } from '@public/shared/cloth';
-import { InventoryItemMetadata, ItemType } from '@public/shared/item';
 import { Skin, TenueIdToHide } from '@public/shared/player';
 import {
     BarberShopItem,
@@ -10,6 +9,7 @@ import {
     ShopProduct,
     TattooShopItem,
 } from '@public/shared/shop';
+import { CartElement } from '@public/shared/shop/superette';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -23,24 +23,6 @@ import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
 import { QBCore } from '../qbcore';
 import { ClothingShopRepository } from '../repository/cloth.shop.repository';
-
-type CartElement = {
-    name: string;
-    label: string;
-    description: string;
-    weight: number;
-    slot: number;
-    useable: boolean;
-    unique: boolean;
-    type: ItemType;
-    amount: number;
-    metadata?: InventoryItemMetadata;
-    shouldClose?: boolean;
-    illustrator?: Record<string, string> | string;
-    disabled?: boolean; // added by inventory on the fly
-    shortcut?: string | null; // added by inventory on the fly
-    price: number;
-};
 
 @Provider()
 export class ShopProvider {
