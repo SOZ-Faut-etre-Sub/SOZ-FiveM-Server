@@ -9,11 +9,11 @@ import { PlayerData, PlayerPedHash, Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { BarberConfiguration, BarberShopColors, BarberShopItem, BarberShopLabels } from '@public/shared/shop';
 
+import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
-import { ShopService } from './shop.service';
 
 @Provider()
 export class BarberShopProvider {
@@ -29,8 +29,8 @@ export class BarberShopProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
-    @Inject(ShopService)
-    private shopService: ShopService;
+    @Inject(AnimationService)
+    private animationService: AnimationService;
 
     private barberShopLabels: BarberShopLabels;
     private barberShopColors: BarberShopColors;
@@ -154,7 +154,7 @@ export class BarberShopProvider {
         }
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         await this.cameraService.deleteCamera();
-        await this.shopService.clearAllAnimations();
+        await this.animationService.clearShopAnimations(PlayerPedId());
         FreezeEntityPosition(PlayerPedId(), false);
     }
 }

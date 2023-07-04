@@ -17,7 +17,6 @@ import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
 import { ClothingShopRepository } from '../resources/shop.repository';
-import { ShopService } from './shop.service';
 
 @Provider()
 export class ClothingShopProvider {
@@ -45,8 +44,8 @@ export class ClothingShopProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
-    @Inject(ShopService)
-    private shopService: ShopService;
+    @Inject(AnimationService)
+    private animation: AnimationService;
 
     private currentShop: string = undefined;
 
@@ -213,7 +212,7 @@ export class ClothingShopProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         await this.cameraService.deleteCamera();
-        await this.shopService.clearAllAnimations();
+        await this.animationService.clearShopAnimations(PlayerPedId());
         this.currentShop = undefined;
         FreezeEntityPosition(PlayerPedId(), false);
     }
