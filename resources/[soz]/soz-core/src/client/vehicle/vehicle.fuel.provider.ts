@@ -103,7 +103,11 @@ export class VehicleFuelProvider {
                 });
             }
 
-            if (station.type === FuelStationType.Private || station.fuel === FuelType.Kerosene) {
+            if (
+                station.type === FuelStationType.Private ||
+                station.fuel === FuelType.Kerosene ||
+                station.name === 'Cayo'
+            ) {
                 station.entity = this.objectFFactory.create(station.model, station.position, true);
             }
         }
