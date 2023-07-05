@@ -57,7 +57,7 @@ export class VehicleFuelProvider {
                 const reservedFuel = Math.min(fuelToFill, station.stock, maxFuelForMoney);
                 let reservedFuelTx = reservedFuel;
 
-                if (station.station === 'Cayo_heli') {
+                if (station.station === 'Cayo_heli' || station.station === 'Cayo') {
                     reservedFuelTx = 0;
                 }
 
