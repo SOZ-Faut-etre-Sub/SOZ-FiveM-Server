@@ -10631,6 +10631,21 @@ export const Animations: AnimationConfigList = [
                             },
                         },
                     },
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (Sol mixte)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_picnic@male@idle_a',
+                                name: 'idle_a',
+                                options: { 
+                                    repeat: true, 
+                                },
+                            },
+                        },
+                    },
                 ],
             },
             {
