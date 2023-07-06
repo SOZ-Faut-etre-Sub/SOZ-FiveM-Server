@@ -73,6 +73,7 @@ export const showPhone = async (): Promise<void> => {
 
     emitNet(PhoneEvents.FETCH_CREDENTIALS);
     SetCursorLocation(0.9, 0.922); //Experimental
+    sendMessage('PHONE', EmergencyEvents.SET_EMERGENCY, state.isDead);
     sendMessage('PHONE', PhoneEvents.SET_VISIBILITY, true);
     sendMessage('PHONE', PhoneEvents.SET_TIME, time);
     SetNuiFocus(true, true);
