@@ -15,8 +15,43 @@ export type WorldPlacedProp = {
     loaded: boolean;
 };
 
+export type DebugProp = {
+    entity: number;
+    model: string;
+    collection: string | null;
+    matrix: Float32Array;
+};
+
+export type SpawedWorlPlacedProp = WorldPlacedProp & {
+    entity: number;
+};
+
+export type PropCollection = {
+    name: string;
+    size: number;
+    loaded_size: number;
+    props: WorldPlacedProp[];
+};
+
+export type SpawnedCollection = {
+    name: string;
+    size: number;
+    loaded_size: number;
+    props: SpawedWorlPlacedProp[];
+};
+
 export type PropCollectionData = {
     name: string;
     size: number;
     loaded_size: number;
+};
+
+export type PropServerData = {
+    total: number;
+    loaded: number;
+};
+
+export type PropClientData = {
+    total: number;
+    valid: number;
 };

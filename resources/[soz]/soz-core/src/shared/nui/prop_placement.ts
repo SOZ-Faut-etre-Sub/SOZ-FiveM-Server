@@ -1,21 +1,21 @@
-import { Vector3 } from '../polyzone/vector';
+import { PropClientData, PropCollection, PropCollectionData, PropServerData } from '../object';
 
 export type PropPlacementMenuData = {
     props: PlacementPropList;
-    propState: PlacementProp;
+    serverData: PropServerData;
+    clientData: PropClientData;
+    collections: PropCollectionData[];
+};
+
+export type NuiPlacementPropMethodMap = {
+    SetCollectionList: PropCollectionData[];
+    SetCollection: PropCollection;
+    SetDatas: { serverData: PropServerData; clientData: PropClientData };
 };
 
 export type PlacementProp = {
     model: string;
     label: string;
-    entity?: number;
-};
-
-export type PlacedProp = {
-    entity: number;
-    model: string;
-    label: string;
-    position: Vector3;
 };
 
 export type PlacementPropList = PlacementProp[];

@@ -111,9 +111,8 @@ export enum ServerEvent {
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
     // Takes array of WorldPlacedProp objects
-    PROP_REQUEST_CREATE_PROPS = 'soz-core:server:prop:request-create',
     PROP_REQUEST_DELETE_PROPS = 'soz-core:server:prop:request-delete',
-    PROP_REQUEST_CREATE_COLLECTION = 'soz-core:server:prop:request-create-collection',
+    PROP_REQUEST_EDIT_PROP = 'soz-core:server:prop:request-edit',
     PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:request-delete-collection',
     PROP_REQUEST_LOAD_PROPS = 'soz-core:server:prop:request-load',
     PROP_REQUEST_UNLOAD_PROPS = 'soz-core:server:prop:request-unload',
@@ -348,6 +347,8 @@ export enum ClientEvent {
 
     PROP_CREATE_CLIENTSIDE = 'soz-core:client:prop:create',
     PROP_DELETE_CLIENTSIDE = 'soz-core:client:prop:delete',
+    PROP_EDIT_CLIENTSIDE = 'soz-core:client:prop:edit',
+    PROP_SYNC_CLIENTSIDE = 'soz-core:client:prop:sync',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
@@ -661,8 +662,18 @@ export enum NuiEvent {
     TaxiSetHorodateur = 'soz-core:client:taxi:set-horodateur',
     TaxiDisplayHorodateur = 'soz-core:client:taxi:display-horodateur',
 
-    SelectPlacementProp = 'soz-core:client:placement:select-prop',
+    SelectPlacedProp = 'soz-core:client:placement:select-placed-prop',
+    SelectPropToCreate = 'soz-core:client:placement:select-prop-to-create',
+    ChoosePropToCreate = 'soz-core:client:placement:choose-prop-to-create',
+    ChoosePlacedPropToEdit = 'soz-core:client:placement:choose-placed-prop-to-edit',
     SetPlacementProp = 'soz-core:client:placement:set-prop',
-    LeavePlacementMode = 'soz-core:client:placement:leave-mode',
+    LeaveEditorMode = 'soz-core:client:placement:leave-mode',
+    ValidatePlacement = 'soz-core:client:placement:validate',
     PropPlacementReset = 'soz-core:client:placement:reset',
+    PropPlacementReturnToMainMenu = 'soz-core:client:placement:return-to-main-menu',
+    SelectPlacementCollection = 'soz-core:client:placement:select-collection',
+    HighlightCollection = 'soz-core:client:placement:highlight-collection',
+    RequestToggleCollectionLoad = 'soz-core:client:placement:toggle-collection-load',
+    RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
+    RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
 }
