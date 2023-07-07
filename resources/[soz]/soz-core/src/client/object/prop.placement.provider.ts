@@ -68,6 +68,8 @@ export class PropPlacementProvider {
     })
     public async openPlacementMenu() {
         if (this.menu.getOpened() === MenuType.PropPlacementMenu) {
+            await this.onLeaveEditorMode();
+            await this.onReturnToMainMenu();
             this.editorState = null;
             this.menu.closeMenu();
             return;
@@ -92,6 +94,7 @@ export class PropPlacementProvider {
 
     @OnNuiEvent(NuiEvent.PropPlacementReturnToMainMenu)
     public async onReturnToMainMenu() {
+        console.log('Return to main menu triggered');
         if (this.editorState.currentCollection) {
             await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
         }
@@ -118,7 +121,7 @@ export class PropPlacementProvider {
             return;
         }
         const newCollections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_REQUEST_CREATE_COLLECTION, name);
-        this.nuiDispatch.dispatch('placement_prop', 'SetCollectionList', newCollections);
+        await this.refreshPropPlacementMenuData(newCollections);
     }
 
     @OnNuiEvent(NuiEvent.RequestDeletePropCollection)
@@ -128,7 +131,26 @@ export class PropPlacementProvider {
             return;
         }
         const newCollections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_REQUEST_DELETE_COLLECTION, name);
-        this.nuiDispatch.dispatch('placement_prop', 'SetCollectionList', newCollections);
+        if (!newCollections) {
+            return;
+        }
+        if (this.editorState && this.editorState.currentCollection) {
+            await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
+            this.editorState.currentCollection = null;
+        }
+        await this.refreshPropPlacementMenuData(newCollections);
+    }
+
+    public async refreshPropPlacementMenuData(
+        propCollectionDatas?: PropCollectionData[],
+        currentCollection?: PropCollection | null
+    ) {
+        if (propCollectionDatas) {
+            this.nuiDispatch.dispatch('placement_prop', 'SetCollectionList', propCollectionDatas);
+        }
+        if (currentCollection) {
+            this.nuiDispatch.dispatch('placement_prop', 'SetCollection', currentCollection);
+        }
         this.nuiDispatch.dispatch('placement_prop', 'SetDatas', {
             serverData: await emitRpc<PropServerData>(RpcServerEvent.PROP_GET_SERVER_DATA),
             clientData: this.propProvider.getPropClientData(),
@@ -142,6 +164,7 @@ export class PropPlacementProvider {
             return null;
         }
         this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(collection);
+        console.log('current collection : ', this.editorState.currentCollection);
         return collection;
     }
 
@@ -175,8 +198,9 @@ export class PropPlacementProvider {
     }
 
     @OnNuiEvent(NuiEvent.SelectPropToCreate)
-    public async onSelectPropToCreate({ prop }: { prop: PlacementProp }): Promise<void> {
-        if (!prop) {
+    public async onSelectPropToCreate({ selectedProp }: { selectedProp: PlacementProp }): Promise<void> {
+        console.log(`prop selected: ${selectedProp}`);
+        if (!selectedProp) {
             return;
         }
         const ped = PlayerPedId();
@@ -191,13 +215,14 @@ export class PropPlacementProvider {
         const coords = GetOffsetFromEntityInWorldCoords(ped, 0, 2.0, 0);
         const debugProp: WorldPlacedProp = {
             unique_id: null,
-            model: prop.model,
-            collection: null,
+            model: selectedProp.model,
+            collection: this.editorState.currentCollection.name,
             position: [coords[0], coords[1], coords[2], 0],
             matrix: null,
             loaded: false,
         };
-        const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp);
+        const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true);
+        console.log(`prop spawned: ${debugPropEntity}`);
         this.editorState.debugProp = { ...debugProp, entity: debugPropEntity } as SpawedWorlPlacedProp;
     }
 
@@ -237,20 +262,21 @@ export class PropPlacementProvider {
             matrix: null,
             loaded: false,
         };
-        const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp);
+        const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true);
         this.editorState.debugProp = { ...debugProp, entity: debugPropEntity } as SpawedWorlPlacedProp;
-        this.editorState.isEditorModeOn = true;
         await this.enterEditorMode();
         return Ok(true);
     }
 
     public async enterEditorMode() {
+        ResetEditorValues();
         EnterCursorMode();
+        this.editorState.isEditorModeOn = true;
     }
 
     @Tick(TickInterval.EVERY_FRAME)
     public async handleGizmo() {
-        if (!this.editorState || this.editorState.debugProp || !this.editorState.isEditorModeOn) {
+        if (!this.editorState || !this.editorState.debugProp || !this.editorState.isEditorModeOn) {
             return;
         }
         const entity = this.editorState.debugProp.entity;
@@ -272,17 +298,20 @@ export class PropPlacementProvider {
         if (!this.editorState) {
             return;
         }
-        if (!this.editorState.isEditorModeOn) {
-            return;
-        }
 
         if (this.editorState.debugProp) {
             await this.propProvider.despawnDebugProp(this.editorState.debugProp);
 
             this.editorState.debugProp = null;
         }
+
+        if (!this.editorState.isEditorModeOn) {
+            return;
+        }
+
         EnableAllControlActions(0);
         LeaveCursorMode();
+        this.editorState.isEditorModeOn = false;
     }
 
     @OnNuiEvent(NuiEvent.PropPlacementReset)
@@ -308,8 +337,8 @@ export class PropPlacementProvider {
         // Scale is not easy to handle, so just reset the prop completely.
         if (scale) {
             await this.propProvider.despawnDebugProp(this.editorState.debugProp);
-            const newDebugPropEntityawait = await this.propProvider.spawnDebugProp(this.editorState.debugProp);
-            this.editorState.debugProp.entity = newDebugPropEntityawait;
+            const newDebugPropEntity = await this.propProvider.spawnDebugProp(this.editorState.debugProp, true);
+            this.editorState.debugProp.entity = newDebugPropEntity;
             return;
         }
         if (position) {
@@ -360,19 +389,33 @@ export class PropPlacementProvider {
             loaded: false,
         };
 
-        const newCollection: Result<PropCollection, never> = await emitRpc(RpcServerEvent.PROP_REQUEST_CREATE_PROPS, [
-            worldPlacedProp,
-        ]);
+        const newCollection: Result<PropCollection, never> = await emitRpc(
+            RpcServerEvent.PROP_REQUEST_CREATE_PROP,
+            worldPlacedProp
+        );
 
         if (isErr(newCollection)) {
             return Err(false);
         }
 
+        // I don't think doing this is a good idea. Rather fetch current collection for server
+        // then update the provider and nui data. For the entity, we can maybe keep the entity of
+        // the debugProp. I have to work this out better.
         this.editorState.currentCollection.props.push({
             ...worldPlacedProp,
             entity: debugProp.entity,
         });
+        this.editorState.currentCollection.size += 1;
         this.editorState.debugProp = null;
+
+        // We also need to update the client and server data on the nui
+        const collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
+        await this.refreshPropPlacementMenuData(collections, newCollection.ok);
+
+        this.notifier.notify('Le prop a bien été créé !', 'success');
+
+        await this.onLeaveEditorMode();
+
         return Ok(true);
     }
 

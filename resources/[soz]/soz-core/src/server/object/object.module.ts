@@ -5,4 +5,4 @@ import { ObjectProvider } from './object.provider';
 @Module({
     providers: [ObjectProvider],
 })
-export class ShopModule {}
+export class ObjectModule {}

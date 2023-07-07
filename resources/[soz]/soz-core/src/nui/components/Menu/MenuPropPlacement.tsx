@@ -37,7 +37,12 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     const [collectionList, setCollectionList] = useState<PropCollectionData[]>(data.collections);
     const [serverData, setServerData] = useState<PropServerData>(data.serverData);
     const [clientData, setClientData] = useState<PropClientData>(data.clientData);
-    const [collection, setCollection] = useState<PropCollection>(null);
+    const [collection, setCollection] = useState<PropCollection>({
+        name: '',
+        size: 0,
+        loaded_size: 0,
+        props: [],
+    });
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -53,7 +58,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     });
     useBackspace(async () => {
         await fetchNui(NuiEvent.LeaveEditorMode);
-        if (location.pathname == `/${MenuType.PropPlacementMenu}`) {
+        if (location.pathname == `/${MenuType.PropPlacementMenu}/collection`) {
             await fetchNui(NuiEvent.PropPlacementReturnToMainMenu);
         }
     });
@@ -69,7 +74,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 return;
             }
             setCollection(col);
-            navigate(`/${MenuType.PropPlacementMenu}/collection`);
+            navigate(`/${MenuType.PropPlacementMenu}/collection`, { state: location.state });
         };
     };
 
@@ -81,7 +86,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     const onChooseProp = (selectedProp: WorldPlacedProp) => {
         return async () => {
             await fetchNui(NuiEvent.ChoosePlacedPropToEdit, { selectedProp });
-            navigate(`/${MenuType.PropPlacementMenu}/editor`);
+            navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: location.state });
         };
     };
 
@@ -95,7 +100,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
         return async () => {
             const result: Result<any, never> = await fetchNui(NuiEvent.ChoosePropToCreate, { selectedProp });
             if (isOk(result)) {
-                navigate(`/${MenuType.PropPlacementMenu}/editor`);
+                navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: location.state });
             }
         };
     };
@@ -150,14 +155,11 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                             : collection.loaded_size < collection.size
                             ? '🔵 Partiellement chargée'
                             : '🟢 Complètement chargée'}
-                        {collection.name}
                     </MenuTitle>
-                    <MenuItemSubMenuLink id={`${MenuType.PropPlacementMenu}/collection/props`}>
+                    <MenuItemSubMenuLink id={`collection/props`}>
                         📝 Voir la liste des props de la collection
                     </MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id={`${MenuType.PropPlacementMenu}/collection/prop_choose`}>
-                        ➕ Ajouter un prop
-                    </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id={`collection/prop_choose`}>➕ Ajouter un prop</MenuItemSubMenuLink>
                     <MenuItemCheckbox
                         checked={false}
                         onChange={async value => {
@@ -192,7 +194,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.RequestDeletePropCollection, { name: collection.name });
-                            navigate(`/${MenuType.PropPlacementMenu}`);
+                            navigate(-1);
                         }}
                         disabled={collection.loaded_size > 0}
                         description="Supprime la collection du serveur. Il faut la décharger avant !"
@@ -239,17 +241,10 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 <MenuTitle banner="https://nui-img/soz/menu_mapper">Mode Editeur</MenuTitle>
                 <MenuContent>
                     <MenuItemButton
-                        onConfirm={() => {
-                            fetchNui(NuiEvent.LeaveEditorMode);
-                        }}
-                    >
-                        ❌ Quitter le mode editeur
-                    </MenuItemButton>
-                    <MenuItemButton
                         onConfirm={async () => {
                             const result: Result<any, never> = await fetchNui(NuiEvent.ValidatePlacement);
                             if (isOk(result)) {
-                                navigate(`/${MenuType.PropPlacementMenu}/collection`);
+                                navigate(-1);
                             }
                         }}
                     >

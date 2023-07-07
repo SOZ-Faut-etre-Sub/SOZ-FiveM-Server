@@ -22,7 +22,7 @@ export class ObjectProvider {
     private objects: Record<string, WorldPlacedProp> = {}; // unique_ID -> WorldPlacedProp
     private collections: Record<string, string[]> = {}; // Collection -> unique_ID[]
 
-    @Once(OnceStep.RepositoriesLoaded)
+    @Once(OnceStep.DatabaseConnected)
     public async loadObjectsOnStart() {
         const placedPropsDB = await this.prismaService.placed_prop.findMany();
         for (const placedProp of placedPropsDB) {
@@ -37,7 +37,7 @@ export class ObjectProvider {
                 model: placedProp.model,
                 collection: placedProp.collection,
                 position: JSON.parse(placedProp.position),
-                matrix: placedProp.matrix ? JSON.parse(placedProp.matrix) : null,
+                matrix: (placedProp.matrix ? JSON.parse(placedProp.matrix) : null) as Float32Array | null,
                 loaded: false,
             };
         }
@@ -54,18 +54,20 @@ export class ObjectProvider {
     }
 
     @Rpc(RpcServerEvent.PROP_REQUEST_DELETE_COLLECTION)
-    public async deleteCollection(source: number, collection: string): Promise<PropCollectionData[]> {
-        if (!this.objects[collection]) {
-            this.notifier.notify(source, `La collection ${collection} n'existe pas`, 'error');
+    public async deleteCollection(source: number, collectionName: string): Promise<PropCollectionData[]> {
+        if (!this.collections[collectionName]) {
+            this.notifier.notify(source, `La collection ${collectionName} n'existe pas`, 'error');
         } else {
-            await this.deleteProps(source, this.collections[collection]); // Need to delete props of this collection!
-            delete this.collections[collection];
-            this.notifier.notify(source, `La collection ${collection} a été supprimée`, 'success');
+            console.log(`I am trying to delete the collection ${collectionName}`);
+            console.log(this.collections[collectionName]);
+            await this.deleteProps(source, this.collections[collectionName]); // Need to delete props of this collection!
+            delete this.collections[collectionName];
+            this.notifier.notify(source, `La collection ${collectionName} a été supprimée`, 'success');
         }
         return this.getCollectionData();
     }
 
-    @Rpc(RpcServerEvent.PROP_REQUEST_CREATE_PROPS)
+    @Rpc(RpcServerEvent.PROP_REQUEST_CREATE_PROP)
     public async createProps(source: number, prop: WorldPlacedProp) {
         if (prop.collection && !this.collections[prop.collection]) {
             this.notifier.notify(
@@ -75,27 +77,34 @@ export class ObjectProvider {
             );
             return Err("Collection doesn't exist");
         }
-        const unique_id = uuidv4();
+        const id = uuidv4();
         await this.prismaService.placed_prop.create({
             data: {
-                unique_id: unique_id,
+                unique_id: id,
                 model: prop.model,
                 collection: prop.collection,
                 position: JSON.stringify(prop.position),
                 matrix: prop.matrix ? JSON.stringify(prop.matrix) : null,
             },
         });
+        const newProp: WorldPlacedProp = {
+            ...prop,
+            unique_id: id,
+        };
 
-        this.objects[unique_id] = prop;
-        if (prop.collection) {
-            this.collections[prop.collection].push(prop.unique_id);
+        this.objects[id] = newProp;
+        if (newProp.collection) {
+            this.collections[newProp.collection].push(newProp.unique_id);
         }
-        return await this.getCollection(source, prop.collection);
+        console.log(`collection ${newProp.collection}`);
+        console.log(this.collections[newProp.collection]);
+        return await this.getCollection(source, newProp.collection);
     }
 
     // Need to unload before deleting!
     @OnEvent(ServerEvent.PROP_REQUEST_DELETE_PROPS)
     public async deleteProps(source: number, propIds: string[]) {
+        await this.unloadProps(source, propIds);
         for (const propId of propIds) {
             if (!this.objects[propId]) {
                 this.notifier.notify(source, `Impossible de supprimer l'objet ${propId} car il n'existe pas.`, 'error');
@@ -106,13 +115,12 @@ export class ObjectProvider {
                     unique_id: propId,
                 },
             });
-            delete this.objects[propId];
             const collection = this.objects[propId].collection;
             if (collection && this.collections[collection]) {
                 this.collections[collection] = this.collections[collection].filter(id => id !== propId);
             }
+            delete this.objects[propId];
         }
-        await this.unloadProps(source, propIds);
         this.notifier.notify(source, `Les props ont été supprimés`, 'success');
     }
 

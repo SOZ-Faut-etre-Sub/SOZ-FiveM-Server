@@ -126,7 +126,7 @@ export class PropProvider {
         SetEntityHeading(entity, prop.position[3]);
 
         if (prop.matrix) {
-            this.objectService.applyEntityMatrix(entity, prop.matrix);
+            this.applyEntityMatrix(entity, prop.matrix);
         }
 
         FreezeEntityPosition(entity, true); // Always freeze for the moment
@@ -176,7 +176,7 @@ export class PropProvider {
         };
     }
 
-    public async spawnDebugProp(prop: WorldPlacedProp): Promise<number> {
+    public async spawnDebugProp(prop: WorldPlacedProp, onGround: boolean): Promise<number> {
         await this.resourceLoader.loadModel(prop.model);
         const entity = CreateObjectNoOffset(
             GetHashKey(prop.model),
@@ -194,11 +194,13 @@ export class PropProvider {
             this.objectService.applyEntityMatrix(entity, prop.matrix);
         }
 
-        SetEntityAlpha(entity, 210, false);
+        SetEntityAlpha(entity, 200, false);
         SetEntityCollision(entity, false, false);
         SetEntityInvincible(entity, true);
 
-        PlaceObjectOnGroundProperly(entity);
+        if (onGround) {
+            PlaceObjectOnGroundProperly(entity);
+        }
 
         return entity;
     }
@@ -239,7 +241,7 @@ export class PropProvider {
                     entity: entity,
                 });
             } else {
-                entity = await this.spawnDebugProp(prop);
+                entity = await this.spawnDebugProp(prop, false);
                 spawnedCollection.props.push({
                     ...prop,
                     entity: entity,

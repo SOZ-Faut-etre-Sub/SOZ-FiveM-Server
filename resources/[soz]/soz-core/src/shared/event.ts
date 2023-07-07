@@ -676,4 +676,5 @@ export enum NuiEvent {
     RequestToggleCollectionLoad = 'soz-core:client:placement:toggle-collection-load',
     RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
     RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
+    RefreshPropPlacementMenuData = 'soz-core:client:placement:refresh-menu-data',
 }

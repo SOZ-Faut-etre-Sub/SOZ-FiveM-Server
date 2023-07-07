@@ -26,14 +26,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = [
         label: 'Poubelle',
     },
     {
-        model: 'soz_prop_elec01___default',
-        label: 'Borne civile',
-    },
-    {
-        model: 'soz_prop_elec02___entreprise',
-        label: 'Borne entreprise',
-    },
-    {
         model: 'upwpile',
         label: 'Onduleur',
     },
