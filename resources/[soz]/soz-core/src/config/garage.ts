@@ -1968,4 +1968,116 @@ export const GarageList: Record<string, Garage> = {
         }),
         parkingPlaces: [],
     },
+    cayo: {
+        name: 'Cayo Perico Parking',
+        legacyId: 'cayo',
+        type: GarageType.Public,
+        category: GarageCategory.All,
+        zone: new BoxZone([4461.58, -4469.03, 4.24], 0.7, 1.0, {
+            heading: 290.0,
+            minZ: 3.24,
+            maxZ: 6.24,
+        }),
+        parkingPlaces: [
+            // Air
+            new BoxZone([4470.46, -4461.85, 4.23], 15.8, 15.8, {
+                heading: 20.0,
+                minZ: 3.23,
+                maxZ: 6.23,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([4487.8, -4455.43, 4.22], 15.8, 15.8, {
+                heading: 20.0,
+                minZ: 3.22,
+                maxZ: 6.22,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+            // Car
+            new BoxZone([4506.77, -4468.29, 4.19], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.19,
+                maxZ: 6.19,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4509.83, -4466.26, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4512.98, -4464.79, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4516.57, -4463.56, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+
+            new BoxZone([4460.9, -4480.77, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4454.84, -4483.18, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4450.79, -4484.52, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4446.19, -4486.15, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4442.47, -4487.54, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4439.06, -4488.85, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+        ],
+    },
 };

@@ -55,6 +55,11 @@ export class VehicleFuelProvider {
 
                 const maxFuelForMoney = station.price > 0 ? Math.floor(player.money.money / station.price) : fuelToFill;
                 const reservedFuel = Math.min(fuelToFill, station.stock, maxFuelForMoney);
+                let reservedFuelTx = reservedFuel;
+
+                if (station.station === 'Cayo_heli' || station.station === 'Cayo') {
+                    reservedFuelTx = 0;
+                }
 
                 await this.prismaService.fuel_storage.update({
                     where: {
@@ -62,7 +67,7 @@ export class VehicleFuelProvider {
                     },
                     data: {
                         stock: {
-                            decrement: reservedFuel,
+                            decrement: reservedFuelTx,
                         },
                     },
                 });
