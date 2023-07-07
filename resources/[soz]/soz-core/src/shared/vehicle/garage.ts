@@ -15,6 +15,7 @@ export enum GarageCategory {
     Car = 'car',
     Air = 'air',
     Sea = 'sea',
+    All = 'all',
 }
 
 export enum PlaceCapacity {

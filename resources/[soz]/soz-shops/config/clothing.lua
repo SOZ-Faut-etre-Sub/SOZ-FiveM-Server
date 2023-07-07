@@ -18,6 +18,7 @@ Config.ClothingLocationsInShop = {
     ["binco5"] = vector4(1698.91, 4817.47, 42.06, 5.87),
     ["binco6"] = vector4(1202.65, 2714.47, 38.22, 87.5),
     ["binco7"] = vector4(-1099.84, 2717.69, 19.11, 135.67),
+    ["binco8"] = vector4(4999.24, -5113.65, 2.85, 173.76),
 }
 
 Config.ClothingCameraPositionsInShop = {
@@ -34,6 +35,7 @@ Config.ClothingCameraPositionsInShop = {
     ["binco5"] = vector4(1698.54, 4819.34, 42.06, 187.54),
     ["binco6"] = vector4(1200.77, 2714.4, 38.22, 270.77),
     ["binco7"] = vector4(-1101.08, 2716.36, 19.11, 310.78),
+    ["binco8"] = vector4(4998.50, -5116.23, 2.85, 339.63),
 }
 
 Config.Locations["ponsonbys"] = {
@@ -56,6 +58,7 @@ Config.Locations["binco"] = {
     ["binco5"] = vector4(1695.48, 4823.14, 42.06, 114.62),
     ["binco6"] = vector4(1196.47, 2711.95, 38.22, 179.31),
     ["binco7"] = vector4(-1102.70, 2711.59, 19.11, 229.23),
+    ["binco8"] = vector4(5000.14, -5119.18, 2.85, 250.68),
 }
 
 Config.Torsos = {

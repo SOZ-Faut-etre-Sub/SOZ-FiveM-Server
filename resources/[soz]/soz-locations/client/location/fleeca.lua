@@ -29,4 +29,6 @@ Locations["fleeca"] = {
     }),
     [7] = BoxZone:Create(vector3(-107.39, 6470.23, 31.63), 19.85, 18.0,
                          {name = "fleeca7", heading = 45, minZ = 30.63, maxZ = 33.63, debugPoly = LocationDebugPoly}),
+    [8] = BoxZone:Create(vector3(5057.35, -5195.83, 2.60), 15.80, 11.00,
+                         {name = "fleeca8", heading = 4.00, minZ = 1.60, maxZ = 4.60, debugPoly = LocationDebugPoly}),
 }
