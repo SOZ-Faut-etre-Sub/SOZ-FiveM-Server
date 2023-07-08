@@ -140,7 +140,7 @@ export class ClothingShopProvider {
         const player = this.playerService.getPlayer();
         const baseTorsoDrawable = player.cloth_config.BaseClothSet.Components[Component.Torso].Drawable;
         const nakedTorsoDrawable = player.cloth_config.NakedClothSet.Components[Component.Torso].Drawable;
-        if (!baseTorsoDrawable) {
+        if (baseTorsoDrawable == null) {
             return;
         }
         if (product.undershirtType) {
