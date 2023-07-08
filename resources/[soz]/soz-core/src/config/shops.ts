@@ -449,7 +449,11 @@ export const ShopTattooConfig: Record<string, TattooShopCategory> = {
         label: 'Torse',
         cam: [
             [0.0, 0.7, 0.2],
+            [-0.5, 0.7, 0.2],
+            [-0.5, -0.7, 0.2],
             [0.0, -0.7, 0.2],
+            [0.5, -0.7, 0.2],
+            [0.5, 0.7, 0.2],
         ],
         player: [0.0, 0.0, 0.2],
     },
