@@ -36,7 +36,7 @@ export class HousingRepository extends Repository<Property[]> {
                 price: apartment.price,
                 owner: apartment.owner,
                 roommate: apartment.roommate,
-                position: [insideCord.x, insideCord.y, insideCord.z, insideCord.w],
+                position: insideCord ? [insideCord.x, insideCord.y, insideCord.z, insideCord.w] : null,
                 exitZone: createZoneFromLegacyData(JSON.parse(apartment.exit_zone)),
                 fridgeZone: createZoneFromLegacyData(JSON.parse(apartment.fridge_zone)),
                 stashZone: createZoneFromLegacyData(JSON.parse(apartment.stash_zone)),

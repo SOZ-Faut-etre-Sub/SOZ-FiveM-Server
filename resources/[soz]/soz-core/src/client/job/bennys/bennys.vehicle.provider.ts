@@ -5,7 +5,6 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/ev
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
-import { emitRpc } from '../../../core/rpc';
 import { JobService } from '../../../server/job.service';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
 import { BennysConfig } from '../../../shared/job/bennys';
@@ -13,8 +12,6 @@ import { MenuType } from '../../../shared/nui/menu';
 import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { MultiZone } from '../../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
-import { RpcServerEvent } from '../../../shared/rpc';
-import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { NuiMenu } from '../../nui/nui.menu';

@@ -9,4 +9,5 @@ export type HousingUpgradesMenuData = {
 
 export type AdminMapperMenuData = {
     properties: Property[];
+    showInterior: boolean;
 };

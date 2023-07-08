@@ -79,7 +79,6 @@ export class AdminMenuMapperProvider {
                 },
             });
         } else {
-            console.log('updateApartmentZone', zone);
             const zoneData = JSON.stringify(zoneToLegacyData(zone));
 
             await this.prismaService.housing_apartment.update({
@@ -116,23 +115,54 @@ export class AdminMenuMapperProvider {
         return await this.repositoryProvider.refresh('housing');
     }
 
-    @Rpc(RpcServerEvent.ADMIN_MAPPER_ADD_APARTMENT)
-    public async addApartment(source: number): Promise<Property[]> {
-        return await this.repositoryProvider.refresh('housing');
-    }
-
     @Rpc(RpcServerEvent.ADMIN_MAPPER_ADD_PROPERTY)
-    public async addProperty(source: number): Promise<Property[]> {
+    public async addProperty(source: number, name: string): Promise<Property[]> {
+        await this.prismaService.housing_property.create({
+            data: {
+                identifier: name,
+            },
+        });
+
         return await this.repositoryProvider.refresh('housing');
     }
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_REMOVE_PROPERTY)
-    public async removeProperty(source: number): Promise<Property[]> {
+    public async removeProperty(source: number, id: number): Promise<Property[]> {
+        await this.prismaService.housing_property.delete({
+            where: {
+                id: id,
+            },
+        });
+
+        return await this.repositoryProvider.refresh('housing');
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_ADD_APARTMENT)
+    public async addApartment(
+        source: number,
+        propertyId: number,
+        identifier: string,
+        label: string
+    ): Promise<Property[]> {
+        await this.prismaService.housing_apartment.create({
+            data: {
+                property_id: propertyId,
+                identifier,
+                label,
+            },
+        });
+
         return await this.repositoryProvider.refresh('housing');
     }
 
     @Rpc(RpcServerEvent.ADMIN_MAPPER_REMOVE_APARTMENT)
-    public async removeApartment(source: number): Promise<Property[]> {
+    public async removeApartment(source: number, id: number): Promise<Property[]> {
+        await this.prismaService.housing_apartment.delete({
+            where: {
+                id: id,
+            },
+        });
+
         return await this.repositoryProvider.refresh('housing');
     }
 }

@@ -4,9 +4,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { NuiEvent } from '../../../../shared/event';
 import { Property } from '../../../../shared/housing/housing';
 import { AdminMapperMenuData } from '../../../../shared/housing/menu';
+import { JobType } from '../../../../shared/job';
 import { MenuType } from '../../../../shared/nui/menu';
 import { Zone } from '../../../../shared/polyzone/box.zone';
 import { fetchNui } from '../../../fetch';
+import { useJobs } from '../../../hook/job';
 import {
     MainMenu,
     Menu,
@@ -28,6 +30,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
     const navigate = useNavigate();
     const location = useLocation();
     const [properties, setProperties] = useState<AdminMapperMenuData['properties']>([]);
+    const [selectedObject, setSelectedObject] = useState<string>('soz_prop_bb_bin');
+    const jobs = useJobs();
+    const [job, setJob] = useState<JobType | null>(null);
+    const [event, setEvent] = useState<string | null>(null);
 
     useEffect(() => {
         setProperties(data?.properties || []);
@@ -46,12 +52,64 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                 <MenuContent>
                     <MenuItemSubMenuLink id="objects">🚏 Gestion des objets</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="properties">🏠 Gestion des propriétés</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="tools">🚧 Outils pour mappeur</MenuItemSubMenuLink>
+                    <MenuItemCheckbox
+                        checked={data.showInterior}
+                        onChange={value => {
+                            fetchNui(NuiEvent.AdminMenuMapperSetShowInterior, { value: value });
+                        }}
+                    >
+                        🚧 Voir les informations de l'interieur
+                    </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">
                 <MenuTitle banner="https://nui-img/soz/menu_mapper">Un poteau, une borne, des poubelles !</MenuTitle>
-                <MenuContent></MenuContent>
+                <MenuContent>
+                    <MenuItemSelect title={'🚏 Objet séléctionné'} onChange={(i, value) => setSelectedObject(value)}>
+                        <MenuItemSelectOption value="soz_prop_bb_bin">Poubelle</MenuItemSelectOption>
+                        <MenuItemSelectOption value="soz_prop_elec01">Borne civile</MenuItemSelectOption>
+                        <MenuItemSelectOption value="soz_prop_elec02">Borne entreprise</MenuItemSelectOption>
+                        <MenuItemSelectOption value="upwpile">Onduleur</MenuItemSelectOption>
+                        <MenuItemSelectOption value="soz_atm_entreprise">ATM entreprise</MenuItemSelectOption>
+                    </MenuItemSelect>
+                    <MenuItemSelect
+                        title="Metier lié"
+                        description="Lier la prop à une entreprise (uniquement borne entreprise)"
+                        value={null}
+                        onChange={(i, value) => {
+                            setJob(value);
+                        }}
+                    >
+                        <MenuItemSelectOption value={null}>Aucun</MenuItemSelectOption>
+                        {jobs.map(job => (
+                            <MenuItemSelectOption value={job.id} key={'job_' + job.id}>
+                                {job.label}
+                            </MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+                    <MenuItemSelect
+                        title="Evenement lié"
+                        description="Permet de filtrer les objets a afficher"
+                        value={null}
+                        onChange={(i, value) => {
+                            setEvent(value);
+                        }}
+                    >
+                        <MenuItemSelectOption value={null}>Tous le temps</MenuItemSelectOption>
+                        <MenuItemSelectOption value="xmas">Noel</MenuItemSelectOption>
+                    </MenuItemSelect>
+                    <MenuItemButton
+                        onConfirm={() => {
+                            fetchNui(NuiEvent.AdminMenuMapperAddObject, {
+                                object: selectedObject,
+                                event: event,
+                                job: job,
+                            });
+                        }}
+                    >
+                        Ajouter l'objet
+                    </MenuItemButton>
+                </MenuContent>
             </SubMenu>
             <SubMenu id="properties">
                 <MenuTitle banner="https://nui-img/soz/menu_mapper">Gestion des propriétés</MenuTitle>
@@ -204,13 +262,34 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                         <span>${apartment.price?.toLocaleString()}</span>
                                     </div>
                                 </MenuItemButton>
-                                {/*<ZoneMenuSelect*/}
-                                {/*    title="🌀️ Zone d'apparition"*/}
-                                {/*    type="money"*/}
-                                {/*    zone={apartment.position}*/}
-                                {/*    propertyId={property.id}*/}
-                                {/*    apartmentId={apartment.id}*/}
-                                {/*/>*/}
+                                <MenuItemSelect
+                                    onConfirm={async (i, value) => {
+                                        if (value === 'teleport') {
+                                            fetchNui(NuiEvent.AdminMenuMapperTeleportToInsideCoords, {
+                                                coords: apartment.position,
+                                            });
+                                        }
+
+                                        if (value === 'update') {
+                                            const properties = await fetchNui<any, Property[]>(
+                                                NuiEvent.AdminMenuMapperSetInsideCoords,
+                                                {
+                                                    apartmentId: apartment.id,
+                                                }
+                                            );
+
+                                            setProperties(properties);
+                                        }
+                                    }}
+                                    title={
+                                        <span className={apartment.position ? '' : 'text-red-500'}>
+                                            🌀 Zone d'apparition
+                                        </span>
+                                    }
+                                >
+                                    <MenuItemSelectOption value="teleport">Téléporter</MenuItemSelectOption>
+                                    <MenuItemSelectOption value="update">Définir</MenuItemSelectOption>
+                                </MenuItemSelect>
                                 <ZoneMenuSelect
                                     title="🚪 Zone de sortie"
                                     type="exit"
@@ -341,7 +420,7 @@ const ZoneMenuSelect: FunctionComponent<ZoneMenuSelectProps> = ({
     };
 
     return (
-        <MenuItemSelect onConfirm={onConfirm} title={title}>
+        <MenuItemSelect onConfirm={onConfirm} title={<span className={!zone ? 'text-red-500' : ''}>{title}</span>}>
             <MenuItemSelectOption value="teleport">Téléporter</MenuItemSelectOption>
             <MenuItemSelectOption value="update">Modifier</MenuItemSelectOption>
             <MenuItemSelectOption value="show">Afficher</MenuItemSelectOption>
