@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { CheckIcon } from '@heroicons/react/solid';
+import { useNuiEvent } from '@public/nui/hook/nui';
 import {
     createDescendantContext,
     Descendant,
@@ -52,9 +53,11 @@ const MenuItemSelectDescendantContext = createDescendantContext<MenuSelectDescen
 const MenuContext = createContext<{
     activeIndex: number;
     setActiveIndex: (number: number) => void;
+    visibility: boolean;
     setDescription: (desc: string) => void;
 }>({
     activeIndex: 0,
+    visibility: true,
     setActiveIndex: () => {},
     setDescription: () => {},
 });
@@ -139,10 +142,13 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeIndex, setActiveIndex] = useState(0);
     const [description, setDescription] = useState<string | null>(null);
+    const [visibility, setVisibility] = useState(true);
+
+    useNuiEvent('menu', 'SetMenuVisibility', setVisibility);
 
     return (
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
-            <MenuContext.Provider value={{ activeIndex, setActiveIndex, setDescription }}>
+            <MenuContext.Provider value={{ activeIndex, setActiveIndex, setDescription, visibility }}>
                 <MenuControls>
                     <ul className="bg-black/50 py-1 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {children}
@@ -157,7 +163,7 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
 };
 
 const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    const { activeIndex, setActiveIndex } = useContext(MenuContext);
+    const { activeIndex, setActiveIndex, visibility } = useContext(MenuContext);
     const menuItems = useDescendants(MenuDescendantContext);
     const location = useLocation();
     const navigate = useNavigate();
@@ -170,6 +176,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
 
     useArrowDown(() => {
         let newIndex = activeIndex;
+
+        if (!visibility) {
+            return;
+        }
 
         do {
             newIndex = newIndex + 1;
@@ -195,6 +205,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     useArrowUp(() => {
         let newIndex = activeIndex;
 
+        if (!visibility) {
+            return;
+        }
+
         do {
             newIndex = newIndex - 1;
 
@@ -217,6 +231,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     });
 
     useBackspace(() => {
+        if (!visibility) {
+            return;
+        }
+
         navigate(-1);
     });
 
@@ -241,7 +259,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     description = null,
     className = null,
 }) => {
-    const { activeIndex, setDescription, setActiveIndex } = useContext(MenuContext);
+    const { activeIndex, setDescription, setActiveIndex, visibility } = useContext(MenuContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
     const handleRefSet = useCallback(refValue => {
@@ -271,7 +289,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     }, [isSelected, ref, description]);
 
     useEnter(() => {
-        if (!isSelected) {
+        if (!isSelected || !visibility) {
             return;
         }
 
@@ -283,7 +301,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     });
 
     const onClick = () => {
-        if (disabled) {
+        if (disabled || !visibility) {
             return;
         }
 
@@ -291,7 +309,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     };
 
     const onOver = () => {
-        if (disabled) {
+        if (disabled || !visibility) {
             return;
         }
 
@@ -461,6 +479,7 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
     const initialValueRef = useRef(initialValue);
     const isItemSelected = useContext(MenuSelectedContext);
     const menuItems = useDescendants(MenuItemSelectDescendantContext);
+    const { visibility } = useContext(MenuContext);
 
     useReset(() => {
         if (isItemSelected) {
@@ -515,12 +534,20 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
     };
 
     useArrowLeft(() => {
+        if (!visibility) {
+            return;
+        }
+
         if (isItemSelected) {
             goLeft();
         }
     });
 
     useArrowRight(() => {
+        if (!visibility) {
+            return;
+        }
+
         if (isItemSelected) {
             goRight();
         }

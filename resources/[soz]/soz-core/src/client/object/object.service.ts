@@ -25,10 +25,7 @@ export class ObjectService {
         );
 
         SetEntityHeading(entity, object.position[3]);
-
-        if (object.freeze) {
-            FreezeEntityPosition(entity, true);
-        }
+        FreezeEntityPosition(entity, true);
 
         this.objects[id] = {
             entity,

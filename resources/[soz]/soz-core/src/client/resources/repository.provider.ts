@@ -5,6 +5,7 @@ import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
+import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { UpwChargerRepository } from './upw.station.repository';
 import { VehicleRepository } from './vehicle.repository';
@@ -26,6 +27,9 @@ export class RepositoryProvider {
     @Inject(UpwChargerRepository)
     private upwChargerRepository: UpwChargerRepository;
 
+    @Inject(HousingRepository)
+    private housingRepository: HousingRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -36,6 +40,7 @@ export class RepositoryProvider {
         await this.vehicleRepository.load();
         await this.fuelStationRepository.load();
         await this.upwChargerRepository.load();
+        await this.housingRepository.load();
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
@@ -57,6 +62,10 @@ export class RepositoryProvider {
                 break;
             case 'upwCharger':
                 this.upwChargerRepository.update(data);
+                break;
+            case 'housing':
+                this.housingRepository.update(data);
+                break;
         }
     }
 }
