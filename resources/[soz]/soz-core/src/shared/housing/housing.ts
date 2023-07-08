@@ -4,8 +4,8 @@ import { Vector4 } from '../polyzone/vector';
 export type Property = {
     id: number;
     identifier: string;
-    entryZone: Zone;
-    garageZone: Zone;
+    entryZone: Zone | null;
+    garageZone: Zone | null;
     exteriorCulling: number[];
     apartments: Apartment[];
 };
@@ -18,11 +18,11 @@ export type Apartment = {
     owner: string;
     roommate: string;
     position: Vector4;
-    exitZone: Zone;
-    fridgeZone: Zone;
-    stashZone: Zone;
-    closetZone: Zone;
-    moneyZone: Zone;
+    exitZone: Zone | null;
+    fridgeZone: Zone | null;
+    stashZone: Zone | null;
+    closetZone: Zone | null;
+    moneyZone: Zone | null;
     tier: number;
     hasParkingPlace: boolean;
 };
