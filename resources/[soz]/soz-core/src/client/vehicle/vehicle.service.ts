@@ -347,14 +347,6 @@ export class VehicleService {
         return closestVehicle;
     }
 
-    public syncVehicle(vehicle: number, state: VehicleVolatileState): void {
-        SetVehicleModKit(vehicle, 0);
-
-        if (state.plate) {
-            SetVehicleNumberPlateText(vehicle, state.plate);
-        }
-    }
-
     public getVehicleConditionDiff(
         vehicle: number,
         previousCondition: Partial<VehicleCondition>,
