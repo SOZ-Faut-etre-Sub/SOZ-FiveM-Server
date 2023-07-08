@@ -10,7 +10,6 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
 import { getRandomInt, getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, ForecastWithTemperature, TemperatureRange, Time, Weather } from '../../shared/weather';
-import { MonitorService } from '../monitor/monitor.service';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
 import { Polluted, Summer } from './forecast';
