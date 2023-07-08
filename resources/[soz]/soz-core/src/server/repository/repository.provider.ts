@@ -1,14 +1,16 @@
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
+import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { OnceLoader } from '../../core/loader/once.loader';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
+import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
+import { ObjectRepository } from './object.repository';
 import { Repository } from './repository';
 import { UpwChargerRepository } from './upw.charger.repository';
 import { UpwStationRepository } from './upw.station.repository';
@@ -37,6 +39,12 @@ export class RepositoryProvider {
     @Inject(UpwStationRepository)
     private upwStationRepository: UpwStationRepository;
 
+    @Inject(HousingRepository)
+    private housingRepository: HousingRepository;
+
+    @Inject(ObjectRepository)
+    private objectRepository: ObjectRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -50,6 +58,8 @@ export class RepositoryProvider {
         this.repositories['fuelStation'] = this.fuelStationRepository;
         this.repositories['upwCharger'] = this.upwChargerRepository;
         this.repositories['upwStation'] = this.upwStationRepository;
+        this.repositories['housing'] = this.housingRepository;
+        this.repositories['object'] = this.objectRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)
@@ -70,12 +80,15 @@ export class RepositoryProvider {
         return null;
     }
 
-    @OnEvent(ServerEvent.REPOSITORY_REFRESH_DATA)
-    public async refresh(repositoryName: string) {
+    public async refresh(repositoryName: string): Promise<any | null> {
         if (this.repositories[repositoryName]) {
             const data = await this.repositories[repositoryName].refresh();
 
             TriggerClientEvent(ClientEvent.REPOSITORY_SYNC_DATA, -1, repositoryName, data);
+
+            return data;
         }
+
+        return null;
     }
 }

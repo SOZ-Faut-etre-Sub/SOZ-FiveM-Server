@@ -39,7 +39,7 @@ export class Notifier {
         });
     }
 
-    public error(source: number, message: string) {
+    public error(message: string) {
         this.notify(message, 'error');
     }
 }

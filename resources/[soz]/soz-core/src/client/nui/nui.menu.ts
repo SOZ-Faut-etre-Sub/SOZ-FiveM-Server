@@ -38,6 +38,10 @@ export class NuiMenu {
         });
     }
 
+    public setMenuVisibility(value: boolean) {
+        this.dispatcher.dispatch('menu', 'SetMenuVisibility', value);
+    }
+
     @Tick(TickInterval.EVERY_SECOND)
     public closeMenuIfTooFar() {
         if (!this.menuPosition || this.getOpened() === null) {

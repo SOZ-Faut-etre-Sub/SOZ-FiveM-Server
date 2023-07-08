@@ -5,7 +5,7 @@ import { AdminMenuStateProps } from '../../nui/components/Admin/AdminMenu';
 import { WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
-import { HousingUpgradesMenuData } from '../housing/menu';
+import { AdminMapperMenuData, HousingUpgradesMenuData } from '../housing/menu';
 import { MenuUpwData, UpwOrderMenuData } from '../job/upw';
 import { BossShopMenu, ShopProduct } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
@@ -24,6 +24,7 @@ export interface NuiMenuMethodMap {
     Enter: never;
     SetMenuType: SetMenuType;
     ToggleFocus: never;
+    SetMenuVisibility: boolean;
 }
 
 export type SetMenuType = {
@@ -35,6 +36,7 @@ export type SetMenuType = {
 
 export enum MenuType {
     AdminMenu = 'AdminMenu',
+    AdminMapperMenu = 'AdminMapperMenu',
     BahamaUnicornJobMenu = 'baun_job',
     BennysOrderMenu = 'bennys_order',
     BennysUpgradeVehicle = 'bennys_upgrade_vehicle',
@@ -70,6 +72,7 @@ export enum MenuType {
 
 export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.AdminMenu]: AdminMenuStateProps['data'];
+    [MenuType.AdminMapperMenu]: AdminMapperMenuData;
     [MenuType.BahamaUnicornJobMenu]: any;
     [MenuType.BennysUpgradeVehicle]: VehicleCustomMenuData;
     [MenuType.BennysOrderMenu]: any;
