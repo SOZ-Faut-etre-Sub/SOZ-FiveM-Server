@@ -630,6 +630,17 @@ export const UndershirtCategoryNeedingReplacementTorso = {
     },
 };
 
+export const UndershirtDrawablesToExclude = {
+    [1885233650]: {
+        [346]: [8, 29, 41],
+        [347]: [8, 29, 41],
+        [355]: [8, 29, 41],
+        [419]: [8, 29, 41],
+        [420]: [8, 29, 41],
+    },
+    [-1667301416]: {},
+};
+
 export const ProperTorsos = {
     [1885233650]: {
         [0]: 0,
