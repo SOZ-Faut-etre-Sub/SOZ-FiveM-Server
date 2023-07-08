@@ -1,5 +1,6 @@
-import { BrandsConfig, ShopBrand } from '@public/config/shops';
+import { BrandsConfig, ShopBrand, UndershirtDrawablesToExclude } from '@public/config/shops';
 import { useNuiEvent } from '@public/nui/hook/nui';
+import { Component } from '@public/shared/cloth';
 import { PlayerData } from '@public/shared/player';
 import { ClothingCategoryID, ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 import { FunctionComponent, useState } from 'react';
@@ -140,7 +141,10 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                             catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
                                             catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].includes(
                                                 items[0].undershirtType
-                                            ))
+                                            ) &&
+                                            !UndershirtDrawablesToExclude[playerData.skin.Model.Hash][
+                                                playerData.cloth_config.BaseClothSet.Components[Component.Tops].Drawable
+                                            ].includes(items[0].components[Component.Undershirt].Drawable))
                                 )
                                 .sort((a, b) => a[0].localeCompare(b[0]))
                                 .map(([modelLabel, items]) => (
