@@ -287,13 +287,16 @@ export class VehicleSpawnProvider {
             TaskWarpPedIntoVehicle(ped, vehicle, -1);
         }
 
+        if (volatile.plate) {
+            SetVehicleNumberPlateText(vehicle, volatile.plate);
+        }
+
+        this.vehicleStateService.setVehicleState(vehicle, volatile, true);
+        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
+
         if (vehicleSpawn.modification) {
             this.vehicleService.applyVehicleConfiguration(vehicle, vehicleSpawn.modification);
         }
-
-        this.vehicleService.syncVehicle(vehicle, volatile);
-        this.vehicleStateService.setVehicleState(vehicle, volatile, true);
-        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
     }
 
     @Rpc(RpcClientEvent.VEHICLE_DELETE)
