@@ -9,8 +9,9 @@ import {
     MainMenu,
     Menu,
     MenuContent,
-    MenuItemButton,
     MenuItemCheckbox,
+    MenuItemSelect,
+    MenuItemSelectOption,
     MenuItemSubMenuLink,
     MenuTitle,
     SubMenu,
@@ -67,53 +68,67 @@ export const JewelryShopMenu: FunctionComponent<MenuJewelryShopStateProps> = ({ 
                     <SubMenu id={(String(cat.categoryId) + String(subCatName)).replace(/\s/g, '')}>
                         <MenuTitle banner={banner}> {subCatName} </MenuTitle>
                         <MenuContent>
-                            {Object.entries(subCat).map(([drawable, next]) =>
-                                Object.entries(next).map(([texture, content]) => (
-                                    <MenuItemButton
-                                        key={content.Localized}
-                                        onConfirm={async () => {
-                                            fetchNui(NuiEvent.JewelryShopBuy, {
-                                                label: content.Localized,
-                                                price: cat.price,
-                                                overlay: cat.overlay,
-                                                components:
-                                                    cat.componentId != null
-                                                        ? {
-                                                              [cat.componentId]: {
-                                                                  Drawable: parseInt(drawable),
-                                                                  Texture: parseInt(texture),
-                                                                  Palette: 0,
-                                                              },
-                                                          }
-                                                        : null,
-                                                props:
-                                                    cat.propId != null
-                                                        ? {
-                                                              [cat.propId]: {
-                                                                  Drawable: parseInt(drawable),
-                                                                  Texture: parseInt(texture),
-                                                                  Palette: 0,
-                                                              },
-                                                          }
-                                                        : null,
-                                            } as JewelryShopItem);
-                                        }}
-                                        onSelected={async () => {
-                                            fetchNui(NuiEvent.JewelryShopPreview, {
-                                                drawable: parseInt(drawable),
-                                                texture: parseInt(texture),
-                                                propId: cat.propId,
-                                                componentId: cat.componentId,
-                                            });
-                                        }}
-                                    >
-                                        <div className="flex justify-between items-center">
-                                            <span>{content.Localized}</span>
-                                            <span className="mr-1">${cat.price}</span>
-                                        </div>
-                                    </MenuItemButton>
-                                ))
-                            )}
+                            {Object.entries(subCat).map(([drawable, next]) => (
+                                <MenuItemSelect
+                                    key={parseInt(drawable)}
+                                    title={''}
+                                    titleWidth={0}
+                                    value={Object.keys(next)[0]}
+                                    onSelectedValue={async (_, value) => {
+                                        await fetchNui(NuiEvent.JewelryShopPreview, {
+                                            drawable: parseInt(drawable),
+                                            texture: parseInt(value),
+                                            propId: cat.propId,
+                                            componentId: cat.componentId,
+                                        });
+                                    }}
+                                    description={`💸 Prix : $${cat.price}`}
+                                    onConfirm={async (_, value) => {
+                                        fetchNui(NuiEvent.JewelryShopBuy, {
+                                            label: next[value].Localized,
+                                            price: cat.price,
+                                            overlay: cat.overlay,
+                                            components:
+                                                cat.componentId != null
+                                                    ? {
+                                                          [cat.componentId]: {
+                                                              Drawable: parseInt(drawable),
+                                                              Texture: parseInt(value),
+                                                              Palette: 0,
+                                                          },
+                                                      }
+                                                    : null,
+                                            props:
+                                                cat.propId != null
+                                                    ? {
+                                                          [cat.propId]: {
+                                                              Drawable: parseInt(drawable),
+                                                              Texture: parseInt(value),
+                                                              Palette: 0,
+                                                          },
+                                                      }
+                                                    : null,
+                                        } as JewelryShopItem);
+                                    }}
+                                >
+                                    {Object.entries(next).map(([texture, content]) => (
+                                        <MenuItemSelectOption
+                                            key={parseInt(texture)}
+                                            value={texture}
+                                            onSelected={async () => {
+                                                await fetchNui(NuiEvent.JewelryShopPreview, {
+                                                    drawable: parseInt(drawable),
+                                                    texture: parseInt(texture),
+                                                    propId: cat.propId,
+                                                    componentId: cat.componentId,
+                                                });
+                                            }}
+                                        >
+                                            {content.Localized}
+                                        </MenuItemSelectOption>
+                                    ))}
+                                </MenuItemSelect>
+                            ))}
                         </MenuContent>
                     </SubMenu>
                 ))
