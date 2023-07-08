@@ -218,6 +218,28 @@ end
 RegisterNetEvent("inventory:server:CanSwapItem", Inventory.CanSwapItem)
 exports("CanSwapItem", Inventory.CanSwapItem)
 
+
+function Inventory.CanSwapItems(inv, outItems, inItems)
+    inv = Inventory(inv)
+
+    local inWeight = 0;
+    local outWeight = 0;
+
+    for _, v in pairs(outItems) do
+        local item = QBCore.Shared.Items[v.name]
+        outWeight += Inventory.SlotWeight(item, {amount = v.amount, metadata = v.medata})
+    end
+    
+    for _, v in pairs(inItems) do
+        local item = QBCore.Shared.Items[v.name]
+        outWeight += Inventory.SlotWeight(item, {amount = v.amount, metadata = v.medata})
+    end
+
+    return inv.weight + inWeight - outWeight <= inv.maxWeight
+end
+RegisterNetEvent("inventory:server:CanSwapItems", Inventory.CanSwapItems)
+exports("CanSwapItems", Inventory.CanSwapItems)
+
 function Inventory.CanCarryItem(inv, item, amount, metadata)
     if type(item) ~= "table" then
         item = QBCore.Shared.Items[item]
