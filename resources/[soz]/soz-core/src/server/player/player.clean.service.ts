@@ -70,6 +70,21 @@ export class PlayerCleanService {
             },
         });
 
+        await this.prismaService.playerVehicle.updateMany({
+            where: {
+                garage: {
+                    in: housingOwnerIdentifiers.map(h => 'property_' + h.identifier),
+                },
+            },
+            data: {
+                garage: 'airportpublic',
+            },
+        });
+
+        for (const housingOwnerIdentifier of housingOwnerIdentifiers) {
+            exports['soz-bank'].ClearAccount(housingOwnerIdentifier.identifier);
+        }
+
         const housingRoommateUpdated = await this.prismaService.housing_apartment.updateMany({
             data: {
                 roommate: null,
