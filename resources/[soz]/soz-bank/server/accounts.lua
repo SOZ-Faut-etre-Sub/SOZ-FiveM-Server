@@ -170,6 +170,15 @@ function Account.RemoveMoney(acc, money, money_type)
     end
 end
 
+function Account.Clear(acc)
+    acc = Account(acc)
+
+    acc.money = 0
+    acc.marked_money = 0
+    acc.changed = true
+end
+exports("ClearAccount", Account.Clear)
+
 function Account.TransfertMoney(accSource, accTarget, money, cb)
     accSource = Account(accSource)
     accTarget = Account(accTarget)

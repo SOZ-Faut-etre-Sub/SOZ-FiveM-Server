@@ -23,8 +23,9 @@ setmetatable(Inventory, {
 MySQL.ready(function()
     local StorageNotLoaded = table.clone(Config.Storages)
 
-    --delete inventory of non players cars to avoid having an NPC car with same plate retrieving an existing inventory
-    MySQL.query("DELETE FROM storages WHERE NAME IN (SELECT name FROM storages LEFT OUTER JOIN player_vehicles on storages.owner = player_vehicles.plate where storages.`type`='trunk' AND player_vehicles.citizenid IS NULL)")
+    -- delete inventory of non players cars to avoid having an NPC car with same plate retrieving an existing inventory
+    MySQL.query(
+        "DELETE FROM storages WHERE NAME IN (SELECT name FROM storages LEFT OUTER JOIN player_vehicles on storages.owner = player_vehicles.plate where storages.`type`='trunk' AND player_vehicles.citizenid IS NULL)")
 
     MySQL.query("SELECT * FROM storages", {}, function(result)
         if result then
@@ -218,7 +219,6 @@ end
 RegisterNetEvent("inventory:server:CanSwapItem", Inventory.CanSwapItem)
 exports("CanSwapItem", Inventory.CanSwapItem)
 
-
 function Inventory.CanSwapItems(inv, outItems, inItems)
     inv = Inventory(inv)
 
@@ -227,12 +227,12 @@ function Inventory.CanSwapItems(inv, outItems, inItems)
 
     for _, v in pairs(outItems) do
         local item = QBCore.Shared.Items[v.name]
-        outWeight += Inventory.SlotWeight(item, {amount = v.amount, metadata = v.medata})
+        outWeight = outWeight + Inventory.SlotWeight(item, {amount = v.amount, metadata = v.medata})
     end
-    
+
     for _, v in pairs(inItems) do
         local item = QBCore.Shared.Items[v.name]
-        outWeight += Inventory.SlotWeight(item, {amount = v.amount, metadata = v.medata})
+        inWeight = inWeight + Inventory.SlotWeight(item, {amount = v.amount, metadata = v.medata})
     end
 
     return inv.weight + inWeight - outWeight <= inv.maxWeight
@@ -1083,3 +1083,14 @@ local function GetMetrics()
 end
 
 exports("GetMetrics", GetMetrics)
+
+local function clearByOwner(owner)
+    MySQL.query("UPDATE storages SET inventory = ? WHERE owner = ?", {"[]", owner})
+
+    for _, inv in pairs(Inventories) do
+        if (inv.owner == owner) then
+            Inventory.Clear(inv, false)
+        end
+    end
+end
+exports("ClearByOwner", clearByOwner)
