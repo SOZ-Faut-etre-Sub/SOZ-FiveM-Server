@@ -185,6 +185,14 @@ export class InventoryManager {
         return this.sozInventory.CanSwapItem(source, firstItemId, firstItemAmount, secondItemId, secondItemAmount);
     }
 
+    public canSwapItems(
+        source: number,
+        outItems: { name: string; amount: number; metadata: InventoryItemMetadata }[],
+        inItems: { name: string; amount: number; metadata: InventoryItemMetadata }[]
+    ): boolean {
+        return this.sozInventory.CanSwapItems(source, outItems, inItems);
+    }
+
     public hasEnoughItem(source: number, itemId: string, amount?: number, skipExpiredItem?: boolean): boolean {
         const items = this.getItems(source);
         let count = 0;
