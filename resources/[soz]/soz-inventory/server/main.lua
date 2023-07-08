@@ -23,6 +23,9 @@ setmetatable(Inventory, {
 MySQL.ready(function()
     local StorageNotLoaded = table.clone(Config.Storages)
 
+    --delete inventory of non players cars to avoid having an NPC car with same plate retrieving an existing inventory
+    MySQL.query("DELETE FROM storages WHERE NAME IN (SELECT name FROM storages LEFT OUTER JOIN player_vehicles on storages.owner = player_vehicles.plate where storages.`type`='trunk' AND player_vehicles.citizenid IS NULL)")
+
     MySQL.query("SELECT * FROM storages", {}, function(result)
         if result then
             for _, v in pairs(result) do

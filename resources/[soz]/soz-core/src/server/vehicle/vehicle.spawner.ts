@@ -293,7 +293,7 @@ export class VehicleSpawner {
         const modelHash = GetHashKey(model);
         const volatileState = {
             ...getDefaultVehicleVolatileState(),
-            isPlayerVehicle: true,
+            isPlayerVehicle: false,
             owner: player.citizenid,
             open: true,
         };
