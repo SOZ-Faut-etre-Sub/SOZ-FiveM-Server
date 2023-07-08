@@ -118,6 +118,11 @@ export class AdminMenuMapperProvider {
         ],
     })
     public async toggleMapperMenu(): Promise<void> {
+        const [isAllowed] = await emitRpc<[boolean, string]>(RpcServerEvent.ADMIN_IS_ALLOWED);
+        if (!isAllowed) {
+            return;
+        }
+
         if (this.nuiMenu.getOpened() === MenuType.AdminMapperMenu) {
             this.nuiMenu.closeMenu();
 
