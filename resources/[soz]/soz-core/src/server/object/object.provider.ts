@@ -154,6 +154,24 @@ export class ObjectProvider {
         this.notifier.notify(source, `L'objet ${prop.unique_id} a été modifié`, 'success');
     }
 
+    @Rpc(RpcServerEvent.PROP_REQUEST_TOGGLE_LOAD_COLLECTION)
+    public async toggleLoadCollection(source: number, collection: string, value: boolean) {
+        if (!this.collections[collection]) {
+            this.notifier.notify(
+                source,
+                `Impossible de charger ou décharger la collection ${collection} car elle n'existe pas.`,
+                'error'
+            );
+            return;
+        }
+        if (value) {
+            await this.loadProps(source, this.collections[collection]);
+        } else {
+            await this.unloadProps(source, this.collections[collection]);
+        }
+        return await this.getCollection(source, collection);
+    }
+
     @OnEvent(ServerEvent.PROP_REQUEST_LOAD_PROPS)
     public async loadProps(source: number, propIds: string[]) {
         const propsToLoad: WorldPlacedProp[] = [];
@@ -164,30 +182,14 @@ export class ObjectProvider {
                 this.notifier.notify(source, `Impossible de charger l'objet ${propId} car il n'existe pas.`, 'error');
                 continue;
             }
-            if (prop.loaded) {
-                this.notifier.notify(source, `L'objet ${propId} est déjà chargé.`, 'info');
-                continue;
-            }
             propsToLoad.push(prop);
+            this.objects[propId].loaded = true;
         }
 
         await this.createPropsToAllClients(propsToLoad);
     }
 
-    @OnEvent(ServerEvent.PROP_REQUEST_LOAD_COLLECTION)
-    public async loadCollection(source: number, collection: string) {
-        if (!this.collections[collection]) {
-            this.notifier.notify(
-                source,
-                `Impossible de charger la collection ${collection} car elle n'existe pas.`,
-                'error'
-            );
-            return;
-        }
-        await this.loadProps(source, this.collections[collection]);
-    }
-
-    @OnEvent(ServerEvent.PROP_REQUEST_UNLOAD_PROPS)
+    @Rpc(RpcServerEvent.PROP_REQUEST_UNLOAD_PROPS)
     public async unloadProps(source: number, propIds: string[]) {
         const propIdsToUnload: string[] = [];
 
@@ -197,11 +199,8 @@ export class ObjectProvider {
                 this.notifier.notify(source, `Impossible de décharger l'objet ${propId} car il n'existe pas.`, 'error');
                 continue;
             }
-            if (!prop.loaded) {
-                this.notifier.notify(source, `L'objet ${propId} est déjà déchargé.`, 'info');
-                continue;
-            }
             propIdsToUnload.push(propId);
+            this.objects[propId].loaded = false;
         }
 
         await this.deletePropsToAllClients(propIdsToUnload);

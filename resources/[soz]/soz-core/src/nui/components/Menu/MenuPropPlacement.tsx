@@ -74,7 +74,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 return;
             }
             setCollection(col);
-            navigate(`/${MenuType.PropPlacementMenu}/collection`, { state: location.state });
+            navigate(`/${MenuType.PropPlacementMenu}/collection`, { state: { ...location.state, activeIndex: 0 } });
         };
     };
 
@@ -86,7 +86,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     const onChooseProp = (selectedProp: WorldPlacedProp) => {
         return async () => {
             await fetchNui(NuiEvent.ChoosePlacedPropToEdit, { selectedProp });
-            navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: location.state });
+            navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
         };
     };
 
@@ -100,7 +100,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
         return async () => {
             const result: Result<any, never> = await fetchNui(NuiEvent.ChoosePropToCreate, { selectedProp });
             if (isOk(result)) {
-                navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: location.state });
+                navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
             }
         };
     };
@@ -130,7 +130,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                                         ? '🔴'
                                         : collection.loaded_size < collection.size
                                         ? '🔵'
-                                        : '🟢'}
+                                        : '🟢'}{' '}
                                     {collection.name}
                                 </span>
                                 <span>
@@ -196,8 +196,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                             await fetchNui(NuiEvent.RequestDeletePropCollection, { name: collection.name });
                             navigate(-1);
                         }}
-                        disabled={collection.loaded_size > 0}
-                        description="Supprime la collection du serveur. Il faut la décharger avant !"
+                        description="Supprime la collection du serveur."
                     >
                         ❌ Supprimer la collection
                     </MenuItemButton>

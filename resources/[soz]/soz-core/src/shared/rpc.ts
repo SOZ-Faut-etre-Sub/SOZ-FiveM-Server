@@ -112,6 +112,8 @@ export enum RpcServerEvent {
     PROP_REQUEST_CREATE_COLLECTION = 'soz-core:server:prop:create-collection',
     PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:delete-collection',
     PROP_REQUEST_CREATE_PROP = 'soz-core:server:prop:create-prop',
+    PROP_REQUEST_TOGGLE_LOAD_COLLECTION = 'soz-core:server:prop:load-collection',
+    PROP_REQUEST_UNLOAD_PROPS = 'soz-core:server:prop:unload-props',
 }
 
 export enum RpcClientEvent {

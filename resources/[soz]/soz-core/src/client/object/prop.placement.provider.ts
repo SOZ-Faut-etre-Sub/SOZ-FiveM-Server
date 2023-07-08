@@ -16,14 +16,14 @@ import {
     SpawnedCollection,
     WorldPlacedProp,
 } from '@public/shared/object';
-import { Err, isErr, Ok, Result } from '@public/shared/result';
+import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
-import { ResourceLoader } from '../resources/resource.loader';
+import { PropHighlightProvider } from './prop.highlight.provider';
 import { PropProvider } from './prop.provider';
 
 type EditorState = {
@@ -45,8 +45,8 @@ export class PropPlacementProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(ResourceLoader)
-    private resourceLoader: ResourceLoader;
+    @Inject(PropHighlightProvider)
+    private highlightProvider: PropHighlightProvider;
 
     @Inject(PropProvider)
     private propProvider: PropProvider;
@@ -108,6 +108,7 @@ export class PropPlacementProvider {
             propsToHighlight: {},
             currentCollection: null,
         };
+        await this.highlightProvider.unhighlightAllEntities();
     }
 
     @OnNuiEvent(NuiEvent.RequestCreatePropCollection)
@@ -145,6 +146,9 @@ export class PropPlacementProvider {
         propCollectionDatas?: PropCollectionData[],
         currentCollection?: PropCollection | null
     ) {
+        console.log('refreshing prop placement menu data');
+        console.log(propCollectionDatas);
+        console.log(currentCollection);
         if (propCollectionDatas) {
             this.nuiDispatch.dispatch('placement_prop', 'SetCollectionList', propCollectionDatas);
         }
@@ -164,32 +168,12 @@ export class PropPlacementProvider {
             return null;
         }
         this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(collection);
+        await this.highlightProvider.unhighlightAllEntities();
+        await this.highlightProvider.highlightEntities(
+            this.editorState.currentCollection.props.map(prop => prop.entity)
+        );
         console.log('current collection : ', this.editorState.currentCollection);
         return collection;
-    }
-
-    // Not usef for now
-    public async handleHighlight(): Promise<void> {
-        if (!this.editorState) {
-            return;
-        }
-        if (!this.editorState.propsToHighlight) {
-            return;
-        }
-        for (const unique_id of Object.keys(this.editorState.highlightedProps)) {
-            const entity = this.editorState.highlightedProps[unique_id];
-            if (!this.editorState.propsToHighlight[unique_id]) {
-                SetEntityDrawOutline(entity, false);
-                delete this.editorState.highlightedProps[entity];
-            }
-        }
-        for (const unique_id of Object.keys(this.editorState.propsToHighlight)) {
-            const entity = this.editorState.propsToHighlight[unique_id];
-            if (!this.editorState.highlightedProps[unique_id]) {
-                SetEntityDrawOutline(entity, true);
-                this.editorState.highlightedProps[unique_id] = entity;
-            }
-        }
     }
 
     @OnNuiEvent(NuiEvent.HighlightCollection)
@@ -389,12 +373,9 @@ export class PropPlacementProvider {
             loaded: false,
         };
 
-        const newCollection: Result<PropCollection, never> = await emitRpc(
-            RpcServerEvent.PROP_REQUEST_CREATE_PROP,
-            worldPlacedProp
-        );
+        const newCollection = await emitRpc<PropCollection>(RpcServerEvent.PROP_REQUEST_CREATE_PROP, worldPlacedProp);
 
-        if (isErr(newCollection)) {
+        if (!newCollection) {
             return Err(false);
         }
 
@@ -410,17 +391,44 @@ export class PropPlacementProvider {
 
         // We also need to update the client and server data on the nui
         const collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
-        await this.refreshPropPlacementMenuData(collections, newCollection.ok);
+        await this.refreshPropPlacementMenuData(collections, newCollection);
 
         this.notifier.notify('Le prop a bien été créé !', 'success');
 
         await this.onLeaveEditorMode();
+        await this.highlightProvider.highlightEntities([debugProp.entity]);
 
         return Ok(true);
     }
 
+    @OnNuiEvent(NuiEvent.RequestToggleCollectionLoad)
+    public async requestToggleCollectionLoad({ name, value }: { name: string; value: boolean }) {
+        await this.highlightProvider.unhighlightAllEntities();
+        await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
+        const newCollection = await emitRpc<PropCollection>(
+            RpcServerEvent.PROP_REQUEST_TOGGLE_LOAD_COLLECTION,
+            name,
+            value
+        );
+        if (!newCollection) {
+            this.notifier.notify('Impossible de charger ou décharger la collection.', 'error');
+            return;
+        }
+        this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(newCollection);
+        await this.highlightProvider.highlightEntities(
+            this.editorState.currentCollection.props.map(prop => prop.entity)
+        );
+        const collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
+        await this.refreshPropPlacementMenuData(collections, newCollection);
+        if (value) {
+            this.notifier.notify('Collection chargée !', 'success');
+        } else {
+            this.notifier.notify('Collection déchargée !', 'success');
+        }
+    }
+
     @Exportable('IsEditorModeActive')
-    public IsPlacementModeActive(): boolean {
+    public IsEditorModeActive(): boolean {
         return this.editorState && this.editorState.isEditorModeOn;
     }
 }

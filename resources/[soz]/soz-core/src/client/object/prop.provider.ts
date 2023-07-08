@@ -36,7 +36,7 @@ export class PropProvider {
 
     // In case the client seems to desync with the server, we provide a function to resync the client
     @OnEvent(ClientEvent.PROP_SYNC_CLIENTSIDE)
-    public async syncClientSideProp() {
+    public async syncPropClientSide() {
         const loadProps = await emitRpc<WorldPlacedProp[]>(RpcServerEvent.PROP_GET_LOADED_PROPS);
 
         // Pass over the spawned props and check they exist for the server
@@ -225,14 +225,14 @@ export class PropProvider {
                 if (!this.objects[prop.unique_id]) {
                     // The prop should be loaded, but is not for this client. It shouldn't happen
                     console.error(`[PropProvider] Prop ${prop.unique_id} is loaded but not spawned. Syncing...`);
-                    await this.syncClientSideProp();
+                    await this.syncPropClientSide();
                     entity = this.objects[prop.unique_id].entity;
                 } else {
                     entity = this.objects[prop.unique_id].entity;
                     if (!DoesEntityExist(entity)) {
                         // The prop should be loaded, exists for the client, but the entity doesn't exist. It shouldn't happen
                         console.error(`[PropProvider] Prop ${prop.unique_id} is loaded but not spawned. Syncing...`);
-                        await this.syncClientSideProp();
+                        await this.syncPropClientSide();
                         entity = this.objects[prop.unique_id].entity;
                     }
                 }

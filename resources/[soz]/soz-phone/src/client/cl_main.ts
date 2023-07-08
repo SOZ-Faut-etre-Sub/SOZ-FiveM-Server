@@ -136,9 +136,8 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 };
 
 async function togglePhone(): Promise<void> {
-    const isPlacementModeActive = exports['soz-core'].IsPlacementModeActive();
-    console.log('isPlacementModeActive', isPlacementModeActive);
-    if (isPlacementModeActive) {
+    const isEditorModeActive = exports['soz-core'].IsEditorModeActive();
+    if (isEditorModeActive) {
         return;
     }
 
