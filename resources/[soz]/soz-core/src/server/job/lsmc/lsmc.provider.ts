@@ -1,6 +1,6 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { PlayerInjuriesProvider } from '@private/server/player/player.injuries.provider';
+import { PlayerInjuryProvider } from '@private/server/player/player.injuries.provider';
 import { Command } from '@public/core/decorators/command';
 import { OnEvent } from '@public/core/decorators/event';
 import { Rpc } from '@public/core/decorators/rpc';
@@ -27,8 +27,8 @@ export class LSMCProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    @Inject(PlayerInjuriesProvider)
-    private playerInjuriesProvider: PlayerInjuriesProvider;
+    @Inject(PlayerInjuryProvider)
+    private playerInjuryProvider: PlayerInjuryProvider;
 
     @Rpc(RpcServerEvent.LSMC_CAN_REMOVE_ITT)
     public canRemoveITT(source: number, target: number) {
@@ -44,7 +44,7 @@ export class LSMCProvider {
             return false;
         }
 
-        if (this.playerInjuriesProvider.hasMaxInjuries(target)) {
+        if (this.playerInjuryProvider.hasMaxInjuries(target)) {
             return false;
         }
 
