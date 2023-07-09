@@ -8,3 +8,4 @@ imgui.ini
 /db
 polyzone_created_zones.txt*
 node_modules
+.replxx_history
