@@ -193,6 +193,13 @@ function Account.TransfertMoney(accSource, accTarget, money, cb)
                     _G.AccountType[accTarget.type]:save(accTarget.id, accTarget.owner, accTarget.money, accTarget.marked_money)
 
                     success = true
+
+                    exports["soz-core"]:Event("transfer_money", {
+                        source_owner = accSource.owner,
+                        target_owner = accTarget.owner,
+                        source_id = accSource.id,
+                        target_id = accTarget.id,
+                    }, {money = money})
                 else
                     success, reason = false, "transfert_failed"
                 end

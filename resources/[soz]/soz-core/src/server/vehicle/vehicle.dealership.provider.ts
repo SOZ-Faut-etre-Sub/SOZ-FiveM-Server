@@ -8,7 +8,6 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
-import { Monitor } from '../../shared/monitor';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItems } from '../../shared/random';
@@ -20,6 +19,7 @@ import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, Vehicle, VehicleMaxStock } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { LockService } from '../lock.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerService } from '../player/player.service';
@@ -56,26 +56,8 @@ export class VehicleDealershipProvider {
 
     @Once(OnceStep.DatabaseConnected)
     public async initAuction() {
-        const lastPurchases = await this.prismaService.player_purchases.groupBy({
-            where: {
-                shop_type: 'dealership',
-                shop_id: DealershipType.Luxury,
-            },
-            by: ['item_id'],
-            having: {
-                item_id: {
-                    _count: {
-                        gte: 2,
-                    },
-                },
-            },
-        });
-
         const vehicles = await this.prismaService.vehicle.findMany({
             where: {
-                model: {
-                    notIn: lastPurchases.map(purchase => purchase.item_id),
-                },
                 category: {
                     in: ['Sports', 'Sportsclassic'],
                 },

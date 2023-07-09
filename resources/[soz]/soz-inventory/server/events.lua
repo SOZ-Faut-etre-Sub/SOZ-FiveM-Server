@@ -25,12 +25,12 @@ RegisterServerEvent("inventory:server:bin-vandalism", function(invID, ctx)
     local binInv = GetOrCreateInventory(storageType, invID, ctx)
     local count = Inventory.Search(binInv, "amount", "garbagebag")
     Inventory.RemoveItem(binInv, "garbagebag", count)
-    Inventory.AddItem(binInv, "torn_garbagebag", math.ceil(count / 2))
+    Inventory.AddItem(source, binInv, "torn_garbagebag", math.floor(count / 2))
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
                                 function(source, cb, inventorySource, inventoryTarget, item, amount, metadata, slot, targetSlot, manualFilter)
-    Inventory.TransfertItem(inventorySource, inventoryTarget, item, amount, metadata, slot, function(success, reason)
+    Inventory.TransfertItem(source, inventorySource, inventoryTarget, item, amount, metadata, slot, function(success, reason)
         local sourceInv = Inventory(inventorySource)
         local targetInv = Inventory(inventoryTarget)
 
@@ -88,6 +88,11 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertMoney", function(sour
             TriggerClientEvent("soz-core:client:notification:draw", SourcePlayer.PlayerData.source, string.format("Vous avez donné ~r~%s$", amount))
             TriggerClientEvent("soz-core:client:notification:draw", TargetPlayer.PlayerData.source, string.format("Vous avez reçu ~g~%s$", amount))
         end
+
+        exports["soz-core"]:Event("give_money", {
+            src = SourcePlayer.PlayerData.citizenid,
+            target = TargetPlayer.PlayerData.citizenid,
+        }, {money = moneyTake, marked_money = markedMoneyTake})
     else
         TriggerClientEvent("soz-core:client:notification:draw", source, "Pas assez d'argent", "error")
     end
@@ -110,4 +115,14 @@ RegisterServerEvent("inventory:server:closeInventory", function(invID)
     if targetInv and targetInv.users[source] then
         targetInv.users[source] = nil
     end
+end)
+
+RegisterServerEvent("inventory:server:renameItem", function(label, item)
+    local inventorySource = Inventory(source)
+    local metadata = item.metadata
+    metadata.label = label
+
+    Inventory.SetMetadata(inventorySource, item.slot, metadata)
+    local message = string.format("Vous avez ajouté l'étiquette ~g~%s", label)
+    TriggerClientEvent("soz-core:client:notification:draw", source, message)
 end)

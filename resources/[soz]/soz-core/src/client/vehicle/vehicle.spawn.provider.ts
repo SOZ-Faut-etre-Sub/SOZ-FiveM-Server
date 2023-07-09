@@ -114,7 +114,7 @@ export class VehicleSpawnProvider {
             return false;
         }
 
-        this.doSpawn(vehicle, networkId, vehicleSpawn, volatile, condition);
+        await this.doSpawn(vehicle, networkId, vehicleSpawn, volatile, condition);
 
         return true;
     }
@@ -147,10 +147,10 @@ export class VehicleSpawnProvider {
             }
         }
 
-        await this.resourceLoader.loadModel(vehicleSpawn.model);
+        await this.resourceLoader.loadModel(hash);
 
         const vehicle = CreateVehicle(
-            vehicleSpawn.model,
+            hash,
             vehicleSpawn.position[0],
             vehicleSpawn.position[1],
             vehicleSpawn.position[2],
@@ -159,7 +159,21 @@ export class VehicleSpawnProvider {
             true
         );
 
-        this.resourceLoader.unloadModel(vehicleSpawn.model);
+        this.resourceLoader.unloadModel(hash);
+        let attempts = 0;
+
+        while (!NetworkGetEntityIsNetworked(vehicle) && attempts < 10) {
+            NetworkRegisterEntityAsNetworked(vehicle);
+            attempts += 1;
+            await wait(100);
+        }
+
+        if (!NetworkGetEntityIsNetworked(vehicle)) {
+            this.logger.error(`could not create vehicle on network, try again latter`);
+            DeleteVehicle(vehicle);
+
+            return null;
+        }
 
         const networkId = NetworkGetNetworkIdFromEntity(vehicle);
 

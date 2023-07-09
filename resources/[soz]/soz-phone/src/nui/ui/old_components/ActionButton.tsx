@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useConfig } from '../../hooks/usePhone';
 
-export const ActionButton: React.FC<any> = ({ ...props }) => {
+export const ActionButton: React.FC<any> = ({ children, ...props }) => {
     const config = useConfig();
 
     return (
@@ -16,7 +16,7 @@ export const ActionButton: React.FC<any> = ({ ...props }) => {
                 'cursor-pointer': !props.disabled,
             })}
         >
-            {props.children}
+            {children}
         </div>
     );
 };

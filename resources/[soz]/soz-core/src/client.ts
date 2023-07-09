@@ -26,6 +26,7 @@ import { PoliceModule } from './client/job/police/police.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { TaxiModule } from './client/job/taxi/taxi.module';
 import { UpwModule } from './client/job/upw/upw.module';
+import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
 import { ObjectModule } from './client/object/object.module';
 import { PlayerModule } from './client/player/player.module';
@@ -57,6 +58,7 @@ async function bootstrap() {
         ProviderClientLoader,
         StoreModule,
         RepositoryModule,
+        MonitorModule,
         HudModule,
         WorldModule,
         ObjectModule,

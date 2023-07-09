@@ -17,6 +17,14 @@ export class VehicleStateService {
 
     private selectorCreators = [];
 
+    public checkState() {
+        for (const vehicleEntityId of this.state.keys()) {
+            if (!DoesEntityExist(vehicleEntityId)) {
+                this.state.delete(vehicleEntityId);
+            }
+        }
+    }
+
     public async getVehicleState(vehicleEntityId: number): Promise<VehicleVolatileState> {
         if (this.state.has(vehicleEntityId)) {
             const item = this.state.get(vehicleEntityId);
@@ -24,6 +32,12 @@ export class VehicleStateService {
             return { ...item.state };
         }
 
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+
+        return await emitRpc<VehicleVolatileState>(RpcServerEvent.VEHICLE_GET_STATE, vehicleNetworkId);
+    }
+
+    public async getServerVehicleState(vehicleEntityId: number): Promise<VehicleVolatileState> {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
 
         return await emitRpc<VehicleVolatileState>(RpcServerEvent.VEHICLE_GET_STATE, vehicleNetworkId);

@@ -14,7 +14,6 @@ export const emitRpcTimeout = async <R>(name: RpcServerEvent, timeout: number, .
         try {
             return await doEmitRpc<R>(name, timeout, ...args);
         } catch (e) {
-            console.error(`RPC ${name} failed`, e);
             rpcTry++;
 
             if (rpcTry === 3) {
@@ -42,7 +41,6 @@ export const emitClientRpcConfig = async <R>(
         try {
             return await doEmitClientRpc<R>(name, source, config.timeout, ...args);
         } catch (e) {
-            console.error(`RPC ${name} failed`, e);
             rpcTry++;
 
             if (rpcTry === 3) {

@@ -3,6 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { BlipFactory } from '@public/client/blip';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { Monitor } from '@public/client/monitor/monitor';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
 import { TargetFactory } from '@public/client/target/target.factory';
@@ -10,7 +11,6 @@ import { emitRpc } from '@public/core/rpc';
 import { Organ } from '@public/shared/disease';
 import { ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
-import { Monitor } from '@public/shared/monitor';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -62,14 +62,22 @@ export class LSMCSurgeryProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
                 canInteract: async entity => {
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
+                    if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
+                        return false;
+                    }
+
+                    if (!surgery.isPointInside(GetEntityCoords(entity) as Vector3)) {
+                        return false;
+                    }
+
                     const id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     organ = await emitRpc<Organ>(RpcServerEvent.LSMC_GET_CURRENT_ORGAN, id);
-                    return (
-                        this.playerService.isOnDuty() &&
-                        IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3) &&
-                        surgery.isPointInside(GetEntityCoords(entity) as Vector3) &&
-                        !organ
-                    );
+
+                    return !organ;
                 },
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
@@ -102,12 +110,22 @@ export class LSMCSurgeryProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
                 canInteract: async entity => {
-                    return (
-                        this.playerService.isOnDuty() &&
-                        IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3) &&
-                        surgery.isPointInside(GetEntityCoords(entity) as Vector3) &&
-                        !organ
-                    );
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
+                    if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
+                        return false;
+                    }
+
+                    if (!surgery.isPointInside(GetEntityCoords(entity) as Vector3)) {
+                        return false;
+                    }
+
+                    const id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                    organ = await emitRpc<Organ>(RpcServerEvent.LSMC_GET_CURRENT_ORGAN, id);
+
+                    return !organ;
                 },
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
@@ -140,12 +158,22 @@ export class LSMCSurgeryProvider {
                 blackoutGlobal: true,
                 blackoutJob: JobType.LSMC,
                 canInteract: async entity => {
-                    return (
-                        this.playerService.isOnDuty() &&
-                        IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3) &&
-                        surgery.isPointInside(GetEntityCoords(entity) as Vector3) &&
-                        !organ
-                    );
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
+                    if (!IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3)) {
+                        return false;
+                    }
+
+                    if (!surgery.isPointInside(GetEntityCoords(entity) as Vector3)) {
+                        return false;
+                    }
+
+                    const id = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                    organ = await emitRpc<Organ>(RpcServerEvent.LSMC_GET_CURRENT_ORGAN, id);
+
+                    return !organ;
                 },
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
@@ -177,7 +205,7 @@ export class LSMCSurgeryProvider {
                 job: JobType.LSMC,
                 blackoutGlobal: true,
                 blackoutJob: 'lsmc',
-                canInteract: async entity => {
+                canInteract: entity => {
                     return (
                         this.playerService.isOnDuty() &&
                         IsEntityPlayingAnim(entity, 'anim@gangops@morgue@table@', 'body_search', 3) &&

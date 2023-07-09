@@ -23,6 +23,12 @@ function QBCore.Functions.GetIdentifier(source, idtype)
 end
 
 function QBCore.Functions.GetSozIdentifier(source)
+    local forcedIdentifier = GetConvar('soz_force_player_identifier', '')
+
+    if forcedIdentifier ~= '' then
+        return forcedIdentifier
+    end
+
     if GetConvar("soz_disable_steam_credential", "false") == "true" then
         return QBCore.Functions.GetIdentifier(source, 'license')
     end
@@ -76,7 +82,7 @@ function QBCore.Functions.GetUserAccount(source, useTestMode)
     end)
 
     if not status or not result then
-        exports["soz-monitor"]:Log("ERROR", "cannot find account for this user: '" .. json.encode(result) .. "'", {
+        exports["soz-core"]:Log("ERROR", "cannot find account for this user: '" .. json.encode(result) .. "'", {
             steam = steam,
         })
 

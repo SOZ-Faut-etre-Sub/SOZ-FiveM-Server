@@ -77,4 +77,8 @@ export class InventoryManager {
             );
         }
     }
+
+    public openShopInventory(shopContent, shopHeaderTexture) {
+        TriggerEvent('inventory:client:openShop', shopContent, shopHeaderTexture);
+    }
 }

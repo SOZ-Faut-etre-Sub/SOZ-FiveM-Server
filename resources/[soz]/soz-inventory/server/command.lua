@@ -34,7 +34,7 @@ QBCore.Commands.Add("giveitem", "Give An Item", {
                     end
                 end
 
-                Inventory.AddItem(Player.PlayerData.source, itemData["name"], amount, metadata, false, function(success, reason)
+                Inventory.AddItem(Player.PlayerData.source, Player.PlayerData.source, itemData["name"], amount, metadata, false, function(success, reason)
                     if success then
                         TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous avez donné ~o~%s ~b~%s", amount, itemData["label"]))
                     else

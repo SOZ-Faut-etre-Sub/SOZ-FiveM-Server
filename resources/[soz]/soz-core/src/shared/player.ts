@@ -132,6 +132,8 @@ export enum PlayerLicenceType {
     Rescuer = 'rescuer',
 }
 
+export type PlayerListStateKey = 'dead' | 'zipped' | 'wearingPatientOutfit';
+
 export enum PlayerCriminalState {
     None,
     Allowed,

@@ -26,64 +26,17 @@ import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
-const DOOR_INDEX_CONFIG: Partial<Record<VehicleClass, Record<string, number>>> = {
-    [VehicleClass.Helicopters]: {
-        window_lf: -1,
-        window_rf: 0,
-        seat_dside_r: 1,
-        seat_pside_r: 2,
-        handle_dside_f: -1,
-        handle_pside_f: 0,
-        handle_dside_r: 1,
-        handle_pside_r: 2,
-    },
-    [VehicleClass.Motorcycles]: {
-        seat_f: -1,
-        seat_r: 0,
-    },
-    [VehicleClass.Boats]: {
-        seat_dside_f: -1,
-        seat_pside_f: 0,
-        seat_dside_r: 1,
-        seat_pside_r: 2,
-    },
-    [VehicleClass.Service]: {
-        seat_dside_f: -1,
-        seat_pside_f: 0,
-        seat_dside_r1: 1,
-        seat_pside_r1: 2,
-        seat_dside_r2: 3,
-        seat_pside_r2: 4,
-        handle_dside_f: -1,
-        handle_pside_f: 0,
-        handle_dside_r: 1,
-        handle_pside_r: 2,
-        wheel_lr: 5,
-        wheel_rr: 6,
-    },
-    [VehicleClass.Commercial]: {
-        seat_dside_f: -1,
-        seat_pside_f: 0,
-        seat_dside_r1: 1,
-        seat_pside_r1: 2,
-        seat_dside_r2: 3,
-        seat_pside_r2: 4,
-        handle_dside_f: -1,
-        handle_pside_f: 0,
-        handle_dside_r: 1,
-        handle_pside_r: 2,
-        wheel_lr: 5,
-        wheel_rr: 6,
-    },
-};
-
-const DOOR_INDEX_DEFAULT_CONFIG = {
-    handle_dside_f: -1,
-    handle_pside_f: 0,
-    handle_dside_r: 1,
-    handle_pside_r: 2,
-    wheel_lr: 3,
-    wheel_rr: 4,
+const DOOR_INDEX_CONFIG = {
+    seat_dside_f: -1,
+    seat_pside_f: 0,
+    seat_dside_r: 1,
+    seat_pside_r: 2,
+    door_dside_f: -1,
+    door_pside_f: 0,
+    door_dside_r: 1,
+    door_pside_r: 2,
+    wheel_lr: [3, 5],
+    wheel_rr: [4, 6],
 };
 
 const VEHICLE_TRUNK_TYPES = {
@@ -126,12 +79,26 @@ export class VehicleLockProvider {
 
     private vehicleTrunkOpened: TrunkOpened | null = null;
 
+    private vehicleOpened: Set<number> = new Set();
+
+    @Once(OnceStep.PlayerLoaded)
+    public async onPlayerLoaded() {
+        const vehicleOpened = await emitRpc<number[]>(RpcServerEvent.VEHICLE_GET_OPENED);
+
+        this.vehicleOpened = new Set(vehicleOpened);
+    }
+
     @Once(OnceStep.Start)
     private async initLockStateSelector() {
         this.vehicleStateService.addVehicleStateSelector(
             [state => state.open, state => state.forced],
             this.onVehicleOpenChange.bind(this)
         );
+    }
+
+    @OnEvent(ClientEvent.VEHICLE_SET_OPEN_LIST)
+    private async onVehicleOpenList(vehicles: number[]) {
+        this.vehicleOpened = new Set(vehicles);
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
@@ -205,9 +172,13 @@ export class VehicleLockProvider {
             return;
         }
 
-        const state = await this.vehicleStateService.getVehicleState(vehicle);
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        if (!player.metadata.godmode && !state.open && !state.forced) {
+        if (!vehicleNetworkId) {
+            return;
+        }
+
+        if (!player.metadata.godmode && !this.vehicleOpened.has(vehicleNetworkId)) {
             SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
 
             const vehicleClass = GetVehicleClass(vehicle);
@@ -228,15 +199,25 @@ export class VehicleLockProvider {
         const playerPosition = GetEntityCoords(ped, false) as Vector3;
         const minDistance = 2.0;
         let closestDoor = null;
-        const vehicleClass = GetVehicleClass(vehicle);
-        const DOOR_CONFIG = DOOR_INDEX_CONFIG[vehicleClass] || DOOR_INDEX_DEFAULT_CONFIG;
 
-        for (const [door, seatIndex] of Object.entries(DOOR_CONFIG)) {
+        for (const [door, seatIndex] of Object.entries(DOOR_INDEX_CONFIG)) {
             let useSeat = false;
-            const availableSeatIndex = seatIndex as number;
+            let availableSeatIndex = 0;
 
-            const ped = GetPedInVehicleSeat(vehicle, availableSeatIndex);
-            useSeat = ped == 0 || !IsPedAPlayer(ped);
+            if (typeof seatIndex === 'number') {
+                availableSeatIndex = seatIndex;
+                const ped = GetPedInVehicleSeat(vehicle, seatIndex);
+                useSeat = ped == 0 || !IsPedAPlayer(ped);
+            } else {
+                availableSeatIndex = maxSeats;
+
+                for (const seat of seatIndex) {
+                    if (!useSeat && GetPedInVehicleSeat(vehicle, seat) == 0) {
+                        useSeat = true;
+                        availableSeatIndex = seat;
+                    }
+                }
+            }
 
             if (availableSeatIndex > maxSeats - 1) {
                 useSeat = false;
@@ -350,7 +331,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
+        const vehicleState = await this.vehicleStateService.getServerVehicleState(vehicle);
 
         if (!vehicleState.forced && !player.metadata.godmode && !vehicleState.open) {
             this.notifier.notify('Véhicule verrouillé.', 'error');
@@ -418,6 +399,10 @@ export class VehicleLockProvider {
 
     @OnEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE)
     async setVehicleTrunkState(vehicleNetworkId: number, state: boolean) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!DoesEntityExist(entityId)) {
@@ -507,26 +492,16 @@ export class VehicleLockProvider {
             );
         }
 
+        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+
         if (state.open) {
             this.soundService.playAround('vehicle/lock', 5, 0.1);
-            this.vehicleStateService.updateVehicleState(
-                vehicle,
-                {
-                    open: false,
-                },
-                true,
-                true
-            );
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, false);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Locked);
         } else {
             this.soundService.playAround('vehicle/unlock', 5, 0.1);
-            this.vehicleStateService.updateVehicleState(
-                vehicle,
-                {
-                    open: true,
-                },
-                true,
-                true
-            );
+            TriggerServerEvent(ServerEvent.VEHICLE_SET_OPEN, vehicleNetworkId, true);
+            SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
         }
     }
 
@@ -540,7 +515,7 @@ export class VehicleLockProvider {
             return true;
         }
 
-        return await emitRpc<boolean>(RpcServerEvent.VEHICLE_HAS_KEY, state.id);
+        return await emitRpc<boolean>(RpcServerEvent.VEHICLE_HAS_KEY, state.plate);
     }
 
     @OnEvent(ClientEvent.VEHICLE_LOCKPICK)

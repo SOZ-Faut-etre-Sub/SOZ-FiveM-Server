@@ -87,11 +87,17 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                 },
-                Props: {},
+                Props: {
+                    [Prop.Hat]: {
+                        Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat],
+                        Texture: 1,
+                        Palette: 0,
+                    },
+                },
             },
             ['Tenue Hiver']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 12, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 1,
@@ -118,10 +124,16 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                 },
-                Props: {},
+                Props: {
+                    [Prop.Hat]: {
+                        Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat],
+                        Texture: 1,
+                        Palette: 0,
+                    },
+                },
             },
-            /*[[ ["Tenue SWAT"]:  {
-            Components:  {
+            /*["Tenue SWAT"]:  {
+                Components:  {
                 [Component.Mask]:  {Drawable:  185, Texture:  0, Palette:  0},
                 [Component.Torso]:  {Drawable:  179, Texture:  0, Palette:  0},
                 [Component.Legs]:  {Drawable:  31, Texture:  0, Palette:  0},
@@ -132,12 +144,12 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 [Component.BodyArmor]:  {Drawable:  16, Texture:  0, Palette:  0},
                 [Component.Decals]:  {Drawable:  0, Texture:  0, Palette:  0},
                 [Component.Tops]:  {Drawable:  220, Texture:  0, Palette:  0},
-            },
-            Props:  {
-                [Prop.Helmet]:  {Drawable:  150, Texture:  0, Palette:  0},
-                [Prop.Glasses]:  {Drawable:  21, Texture:  0, Palette:  0},
-            },
-        }, */
+                },
+                Props:  {
+                    [Prop.Helmet]:  {Drawable:  150, Texture:  0, Palette:  0},
+                    [Prop.Glasses]:  {Drawable:  21, Texture:  0, Palette:  0},
+                },
+            },*/
             ['Tenue de pilote']: {
                 Components: {
                     [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
@@ -275,11 +287,17 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                 },
-                Props: {},
+                Props: {
+                    [Prop.Hat]: {
+                        Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Prop.Hat],
+                        Texture: 1,
+                        Palette: 0,
+                    },
+                },
             },
             ['Tenue Hiver']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 1,
@@ -306,7 +324,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Palette: 0,
                     },
                 },
-                Props: {},
+                Props: {
+                    [Prop.Hat]: {
+                        Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Prop.Hat],
+                        Texture: 1,
+                        Palette: 0,
+                    },
+                },
             },
             /* ["Tenue SWAT"]:  {
             Components:  {
@@ -365,6 +389,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Tenue de moto']: {
                 Components: {
+                    [Component.Torso]: { Drawable: 23, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 3,
@@ -658,7 +683,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Tenue Hiver']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 1,
@@ -731,7 +756,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Tenue de moto']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 23, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
                             VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 3,
@@ -821,7 +846,7 @@ export const RankOutfit = {
 
 export const Armors = {
     [GetHashKey('mp_m_freemode_01')]: {
-        ['unmark']: { Drawable: 27, Texture: 0, Palette: 0 },
+        ['unmark']: { Drawable: 59, Texture: 0, Palette: 0 },
         ['lspd']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 1,
             Texture: 0,
@@ -832,7 +857,7 @@ export const Armors = {
             Texture: 3,
             Palette: 0,
         },
-        ['lsmc']: { Drawable: 27, Texture: 0, Palette: 0 }, // is unmarked, need reskin
+        ['lsmc']: { Drawable: 27, Texture: 8, Palette: 0 }, // is unmarked, need reskin
         ['stonk']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor],
             Texture: 0,
@@ -843,10 +868,10 @@ export const Armors = {
             Texture: 2,
             Palette: 0,
         },
-        ['news']: { Drawable: 27, Texture: 0, Palette: 0 }, // is unmarked, need reskin
+        ['news']: { Drawable: 27, Texture: 2, Palette: 0 }, // is unmarked, need reskin
     },
     [GetHashKey('mp_f_freemode_01')]: {
-        ['unmark']: { Drawable: 31, Texture: 7, Palette: 0 },
+        ['unmark']: { Drawable: 59, Texture: 7, Palette: 0 },
         ['lspd']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] + 1,
             Texture: 0,
@@ -857,7 +882,7 @@ export const Armors = {
             Texture: 3,
             Palette: 0,
         },
-        ['lsmc']: { Drawable: 31, Texture: 7, Palette: 0 }, // is unmarked, need reskin
+        ['lsmc']: { Drawable: 31, Texture: 8, Palette: 0 }, // is unmarked, need reskin
         ['stonk']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor],
             Texture: 0,
@@ -868,7 +893,7 @@ export const Armors = {
             Texture: 2,
             Palette: 0,
         },
-        ['news']: { Drawable: 31, Texture: 7, Palette: 0 }, // is unmarked, need reskin
+        ['news']: { Drawable: 31, Texture: 2, Palette: 0 }, // is unmarked, need reskin
     },
 };
 

@@ -69,9 +69,20 @@ export class TaxiMissionService {
         }
 
         if (this.NpcTaken && this.Npc) {
-            TaskLeaveVehicle(this.Npc, GetVehiclePedIsIn(this.Npc, false), 0);
+            const veh = GetVehiclePedIsIn(this.Npc, false);
+            let doorIndex = 2;
+
+            for (let i = -1; i < 5; i++) {
+                if (GetPedInVehicleSeat(veh, i) == this.Npc) {
+                    doorIndex = i + 1;
+                    break;
+                }
+            }
+
+            TaskLeaveVehicle(this.Npc, veh, 0);
             this.NpcTaken = false;
             await wait(1000);
+            SetVehicleDoorShut(veh, doorIndex, false);
         }
 
         if (this.Npc) {
@@ -168,7 +179,7 @@ export class TaxiMissionService {
             }
 
             this.notifier.notify('Mission annulée', 'error');
-            this.clearMission();
+            await this.clearMission();
             return false;
         }
         return true;
@@ -184,6 +195,9 @@ export class TaxiMissionService {
             this.notifier.notify('Vous êtes déjà en mission', 'error');
             return;
         }
+
+        await this.clearMission();
+
         this.updateState({
             missionInprogress: true,
         });
@@ -262,7 +276,7 @@ export class TaxiMissionService {
                     let count = 0;
                     while (!IsPedInVehicle(this.Npc, veh, false)) {
                         if (count == 15 || dist > requiredDist) {
-                            this.clearMission();
+                            await this.clearMission();
                             this.notifier.notify('Ouvre ton véhicule la prochaine fois ?', 'error');
                             return;
                         }
@@ -308,7 +322,7 @@ export class TaxiMissionService {
                 if (IsVehicleStopped(GetVehiclePedIsIn(ped, false)) && this.validVehicle()) {
                     const veh = GetVehiclePedIsIn(ped, false);
                     if (!IsPedInVehicle(this.Npc, veh, false)) {
-                        this.clearMission();
+                        await this.clearMission();
                         this.notifier.notify("Vous n'avez pas la personne dans votre véhicule", 'error');
                         return;
                     }
@@ -326,7 +340,7 @@ export class TaxiMissionService {
                     this.notifier.notify('Vous avez déposé la personne', 'success');
 
                     this.setHorodateurStarted(false);
-                    this.clearMission();
+                    await this.clearMission();
                     break;
                 }
             }

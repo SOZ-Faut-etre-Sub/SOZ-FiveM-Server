@@ -71,6 +71,10 @@ RegisterNUICallback("transfertItem", function(data, cb)
 
     amount = getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
 
+    if (not amount) then
+        return
+    end
+
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
         if not success then
@@ -105,6 +109,10 @@ RegisterNUICallback("sortItem", function(data, cb)
 
     amount = getAmountFromShortcutModifier(keyModifier, amount)
 
+    if (not amount) then
+        return
+    end
+
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
         if not success then
@@ -132,6 +140,13 @@ RegisterNUICallback("closeNUI", function(data, cb)
             TriggerEvent("soz-core:client:vehicle:close-trunk")
         end
     end
+end)
+
+RegisterNUICallback("player/askForAmount", function(data, cb)
+    SetNuiFocus(false, false)
+    amount = exports["soz-core"]:Input("Quantité", 5, 1)
+    SetNuiFocus(true, true)
+    cb(amount)
 end)
 
 CreateThread(function()
@@ -175,4 +190,27 @@ end)
 
 RegisterNetEvent("inventory:client:updateTargetStoragesState", function(targetInventory)
     SendNUIMessage({action = "updateInventory", targetInventory = targetInventory})
+end)
+
+-- SHOPS
+
+RegisterNetEvent("inventory:client:openShop", function(shopContent, shopHeaderTexture)
+
+    SendNUIMessage({action = "openShop", shopContent = shopContent, shopHeaderTexture = shopHeaderTexture})
+    SetNuiFocus(true, true)
+end)
+
+exports("openShop", function(shopContent, shopHeaderTexture)
+    SendNUIMessage({action = "openShop", shopContent = shopContent, shopHeaderTexture = shopHeaderTexture})
+    SetNuiFocus(true, true)
+end)
+
+RegisterNUICallback("player/validateCart", function(data, cb)
+    SetNuiFocus(false, false)
+    local cartContent = data
+
+    TriggerServerEvent("soz-core:server:shop:validate-cart", cartContent)
+
+    SetNuiFocus(true, true)
+    cb(amount)
 end)

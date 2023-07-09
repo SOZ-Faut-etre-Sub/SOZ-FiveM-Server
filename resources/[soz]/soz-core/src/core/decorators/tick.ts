@@ -16,15 +16,17 @@ export enum TickInterval {
 export type TickMetadata = {
     interval: number;
     name: string;
+    context: boolean;
 };
 
-export const Tick = (interval = 0, name?: string): MethodDecorator => {
+export const Tick = (interval = 0, name?: string, context = false): MethodDecorator => {
     return (target, propertyKey) => {
         setMethodMetadata(
             TickMetadataKey,
             {
                 interval,
                 name: name || propertyKey.toString(),
+                context,
             },
             target,
             propertyKey

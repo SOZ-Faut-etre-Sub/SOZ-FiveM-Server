@@ -1,9 +1,8 @@
-import { Monitor } from '@public/shared/monitor';
-
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Logger } from '../../core/logger';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -14,6 +13,9 @@ import { Notifier } from '../notifier';
 import { PlayerStateService } from '../player/player.state.service';
 
 const DIR_WATER_HYDRANT = 13;
+const EXP_TAG_RAYGUN = 70;
+
+const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN];
 
 @Provider()
 export class WeaponProvider {
@@ -26,8 +28,8 @@ export class WeaponProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
-    @Inject(Monitor)
-    private monitor: Monitor;
+    @Inject(Logger)
+    private logger: Logger;
 
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
@@ -125,11 +127,12 @@ export class WeaponProvider {
 
     @On('explosionEvent')
     public onExplosion(unk: any, source: number, explosionData) {
-        if (explosionData.explosionType == DIR_WATER_HYDRANT) {
+        this.logger.info('Explosion ' + JSON.stringify(explosionData));
+
+        if (excludeExplosionAlert.includes(explosionData.explosionType)) {
             return;
         }
 
-        this.monitor.log('INFO', 'Explosion ' + JSON.stringify(explosionData));
         if (!explosionData.f208) {
             TriggerClientEvent(
                 ClientEvent.WEAPON_EXPLOSION,

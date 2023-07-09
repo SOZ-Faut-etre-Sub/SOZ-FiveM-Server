@@ -173,7 +173,7 @@ RegisterNetEvent("police:client:SearchPlayer", function(data)
                 StopAnimTask(ped, "random@shop_robbery", "robbery_action_b", 1.0)
                 TriggerServerEvent("inventory:server:openInventory", "player", playerId)
 
-                TriggerServerEvent("monitor:server:event", "job_police_search_player", {}, {
+                TriggerServerEvent("soz-core:server:monitor:add-event", "job_police_search_player", {}, {
                     target_source = playerId,
                     position = plyCoords,
                 }, true)
@@ -195,7 +195,7 @@ RegisterNetEvent("police:client:CuffPlayer", function(data)
             local playerId = GetPlayerServerId(player)
 
             TriggerServerEvent("police:server:CuffPlayer", playerId, false)
-            TriggerServerEvent("monitor:server:event", "job_police_cuff_player", {},
+            TriggerServerEvent("soz-core:server:monitor:add-event", "job_police_cuff_player", {},
                                {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
         else
             exports["soz-core"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
@@ -212,7 +212,7 @@ RegisterNetEvent("police:client:UnCuffPlayer", function(data)
             local playerId = GetPlayerServerId(player)
 
             TriggerServerEvent("police:server:UnCuffPlayer", playerId)
-            TriggerServerEvent("monitor:server:event", "job_police_uncuff_player", {},
+            TriggerServerEvent("soz-core:server:monitor:add-event", "job_police_uncuff_player", {},
                                {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
         else
             exports["soz-core"]:DrawNotification("Vous ne pouvez pas menotter une personne dans un véhicule", "error")
@@ -256,7 +256,7 @@ RegisterNetEvent("police:client:RequestEscortPlayer", function(data)
         local playerId = GetPlayerServerId(player)
 
         TriggerServerEvent("police:server:EscortPlayer", playerId, data.crimi)
-        TriggerServerEvent("monitor:server:event", "job_police_escort_player", {},
+        TriggerServerEvent("soz-core:server:monitor:add-event", "job_police_escort_player", {},
                            {
             target_source = playerId,
             crimi = data.crimi,
@@ -291,7 +291,7 @@ RegisterNetEvent("police:client:SetEscorting", function(target, crimi)
                 IsControlJustReleased(0, 194) or (not crimi and IsControlJustReleased(0, 225)) or (crimi and not IsEntityPlayingAnim(ped, dict, anim, 3)) then
 
                 TriggerServerEvent("police:server:DeEscortPlayer", target)
-                TriggerServerEvent("monitor:server:event", "job_police_deescort_player", {},
+                TriggerServerEvent("soz-core:server:monitor:add-event", "job_police_deescort_player", {},
                                    {target_source = playerId, position = GetEntityCoords(GetPlayerPed(player))}, true)
                 ClearPedTasks(ped);
             end
@@ -318,7 +318,6 @@ RegisterNetEvent("police:client:GetEscorted", function(playerId, crimi)
         ClearPedTasksImmediately(ped)
     end
 
-    SetEntityCoords(ped, GetOffsetFromEntityInWorldCoords(dragger, delta_x, delta_y, 0.0))
     AttachEntityToEntity(ped, dragger, 11816, delta_x, delta_y, 0.0, 0.0, 0.0, rota_z, false, false, true, true, 2, true)
 
     if crimi then
@@ -334,5 +333,7 @@ end)
 RegisterNetEvent("police:client:DeEscort", function()
     local ped = PlayerPedId()
     DetachEntity(ped, true, false)
-    ClearPedTasks(ped)
+    if not PlayerData.metadata["isdead"] then
+        ClearPedTasks(ped)
+    end
 end)

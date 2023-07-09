@@ -6,7 +6,7 @@ import { Message, MessageEvents } from '@typings/messages';
 import { PictureReveal } from '@ui/old_components/PictureReveal';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import dayjs from 'dayjs';
+import { format } from 'date-fns';
 import React from 'react';
 
 import { useConfig } from '../../../../hooks/usePhone';
@@ -77,12 +77,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                                 'text-2xl': config.textZoom.value === 1.6,
                             })}
                         >
-                            {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map(text => {
+                            {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map((text, i) => {
                                 if (text.startsWith(':') && text.endsWith(':')) {
-                                    return <Emoji emoji={text} />;
+                                    return <Emoji key={i} emoji={text} />;
                                 }
 
-                                return text;
+                                return <React.Fragment key={i}>{text}</React.Fragment>;
                             })}
                         </p>
                     </Menu.Button>
@@ -115,7 +115,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                         'text-gray-500': config.theme.value === 'light',
                     })}
                 >
-                    {dayjs(message.createdAt).format('HH:mm')}
+                    {format(new Date(message.createdAt), 'HH:mm')}
                 </div>
             </div>
         </div>

@@ -54,7 +54,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:craft", function(source, c
         end
     end
 
-    exports["soz-inventory"]:AddItem(source, itemId, 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, itemId, 1, nil, nil, function(success, reason)
         if not success then
             local message = "Vos poches sont pleines..."
             if reason ~= "invalid_weight" then
@@ -90,7 +90,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:harvest", function(source,
         return
     end
 
-    exports["soz-inventory"]:AddItem(source, itemId, 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, itemId, 1, nil, nil, function(success, reason)
         cb(success, reason)
     end)
 end)
@@ -117,7 +117,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:restock", function(source,
 
     for _, item in pairs(BaunConfig.Restock[itemId]) do
         if not cbCalled then
-            exports["soz-inventory"]:AddItem(storage, item.itemId, item.quantity, nil, nil, function(success, reason)
+            exports["soz-inventory"]:AddItem(source, storage, item.itemId, item.quantity, nil, nil, function(success, reason)
                 if not success and not cbCalled then
                     cbCalled = true
                     cb(success, reason)
@@ -174,7 +174,7 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
         player.Functions.RemoveItem(item.name, item.amount, nil, item.slot)
     end
 
-    exports["soz-inventory"]:AddItem(source, "cocktail_box", 1, nil, nil, function(success, reason)
+    exports["soz-inventory"]:AddItem(source, source, "cocktail_box", 1, nil, nil, function(success, reason)
         if not success then
             TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines...", "error")
         else

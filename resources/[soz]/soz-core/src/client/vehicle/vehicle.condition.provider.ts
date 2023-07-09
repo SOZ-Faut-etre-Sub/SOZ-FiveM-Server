@@ -7,6 +7,7 @@ import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
+import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -28,6 +29,9 @@ export class VehicleConditionProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
+    @Inject(VehicleFuelProvider)
+    private vehicleFuelProvider: VehicleFuelProvider;
+
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
@@ -39,6 +43,10 @@ export class VehicleConditionProvider {
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_REGISTER)
     private registerVehicleCondition(vehicleNetworkId: number, condition: VehicleCondition): void {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         // cannot check a vehicle that does not exist
@@ -63,10 +71,27 @@ export class VehicleConditionProvider {
         return this.currentVehicleCondition.get(vehicleNetworkId) || null;
     }
 
+    public setVehicleCondition(vehicleNetworkId: number, condition: Partial<VehicleCondition>) {
+        const currentCondition = this.getVehicleCondition(vehicleNetworkId);
+
+        if (null === currentCondition) {
+            return;
+        }
+
+        this.currentVehicleCondition.set(vehicleNetworkId, {
+            ...currentCondition,
+            ...condition,
+        });
+    }
+
     @Tick(TickInterval.EVERY_SECOND)
     private async checkConditionLoop() {
         // loop through all vehicles we have to check
         for (const [vehicleNetworkId, currentCondition] of this.currentVehicleCondition) {
+            if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+                continue;
+            }
+
             const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
             // cannot check a vehicle that does not exist
@@ -81,7 +106,12 @@ export class VehicleConditionProvider {
 
             // get the current condition of the vehicle
             const state = await this.vehicleStateService.getVehicleState(entityId);
-            const condition = this.vehicleService.getVehicleConditionDiff(entityId, currentCondition, state);
+            const fuelCondition = this.vehicleFuelProvider.checkVehicleFuel(entityId, currentCondition);
+
+            const condition = {
+                ...fuelCondition,
+                ...this.vehicleService.getVehicleConditionDiff(entityId, currentCondition, state),
+            };
 
             // if not empty
             if (Object.keys(condition).length > 0) {
@@ -128,6 +158,10 @@ export class VehicleConditionProvider {
         condition: Partial<VehicleCondition>,
         fullCondition: VehicleCondition
     ) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         // cannot check a vehicle that does not exist
@@ -158,6 +192,10 @@ export class VehicleConditionProvider {
         condition: Partial<VehicleCondition>,
         fullCondition: VehicleCondition
     ) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         // cannot check a vehicle that does not exist

@@ -73,6 +73,8 @@ export const PlayerContainer = () => {
                 }
             } else if (event.data.action === 'closeInventory') {
                 closeNUI(() => closeMenu());
+            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+                closeMenu();
             }
         },
         [setDisplay, closeMenu, setPlayerMoney, setPlayerInventory, setPlayerShortcuts]
@@ -185,10 +187,8 @@ export const PlayerContainer = () => {
             collisionDetection={rectIntersection}
             onDragEnd={handleDragAndDrop}
         >
-            <div className={clsx(style.Wrapper, {
-                [style.Show]: display,
-                [style.Hide]: !display,
-            })}>
+            {display &&
+            <div className={clsx(style.Wrapper)}>
                 <ContainerWrapper
                     display={true}
                     banner={playerBanner}
@@ -205,6 +205,7 @@ export const PlayerContainer = () => {
                     />
                 </ContainerWrapper>
             </div>
+            }
         </DndContext>
     )
 }

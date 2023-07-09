@@ -30,7 +30,12 @@ export const RadioApp: FunctionComponent = () => {
         [radio]
     );
     useNuiEvent('radio', 'Close', () => setRadio(null));
-    useNuiFocus(radio !== null, radio !== null, radio !== null, radio !== null ? [Control.Attack] : []);
+    useNuiFocus(
+        radio !== null,
+        radio !== null,
+        radio !== null,
+        radio !== null ? [Control.Attack, Control.NextCamera] : []
+    );
 
     useEffect(() => {
         if (!radio) {
@@ -84,7 +89,7 @@ export const RadioApp: FunctionComponent = () => {
             >
                 <img
                     className="relative"
-                    style={{ height: '40vh', zIndex: 5 }}
+                    style={{ height: '40vh', zIndex: 5, width: '9vw' }}
                     src="/public/images/radio/radio.png"
                     alt="radio"
                 />

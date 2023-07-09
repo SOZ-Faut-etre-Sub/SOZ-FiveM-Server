@@ -11,7 +11,7 @@ QBCore.Functions.CreateCallback("soz-character:server:LoginPlayer", function(sou
     if QBCore.Player.Login(source, player.citizenid) then
         QBCore.Commands.Refresh(source)
 
-        TriggerEvent("monitor:server:event", "player_login", {player_source = source}, {})
+        exports["soz-core"]:Event("player_login", {player_source = source}, {})
 
         cb(QBCore.Functions.GetPlayer(source))
     else

@@ -1,3 +1,4 @@
+import { Router } from '@egoist/router';
 import { Histogram } from 'prom-client';
 
 import { RouteConfig, RouteMetadata, RouteMetadataKey } from '../decorators/http';
@@ -8,13 +9,13 @@ import { Response } from '../http/response';
 import { Logger } from '../logger';
 
 type Route = {
-    handler: (request: Request) => Promise<Response> | Response;
+    handler: (request: Request, params: Record<string, string | string[]>) => Promise<Response> | Response;
     config: RouteConfig;
 };
 
 @Injectable()
 export class RouteLoader {
-    private routeList: Record<string, Record<string, Route>> = {};
+    private router: Router<Route>;
 
     @Inject(Logger)
     private logger: Logger;
@@ -32,6 +33,7 @@ export class RouteLoader {
         const password = GetConvar('soz_api_password', 'admin');
 
         this.expectedAuthHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
+        this.router = new Router();
     }
 
     public load(provider): void {
@@ -41,18 +43,10 @@ export class RouteLoader {
             const route = routeMethodList[methodName];
             const method = provider[methodName].bind(provider);
 
-            if (!this.routeList[route.path]) {
-                this.routeList[route.path] = {};
-            }
-
-            if (this.routeList[route.path][route.method]) {
-                this.logger.warn(`route ${route.path} already exists with method ${route.method}`);
-            }
-
-            this.routeList[route.path][route.method] = {
+            this.router.add(route.method, route.path, {
                 handler: method,
                 config: route.config,
-            };
+            });
         }
 
         SetHttpHandler(async (req, res) => {
@@ -98,15 +92,16 @@ export class RouteLoader {
     }
 
     private async handleRequest(request: Request): Promise<Response> {
-        if (!this.routeList[request.path]) {
+        const matches = this.router.find(request.method, request.path, {
+            exitOnFirstMatch: true,
+        });
+
+        if (!matches.length) {
             return Response.notFound();
         }
 
-        const route = this.routeList[request.path][request.method];
-
-        if (!route) {
-            return Response.notFound();
-        }
+        const match = matches[0];
+        const route = match.handler;
 
         if (route.config.auth) {
             const authHeader = request.headers['authorization'] || '';
@@ -117,7 +112,7 @@ export class RouteLoader {
         }
 
         try {
-            return route.handler(request);
+            return await route.handler(request, match.params);
         } catch (e) {
             this.logger.error(`[HTTP] Request failed for ${request.method} ${request.path} ${e.message}`, e);
 
@@ -125,5 +120,7 @@ export class RouteLoader {
         }
     }
 
-    public unload(): void {}
+    public unload(): void {
+        this.router = new Router();
+    }
 }

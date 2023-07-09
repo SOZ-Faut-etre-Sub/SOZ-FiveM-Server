@@ -195,7 +195,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
             count = 3
         end
 
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, item, count, nil, nil, function(success, reason)
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, count, nil, nil, function(success, reason)
             p:resolve(success, reason)
         end)
     end

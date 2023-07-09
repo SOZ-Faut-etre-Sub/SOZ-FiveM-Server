@@ -54,18 +54,18 @@ const applyVehicleTire = (
 const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondition>> = {
     bodyHealth: {
         apply: (vehicle, value: number) => {
+            const previousEngineHealth = GetVehicleEngineHealth(vehicle);
+            const previousTankHealth = GetVehiclePetrolTankHealth(vehicle);
+
             SetVehicleBodyHealth(vehicle, value);
 
             if (value > 999.99) {
-                const previousFuel = GetVehicleFuelLevel(vehicle);
-                const previousOil = GetVehicleOilLevel(vehicle);
-
                 SetVehicleDeformationFixed(vehicle);
                 SetVehicleFixed(vehicle);
-
-                SetVehicleFuelLevel(vehicle, previousFuel);
-                SetVehicleOilLevel(vehicle, previousOil);
             }
+
+            SetVehicleEngineHealth(vehicle, previousEngineHealth);
+            SetVehiclePetrolTankHealth(vehicle, previousTankHealth);
         },
         get: vehicle => GetVehicleBodyHealth(vehicle),
     },
@@ -74,31 +74,6 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
             SetVehicleEngineHealth(vehicle, value);
         },
         get: vehicle => GetVehicleEngineHealth(vehicle),
-    },
-    fuelLevel: {
-        apply: (vehicle, value: number) => {
-            SetVehicleFuelLevel(vehicle, value);
-        },
-        get: vehicle => GetVehicleFuelLevel(vehicle),
-    },
-    oilLevel: {
-        apply: (vehicle, value: number) => {
-            const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
-
-            if (maxOilVolume) {
-                const realOilLevel = (value * maxOilVolume) / 100;
-                SetVehicleOilLevel(vehicle, realOilLevel);
-            }
-        },
-        get: vehicle => {
-            const maxOilVolume = GetVehicleHandlingFloat(vehicle, 'CHandlingData', 'fOilVolume');
-
-            if (maxOilVolume) {
-                return (GetVehicleOilLevel(vehicle) * 100) / maxOilVolume;
-            }
-
-            return 100;
-        },
     },
     dirtLevel: {
         apply: (vehicle, value: number) => {
@@ -320,8 +295,16 @@ export class VehicleService {
 
     public async getVehicleConfiguration(vehicleEntityId: number): Promise<VehicleConfiguration> {
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
+        const configuration = await emitRpc<VehicleConfiguration>(
+            RpcServerEvent.VEHICLE_CUSTOM_GET_MODS,
+            vehicleNetworkId
+        );
 
-        return await emitRpc<VehicleConfiguration>(RpcServerEvent.VEHICLE_CUSTOM_GET_MODS, vehicleNetworkId);
+        if (!configuration) {
+            return this.vehicleModificationService.getVehicleConfiguration(vehicleEntityId);
+        }
+
+        return configuration;
     }
 
     public getClosestVehicle(config?: ClosestVehicleConfig, filter?: (vehicle: number) => boolean): number | null {

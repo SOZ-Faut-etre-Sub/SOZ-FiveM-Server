@@ -1,6 +1,7 @@
 import { PlayerTalentService } from '@private/server/player/player.talent.service';
 import { waitUntil } from '@public/core/utils';
-import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
+import { Monitor } from '@public/server/monitor/monitor';
+import { getDistance, toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { LockPickAlertChance } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnEvent } from '../../core/decorators/event';
@@ -53,6 +54,9 @@ export class VehicleLockProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
     private trunkOpened: Record<number, Set<number>> = {};
 
     @Once()
@@ -61,6 +65,25 @@ export class VehicleLockProvider {
         this.item.setItemUseCallback('lockpick_low', this.useLockpick.bind(this));
         this.item.setItemUseCallback('lockpick_medium', this.useLockpick.bind(this));
         this.item.setItemUseCallback('lockpick_high', this.useLockpick.bind(this));
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_SET_OPEN)
+    public onVehicleSetOpen(source: number, vehicleNetworkId: number, isOpen: boolean) {
+        this.vehicleStateService.updateVehicleVolatileState(
+            vehicleNetworkId,
+            {
+                open: isOpen,
+            },
+            null,
+            true
+        );
+
+        this.vehicleStateService.handleVehicleOpenChange(vehicleNetworkId);
+    }
+
+    @Rpc(RpcServerEvent.VEHICLE_GET_OPENED)
+    public getVehicleOpened(): number[] {
+        return [...this.vehicleStateService.vehicleOpened];
     }
 
     public async useLockpick(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
@@ -176,9 +199,24 @@ export class VehicleLockProvider {
             }
         }
 
+        this.monitor.publish(
+            'vehicle_lockpick',
+            {
+                player_source: source,
+            },
+            {
+                item: item.name,
+                location: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                vehicle_plate: GetVehicleNumberPlateText(closestVehicle.vehicleEntityId),
+                player_vehicle: vehicleState.volatile.isPlayerVehicle,
+            }
+        );
+
         this.vehicleStateService.updateVehicleVolatileState(closestVehicle.vehicleNetworkId, {
             forced: true,
         });
+
+        this.vehicleStateService.handleVehicleOpenChange(closestVehicle.vehicleNetworkId);
 
         this.notifier.notify(source, 'Le véhicule a été forcé.', 'success');
     }
@@ -196,12 +234,21 @@ export class VehicleLockProvider {
         this.trunkOpened[vehicleNetworkId] = set;
 
         const entityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+
+        if (!entityId) {
+            return;
+        }
+
         const owner = NetworkGetEntityOwner(entityId);
 
+        if (!owner) {
+            return;
+        }
+
         if (set.size > 0) {
-            TriggerClientEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, true);
+            TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, true);
         } else {
-            TriggerClientEvent(ServerEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, false);
+            TriggerClientEvent(ClientEvent.VEHICLE_SET_TRUNK_STATE, owner, vehicleNetworkId, false);
             delete this.trunkOpened[vehicleNetworkId];
         }
     }
@@ -222,6 +269,8 @@ export class VehicleLockProvider {
             open: true,
             owner: player.citizenid,
         });
+
+        this.vehicleStateService.handleVehicleOpenChange(vehicleNetworkId);
     }
 
     @OnEvent(ServerEvent.PLAYER_UPDATE_HAT_VEHICLE)
@@ -236,20 +285,14 @@ export class VehicleLockProvider {
     }
 
     @Rpc(RpcServerEvent.VEHICLE_HAS_KEY)
-    public async hasVehicleKey(source: number, vehicleId: number): Promise<boolean> {
+    public async hasVehicleKey(source: number, plate: string): Promise<boolean> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
             return false;
         }
 
-        const vehicle = await this.vehiclePlayerRepository.find(vehicleId);
-
-        if (!vehicle) {
-            return false;
-        }
-
-        return this.vehicleStateService.hasVehicleKey(vehicle.plate, player.citizenid);
+        return this.vehicleStateService.hasVehicleKey(plate, player.citizenid);
     }
 
     @OnEvent(ServerEvent.VEHICLE_FORCE_OPEN)
@@ -257,5 +300,7 @@ export class VehicleLockProvider {
         this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
             forced: true,
         });
+
+        this.vehicleStateService.handleVehicleOpenChange(vehicleNetworkId);
     }
 }

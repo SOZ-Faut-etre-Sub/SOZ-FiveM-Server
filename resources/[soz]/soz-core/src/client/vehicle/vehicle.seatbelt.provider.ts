@@ -237,6 +237,10 @@ export class VehicleSeatbeltProvider {
 
     @OnEvent(ClientEvent.VEHICLE_ROUTE_EJECTION)
     async handleVehicleEjection(vehicleNetworkId: number, gStrength: number, velocity: Vector3) {
+        if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+            return;
+        }
+
         const vehicleEjection = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const ped = PlayerPedId();
         const vehiclePedIsIn = GetVehiclePedIsIn(ped, false);

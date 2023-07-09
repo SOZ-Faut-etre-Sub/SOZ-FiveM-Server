@@ -3,6 +3,7 @@ import { Provider } from '@core/decorators/provider';
 import { uuidv4, wait } from '@core/utils';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { AnimationService } from '@public/client/animation/animation.service';
+import { Monitor } from '@public/client/monitor/monitor';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
@@ -17,7 +18,6 @@ import { OnEvent } from '@public/core/decorators/event';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { BedLocations, FailoverLocation, KillData, KillerVehData, PatientClothes } from '@public/shared/job/lsmc';
-import { Monitor } from '@public/shared/monitor';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
@@ -148,7 +148,7 @@ export class LSMCDeathProvider {
                 await this.onDeath(playerPed);
             }
             if (this.IsDead) {
-                this.animationCheck(playerPed);
+                await this.animationCheck(playerPed);
             }
         }
     }
@@ -278,13 +278,14 @@ export class LSMCDeathProvider {
         }
     }
 
-    private animationCheck(ped: number) {
+    private async animationCheck(ped: number) {
         const anim = IsPedInAnyVehicle(ped, true) ? deathVehcleAnim : deathAnim;
 
         if (!IsEntityPlayingAnim(ped, anim.base.dictionary, anim.base.name, 3)) {
             this.animationService.playAnimation(anim, {
                 clearTasksBefore: true,
             });
+            await wait(500);
         }
     }
 

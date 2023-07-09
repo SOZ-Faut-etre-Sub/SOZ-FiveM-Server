@@ -43,14 +43,15 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTree", function(source, cb, 
                 if cbSent then
                     return
                 end
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, item.amount, nil, nil, function(success, reason)
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, nil, nil, function(success,
+                                                                                                                                                reason)
                     if not success then
                         cb(false)
                         cbSent = true
                     end
                 end)
             end
-            TriggerEvent("monitor:server:event", "job_pawl_harvest_tree", {
+            exports["soz-core"]:Event("job_pawl_harvest_tree", {
                 player_source = Player.PlayerData.source,
                 field = identifier,
             }, {position = position, amount = 1})
@@ -86,14 +87,15 @@ QBCore.Functions.CreateCallback("pawl:server:harvestTreeSap", function(source, c
                 if cbSent then
                     return
                 end
-                exports["soz-inventory"]:AddItem(Player.PlayerData.source, item.name, item.amount, nil, nil, function(success, reason)
+                exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item.name, item.amount, nil, nil, function(success,
+                                                                                                                                                reason)
                     if not success then
                         cb(false)
                         cbSent = true
                     end
                 end)
             end
-            TriggerEvent("monitor:server:event", "job_pawl_sap_tree", {
+            exports["soz-core"]:Event("job_pawl_sap_tree", {
                 player_source = Player.PlayerData.source,
                 field = identifier,
             }, {position = position, amount = 1})
@@ -187,8 +189,8 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
 
             if GetGameTimer() - Processing.StartedAt >= Config.Processing.Duration then
                 if exports["soz-inventory"]:RemoveItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, Config.Processing.ProcessingAmount) then
-                    exports["soz-inventory"]:AddItem(Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
-                    exports["soz-inventory"]:AddItem(Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
+                    exports["soz-inventory"]:AddItem(source, Config.Processing.PlankStorage, Config.Processing.PlankItem, Config.Processing.PlankAmount)
+                    exports["soz-inventory"]:AddItem(source, Config.Processing.SawdustStorage, Config.Processing.SawdustItem, Config.Processing.SawdustAmount)
 
                     if exports["soz-inventory"]:GetItem(Config.Processing.ProcessingStorage, Config.Processing.ProcessingItem, nil, true) >= 1 then
                         Processing.StartedAt = GetGameTimer()
@@ -267,15 +269,17 @@ RegisterNetEvent("pawl:server:craft", function(identifier)
     end
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, craft.SourceItem, craft.SourceItemAmount or 1) then
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil, function(success, reason)
+        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil,
+                                         function(success, reason)
             if success then
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez récupéré ~g~" .. craft.Name .. "~s~ !",
-                                   "success")
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                                   "Vous avez fabriqué  ~g~" .. craft.RewardAmount .. " " .. craft.Name .. "~s~ !", "success")
 
-                TriggerEvent("monitor:server:event", "job_pawl_craft",
-                             {player_source = Player.PlayerData.source, item = craft.RewardItem, tier = metadata.tier}, {
-                    amount = craft.RewardAmount,
-                })
+                exports["soz-core"]:Event("job_pawl_craft", {
+                    player_source = Player.PlayerData.source,
+                    item = craft.RewardItem,
+                    tier = metadata.tier,
+                }, {amount = craft.RewardAmount})
             else
                 TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas récupérer d'objet !", "error")
             end

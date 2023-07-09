@@ -37,8 +37,10 @@ export const KeyContainer = () => {
         if (event.data.action === "openPlayerKeyInventory") {
             if (event.data.keys === undefined) return
 
-            setPlayerInventory(event.data.keys.filter((i: InventoryItem) => i !== null).map((item: InventoryItem) => ({...item, id: `key_${item.slot}`})));
+            setPlayerInventory(event.data.keys.filter((i: InventoryItem) => i !== null).map((item: InventoryItem) => ({ ...item, id: `key_${item.slot}` })));
             setDisplay(true);
+        } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerInventory') {
+            closeMenu();
         }
     }, [setDisplay, setPlayerInventory]);
 
@@ -49,7 +51,7 @@ export const KeyContainer = () => {
     }, [display, closeMenu])
 
     const onClickReceived = useCallback((event: MouseEvent) => {
-        if (display &&menuRef.current && !menuRef.current.contains(event.target as Node)){
+        if (display && menuRef.current && !menuRef.current.contains(event.target as Node)) {
             event.preventDefault();
             closeNUI(() => closeMenu());
         }
@@ -78,29 +80,30 @@ export const KeyContainer = () => {
     }
 
     return (
-        <DndContext
-            autoScroll={{
-                enabled: false,
-            }}
-            collisionDetection={rectIntersection}
-            onDragEnd={transfertItem}
-        >
-            <div className={clsx(style.Wrapper, {
-                [style.Show]: display,
-                [style.Hide]: !display,
-            })}>
-                <ContainerWrapper
-                    display={true}
-                    banner={playerBanner}
-                    maxWeight={-1}
+        <>
+            {display &&
+                <DndContext
+                    autoScroll={{
+                        enabled: false,
+                    }}
+                    collisionDetection={rectIntersection}
+                    onDragEnd={transfertItem}
                 >
-                    <ContainerSlots
-                        id="player"
-                        rows={inventoryRow}
-                        items={playerInventory.map((item, i) => ({...item, id: i, slot: i+1, type: 'key'}))}
-                    />
-                </ContainerWrapper>
-            </div>
-        </DndContext>
+                    <div className={clsx(style.Wrapper)}>
+                        <ContainerWrapper
+                            display={true}
+                            banner={playerBanner}
+                            maxWeight={-1}
+                        >
+                            <ContainerSlots
+                                id="player"
+                                rows={inventoryRow}
+                                items={playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' }))}
+                            />
+                        </ContainerWrapper>
+                    </div>
+                </DndContext>
+            }
+        </>
     )
 }

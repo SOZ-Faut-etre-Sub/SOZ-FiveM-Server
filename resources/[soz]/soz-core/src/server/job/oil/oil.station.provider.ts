@@ -5,13 +5,13 @@ import { Rpc } from '../../../core/decorators/rpc';
 import { ServerEvent } from '../../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../../shared/fuel';
 import { JobPermission, JobType } from '../../../shared/job';
-import { Monitor } from '../../../shared/monitor';
 import { toVector3Object, Vector3, Vector4 } from '../../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { JobService } from '../../job.service';
 import { LockService } from '../../lock.service';
+import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { PlayerMoneyService } from '../../player/player.money.service';
 import { PlayerService } from '../../player/player.service';
@@ -152,7 +152,8 @@ export class OilStationProvider {
         }
 
         const itemCount = Math.ceil(amount / 10);
-        const availableCount = this.inventoryManager.getItemCount(`trunk_` + state.volatile.plate, 'essence');
+        const plate = state.volatile.plate || GetVehicleNumberPlateText(vehicleEntityId);
+        const availableCount = this.inventoryManager.getItemCount(`trunk_` + plate, 'essence');
         const duration = itemCount * 500;
 
         if (itemCount > availableCount) {
@@ -181,53 +182,55 @@ export class OilStationProvider {
             }
         );
 
-        const refilled = Math.ceil(amount * progress);
-        const itemUsed = Math.ceil(refilled / 10);
-        const plate = state.volatile.plate || GetVehicleNumberPlateText(vehicleEntityId);
-
-        if (!this.inventoryManager.removeItemFromInventory(`trunk_` + plate, 'essence', itemUsed)) {
-            this.notifier.notify(source, "Vous n'avez pas assez d'essence dans la citerne.");
-
-            return;
-        }
-
-        const station = await this.prismaService.fuel_storage.findUnique({
-            where: {
-                id: stationId,
-            },
-        });
-
-        if (station && station.type === FuelStationType.Public) {
-            await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', refilled * 3);
-        }
-
-        this.notifier.notify(source, `Vous avez ~g~ajouté~s~ ${refilled}L d'essence dans la station.`);
-
-        await this.prismaService.fuel_storage.update({
-            where: {
-                id: stationId,
-            },
-            data: {
-                stock: {
-                    increment: refilled,
+        await this.lockService.lock(`refill_essence_station_${stationId}`, async () => {
+            const refilled = Math.ceil(amount * progress);
+            const station = await this.prismaService.fuel_storage.findUnique({
+                where: {
+                    id: stationId,
                 },
-            },
-        });
+            });
 
-        this.monitor.publish(
-            'job_mtp_refill_station',
-            {
-                player_source: source,
-                station: stationId,
-                station_type: 'essence',
-            },
-            {
-                quantity: refilled,
-                position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            const reallyRefilled = Math.max(0, Math.min(refilled, 3000 - station.stock));
+            const itemUsed = Math.ceil(reallyRefilled / 10);
+
+            if (!this.inventoryManager.removeItemFromInventory(`trunk_` + plate, 'essence', itemUsed)) {
+                this.notifier.notify(source, "Vous n'avez pas assez d'essence dans la citerne.");
+
+                return;
             }
-        );
 
-        TriggerClientEvent('jobs:client:fueler:CancelTankerRefill', source);
+            if (station && station.type === FuelStationType.Public) {
+                await this.playerMoneyService.transfer('farm_mtp', 'safe_oil', reallyRefilled * 3);
+            }
+
+            this.notifier.notify(source, `Vous avez ~g~ajouté~s~ ${reallyRefilled}L d'essence dans la station.`);
+
+            await this.prismaService.fuel_storage.update({
+                where: {
+                    id: stationId,
+                },
+                data: {
+                    stock: {
+                        increment: reallyRefilled,
+                    },
+                },
+            });
+
+            this.monitor.publish(
+                'job_mtp_refill_station',
+                {
+                    player_source: source,
+                    station: stationId,
+                    station_type: 'essence',
+                },
+                {
+                    quantity: reallyRefilled,
+                    position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                }
+            );
+
+            TriggerClientEvent('jobs:client:fueler:CancelTankerRefill', source);
+        });
     }
 
     @OnEvent(ServerEvent.OIL_REFILL_KEROSENE_STATION)

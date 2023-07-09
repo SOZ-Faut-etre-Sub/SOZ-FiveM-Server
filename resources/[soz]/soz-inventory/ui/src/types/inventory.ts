@@ -13,6 +13,7 @@ export type SozInventoryModel = {
     items: InventoryItem[];
 }
 
+
 /*
  * Get from gta-server/resources/[soz]/soz-core/src/shared/item.ts
  * Can be removed after soz-inventory moves to soz-core
@@ -53,8 +54,17 @@ export type ItemType =
     | 'furniture'
     | 'liquor'
     | 'outfit'
-    | 'key';
+    | 'key'
+    | 'crate';
 
+export type MealMetadata = {
+        name: string;
+        metadata: InventoryItemMetadata;
+        amount: number;
+        label: string;
+        weight: number;
+};
+    
 export type InventoryItemMetadata = {
     label?: string;
     type?: string;
@@ -69,4 +79,7 @@ export type InventoryItemMetadata = {
     tint?: number;
     attachments?: Record<string, string | null>;
     crafted?: boolean;
+    crateElements?: MealMetadata[];
 };
+
+

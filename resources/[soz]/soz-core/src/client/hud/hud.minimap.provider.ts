@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event';
 import { Minimap } from '../../shared/hud';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ResourceLoader } from '../resources/resource.loader';
@@ -61,12 +62,9 @@ export class HudMinimapProvider {
     }
 
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
-    public onBaseEnteredVehicle(): void {
-        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
-
-        if (vehicle) {
-            this._inVehicle = true;
-        }
+    @OnEvent(ClientEvent.BASE_CHANGE_VEHICLE_SEAT)
+    public onBaseEnteredVehicle(vehicle: number, seat: VehicleSeat): void {
+        this._inVehicle = vehicle && (VehicleSeat.Driver === seat || VehicleSeat.Copilot === seat);
 
         this.updateShowRadar();
     }

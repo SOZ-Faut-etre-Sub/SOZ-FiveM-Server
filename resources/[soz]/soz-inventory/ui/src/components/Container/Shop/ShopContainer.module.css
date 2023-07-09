@@ -1,0 +1,16 @@
+.Wrapper {
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr 2rem 1fr;
+    top: 2rem;
+    bottom: 2rem;
+    left: 1rem;
+    max-width: 70vh;
+    transition: transform 0.15s, opacity 0.15s;
+}
+
+.CartContainer{
+    grid-column: 1/1;
+    justify-self: end;
+    width: auto
+}

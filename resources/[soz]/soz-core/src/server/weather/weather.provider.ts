@@ -1,3 +1,4 @@
+import { Context } from '../../core/context';
 import { Command } from '../../core/decorators/command';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
@@ -9,10 +10,9 @@ import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
 import { getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, Time, Weather } from '../../shared/weather';
-import { MonitorService } from '../monitor/monitor.service';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
-import { Polluted, SpringAutumn } from './forecast';
+import { Polluted, Summer } from './forecast';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 
@@ -21,20 +21,17 @@ export class WeatherProvider {
     @Inject(Pollution)
     private pollution: Pollution;
 
-    @Inject(MonitorService)
-    private monitorService: MonitorService;
-
     @Inject('Store')
     private store: Store;
 
-    private forecast: Forecast = SpringAutumn;
+    private forecast: Forecast = Summer;
 
     private currentTime: Time = { hour: 2, minute: 0, second: 0 };
 
     private shouldUpdateWeather = true;
 
-    @Tick(TickInterval.EVERY_SECOND, 'weather:time:advance')
-    async advanceTime() {
+    @Tick(TickInterval.EVERY_SECOND, 'weather:time:advance', true)
+    async advanceTime(context: Context) {
         this.currentTime.second += INCREMENT_SECOND;
 
         if (this.currentTime.second >= 60) {
@@ -55,6 +52,8 @@ export class WeatherProvider {
             }
         }
 
+        await context.wait(100);
+
         if (isFeatureEnabled(Feature.Halloween)) {
             if (this.currentTime.hour >= 2 && this.currentTime.hour < 23) {
                 this.currentTime.hour = 23;
@@ -62,6 +61,8 @@ export class WeatherProvider {
                 this.currentTime.second = 0;
             }
         }
+
+        await context.wait(100);
 
         TriggerClientEvent(ClientEvent.STATE_UPDATE_TIME, -1, this.currentTime);
     }

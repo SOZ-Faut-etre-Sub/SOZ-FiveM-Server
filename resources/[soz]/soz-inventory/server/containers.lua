@@ -40,7 +40,7 @@ Container["armory"] = InventoryContainer:new({
 
 Container["fridge"] = InventoryContainer:new({
     type = "fridge",
-    allowedTypes = {"food", "drink", "cocktail", "liquor"},
+    allowedTypes = {"food", "drink", "cocktail", "liquor", "crate"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
@@ -53,6 +53,7 @@ Container["trunk"] = InventoryContainer:new({
         "item",
         "drug",
         "drink",
+        "cocktail",
         "food",
         "oil_and_item",
         "plank",
@@ -62,6 +63,7 @@ Container["trunk"] = InventoryContainer:new({
         "furniture",
         "flavor",
         "outfit",
+        "crate",
     },
 })
 
@@ -74,6 +76,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "item",
         "drug",
         "drink",
+        "cocktail",
         "food",
         "oil_and_item",
         "plank",
@@ -83,6 +86,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "furniture",
         "flavor",
         "outfit",
+        "crate",
     },
 })
 
@@ -108,12 +112,13 @@ Container["trash"] = InventoryContainer:new({
         "furniture",
         "liquor",
         "outfit",
+        "crate",
     },
 })
 
 Container["storage"] = InventoryContainer:new({
     type = "storage",
-    allowedTypes = {"item", "drug", "oil_and_item", "outfit"},
+    allowedTypes = {"item", "drug", "oil_and_item", "outfit", "crate"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 --- Todo: convert to storage type : storage
@@ -175,6 +180,7 @@ Container["bin"] = InventoryDatastore:new({
         "furniture",
         "liquor",
         "outfit",
+        "crate",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -226,7 +232,7 @@ Container["house_stash"] = InventoryContainer:new({
 })
 Container["house_fridge"] = InventoryContainer:new({
     type = "fridge",
-    allowedTypes = {"food", "drink", "cocktail", "liquor", "flavor"},
+    allowedTypes = {"food", "drink", "cocktail", "liquor", "flavor", "crate"},
 })
 
 --- Jobs PAWL
@@ -305,6 +311,7 @@ Container["recycler_processing"] = InventoryContainer:new({
         "flavor",
         "furniture",
         "liquor",
+        "crate",
     },
     inventoryPermissionCallback = playerHaveJobAndDuty,
     inventoryGetContentCallback = function()

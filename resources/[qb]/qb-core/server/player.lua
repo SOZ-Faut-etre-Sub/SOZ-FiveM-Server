@@ -37,6 +37,7 @@ function QBCore.Player.Login(source, citizenid, newData)
                 if apartment then
                     PlayerData.address = apartment.label
                     PlayerData.apartment = apartment
+                    PlayerData.apartment.price = QBCore.Shared.Round(apartment.price * 4 / 5)
                 else
                     PlayerData.apartment = nil
                 end
@@ -418,7 +419,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
         self.PlayerData.items = items
         self.Functions.UpdatePlayerData(dontUpdateChat)
 
-        exports['soz-monitor']:Log('TRACE', 'Inventory movement - Set ! items set: ' .. json.encode(items), { player = self.PlayerData })
+        exports['soz-core']:Log('DEBUG', 'Inventory movement - Set ! items set: ' .. json.encode(items), { player = self.PlayerData })
     end
 
     self.Functions.SetSkin = function(skin, skipApply)
@@ -429,7 +430,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             TriggerClientEvent("soz-character:Client:ApplyCurrentSkin", self.PlayerData.source)
         end
 
-        exports['soz-monitor']:Log('TRACE', 'Update player skin ' .. json.encode(skin), { player = self.PlayerData })
+        exports['soz-core']:Log('DEBUG', 'Update player skin ' .. json.encode(skin), { player = self.PlayerData })
     end
 
     self.Functions.UpdateMaxWeight = function()
@@ -508,7 +509,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             end
         end
 
-        exports['soz-monitor']:Log('TRACE', 'Update player cloth config ' .. json.encode(config), { player = self.PlayerData })
+        exports['soz-core']:Log('DEBUG', 'Update player cloth config ' .. json.encode(config), { player = self.PlayerData })
     end
 
     self.Functions.GetItemByName = function(item)
@@ -639,7 +640,7 @@ function QBCore.Player.Save(source)
             features = json.encode(PlayerData.features),
         })
     else
-        exports['soz-monitor']:Log('ERROR', 'Save player error ! PlayerData is empty', { player = PlayerData })
+        exports['soz-core']:Log('ERROR', 'Save player error ! PlayerData is empty', { player = PlayerData })
     end
 end
 
@@ -669,10 +670,10 @@ function QBCore.Player.DeleteCharacter(source, citizenid)
         for k, v in pairs(playertables) do
             exports.oxmysql:execute('DELETE FROM ' .. v.table .. ' WHERE citizenid = ?', { citizenid })
         end
-        exports['soz-monitor']:Log('WARN', 'Character Deleted ! deleted' .. citizenid, { steam = license })
+        exports['soz-core']:Log('WARN', 'Character Deleted ! deleted' .. citizenid, { steam = license })
     else
         DropPlayer(src, 'You Have Been Kicked For Exploitation')
-        exports['soz-monitor']:Log('WARN', 'Anti-Cheat ! Player has Been Dropped For Character Deletion Exploit', { steam = license })
+        exports['soz-core']:Log('WARN', 'Anti-Cheat ! Player has Been Dropped For Character Deletion Exploit', { steam = license })
     end
 end
 

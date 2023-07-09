@@ -1,6 +1,7 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { PlayerListStateService } from '@public/server/player/player.list.state.service';
 import { ClientEvent } from '@public/shared/event';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
 import { PlayerClientState, PlayerServerState } from '../../shared/player';
 import { PlayerService } from './player.service';
 
@@ -8,6 +9,9 @@ import { PlayerService } from './player.service';
 export class PlayerStateService {
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PlayerListStateService)
+    private playerListStateService: PlayerListStateService;
 
     private serverStateByCitizenId: Record<string, PlayerServerState> = {};
 
@@ -34,6 +38,12 @@ export class PlayerStateService {
     }
 
     public getIdentifier(source: string): string | null {
+        const forcedIdentifier = GetConvar('soz_force_player_identifier', '');
+
+        if (forcedIdentifier !== '') {
+            return forcedIdentifier;
+        }
+
         if (GetConvar('soz_disable_steam_credential', 'false') === 'true') {
             return this.getPlayerIdentifierByType(source, 'license');
         }
@@ -99,6 +109,8 @@ export class PlayerStateService {
         };
 
         TriggerClientEvent(ClientEvent.PLAYER_UPDATE_STATE, source, this.clientStateByCitizenId[player.citizenid]);
+
+        this.playerListStateService.handlePlayer(player, this.clientStateByCitizenId[player.citizenid]);
 
         return this.clientStateByCitizenId[player.citizenid];
     }

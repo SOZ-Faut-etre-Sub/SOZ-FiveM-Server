@@ -239,7 +239,7 @@ RegisterNetEvent("voip:client:reset", function()
     restarting = true
     Citizen.Wait(200)
 
-    TriggerServerEvent("monitor:server:event", "voip_restart", {}, {}, true)
+    TriggerServerEvent("soz-core:server:monitor:add-event", "voip_restart", {}, {}, true)
 
     exports["soz-core"]:DrawNotification("Arret de la voip...", "info")
 

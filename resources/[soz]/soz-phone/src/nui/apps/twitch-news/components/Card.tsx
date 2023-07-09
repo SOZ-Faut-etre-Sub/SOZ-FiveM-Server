@@ -1,5 +1,6 @@
 import cn from 'classnames';
-import dayjs from 'dayjs';
+import { formatDistance } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import React, { FunctionComponent, memo } from 'react';
 
 import { TwitchNewsMessage } from '../../../../../typings/twitch-news';
@@ -47,7 +48,11 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
                         </p>
                         <p className="flex justify-between text-xs text-gray-400">
                             <span>{reporter}</span>
-                            <span>{dayjs().to(createdAt)}</span>
+                            <span>
+                                {formatDistance(new Date(createdAt), new Date(), {
+                                    locale: fr,
+                                })}
+                            </span>
                         </p>
                     </div>
                 </div>

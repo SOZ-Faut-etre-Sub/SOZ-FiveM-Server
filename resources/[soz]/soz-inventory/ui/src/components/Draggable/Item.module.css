@@ -46,6 +46,7 @@
     font-size: 0.75rem;
     color: #ffffff;
     z-index: 100;
+    text-shadow: black 5px 0 10px;
     pointer-events: none;
 }
 

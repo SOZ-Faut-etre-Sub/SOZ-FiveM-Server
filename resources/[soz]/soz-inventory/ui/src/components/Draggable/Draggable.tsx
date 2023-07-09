@@ -19,12 +19,13 @@ type Props = {
     interactAction?: any;
     setInContext?: (inContext: boolean) => void;
     onItemHover?: (description: string | null) => void;
+    price?: number
 }
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
 const FORMAT_CURRENCY: Intl.NumberFormatOptions = {style: "currency", currency: 'USD', maximumFractionDigits: 0}
 
-const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, onItemHover }) => {
+const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, onItemHover, price }) => {
     const {attributes, listeners, setNodeRef, transform, isDragging} = useDraggable({
         id: `${id}_${item?.slot ?? ''}`,
         data: {
@@ -48,9 +49,11 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             return null
         }
 
-        const itemLabel = item?.metadata?.label ? `${item.metadata.label} <small>${item.label}</small>` : item.label;
+        let itemLabel = item?.metadata?.label ? `${item.metadata.label} <small>${item.label}</small>` : item.label;
         let itemExtraLabel = '';
         let contextExtraLabel = '';
+        let crateContent = '';
+        let crateWeight = 0;
 
         let illustrator = item.illustrator || ''
 
@@ -61,6 +64,19 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if (WeaponAmmo[item.name]) {
                 contextExtraLabel += ` Munition : ${WeaponAmmo[item.name]}`
             }
+        } else if( item.type === 'crate' && item.metadata?.crateElements?.length){         
+
+            if(item.metadata.label){
+                itemLabel = `${item.label} "${item.metadata.label}"`
+            }
+            item.metadata.crateElements.map(meal => {
+                const expiration = new Date(meal?.metadata?.expiration ?? '')
+                crateContent += `<br>- ${meal.amount} ${meal.label} [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
+                crateWeight = crateWeight + (meal.amount * meal.weight)
+            })
+            
+            itemExtraLabel = `[${crateWeight/1000}/12 Kg]`
+            
         } else if (item?.metadata?.expiration) {
             const currentTime = new Date().getTime();
             const expiration = new Date(item.metadata['expiration'])
@@ -88,6 +104,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         onItemHover?.(`
             <div><b>${itemLabel}</b> <span>${itemExtraLabel}</span></div>
             ${item.description ? item.description : ''}
+            <div>${crateContent}</div>
             <div><span>${contextExtraLabel}</span> <span>${illustrator}</span></div>
         `);
     }, [item, onItemHover]);
@@ -189,9 +206,12 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             >
                 {item && (
                     <>
+                        {price ?
                         <span className={style.Amount}>
+                            {price > 1 && price} $
+                        </span> : <span className={style.Amount}>
                             {item.amount > 1 && item.amount}
-                        </span>
+                        </span>}
                         {(item?.shortcut) && (
                             <span className={style.Shortcut}>
                                 {item?.shortcut}
@@ -243,6 +263,11 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                                     Définir comme arme secondaire
                                 </li>
                             </>
+                        )}
+                        {(item && item.type === 'crate' && item.metadata?.crateElements?.length) && (
+                            <li className={style.OptionListItem} onClick={createInteractAction('renameItem')}>
+                                Renommer
+                            </li>
                         )}
                         {(item && item.useable && item.type !== 'weapon') && (
                             <>
