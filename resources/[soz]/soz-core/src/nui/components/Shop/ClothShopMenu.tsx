@@ -61,6 +61,26 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
         setPlayerData(playerData);
     });
 
+    const GetChildrenCategoriesNotEmpty = cat => {
+        return Object.values(catalog.shop_categories).filter(
+            childCat =>
+                // is child
+                childCat.parentId == cat.id &&
+                // has sub category
+                (Object.values(catalog.shop_categories).filter(childchildCat => childchildCat.parentId == childCat.id)
+                    .length > 0 || // or has items
+                    Object.values(childCat.content).filter(
+                        product =>
+                            !product[0].undershirtType ||
+                            (playerData.cloth_config.BaseClothSet.TopID != null &&
+                                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
+                                    product[0].undershirtType
+                                ))
+                    ).length > 0)
+        );
+    };
+
     const CategoriesNotEmpty = Object.values(catalog.shop_content.categories).filter(
         category =>
             // Check if the category is not empty
@@ -99,30 +119,11 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                 </MenuContent>
             </MainMenu>
             {Object.values(catalog.shop_categories).map(cat => {
-                // For each category, filter its subcategories
-                const ChildrenCatehoriesNotEmpty = Object.values(catalog.shop_categories).filter(
-                    childCat =>
-                        // is child
-                        childCat.parentId == cat.id &&
-                        // has sub category
-                        (Object.values(catalog.shop_categories).filter(
-                            childchildCat => childchildCat.parentId == childCat.id
-                        ).length > 0 || // or has items
-                            Object.values(childCat.content).filter(
-                                product =>
-                                    !product[0].undershirtType ||
-                                    (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                        catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                        catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].includes(
-                                            product[0].undershirtType
-                                        ))
-                            ).length > 0)
-                );
                 return (
                     <SubMenu key={cat.id} id={String(cat.id)}>
                         <MenuTitle banner={banner}>{cat.name}</MenuTitle>
                         <MenuContent>
-                            {ChildrenCatehoriesNotEmpty.map(childCat => (
+                            {GetChildrenCategoriesNotEmpty(cat).map(childCat => (
                                 <MenuItemButton
                                     key={childCat.id}
                                     onConfirm={async () => {
@@ -139,12 +140,12 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                         !items[0].undershirtType ||
                                         (playerData.cloth_config.BaseClothSet.TopID != null &&
                                             catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                            catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].includes(
+                                            catalog.under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
                                                 items[0].undershirtType
                                             ) &&
                                             !UndershirtDrawablesToExclude[playerData.skin.Model.Hash][
                                                 playerData.cloth_config.BaseClothSet.Components[Component.Tops].Drawable
-                                            ].includes(items[0].components[Component.Undershirt].Drawable))
+                                            ]?.includes(items[0].components[Component.Undershirt].Drawable))
                                 )
                                 .sort((a, b) => a[0].localeCompare(b[0]))
                                 .map(([modelLabel, items]) => (
