@@ -50,6 +50,10 @@ export class ClothingShopRepository {
     }
 
     public async updateShopStock(shop: string) {
+        if (this.repoData === undefined) {
+            await this.load();
+            return;
+        }
         this.repoData.shops[shop].stocks = await emitRpc<Record<number, number>>(
             RpcServerEvent.REPOSITORY_CLOTHING_GET_STOCK,
             shop
@@ -57,6 +61,10 @@ export class ClothingShopRepository {
     }
 
     public getShop(shop: string): ClothingShop {
+        if (this.repoData === undefined) {
+            this.load();
+            return;
+        }
         return this.repoData.shops[shop];
     }
 
