@@ -13,6 +13,10 @@ export class ClothingShopRepository {
     private repoData: ClothingShopRepositoryData;
 
     public async load() {
+        if (this.repoData) {
+            return;
+        }
+
         this.repoData = await emitRpc<ClothingShopRepositoryData>(RpcServerEvent.REPOSITORY_GET_DATA, 'clothingShop');
 
         // Hydrate tops with proper torsos and remove undershirts
@@ -50,7 +54,7 @@ export class ClothingShopRepository {
     }
 
     public async updateShopStock(shop: string) {
-        if (this.repoData === undefined) {
+        if (!this.repoData) {
             await this.load();
             return;
         }
@@ -61,7 +65,7 @@ export class ClothingShopRepository {
     }
 
     public getShop(shop: string): ClothingShop {
-        if (this.repoData === undefined) {
+        if (!this.repoData) {
             this.load();
             return;
         }
