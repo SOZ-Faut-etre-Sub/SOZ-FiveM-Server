@@ -303,6 +303,8 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
 
         if apartment:HasRoommate() then
             local roommateCitizenId = apartment:GetRoomMate()
+            MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
+                               {roommateCitizenId, property:GetGarageName()})
             exports["soz-character"]:TruncatePlayerCloakroomFromTier(roommateCitizenId, 0)
             local Target = QBCore.Functions.GetPlayerByCitizenId(roommateCitizenId)
             if Target then
@@ -310,9 +312,8 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
                 TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous avez été supprimé de votre maison")
             end
         end
-        MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE garage = ?", {
-            property:GetGarageName(),
-        })
+        MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
+                           {Player.PlayerData.citizenid, property:GetGarageName()})
 
         apartment:SetOwner(nil)
         apartment:SetRoommate(nil)
