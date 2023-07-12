@@ -6615,4 +6615,16 @@ QBShared.Items = {
         ['description'] = "Décernée aux membres des forces de l'ordre ainsi qu'aux civils travaillant pour la Défense qui se sont distingués par leur conduite et leur manière de servir ou par des prestations occasionnelles qui revêtent un caractère exceptionnel.",
         ['illustrator'] = '.Poulpito'
     },
+    ['products_heavy_box'] = {
+        ['name'] = 'products_heavy_box',
+        ['label'] = "Lourde caisse de produits",
+        ['weight'] = 2000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Cette lourde caisse semble être remplit de cachets, seringues et poudres diverses. Une odeur peu familière s'en dégage.",
+        ['illustrator'] = '.Sniteur'
+    },
 }
