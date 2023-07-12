@@ -44,8 +44,8 @@ export const useDebugService = () => {
                 data: {
                     is_accepted: true,
                     isTransmitter: true,
-                    transmitter: '603-275-8373',
-                    receiver: '603-275-4747',
+                    transmitter: '111-1134',
+                    receiver: '603-275-8373',
                     active: true,
                 },
             },
