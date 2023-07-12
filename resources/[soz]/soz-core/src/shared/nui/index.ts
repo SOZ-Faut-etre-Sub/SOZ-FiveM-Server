@@ -22,6 +22,7 @@ import { NuiPLayerMethodMap } from './player';
 import { NuiPoliceMethodMap } from './police';
 import { NuiProgressMethodMap } from './progress';
 import { NuiRepairMethodMap } from './repair';
+import { NuiSozedexMethodMap } from './sozedex';
 import { NuiTaxiMethodMap } from './taxi';
 import { NuiUpwOrderMenuMethodMap } from './upw_order_menu';
 
@@ -58,6 +59,7 @@ export interface NuiMethodMap {
     hud: NuiHudMethodMap;
     radio: NuiRadioMethodMap;
     radio_vehicle: NuiRadioVehicleMethodMap;
+    sozedex: NuiSozedexMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

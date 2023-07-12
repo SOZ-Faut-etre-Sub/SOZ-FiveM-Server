@@ -13,6 +13,7 @@ import { ApiModule } from './server/api/api.module';
 import { DatabaseModule } from './server/database/database.module';
 import { DrivingSchoolModule } from './server/driving-school/ds.module';
 import { FieldModule } from './server/farm/field.module';
+import { SozedexModule } from './server/fishing/sozedex.module';
 import { InventoryModule } from './server/inventory/inventory.module';
 import { ItemModule } from './server/item/item.module';
 import { BaunModule } from './server/job/baun/baun.module';
@@ -84,6 +85,7 @@ async function bootstrap() {
         PoliceModule,
         UpwModule,
         TaxiModule,
+        SozedexModule,
         ...PrivateModules
     );
 

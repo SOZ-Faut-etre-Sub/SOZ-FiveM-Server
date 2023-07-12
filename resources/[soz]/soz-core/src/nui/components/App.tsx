@@ -16,6 +16,7 @@ import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
 import { RepairApp } from './Bennys/RepairApp';
 import { CardApp } from './Card/CardApp';
+import { SozedexApp } from './Fishing/SozedexApp';
 import { HudApp } from './Hud/HudApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
@@ -79,6 +80,7 @@ export const App: FunctionComponent = () => {
                 <CraftingApp />
                 <FishingApp />
                 <InputApp />
+                <SozedexApp />
             </div>
         </Provider>
     );

@@ -152,7 +152,7 @@ function Inventory.CalculateWeight(items)
     for _, v in pairs(items) do
         local item = QBCore.Shared.Items[v.name]
         if item then
-            weight = weight + Inventory.GetItemWeight(item, v.metadata)
+            weight = weight + Inventory.GetItemWeight(item, v.metadata, v.amount)
         end
     end
     return weight

@@ -6900,6 +6900,80 @@ QBShared.Items = {
         ['description'] = "Cet appat musclé permettra d'aller rapidement au contact des animaux marin, la prise devrait arriver plus rapidement.",
         ['illustrator'] = '.Poulpito'
     },
+    ['sozedex'] = {
+        ['name'] = 'sozedex',
+        ['label'] = "Sozedex",
+        ['weight'] = 100,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Indispensable à tout bon pêcheur, il est idéal pour noter vos exploits de pêche.",
+        ['illustrator'] = '.XLKa'
+    },
+    
+    --- FISHING GARBAGES ---
+    ['old_shoes'] = {
+        ['name'] = 'old_shoes',
+        ['label'] = "Vieilles paire de chaussure",
+        ['weight'] = 100,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Vieille paire de bottes usées rongée par les eaux..",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['dirty_urinal_test'] = {
+        ['name'] = 'dirty_urinal_test',
+        ['label'] = "Bocal suspect",
+        ['weight'] = 100,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Bocal suspect. Il ressemble étrangement à un test urinaire..",
+        ['illustrator'] = '.Moustash'
+    },
+    ['old_bean_can'] = {
+        ['name'] = 'old_bean_can',
+        ['label'] = "Vieille boîte de conserve",
+        ['weight'] = 100,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Vieille boite de conserve de haricot rouge. Rouillée, elle est encore fermée..",
+        ['illustrator'] = '.Moustash'
+    },
+    ['old_coffee_cup'] = {
+        ['name'] = 'old_coffee_cup',
+        ['label'] = "Vieux gobelet en plastique",
+        ['weight'] = 100,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Gobelet de café à moitié rongé par le temps et les intempéries..",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['used_junky_syringue'] = {
+        ['name'] = 'used_junky_syringue',
+        ['label'] = "Seringue de junky usagée",
+        ['weight'] = 100,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Une seringue en verre pleine d'algues.. Ayant sûrement appartenu à un docker junky d'il y'à quelques temps maintenant.",
+        ['illustrator'] = '.Moustash'
+    },
 
     --- FISHES --- 
     ['petite_grosse_baleine'] = {
@@ -8989,5 +9063,5 @@ QBShared.Items = {
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 20,          -- taille minimale en cm
         ['sozedex_id'] = 00             -- identifiant sozédex
-    },
+    },    
 }
