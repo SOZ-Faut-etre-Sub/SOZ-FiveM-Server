@@ -21,9 +21,12 @@ module.exports = {
             mono: ['input-mono', 'monospace'],
             lato: ['Lato', ...defaultTheme.fontFamily.sans],
             prompt: ['Prompt', 'sans-serif'],
+            'delight-sunset': ['Delight-Sunset', 'sans-serif'],
         },
         extend: {
-            colors: {},
+            colors: {
+                'sozedex-green': '#308032',
+            },
             zIndex: {
                 9999: '9999',
             },

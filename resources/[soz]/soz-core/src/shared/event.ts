@@ -477,6 +477,10 @@ export enum ClientEvent {
     // Not core
     LOCATION_ENTER = 'locations:zone:enter',
     LOCATION_EXIT = 'locations:zone:exit',
+
+    // Sozedex
+    NUI_SHOW_SOZEDEX = 'soz-core:client:nui:show-sozedex',
+    NUI_HIDE_SOZEDEX = 'soz-core:client:nui:hide-sozedex',
 }
 
 export enum GameEvent {
@@ -715,4 +719,5 @@ export enum NuiEvent {
     FishingSuccessHit = 'soz-core:client:fishing:success-hit',
 
     RentBoat = 'soz-core:client:fishing:rent-boat',
+    SozedexClosed = 'soz-core:nui:sozedex:closed',
 }
