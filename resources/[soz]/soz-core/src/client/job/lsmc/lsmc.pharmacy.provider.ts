@@ -38,7 +38,7 @@ export class LSMCPharmacyProvider {
             const hydratedProducts = products.map((product, id) => ({
                 ...this.itemService.getItem(product.name),
                 ...product,
-                slot: id,
+                slot: id + 1,
             }));
 
             return hydratedProducts;
