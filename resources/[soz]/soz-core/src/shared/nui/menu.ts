@@ -68,6 +68,7 @@ export enum MenuType {
     PlayerPersonal = 'player_personal',
     LsmcJobMenu = 'lsmc_job_menu',
     JobOnDutyMenu = 'job_on_duty,',
+    Album = 'album',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -103,4 +104,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.PlayerPersonal]: PlayerPersonalMenuData;
     [MenuType.LsmcJobMenu]: any;
     [MenuType.JobOnDutyMenu]: NuiJobEmployeeOnDuty;
+    [MenuType.Album]: { tracks: Record<string, string>; volume: number };
 }

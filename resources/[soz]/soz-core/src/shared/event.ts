@@ -302,6 +302,7 @@ export enum ClientEvent {
 
     ITEM_USE = 'soz-core:client:item:use',
     ITEM_UMBRELLA_TOGGLE = 'soz-core:client:item:umbrella:toggle',
+    ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',
 
     HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 
@@ -672,4 +673,7 @@ export enum NuiEvent {
     TaxiSetMission = 'soz-core:client:taxi:set-mission',
     TaxiSetHorodateur = 'soz-core:client:taxi:set-horodateur',
     TaxiDisplayHorodateur = 'soz-core:client:taxi:display-horodateur',
+
+    AlbumPlay = 'soz-core:client:album:play',
+    AlbumVolume = 'soz-core:client:album:volume',
 }

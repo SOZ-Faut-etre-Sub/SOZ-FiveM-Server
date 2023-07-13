@@ -6627,4 +6627,16 @@ QBShared.Items = {
         ['description'] = "Cette lourde caisse semble être remplit de cachets, seringues et poudres diverses. Une odeur peu familière s'en dégage.",
         ['illustrator'] = '.Sniteur'
     },
+    ['900k_album'] = {
+        ['name'] = '900k_album',
+        ['label'] = "Album 900k",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Album musical du plus grand des artistes français.",
+        ['illustrator'] = '.Nariiel'
+    },
 }
