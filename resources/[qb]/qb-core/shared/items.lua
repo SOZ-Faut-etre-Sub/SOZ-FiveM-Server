@@ -5569,7 +5569,7 @@ QBShared.Items = {
         ['weight'] = 50,
         ['type'] = 'item_illegal',
         ['unique'] = false,
-        ['useable'] = true,
+        ['useable'] = false,
         ['description'] = 'Cigarette déja utilisée.',
         ['illustrator'] = '.NariieL',
     },
