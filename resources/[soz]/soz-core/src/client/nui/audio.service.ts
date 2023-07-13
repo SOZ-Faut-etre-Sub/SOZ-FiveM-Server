@@ -27,4 +27,8 @@ export class AudioService {
     public startAudio(audio: Audio): void {
         this.nuiDispatch.dispatch('audio', 'PlayAudio', audio);
     }
+
+    public volumeAudio(audio: Audio): void {
+        this.nuiDispatch.dispatch('audio', 'VolumeAudio', audio);
+    }
 }

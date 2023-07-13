@@ -26,6 +26,7 @@ import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { TaxiJobMenu } from '../Taxi/TaxiJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
 import { MenuUpw } from './Job/MenuUpw';
+import { MenuAlbum } from './MenuAlbum';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
 import { MenuDemo } from './MenuDemo';
 import { MenuGarage } from './MenuGarage';
@@ -188,6 +189,7 @@ const MenuRouter: FunctionComponent = () => {
                 path={`/${MenuType.BennysUpgradeVehicle}/*`}
                 element={<MenuBennysUpgradeVehicle data={menuData} />}
             />
+            <Route path={`/${MenuType.Album}/*`} element={<MenuAlbum data={menuData} />} />
         </Routes>
     );
 };
