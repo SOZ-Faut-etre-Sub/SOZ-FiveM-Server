@@ -7341,49 +7341,49 @@ QBShared.Items = {
     ['old_shoes'] = {
         ['name'] = 'old_shoes',
         ['label'] = "Paire de chaussure pourrie",
-        ['weight'] = 100,
+        ['weight'] = 400,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Vieille paire de bottes usées rongée par les eaux..",
+        ['description'] = "Un coup de polish et elles sont niquel... Non ?",
         ['illustrator'] = '.Poulpito'
     },
-    ['dirty_urinal_test'] = {
-        ['name'] = 'dirty_urinal_test',
+    ['disgusting_jar'] = {
+        ['name'] = 'disgusting_jar',
         ['label'] = "Bocal répugnant",
-        ['weight'] = 100,
+        ['weight'] = 150,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Bocal répugnant. Il ressemble étrangement à un test urinaire..",
+        ['description'] = "Berk, un écosystème otonome c'est établit sur ce bocal.",
         ['illustrator'] = '.Moustash'
     },
-    ['old_bean_can'] = {
-        ['name'] = 'old_bean_can',
+    ['disgusting_can'] = {
+        ['name'] = 'disgusting_can',
         ['label'] = "Boite de conserve dégoutante",
-        ['weight'] = 100,
+        ['weight'] = 200,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Vieille boite de conserve de haricot rouge. Rouillée, elle est encore fermée..",
+        ['description'] = "Miam miam le petit ragoût !",
         ['illustrator'] = '.Moustash'
     },
     ['old_coffee_cup'] = {
         ['name'] = 'old_coffee_cup',
         ['label'] = "Gobelet en plastique dégoulinant",
-        ['weight'] = 100,
+        ['weight'] = 200,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Gobelet de café à moitié rongé par le temps et les intempéries..",
+        ['description'] = "Une représentation parfaite de la vie.",
         ['illustrator'] = '.Poulpito'
     },
     ['used_junky_syringue'] = {
@@ -7395,8 +7395,20 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Une seringue en verre pleine d'algues.. Ayant sûrement appartenu à un docker junky d'il y'à quelques temps maintenant.",
+        ['description'] = "Les ravages de VALORANT, encore une personne ayant trop joué.",
         ['illustrator'] = '.Moustash'
+    },
+    ['lost_tire'] = {
+        ['name'] = 'lost_tire',
+        ['label'] = "Pneu perdu",
+        ['weight'] = 500,
+        ['type'] = 'fishing_garbage',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Il y autant d'habitants vivants sur ce pneu qu'une station orbitale de science-fiction dans l'espace.",
+        ['illustrator'] = '.Poulpito'
     },
 
     --- BADGES ---
