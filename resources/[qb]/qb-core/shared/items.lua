@@ -7072,176 +7072,165 @@ QBShared.Items = {
     ['basic_rod'] = {
         ['name'] = 'basic_rod',
         ['label'] = "Canne à pêche basique",
-        ['weight'] = 200,
+        ['weight'] = 1000,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "Un bout de bois, une ficelle, que demander de mieux. <br> A part une canne à pêche.",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
 
     ['prestige_rod'] = {
         ['name'] = 'prestige_rod',
         ['label'] = "Canne à pêche prestige",
-        ['weight'] = 200,
+        ['weight'] = 1500,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "Canne à pêche dernier cris fait de matérieux luxueux. Elle ne vous fera jamais défaut !",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
     ['littoral_rod'] = {
         ['name'] = 'littoral_rod',
-        ['label'] = "Canne à pêche - Littoral",
-        ['weight'] = 200,
+        ['label'] = "Canne à pêche \"Littoral\"",
+        ['weight'] = 1500,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "Qui n'a jamais ramassé et collectionné les coquillages sur la plage !",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
     ['canals_rod'] = {
         ['name'] = 'canals_rod',
-        ['label'] = "Canne à pêche - Canaux",
-        ['weight'] = 200,
+        ['label'] = "Canne à pêche \"Canaux\"",
+        ['weight'] = 1500,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "C'était certain qu'avec la pollution et tous les produits chimiques dans les canaux que la canne à pêche allait muter !",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
     ['river_rod'] = {
         ['name'] = 'river_rod',
-        ['label'] = "Canne à pêche - Rivière",
-        ['weight'] = 200,
+        ['label'] = "Canne à pêche \"Rivière\"",
+        ['weight'] = 500,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "La nature elle même (les feuilles bougent avec le vent)",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
     ['little_lake_rod'] = {
         ['name'] = 'little_lake_rod',
-        ['label'] = "Canne à pêche - Petit lac",
-        ['weight'] = 200,
+        ['label'] = "Canne à pêche \"Petit Lac\"",
+        ['weight'] = 1500,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "Le roseau plie mais ne se romps pas",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
     ['big_lake_rod'] = {
         ['name'] = 'big_lake_rod',
-        ['label'] = "Canne à pêche - Grand lac",
-        ['weight'] = 200,
+        ['label'] = "Canne à pêche \"Grand Lac\"",
+        ['weight'] = 1500,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "Entre dune, forêt et montagne",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
     ['north_sea_rod'] = {
         ['name'] = 'north_sea_rod',
-        ['label'] = "Canne à pêche - Mer du nord",
-        ['weight'] = 200,
+        ['label'] = "Canne à pêche \"Mer du Nord\"",
+        ['weight'] = 1500,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "Inspiré de \"La Grande Vague de Kanagawa\"",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
     ['south_sea_rod'] = {
         ['name'] = 'south_sea_rod',
-        ['label'] = "Canne à pêche - Mer du sud",
-        ['weight'] = 200,
+        ['label'] = "Canne à pêche \"Mer du Sud\"",
+        ['weight'] = 1500,
         ['useable'] = true,
         ['type'] = 'fishing_rod',
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
         ['description'] = "Le trident et le filet de Poséidon (ou d'un gladiateur qui sait) ",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Aurukh'
     },
-    ['ultim_rod'] = {
-        ['name'] = 'ultim_rod',
-        ['label'] = "Canne à pêche Ultime",
-        ['weight'] = 200,
-        ['useable'] = true,
-        ['type'] = 'fishing_rod',
-        ['shouldClose'] = false,
-        ['unique'] = true,
-        ['combinable'] = nil,
-        ['description'] = "Canne à pêche dernier cris fait de matérieux luxueux. Elle ne vous fera jamais défaut !",
-        ['illustrator'] = '.Poulpito'
-    },
+
     ['juicy_bait'] = {
         ['name'] = 'juicy_bait',
         ['label'] = "Appât Juteux",
-        ['weight'] = 200,
+        ['weight'] = 100,
         ['useable'] = false,
         ['type'] = 'fishing_bait',
         ['shouldClose'] = false,
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Appât dégoulinant, les animaux marins se réveilleront peu importe l'heure pour venir déguster cette chose gluante.",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Moustash'
     },
     ['tender_bait'] = {
         ['name'] = 'tender_bait',
         ['label'] = "Appât Tendre",
-        ['weight'] = 200,
+        ['weight'] = 100,
         ['useable'] = false,
         ['type'] = 'fishing_bait',
         ['shouldClose'] = false,
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Appât fait d'un met délicieux, peu importe le mauvais temps, les animaux marins se rueront vers lui.",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Moustash'
     },
     ['furious_bait'] = {
         ['name'] = 'furious_bait',
         ['label'] = "Appât Furieux",
-        ['weight'] = 200,
+        ['weight'] = 150,
         ['useable'] = false,
         ['type'] = 'fishing_bait',
         ['shouldClose'] = false,
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Cet appat N.R.V. donnera un sale coup au moral de la prise, ce sera plus facile de la tirer de l'eau le moment venu",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Moustash'
     },
     ['inshape_bait'] = {
         ['name'] = 'inshape_bait',
         ['label'] = "Appât Musclé",
-        ['weight'] = 200,
+        ['weight'] = 250,
         ['useable'] = false,
         ['type'] = 'fishing_bait',
         ['shouldClose'] = false,
         ['unique'] = false,
         ['combinable'] = nil,
         ['description'] = "Cet appat musclé permettra d'aller rapidement au contact des animaux marin, la prise devrait arriver plus rapidement.",
-        ['illustrator'] = '.Poulpito'
+        ['illustrator'] = '.Moustash'
     },
     ['sozedex'] = {
         ['name'] = 'sozedex',
         ['label'] = "Sozedex",
-        ['weight'] = 100,
+        ['weight'] = 600,
         ['type'] = 'item',
         ['unique'] = true,
         ['useable'] = true,
@@ -7254,7 +7243,7 @@ QBShared.Items = {
     --- FISHING GARBAGES ---
     ['old_shoes'] = {
         ['name'] = 'old_shoes',
-        ['label'] = "Vieilles paire de chaussure",
+        ['label'] = "Paire de chaussure pourrie",
         ['weight'] = 100,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
@@ -7266,19 +7255,19 @@ QBShared.Items = {
     },
     ['dirty_urinal_test'] = {
         ['name'] = 'dirty_urinal_test',
-        ['label'] = "Bocal suspect",
+        ['label'] = "Bocal répugnant",
         ['weight'] = 100,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Bocal suspect. Il ressemble étrangement à un test urinaire..",
+        ['description'] = "Bocal répugnant. Il ressemble étrangement à un test urinaire..",
         ['illustrator'] = '.Moustash'
     },
     ['old_bean_can'] = {
         ['name'] = 'old_bean_can',
-        ['label'] = "Vieille boîte de conserve",
+        ['label'] = "Boite de conserve dégoutante",
         ['weight'] = 100,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
@@ -7290,7 +7279,7 @@ QBShared.Items = {
     },
     ['old_coffee_cup'] = {
         ['name'] = 'old_coffee_cup',
-        ['label'] = "Vieux gobelet en plastique",
+        ['label'] = "Gobelet en plastique dégoulinant",
         ['weight'] = 100,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
@@ -7312,6 +7301,72 @@ QBShared.Items = {
         ['description'] = "Une seringue en verre pleine d'algues.. Ayant sûrement appartenu à un docker junky d'il y'à quelques temps maintenant.",
         ['illustrator'] = '.Moustash'
     },
+
+    --- BADGES ---
+    ['badge_south_sea'] = {
+        ['name'] = 'badge_south_sea',
+        ['label'] = "Badge \"Mer du sud\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex de la Mer du Sud.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_north_sea'] = {
+        ['name'] = 'badge_north_sea',
+        ['label'] = "Badge \"Mer du nord\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex de la Mer du Nord.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_canals'] = {
+        ['name'] = 'badge_canals',
+        ['label'] = "Badge \"Canaux\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex des Canaux.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_littoral'] = {
+        ['name'] = 'badge_littoral',
+        ['label'] = "Badge \"Littoral\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex du Littoral.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_big_lake'] = {
+        ['name'] = 'badge_big_lake',
+        ['label'] = "Badge \"Grand Lac\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex du Grand Lac.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_little_lake'] = {
+        ['name'] = 'badge_little_lake',
+        ['label'] = "Badge \"Petit Lac\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex des Petits Lacs.",
+        ['illustrator'] = '.Poulpito',
+    },
+    ['badge_rivers'] = {
+        ['name'] = 'badge_rivers',
+        ['label'] = "Badge \"Rivières\"",
+        ['useable'] = false,
+        ['weight'] = 2000,
+        ['type'] = 'item',
+        ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex des Rivières.",
+        ['illustrator'] = '.Poulpito',
+    },
+
 
     --- FISHES --- 
     ['petite_grosse_baleine'] = {
