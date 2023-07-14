@@ -6992,7 +6992,7 @@ QBShared.Items = {
         ['max_weight'] = 3000,        
         ['min_length'] = 50,          
         ['max_length'] = 250,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 1
     },
     ['pfister_fish'] = {
         ['name'] = 'pfister_fish',
@@ -7010,7 +7010,7 @@ QBShared.Items = {
         ['max_weight'] = 800,        
         ['min_length'] = 15,          
         ['max_length'] = 40,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 2
     },
     ['barrycuda'] = {
         ['name'] = 'barrycuda',
@@ -7028,7 +7028,7 @@ QBShared.Items = {
         ['max_weight'] = 3800,        
         ['min_length'] = 80,          
         ['max_length'] = 120,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 3
     },
     ['angry_fish'] = {
         ['name'] = 'angry_fish',
@@ -7046,7 +7046,7 @@ QBShared.Items = {
         ['max_weight'] = 2500,        
         ['min_length'] = 60,          
         ['max_length'] = 120,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 4
     },
     ['cristalfish'] = {
         ['name'] = 'cristalfish',
@@ -7064,7 +7064,7 @@ QBShared.Items = {
         ['max_weight'] = 30,        
         ['min_length'] = 5,          
         ['max_length'] = 12,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 5
     },
     ['le_poulpe_thor'] = {
         ['name'] = 'le_poulpe_thor',
@@ -7082,7 +7082,7 @@ QBShared.Items = {
         ['max_weight'] = 3200,        
         ['min_length'] = 85,          
         ['max_length'] = 195,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 6
     },
     ['glowriffy'] = {
         ['name'] = 'glowriffy',
@@ -7100,7 +7100,7 @@ QBShared.Items = {
         ['max_weight'] = 1500,        
         ['min_length'] = 20,          
         ['max_length'] = 45,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 7
     },
     ['carpe_diam'] = {
         ['name'] = 'carpe_diam',
@@ -7118,7 +7118,7 @@ QBShared.Items = {
         ['max_weight'] = 800,        
         ['min_length'] = 70,          
         ['max_length'] = 90,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 8
     },
     ['chibhippocampe'] = {
         ['name'] = 'chibhippocampe',
@@ -7136,7 +7136,7 @@ QBShared.Items = {
         ['max_weight'] = 100,        
         ['min_length'] = 10,          
         ['max_length'] = 20,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 9
     },
     ['stepafou_moustachou'] = {
         ['name'] = 'stepafou_moustachou',
@@ -7154,7 +7154,7 @@ QBShared.Items = {
         ['max_weight'] = 2400,        
         ['min_length'] = 30,          
         ['max_length'] = 280,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 10
     },
     ['graie_montas'] = {
         ['name'] = 'graie_montas',
@@ -7172,7 +7172,7 @@ QBShared.Items = {
         ['max_weight'] = 777,        
         ['min_length'] = 50,          
         ['max_length'] = 77,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 11
     },
     ['la_carpotresor'] = {
         ['name'] = 'la_carpotresor ',
@@ -7190,7 +7190,7 @@ QBShared.Items = {
         ['max_weight'] = 1000,        
         ['min_length'] = 21,          
         ['max_length'] = 29,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 12
     },
     ['hypnoisson'] = {
         ['name'] = 'hypnoisson',
@@ -7208,7 +7208,7 @@ QBShared.Items = {
         ['max_weight'] = 250,        
         ['min_length'] = 6,          
         ['max_length'] = 20,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 13
     },
     ['meduze_de_fe_de_la_morre_qui_tu'] = {
         ['name'] = 'meduze_de_fe_de_la_morre_qui_tu',
@@ -7226,7 +7226,7 @@ QBShared.Items = {
         ['max_weight'] = 1200,        
         ['min_length'] = 30,          
         ['max_length'] = 80,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 14
     },
     ['marine'] = {
         ['name'] = 'marine',
@@ -7244,7 +7244,7 @@ QBShared.Items = {
         ['max_weight'] = 500,        
         ['min_length'] = 1,          
         ['max_length'] = 10,          
-        ['sozedex_id'] = 00           
+        ['sozedex_id'] = 15
     },
     ['purple_omen'] = {
         ['name'] = 'purple_omen',
@@ -7262,7 +7262,7 @@ QBShared.Items = {
         ['max_weight'] = 4300,         -- poids maxmimal en grammes
         ['min_length'] = 76,           -- taille minimale en cm
         ['max_length'] = 183,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 16
     },
     ['bigornoob'] = {
         ['name'] = 'bigornoob',
@@ -7280,7 +7280,7 @@ QBShared.Items = {
         ['max_weight'] = 20,         -- poids maxmimal en grammes
         ['min_length'] = 1,           -- taille minimale en cm
         ['max_length'] = 4,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 17
     },
     ['le_sunny'] = {
         ['name'] = 'le_sunny',
@@ -7298,7 +7298,7 @@ QBShared.Items = {
         ['max_weight'] = 800,         -- poids maxmimal en grammes
         ['min_length'] = 31,           -- taille minimale en cm
         ['max_length'] = 48,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 18
     },
     ['croaky_froggy'] = {
         ['name'] = 'croaky_froggy',
@@ -7316,7 +7316,7 @@ QBShared.Items = {
         ['max_weight'] = 30,         -- poids maxmimal en grammes
         ['min_length'] = 3,           -- taille minimale en cm
         ['max_length'] = 10,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 19
     },
     ['chaxo'] = {
         ['name'] = 'chaxo',
@@ -7334,7 +7334,7 @@ QBShared.Items = {
         ['max_weight'] = 150,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 30,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 20
     },
     ['morpheus_somnolent'] = {
         ['name'] = 'morpheus_somnolent',
@@ -7352,7 +7352,7 @@ QBShared.Items = {
         ['max_weight'] = 1200,         -- poids maxmimal en grammes
         ['min_length'] = 25,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 21
     },
     ['portinet'] = {
         ['name'] = 'portinet',
@@ -7370,7 +7370,7 @@ QBShared.Items = {
         ['max_weight'] = 2200,         -- poids maxmimal en grammes
         ['min_length'] = 90,           -- taille minimale en cm
         ['max_length'] = 140,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 22
     },
     ['la_clebsouille'] = {
         ['name'] = 'la_clebsouille',
@@ -7388,7 +7388,7 @@ QBShared.Items = {
         ['max_weight'] = 4000,         -- poids maxmimal en grammes
         ['min_length'] = 60,           -- taille minimale en cm
         ['max_length'] = 100,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 23
     },
     ['fichouette'] = {
         ['name'] = 'fichouette',
@@ -7406,7 +7406,7 @@ QBShared.Items = {
         ['max_weight'] = 1000,         -- poids maxmimal en grammes
         ['min_length'] = 50,           -- taille minimale en cm
         ['max_length'] = 100,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 24
     },
     ['merou_colerique_tachete'] = {
         ['name'] = 'merou_colerique_tachete',
@@ -7424,7 +7424,7 @@ QBShared.Items = {
         ['max_weight'] = 1000,         -- poids maxmimal en grammes
         ['min_length'] = 13,           -- taille minimale en cm
         ['max_length'] = 54,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 25
     },
     ['chromabranchus_virosa'] = {
         ['name'] = 'chromabranchus_virosa',
@@ -7442,7 +7442,7 @@ QBShared.Items = {
         ['max_weight'] = 1500,         -- poids maxmimal en grammes
         ['min_length'] = 7,           -- taille minimale en cm
         ['max_length'] = 40,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 26
     },
     ['mossiferne'] = {
         ['name'] = 'mossiferne',
@@ -7460,7 +7460,7 @@ QBShared.Items = {
         ['max_weight'] = 300,         -- poids maxmimal en grammes
         ['min_length'] = 20,           -- taille minimale en cm
         ['max_length'] = 90,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 27
     },
     ['figel'] = {
         ['name'] = 'figel',
@@ -7478,7 +7478,7 @@ QBShared.Items = {
         ['max_weight'] = 4800,         -- poids maxmimal en grammes
         ['min_length'] = 250,           -- taille minimale en cm
         ['max_length'] = 388,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 28
     },
     ['rosailee'] = {
         ['name'] = 'rosailee',
@@ -7496,7 +7496,7 @@ QBShared.Items = {
         ['max_weight'] = 600,         -- poids maxmimal en grammes
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 29
     },
     ['le_perlea'] = {
         ['name'] = 'le_perlea',
@@ -7514,7 +7514,7 @@ QBShared.Items = {
         ['max_weight'] = 500,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 25,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 30
     },
     ['sanajvit'] = {
         ['name'] = 'sanajvit',
@@ -7532,7 +7532,7 @@ QBShared.Items = {
         ['max_weight'] = 2700,         -- poids maxmimal en grammes
         ['min_length'] = 33,           -- taille minimale en cm
         ['max_length'] = 38,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 31
     },
     ['simone'] = {
         ['name'] = 'simone',
@@ -7550,7 +7550,7 @@ QBShared.Items = {
         ['max_weight'] = 150,         -- poids maxmimal en grammes
         ['min_length'] = 5,           -- taille minimale en cm
         ['max_length'] = 10,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 32
     },
     ['axowin_dragonnet_splendide'] = {
         ['name'] = 'axowin_dragonnet_splendide',
@@ -7568,7 +7568,7 @@ QBShared.Items = {
         ['max_weight'] = 250,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 25,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 33
     },
     ['fire_plouf'] = {
         ['name'] = 'fire_plouf',
@@ -7586,7 +7586,7 @@ QBShared.Items = {
         ['max_weight'] = 200,         -- poids maxmimal en grammes
         ['min_length'] = 8,           -- taille minimale en cm
         ['max_length'] = 12,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 34
     },
     ['aquatic_wood_runner'] = {
         ['name'] = 'aquatic_wood_runner',
@@ -7604,7 +7604,7 @@ QBShared.Items = {
         ['max_weight'] = 200,         -- poids maxmimal en grammes
         ['min_length'] = 5,           -- taille minimale en cm
         ['max_length'] = 10,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 35
     },
     ['squalopoisson'] = {
         ['name'] = 'squalopoisson',
@@ -7622,7 +7622,7 @@ QBShared.Items = {
         ['max_weight'] = 900,         -- poids maxmimal en grammes
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 36
     },
     ['rastortue'] = {
         ['name'] = 'rastortue',
@@ -7640,7 +7640,7 @@ QBShared.Items = {
         ['max_weight'] = 1500,         -- poids maxmimal en grammes
         ['min_length'] = 40,           -- taille minimale en cm
         ['max_length'] = 55,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 37
     },
     ['voile_souvenir'] = {
         ['name'] = 'voile_souvenir',
@@ -7658,7 +7658,7 @@ QBShared.Items = {
         ['max_weight'] = 400,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 40,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 38
     },
     ['sandre_florale'] = {
         ['name'] = 'sandre_florale',
@@ -7676,7 +7676,7 @@ QBShared.Items = {
         ['max_weight'] = 4000,         -- poids maxmimal en grammes
         ['min_length'] = 200,           -- taille minimale en cm
         ['max_length'] = 350,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 39
     },
     ['pinky_punky_fish'] = {
         ['name'] = 'pinky_punky_fish',
@@ -7694,7 +7694,7 @@ QBShared.Items = {
         ['max_weight'] = 2000,         -- poids maxmimal en grammes
         ['min_length'] = 51,           -- taille minimale en cm
         ['max_length'] = 151,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 40
     },
     ['electropoulpe'] = {
         ['name'] = 'electropoulpe',
@@ -7712,7 +7712,7 @@ QBShared.Items = {
         ['max_weight'] = 2500,         -- poids maxmimal en grammes
         ['min_length'] = 175,           -- taille minimale en cm
         ['max_length'] = 230,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 41
     },
     ['verdipoulpe'] = {
         ['name'] = 'verdipoulpe',
@@ -7730,7 +7730,7 @@ QBShared.Items = {
         ['max_weight'] = 200,         -- poids maxmimal en grammes
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 42
     },
     ['pilulieu'] = {
         ['name'] = 'pilulieu',
@@ -7748,7 +7748,7 @@ QBShared.Items = {
         ['max_weight'] = 250,         -- poids maxmimal en grammes
         ['min_length'] = 20,           -- taille minimale en cm
         ['max_length'] = 30,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 43
     },
     ['orions_star'] = {
         ['name'] = 'orions_star',
@@ -7766,7 +7766,7 @@ QBShared.Items = {
         ['max_weight'] = 200,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 20,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 44
     },
     ['globenciel'] = {
         ['name'] = 'globenciel',
@@ -7784,7 +7784,7 @@ QBShared.Items = {
         ['max_weight'] = 500,         -- poids maxmimal en grammes
         ['min_length'] = 7,           -- taille minimale en cm
         ['max_length'] = 12,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant soz�dex
+        ['sozedex_id'] = 45
     },
     ['poissoncisson'] = {
         ['name'] = 'poissoncisson',
@@ -7802,7 +7802,7 @@ QBShared.Items = {
         ['max_weight'] = 1000,         -- poids maxmimal en grammes
         ['min_length'] = 20,           -- taille minimale en cm
         ['max_length'] = 30,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 46
     },
     ['pipoulpe'] = {
         ['name'] = 'le_pipoulpe',
@@ -7820,7 +7820,7 @@ QBShared.Items = {
         ['max_weight'] = 600,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 15,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 47
     },
     ['luminosa'] = {
         ['name'] = 'luminosa',
@@ -7838,7 +7838,7 @@ QBShared.Items = {
         ['max_weight'] = 5,         -- poids maxmimal en grammes
         ['min_length'] = 9,           -- taille minimale en cm
         ['max_length'] = 9,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 48
     },
 	['poulamar'] = {
         ['name'] = 'poulamar',
@@ -7856,7 +7856,7 @@ QBShared.Items = {
         ['max_weight'] = 1000,         -- poids maxmimal en grammes
         ['min_length'] = 300,           -- taille minimale en cm
         ['max_length'] = 300,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 49
     },
     ['electraie'] = {
         ['name'] = 'electraie',
@@ -7874,7 +7874,7 @@ QBShared.Items = {
         ['max_weight'] = 3800,         -- poids maxmimal en grammes
         ['min_length'] = 40,           -- taille minimale en cm
         ['max_length'] = 70,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 50
     },
     ['bolingbroke_fish'] = {
         ['name'] = 'bolingbroke_fish',
@@ -7892,7 +7892,7 @@ QBShared.Items = {
         ['max_weight'] = 3000,         -- poids maxmimal en grammes
         ['min_length'] = 15,           -- taille minimale en cm
         ['max_length'] = 40,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 51
     },
     ['nebulith'] = {
         ['name'] = 'nebulith',
@@ -7910,7 +7910,7 @@ QBShared.Items = {
         ['max_weight'] = 3000,         -- poids maxmimal en grammes
         ['min_length'] = 60,           -- taille minimale en cm
         ['max_length'] = 60,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 52
     },
     ['mariusson'] = {
         ['name'] = 'mariusson',
@@ -7928,7 +7928,7 @@ QBShared.Items = {
         ['max_weight'] = 250,         -- poids maxmimal en grammes
         ['min_length'] = 12,           -- taille minimale en cm
         ['max_length'] = 12,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 53
     },
     ['dobbry_rok'] = {
         ['name'] = 'dobbry_rok',
@@ -7946,7 +7946,7 @@ QBShared.Items = {
         ['max_weight'] = 2500,         -- poids maxmimal en grammes
         ['min_length'] = 17,           -- taille minimale en cm
         ['max_length'] = 26,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 54
     },
     ['ablyssus'] = {
         ['name'] = 'ablyssus',
@@ -7964,7 +7964,7 @@ QBShared.Items = {
         ['max_weight'] = 633,         -- poids maxmimal en grammes
         ['min_length'] = 17,           -- taille minimale en cm
         ['max_length'] = 66,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 55
     },
     ['zirvine_dracopis'] = {
         ['name'] = 'zirvine_dracopis',
@@ -7982,7 +7982,7 @@ QBShared.Items = {
         ['max_weight'] = 850,         -- poids maxmimal en grammes
         ['min_length'] = 38,           -- taille minimale en cm
         ['max_length'] = 45,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 56
     },
     ['gobie_vaseux'] = {
         ['name'] = 'gobie_vaseux',
@@ -8000,7 +8000,7 @@ QBShared.Items = {
         ['max_weight'] = 350,         -- poids maxmimal en grammes
         ['min_length'] = 5,           -- taille minimale en cm
         ['max_length'] = 20,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 57
     },
     ['trashark'] = {
         ['name'] = 'trashark',
@@ -8018,7 +8018,7 @@ QBShared.Items = {
         ['max_weight'] = 5000,         -- poids maxmimal en grammes
         ['min_length'] = 250,           -- taille minimale en cm
         ['max_length'] = 350,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 58
     },
     ['akumaaaa'] = {
         ['name'] = 'akumaaaa',
@@ -8036,7 +8036,7 @@ QBShared.Items = {
         ['max_weight'] = 5000,         -- poids maxmimal en grammes
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 150,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 59
     },
     ['lantrole'] = {
         ['name'] = 'lantrole',
@@ -8054,7 +8054,7 @@ QBShared.Items = {
         ['max_weight'] = 2300,         -- poids maxmimal en grammes
         ['min_length'] = 20,           -- taille minimale en cm
         ['max_length'] = 30,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 60
     },
     ['la_crevette_arc_en_ciel'] = {
         ['name'] = 'la_crevette_arc_en_ciel',
@@ -8072,7 +8072,7 @@ QBShared.Items = {
         ['max_weight'] = 40,         -- poids maxmimal en grammes
         ['min_length'] = 1,          -- taille minimale en cm
         ['max_length'] = 8,          -- taille minimale en cm
-        ['sozedex_id'] = 00          -- identifiant sozédex
+        ['sozedex_id'] = 61
     },
     ['acuattus'] = {
         ['name'] = 'acuattus',
@@ -8090,7 +8090,7 @@ QBShared.Items = {
         ['max_weight'] = 1500,         -- poids maxmimal en grammes
         ['min_length'] = 50,           -- taille minimale en cm
         ['max_length'] = 1000,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 62
     },
     ['crabantine'] = {
         ['name'] = 'crabantine',
@@ -8108,7 +8108,7 @@ QBShared.Items = {
         ['max_weight'] = 700,         -- poids maxmimal en grammes
         ['min_length'] = 40,           -- taille minimale en cm
         ['max_length'] = 75,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 63
     },
     ['blobo_acanthus'] = {
         ['name'] = 'blobo_acanthus',
@@ -8126,7 +8126,7 @@ QBShared.Items = {
         ['max_weight'] = 1000,         -- poids maxmimal en grammes
         ['min_length'] = 8,           -- taille minimale en cm
         ['max_length'] = 30,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 64
     },
     ['fausse_meduse_haploida'] = {
         ['name'] = 'fausse_meduse_haploida',
@@ -8144,7 +8144,7 @@ QBShared.Items = {
         ['max_weight'] = 20,         -- poids maxmimal en grammes
         ['min_length'] = 6,           -- taille minimale en cm
         ['max_length'] = 15,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 65
     },
     ['bi_queue'] = {
         ['name'] = 'bi_queue',
@@ -8162,7 +8162,7 @@ QBShared.Items = {
         ['max_weight'] = 2000,         -- poids maxmimal en grammes
         ['min_length'] = 20,           -- taille minimale en cm
         ['max_length'] = 80,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 66
     },
     ['reggaeToad'] = {
         ['name'] = 'reggaeToad',
@@ -8180,7 +8180,7 @@ QBShared.Items = {
         ['max_weight'] = 300,         -- poids maxmimal en grammes
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 67
     },
     ['hippocon'] = {
         ['name'] = 'hippocon',
@@ -8198,7 +8198,7 @@ QBShared.Items = {
         ['max_weight'] = 15,         -- poids maxmimal en grammes
         ['min_length'] = 7,           -- taille minimale en cm
         ['max_length'] = 15,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 68
     },
     ['piranha_clown'] = {
         ['name'] = 'piranha_clown',
@@ -8216,7 +8216,7 @@ QBShared.Items = {
         ['max_weight'] = 2300,         -- poids maxmimal en grammes
         ['min_length'] = 45,           -- taille minimale en cm
         ['max_length'] = 70,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 69
     },
     ['coelacant'] = {
         ['name'] = 'coelacant',
@@ -8234,7 +8234,7 @@ QBShared.Items = {
         ['max_weight'] = 2000,         -- poids maxmimal en grammes
         ['min_length'] = 15,           -- taille minimale en cm
         ['max_length'] = 45,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 70
     },
     ['flannochet_zebre'] = {
         ['name'] = 'flannochet_zebre',
@@ -8252,7 +8252,7 @@ QBShared.Items = {
         ['max_weight'] = 3000,         -- poids maxmimal en grammes
         ['min_length'] = 45,           -- taille minimale en cm
         ['max_length'] = 72,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 71
     },
     ['baleine_iris'] = {
         ['name'] = 'baleine_iris',
@@ -8270,7 +8270,7 @@ QBShared.Items = {
         ['max_weight'] = 5000,         -- poids maxmimal en grammes
         ['min_length'] = 320,           -- taille minimale en cm
         ['max_length'] = 4000,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 72
     },
     ['crabe_rubis'] = {
         ['name'] = 'crabe_rubis',
@@ -8288,7 +8288,7 @@ QBShared.Items = {
         ['max_weight'] = 320,         -- poids maxmimal en grammes
         ['min_length'] = 8,           -- taille minimale en cm
         ['max_length'] = 15,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 73
     },
     ['carpe_emeraude'] = {
         ['name'] = 'carpe_emeraude',
@@ -8306,7 +8306,7 @@ QBShared.Items = {
         ['max_weight'] = 400,         -- poids maxmimal en grammes
         ['min_length'] = 15,           -- taille minimale en cm
         ['max_length'] = 35,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 74
     },
     ['calmar_amethyste'] = {
         ['name'] = 'calmar_amethyste',
@@ -8324,7 +8324,7 @@ QBShared.Items = {
         ['max_weight'] = 20,         -- poids maxmimal en grammes
         ['min_length'] = 5,           -- taille minimale en cm
         ['max_length'] = 10,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 75
     },
     ['meduse_ambre'] = {
         ['name'] = 'meduse_ambre',
@@ -8342,7 +8342,7 @@ QBShared.Items = {
         ['max_weight'] = 15,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 25,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 76
     },
     ['etoile_diamant'] = {
         ['name'] = 'etoile_diamant',
@@ -8360,7 +8360,7 @@ QBShared.Items = {
         ['max_weight'] = 2200,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 29,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 77
     },
     ['tortue_saphir'] = {
         ['name'] = 'tortue_saphir',
@@ -8378,7 +8378,7 @@ QBShared.Items = {
         ['max_weight'] = 3000,         -- poids maxmimal en grammes
         ['min_length'] = 15,           -- taille minimale en cm
         ['max_length'] = 35,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 78
     },
     ['twinfish'] = {
         ['name'] = 'twinfish',
@@ -8396,7 +8396,7 @@ QBShared.Items = {
         ['max_weight'] = 2222,         -- poids maxmimal en grammes
         ['min_length'] = 22,           -- taille minimale en cm
         ['max_length'] = 44,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 79
     },
     ['happygloby'] = {
         ['name'] = 'happygloby',
@@ -8414,7 +8414,7 @@ QBShared.Items = {
         ['max_weight'] = 800,         -- poids maxmimal en grammes
         ['min_length'] = 15,           -- taille minimale en cm
         ['max_length'] = 25,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 80
     },
     ['toxiglue'] = {
         ['name'] = 'toxiglue',
@@ -8432,7 +8432,7 @@ QBShared.Items = {
         ['max_weight'] = 700,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 30,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 81
     },
     ['octoleon'] = {
         ['name'] = 'octoleon',
@@ -8450,7 +8450,7 @@ QBShared.Items = {
         ['max_weight'] = 3500,         -- poids maxmimal en grammes
         ['min_length'] = 60,           -- taille minimale en cm
         ['max_length'] = 120,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 82
     },
     ['cryscrab'] = {
         ['name'] = 'cryscrab',
@@ -8468,7 +8468,7 @@ QBShared.Items = {
         ['max_weight'] = 600,         -- poids maxmimal en grammes
         ['min_length'] = 15,           -- taille minimale en cm
         ['max_length'] = 25,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 83
     },
     ['rainbowfish'] = {
         ['name'] = 'rainbowfish',
@@ -8486,7 +8486,7 @@ QBShared.Items = {
         ['max_weight'] = 400,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 15,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 84
     },
     ['lumiscale'] = {
         ['name'] = 'lumiscale',
@@ -8504,7 +8504,7 @@ QBShared.Items = {
         ['max_weight'] = 1200,         -- poids maxmimal en grammes
         ['min_length'] = 40,           -- taille minimale en cm
         ['max_length'] = 60,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 85
     },
     ['athenais_la_meduse_papillon'] = {
         ['name'] = 'athenais_la_meduse_papillon',
@@ -8522,7 +8522,7 @@ QBShared.Items = {
         ['max_weight'] = 2000,         -- poids maxmimal en grammes
         ['min_length'] = 200,           -- taille minimale en cm
         ['max_length'] = 300,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 86
     },
     ['uhane'] = {
         ['name'] = 'uhane',
@@ -8540,7 +8540,7 @@ QBShared.Items = {
         ['max_weight'] = 500,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 20,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 87
     },
     ['rubis_des_mers'] = {
         ['name'] = 'rubis_des_mers',
@@ -8558,7 +8558,7 @@ QBShared.Items = {
         ['max_weight'] = 2500,         -- poids maxmimal en grammes
         ['min_length'] = 25,           -- taille minimale en cm
         ['max_length'] = 42,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 88
     },
     ['lumeine'] = {
         ['name'] = 'lumeine',
@@ -8576,7 +8576,7 @@ QBShared.Items = {
         ['max_weight'] = 4000,         -- poids maxmimal en grammes
         ['min_length'] = 35,           -- taille minimale en cm
         ['max_length'] = 46,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 89
     },
     ['discoelacanthe'] = {
         ['name'] = 'discoelacanthe',
@@ -8594,7 +8594,7 @@ QBShared.Items = {
         ['max_weight'] = 5000,         -- poids maxmimal en grammes
         ['min_length'] = 100,           -- taille minimale en cm
         ['max_length'] = 200,          -- taille minimale en cm
-        ['sozedex_id'] = 1             -- identifiant sozédex
+        ['sozedex_id'] = 90
     },
     ['cochon_de_mer'] = {
         ['name'] = 'cochon_de_mer',
@@ -8612,7 +8612,7 @@ QBShared.Items = {
         ['max_weight'] = 1200,         
         ['min_length'] = 50,          
         ['max_length'] = 80,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 91
     },
     ['zeponge_de_mer'] = {
         ['name'] = 'zeponge_de_mer',
@@ -8630,7 +8630,7 @@ QBShared.Items = {
         ['max_weight'] = 300,         
         ['min_length'] = 20,          
         ['max_length'] = 50,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 92
     },
     ['goldecrevisse'] = {
         ['name'] = 'goldecrevisse',
@@ -8648,7 +8648,7 @@ QBShared.Items = {
         ['max_weight'] = 150,         
         ['min_length'] = 10,          
         ['max_length'] = 16,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 93
     },
     ['etoile_de_merdeeeee_aie_elle_ma_mordu'] = { 
         ['name'] = 'etoile_de_merdeeeee_aie_elle_ma_mordu',
@@ -8666,7 +8666,7 @@ QBShared.Items = {
         ['max_weight'] = 1000,         
         ['min_length'] = 30,          
         ['max_length'] = 50,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 94
     },
     ['exocet_bleu'] = {
         ['name'] = 'exocet_bleu',
@@ -8684,7 +8684,7 @@ QBShared.Items = {
         ['max_weight'] = 100,         
         ['min_length'] = 3,          
         ['max_length'] = 10,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 95
     },
     ['poulpitrol'] = {
         ['name'] = 'poulpitrol',
@@ -8702,7 +8702,7 @@ QBShared.Items = {
         ['max_weight'] = 3000,         
         ['min_length'] = 40,          
         ['max_length'] = 130,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 96
     },
     ['nimo'] = {
         ['name'] = 'nimo',
@@ -8720,7 +8720,7 @@ QBShared.Items = {
         ['max_weight'] = 1000,         
         ['min_length'] = 50,          
         ['max_length'] = 75,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 97
     },
     ['tetrotox'] = {
         ['name'] = 'tetrotox',
@@ -8738,7 +8738,7 @@ QBShared.Items = {
         ['max_weight'] = 2000,         
         ['min_length'] = 20,          
         ['max_length'] = 40,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 98
     },
     ['lapollo'] = {
         ['name'] = 'lapollo',
@@ -8756,7 +8756,7 @@ QBShared.Items = {
         ['max_weight'] = 2500,         
         ['min_length'] = 80,          
         ['max_length'] = 200,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 99
     },
     ['kronk_terreur'] = {
         ['name'] = 'kronk_terreur',
@@ -8774,7 +8774,7 @@ QBShared.Items = {
         ['max_weight'] = 500,         
         ['min_length'] = 10,          
         ['max_length'] = 20,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 100
     },
     ['poulpe_eclair'] = {
         ['name'] = 'poulpe_eclair',
@@ -8792,7 +8792,7 @@ QBShared.Items = {
         ['max_weight'] = 150,         
         ['min_length'] = 20,          
         ['max_length'] = 100,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 101
     },
     ['lotushell'] = {
         ['name'] = 'lotushell',
@@ -8810,7 +8810,7 @@ QBShared.Items = {
         ['max_weight'] = 1250,         
         ['min_length'] = 13,          
         ['max_length'] = 36,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 102
     },
     ['icecrevisse'] = {
         ['name'] = 'icecrevisse',
@@ -8828,7 +8828,7 @@ QBShared.Items = {
         ['max_weight'] = 90,         
         ['min_length'] = 8,          
         ['max_length'] = 18,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 103
     },
     ['frostoad'] = {
         ['name'] = 'frostoad',
@@ -8846,7 +8846,7 @@ QBShared.Items = {
         ['max_weight'] = 321,         
         ['min_length'] = 9,          
         ['max_length'] = 16,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 104
     },
     ['carpxolotl'] = {
         ['name'] = 'carpxolotl',
@@ -8864,7 +8864,7 @@ QBShared.Items = {
         ['max_weight'] = 60,         
         ['min_length'] = 7,          
         ['max_length'] = 13,         
-        ['sozedex_id'] = 00            
+        ['sozedex_id'] = 105
     },
     ['clearcrab'] = {
         ['name'] = 'clearcrab',
@@ -8882,7 +8882,7 @@ QBShared.Items = {
         ['max_weight'] = 600,         -- poids maxmimal en grammes
         ['min_length'] = 21,           -- taille minimale en cm
         ['max_length'] = 38,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 106
     },
     ['wooden_flight'] = {
         ['name'] = 'wooden_flight',
@@ -8900,7 +8900,7 @@ QBShared.Items = {
         ['max_weight'] = 1500,         -- poids maxmimal en grammes
         ['min_length'] = 28,           -- taille minimale en cm
         ['max_length'] = 35,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 107
     },
     ['horaine_argentee'] = {
         ['name'] = 'horaine_argentee',
@@ -8918,7 +8918,7 @@ QBShared.Items = {
         ['max_weight'] = 800,         -- poids maxmimal en grammes
         ['min_length'] = 18,           -- taille minimale en cm
         ['max_length'] = 28,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 108
     },
     ['doradonut'] = {
         ['name'] = 'doradonut',
@@ -8936,7 +8936,7 @@ QBShared.Items = {
         ['max_weight'] = 50,         -- poids maxmimal en grammes
         ['min_length'] = 8,           -- taille minimale en cm
         ['max_length'] = 10,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 109
     },
     ['oursin_kipik'] = {
         ['name'] = 'oursin_kipik',
@@ -8954,7 +8954,7 @@ QBShared.Items = {
         ['max_weight'] = 100,         -- poids maxmimal en grammes
         ['min_length'] = 5,           -- taille minimale en cm
         ['max_length'] = 10,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 110
     },
     ['silver_moula'] = {
         ['name'] = 'silver_moula',
@@ -8972,7 +8972,7 @@ QBShared.Items = {
         ['max_weight'] = 10,         -- poids maxmimal en grammes
         ['min_length'] = 4,           -- taille minimale en cm
         ['max_length'] = 5,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 111
     },
     ['golden_huitre'] = {
         ['name'] = 'golden_huitre',
@@ -8990,7 +8990,7 @@ QBShared.Items = {
         ['max_weight'] = 150,         -- poids maxmimal en grammes
         ['min_length'] = 12,           -- taille minimale en cm
         ['max_length'] = 15,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 112
     },
     ['crevette_alecto'] = {
         ['name'] = 'crevette_alecto',
@@ -9008,7 +9008,7 @@ QBShared.Items = {
         ['max_weight'] = 5,         -- poids maxmimal en grammes
         ['min_length'] = 2,           -- taille minimale en cm
         ['max_length'] = 3,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 113
     },
     ['limasse'] = {
         ['name'] = 'limasse',
@@ -9026,7 +9026,7 @@ QBShared.Items = {
         ['max_weight'] = 20,         -- poids maxmimal en grammes
         ['min_length'] = 4,           -- taille minimale en cm
         ['max_length'] = 7,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 114
     },
     ['poimousse'] = {
         ['name'] = 'poimousse',
@@ -9044,7 +9044,7 @@ QBShared.Items = {
         ['max_weight'] = 2000,         -- poids maxmimal en grammes
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 60,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 115
     },
     ['goofysh'] = {
         ['name'] = 'goofysh',
@@ -9062,6 +9062,6 @@ QBShared.Items = {
         ['max_weight'] = 100,         -- poids maxmimal en grammes
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 20,          -- taille minimale en cm
-        ['sozedex_id'] = 00             -- identifiant sozédex
+        ['sozedex_id'] = 116
     },    
 }
