@@ -7,7 +7,6 @@ import { NuiObjectProvider } from './nui.object.provider';
 import { NuiPanelProvider } from './nui.panel.provider';
 import { NuiPingProvider } from './nui.ping.provider';
 import { NuiProvider } from './nui.provider';
-import { NuiSozedexProvider } from './nui.sozedex.provider';
 import { NuiZoneProvider } from './nui.zone.provider';
 
 @Module({
@@ -21,7 +20,6 @@ import { NuiZoneProvider } from './nui.zone.provider';
         NuiPingProvider,
         NuiZoneProvider,
         NuiObjectProvider,
-        NuiSozedexProvider,
     ],
 })
 export class NuiModule {}
