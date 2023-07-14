@@ -1,4 +1,6 @@
+import { Item } from '../item';
+
 export interface NuiSozedexMethodMap {
-    ShowSozedex: Array<string>;
+    ShowSozedex: Array<Item>;
     HideSozedex: never;
 }
