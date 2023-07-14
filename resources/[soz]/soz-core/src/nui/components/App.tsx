@@ -6,6 +6,7 @@ import { DrugSkillApp } from '@private/nui/drug/DrugSkillApp';
 import { FishingApp } from '@private/nui/fishing/FishingApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
+import { StatePrivateApp } from '@private/nui/StatePrivateApp';
 import { TalentApp } from '@private/nui/Talent/TalentApp';
 import classNames from 'classnames';
 import { FunctionComponent, useEffect, useState } from 'react';
@@ -59,6 +60,7 @@ export const App: FunctionComponent = () => {
     return (
         <Provider store={store}>
             <StateApp />
+            <StatePrivateApp />
             <AudioApp />
             <div className={classes}>
                 <HudApp />
