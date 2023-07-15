@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["filterJson"]
+  previewFeatures = ["metrics"]
   binaryTargets   = ["native", "linux-musl", "windows"]
   engineType      = "binary"
 }
