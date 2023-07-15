@@ -7175,7 +7175,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
-        ['description'] = "Un bout de bois, une ficelle, que demander de mieux. <br> A part une canne à pêche.",
+        ['description'] = "Un simple bâton de bois avec un bout de ficelle.",
         ['illustrator'] = '.Aurukh'
     },
 
@@ -7188,7 +7188,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
-        ['description'] = "Canne à pêche dernier cris fait de matérieux luxueux. Elle ne vous fera jamais défaut !",
+        ['description'] = "Le matériel du pêcheur professionnel.",
         ['illustrator'] = '.Aurukh'
     },
     ['littoral_rod'] = {
@@ -7200,7 +7200,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
-        ['description'] = "Qui n'a jamais ramassé et collectionné les coquillages sur la plage !",
+        ['description'] = "Qui n'a jamais collectionné les coquillages sur la plage ?",
         ['illustrator'] = '.Aurukh'
     },
     ['canals_rod'] = {
@@ -7224,7 +7224,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
-        ['description'] = "La nature elle même (les feuilles bougent avec le vent)",
+        ['description'] = "Salut vieille branche !",
         ['illustrator'] = '.Aurukh'
     },
     ['little_lake_rod'] = {
@@ -7248,7 +7248,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
-        ['description'] = "Entre dune, forêt et montagne",
+        ['description'] = "Le sable, la forêt et la montagne",
         ['illustrator'] = '.Aurukh'
     },
     ['north_sea_rod'] = {
@@ -7260,7 +7260,7 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
-        ['description'] = "Inspiré de \"La Grande Vague de Kanagawa\"",
+        ['description'] = "Vogue sur l'océan, moussaillon !",
         ['illustrator'] = '.Aurukh'
     },
     ['south_sea_rod'] = {
@@ -7272,7 +7272,19 @@ QBShared.Items = {
         ['shouldClose'] = false,
         ['unique'] = true,
         ['combinable'] = nil,
-        ['description'] = "Le trident et le filet de Poséidon (ou d'un gladiateur qui sait) ",
+        ['description'] = "Avec un trident et un filet, quoi de mieux pour pécher ?",
+        ['illustrator'] = '.Aurukh'
+    },
+    ['ultim_rod'] = {
+        ['name'] = 'ultim_rod',
+        ['label'] = "Canne à pêche Ultime",
+        ['weight'] = 1500,
+        ['useable'] = true,
+        ['type'] = 'fishing_rod',
+        ['shouldClose'] = false,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "La vie aquatique dans toute sa splendeur",
         ['illustrator'] = '.Aurukh'
     },
 
@@ -7359,12 +7371,12 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = false,
         ['combinable'] = nil,
-        ['description'] = "Berk, un écosystème otonome c'est établit sur ce bocal.",
+        ['description'] = "Berk, un écosystème autonome s'est établit sur ce bocal.",
         ['illustrator'] = '.Moustash'
     },
     ['disgusting_can'] = {
         ['name'] = 'disgusting_can',
-        ['label'] = "Boite de conserve dégoutante",
+        ['label'] = "Boîte de conserve dégoutante",
         ['weight'] = 200,
         ['type'] = 'fishing_garbage',
         ['unique'] = false,
