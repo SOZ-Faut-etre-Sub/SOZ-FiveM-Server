@@ -275,7 +275,6 @@ export enum ServerEvent {
     DRUGS_STOLEN = 'soz-core:server:drugs:stolen',
     DRUGS_GARDEN_ADD = 'soz-core:server:drugs:garden-add',
     DRUGS_GARDEN_REMOVE = 'soz-core:server:drugs:garden-remove',
-    DRUGS_TRANSFORM = 'soz-core:server:drugs:transform',
     DRUGS_ZONE_ADD = 'soz-core:server:drugs:zone-add',
     DRUGS_ZONE_DELETE = 'soz-core:server:drugs:zone-delete',
     DRUGS_ZONE_UPDATE = 'soz-core:server:drugs:zone-update',
@@ -759,4 +758,6 @@ export enum NuiEvent {
     DrugZoneAdd = 'soz-core:client:drug:zone-add',
     DrugUpdateZone = 'soz-core:client:drug:zone-update',
     DrugAdminMenuOpen = 'soz-core:client:drug:admin-menu-open',
+    DrugTransformDoTransform = 'soz-core:client:drug:transform-doit',
+    DrugTransformCancel = 'soz-core:client:drug:transform-cancel',
 }

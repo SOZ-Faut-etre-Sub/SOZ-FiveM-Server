@@ -146,6 +146,7 @@ export class PlayerStateService {
             escorting: null,
             isLooted: false,
             isZipped: false,
+            carryBox: false,
         };
     }
 

@@ -29,6 +29,22 @@ RegisterNetEvent("inventory:client:requestOpenInventory", function(data)
     TriggerServerEvent("inventory:server:openInventory", data.invType, data.invID)
 end)
 
+function handleFish(inventory)
+    for _, value in ipairs(PlayerData.metadata.drugs_skills) do
+        -- 2 is Zoologiste
+        if value == 2 then
+            for key, value in pairs(inventory.items) do
+                if value.type == "fish" then
+                    value.useable = true
+                    value.usableLabel = "Ponctionner les toxines"
+                end
+            end
+        end
+    end
+
+    return inventory
+end
+
 function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
     local tempAmount = amount
 
@@ -114,6 +130,7 @@ RegisterNUICallback("sortItem", function(data, cb)
     end
 
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
+        invSource = handleFish(invSource)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
         if not success then
             exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason] or reason, "error")

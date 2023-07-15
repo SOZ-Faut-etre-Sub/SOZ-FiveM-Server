@@ -181,6 +181,7 @@ export type PlayerClientState = {
     hasPrisonerClothes: boolean;
     isWearingPatientOutfit: boolean;
     isLooted: boolean;
+    carryBox: boolean;
 };
 
 export enum PlayerLicenceType {
