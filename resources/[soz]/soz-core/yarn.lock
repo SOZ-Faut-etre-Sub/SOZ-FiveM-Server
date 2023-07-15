@@ -1340,7 +1340,7 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
-"@prisma/client@5":
+"@prisma/client@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-5.0.0.tgz#9f0cd4164f4ffddb28bb1811c27eb7fa1e01a087"
   integrity sha512-XlO5ELNAQ7rV4cXIDJUNBEgdLwX3pjtt9Q/RHqDpGf43szpNJx2hJnggfFs7TKNx0cOFsl6KJCSfqr5duEU/bQ==
@@ -4961,7 +4961,7 @@ prettier@^2.7.1:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
-prisma@5:
+prisma@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/prisma/-/prisma-5.0.0.tgz#f6571c46dc2478172cb7bc1bb62d74026a2c2630"
   integrity sha512-KYWk83Fhi1FH59jSpavAYTt2eoMVW9YKgu8ci0kuUnt6Dup5Qy47pcB4/TLmiPAbhGrxxSz7gsSnJcCmkyPANA==
