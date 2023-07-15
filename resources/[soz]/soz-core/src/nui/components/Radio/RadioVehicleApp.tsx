@@ -16,7 +16,7 @@ export const RadioVehicleApp: FunctionComponent = () => {
     const [radio, setRadio] = useState<Radio>(null);
     const [display, setDisplay] = useState(false);
     const [currentChannelType, setCurrentChannelType] = useState<RadioChannelType>(RadioChannelType.Primary);
-    const { control, handleSubmit, setValue } = useForm();
+    const { control, handleSubmit, setValue } = useForm<{ frequency: string }, any, { frequency: string }>();
 
     useNuiEvent('radio_vehicle', 'Open', setRadio);
     useNuiEvent(
@@ -49,7 +49,7 @@ export const RadioVehicleApp: FunctionComponent = () => {
         if (radio) {
             const frequency =
                 currentChannelType === RadioChannelType.Primary ? radio.primary.frequency : radio.secondary.frequency;
-            setValue('frequency', frequency);
+            setValue('frequency', frequency.toString());
         }
     }, [radio, currentChannelType]);
 
