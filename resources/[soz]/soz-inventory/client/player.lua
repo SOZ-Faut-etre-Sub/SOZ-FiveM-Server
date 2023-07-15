@@ -1,19 +1,3 @@
-local function handleFish(inventory)
-    for _, value in ipairs(PlayerData.metadata.drugs_skills) do
-        -- 2 is Zoologiste
-        if value == 2 then
-            for key, value in ipairs(inventory.items) do
-                if value.type == "fish" then
-                    value.useable = true
-                    value.usableLabel = "Ponctionner les toxines"
-                end
-            end
-        end
-    end
-
-    return inventory
-end
-
 RegisterKeyMapping("inventory", "Ouvrir l'inventaire", "keyboard", "F2")
 RegisterCommand("inventory", function()
     if PlayerData.metadata["isdead"] or PlayerData.metadata["inlaststand"] or PlayerData.metadata["ishandcuffed"] or IsPauseMenuActive() then

@@ -1,4 +1,4 @@
-import { DrugContractInfo, DrugNuiZone } from '@private/shared/drugs';
+import { DrugContractInfo, DrugNuiZone, DrugTransformList } from '@private/shared/drugs';
 
 export interface NuiDrugMethodMap {
     ShowContract: DrugContractInfo;
@@ -6,4 +6,5 @@ export interface NuiDrugMethodMap {
     AddUpdateLocation: DrugNuiZone;
     DeleteLocation: number;
     ShowDrugSkill: never;
+    ShowDrugTransform: DrugTransformList;
 }

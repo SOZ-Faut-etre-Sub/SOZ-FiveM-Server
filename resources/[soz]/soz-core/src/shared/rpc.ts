@@ -115,6 +115,8 @@ export enum RpcServerEvent {
     DRUGS_GET_GARDEN_INFO = 'soz-core:server:drugs:garden-info',
     DRUGS_GARDEN_ENTER = 'soz-core:server:drugs:garden-enter',
     DRUGS_GARDEN_EXIT = 'soz-core:server:drugs:garden-exit',
+    DRUGS_GET_RECIPES = 'soz-core:server:drugs:recipes-get',
+    DRUG_DO_TRANSFORM = 'soz-core:server:drugs:recipes-transform',
 }
 
 export enum RpcClientEvent {

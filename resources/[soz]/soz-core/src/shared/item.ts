@@ -34,7 +34,7 @@ type BaseItem = {
     description: string;
     unique: boolean;
     useable: boolean;
-    carrybox: boolean;
+    carrybox: string;
 };
 
 export type Nutrition = {

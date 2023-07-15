@@ -149,6 +149,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'health_book', type: 'item', price: 30 },
             { id: 'antiacide', type: 'item', price: 15 },
             { id: 'breathanalyzer', type: 'item', price: 5 },
+            { id: 'naloxone', type: 'item', price: 20 },
         ],
     },
     {

@@ -3,6 +3,7 @@ import '../styles/index.scss';
 import { CraftingApp } from '@private/nui/crafting/CraftingApp';
 import { DrugContractApp } from '@private/nui/drug/DrugContractApp';
 import { DrugSkillApp } from '@private/nui/drug/DrugSkillApp';
+import { DrugTransformApp } from '@private/nui/drug/DrugTransformApp';
 import { FishingApp } from '@private/nui/fishing/FishingApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
@@ -87,6 +88,7 @@ export const App: FunctionComponent = () => {
                 <InputApp />
                 <SozedexApp />
                 <DrugSkillApp />
+                <DrugTransformApp />
             </div>
         </Provider>
     );

@@ -211,7 +211,8 @@ export class VoipRadioProvider {
         if (this.radioInUse) {
             this.closeRadioInterface();
         } else {
-            if (!IsNuiFocused()) {
+            const playerState = this.playerService.getState();
+            if (!IsNuiFocused() && !playerState.carryBox) {
                 this.openRadioInterface();
             }
         }

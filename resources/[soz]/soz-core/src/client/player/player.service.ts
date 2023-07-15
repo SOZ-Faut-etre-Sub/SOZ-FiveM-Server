@@ -27,6 +27,7 @@ export class PlayerService {
         isZipped: false,
         isLooted: false,
         escorting: null,
+        carryBox: false,
     };
 
     @Inject(Qbcore)

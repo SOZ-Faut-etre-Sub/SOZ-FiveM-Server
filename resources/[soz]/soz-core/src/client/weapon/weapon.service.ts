@@ -3,6 +3,8 @@ import { InventoryItem } from '../../shared/item';
 import { GlobalWeaponConfig, WeaponConfig, WeaponName, Weapons } from '../../shared/weapons/weapon';
 import { PlayerService } from '../player/player.service';
 
+const MONEY_CASE_HASH = GetHashKey('WEAPON_BRIEFCASE');
+
 @Injectable()
 export class WeaponService {
     private currentWeapon: InventoryItem | null = null;
@@ -59,7 +61,7 @@ export class WeaponService {
 
         const [, hash] = GetCurrentPedWeapon(player, false);
 
-        if (hash !== GetHashKey(WeaponName.UNARMED)) {
+        if (hash !== GetHashKey(WeaponName.UNARMED) && hash !== MONEY_CASE_HASH) {
             SetCurrentPedWeapon(player, GetHashKey(WeaponName.UNARMED), true);
             RemoveWeaponFromPed(player, hash);
         }
