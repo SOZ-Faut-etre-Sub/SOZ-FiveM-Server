@@ -305,6 +305,7 @@ model player {
   records_history_player player_records_history[] @relation("records_history_player")
   records_history_author player_records_history[] @relation("records_history_author")
   records_history_deletor player_records_history[] @relation("records_history_deletor")
+  fishes                 player_fish[] @relation("fishes")
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -584,6 +585,18 @@ model drugs_garden_guest {
   id          Int      @id @default(autoincrement())
   citizenid   String   @db.VarChar(50)
   guest       String   @db.VarChar(50)
-  
+
   @@unique([citizenid, guest])
+}
+
+model player_fish {
+  player      player   @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_fish_player", name: "fishes")
+  citizenId   String   @db.VarChar(50)
+  fishId      String   @db.VarChar(100)
+  quantity    Int
+  maxWidth    Int
+  maxWeight   Int
+  lastFishAt  DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([citizenId, fishId])
 }
