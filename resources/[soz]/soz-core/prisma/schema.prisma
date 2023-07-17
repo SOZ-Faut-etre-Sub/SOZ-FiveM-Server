@@ -596,6 +596,7 @@ model player_fish {
   quantity    Int
   maxWidth    Int
   maxWeight   Int
+  maxResell   Int
   lastFishAt  DateTime @default(now()) @db.Timestamp(0)
 
   @@id([citizenId, fishId])
