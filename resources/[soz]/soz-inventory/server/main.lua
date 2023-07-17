@@ -716,7 +716,6 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
     if Inventory.RemoveItem(invSource, item, amount, metadata, slot) then
         Inventory.AddItem(source, invTarget, item, amount, metadata, targetSlot, function(s, r)
             if not s then
-                TriggerClientEvent("soz-core:client:notification:draw", source, Config.ErrorMessage[reason] or reason, "error")
                 Inventory.AddItem(source, invSource, item, amount, metadata, slot)
             end
             success, reason = s, r

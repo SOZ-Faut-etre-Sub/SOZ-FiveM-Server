@@ -219,6 +219,25 @@ export class AnimationFactory {
                         true
                     );
 
+                    if (prop.fx) {
+                        UseParticleFxAsset(prop.fx.dictionary);
+
+                        StartNetworkedParticleFxLoopedOnEntity(
+                            prop.fx.name,
+                            propId,
+                            prop.fx.position[0],
+                            prop.fx.position[1],
+                            prop.fx.position[2],
+                            prop.fx.rotation[0],
+                            prop.fx.rotation[1],
+                            prop.fx.rotation[2],
+                            prop.fx.scale,
+                            false,
+                            false,
+                            false
+                        );
+                    }
+
                     props.push(propId);
                 }
             }
@@ -259,6 +278,7 @@ export class AnimationFactory {
                         this.resourceLoader.unloadAnimationDictionary(animation.exit.dictionary);
                     }
 
+                    RemoveParticleFxFromEntity(prop);
                     DetachEntity(prop, false, false);
                     DeleteEntity(prop);
                 }
