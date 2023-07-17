@@ -103,6 +103,8 @@ export class ClothingShopProvider {
 
         ClearPedTasksImmediately(ped);
         TaskPlayAnim(ped, animDict, 'idle', 1.0, 1.0, -1, 1, 1, false, false, false);
+
+        this.playerService.updateState({ isInventoryBusy: true });
     }
 
     @OnNuiEvent(NuiEvent.ClothShopToggleCamera)
@@ -225,6 +227,8 @@ export class ClothingShopProvider {
         await this.animationService.clearShopAnimations(PlayerPedId());
         this.currentShop = undefined;
         FreezeEntityPosition(PlayerPedId(), false);
+
+        this.playerService.updateState({ isInventoryBusy: false });
     }
 
     @OnEvent(ClientEvent.SHOP_UPDATE_STOCKS)
