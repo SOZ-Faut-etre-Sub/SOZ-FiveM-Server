@@ -226,7 +226,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                         setProperties(properties);
                                     }}
                                 >
-                                    Changer l'identifiant
+                                    <div className="flex justify-between align-items-center">
+                                        <span>{apartment.identifier}</span>
+                                        <span>Changer l'identifiant</span>
+                                    </div>
                                 </MenuItemButton>
                                 <MenuItemButton
                                     onConfirm={async () => {
@@ -241,7 +244,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                                         setProperties(properties);
                                     }}
                                 >
-                                    Changer le nom
+                                    <div className="flex justify-between align-items-center">
+                                        <span>{apartment.label}</span>
+                                        <span>Changer le nom</span>
+                                    </div>
                                 </MenuItemButton>
                                 <MenuItemButton
                                     onConfirm={async () => {
