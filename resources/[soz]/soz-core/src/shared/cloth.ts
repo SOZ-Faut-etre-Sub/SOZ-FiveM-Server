@@ -29,9 +29,17 @@ export type OutfitItem = {
     Clear?: boolean;
 };
 
+export type GlovesItem = {
+    id: number;
+    correspondingDrawables: Record<number, number>;
+    texture: number;
+};
+
 export type Outfit = {
     Components: Partial<Record<Component, OutfitItem>>;
     Props: Partial<Record<Prop, OutfitItem>>;
+    GlovesID?: number;
+    TopID?: number;
 };
 
 export type ClothConfig = {
@@ -55,6 +63,7 @@ export type ClothConfig = {
         HideBag: boolean;
         HidePants: boolean;
         HideShoes: boolean;
+        HideGloves: boolean;
     };
 };
 

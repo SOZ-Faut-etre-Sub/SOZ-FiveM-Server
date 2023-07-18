@@ -6,6 +6,7 @@ import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
+import { ClothingShopRepository, ClothingShopRepositoryData } from './cloth.shop.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { HousingRepository } from './housing.repository';
@@ -48,6 +49,9 @@ export class RepositoryProvider {
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
+    @Inject(ClothingShopRepository)
+    private clothingShopRepository: ClothingShopRepository;
+
     private repositories: Record<string, Repository<any>> = {};
 
     @Once()
@@ -60,6 +64,7 @@ export class RepositoryProvider {
         this.repositories['upwStation'] = this.upwStationRepository;
         this.repositories['housing'] = this.housingRepository;
         this.repositories['object'] = this.objectRepository;
+        this.repositories['clothingShop'] = this.clothingShopRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)
@@ -90,5 +95,10 @@ export class RepositoryProvider {
         }
 
         return null;
+    }
+
+    @Rpc(RpcServerEvent.REPOSITORY_CLOTHING_GET_STOCK)
+    public async getClothingStock(source: number, shop: string): Promise<Record<number, number>> {
+        return ((await this.repositories['clothingShop'].get()) as ClothingShopRepositoryData).shops[shop].stocks;
     }
 }

@@ -11,10 +11,10 @@ import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSub
 import { NuiAudioMethodMap } from './audio';
 import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
+import { NuiClothShopMethodMap } from './cloth_shop';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
-import { NuiMaskShopMethodMap } from './mask_shop';
 import { NuiMenuMethodMap } from './menu';
 import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
@@ -36,10 +36,10 @@ export interface NuiMethodMap {
     bennys_order_menu: NuiBennysOrderMenuMethodMap;
     upw_order_menu: NuiUpwOrderMenuMethodMap;
     clipboard: NuiClipboardMethodMap;
+    cloth_shop: NuiClothShopMethodMap;
     ffs_recipe_book: NuiFfsRecipeBookMethodMap;
     global: NuiGlobalMethodMap;
     input: NuiInputMethodMap;
-    mask_shop: NuiMaskShopMethodMap;
     menu: NuiMenuMethodMap;
     player: NuiPLayerMethodMap;
     progress: NuiProgressMethodMap;

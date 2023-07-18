@@ -106,6 +106,10 @@ export enum Garment {
     PANT = 'garment_pant',
     SHOES = 'garment_shoes',
     UNDERWEAR = 'garment_underwear',
+    BAG = 'garment_bag',
+    GLOVES = 'garment_gloves',
+    UNDERWEAR_TOP = 'garment_underwear_top',
+    MASK = 'garment_mask',
 }
 
 export enum LuxuryGarment {
@@ -113,6 +117,9 @@ export enum LuxuryGarment {
     PANT = 'luxury_garment_pant',
     SHOES = 'luxury_garment_shoes',
     UNDERWEAR = 'luxury_garment_underwear',
+    BAG = 'luxury_garment_bag',
+    GLOVES = 'luxury_garment_gloves',
+    UNDERWEAR_TOP = 'luxury_garment_underwear_top',
 }
 
 export type Process = {
@@ -182,7 +189,7 @@ const craftZones: NamedZone[] = [
 
 const craftProcesses: Process[] = [
     {
-        label: '👕 Haut en fibres naturelles',
+        label: '🧥 Haut en fibres naturelles',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
@@ -195,7 +202,7 @@ const craftProcesses: Process[] = [
         },
     },
     {
-        label: '👕 Haut en fibres artificielles',
+        label: '🧥 Haut en fibres artificielles',
         inputs: [
             {
                 id: FabricMaterial.ARTIFICIAL_FIBER,
@@ -243,6 +250,32 @@ const craftProcesses: Process[] = [
         ],
         output: {
             id: Garment.UNDERWEAR,
+            amount: 1,
+        },
+    },
+    {
+        label: '👕 Haut de sous-vêtement naturel',
+        inputs: [
+            {
+                id: FabricMaterial.NATURAL_FIBER,
+                amount: 30,
+            },
+        ],
+        output: {
+            id: Garment.UNDERWEAR_TOP,
+            amount: 1,
+        },
+    },
+    {
+        label: '👕 Haut de sous-vêtement synthétique',
+        inputs: [
+            {
+                id: FabricMaterial.SYNTHETIC_FIBER,
+                amount: 30,
+            },
+        ],
+        output: {
+            id: Garment.UNDERWEAR_TOP,
             amount: 1,
         },
     },
@@ -300,7 +333,7 @@ const luxuryCraftZones: NamedZone[] = [
 
 const luxuryCraftProcesses: Process[] = [
     {
-        label: '👕 Haut luxueux en fibres naturelles',
+        label: '🧥 Haut luxueux en fibres naturelles',
         inputs: [
             {
                 id: FabricMaterial.NATURAL_FIBER,
@@ -313,7 +346,7 @@ const luxuryCraftProcesses: Process[] = [
         },
     },
     {
-        label: '👕 Haut luxueux en fibres artificielles',
+        label: '🧥 Haut luxueux en fibres artificielles',
         inputs: [
             {
                 id: FabricMaterial.ARTIFICIAL_FIBER,
@@ -361,6 +394,32 @@ const luxuryCraftProcesses: Process[] = [
         ],
         output: {
             id: LuxuryGarment.UNDERWEAR,
+            amount: 1,
+        },
+    },
+    {
+        label: '👕 Haut de sous-vêtement luxueux naturel',
+        inputs: [
+            {
+                id: FabricMaterial.NATURAL_FIBER,
+                amount: 60,
+            },
+        ],
+        output: {
+            id: LuxuryGarment.UNDERWEAR_TOP,
+            amount: 1,
+        },
+    },
+    {
+        label: '👕 Haut de sous-vêtement luxueux synthétique',
+        inputs: [
+            {
+                id: FabricMaterial.SYNTHETIC_FIBER,
+                amount: 60,
+            },
+        ],
+        output: {
+            id: LuxuryGarment.UNDERWEAR_TOP,
             amount: 1,
         },
     },
@@ -414,23 +473,129 @@ const shoesCraftProcesses: Process[] = [
             amount: 1,
         },
     },
+    {
+        label: '🧤 Paire de gants',
+        inputs: [
+            {
+                id: FabricMaterial.LEATHER,
+                amount: 1,
+            },
+            {
+                id: FabricMaterial.SYNTHETIC_FIBER,
+                amount: 10,
+            },
+        ],
+        output: {
+            id: Garment.GLOVES,
+            amount: 1,
+        },
+    },
+    {
+        label: '🧤 Paire de gants luxueux',
+        inputs: [
+            {
+                id: FabricMaterial.LEATHER,
+                amount: 2,
+            },
+            {
+                id: FabricMaterial.SYNTHETIC_FIBER,
+                amount: 20,
+            },
+        ],
+        output: {
+            id: LuxuryGarment.GLOVES,
+            amount: 1,
+        },
+    },
+    {
+        label: '👜 Sac',
+        inputs: [
+            {
+                id: FabricMaterial.LEATHER,
+                amount: 1,
+            },
+            {
+                id: FabricMaterial.LATEX,
+                amount: 2,
+            },
+            {
+                id: FabricMaterial.ARTIFICIAL_FIBER,
+                amount: 10,
+            },
+        ],
+        output: {
+            id: Garment.BAG,
+            amount: 1,
+        },
+    },
+    {
+        label: '👜 Sac luxueux',
+        inputs: [
+            {
+                id: FabricMaterial.LEATHER,
+                amount: 2,
+            },
+            {
+                id: FabricMaterial.LATEX,
+                amount: 4,
+            },
+            {
+                id: FabricMaterial.ARTIFICIAL_FIBER,
+                amount: 20,
+            },
+        ],
+        output: {
+            id: LuxuryGarment.BAG,
+            amount: 1,
+        },
+    },
+    {
+        label: '🎭 Masque',
+        inputs: [
+            {
+                id: FabricMaterial.LATEX,
+                amount: 2,
+            },
+            {
+                id: FabricMaterial.NATURAL_FIBER,
+                amount: 10,
+            },
+            {
+                id: FabricMaterial.SYNTHETIC_FIBER,
+                amount: 10,
+            },
+        ],
+        output: {
+            id: Garment.MASK,
+            amount: 1,
+        },
+    },
 ];
 
 const getRewardFromDeliveredGarment = (garment: Garment | LuxuryGarment): number => {
     switch (garment) {
         case Garment.TOP:
         case Garment.PANT:
+        case Garment.BAG:
+        case Garment.MASK:
             return 50;
+        case Garment.UNDERWEAR_TOP:
+            return 30;
         case Garment.UNDERWEAR:
             return 20;
         case Garment.SHOES:
+        case Garment.GLOVES:
             return 40;
         case LuxuryGarment.TOP:
         case LuxuryGarment.PANT:
+        case LuxuryGarment.BAG:
             return 100;
+        case LuxuryGarment.UNDERWEAR_TOP:
+            return 60;
         case LuxuryGarment.UNDERWEAR:
             return 40;
         case LuxuryGarment.SHOES:
+        case LuxuryGarment.GLOVES:
             return 80;
     }
 };

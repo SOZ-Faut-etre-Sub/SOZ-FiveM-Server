@@ -30,5 +30,9 @@ export abstract class Repository<T> {
         return this.data;
     }
 
+    public async set(data: T) {
+        this.data = data;
+    }
+
     protected abstract load(): Promise<T>;
 }

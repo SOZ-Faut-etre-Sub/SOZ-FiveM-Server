@@ -41,15 +41,13 @@ export enum RpcServerEvent {
     CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',
     CRAFTING_DO_SALVAGE = 'soz-core:crafting:do-salvage',
 
-    SHOP_MASK_GET_CATEGORIES = 'soz-core:shop:mask:get-categories',
-    SHOP_MASK_GET_ITEMS = 'soz-core:shop:mask:get-items',
-
     STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween1',
     STORY_HALLOWEEN_SCENARIO2 = 'soz-story:server:halloween2',
     STORY_HALLOWEEN_SCENARIO3 = 'soz-story:server:halloween3',
     STORY_HALLOWEEN_SCENARIO4 = 'soz-story:server:halloween4',
 
     REPOSITORY_GET_DATA = 'soz-core:repository:get-data',
+    REPOSITORY_CLOTHING_GET_STOCK = 'soz-core:repository:clothing:get-stock',
 
     VEHICLE_CUSTOM_GET_MODS = 'soz-core:vehicle:custom:get-mods',
     VEHICLE_CUSTOM_SET_MODS = 'soz-core:vehicle:custom:set-mods',

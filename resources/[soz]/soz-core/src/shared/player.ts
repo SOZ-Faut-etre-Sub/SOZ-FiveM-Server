@@ -17,6 +17,7 @@ export type QBCorePlayer = {
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
         GetMoney: (type: 'money' | 'marked_money') => number;
         SetJobDuty: (onDuty: boolean) => void;
+        SetSkin: (skin: Skin, skipApply: boolean) => void;
     };
     PlayerData: PlayerData;
 };
@@ -44,16 +45,77 @@ export type PlayerData = {
 // TODO: Finish to implement the other properties
 export type Skin = {
     Hair: {
-        HairType: number;
+        HairType?: number;
+        HairColor?: number;
+        HairSecondaryColor?: number;
+        BeardType?: number;
+        BeardOpacity?: number;
+        BeardColor?: number;
+    };
+    Makeup: {
+        BeardType?: number;
+        BeardColor?: number;
+        FullMakeupType?: number;
+        FullMakeupOpacity?: number;
+        FullMakeupDefaultColor?: boolean;
+        FullMakeupPrimaryColor?: number;
+        FullMakeupSecondaryColor?: number;
+        BlushType?: number;
+        BlushOpacity?: number;
+        BlushColor?: number;
+        LipstickType?: number;
+        LipstickOpacity?: number;
+        LipstickColor?: number;
     };
     Model: {
         Hash: number;
     };
+    Tattoos: {
+        Collection: number;
+        Overlay: number;
+    }[];
 };
 
 export const PlayerPedHash = {
     Male: 1885233650,
     Female: -1667301416,
+};
+
+export const TenueComponents = {
+    [1]: { label: 'Chapeau', propId: 0, value: 'HideHead' },
+    [2]: { label: 'Masque', componentId: 1, value: 'HideMask' },
+    [3]: { label: 'Lunettes', propId: 1, value: 'HideGlasses' },
+    [4]: { label: 'Boucles', propId: 2, value: 'HideEar' },
+    [5]: { label: 'Collier', componentId: 7, value: 'HideChain' },
+    [6]: { label: 'Gilet', componentId: 9, value: 'HideBulletproof' },
+    [7]: { label: 'Haut', componentId: [3, 8, 10, 11], value: 'HideTop' },
+    [8]: { label: 'Montre', propId: 6, value: 'HideLeftHand' },
+    [9]: { label: 'Bracelet', propId: 7, value: 'HideRightHand' },
+    [10]: { label: 'Sac', componentId: 5, value: 'HideBag' },
+    [11]: { label: 'Pantalon', componentId: 4, value: 'HidePants' },
+    [12]: { label: 'Chaussures', componentId: 6, value: 'HideShoes' },
+};
+
+export const TenueIdToHide = {
+    Props: {
+        0: 'HideHead',
+        1: 'HideGlasses',
+        2: 'HideEar',
+        6: 'HideLeftHand',
+        7: 'HideRightHand',
+    },
+    Components: {
+        1: 'HideMask',
+        3: 'HideTop',
+        4: 'HidePants',
+        5: 'HideBag',
+        6: 'HideShoes',
+        7: 'HideChain',
+        8: 'HideTop',
+        9: 'HideBulletproof',
+        10: 'HideTop',
+        11: 'HideTop',
+    },
 };
 
 export type PlayerCharInfo = {
