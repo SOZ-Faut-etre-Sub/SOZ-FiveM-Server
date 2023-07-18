@@ -1,10 +1,11 @@
+import { PlayerService } from '@public/client/player/player.service';
 import { ProperTorsos } from '@public/config/shops';
 import { ClothingShopRepositoryData } from '@public/server/repository/cloth.shop.repository';
 import { Component, GlovesItem } from '@public/shared/cloth';
 import { PlayerPedHash } from '@public/shared/player';
 import { ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 
-import { Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
 import { RpcServerEvent } from '../../shared/rpc';
 
@@ -12,12 +13,18 @@ import { RpcServerEvent } from '../../shared/rpc';
 export class ClothingShopRepository {
     private repoData: ClothingShopRepositoryData;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     public async load() {
         if (this.repoData) {
             return;
         }
 
-        this.repoData = await emitRpc<ClothingShopRepositoryData>(RpcServerEvent.REPOSITORY_GET_DATA, 'clothingShop');
+        this.repoData = await emitRpc<ClothingShopRepositoryData>(
+            RpcServerEvent.REPOSITORY_CLOTHING_GET_DATA,
+            this.playerService.getPlayer().skin.Model.Hash
+        );
 
         // Hydrate tops with proper torsos and remove undershirts
         for (const shop of Object.values(this.repoData.categories)) {
