@@ -1,9 +1,14 @@
+import { Logger } from '@core/logger';
+
 import { OnceMetadataKey, OnceStep } from '../decorators/event';
-import { Injectable } from '../decorators/injectable';
+import { Inject, Injectable } from '../decorators/injectable';
 import { getMethodMetadata } from '../decorators/reflect';
 
 @Injectable()
 export class OnceLoader {
+    @Inject(Logger)
+    private logger: Logger;
+
     private methods: Record<OnceStep, any[]> = {
         [OnceStep.Start]: [],
         [OnceStep.DatabaseConnected]: [],
@@ -33,8 +38,8 @@ export class OnceLoader {
                 try {
                     await method(...args);
                 } catch (e) {
-                    console.error(
-                        `Error on executing step ${step}, in method ${methodName} of provider ${provider.constructor.name}`,
+                    this.logger.error(
+                        `Error on executing step ${step} in method ${methodName} of provider ${provider.constructor.name}`,
                         e
                     );
                 }
