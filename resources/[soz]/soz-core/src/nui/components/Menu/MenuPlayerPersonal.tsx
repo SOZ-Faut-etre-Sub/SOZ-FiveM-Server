@@ -210,6 +210,12 @@ const MenuClothing: FunctionComponent = () => {
                     Bracelet
                 </MenuItemCheckbox>
                 <MenuItemCheckbox
+                    onChange={createUpdateClothConfig('HideGloves')}
+                    checked={!player.cloth_config.Config['HideGloves']}
+                >
+                    Gants
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
                     onChange={createUpdateClothConfig('HideBag')}
                     checked={!player.cloth_config.Config['HideBag']}
                 >

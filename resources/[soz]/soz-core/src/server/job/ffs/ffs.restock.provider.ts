@@ -1,4 +1,6 @@
 import { Prisma } from '@prisma/client';
+import { ClothingShopRepository } from '@public/server/repository/cloth.shop.repository';
+import { PlayerPedHash } from '@public/shared/player';
 
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -6,7 +8,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event';
 import { FfsConfig, Garment, LuxuryGarment } from '../../../shared/job/ffs';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
-import { ClothingBrand } from '../../../shared/shop';
+import { ClothingBrand, ClothingShopItem } from '../../../shared/shop';
 import { PrismaService } from '../../database/prisma.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Monitor } from '../../monitor/monitor';
@@ -30,11 +32,44 @@ export class FightForStyleRestockProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
+    @Inject(ClothingShopRepository)
+    private clothingShopRepository: ClothingShopRepository;
+
     @Once(OnceStep.DatabaseConnected)
     public async onOnceStart() {
         await this.prismaService.$queryRaw(
             Prisma.sql`UPDATE shop_content SET shop_content.stock = CEIL(shop_content.stock * 0.95) WHERE shop_content.shop_id IN (1, 2, 3)`
         );
+    }
+
+    public garmentToCategory(garment: Garment | LuxuryGarment): number {
+        switch (garment) {
+            case Garment.TOP:
+            case LuxuryGarment.TOP:
+                return 1;
+            case Garment.PANT:
+            case LuxuryGarment.PANT:
+                return 15;
+            case Garment.SHOES:
+            case LuxuryGarment.SHOES:
+                return 25;
+            case Garment.UNDERWEAR:
+            case LuxuryGarment.UNDERWEAR:
+                return 21;
+            case Garment.BAG:
+            case LuxuryGarment.BAG:
+                return 52;
+            case Garment.GLOVES:
+            case LuxuryGarment.GLOVES:
+                return 50;
+            case Garment.UNDERWEAR_TOP:
+            case LuxuryGarment.UNDERWEAR_TOP:
+                return 60;
+            case Garment.MASK:
+                return 41;
+            default:
+                return -1;
+        }
     }
 
     @OnEvent(ServerEvent.FFS_RESTOCK)
@@ -58,7 +93,8 @@ export class FightForStyleRestockProvider {
 
         this.inventoryManager.removeItemFromInventory(source, garment, item.amount);
 
-        exports['soz-shops'].RestockShop(brand, garment, item.amount);
+        // Restock shops
+        await this.restockLoop(brand, garment, item.amount);
 
         const totalAmount = item.amount * FfsConfig.restock.getRewardFromDeliveredGarment(garment);
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
@@ -77,5 +113,84 @@ export class FightForStyleRestockProvider {
         );
 
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
+    }
+
+    public async restockLoop(brand: ClothingBrand, garment: Garment | LuxuryGarment, amount: number) {
+        const sexes = [PlayerPedHash.Male, PlayerPedHash.Female];
+        const category = this.garmentToCategory(garment);
+        if (category == -1) {
+            console.error('Invalid category for item ', garment);
+            return;
+        }
+        const repo = await this.clothingShopRepository.get();
+        const shopId = repo.shops[brand].id;
+
+        // Fetch all items from this category
+        const allItemsByGender: Record<number, ClothingShopItem[]> = {
+            [PlayerPedHash.Male]: [],
+            [PlayerPedHash.Female]: [],
+        };
+        for (const [genderHash, shop_content] of Object.entries(repo.categories)) {
+            for (const shop_category of Object.values(shop_content[shopId])) {
+                if (
+                    (shop_category.content != null &&
+                        (shop_category.id == category || shop_category.parentId == category)) ||
+                    (category === 41 && [33, 34, 35, 36, 37, 38, 39, 40].includes(shop_category.id)) // Masks don't have a parent category
+                ) {
+                    Object.values(shop_category.content).forEach(items => {
+                        items.forEach(item => allItemsByGender[parseInt(genderHash)].push(item));
+                    });
+                }
+            }
+        }
+
+        let amountLeft = amount;
+        while (amountLeft > 0) {
+            const loopAmount = Math.min(5, amountLeft); // <--- LoopAmount decreased to 5 to increase the diversity of restocked items
+            amountLeft -= loopAmount;
+            const loopSex = sexes[Math.floor(Math.random() * 2)];
+            let loopItems = allItemsByGender[loopSex];
+            if (loopItems.length == 0) {
+                for (const items of Object.values(allItemsByGender)) {
+                    if (items.length > 0) {
+                        loopItems = items;
+                        break;
+                    }
+                }
+            }
+            const randomItem = loopItems[Math.floor(Math.random() * loopItems.length)];
+            if (!randomItem || !loopItems) {
+                return;
+            }
+            let sameModelsIds: number[] = [];
+            if (randomItem.modelLabel != null) {
+                const sameModelLabelItems = loopItems.filter(
+                    item => item.modelLabel != null && item.modelLabel === randomItem.modelLabel
+                );
+                sameModelsIds = sameModelLabelItems.map(item => item.id);
+            } else {
+                continue;
+            }
+
+            // Update SQL database
+            await this.prismaService.shop_content.updateMany({
+                where: {
+                    id: {
+                        in: sameModelsIds,
+                    },
+                },
+                data: {
+                    stock: {
+                        increment: loopAmount,
+                    },
+                },
+            });
+
+            // Update repository
+            Object.values(sameModelsIds).forEach(id => {
+                repo.shops[brand].stocks[id] += loopAmount;
+            });
+        }
+        await this.clothingShopRepository.set(repo);
     }
 }

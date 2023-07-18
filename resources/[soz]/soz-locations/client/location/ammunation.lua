@@ -34,7 +34,7 @@ Locations["ammunation"] = {
     }),
     [11] = BoxZone:Create(vector3(-1308.72, -392.85, 36.70), 11.8, 7.8,
                           {
-        name = "ammunation10",
+        name = "ammunation11",
         heading = 75,
         minZ = 35.70,
         maxZ = 37.70,

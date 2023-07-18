@@ -112,7 +112,6 @@ export enum ServerEvent {
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
-    SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
     SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',
     SHOP_VALIDATE_CART = 'soz-core:server:shop:validate-cart',
@@ -121,6 +120,9 @@ export enum ServerEvent {
     UPW_REFILL_STATION = 'soz-core:server:job:upw:refill-station',
     UPW_CHANGE_BATTERY = 'soz-core:server:job:upw:change-battery',
     UPW_SET_CHARGER_PRICE = 'soz-core:server:job:upw:set-charger-price',
+    SHOP_BUY = 'soz-core:server:shop:buy',
+    SHOP_TATTOO_RESET = 'soz-core:server:shop:tattoo-reset',
+    ZKEA_CHECK_STOCK = 'soz-core:client:shop:zkea:check-stock',
 
     AFK_KICK = 'soz-core:server:afk:kick',
 
@@ -350,6 +352,9 @@ export enum ClientEvent {
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
     STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
 
+    SHOP_OPEN_MENU = 'soz-core:client:shops:open-menu',
+    SHOP_UPDATE_STOCKS = 'soz-core:client:update-stocks',
+
     // Temp event which should be internally used by a service when only soz core
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
 
@@ -458,6 +463,10 @@ export enum ClientEvent {
     BINOCULARS_SET = 'items:binoculars:set',
 
     RACKET_START_PHASE = 'soz-core:client:racket:start-phase',
+
+    // Not core
+    LOCATION_ENTER = 'locations:zone:enter',
+    LOCATION_EXIT = 'locations:zone:exit',
 }
 
 export enum GameEvent {
@@ -605,9 +614,23 @@ export enum NuiEvent {
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
-    ShopMaskBuy = 'soz-core:client:shop:mask:buy',
-    ShopMaskPreview = 'soz-core:client:shop:mask:preview',
-    ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
+    BossShopBuy = 'soz-core:client:shop:boss:buy',
+
+    SuperetteShopBuy = 'soz-core:client:shop:superette:buy',
+    TattooShopResetTattos = 'soz-core:client:shop:tattoo:resetTattos',
+    TattooShopBuy = 'soz-core:client:shop:tattoo:buy',
+    TattoShopPreview = 'soz-core:client:shop:tattoo:preview',
+    TattooShopSelectCategory = 'soz-core:client:shop:tattoo:select-category',
+    ClothingShopPreview = 'soz-core:client:shop:clothing:preview',
+    ClothingShopBuy = 'soz-core:client:shop:clothing:buy',
+    ClothingShopBackspace = 'soz-core:client:shop:clothing:backspace',
+    ClothShopToggleCamera = 'soz-core:client:shop:clothing:toggle-camera',
+    JewelryShopPreview = 'soz-core:client:shop:jewelry:preview',
+    JewelryShopBuy = 'soz-core:client:shop:jewelry:buy',
+    JewelryShopBackspace = 'soz-core:client:shop:jewelry:backspace',
+    JewelryShopToggleCamera = 'soz-core:client:shop:jewelry:toggle-camera',
+    BarberShopPreview = 'soz-core:client:shop:barber:preview',
+    BarberShopBuy = 'soz-core:client:shop:barber:buy',
 
     TriggerServerEvent = 'soz-core:nui:trigger-server-event',
     TriggerClientEvent = 'soz-core:nui:trigger-client-event',
