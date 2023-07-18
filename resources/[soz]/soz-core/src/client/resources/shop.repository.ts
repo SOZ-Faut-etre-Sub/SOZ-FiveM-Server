@@ -6,7 +6,7 @@ import { PlayerPedHash } from '@public/shared/player';
 import { ClothingShop, ClothingShopCategory } from '@public/shared/shop';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { emitRpc } from '../../core/rpc';
+import { emitRpc, emitRpcTimeout } from '../../core/rpc';
 import { RpcServerEvent } from '../../shared/rpc';
 
 @Injectable()
@@ -21,8 +21,9 @@ export class ClothingShopRepository {
             return;
         }
 
-        this.repoData = await emitRpc<ClothingShopRepositoryData>(
+        this.repoData = await emitRpcTimeout<ClothingShopRepositoryData>(
             RpcServerEvent.REPOSITORY_CLOTHING_GET_DATA,
+            6000,
             this.playerService.getPlayer().skin.Model.Hash
         );
 
