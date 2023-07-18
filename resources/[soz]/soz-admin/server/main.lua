@@ -17,51 +17,6 @@ SozAdmin.Functions.IsPlayerHelper = function(source)
                QBCore.Functions.HasPermission(source, "admin")
 end
 
-CheckIsAdminMenuIsAvailable = function(source)
-    for _, role in ipairs(Config.AllowedRole) do
-        if QBCore.Functions.HasPermission(source, role) then
-            return true
-        end
-    end
-
-    return false
-end
-
-QBCore.Functions.CreateCallback("admin:server:isAllowed", function(source, cb)
-    if SozAdmin.Functions.IsPlayerAdmin(source) then
-        cb(true, "admin")
-    elseif SozAdmin.Functions.IsPlayerStaff(source) then
-        cb(true, "staff")
-    elseif SozAdmin.Functions.IsPlayerHelper(source) then
-        cb(true, "helper")
-    else
-        cb(false)
-    end
-end)
-
-QBCore.Functions.CreateCallback("admin:server:getplayers", function(source, cb)
-    if not SozAdmin.Functions.IsPlayerHelper(source) then
-        return
-    end
-
-    local players = {}
-    for k, v in pairs(QBCore.Functions.GetPlayers()) do
-        local targetped = GetPlayerPed(v)
-        local ped = QBCore.Functions.GetPlayer(v)
-        table.insert(players, {
-            name = ped.PlayerData.charinfo.firstname .. " " .. ped.PlayerData.charinfo.lastname .. " | (" .. GetPlayerName(v) .. ")",
-            id = v,
-            coords = GetEntityCoords(targetped),
-            heading = GetEntityHeading(targetped),
-            cid = ped.PlayerData.charinfo.firstname .. " " .. ped.PlayerData.charinfo.lastname,
-            citizenid = ped.PlayerData.citizenid,
-            sources = GetPlayerPed(ped.PlayerData.source),
-            sourceplayer = ped.PlayerData.source,
-        })
-    end
-    cb(players)
-end)
-
 RegisterNetEvent("admin:server:addPersistentProp", function(model, event, position)
     if not SozAdmin.Functions.IsPlayerHelper(source) then
         return
