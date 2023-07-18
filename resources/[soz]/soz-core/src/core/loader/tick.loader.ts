@@ -28,7 +28,7 @@ export class TickLoader {
                         return;
                     }
                 } catch (error) {
-                    console.error(`Error in ${metadata.name}`, error);
+                    /* empty */
                 }
 
                 if (metadata.interval > 0) {
