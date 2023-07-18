@@ -1,24 +1,15 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
-import { GlovesItem } from '@public/shared/cloth';
 import { PlayerPedHash } from '@public/shared/player';
 import {
     ClothingShop,
-    ClothingShopCategory,
     ClothingShopID,
     ClothingShopItem,
     ClothingShopItemData,
+    ClothingShopRepositoryData,
 } from '@public/shared/shop';
 
 import { PrismaService } from '../database/prisma.service';
 import { Repository } from './repository';
-
-export type ClothingShopRepositoryData = {
-    shops: Record<string, ClothingShop>;
-    categories: Record<number, Record<number, Record<number, ClothingShopCategory>>>; // Map modelHash -> shopId -> categoryId -> category
-    shopNameById: Record<number, string>;
-    underTypes: Record<number, number[]>; // Map ID -> list of compatible underTypes
-    gloves: Record<number, GlovesItem>; // Map ID of gloves -> Gloves data
-};
 
 @Injectable()
 export class ClothingShopRepository extends Repository<ClothingShopRepositoryData> {

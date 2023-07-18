@@ -1,9 +1,8 @@
 import { PlayerService } from '@public/client/player/player.service';
 import { ProperTorsos } from '@public/config/shops';
-import { ClothingShopRepositoryData } from '@public/server/repository/cloth.shop.repository';
 import { Component, GlovesItem } from '@public/shared/cloth';
 import { PlayerPedHash } from '@public/shared/player';
-import { ClothingShop, ClothingShopCategory } from '@public/shared/shop';
+import { ClothingShop, ClothingShopCategory, ClothingShopRepositoryData } from '@public/shared/shop';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { emitRpc, emitRpcTimeout } from '../../core/rpc';
@@ -23,7 +22,7 @@ export class ClothingShopRepository {
 
         this.repoData = await emitRpcTimeout<ClothingShopRepositoryData>(
             RpcServerEvent.REPOSITORY_CLOTHING_GET_DATA,
-            6000,
+            10000,
             this.playerService.getPlayer().skin.Model.Hash
         );
 

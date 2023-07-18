@@ -1,5 +1,5 @@
 import { TargetOptions } from '../client/target/target.factory';
-import { Component, OutfitItem, Prop } from './cloth';
+import { Component, GlovesItem, OutfitItem, Prop } from './cloth';
 import { InventoryItemMetadata, Item, ItemType } from './item';
 import { JobType } from './job';
 import { PlayerLicenceType } from './player';
@@ -184,4 +184,12 @@ export type BarberShopItem = {
     config: BarberConfiguration;
     price: number;
     overlay: string;
+};
+
+export type ClothingShopRepositoryData = {
+    shops: Record<string, ClothingShop>;
+    categories: Record<number, Record<number, Record<number, ClothingShopCategory>>>; // Map modelHash -> shopId -> categoryId -> category
+    shopNameById: Record<number, string>;
+    underTypes: Record<number, number[]>; // Map ID -> list of compatible underTypes
+    gloves: Record<number, GlovesItem>; // Map ID of gloves -> Gloves data
 };
