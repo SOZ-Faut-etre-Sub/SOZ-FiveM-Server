@@ -1,6 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { CheckIcon } from '@heroicons/react/solid';
 import { useNuiEvent } from '@public/nui/hook/nui';
+import { slugify } from '@public/nui/utils/slugify';
 import {
     createDescendantContext,
     Descendant,
@@ -96,9 +97,11 @@ export type SubMenuProps = {
 };
 
 export const SubMenu: FunctionComponent<PropsWithChildren<SubMenuProps>> = ({ children, id }) => {
+    const slugId = slugify(id);
+
     return (
         <Routes>
-            <Route path={`/${id}`} element={<MenuContainer>{children}</MenuContainer>} />
+            <Route path={`/${slugId}`} element={<MenuContainer>{children}</MenuContainer>} />
         </Routes>
     );
 };
@@ -433,12 +436,13 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     const type = useContext(MenuTypeContext);
     const navigate = useNavigate();
     const state = location.state as { activeIndex: number } | undefined;
+    const slugId = slugify(id);
 
     return (
         <MenuItemContainer
             onSelected={onSelected}
             onConfirm={() =>
-                navigate(`/${type}/${id}`, {
+                navigate(`/${type}/${slugId}`, {
                     state: {
                         ...(state || {}),
                         activeIndex: 0,
