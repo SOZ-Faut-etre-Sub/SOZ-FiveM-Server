@@ -7478,8 +7478,8 @@ QBShared.Items = {
         ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex des Petits Lacs.",
         ['illustrator'] = '.Poulpito',
     },
-    ['badge_rivers'] = {
-        ['name'] = 'badge_rivers',
+    ['badge_river'] = {
+        ['name'] = 'badge_river',
         ['label'] = "Badge \"Rivières\"",
         ['useable'] = false,
         ['weight'] = 2000,
