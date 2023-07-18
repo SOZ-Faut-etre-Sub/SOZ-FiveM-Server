@@ -97,6 +97,23 @@ export class RepositoryProvider {
         return null;
     }
 
+    @Rpc(RpcServerEvent.REPOSITORY_CLOTHING_GET_DATA)
+    public async getClothingData(source: number, playerPedHash: number): Promise<ClothingShopRepositoryData> {
+        if (this.repositories['clothingShop']) {
+            const shop: ClothingShopRepositoryData = await this.repositories['clothingShop'].get();
+
+            // remove categories from another ped model
+            return {
+                ...shop,
+                categories: Object.entries(shop.categories)
+                    .filter(([key]) => Number(key) === playerPedHash)
+                    .reduce((obj, [key, val]) => Object.assign(obj, { [key]: val }), {}) as { [key: string]: any },
+            };
+        }
+
+        return null;
+    }
+
     @Rpc(RpcServerEvent.REPOSITORY_CLOTHING_GET_STOCK)
     public async getClothingStock(source: number, shop: string): Promise<Record<number, number>> {
         return ((await this.repositories['clothingShop'].get()) as ClothingShopRepositoryData).shops[shop].stocks;
