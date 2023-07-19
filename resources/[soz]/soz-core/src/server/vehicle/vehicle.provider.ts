@@ -1,3 +1,5 @@
+import { VehicleClass } from '@public/shared/vehicle/vehicle';
+
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -6,6 +8,7 @@ import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { VehicleService } from './vehicle.service';
+import { GarageList } from '@public/config/garage';
 
 @Provider()
 export class VehicleProvider {
@@ -22,12 +25,14 @@ export class VehicleProvider {
     private vehicleService: VehicleService;
 
     @OnEvent(ServerEvent.ADMIN_ADD_VEHICLE)
-    public async addVehicle(source: number, model: string, name: string, mods: any[]) {
+    public async addVehicle(source: number, model: string, name: string, vehClass: VehicleClass, mods: any[]) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
             return;
         }
+
+        const garage = vehClass == VehicleClass.Boats ? 'docks_boat' : 'airportpublic';
 
         await this.prismaService.playerVehicle.create({
             data: {
@@ -37,13 +42,15 @@ export class VehicleProvider {
                 hash: model.toString(),
                 mods: JSON.stringify(mods),
                 plate: await this.vehicleService.generatePlate(),
-                garage: 'airportpublic',
+                garage: garage,
                 state: 1,
                 boughttime: Math.floor(new Date().getTime() / 1000),
                 parkingtime: Math.floor(new Date().getTime() / 1000),
             },
         });
 
-        this.notifier.notify(source, 'Une version de ce véhicule ~g~a été ajouté~s~ au parking public');
+        const garageConfig = GarageList[garage];
+
+        this.notifier.notify(source, 'Une version de ce véhicule ~g~a été ajouté~s~ au ' + garageConfig.name);
     }
 }

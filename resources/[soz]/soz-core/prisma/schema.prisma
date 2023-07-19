@@ -400,6 +400,7 @@ model Vehicle {
   jobName         String? @map("job_name") @db.Text
   stock           Int?    @default(0)
   radio           Boolean @default(false)
+  maxStock        Int?    @default(2)
 
   @@index([category])
   @@index([dealershipId], map: "vehicles_dealership_idx")

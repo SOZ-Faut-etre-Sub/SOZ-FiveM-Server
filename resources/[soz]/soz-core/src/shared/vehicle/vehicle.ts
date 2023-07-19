@@ -257,34 +257,6 @@ export const VehicleMidDamageThreshold = 700;
 export const VehicleHighDamageThreshold = 400;
 export const VehicleCriticalDamageThreshold = 101;
 
-export const VehicleMaxStock: Record<keyof typeof VehicleCategory, number> = {
-    Boats: 0,
-    Commercial: 0,
-    Compacts: 8,
-    Coupes: 6,
-    Cycles: 100,
-    Emergency: 0,
-    Helicopters: 3,
-    Industrial: 0,
-    Military: 0,
-    Motorcycles: 6,
-    'Off-road': 4,
-    Planes: 0,
-    Sedans: 6,
-    Service: 0,
-    Suvs: 4,
-    Super: 0,
-    Sports: 0,
-    Sportsclassics: 0,
-    Trains: 0,
-    Utility: 0,
-    Vans: 6,
-    Openwheel: 0,
-    Muscle: 3,
-    Electric: 6, // I don't know what this is.
-    Quads: 6,
-};
-
 export enum VehicleCategory {
     Boats = 'Bateaux',
     Commercial = 'Commercial',

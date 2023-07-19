@@ -55,9 +55,9 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: false,
     },
     [Feature.Boat]: {
-        production: false,
+        production: true,
         development: true,
-        test: false,
+        test: true,
     },
     [Feature.Easter]: {
         production: false,

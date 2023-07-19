@@ -1,10 +1,11 @@
 import { emitRpc } from '@public/core/rpc';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { DrivingSchoolConfig } from '../../shared/driving-school';
+import { DrivingSchoolConfig, DrivingSchoolLicenseType } from '../../shared/driving-school';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
@@ -89,11 +90,15 @@ export class DrivingSchoolProvider {
         ];
         const licensesConfig = DrivingSchoolConfig.licenses;
 
-        Object.entries(licensesConfig).forEach(([licenseType, data]) => {
+        Object.values(licensesConfig).forEach(license => {
+            if (license.licenseType == DrivingSchoolLicenseType.Boat && !isFeatureEnabled(Feature.Boat)) {
+                return;
+            }
+
             targetOptions.push({
-                license: licenseType,
-                label: `${data.label} ($${data.price})`,
-                icon: data.icon,
+                license: license.licenseType,
+                label: `${license.label} ($${license.price})`,
+                icon: license.icon,
                 event: ClientEvent.DRIVING_SCHOOL_START_EXAM,
                 blackoutGlobal: true,
             });

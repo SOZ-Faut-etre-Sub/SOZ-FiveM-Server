@@ -124,7 +124,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         garageName: 'sandy_shores_air',
     },
     [DealershipType.Boat]: {
-        position: [-847.93, -1312.15, 4.0, 296.25],
+        position: [-237.94, -2686.3, 5.0, 27.86],
         blip: {
             name: 'Concessionnaire Maritime',
             sprite: 780,
@@ -132,11 +132,11 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         },
         ped: 'mp_m_boatstaff_01',
         showroom: {
-            position: [-857.02, -1327.72, 0.45, 110],
-            camera: [-871.61, -1342.65, 8.44],
+            position: [-226.68, -2702.23, 0.68, 215.88],
+            camera: [-242.15, -2720.95, 14.16],
         },
         daysBeforeNextPurchase: 7,
-        garageName: 'marina_boat',
+        garageName: 'docks_boat',
     },
     [DealershipType.Electric]: {
         position: [-63.2, 71.92, 71.0, 147.57],
