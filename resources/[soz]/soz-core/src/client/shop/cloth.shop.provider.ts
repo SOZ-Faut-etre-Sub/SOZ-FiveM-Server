@@ -1,4 +1,5 @@
 import { Notifier } from '@public/client/notifier';
+import { GloveShopRepository } from '@public/client/resources/glove.shop.repository';
 import { ShopBrand, ShopsConfig, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { On, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
@@ -23,6 +24,9 @@ import { ClothingShopRepository } from '../resources/shop.repository';
 export class ClothingShopProvider {
     @Inject(ClothingShopRepository)
     private clothingShopRepository: ClothingShopRepository;
+
+    @Inject(GloveShopRepository)
+    private gloveShopRepository: GloveShopRepository;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -188,7 +192,7 @@ export class ClothingShopProvider {
             if (player.cloth_config.BaseClothSet.GlovesID == null || player.cloth_config.Config.HideGloves) {
                 return;
             }
-            const gloves = await this.clothingShopRepository.getGloves(player.cloth_config.BaseClothSet.GlovesID);
+            const gloves = await this.gloveShopRepository.getGloves(player.cloth_config.BaseClothSet.GlovesID);
             if (gloves && gloves.correspondingDrawables) {
                 const currentTorso = GetPedDrawableVariation(ped, Component.Torso);
                 if (!gloves.correspondingDrawables[currentTorso]) {
@@ -255,6 +259,6 @@ export class ClothingShopProvider {
 
     @Exportable('GetGloves')
     async getGloves(glovesId: number): Promise<GlovesItem> {
-        return await this.clothingShopRepository.getGloves(glovesId);
+        return await this.gloveShopRepository.getGloves(glovesId);
     }
 }

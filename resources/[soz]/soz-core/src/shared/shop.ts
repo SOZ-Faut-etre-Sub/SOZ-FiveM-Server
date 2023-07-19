@@ -193,3 +193,5 @@ export type ClothingShopRepositoryData = {
     underTypes: Record<number, number[]>; // Map ID -> list of compatible underTypes
     gloves: Record<number, GlovesItem>; // Map ID of gloves -> Gloves data
 };
+
+export type GloveShopRepositoryData = Record<number, GlovesItem>;
