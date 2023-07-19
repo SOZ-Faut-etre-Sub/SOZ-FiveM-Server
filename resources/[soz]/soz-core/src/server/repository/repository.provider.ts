@@ -10,6 +10,7 @@ import { PrismaService } from '../database/prisma.service';
 import { ClothingShopRepository } from './cloth.shop.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
+import { GloveShopRepository } from './glove.shop.repository';
 import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { ObjectRepository } from './object.repository';
@@ -50,6 +51,9 @@ export class RepositoryProvider {
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
+    @Inject(GloveShopRepository)
+    private gloveShopRepository: GloveShopRepository;
+
     @Inject(ClothingShopRepository)
     private clothingShopRepository: ClothingShopRepository;
 
@@ -66,6 +70,7 @@ export class RepositoryProvider {
         this.repositories['housing'] = this.housingRepository;
         this.repositories['object'] = this.objectRepository;
         this.repositories['clothingShop'] = this.clothingShopRepository;
+        this.repositories['gloveShop'] = this.gloveShopRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)

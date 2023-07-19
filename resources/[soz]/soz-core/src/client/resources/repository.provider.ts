@@ -45,7 +45,6 @@ export class RepositoryProvider {
         await this.fuelStationRepository.load();
         await this.upwChargerRepository.load();
         await this.housingRepository.load();
-        await this.clothingShopRepository.load();
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }

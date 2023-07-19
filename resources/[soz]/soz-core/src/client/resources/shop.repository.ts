@@ -1,11 +1,11 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { emitRpc, emitRpcTimeout } from '@core/rpc';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProperTorsos } from '@public/config/shops';
-import { Component, GlovesItem } from '@public/shared/cloth';
+import { Component } from '@public/shared/cloth';
 import { PlayerPedHash } from '@public/shared/player';
 import { ClothingShop, ClothingShopCategory, ClothingShopRepositoryData } from '@public/shared/shop';
 
-import { Inject, Injectable } from '../../core/decorators/injectable';
-import { emitRpc, emitRpcTimeout } from '../../core/rpc';
 import { RpcServerEvent } from '../../shared/rpc';
 
 @Injectable()
@@ -98,19 +98,5 @@ export class ClothingShopRepository {
 
     public getAllUnderTypes(): Record<number, number[]> {
         return this.repoData.underTypes;
-    }
-
-    public async getGloves(id: number): Promise<GlovesItem> {
-        // getGloves is called by in resources\[soz]\soz-character\client\skin\apply.lua as an Exportable
-        // in case soz-character is loaded before soz-core, we need to make sure the repoData is loaded before the exportable is called
-        // then, simply check if repoData is loaded, and if not, load it. Meant to happen eventually at client start
-        if (!this.repoData) {
-            await this.load();
-        }
-        return this.repoData.gloves[id];
-    }
-
-    public getAllGloves(): Record<number, GlovesItem> {
-        return this.repoData.gloves;
     }
 }
