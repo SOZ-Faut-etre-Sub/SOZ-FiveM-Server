@@ -1,3 +1,5 @@
+import { getRandomItems } from '@public/shared/random';
+
 import { On, OnGameEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -46,7 +48,7 @@ export class ExamProvider {
 
     @On(ClientEvent.DRIVING_SCHOOL_START_EXAM)
     public async examPrecheck(data: TargetOptions) {
-        const lData: DrivingSchoolLicense = DrivingSchoolConfig.licenses[data.license];
+        const lData: DrivingSchoolLicense = DrivingSchoolConfig.licenses[data.license as DrivingSchoolLicenseType];
 
         if (!lData) {
             this.notifier.notify("Impossible de démarrer l'examen", 'error');
@@ -276,12 +278,10 @@ export class ExamProvider {
     private getRandomCheckpoints(licenseType: DrivingSchoolLicenseType, count: number) {
         if (count > Checkpoints.length) count = Checkpoints.length;
 
-        const eligibleCheckpoints = [...Checkpoints].filter(c => c.licenses.includes(licenseType));
-
-        return [...Array(count).keys()].map(() => {
-            const idx = Math.floor(Math.random() * eligibleCheckpoints.length);
-            return eligibleCheckpoints.splice(idx, 1)[0];
-        });
+        return getRandomItems(
+            Checkpoints.filter(c => c.licenses.includes(licenseType)),
+            Math.min(count, Checkpoints.length)
+        );
     }
 
     private displayCheckpoint(current: Checkpoint) {

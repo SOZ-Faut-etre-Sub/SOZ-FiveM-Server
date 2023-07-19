@@ -104,11 +104,7 @@ export class VehicleSeatbeltProvider {
 
         const vehicleClass = GetVehicleClass(vehicle);
 
-        if (
-            vehicleClass === VehicleClass.Motorcycles ||
-            vehicleClass === VehicleClass.Cycles ||
-            vehicleClass === VehicleClass.Boats
-        ) {
+        if (vehicleClass === VehicleClass.Motorcycles || vehicleClass === VehicleClass.Cycles) {
             return;
         }
 
@@ -181,11 +177,7 @@ export class VehicleSeatbeltProvider {
 
         const vehicleClass = GetVehicleClass(vehicle);
 
-        if (
-            vehicleClass === VehicleClass.Motorcycles ||
-            vehicleClass === VehicleClass.Cycles ||
-            vehicleClass === VehicleClass.Boats
-        ) {
+        if (vehicleClass === VehicleClass.Motorcycles || vehicleClass === VehicleClass.Cycles) {
             return;
         }
 

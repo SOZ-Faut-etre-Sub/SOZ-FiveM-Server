@@ -14,9 +14,9 @@ import { getRandomItems } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
 import { DealershipId } from '../../shared/vehicle/dealership';
-import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration, VehicleColor, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
-import { getDefaultVehicleCondition, Vehicle, VehicleMaxStock } from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleCondition, Vehicle } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { LockService } from '../lock.service';
 import { Monitor } from '../monitor/monitor';
@@ -87,10 +87,7 @@ export class VehicleDealershipProvider {
             };
 
             this.auctions[selectedVehicle.model] = {
-                vehicle: {
-                    ...vehicle,
-                    maxStock: VehicleMaxStock[vehicle.category] || 0,
-                },
+                vehicle: { ...vehicle },
                 position: auctionZone.position as Vector4,
                 windows: auctionZone.window,
                 bestBid: null,
@@ -285,7 +282,6 @@ export class VehicleDealershipProvider {
             return {
                 ...vehicle,
                 jobName: JSON.parse(vehicle.jobName),
-                maxStock: VehicleMaxStock[vehicle.category] || 0,
             };
         });
     }
@@ -317,7 +313,6 @@ export class VehicleDealershipProvider {
                 stock: 100,
                 // Use price for job
                 price: jobVehicle.price,
-                maxStock: VehicleMaxStock[vehicle.category] || 0,
                 name: jobName && jobName[job] ? jobName[job] : vehicle.name,
             };
         });
@@ -467,6 +462,18 @@ export class VehicleDealershipProvider {
                     livery,
                 };
 
+                if (vehicle.model == 'predator') {
+                    configuration.color.primary = VehicleColor.MetallicWhite;
+                }
+
+                let garage = dealershipId !== DealershipType.Job ? dealership?.garageName : null;
+                let state = dealershipId !== DealershipType.Job ? PlayerVehicleState.InGarage : PlayerVehicleState.Out;
+
+                if (dealershipId == DealershipType.Job && vehicle.category == 'Boats') {
+                    garage = 'docks_boat';
+                    state = PlayerVehicleState.InGarage;
+                }
+
                 const playerVehicle = await this.prismaService.playerVehicle.create({
                     data: {
                         license: player.license,
@@ -475,11 +482,10 @@ export class VehicleDealershipProvider {
                         hash: vehicle.hash.toString(),
                         mods: JSON.stringify(configuration),
                         condition: JSON.stringify(getDefaultVehicleCondition()),
-                        garage: dealershipId !== DealershipType.Job && dealership ? dealership.garageName : null,
+                        garage: garage,
                         plate,
                         category: vehicle.category,
-                        state:
-                            dealershipId !== DealershipType.Job ? PlayerVehicleState.InGarage : PlayerVehicleState.Out,
+                        state: state,
                         job: dealershipId === DealershipType.Job ? player.job.id : null,
                         life_counter: 3,
                         boughttime: nowInSeconds,
@@ -524,7 +530,7 @@ export class VehicleDealershipProvider {
                     });
                 }
 
-                if (dealershipId === DealershipType.Job) {
+                if (dealershipId === DealershipType.Job && vehicle.category != 'Boats') {
                     await this.vehicleSpawner.spawnPlayerVehicle(source, playerVehicle, [
                         ...parkingPlace.center,
                         parkingPlace.heading || 0,
@@ -532,7 +538,7 @@ export class VehicleDealershipProvider {
 
                     this.notifier.notify(source, `Merci pour votre achat !`, 'success');
                 } else {
-                    const garageConfig = GarageList[dealership.garageName];
+                    const garageConfig = GarageList[garage];
 
                     this.notifier.notify(
                         source,
