@@ -16,8 +16,10 @@ export const emergency = createModel<RootModel>()({
         SET_EMERGENCY(state, payload: boolean) {
             if (payload && !state.emergency) {
                 return { ...state, emergencyStart: Date.now(), emergency: payload };
-            } else {
+            } else if (!payload) {
                 return { ...state, lsmcCalled: false, emergency: payload };
+            } else {
+                return { ...state, emergency: payload };
             }
         },
         SET_DEAD(state, deathReason: string) {
