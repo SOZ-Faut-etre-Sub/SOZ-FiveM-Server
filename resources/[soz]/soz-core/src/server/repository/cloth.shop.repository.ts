@@ -144,13 +144,6 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
             if (shopItem.underTypes) {
                 repository.underTypes[shopItem.id] = shopItem.underTypes;
             }
-            if (shopItem.correspondingDrawables) {
-                repository.gloves[shopItem.id] = {
-                    id: shopItem.id,
-                    correspondingDrawables: shopItem.correspondingDrawables,
-                    texture: shopItemData.components[3].Texture,
-                };
-            }
             const shopName = repository.shopNameById[item.shop_id];
             repository.shops[shopName].stocks[item.id] = item.stock;
             const genderToAdd = shopItem.modelHash ? [shopItem.modelHash] : [PlayerPedHash.Male, PlayerPedHash.Female];
