@@ -247,13 +247,21 @@ export class ShopProvider {
     }
 
     public async addTargetModel() {
-        if (this.currentShopBrand != null && BrandsConfig[this.currentShopBrand].pedModel) {
+        if (
+            this.currentShopBrand &&
+            BrandsConfig[this.currentShopBrand] &&
+            BrandsConfig[this.currentShopBrand].pedModel
+        ) {
             this.targetFactory.createForModel(BrandsConfig[this.currentShopBrand].pedModel, this.shopActions);
         }
     }
 
     public async removeTargetModel() {
-        if (this.currentShopBrand != null && BrandsConfig[this.currentShopBrand].pedModel) {
+        if (
+            this.currentShopBrand &&
+            BrandsConfig[this.currentShopBrand] &&
+            BrandsConfig[this.currentShopBrand].pedModel
+        ) {
             this.targetFactory.removeTargetModel([BrandsConfig[this.currentShopBrand].pedModel], []);
         }
     }
