@@ -5,7 +5,6 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/ev
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
-import { JobService } from '../../../server/job.service';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
@@ -22,6 +21,7 @@ import { TargetFactory } from '../../target/target.factory';
 import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
 import { VehicleService } from '../../vehicle/vehicle.service';
 import { VehicleStateService } from '../../vehicle/vehicle.state.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class BennysVehicleProvider {
@@ -131,7 +131,7 @@ export class BennysVehicleProvider {
                     const player = this.playerService.getPlayer();
                     return (
                         this.playerService.isOnDuty() &&
-                        this.jobService.hasPermission(player, player.job.id, JobPermission.OnDutyView)
+                        this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
                     );
                 },
             },
