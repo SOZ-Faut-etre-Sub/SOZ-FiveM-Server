@@ -60,27 +60,11 @@ export class ClothingShopRepository {
         this.repoData = data;
     }
 
-    public async updateShopStock(shop: string) {
+    public async getShop(shop: string): Promise<ClothingShop> {
         if (!this.repoData) {
             await this.load();
-            return;
-        }
-        this.repoData.shops[shop].stocks = await emitRpc<Record<number, number>>(
-            RpcServerEvent.REPOSITORY_CLOTHING_GET_STOCK,
-            shop
-        );
-    }
-
-    public getShop(shop: string): ClothingShop {
-        if (!this.repoData) {
-            this.load();
-            return;
         }
         return this.repoData.shops[shop];
-    }
-
-    public getFirstCategoriesOfShop(shop: string): Record<number, ClothingShopCategory> {
-        return this.repoData.shops[shop].categories;
     }
 
     public getModelCategoriesOfShop(shop: string, modelHash: number): Record<number, ClothingShopCategory> {

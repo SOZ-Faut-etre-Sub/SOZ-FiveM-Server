@@ -88,7 +88,6 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
                 id: shop.id,
                 name: shop.name,
                 categories: {},
-                stocks: {},
             };
             for (const shopCategory of shop.shop_categories) {
                 clothingShop.categories[shopCategory.category_id] = {
@@ -137,15 +136,17 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
                 underTypes: shopItemData.underTypes,
                 modelLabel: shopItemData.modelLabel,
                 colorLabel: shopItemData.colorLabel,
+                stock: item.stock,
             };
             if (!shopItem.modelLabel) {
                 continue;
             }
             if (shopItem.underTypes) {
+                if (shopItem.underTypes.length <= 0) {
+                    continue;
+                }
                 repository.underTypes[shopItem.id] = shopItem.underTypes;
             }
-            const shopName = repository.shopNameById[item.shop_id];
-            repository.shops[shopName].stocks[item.id] = item.stock;
             const genderToAdd = shopItem.modelHash ? [shopItem.modelHash] : [PlayerPedHash.Male, PlayerPedHash.Female];
             for (const modelHash of genderToAdd) {
                 if (!repository.categories[modelHash][shopItem.shopId][item.category_id].content[shopItem.modelLabel]) {

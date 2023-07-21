@@ -37,7 +37,6 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
     const navigate = useNavigate();
     const location = useLocation();
     const state = location.state as { activeIndex: number } | undefined;
-    const [stocks, setStocks] = useState<Record<number, number>>(catalog.shop_content.stocks);
     const [playerData, setPlayerData] = useState<PlayerData>(catalog.player_data);
 
     const selectCategory = (categoryId: number) => {
@@ -51,10 +50,6 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
 
     useNuiEvent('menu', 'Backspace', () => {
         fetchNui(NuiEvent.ClothingShopBackspace);
-    });
-
-    useNuiEvent('cloth_shop', 'SetStocks', stocks => {
-        setStocks(stocks);
     });
 
     useNuiEvent('cloth_shop', 'SetPlayerData', playerData => {
@@ -78,7 +73,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
         return (
             category.id != ClothingCategoryID.UNDERSHIRTS ||
             (playerData.cloth_config.BaseClothSet.TopID != null &&
-                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] != null &&
+                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
                 catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0)
         );
     });
@@ -173,16 +168,14 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                         onSelectedValue={async (_, item) =>
                                             await fetchNui(NuiEvent.ClothingShopPreview, item)
                                         }
-                                        descriptionValue={item =>
-                                            `💸 Prix : $${item.price} - 📦 Stock : ${stocks[item.id]}`
-                                        }
+                                        descriptionValue={item => `💸 Prix : $${item.price} - 📦 Stock : ${item.stock}`}
                                     >
                                         {items.map(item => (
                                             <MenuItemSelectOption
                                                 key={item.id}
                                                 value={item}
-                                                description={`💸 Prix : $${item.price} - 📦 Stock : ${stocks[item.id]}`}
-                                                disabled={stocks[item.id] == 0}
+                                                description={`💸 Prix : $${item.price} - 📦 Stock : ${item.stock}`}
+                                                disabled={item.stock == 0}
                                                 onSelected={async () =>
                                                     await fetchNui(NuiEvent.ClothingShopPreview, item)
                                                 }
