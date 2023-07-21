@@ -61,10 +61,36 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
         setPlayerData(playerData);
     });
 
+    const GetRootCategories = Object.values(catalog.shop_content.categories).filter(category => {
+        if (category.parentId) {
+            return false;
+        }
+
+        // Check if the category is not empty
+        if (
+            Object.values(catalog.shop_categories[category.id].content).length == 0 &&
+            Object.values(catalog.shop_categories).filter(childCat => childCat.parentId == category.id).length == 0
+        ) {
+            return false;
+        }
+
+        // Check if the category is not an undershirt or if it is, check if the player can where undershirts with his top
+        return (
+            category.id != ClothingCategoryID.UNDERSHIRTS ||
+            (playerData.cloth_config.BaseClothSet.TopID != null &&
+                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] != null &&
+                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0)
+        );
+    });
+
     const GetChildrenCategoriesNotEmpty = cat => {
-        return Object.values(catalog.shop_categories).filter(
-            childCat =>
-                // is child
+        return Object.values(catalog.shop_categories).filter(childCat => {
+            // is child
+            if (!childCat.parentId) {
+                return false;
+            }
+
+            return (
                 childCat.parentId == cat.id &&
                 // has sub category
                 (Object.values(catalog.shop_categories).filter(childchildCat => childchildCat.parentId == childCat.id)
@@ -78,21 +104,9 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                     product[0].undershirtType
                                 ))
                     ).length > 0)
-        );
+            );
+        });
     };
-
-    const CategoriesNotEmpty = Object.values(catalog.shop_content.categories).filter(
-        category =>
-            // Check if the category is not empty
-            (Object.values(catalog.shop_categories[category.id].content).length > 0 ||
-                Object.values(catalog.shop_categories).filter(childCat => childCat.parentId == category.id).length >
-                    0) &&
-            // Check if the category is not an undershirt or if it is, check if the player can where undershirts with his top
-            (category.id != ClothingCategoryID.UNDERSHIRTS ||
-                (playerData.cloth_config.BaseClothSet.TopID != null &&
-                    catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] != null &&
-                    catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0))
-    );
 
     return (
         <Menu type={MenuType.ClothShop}>
@@ -106,7 +120,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                     >
                         Libérer la caméra
                     </MenuItemCheckbox>
-                    {CategoriesNotEmpty.map(category => (
+                    {GetRootCategories.map(category => (
                         <MenuItemButton
                             key={category.id}
                             onConfirm={async () => {
