@@ -25,3 +25,8 @@ RegisterNetEvent("admin:client:spectate", function(targetPed, coords)
         exports["soz-voip"]:MutePlayer(false)
     end
 end)
+
+RegisterNetEvent("admin:client:KillPlayer")
+AddEventHandler("admin:client:KillPlayer", function()
+    SetEntityHealth(PlayerPedId(), 0)
+end)
