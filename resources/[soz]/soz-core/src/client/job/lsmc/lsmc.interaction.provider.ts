@@ -112,6 +112,10 @@ export class LSMCInteractionProvider {
                 icon: 'c:ems/desabhiller.png',
                 job: JobType.LSMC,
                 canInteract: entity => {
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
                     }
@@ -134,6 +138,10 @@ export class LSMCInteractionProvider {
                 icon: 'c:ems/rhabiller.png',
                 job: JobType.LSMC,
                 canInteract: entity => {
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
                         return false;
                     }
