@@ -3,11 +3,12 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick } from '@public/core/decorators/tick';
 import { ClientEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { JobPermission, JobType } from '@public/shared/job';
 
 import { BlipFactory } from '../../blip';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
+import { JobService } from '../job.service';
 import { TaxiMissionService } from './mission.taxi.service';
 
 @Provider()
@@ -23,6 +24,9 @@ export class TaxiProvider {
 
     @Inject(TaxiMissionService)
     private taxiMissionService: TaxiMissionService;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Once(OnceStep.Start)
     public onPlayerLoaded() {
@@ -58,6 +62,20 @@ export class TaxiProvider {
                         return this.playerService.isOnDuty();
                     },
                     job: JobType.Taxi,
+                },
+                {
+                    icon: 'fas fa-users',
+                    label: 'Employé(e)s en service',
+                    action: () => {
+                        TriggerServerEvent('QBCore:GetEmployOnDuty');
+                    },
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return (
+                            this.playerService.isOnDuty() &&
+                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
+                        );
+                    },
                 },
             ]
         );

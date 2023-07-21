@@ -15,7 +15,7 @@ type TaxiStateProps = {
 
 export const TaxiJobMenu: FunctionComponent<TaxiStateProps> = ({ data }) => {
     const status = useSelector((state: RootState) => state.taxi);
-    const banner = 'https://nui-img/soz/menu_job_trucker';
+    const banner = 'https://nui-img/soz/menu_job_taxi';
 
     if (!data.onDuty) {
         return (

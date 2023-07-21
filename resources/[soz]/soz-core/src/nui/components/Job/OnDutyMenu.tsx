@@ -9,6 +9,7 @@ type MenuJobOnDutyProps = {
 };
 
 export const JobOnDutyMenu: FunctionComponent<MenuJobOnDutyProps> = ({ data }) => {
+    console.log(data.job);
     const banner = `https://nui-img/soz/menu_job_${data.job}`;
 
     if (!data.state.length) {
