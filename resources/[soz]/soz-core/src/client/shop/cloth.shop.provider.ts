@@ -71,9 +71,7 @@ export class ClothingShopProvider {
         ) {
             return;
         }
-        await this.clothingShopRepository.updateShopStock(brand);
-        const shop_content = this.clothingShopRepository.getShop(brand);
-
+        const shop_content = await this.clothingShopRepository.getShop(brand);
         if (!shop_content) {
             this.logger.error(`Shop ${brand} not initialized`);
             this.notifier.notify(`Ce magasin n'est pas encore ouvert. Merci de patienter.`, 'error');
@@ -252,11 +250,12 @@ export class ClothingShopProvider {
         ) {
             return;
         }
-        await this.clothingShopRepository.updateShopStock(brand);
-        this.nuiDispatch.dispatch('cloth_shop', 'SetStocks', this.clothingShopRepository.getShop(brand).stocks);
         // Also update player data in case the player changed clothes
         const playerData = this.playerService.getPlayer();
         this.nuiDispatch.dispatch('cloth_shop', 'SetPlayerData', playerData);
+
+        this.nuiMenu.closeMenu(true);
+        await this.openShop(brand, this.currentShop);
     }
 
     @Exportable('DisplayHairWithMask')

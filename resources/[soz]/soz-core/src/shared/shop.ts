@@ -61,6 +61,7 @@ export type ClothingShopItem = {
     modelHash?: number;
     components?: Record<Component, OutfitItem>;
     props?: Record<Prop, OutfitItem>;
+    stock: number;
     correspondingDrawables?: Record<number, number>; // This is for torso compatibility (for gloves)
     undershirtType?: number; // This is for top compatibility (for undershirt)
     underTypes?: number[]; // This is for undershirt compatibility (for tops)

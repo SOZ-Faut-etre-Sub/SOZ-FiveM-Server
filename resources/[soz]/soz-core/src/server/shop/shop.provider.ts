@@ -223,7 +223,11 @@ export class ShopProvider {
             return;
         }
         const repo = await this.clothingShopRepository.get();
-        const stock = repo.shops[brand].stocks[product.id];
+        const shopCategories = repo.categories[this.playerService.getPlayer(source).skin.Model.Hash][product.shopId];
+        const shopItem = shopCategories[product.categoryId].content[product.modelLabel].find(
+            item => item.id == product.id
+        );
+        const stock = shopItem.stock;
         if (stock <= 0) {
             this.notifier.notify(source, `Ce produit n'est plus en stock`, 'error');
             return;
@@ -242,7 +246,7 @@ export class ShopProvider {
         });
 
         // Update repository
-        repo.shops[brand].stocks[product.id] -= 1;
+        shopItem.stock -= 1;
         await this.clothingShopRepository.set(repo);
 
         const clothSet = product.categoryId == ClothingCategoryID.UNDERWEARS ? 'NakedClothSet' : 'BaseClothSet';
