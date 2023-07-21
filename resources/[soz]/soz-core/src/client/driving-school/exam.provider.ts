@@ -11,7 +11,6 @@ import {
     Checkpoints,
     CurrentExam,
     DrivingSchoolConfig,
-    DrivingSchoolLicense,
     DrivingSchoolLicenseType,
 } from '../../shared/driving-school';
 import { EntityType } from '../../shared/entity';
@@ -23,7 +22,6 @@ import { PedFactory } from '../factory/ped.factory';
 import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
-import { TargetOptions } from '../target/target.factory';
 import { VehicleSeatbeltProvider } from '../vehicle/vehicle.seatbelt.provider';
 import { Penalties } from './penalties';
 
@@ -45,25 +43,6 @@ export class ExamProvider {
 
     @Inject(VehicleSeatbeltProvider)
     private seatbeltProvider: VehicleSeatbeltProvider;
-
-    @On(ClientEvent.DRIVING_SCHOOL_START_EXAM)
-    public async examPrecheck(data: TargetOptions) {
-        const lData: DrivingSchoolLicense = DrivingSchoolConfig.licenses[data.license as DrivingSchoolLicenseType];
-
-        if (!lData) {
-            this.notifier.notify("Impossible de démarrer l'examen", 'error');
-            return;
-        }
-
-        const spawnPoint = this.getSpawnPoint(lData.vehicle.spawnPoints);
-
-        if (!spawnPoint) {
-            this.notifier.notify("Parking encombré, l'instructeur ne peut pas garer le véhicule d'examen.", 'error');
-            return;
-        }
-
-        TriggerServerEvent(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY, lData.licenseType, spawnPoint);
-    }
 
     @On(ClientEvent.DRIVING_SCHOOL_SETUP_EXAM)
     public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
@@ -174,15 +153,6 @@ export class ExamProvider {
         const playerPed = PlayerPedId();
         SetEntityCoords(playerPed, x, y, z, false, false, false, false);
         SetEntityHeading(playerPed, w);
-    }
-
-    private getSpawnPoint(points: Vector4[]) {
-        for (const point of points) {
-            const [x, y, z] = point;
-            if (!IsPositionOccupied(x, y, z, 0.25, false, true, true, false, false, 0, false)) {
-                return point;
-            }
-        }
     }
 
     private startExam() {

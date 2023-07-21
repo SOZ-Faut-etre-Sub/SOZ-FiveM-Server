@@ -14,7 +14,7 @@ import { getRandomItems } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
 import { DealershipId } from '../../shared/vehicle/dealership';
-import { getDefaultVehicleConfiguration, VehicleColor, VehicleConfiguration } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { getDefaultVehicleCondition, Vehicle } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
@@ -462,16 +462,13 @@ export class VehicleDealershipProvider {
                     livery,
                 };
 
-                if (vehicle.model == 'predator') {
-                    configuration.color.primary = VehicleColor.MetallicWhite;
-                }
-
                 let garage = dealershipId !== DealershipType.Job ? dealership?.garageName : null;
                 let state = dealershipId !== DealershipType.Job ? PlayerVehicleState.InGarage : PlayerVehicleState.Out;
 
                 if (dealershipId == DealershipType.Job && vehicle.category == 'Boats') {
                     garage = 'docks_boat';
                     state = PlayerVehicleState.InGarage;
+                    configuration.color = null;
                 }
 
                 const playerVehicle = await this.prismaService.playerVehicle.create({
