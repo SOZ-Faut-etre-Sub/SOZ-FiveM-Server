@@ -40,7 +40,7 @@ const BlipConfigMap: Partial<Record<GarageType, Partial<Record<GarageCategory, B
         [GarageCategory.Car]: { name: 'Parking Privé', sprite: 357, color: 5 },
     },
     [GarageType.Public]: {
-        [GarageCategory.Car]: { name: 'Parking public', sprite: 357, color: 3 },
+        [GarageCategory.Car]: { name: 'Parking Public', sprite: 357, color: 3 },
         [GarageCategory.Air]: { name: 'Héliport Public', sprite: 360, color: 3 },
         [GarageCategory.All]: { name: 'Parking Public', sprite: 357, color: 3 },
     },
