@@ -1963,7 +1963,7 @@ export const GarageList: Record<string, Garage> = {
     },
     catfish_boat: {
         name: 'Port Catfish',
-        type: GarageType.Public,
+        type: GarageType.Private,
         category: GarageCategory.Sea,
         zone: new BoxZone([3860.63, 4464.8, 1.72], 2.0, 2.0, {
             heading: 359.72,
@@ -2183,7 +2183,7 @@ export const GarageList: Record<string, Garage> = {
     },
     cayo_boat: {
         name: 'Port Cayo',
-        type: GarageType.Private,
+        type: GarageType.Public,
         category: GarageCategory.Sea,
         zone: new BoxZone([4930.15, -5146.44, 1.46], 1.0, 1.0, {
             heading: 64.91,

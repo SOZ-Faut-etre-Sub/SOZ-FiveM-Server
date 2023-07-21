@@ -1309,6 +1309,12 @@ export const VehicleModificationPricing: Partial<Record<keyof VehicleModificatio
 };
 
 export const getDefaultVehicleConfiguration = (): VehicleConfiguration => ({
+    color: {
+        primary: 0,
+        secondary: 0,
+        pearlescent: 0,
+        rim: 0,
+    },
     modification: {},
     extra: {},
 });
