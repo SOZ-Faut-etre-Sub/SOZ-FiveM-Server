@@ -69,8 +69,11 @@ export class ShopProvider {
         {
             icon: 'fas fa-shopping-cart',
             label: 'Accéder au magasin',
-            canInteract: () => {
-                return this.currentShop !== null;
+            canInteract: entity => {
+                return (
+                    this.currentShop !== null &&
+                    !IsEntityPlayingAnim(entity, 'random@robbery', 'robbery_main_female', 3)
+                );
             },
             blackoutGlobal: true,
             action: this.openShop.bind(this),
