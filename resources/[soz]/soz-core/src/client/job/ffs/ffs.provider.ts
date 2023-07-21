@@ -3,7 +3,6 @@ import { JobPermission, JobType } from '@public/shared/job';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { JobService } from '../../../server/job.service';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { FfsConfig, FfsRecipe, Process } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
@@ -13,6 +12,7 @@ import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
+import { JobService } from '../job.service';
 
 @Provider()
 export class FightForStyleProvider {
@@ -85,7 +85,7 @@ export class FightForStyleProvider {
                         const player = this.playerService.getPlayer();
                         return (
                             this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player, player.job.id, JobPermission.OnDutyView)
+                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
                         );
                     },
                 },

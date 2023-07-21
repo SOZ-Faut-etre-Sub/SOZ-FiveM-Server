@@ -14,8 +14,8 @@ import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
-import { JobService } from '../../../server/job.service';
 import { PlayerListStateService } from '../../player/player.list.state.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class LSMCProvider {
@@ -96,7 +96,7 @@ export class LSMCProvider {
                         const player = this.playerService.getPlayer();
                         return (
                             this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player, player.job.id, JobPermission.OnDutyView)
+                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
                         );
                     },
                 },
