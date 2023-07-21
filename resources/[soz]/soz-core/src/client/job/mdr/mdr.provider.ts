@@ -8,7 +8,6 @@ import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 
-import { JobService } from '../../../server/job.service';
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { ItemService } from '../../item/item.service';
@@ -16,6 +15,7 @@ import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 import { JobPermissionService } from '../job.permission.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class MandatoryProvider {
@@ -100,7 +100,7 @@ export class MandatoryProvider {
                         const player = this.playerService.getPlayer();
                         return (
                             this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player, player.job.id, JobPermission.OnDutyView)
+                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
                         );
                     },
                 },

@@ -25,7 +25,7 @@ export const MenuOilSetPrice: FunctionComponent<MenuOilSetPriceProps> = ({ data 
     return (
         <Menu type={MenuType.OilSetStationPrice}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_job_fueler">Changement de prix des stations</MenuTitle>
+                <MenuTitle banner="https://nui-img/soz/menu_job_oil">Changement de prix des stations</MenuTitle>
                 <MenuContent>
                     <MenuItemButton onConfirm={() => onConfirm(FuelType.Essence, data.essence)}>
                         <div className="pr-2 flex items-center justify-between">
