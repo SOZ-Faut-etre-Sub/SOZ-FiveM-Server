@@ -239,6 +239,8 @@ export type VehicleMenuData = {
     hasRadio: boolean;
     insideLSCustom: boolean;
     permission: string | null;
+    isBoat: boolean;
+    isAnchor: boolean;
 };
 
 export type VehicleAuctionMenuData = {
