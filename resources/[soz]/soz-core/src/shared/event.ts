@@ -648,6 +648,7 @@ export enum NuiEvent {
     VehicleOpenLSCustom = 'soz-core:nui:vehicle:open-ls-custom',
     VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
     VehicleHandleRadio = 'soz-core:nui:vehicle:handle-radio',
+    VehicleAnchorChange = 'soz-core:client:vehicle:anchor-change',
 
     VehicleGarageTakeOut = 'soz-core:client:vehicle:garage:take-out',
     VehicleGarageSetName = 'soz-core:client:vehicle:garage:set-name',

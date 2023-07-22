@@ -212,4 +212,6 @@ export const RadarInformedVehicle: number[] = [
     GetHashKey('bcsobana1'),
     GetHashKey('bcsobana2'),
     GetHashKey('bcsoc7'),
+    // Both
+    GetHashKey('predator'),
 ];
