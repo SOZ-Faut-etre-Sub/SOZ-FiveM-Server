@@ -146,12 +146,17 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
     const [activeIndex, setActiveIndex] = useState(0);
     const [description, setDescription] = useState<string | null>(null);
     const [visibility, setVisibility] = useState(true);
+    const [pauseMenuActive, setPauseMenuActive] = useState(true);
+
+    useNuiEvent('global', 'PauseMenuActive', setPauseMenuActive);
 
     useNuiEvent('menu', 'SetMenuVisibility', setVisibility);
 
     return (
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
-            <MenuContext.Provider value={{ activeIndex, setActiveIndex, setDescription, visibility }}>
+            <MenuContext.Provider
+                value={{ activeIndex, setActiveIndex, setDescription, visibility: visibility && !pauseMenuActive }}
+            >
                 <MenuControls>
                     <ul className="bg-black/50 py-1 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {children}

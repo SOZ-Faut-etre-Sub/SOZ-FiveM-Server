@@ -83,6 +83,12 @@ export class VehicleStateProvider {
 
                         SetVehicleMaxSpeed(vehicle, maxSpeed / 3.6 - 0.25);
                         await wait(50);
+
+                        const newState = await this.vehicleStateService.getVehicleState(vehicle);
+
+                        if (newState.speedLimit !== speedLimit) {
+                            return;
+                        }
                     }
 
                     SetVehicleMaxSpeed(vehicle, speedLimit / 3.6 - 0.25);

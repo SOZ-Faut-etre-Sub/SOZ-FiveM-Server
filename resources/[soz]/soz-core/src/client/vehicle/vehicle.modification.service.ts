@@ -692,10 +692,11 @@ export class VehicleModificationService {
             value.apply(vehicle, configuration.modification[key], configuration);
         }
 
-        for (const extraStr of Object.keys(configuration.extra)) {
-            const extra = parseInt(extraStr, 10);
-
-            SetVehicleExtra(vehicle, extra, !configuration.extra[extra]);
+        for (let i = 1; i < 15; i++) {
+            if (DoesExtraExist(vehicle, i)) {
+                // Shouls be name DisableVehicleExtra
+                SetVehicleExtra(vehicle, i, !configuration.extra[i]);
+            }
         }
     }
 
