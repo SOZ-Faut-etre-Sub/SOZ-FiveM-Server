@@ -124,7 +124,7 @@ export class ShopProvider {
             case ShopBrand.LtdGasolineSouth:
             case ShopBrand.RobsliquorNorth:
             case ShopBrand.RobsliquorSouth:
-                console.error(`[ShopProvider] shopBuy: Not implemented shop ${brand}`);
+                this.logger.error(`[ShopProvider] shopBuy: Not implemented shop ${brand}`);
                 break;
             case ShopBrand.Ammunation:
             case ShopBrand.Zkea:
