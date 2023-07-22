@@ -13,6 +13,9 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { AnimationStopReason } from '../../../shared/animation';
+import { AnimationService } from '../../animation/animation.service';
+
 const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD];
 const WEAPON_DIGISCANNER = -38085395;
 const RadarRange = 40;
@@ -31,68 +34,61 @@ export class PoliceProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(AnimationService)
+    private animationService: AnimationService;
+
     private radarEnabled = false;
-    private inTakedown = false;
-    private clearTakedown = false;
+
+    private inTakeDown = false;
 
     @OnEvent(ClientEvent.TAKE_DOWN)
     public async takeDown() {
         const player = this.playerService.getPlayer();
         const playerPed = PlayerPedId();
 
-        if (this.inTakedown) {
-            this.clearTakedown = true;
+        if (this.inTakeDown) {
             return;
         }
-        this.inTakedown = true;
-        this.clearTakedown = false;
 
-        if (player && AllowedJob.includes(player.job.id)) {
-            this.getFrontPlayer(playerPed);
+        this.inTakeDown = true;
+
+        const takeDownAfter = wait(1000);
+
+        takeDownAfter.then(() => {
+            if (takeDownAfter.isCanceled) {
+                return;
+            }
+
+            if (player && AllowedJob.includes(player.job.id)) {
+                this.takeDownFrontPlayer(playerPed);
+            }
+        });
+
+        const stopReason = await this.animationService.playAnimation({
+            base: {
+                dictionary: 'anim@sports@ballgame@handball@',
+                name: 'ball_rstop_r',
+            },
+        });
+
+        if (stopReason !== AnimationStopReason.Finished) {
+            takeDownAfter.cancel();
+            this.inTakeDown = false;
+
+            return;
         }
 
-        this.resourceLoader.loadAnimationDictionary('anim@sports@ballgame@handball@');
+        await this.animationService.playAnimation({
+            base: {
+                dictionary: 'anim@sports@ballgame@handball@',
+                name: 'ball_get_up',
+            },
+        });
 
-        TaskPlayAnim(
-            playerPed,
-            'anim@sports@ballgame@handball@',
-            'ball_rstop_r',
-            8.0,
-            -8.0,
-            -1,
-            262144,
-            0,
-            false,
-            false,
-            false
-        );
-
-        const animDuration = GetAnimDuration('anim@sports@ballgame@handball@', 'ball_rstop_r');
-        await wait(animDuration * 1000);
-        if (!this.clearTakedown) {
-            TaskPlayAnim(
-                playerPed,
-                'anim@sports@ballgame@handball@',
-                'ball_get_up',
-                8.0,
-                -8.0,
-                -1,
-                262144,
-                0,
-                false,
-                false,
-                false
-            );
-
-            const animDuration2 = GetAnimDuration('anim@sports@ballgame@handball@', 'ball_get_up');
-            await wait(animDuration2 * 1000 - 2000);
-        }
-
-        ClearPedTasks(playerPed);
-        this.inTakedown = false;
+        this.inTakeDown = false;
     }
 
-    public getFrontPlayer(playerPed: number) {
+    public takeDownFrontPlayer(playerPed: number) {
         const coords = GetEntityCoords(playerPed);
         const heading = GetEntityHeading(playerPed);
         const playerId = PlayerId();
