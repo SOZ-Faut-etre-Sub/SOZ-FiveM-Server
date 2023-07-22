@@ -4,6 +4,7 @@ import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { Logger } from '../../core/logger';
 import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
@@ -23,6 +24,9 @@ export class WeatherProvider {
 
     @Inject('Store')
     private store: Store;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     private forecast: Forecast = Summer;
 
@@ -91,7 +95,7 @@ export class WeatherProvider {
         const weatherString = weather.toUpperCase() as Weather;
 
         if (!this.forecast[weatherString]) {
-            console.error('bad weather ' + weatherString);
+            this.logger.error('bad weather ' + weatherString);
 
             return;
         }
@@ -170,7 +174,7 @@ export class WeatherProvider {
         let transitions = currentForecast[currentWeather];
 
         if (!transitions) {
-            console.error('no transitions for, bad weather ' + currentWeather);
+            this.logger.error('no transitions for, bad weather ' + currentWeather);
 
             transitions = {};
         }

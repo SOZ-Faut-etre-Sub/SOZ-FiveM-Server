@@ -137,11 +137,7 @@ export class VehicleSpawnProvider {
             hash = GetHashKey(vehicleSpawn.model);
 
             if (!IsModelInCdimage(hash) || !IsModelAVehicle(hash)) {
-                console.error(
-                    'could not load model with given hash or model name',
-                    vehicleSpawn.model,
-                    vehicleSpawn.hash
-                );
+                this.logger.error(`could not load model with given hash or model name ${vehicleSpawn.model} ${hash}`);
 
                 return null;
             }

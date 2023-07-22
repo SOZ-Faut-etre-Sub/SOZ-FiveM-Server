@@ -1,3 +1,4 @@
+import { Logger } from '@core/logger';
 import { ShopBrand } from '@public/config/shops';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -27,6 +28,9 @@ export class SuperetteShopProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(Logger)
+    private logger: Logger;
+
     public openShop(brand: ShopBrand) {
         if (brand != ShopBrand.Zkea && brand != ShopBrand.Ammunation) {
             const superetteContent: SuperetteItem[] = [];
@@ -49,10 +53,12 @@ export class SuperetteShopProvider {
                     ...product,
                     item: this.itemService.getItem(product.id),
                 }));
+
             if (!products) {
-                console.error(`Shop ${brand} not found`);
+                this.logger.error(`Shop ${brand} not found`);
                 return;
             }
+
             this.nuiMenu.openMenu(MenuType.SuperetteShop, { brand, products });
         }
     }
