@@ -61,8 +61,6 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleAnchorChange, value);
     };
 
-    console.log(data.isBoat, data.isAnchor);
-
     return (
         <Menu type={MenuType.Vehicle}>
             <MainMenu>
