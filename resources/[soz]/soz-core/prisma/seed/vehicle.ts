@@ -4,7 +4,7 @@ import { joaat } from '../../src/shared/joaat';
 import { JobType } from '../../src/shared/job';
 import { getRandomInt } from '../../src/shared/random';
 
-const baseList = [
+const baseList: [string, string, string, string, string | null][] = [
     ['asea', 'Asea', 'Sedans', 'pdm', 'car'],
     ['akuma', 'Akuma', 'Motorcycles', 'moto', 'motorcycle'],
     ['alpha', 'Alpha', 'Sports', 'luxury', 'car'],
@@ -64,6 +64,7 @@ baseList.forEach(vehicle => {
         requiredLicence: vehicle[4],
         size: 1,
         stock: getRandomInt(1, 10),
+        maxStock: 2,
     });
 });
 
