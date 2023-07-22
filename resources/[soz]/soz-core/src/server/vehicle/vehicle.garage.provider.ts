@@ -105,22 +105,12 @@ export class VehicleGarageProvider {
             UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL AND category = 'car';
             UPDATE player_vehicles SET state = 1, garage = 'airport_air' WHERE state = 0 AND job IS NULL AND category = 'air';
             UPDATE player_vehicles SET state = 3, garage = concat(job,'_air') WHERE state = 0 AND job IS NOT NULL AND category = 'air';
+            UPDATE player_vehicles SET state = 1, garage = 'docks_boat' WHERE state = 0 AND category = 'Boats';
             UPDATE player_vehicles SET garage = 'mtp' WHERE garage = 'oil';
             UPDATE player_vehicles SET garage = 'stonk' WHERE garage = 'cash-transfer';
             UPDATE player_vehicles SET garage = 'pound' WHERE state = 2 AND garage != 'pound';
 
-            UPDATE vehicles v SET v.stock = 14 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Compacts';
-            UPDATE vehicles v SET v.stock = 10 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Coupes';
-            UPDATE vehicles v SET v.stock = 6 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Muscle';
-            UPDATE vehicles v SET v.stock = 6 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Suvs';
-            UPDATE vehicles v SET v.stock = 10 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Vans';
-            UPDATE vehicles v SET v.stock = 10 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Off-road';
-            UPDATE vehicles v SET v.stock = 14 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Sedans';
-            UPDATE vehicles v SET v.stock = 10 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Motorcycles';
-            UPDATE vehicles v SET v.stock = 3 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Helicopters';
-            UPDATE vehicles v SET v.stock = 99 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Cycles';
-            UPDATE vehicles v SET v.stock = 100 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.category = 'Electric';
-            UPDATE vehicles v SET v.stock = 2 - (SELECT COUNT(1) as taken FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5)  WHERE v.dealership_id = 'luxury';
+            UPDATE vehicles v SET v.stock = v.maxStock - (SELECT COUNT(1) FROM player_vehicles WHERE player_vehicles.vehicle = v.model AND player_vehicles.state != 5);
             UPDATE vehicles v SET v.stock = 0 WHERE v.stock < 0;
         `
             .split(';')

@@ -117,6 +117,7 @@ export class VehicleDealershipProvider {
                     z: config.position[2],
                     w: config.position[3],
                 },
+                scenario: config.task,
                 target: {
                     options: [
                         {

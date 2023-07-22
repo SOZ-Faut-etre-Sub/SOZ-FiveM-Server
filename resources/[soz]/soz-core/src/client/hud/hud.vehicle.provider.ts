@@ -83,9 +83,7 @@ export class HudVehicleProvider {
             this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
                 seat,
                 seatbelt:
-                    vehicleClass !== VehicleClass.Motorcycles &&
-                    vehicleClass !== VehicleClass.Cycles &&
-                    vehicleClass !== VehicleClass.Boats
+                    vehicleClass !== VehicleClass.Motorcycles && vehicleClass !== VehicleClass.Cycles
                         ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
                         : null,
             });
@@ -100,9 +98,7 @@ export class HudVehicleProvider {
             this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
                 seat,
                 seatbelt:
-                    vehicleClass !== VehicleClass.Motorcycles &&
-                    vehicleClass !== VehicleClass.Cycles &&
-                    vehicleClass !== VehicleClass.Boats
+                    vehicleClass !== VehicleClass.Motorcycles && vehicleClass !== VehicleClass.Cycles
                         ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
                         : null,
             });
@@ -123,9 +119,7 @@ export class HudVehicleProvider {
             fuelLevel: condition.fuelLevel,
             engineHealth: GetVehicleEngineHealth(vehicle),
             seatbelt:
-                vehicleClass !== VehicleClass.Motorcycles &&
-                vehicleClass !== VehicleClass.Cycles &&
-                vehicleClass !== VehicleClass.Boats
+                vehicleClass !== VehicleClass.Motorcycles && vehicleClass !== VehicleClass.Cycles
                     ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
                     : null,
             oilLevel: condition.oilLevel,

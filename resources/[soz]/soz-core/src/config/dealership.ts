@@ -20,6 +20,7 @@ export type DealershipConfigItem = {
         sprite: number;
     };
     ped: string;
+    task?: string;
     showroom: {
         position: Vector4;
         camera: Vector3;
@@ -124,7 +125,7 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         garageName: 'sandy_shores_air',
     },
     [DealershipType.Boat]: {
-        position: [-847.93, -1312.15, 4.0, 296.25],
+        position: [-140.49, -2718.59, 5.07, 1.43],
         blip: {
             name: 'Concessionnaire Maritime',
             sprite: 780,
@@ -132,11 +133,12 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         },
         ped: 'mp_m_boatstaff_01',
         showroom: {
-            position: [-857.02, -1327.72, 0.45, 110],
-            camera: [-871.61, -1342.65, 8.44],
+            position: [-128.36, -2729.54, 0.58, 136.81],
+            camera: [-144.22, -2721.76, 6.09],
         },
         daysBeforeNextPurchase: 7,
-        garageName: 'marina_boat',
+        garageName: 'docks_boat',
+        task: 'WORLD_HUMAN_SMOKING',
     },
     [DealershipType.Electric]: {
         position: [-63.2, 71.92, 71.0, 147.57],

@@ -15,7 +15,6 @@ export type TargetOptions = {
     canInteract?: (entity) => boolean | Promise<boolean>;
     action?: (entity) => void;
     job?: string | JobType | Partial<{ [key in JobType]: number }>;
-    license?: string;
     item?: string;
 };
 
