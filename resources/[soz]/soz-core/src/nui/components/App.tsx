@@ -39,6 +39,11 @@ export const App: FunctionComponent = () => {
         'opacity-100': !pauseMenuActive && !hideHud,
     });
 
+    const menuClasses = classNames('font-prompt overflow-hidden', {
+        'opacity-0': pauseMenuActive,
+        'opacity-100': !pauseMenuActive,
+    });
+
     useEffect(() => {
         const interval = setInterval(() => {
             fetchNui(NuiEvent.Ping);
@@ -55,7 +60,7 @@ export const App: FunctionComponent = () => {
                 <HudApp />
                 <CardApp />
             </div>
-            <div className="font-prompt overflow-hidden">
+            <div className={menuClasses}>
                 <MenuApp />
             </div>
             <div className={classes}>
