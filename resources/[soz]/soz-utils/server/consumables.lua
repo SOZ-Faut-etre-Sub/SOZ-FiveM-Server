@@ -53,35 +53,6 @@ QBCore.Functions.CreateUseableItem("binoculars", function(source, item)
     TriggerClientEvent("items:binoculars:toggle", source)
 end)
 
---- Firework
-QBCore.Functions.CreateUseableItem("firework1", function(source, item)
-    if not preventUsageWhileHoldingWeapon(source) then
-        return
-    end
-    TriggerClientEvent("fireworks:client:UseFirework", source, item.name, "proj_indep_firework")
-end)
-
-QBCore.Functions.CreateUseableItem("firework2", function(source, item)
-    if not preventUsageWhileHoldingWeapon(source) then
-        return
-    end
-    TriggerClientEvent("fireworks:client:UseFirework", source, item.name, "proj_indep_firework_v2")
-end)
-
-QBCore.Functions.CreateUseableItem("firework3", function(source, item)
-    if not preventUsageWhileHoldingWeapon(source) then
-        return
-    end
-    TriggerClientEvent("fireworks:client:UseFirework", source, item.name, "proj_xmas_firework")
-end)
-
-QBCore.Functions.CreateUseableItem("firework4", function(source, item)
-    if not preventUsageWhileHoldingWeapon(source) then
-        return
-    end
-    TriggerClientEvent("fireworks:client:UseFirework", source, item.name, "scr_indep_fireworks")
-end)
-
 --- Soz
 QBCore.Functions.CreateUseableItem("cardbord", function(source)
     if not preventUsageWhileHoldingWeapon(source) then
@@ -105,24 +76,4 @@ QBCore.Functions.CreateUseableItem("diving_gear", function(source)
     Player.Functions.SetMetaData("scuba", scuba)
 
     TriggerClientEvent("scuba:client:Toggle", source, scuba)
-end)
-
---- LSMC
-
-QBCore.Functions.CreateUseableItem("walkstick", function(source, item)
-    if not preventUsageWhileHoldingWeapon(source) then
-        return
-    end
-    TriggerClientEvent("items:walkstick:toggle", source)
-end)
-
---- Parapluie
-
---- Panneau de Manif
-
-QBCore.Functions.CreateUseableItem("protestsign", function(source, item)
-    if not preventUsageWhileHoldingWeapon(source) then
-        return
-    end
-    TriggerClientEvent("items:protestsign:toggle", source)
 end)

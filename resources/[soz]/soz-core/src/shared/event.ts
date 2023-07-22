@@ -303,8 +303,10 @@ export enum ClientEvent {
     HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
 
     ITEM_USE = 'soz-core:client:item:use',
-    ITEM_UMBRELLA_TOGGLE = 'soz-core:client:item:umbrella:toggle',
     ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',
+    ITEM_PROTEST_SIGN_TOGGLE = 'soz-core:client:item:protest-sign:toggle',
+    ITEM_UMBRELLA_TOGGLE = 'soz-core:client:item:umbrella:toggle',
+    ITEM_WALK_STICK_TOGGLE = 'soz-core:client:item:walk-stick:toggle',
 
     HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 
@@ -366,7 +368,6 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     PLAYER_UPDATE = 'soz-core:client:player:update',
-    PLAYER_UPDATE_WALK_STYLE = 'soz-core:client:player:update-walk-style',
     PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
     PLAYER_SET_UNLIMITED_SPRINT = 'soz-core:client:player:set-unlimited-sprint',
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
