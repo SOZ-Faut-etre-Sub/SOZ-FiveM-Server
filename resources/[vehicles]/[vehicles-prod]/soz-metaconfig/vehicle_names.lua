@@ -38,6 +38,7 @@ Citizen.CreateThread(function()
     AddTextEntryByHash(GetHashKey("mixer"), "Bétonnière Rouillé")
 
     -- Liveries
+    AddTextEntry(GetHashKey('deity_livery13'),'Sticker MDR') -- Sticker MDR
 
     AddTextEntry("0xA4849CEF", "Numéro - 0") -- POLICE5_A0
     AddTextEntry("0xD083F4ED", "Numéro - 1") -- POLICE5_A1
@@ -72,5 +73,45 @@ Citizen.CreateThread(function()
     AddTextEntry('0x71312BA1','Numéro - 8')   -- POLICE5_C8
     AddTextEntry('0x5CC802CF','Numéro - 9')   -- POLICE5_C9
 
-    AddTextEntry('0xAA1D8988','Sticker MDR') -- Sticker MDR
+    -- SASP 1
+    AddTextEntryByHash(GetHashKey('SASP1'), "Dominator GTX")
+    AddTextEntryByHash(GetHashKey('SASP1_LIV_1'), "SASP Livery")
+
+    AddTextEntryByHash(GetHashKey('POLICE_ANTENNA'), "Antenna")
+    AddTextEntryByHash(GetHashKey('POLICE_DIVIDER'), "Divider")
+
+    	--Call Signs
+    AddTextEntryByHash(GetHashKey('CALLSIGN_L'), "Left Call Sign")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C'), "Center Call Sign")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_R'), "Right Call Sign")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A0'), "0")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A1'), "1")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A2'), "2")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A3'), "3")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A4'), "4")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A5'), "5")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A6'), "6")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A7'), "7")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A8'), "8")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_A9'), "9")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B0'), "0")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B1'), "1")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B2'), "2")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B3'), "3")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B4'), "4")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B5'), "5")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B6'), "6")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B7'), "7")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B8'), "8")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_B9'), "9")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C0'), "0")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C1'), "1")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C2'), "2")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C3'), "3")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C4'), "4")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C5'), "5")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C6'), "6")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C7'), "7")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C8'), "8")
+    AddTextEntryByHash(GetHashKey('CALLSIGN_C9'), "9")
 end)
