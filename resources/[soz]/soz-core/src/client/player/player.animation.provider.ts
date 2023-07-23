@@ -6,6 +6,7 @@ import { Logger } from '../../core/logger';
 import { AnimationConfigItem, MoodConfigItem, WalkConfigItem } from '../../shared/animation';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Shortcut } from '../../shared/nui/player';
+import { getRandomItem } from '../../shared/random';
 import { Err, Ok } from '../../shared/result';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
@@ -358,6 +359,23 @@ export class PlayerAnimationProvider {
         }
 
         return false;
+    }
+
+    @OnEvent(ClientEvent.ANIMATION_GIVE)
+    public async playGiveAnimation() {
+        const randomAnimation = getRandomItem(['givetake1_a', 'givetake2_a', 'givetake1_b', 'givetake2_b']);
+
+        await this.animationService.playAnimation({
+            base: {
+                dictionary: 'mp_common',
+                name: randomAnimation,
+                duration: 2000,
+                options: {
+                    enablePlayerControl: true,
+                    onlyUpperBody: true,
+                },
+            },
+        });
     }
 
     @OnEvent(ClientEvent.ANIMATION_SURRENDER)
