@@ -66,7 +66,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
     }, [configuration]);
 
     useEffect(() => {
-        fetchNui(NuiEvent.GunSmithPreviewAnimation).catch(e => console.error(e));
+        fetchNui(NuiEvent.GunSmithPreviewAnimation);
     }, []);
 
     return (
@@ -96,9 +96,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                     distance={5}
                     onChange={async (_, tint) => {
                         setConfiguration(s => ({ ...s, tint: Number(tint) }));
-                        fetchNui(NuiEvent.GunSmithPreviewTint, { slot: weapon.slot, tint: Number(tint) }).catch(e =>
-                            console.error(e)
-                        );
+                        fetchNui(NuiEvent.GunSmithPreviewTint, { slot: weapon.slot, tint: Number(tint) });
                     }}
                     value={(weapon.metadata.tint ?? 0).toString()}
                 >
@@ -165,7 +163,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                         fetchNui(NuiEvent.GunSmithApplyConfiguration, {
                             slot: weapon.slot,
                             ...configuration,
-                        }).catch(e => console.error(e));
+                        });
                     }}
                 >
                     <div className="flex w-full justify-between items-center">
@@ -196,7 +194,7 @@ const MenuWeaponComponentSelect: FunctionComponent<{
                     slot: weapon.slot,
                     attachment: attachment,
                     attachmentList: options,
-                }).catch(e => console.error(e));
+                });
                 onUpdate?.(s => ({ ...s, attachments: { ...s.attachments, [type]: attachment } }));
             }}
             value={weapon.metadata?.attachments?.[type] ?? 0}

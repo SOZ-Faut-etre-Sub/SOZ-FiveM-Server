@@ -5,6 +5,7 @@ import { PlayerPedHash } from '@public/shared/player';
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
+import { Logger } from '../../../core/logger';
 import { ServerEvent } from '../../../shared/event';
 import { FfsConfig, Garment, LuxuryGarment } from '../../../shared/job/ffs';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
@@ -31,6 +32,9 @@ export class FightForStyleRestockProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @Inject(ClothingShopRepository)
     private clothingShopRepository: ClothingShopRepository;
@@ -118,10 +122,12 @@ export class FightForStyleRestockProvider {
     public async restockLoop(brand: ClothingBrand, garment: Garment | LuxuryGarment, amount: number) {
         const sexes = [PlayerPedHash.Male, PlayerPedHash.Female];
         const category = this.garmentToCategory(garment);
+
         if (category == -1) {
-            console.error('Invalid category for item ', garment);
+            this.logger.error('Invalid category for item ', garment);
             return;
         }
+
         const repo = await this.clothingShopRepository.get();
         const shopId = repo.shops[brand].id;
 
