@@ -1,6 +1,7 @@
 import { Logger } from '@core/logger';
 import { Notifier } from '@public/client/notifier';
 import { GloveShopRepository } from '@public/client/resources/glove.shop.repository';
+import { UnderTypesShopRepository } from '@public/client/resources/under_types.shop.repository';
 import { ShopBrand, ShopsConfig, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { On, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
@@ -10,7 +11,7 @@ import { Component, GlovesItem } from '@public/shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
-import { ClothingShopItem } from '@public/shared/shop';
+import { ClothingShopID, ClothingShopItem } from '@public/shared/shop';
 
 import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
@@ -28,6 +29,9 @@ export class ClothingShopProvider {
 
     @Inject(GloveShopRepository)
     private gloveShopRepository: GloveShopRepository;
+
+    @Inject(UnderTypesShopRepository)
+    private underTypesShopRepository: UnderTypesShopRepository;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -84,7 +88,7 @@ export class ClothingShopProvider {
             return;
         }
         const player_data = this.playerService.getPlayer();
-        const under_types = this.clothingShopRepository.getAllUnderTypes();
+        const under_types = this.underTypesShopRepository.getAllUnderTypes();
         this.currentShop = shop;
         await this.setupShop();
         this.nuiMenu.openMenu(MenuType.ClothShop, { brand, shop_content, shop_categories, player_data, under_types });
@@ -218,7 +222,10 @@ export class ClothingShopProvider {
 
     @OnNuiEvent(NuiEvent.ClothingShopBuy)
     public async onBuyCloth(product: ClothingShopItem) {
-        TriggerServerEvent(ServerEvent.SHOP_BUY, product, this.clothingShopRepository.getShopNameById(product.shopId));
+        const shopName = Object.entries(ClothingShopID)
+            .find(([, value]) => value == product.shopId)[0]
+            .toLowerCase();
+        TriggerServerEvent(ServerEvent.SHOP_BUY, product, shopName);
     }
 
     @OnNuiEvent(NuiEvent.ClothingShopBackspace)

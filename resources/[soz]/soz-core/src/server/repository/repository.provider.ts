@@ -15,6 +15,7 @@ import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { ObjectRepository } from './object.repository';
 import { Repository } from './repository';
+import { UnderTypesShopRepository } from './under_types.shop.repository';
 import { UpwChargerRepository } from './upw.charger.repository';
 import { UpwStationRepository } from './upw.station.repository';
 import { VehicleRepository } from './vehicle.repository';
@@ -54,6 +55,9 @@ export class RepositoryProvider {
     @Inject(GloveShopRepository)
     private gloveShopRepository: GloveShopRepository;
 
+    @Inject(UnderTypesShopRepository)
+    private underTypesShopRepository: UnderTypesShopRepository;
+
     @Inject(ClothingShopRepository)
     private clothingShopRepository: ClothingShopRepository;
 
@@ -71,6 +75,7 @@ export class RepositoryProvider {
         this.repositories['object'] = this.objectRepository;
         this.repositories['clothingShop'] = this.clothingShopRepository;
         this.repositories['gloveShop'] = this.gloveShopRepository;
+        this.repositories['underTypesShop'] = this.underTypesShopRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)
@@ -117,10 +122,5 @@ export class RepositoryProvider {
                 .filter(([key]) => Number(key) === playerPedHash)
                 .reduce((obj, [key, val]) => Object.assign(obj, { [key]: val }), {}) as { [key: string]: any },
         };
-    }
-
-    @Rpc(RpcServerEvent.REPOSITORY_CLOTHING_GET_STOCK)
-    public async getClothingStock(source: number, shop: string): Promise<Record<number, number>> {
-        return ((await this.repositories['clothingShop'].get()) as ClothingShopRepositoryData).shops[shop].stocks;
     }
 }

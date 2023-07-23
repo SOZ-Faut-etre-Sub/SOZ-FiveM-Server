@@ -34,8 +34,6 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
                 },
             },
             shopNameById: {},
-            underTypes: {},
-            gloves: {},
         };
 
         // Fetching shops
@@ -140,12 +138,6 @@ export class ClothingShopRepository extends Repository<ClothingShopRepositoryDat
             };
             if (!shopItem.modelLabel) {
                 continue;
-            }
-            if (shopItem.underTypes) {
-                if (shopItem.underTypes.length <= 0) {
-                    continue;
-                }
-                repository.underTypes[shopItem.id] = shopItem.underTypes;
             }
             const genderToAdd = shopItem.modelHash ? [shopItem.modelHash] : [PlayerPedHash.Male, PlayerPedHash.Female];
             for (const modelHash of genderToAdd) {
