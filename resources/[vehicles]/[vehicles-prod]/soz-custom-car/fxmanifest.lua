@@ -5,4 +5,4 @@ files {
     "audio/*.rel"
 }
 
-data_file "AUDIO_GAMEDATA" "audio/sozfbi_game.dat"
+data_file "AUDIO_GAMEDATA" "audio/sozcustomsounds_game.dat"
