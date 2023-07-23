@@ -1,5 +1,5 @@
 local giveAnimation = function(src)
-    TriggerClientEvent("animation:client:give", src)
+    TriggerClientEvent("soz-core:client:animation:give", src)
 end
 
 QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function(source, cb, type, id)
