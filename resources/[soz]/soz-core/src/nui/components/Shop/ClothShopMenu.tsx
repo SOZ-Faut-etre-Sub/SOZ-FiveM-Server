@@ -56,8 +56,8 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
         fetchNui(NuiEvent.ClothingShopBackspace);
     });
 
-    useNuiEvent('cloth_shop', 'SetPlayerData', playerData => {
-        setPlayerData(playerData);
+    useNuiEvent('cloth_shop', 'SetPlayerData', data => {
+        setPlayerData(data);
     });
 
     const buyItem = async (_, item) => {
@@ -80,19 +80,23 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
         }
 
         // Check if the category is not empty
+
         if (
             Object.values(shopCategories[category.id].content).length == 0 &&
             Object.values(shopCategories).filter(childCat => childCat.parentId == category.id).length == 0
         ) {
             return false;
         }
-
         // Check if the category is not an undershirt or if it is, check if the player can where undershirts with his top
+
+        if (category.id != ClothingCategoryID.UNDERSHIRTS) {
+            return true;
+        }
+
         return (
-            category.id != ClothingCategoryID.UNDERSHIRTS ||
-            (playerData.cloth_config.BaseClothSet.TopID != null &&
-                under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0)
+            playerData.cloth_config.BaseClothSet.TopID != null &&
+            under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+            under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0
         );
     });
 
