@@ -178,6 +178,7 @@ export class ShopProvider {
             this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');
             return;
         }
+
         // Update player cloth config
         const clothConfig = this.playerService.getPlayer(source).cloth_config;
         if (product.components) {
@@ -197,7 +198,7 @@ export class ShopProvider {
                 }
             } else {
                 for (const propId of Object.keys(product.props)) {
-                    clothConfig.BaseClothSet.Props[propId] = product.props[propId];
+                    clothConfig.BaseClothSet.Props[Number(propId)] = product.props[propId];
                     const HideToReset = TenueIdToHide.Props[propId];
                     if (HideToReset) {
                         clothConfig.Config[HideToReset] = false;
