@@ -694,8 +694,9 @@ export class VehicleModificationService {
 
         for (let i = 1; i < 15; i++) {
             if (DoesExtraExist(vehicle, i)) {
-                // Shouls be name DisableVehicleExtra
-                SetVehicleExtra(vehicle, i, !configuration.extra[i]);
+                const haxExtra = configuration.extra[i] === undefined ? true : configuration.extra[i];
+
+                SetVehicleExtra(vehicle, i, !haxExtra);
             }
         }
     }
