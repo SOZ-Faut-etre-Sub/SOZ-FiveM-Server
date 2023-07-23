@@ -14,6 +14,7 @@ import { CartElement } from '@public/shared/shop/superette';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Logger } from '../../core/logger';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -49,6 +50,9 @@ export class ShopProvider {
 
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @OnEvent(ServerEvent.SHOP_VALIDATE_CART)
     public async onShopMaskBuy(source: number, cartContent: CartElement[]) {
@@ -120,7 +124,7 @@ export class ShopProvider {
             case ShopBrand.LtdGasolineSouth:
             case ShopBrand.RobsliquorNorth:
             case ShopBrand.RobsliquorSouth:
-                console.error(`[ShopProvider] shopBuy: Not implemented shop ${brand}`);
+                this.logger.error(`[ShopProvider] shopBuy: Not implemented shop ${brand}`);
                 break;
             case ShopBrand.Ammunation:
             case ShopBrand.Zkea:
@@ -133,7 +137,7 @@ export class ShopProvider {
                 this.shopJewelryBuy(source, product as JewelryShopItem);
                 break;
             default:
-                console.log(`[ShopProvider] shopBuy: Unknown brand ${brand}`);
+                this.logger.warn(`[ShopProvider] shopBuy: Unknown brand ${brand}`);
                 return;
         }
     }

@@ -2,6 +2,7 @@ import { Command } from '../../core/decorators/command';
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Logger } from '../../core/logger';
 import { AnimationConfigItem, MoodConfigItem, WalkConfigItem } from '../../shared/animation';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Shortcut } from '../../shared/nui/player';
@@ -32,6 +33,9 @@ export class PlayerAnimationProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @Command('animation_stop', {
         description: "Stop l'animation en cours",
@@ -192,7 +196,7 @@ export class PlayerAnimationProvider {
             try {
                 animation = JSON.parse(animationJson) as AnimationConfigItem;
             } catch (e) {
-                console.error(e);
+                this.logger.error(`Error while parsing animation ${key}`, e);
             }
         }
 
@@ -282,7 +286,7 @@ export class PlayerAnimationProvider {
                 try {
                     animation = JSON.parse(animationJson) as AnimationConfigItem;
                 } catch (e) {
-                    console.error(e);
+                    this.logger.error(`Error while parsing animation ${key}`, e);
                 }
             }
 

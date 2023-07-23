@@ -1,3 +1,4 @@
+import { Logger } from '@core/logger';
 import { Notifier } from '@public/client/notifier';
 import { GloveShopRepository } from '@public/client/resources/glove.shop.repository';
 import { ShopBrand, ShopsConfig, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
@@ -55,6 +56,9 @@ export class ClothingShopProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(Logger)
+    private logger: Logger;
+
     private currentShop: string = undefined;
 
     @On(ClientEvent.SHOP_OPEN_MENU)
@@ -69,11 +73,14 @@ export class ClothingShopProvider {
         }
         await this.clothingShopRepository.updateShopStock(brand);
         const shop_content = this.clothingShopRepository.getShop(brand);
+
         if (!shop_content) {
-            console.error(`Shop ${brand} not initialized`);
+            this.logger.error(`Shop ${brand} not initialized`);
             this.notifier.notify(`Ce magasin n'est pas encore ouvert. Merci de patienter.`, 'error');
+
             return;
         }
+
         const modelHash = GetEntityModel(PlayerPedId());
         const shop_categories = this.clothingShopRepository.getModelCategoriesOfShop(brand, modelHash);
         const player_data = this.playerService.getPlayer();
