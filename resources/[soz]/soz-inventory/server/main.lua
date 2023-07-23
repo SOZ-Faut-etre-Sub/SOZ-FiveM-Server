@@ -512,6 +512,19 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
                 TriggerClientEvent("soz-core:client:notification:draw", source,
                                    "Impossible d'attacher ~b~" .. item.label .. "~s~ à vôtre ~g~" .. slotItem.label .. "~s~ !", "error")
             end
+        elseif slotItem and slotItem.type == "drug_pot" then
+            local slotItemDef = QBCore.Shared.Items[slotItem.name]
+            if slotItemDef.drug_pot.ingredient == item.name and amount >= slotItemDef.drug_pot.nbIngredient then
+                Inventory.RemoveItem(inv, slotItemDef.name, 1, nil, slotId)
+                Inventory.AddItem(source, inv, slotItemDef.drug_pot.target, 1)
+                amount = amount - slotItemDef.drug_pot.nbIngredient
+
+                if amount == 0 then
+                    success = true
+                    goto endAddItem
+                end
+
+            end
         end
     end
 

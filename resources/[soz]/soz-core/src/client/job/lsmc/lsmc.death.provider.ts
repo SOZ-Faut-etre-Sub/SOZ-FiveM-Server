@@ -487,8 +487,9 @@ export class LSMCDeathProvider {
 
         if (
             playerData.metadata.hunger <= 0 ||
-            playerData.metadata['thirst'] <= 0 ||
-            playerData.metadata['alcohol'] >= 100
+            playerData.metadata.thirst <= 0 ||
+            playerData.metadata.alcohol >= 100 ||
+            playerData.metadata.drug >= 100
         ) {
             const ped = PlayerPedId();
 
@@ -504,7 +505,7 @@ export class LSMCDeathProvider {
                     },
                 });
 
-                this.hungerThristDeath = true;
+                this.hungerThristDeath = playerData.metadata.hunger <= 0 || playerData.metadata.thirst <= 0;
                 SetEntityHealth(ped, 0);
             }
         }

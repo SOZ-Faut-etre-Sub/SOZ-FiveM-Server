@@ -46,6 +46,8 @@ export type Nutrition = {
     lipid: number;
     sugar: number;
     protein: number;
+    drug: number;
+    stress: number;
 };
 
 export type WeaponItem = BaseItem & {
@@ -53,10 +55,6 @@ export type WeaponItem = BaseItem & {
 };
 
 export type AmmoItem = BaseItem & {
-    type: 'item';
-};
-
-export type DrugItem = BaseItem & {
     type: 'item';
 };
 
@@ -170,6 +168,11 @@ export type CocktailItem = BaseItem & {
     nutrition: Nutrition;
     animation?: AnimationItem;
     prop?: PropItem;
+};
+
+export type DrugItem = BaseItem & {
+    type: 'drug';
+    nutrition: Nutrition;
 };
 
 export type MealMetadata = {
