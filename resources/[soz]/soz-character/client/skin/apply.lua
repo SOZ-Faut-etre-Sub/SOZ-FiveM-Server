@@ -50,10 +50,10 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
     SetPedHeadOverlay(ped, HeadOverlayType.AddBodyBlemishes, faceTrait.AddBodyBlemish, 1.0);
 
     SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, faceTrait.EyesOpening + 0.0);
-    SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, faceTrait.EyebrowForward + 0.0);
-    SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, faceTrait.EyebrowHigh + 0.0);
 
     if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, -1.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, -1.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, 0.0);
@@ -72,6 +72,8 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
         SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, 0.0);
     else
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, faceTrait.EyebrowHigh + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, faceTrait.EyebrowForward + 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, faceTrait.CheeksBoneHigh + 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, faceTrait.CheeksBoneWidth + 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, faceTrait.CheeksWidth + 0.0);
