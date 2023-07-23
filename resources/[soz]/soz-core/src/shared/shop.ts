@@ -191,8 +191,7 @@ export type ClothingShopRepositoryData = {
     shops: Record<string, ClothingShop>;
     categories: Record<number, Record<number, Record<number, ClothingShopCategory>>>; // Map modelHash -> shopId -> categoryId -> category
     shopNameById: Record<number, string>;
-    underTypes: Record<number, number[]>; // Map ID -> list of compatible underTypes
-    gloves: Record<number, GlovesItem>; // Map ID of gloves -> Gloves data
 };
 
-export type GloveShopRepositoryData = Record<number, GlovesItem>;
+export type GloveShopRepositoryData = Record<number, GlovesItem>; // Map ID of gloves -> Gloves data
+export type UnderTypesShopRepositoryData = Record<number, number[]>; // Map ID -> list of compatible underTypes

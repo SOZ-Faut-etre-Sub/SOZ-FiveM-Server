@@ -64,16 +64,4 @@ export class ClothingShopRepository {
             content: this.repoData.categories[modelHash][shopId],
         };
     }
-
-    public getShopNameById(id: number): string {
-        return this.repoData.shopNameById[id];
-    }
-
-    public getUnderTypes(id: number): number[] {
-        return this.repoData.underTypes[id];
-    }
-
-    public getAllUnderTypes(): Record<number, number[]> {
-        return this.repoData.underTypes;
-    }
 }
