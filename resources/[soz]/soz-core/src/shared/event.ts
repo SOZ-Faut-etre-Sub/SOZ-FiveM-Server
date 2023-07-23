@@ -355,6 +355,7 @@ export enum ClientEvent {
     STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
 
     SHOP_OPEN_MENU = 'soz-core:client:shops:open-menu',
+    SHOP_UPDATE_STOCKS = 'soz-core:client:shops:update-stocks',
 
     // Temp event which should be internally used by a service when only soz core
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',

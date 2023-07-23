@@ -249,6 +249,22 @@ export class ClothingShopProvider {
         this.playerService.updateState({ isInventoryBusy: false });
     }
 
+    @OnEvent(ClientEvent.SHOP_UPDATE_STOCKS)
+    public async onUpdateStocks(brand: ShopBrand) {
+        if (
+            brand != ShopBrand.Ponsonbys &&
+            brand != ShopBrand.Suburban &&
+            brand != ShopBrand.Binco &&
+            brand != ShopBrand.Mask
+        ) {
+            return;
+        }
+
+        // update player data in case the player changed clothes
+        const playerData = this.playerService.getPlayer();
+        this.nuiDispatch.dispatch('cloth_shop', 'SetPlayerData', playerData);
+    }
+
     @Exportable('DisplayHairWithMask')
     displayHairWithMask(maskDrawable: number): boolean {
         return this.clothingService.displayHairWithMask(maskDrawable);
