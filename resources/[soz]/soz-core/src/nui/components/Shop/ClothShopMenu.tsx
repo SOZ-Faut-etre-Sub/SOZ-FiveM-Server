@@ -23,7 +23,7 @@ import {
 
 type MenuClothShopStateProps = {
     catalog: {
-        brand: string;
+        brand: ShopBrand;
         shop_content: ClothingShop;
         shop_categories: Record<number, ClothingShopCategory>;
         player_data: PlayerData;
@@ -31,13 +31,17 @@ type MenuClothShopStateProps = {
     };
 };
 
-export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ catalog }) => {
-    const banner = BrandsConfig[catalog.brand as ShopBrand].banner || 'https://nui-img/soz/menu_shop_clothe_normal';
-    const shopName = BrandsConfig[catalog.brand as ShopBrand].label || 'Magasin';
+export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
+    catalog: { brand, shop_content, shop_categories, player_data, under_types },
+}: MenuClothShopStateProps) => {
+    const [shopCategories, setShopCategories] = useState<Record<number, ClothingShopCategory>>(shop_categories);
+    const [playerData, setPlayerData] = useState<PlayerData>(player_data);
+
+    const banner = BrandsConfig[brand].banner || 'https://nui-img/soz/menu_shop_clothe_normal';
+    const shopName = BrandsConfig[brand].label || 'Magasin';
     const navigate = useNavigate();
     const location = useLocation();
     const state = location.state as { activeIndex: number } | undefined;
-    const [playerData, setPlayerData] = useState<PlayerData>(catalog.player_data);
 
     const selectCategory = (categoryId: number) => {
         navigate(`/${MenuType.ClothShop}/${categoryId}`, {
@@ -56,15 +60,29 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
         setPlayerData(playerData);
     });
 
-    const GetRootCategories = Object.values(catalog.shop_content.categories).filter(category => {
+    const buyItem = async (_, item) => {
+        fetchNui(NuiEvent.ClothingShopBuy, item).then(() => {
+            if (item.stock == 0) {
+                return;
+            }
+            // Visual update the stock.
+            // We don't need to wait the backend to update the stock.
+            // It will be updated on the next shop opening.
+            const newShopCategories = { ...shopCategories };
+            newShopCategories[item.categoryId].content[item.modelLabel].find(i => i.id === item.id).stock--;
+            setShopCategories(newShopCategories);
+        });
+    };
+
+    const GetRootCategories = Object.values(shop_content.categories).filter(category => {
         if (category.parentId) {
             return false;
         }
 
         // Check if the category is not empty
         if (
-            Object.values(catalog.shop_categories[category.id].content).length == 0 &&
-            Object.values(catalog.shop_categories).filter(childCat => childCat.parentId == category.id).length == 0
+            Object.values(shopCategories[category.id].content).length == 0 &&
+            Object.values(shopCategories).filter(childCat => childCat.parentId == category.id).length == 0
         ) {
             return false;
         }
@@ -73,13 +91,13 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
         return (
             category.id != ClothingCategoryID.UNDERSHIRTS ||
             (playerData.cloth_config.BaseClothSet.TopID != null &&
-                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0)
+                under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0)
         );
     });
 
     const GetChildrenCategoriesNotEmpty = cat => {
-        return Object.values(catalog.shop_categories).filter(childCat => {
+        return Object.values(shopCategories).filter(childCat => {
             // is child
             if (!childCat.parentId) {
                 return false;
@@ -88,14 +106,14 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
             return (
                 childCat.parentId == cat.id &&
                 // has sub category
-                (Object.values(catalog.shop_categories).filter(childchildCat => childchildCat.parentId == childCat.id)
-                    .length > 0 || // or has items
+                (Object.values(shopCategories).filter(childchildCat => childchildCat.parentId == childCat.id).length >
+                    0 || // or has items
                     Object.values(childCat.content).filter(
                         product =>
                             !product[0].undershirtType ||
                             (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                catalog.under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
+                                under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                                under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
                                     product[0].undershirtType
                                 ))
                     ).length > 0)
@@ -127,7 +145,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                     ))}
                 </MenuContent>
             </MainMenu>
-            {Object.values(catalog.shop_categories).map(cat => {
+            {Object.values(shopCategories).map(cat => {
                 return (
                     <SubMenu key={cat.id} id={String(cat.id)}>
                         <MenuTitle banner={banner}>{cat.name}</MenuTitle>
@@ -148,8 +166,8 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                     ([, items]) =>
                                         !items[0].undershirtType ||
                                         (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                            catalog.under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                            catalog.under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
+                                            under_types[playerData.cloth_config.BaseClothSet.TopID] &&
+                                            under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
                                                 items[0].undershirtType
                                             ) &&
                                             !UndershirtDrawablesToExclude[playerData.skin.Model.Hash][
@@ -164,7 +182,7 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({ cata
                                         title={modelLabel}
                                         titleWidth={60}
                                         value={items[0]}
-                                        onConfirm={async (_, item) => await fetchNui(NuiEvent.ClothingShopBuy, item)}
+                                        onConfirm={buyItem}
                                         onSelectedValue={async (_, item) =>
                                             await fetchNui(NuiEvent.ClothingShopPreview, item)
                                         }

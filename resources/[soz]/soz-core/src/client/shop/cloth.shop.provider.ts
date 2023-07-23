@@ -71,16 +71,18 @@ export class ClothingShopProvider {
         ) {
             return;
         }
-        const shop_content = await this.clothingShopRepository.getShop(brand);
+        const modelHash = GetEntityModel(PlayerPedId());
+
+        const { shop: shop_content, content: shop_categories } = await this.clothingShopRepository.getShopContent(
+            brand,
+            modelHash
+        );
         if (!shop_content) {
             this.logger.error(`Shop ${brand} not initialized`);
             this.notifier.notify(`Ce magasin n'est pas encore ouvert. Merci de patienter.`, 'error');
 
             return;
         }
-
-        const modelHash = GetEntityModel(PlayerPedId());
-        const shop_categories = this.clothingShopRepository.getModelCategoriesOfShop(brand, modelHash);
         const player_data = this.playerService.getPlayer();
         const under_types = this.clothingShopRepository.getAllUnderTypes();
         this.currentShop = shop;
@@ -238,24 +240,6 @@ export class ClothingShopProvider {
         FreezeEntityPosition(PlayerPedId(), false);
 
         this.playerService.updateState({ isInventoryBusy: false });
-    }
-
-    @OnEvent(ClientEvent.SHOP_UPDATE_STOCKS)
-    public async onUpdateStocks(brand: ShopBrand) {
-        if (
-            brand != ShopBrand.Ponsonbys &&
-            brand != ShopBrand.Suburban &&
-            brand != ShopBrand.Binco &&
-            brand != ShopBrand.Mask
-        ) {
-            return;
-        }
-        // Also update player data in case the player changed clothes
-        const playerData = this.playerService.getPlayer();
-        this.nuiDispatch.dispatch('cloth_shop', 'SetPlayerData', playerData);
-
-        this.nuiMenu.closeMenu(true);
-        await this.openShop(brand, this.currentShop);
     }
 
     @Exportable('DisplayHairWithMask')
