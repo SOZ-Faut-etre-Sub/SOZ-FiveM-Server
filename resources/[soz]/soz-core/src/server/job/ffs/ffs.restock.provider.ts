@@ -191,12 +191,9 @@ export class FightForStyleRestockProvider {
                     },
                 },
             });
-
-            // Update repository
-            Object.values(sameModelsIds).forEach(id => {
-                repo.shops[brand].stocks[id] += loopAmount;
-            });
         }
-        await this.clothingShopRepository.set(repo);
+
+        // Update repository
+        await this.clothingShopRepository.init();
     }
 }
