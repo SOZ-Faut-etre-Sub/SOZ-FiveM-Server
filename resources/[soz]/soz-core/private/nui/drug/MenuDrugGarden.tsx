@@ -1,9 +1,9 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 
 type MenuDrugGardenProps = {
     data: any;
 };
 
-export const DrugGardenMenu: FunctionComponent<MenuDrugGardenProps> = ({ data }) => {
+export const DrugGardenMenu: FunctionComponent<MenuDrugGardenProps> = () => {
     return null;
 };

@@ -75,7 +75,7 @@ export class PlayerHealthProvider {
         datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', hungerDiff, 0, 100);
         datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', thirstDiff, 0, 100);
         datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', ALCOHOL_RATE, 0, 200);
-        datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', DRUG_RATE, 0, 200);
+        datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', DRUG_RATE, 0, 110);
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
             const now = new Date().getTime();

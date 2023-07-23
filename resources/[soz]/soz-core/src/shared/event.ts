@@ -751,7 +751,6 @@ export enum NuiEvent {
     RentBoat = 'soz-core:client:fishing:rent-boat',
     SozedexClosed = 'soz-core:nui:sozedex:closed',
 
-    DrugShopBuy = 'soz-core:client:drug:shop-buy',
     DrugSkillTreeBuy = 'soz-core:client:drug:skill-buy',
     DrugLocationGps = 'soz-core:client:drug:location-gps',
     DrugGardenEnter = 'soz-core:client:drug:garden-enter',
@@ -763,4 +762,5 @@ export enum NuiEvent {
     DrugAdminMenuOpen = 'soz-core:client:drug:admin-menu-open',
     DrugTransformDoTransform = 'soz-core:client:drug:transform-doit',
     DrugTransformCancel = 'soz-core:client:drug:transform-cancel',
+    DrugContractExit = 'soz-core:client:drug:contract-exit',
 }

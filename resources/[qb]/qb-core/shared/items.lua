@@ -6776,14 +6776,19 @@ QBShared.Items = {
         ['name'] = 'fruiting_bag',
         ['label'] = 'Sac de fructification',
         ['weight'] = 5000,
-        ['type'] = 'item_illegal',
+        ['type'] = 'drug_pot',
         ['durability'] = 14,
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Prêt à être utilisé afin d'y faire développer quelconque écosystème.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.Sniteur',
+        ['drug_pot'] = {
+            ['target'] = 'mushrooms_fruiting_bag',
+            ['ingredient'] = 'mushroom',
+            ['nbIngredient'] = 10,
+        }
     },
     ['mushrooms_fruiting_bag'] = {
         ['name'] = 'mushrooms_fruiting_bag',
@@ -6819,7 +6824,12 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
+        ['durability'] = 14,
         ['description'] = "Décollage, direction l'espace !",
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['drug'] = 30,
+        },
         ['illustrator'] = '.Sniteur'
     },
     ['psilocybine_bag'] = {
@@ -6850,7 +6860,7 @@ QBShared.Items = {
     
     ['zeed'] = {
         ['name'] = 'zeed',
-        ['label'] = 'Zeed',
+        ['label'] = 'Feuille de Zeed',
         ['weight'] = 100,
         ['type'] = 'item_illegal',
         ['durability'] = 14,
@@ -6865,14 +6875,19 @@ QBShared.Items = {
         ['name'] = 'soil_pot',
         ['label'] = 'Pot de terre',
         ['weight'] = 2000,
-        ['type'] = 'item_illegal',
+        ['type'] = 'drug_pot',
         ['durability'] = 14,
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Idéal pour faire pousser de belles plantations.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.Sniteur',
+        ['drug_pot'] = {
+            ['target'] = 'zeed_pot',
+            ['ingredient'] = 'zeed',
+            ['nbIngredient'] = 10,
+        }
     },
     ['zeed_pot'] = {
         ['name'] = 'zeed_pot',
@@ -6954,14 +6969,19 @@ QBShared.Items = {
         ['name'] = 'fermentation_pot',
         ['label'] = 'Marmite de fermentation',
         ['weight'] = 1000,
-        ['type'] = 'item_illegal',
+        ['type'] = 'drug_pot',
         ['durability'] = 14,
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "C'est important de bien fermenter la viande.",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.Sniteur',
+        ['drug_pot'] = {
+            ['target'] = 'toxic_flesh_pot',
+            ['ingredient'] = 'toxic_flesh',
+            ['nbIngredient'] = 10,
+        }
     },
     ['toxic_flesh_pot'] = {
         ['name'] = 'toxic_flesh_pot',
@@ -6998,6 +7018,10 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Qui veut mes bonbons sucrés ? Qui veut ?",
+        ['nutrition'] = {
+            ['stress'] = -2,
+            ['drug'] = 25,
+        },
         ['illustrator'] = '.Poulpito'
     },
     ['pandoxine_bag'] = {
@@ -7043,14 +7067,19 @@ QBShared.Items = {
         ['name'] = 'heating_tank',
         ['label'] = 'Bidon de chauffe',
         ['weight'] = 2000,
-        ['type'] = 'item_illegal',
+        ['type'] = 'drug_pot',
         ['durability'] = 14,
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Qu'est-ce qu'on pourrait bien faire chauffer là-dedans ? Sûrement une grande quantité de liquide !",
-        ['illustrator'] = '.Sniteur'
+        ['illustrator'] = '.Sniteur',
+        ['drug_pot'] = {
+            ['target'] = 'ciguatoxine_tank',
+            ['ingredient'] = 'ciguatoxine',
+            ['nbIngredient'] = 10,
+        }
     },
     ['ciguatoxine_tank'] = {
         ['name'] = 'ciguatoxine_tank',
@@ -7087,6 +7116,13 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Direction le paradis ou les enfers, au choix.",
+        ['nutrition'] = {
+            ['hunger'] = -10,
+            ['thirst'] = -10,
+            ['stress'] = -4,
+            ['drug'] = 50,
+        },
+        ['stressGroup'] = true,
         ['illustrator'] = '.Sniteur'
     },
     ['krakenine_bag'] = {
@@ -7136,7 +7172,13 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
+        ['durability'] = 14,
         ['description'] = "Tout le monde aime les cookies.",
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['drug'] = 30,
+            ['stress'] = -2,
+        },
         ['illustrator'] = '.NariieL'
     },
     ['calm_beverage'] = {
@@ -7148,7 +7190,13 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
+        ['durability'] = 14,
         ['description'] = "Les plantes c'est la vie.",
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['drug'] = 20,
+            ['stress'] = -2,
+        },
         ['illustrator'] = '.NariieL'
     },
     ['naloxone'] = {
