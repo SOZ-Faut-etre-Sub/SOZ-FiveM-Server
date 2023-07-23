@@ -299,9 +299,6 @@ export class ShopProvider {
         // Update player cloth config through QBCore
         this.qbcore.getPlayer(source).Functions.SetClothConfig(clothConfig, false);
 
-        // Update player stocks
-        TriggerClientEvent(ClientEvent.SHOP_UPDATE_STOCKS, source, brand);
-
         // Notify player
         this.notifier.notify(
             source,

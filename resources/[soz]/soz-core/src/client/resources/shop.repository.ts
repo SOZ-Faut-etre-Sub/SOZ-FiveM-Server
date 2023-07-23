@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { emitRpc, emitRpcTimeout } from '@core/rpc';
+import { emitRpcTimeout } from '@core/rpc';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProperTorsos } from '@public/config/shops';
 import { Component } from '@public/shared/cloth';
@@ -16,10 +16,6 @@ export class ClothingShopRepository {
     private playerService: PlayerService;
 
     public async load() {
-        if (this.repoData) {
-            return;
-        }
-
         this.repoData = await emitRpcTimeout<ClothingShopRepositoryData>(
             RpcServerEvent.REPOSITORY_CLOTHING_GET_DATA,
             10000,
@@ -56,20 +52,17 @@ export class ClothingShopRepository {
         }
     }
 
-    public update(data: ClothingShopRepositoryData) {
-        this.repoData = data;
-    }
-
-    public async getShop(shop: string): Promise<ClothingShop> {
-        if (!this.repoData) {
-            await this.load();
-        }
-        return this.repoData.shops[shop];
-    }
-
-    public getModelCategoriesOfShop(shop: string, modelHash: number): Record<number, ClothingShopCategory> {
+    public async getShopContent(
+        shop: string,
+        modelHash: number
+    ): Promise<{ shop: ClothingShop; content: Record<number, ClothingShopCategory> }> {
+        await this.load();
         const shopId = this.repoData.shops[shop].id;
-        return this.repoData.categories[modelHash][shopId];
+
+        return {
+            shop: this.repoData.shops[shop],
+            content: this.repoData.categories[modelHash][shopId],
+        };
     }
 
     public getShopNameById(id: number): string {

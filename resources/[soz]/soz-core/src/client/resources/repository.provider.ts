@@ -70,9 +70,6 @@ export class RepositoryProvider {
             case 'housing':
                 this.housingRepository.update(data);
                 break;
-            case 'clothingShop':
-                this.clothingShopRepository.update(data);
-                break;
         }
     }
 }
