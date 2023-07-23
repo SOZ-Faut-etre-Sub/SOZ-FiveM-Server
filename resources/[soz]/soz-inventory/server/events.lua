@@ -40,7 +40,7 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
         end
 
         if sourceInv.type == "trunk" or targetInv.type == "trunk" then
-            TriggerClientEvent("animation:client:give", source)
+            TriggerClientEvent("soz-core:client:animation:give", source)
         end
 
         cb(success, reason, sourceInventory, Inventory.FilterItems(targetInv, sourceInv.type))
