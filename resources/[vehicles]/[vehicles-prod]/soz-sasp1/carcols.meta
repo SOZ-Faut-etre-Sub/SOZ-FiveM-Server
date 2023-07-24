@@ -488,6 +488,337 @@
                     <allowBonnetSlide value="true"/>
                 </Item>
                 <Item>
+                    <modelName>gtx_roof_g</modelName>
+                    <modShopLabel>GTX_ROOF_G</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_g1</modelName>
+                    <modShopLabel>GTX_ROOF_G1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_gc</modelName>
+                    <modShopLabel>GTX_ROOF_GC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_gd</modelName>
+                    <modShopLabel>GTX_ROOF_GD</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_c</modelName>
+                    <modShopLabel>GTX_ROOF_C</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_d</modelName>
+                    <modShopLabel>GTX_ROOF_D</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_f</modelName>
+                    <modShopLabel>GTX_ROOF_F</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_f1</modelName>
+                    <modShopLabel>GTX_ROOF_F1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_fc</modelName>
+                    <modShopLabel>GTX_ROOF_FC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_a</modelName>
+                    <modShopLabel>GTX_ROOF_A</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_ac</modelName>
+                    <modShopLabel>GTX_ROOF_AC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_e</modelName>
+                    <modShopLabel>GTX_ROOF_E</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_ec</modelName>
+                    <modShopLabel>GTX_ROOF_EC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_b</modelName>
+                    <modShopLabel>GTX_ROOF_B</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_bc</modelName>
+                    <modShopLabel>GTX_ROOF_BC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_g</modelName>
+                    <modShopLabel>GTX_ROOF_H</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_roof_h</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_g</modelName>
+                    <modShopLabel>GTX_ROOF_H1</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_roof_h1</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_g</modelName>
+                    <modShopLabel>GTX_ROOF_HC</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_roof_hc</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_g</modelName>
+                    <modShopLabel>GTX_ROOF_HD</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_roof_hd</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_r</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
                     <modelName>gtx_wing_a</modelName>
                     <modShopLabel>GTX_WING_A</modShopLabel>
                     <linkedModels/>
@@ -496,11 +827,11 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_wing_a1</modelName>
@@ -511,11 +842,11 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_wing_ac</modelName>
@@ -526,11 +857,11 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_wing_b</modelName>
@@ -541,11 +872,11 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_wing_b1</modelName>
@@ -556,11 +887,11 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_wing_bc</modelName>
@@ -571,11 +902,11 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_wing_e</modelName>
@@ -586,11 +917,11 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_wing_e1</modelName>
@@ -601,11 +932,11 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_wing_ec</modelName>
@@ -616,14 +947,360 @@
                     <bone>boot</bone>
                     <collisionBone>mod_col_4</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
-                    <modelName>sasp1_hood_a</modelName>
+                    <modelName>gtx_wing_d</modelName>
+                    <modShopLabel>GTX_WING_D</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SPOILER</type>
+                    <bone>boot</bone>
+                    <collisionBone>mod_col_5</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_wing_d1</modelName>
+                    <modShopLabel>GTX_WING_D1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SPOILER</type>
+                    <bone>boot</bone>
+                    <collisionBone>mod_col_5</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_wing_dc</modelName>
+                    <modShopLabel>GTX_WING_DC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SPOILER</type>
+                    <bone>boot</bone>
+                    <collisionBone>mod_col_5</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_wing_g</modelName>
+                    <modShopLabel>GTX_WING_G</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SPOILER</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_wing_g1</modelName>
+                    <modShopLabel>GTX_WING_G1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SPOILER</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_wing_gc</modelName>
+                    <modShopLabel>GTX_WING_GC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SPOILER</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_wing_c</modelName>
+                    <modShopLabel>GTX_WING_C</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SPOILER</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_1</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_wing_c1</modelName>
+                    <modShopLabel>GTX_WING_C1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SPOILER</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_1</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_a</modelName>
+                    <modShopLabel>GTX_SKRT_A</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_s</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_a1</modelName>
+                    <modShopLabel>GTX_SKRT_A1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_s</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_ac</modelName>
+                    <modShopLabel>GTX_SKRT_AC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_s</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_ad</modelName>
+                    <modShopLabel>GTX_SKRT_AD</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_s</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_b</modelName>
+                    <modShopLabel>GTX_SKRT_B</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_s</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_b1</modelName>
+                    <modShopLabel>GTX_SKRT_B1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_s</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_bc</modelName>
+                    <modShopLabel>GTX_SKRT_BC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_s</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_bd</modelName>
+                    <modShopLabel>GTX_SKRT_BD</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_s</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_c</modelName>
+                    <modShopLabel>GTX_SKRT_C</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_c1</modelName>
+                    <modShopLabel>GTX_SKRT_C1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_cd</modelName>
+                    <modShopLabel>GTX_SKRT_CD</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_d</modelName>
+                    <modShopLabel>GTX_SKRT_D</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_3</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_d1</modelName>
+                    <modShopLabel>GTX_SKRT_D1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_3</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_skrt_d2</modelName>
+                    <modShopLabel>GTX_SKRT_D2</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_3</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_a</modelName>
                     <modShopLabel>GTX_HOOD_A</modShopLabel>
                     <linkedModels/>
                     <turnOffBones>
@@ -633,14 +1310,65 @@
                     <bone>bonnet</bone>
                     <collisionBone>bonnet</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
-                    <modelName>sasp1_hood_d</modelName>
+                    <modelName>gtx_hood_a1</modelName>
+                    <modShopLabel>GTX_HOOD_A1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_ac</modelName>
+                    <modShopLabel>GTX_HOOD_AC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_ad</modelName>
+                    <modShopLabel>GTX_HOOD_AD</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_d</modelName>
                     <modShopLabel>GTX_HOOD_D</modShopLabel>
                     <linkedModels/>
                     <turnOffBones>
@@ -650,14 +1378,31 @@
                     <bone>bonnet</bone>
                     <collisionBone>bonnet</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
-                    <modelName>sasp1_hood_e</modelName>
+                    <modelName>gtx_hood_dc</modelName>
+                    <modShopLabel>GTX_HOOD_DC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_e</modelName>
                     <modShopLabel>GTX_HOOD_E</modShopLabel>
                     <linkedModels/>
                     <turnOffBones>
@@ -667,14 +1412,31 @@
                     <bone>bonnet</bone>
                     <collisionBone>bonnet</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
-                    <modelName>sasp1_hood_b</modelName>
+                    <modelName>gtx_hood_ec</modelName>
+                    <modShopLabel>GTX_HOOD_EC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_b</modelName>
                     <modShopLabel>GTX_HOOD_B</modShopLabel>
                     <linkedModels/>
                     <turnOffBones>
@@ -684,14 +1446,31 @@
                     <bone>bonnet</bone>
                     <collisionBone>bonnet</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
-                    <modelName>sasp1_hood_c</modelName>
+                    <modelName>gtx_hood_bc</modelName>
+                    <modShopLabel>GTX_HOOD_BC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_c</modelName>
                     <modShopLabel>GTX_HOOD_C</modShopLabel>
                     <linkedModels/>
                     <turnOffBones>
@@ -701,14 +1480,31 @@
                     <bone>bonnet</bone>
                     <collisionBone>bonnet</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
-                    <modelName>sasp1_hood_f</modelName>
+                    <modelName>gtx_hood_cc</modelName>
+                    <modShopLabel>GTX_HOOD_CC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_f</modelName>
                     <modShopLabel>GTX_HOOD_F</modShopLabel>
                     <linkedModels/>
                     <turnOffBones>
@@ -718,11 +1514,62 @@
                     <bone>bonnet</bone>
                     <collisionBone>bonnet</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_fc</modelName>
+                    <modShopLabel>GTX_HOOD_FC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_g</modelName>
+                    <modShopLabel>GTX_HOOD_G</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_hood_gc</modelName>
+                    <modShopLabel>GTX_HOOD_GC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_b</modelName>
@@ -735,11 +1582,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_bc</modelName>
@@ -752,11 +1599,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_c</modelName>
@@ -769,11 +1616,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_cc</modelName>
@@ -786,11 +1633,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_a</modelName>
@@ -803,11 +1650,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_a2</modelName>
@@ -820,11 +1667,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_d</modelName>
@@ -837,11 +1684,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_dc</modelName>
@@ -854,11 +1701,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_e</modelName>
@@ -871,11 +1718,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_grille_ec</modelName>
@@ -888,31 +1735,384 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="3"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_1</modelName>
+                    <modShopLabel>GTX_EXH_E1</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_e1</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_1</modelName>
+                    <modShopLabel>GTX_EXH_E</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_e</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_1</modelName>
+                    <modShopLabel>GTX_EXH_A</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_a</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_1</modelName>
+                    <modShopLabel>GTX_EXH_A1</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_a1</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_2</modelName>
+                    <modShopLabel>GTX_EXH_B</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_b</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_2</modelName>
+                    <modShopLabel>GTX_EXH_D</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_2</modelName>
+                    <modShopLabel>GTX_EXH_C</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_c</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_3</modelName>
+                    <modShopLabel>GTX_EXH_H</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_h</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_2</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_3</modelName>
+                    <modShopLabel>GTX_EXH_F</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_f</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_2</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_nodes_3</modelName>
+                    <modShopLabel>GTX_EXH_G</modShopLabel>
+                    <linkedModels>
+                        <Item>gtx_exh_g</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_e</Item>
+                        <Item>exhaust</Item>
+                        <Item>exhaust_2</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_2</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_arch_a</modelName>
+                    <modShopLabel>GTX_ARCH_A</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_arch_a1</modelName>
+                    <modShopLabel>GTX_ARCH_A1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_arch_ac</modelName>
+                    <modShopLabel>GTX_ARCH_AC</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_arch_ae</modelName>
+                    <modShopLabel>GTX_ARCH_AE</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_arch_ad</modelName>
+                    <modShopLabel>GTX_ARCH_AD</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_bumr_a</modelName>
+                    <modShopLabel>GTX_REAR_A</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_h</Item>
+                    </turnOffBones>
+                    <type>VMT_BUMPER_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_bumr_b</modelName>
+                    <modShopLabel>GTX_REAR_B</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_h</Item>
+                    </turnOffBones>
+                    <type>VMT_BUMPER_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_bumr_c</modelName>
+                    <modShopLabel>GTX_REAR_C</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones>
+                        <Item>misc_h</Item>
+                    </turnOffBones>
+                    <type>VMT_BUMPER_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="3" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_flaps</modelName>
                     <modShopLabel>GTX_FLAPS</modShopLabel>
                     <linkedModels/>
                     <turnOffBones/>
-                    <type>VMT_BUMPER_R</type>
+                    <type>VMT_WING_L</type>
                     <bone>chassis</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="20"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_brace_b</modelName>
+                    <modShopLabel>GTX_BRACE_B</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_b</Item>
+                    </turnOffBones>
+                    <type>VMT_CHASSIS</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_brace_a</modelName>
                     <modShopLabel>GTX_BRACE_A</modShopLabel>
-                    <linkedModels/>
+                    <linkedModels />
                     <turnOffBones>
                         <Item>misc_b</Item>
                     </turnOffBones>
@@ -920,16 +2120,16 @@
                     <bone>chassis</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="20"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_brace_c</modelName>
                     <modShopLabel>GTX_BRACE_C</modShopLabel>
-                    <linkedModels/>
+                    <linkedModels />
                     <turnOffBones>
                         <Item>misc_b</Item>
                     </turnOffBones>
@@ -937,16 +2137,16 @@
                     <bone>chassis</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="20"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_brace_e</modelName>
                     <modShopLabel>GTX_BRACE_E</modShopLabel>
-                    <linkedModels/>
+                    <linkedModels />
                     <turnOffBones>
                         <Item>misc_b</Item>
                     </turnOffBones>
@@ -954,16 +2154,16 @@
                     <bone>chassis</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="20"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_brace_f</modelName>
                     <modShopLabel>GTX_BRACE_F</modShopLabel>
-                    <linkedModels/>
+                    <linkedModels />
                     <turnOffBones>
                         <Item>misc_b</Item>
                     </turnOffBones>
@@ -971,11 +2171,11 @@
                     <bone>chassis</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="20"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_fbum_a</modelName>
@@ -986,11 +2186,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="20"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_fbum_a1</modelName>
@@ -1001,11 +2201,11 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="20"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
                     <modelName>gtx_fbum_ac</modelName>
@@ -1016,14 +2216,100 @@
                     <bone>bumper_f</bone>
                     <collisionBone>chassis</collisionBone>
                     <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000"/>
-                    <weight value="20"/>
-                    <turnOffExtra value="false"/>
-                    <disableBonnetCamera value="false"/>
-                    <allowBonnetSlide value="true"/>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>gtx_fbum_ad</modelName>
+                    <modShopLabel>GTX_BUMF_AD</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_BUMPER_F</type>
+                    <bone>bumper_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
                 </Item>
             </visibleMods>
-            <linkMods/>
+            <linkMods>
+                <Item>
+                    <modelName>gtx_exh_a</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_a1</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_b</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_c</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_d</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_e</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_e1</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_f</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_g</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_exh_h</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_h</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_h1</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_hc</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>gtx_roof_hd</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+            </linkMods>
             <statMods>
                 <Item>
                     <identifier/>
