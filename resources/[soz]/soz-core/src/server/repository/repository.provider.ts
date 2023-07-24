@@ -5,7 +5,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
-import { ClothingShopRepositoryData } from '../../shared/shop';
+import { ClothingShop, ClothingShopCategory, ClothingShopRepositoryData } from '../../shared/shop';
 import { PrismaService } from '../database/prisma.service';
 import { ClothingShopRepository } from './cloth.shop.repository';
 import { FuelStationRepository } from './fuel.station.repository';
@@ -108,8 +108,25 @@ export class RepositoryProvider {
         return null;
     }
 
-    @Rpc(RpcServerEvent.REPOSITORY_CLOTHING_GET_DATA)
-    public async getClothingData(source: number, playerPedHash: number): Promise<ClothingShopRepositoryData> {
+    @Rpc(RpcServerEvent.REPOSITORY_CLOTHING_GET_SHOP)
+    public async getShopData(
+        source: number,
+        playerPedHash: number,
+        shop: string
+    ): Promise<{ shop: ClothingShop; content: Record<number, ClothingShopCategory> }> {
+        const clothingData = await this.getClothingData(source, playerPedHash);
+
+        if (!clothingData) {
+            return null;
+        }
+
+        return {
+            shop: clothingData.shops[shop],
+            content: clothingData.categories[playerPedHash][clothingData.shops[shop].id],
+        };
+    }
+
+    private async getClothingData(source: number, playerPedHash: number): Promise<ClothingShopRepositoryData> {
         if (!this.repositories['clothingShop']) {
             return null;
         }
