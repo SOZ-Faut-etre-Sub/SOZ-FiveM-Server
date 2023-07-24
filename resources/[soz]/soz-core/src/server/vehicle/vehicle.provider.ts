@@ -1,3 +1,4 @@
+import { GarageList } from '@public/config/garage';
 import { VehicleClass } from '@public/shared/vehicle/vehicle';
 
 import { OnEvent } from '../../core/decorators/event';
@@ -8,7 +9,6 @@ import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { VehicleService } from './vehicle.service';
-import { GarageList } from '@public/config/garage';
 
 @Provider()
 export class VehicleProvider {

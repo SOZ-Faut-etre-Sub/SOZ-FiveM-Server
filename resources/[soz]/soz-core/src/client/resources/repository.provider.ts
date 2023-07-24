@@ -7,7 +7,6 @@ import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
-import { ClothingShopRepository } from './shop.repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
 import { UpwChargerRepository } from './upw.station.repository';
 import { VehicleRepository } from './vehicle.repository';
