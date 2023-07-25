@@ -16,7 +16,7 @@
       <animConvRoofWindowsAffected />
       <ptfxAssetName>null</ptfxAssetName>
       <audioNameHash>tamustanggt50p</audioNameHash>
-      <layout>LAYOUT_STD_EXITFIXUP</layout>
+      <layout>LAYOUT_LOW_DOMINATOR3</layout>
       <coverBoundOffsets>DOMINATOR3_COVER_OFFSET_INFO</coverBoundOffsets>
       <explosionInfo>EXPLOSION_INFO_DEFAULT</explosionInfo>
       <scenarioLayout />
@@ -47,7 +47,7 @@
       <wheelScale value="0.305000" />
       <wheelScaleRear value="0.305000" />
       <dirtLevelMin value="0.000000" />
-      <dirtLevelMax value="0.100000" />
+      <dirtLevelMax value="1.000000" />
       <envEffScaleMin value="0.800000" />
       <envEffScaleMax value="1.000000" />
       <envEffScaleMin2 value="0.000000" />
@@ -58,11 +58,11 @@
       <steerWheelMult value="1.000000" />
       <HDTextureDist value="5.000000" />
       <lodDistances content="float_array">
+        15.000000
         30.000000
-        50.000000
-        80.000000	
-        120.000000	
-        500.000000	
+        60.000000
+        120.000000
+        500.000000
         500.000000
       </lodDistances>
       <minSeatHeight value="0.780" />
@@ -80,7 +80,7 @@
       <type>VEHICLE_TYPE_CAR</type>
       <plateType>VPT_BACK_PLATES</plateType>
       <dashboardType>VDT_RACE</dashboardType>
-      <vehicleClass>VC_EMERGENCY</vehicleClass>
+      <vehicleClass>VC_MUSCLE</vehicleClass>
       <wheelType>VWT_HIEND</wheelType>
       <trailers />
       <additionalTrailers />
