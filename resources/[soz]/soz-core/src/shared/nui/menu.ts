@@ -76,6 +76,7 @@ export enum MenuType {
     DrugShop = 'drug_shop',
     DrugGarden = 'drug_garden',
     DrugAdmin = 'drug_admin',
+    RentBoat = 'rent_boat',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -114,4 +115,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.Album]: { tracks: Record<string, string>; volume: number };
     [MenuType.DrugShop]: ShopProduct[];
     [MenuType.DrugAdmin]: never;
+    [MenuType.RentBoat]: any;
 }

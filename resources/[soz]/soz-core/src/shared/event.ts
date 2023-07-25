@@ -262,6 +262,7 @@ export enum ServerEvent {
     FISHING_RESELL = 'soz-core:server:fishing:resell',
     FISHING_RENT_BOAT = 'soz-core:server:fishing:rent-boat',
     FISHING_REMOVE_BAIT = 'soz-core:server:fishing:remove-bait',
+    FISHING_RETURN_BOAT = 'soz-core:server:fishing:return-boat',
 
     SOZEDEX_CLAIM_REWARD = 'soz-core:server:sozedex:claim-reward',
 
@@ -748,7 +749,8 @@ export enum NuiEvent {
     FishingSuccessHit = 'soz-core:client:fishing:success-hit',
     ClaimReward = 'soz-core:client:sozedex:claim-reward',
 
-    RentBoat = 'soz-core:client:fishing:rent-boat',
+    BoatRent = 'soz-core:client:fishing:rent-boat',
+    BoatReturn = 'soz-core:client:fishing:return-boat',
     SozedexClosed = 'soz-core:nui:sozedex:closed',
 
     DrugSkillTreeBuy = 'soz-core:client:drug:skill-buy',
