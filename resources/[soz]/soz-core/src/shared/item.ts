@@ -113,6 +113,7 @@ export type FishItem = BaseItem & {
     max_length: number;
     sozedex_id: number;
     fishman_status: string;
+    price: number;
 };
 
 export type FishingGarbageItem = BaseItem & {

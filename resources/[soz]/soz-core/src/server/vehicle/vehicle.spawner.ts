@@ -14,7 +14,7 @@ import { Ear } from '@public/shared/voip';
 
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
-import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration, VehicleColor, VehicleConfiguration } from '../../shared/vehicle/modification';
 import {
     getDefaultVehicleCondition,
     getDefaultVehicleVolatileState,
@@ -313,8 +313,14 @@ export class VehicleSpawner {
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    public async spawnRentVehicle(source: number, model: string, position: Vector4): Promise<null | number | {}> {
+    public async spawnRentVehicle(
+        source: number,
+        model: string,
+        data: { position: Vector4; color: number }
+    ): Promise<null | number | object> {
         const player = this.playerService.getPlayer(source);
+        const position = data.position;
+        const color = data.color;
 
         if (!player) {
             return null;
@@ -326,6 +332,7 @@ export class VehicleSpawner {
             isPlayerVehicle: false,
             owner: player.citizenid,
             open: false,
+            rentOwner: player.citizenid,
         };
         const condition = getDefaultVehicleCondition();
         return this.spawn(
@@ -335,6 +342,16 @@ export class VehicleSpawner {
                 model,
                 position,
                 warp: false,
+                modification: {
+                    color: {
+                        primary: VehicleColor.MetallicWhite,
+                        secondary: color,
+                        pearlescent: null,
+                        rim: null,
+                    },
+                    modification: {},
+                    extra: {},
+                },
             },
             volatileState,
             condition

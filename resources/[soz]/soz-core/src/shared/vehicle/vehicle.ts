@@ -153,6 +153,7 @@ export type VehicleVolatileState = {
     primaryRadio: RadioChannel | null;
     secondaryRadio: RadioChannel | null;
     flatbedAttachedVehicle: number | null;
+    rentOwner: string | null;
 };
 
 export enum VehicleClass {
@@ -229,6 +230,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     primaryRadio: null,
     secondaryRadio: null,
     flatbedAttachedVehicle: null,
+    rentOwner: null,
 });
 
 export type VehicleMenuData = {

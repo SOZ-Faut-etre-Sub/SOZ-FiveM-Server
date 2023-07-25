@@ -39,6 +39,7 @@ import { MenuGarage } from './MenuGarage';
 import { MenuOilSetPrice } from './MenuOilSetPrice';
 import { UpwOrderMenu } from './MenuOrderUpw';
 import { MenuPlayerPersonal } from './MenuPlayerPersonal';
+import { MenuRentBoat } from './MenuRentBoat';
 import { MenuSetHealthState } from './MenuSetHealthState';
 import { MenuVehicle } from './MenuVehicle';
 import { MenuVehicleAuction } from './MenuVehicleAuction';
@@ -203,6 +204,7 @@ const MenuRouter: FunctionComponent = () => {
                 element={<MenuBennysUpgradeVehicle data={menuData} />}
             />
             <Route path={`/${MenuType.Album}/*`} element={<MenuAlbum data={menuData} />} />
+            <Route path={`/${MenuType.RentBoat}/*`} element={<MenuRentBoat />} />
         </Routes>
     );
 };
