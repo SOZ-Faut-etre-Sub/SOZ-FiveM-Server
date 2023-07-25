@@ -2,7 +2,7 @@ local function handleFish(inventory)
     for _, value in ipairs(PlayerData.metadata.drugs_skills) do
         -- 2 is Zoologiste
         if value == 2 then
-            for key, value in ipairs(inventory.items) do
+            for _, value in pairs(inventory.items) do
                 if value.type == "fish" then
                     value.useable = true
                     value.usableLabel = "Ponctionner les toxines"
