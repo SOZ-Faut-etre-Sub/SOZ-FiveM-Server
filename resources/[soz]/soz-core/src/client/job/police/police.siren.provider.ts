@@ -36,6 +36,8 @@ export const VehicleWithSirens = {
     [GetHashKey('bcsoc7')]: true,
     // LSPD + BCSO
     [GetHashKey('pbus')]: true,
+    //SASP
+    [GetHashKey('sasp1')]: true,
     // FBI
     [GetHashKey('fbi')]: true,
     [GetHashKey('fbi2')]: true,

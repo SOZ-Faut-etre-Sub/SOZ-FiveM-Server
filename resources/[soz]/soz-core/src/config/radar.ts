@@ -181,6 +181,8 @@ export const RadarAllowedVehicle: number[] = [
     GetHashKey('bcsomanchez'),
     // LSPD / BCSO
     GetHashKey('pbus'),
+    //SASP
+    GetHashKey('sasp1'),
     // FBI
     GetHashKey('fbi'),
     GetHashKey('fbi2'),
@@ -214,4 +216,6 @@ export const RadarInformedVehicle: number[] = [
     GetHashKey('bcsoc7'),
     // Both
     GetHashKey('predator'),
+    //SASP
+    GetHashKey('sasp1'),
 ];

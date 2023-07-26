@@ -41,6 +41,7 @@ const VEHICLE_HAS_RADIO = [
     'mule6',
     'taco1',
     'dynasty2',
+    'tropic3',
     'trash',
     'stockade',
     'baller8',
@@ -87,6 +88,7 @@ const VEHICLE_HAS_RADIO = [
     'lspdgallardo',
     'bcsomanchez',
     'predator',
+    'sasp1',
 ];
 
 const DISALLOWED_VEHICLE_MODELS = { [GetHashKey('dune2')]: true };
