@@ -85,10 +85,10 @@ export const App: FunctionComponent = () => {
                 <TalentApp />
                 <CraftingApp />
                 <FishingApp />
-                <InputApp />
                 <SozedexApp />
                 <DrugSkillApp />
                 <DrugTransformApp />
+                <InputApp />
             </div>
         </Provider>
     );
