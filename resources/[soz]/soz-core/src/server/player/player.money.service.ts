@@ -7,10 +7,16 @@ export class PlayerMoneyService {
     private QBCore: QBCore;
 
     public add(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+        if (isNaN(money)) {
+            return;
+        }
         return this.QBCore.getPlayer(source).Functions.AddMoney(type, money);
     }
 
     public remove(source: number, money: number, type: 'money' | 'marked_money' = 'money'): boolean {
+        if (isNaN(money)) {
+            return;
+        }
         return this.QBCore.getPlayer(source).Functions.RemoveMoney(type, money);
     }
 

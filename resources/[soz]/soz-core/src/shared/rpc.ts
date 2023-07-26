@@ -117,6 +117,7 @@ export enum RpcServerEvent {
     DRUGS_GARDEN_EXIT = 'soz-core:server:drugs:garden-exit',
     DRUGS_GET_RECIPES = 'soz-core:server:drugs:recipes-get',
     DRUG_DO_TRANSFORM = 'soz-core:server:drugs:recipes-transform',
+    DRUGS_PAY_LOCATION = 'soz-core:server:drugs:location-pay',
 }
 
 export enum RpcClientEvent {
