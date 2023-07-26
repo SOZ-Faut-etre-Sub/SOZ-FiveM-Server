@@ -57,12 +57,16 @@ Config.SirenVehicle = {
     [GetHashKey("bcsoc7")] = true,
     --- LSPD / BCSO
     [GetHashKey("pbus")] = true,
+    -- SASP
+    [GetHashKey("sasp1")] = true,
     --- FBI
     [GetHashKey("fbi")] = true,
     [GetHashKey("fbi2")] = true,
     [GetHashKey("cogfbi")] = true,
     [GetHashKey("paragonfbi")] = true,
     [GetHashKey("dodgebana")] = true,
+    -- SASP
+    [GetHashKey("sasp1")] = true,
 }
 --- Fines
 Config.Fines = {
