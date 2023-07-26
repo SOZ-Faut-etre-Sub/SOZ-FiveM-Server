@@ -217,9 +217,9 @@ export class PropProvider {
     public async spawnDebugCollection(collection: PropCollection): Promise<SpawnedCollection> {
         const spawnedCollection: SpawnedCollection = {
             ...collection,
-            props: [],
+            props: {},
         };
-        for (const prop of collection.props) {
+        for (const prop of Object.values(collection.props)) {
             let entity: number;
             if (prop.loaded) {
                 if (!this.objects[prop.unique_id]) {
@@ -236,23 +236,23 @@ export class PropProvider {
                         entity = this.objects[prop.unique_id].entity;
                     }
                 }
-                spawnedCollection.props.push({
+                spawnedCollection.props[prop.unique_id] = {
                     ...prop,
                     entity: entity,
-                });
+                };
             } else {
                 entity = await this.spawnDebugProp(prop, false);
-                spawnedCollection.props.push({
+                spawnedCollection.props[prop.unique_id] = {
                     ...prop,
                     entity: entity,
-                });
+                };
             }
         }
         return spawnedCollection;
     }
 
     public async despawnDebugCollection(spawnedCollection: SpawnedCollection): Promise<void> {
-        for (const prop of spawnedCollection.props) {
+        for (const prop of Object.values(spawnedCollection.props)) {
             await this.despawnDebugProp(prop);
         }
     }

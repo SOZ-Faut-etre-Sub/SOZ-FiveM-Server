@@ -26,24 +26,20 @@ export type SpawedWorlPlacedProp = WorldPlacedProp & {
     entity: number;
 };
 
-export type PropCollection = {
-    name: string;
-    size: number;
-    loaded_size: number;
-    props: WorldPlacedProp[];
-};
-
-export type SpawnedCollection = {
-    name: string;
-    size: number;
-    loaded_size: number;
-    props: SpawedWorlPlacedProp[];
-};
-
 export type PropCollectionData = {
     name: string;
+    creator_citizenID: string;
+    creation_date: Date;
     size: number;
     loaded_size: number;
+};
+
+export type PropCollection = PropCollectionData & {
+    props: Record<string, WorldPlacedProp>;
+};
+
+export type SpawnedCollection = PropCollectionData & {
+    props: Record<string, SpawedWorlPlacedProp>;
 };
 
 export type PropServerData = {

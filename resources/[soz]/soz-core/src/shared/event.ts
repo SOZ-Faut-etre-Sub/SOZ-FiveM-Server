@@ -668,6 +668,7 @@ export enum NuiEvent {
     ChoosePlacedPropToEdit = 'soz-core:client:placement:choose-placed-prop-to-edit',
     SetPlacementProp = 'soz-core:client:placement:set-prop',
     LeaveEditorMode = 'soz-core:client:placement:leave-mode',
+    TogglePedMovements = 'soz-core:client:placement:toggle-movements',
     ValidatePlacement = 'soz-core:client:placement:validate',
     PropPlacementReset = 'soz-core:client:placement:reset',
     PropPlacementReturnToMainMenu = 'soz-core:client:placement:return-to-main-menu',
@@ -677,4 +678,5 @@ export enum NuiEvent {
     RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
     RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
     RefreshPropPlacementMenuData = 'soz-core:client:placement:refresh-menu-data',
+    RequestDeleteProp = 'soz-core:client:placement:delete-prop',
 }

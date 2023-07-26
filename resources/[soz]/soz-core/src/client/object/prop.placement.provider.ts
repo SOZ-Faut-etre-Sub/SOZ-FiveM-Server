@@ -5,6 +5,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
+import { uuidv4 } from '@public/core/utils';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { PLACEMENT_PROP_LIST, PlacementProp } from '@public/shared/nui/prop_placement';
@@ -92,6 +93,16 @@ export class PropPlacementProvider {
         });
     }
 
+    @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
+    public async onCloseMenu({ menuType }) {
+        if (menuType !== MenuType.PropPlacementMenu) {
+            return;
+        }
+        await this.onLeaveEditorMode();
+        await this.onReturnToMainMenu();
+        this.editorState = null;
+    }
+
     @OnNuiEvent(NuiEvent.PropPlacementReturnToMainMenu)
     public async onReturnToMainMenu() {
         console.log('Return to main menu triggered');
@@ -170,7 +181,7 @@ export class PropPlacementProvider {
         this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(collection);
         await this.highlightProvider.unhighlightAllEntities();
         await this.highlightProvider.highlightEntities(
-            this.editorState.currentCollection.props.map(prop => prop.entity)
+            Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
         );
         console.log('current collection : ', this.editorState.currentCollection);
         return collection;
@@ -277,6 +288,21 @@ export class PropPlacementProvider {
         }
     }
 
+    @OnNuiEvent(NuiEvent.TogglePedMovements)
+    public async onTogglePedMovements({ value }: { value: boolean }) {
+        if (!this.editorState || !this.editorState.debugProp) {
+            return;
+        }
+        this.editorState.isEditorModeOn = value;
+        if (value) {
+            DisableAllControlActions(0);
+            EnterCursorMode();
+        } else {
+            EnableAllControlActions(0);
+            LeaveCursorMode();
+        }
+    }
+
     @OnNuiEvent(NuiEvent.LeaveEditorMode)
     public async onLeaveEditorMode() {
         if (!this.editorState) {
@@ -351,12 +377,7 @@ export class PropPlacementProvider {
 
     @OnNuiEvent(NuiEvent.ValidatePlacement)
     public async validatePlacement() {
-        if (
-            !this.editorState ||
-            !this.editorState.isEditorModeOn ||
-            !this.editorState.debugProp ||
-            !DoesEntityExist(this.editorState.debugProp.entity)
-        ) {
+        if (!this.editorState || !this.editorState.debugProp || !DoesEntityExist(this.editorState.debugProp.entity)) {
             return Err(false);
         }
 
@@ -364,8 +385,9 @@ export class PropPlacementProvider {
         const coords = GetEntityCoords(debugProp.entity, false);
         const heading = GetEntityHeading(debugProp.entity);
         const matrix = this.propProvider.makeEntityMatrix(debugProp.entity);
+        const id = uuidv4();
         const worldPlacedProp: WorldPlacedProp = {
-            unique_id: null,
+            unique_id: id,
             model: debugProp.model,
             collection: this.editorState.currentCollection.name,
             position: [coords[0], coords[1], coords[2], heading],
@@ -379,13 +401,10 @@ export class PropPlacementProvider {
             return Err(false);
         }
 
-        // I don't think doing this is a good idea. Rather fetch current collection for server
-        // then update the provider and nui data. For the entity, we can maybe keep the entity of
-        // the debugProp. I have to work this out better.
-        this.editorState.currentCollection.props.push({
+        this.editorState.currentCollection.props[id] = {
             ...worldPlacedProp,
             entity: debugProp.entity,
-        });
+        };
         this.editorState.currentCollection.size += 1;
         this.editorState.debugProp = null;
 
@@ -416,7 +435,7 @@ export class PropPlacementProvider {
         }
         this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(newCollection);
         await this.highlightProvider.highlightEntities(
-            this.editorState.currentCollection.props.map(prop => prop.entity)
+            Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
         );
         const collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
         await this.refreshPropPlacementMenuData(collections, newCollection);

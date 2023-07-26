@@ -22,6 +22,8 @@ import {
     MenuContent,
     MenuItemButton,
     MenuItemCheckbox,
+    MenuItemSelect,
+    MenuItemSelectOption,
     MenuItemSubMenuLink,
     MenuItemText,
     MenuTitle,
@@ -39,9 +41,11 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     const [clientData, setClientData] = useState<PropClientData>(data.clientData);
     const [collection, setCollection] = useState<PropCollection>({
         name: '',
+        creator_citizenID: '',
+        creation_date: new Date(),
         size: 0,
         loaded_size: 0,
-        props: [],
+        props: {},
     });
     const navigate = useNavigate();
     const location = useLocation();
@@ -75,18 +79,6 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             }
             setCollection(col);
             navigate(`/${MenuType.PropPlacementMenu}/collection`, { state: { ...location.state, activeIndex: 0 } });
-        };
-    };
-
-    const onSelectedProp = (selectedProp: WorldPlacedProp) => {
-        return async () => {
-            await fetchNui(NuiEvent.SelectPlacedProp, { selectedProp });
-        };
-    };
-    const onChooseProp = (selectedProp: WorldPlacedProp) => {
-        return async () => {
-            await fetchNui(NuiEvent.ChoosePlacedPropToEdit, { selectedProp });
-            navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
         };
     };
 
@@ -207,14 +199,25 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     Props de la collection : {collection.name}
                 </MenuTitle>
                 <MenuContent>
-                    {collection.props.map(prop => (
-                        <MenuItemButton
+                    {Object.values(collection.props).map(prop => (
+                        <MenuItemSelect
                             key={prop.unique_id}
-                            onSelected={onSelectedProp(prop)}
-                            onConfirm={onChooseProp(prop)}
+                            title={prop.model}
+                            onSelected={async () => {
+                                await fetchNui(NuiEvent.SelectPlacedProp, { selectedProp: prop });
+                            }}
+                            onConfirm={async (_, value) => {
+                                if (value == 'delete') {
+                                    await fetchNui(NuiEvent.RequestDeleteProp, { prop: prop });
+                                }
+                                if (value == 'edit') {
+                                    await fetchNui(NuiEvent.ChoosePlacedPropToEdit, { prop: prop });
+                                }
+                            }}
                         >
-                            {prop.model}
-                        </MenuItemButton>
+                            <MenuItemSelectOption value="edit">Editer</MenuItemSelectOption>
+                            <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                        </MenuItemSelect>
                     ))}
                 </MenuContent>
             </SubMenu>
@@ -277,6 +280,14 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         🔄 Réinitialiser tout
                     </MenuItemButton>
+                    <MenuItemCheckbox
+                        checked={true}
+                        onChange={async value => {
+                            await fetchNui(NuiEvent.TogglePedMovements, { value: value });
+                        }}
+                    >
+                        Afficher la souris
+                    </MenuItemCheckbox>
                     <MenuTitle>Contrôle du mode editeur</MenuTitle>
                     <MenuItemText> Mode Translation : T</MenuItemText>
                     <MenuItemText> Mode Rotation : R</MenuItemText>
