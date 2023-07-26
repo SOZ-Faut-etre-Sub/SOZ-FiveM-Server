@@ -69,7 +69,7 @@ local function SpawnFieldZones()
                         end
                         return false
                     end,
-                    location = zoneName,
+                    location = "food",
                 },
             },
             distance = 1.5,
