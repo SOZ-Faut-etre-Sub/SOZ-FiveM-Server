@@ -103,6 +103,7 @@ export class MandatoryProvider {
                             this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
                         );
                     },
+                    job: JobType.MDR,
                 },
             ]
         );
