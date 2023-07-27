@@ -172,6 +172,12 @@ export class VehicleMenuProvider {
         SetBoatAnchor(vehicle, status);
         SetBoatFrozenWhenAnchored(vehicle, status);
 
+        if (status) {
+            this.notifier.notify("Vous avez ~g~baissé~s~ l'ancre.");
+        } else {
+            this.notifier.notify("Vous avez ~r~relevé~s~ l'ancre.");
+        }
+
         return true;
     }
 
