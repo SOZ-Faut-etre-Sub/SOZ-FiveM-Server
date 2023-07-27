@@ -1,4 +1,6 @@
+import { PrismaService } from '@public/server/database/prisma.service';
 import { ItemService } from '@public/server/item/item.service';
+import { Storage, StorageType } from '@public/shared/inventory';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { InventoryItem, InventoryItemMetadata } from '../../shared/item';
@@ -12,10 +14,34 @@ export class InventoryManager {
     @Inject(ItemService)
     private itemService: ItemService;
 
+    @Inject(PrismaService)
+    private prisma: PrismaService;
+
     private sozInventory: any;
 
     public constructor() {
         this.sozInventory = exports['soz-inventory'];
+    }
+
+    private async getStorage(id: string): Promise<Storage | null> {
+        const storage = await this.prisma.storages.findUnique({
+            where: {
+                name: id,
+            },
+        });
+
+        if (!storage) {
+            return null;
+        }
+
+        return {
+            type: storage.type as StorageType,
+            id: storage.name,
+            inventory: storage.inventory ? (JSON.parse(storage.inventory) as InventoryItem[]) : [],
+            maxWeight: storage.max_weight,
+            maxSlots: storage.max_slots,
+            owner: storage.owner,
+        };
     }
 
     public getItems(source: number): InventoryItem[] {
@@ -53,6 +79,22 @@ export class InventoryManager {
         }
 
         return inventoryItem;
+    }
+
+    public async getVehicleStorageWeight(plate: string): Promise<number> {
+        const inventory = this.sozInventory.GetOrCreateInventory('trunk', plate);
+
+        if (inventory) {
+            return inventory.weight;
+        }
+
+        const storage = await this.getStorage('trunk_' + plate);
+
+        if (!storage) {
+            return 0;
+        }
+
+        return this.sozInventory.CalculateWeight(storage.inventory);
     }
 
     public findItem(source: number, predicate: (item: InventoryItem) => boolean): InventoryItem | null {

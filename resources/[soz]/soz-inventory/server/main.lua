@@ -171,6 +171,7 @@ function Inventory.SetMaxWeight(inv, weight)
         inv.maxWeight = weight
     end
 end
+exports("CalculateWeight", Inventory.CalculateWeight)
 exports("SetMaxWeight", Inventory.SetMaxWeight)
 
 function Inventory.SetHouseStashMaxWeightFromTier(inv, tier)

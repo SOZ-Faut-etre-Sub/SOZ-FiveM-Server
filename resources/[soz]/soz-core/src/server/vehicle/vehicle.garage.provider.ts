@@ -101,7 +101,7 @@ export class VehicleGarageProvider {
     @Once(OnceStep.RepositoriesLoaded)
     public async init(): Promise<void> {
         const queries = `
-            UPDATE player_vehicles SET state = 1, garage = 'airportpublic' WHERE state = 0 AND job IS NULL AND category = 'car';
+            UPDATE player_vehicles SET state = 1, garage = 'airport_public' WHERE state = 0 AND job IS NULL AND category = 'car';
             UPDATE player_vehicles SET state = 3, garage = job WHERE state = 0 AND job IS NOT NULL AND category = 'car';
             UPDATE player_vehicles SET state = 1, garage = 'airport_air' WHERE state = 0 AND job IS NULL AND category = 'air';
             UPDATE player_vehicles SET state = 3, garage = concat(job,'_air') WHERE state = 0 AND job IS NOT NULL AND category = 'air';
@@ -436,6 +436,7 @@ export class VehicleGarageProvider {
             playerVehiclesMapped.push({
                 vehicle: playerVehicle,
                 price,
+                weight: await this.inventoryManager.getVehicleStorageWeight(playerVehicle.plate),
                 name: vehiclesByModel[playerVehicle.modelName]?.name || null,
             } as GarageVehicle);
         }
@@ -869,48 +870,41 @@ export class VehicleGarageProvider {
         );
     }
 
-    private async getCitizenIdsForGarage(player: PlayerData, garage: Garage, propertyId: string): Promise<Set<string>> {
-        const citizenIds = new Set<string>();
+    @OnEvent(ServerEvent.VEHICLE_GARAGE_TRANSFER)
+    public async transferVehicleToGarage(source: number, id: number, from: Garage, to: Garage) {
+        if (!from.transferList || !from.transferList.includes(to.id)) {
+            this.notifier.notify(source, 'Vous ne pouvez pas transférer ce véhicule dans ce garage.', 'error');
 
-        if (garage.type === GarageType.House) {
-            const property = await this.prismaService.housing_property.findUnique({
-                where: {
-                    identifier: propertyId,
-                },
-            });
-
-            if (property) {
-                const appartements = await this.prismaService.housing_apartment.findMany({
-                    where: {
-                        AND: [
-                            { property_id: property.id },
-                            { OR: [{ owner: player.citizenid }, { roommate: player.citizenid }] },
-                        ],
-                    },
-                });
-
-                if (appartements.length == 0) {
-                    citizenIds.add(player.citizenid);
-                    this.logger.error('no appartements found for property', propertyId);
-                }
-
-                for (const appartement of appartements) {
-                    citizenIds.add(appartement.owner);
-
-                    if (appartement.roommate) {
-                        citizenIds.add(appartement.roommate);
-                    }
-                }
-            } else {
-                this.logger.error('property not found', propertyId);
-
-                citizenIds.add(player.citizenid);
-            }
-        } else {
-            citizenIds.add(player.citizenid);
+            return;
         }
 
-        return citizenIds;
+        const playerVehicle = await this.prismaService.playerVehicle.findFirst({
+            where: { id },
+        });
+
+        if (!playerVehicle || (playerVehicle.garage !== from.id && playerVehicle.garage !== from.legacyId)) {
+            this.notifier.notify(source, "Ce véhicule n'est pas disponible.", 'error');
+
+            return;
+        }
+
+        const weight = await this.inventoryManager.getVehicleStorageWeight(playerVehicle.plate);
+        const transferPrice = 100 + Math.round((weight / 1000) * 5);
+
+        if (!this.playerMoneyService.remove(source, transferPrice)) {
+            this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
+
+            return;
+        }
+
+        await this.prismaService.playerVehicle.update({
+            where: { id },
+            data: {
+                garage: to.id,
+            },
+        });
+
+        this.notifier.notify(source, `Vous avez transféré votre véhicule pour ${transferPrice}$.`, 'success');
     }
 
     @Tick(TickInterval.EVERY_MINUTE, 'soft-pound-check')
@@ -954,5 +948,49 @@ export class VehicleGarageProvider {
         }
 
         await wait(waitTime * 1000);
+    }
+
+    private async getCitizenIdsForGarage(player: PlayerData, garage: Garage, propertyId: string): Promise<Set<string>> {
+        const citizenIds = new Set<string>();
+
+        if (garage.type === GarageType.House) {
+            const property = await this.prismaService.housing_property.findUnique({
+                where: {
+                    identifier: propertyId,
+                },
+            });
+
+            if (property) {
+                const appartements = await this.prismaService.housing_apartment.findMany({
+                    where: {
+                        AND: [
+                            { property_id: property.id },
+                            { OR: [{ owner: player.citizenid }, { roommate: player.citizenid }] },
+                        ],
+                    },
+                });
+
+                if (appartements.length == 0) {
+                    citizenIds.add(player.citizenid);
+                    this.logger.error('no appartements found for property', propertyId);
+                }
+
+                for (const appartement of appartements) {
+                    citizenIds.add(appartement.owner);
+
+                    if (appartement.roommate) {
+                        citizenIds.add(appartement.roommate);
+                    }
+                }
+            } else {
+                this.logger.error('property not found', propertyId);
+
+                citizenIds.add(player.citizenid);
+            }
+        } else {
+            citizenIds.add(player.citizenid);
+        }
+
+        return citizenIds;
     }
 }

@@ -2,7 +2,7 @@ import { JobType } from '../shared/job';
 import { BoxZone } from '../shared/polyzone/box.zone';
 import { Garage, GarageCategory, GarageType, PlaceCapacity } from '../shared/vehicle/garage';
 
-export const GarageList: Record<string, Garage> = {
+export const GarageList: Record<string, Omit<Garage, 'id'>> = {
     motel: {
         name: 'Motel Parking',
         legacyId: 'motelgarage',
@@ -763,6 +763,7 @@ export const GarageList: Record<string, Garage> = {
                 },
             }),
         ],
+        transferList: ['cayo'],
     },
     bell_farms: {
         name: 'Bell Farms Parking',
@@ -2180,6 +2181,7 @@ export const GarageList: Record<string, Garage> = {
                 },
             }),
         ],
+        transferList: ['airport_public'],
     },
     cayo_boat: {
         name: 'Port Cayo',

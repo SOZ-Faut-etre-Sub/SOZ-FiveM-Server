@@ -23,6 +23,10 @@ export const fetchNui = async <I, R>(event: NuiEvent, input?: I, options?: Fetch
             signal: controller.signal,
         });
 
+        if (response.status === 404) {
+            throw new Error(`Nui event ${event.toString()} no handler found`);
+        }
+
         return (await response.json()) as R;
     } catch (e) {
         console.error(`Failed to fetch ${event.toString()}`, e);
