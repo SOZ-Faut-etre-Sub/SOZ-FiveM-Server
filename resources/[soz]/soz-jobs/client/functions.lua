@@ -34,6 +34,7 @@ SozJobCore.Functions.GetDutyActions = function(job)
             canInteract = function()
                 return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.OnDutyView)
             end,
+            job = job,
         },
     }
 end
