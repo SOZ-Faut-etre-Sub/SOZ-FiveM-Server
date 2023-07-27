@@ -20,6 +20,7 @@ import {
     GarageCategory,
     GarageType,
     GarageVehicle,
+    getTransferPrice,
     HouseGarageLimits,
     PlaceCapacity,
 } from '../../shared/vehicle/garage';
@@ -889,7 +890,7 @@ export class VehicleGarageProvider {
         }
 
         const weight = await this.inventoryManager.getVehicleStorageWeight(playerVehicle.plate);
-        const transferPrice = 100 + Math.round((weight / 1000) * 5);
+        const transferPrice = getTransferPrice(weight);
 
         if (!this.playerMoneyService.remove(source, transferPrice)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');

@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
-import { GarageMenuData, GarageType, GarageVehicle } from '../../../shared/vehicle/garage';
+import { GarageMenuData, GarageType, GarageVehicle, getTransferPrice } from '../../../shared/vehicle/garage';
 import { fetchNui } from '../../fetch';
 import {
     MainMenu,
@@ -93,7 +93,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                 </MenuTitle>
                 <MenuContent>
                     {data.transferGarageList.map((garage, key) => {
-                        const transferPrice = 100 + Math.round((currentVehicle?.weight / 1000) * 5);
+                        const transferPrice = getTransferPrice(currentVehicle?.weight || 0);
 
                         return (
                             <MenuItemButton

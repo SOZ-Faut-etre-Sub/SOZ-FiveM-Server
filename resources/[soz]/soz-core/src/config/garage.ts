@@ -827,6 +827,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 maxZ: 34.23,
             }),
         ],
+        transferList: ['cayo'],
     },
     marina_drive_air: {
         name: 'Marina Drive Air Parking',
@@ -2181,7 +2182,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 },
             }),
         ],
-        transferList: ['airport_public'],
+        transferList: ['airport_public', 'bell_farms'],
     },
     cayo_boat: {
         name: 'Port Cayo',
