@@ -18,6 +18,8 @@ export class PlayerService {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
+    private names: Record<string, string> = {};
+
     public getPlayerByCitizenId(citizenId: string): PlayerData | null {
         const player = this.QBCore.getPlayerByCitizenId(citizenId);
 
@@ -174,21 +176,25 @@ export class PlayerService {
     }
 
     public async getNameFromCitizenId(citizenId: string) {
-        const dbInfo = await this.prismaService.player.findFirst({
-            where: {
-                citizenid: citizenId,
-            },
-            select: {
-                charinfo: true,
-            },
-        });
+        if (!this.names[citizenId]) {
+            const dbInfo = await this.prismaService.player.findFirst({
+                where: {
+                    citizenid: citizenId,
+                },
+                select: {
+                    charinfo: true,
+                },
+            });
 
-        if (!dbInfo) {
-            return null;
+            if (!dbInfo) {
+                return null;
+            }
+
+            const charInfo = JSON.parse(dbInfo.charinfo) as PlayerCharInfo;
+
+            this.names[citizenId] = charInfo.firstname + ' ' + charInfo.lastname;
         }
 
-        const charInfo = JSON.parse(dbInfo.charinfo) as PlayerCharInfo;
-
-        return charInfo.firstname + ' ' + charInfo.lastname;
+        return this.names[citizenId];
     }
 }

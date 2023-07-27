@@ -25,7 +25,7 @@ export class CylinderZone implements AbstractZone {
         );
     }
 
-    public draw(wallColor: RGBColor, alpha: number): void {
+    public draw(wallColor: RGBColor, alpha: number, text?: string): void {
         DrawMarker(
             1,
             this.center[0],
@@ -52,5 +52,20 @@ export class CylinderZone implements AbstractZone {
             null,
             false
         );
+
+        if (text) {
+            const [onScreen, _x, _y] = World3dToScreen2d(this.center[0], this.center[1], (this.minZ + this.maxZ) / 2);
+
+            if (onScreen) {
+                SetTextScale(0.35, 0.35);
+                SetTextFont(4);
+                SetTextProportional(true);
+                SetTextColour(255, 255, 255, 255);
+                SetTextEntry('STRING');
+                SetTextCentre(true);
+                AddTextComponentString(text);
+                DrawText(_x, _y);
+            }
+        }
     }
 }

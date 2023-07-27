@@ -102,7 +102,7 @@ export class VehicleDamageProvider {
             return;
         }
 
-        if (!NetworkHasControlOfEntity(vehicle)) {
+        if (NetworkGetEntityIsLocal(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
             this.currentVehicleStatus = null;
 
             return;
@@ -224,7 +224,10 @@ export class VehicleDamageProvider {
     public async cancelElectricTankDamage() {
         const vehicles: number[] = GetGamePool('CVehicle');
         for (const vehicle of vehicles) {
-            if (GetPlayerServerId(NetworkGetEntityOwner(vehicle)) !== GetPlayerServerId(PlayerId())) {
+            if (
+                NetworkGetEntityIsLocal(vehicle) ||
+                GetPlayerServerId(NetworkGetEntityOwner(vehicle)) !== GetPlayerServerId(PlayerId())
+            ) {
                 continue;
             }
             if (isVehicleModelElectric(GetEntityModel(vehicle))) {

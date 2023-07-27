@@ -30,6 +30,7 @@ import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
 import { ObjectModule } from './client/object/object.module';
 import { PlayerModule } from './client/player/player.module';
+import { RaceModule } from './client/race/race.module';
 import { RepositoryModule } from './client/resources/repository.module';
 import { ShopModule } from './client/shop/shop.module';
 import { store } from './client/store/store';
@@ -95,6 +96,7 @@ async function bootstrap() {
         TaxiModule,
         BinocularsModule,
         VoipModule,
+        RaceModule,
         ...PrivateModules
     );
 

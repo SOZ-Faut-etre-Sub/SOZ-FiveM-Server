@@ -10,6 +10,7 @@ import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
+import { RaceRepository } from './race.repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
 import { UpwChargerRepository } from './upw.station.repository';
 import { VehicleRepository } from './vehicle.repository';
@@ -43,6 +44,9 @@ export class RepositoryProvider {
     @Inject(DrugSellLocationRepository)
     private drugSellLocationRepository: DrugSellLocationRepository;
 
+    @Inject(RaceRepository)
+    private raceRepository: RaceRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -57,6 +61,7 @@ export class RepositoryProvider {
         await this.underTypesShopRepository.load();
         await this.drugSeedlingRepository.load();
         await this.drugSellLocationRepository.load();
+        await this.raceRepository.load();
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }

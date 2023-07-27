@@ -7,6 +7,7 @@ import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { AdminMapperMenuData, HousingUpgradesMenuData } from '../housing/menu';
 import { MenuUpwData, UpwOrderMenuData } from '../job/upw';
+import { Race } from '../race';
 import { BossShopMenu, ShopProduct } from '../shop';
 import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
@@ -77,6 +78,8 @@ export enum MenuType {
     DrugGarden = 'drug_garden',
     DrugAdmin = 'drug_admin',
     RentBoat = 'rent_boat',
+    RaceAdmin = 'RaceAdmin',
+    RaceRank = 'RaceRank',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -116,4 +119,6 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.DrugShop]: ShopProduct[];
     [MenuType.DrugAdmin]: never;
     [MenuType.RentBoat]: any;
+    [MenuType.RaceAdmin]: Race[];
+    [MenuType.RaceRank]: { id: number; name: string };
 }

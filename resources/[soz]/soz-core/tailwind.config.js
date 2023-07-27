@@ -26,6 +26,8 @@ module.exports = {
         extend: {
             colors: {
                 'sozedex-green': '#308032',
+                'race-current': '#33a844',
+                'race-notcurrent': '#778694',
             },
             zIndex: {
                 9999: '9999',

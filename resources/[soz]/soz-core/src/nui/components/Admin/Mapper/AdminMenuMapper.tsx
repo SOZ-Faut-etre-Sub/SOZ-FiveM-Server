@@ -47,6 +47,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
         return null;
     }
 
+    const onRaceAdminMenuOpen = () => {
+        fetchNui(NuiEvent.RaceAdminMenuOpen);
+    };
+
     const sortedProperties = properties.sort((a, b) => a.identifier.localeCompare(b.identifier));
 
     return (
@@ -65,6 +69,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                         🚧 Voir les informations de l'interieur
                     </MenuItemCheckbox>
                     <MenuItemButton onConfirm={onDrugAdminMenuOpen}>💊 Drogue</MenuItemButton>
+                    <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">

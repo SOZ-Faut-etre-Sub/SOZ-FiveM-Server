@@ -2,6 +2,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import {
+    getDefaultVehicleCondition,
     isVehicleModelElectric,
     VehicleClass,
     VehicleLightState,
@@ -91,8 +92,9 @@ export class HudVehicleProvider {
             return;
         }
 
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
-        const condition = this.vehicleConditionProvider.getVehicleCondition(vehicleNetworkId);
+        const condition = NetworkGetEntityIsNetworked(vehicle)
+            ? this.vehicleConditionProvider.getVehicleCondition(NetworkGetNetworkIdFromEntity(vehicle))
+            : getDefaultVehicleCondition();
 
         if (null === condition) {
             this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {

@@ -28,6 +28,7 @@ import { PanelApp } from './Panel/PanelApp';
 import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
 import { RadarApp } from './Police/RadarApp';
 import { ProgressApp } from './Progress/ProgressApp';
+import { RaceApp } from './Race/RaceApp';
 import { RadioApp } from './Radio/RadioApp';
 import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { StateApp } from './StateApp';
@@ -88,6 +89,7 @@ export const App: FunctionComponent = () => {
                 <SozedexApp />
                 <DrugSkillApp />
                 <DrugTransformApp />
+                <RaceApp />
                 <InputApp />
             </div>
         </Provider>

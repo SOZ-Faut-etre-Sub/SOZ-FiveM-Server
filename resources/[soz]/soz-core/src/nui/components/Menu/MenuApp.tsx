@@ -22,6 +22,8 @@ import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
 import { JobOnDutyMenu } from '../Job/OnDutyMenu';
 import { LsmcJobMenu } from '../LSMC/LsmcJobMenu';
 import { MandatoryJobMenu } from '../Mandatory/MandatoryJobMenu';
+import { MenuRaceAdmin } from '../Race/MenuRaceAdmin';
+import { MenuRaceRank } from '../Race/MenuRaceRanking';
 import { BarberShopMenu } from '../Shop/BarberShopMenu';
 import { ClothShopMenu } from '../Shop/ClothShopMenu';
 import { EasterShopMenu } from '../Shop/EasterShopMenu';
@@ -205,6 +207,8 @@ const MenuRouter: FunctionComponent = () => {
             />
             <Route path={`/${MenuType.Album}/*`} element={<MenuAlbum data={menuData} />} />
             <Route path={`/${MenuType.RentBoat}/*`} element={<MenuRentBoat />} />
+            <Route path={`/${MenuType.RaceAdmin}/*`} element={<MenuRaceAdmin data={menuData} />} />
+            <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
         </Routes>
     );
 };
