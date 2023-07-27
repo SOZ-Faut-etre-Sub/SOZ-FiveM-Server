@@ -6787,7 +6787,7 @@ QBShared.Items = {
         ['drug_pot'] = {
             ['target'] = 'mushrooms_fruiting_bag',
             ['ingredient'] = 'mushroom',
-            ['nbIngredient'] = 10,
+            ['nbIngredient'] = 30,
         }
     },
     ['mushrooms_fruiting_bag'] = {
@@ -6886,7 +6886,7 @@ QBShared.Items = {
         ['drug_pot'] = {
             ['target'] = 'zeed_pot',
             ['ingredient'] = 'zeed',
-            ['nbIngredient'] = 10,
+            ['nbIngredient'] = 30,
         }
     },
     ['zeed_pot'] = {
