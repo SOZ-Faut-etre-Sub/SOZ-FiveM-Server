@@ -161,6 +161,9 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
                 case 'auto-theft':
                     titleType = 'vol de voiture';
                     break;
+                case 'drug':
+                    titleType = 'Stupéfiant';
+                    break;
                 case 'default':
                 default:
                     titleType = 'message';
@@ -185,6 +188,8 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
                 return 'border-indigo-500/70';
             case 'auto-theft':
                 return 'border-cyan-500/70';
+            case 'drug':
+                return 'border-teal-300/70';
             case 'explosion':
                 return 'border-pink-500/70';
             case 'default':
@@ -207,6 +212,8 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
                 return 'text-indigo-500';
             case 'auto-theft':
                 return 'text-cyan-500';
+            case 'drug':
+                return 'text-teal-300';
             case 'explosion':
                 return 'text-pink-500';
             case 'default':

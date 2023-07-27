@@ -29,6 +29,7 @@ export type NotificationPoliceType =
     | 'racket'
     | 'shooting'
     | 'explosion'
-    | 'auto-theft';
+    | 'auto-theft'
+    | 'drug';
 
 export type NotificationPoliceLogoType = 'lspd' | 'bcso' | 'police';
