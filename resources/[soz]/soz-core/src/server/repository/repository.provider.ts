@@ -17,6 +17,7 @@ import { GloveShopRepository } from './glove.shop.repository';
 import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { ObjectRepository } from './object.repository';
+import { RaceRepository } from './race.repository';
 import { Repository } from './repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
 import { UpwChargerRepository } from './upw.charger.repository';
@@ -70,6 +71,9 @@ export class RepositoryProvider {
     @Inject(ClothingShopRepository)
     private clothingShopRepository: ClothingShopRepository;
 
+    @Inject(RaceRepository)
+    private raceRepository: RaceRepository;
+
     private repositories: Record<string, Repository<any>> = {};
 
     @Once()
@@ -87,6 +91,7 @@ export class RepositoryProvider {
         this.repositories['underTypesShop'] = this.underTypesShopRepository;
         this.repositories['drugSeedling'] = this.drugSeedlingRepository;
         this.repositories['drugSellLocation'] = this.drugSellLocationRepository;
+        this.repositories['race'] = this.raceRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)

@@ -282,6 +282,12 @@ export enum ServerEvent {
     DRUGS_ZONE_ADD = 'soz-core:server:drugs:zone-add',
     DRUGS_ZONE_DELETE = 'soz-core:server:drugs:zone-delete',
     DRUGS_ZONE_UPDATE = 'soz-core:server:drugs:zone-update',
+
+    RACE_ADD = 'soz-core:server:race:add',
+    RACE_UPDATE = 'soz-core:server:race:update',
+    RACE_DELETE = 'soz-core:server:race:delete',
+    RACE_FINISH = 'soz-core:server:race:finish',
+    RACE_CLEAR_RANKING = 'soz-core:server:race:clear-ranking',
 }
 
 export enum ClientEvent {
@@ -515,6 +521,9 @@ export enum ClientEvent {
     DRUGS_CONSUME = 'soz-core:client:drugs:consume',
     DRUGS_ZONE_ADD_UPDATE = 'soz-core:client:drugs:zone-add',
     DRUGS_ZONE_DELETE = 'soz-core:client:drugs:zone-delete',
+
+    RACE_ADD_UPDATE = 'soz-core:client:race:add-update',
+    RACE_DELETE = 'soz-core:client:race:delete',
 }
 
 export enum GameEvent {
@@ -771,4 +780,22 @@ export enum NuiEvent {
     DrugTransformDoTransform = 'soz-core:client:drug:transform-doit',
     DrugTransformCancel = 'soz-core:client:drug:transform-cancel',
     DrugContractExit = 'soz-core:client:drug:contract-exit',
+
+    RaceAdminMenuOpen = 'soz-core:client:race:open-menu',
+    RaceAdd = 'soz-core:client:race:add',
+    RaceEnable = 'soz-core:client:race:enable',
+    RaceRename = 'soz-core:client:race:rename',
+    RaceUpdateNPCLocation = 'soz-core:client:race:update-npc-location',
+    RaceUpdateStart = 'soz-core:client:race:update-start',
+    RaceUpdateCarModel = 'soz-core:client:race:update-model',
+    RaceDelete = 'soz-core:client:race:delete',
+    RaceTry = 'soz-core:client:race:try',
+    RaceAddCheckpoint = 'soz-core:client:race:add-checkpoint',
+    RaceUpdateCheckPoint = 'soz-core:client:race:update-checkpoint',
+    RaceDisplay = 'soz-core:client:race:display',
+    RaceTPStart = 'soz-core:client:race:tp',
+    RaceCurrrent = 'soz-core:client:race:current',
+    RaceClearRanking = 'soz-core:client:race:clear-ranking',
+    RaceGetRanking = 'soz-core:client:race:get-ranking',
+    RaceFps = 'soz-core:client:race:fps',
 }

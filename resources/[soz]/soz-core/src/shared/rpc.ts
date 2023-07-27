@@ -120,6 +120,11 @@ export enum RpcServerEvent {
     DRUGS_PAY_LOCATION = 'soz-core:server:drugs:location-pay',
 
     SOZEDEX_CLAIM_REWARD = 'soz-core:server:sozedex:claim-reward',
+
+    RACE_SERVER_START = 'soz-core:server:race:start',
+    RACE_SERVER_EXIT = 'soz-core:server:race:exit',
+    RACE_GET_RANKING = 'soz-core:server:race:get-ranking',
+    RACE_GET_SPLITS = 'soz-core:server:race:get-splits',
 }
 
 export enum RpcClientEvent {

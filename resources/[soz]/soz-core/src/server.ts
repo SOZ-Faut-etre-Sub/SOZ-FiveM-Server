@@ -29,6 +29,7 @@ import { TaxiModule } from './server/job/taxi/taxi.module';
 import { UpwModule } from './server/job/upw/upw.module';
 import { MonitorModule } from './server/monitor/monitor.module';
 import { PlayerModule } from './server/player/player.module';
+import { RaceModule } from './server/race/race.module';
 import { RebootModule } from './server/reboot/reboot.module';
 import { RepositoryModule } from './server/repository/repository.module';
 import { ShopModule } from './server/shop/shop.module';
@@ -84,6 +85,7 @@ async function bootstrap() {
         PoliceModule,
         UpwModule,
         TaxiModule,
+        RaceModule,
         ...PrivateModules
     );
 

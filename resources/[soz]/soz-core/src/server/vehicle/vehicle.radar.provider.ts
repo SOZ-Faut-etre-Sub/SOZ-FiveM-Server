@@ -6,10 +6,10 @@ import { ClientEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
 import { PlayerLicenceType } from '../../shared/player';
 import { BankService } from '../bank/bank.service';
+import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { VehicleRepository } from '../repository/vehicle.repository';
-import { ServerStateService } from '../server.state.service';
 import { VehicleStateService } from './vehicle.state.service';
 
 const RadarMessage = {
@@ -23,8 +23,8 @@ export class VehicleRadarProvider {
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
 
-    @Inject(ServerStateService)
-    private serverStateService: ServerStateService;
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
 
     @Inject(BankService)
     private bankService: BankService;
@@ -53,7 +53,7 @@ export class VehicleRadarProvider {
         const state = this.vehicleStateService.getVehicleState(vehicleID);
         const vehiclePlate = state.volatile.plate || GetVehicleNumberPlateText(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
-        const fine = Math.round((vehicleSpeed - radar.speed) * 1.5);
+        const fine = Math.round((vehicleSpeed - radar.speed) * 10);
         const vehicleType = GetVehicleType(vehicle);
         const vehiclePosition = GetEntityCoords(vehicle);
 
@@ -75,10 +75,46 @@ export class VehicleRadarProvider {
                 return;
             }
 
+            const dbInfo = await this.prismaService.radar.findUnique({
+                where: {
+                    id: radarID,
+                },
+            });
+
+            let record = 0;
+            if (dbInfo) {
+                record = dbInfo.speed_record;
+                radarMessage =
+                    radarMessage +
+                    `Record: ~b~${await this.playerService.getNameFromCitizenId(dbInfo.citizedid_record)}~s~ ~o~${
+                        dbInfo.speed_record
+                    }km/h~s~~n~`;
+            } else {
+                await this.prismaService.radar.create({
+                    data: {
+                        id: radarID,
+                        citizedid_record: player.citizenid,
+                        speed_record: vehicleSpeed,
+                    },
+                });
+            }
+
+            if (vehicleSpeed > record) {
+                await this.prismaService.radar.update({
+                    where: {
+                        id: radarID,
+                    },
+                    data: {
+                        citizedid_record: player.citizenid,
+                        speed_record: vehicleSpeed,
+                    },
+                });
+            }
+
             radarMessage = radarMessage + `Amende: ~r~${fine}$~s~~n~`;
             let licenceAction = 'no_action';
 
-            if (vehicleSpeed - radar.speed >= 40) {
+            if (vehicleSpeed - radar.speed >= 20) {
                 const licences = player.metadata['licences'];
                 const vehicleDB = await this.vehicleRepository.findByHash(vehicleModel);
 
@@ -134,7 +170,8 @@ export class VehicleRadarProvider {
                 }
             );
 
-            this.bankService.transferBankMoney(player.charinfo.account, radar.station, fine);
+            this.bankService.transferBankMoney(player.charinfo.account, JobType.LSPD, Math.round(fine / 2));
+            this.bankService.transferBankMoney(player.charinfo.account, JobType.BCSO, fine - Math.round(fine / 2));
 
             this.notifier.advancedNotify(
                 source,
