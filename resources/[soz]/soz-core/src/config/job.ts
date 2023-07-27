@@ -22,6 +22,12 @@ export const JobBlips: Partial<Record<JobType, Blip[]>> = {
             scale: 0.9,
             coords: { x: 2405.98, y: 3127.11, z: 48.17 },
         },
+        {
+            name: 'Atelier marin',
+            sprite: 227,
+            scale: 0.9,
+            coords: { x: 5111.62, y: -4638.45, z: 1.74 },
+        },
     ],
 };
 

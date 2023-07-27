@@ -34,7 +34,7 @@ export class JobProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Once(OnceStep.PlayerLoaded)
+    @Once(OnceStep.Start)
     public async onStart() {
         for (const [job, blips] of Object.entries(JobBlips)) {
             for (const blipIndex in blips) {
