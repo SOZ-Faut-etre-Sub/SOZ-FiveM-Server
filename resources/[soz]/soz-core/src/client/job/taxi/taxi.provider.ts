@@ -76,6 +76,7 @@ export class TaxiProvider {
                             this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
                         );
                     },
+                    job: JobType.Taxi,
                 },
             ]
         );

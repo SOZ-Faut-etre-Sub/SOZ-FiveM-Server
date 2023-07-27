@@ -166,8 +166,9 @@ Citizen.CreateThread(function()
                 label = "Prise de service",
                 event = "QBCore:ToggleDuty",
                 canInteract = function()
-                    return PlayerData.job.id == SozJobCore.JobType.Food and not PlayerData.job.onduty
+                    return not PlayerData.job.onduty
                 end,
+                job = SozJobCore.JobType.Food,
             },
             {
                 type = "server",
@@ -175,8 +176,9 @@ Citizen.CreateThread(function()
                 label = "Fin de service",
                 event = "QBCore:ToggleDuty",
                 canInteract = function()
-                    return PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty
+                    return PlayerData.job.onduty
                 end,
+                job = SozJobCore.JobType.Food,
             },
             {
                 type = "server",
@@ -186,6 +188,7 @@ Citizen.CreateThread(function()
                 canInteract = function()
                     return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.OnDutyView)
                 end,
+                job = SozJobCore.JobType.Food,
             },
         },
     })
