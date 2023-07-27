@@ -430,6 +430,22 @@ type MenuItemSubMenuLinkProps = PropsWithChildren<{
     description?: string;
 }>;
 
+export const useMenuNavigate = (id: string): (() => void) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const type = useContext(MenuTypeContext);
+    const slugId = slugify(id);
+    const state = location.state as { activeIndex: number } | undefined;
+
+    return () =>
+        navigate(`/${type}/${slugId}`, {
+            state: {
+                ...(state || {}),
+                activeIndex: 0,
+            },
+        });
+};
+
 export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = ({
     children,
     id,
@@ -437,26 +453,10 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     description = null,
     disabled = false,
 }) => {
-    const location = useLocation();
-    const type = useContext(MenuTypeContext);
-    const navigate = useNavigate();
-    const state = location.state as { activeIndex: number } | undefined;
-    const slugId = slugify(id);
+    const navigateTo = useMenuNavigate(id);
 
     return (
-        <MenuItemContainer
-            onSelected={onSelected}
-            onConfirm={() =>
-                navigate(`/${type}/${slugId}`, {
-                    state: {
-                        ...(state || {}),
-                        activeIndex: 0,
-                    },
-                })
-            }
-            disabled={disabled}
-            description={description}
-        >
+        <MenuItemContainer onSelected={onSelected} onConfirm={navigateTo} disabled={disabled} description={description}>
             <div className="flex items-center justify-between">
                 <div>{children}</div>
                 <div>

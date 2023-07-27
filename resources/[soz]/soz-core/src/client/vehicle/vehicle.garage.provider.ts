@@ -541,6 +541,13 @@ export class VehicleGarageProvider {
         this.nuiMenu.closeMenu();
     }
 
+    @OnNuiEvent(NuiEvent.VehicleGarageTransfer)
+    public async transferVehicle({ id, from, to }: { id: number; from: Garage; to: Garage }) {
+        TriggerServerEvent(ServerEvent.VEHICLE_GARAGE_TRANSFER, id, from, to);
+
+        this.nuiMenu.closeMenu();
+    }
+
     private async enterGarage(id: string, garage: Garage) {
         const vehicles = await emitRpc<GarageVehicle[]>(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
         if (vehicles === null) {
@@ -576,6 +583,21 @@ export class VehicleGarageProvider {
                 free_places,
                 max_places,
                 has_fake_ticket: this.inventoryManager.hasEnoughItem('parking_ticket_fake', 1),
+                transferGarageList:
+                    garage.transferList
+                        ?.map(garageId => {
+                            const garage = this.garageRepository.get()[garageId];
+
+                            if (!garage) {
+                                return null;
+                            }
+
+                            return {
+                                id: garageId,
+                                garage,
+                            };
+                        })
+                        .filter(garage => garage !== null) ?? [],
             },
             {
                 position: {

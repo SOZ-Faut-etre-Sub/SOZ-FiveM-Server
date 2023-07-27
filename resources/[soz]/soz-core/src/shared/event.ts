@@ -179,6 +179,7 @@ export enum ServerEvent {
     VEHICLE_GARAGE_STORE = 'soz-core:server:vehicle:garage:store',
     VEHICLE_GARAGE_RETRIEVE = 'soz-core:server:vehicle:garage:retrieve',
     VEHICLE_GARAGE_RENAME = 'soz-core:server:vehicle:garage:rename',
+    VEHICLE_GARAGE_TRANSFER = 'soz-core:server:vehicle:garage:transfer',
     VEHICLE_SET_DEAD = 'soz-core:server:vehicle:set-dead',
     VEHICLE_WASH = 'soz-core:server:vehicle:wash',
     VEHICLE_FUEL_START = 'soz-core:server:vehicle:fuel:start',
@@ -699,6 +700,7 @@ export enum NuiEvent {
     VehicleGarageStore = 'soz-core:client:vehicle:garage:store',
     VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
+    VehicleGarageTransfer = 'soz-core:client:vehicle:garage:transfer',
 
     VoipCloseRadio = 'soz-core:nui:voip:close-radio',
     VoipEnableRadio = 'soz-core:nui:voip:enable-radio',

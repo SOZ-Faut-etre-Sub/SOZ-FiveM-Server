@@ -77,7 +77,7 @@ export class PlayerCleanService {
                 },
             },
             data: {
-                garage: 'airportpublic',
+                garage: 'airport_public',
             },
         });
 
