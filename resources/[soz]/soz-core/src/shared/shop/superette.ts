@@ -54,6 +54,7 @@ export const ShopsContent: Partial<Record<ShopBrand, ShopContent>> = {
     [ShopBrand.RobsliquorSouth]: SuperetteContent,
     [ShopBrand.Supermarket247North]: SuperetteContent,
     [ShopBrand.Supermarket247South]: SuperetteContent,
+    [ShopBrand.Supermarket247Cayo]: SuperetteContent,
     [ShopBrand.Zkea]: ZkeaContent,
     [ShopBrand.Ammunation]: AmmunationContent,
 };

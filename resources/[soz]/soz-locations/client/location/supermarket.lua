@@ -84,9 +84,12 @@ Locations["247supermarket-south"] = {
         maxZ = 105.57,
         debugPoly = LocationDebugPoly,
     }),
+}
+
+Locations["247supermarket-cayo"] = {
     [12] = BoxZone:Create(vector3(5146.02, -5083.16, 2.64), 12.00, 11.20,
                           {
-        name = "247supermarket9",
+        name = "247supermarket12",
         heading = 7.00,
         minZ = 1.64,
         maxZ = 4.64,
