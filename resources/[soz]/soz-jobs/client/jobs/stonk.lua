@@ -25,6 +25,7 @@ Citizen.CreateThread(function()
                 canInteract = function()
                     return not PlayerData.job.onduty
                 end,
+                job = SozJobCore.JobType.CashTransfer,
             },
             {
                 icon = "fas fa-sign-out-alt",
@@ -34,6 +35,7 @@ Citizen.CreateThread(function()
                 canInteract = function()
                     return PlayerData.job.onduty
                 end,
+                job = SozJobCore.JobType.CashTransfer,
             },
             {
                 type = "server",
@@ -43,6 +45,7 @@ Citizen.CreateThread(function()
                 canInteract = function()
                     return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.OnDutyView)
                 end,
+                job = SozJobCore.JobType.CashTransfer,
             },
         },
     })

@@ -99,6 +99,7 @@ export class LSMCProvider {
                             this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
                         );
                     },
+                    job: JobType.LSMC,
                 },
             ]
         );
