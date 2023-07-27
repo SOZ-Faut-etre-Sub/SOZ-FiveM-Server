@@ -32,7 +32,7 @@ export class VehicleProvider {
             return;
         }
 
-        const garage = vehClass == VehicleClass.Boats ? 'docks_boat' : 'airportpublic';
+        const garage = vehClass == VehicleClass.Boats ? 'docks_boat' : 'airport_public';
 
         await this.prismaService.playerVehicle.create({
             data: {

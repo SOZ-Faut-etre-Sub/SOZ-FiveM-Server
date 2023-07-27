@@ -1,8 +1,8 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
-import { GarageMenuData, GarageType } from '../../../shared/vehicle/garage';
+import { GarageMenuData, GarageType, GarageVehicle } from '../../../shared/vehicle/garage';
 import { fetchNui } from '../../fetch';
 import {
     MainMenu,
@@ -14,6 +14,7 @@ import {
     MenuItemSubMenuLink,
     MenuTitle,
     SubMenu,
+    useMenuNavigate,
 } from '../Styleguide/Menu';
 
 type MenuGarageProps = {
@@ -30,6 +31,8 @@ const BannerMap: Record<GarageType, string> = {
 };
 
 export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
+    const [currentVehicle, setCurrentVehicle] = useState<GarageVehicle | null>(null);
+
     if (!data) {
         return null;
     }
@@ -53,7 +56,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
             <Menu type={MenuType.Garage}>
                 <MainMenu>
                     <MenuTitle banner={BannerMap[data?.garage.type]}>{data?.garage.name}</MenuTitle>
-                    <VehicleList data={data} />
+                    <VehicleList data={data} setCurrentVehicle={setCurrentVehicle} />
                 </MainMenu>
             </Menu>
         );
@@ -82,13 +85,48 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                     {data?.garage.name}
                     {showFreePlaces && ` | Places libres : ${data?.free_places} / ${data?.max_places}`}
                 </MenuTitle>
-                <VehicleList data={data} />
+                <VehicleList data={data} setCurrentVehicle={setCurrentVehicle} />
+            </SubMenu>
+            <SubMenu id="transfer">
+                <MenuTitle banner={BannerMap[data?.garage.type]}>
+                    Transférer {currentVehicle?.name} - {currentVehicle?.vehicle.plate}
+                </MenuTitle>
+                <MenuContent>
+                    {data.transferGarageList.map((garage, key) => {
+                        const transferPrice = 100 + Math.round((currentVehicle?.weight / 1000) * 5);
+
+                        return (
+                            <MenuItemButton
+                                key={key}
+                                onConfirm={() => {
+                                    fetchNui(NuiEvent.VehicleGarageTransfer, {
+                                        id: currentVehicle?.vehicle.id,
+                                        from: data.garage,
+                                        to: garage,
+                                    });
+                                }}
+                            >
+                                <div className="flex justify-between align-items-center">
+                                    <span>{garage.garage.name}</span>
+                                    <span>{transferPrice}$</span>
+                                </div>
+                            </MenuItemButton>
+                        );
+                    })}
+                </MenuContent>
             </SubMenu>
         </Menu>
     );
 };
 
-export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
+type VehicleListProps = {
+    data: GarageMenuData;
+    setCurrentVehicle: (vehicle: GarageVehicle) => void;
+};
+
+export const VehicleList: FunctionComponent<VehicleListProps> = ({ data, setCurrentVehicle }) => {
+    const navigateToTransfer = useMenuNavigate('transfer');
+
     if (!data) {
         return null;
     }
@@ -150,50 +188,43 @@ export const VehicleList: FunctionComponent<MenuGarageProps> = ({ data }) => {
             {data.garage.type !== GarageType.Job && data.garage.type !== GarageType.House && (
                 <>
                     {vehicleList.map(garageVehicle => {
-                        if (
-                            garageVehicle.price > 0 &&
-                            data.has_fake_ticket &&
-                            data.garage.type === GarageType.Private
-                        ) {
-                            return (
-                                <MenuItemSelect
-                                    onConfirm={(index, value) => {
-                                        if (value === 'take_out') {
-                                            vehicleTakeOut(garageVehicle.vehicle.id, false);
-                                        }
-
-                                        if (value === 'take_out_ticket') {
-                                            vehicleTakeOut(garageVehicle.vehicle.id, true);
-                                        }
-                                    }}
-                                    key={garageVehicle.vehicle.id}
-                                    title={garageVehicle.vehicle_name}
-                                    titleWidth={60}
-                                    description={`Kilométrage: ${(
-                                        (garageVehicle.vehicle.condition.mileage || 0) / 1000
-                                    ).toFixed(2)}km`}
-                                >
-                                    <MenuItemSelectOption value="take_out">
-                                        Payer ${garageVehicle.price}
-                                    </MenuItemSelectOption>
-                                    <MenuItemSelectOption value="take_out_ticket">
-                                        Utiliser un ticket
-                                    </MenuItemSelectOption>
-                                </MenuItemSelect>
-                            );
-                        }
-
                         return (
-                            <MenuItemButton
-                                onConfirm={() => vehicleTakeOut(garageVehicle.vehicle.id, false)}
+                            <MenuItemSelect
+                                onConfirm={(index, value) => {
+                                    if (value === 'take_out') {
+                                        vehicleTakeOut(garageVehicle.vehicle.id, false);
+                                    }
+
+                                    if (value === 'take_out_ticket') {
+                                        vehicleTakeOut(garageVehicle.vehicle.id, true);
+                                    }
+
+                                    if (value === 'transfer') {
+                                        setCurrentVehicle(garageVehicle);
+                                        navigateToTransfer();
+                                    }
+                                }}
                                 key={garageVehicle.vehicle.id}
+                                title={garageVehicle.vehicle_name}
+                                titleWidth={60}
                                 description={`Kilométrage: ${(
                                     (garageVehicle.vehicle.condition.mileage || 0) / 1000
                                 ).toFixed(2)}km`}
                             >
-                                {garageVehicle.vehicle_name}
-                                {garageVehicle.price > 0 && ` - Coût: $${garageVehicle.price}`}
-                            </MenuItemButton>
+                                <MenuItemSelectOption value="take_out">
+                                    Sortir {garageVehicle.price > 0 && <span>(${garageVehicle.price})</span>}
+                                </MenuItemSelectOption>
+                                {garageVehicle.price > 0 &&
+                                    data.has_fake_ticket &&
+                                    data.garage.type === GarageType.Private && (
+                                        <MenuItemSelectOption value="take_out_ticket">
+                                            Utiliser un ticket
+                                        </MenuItemSelectOption>
+                                    )}
+                                {data.garage.type === GarageType.Public && (
+                                    <MenuItemSelectOption value="transfer">Transférer</MenuItemSelectOption>
+                                )}
+                            </MenuItemSelect>
                         );
                     })}
                 </>
