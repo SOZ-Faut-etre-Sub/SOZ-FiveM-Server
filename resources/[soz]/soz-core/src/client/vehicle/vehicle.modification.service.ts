@@ -29,6 +29,8 @@ const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.Fender]: 'Aile',
 };
 
+const VehNoDefaultExtra = [GetHashKey('tropic2'), GetHashKey('tropic3')];
+
 const ModExclusion: Record<number, VehicleModType[]> = {
     [GetHashKey('sentinel')]: [VehicleModType.ColumnShifterLevers, VehicleModType.Speakers],
     [GetHashKey('banshee')]: [VehicleModType.Speakers],
@@ -692,9 +694,15 @@ export class VehicleModificationService {
             value.apply(vehicle, configuration.modification[key], configuration);
         }
 
+        const defaultExtra = !VehNoDefaultExtra.includes(GetEntityModel(vehicle));
+
         for (let i = 1; i < 15; i++) {
             if (DoesExtraExist(vehicle, i)) {
                 const haxExtra = configuration.extra[i] === undefined ? true : configuration.extra[i];
+
+                if (configuration.extra[i] === undefined && !defaultExtra) {
+                    continue;
+                }
 
                 SetVehicleExtra(vehicle, i, !haxExtra);
             }
