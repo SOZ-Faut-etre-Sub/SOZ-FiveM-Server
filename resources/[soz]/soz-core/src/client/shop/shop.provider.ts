@@ -273,6 +273,7 @@ export class ShopProvider {
         switch (this.currentShopBrand) {
             case ShopBrand.Supermarket247North:
             case ShopBrand.Supermarket247South:
+            case ShopBrand.Supermarket247Cayo:
             case ShopBrand.LtdGasolineNorth:
             case ShopBrand.LtdGasolineSouth:
             case ShopBrand.RobsliquorNorth:

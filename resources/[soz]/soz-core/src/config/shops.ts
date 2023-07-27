@@ -24,6 +24,7 @@ export enum ShopBrand {
     Jewelry = 'jewelry',
     Supermarket247North = '247supermarket-north',
     Supermarket247South = '247supermarket-south',
+    Supermarket247Cayo = '247supermarket-cayo',
     LtdGasolineNorth = 'ltdgasoline-north',
     LtdGasolineSouth = 'ltdgasoline-south',
     RobsliquorNorth = 'robsliquor-north',
@@ -80,6 +81,13 @@ export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
         blipSprite: 52,
         blipColor: 2,
         pedModel: 'cs_ashley',
+        banner: 'https://nui-img/soz/menu_shop_supermarket',
+    },
+    [ShopBrand.Supermarket247Cayo]: {
+        label: 'Superette',
+        blipSprite: 52,
+        blipColor: 2,
+        pedModel: 's_f_y_sweatshop_01',
         banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.LtdGasolineNorth]: {
@@ -219,6 +227,12 @@ export const ShopsConfig: Record<string, ShopConfig> = {
         positionInShop: [-1099.84, 2717.69, 19.11, 135.67],
         cameraInShop: [-1101.08, 2716.36, 19.11, 310.78],
     },
+    ['binco8']: {
+        brand: ShopBrand.Binco,
+        location: [5000.14, -5119.18, 2.85, 250.68],
+        positionInShop: [4999.24, -5113.65, 2.85, 173.76],
+        cameraInShop: [4998.5, -5116.23, 2.85, 339.63],
+    },
     ['barber']: {
         brand: ShopBrand.Barber,
         location: [-823.04, -183.63, 37.57, 208.03],
@@ -281,6 +295,10 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     ['247supermarket11']: {
         brand: ShopBrand.Supermarket247North,
         location: [161.57, 6643.05, 31.71, 222.18],
+    },
+    ['247supermarket12']: {
+        brand: ShopBrand.Supermarket247Cayo,
+        location: [5148.21, -5087.62, 2.54, 2.48],
     },
     ['247supermarket']: {
         brand: ShopBrand.Supermarket247South,
