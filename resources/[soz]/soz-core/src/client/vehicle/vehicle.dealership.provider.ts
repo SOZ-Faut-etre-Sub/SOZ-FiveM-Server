@@ -87,8 +87,8 @@ export class VehicleDealershipProvider {
         }
     }
 
-    @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded() {
+    @Once(OnceStep.Start)
+    public async onStart() {
         for (const [dealership, config] of Object.entries(DealershipConfig)) {
             if (!isFeatureEnabled(Feature.Boat) && dealership === DealershipType.Boat) {
                 continue;

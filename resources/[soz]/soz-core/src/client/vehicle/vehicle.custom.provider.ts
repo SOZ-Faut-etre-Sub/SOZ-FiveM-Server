@@ -81,6 +81,11 @@ export class VehicleCustomProvider {
             minZ: 28.5,
             maxZ: 34.502,
         }),
+        new BoxZone([5126.11, -4649.94, 0.62], 71.0, 29.2, {
+            heading: 255.65,
+            minZ: -0.38,
+            maxZ: 1.62,
+        }),
     ]);
 
     @Once(OnceStep.PlayerLoaded)

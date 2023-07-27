@@ -94,6 +94,11 @@ export class BennysVehicleProvider {
             minZ: 43.81,
             maxZ: 50.812,
         }),
+        new BoxZone([5126.11, -4649.94, 0.62], 71.0, 29.2, {
+            heading: 255.65,
+            minZ: -0.38,
+            maxZ: 1.62,
+        }),
     ]);
 
     @Once(OnceStep.PlayerLoaded)
