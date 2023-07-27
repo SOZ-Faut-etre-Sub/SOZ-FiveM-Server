@@ -23,10 +23,13 @@ export class InventoryManager {
     }
 
     public hasEnoughItem(itemId: string, amount?: number, skipExpiredItem?: boolean): boolean {
-        if (amount) {
-            return this.getItemCount(itemId, skipExpiredItem) >= amount;
+        if (amount === 0) {
+            return true;
         }
-        return false;
+        if (!amount) {
+            amount = 1;
+        }
+        return this.getItemCount(itemId, skipExpiredItem) >= amount;
     }
 
     public getItemCount(itemId: string, skipExpiredItem?: boolean): number {
