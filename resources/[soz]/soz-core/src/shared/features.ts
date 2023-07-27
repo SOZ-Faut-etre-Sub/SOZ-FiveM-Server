@@ -66,7 +66,7 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
         test: false,
     },
     [Feature.NewHorizon]: {
-        production: false,
+        production: true,
         development: true,
         test: true,
     },
