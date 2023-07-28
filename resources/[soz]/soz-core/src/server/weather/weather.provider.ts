@@ -9,9 +9,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { PollutionLevel } from '../../shared/pollution';
-import { getRandomKeyWeighted } from '../../shared/random';
 import { getRandomInt, getRandomKeyWeighted } from '../../shared/random';
-import { Forecast, Time, Weather } from '../../shared/weather';
 import { Forecast, ForecastWithTemperature, TemperatureRange, Time, Weather } from '../../shared/weather';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
@@ -40,7 +38,7 @@ export class WeatherProvider {
     private incomingForecasts: ForecastWithTemperature[] = [
         {
             weather: this.defaultWeather,
-            temperature: this.getTemperature(this.defaultWeather, GlobalState.time),
+            temperature: this.getTemperature(this.defaultWeather, this.currentTime),
             duration: 1000 * 10,
         },
     ];
@@ -105,7 +103,7 @@ export class WeatherProvider {
             // Just check the logs of the server, if it loops indefinitely, then you need to keep this block.
             weather = {
                 weather: this.defaultWeather,
-                temperature: this.getTemperature(this.defaultWeather, GlobalState.time),
+                temperature: this.getTemperature(this.defaultWeather, this.currentTime),
                 duration: 1000 * 10,
             };
         }
@@ -230,13 +228,13 @@ export class WeatherProvider {
                     }
                 }
                 return acc;
-            }, GlobalState.time);
+            }, this.currentTime);
 
             const randomDuration = (Math.random() * 5 + 10) * 60 * 1000;
             if (this.shouldUpdateWeather) {
                 const forecast = this.incomingForecasts.slice(-1);
                 const nextWeather = this.getNextWeather(forecast.length ? forecast[0].weather : initialWeather);
-                const futureTime = GlobalState.time;
+                const futureTime = this.currentTime;
 
                 this.incomingForecasts.push({
                     weather: nextWeather,
