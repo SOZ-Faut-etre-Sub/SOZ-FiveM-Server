@@ -195,6 +195,33 @@
                 "TITLE": "Appel de société"
             }
         },
+        "WEATHER": {
+            "ALERT": {
+                "TITLE": "Alerte tempête",
+                "DESCRIPTION": "Une tempête est en approche, veuillez rester à l'intérieur et vous mettre à l'abri."
+            },
+            "FORECASTS": {
+                "EXTRASUNNY": {
+                    "DAY": "Ensoleillé",
+                    "NIGHT": "Enluné"
+                },
+                "CLEAR": "Clair",
+                "CLOUDS": "Nuageux",
+                "SMOG": "Brouillard",
+                "FOGGY": "Brumeux",
+                "OVERCAST": "Couvert",
+                "RAIN": "Pluie",
+                "THUNDER": "Orage",
+                "CLEARING": "Éclaircies, rares averses",
+                "NEUTRAL": "Éclaircies",
+                "SNOW": "Neige",
+                "BLIZZARD": "Blizzard",
+                "SNOWLIGHT": "Neige légère",
+                "XMAS": "Neige",
+                "HALLOWEEN": "Apocalyptique"
+            },
+            "LOADING": "Récupération de la météo..."
+        },
         "RELATIVE_TIME": {
             "future": "dans %s",
             "past": "%s plus tôt",
@@ -245,6 +272,7 @@
         "APPS_SOCIETY_MESSAGES": "Répondeur Entreprise",
         "APPS_TWITCH_NEWS": "Twitch News",
         "APPS_ZUTOM": "Zutom",
+        "APPS_WEATHER": "Météo",
         "GENERIC_CLICK_TO_REVEAL": "Cliquer pour révéler",
         "GENERIC_LOADING": "Chargement...",
         "GENERIC_WAIT": "Veuillez patienter...",

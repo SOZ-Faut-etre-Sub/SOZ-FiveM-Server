@@ -26,6 +26,7 @@ import { useMessagesService } from './services/useMessagesService';
 import { usePhoneService } from './services/usePhoneService';
 import { usePhotoService } from './services/usePhotoService';
 import { useSimCardService } from './services/useSimCardService';
+import { useAppWeatherService } from './services/app/useAppWeatherService';
 
 function Phone() {
     const { apps } = useApps();
@@ -56,6 +57,7 @@ function Phone() {
     useAppInvoicesService();
     useAppTwitchNewsService();
     useAppSocietyService();
+    useAppWeatherService();
 
     if (config.wallpaper === undefined) {
         return null;
