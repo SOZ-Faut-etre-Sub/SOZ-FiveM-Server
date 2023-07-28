@@ -145,7 +145,7 @@ export class ShopProvider {
 
     @OnEvent(ServerEvent.ZKEA_CHECK_STOCK)
     public async zkeaCheckStock(source: number) {
-        const amount = this.inventoryManager.getItem('cabinet_storage', 'cabinet_zkea');
+        const amount = this.inventoryManager.getItemCount('cabinet_storage', 'cabinet_zkea');
         this.notifier.notify(source, `Il reste ${amount} ~b~meubles Zkea~s~ en stock.`, 'info');
     }
 
