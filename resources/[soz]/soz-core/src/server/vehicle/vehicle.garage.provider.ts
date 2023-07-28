@@ -361,8 +361,15 @@ export class VehicleGarageProvider {
             const or = [{ citizenid: player.citizenid, job: null }] as Array<Prisma.PlayerVehicleWhereInput>;
 
             if (
-                garage.type !== GarageType.Private &&
+                garage.type === GarageType.Depot &&
                 this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyTakeOutPound)
+            ) {
+                or.push({ job: player.job.id });
+            }
+
+            if (
+                (garage.type === GarageType.Public || garage.type === GarageType.Private) &&
+                this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyPublicPrivateGarage)
             ) {
                 or.push({ job: player.job.id });
             }
@@ -465,9 +472,18 @@ export class VehicleGarageProvider {
             (garage.type === GarageType.Private ||
                 garage.type === GarageType.Public ||
                 garage.type === GarageType.House) &&
+            !vehicle.job &&
             !citizenIds.has(vehicle.citizenid)
         ) {
             return Err("ce véhicule n'est pas à vous");
+        } else if (
+            (garage.type === GarageType.Private ||
+                garage.type === GarageType.Public ||
+                garage.type === GarageType.House) &&
+            vehicle.job &&
+            !this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyPublicPrivateGarage)
+        ) {
+            return Err("vous n'avez pas la permission de ranger un véhicule entreprise dans un garage publique/privé");
         } else if (garage.type === GarageType.Job && garage.job !== player.job.id) {
             return Err("vous n'avez pas accès à ce garage entreprise");
         } else if (
@@ -694,7 +710,10 @@ export class VehicleGarageProvider {
                 const citizenIds = await this.getCitizenIdsForGarage(player, garage, id);
 
                 if (!citizenIds.has(playerVehicle.citizenid)) {
-                    if (garage.type === GarageType.Private || garage.type === GarageType.House) {
+                    if (
+                        !playerVehicle.job &&
+                        (garage.type === GarageType.Private || garage.type === GarageType.House)
+                    ) {
                         this.notifier.notify(source, 'Ce véhicule ne vous appartient pas.', 'error');
 
                         return;
@@ -710,9 +729,23 @@ export class VehicleGarageProvider {
                     }
 
                     if (
-                        (garage.type === GarageType.Depot || garage.type === GarageType.Public) &&
+                        garage.type === GarageType.Depot &&
                         (playerVehicle.job !== player.job.id ||
                             !this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyTakeOutPound))
+                    ) {
+                        this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
+
+                        return;
+                    }
+
+                    if (
+                        (garage.type === GarageType.Private || garage.type === GarageType.Public) &&
+                        (playerVehicle.job !== player.job.id ||
+                            !this.jobService.hasPermission(
+                                player,
+                                player.job.id,
+                                JobPermission.SocietyPublicPrivateGarage
+                            ))
                     ) {
                         this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
 

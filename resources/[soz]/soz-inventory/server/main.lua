@@ -519,6 +519,7 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
                 Inventory.RemoveItem(inv, slotItemDef.name, 1, nil, slotId)
                 Inventory.AddItem(source, inv, slotItemDef.drug_pot.target, 1)
                 amount = amount - slotItemDef.drug_pot.nbIngredient
+                weight = Inventory.GetItemWeight(item, metadata, amount)
 
                 if amount == 0 then
                     success = true
