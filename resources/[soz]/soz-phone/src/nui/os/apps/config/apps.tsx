@@ -27,6 +27,8 @@ import { TwitchNewsApp } from '../../../apps/twitch-news';
 import TwitchNewsIcon from '../../../apps/twitch-news/icon';
 import ZutomIcon from '../../../apps/zutom/icon';
 import { ZutomApp } from '../../../apps/zutom/ZutomApp';
+import WeatherIcon from '../../../apps/weather/icon';
+import { WeatherApp } from '../../../apps/weather';
 
 export interface IAppConfig {
     id: string;
@@ -136,5 +138,12 @@ export const APPS: IAppConfig[] = [
         home: true,
         component: <CameraApp />,
         icon: CameraIcon,
+    },
+    {
+        id: 'weather',
+        nameLocale: 'APPS_WEATHER',
+        path: '/weather',
+        component: <WeatherApp />,
+        icon: WeatherIcon,
     },
 ];
