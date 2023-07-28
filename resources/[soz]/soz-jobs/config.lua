@@ -35,6 +35,7 @@ SozJobCore.JobPermission = {
     SocietyBankAccount = "society-bank-account",
     SocietyBankInvoices = "society-bank-invoices",
     SocietyTakeOutPound = "society-take-out-pound",
+    SocietyPublicPrivateGarage = "society-public-private-garage",
     SocietyViewCompanyPanel = "society-view-company-panel",
     NewsManageArticle = "manage-article",
     OnDutyView = "view-employe-on-duty",
@@ -171,6 +172,9 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.SocietyPublicPrivateGarage] = {
+                label = "Ranger/sortir les véhicules des garages publiques/privés",
+            },
             [SozJobCore.JobPermission.CriminalRecord] = {label = "Accès aux casiers judiciaires"},
             [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès au registre des véhicules"},
             [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
@@ -210,6 +214,9 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.SocietyPublicPrivateGarage] = {
+                label = "Ranger/sortir les véhicules des garages publiques/privés",
+            },
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.CriminalRecord] = {label = "Accès aux casiers judiciaires"},
             [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès au registre des véhicules"},
@@ -251,6 +258,9 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.SocietyPublicPrivateGarage] = {
+                label = "Ranger/sortir les véhicules des garages publiques/privés",
+            },
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
         },
         bossZones = {
@@ -285,6 +295,9 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.SocietyPublicPrivateGarage] = {
+                label = "Ranger/sortir les véhicules des garages publiques/privés",
+            },
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
         },
         bossZones = {
