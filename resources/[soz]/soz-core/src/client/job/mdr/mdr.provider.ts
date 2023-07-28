@@ -201,7 +201,7 @@ export class MandatoryProvider {
     public useTicket(dlc: string) {
         const [player, distance] = this.playerService.getClosestPlayer();
 
-        if (player && distance < 2.5) {
+        if (player != -1 && distance < 2.5) {
             const animDict = 'mp_common';
             this.resourceLoader.loadAnimationDictionary(animDict);
             TaskPlayAnim(PlayerPedId(), animDict, 'givetake2_a', 8.0, 8.0, -1, 0, 0, true, false, true);
