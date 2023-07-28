@@ -306,6 +306,8 @@ model player {
   records_history_author player_records_history[] @relation("records_history_author")
   records_history_deletor player_records_history[] @relation("records_history_deletor")
   fishes                 player_fish[] @relation("fishes")
+  sozedex_rewards                 player_sozedex_rewards[] @relation("sozedex_rewards")
+
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -600,4 +602,12 @@ model player_fish {
   lastFishAt  DateTime @default(now()) @db.Timestamp(0)
 
   @@id([citizenId, fishId])
+}
+model player_sozedex_rewards {
+  player      player   @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_player_sozedex_rewards", name: "sozedex_rewards")
+  citizenId   String   @db.VarChar(50)
+  itemId      String   @db.VarChar(100)
+  claimedAt  DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([citizenId, itemId])
 }
