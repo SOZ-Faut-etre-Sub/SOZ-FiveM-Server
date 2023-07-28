@@ -199,7 +199,7 @@ export class ShopProvider {
                 }
             } else {
                 for (const propId of Object.keys(product.props)) {
-                    clothConfig.BaseClothSet.Props[Number(propId)] = product.props[propId];
+                    clothConfig.BaseClothSet.Props[propId] = product.props[propId];
                     const HideToReset = TenueIdToHide.Props[propId];
                     if (HideToReset) {
                         clothConfig.Config[HideToReset] = false;
@@ -207,6 +207,9 @@ export class ShopProvider {
                 }
             }
         }
+
+        // BaseClothSet.Props needs to be an object for soz-character
+        clothConfig.BaseClothSet.Props = Object.assign({}, clothConfig.BaseClothSet.Props);
 
         // Update player cloth config through QBCore
         this.qbcore.getPlayer(source).Functions.SetClothConfig(clothConfig, false);
