@@ -34,6 +34,13 @@ export class WeatherProvider {
 
     private shouldUpdateWeather = true;
 
+    // See forecast.ts for the list of available forecasts
+    private forecast: Forecast = Summer;
+    // See temperature.ts for the list of available temperature ranges,
+    // please ensure that the day and night temperature ranges are using the same season
+    private dayTemperatureRange: TemperatureRange = DaySummerTemperature;
+    private nightTemperatureRange: TemperatureRange = NightSummerTemperature;
+
     private defaultWeather: Weather = 'CLEAR';
     private incomingForecasts: ForecastWithTemperature[] = [
         {
@@ -42,13 +49,6 @@ export class WeatherProvider {
             duration: 1000 * 10,
         },
     ];
-
-    // See forecast.ts for the list of available forecasts
-    private forecast: Forecast = Summer;
-    // See temperature.ts for the list of available temperature ranges,
-    // please ensure that the day and night temperature ranges are using the same season
-    private dayTemperatureRange: TemperatureRange = DaySummerTemperature;
-    private nightTemperatureRange: TemperatureRange = NightSummerTemperature;
 
     private stormDeadline = 0; // timestamp
 
@@ -89,10 +89,9 @@ export class WeatherProvider {
         TriggerClientEvent(ClientEvent.STATE_UPDATE_TIME, -1, this.currentTime);
     }
 
-    @Tick(TickInterval.EVERY_FRAME, 'weather:next-weather')
+    @Tick(TickInterval.EVERY_SECOND, 'weather:next-weather')
     async updateWeather() {
         if (!this.shouldUpdateWeather) {
-            wait(1000); // No need to update every frame
             return;
         }
 
@@ -149,10 +148,9 @@ export class WeatherProvider {
 
     public setWeather(weather: Weather): void {
         // If you set the weather, you want to recalculate the following forecasts
-        this.incomingForecasts = [];
         const defaultWeather = isFeatureEnabled(Feature.Halloween) ? 'NEUTRAL' : 'OVERCAST';
         this.store.dispatch.global.update({ weather: weather || defaultWeather });
-        this.prepareForecasts(this.store.getState().global.weather);
+        this.prepareForecasts(this.store.getState().global.weather, true);
 
         TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
     }
@@ -205,7 +203,11 @@ export class WeatherProvider {
         return this.stormDeadline;
     }
 
-    private prepareForecasts(initialWeather: Weather) {
+    private prepareForecasts(initialWeather: Weather, cleanOldForecasts = false) {
+        if (cleanOldForecasts) {
+            this.incomingForecasts = [];
+        }
+
         while (this.incomingForecasts.length < MAX_FORECASTS) {
             const futureTime = this.incomingForecasts.reduce((acc, forecast) => {
                 const incrementSeconds = forecast.duration / 1000;

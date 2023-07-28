@@ -1,8 +1,9 @@
+import cn from 'classnames';
 import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useWeather } from '../../../hooks/app/useWeather';
-import { useTime } from '../../../hooks/usePhone';
+import { useConfig, useTime } from '../../../hooks/usePhone';
 import { AppContent } from '../../../ui/components/AppContent';
 import {
     BlizzardIcon,
@@ -31,6 +32,7 @@ export const WeatherList = memo(() => {
     const forecasts = getForecasts();
     const alertDate: Date = getAlert();
     const [alertMessage, setAlertMessage] = useState<string>();
+    const config = useConfig();
     const checkAlert = () => {
         if (alertDate && alertDate.getTime() > Date.now()) {
             const remainingTime = alertDate.getTime() - Date.now();
@@ -149,7 +151,6 @@ export const WeatherList = memo(() => {
                                         ? 'EXTRASUNNY.' + day
                                         : forecast.weather.toUpperCase());
                                 advanceTime(timeObject, forecast.duration);
-                                console.log(forecast.weather, day);
                                 return (
                                     <li
                                         className="py-1 flex flex-row justify-between h-10 leading-7"
@@ -175,7 +176,14 @@ export const WeatherList = memo(() => {
     return (
         <AppContent>
             <div className="m-auto pt-1 pb-3 flex flex-col w-5/6">
-                <h2 className="m-auto text-center">{t('WEATHER.LOADING')}</h2>
+                <h2
+                    className={cn('flex justify-center items-center', {
+                        'text-white': config.theme.value === 'dark',
+                        'text-dark': config.theme.value === 'light',
+                    })}
+                >
+                    {t('WEATHER.LOADING')}
+                </h2>
             </div>
         </AppContent>
     );
