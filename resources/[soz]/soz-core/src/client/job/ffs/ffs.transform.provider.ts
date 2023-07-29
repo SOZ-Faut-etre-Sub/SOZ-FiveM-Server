@@ -24,7 +24,7 @@ export class FightForStyleTransformProvider {
     private playerService: PlayerService;
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupFfsTransform() {
         const targets: TargetOptions[] = Object.keys(FabricMaterial).map(key => {
             const fabricMaterial: string = FabricMaterial[key];
             const item = this.itemService.getItem<SewingRawMaterialItem>(fabricMaterial);

@@ -24,7 +24,7 @@ export class StonkResellProvider {
     private targetFactory: TargetFactory;
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupStonkResell() {
         StonkConfig.resell.zones.forEach(zone => {
             this.targetFactory.createForBoxZone(zone.name, zone, [this.resellZoneToTarget(zone.bagAccepted)]);
         });

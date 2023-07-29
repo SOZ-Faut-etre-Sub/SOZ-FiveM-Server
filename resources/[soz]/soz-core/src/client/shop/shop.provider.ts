@@ -145,7 +145,7 @@ export class ShopProvider {
     ];
 
     @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded() {
+    public async setupShopConfig() {
         for (const shop in ShopsConfig) {
             const config = ShopsConfig[shop];
             const brandConfig = BrandsConfig[config.brand];

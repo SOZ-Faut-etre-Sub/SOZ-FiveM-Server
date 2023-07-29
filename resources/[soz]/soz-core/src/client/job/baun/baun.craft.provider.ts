@@ -23,7 +23,7 @@ export class BaunCraftProvider {
     private targetFactory: TargetFactory;
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupBaunCraftZone() {
         const targets: TargetOptions[] = baunCraftProcesses.map(craftProcess => {
             return this.craftProcessToTarget(craftProcess, 'c:/baun/craft.png');
         });

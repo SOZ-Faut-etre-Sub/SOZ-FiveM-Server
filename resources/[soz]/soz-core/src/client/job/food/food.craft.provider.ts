@@ -25,7 +25,7 @@ export class FoodCraftProvider {
     private playerService: PlayerService;
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupFoodCraft() {
         // 3 craft zones
         const wineTargets: TargetOptions[] = FoodConfig.processes.wineProcesses.map(craftProcess => {
             const method: (craft: FoodCraftProcess, icon: string, duration: number) => TargetOptions =

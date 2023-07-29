@@ -102,7 +102,7 @@ export class BennysVehicleProvider {
     ]);
 
     @Once(OnceStep.PlayerLoaded)
-    public onStart() {
+    public setupBennysJob() {
         const dutyTargets = [
             {
                 icon: 'fas fa-sign-in-alt',

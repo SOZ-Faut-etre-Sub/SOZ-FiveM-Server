@@ -33,7 +33,7 @@ export class DrivingSchoolProvider {
     private notifier: Notifier;
 
     @Once(OnceStep.Start)
-    public onPlayerLoaded() {
+    public setupDrivingSchool() {
         const secretaryPedConfig = DrivingSchoolConfig.peds.secretary;
         this.targetFactory.createForPed({
             ...secretaryPedConfig,

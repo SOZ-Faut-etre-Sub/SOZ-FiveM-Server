@@ -38,7 +38,7 @@ export class BarberShopProvider {
     private barberShopContent = BarberShopItems;
 
     @Once(OnceStep.PlayerLoaded)
-    public async setup() {
+    public async setupBarberShop() {
         this.barberShopLabels = exports['soz-character'].GetLabels() as BarberShopLabels;
 
         const numHairColors = GetNumHairColors();

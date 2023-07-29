@@ -57,7 +57,7 @@ export class VehicleCarWashProvider {
     ]);
 
     @Once(OnceStep.PlayerLoaded)
-    onStart(): void {
+    setupVehicleCarWash(): void {
         this.targetFactory.createForAllVehicle([
             {
                 icon: 'c:mechanic/Car_wash.png',

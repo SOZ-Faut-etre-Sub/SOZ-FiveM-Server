@@ -56,7 +56,7 @@ export class HudMinimapProvider {
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap());
     }
 
-    @Once(OnceStep.PlayerLoaded)
+    @Once(OnceStep.PlayerLoaded, true)
     public async onStartCheckShowRadar(): Promise<void> {
         this.updateShowRadar();
     }

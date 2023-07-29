@@ -575,7 +575,7 @@ export class PlayerHealthProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded(): Promise<void> {
+    async setupPlayerBodySummer(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }

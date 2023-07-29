@@ -39,7 +39,7 @@ export class BaunProvider {
     };
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupBaunBlips() {
         this.createBlips();
     }
 

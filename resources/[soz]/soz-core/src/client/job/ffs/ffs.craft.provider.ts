@@ -19,7 +19,7 @@ export class FightForStyleCraftProvider {
     private targetFactory: TargetFactory;
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupFfsJobCraft() {
         const { craftZones, luxuryCraftZones, shoesCraftZones } = FfsConfig.craft.zones;
         const { craftProcesses, luxuryCraftProcesses, shoesCraftProcesses } = FfsConfig.craft.processes;
 

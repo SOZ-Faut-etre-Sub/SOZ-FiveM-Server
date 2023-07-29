@@ -33,7 +33,7 @@ export class StonkProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupStonkSecurity() {
         this.blipFactory.create('societyStonkSecurity', {
             name: 'STONK Security',
             coords: { x: 6.25, y: -709.11, z: 46.22 },
