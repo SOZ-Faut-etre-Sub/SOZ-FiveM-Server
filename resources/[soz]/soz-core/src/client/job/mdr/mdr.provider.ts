@@ -57,7 +57,7 @@ export class MandatoryProvider {
     };
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupMdrJob() {
         this.createBlips();
 
         this.targetFactory.createForBoxZone(

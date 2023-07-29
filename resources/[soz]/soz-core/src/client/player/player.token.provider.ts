@@ -8,7 +8,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 export class PlayerTokenProvider {
     private token: string;
 
-    @Once(OnceStep.PlayerLoaded)
+    @Once(OnceStep.PlayerLoaded, true)
     public async loadJwtToken() {
         this.token = await emitRpc<string>(RpcServerEvent.PLAYER_GET_JWT_TOKEN);
     }

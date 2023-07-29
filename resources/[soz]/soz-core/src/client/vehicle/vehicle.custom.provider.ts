@@ -90,7 +90,7 @@ export class VehicleCustomProvider {
     ]);
 
     @Once(OnceStep.PlayerLoaded)
-    onStart(): void {
+    setupVehicleCustomZone(): void {
         for (const zoneIndex in this.lsCustomZone.zones) {
             const zone = this.lsCustomZone.zones[zoneIndex];
 

@@ -116,7 +116,7 @@ export class VehicleElectricProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded() {
+    public async setupVehicleElectric() {
         this.targetFactory.createForModel(this.upwChargerRepository.getModel(), [
             {
                 label: "Recharger à l'énergie fossile",

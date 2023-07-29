@@ -10,7 +10,7 @@ export class VehicleItemProvider {
     private targetFactory: TargetFactory;
 
     @Once(OnceStep.PlayerLoaded)
-    public async init() {
+    public async setupVehicleItems() {
         this.targetFactory.createForAllVehicle([
             {
                 icon: 'c:mechanic/nettoyer.png',

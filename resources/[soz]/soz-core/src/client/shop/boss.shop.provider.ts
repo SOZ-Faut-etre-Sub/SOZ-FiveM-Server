@@ -33,7 +33,7 @@ export class BossShopProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    onPlayerLoaded() {
+    setupBossShop() {
         BossShop.forEach(shop => {
             this.targetFactory.createForBoxZone(
                 `shops:boss:${shop.name}`,

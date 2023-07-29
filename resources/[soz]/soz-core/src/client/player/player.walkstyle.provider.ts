@@ -84,8 +84,8 @@ export class PlayerWalkstyleProvider {
         SetFacialIdleAnimOverride(PlayerPedId(), mood, null);
     }
 
-    @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded(player: PlayerData): Promise<void> {
+    @Once(OnceStep.PlayerLoaded, true)
+    async setupPlayerWalkstyle(player: PlayerData): Promise<void> {
         if (player.metadata.walk) {
             await this.applyWalkStyle(player.metadata.walk);
         }

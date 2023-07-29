@@ -57,7 +57,7 @@ export class WeaponProvider {
     private lastPoliceCall = 0;
 
     @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded() {
+    async setupWeaponDamageModifier() {
         SetWeaponsNoAutoswap(true);
 
         await this.weapon.clear();

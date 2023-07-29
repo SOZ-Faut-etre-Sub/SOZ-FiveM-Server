@@ -51,7 +51,7 @@ export class EasterShopProvider {
     }
 
     @Once(OnceStep.Start)
-    onPlayerLoaded() {
+    setupEaster() {
         if (!isFeatureEnabled(Feature.Easter)) {
             return;
         }

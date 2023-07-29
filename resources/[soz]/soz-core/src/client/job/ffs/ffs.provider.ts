@@ -42,7 +42,7 @@ export class FightForStyleProvider {
     };
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupFfsJob() {
         this.createBlips();
 
         this.targetFactory.createForBoxZone(

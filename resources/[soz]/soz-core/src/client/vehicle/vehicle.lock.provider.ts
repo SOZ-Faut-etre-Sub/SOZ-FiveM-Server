@@ -82,7 +82,7 @@ export class VehicleLockProvider {
     private vehicleOpened: Set<number> = new Set();
 
     @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded() {
+    public async setupVehicleOpened() {
         const vehicleOpened = await emitRpc<number[]>(RpcServerEvent.VEHICLE_GET_OPENED);
 
         this.vehicleOpened = new Set(vehicleOpened);

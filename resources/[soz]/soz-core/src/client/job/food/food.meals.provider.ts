@@ -21,7 +21,7 @@ export class FoodMealsProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    onPlayerLoaded() {
+    setupFoodMeals() {
         TriggerServerEvent(ServerEvent.FOOD_RETRIEVE_STATE);
         this.targetFactory.createForBoxZone(
             'food_meals_provider',

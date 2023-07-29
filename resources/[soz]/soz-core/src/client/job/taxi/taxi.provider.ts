@@ -29,7 +29,7 @@ export class TaxiProvider {
     private jobService: JobService;
 
     @Once(OnceStep.Start)
-    public onPlayerLoaded() {
+    public setupTaxiJob() {
         this.createBlips();
 
         this.targetFactory.createForBoxZone(

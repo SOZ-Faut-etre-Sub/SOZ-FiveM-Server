@@ -14,7 +14,7 @@ export class BaunResellProvider {
     private playerService: PlayerService;
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupBaunResell() {
         this.targetFactory.createForBoxZone(
             'baun_resell',
             {

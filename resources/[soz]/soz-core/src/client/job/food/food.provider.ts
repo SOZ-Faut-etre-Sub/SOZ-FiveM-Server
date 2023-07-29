@@ -46,7 +46,7 @@ export class FoodProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupFoodJob() {
         this.blipFactory.create('displayMilkBlip', {
             name: 'Point de récolte du lait',
             coords: { x: 2416.01, y: 4993.49, z: 46.22 },

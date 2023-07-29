@@ -84,7 +84,7 @@ export class SeatAnimationProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded() {
+    public async setupSitAnimation() {
         this.targetFactory.createForModel(
             SeatsTargetList,
             [

@@ -24,7 +24,7 @@ export class LSMCPharmacyProvider {
     private inventoryManager: InventoryManager;
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupPharmacy() {
         const products = [
             { name: 'tissue', price: PHARMACY_PRICES.tissue, amount: 2000 },
             { name: 'antibiotic', price: PHARMACY_PRICES.antibiotic, amount: 2000 },

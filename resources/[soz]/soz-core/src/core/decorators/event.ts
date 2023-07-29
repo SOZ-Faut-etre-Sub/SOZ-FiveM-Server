@@ -81,10 +81,23 @@ export enum OnceStep {
     NuiLoaded = 'nuiLoaded',
 }
 
+export type OnceMetadata = {
+    step: OnceStep;
+    reload: boolean;
+};
+
 export const OnceMetadataKey = 'soz_core.decorator.once';
 
-export const Once = (step: OnceStep = OnceStep.Start): MethodDecorator => {
+export const Once = (step: OnceStep = OnceStep.Start, reload = false): MethodDecorator => {
     return (target, propertyKey) => {
-        setMethodMetadata(OnceMetadataKey, step, target, propertyKey);
+        setMethodMetadata(
+            OnceMetadataKey,
+            {
+                step,
+                reload,
+            },
+            target,
+            propertyKey
+        );
     };
 };
