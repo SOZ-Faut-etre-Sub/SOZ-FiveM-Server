@@ -129,6 +129,8 @@ export class PropProvider {
             this.applyEntityMatrix(entity, prop.matrix);
         }
 
+        SetEntityCollision(entity, prop.collision, false);
+        SetEntityInvincible(entity, true);
         FreezeEntityPosition(entity, true); // Always freeze for the moment
 
         this.objects[prop.unique_id] = {
@@ -162,6 +164,10 @@ export class PropProvider {
         if (prop.matrix) {
             this.objectService.applyEntityMatrix(entity, prop.matrix);
         }
+
+        SetEntityCollision(entity, prop.collision, false);
+        SetEntityInvincible(entity, true);
+        FreezeEntityPosition(entity, true); // Always freeze for the moment
 
         this.objects[uniqueId] = {
             ...prop,
@@ -197,6 +203,7 @@ export class PropProvider {
         SetEntityAlpha(entity, 200, false);
         SetEntityCollision(entity, false, false);
         SetEntityInvincible(entity, true);
+        FreezeEntityPosition(entity, true); // Always freeze for the moment
 
         if (onGround) {
             PlaceObjectOnGroundProperly(entity);
@@ -205,12 +212,33 @@ export class PropProvider {
         return entity;
     }
 
+    public async resetDebugProp(prop: SpawedWorlPlacedProp): Promise<void> {
+        // The prop exists in the collection but is not loaded. Reset its position
+        const entity = prop.entity;
+        SetEntityCoordsNoOffset(entity, prop.position[0], prop.position[1], prop.position[2], false, false, false);
+        SetEntityHeading(entity, prop.position[3]);
+
+        if (prop.matrix) {
+            this.objectService.applyEntityMatrix(entity, prop.matrix);
+        }
+
+        SetEntityInvincible(entity, true);
+        FreezeEntityPosition(entity, true); // Always freeze for the moment
+    }
+
     public async despawnDebugProp(prop: SpawedWorlPlacedProp): Promise<void> {
         if (prop.loaded) {
-            return;
-        }
-        if (DoesEntityExist(prop.entity)) {
-            DeleteEntity(prop.entity);
+            if (!this.objects[prop.unique_id]) {
+                // The prop should be loaded, but is not for this client. It shouldn't happen
+                console.error(`[PropProvider] Prop ${prop.unique_id} is loaded but not spawned. Syncing...`);
+                await this.syncPropClientSide();
+            }
+            console.log(`[PropProvider] Edition prop ${prop.unique_id} in `, this.objects[prop.unique_id]);
+            await this.editProp(prop.unique_id, this.objects[prop.unique_id]);
+        } else {
+            if (DoesEntityExist(prop.entity)) {
+                DeleteEntity(prop.entity);
+            }
         }
     }
 
@@ -275,6 +303,25 @@ export class PropProvider {
             matrix[8],
             matrix[9],
             matrix[10], // Up
+            matrix[12],
+            matrix[13],
+            matrix[14] // Position
+        );
+    };
+
+    public applyEntityNormalizedMatrix = (entity: number, matrix: Float32Array) => {
+        const norm_F = Math.sqrt(matrix[0] ** 2 + matrix[1] ** 2);
+        SetEntityMatrix(
+            entity,
+            -matrix[1] / norm_F,
+            matrix[0] / norm_F,
+            0, // Right
+            matrix[0] / norm_F,
+            matrix[1] / norm_F,
+            0, // Forward
+            0,
+            0,
+            1, // Up
             matrix[12],
             matrix[13],
             matrix[14] // Position

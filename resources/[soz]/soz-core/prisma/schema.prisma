@@ -188,6 +188,7 @@ model placed_prop {
   model               String
   position            String              @db.LongText
   matrix              String?             @db.LongText
+  collision           Boolean             @default(true)
   collection_prop     collection_prop     @relation(fields: [collection], references: [name], onDelete: Cascade, onUpdate: Restrict, map: "FK_placed_prop_soz_collection_prop")
 
   @@index([collection], map: "FK_placed_prop_soz_collection_prop")

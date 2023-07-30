@@ -60,10 +60,16 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
         setServerData(serverData);
         setClientData(clientData);
     });
+    useNuiEvent('placement_prop', 'EnterEditorMode', () => {
+        navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
+    });
     useBackspace(async () => {
         await fetchNui(NuiEvent.LeaveEditorMode);
         if (location.pathname == `/${MenuType.PropPlacementMenu}/collection`) {
             await fetchNui(NuiEvent.PropPlacementReturnToMainMenu);
+        }
+        if (location.pathname == `/${MenuType.PropPlacementMenu}/collection/props`) {
+            await fetchNui(NuiEvent.PropPlacementReturnToCollection);
         }
     });
 
@@ -168,7 +174,6 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                                 value: true,
                             });
                         }}
-                        disabled={collection.loaded_size >= collection.size}
                     >
                         ⚡ Charger la collection
                     </MenuItemButton>
@@ -179,7 +184,6 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                                 value: false,
                             });
                         }}
-                        disabled={collection.loaded_size == 0}
                     >
                         🌬️ Décharger la collection
                     </MenuItemButton>
@@ -199,19 +203,36 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     Props de la collection : {collection.name}
                 </MenuTitle>
                 <MenuContent>
+                    <MenuItemCheckbox
+                        checked={false}
+                        onChange={async value => {
+                            await fetchNui(NuiEvent.ToggleMouseSelection, { value: value });
+                        }}
+                        description="Selectionner un prop à la souris."
+                    >
+                        Selectionner à la souris
+                    </MenuItemCheckbox>
                     {Object.values(collection.props).map(prop => (
                         <MenuItemSelect
                             key={prop.unique_id}
-                            title={prop.model}
+                            title={data.props.find(p => p.model == prop.model)?.label || prop.model}
+                            titleWidth={60}
                             onSelected={async () => {
-                                await fetchNui(NuiEvent.SelectPlacedProp, { selectedProp: prop });
+                                await fetchNui(NuiEvent.SelectPlacedProp, { id: prop.unique_id });
                             }}
                             onConfirm={async (_, value) => {
                                 if (value == 'delete') {
-                                    await fetchNui(NuiEvent.RequestDeleteProp, { prop: prop });
+                                    await fetchNui(NuiEvent.RequestDeleteProp, { id: prop.unique_id });
                                 }
                                 if (value == 'edit') {
-                                    await fetchNui(NuiEvent.ChoosePlacedPropToEdit, { prop: prop });
+                                    const result: Result<any, never> = await fetchNui(NuiEvent.ChoosePlacedPropToEdit, {
+                                        id: prop.unique_id,
+                                    });
+                                    if (isOk(result)) {
+                                        navigate(`/${MenuType.PropPlacementMenu}/editor`, {
+                                            state: { ...location.state, activeIndex: 0 },
+                                        });
+                                    }
                                 }
                             }}
                         >
@@ -252,13 +273,15 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         ✔️ Valider le placement
                     </MenuItemButton>
-                    <MenuItemButton
-                        onConfirm={() => {
-                            fetchNui(NuiEvent.PropPlacementReset, { snap: true });
+                    <MenuItemCheckbox
+                        onChange={value => {
+                            fetchNui(NuiEvent.PropPlacementReset, { snap: value });
                         }}
+                        checked={false}
+                        description="Aligne le prop sur le sol automatiquement."
                     >
-                        ⬇️ Snap au sol
-                    </MenuItemButton>
+                        ⬇️ Aligner au sol
+                    </MenuItemCheckbox>
                     <MenuItemButton
                         onConfirm={() => {
                             fetchNui(NuiEvent.PropPlacementReset, { position: true });

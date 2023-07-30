@@ -2,13 +2,13 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
-import { uuidv4 } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { PropCollection, PropCollectionData, PropServerData, WorldPlacedProp } from '@public/shared/object';
 import { Err } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PrismaService } from '../database/prisma.service';
+import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 
@@ -22,6 +22,9 @@ export class PropsProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
 
     private collections: Record<string, PropCollection> = {};
     private collectionOfProp: Record<string, string> = {};
@@ -53,6 +56,7 @@ export class PropsProvider {
                 position: JSON.parse(placedProp.position),
                 matrix: placedProp.matrix ? JSON.parse(placedProp.matrix) : null,
                 loaded: false,
+                collision: placedProp.collision,
             };
             this.collections[placedProp.collection].props[placedProp.unique_id] = prop;
             this.collections[placedProp.collection].size++;
@@ -133,12 +137,15 @@ export class PropsProvider {
                 collection: prop.collection,
                 position: JSON.stringify(prop.position),
                 matrix: prop.matrix ? JSON.stringify(prop.matrix) : null,
+                collision: prop.collision,
             },
         });
 
         this.collections[prop.collection].props[prop.unique_id] = prop;
         this.collections[prop.collection].size++;
         this.collectionOfProp[prop.unique_id] = prop.collection;
+
+        this.notifier.notify(source, 'Le prop a bien été créé !', 'success');
 
         return await this.getCollection(source, prop.collection);
     }
@@ -214,8 +221,11 @@ export class PropsProvider {
                 collection: prop.collection,
                 position: JSON.stringify(prop.position),
                 matrix: prop.matrix ? JSON.stringify(prop.matrix) : null,
+                collision: prop.collision,
             },
         });
+
+        this.collections[prop.collection].props[prop.unique_id] = prop;
 
         await this.editPropToAllClients(prop.unique_id, prop);
 
@@ -353,6 +363,15 @@ export class PropsProvider {
             });
         });
         return loadedProps;
+    }
+
+    private async onUseSozHammer(source: number) {
+        TriggerClientEvent(ClientEvent.PROP_OPEN_MENU, source);
+    }
+
+    @Once()
+    public async onStart() {
+        this.itemService.setItemUseCallback('soz_hammer', this.onUseSozHammer.bind(this));
     }
 
     public async createPropsToClient(source: number, props: WorldPlacedProp[]) {

@@ -6591,4 +6591,17 @@ QBShared.Items = {
         ['description'] = "Panier-repas contenant :",
         ['illustrator'] = '.Poulpito'
     },
+    ['soz_hammer'] = {
+        ['name'] = 'soz_hammer',
+        ['label'] = "Le Marteau",
+        ['weight'] = 1000,
+        ['useable'] = true,
+        ['type'] = 'item',
+        ['shouldClose'] = true,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['giveable'] = false,
+        ['description'] = "Il en émane une puissance incommensurable. Il est dit que celui qui le possède peut façon le monde à sa guise. Vous ne vous sentez pas de le donner à quiconque.",
+        ['illustrator'] = '.'
+    }
 }

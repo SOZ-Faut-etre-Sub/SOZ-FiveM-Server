@@ -13,6 +13,7 @@ export type WorldPlacedProp = {
     position: Vector4;
     matrix: Float32Array;
     loaded: boolean;
+    collision: boolean;
 };
 
 export type DebugProp = {

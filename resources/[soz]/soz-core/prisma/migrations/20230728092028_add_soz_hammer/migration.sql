@@ -17,6 +17,7 @@ CREATE TABLE `placed_prop` (
     `model` VARCHAR(191) NOT NULL,
     `position` LONGTEXT NOT NULL,
     `matrix` LONGTEXT NULL,
+    `collision` BOOLEAN NOT NULL DEFAULT true,
 
     UNIQUE INDEX `placed_prop_unique_id_key`(`unique_id`),
     INDEX `FK_placed_prop_soz_collection_prop`(`collection`),

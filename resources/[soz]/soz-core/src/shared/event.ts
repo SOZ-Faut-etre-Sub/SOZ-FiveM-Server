@@ -110,7 +110,6 @@ export enum ServerEvent {
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
-    // Takes array of WorldPlacedProp objects
     PROP_REQUEST_DELETE_PROPS = 'soz-core:server:prop:request-delete',
     PROP_REQUEST_EDIT_PROP = 'soz-core:server:prop:request-edit',
     PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:request-delete-collection',
@@ -349,6 +348,7 @@ export enum ClientEvent {
     PROP_DELETE_CLIENTSIDE = 'soz-core:client:prop:delete',
     PROP_EDIT_CLIENTSIDE = 'soz-core:client:prop:edit',
     PROP_SYNC_CLIENTSIDE = 'soz-core:client:prop:sync',
+    PROP_OPEN_MENU = 'soz-core:client:prop:open-menu',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
@@ -669,9 +669,11 @@ export enum NuiEvent {
     SetPlacementProp = 'soz-core:client:placement:set-prop',
     LeaveEditorMode = 'soz-core:client:placement:leave-mode',
     TogglePedMovements = 'soz-core:client:placement:toggle-movements',
+    ToggleMouseSelection = 'soz-core:client:placement:toggle-mouse-selection',
     ValidatePlacement = 'soz-core:client:placement:validate',
     PropPlacementReset = 'soz-core:client:placement:reset',
     PropPlacementReturnToMainMenu = 'soz-core:client:placement:return-to-main-menu',
+    PropPlacementReturnToCollection = 'soz-core:client:placement:return-to-collection',
     SelectPlacementCollection = 'soz-core:client:placement:select-collection',
     HighlightCollection = 'soz-core:client:placement:highlight-collection',
     RequestToggleCollectionLoad = 'soz-core:client:placement:toggle-collection-load',
