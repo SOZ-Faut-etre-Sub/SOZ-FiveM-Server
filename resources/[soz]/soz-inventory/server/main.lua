@@ -515,8 +515,9 @@ function Inventory.AddItem(source, inv, item, amount, metadata, slot, cb)
             end
         elseif slotItem and slotItem.type == "drug_pot" then
             local slotItemDef = QBCore.Shared.Items[slotItem.name]
-            if slotItemDef.drug_pot.ingredient == item.name and amount >= slotItemDef.drug_pot.nbIngredient then
-                Inventory.RemoveItem(inv, slotItemDef.name, 1, nil, slotId)
+            if slotItemDef.drug_pot.ingredient == item.name and amount >= slotItemDef.drug_pot.nbIngredient and not exports["soz-utils"]:ItemIsExpired(slotItem) and
+                not exports["soz-utils"]:ItemIsExpired({metadata = metadata}) then
+                Inventory.RemoveItem(inv, slotItemDef.name, 1, nil, slotItem.slot)
                 Inventory.AddItem(source, inv, slotItemDef.drug_pot.target, 1)
                 amount = amount - slotItemDef.drug_pot.nbIngredient
                 weight = Inventory.GetItemWeight(item, metadata, amount)
