@@ -1,4 +1,3 @@
-import { Command } from '@public/core/decorators/command';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
@@ -172,7 +171,12 @@ export class PropPlacementProvider {
         currentCollection?: PropCollection | null
     ) {
         if (propCollectionDatas) {
-            this.nuiDispatch.dispatch('placement_prop', 'SetCollectionList', propCollectionDatas);
+            const playerData = this.playerService.getPlayer();
+            let collections = propCollectionDatas;
+            if (!['admin', 'staff'].includes(playerData.role)) {
+                collections = propCollectionDatas.filter(c => c.creator_citizenID == playerData.citizenid);
+            }
+            this.nuiDispatch.dispatch('placement_prop', 'SetCollectionList', collections);
         }
         if (currentCollection) {
             this.nuiDispatch.dispatch('placement_prop', 'SetCollection', currentCollection);
@@ -195,11 +199,6 @@ export class PropPlacementProvider {
             Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
         );
         return collection;
-    }
-
-    @OnNuiEvent(NuiEvent.HighlightCollection)
-    public async onHighlightCollection({ value }: { value: boolean }): Promise<void> {
-        // Not implemented yet
     }
 
     @OnNuiEvent(NuiEvent.SelectPropToCreate)

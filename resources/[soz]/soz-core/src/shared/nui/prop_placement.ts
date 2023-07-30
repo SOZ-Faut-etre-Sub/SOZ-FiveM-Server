@@ -20,22 +20,26 @@ export type PlacementProp = {
     collision?: boolean;
 };
 
-export type PlacementPropList = PlacementProp[];
+export type PlacementPropList = Record<string, PlacementProp[]>;
 
-export const PLACEMENT_PROP_LIST: PlacementPropList = [
-    {
-        model: 'soz_prop_bb_bin',
-        label: 'Poubelle',
-        collision: true,
-    },
-    {
-        model: 'upwpile',
-        label: 'Onduleur',
-        collision: true,
-    },
-    {
-        model: 'soz_atm_entreprise',
-        label: 'ATM entreprise',
-        collision: false,
-    },
-];
+export const PLACEMENT_PROP_LIST: PlacementPropList = {
+    ['Test avec collisions']: [
+        {
+            model: 'soz_prop_bb_bin',
+            label: 'Poubelle',
+            collision: true,
+        },
+        {
+            model: 'upwpile',
+            label: 'Onduleur',
+            collision: true,
+        },
+    ],
+    ['Test sans collisions']: [
+        {
+            model: 'soz_atm_entreprise',
+            label: 'ATM entreprise',
+            collision: false,
+        },
+    ],
+};

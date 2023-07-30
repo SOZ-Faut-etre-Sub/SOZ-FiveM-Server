@@ -5,13 +5,7 @@ import { useNuiEvent } from '@public/nui/hook/nui';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { PlacementProp, PropPlacementMenuData } from '@public/shared/nui/prop_placement';
-import {
-    PropClientData,
-    PropCollection,
-    PropCollectionData,
-    PropServerData,
-    WorldPlacedProp,
-} from '@public/shared/object';
+import { PropClientData, PropCollection, PropCollectionData, PropServerData } from '@public/shared/object';
 import { isOk, Result } from '@public/shared/result';
 import { FunctionComponent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -158,15 +152,6 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                         📝 Voir la liste des props de la collection
                     </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id={`collection/prop_choose`}>➕ Ajouter un prop</MenuItemSubMenuLink>
-                    <MenuItemCheckbox
-                        checked={false}
-                        onChange={async value => {
-                            await fetchNui(NuiEvent.HighlightCollection, { value: value });
-                        }}
-                        description="Affiche les props de la collection en surbrillance seulement pour vous."
-                    >
-                        Afficher la collection en surbrillance
-                    </MenuItemCheckbox>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.RequestToggleCollectionLoad, {
@@ -212,34 +197,50 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         Selectionner à la souris
                     </MenuItemCheckbox>
-                    {Object.values(collection.props).map(prop => (
-                        <MenuItemSelect
-                            key={prop.unique_id}
-                            title={data.props.find(p => p.model == prop.model)?.label || prop.model}
-                            titleWidth={60}
-                            onSelected={async () => {
-                                await fetchNui(NuiEvent.SelectPlacedProp, { id: prop.unique_id });
-                            }}
-                            onConfirm={async (_, value) => {
-                                if (value == 'delete') {
-                                    await fetchNui(NuiEvent.RequestDeleteProp, { id: prop.unique_id });
-                                }
-                                if (value == 'edit') {
-                                    const result: Result<any, never> = await fetchNui(NuiEvent.ChoosePlacedPropToEdit, {
-                                        id: prop.unique_id,
-                                    });
-                                    if (isOk(result)) {
-                                        navigate(`/${MenuType.PropPlacementMenu}/editor`, {
-                                            state: { ...location.state, activeIndex: 0 },
-                                        });
+                    {Object.values(collection.props).map(prop => {
+                        let label = null;
+                        for (const cat of Object.values(data.props)) {
+                            const item = cat.find(p => p.model == prop.model);
+                            if (item) {
+                                label = item.label;
+                                break;
+                            }
+                        }
+                        if (!label) {
+                            label = prop.model;
+                        }
+                        return (
+                            <MenuItemSelect
+                                key={prop.unique_id}
+                                title={label}
+                                titleWidth={60}
+                                onSelected={async () => {
+                                    await fetchNui(NuiEvent.SelectPlacedProp, { id: prop.unique_id });
+                                }}
+                                onConfirm={async (_, value) => {
+                                    if (value == 'delete') {
+                                        await fetchNui(NuiEvent.RequestDeleteProp, { id: prop.unique_id });
                                     }
-                                }
-                            }}
-                        >
-                            <MenuItemSelectOption value="edit">Editer</MenuItemSelectOption>
-                            <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
-                        </MenuItemSelect>
-                    ))}
+                                    if (value == 'edit') {
+                                        const result: Result<any, never> = await fetchNui(
+                                            NuiEvent.ChoosePlacedPropToEdit,
+                                            {
+                                                id: prop.unique_id,
+                                            }
+                                        );
+                                        if (isOk(result)) {
+                                            navigate(`/${MenuType.PropPlacementMenu}/editor`, {
+                                                state: { ...location.state, activeIndex: 0 },
+                                            });
+                                        }
+                                    }
+                                }}
+                            >
+                                <MenuItemSelectOption value="edit">Editer</MenuItemSelectOption>
+                                <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                            </MenuItemSelect>
+                        );
+                    })}
                 </MenuContent>
             </SubMenu>
 
@@ -248,17 +249,30 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 <MenuContent>
                     <MenuItemButton onConfirm={onChooseCreateProp(null)}>🔎 Entrer un modèle</MenuItemButton>
                     <MenuTitle>Liste de props</MenuTitle>
-                    {data.props.map(prop => (
-                        <MenuItemButton
-                            key={prop.model}
-                            onSelected={onSelectedCreateProp(prop)}
-                            onConfirm={onChooseCreateProp(prop)}
-                        >
-                            {prop.label}
-                        </MenuItemButton>
+                    {Object.keys(data.props).map(propCategory => (
+                        <MenuItemSubMenuLink key={propCategory} id={`collection/prop_choose/${propCategory}`}>
+                            {propCategory}
+                        </MenuItemSubMenuLink>
                     ))}
                 </MenuContent>
             </SubMenu>
+
+            {Object.keys(data.props).map(propCategory => (
+                <SubMenu key={propCategory} id={`collection/prop_choose/${propCategory}`}>
+                    <MenuTitle banner="https://nui-img/soz/menu_mapper">{propCategory}</MenuTitle>
+                    <MenuContent>
+                        {data.props[propCategory].map(prop => (
+                            <MenuItemButton
+                                key={prop.model}
+                                onSelected={onSelectedCreateProp(prop)}
+                                onConfirm={onChooseCreateProp(prop)}
+                            >
+                                {prop.label}
+                            </MenuItemButton>
+                        ))}
+                    </MenuContent>
+                </SubMenu>
+            ))}
 
             <SubMenu id="editor">
                 <MenuTitle banner="https://nui-img/soz/menu_mapper">Mode Editeur</MenuTitle>

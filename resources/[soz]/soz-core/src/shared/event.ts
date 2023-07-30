@@ -112,11 +112,7 @@ export enum ServerEvent {
 
     PROP_REQUEST_DELETE_PROPS = 'soz-core:server:prop:request-delete',
     PROP_REQUEST_EDIT_PROP = 'soz-core:server:prop:request-edit',
-    PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:request-delete-collection',
     PROP_REQUEST_LOAD_PROPS = 'soz-core:server:prop:request-load',
-    PROP_REQUEST_UNLOAD_PROPS = 'soz-core:server:prop:request-unload',
-    PROP_REQUEST_LOAD_COLLECTION = 'soz-core:server:prop:request-load-collection',
-    PROP_REQUEST_UNLOAD_COLLECTION = 'soz-core:server:prop:request-unload-collection',
 
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
@@ -666,7 +662,6 @@ export enum NuiEvent {
     SelectPropToCreate = 'soz-core:client:placement:select-prop-to-create',
     ChoosePropToCreate = 'soz-core:client:placement:choose-prop-to-create',
     ChoosePlacedPropToEdit = 'soz-core:client:placement:choose-placed-prop-to-edit',
-    SetPlacementProp = 'soz-core:client:placement:set-prop',
     LeaveEditorMode = 'soz-core:client:placement:leave-mode',
     TogglePedMovements = 'soz-core:client:placement:toggle-movements',
     ToggleMouseSelection = 'soz-core:client:placement:toggle-mouse-selection',
@@ -675,10 +670,8 @@ export enum NuiEvent {
     PropPlacementReturnToMainMenu = 'soz-core:client:placement:return-to-main-menu',
     PropPlacementReturnToCollection = 'soz-core:client:placement:return-to-collection',
     SelectPlacementCollection = 'soz-core:client:placement:select-collection',
-    HighlightCollection = 'soz-core:client:placement:highlight-collection',
     RequestToggleCollectionLoad = 'soz-core:client:placement:toggle-collection-load',
     RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
     RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
-    RefreshPropPlacementMenuData = 'soz-core:client:placement:refresh-menu-data',
     RequestDeleteProp = 'soz-core:client:placement:delete-prop',
 }
