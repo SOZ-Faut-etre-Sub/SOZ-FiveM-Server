@@ -8412,7 +8412,7 @@ QBShared.Items = {
         ['sozedex_id'] = 46,
         ['price'] = 45
     },
-    ['pipoulpe'] = {
+    ['le_pipoulpe'] = {
         ['name'] = 'le_pipoulpe',
         ['label'] = "Pipoulpe",
         ['useable'] = false,
