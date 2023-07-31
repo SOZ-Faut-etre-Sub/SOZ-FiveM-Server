@@ -28,6 +28,7 @@ import { StonkModule } from './server/job/stonk/stonk.module';
 import { TaxiModule } from './server/job/taxi/taxi.module';
 import { UpwModule } from './server/job/upw/upw.module';
 import { MonitorModule } from './server/monitor/monitor.module';
+import { ObjectModule } from './server/object/object.module';
 import { PlayerModule } from './server/player/player.module';
 import { RaceModule } from './server/race/race.module';
 import { RebootModule } from './server/reboot/reboot.module';
@@ -56,6 +57,7 @@ async function bootstrap() {
         DatabaseModule,
         RepositoryModule,
         ApiModule,
+        ObjectModule,
         WeatherModule,
         PlayerModule,
         ItemModule,

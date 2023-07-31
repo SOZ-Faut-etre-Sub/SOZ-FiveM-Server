@@ -1,23 +1,4 @@
 local ObjectList = {}
-local ObjectListRef = {}
-
-local function CreateObjectServerSide(model, x, y, z, w, culling, freeze)
-    local ref = tostring(model) .. tostring(x) .. tostring(y) .. tostring(z)
-    local entity = CreateObjectNoOffset(model, x, y, z, true, true, false)
-    SetEntityHeading(entity, w)
-
-    ObjectListRef[ref] = entity
-
-    -- if culling then
-    --    SetEntityDistanceCullingRadius(entity, culling)
-    -- end
-
-    if freeze then
-        FreezeEntityPosition(entity, true)
-    end
-
-    return ref
-end
 
 local function CreateObjectClientSide(model, x, y, z, w, culling, freeze)
     local ref = tostring(model) .. QBCore.Shared.Round(x) .. QBCore.Shared.Round(y) .. QBCore.Shared.Round(z)
@@ -27,10 +8,6 @@ local function CreateObjectClientSide(model, x, y, z, w, culling, freeze)
     TriggerClientEvent("soz-utils:client:create-object", -1, ref, model, x, y, z, w, culling, freeze)
 
     return ref
-end
-
-local function DeleteObjectServerSide(ref)
-    -- @TODO
 end
 
 local function DeleteObjectClientSide(ref)

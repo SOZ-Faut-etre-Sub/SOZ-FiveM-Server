@@ -48,15 +48,3 @@ RegisterNetEvent("core:server:refreshPersistentProp", function()
         end
     end
 end)
-
-RegisterNetEvent("core:server:refresh-charger-props", function()
-    local data = MySQL.Sync.fetchAll("SELECT * FROM upw_chargers")
-
-    for _, prop in pairs(data) do
-        if prop.active == 1 and car_chargers[prop.id] == nil then
-            local position = json.decode(prop.position)
-            car_chargers[prop.id] = prop.id
-            CreateObject(GetHashKey("upwcarcharger"), position.x, position.y, position.z, position.w, 8000.0, true)
-        end
-    end
-end)
