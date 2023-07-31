@@ -4,7 +4,6 @@ local CollectObjects = {
     [GetHashKey("prop_kino_light_01")] = "n_fix_light",
     [GetHashKey("v_ilev_fos_mic")] = "n_fix_mic",
 }
-local ObjectWithoutFreeze = {[GetHashKey("prop_cardbordbox_03a")] = true}
 
 RegisterNetEvent("job:server:placeProps", function(item, props, rotation, offset)
     local Player = QBCore.Functions.GetPlayer(source)
@@ -19,11 +18,14 @@ end)
 
 --- Events
 RegisterNetEvent("job:server:AddObject", function(object, position)
-    exports["soz-utils"]:CreateObject(object, position.x, position.y, position.z, position.w or 0, 8000.0, ObjectWithoutFreeze[object] ~= true)
+    exports["soz-core"]:CreateObject({
+        model = object,
+        coords = { position.x,  position.y, position.z, position.w or 0},
+    })
 end)
 
 RegisterNetEvent("job:server:RemoveObject", function(ref)
-    exports["soz-utils"]:DeleteObject(ref)
+    exports["soz-core"]:DeleteObject(ref)
 end)
 
 RegisterNetEvent("job:server:CollectObject", function(ref, model)

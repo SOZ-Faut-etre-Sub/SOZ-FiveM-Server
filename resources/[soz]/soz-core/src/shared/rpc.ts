@@ -126,6 +126,8 @@ export enum RpcServerEvent {
     RACE_SERVER_EXIT = 'soz-core:server:race:exit',
     RACE_GET_RANKING = 'soz-core:server:race:get-ranking',
     RACE_GET_SPLITS = 'soz-core:server:race:get-splits',
+
+    OBJECT_GET_LIST = 'soz-core:server:object:get-list',
 }
 
 export enum RpcClientEvent {
