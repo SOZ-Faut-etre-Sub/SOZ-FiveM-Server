@@ -252,6 +252,10 @@ export class AdminMenuPlayerProvider {
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetClientState)
     public async handleResetClientState(player: AdminPlayer): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_RESET_CLIENT_STATE, player.id);
-        return;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSearch)
+    public async handleResePlayerSearch(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent('inventory:server:openInventory', 'player', player.id);
     }
 }
