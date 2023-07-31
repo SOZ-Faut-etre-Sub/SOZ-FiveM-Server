@@ -220,6 +220,14 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         <MenuItemButton
                             disabled={!isAdminOrStaff}
                             onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSearch, player);
+                            }}
+                        >
+                            Fouiller
+                        </MenuItemButton>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleOpenGunSmith, player);
                             }}
                         >
