@@ -193,7 +193,7 @@ QBCore.Functions.CreateUseableItem("meal_box", function(source, item)
         {name = "meat_festival", amount = 5},
         {name = "royal_vegetables", amount = 5},
     }) then
-        exports["soz-inventory"]:RemoveItem(source, "meal_box", 1)
+        exports["soz-inventory"]:RemoveItem(source, "meal_box", 1, item.metadata, item.slot)
         exports["soz-inventory"]:AddItem(source, source, "vegan_meal", 5, item.metadata)
         exports["soz-inventory"]:AddItem(source, source, "onigiri_assortment", 5, item.metadata)
         exports["soz-inventory"]:AddItem(source, source, "meat_festival", 5, item.metadata)
