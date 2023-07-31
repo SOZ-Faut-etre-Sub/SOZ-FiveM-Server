@@ -34,9 +34,11 @@ QBCore.Functions.CreateCallback("inventory:server:TransfertItem",
         local sourceInv = Inventory(inventorySource)
         local targetInv = Inventory(inventoryTarget)
 
-        local sourceInventory = Inventory.FilterItems(sourceInv, targetInv.type)
+        local sourceInventory = sourceInv
         if sourceInv.id == targetInv.id and manualFilter then
             sourceInventory = Inventory.FilterItems(sourceInv, manualFilter)
+        elseif sourceInv.id ~= targetInv.id then
+            sourceInventory = Inventory.FilterItems(sourceInv, targetInv.type)
         end
 
         if sourceInv.type == "trunk" or targetInv.type == "trunk" then

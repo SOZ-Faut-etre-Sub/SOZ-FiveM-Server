@@ -313,13 +313,12 @@ function Inventory.FilterItems(inv, invType)
     if invType then
         if inv.items ~= nil then
             for _, v in pairs(inv.items) do
-                if not (invType == "player" and inv.type == "player" and QBCore.Shared.Items[v.name]["not_searchable"]) then
-                    local insertId = #items + 1
-                    items[insertId] = table.deepclone(v)
+                local insertId = #items + 1
+                items[insertId] = table.deepclone(v)
 
-                    if not _G.Container[invType]:ItemIsAllowed(v) then
-                        items[insertId].disabled = true
-                    end
+                if not _G.Container[invType]:ItemIsAllowed(v) or
+                    (invType == "player" and inv.type == "player" and QBCore.Shared.Items[v.name]["not_searchable"]) then
+                    items[insertId].disabled = true
                 end
             end
         end
