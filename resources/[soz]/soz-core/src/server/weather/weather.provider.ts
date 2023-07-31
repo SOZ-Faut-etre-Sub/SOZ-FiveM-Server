@@ -284,7 +284,7 @@ export class WeatherProvider {
             transitions = {};
         }
 
-        return getRandomKeyWeighted<Weather>(transitions, 'OVERCAST') as Weather;
+        return getRandomKeyWeighted<Weather>(transitions, currentWeather) as Weather;
     }
 
     private getTemperature(weather: Weather, time: Time): number {
