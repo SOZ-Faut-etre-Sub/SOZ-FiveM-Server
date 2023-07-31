@@ -46,11 +46,7 @@ export class WeaponDrawingProvider {
     }
 
     private async drawWeapon() {
-        if (
-            !this.shouldDrawWeapon ||
-            !this.shouldAdminDrawWeapon ||
-            this.playerService.getState().isWearingPatientOutfit
-        ) {
+        if (!this.shouldDrawWeapon || !this.shouldAdminDrawWeapon) {
             return;
         }
 
