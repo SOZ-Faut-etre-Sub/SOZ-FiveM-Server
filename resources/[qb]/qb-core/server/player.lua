@@ -228,6 +228,10 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.features = PlayerData.features or {}
     PlayerData.role = PlayerData.role or "user"
 
+    exports['soz-core']:SetPlayerState(PlayerData.source, {
+        isWearingPatientOutfit = false
+    })
+
     QBCore.Player.CreatePlayer(PlayerData)
 end
 
