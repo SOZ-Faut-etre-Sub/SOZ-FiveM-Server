@@ -8902,7 +8902,7 @@ QBShared.Items = {
         ['min_weight'] = 3000,          -- poids minimal en grammes
         ['max_weight'] = 5000,         -- poids maxmimal en grammes
         ['min_length'] = 320,           -- taille minimale en cm
-        ['max_length'] = 4000,          -- taille minimale en cm
+        ['max_length'] = 400,          -- taille minimale en cm
         ['sozedex_id'] = 72,
         ['price'] = 46
     },
