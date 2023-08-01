@@ -6787,7 +6787,7 @@ QBShared.Items = {
         ['drug_pot'] = {
             ['target'] = 'mushrooms_fruiting_bag',
             ['ingredient'] = 'mushroom',
-            ['nbIngredient'] = 30,
+            ['nbIngredient'] = 60,
         }
     },
     ['mushrooms_fruiting_bag'] = {
@@ -6886,7 +6886,7 @@ QBShared.Items = {
         ['drug_pot'] = {
             ['target'] = 'zeed_pot',
             ['ingredient'] = 'zeed',
-            ['nbIngredient'] = 30,
+            ['nbIngredient'] = 60,
         }
     },
     ['zeed_pot'] = {
@@ -6980,7 +6980,7 @@ QBShared.Items = {
         ['drug_pot'] = {
             ['target'] = 'toxic_flesh_pot',
             ['ingredient'] = 'toxic_flesh',
-            ['nbIngredient'] = 10,
+            ['nbIngredient'] = 20,
         }
     },
     ['toxic_flesh_pot'] = {
@@ -7078,7 +7078,7 @@ QBShared.Items = {
         ['drug_pot'] = {
             ['target'] = 'ciguatoxine_tank',
             ['ingredient'] = 'ciguatoxine',
-            ['nbIngredient'] = 10,
+            ['nbIngredient'] = 20,
         }
     },
     ['ciguatoxine_tank'] = {
