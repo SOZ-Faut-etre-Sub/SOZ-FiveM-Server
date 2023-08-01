@@ -297,6 +297,26 @@ export class VehicleGarageProvider {
         this.blockedCrimiDate[citizenId] = date;
     }
 
+    private getPermissionForGarage(type: GarageType, category: GarageCategory): JobPermission {
+        if (type == GarageType.Depot) {
+            return JobPermission.SocietyTakeOutPound;
+        }
+        if (type == GarageType.Public) {
+            if (category == GarageCategory.Sea) {
+                return JobPermission.SocietyPublicPort;
+            } else {
+                return JobPermission.SocietyPublicGarage;
+            }
+        } else {
+            if (category == GarageCategory.Sea) {
+                return JobPermission.SocietyPrivatePort;
+            } else {
+                return JobPermission.SocietyPrivateGarage;
+            }
+        }
+        return null;
+    }
+
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES)
     public async getGarageVehicles(source: number, id: string): Promise<GarageVehicle[]> {
         const garage = (await this.garageRepository.get())[id];
@@ -360,17 +380,9 @@ export class VehicleGarageProvider {
         ) {
             const or = [{ citizenid: player.citizenid, job: null }] as Array<Prisma.PlayerVehicleWhereInput>;
 
-            if (
-                garage.type === GarageType.Depot &&
-                this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyTakeOutPound)
-            ) {
-                or.push({ job: player.job.id });
-            }
+            const permission = this.getPermissionForGarage(garage.type, garage.category);
 
-            if (
-                (garage.type === GarageType.Public || garage.type === GarageType.Private) &&
-                this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyPublicPrivateGarage)
-            ) {
+            if (permission && this.jobService.hasPermission(player, player.job.id, permission)) {
                 or.push({ job: player.job.id });
             }
 
@@ -477,11 +489,13 @@ export class VehicleGarageProvider {
         ) {
             return Err("ce véhicule n'est pas à vous");
         } else if (
-            (garage.type === GarageType.Private ||
-                garage.type === GarageType.Public ||
-                garage.type === GarageType.House) &&
+            (garage.type === GarageType.Private || garage.type === GarageType.Public) &&
             vehicle.job &&
-            !this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyPublicPrivateGarage)
+            !this.jobService.hasPermission(
+                player,
+                player.job.id,
+                this.getPermissionForGarage(garage.type, garage.category)
+            )
         ) {
             return Err("vous n'avez pas la permission de ranger un véhicule entreprise dans un garage publique/privé");
         } else if (garage.type === GarageType.Job && garage.job !== player.job.id) {
@@ -728,24 +742,11 @@ export class VehicleGarageProvider {
                         return;
                     }
 
-                    if (
-                        garage.type === GarageType.Depot &&
-                        (playerVehicle.job !== player.job.id ||
-                            !this.jobService.hasPermission(player, player.job.id, JobPermission.SocietyTakeOutPound))
-                    ) {
-                        this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
-
-                        return;
-                    }
+                    const permission = this.getPermissionForGarage(garage.type, garage.category);
 
                     if (
-                        (garage.type === GarageType.Private || garage.type === GarageType.Public) &&
-                        (playerVehicle.job !== player.job.id ||
-                            !this.jobService.hasPermission(
-                                player,
-                                player.job.id,
-                                JobPermission.SocietyPublicPrivateGarage
-                            ))
+                        playerVehicle.job !== player.job.id ||
+                        !this.jobService.hasPermission(player, player.job.id, permission)
                     ) {
                         this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
 
