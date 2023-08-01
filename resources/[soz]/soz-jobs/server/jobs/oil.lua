@@ -189,8 +189,8 @@ end)
 
 RegisterNetEvent("jobs:server:fueler:craftKeroseneJerryCan", function()
     local Player = QBCore.Functions.GetPlayer(source)
-    local jerrycanItemAmount = math.floor(exports["soz-inventory"]:GetItem(Player.PlayerData.source, "kerosene", nil, true) / 3)
-    local keroseneItemAmount = jerrycanItemAmount * 3
+    local jerrycanItemAmount = math.floor(exports["soz-inventory"]:GetItem(Player.PlayerData.source, "kerosene", nil, true))
+    local keroseneItemAmount = jerrycanItemAmount
 
     if not exports["soz-inventory"]:CanSwapItem(Player.PlayerData.source, "kerosene", keroseneItemAmount, "kerosene_jerrycan", jerrycanItemAmount) then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre ne pouvez pas ~r~transformer~s~ autant de kérosène.", "error")
