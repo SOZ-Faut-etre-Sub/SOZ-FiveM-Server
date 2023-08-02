@@ -176,12 +176,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.CriminalRecord] = {label = "Accès aux casiers judiciaires"},
             [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès au registre des véhicules"},
@@ -223,12 +223,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.CriminalRecord] = {label = "Accès aux casiers judiciaires"},
@@ -272,12 +272,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
         },
@@ -314,12 +314,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
         },
@@ -359,12 +359,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
         },
@@ -407,12 +407,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.NewsManageArticle] = {label = "Gérer les articles sur le site"},
@@ -451,12 +451,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
         },
@@ -492,12 +492,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.Fueler.ChangePrice] = {label = "Changer le prix des stations publiques"},
@@ -539,12 +539,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.CashTransfer.CollectSecure] = {label = "Collecte des containers sécurisés"},
@@ -582,12 +582,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.Bennys.Estimate] = {label = "Estimer les véhicules"},
@@ -626,12 +626,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.UPW.Order] = {label = "Commander des véhicules éléctriques"},
@@ -671,12 +671,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
             [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
             [SozJobCore.JobPermission.SocietyPublicGarage] = {
-                label = "Ranger/sortir les véhicules des garages publiques",
+                label = "Ranger/sortir les véhicules des garages publics",
             },
             [SozJobCore.JobPermission.SocietyPrivateGarage] = {
                 label = "Ranger/sortir les véhicules des garages privés",
             },
-            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publiques"},
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
