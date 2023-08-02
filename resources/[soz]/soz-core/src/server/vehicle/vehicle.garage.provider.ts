@@ -745,8 +745,11 @@ export class VehicleGarageProvider {
                     const permission = this.getPermissionForGarage(garage.type, garage.category);
 
                     if (
-                        playerVehicle.job !== player.job.id ||
-                        !this.jobService.hasPermission(player, player.job.id, permission)
+                        (garage.type === GarageType.Private ||
+                            garage.type === GarageType.Public ||
+                            garage.type === GarageType.Depot) &&
+                        (playerVehicle.job !== player.job.id ||
+                            !this.jobService.hasPermission(player, player.job.id, permission))
                     ) {
                         this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
 
