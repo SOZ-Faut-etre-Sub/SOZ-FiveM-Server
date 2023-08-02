@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useWeather } from '../../hooks/app/useWeather';
 import { useTime } from '../../hooks/usePhone';
 import { AppWrapper } from '../../ui/components/AppWrapper';
-import { FullPageWithHeaderWithNavBar } from '../../ui/layout/FullPageWithHeaderWithNavBar';
+import { FullPage } from '../../ui/layout/FullPage';
 import { WeatherList } from './pages/WeatherList';
 
 export const WeatherApp = () => {
@@ -18,7 +18,7 @@ export const WeatherApp = () => {
     const isDay = hours >= 8 && hours < 20;
 
     return (
-        <FullPageWithHeaderWithNavBar
+        <FullPage
             className={cn('bg-gradient-to-t', {
                 'from-red-900 to-red-600': alertInProgress,
                 'from-sky-900 to-indigo-900': !alertInProgress && isNight,
@@ -42,6 +42,6 @@ export const WeatherApp = () => {
                     </Routes>
                 </AppWrapper>
             </Transition>
-        </FullPageWithHeaderWithNavBar>
+        </FullPage>
     );
 };
