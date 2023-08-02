@@ -212,6 +212,14 @@ export class PoliceProvider {
         this.dispatcher.dispatch('police', 'OpenBreathAnalyzer', alcoolLevel / 20);
     }
 
+    @On('police:client:screening_test')
+    public async screeningTest(data) {
+        const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(data.entity));
+
+        const alcoolLevel = await emitRpc<number>(RpcServerEvent.POLICE_DRUGLEVEL, target);
+        this.dispatcher.dispatch('police', 'OpenScreeningTest', alcoolLevel / 20);
+    }
+
     @OnEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET)
     public async breathanalyzerTarget() {
         const playerPed = PlayerPedId();

@@ -3,15 +3,24 @@ import { FunctionComponent, useState } from 'react';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 
 export const BreathAnalyzerApp: FunctionComponent = () => {
-    const [level, setLevel] = useState<number>(-1);
+    const [level, setLevel] = useState<string>(null);
     const [open, setOpen] = useState<boolean>(false);
+    const [style, setStyle] = useState<string>('text-green-500 text-center');
 
     useNuiFocus(open, open, false);
 
     useNuiEvent('police', 'OpenBreathAnalyzer', level => {
-        setLevel(-1);
+        setLevel(null);
+        setStyle('text-green-500 text-center');
         setOpen(true);
-        setTimeout(() => setLevel(level), 5000);
+        setTimeout(() => setLevel(`${level.toFixed(2)} g/L`), 5000);
+    });
+
+    useNuiEvent('police', 'OpenScreeningTest', level => {
+        setLevel(null);
+        setStyle('text-red-500 text-center');
+        setOpen(true);
+        setTimeout(() => setLevel(`${level.toFixed(2)} ng/mL`), 5000);
     });
 
     if (!open) {
@@ -37,17 +46,17 @@ export const BreathAnalyzerApp: FunctionComponent = () => {
                     paddingLeft: '165px',
                     height: '161px',
                 }}
-                className="text-green-500 text-center"
+                className={style}
             >
-                {level != -1 ? (
+                {level != null ? (
                     <div
                         style={{
                             width: '92px',
                             verticalAlign: 'middle',
                         }}
-                        className="text-green-500 text-center"
+                        className={style}
                     >
-                        {level.toFixed(2)} g/L
+                        {level}
                     </div>
                 ) : (
                     <div
@@ -55,7 +64,7 @@ export const BreathAnalyzerApp: FunctionComponent = () => {
                             width: '92px',
                             lineHeight: 'normal',
                         }}
-                        className="text-green-500 text-center"
+                        className={style}
                     >
                         <div>ANALYSE</div>
                         <div>EN</div>

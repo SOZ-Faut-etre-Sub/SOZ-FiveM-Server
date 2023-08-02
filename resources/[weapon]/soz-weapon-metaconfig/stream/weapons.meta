@@ -1382,7 +1382,7 @@
           <PedRicochetTolerance value="1.000000" />
           <VehicleRicochetTolerance value="1.000000" />
           <Explosion>
-            <Default>SMOKEGRENADE</Default>
+            <Default>SMOKEGRENADELAUNCHER</Default>
             <HitCar>DONTCARE</HitCar>
             <HitTruck>DONTCARE</HitTruck>
             <HitBike>DONTCARE</HitBike>

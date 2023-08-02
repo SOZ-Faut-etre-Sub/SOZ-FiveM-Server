@@ -485,13 +485,14 @@ QBShared.Items = {
     },
     ['weapon_assaultsmg'] = {
         ['name'] = 'weapon_assaultsmg',
-        ['label'] = 'Mitraillette d\'assaut',
-        ['weight'] = 4200,
+        ['label'] = 'P90 GEN2',
+        ['weight'] = 2400,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_SMG',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Une version plus lourde de la mitrailette.'
+        ['description'] = 'Une version modifié et améliorée de la célèbre P90, idéale pour vider un chargeur en une respiration.',
+        ['illustrator'] = '.Sniteur'
     },
     ['weapon_combatpdw'] = {
         ['name'] = 'weapon_combatpdw',
@@ -1060,13 +1061,14 @@ QBShared.Items = {
     },
     ['weapon_smokegrenade'] = {
         ['name'] = 'weapon_smokegrenade',
-        ['label'] = 'Fumigène',
-        ['weight'] = 500,
+        ['label'] = 'Grenade fumigène',
+        ['weight'] = 300,
         ['type'] = 'weapon',
         ['ammotype'] = nil,
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Grenade libérant un épais nuage de fumée.'
+        ['description'] = 'Parfaite pour ne strictement plus rien voir devant nous.',
+        ['illustrator'] = '.Sniteur'
     },
     ['weapon_flare'] = {
         ['name'] = 'weapon_flare',
@@ -1226,7 +1228,8 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = ''
+        ['description'] = "Elle est destinée à engager des cibles jusqu'à 200 mètres et à perforer les protections individuelles comme les gilets pare-balles ou les casques. Sa légèreté lui permet de perdre rapidement son énergie lors d'un impact, ce qui limite les risques de surpénétration et les dommages collatéraux qu'ils impliquent.",
+        ['illustrator'] = '.Sniteur'
     },
     ['ammo_05'] = {
         ['name'] = 'ammo_05',
@@ -6144,6 +6147,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = 'Ne doit pas être utilisé pour faire des records. ',
     },
+    ["screening_test"] = {
+        ['name'] = "screening_test",
+        ['label'] = "Test de dépistage",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['combinable'] = nil,
+        ['description'] = "Je vous jure que j'ai pas fumé. Sauf une fois au chalet.",
+        ['illustrator'] = '.Poulpito',
+    },
     ['zip'] = {
         ['name'] = 'zip',
         ['label'] = 'Zip',
@@ -9741,5 +9755,5 @@ QBShared.Items = {
         ['max_length'] = 20,          -- taille minimale en cm
         ['sozedex_id'] = 116,
         ['price'] = 22
-    },    
+    },
 }

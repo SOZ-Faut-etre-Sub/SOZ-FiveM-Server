@@ -147,6 +147,17 @@ Citizen.CreateThread(function()
                     end,
                     job = jobId,
                 },
+                {
+                    label = "Dépistage de drogue",
+                    color = jobId,
+                    icon = "c:police/screening.png",
+                    event = "police:client:screening_test",
+                    item = "screening_test",
+                    canInteract = function(player)
+                        return PlayerData.job.onduty
+                    end,
+                    job = jobId,
+                },
             },
             distance = 1.5,
         })
