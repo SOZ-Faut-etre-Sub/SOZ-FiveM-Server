@@ -155,25 +155,48 @@ export class VehicleSpawnProvider {
             true
         );
 
+        if (!vehicle) {
+            this.logger.error(`could not create vehicle with hash ${hash}`);
+
+            return null;
+        }
+
+        SetEntityAsMissionEntity(vehicle, true, true);
+
         this.resourceLoader.unloadModel(hash);
         let attempts = 0;
 
         this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
 
+        let networkId = NetworkGetNetworkIdFromEntity(vehicle);
+
+        if (networkId) {
+            SetNetworkIdExistsOnAllMachines(networkId, true);
+        }
+
         while (!NetworkGetEntityIsNetworked(vehicle) && attempts < 10) {
             NetworkRegisterEntityAsNetworked(vehicle);
+            networkId = NetworkGetNetworkIdFromEntity(vehicle);
+
+            if (networkId) {
+                SetNetworkIdExistsOnAllMachines(networkId, true);
+            }
+
             attempts += 1;
             await wait(100);
         }
 
         if (!NetworkGetEntityIsNetworked(vehicle)) {
-            this.logger.error(`could not create vehicle on network, try again latter`);
+            this.logger.error(
+                `could not create vehicle on network, try again latter, entity id : ${vehicle}, network id : ${networkId}`
+            );
+
             DeleteVehicle(vehicle);
 
             return null;
         }
 
-        const networkId = NetworkGetNetworkIdFromEntity(vehicle);
+        networkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         if (!NetworkDoesEntityExistWithNetworkId(networkId) || !NetworkDoesNetworkIdExist(networkId)) {
             this.logger.error(`network id ${networkId} does not exist, cannot spawn vehicle`);
