@@ -743,7 +743,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 minZ: 5,
                 maxZ: 6.002,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
             new BoxZone([-641.07, -2212.31, 6.0], 1.0, 1.0, {
@@ -751,7 +751,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 minZ: 5.0,
                 maxZ: 8.0,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
             new BoxZone([-634.45, -2209.31, 6.0], 1.0, 1.0, {
@@ -759,7 +759,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 minZ: 5.0,
                 maxZ: 8.0,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -941,7 +941,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 minZ: 30.49,
                 maxZ: 31.492,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -992,7 +992,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 minZ: 28.29,
                 maxZ: 29.292,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -1291,7 +1291,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 minZ: 45.92,
                 maxZ: 48.922,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -1466,6 +1466,9 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 heading: 45.0,
                 minZ: 30.42,
                 maxZ: 33.42,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
             }),
             new BoxZone([-257.71, 6061.84, 31.35], 13.4, 3.6, {
                 heading: 46.0,
@@ -1529,7 +1532,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 minZ: 73.23,
                 maxZ: 74.23,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -1692,7 +1695,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 minZ: 27.67,
                 maxZ: 30.672,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
             new BoxZone([-1415.16, -630.19, 28.67], 7.0, 3.0, {
