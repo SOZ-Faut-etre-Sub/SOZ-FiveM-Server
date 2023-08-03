@@ -1,14 +1,17 @@
 import { NotificationPoliceLogoType, NotificationPoliceType, NotificationType } from '@public/shared/notification';
 
+import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
+import { Logger } from '../../core/logger';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Font } from '../../shared/hud';
 import { Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
+import { GetObjectList, GetPedList, GetPickupList, GetVehicleList } from '../enumerate';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
@@ -33,6 +36,9 @@ export class AdminMenuDeveloperProvider {
 
     @Inject(NuiZoneProvider)
     private nuiZoneProvider: NuiZoneProvider;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     public showCoordinates = false;
 
@@ -219,5 +225,71 @@ export class AdminMenuDeveloperProvider {
         TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'hunger', 100);
         TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'alcohol', 0);
         TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'drug', 0);
+    }
+
+    @Command('debug-entity')
+    public async debugObjects(): Promise<void> {
+        const objects = GetObjectList();
+        const peds = GetPedList();
+        const vehicles = GetVehicleList();
+        const pickups = GetPickupList();
+
+        let countObjects = 0,
+            countObjectsNetworked = 0,
+            countPeds = 0,
+            countPedsNetworked = 0,
+            countVehicles = 0,
+            countVehiclesNetworked = 0,
+            countPickups = 0,
+            countPickupsNetworked = 0;
+
+        for (const object of objects) {
+            countObjects++;
+            if (NetworkGetEntityIsNetworked(object)) {
+                countObjectsNetworked++;
+            }
+        }
+
+        for (const ped of peds) {
+            countPeds++;
+            if (NetworkGetEntityIsNetworked(ped)) {
+                countPedsNetworked++;
+            }
+        }
+
+        for (const vehicle of vehicles) {
+            countVehicles++;
+            if (NetworkGetEntityIsNetworked(vehicle)) {
+                countVehiclesNetworked++;
+            }
+        }
+
+        for (const pickup of pickups) {
+            countPickups++;
+            if (NetworkGetEntityIsNetworked(pickup)) {
+                countPickupsNetworked++;
+            }
+        }
+
+        console.log(
+            `Objects : ${countObjects} total, ${
+                countObjects - countObjectsNetworked
+            } not networked, ${countObjectsNetworked} networked, ${GetMaxNumNetworkObjects()} max networked`
+        );
+        console.log(
+            `Peds : ${countPeds} total, ${
+                countPeds - countPedsNetworked
+            } not networked, ${countPedsNetworked} networked, ${GetMaxNumNetworkPeds()} max networked`
+        );
+        console.log(
+            `Vehicles : ${countVehicles} total, ${
+                countVehicles - countVehiclesNetworked
+            } not networked, ${countVehiclesNetworked} networked, ${GetMaxNumNetworkVehicles()} max networked`
+        );
+        console.log(
+            `Pikcups : ${countPickups} total, ${
+                countPickups - countPickupsNetworked
+            } not networked, ${countPickupsNetworked} networked, ${GetMaxNumNetworkVehicles()} max networked`
+        );
     }
 }
