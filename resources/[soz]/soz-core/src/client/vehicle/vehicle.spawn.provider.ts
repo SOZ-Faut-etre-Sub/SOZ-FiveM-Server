@@ -158,6 +158,8 @@ export class VehicleSpawnProvider {
         this.resourceLoader.unloadModel(hash);
         let attempts = 0;
 
+        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
+
         while (!NetworkGetEntityIsNetworked(vehicle) && attempts < 10) {
             NetworkRegisterEntityAsNetworked(vehicle);
             attempts += 1;
@@ -263,6 +265,8 @@ export class VehicleSpawnProvider {
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
 
+        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
+
         while (IsEntityWaitingForWorldCollision(vehicle)) {
             await wait(0);
         }
@@ -290,7 +294,6 @@ export class VehicleSpawnProvider {
         }
 
         this.vehicleStateService.setVehicleState(vehicle, volatile, true);
-        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
 
         if (vehicleSpawn.modification) {
             this.vehicleService.applyVehicleConfiguration(vehicle, vehicleSpawn.modification);

@@ -53,10 +53,7 @@ const applyVehicleTire = (
 
 const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondition>> = {
     bodyHealth: {
-        apply: (vehicle, value: number) => {
-            const previousEngineHealth = GetVehicleEngineHealth(vehicle);
-            const previousTankHealth = GetVehiclePetrolTankHealth(vehicle);
-
+        apply: (vehicle, value: number, condition) => {
             SetVehicleBodyHealth(vehicle, value);
 
             if (value > 999.99) {
@@ -64,8 +61,8 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
                 SetVehicleFixed(vehicle);
             }
 
-            SetVehicleEngineHealth(vehicle, previousEngineHealth);
-            SetVehiclePetrolTankHealth(vehicle, previousTankHealth);
+            SetVehicleEngineHealth(vehicle, condition.engineHealth);
+            SetVehiclePetrolTankHealth(vehicle, condition.tankHealth);
         },
         get: vehicle => GetVehicleBodyHealth(vehicle),
     },
