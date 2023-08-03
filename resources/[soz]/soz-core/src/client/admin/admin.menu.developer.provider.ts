@@ -289,7 +289,7 @@ export class AdminMenuDeveloperProvider {
         console.log(
             `Pikcups : ${countPickups} total, ${
                 countPickups - countPickupsNetworked
-            } not networked, ${countPickupsNetworked} networked, ${GetMaxNumNetworkVehicles()} max networked`
+            } not networked, ${countPickupsNetworked} networked, ${GetMaxNumNetworkPickups()} max networked`
         );
     }
 }
