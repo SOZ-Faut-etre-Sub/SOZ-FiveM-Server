@@ -36,25 +36,23 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     }, [notifications, setBarUncollapsed]);
 
     const color = () => {
-        if (pathname === '/' || pathname === '/emergency') {
+        if (['/', '/emergency', '/weather'].includes(pathname)) {
             return 'text-white';
-        } else if (pathname === '/call' || pathname.includes('/phone')) {
+        } else if (pathname === '/call' || (call && pathname.includes('/phone'))) {
             return 'text-white';
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else {
-            return config.theme.value === 'dark' ? 'bg-ios-800 text-white' : 'bg-ios-50 text-black';
+            return config.theme.value === 'dark' ? 'text-white' : 'text-black';
         }
     };
 
     return (
         <>
             <div
-                className={cn(
-                    `z-40 grid grid-cols-3 px-5 py-3 text-sm w-full`,
-                    emergency ? '' : 'cursor-pointer',
-                    color()
-                )}
+                className={cn(`z-40 grid grid-cols-3 px-5 py-3 text-sm w-full`, color(), {
+                    'cursor-pointer': !emergency,
+                })}
                 onClick={
                     emergency
                         ? () => {}
