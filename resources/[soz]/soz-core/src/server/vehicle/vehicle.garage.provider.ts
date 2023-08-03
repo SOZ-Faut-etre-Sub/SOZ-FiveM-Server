@@ -771,7 +771,7 @@ export class VehicleGarageProvider {
                 }
 
                 const parkingPlaces = garage.parkingPlaces.filter(place => {
-                    const placeCapacities = place.data?.capacity || [PlaceCapacity.Small, PlaceCapacity.Medium];
+                    const placeCapacities = place.data?.capacity || [PlaceCapacity.Small];
 
                     return placeCapacities.includes(capacity);
                 });
