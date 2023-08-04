@@ -538,13 +538,13 @@ QBShared.Items = {
     -- Shotguns
     ['weapon_pumpshotgun'] = {
         ['name'] = 'weapon_pumpshotgun',
-        ['label'] = 'Fusil à pompe',
-        ['weight'] = 2500,
+        ['label'] = 'Remington 870 Non lethal',
+        ['weight'] = 2300,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_SHOTGUN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'Un fusil à pompe, efficace à courte portée.'
+        ['description'] = "L'arme idéale pour mettre au sol n'importe quel individu sans pour autant l'abattre."
     },
     ['weapon_sawnoffshotgun'] = {
         ['name'] = 'weapon_sawnoffshotgun',
@@ -1364,6 +1364,17 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = ''
+    },
+    ['ammo_17'] = {
+        ['name'] = 'ammo_17',
+        ['label'] = "Billes caoutchouc",
+        ['weight'] = 300,
+        ['type'] = 'weapon_ammo',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Je ne vous conseille pas de subir un tir à l'aide de cette bille ! Elle laisse une marque à vie sur le corps de l'individu."
     },
 
     -- Card ITEMS

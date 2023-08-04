@@ -26,6 +26,7 @@ import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
 import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
+import { DrugScreeningApp } from './Police/DrugScreeningApp';
 import { RadarApp } from './Police/RadarApp';
 import { ProgressApp } from './Progress/ProgressApp';
 import { RadioApp } from './Radio/RadioApp';
@@ -80,6 +81,7 @@ export const App: FunctionComponent = () => {
                 <RadioApp />
                 <RadioVehicleApp />
                 <BreathAnalyzerApp />
+                <DrugScreeningApp />
                 <HoodApp />
                 <TaxiHorodateurApp />
                 <TalentApp />

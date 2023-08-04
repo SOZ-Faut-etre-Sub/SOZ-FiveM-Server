@@ -216,8 +216,8 @@ export class PoliceProvider {
     public async screeningTest(data) {
         const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(data.entity));
 
-        const alcoolLevel = await emitRpc<number>(RpcServerEvent.POLICE_DRUGLEVEL, target);
-        this.dispatcher.dispatch('police', 'OpenScreeningTest', alcoolLevel / 20);
+        const drugLevel = await emitRpc<number>(RpcServerEvent.POLICE_DRUGLEVEL, target);
+        this.dispatcher.dispatch('police', 'OpenScreeningTest', drugLevel > 0);
     }
 
     @OnEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET)

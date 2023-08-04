@@ -186,6 +186,8 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'screening_test', type: 'item', price: 5 },
             { id: 'police_pliers', type: 'item', price: 450 },
             { id: 'weapon_smokegrenade', type: 'weapon', metadata: { ammo: 1 }, price: 50 },
+            { id: 'weapon_pumpshotgun', type: 'weapon', price: 1200 },
+            { id: 'ammo_17', type: 'weapon_ammo', price: 10 },
         ],
     },
     {
@@ -222,6 +224,8 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'screening_test', type: 'item', price: 5 },
             { id: 'police_pliers', type: 'item', price: 450 },
             { id: 'weapon_smokegrenade', type: 'weapon', metadata: { ammo: 1 }, price: 50 },
+            { id: 'weapon_pumpshotgun', type: 'weapon', price: 1200 },
+            { id: 'ammo_17', type: 'weapon_ammo', price: 10 },
         ],
     },
     {
