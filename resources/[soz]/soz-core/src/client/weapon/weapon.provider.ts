@@ -1,13 +1,14 @@
-import { Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Once, OnceStep, OnEvent, OnGameEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { uuidv4 } from '@public/core/utils';
 import { Control } from '@public/shared/input';
+import { Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomItem } from '@public/shared/random';
 
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
@@ -27,6 +28,7 @@ const messageExcludeGroups = [
 ];
 
 const messageExclude = [GetHashKey('weapon_musket'), GetHashKey('weapon_raypistol')];
+const NonLethalWeapons = [GetHashKey('weapon_pumpshotgun')];
 
 @Provider()
 export class WeaponProvider {
@@ -304,6 +306,31 @@ export class WeaponProvider {
                 await this.weapon.clear();
                 await this.weaponDrawingProvider.refreshDrawWeapons();
             }
+        }
+    }
+
+    @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
+    public gameEventTriggered(
+        victim: number,
+        attacker: number,
+        unkInt1: number,
+        unkBool1: number,
+        unkBool2: number,
+        isFatal: boolean,
+        weaponHash: number
+    ) {
+        const playerPed = PlayerPedId();
+        if (playerPed == victim && NonLethalWeapons.includes(weaponHash) && !IsPedRagdoll(playerPed)) {
+            SetPedToRagdoll(playerPed, 10000, 10000, 0, false, false, false);
+            const attackerCoords = GetEntityCoords(attacker);
+            const victimCoords = GetEntityCoords(victim);
+            const vec = [
+                victimCoords[0] - attackerCoords[0],
+                victimCoords[1] - attackerCoords[1],
+                victimCoords[2] - attackerCoords[2],
+            ] as Vector3;
+            const magnitude = Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+            SetEntityVelocity(playerPed, (5 * vec[0]) / magnitude, (5 * vec[1]) / magnitude, (5 * vec[2]) / magnitude);
         }
     }
 }
