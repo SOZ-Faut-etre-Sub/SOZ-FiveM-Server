@@ -390,6 +390,6 @@ export class PropsProvider {
         TriggerClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, source, propId, prop);
     }
     public async editPropToAllClients(propId: string, prop: WorldPlacedProp) {
-        TriggerClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, -1, propId, prop);
+        TriggerClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, -1, prop);
     }
 }

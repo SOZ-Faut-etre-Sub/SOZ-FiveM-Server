@@ -1,4 +1,4 @@
-import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -62,6 +62,15 @@ export class PropPlacementProvider {
 
     private editorState: EditorState = null;
 
+    @Once(OnceStep.Start)
+    public async onInit() {
+        RegisterKeyMapping('+gizmoSelect', 'Gizmo : Sélectionner un axe.', 'MOUSE_BUTTON', 'MOUSE_LEFT');
+        RegisterKeyMapping('+gizmoTranslation', 'Gizmo : Mode Translation', 'keyboard', 'T');
+        RegisterKeyMapping('+gizmoRotation', 'Gizmo : Mode Rotation', 'keyboard', 'R');
+        RegisterKeyMapping('+gizmoScale', 'Giszmo : Mode Scale', 'keyboard', 'S');
+        RegisterKeyMapping('+gizmoLocal', 'Gizmo : Coordonnées locales', 'keyboard', 'L');
+    }
+
     @OnEvent(ClientEvent.PROP_OPEN_MENU)
     public async openPlacementMenu() {
         if (this.menu.getOpened() === MenuType.PropPlacementMenu) {
@@ -106,7 +115,6 @@ export class PropPlacementProvider {
 
     @OnNuiEvent(NuiEvent.PropPlacementReturnToMainMenu)
     public async onReturnToMainMenu() {
-        console.log('Return to main menu triggered');
         if (this.editorState.currentCollection) {
             await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
         }
@@ -283,7 +291,6 @@ export class PropPlacementProvider {
     }
 
     public async enterEditorMode() {
-        ResetEditorValues();
         EnterCursorMode();
         this.editorState.isEditorModeOn = true;
     }
@@ -305,7 +312,7 @@ export class PropPlacementProvider {
         }
 
         const matrixBuffer = this.propProvider.makeEntityMatrix(entity);
-        const changed = DrawGizmo(matrixBuffer as any, 'Gismo_editor');
+        const changed = DrawGizmo(matrixBuffer as any, `Gismo_editor_${entity}`);
         if (changed) {
             if (this.editorState.debugProp.collision) {
                 this.propProvider.applyEntityNormalizedMatrix(entity, matrixBuffer);
@@ -425,11 +432,7 @@ export class PropPlacementProvider {
             matrix: matrix,
         };
 
-        console.log('old prop: ', debugProp);
-        console.log('new prop: ', editedProp);
-
         TriggerServerEvent(ServerEvent.PROP_REQUEST_EDIT_PROP, editedProp);
-        await this.propProvider.editClientSideProp(editedProp); // Server event is supposed to do it
         this.editorState.currentCollection.props[debugProp.unique_id] = {
             ...editedProp,
             entity: debugProp.entity,
@@ -523,7 +526,6 @@ export class PropPlacementProvider {
         }
         DisableAllControlActions(0);
         const hitEntDebug = SelectEntityAtCursor(6 | (1 << 5), true);
-        console.log('hitEntDebug: ', hitEntDebug);
         const obj = Object.values(this.editorState.currentCollection.props).find(prop => prop.entity === hitEntDebug);
         if (!obj) {
             this.highlightProvider.unhighlightAllEntities();
