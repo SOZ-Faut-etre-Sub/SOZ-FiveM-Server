@@ -27,7 +27,7 @@ const messageExcludeGroups = [
     GetHashKey('GROUP_STUNGUN'),
 ];
 
-const messageExclude = [GetHashKey('weapon_musket'), GetHashKey('weapon_raypistol')];
+const messageExclude = [GetHashKey('weapon_musket'), GetHashKey('weapon_raypistol'), GetHashKey('weapon_pumpshotgun')];
 const NonLethalWeapons = [GetHashKey('weapon_pumpshotgun')];
 
 @Provider()
@@ -321,6 +321,7 @@ export class WeaponProvider {
     ) {
         const playerPed = PlayerPedId();
         if (playerPed == victim && NonLethalWeapons.includes(weaponHash) && !IsPedRagdoll(playerPed)) {
+            this.weapon.clear();
             SetPedToRagdoll(playerPed, 10000, 10000, 0, false, false, false);
             const attackerCoords = GetEntityCoords(attacker);
             const victimCoords = GetEntityCoords(victim);
@@ -330,7 +331,7 @@ export class WeaponProvider {
                 victimCoords[2] - attackerCoords[2],
             ] as Vector3;
             const magnitude = Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
-            SetEntityVelocity(playerPed, (5 * vec[0]) / magnitude, (5 * vec[1]) / magnitude, (5 * vec[2]) / magnitude);
+            SetEntityVelocity(playerPed, (2 * vec[0]) / magnitude, (2 * vec[1]) / magnitude, (2 * vec[2]) / magnitude);
         }
     }
 }
