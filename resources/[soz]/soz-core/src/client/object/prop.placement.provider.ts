@@ -314,10 +314,10 @@ export class PropPlacementProvider {
         const matrixBuffer = this.propProvider.makeEntityMatrix(entity);
         const changed = DrawGizmo(matrixBuffer as any, `Gismo_editor_${entity}`);
         if (changed) {
-            if (this.editorState.debugProp.collision) {
-                this.propProvider.applyEntityNormalizedMatrix(entity, matrixBuffer);
-            } else {
+            if (this.editorState.debugProp.collision === false) {
                 this.propProvider.applyEntityMatrix(entity, matrixBuffer);
+            } else {
+                this.propProvider.applyEntityNormalizedMatrix(entity, matrixBuffer);
             }
         }
     }
@@ -380,9 +380,6 @@ export class PropPlacementProvider {
         ) {
             return;
         }
-        if (scale) {
-            // Not implemented yet
-        }
         if (position) {
             const playerPed = PlayerPedId();
             if (!playerPed) {
@@ -404,6 +401,10 @@ export class PropPlacementProvider {
         }
         if (snap != null) {
             this.editorState.snapMode = snap;
+        }
+        if (scale) {
+            const rot = GetEntityRotation(this.editorState.debugProp.entity);
+            SetEntityRotation(this.editorState.debugProp.entity, rot[0], rot[1], rot[2], 0, false);
         }
     }
 
@@ -497,16 +498,21 @@ export class PropPlacementProvider {
 
     @OnNuiEvent(NuiEvent.RequestDeleteCurrentProp)
     public async requestDeleteCurrentProp() {
+        if (!this.editorState || !this.editorState.debugProp) {
+            return Err(false);
+        }
+        if (!this.editorState.debugProp.unique_id) {
+            return Ok(true);
+        }
         if (
-            !this.editorState ||
-            !this.editorState.debugProp ||
-            !this.editorState.debugProp.unique_id ||
             !this.editorState.currentCollection ||
             !this.editorState.currentCollection.props[this.editorState.debugProp.unique_id]
         ) {
             return Err(false);
         }
-        return await this.requestDeleteProp({ id: this.editorState.debugProp.unique_id });
+        await this.requestDeleteProp({ id: this.editorState.debugProp.unique_id });
+        await this.onLeaveEditorMode();
+        return Ok(true);
     }
 
     @OnNuiEvent(NuiEvent.ChoosePlacedPropToEdit)

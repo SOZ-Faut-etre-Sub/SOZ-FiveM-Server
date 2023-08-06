@@ -360,6 +360,13 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     </MenuItemButton>
                     <MenuItemButton
                         onConfirm={() => {
+                            fetchNui(NuiEvent.PropPlacementReset, { scale: true });
+                        }}
+                    >
+                        🔄 Réinitialiser l'échelle
+                    </MenuItemButton>
+                    <MenuItemButton
+                        onConfirm={() => {
                             fetchNui(NuiEvent.PropPlacementReset, { position: true, rotation: true, scale: true });
                         }}
                     >
