@@ -594,8 +594,10 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
     end
 
     if item['giveable'] == false then
-        cb(false, "not_giveable")
-        return
+        if invSource.id ~= invTarget.id then
+            cb(false, "not_giveable")
+            return
+        end
     end
 
     if not metadata then

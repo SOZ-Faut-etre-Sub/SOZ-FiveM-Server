@@ -12,6 +12,7 @@ export type NuiPlacementPropMethodMap = {
     SetCollection: PropCollection;
     SetDatas: { serverData: PropServerData; clientData: PropClientData };
     EnterEditorMode: void;
+    SetCurrentSearch: string;
 };
 
 export type PlacementProp = {
@@ -23,7 +24,741 @@ export type PlacementProp = {
 export type PlacementPropList = Record<string, PlacementProp[]>;
 
 export const PLACEMENT_PROP_LIST: PlacementPropList = {
-    ['Art']: [],
+    ['Distributeur & Arcade']: [
+        {
+            model: 'ch_prop_arcade_race_01a',
+            label: 'Arcade de course (base) 1',
+        },
+        {
+            model: 'ch_prop_arcade_race_01b',
+            label: 'Arcade de course (base) 2',
+        },
+        {
+            model: 'ch_prop_arcade_race_02a',
+            label: 'Arcade de course (base) 3',
+        },
+        {
+            model: 'ch_prop_arcade_race_bike_02a',
+            label: 'Arcade de course (moto) 1',
+        },
+        {
+            model: 'ch_prop_arcade_race_car_01a',
+            label: 'Arcade de course (voiture) 1',
+        },
+        {
+            model: 'ch_prop_arcade_race_car_01b',
+            label: 'Arcade de course (voiture) 2',
+        },
+        {
+            model: 'ch_prop_arcade_race_truck_01a',
+            label: 'Arcade de course (camion) 1',
+        },
+        {
+            model: 'ch_prop_arcade_race_truck_01b',
+            label: 'Arcade de course (camion) 2',
+        },
+        {
+            model: 'prop_50s_jukebox',
+            label: 'Jukebox',
+        },
+        {
+            model: 'prop_airhockey_01',
+            label: 'Air Hockey',
+        },
+        {
+            model: 'prop_arcade_01',
+            label: 'Arcade 1',
+        },
+        {
+            model: 'prop_arcade_02',
+            label: 'Arcade 2',
+        },
+        {
+            model: 'ch_prop_arcade_degenatron_01a',
+            label: 'Arcade 3',
+        },
+        {
+            model: 'ch_prop_arcade_monkey_01a',
+            label: 'Arcade 4',
+        },
+        {
+            model: 'ch_prop_arcade_penetrator_01a',
+            label: 'Arcade 5',
+        },
+        {
+            model: 'prop_gumball_03',
+            label: 'Distributeur de bonbons',
+        },
+        {
+            model: 'prop_jukebox_01',
+            label: 'Jukebox 1',
+        },
+        {
+            model: 'prop_jukebox_02',
+            label: 'Jukebox 2',
+        },
+        {
+            model: 'ch_prop_arcade_love_01a',
+            label: 'Arcade 7',
+        },
+        {
+            model: 'ch_prop_arcade_fortune_01a',
+            label: 'Diseuse de bonne aventure',
+        },
+        {
+            model: 'ch_prop_arcade_gun_01a',
+            label: 'Arcade 6',
+        },
+        {
+            model: 'ch_prop_arcade_jukebox_01a',
+            label: 'Jukebox 3',
+        },
+        {
+            model: 'prop_pooltable_02',
+            label: 'Table de billard 1',
+        },
+        {
+            model: 'prop_pooltable_3b',
+            label: 'Table de billard 2',
+        },
+        {
+            model: 'prop_train_ticket_02',
+            label: 'Distributeur de tickets',
+        },
+        {
+            model: 'prop_vend_coffe_01',
+            label: 'Distributeur de café',
+        },
+        {
+            model: 'prop_vend_fags_01',
+            label: 'Distributeur de sodas 1',
+        },
+        {
+            model: 'prop_vend_fridge01',
+            label: 'Frigo de boissons 1',
+        },
+        {
+            model: 'prop_vend_snak_01',
+            label: 'Distributeur de snacks 1',
+        },
+        {
+            model: 'prop_vend_soda_02',
+            label: 'Distributeur de sodas 2',
+        },
+        {
+            model: 'prop_vend_water_01',
+            label: "Distributeur de bouteille d'eau",
+        },
+        {
+            model: 'prop_bball_arcade_01',
+            label: 'Basketball arcade',
+        },
+        {
+            model: 'bkr_prop_clubhouse_jukebox_01a',
+            label: 'Jukebox de club 1',
+        },
+        {
+            model: 'ch_prop_arcade_claw_01a',
+            label: 'Gatcha ! UwU',
+        },
+        {
+            model: 'ch_prop_arcade_space_01a',
+            label: 'Arcade 8',
+        },
+        {
+            model: 'ch_prop_arcade_invade_01a',
+            label: 'Arcade 9',
+        },
+        {
+            model: 'ch_prop_arcade_street_01a',
+            label: 'Arcade 10',
+        },
+        {
+            model: 'ch_prop_arcade_street_01b',
+            label: 'Arcade 11',
+        },
+        {
+            model: 'ch_prop_arcade_street_01c',
+            label: 'Arcade 12',
+        },
+        {
+            model: 'ch_prop_arcade_street_01d',
+            label: 'Arcade 13',
+        },
+        {
+            model: 'ch_prop_arcade_wizard_01a',
+            label: 'Arcade 14',
+        },
+        {
+            model: 'ch_prop_casino_lucky_wheel_01a',
+            label: 'Roue de la fortune',
+        },
+    ],
+    ['Art']: [
+        {
+            model: 'apa_mp_h_acc_artwalll_01',
+            label: 'Tableau 1',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_artwalll_02',
+            label: 'Tableau 2',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_artwalll_03',
+            label: 'Tableau 3',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_artwallm_02',
+            label: 'Tableau 4',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_artwallm_03',
+            label: 'Tableau 5',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_artwallm_04',
+            label: 'Tableau 6',
+            collision: false,
+        },
+        {
+            model: 'apa_p_h_acc_artwalll_01',
+            label: 'Tableau 7',
+            collision: false,
+        },
+        {
+            model: 'apa_p_h_acc_artwalll_02',
+            label: 'Tableau 8',
+            collision: false,
+        },
+        {
+            model: 'apa_p_h_acc_artwalll_03',
+            label: 'Tableau 9',
+            collision: false,
+        },
+        {
+            model: 'apa_p_h_acc_artwallm_01',
+            label: 'Tableau 10',
+            collision: false,
+        },
+        {
+            model: 'apa_p_h_acc_artwallm_03',
+            label: 'Tableau 12',
+            collision: false,
+        },
+        {
+            model: 'apa_p_h_acc_artwallm_04',
+            label: 'Tableau 13',
+            collision: false,
+        },
+        {
+            model: 'apa_p_h_acc_artwalls_03',
+            label: 'Maillot de sport 3',
+            collision: false,
+        },
+        {
+            model: 'apa_p_h_acc_artwalls_04',
+            label: 'Maillot de sport 4',
+            collision: false,
+        },
+        {
+            model: 'ex_mp_h_acc_artwalll_02',
+            label: 'Tableau 14',
+            collision: false,
+        },
+        {
+            model: 'ex_mp_h_acc_artwalll_03',
+            label: 'Tableau 15',
+            collision: false,
+        },
+        {
+            model: 'ex_mp_h_acc_artwallm_02',
+            label: 'Tableau 16',
+            collision: false,
+        },
+        {
+            model: 'ex_mp_h_acc_artwallm_03',
+            label: 'Tableau 17',
+            collision: false,
+        },
+        {
+            model: 'ex_mp_h_acc_artwallm_04',
+            label: 'Tableau 18',
+            collision: false,
+        },
+        {
+            model: 'ex_p_h_acc_artwalll_01',
+            label: 'Tableau 19',
+            collision: false,
+        },
+        {
+            model: 'ex_p_h_acc_artwalll_03',
+            label: 'Tableau 21',
+            collision: false,
+        },
+        {
+            model: 'ex_p_h_acc_artwallm_01',
+            label: 'Tableau 22',
+            collision: false,
+        },
+        {
+            model: 'ex_p_h_acc_artwallm_03',
+            label: 'Tableau 24',
+            collision: false,
+        },
+        {
+            model: 'ex_p_h_acc_artwallm_04',
+            label: 'Tableau 25',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_hl_gurkhas',
+            label: 'Poster 1',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_hl_keycodes',
+            label: 'Poster 2',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_hl_valkyrie',
+            label: 'Poster 3',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_pb_break',
+            label: 'Poster 4',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_pb_bus',
+            label: 'Poster 5',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_pb_plane',
+            label: 'Poster 6',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_pb_station',
+            label: 'Poster 7',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_ps_bike',
+            label: 'Poster 8',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_ps_convoy',
+            label: 'Poster 9',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_ps_job',
+            label: 'Poster 10',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_ps_trucks',
+            label: 'Poster 11',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_ps_witsec',
+            label: 'Poster 12',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_ub_prep',
+            label: 'Poster 13',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hei_pic_ub_prep02',
+            label: 'Poster 14',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_01',
+            label: 'Poster 15',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_02',
+            label: 'Poster 16',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_04',
+            label: 'Poster 17',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_05',
+            label: 'Poster 18',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_06',
+            label: 'Poster 19',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_07',
+            label: 'Poster 20',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_08',
+            label: 'Poster 21',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_09',
+            label: 'Poster 22',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_10',
+            label: 'Poster 23',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_11',
+            label: 'Poster 24',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_12',
+            label: 'Poster 25',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_13',
+            label: 'Poster 26',
+            collision: false,
+        },
+        {
+            model: 'hei_prop_heist_pic_14',
+            label: 'Poster 27',
+            collision: false,
+        },
+        {
+            model: 'hei_heist_acc_artgolddisc_01',
+            label: "Disque d'or 1",
+            collision: false,
+        },
+        {
+            model: 'vw_prop_casino_art_concrete_01a',
+            label: 'Sculpture ballon',
+        },
+        {
+            model: 'vw_prop_casino_art_concrete_02a',
+            label: 'Sculpture volant',
+        },
+        {
+            model: 'vw_prop_casino_art_console_02a',
+            label: 'Présntoire console',
+        },
+        {
+            model: 'vw_prop_casino_art_miniature_05a',
+            label: 'Maquette 1',
+        },
+        {
+            model: 'vw_prop_casino_art_miniature_05b',
+            label: 'Maquette 2',
+        },
+        {
+            model: 'vw_prop_casino_art_miniature_05c',
+            label: 'Maquette 3',
+        },
+        {
+            model: 'vw_prop_casino_art_skull_01a',
+            label: 'Crâne 1',
+        },
+        {
+            model: 'vw_prop_casino_art_skull_01b',
+            label: 'Crâne 2',
+        },
+        {
+            model: 'vw_prop_casino_art_skull_02a',
+            label: 'Crâne 3',
+        },
+        {
+            model: 'vw_prop_casino_art_skull_02b',
+            label: 'Crâne 4',
+        },
+        {
+            model: 'vw_prop_casino_art_skull_03a',
+            label: 'Crâne 5',
+        },
+        {
+            model: 'vw_prop_casino_art_skull_03b',
+            label: 'Crâne 6',
+        },
+        {
+            model: 'vw_prop_casino_art_statue_01a',
+            label: 'Statue DAB',
+        },
+        {
+            model: 'vw_prop_casino_art_statue_02a',
+            label: 'Statue déhanché',
+        },
+        {
+            model: 'vw_prop_casino_art_bird_01a',
+            label: 'Oiseau 1',
+        },
+        {
+            model: 'vw_prop_casino_art_car_01a',
+            label: 'Voiture 1',
+        },
+        {
+            model: 'vw_prop_casino_art_car_02a',
+            label: 'Voiture 2',
+        },
+        {
+            model: 'vw_prop_casino_art_car_03a',
+            label: 'Voiture 3',
+        },
+        {
+            model: 'vw_prop_casino_art_car_04a',
+            label: 'Voiture 4',
+        },
+        {
+            model: 'vw_prop_casino_art_car_05a',
+            label: 'Voiture 5',
+        },
+        {
+            model: 'vw_prop_casino_art_car_06a',
+            label: 'Voiture 6',
+        },
+        {
+            model: 'vw_prop_casino_art_car_07a',
+            label: 'Voiture 7',
+        },
+        {
+            model: 'vw_prop_casino_art_car_08a',
+            label: 'Voiture 8',
+        },
+        {
+            model: 'vw_prop_casino_art_car_09a',
+            label: 'Voiture 9',
+        },
+        {
+            model: 'vw_prop_casino_art_car_10a',
+            label: 'Voiture 10',
+        },
+        {
+            model: 'vw_prop_casino_art_car_11a',
+            label: 'Voiture 11',
+        },
+        {
+            model: 'vw_prop_casino_art_car_12a',
+            label: 'Voiture 12',
+        },
+        {
+            model: 'vw_prop_casino_art_cherries_01a',
+            label: 'Cerises',
+        },
+        {
+            model: 'vw_prop_casino_art_deer_01a',
+            label: 'Sirène Kang',
+        },
+        {
+            model: 'vw_prop_casino_art_head_01a',
+            label: 'Tête 1',
+        },
+        {
+            model: 'vw_prop_casino_art_head_01b',
+            label: 'Tête 2',
+        },
+        {
+            model: 'vw_prop_casino_art_head_01c',
+            label: 'Tête 3',
+        },
+        {
+            model: 'vw_prop_casino_art_head_01d',
+            label: 'Tête 4',
+        },
+        {
+            model: 'vw_prop_casino_art_mod_03b',
+            label: 'Mannequin en cailloux 1',
+        },
+        {
+            model: 'vw_prop_casino_art_mod_03b_a',
+            label: 'Mannequin en cailloux 2',
+        },
+        {
+            model: 'vw_prop_casino_art_mod_03b_b',
+            label: 'Mannequin en cailloux 3',
+        },
+        {
+            model: 'vw_prop_casino_art_mod_03b_c',
+            label: 'Mannequin en cailloux 4',
+        },
+        {
+            model: 'vw_prop_art_wall_segment_02a',
+            label: 'Affiche artistique 1',
+        },
+        {
+            model: 'vw_prop_art_wall_segment_02b',
+            label: 'Affiche artistique 2',
+        },
+        {
+            model: 'vw_prop_art_wall_segment_03a',
+            label: 'Affiche artistique 3',
+        },
+        {
+            model: 'vw_prop_art_wings_01a',
+            label: "Ailes d'anges suspendues 1",
+        },
+        {
+            model: 'vw_prop_casino_art_bowling_01a',
+            label: 'Quille peinte 1',
+        },
+        {
+            model: 'vw_prop_casino_art_bowling_01b',
+            label: 'Quille peinte 2',
+        },
+        {
+            model: 'vw_prop_casino_art_bowling_02a',
+            label: 'Quille peinte 3',
+        },
+        {
+            model: 'vw_prop_casino_art_horse_01a',
+            label: 'Cheval 1',
+        },
+        {
+            model: 'vw_prop_casino_art_horse_01b',
+            label: 'Cheval 2',
+        },
+        {
+            model: 'vw_prop_casino_art_horse_01c',
+            label: 'Cheval 3',
+        },
+        {
+            model: 'vw_prop_casino_art_panther_01a',
+            label: 'Panthere 1',
+        },
+        {
+            model: 'vw_prop_casino_art_panther_01b',
+            label: 'Panthere 2',
+        },
+        {
+            model: 'vw_prop_casino_art_panther_01c',
+            label: 'Panthere 3',
+        },
+        {
+            model: 'vw_prop_casino_art_rocket_01a',
+            label: 'Fusée 1',
+        },
+        {
+            model: 'apa_dining_art_new',
+            label: 'Tableau pop art 2',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_artwalll_01_dressing',
+            label: 'Tableau pop art 3',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_artwallm_bed_1',
+            label: 'Tableau pop art 4',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_artwallm_bed_2',
+            label: 'Tableau pop art 5',
+            collision: false,
+        },
+        {
+            model: 'apa_mpa3_dining_art',
+            label: 'Tableau pop art 6',
+            collision: false,
+        },
+        {
+            model: 'sf_int1_art1_operations',
+            label: 'Tableau pop art 7',
+            collision: false,
+        },
+        {
+            model: 'sf_int1_art1_stairs',
+            label: 'Tableau pop art 8',
+            collision: false,
+        },
+        {
+            model: 'sf_int1_art2_operations',
+            label: 'Tableau pop art 9',
+            collision: false,
+        },
+        {
+            model: 'sf_int1_art2_stairs',
+            label: 'Tableau pop art 10',
+            collision: false,
+        },
+        {
+            model: 'sf_int1_art3_new1',
+            label: 'Tableau pop art 11',
+            collision: false,
+        },
+        {
+            model: 'sf_int1_art3_stairs1',
+            label: 'Tableau pop art 12',
+            collision: false,
+        },
+        {
+            model: 'sf_prop_sf_art_car_01a',
+            label: 'Voiture 13',
+        },
+        {
+            model: 'sf_prop_sf_art_car_02a',
+            label: 'Voiture 14',
+        },
+        {
+            model: 'sf_prop_sf_art_car_03a',
+            label: 'Voiture 15',
+        },
+        {
+            model: 'sf_prop_sf_art_trophy_co_01a',
+            label: 'Trophée 1',
+        },
+        {
+            model: 'sf_prop_sf_art_trophy_cp_01a',
+            label: 'Trophée 2',
+        },
+        {
+            model: 'sf_prop_sf_art_s_board_01a',
+            label: 'Skateboard 1',
+        },
+        {
+            model: 'sf_prop_sf_art_s_board_02a',
+            label: 'Skateboard 2',
+        },
+        {
+            model: 'sf_prop_sf_art_s_board_02b',
+            label: 'Skateboard 3',
+        },
+        {
+            model: 'sf_prop_sf_art_bobble_01a',
+            label: 'Bobblehead 1',
+        },
+        {
+            model: 'sf_prop_sf_art_bobble_bb_01a',
+            label: 'Bobblehead 2',
+        },
+        {
+            model: 'sf_prop_sf_art_bobble_bb_01b',
+            label: 'Bobblehead 3',
+        },
+    ],
     ['Salle de bain']: [
         {
             model: 'prop_washer_01',
@@ -121,6 +856,117 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'apa_mp_h_bathtub_01',
             label: 'Baignoire 2',
         },
+        {
+            model: 'prop_makeup_brush',
+            label: 'Pinceau de maquillage',
+        },
+        {
+            model: 'v_serv_bs_cond',
+            label: 'Laque',
+        },
+        {
+            model: 'v_serv_bs_gelx3',
+            label: 'Gel x3',
+        },
+        {
+            model: 'v_hair_d_gel',
+            label: 'Gel',
+        },
+        {
+            model: 'p_int_jewel_mirror',
+            label: 'Miroir',
+        },
+        {
+            model: 'prop_clippers_01',
+            label: 'Rasoir électrique',
+        },
+        {
+            model: 'prop_cs_nail_file',
+            label: 'Lime à ongles',
+        },
+        {
+            model: 'prop_cs_pills',
+            label: 'Pilules',
+        },
+        {
+            model: 'prop_disp_razor_01',
+            label: 'Rasoir',
+        },
+        {
+            model: 'prop_toothbrush_01',
+            label: 'Brosse à dents',
+        },
+        {
+            model: 'v_res_r_perfume',
+            label: 'Parfum',
+        },
+        {
+            model: 'stt_prop_lives_bottle',
+            label: 'Bouteille à coeur <3',
+        },
+    ],
+    ['Divers']: [
+        {
+            model: 'prop_cs_dvd',
+            label: 'DVD',
+        },
+        {
+            model: 'v_ilev_mp_bedsidebook',
+            label: 'Livre retourné',
+        },
+        {
+            model: 'v_ilev_mr_rasberryclean',
+            label: 'Nounours',
+        },
+        {
+            model: 'p_cs_lighter_01',
+            label: 'Briquet 2',
+        },
+        {
+            model: 'prop_amb_ciggy_01',
+            label: 'Cigarette',
+        },
+        {
+            model: 'prop_controller_01',
+            label: 'Manette de jeu vidéal',
+        },
+        {
+            model: 'prop_cs_cashenvelope',
+            label: 'Enveloppe',
+        },
+        {
+            model: 'prop_syringe_01',
+            label: 'Seringue',
+            collision: false,
+        },
+        {
+            model: 'prop_binoc_01',
+            label: 'Jumelles 1',
+            collision: false,
+        },
+        {
+            model: 'prop_gaffer_tape',
+            label: 'Rouleau de scotch',
+        },
+        {
+            model: 'prop_inhaler_01',
+            label: 'Inhalateur',
+        },
+        {
+            model: 'ng_proc_syrnige01a',
+            label: 'Seringue 2',
+            collision: false,
+        },
+        {
+            model: 'xs_propintxmas_tree_2018',
+            label: 'Sapin de Noël',
+            collision: false,
+        },
+        {
+            model: 'ch_prop_ch_diamond_xmastree',
+            label: 'Sapin de Diamands',
+            collision: false,
+        },
     ],
     ['Sport']: [
         {
@@ -150,6 +996,186 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_muscle_bench_05',
             label: 'Barre de traction 1',
+        },
+        {
+            model: 'prop_ping_pong',
+            label: 'Balle de ping-pong',
+        },
+        {
+            model: 'prop_pool_rack_01',
+            label: 'Rack de billard',
+        },
+        {
+            model: 'prop_pool_tri',
+            label: 'Triangle de billard',
+        },
+        {
+            model: 'prop_boxing_glove_01',
+            label: 'Gant de boxe 1',
+        },
+        {
+            model: 'prop_freeweight_01',
+            label: 'Haltère 1',
+        },
+        {
+            model: 'prop_golf_bag_01',
+            label: 'Sac de golf',
+        },
+        {
+            model: 'prop_golf_bag_01b',
+            label: 'Sac de golf 2',
+        },
+        {
+            model: 'prop_golf_bag_01c',
+            label: 'Sac de golf 3',
+        },
+        {
+            model: 'prop_golf_driver',
+            label: 'Club de golf 1',
+        },
+        {
+            model: 'prop_golf_iron_01',
+            label: 'Club de golf 2',
+        },
+        {
+            model: 'prop_golf_putter_01',
+            label: 'Club de golf 3',
+        },
+        {
+            model: 'prop_beach_punchbag',
+            label: 'Sac de frappe',
+        },
+        {
+            model: 'prop_basketball_net',
+            label: 'Filet de basket',
+        },
+        {
+            model: 'prop_table_ten_bat',
+            label: 'Raquette de ping pong',
+            collision: false,
+        },
+        {
+            model: 'prop_swiss_ball_01',
+            label: 'Ballon de gym 1',
+        },
+        {
+            model: 'stt_prop_stunt_soccer_goal',
+            label: 'But de foot',
+        },
+        {
+            model: 'w_am_baseball',
+            label: 'Balle de baseball',
+            collision: false,
+        },
+        {
+            model: 'prop_table_tennis',
+            label: 'Table de ping pong',
+        },
+        {
+            model: 'p_yoga_mat_01_s',
+            label: 'Tapis de yoga',
+            collision: false,
+        },
+        {
+            model: 'prop_yoga_mat_02',
+            label: 'Tapis de yoga 2',
+            collision: false,
+        },
+        {
+            model: 'prop_yoga_mat_03',
+            label: 'Tapis de yoga 3',
+            collision: false,
+        },
+        {
+            model: 'prop_ball_box',
+            label: 'Boite de ballons',
+        },
+        {
+            model: 'prop_barbell_01',
+            label: 'Haltere 2',
+        },
+        {
+            model: 'prop_barbell_02',
+            label: 'Haltere 3',
+        },
+        {
+            model: 'prop_bowling_ball',
+            label: 'Boule de bowling',
+        },
+        {
+            model: 'prop_bowling_pin',
+            label: 'Quille de bowling',
+        },
+        {
+            model: 'prop_curl_bar_01',
+            label: 'Barre de musculation',
+        },
+        {
+            model: 'prop_dart_bd_01',
+            label: 'Cible de flechettes 1',
+        },
+        {
+            model: 'prop_dart_bd_cab_01',
+            label: 'Cible de flechettes 2',
+        },
+        {
+            model: 'prop_punch_bag_l',
+            label: 'Sac de frappe 2',
+        },
+        {
+            model: 'prop_weight_bench_02',
+            label: 'Banc de musculation 2',
+        },
+        {
+            model: 'prop_weight_squat',
+            label: 'Barre de musculation 2',
+        },
+        {
+            model: 'apa_p_apdlc_crosstrainer_s',
+            label: 'Velo elliptique',
+        },
+        {
+            model: 'apa_p_apdlc_treadmill_s',
+            label: 'Tapis de course',
+        },
+        {
+            model: 'p_ld_am_ball_01',
+            label: 'Ballon de football',
+            collision: false,
+        },
+        {
+            model: 'p_ld_frisbee_01',
+            label: 'Frisbee',
+            collision: false,
+        },
+        {
+            model: 'p_ld_soc_ball_01',
+            label: 'Ballon de soccer',
+            collision: false,
+        },
+        {
+            model: 'prop_bskball_01',
+            label: 'Ballon de basket',
+            collision: false,
+        },
+        {
+            model: 'prop_exercisebike',
+            label: "Velo d'appartement",
+        },
+        {
+            model: 'prop_tennis_ball',
+            label: 'Balle de tennis',
+            collision: false,
+        },
+        {
+            model: 'prop_tennis_rack_01',
+            label: 'Raquette de tennis',
+            collision: false,
+        },
+        {
+            model: 'prop_tennis_rack_01b',
+            label: 'Raquette de tennis 2',
+            collision: false,
         },
     ],
     ['Plage']: [
@@ -478,11 +1504,83 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'prop_bin_beach_01d',
             label: 'Poubelle de plage 2',
         },
+        {
+            model: 'p_airdancer_01_s',
+            label: 'Boudin qui danse',
+        },
+        {
+            model: 'prop_umpire_01',
+            label: 'Siège de maitre nageur',
+        },
     ],
     ['Musique']: [
         {
             model: 'prop_boombox_01',
             label: 'Boombox',
+        },
+        {
+            model: 'prop_ghettoblast_01',
+            label: 'Ghetto Blaster 1',
+        },
+        {
+            model: 'prop_ghettoblast_02',
+            label: 'Ghetto Blaster 2',
+        },
+        {
+            model: 'prop_hifi_01',
+            label: 'Chaîne Hi-Fi',
+        },
+        {
+            model: 'prop_mp3_dock',
+            label: "Station d'accueil MP3",
+        },
+        {
+            model: 'prop_tapeplayer_01',
+            label: 'Lecteur cassette',
+        },
+        {
+            model: 'prop_portable_hifi_01',
+            label: 'Chaîne Hi-Fi portable',
+        },
+        {
+            model: 'prop_speaker_02',
+            label: 'Enceinte 1',
+        },
+        {
+            model: 'prop_speaker_03',
+            label: 'Enceinte 2',
+        },
+        {
+            model: 'prop_speaker_05',
+            label: 'Enceinte 3',
+        },
+        {
+            model: 'prop_speaker_06',
+            label: 'Enceinte 4',
+        },
+        {
+            model: 'prop_speaker_07',
+            label: 'Enceinte 5',
+        },
+        {
+            model: 'prop_speaker_08',
+            label: 'Enceinte 6',
+        },
+        {
+            model: 'prop_vcr_01',
+            label: 'Magnétoscope',
+        },
+        {
+            model: 'ba_prop_battle_dj_stand',
+            label: 'Stand de DJ',
+        },
+        {
+            model: 'sf_prop_sf_rack_audio_01a',
+            label: 'Rack audio',
+        },
+        {
+            model: 'sf_prop_sf_ps_mixer_01a',
+            label: 'Table de mixage sur pied ',
         },
     ],
     ['Lits']: [
@@ -592,15 +1690,111 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'prop_bench_11',
             label: 'Banc en bois 7',
         },
-        {
-            model: 'prop_bench_12',
-            label: 'Banc en bois 8',
-        },
     ],
     ['Poubelles']: [
         {
             model: 'prop_cs_bin_02',
             label: 'Poubelle 1',
+        },
+        {
+            model: 'prop_cs_dumpster_01a',
+            label: 'Benne à ordures 1',
+        },
+        {
+            model: 'prop_rub_binbag_sd_01',
+            label: 'Sac poubelle 1',
+        },
+        {
+            model: 'prop_rub_binbag_03',
+            label: 'Poubelles en bazar 1',
+        },
+        {
+            model: 'prop_rub_binbag_04',
+            label: 'Sac poubelle 2',
+        },
+        {
+            model: 'prop_rub_binbag_05',
+            label: 'Sac poubelle 3',
+        },
+        {
+            model: 'prop_bin_01a',
+            label: 'Poubelle 2',
+        },
+        {
+            model: 'prop_bin_02a',
+            label: 'Poubelle 3',
+        },
+        {
+            model: 'prop_bin_04a',
+            label: 'Poubelle 4',
+        },
+        {
+            model: 'prop_bin_05a',
+            label: 'Poubelle 5',
+        },
+        {
+            model: 'prop_bin_06a',
+            label: 'Poubelle 6',
+        },
+        {
+            model: 'prop_bin_07a',
+            label: 'Poubelle 7',
+        },
+        {
+            model: 'prop_bin_08a',
+            label: 'Poubelle 8',
+        },
+        {
+            model: 'prop_bin_08open',
+            label: 'Poubelle 9',
+        },
+        {
+            model: 'prop_bin_09a',
+            label: 'Poubelle 10',
+        },
+        {
+            model: 'prop_bin_10a',
+            label: 'Poubelle 11',
+        },
+        {
+            model: 'prop_bin_11a',
+            label: 'Poubelle 12',
+        },
+        {
+            model: 'prop_bin_14a',
+            label: 'Benne à ordures 2',
+        },
+        {
+            model: 'prop_bin_beach_01d',
+            label: 'Poubelle de plage 1',
+        },
+        {
+            model: 'prop_bin_delpiero',
+            label: 'Poubelle de plage 2',
+        },
+        {
+            model: 'prop_bin_delpiero_b',
+            label: 'Poubelle de plage 3',
+        },
+        {
+            model: 'prop_dumpster_02a',
+            label: 'Benne à ordures 3',
+        },
+        {
+            model: 'prop_dumpster_4b',
+            label: 'Benne à ordures 4',
+        },
+        {
+            model: 'prop_recyclebin_04_a',
+            label: 'Poubelle de recyclage 1',
+        },
+        {
+            model: 'prop_recyclebin_04_b',
+            label: 'Poubelle de recyclage 2',
+        },
+        {
+            model: 'prop_recyclebin_05_a',
+            label: 'Poubelle de recyclage 3',
         },
     ],
     ['Sofas']: [
@@ -621,14 +1815,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             label: 'Canapé usé 1',
         },
         {
-            model: 'v_16_low_lng_mesh_sofa2',
-            label: 'Canapé à motifs 1',
-        },
-        {
-            model: 'v_16_study_sofa',
-            label: 'Canapé chic 1',
-        },
-        {
             model: 'hei_heist_stn_sofa3seat_01',
             label: 'Canapé long 1',
         },
@@ -637,24 +1823,138 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             label: "Canapé d'angle 1",
         },
         {
-            model: 'ex_office_01a_sofa01',
+            model: 'v_ilev_m_sofa',
+            label: 'Canapé en cuir blanc 1',
+        },
+        {
+            model: 'v_res_tre_sofa',
+            label: 'Sofa 1',
+        },
+        {
+            model: 'prop_t_sofa_02',
+            label: 'Sofa 2',
+        },
+        {
+            model: 'miss_rub_couch_01',
+            label: 'Sofa 3',
+        },
+        {
+            model: 'p_res_sofa_l_s',
+            label: 'Sofa 4',
+        },
+        {
+            model: 'prop_rub_couch04',
+            label: 'Sofa 5',
+        },
+        {
+            model: 'prop_couch_01',
+            label: 'Sofa Luxueux 1',
+        },
+        {
+            model: 'prop_couch_03',
+            label: 'Sofa Luxueux 2',
+        },
+        {
+            model: 'prop_couch_lg_02',
+            label: 'Sofa 6',
+        },
+        {
+            model: 'prop_couch_lg_06',
+            label: 'Sofa 7',
+        },
+        {
+            model: 'prop_couch_lg_07',
+            label: 'Sofa Luxueux 3',
+        },
+        {
+            model: 'prop_couch_lg_08',
+            label: 'Sofa Luxueux 4',
+        },
+        {
+            model: 'apa_mp_h_stn_sofa_daybed_01',
+            label: 'Fauteuil allongé 1',
+        },
+        {
+            model: 'apa_mp_h_stn_sofa_daybed_02',
+            label: 'Fauteuil allongé 2',
+        },
+        {
+            model: 'apa_mp_h_stn_sofacorn_01',
+            label: "Canapé d'angle 2",
+        },
+        {
+            model: 'apa_mp_h_stn_sofacorn_05',
+            label: "Canapé d'angle 3",
+        },
+        {
+            model: 'apa_mp_h_stn_sofacorn_06',
+            label: "Canapé d'angle 4",
+        },
+        {
+            model: 'apa_mp_h_stn_sofacorn_07',
+            label: "Canapé d'angle 5",
+        },
+        {
+            model: 'apa_mp_h_stn_sofacorn_08',
+            label: "Canapé d'angle 6",
+        },
+        {
+            model: 'apa_mp_h_stn_sofacorn_09',
+            label: "Canapé d'angle 7",
+        },
+        {
+            model: 'apa_mp_h_stn_sofacorn_10',
+            label: "Canapé d'angle 8",
+        },
+        {
+            model: 'ex_mp_h_off_sofa_003',
             label: 'Canapé de bureau 1',
         },
         {
-            model: 'ex_office_01b_sofa02',
+            model: 'ex_mp_h_off_sofa_01',
             label: 'Canapé de bureau 2',
         },
         {
-            model: 'ex_office_01c_sofa02',
+            model: 'ex_mp_h_off_sofa_02',
             label: 'Canapé de bureau 3',
         },
+    ],
+    ['Skating']: [
         {
-            model: 'ex_office2a_sofa01',
-            label: 'Canapé de bureau 4',
+            model: 'v_res_skateboard',
+            label: 'Skateboard 1',
         },
         {
-            model: 'ex_office2b_sofa01',
-            label: 'Canapé de bureau 5',
+            model: 'prop_skate_halfpipe',
+            label: 'Halfpipe 1',
+        },
+        {
+            model: 'prop_skate_halfpipe_cr',
+            label: 'Halfpipe 2',
+        },
+        {
+            model: 'prop_skate_kickers',
+            label: 'Kickers 1',
+        },
+        {
+            model: 'prop_skate_quartpipe',
+            label: 'Quartpipe 1',
+        },
+        {
+            model: 'prop_skate_quartpipe_cr',
+            label: 'Quartpipe 2',
+        },
+        {
+            model: 'prop_skate_rail',
+            label: 'Rail 1',
+        },
+        {
+            model: 'prop_skate_spiner',
+            label: 'Spiner 1',
+        },
+        {
+            model: 'prop_skate_spiner_cr',
+            label: 'Spiner 2',
         },
     ],
     ['Chaises et Fauteuils']: [
@@ -665,10 +1965,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'v_ind_ss_chair01',
             label: 'Chaise en métal 1',
-        },
-        {
-            model: 'v_ind_ss_chair02',
-            label: 'Chaise en métal 2',
         },
         {
             model: 'v_ilev_chair02_ped',
@@ -871,10 +2167,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             label: 'Chaise en paille 3',
         },
         {
-            model: 'v_16_low_lng_mesh_armchair',
-            label: 'Fauteuil en cuir 1',
-        },
-        {
             model: 'v_club_barchair',
             label: 'Chaise de bar 1',
         },
@@ -927,10 +2219,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             label: 'Chaise de salle à manger 6',
         },
         {
-            model: 'apa_mp_h_din_chair_14',
-            label: 'Chaise de salle à manger 7',
-        },
-        {
             model: 'apa_mp_h_stn_chairarm_01',
             label: 'Fauteil en cuir 2',
         },
@@ -957,10 +2245,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'apa_mp_h_stn_chairarm_13',
             label: 'Fauteil de bureau 2',
-        },
-        {
-            model: 'apa_mp_h_stn_chairarm_14',
-            label: 'Fauteil simple 1',
         },
         {
             model: 'apa_mp_h_stn_chairarm_26',
@@ -1010,6 +2294,14 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'hei_heist_stn_chairarm_06',
             label: 'Chaise stylée 1',
         },
+        {
+            model: 'v_ilev_fh_kitchenstool',
+            label: 'Tabouret de bar 5',
+        },
+        {
+            model: 'prop_direct_chair_01',
+            label: 'Chaise de camping 4',
+        },
     ],
     ['Exterieur']: [
         {
@@ -1020,11 +2312,339 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'prop_bbq_5',
             label: 'Barbecue 2',
         },
+        {
+            model: 'prop_hobo_seat_01',
+            label: 'Pouf de camping 1',
+        },
+        {
+            model: 'prop_fire_hydrant_1',
+            label: "Bouche d'incendie 1",
+        },
+        {
+            model: 'prop_fire_hydrant_4',
+            label: "Bouche d'incendie 2",
+        },
+        {
+            model: 'prop_old_churn_01',
+            label: 'Baril en métal',
+        },
+        {
+            model: 'prop_gnome1',
+            label: 'Nain de jardin 1',
+        },
+        {
+            model: 'prop_gnome2',
+            label: 'Nain de jardin 2',
+        },
+        {
+            model: 'prop_gnome3',
+            label: 'Nain de jardin 3',
+        },
+        {
+            model: 'prop_stickbfly',
+            label: 'Oiseau sur baton 1',
+        },
+        {
+            model: 'prop_stickhbird',
+            label: 'Oiseau sur baton 2',
+        },
+        {
+            model: 'prop_parasol_01',
+            label: 'Parasol 1',
+        },
+        {
+            model: 'prop_parasol_01_b',
+            label: 'Parasol 2',
+        },
+        {
+            model: 'prop_parasol_01_c',
+            label: 'Parasol 3',
+        },
+        {
+            model: 'prop_parasol_02',
+            label: 'Parasol 4',
+        },
+        {
+            model: 'prop_parasol_02_b',
+            label: 'Parasol 5',
+        },
+        {
+            model: 'prop_parasol_02_c',
+            label: 'Parasol 6',
+        },
+        {
+            model: 'prop_parasol_05',
+            label: 'Parasol 7',
+        },
+        {
+            model: 'prop_parasol_03',
+            label: 'Parasol 8',
+        },
+        {
+            model: 'prop_parasol_03_b',
+            label: 'Parasol 9',
+        },
+        {
+            model: 'prop_parasol_03_c',
+            label: 'Parasol 9',
+        },
+        {
+            model: 'prop_coffin_01',
+            label: 'Cercueil 1',
+        },
+        {
+            model: 'prop_coffin_02',
+            label: 'Cercueil 2',
+        },
+        {
+            model: 'prop_coffin_02b',
+            label: 'Cercueil 3',
+        },
+        {
+            model: 'prop_wateringcan',
+            label: 'Arrosoir',
+        },
+        {
+            model: 'prop_bucket_01a',
+            label: 'Seau 1',
+        },
+        {
+            model: 'prop_watercrate_01',
+            label: "Caisse d'eau 1",
+        },
+        {
+            model: 'prop_wooden_barrel',
+            label: 'Baril en bois 1',
+        },
+        {
+            model: 'prop_fruit_sign_01',
+            label: 'Panneau de fruits',
+        },
+        {
+            model: 'prop_fruit_stand_01',
+            label: 'Stand de fruits 1',
+        },
+        {
+            model: 'prop_fruit_stand_02',
+            label: 'Stand de fruits 2',
+        },
+        {
+            model: 'prop_fruit_stand_03',
+            label: 'Stand de fruits 3',
+        },
+        {
+            model: 'prop_water_ramp_02',
+            label: "Rampe de mise à l'eau 1",
+        },
+        {
+            model: 'prop_water_ramp_03',
+            label: "Rampe de mise à l'eau 2",
+        },
+        {
+            model: 'prop_cs_protest_sign_01',
+            label: 'Pancarte de manifestation 1',
+        },
+        {
+            model: 'prop_cs_protest_sign_03',
+            label: 'Pancarte de manifestation 2',
+        },
+        {
+            model: 'prop_cs_protest_sign_04a',
+            label: 'Pancarte de manifestation 3',
+        },
+        {
+            model: 'prop_cs_protest_sign_04b',
+            label: 'Pancarte de manifestation 4',
+        },
+        {
+            model: 'prop_road_memorial_01',
+            label: 'Memorial 1',
+        },
+        {
+            model: 'prop_road_memorial_02',
+            label: 'Memorial 2',
+        },
+        {
+            model: 'prop_prlg_snowpile',
+            label: 'Bonhomme de neige',
+        },
+        {
+            model: 'prop_rural_windmill',
+            label: 'Eolienne',
+        },
+        {
+            model: 'prop_hayb_st_01_cr',
+            label: 'Botte de foin 1',
+        },
+        {
+            model: 'prop_haybale_01',
+            label: 'Botte de foin 2',
+        },
+        {
+            model: 'prop_haybale_02',
+            label: 'Botte de foin 3',
+        },
+        {
+            model: 'prop_haybale_03',
+            label: 'Botte de foin 4',
+        },
+        {
+            model: 'prop_waterwheela',
+            label: "Roue de tuyau d'eau",
+        },
+        {
+            model: 'prop_bbq_2',
+            label: 'Barbecue 3',
+        },
+        {
+            model: 'prop_bbq_3',
+            label: 'Barbecue 4',
+        },
+        {
+            model: 'prop_bbq_4',
+            label: 'Barbecue 5',
+        },
+        {
+            model: 'prop_birdbath1',
+            label: "Bain d'oiseaux 1",
+        },
+        {
+            model: 'prop_birdbath2',
+            label: "Bain d'oiseaux 2",
+        },
+        {
+            model: 'prop_doghouse_01',
+            label: 'Niche',
+        },
+        {
+            model: 'prop_flamingo',
+            label: 'Flamant rose',
+        },
+        {
+            model: 'prop_fruitstand_01',
+            label: 'Tente de marché 1',
+        },
+        {
+            model: 'prop_gazebo_01',
+            label: "Tente d'extérieur 1",
+        },
+        {
+            model: 'prop_gazebo_02',
+            label: "Tente d'extérieur 2",
+        },
+        {
+            model: 'prop_letterbox_01',
+            label: 'Boîte aux lettres 1',
+        },
+        {
+            model: 'prop_letterbox_02',
+            label: 'Boîte aux lettres 2',
+        },
+        {
+            model: 'prop_letterbox_03',
+            label: 'Boîte aux lettres 3',
+        },
+        {
+            model: 'prop_prlg_gravestone_01a',
+            label: 'Pierre tombale 1',
+        },
+        {
+            model: 'prop_prlg_gravestone_02a',
+            label: 'Pierre tombale 2',
+        },
+        {
+            model: 'prop_prlg_gravestone_03a',
+            label: 'Pierre tombale 3',
+        },
+        {
+            model: 'prop_prlg_gravestone_04a',
+            label: 'Pierre tombale 4',
+        },
+        {
+            model: 'prop_prlg_gravestone_05a',
+            label: 'Pierre tombale 5',
+        },
+        {
+            model: 'prop_portaloo_01a',
+            label: 'Toilettes portables 1',
+        },
+        {
+            model: 'prop_bleachers_04_cr',
+            label: 'Gradins 1',
+        },
+        {
+            model: 'prop_bleachers_05_cr',
+            label: 'Gradins 2',
+        },
+        {
+            model: 'prop_bleachers_01',
+            label: 'Gradins 3',
+        },
+        {
+            model: 'prop_bleachers_02',
+            label: 'Gradins 4',
+        },
+        {
+            model: 'prop_bleachers_03',
+            label: 'Gradins 5',
+        },
+        {
+            model: 'prop_inflatearch_01',
+            label: 'Arche gonflable 1',
+        },
     ],
     ['Studio']: [
         {
             model: 'prop_studio_light_02',
             label: 'Lumière de studio 1',
+        },
+        {
+            model: 'v_ilev_fos_mic',
+            label: 'Micro sur pieds 1',
+        },
+        {
+            model: 'prop_podium_mic',
+            label: 'Micro de podium',
+        },
+        {
+            model: 'prop_tv_cam_02',
+            label: 'Caméra de télévision 1',
+        },
+        {
+            model: 'prop_voltmeter_01',
+            label: 'Voltmètre 1',
+        },
+        {
+            model: 'v_club_roc_micstd',
+            label: 'Micro sur pieds 2',
+        },
+        {
+            model: 'v_res_mountedprojector',
+            label: 'Projecteur de plafond',
+        },
+        {
+            model: 'prop_spot_01',
+            label: 'Spot de lumière 1',
+        },
+        {
+            model: 'prop_kino_light_01',
+            label: 'Lumière de studio 2',
+        },
+        {
+            model: 'prop_kino_light_03',
+            label: 'Lumière de studio 3',
+        },
+        {
+            model: 'prop_studio_light_01',
+            label: 'Lumière de studio 4',
+        },
+        {
+            model: 'prop_studio_light_02',
+            label: 'Lumière de studio 5',
+        },
+        {
+            model: 'prop_studio_light_03',
+            label: 'Lumière de studio 6',
         },
     ],
     ['BTP']: [
@@ -1176,6 +2796,110 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_set_generator_01_cr',
             label: 'Groupe électrogène 2',
+        },
+        {
+            model: 'prop_generator_01a',
+            label: 'Groupe électrogène 3',
+        },
+        {
+            model: 'prop_barrel_03a',
+            label: 'Baril 1',
+        },
+        {
+            model: 'prop_flattruck_01a',
+            label: 'Camionnette de chantier',
+        },
+        {
+            model: 'prop_pallettruck_01',
+            label: 'Chariot élévateur',
+        },
+        {
+            model: 'prop_barrier_work01a',
+            label: 'Barrière de chantier 1',
+        },
+        {
+            model: 'prop_barrier_work01d',
+            label: 'Barrière de chantier 2',
+        },
+        {
+            model: 'prop_barrier_work06a',
+            label: 'Barrière de chantier 3',
+        },
+        {
+            model: 'prop_oiltub_01',
+            label: "Tonneau d'huile 1",
+        },
+        {
+            model: 'prop_oiltub_03',
+            label: "Bidon d'huile 1",
+        },
+        {
+            model: 'prop_oiltub_04',
+            label: "Bidon d'huile 2",
+        },
+        {
+            model: 'prop_oiltub_05',
+            label: "Bidon d'huile 3",
+        },
+        {
+            model: 'prop_paints_can01',
+            label: 'Pot de peinture 1',
+        },
+        {
+            model: 'prop_paints_can02',
+            label: 'Pot de peinture 2',
+        },
+        {
+            model: 'prop_paints_can03',
+            label: 'Pot de peinture 3',
+        },
+        {
+            model: 'prop_paints_can04',
+            label: 'Pot de peinture 4',
+        },
+        {
+            model: 'prop_paints_can05',
+            label: 'Pot de peinture 5',
+        },
+        {
+            model: 'prop_gascyl_01a',
+            label: 'Bouteille de gaz 1',
+        },
+        {
+            model: 'prop_gascyl_02a',
+            label: 'Bouteille de gaz 2',
+        },
+        {
+            model: 'prop_gascyl_03a',
+            label: 'Bouteille de gaz 3',
+        },
+        {
+            model: 'prop_barrier_wat_03b',
+            label: 'Plot de voiture',
+        },
+        {
+            model: 'prop_worklight_01a_l1',
+            label: 'Lampe de chantier 3',
+        },
+        {
+            model: 'prop_worklight_02a',
+            label: 'Lampe de chantier 4',
+        },
+        {
+            model: 'prop_worklight_03a',
+            label: 'Lampe de chantier 5',
+        },
+        {
+            model: 'prop_worklight_03b',
+            label: 'Lampe de chantier 6',
+        },
+        {
+            model: 'prop_worklight_04b',
+            label: 'Lampe de chantier 7',
+        },
+        {
+            model: 'prop_worklight_04b_l1',
+            label: 'Lampe de chantier 8',
         },
     ],
     ['Conteneurs et Caisses']: [
@@ -1703,9 +3427,111 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'prop_wheelbarrow02a',
             label: 'Brouette 2',
         },
+        {
+            model: 'prop_ld_fireaxe',
+            label: 'Hache de pompier',
+            collision: false,
+        },
+        {
+            model: 'prop_megaphone_01',
+            label: 'Mégaphone',
+            collision: false,
+        },
+        {
+            model: 'prop_microphone_02',
+            label: 'Microphone',
+            collision: false,
+        },
+        {
+            model: 'prop_squeegee',
+            label: 'Raclette',
+            collision: false,
+        },
+        {
+            model: 'prop_w_me_hatchet',
+            label: 'Hache',
+            collision: false,
+        },
+        {
+            model: 'p_cs_cuffs_02_s',
+            label: 'Menottes',
+            collision: false,
+        },
+        {
+            model: 'prop_lawnmower_01',
+            label: 'Tondeuse',
+        },
+        {
+            model: 'prop_shrub_rake',
+            label: 'Râteau à feuilles',
+            collision: false,
+        },
+        {
+            model: 'prop_paint_brush01',
+            label: 'Pinceau à peinture 1',
+            collision: false,
+        },
+        {
+            model: 'prop_paint_brush04',
+            label: 'Pinceau à peinture 2',
+            collision: false,
+        },
+        {
+            model: 'prop_paint_roller',
+            label: 'Rouleau à peinture',
+            collision: false,
+        },
+        {
+            model: 'prop_paint_spray01a',
+            label: 'Bombe de peinture 1',
+            collision: false,
+        },
+        {
+            model: 'prop_paint_spray01b',
+            label: 'Bombe de peinture 2',
+            collision: false,
+        },
+        {
+            model: 'prop_tool_torch',
+            label: 'Lampe torche 3',
+            collision: false,
+        },
+        {
+            model: 'prop_cs_sheers',
+            label: 'Ciseaux de jardin',
+            collision: false,
+        },
+        {
+            model: 'prop_tool_broom',
+            label: 'Balai',
+            collision: false,
+        },
     ],
-    ['Route et panneaux']: [],
+    ['Route et panneaux']: [
+        {
+            model: 'prop_consign_01a',
+            label: 'Panneau de chantier 1',
+        },
+        {
+            model: 'prop_roadcone01a',
+            label: 'Cône de chantier 1',
+        },
+        {
+            model: 'prop_roadpole_01a',
+            label: 'Poteau de chantier 1',
+        },
+    ],
     ['Cuisine']: [
+        {
+            model: 'prop_cs_fork',
+            label: 'Fourchette',
+            collision: false,
+        },
+        {
+            model: 'xm3_prop_xm3_coke_spoon_01a',
+            label: 'Cuillère',
+            collision: false,
+        },
         {
             model: 'prop_sh_tall_glass',
             label: 'Verre grand 1',
@@ -1768,6 +3594,128 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'bkr_prop_coke_cracktray_01',
             label: 'Grand Plateau 1',
         },
+        {
+            model: 'prop_scourer_01',
+            label: 'Éponge',
+            collision: false,
+        },
+        {
+            model: 'prop_kettle',
+            label: 'Bouilloire 1',
+        },
+        {
+            model: 'prop_kettle_01',
+            label: 'Bouilloire 2',
+        },
+        {
+            model: 'prop_kitch_juicer',
+            label: 'Presse-agrumes',
+        },
+        {
+            model: 'prop_kitch_pot_fry',
+            label: 'Poêle',
+        },
+        {
+            model: 'prop_kitch_pot_huge',
+            label: 'Marmite 1',
+        },
+        {
+            model: 'prop_kitch_pot_lrg',
+            label: 'Casserole pleine',
+        },
+        {
+            model: 'prop_kitch_pot_med',
+            label: 'Casserole',
+        },
+        {
+            model: 'prop_knife',
+            label: 'Couteau de cuisine',
+            collision: false,
+        },
+        {
+            model: 'prop_ladel',
+            label: 'Louche',
+            collision: false,
+        },
+        {
+            model: 'v_ilev_m_pitcher',
+            label: 'Pichet',
+        },
+        {
+            model: 'v_ilev_mm_faucet',
+            label: 'Robinet 1',
+        },
+        {
+            model: 'prop_coffee_mac_01',
+            label: 'Machine à café 1',
+        },
+        {
+            model: 'prop_coffee_mac_02',
+            label: 'Machine à café 2',
+        },
+        {
+            model: 'prop_juice_dispenser',
+            label: 'Distributeur de jus',
+        },
+        {
+            model: 'prop_fish_slice_01',
+            label: 'Spatule',
+            collision: false,
+        },
+        {
+            model: 'prop_cleaver',
+            label: 'Couteau de boucher',
+            collision: false,
+        },
+        {
+            model: 'prop_pot_05',
+            label: 'Poêle 1',
+        },
+        {
+            model: 'prop_whisk',
+            label: 'Fouet',
+            collision: false,
+        },
+        {
+            model: 'prop_wok',
+            label: 'Wok',
+        },
+        {
+            model: 'v_res_mbowl',
+            label: 'Bol en céramique 2',
+        },
+        {
+            model: 'v_res_mcofcup',
+            label: 'Tasse de café',
+        },
+        {
+            model: 'v_res_tt_bowlpile02',
+            label: 'Pile de bols',
+        },
+        {
+            model: 'v_res_tt_platepile',
+            label: "Pile d'assiettes",
+        },
+        {
+            model: 'v_ret_fh_plate1',
+            label: 'Assiette 1',
+        },
+        {
+            model: 'v_ret_fh_plate2',
+            label: 'Assiette 2',
+        },
+        {
+            model: 'v_ret_fh_plate3',
+            label: 'Assiette 3',
+        },
+        {
+            model: 'v_ret_fh_plate4',
+            label: 'Assiette 4',
+        },
+        {
+            model: 'v_ret_ta_paproll',
+            label: 'Sopalain',
+        },
     ],
     ['Electroménager']: [
         {
@@ -1790,8 +3738,85 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'prop_fax_01',
             label: 'Fax',
         },
+        {
+            model: 'prop_iron_01',
+            label: 'Fer à repasser',
+        },
+        {
+            model: 'prop_fire_exting_1a',
+            label: 'Extincteur',
+        },
+        {
+            model: 'prop_cs_fridge',
+            label: 'Réfrigérateur 1',
+        },
+        {
+            model: 'prop_cs_ice_locker',
+            label: 'Bac à glaçons',
+        },
+        {
+            model: 'prop_cs_toaster',
+            label: 'Grille-pain',
+        },
+        {
+            model: 'prop_sewing_machine',
+            label: 'Machine à coudre',
+        },
+        {
+            model: 'prop_trailr_fridge',
+            label: 'Réfrigérateur 2',
+        },
+        {
+            model: 'prop_foodprocess_01',
+            label: 'Robot de cuisine',
+        },
+        {
+            model: 'prop_fridge_01',
+            label: 'Réfrigérateur 3',
+        },
+        {
+            model: 'prop_fridge_03',
+            label: 'Réfrigérateur 4',
+        },
+        {
+            model: 'prop_micro_01',
+            label: 'Micro-ondes 1',
+        },
+        {
+            model: 'prop_micro_02',
+            label: 'Micro-ondes 2',
+        },
+        {
+            model: 'prop_micro_04',
+            label: 'Micro-ondes 3',
+        },
+        {
+            model: 'prop_micro_cs_01',
+            label: 'Micro-ondes 4',
+        },
+        {
+            model: 'prop_toaster_01',
+            label: 'Grille-pain 2',
+        },
+        {
+            model: 'v_ret_fh_dryer',
+            label: 'Sèche-linge',
+        },
+        {
+            model: 'v_ret_fh_washmach',
+            label: 'Machine à laver',
+        },
     ],
     ['Nourritures et Boissons']: [
+        {
+            model: 'prop_amb_donut',
+            label: 'Donut',
+        },
+        {
+            model: 'prop_taco_01',
+            label: 'Taco 1',
+            collision: false,
+        },
         {
             model: 'beerrow_local',
             label: 'Bières locales en vrac',
@@ -1959,6 +3984,209 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_fib_coffee',
             label: 'Café 3',
+            collision: false,
+        },
+        {
+            model: 'prop_ld_can_01',
+            label: 'Canette de soda 1',
+            collision: false,
+        },
+        {
+            model: 'prop_ld_flow_bottle',
+            label: "Bouteille d'eau 1",
+            collision: false,
+        },
+        {
+            model: 'prop_peanut_bowl_01',
+            label: 'Bol de cacahuètes',
+            collision: false,
+        },
+        {
+            model: 'prop_sandwich_01',
+            label: 'Sandwich 1',
+            collision: false,
+        },
+        {
+            model: 'v_ret_247_bread1',
+            label: 'Pain de mie',
+            collision: false,
+        },
+        {
+            model: 'v_ret_247_cereal1',
+            label: 'Céréales 1',
+            collision: false,
+        },
+        {
+            model: 'v_ret_247_choptom',
+            label: 'Tomates',
+            collision: false,
+        },
+        {
+            model: 'v_ret_247_eggs',
+            label: 'Oeufs',
+            collision: false,
+        },
+        {
+            model: 'v_ret_247_flour',
+            label: 'Farine',
+            collision: false,
+        },
+        {
+            model: 'v_ret_247_ketchup2',
+            label: 'Ketchup 2',
+            collision: false,
+        },
+        {
+            model: 'v_ret_247_popbot4',
+            label: 'Bouteille de soda 2',
+            collision: false,
+        },
+        {
+            model: 'v_ret_247_swtcorn2',
+            label: 'Maïs',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_beeram',
+            label: 'Pack de bière 1',
+        },
+        {
+            model: 'v_ret_ml_beerbar',
+            label: 'Pack de bière 2',
+        },
+        {
+            model: 'v_ret_ml_beerben1',
+            label: 'Pack de bière 3',
+        },
+        {
+            model: 'v_ret_ml_beerben2',
+            label: 'Pack de bière 4',
+        },
+        {
+            model: 'v_ret_ml_beerbla1',
+            label: 'Pack de bière 5',
+        },
+        {
+            model: 'v_ret_ml_beerdus',
+            label: 'Pack de bière 6',
+        },
+        {
+            model: 'v_ret_ml_beerjak1',
+            label: 'Pack de bière 7',
+        },
+        {
+            model: 'v_ret_ml_beerlog1',
+            label: 'Pack de bière 8',
+        },
+        {
+            model: 'v_ret_ml_beerpis1',
+            label: 'Pack de bière 9',
+        },
+        {
+            model: 'prop_beer_box_01',
+            label: 'Pack de bière en canettes 1',
+        },
+        {
+            model: 'v_ret_ml_chips1',
+            label: 'Chips 1',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_chips2',
+            label: 'Chips 2',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_chips3',
+            label: 'Chips 3',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_chips4',
+            label: 'Chips 4',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_cigs',
+            label: 'Paquet de cigarettes 1',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_cigs2',
+            label: 'Paquet de cigarettes 2',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_cigs3',
+            label: 'Paquet de cigarettes 3',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_cigs4',
+            label: 'Paquet de cigarettes 4',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_cigs5',
+            label: 'Paquet de cigarettes 5',
+            collision: false,
+        },
+        {
+            model: 'v_ret_ml_cigs6',
+            label: 'Paquet de cigarettes 6',
+            collision: false,
+        },
+        {
+            model: 'prop_bowl_crisps',
+            label: 'Bol de chips',
+            collision: false,
+        },
+        {
+            model: 'prop_cs_burger_01',
+            label: 'Hamburger',
+        },
+        {
+            model: 'prop_cs_hotdog_01',
+            label: 'Hotdog',
+        },
+        {
+            model: 'prop_cs_steak',
+            label: 'Steak',
+        },
+        {
+            model: 'prop_energy_drink',
+            label: 'Boisson énergisante',
+            collision: false,
+        },
+        {
+            model: 'prop_pineapple',
+            label: 'Ananas',
+            collision: false,
+        },
+        {
+            model: 'p_weed_bottle_s',
+            label: 'Bocal de Zeed',
+            collision: false,
+        },
+        {
+            model: 'ng_proc_food_nana1a',
+            label: 'Banane',
+            collision: false,
+        },
+        {
+            model: 'prop_pizza_box_01',
+            label: 'Boîte de pizza 1',
+            collision: false,
+        },
+        {
+            model: 'prop_pizza_box_02',
+            label: 'Boîte de pizza 2',
+            collision: false,
+        },
+        {
+            model: 'prop_pizza_box_03',
+            label: 'Boîte de pizza 3',
+            collision: false,
         },
     ],
     ['Bureautique']: [
@@ -1970,14 +4198,17 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'apa_mp_h_acc_phone_01',
             label: 'Téléphone 1',
+            collision: false,
         },
         {
             model: 'bkr_prop_fakeid_pen_01a',
             label: 'Stylo 1',
+            collision: false,
         },
         {
             model: 'bkr_prop_fakeid_pen_02a',
             label: 'Stylo 2',
+            collision: false,
         },
         {
             model: 'ex_prop_ex_laptop_01a',
@@ -1994,6 +4225,143 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_paper_ball',
             label: 'Boule de papier 1',
+            collision: false,
+        },
+        {
+            model: 'prop_ld_scrap',
+            label: 'Papier froissé 1',
+            collision: false,
+        },
+        {
+            model: 'prop_notepad_02',
+            label: 'Bloc-notes 1',
+            collision: false,
+        },
+        {
+            model: 'prop_pencil_01',
+            label: 'Crayon 1',
+            collision: false,
+        },
+        {
+            model: 'prop_keyboard_01a',
+            label: 'Clavier 1',
+            collision: false,
+        },
+        {
+            model: 'prop_keyboard_01b',
+            label: 'Clavier 2',
+            collision: false,
+        },
+        {
+            model: 'prop_laptop_01a',
+            label: 'Ordinateur portable 3',
+        },
+        {
+            model: 'prop_laptop_02_closed',
+            label: 'Ordinateur portable 4',
+        },
+        {
+            model: 'v_serv_ct_monitor01',
+            label: "Écran d'ordinateur 1",
+        },
+        {
+            model: 'v_serv_ct_monitor07',
+            label: "Écran d'ordinateur 2",
+        },
+        {
+            model: 'prop_office_phone_tnt',
+            label: 'Téléphone 2',
+        },
+        {
+            model: 'prop_printer_01',
+            label: 'Imprimante 1',
+        },
+        {
+            model: 'prop_printer_02',
+            label: 'Imprimante 2',
+        },
+        {
+            model: 'prop_watercooler',
+            label: 'Fontaine à eau',
+        },
+        {
+            model: 'v_res_cdstorage',
+            label: 'Boîte de CD',
+        },
+        {
+            model: 'v_res_desktidy',
+            label: 'Fournitures de bureau 1',
+        },
+        {
+            model: 'v_res_paperfolders',
+            label: 'Fournitures de bureau 2',
+        },
+        {
+            model: 'v_ret_gc_folder1',
+            label: 'Classeur 2',
+            collision: false,
+        },
+        {
+            model: 'v_ret_gc_folder2',
+            label: 'Classeur 3',
+            collision: false,
+        },
+        {
+            model: 'v_ret_gc_trays',
+            label: 'Bac à courrier',
+            collision: false,
+        },
+        {
+            model: 'prop_cs_scissors',
+            label: 'Ciseaux',
+            collision: false,
+        },
+        {
+            model: 'prop_cs_tablet',
+            label: 'Tablette',
+            collision: false,
+        },
+        {
+            model: 'prop_cd_folder_pile2',
+            label: 'Pile de classeurs 1',
+            collision: false,
+        },
+        {
+            model: 'prop_cd_folder_pile3',
+            label: 'Pile de classeurs 2',
+            collision: false,
+        },
+        {
+            model: 'prop_cd_paper_pile1',
+            label: 'Pile de papier au mur 1',
+        },
+        {
+            model: 'prop_cd_paper_pile3',
+            label: 'Pile de papier au mur 2',
+        },
+        {
+            model: 'prop_dyn_pc',
+            label: "Tour d'ordinateur 1",
+            collision: false,
+        },
+        {
+            model: 'prop_cs_mouse_01',
+            label: 'Souris',
+            collision: false,
+        },
+        {
+            model: 'prop_elec_heater_01',
+            label: 'Chauffage éléctrique',
+        },
+        {
+            model: 'prop_pc_02a',
+            label: "Tour d'ordinateur 2",
+            collision: false,
+        },
+        {
+            model: 'hei_prop_hst_usb_drive',
+            label: 'Clé USB',
+            collision: false,
         },
     ],
     ['Télévisions']: [
@@ -2009,14 +4377,531 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'ex_prop_tv_settop_remote',
             label: 'Télécommande 1',
         },
+        {
+            model: 'v_ilev_acet_projector',
+            label: 'Projecteur 1',
+        },
+        {
+            model: 'v_ilev_cin_screen',
+            label: 'Écran incurvé',
+        },
+        {
+            model: 'v_ilev_lest_bigscreen',
+            label: 'Écran dépliant',
+        },
+        {
+            model: 'des_tvsmash_start',
+            label: 'Télévision 2',
+        },
+        {
+            model: 'prop_cctv_01_sm_02',
+            label: 'Moniteur de surveillance 1',
+        },
+        {
+            model: 'prop_cctv_cont_02',
+            label: 'Moniteur de surveillance 2',
+        },
+        {
+            model: 'prop_crt_mon_01',
+            label: 'Télévision 3',
+        },
+        {
+            model: 'prop_cs_tv_stand',
+            label: 'Télévision avec support',
+        },
+        {
+            model: 'prop_monitor_03b',
+            label: 'Télévision 4',
+        },
+        {
+            model: 'prop_trev_tv_01',
+            label: 'Télévision 5',
+        },
+        {
+            model: 'prop_tv_01',
+            label: 'Télévision 6',
+        },
+        {
+            model: 'prop_tv_03',
+            label: 'Télévision 7',
+        },
+        {
+            model: 'prop_tv_04',
+            label: 'Télévision 8',
+        },
+        {
+            model: 'prop_tv_06',
+            label: 'Télévision 9',
+        },
+        {
+            model: 'prop_tv_flat_01',
+            label: 'Ecran plat 1',
+        },
+        {
+            model: 'prop_tv_flat_02',
+            label: 'Ecran plat 2',
+        },
+        {
+            model: 'prop_tv_flat_03',
+            label: 'Ecran plat 3',
+        },
+        {
+            model: 'apa_mp_h_str_avunitl_04',
+            label: 'Meuble TV 1',
+        },
+        {
+            model: 'apa_mp_h_str_avunitm_01',
+            label: 'Meuble TV 2',
+        },
+        {
+            model: 'apa_mp_h_str_avunitm_03',
+            label: 'Meuble TV 3',
+        },
+        {
+            model: 'apa_mp_h_str_avunits_01',
+            label: 'Meuble TV 4',
+        },
+        {
+            model: 'apa_mp_h_str_avunits_04',
+            label: 'Meuble TV 5',
+        },
+        {
+            model: 'prop_console_01',
+            label: 'Console de jeux',
+        },
     ],
-    ['Lumières']: [
+    ['Lumières & Eclairages']: [
         {
             model: 'bkr_prop_fakeid_desklamp_01a',
             label: 'Lampe de bureau 1',
         },
+        {
+            model: 'v_ilev_fh_lampa_on',
+            label: 'Lampe de salon 1',
+        },
+        {
+            model: 'vw_prop_casino_art_lampf_01a',
+            label: 'Lampe de casino 1',
+        },
+        {
+            model: 'vw_prop_casino_art_lampf_01b',
+            label: 'Lampe de casino 2',
+        },
+        {
+            model: 'v_corp_bk_lamp1',
+            label: 'Lampe de salon ancienne 1',
+        },
+        {
+            model: 'v_corp_bk_lamp2',
+            label: 'Lampe de salon 2',
+        },
+        {
+            model: 'v_ind_cf_bugzap',
+            label: 'Lampe anti-moustique',
+        },
+        {
+            model: 'v_res_fa_lamp1on',
+            label: 'Lampe de chevet 1',
+        },
+        {
+            model: 'v_res_fh_floorlamp',
+            label: 'Lampe à bras 1',
+        },
+        {
+            model: 'v_res_m_lampstand2',
+            label: 'Lampe à pied 1',
+        },
+        {
+            model: 'v_ret_gc_lamp',
+            label: 'Lampe de bureau 2',
+        },
+        {
+            model: 'v_ret_neon_blarneys',
+            label: 'Enseigne lumineuse 1',
+        },
+        {
+            model: 'v_ret_neon_logger',
+            label: 'Enseigne lumineuse 2',
+        },
+        {
+            model: 'v_serv_ct_lamp',
+            label: 'Lampe de bureau 3',
+        },
+        {
+            model: 'prop_cd_lamp',
+            label: 'Lampe de bureau 4',
+        },
+        {
+            model: 'prop_garden_zapper_01',
+            label: 'Lampe anti-moustique 2',
+        },
+        {
+            model: 'prop_patio_heater_01',
+            label: 'Chauffage extérieur',
+        },
+        {
+            model: 'v_19_vanillasigneon2',
+            label: 'Enseigne lumineuse 3',
+        },
+        {
+            model: 'v_61_bd1_mesh_lamp',
+            label: 'Lampe de salon 3',
+        },
+        {
+            model: 'v_61_hall_mesh_sidestuff',
+            label: 'Lampe de salon 4',
+        },
+        {
+            model: 'v_club_vu_lamp',
+            label: 'Lampe de chevet 2',
+        },
+        {
+            model: 'v_med_examlight_static',
+            label: 'Lampe médicale',
+        },
+        {
+            model: 'prop_barebulb_01',
+            label: 'Ampoule nue',
+        },
+        {
+            model: 'prop_chall_lamp_01n',
+            label: 'Chandelier moderne',
+        },
+        {
+            model: 'prop_oldlight_01a',
+            label: 'Lampadaire ancien',
+        },
+        {
+            model: 'prop_oldlight_01b',
+            label: 'Lampe ancienne de mur',
+        },
+        {
+            model: 'prop_oldlight_01c',
+            label: 'Lampe ancienne de plafond',
+        },
+        {
+            model: 'prop_streetlight_01',
+            label: 'Lampadaire de rue 1',
+        },
+        {
+            model: 'prop_streetlight_01b',
+            label: 'Lampadaire de rue 2',
+        },
+        {
+            model: 'prop_streetlight_02',
+            label: 'Lampadaire de rue 3',
+        },
+        {
+            model: 'prop_streetlight_03',
+            label: 'Lampadaire de rue 4',
+        },
+        {
+            model: 'prop_streetlight_03b',
+            label: 'Lampadaire de rue 5',
+        },
+        {
+            model: 'prop_streetlight_03c',
+            label: 'Lampadaire de rue 6',
+        },
+        {
+            model: 'prop_streetlight_03d',
+            label: 'Lampadaire double de rue 1',
+        },
+        {
+            model: 'prop_streetlight_04',
+            label: 'Lampadaire double de rue 2',
+        },
+        {
+            model: 'prop_streetlight_05',
+            label: 'Lampadaire double de rue 3',
+        },
+        {
+            model: 'prop_streetlight_05_b',
+            label: 'Lampadaire double de rue 4',
+        },
+        {
+            model: 'prop_streetlight_06',
+            label: 'Lampadaire double de rue 5',
+        },
+        {
+            model: 'prop_streetlight_07a',
+            label: 'Lampadaire rue 7',
+        },
+        {
+            model: 'prop_streetlight_07b',
+            label: 'Lampadaire double de rue 6',
+        },
+        {
+            model: 'prop_streetlight_08',
+            label: 'Lampadaire de rue 8',
+        },
+        {
+            model: 'prop_streetlight_09',
+            label: 'Lampadaire de rue 9',
+        },
+        {
+            model: 'prop_streetlight_10',
+            label: 'Lampadaire double de rue 7',
+        },
+        {
+            model: 'prop_streetlight_11a',
+            label: 'Lampadaire de rue 10',
+        },
+        {
+            model: 'prop_streetlight_16a',
+            label: 'Lampadaire double de rue 8',
+        },
+        {
+            model: 'prop_wall_light_01a',
+            label: 'Lampe de mur 1',
+        },
+        {
+            model: 'prop_wall_light_02a',
+            label: 'Lampe de mur 2',
+        },
+        {
+            model: 'prop_wall_light_03a',
+            label: 'Lampe de mur 3',
+        },
+        {
+            model: 'prop_wall_light_07a',
+            label: 'Lampe de mur 4',
+        },
+        {
+            model: 'prop_wall_light_08a',
+            label: 'Lampe de mur 5',
+        },
+        {
+            model: 'prop_wall_light_09a',
+            label: 'Lampe de mur 6',
+        },
+        {
+            model: 'prop_wall_light_09c',
+            label: 'Lampe de mur 7',
+        },
+        {
+            model: 'prop_wall_light_12',
+            label: 'Lampe suspendue 1',
+        },
+        {
+            model: 'prop_wall_light_16a',
+            label: 'Lampe de mur 8',
+        },
+        {
+            model: 'prop_wall_light_16b',
+            label: 'Lampe de mur 9',
+        },
+        {
+            model: 'prop_wall_light_16c',
+            label: 'Lampe de mur 10',
+        },
+        {
+            model: 'prop_wall_light_16e',
+            label: 'Lampe suspendue 2',
+        },
+        {
+            model: 'prop_runlight_b',
+            label: 'Spot lumineux bleu',
+            collision: false,
+        },
+        {
+            model: 'prop_runlight_g',
+            label: 'Spot lumineux vert',
+            collision: false,
+        },
+        {
+            model: 'prop_runlight_r',
+            label: 'Spot lumineux rouge',
+            collision: false,
+        },
+        {
+            model: 'prop_runlight_y',
+            label: 'Spot lumineux jaune',
+            collision: false,
+        },
+        {
+            model: 'xm_base_cia_lamp_ceiling_01',
+            label: 'Lampe de plafond 1',
+        },
+        {
+            model: 'xm_base_cia_lamp_ceiling_02',
+            label: 'Lampe de plafond 2',
+        },
+        {
+            model: 'ch_prop_ch_lamp_ceiling_02a',
+            label: 'Néon de plafond 1',
+        },
+        {
+            model: 'ch_prop_ch_lamp_ceiling_02b',
+            label: 'Néon de plafond 2',
+        },
+        {
+            model: 'ch_prop_tunnel_tripod_lampa',
+            label: 'Lampe tripode',
+        },
+        {
+            model: 'apa_mp_h_floor_lamp_int_08',
+            label: 'Lampe à pied 1',
+        },
+        {
+            model: 'apa_mp_h_floorlamp_a',
+            label: 'Lampe à pied 2',
+        },
+        {
+            model: 'apa_mp_h_floorlamp_b',
+            label: 'Lampe à pied 3',
+        },
+        {
+            model: 'apa_mp_h_floorlamp_c',
+            label: 'Lampe à pied 4',
+        },
+        {
+            model: 'apa_mp_h_lampbulb_multiple_a',
+            label: 'Lampe multiples bulbes',
+        },
+        {
+            model: 'apa_mp_h_lit_floorlamp_10',
+            label: 'Lampe de bureau multiple tiges',
+        },
+        {
+            model: 'apa_mp_h_lit_floorlamp_13',
+            label: 'Lampe rose',
+        },
+        {
+            model: 'apa_mp_h_lit_lamptable_005',
+            label: 'Lampe de salon 5',
+        },
+        {
+            model: 'apa_mp_h_lit_lamptable_04',
+            label: 'Lampe de salon 6',
+        },
+        {
+            model: 'apa_mp_h_lit_lamptable_09',
+            label: 'Lampe de salon 7',
+        },
+        {
+            model: 'apa_mp_h_lit_lamptable_17',
+            label: 'Lampe de salon 8',
+        },
+        {
+            model: 'apa_mp_h_lit_lamptable_21',
+            label: 'Lampe de salon 9',
+        },
+        {
+            model: 'apa_mp_h_lit_lamptablenight_16',
+            label: 'Lampe de chevet 3',
+        },
+        {
+            model: 'apa_mp_h_lit_lamptablenight_24',
+            label: 'Lampe de chevet 4',
+        },
+        {
+            model: 'apa_mp_h_lit_lightpendant_01',
+            label: 'Lampe suspendue 3',
+        },
+        {
+            model: 'apa_mp_h_lit_lightpendant_05',
+            label: 'Lampe suspendue 4',
+        },
+        {
+            model: 'apa_mp_h_yacht_table_lamp_01',
+            label: 'Lampe de salon 10',
+        },
+        {
+            model: 'ba_prop_sign_galaxy',
+            label: 'Néon Galaxy',
+        },
+        {
+            model: 'ba_prop_sign_technologie',
+            label: 'Néon Technologie',
+        },
+        {
+            model: 'bkr_prop_grow_lamp_02a',
+            label: 'Lampe de culture 1',
+        },
+        {
+            model: 'bkr_prop_grow_lamp_02b',
+            label: 'Lampe de culture 2',
+        },
+        {
+            model: 'xm_int_prop_tinsel_aven_01a',
+            label: 'Guirlande 1',
+            collision: false,
+        },
+        {
+            model: 'xm_int_prop_tinsel_truck_carmod',
+            label: 'Guirlande 2',
+            collision: false,
+        },
+        {
+            model: 'xm_int_prop_tinsel_truck_main',
+            label: 'Guirlande 3',
+            collision: false,
+        },
+        {
+            model: 'xm_prop_lab_floor_lampa',
+            label: 'Lampe de laboratoire',
+            collision: false,
+        },
+        {
+            model: 'xm_prop_lab_lamp_wall_b',
+            label: 'Lampe de laboratoire murale',
+            collision: false,
+        },
+        {
+            model: 'xs_prop_arena_lights_tube_l_a',
+            label: 'Néon mural violet',
+            collision: false,
+        },
+        {
+            model: 'xs_prop_x18_hangar_lamp_led_a',
+            label: 'Lampe de hangar 1',
+            collision: false,
+        },
+        {
+            model: 'xs_prop_x18_hangar_lamp_wall_a',
+            label: 'Lampe de hangar 2',
+            collision: false,
+        },
+        {
+            model: 'xs_prop_x18_hangar_light_a',
+            label: 'Lampe de hangar 3',
+            collision: false,
+        },
+        {
+            model: 'xs_prop_x18_hangar_light_b',
+            label: 'Lampe de hangar 4',
+            collision: false,
+        },
+        {
+            model: 'xs_propintarena_lamps_01a',
+            label: "Eclairage d'arène",
+            collision: false,
+        },
+        {
+            model: 'prop_beer_neon_01',
+            label: 'Néon Liquor',
+            collision: false,
+        },
+        {
+            model: 'prop_pharm_sign_01',
+            label: 'Néon Pharmacie',
+            collision: false,
+        },
     ],
     ["Décoration d'intérieur"]: [
+        {
+            model: 'prop_sh_cigar_01',
+            label: 'Cigare 2',
+        },
+        {
+            model: 'prop_cigar_01',
+            label: 'Cigare 3',
+        },
+        {
+            model: 'prop_sh_joint_01',
+            label: 'Joint 1',
+        },
         {
             model: 'apa_mp_h_acc_box_trinket_01',
             label: 'Petite boîte 1',
@@ -2090,6 +4975,10 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             label: 'Clés 1',
         },
         {
+            model: 'p_car_keys_01',
+            label: 'Clés 2',
+        },
+        {
             model: 'bkr_prop_fakeid_openpassport',
             label: 'Passeport',
         },
@@ -2100,10 +4989,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'ex_office_swag_med2',
             label: 'Médicaments 2',
-        },
-        {
-            model: 'ex_office_swag_pills',
-            label: 'Médicaments 3',
         },
         {
             model: 'ex_prop_ashtray_luxe_02',
@@ -2145,8 +5030,133 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'prop_novel_01',
             label: 'Livre ouvert 1',
         },
+        {
+            model: 'prop_egg_clock_01',
+            label: 'Horloge 1',
+        },
+        {
+            model: 'prop_dummy_01',
+            label: 'Statuette 1',
+        },
+        {
+            model: 'prop_t_telescope_01b',
+            label: 'Télescope',
+        },
+        {
+            model: 'prop_anim_cash_note',
+            label: 'Billet de banque',
+        },
+        {
+            model: 'prop_anim_cash_pile_01',
+            label: 'Liasses de billets',
+        },
+        {
+            model: 'prop_ashtray_01',
+            label: 'Cendrier 3',
+        },
+        {
+            model: 'prop_game_clock_01',
+            label: 'Horloge 2',
+        },
+        {
+            model: 'prop_game_clock_02',
+            label: 'Horloge 3',
+        },
+    ],
+    ['Tapis']: [
+        {
+            model: 'apa_mp_h_acc_rugwooll_03',
+            label: 'Tapis 1',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_rugwooll_04',
+            label: 'Tapis 2',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_rugwoolm_01',
+            label: 'Tapis 3',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_rugwoolm_02',
+            label: 'Tapis 4',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_rugwoolm_03',
+            label: 'Tapis 5',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_rugwoolm_04',
+            label: 'Tapis 6',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_rugwools_01',
+            label: 'Tapis 7',
+            collision: false,
+        },
+        {
+            model: 'apa_mp_h_acc_rugwools_03',
+            label: 'Tapis 8',
+            collision: false,
+        },
+        {
+            model: 'ex_mp_h_acc_rugwoolm_04',
+            label: 'Tapis 9',
+            collision: false,
+        },
+        {
+            model: 'hei_heist_acc_rugwooll_01',
+            label: 'Tapis 10',
+            collision: false,
+        },
+        {
+            model: 'hei_heist_acc_rugwooll_02',
+            label: 'Tapis 11',
+            collision: false,
+        },
     ],
     ['Affaires personnelles']: [
+        {
+            model: 'p_ld_heist_bag_s_1',
+            label: 'Gros Sac 1',
+        },
+        {
+            model: 'p_ld_heist_bag_s_2',
+            label: 'Gros Sac 2',
+        },
+        {
+            model: 'p_ld_heist_bag_s_pro',
+            label: 'Gros Sac 3',
+        },
+        {
+            model: 'p_ld_heist_bag_s_pro_o',
+            label: 'Gros Sac 4',
+        },
+        {
+            model: 'prop_ld_hat_01',
+            label: 'Chapeau de cowboy',
+        },
+        {
+            model: 'prop_ld_jeans_01',
+            label: 'Jean',
+        },
+        {
+            model: 'prop_ld_shoe_01',
+            label: 'Chaussure',
+        },
+        {
+            model: 'prop_suitcase_01',
+            label: 'Valisette 1',
+        },
+        {
+            model: 'prop_ld_wallet_pickup',
+            label: 'Portefeuille 1',
+        },
         {
             model: 'p_jewel_necklace_02',
             label: 'Collier 1',
@@ -2253,7 +5263,7 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         },
         {
             model: 'prop_ld_wallet_01',
-            label: 'Portefeuille 1',
+            label: 'Portefeuille 2',
             collision: false,
         },
         {
@@ -2339,11 +5349,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             collision: false,
         },
         {
-            model: 'prop_binoc_01',
-            label: 'Jumelles 1',
-            collision: false,
-        },
-        {
             model: 'prop_carrier_bag_01',
             label: 'Sac de courses 2',
         },
@@ -2392,12 +5397,20 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             label: 'Paquet de cigarettes 1',
         },
         {
-            model: 'prop_gaffer_tape',
-            label: 'Rouleau de scotch',
+            model: 'prop_ld_fags_01',
+            label: 'Paquet de cigarettes 2',
         },
         {
-            model: 'prop_inhaler_01',
-            label: 'Inhalateur',
+            model: 'prop_ld_fags_02',
+            label: 'Paquet de cigarettes 3',
+        },
+        {
+            model: 'prop_m_pack_int_01',
+            label: 'Sac à dos 1',
+        },
+        {
+            model: 'prop_cs_dildo_01',
+            label: 'Dildo',
         },
     ],
     ['Rangement']: [
@@ -2417,12 +5430,360 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'prop_ld_int_safe_01',
             label: 'Coffre-fort 1',
         },
+        {
+            model: 'prop_cabinet_02b',
+            label: 'Tiroirs',
+        },
+        {
+            model: 'p_pharm_unit_01',
+            label: 'Placard à pharmacie 1',
+        },
+        {
+            model: 'p_pharm_unit_02',
+            label: 'Placard à pharmacie 2',
+        },
+        {
+            model: 'prop_cs_bucket_s',
+            label: 'Seau de ménage',
+        },
+        {
+            model: 'prop_blox_spray',
+            label: 'Spray Javel',
+        },
+        {
+            model: 'prop_cs_ironing_board',
+            label: 'Planche à repasser',
+        },
+        {
+            model: 'prop_cs_lester_crate',
+            label: 'Caisse de classeurs',
+        },
+        {
+            model: 'prop_crate_03a',
+            label: 'Cagette 1',
+        },
+        {
+            model: 'prop_crate_05a',
+            label: 'Cagette 2',
+        },
+        {
+            model: 'prop_crate_09a',
+            label: 'Cagette 3',
+        },
+        {
+            model: 'prop_crate_11b',
+            label: 'Cagette 4',
+        },
+        {
+            model: 'prop_cratepile_01a',
+            label: 'Pile de Cagette',
+        },
+        {
+            model: 'prop_cratepile_07a',
+            label: 'Pile de Caisse',
+        },
+        {
+            model: 'v_serv_plastic_box',
+            label: 'Boite en plastique',
+        },
     ],
-    ['Vases']: [],
+    ['Vases']: [
+        {
+            model: 'v_res_cherubvase',
+            label: 'Vase 1',
+        },
+        {
+            model: 'v_res_exoticvase',
+            label: 'Vase de fleurs 1',
+        },
+        {
+            model: 'v_res_m_vasedead',
+            label: 'Vase de fleurs 2',
+        },
+        {
+            model: 'v_res_m_vasefresh',
+            label: 'Vase de fleurs 3',
+        },
+        {
+            model: 'v_res_mbronzvase',
+            label: 'Vase 2',
+        },
+        {
+            model: 'v_res_mvasechinese',
+            label: 'Vase de fleurs 4',
+        },
+        {
+            model: 'v_res_rosevase',
+            label: 'Vase de fleurs 5',
+        },
+        {
+            model: 'v_res_rosevasedead',
+            label: 'Vase de fleurs 6',
+        },
+        {
+            model: 'v_med_p_vaseround',
+            label: 'Vase 3',
+        },
+        {
+            model: 'v_med_p_vasetall',
+            label: 'Vase 4',
+        },
+        {
+            model: 'apa_mp_h_acc_vase_01',
+            label: 'Vase 5',
+        },
+        {
+            model: 'apa_mp_h_acc_vase_02',
+            label: 'Vase 6',
+        },
+        {
+            model: 'apa_mp_h_acc_vase_04',
+            label: 'Vase 7',
+        },
+        {
+            model: 'apa_mp_h_acc_vase_05',
+            label: 'Vase 8',
+        },
+        {
+            model: 'apa_mp_h_acc_vase_flowers_01',
+            label: 'Vase de fleurs 7',
+        },
+        {
+            model: 'apa_mp_h_acc_vase_flowers_02',
+            label: 'Vase de fleurs 8',
+        },
+        {
+            model: 'apa_mp_h_acc_vase_flowers_03',
+            label: 'Vase de fleurs 9',
+        },
+        {
+            model: 'apa_mp_h_acc_vase_flowers_04',
+            label: 'Vase de fleurs 10',
+        },
+        {
+            model: 'p_int_jewel_plant_01',
+            label: 'Vase de plantes 1',
+        },
+        {
+            model: 'p_int_jewel_plant_02',
+            label: 'Vase de plantes 2',
+        },
+        {
+            model: 'prop_fbibombplant',
+            label: 'Vase de plantes 3',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_01a',
+            label: 'Vase de décoration 1',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_02a',
+            label: 'Vase de décoration 2',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_03a',
+            label: 'Vase de décoration 3',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_04a',
+            label: 'Vase de décoration 4',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_05a',
+            label: 'Vase de décoration 5',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_06a',
+            label: 'Vase de décoration 6',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_07a',
+            label: 'Vase de décoration 7',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_08a',
+            label: 'Vase de décoration 8',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_09a',
+            label: 'Vase de décoration 9',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_10a',
+            label: 'Vase de décoration 10',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_11a',
+            label: 'Vase de décoration 11',
+        },
+        {
+            model: 'vw_prop_casino_art_vase_12a',
+            label: 'Vase de décoration 12',
+        },
+    ],
     ['Garage']: [
         {
-            model: 'prop_ld_jerrycan_01',
-            label: 'Jerrican 1',
+            model: 'prop_oilcan_01a',
+            label: "Bidon d'huile 1",
+        },
+        {
+            model: 'prop_oilcan_02a',
+            label: "Bidon d'huile 2",
+        },
+        {
+            model: 'prop_toolchest_01',
+            label: 'Coffre à outils',
+        },
+        {
+            model: 'prop_toolchest_02',
+            label: 'Coffre à outils 2',
+        },
+        {
+            model: 'prop_toolchest_03',
+            label: 'Coffre à outils 3',
+        },
+        {
+            model: 'p_cs_trolley_01_s',
+            label: 'Chariot 1',
+        },
+        {
+            model: 'imp_prop_impexp_half_cut_rack_01a',
+            label: 'Rack de pièces 1',
+        },
+        {
+            model: 'imp_prop_impexp_half_cut_rack_01b',
+            label: 'Rack de pièces 2',
+        },
+        {
+            model: 'imp_prop_impexp_hub_rack_01a',
+            label: 'Rack de pièces 3',
+        },
+        {
+            model: 'imp_prop_impexp_postlift',
+            label: 'Pont élévateur',
+        },
+        {
+            model: 'imp_prop_tool_draw_01a',
+            label: 'Tiroir à outils 1',
+        },
+        {
+            model: 'imp_prop_welder_01a',
+            label: 'Poste à souder',
+        },
+        {
+            model: 'imp_prop_wheel_balancer_01a',
+            label: 'Équilibreuse de roue',
+        },
+        {
+            model: 'prop_cablespool_05',
+            label: 'Bobine de câble',
+        },
+        {
+            model: 'prop_rub_pile_03',
+            label: 'Pile de pneus 1',
+        },
+        {
+            model: 'prop_rub_pile_04',
+            label: 'Pile de pneus 2',
+        },
+        {
+            model: 'prop_rub_tyre_01',
+            label: 'Pneu 1',
+            collision: false,
+        },
+        {
+            model: 'prop_rub_tyre_02',
+            label: 'Pneu 2',
+            collision: false,
+        },
+        {
+            model: 'prop_rub_tyre_03',
+            label: 'Pneu 3',
+            collision: false,
+        },
+        {
+            model: 'prop_car_battery_01',
+            label: 'Batterie de voiture',
+        },
+        {
+            model: 'prop_car_engine_01',
+            label: 'Moteur de voiture',
+        },
+        {
+            model: 'prop_bumper_04',
+            label: 'Pare-choc',
+        },
+        {
+            model: 'prop_car_door_03',
+            label: 'Portière',
+        },
+        {
+            model: 'prop_car_exhaust_01',
+            label: "Pot d'échappement",
+        },
+        {
+            model: 'prop_car_seat',
+            label: 'Siège de voiture',
+        },
+        {
+            model: 'prop_wheel_hub_01',
+            label: 'Jante de voiture',
+        },
+        {
+            model: 'prop_wheel_rim_01',
+            label: 'Roue de voiture',
+        },
+        {
+            model: 'prop_byard_motor_01',
+            label: 'Moteur de bateau 1',
+        },
+        {
+            model: 'prop_byard_motor_02',
+            label: 'Moteur de bateau 2',
+        },
+        {
+            model: 'prop_byard_motor_03',
+            label: 'Moteur de bateau 3',
+        },
+        {
+            model: 'imp_prop_impexp_parts_rack_01a',
+            label: 'Rack de pièces 4',
+        },
+        {
+            model: 'imp_prop_impexp_parts_rack_02a',
+            label: 'Rack de pièces 5',
+        },
+        {
+            model: 'imp_prop_impexp_parts_rack_03a',
+            label: 'Rack de pièces 6',
+        },
+        {
+            model: 'imp_prop_impexp_rack_01a',
+            label: 'Rack vide 1',
+        },
+        {
+            model: 'imp_prop_impexp_rack_02a',
+            label: 'Rack vide 2',
+        },
+        {
+            model: 'imp_prop_impexp_rack_03a',
+            label: 'Rack vide 3',
+        },
+        {
+            model: 'imp_prop_impexp_rack_04a',
+            label: 'Rack vide 4',
+        },
+        {
+            model: 'prop_tool_box_03',
+            label: 'Boîte à outils vide',
+        },
+        {
+            model: 'prop_tool_box_04',
+            label: 'Boîte à outils 1',
+        },
+        {
+            model: 'prop_tool_box_07',
+            label: 'Boîte à outils 2',
         },
     ],
     ['Plantes']: [
@@ -2430,6 +5791,927 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             model: 'prop_single_rose',
             label: 'Rose',
             collision: false,
+        },
+        {
+            model: 'prop_snow_flower_02',
+            label: 'Bouquet de fleurs 1',
+        },
+        {
+            model: 'prop_windowbox_a',
+            label: 'Pot de fleurs 1',
+        },
+        {
+            model: 'prop_windowbox_b',
+            label: 'Pot de fleurs 2',
+        },
+        {
+            model: 'prop_fib_plant_01',
+            label: 'Plante en pot 1',
+        },
+        {
+            model: 'prop_fib_plant_02',
+            label: 'Plante 1',
+        },
+        {
+            model: 'prop_agave_01',
+            label: 'Cactus 1',
+        },
+        {
+            model: 'prop_agave_02',
+            label: 'Cactus 2',
+        },
+        {
+            model: 'prop_cs_plant_01',
+            label: 'Plantes roses',
+        },
+        {
+            model: 'prop_plant_01b',
+            label: 'Plantes violettes',
+        },
+        {
+            model: 'prop_plant_cane_01a',
+            label: 'Plante à fleurs variées',
+        },
+        {
+            model: 'prop_plant_fern_01a',
+            label: 'Plantes jaunes',
+        },
+        {
+            model: 'prop_plant_palm_01a',
+            label: 'Palmier 1',
+        },
+        {
+            model: 'prop_plant_paradise',
+            label: 'Plantes rouges',
+        },
+        {
+            model: 'prop_plant_paradise_b',
+            label: 'Plantes blanches',
+        },
+        {
+            model: 'prop_bush_lrg_02',
+            label: 'Buisson 1',
+        },
+        {
+            model: 'prop_bush_lrg_02b',
+            label: 'Buisson 2',
+        },
+        {
+            model: 'prop_bush_lrg_03',
+            label: 'Buisson 3',
+        },
+        {
+            model: 'prop_bush_lrg_04b',
+            label: 'Arbuste 1',
+        },
+        {
+            model: 'prop_bush_lrg_04c',
+            label: 'Arbuste 2',
+        },
+        {
+            model: 'prop_bush_neat_01',
+            label: 'Arbuste 3',
+        },
+        {
+            model: 'prop_bush_neat_02',
+            label: 'Arbuste 4',
+        },
+        {
+            model: 'prop_bush_neat_07',
+            label: 'Buisson 4',
+        },
+        {
+            model: 'prop_bush_neat_06',
+            label: 'Buisson 5',
+        },
+        {
+            model: 'prop_bush_neat_08',
+            label: 'Buisson taillé 1',
+        },
+        {
+            model: 'prop_bush_ornament_01',
+            label: 'Buisson taillé 2',
+        },
+        {
+            model: 'prop_bush_ornament_02',
+            label: 'Buisson taillé 3',
+        },
+        {
+            model: 'prop_bush_ornament_03',
+            label: 'Buisson taillé 4',
+        },
+        {
+            model: 'prop_bush_ornament_04',
+            label: 'Buisson taillé 5',
+        },
+        {
+            model: 'prop_cactus_01a',
+            label: 'Cactus 3',
+        },
+        {
+            model: 'prop_cactus_01b',
+            label: 'Cactus 4',
+        },
+        {
+            model: 'prop_cactus_01c',
+            label: 'Cactus 5',
+        },
+        {
+            model: 'prop_cactus_01d',
+            label: 'Cactus 6',
+        },
+        {
+            model: 'prop_cactus_01e',
+            label: 'Cactus 7',
+        },
+        {
+            model: 'prop_cactus_02',
+            label: 'Cactus 8',
+        },
+        {
+            model: 'prop_cactus_03',
+            label: 'Cactus 9',
+        },
+        {
+            model: 'prop_tree_birch_05',
+            label: 'Arbre à fruits 1',
+        },
+        {
+            model: 'prop_veg_crop_03_cab',
+            label: 'Salade verte',
+        },
+        {
+            model: 'prop_veg_crop_03_pump',
+            label: 'Citrouille',
+        },
+        {
+            model: 'prop_veg_crop_tr_01',
+            label: 'Palmier 2',
+        },
+        {
+            model: 'prop_palm_fan_02_b',
+            label: 'Palmier 3',
+        },
+        {
+            model: 'prop_palm_fan_03_a',
+            label: 'Palmier 4',
+        },
+        {
+            model: 'prop_palm_fan_03_b',
+            label: 'Palmier 5',
+        },
+        {
+            model: 'prop_plant_int_01a',
+            label: 'Plante en pot 2',
+        },
+        {
+            model: 'prop_plant_int_01b',
+            label: 'Plante en pot 3',
+        },
+        {
+            model: 'prop_plant_int_02a',
+            label: 'Plante en pot 4',
+        },
+        {
+            model: 'prop_plant_int_02b',
+            label: 'Plante en pot 5',
+        },
+        {
+            model: 'prop_plant_int_03a',
+            label: 'Plante en pot 6',
+        },
+        {
+            model: 'prop_plant_int_03b',
+            label: 'Plante en pot 7',
+        },
+        {
+            model: 'prop_plant_int_03c',
+            label: 'Plante en pot 8',
+        },
+        {
+            model: 'prop_plant_int_04a',
+            label: 'Plante en pot 9',
+        },
+        {
+            model: 'prop_plant_int_04b',
+            label: 'Plante en pot 10',
+        },
+        {
+            model: 'prop_plant_int_04c',
+            label: 'Plante en pot 11',
+        },
+        {
+            model: 'prop_plant_int_05a',
+            label: 'Plante en pot 12',
+        },
+        {
+            model: 'prop_plant_int_05b',
+            label: 'Plante en pot 13',
+        },
+        {
+            model: 'prop_plant_int_06a',
+            label: 'Plante en pot 14',
+        },
+        {
+            model: 'prop_plant_int_06b',
+            label: 'Plante en pot 15',
+        },
+        {
+            model: 'prop_pot_plant_01c',
+            label: 'Plante en pot 16',
+        },
+        {
+            model: 'prop_pot_plant_01d',
+            label: 'Plante en pot 17',
+        },
+        {
+            model: 'prop_pot_plant_01e',
+            label: 'Plante en pot 18',
+        },
+        {
+            model: 'prop_pot_plant_02a',
+            label: 'Plante en pot 19',
+        },
+        {
+            model: 'prop_pot_plant_02b',
+            label: 'Plante en pot 20',
+        },
+        {
+            model: 'prop_pot_plant_02c',
+            label: 'Plante en pot 21',
+        },
+        {
+            model: 'prop_pot_plant_02d',
+            label: 'Plante en pot 22',
+        },
+        {
+            model: 'prop_pot_plant_03a',
+            label: 'Plante en pot 23',
+        },
+        {
+            model: 'prop_pot_plant_03b',
+            label: 'Plante en pot 24',
+        },
+        {
+            model: 'prop_pot_plant_03c',
+            label: 'Plante en pot 25',
+        },
+        {
+            model: 'prop_tree_log_01',
+            label: "Tronc d'arbre 1",
+        },
+        {
+            model: 'prop_tree_log_02',
+            label: "Tronc d'arbre 2",
+        },
+    ],
+    ['Bar']: [
+        {
+            model: 'prop_stripmenu',
+            label: 'Menu de bar',
+        },
+        {
+            model: 'prop_rum_bottle',
+            label: 'Bouteille de rhum',
+        },
+        {
+            model: 'prop_amb_beer_bottle',
+            label: 'Bouteille de bière',
+        },
+        {
+            model: 'prop_cs_bottle_opener',
+            label: 'Ouvre-bouteille',
+        },
+        {
+            model: 'prop_cs_cctv',
+            label: 'Caméra de surveillance',
+        },
+        {
+            model: 'prop_cs_champ_flute',
+            label: 'Flûte de champagne',
+        },
+        {
+            model: 'prop_cs_shot_glass',
+            label: 'Verre à shot',
+        },
+        {
+            model: 'prop_sh_wine_glass',
+            label: 'Verre à vin',
+        },
+        {
+            model: 'prop_tumbler_01_empty',
+            label: 'Tumbler vide',
+        },
+        {
+            model: 'prop_wheat_grass_empty',
+            label: 'Verre à cocktail',
+        },
+        {
+            model: 'p_till_01_s',
+            label: 'Caisse enregistreuse 1',
+        },
+        {
+            model: 'prop_till_01',
+            label: 'Caisse enregistreuse 2',
+        },
+        {
+            model: 'prop_bahammenu',
+            label: 'Menu de bar 2',
+        },
+        {
+            model: 'prop_bar_beerfridge_01',
+            label: 'Frigo à bière',
+        },
+        {
+            model: 'prop_bar_caddy',
+            label: 'Fournitures de bar',
+        },
+        {
+            model: 'prop_bar_cockshaker',
+            label: 'Shaker',
+        },
+        {
+            model: 'prop_bar_drinkstraws',
+            label: 'Pailles',
+        },
+        {
+            model: 'prop_bar_fridge_02',
+            label: 'Frigo à bière 2',
+        },
+        {
+            model: 'prop_bar_fridge_03',
+            label: 'Frigo à bière 3',
+        },
+        {
+            model: 'prop_bar_ice_01',
+            label: 'Bac à glaçons',
+        },
+        {
+            model: 'prop_bar_fruit',
+            label: 'Fruits',
+        },
+        {
+            model: 'prop_bar_measrjug',
+            label: 'Verre doseur',
+        },
+        {
+            model: 'prop_beer_logopen',
+            label: 'Bouteille de bière 2',
+        },
+        {
+            model: 'prop_beer_patriot',
+            label: 'Bouteille de bière 3',
+        },
+        {
+            model: 'prop_beer_pissh',
+            label: 'Bouteille de bière 4',
+        },
+        {
+            model: 'prop_beerdusche',
+            label: 'Bouteille de bière 5',
+        },
+        {
+            model: 'prop_bottle_brandy',
+            label: 'Bouteille de brandy',
+        },
+        {
+            model: 'prop_bottle_cognac',
+            label: 'Bouteille de cognac',
+        },
+        {
+            model: 'prop_bottle_macbeth',
+            label: 'Bouteille de whisky',
+        },
+        {
+            model: 'prop_bottle_richard',
+            label: 'Bouteille de whisky 2',
+        },
+        {
+            model: 'prop_cava',
+            label: 'Bouteille de champagne 1',
+        },
+        {
+            model: 'prop_champ_01a',
+            label: 'Bouteille de champagne 2',
+        },
+        {
+            model: 'prop_champ_cool',
+            label: 'Bouteille de champagne 3',
+        },
+        {
+            model: 'prop_cocktail',
+            label: 'Cocktail',
+        },
+        {
+            model: 'prop_daiquiri',
+            label: 'Daiquiri',
+        },
+        {
+            model: 'prop_pinacolada',
+            label: 'Piña Colada',
+        },
+        {
+            model: 'prop_plonk_red',
+            label: 'Bouteille de vin rouge',
+        },
+        {
+            model: 'prop_plonk_white',
+            label: 'Bouteille de vin blanc',
+        },
+        {
+            model: 'prop_tequila',
+            label: 'Tequila',
+        },
+        {
+            model: 'prop_tequila_bottle',
+            label: 'Bouteille de tequila',
+        },
+        {
+            model: 'prop_tequsunrise',
+            label: 'Tequila Sunrise',
+        },
+        {
+            model: 'prop_vodka_bottle',
+            label: 'Bouteille de vodka',
+        },
+        {
+            model: 'spiritsrow',
+            label: "Rangée de bouteilles d'alcool fort",
+        },
+        {
+            model: 'vodkarow',
+            label: 'Rangée de bouteilles de vodka',
+        },
+        {
+            model: 'winerow',
+            label: 'Rangée de bouteilles de vin',
+        },
+        {
+            model: 'prop_bar_coasterdisp',
+            label: 'Distributeur de sous-verres',
+        },
+    ],
+    ['Barrières']: [
+        {
+            model: 'p_fnclink_dtest',
+            label: 'Grillage 1',
+        },
+        {
+            model: 'prop_ld_barrier_01',
+            label: 'Barrière 1',
+        },
+        {
+            model: 'prop_premier_fence_01',
+            label: 'Barrière 2',
+        },
+        {
+            model: 'prop_ld_balastrude',
+            label: 'Balustrade en béton 1',
+        },
+        {
+            model: 'prop_ld_fragwall_01b',
+            label: 'Mur en béton 1',
+        },
+        {
+            model: 'prop_fnccorgm_01a',
+            label: 'Tôles 1',
+        },
+        {
+            model: 'prop_fnccorgm_02c',
+            label: 'Tôles 2',
+        },
+        {
+            model: 'prop_fncsec_03a',
+            label: 'Grillage 2',
+        },
+        {
+            model: 'prop_fncsec_04a',
+            label: 'Barrière 3',
+        },
+        {
+            model: 'prop_ch2_wdfence_01',
+            label: 'Barrière en bois 1',
+        },
+        {
+            model: 'prop_fnc_farm_01b',
+            label: 'Barrière en bois 2',
+        },
+        {
+            model: 'prop_fnc_farm_01e',
+            label: 'Barrière en bois 3',
+        },
+        {
+            model: 'prop_fnc_omesh_01a',
+            label: 'Barrière en bois 4',
+        },
+        {
+            model: 'prop_fnclog_01a',
+            label: 'Barrière en bois 5',
+        },
+        {
+            model: 'prop_fnclog_02b',
+            label: 'Piquet en bois 1',
+        },
+        {
+            model: 'prop_fnclog_03a',
+            label: 'Piquet en bois 2',
+        },
+        {
+            model: 'prop_fncres_01c',
+            label: 'Barrière classieuse 1',
+        },
+        {
+            model: 'prop_fncres_02c',
+            label: 'Barrière classieuse 2',
+        },
+        {
+            model: 'prop_fncres_04b',
+            label: 'Barrière classieuse 3',
+        },
+        {
+            model: 'prop_fncres_05b',
+            label: 'Barrière classieuse 4',
+        },
+        {
+            model: 'prop_fncres_07b',
+            label: 'Barrière classieuse 5',
+        },
+    ],
+    ['Drapeaux']: [
+        {
+            model: 'prop_flag_canada',
+            label: 'Drapeau du Canada',
+        },
+        {
+            model: 'prop_flag_eu',
+            label: "Drapeau de l'Union Européenne",
+        },
+        {
+            model: 'prop_flag_france_s',
+            label: 'Drapeau de la France',
+        },
+        {
+            model: 'prop_flag_german',
+            label: "Drapeau de l'Allemagne",
+        },
+        {
+            model: 'prop_flag_ireland',
+            label: "Drapeau de l'Irlande",
+        },
+        {
+            model: 'prop_flag_japan',
+            label: 'Drapeau du Japon',
+        },
+        {
+            model: 'prop_flag_ls',
+            label: 'Drapeau de Los Santos',
+        },
+        {
+            model: 'prop_flag_lsfd',
+            label: 'Drapeau des pompiers de Los Santos',
+        },
+        {
+            model: 'prop_flag_lsservices',
+            label: 'Drapeau des services de Los Santos',
+        },
+        {
+            model: 'prop_flag_mexico',
+            label: 'Drapeau du Mexique',
+        },
+        {
+            model: 'prop_flag_russia',
+            label: 'Drapeau de la Russie',
+        },
+        {
+            model: 'prop_flag_sa',
+            label: 'Drapeau de San Andreas',
+        },
+        {
+            model: 'prop_flag_sheriff',
+            label: 'Drapeau du BCSO',
+        },
+        {
+            model: 'prop_flag_uk',
+            label: 'Drapeau du Royaume-Uni',
+        },
+        {
+            model: 'prop_flag_us',
+            label: 'Drapeau des États-Unis',
+        },
+    ],
+    ['Camionettes & Stands']: [
+        {
+            model: 'prop_food_van_01',
+            label: 'Camion de nourriture 1',
+        },
+        {
+            model: 'prop_food_van_02',
+            label: 'Camion de nourriture 2',
+        },
+        {
+            model: 'prop_wheelchair_01',
+            label: 'Fauteuil roulant',
+        },
+        {
+            model: 'p_ld_coffee_vend_s',
+            label: 'Distributeur de café',
+        },
+        {
+            model: 'prop_rub_trolley01a',
+            label: 'Caddie 1',
+        },
+        {
+            model: 'prop_rub_trolley02a',
+            label: 'Caddie 2',
+        },
+        {
+            model: 'prop_burgerstand_01',
+            label: 'Stand de burger',
+        },
+        {
+            model: 'prop_hotdogstand_01',
+            label: 'Stand de hotdog',
+        },
+    ],
+    ['Tables']: [
+        {
+            model: 'prop_astro_table_01',
+            label: "Table d'astro 1",
+        },
+        {
+            model: 'prop_astro_table_02',
+            label: "Table d'astro 2",
+        },
+        {
+            model: 'prop_chateau_table_01',
+            label: 'Table en oseille 1',
+        },
+        {
+            model: 'prop_table_01',
+            label: 'Table en bois 1',
+        },
+        {
+            model: 'prop_table_02',
+            label: 'Table en bois 2',
+        },
+        {
+            model: 'prop_table_03',
+            label: 'Table en plastique 1',
+        },
+        {
+            model: 'prop_table_03b',
+            label: 'Table en plastique 2',
+        },
+        {
+            model: 'prop_table_04',
+            label: 'Table en bois 3',
+        },
+        {
+            model: 'prop_table_05',
+            label: 'Table en oseille 2',
+        },
+        {
+            model: 'prop_table_06',
+            label: 'Table en pierre 1',
+        },
+        {
+            model: 'prop_table_07',
+            label: 'Table de bar 1',
+        },
+        {
+            model: 'prop_table_08',
+            label: 'Table de pique-nique 1',
+        },
+        {
+            model: 'prop_table_para_comb_01',
+            label: 'Table avec parasol 1',
+        },
+        {
+            model: 'prop_table_para_comb_02',
+            label: 'Table avec parasol 2',
+        },
+        {
+            model: 'prop_table_para_comb_03',
+            label: 'Table avec parasol 3',
+        },
+        {
+            model: 'prop_table_para_comb_04',
+            label: 'Table avec parasol 4',
+        },
+        {
+            model: 'prop_table_para_comb_05',
+            label: 'Table avec parasol 5',
+        },
+        {
+            model: 'apa_mp_h_din_table_01',
+            label: 'Table en verre 1',
+        },
+        {
+            model: 'apa_mp_h_din_table_04',
+            label: 'Table en verre 2',
+        },
+        {
+            model: 'apa_mp_h_din_table_06',
+            label: 'Table en plastique 3',
+        },
+        {
+            model: 'apa_mp_h_din_table_11',
+            label: 'Table en verre 3',
+        },
+        {
+            model: 'apa_mp_h_tab_coffee_07',
+            label: 'Table en verre 4',
+        },
+        {
+            model: 'apa_mp_h_tab_sidelrg_01',
+            label: 'Table en verre 5',
+        },
+        {
+            model: 'apa_mp_h_tab_sidelrg_02',
+            label: 'Table en verre 6',
+        },
+        {
+            model: 'apa_mp_h_tab_sidelrg_04',
+            label: 'Table de bar 2',
+        },
+        {
+            model: 'apa_mp_h_yacht_coffee_table_01',
+            label: 'Table stylée 1',
+        },
+        {
+            model: 'apa_mp_h_yacht_coffee_table_02',
+            label: 'Table stylée 2',
+        },
+        {
+            model: 'apa_mp_h_yacht_side_table_01',
+            label: 'Table stylée 3',
+        },
+        {
+            model: 'apa_mp_h_yacht_side_table_02',
+            label: 'Table stylée 4',
+        },
+        {
+            model: 'bkr_prop_weed_table_01b',
+            label: 'Table de pique-nique 2',
+        },
+        {
+            model: 'ex_mp_h_din_table_05',
+            label: 'Table basse 1',
+        },
+        {
+            model: 'ex_mp_h_tab_coffee_05',
+            label: 'Table basse 2',
+        },
+        {
+            model: 'ex_mp_h_tab_coffee_08',
+            label: 'Table basse 3',
+        },
+        {
+            model: 'ex_prop_ex_console_table_01',
+            label: 'Console 1',
+        },
+        {
+            model: 'gr_dlc_gr_yacht_props_table_01',
+            label: 'Table de terrasse 1',
+        },
+        {
+            model: 'gr_dlc_gr_yacht_props_table_02',
+            label: 'Table de terrasse 2',
+        },
+        {
+            model: 'gr_dlc_gr_yacht_props_table_03',
+            label: 'Table de terrasse 3',
+        },
+        {
+            model: 'hei_heist_din_table_01',
+            label: 'Table en verre 7',
+        },
+        {
+            model: 'hei_heist_din_table_04',
+            label: 'Table en verre 8',
+        },
+        {
+            model: 'prop_lectern_01',
+            label: 'Pupitre',
+        },
+        {
+            model: 'prop_patio_lounger1_table',
+            label: 'Table de terrasse 4',
+        },
+    ],
+    ['Instruments']: [
+        {
+            model: 'prop_acc_guitar_01',
+            label: 'Guitare acoustique',
+            collision: false,
+        },
+        {
+            model: 'prop_el_guitar_01',
+            label: 'Guitare électrique 1',
+            collision: false,
+        },
+        {
+            model: 'prop_el_guitar_02',
+            label: 'Guitare électrique 2',
+            collision: false,
+        },
+        {
+            model: 'prop_el_guitar_03',
+            label: 'Guitare électrique 3',
+            collision: false,
+        },
+        {
+            model: 'prop_bongos_01',
+            label: 'Bongos',
+            collision: false,
+        },
+    ],
+    ['Meubles']: [
+        {
+            model: 'v_res_tre_sideboard',
+            label: 'Meuble de salle de bain 1',
+        },
+        {
+            model: 'apa_mp_h_str_shelffloorm_02',
+            label: 'Meuble de salon 1',
+        },
+        {
+            model: 'apa_mp_h_str_shelffreel_01',
+            label: 'Meuble de salon 2',
+        },
+        {
+            model: 'apa_mp_h_str_shelfwallm_01',
+            label: 'Meuble de salon 3',
+        },
+        {
+            model: 'apa_mp_h_str_sideboardl_14',
+            label: 'Commode 1',
+        },
+        {
+            model: 'apa_mp_h_str_sideboardm_02',
+            label: 'Commode 2',
+        },
+        {
+            model: 'apa_mp_h_str_sideboardm_03',
+            label: 'Commode 3',
+        },
+        {
+            model: 'apa_mp_h_str_sideboards_01',
+            label: 'Commode 4',
+        },
+        {
+            model: 'apa_mp_h_str_sideboards_02',
+            label: 'Etagère en verre',
+        },
+    ],
+    ['Machines']: [
+        {
+            model: 'gr_prop_gr_lathe_01a',
+            label: 'Tour à bois 1',
+        },
+        {
+            model: 'gr_prop_gr_lathe_01b',
+            label: 'Tour à bois 2',
+        },
+        {
+            model: 'gr_prop_gr_lathe_01c',
+            label: 'Tour à bois 3',
+        },
+        {
+            model: 'gr_prop_gr_speeddrill_01a',
+            label: 'Perceuse à colonne 1',
+        },
+        {
+            model: 'gr_prop_gr_speeddrill_01b',
+            label: 'Perceuse à colonne 2',
+        },
+        {
+            model: 'gr_prop_gr_speeddrill_01c',
+            label: 'Perceuse à colonne 3',
+        },
+        {
+            model: 'gr_prop_gr_vertmill_01a',
+            label: 'Fraiseuse 1',
+        },
+        {
+            model: 'gr_prop_gr_vertmill_01b',
+            label: 'Fraiseuse 2',
+        },
+        {
+            model: 'gr_prop_gr_vertmill_01c',
+            label: 'Fraiseuse 3',
+        },
+        {
+            model: 'gr_prop_gr_cnc_01b',
+            label: 'Machine à commande numérique 1',
+        },
+        {
+            model: 'gr_prop_gr_cnc_01c',
+            label: 'Machine à commande numérique 2',
+        },
+        {
+            model: 'ch_prop_ch_metal_detector_01a',
+            label: 'Portique de sécurité',
         },
     ],
 };

@@ -233,7 +233,6 @@ export class PropProvider {
                 console.error(`[PropProvider] Prop ${prop.unique_id} is loaded but not spawned. Syncing...`);
                 await this.syncPropClientSide();
             }
-            console.log(`[PropProvider] Edition prop ${prop.unique_id} in `, this.objects[prop.unique_id]);
             await this.editProp(prop.unique_id, this.objects[prop.unique_id]);
         } else {
             if (DoesEntityExist(prop.entity)) {

@@ -41,6 +41,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
         loaded_size: 0,
         props: {},
     });
+    const [currentSearch, setCurrentSearch] = useState<string>(null);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -56,6 +57,9 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     });
     useNuiEvent('placement_prop', 'EnterEditorMode', () => {
         navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
+    });
+    useNuiEvent('placement_prop', 'SetCurrentSearch', (search: string) => {
+        setCurrentSearch(search);
     });
     useBackspace(async () => {
         await fetchNui(NuiEvent.LeaveEditorMode);
@@ -248,12 +252,44 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 <MenuTitle banner="https://nui-img/soz/menu_mapper">Choisir un prop</MenuTitle>
                 <MenuContent>
                     <MenuItemButton onConfirm={onChooseCreateProp(null)}>🔎 Entrer un modèle</MenuItemButton>
+                    <MenuItemSubMenuLink id={`collection/prop_search`}>🔎 Rechercher un prop</MenuItemSubMenuLink>
                     <MenuTitle>Liste de props</MenuTitle>
-                    {Object.keys(data.props).map(propCategory => (
-                        <MenuItemSubMenuLink key={propCategory} id={`collection/prop_choose/${propCategory}`}>
-                            {propCategory}
-                        </MenuItemSubMenuLink>
-                    ))}
+                    {Object.keys(data.props)
+                        .sort((a, b) => a.localeCompare(b))
+                        .map(propCategory => (
+                            <MenuItemSubMenuLink key={propCategory} id={`collection/prop_choose/${propCategory}`}>
+                                {propCategory}
+                            </MenuItemSubMenuLink>
+                        ))}
+                </MenuContent>
+            </SubMenu>
+
+            <SubMenu id="collection/prop_search">
+                <MenuTitle banner="https://nui-img/soz/menu_mapper">Rechercher un prop</MenuTitle>
+                <MenuContent>
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.SearchProp);
+                        }}
+                    >
+                        🔎: {currentSearch || 'Entrer un modèle'}
+                    </MenuItemButton>
+                    <MenuTitle>Resultats</MenuTitle>
+                    {currentSearch &&
+                        Object.keys(data.props).map(propCategory =>
+                            data.props[propCategory]
+                                .filter(prop => prop.label.toLowerCase().includes(currentSearch.toLowerCase()))
+                                .sort((a, b) => a.label.localeCompare(b.label))
+                                .map(prop => (
+                                    <MenuItemButton
+                                        key={prop.model}
+                                        onSelected={onSelectedCreateProp(prop)}
+                                        onConfirm={onChooseCreateProp(prop)}
+                                    >
+                                        {prop.label}
+                                    </MenuItemButton>
+                                ))
+                        )}
                 </MenuContent>
             </SubMenu>
 
@@ -261,15 +297,17 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 <SubMenu key={propCategory} id={`collection/prop_choose/${propCategory}`}>
                     <MenuTitle banner="https://nui-img/soz/menu_mapper">{propCategory}</MenuTitle>
                     <MenuContent>
-                        {data.props[propCategory].map(prop => (
-                            <MenuItemButton
-                                key={prop.model}
-                                onSelected={onSelectedCreateProp(prop)}
-                                onConfirm={onChooseCreateProp(prop)}
-                            >
-                                {prop.label}
-                            </MenuItemButton>
-                        ))}
+                        {data.props[propCategory]
+                            .sort((a, b) => a.label.localeCompare(b.label))
+                            .map(prop => (
+                                <MenuItemButton
+                                    key={prop.model}
+                                    onSelected={onSelectedCreateProp(prop)}
+                                    onConfirm={onChooseCreateProp(prop)}
+                                >
+                                    {prop.label}
+                                </MenuItemButton>
+                            ))}
                     </MenuContent>
                 </SubMenu>
             ))}
@@ -286,6 +324,16 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                         }}
                     >
                         ✔️ Valider le placement
+                    </MenuItemButton>
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            const result: Result<any, never> = await fetchNui(NuiEvent.RequestDeleteCurrentProp);
+                            if (isOk(result)) {
+                                navigate(-1);
+                            }
+                        }}
+                    >
+                        ❌ Supprimer le prop
                     </MenuItemButton>
                     <MenuItemCheckbox
                         onChange={value => {

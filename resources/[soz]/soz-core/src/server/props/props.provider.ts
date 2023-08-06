@@ -95,8 +95,6 @@ export class PropsProvider {
         if (!this.collections[collectionName]) {
             this.notifier.notify(source, `La collection ${collectionName} n'existe pas`, 'error');
         } else {
-            console.log(`I am trying to delete the collection ${collectionName}`);
-            console.log(this.collections[collectionName]);
             const propsToDelete = Object.keys(this.collections[collectionName].props);
             await this.deleteProps(source, propsToDelete); // Need to delete props of this collection!
             await this.prismaService.collection_prop.delete({
@@ -137,7 +135,7 @@ export class PropsProvider {
                 collection: prop.collection,
                 position: JSON.stringify(prop.position),
                 matrix: prop.matrix ? JSON.stringify(prop.matrix) : null,
-                collision: prop.collision,
+                collision: prop.collision ? prop.collision : true,
             },
         });
 
@@ -221,7 +219,7 @@ export class PropsProvider {
                 collection: prop.collection,
                 position: JSON.stringify(prop.position),
                 matrix: prop.matrix ? JSON.stringify(prop.matrix) : null,
-                collision: prop.collision,
+                collision: prop.collision ? prop.collision : true,
             },
         });
 

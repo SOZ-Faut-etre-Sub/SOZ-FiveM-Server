@@ -484,7 +484,7 @@ export class PropPlacementProvider {
     @OnNuiEvent(NuiEvent.RequestDeleteProp)
     public async requestDeleteProp({ id }: { id: string }) {
         if (!this.editorState || !this.editorState.currentCollection || !this.editorState.currentCollection.props[id]) {
-            return;
+            return Err(false);
         }
 
         await this.propProvider.despawnDebugProp(this.editorState.currentCollection.props[id]);
@@ -492,6 +492,21 @@ export class PropPlacementProvider {
         delete this.editorState.currentCollection.props[id];
         TriggerServerEvent(ServerEvent.PROP_REQUEST_DELETE_PROPS, [id]);
         await this.refreshPropPlacementMenuData(null, this.editorState.currentCollection);
+        return Ok(true);
+    }
+
+    @OnNuiEvent(NuiEvent.RequestDeleteCurrentProp)
+    public async requestDeleteCurrentProp() {
+        if (
+            !this.editorState ||
+            !this.editorState.debugProp ||
+            !this.editorState.debugProp.unique_id ||
+            !this.editorState.currentCollection ||
+            !this.editorState.currentCollection.props[this.editorState.debugProp.unique_id]
+        ) {
+            return Err(false);
+        }
+        return await this.requestDeleteProp({ id: this.editorState.debugProp.unique_id });
     }
 
     @OnNuiEvent(NuiEvent.ChoosePlacedPropToEdit)
@@ -564,6 +579,15 @@ export class PropPlacementProvider {
         } else {
             this.notifier.notify('Collection déchargée !', 'success');
         }
+    }
+
+    @OnNuiEvent(NuiEvent.SearchProp)
+    public async searchProp() {
+        const search = await this.inputService.askInput({ title: 'Recherche de prop', defaultValue: '' });
+        if (!search) {
+            return;
+        }
+        this.nuiDispatch.dispatch('placement_prop', 'SetCurrentSearch', search);
     }
 
     @Exportable('IsEditorModeActive')
