@@ -429,6 +429,9 @@ export class RaceProvider {
             this.firstPersonCheck();
         }
 
+        const ped = PlayerPedId();
+        SetEntityInvincible(ped, true);
+
         await this.resourceLoader.loadModel(hash);
 
         const vehicle = CreateVehicle(hash, race.start[0], race.start[1], race.start[2], race.start[3], false, false);
@@ -457,7 +460,7 @@ export class RaceProvider {
             getRandomInt(0, VehicleColor.BrushedGold)
         );
 
-        const ped = PlayerPedId();
+        await wait(100);
 
         TaskWarpPedIntoVehicle(ped, vehicle, -1);
 
@@ -487,6 +490,7 @@ export class RaceProvider {
 
         await wait(200);
 
+        SetEntityInvincible(ped, false);
         SetFollowPedCamViewMode(view);
 
         if (!test && result) {
@@ -537,8 +541,6 @@ export class RaceProvider {
 
         let result: [number[], number[]] = null;
         this.inRace = true;
-
-        SetEntityInvincible(ped, true);
 
         SetVehicleHandbrake(veh, true);
         SetVehicleBrake(veh, true);
@@ -699,7 +701,6 @@ export class RaceProvider {
         await wait(2000);
 
         this.inRace = false;
-        SetEntityInvincible(ped, false);
         this.nuiDispatch.dispatch('race', 'SetSplits', null);
 
         return result;
