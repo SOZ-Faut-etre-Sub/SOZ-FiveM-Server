@@ -26,19 +26,19 @@ end
 local function ApplyPedHair(ped, hair)
     SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, 0, 0);
     SetPedHairColor(ped, hair.HairColor, hair.HairSecondaryColor or 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, hair.EyebrowOpacity + 0.0 or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, (hair.EyebrowOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Eyebrows, 1, hair.EyebrowColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.FacialHair, hair.BeardType, hair.BeardOpacity + 0.0 or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.FacialHair, hair.BeardType, (hair.BeardOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.FacialHair, 1, hair.BeardColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.ChestHair, hair.ChestHairType, hair.ChestHairOpacity + 0.0 or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.ChestHair, hair.ChestHairType, (hair.ChestHairOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.ChestHair, 1, hair.ChestHairColor, 0);
 end
 
 local function ApplyPedFaceTrait(ped, faceTrait, model)
     if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
-        SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, model.ShapeMix + 0.0, model.SkinMix + 0.0, 0, false);
+        SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     else
-        SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, model.ShapeMix + 0.0, model.SkinMix + 0.0, 0, false);
+        SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     end
 
     SetPedEyeColor(ped, faceTrait.EyeColor);
@@ -49,7 +49,7 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
     SetPedHeadOverlay(ped, HeadOverlayType.BodyBlemishes, faceTrait.BodyBlemish, 1.0);
     SetPedHeadOverlay(ped, HeadOverlayType.AddBodyBlemishes, faceTrait.AddBodyBlemish, 1.0);
 
-    SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, faceTrait.EyesOpening + 0.0);
+    SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, (faceTrait.EyesOpening or 0) + 0.0);
 
     if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
         SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, 0.0);
@@ -72,34 +72,34 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
         SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, 0.0);
     else
-        SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, faceTrait.EyebrowHigh + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, faceTrait.EyebrowForward + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, faceTrait.CheeksBoneHigh + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, faceTrait.CheeksBoneWidth + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, faceTrait.CheeksWidth + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLength, faceTrait.ChimpBoneLength + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLowering, faceTrait.ChimpBoneLower + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneWidth, faceTrait.ChimpBoneWidth + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.ChimpHole, faceTrait.ChimpHole + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.JawBoneBackLength, faceTrait.JawBoneBackLength + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.JawBoneWidth, faceTrait.JawBoneWidth + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.LipsThickness, faceTrait.LipsThickness + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.NeckThickness, faceTrait.NeckThickness + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, faceTrait.NoseBoneHigh + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneTwist, faceTrait.NoseBoneTwist + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLength, faceTrait.NosePeakLength + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLowering, faceTrait.NosePeakLower + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, faceTrait.NosePeakHeight + 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, faceTrait.NoseWidth + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, (faceTrait.EyebrowHigh or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, (faceTrait.EyebrowForward or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, (faceTrait.CheeksBoneHigh or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, (faceTrait.CheeksBoneWidth or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, (faceTrait.CheeksWidth or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLength, (faceTrait.ChimpBoneLength or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLowering, (faceTrait.ChimpBoneLower or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneWidth, (faceTrait.ChimpBoneWidth or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpHole, (faceTrait.ChimpHole or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.JawBoneBackLength, (faceTrait.JawBoneBackLength or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.JawBoneWidth, (faceTrait.JawBoneWidth or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.LipsThickness, (faceTrait.LipsThickness or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NeckThickness, (faceTrait.NeckThickness or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, (faceTrait.NoseBoneHigh or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneTwist, (faceTrait.NoseBoneTwist or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLength, (faceTrait.NosePeakLength or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLowering, (faceTrait.NosePeakLower or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, (faceTrait.NosePeakHeight or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, (faceTrait.NoseWidth or 0) + 0.0);
     end
 end
 
 local function ApplyPedMakeup(ped, makeup)
-    SetPedHeadOverlay(ped, HeadOverlayType.Lipstick, makeup.LipstickType, makeup.LipstickOpacity + 0.0 or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Lipstick, makeup.LipstickType, (makeup.LipstickOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Lipstick, 2, makeup.LipstickColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Blush, makeup.BlushType, makeup.BlushOpacity + 0.0 or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Blush, makeup.BlushType, (makeup.BlushOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Blush, 2, makeup.BlushColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Makeup, makeup.FullMakeupType, makeup.FullMakeupOpacity + 0.0 or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Makeup, makeup.FullMakeupType, (makeup.FullMakeupOpacity or 0) + 0.0 or 1.0);
 
     if makeup.FullMakeupDefaultColor then
         SetPedHeadOverlayColor(ped, HeadOverlayType.Makeup, 0, 0, 0);

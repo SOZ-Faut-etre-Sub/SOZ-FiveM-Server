@@ -95,7 +95,7 @@ export class BarberShopProvider {
 
     @OnNuiEvent(NuiEvent.BarberShopPreview)
     public async onBarberPreview(config: BarberConfiguration) {
-        const player = this.playerService.getPlayer() as PlayerData;
+        const player = this.playerService.getPlayer();
         const temporarySkin: Skin = {
             ...player.skin,
             Hair: {
