@@ -122,7 +122,7 @@ export const WeaponAmmo: {[key: string]: string} = {
     [WeaponName.MILITARYRIFLE]: '7.62x51 M62',
     [WeaponName.HEAVYRIFLE]: '7.62x51 M62',
     [WeaponName.TACTICALRIFLE]: '5.56x45 M995',
-    [WeaponName.PUMPSHOTGUN]: '12/70 Buckshot',
+    [WeaponName.PUMPSHOTGUN]: 'Billes caoutchouc',
     [WeaponName.SAWNOFFSHOTGUN]: '12/70 Buckshot',
     [WeaponName.ASSAULTSHOTGUN]: '12/70 Buckshot',
     [WeaponName.BULLPUPSHOTGUN]: '12/70 Buckshot',

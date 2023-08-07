@@ -532,6 +532,7 @@ export enum GameEvent {
     CEventVehicleCollision = 'CEventVehicleCollision',
     CEventExplosionHeard = 'CEventExplosionHeard',
     CEventGunShot = 'CEventGunShot',
+    CEventNetworkEntityDamage = 'CEventNetworkEntityDamage',
 }
 
 export enum NuiEvent {

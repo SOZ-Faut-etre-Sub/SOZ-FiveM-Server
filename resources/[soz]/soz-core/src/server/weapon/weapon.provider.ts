@@ -14,9 +14,11 @@ import { PlayerStateService } from '../player/player.state.service';
 
 const DIR_WATER_HYDRANT = 13;
 const EXP_TAG_RAYGUN = 70;
+const SMOKEGRENADELAUNCHER = 19;
+const SMOKEGRENADE = 20;
 const FLARE = 22;
 
-const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN, FLARE];
+const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN, SMOKEGRENADELAUNCHER, SMOKEGRENADE, FLARE];
 
 @Provider()
 export class WeaponProvider {
@@ -120,6 +122,7 @@ export class WeaponProvider {
         this.item.setItemUseCallback('ammo_14', this.useAmmo.bind(this));
         this.item.setItemUseCallback('ammo_15', this.useAmmo.bind(this));
         this.item.setItemUseCallback('ammo_16', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_17', this.useAmmo.bind(this));
     }
 
     private getWeaponConfig(weaponName: string): WeaponConfig | null {

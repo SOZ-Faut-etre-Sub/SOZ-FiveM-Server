@@ -103,6 +103,7 @@ export enum RpcServerEvent {
     HELICO_INIT_LIGHT = 'soz-core:server:helico:init-spotlight',
 
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
+    POLICE_DRUGLEVEL = 'soz-core:server:police:drug-level',
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
 
     BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',
