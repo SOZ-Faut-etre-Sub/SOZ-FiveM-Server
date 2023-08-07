@@ -34,6 +34,7 @@ type EditorState = {
     propsToHighlight: Record<string, number>;
     currentCollection: SpawnedCollection | null;
     isMouseSelectionOn: boolean;
+    isPipetteOn: boolean;
     snapMode?: boolean;
 };
 
@@ -94,6 +95,7 @@ export class PropPlacementProvider {
             propsToHighlight: {},
             currentCollection: null,
             isMouseSelectionOn: false,
+            isPipetteOn: false,
         };
         this.menu.openMenu(MenuType.PropPlacementMenu, {
             props: PLACEMENT_PROP_LIST,
@@ -128,6 +130,7 @@ export class PropPlacementProvider {
             propsToHighlight: {},
             currentCollection: null,
             isMouseSelectionOn: false,
+            isPipetteOn: false,
         };
         await this.highlightProvider.unhighlightAllEntities();
     }
@@ -231,7 +234,7 @@ export class PropPlacementProvider {
             position: [coords[0], coords[1], coords[2], 0],
             matrix: null,
             loaded: false,
-            collision: selectedProp.collision,
+            collision: true,
         };
         const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true);
         this.editorState.debugProp = { ...debugProp, entity: debugPropEntity } as SpawedWorlPlacedProp;
@@ -282,7 +285,7 @@ export class PropPlacementProvider {
             position: [coords[0], coords[1], coords[2], 0],
             matrix: null,
             loaded: false,
-            collision: selectedProp.collision,
+            collision: true,
         };
         const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true);
         this.editorState.debugProp = { ...debugProp, entity: debugPropEntity } as SpawedWorlPlacedProp;
@@ -350,7 +353,7 @@ export class PropPlacementProvider {
         }
         this.editorState.debugProp = null;
 
-        if (!this.editorState.isEditorModeOn && !this.editorState.isMouseSelectionOn) {
+        if (!this.editorState.isEditorModeOn && !this.editorState.isMouseSelectionOn && !this.editorState.isPipetteOn) {
             return;
         }
 
@@ -358,6 +361,7 @@ export class PropPlacementProvider {
         LeaveCursorMode();
         this.editorState.isEditorModeOn = false;
         this.editorState.isMouseSelectionOn = false;
+        this.editorState.isPipetteOn = false;
     }
 
     @OnNuiEvent(NuiEvent.PropPlacementReset)
@@ -367,10 +371,10 @@ export class PropPlacementProvider {
         scale,
         snap,
     }: {
-        position: boolean;
-        rotation: boolean;
-        scale: boolean;
-        snap: boolean;
+        position?: boolean;
+        rotation?: boolean;
+        scale?: boolean;
+        snap?: boolean;
     }) {
         if (
             !this.editorState ||
@@ -487,9 +491,12 @@ export class PropPlacementProvider {
         if (!this.editorState || !this.editorState.currentCollection || !this.editorState.currentCollection.props[id]) {
             return Err(false);
         }
-
-        await this.propProvider.despawnDebugProp(this.editorState.currentCollection.props[id]);
+        const prop = this.editorState.currentCollection.props[id];
+        await this.propProvider.despawnDebugProp(prop);
         this.editorState.currentCollection.size -= 1;
+        if (prop.loaded) {
+            this.editorState.currentCollection.loaded_size -= 1;
+        }
         delete this.editorState.currentCollection.props[id];
         TriggerServerEvent(ServerEvent.PROP_REQUEST_DELETE_PROPS, [id]);
         await this.refreshPropPlacementMenuData(null, this.editorState.currentCollection);
@@ -540,9 +547,31 @@ export class PropPlacementProvider {
         }
     }
 
+    @OnNuiEvent(NuiEvent.TogglePipette)
+    public async togglePipette({ value }: { value: boolean }) {
+        if (!this.editorState) {
+            return;
+        }
+        this.editorState.isPipetteOn = value;
+        if (value) {
+            EnterCursorMode();
+        } else {
+            LeaveCursorMode();
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.PropToggleCollision)
+    public async toggleCollision({ value }: { value: boolean }) {
+        if (!this.editorState || !this.editorState.debugProp) {
+            return;
+        }
+        this.editorState.debugProp.collision = value;
+        await this.resetPlacement({ rotation: true, scale: true });
+    }
+
     @Tick(TickInterval.EVERY_FRAME)
     public async handleMouseSelection() {
-        if (!this.editorState || !this.editorState.isMouseSelectionOn) {
+        if (!this.editorState || (!this.editorState.isMouseSelectionOn && !this.editorState.isPipetteOn)) {
             return;
         }
         DisableAllControlActions(0);
@@ -554,10 +583,24 @@ export class PropPlacementProvider {
         }
         this.highlightProvider.highlightEntities([obj.entity]);
         if (IsDisabledControlJustPressed(0, 24)) {
-            this.editorState.debugProp = { ...obj };
-            this.editorState.isMouseSelectionOn = false;
-            this.nuiDispatch.dispatch('placement_prop', 'EnterEditorMode');
-            this.editorState.isEditorModeOn = true;
+            if (this.editorState.isMouseSelectionOn) {
+                this.editorState.debugProp = { ...obj };
+                this.editorState.isMouseSelectionOn = false;
+                this.nuiDispatch.dispatch('placement_prop', 'EnterEditorMode');
+                this.editorState.isEditorModeOn = true;
+                return;
+            }
+            if (this.editorState.isPipetteOn) {
+                const selectedProp = {
+                    model: obj.model,
+                    label: '',
+                    collision: true,
+                };
+                this.editorState.isPipetteOn = false;
+                LeaveCursorMode();
+                await this.onChoosePropToCreate({ selectedProp });
+                this.nuiDispatch.dispatch('placement_prop', 'EnterEditorMode');
+            }
         }
     }
 

@@ -253,6 +253,15 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 <MenuContent>
                     <MenuItemButton onConfirm={onChooseCreateProp(null)}>🔎 Entrer un modèle</MenuItemButton>
                     <MenuItemSubMenuLink id={`collection/prop_search`}>🔎 Rechercher un prop</MenuItemSubMenuLink>
+                    <MenuItemCheckbox
+                        checked={false}
+                        onChange={async value => {
+                            await fetchNui(NuiEvent.TogglePipette, { value: value });
+                        }}
+                        description="Copie un modèle déjà placé."
+                    >
+                        Pipette
+                    </MenuItemCheckbox>
                     <MenuTitle>Liste de props</MenuTitle>
                     {Object.keys(data.props)
                         .sort((a, b) => a.localeCompare(b))
@@ -343,6 +352,15 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                         description="Aligne le prop sur le sol automatiquement."
                     >
                         ⬇️ Aligner au sol
+                    </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        onChange={value => {
+                            fetchNui(NuiEvent.PropToggleCollision, { value });
+                        }}
+                        checked={true}
+                        description="Active ou désactive la collision du prop. Si la collision est désactivée, le prop peut être agrandi, réduit, et tourné dans tous les sens."
+                    >
+                        Activer la collision
                     </MenuItemCheckbox>
                     <MenuItemButton
                         onConfirm={() => {

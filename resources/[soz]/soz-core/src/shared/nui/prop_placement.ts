@@ -18,7 +18,6 @@ export type NuiPlacementPropMethodMap = {
 export type PlacementProp = {
     model: string;
     label?: string;
-    collision?: boolean;
 };
 
 export type PlacementPropList = Record<string, PlacementProp[]>;
@@ -198,262 +197,210 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'apa_mp_h_acc_artwalll_01',
             label: 'Tableau 1',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_artwalll_02',
             label: 'Tableau 2',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_artwalll_03',
             label: 'Tableau 3',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_artwallm_02',
             label: 'Tableau 4',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_artwallm_03',
             label: 'Tableau 5',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_artwallm_04',
             label: 'Tableau 6',
-            collision: false,
         },
         {
             model: 'apa_p_h_acc_artwalll_01',
             label: 'Tableau 7',
-            collision: false,
         },
         {
             model: 'apa_p_h_acc_artwalll_02',
             label: 'Tableau 8',
-            collision: false,
         },
         {
             model: 'apa_p_h_acc_artwalll_03',
             label: 'Tableau 9',
-            collision: false,
         },
         {
             model: 'apa_p_h_acc_artwallm_01',
             label: 'Tableau 10',
-            collision: false,
         },
         {
             model: 'apa_p_h_acc_artwallm_03',
             label: 'Tableau 12',
-            collision: false,
         },
         {
             model: 'apa_p_h_acc_artwallm_04',
             label: 'Tableau 13',
-            collision: false,
         },
         {
             model: 'apa_p_h_acc_artwalls_03',
             label: 'Maillot de sport 3',
-            collision: false,
         },
         {
             model: 'apa_p_h_acc_artwalls_04',
             label: 'Maillot de sport 4',
-            collision: false,
         },
         {
             model: 'ex_mp_h_acc_artwalll_02',
             label: 'Tableau 14',
-            collision: false,
         },
         {
             model: 'ex_mp_h_acc_artwalll_03',
             label: 'Tableau 15',
-            collision: false,
         },
         {
             model: 'ex_mp_h_acc_artwallm_02',
             label: 'Tableau 16',
-            collision: false,
         },
         {
             model: 'ex_mp_h_acc_artwallm_03',
             label: 'Tableau 17',
-            collision: false,
         },
         {
             model: 'ex_mp_h_acc_artwallm_04',
             label: 'Tableau 18',
-            collision: false,
         },
         {
             model: 'ex_p_h_acc_artwalll_01',
             label: 'Tableau 19',
-            collision: false,
         },
         {
             model: 'ex_p_h_acc_artwalll_03',
             label: 'Tableau 21',
-            collision: false,
         },
         {
             model: 'ex_p_h_acc_artwallm_01',
             label: 'Tableau 22',
-            collision: false,
         },
         {
             model: 'ex_p_h_acc_artwallm_03',
             label: 'Tableau 24',
-            collision: false,
         },
         {
             model: 'ex_p_h_acc_artwallm_04',
             label: 'Tableau 25',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_hl_gurkhas',
             label: 'Poster 1',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_hl_keycodes',
             label: 'Poster 2',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_hl_valkyrie',
             label: 'Poster 3',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_pb_break',
             label: 'Poster 4',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_pb_bus',
             label: 'Poster 5',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_pb_plane',
             label: 'Poster 6',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_pb_station',
             label: 'Poster 7',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_ps_bike',
             label: 'Poster 8',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_ps_convoy',
             label: 'Poster 9',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_ps_job',
             label: 'Poster 10',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_ps_trucks',
             label: 'Poster 11',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_ps_witsec',
             label: 'Poster 12',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_ub_prep',
             label: 'Poster 13',
-            collision: false,
         },
         {
             model: 'hei_prop_hei_pic_ub_prep02',
             label: 'Poster 14',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_01',
             label: 'Poster 15',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_02',
             label: 'Poster 16',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_04',
             label: 'Poster 17',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_05',
             label: 'Poster 18',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_06',
             label: 'Poster 19',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_07',
             label: 'Poster 20',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_08',
             label: 'Poster 21',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_09',
             label: 'Poster 22',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_10',
             label: 'Poster 23',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_11',
             label: 'Poster 24',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_12',
             label: 'Poster 25',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_13',
             label: 'Poster 26',
-            collision: false,
         },
         {
             model: 'hei_prop_heist_pic_14',
             label: 'Poster 27',
-            collision: false,
         },
         {
             model: 'hei_heist_acc_artgolddisc_01',
             label: "Disque d'or 1",
-            collision: false,
         },
         {
             model: 'vw_prop_casino_art_concrete_01a',
@@ -662,57 +609,46 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'apa_dining_art_new',
             label: 'Tableau pop art 2',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_artwalll_01_dressing',
             label: 'Tableau pop art 3',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_artwallm_bed_1',
             label: 'Tableau pop art 4',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_artwallm_bed_2',
             label: 'Tableau pop art 5',
-            collision: false,
         },
         {
             model: 'apa_mpa3_dining_art',
             label: 'Tableau pop art 6',
-            collision: false,
         },
         {
             model: 'sf_int1_art1_operations',
             label: 'Tableau pop art 7',
-            collision: false,
         },
         {
             model: 'sf_int1_art1_stairs',
             label: 'Tableau pop art 8',
-            collision: false,
         },
         {
             model: 'sf_int1_art2_operations',
             label: 'Tableau pop art 9',
-            collision: false,
         },
         {
             model: 'sf_int1_art2_stairs',
             label: 'Tableau pop art 10',
-            collision: false,
         },
         {
             model: 'sf_int1_art3_new1',
             label: 'Tableau pop art 11',
-            collision: false,
         },
         {
             model: 'sf_int1_art3_stairs1',
             label: 'Tableau pop art 12',
-            collision: false,
         },
         {
             model: 'sf_prop_sf_art_car_01a',
@@ -937,12 +873,10 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_syringe_01',
             label: 'Seringue',
-            collision: false,
         },
         {
             model: 'prop_binoc_01',
             label: 'Jumelles 1',
-            collision: false,
         },
         {
             model: 'prop_gaffer_tape',
@@ -955,17 +889,14 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'ng_proc_syrnige01a',
             label: 'Seringue 2',
-            collision: false,
         },
         {
             model: 'xs_propintxmas_tree_2018',
             label: 'Sapin de Noël',
-            collision: false,
         },
         {
             model: 'ch_prop_ch_diamond_xmastree',
             label: 'Sapin de Diamands',
-            collision: false,
         },
     ],
     ['Sport']: [
@@ -1052,7 +983,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_table_ten_bat',
             label: 'Raquette de ping pong',
-            collision: false,
         },
         {
             model: 'prop_swiss_ball_01',
@@ -1065,7 +995,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'w_am_baseball',
             label: 'Balle de baseball',
-            collision: false,
         },
         {
             model: 'prop_table_tennis',
@@ -1074,17 +1003,14 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'p_yoga_mat_01_s',
             label: 'Tapis de yoga',
-            collision: false,
         },
         {
             model: 'prop_yoga_mat_02',
             label: 'Tapis de yoga 2',
-            collision: false,
         },
         {
             model: 'prop_yoga_mat_03',
             label: 'Tapis de yoga 3',
-            collision: false,
         },
         {
             model: 'prop_ball_box',
@@ -1141,22 +1067,18 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'p_ld_am_ball_01',
             label: 'Ballon de football',
-            collision: false,
         },
         {
             model: 'p_ld_frisbee_01',
             label: 'Frisbee',
-            collision: false,
         },
         {
             model: 'p_ld_soc_ball_01',
             label: 'Ballon de soccer',
-            collision: false,
         },
         {
             model: 'prop_bskball_01',
             label: 'Ballon de basket',
-            collision: false,
         },
         {
             model: 'prop_exercisebike',
@@ -1165,24 +1087,20 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_tennis_ball',
             label: 'Balle de tennis',
-            collision: false,
         },
         {
             model: 'prop_tennis_rack_01',
             label: 'Raquette de tennis',
-            collision: false,
         },
         {
             model: 'prop_tennis_rack_01b',
             label: 'Raquette de tennis 2',
-            collision: false,
         },
     ],
     ['Plage']: [
         {
             model: 'p_cs_beachtowel_01_s',
             label: 'Serviette de plage 1',
-            collision: false,
         },
         {
             model: 'prop_parasol_04',
@@ -1359,22 +1277,18 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_beachf_01_cr',
             label: 'Drapeau de plage 1',
-            collision: false,
         },
         {
             model: 'prop_beachflag_01',
             label: 'Drapeau de plage 2',
-            collision: false,
         },
         {
             model: 'prop_beachflag_02',
             label: 'Drapeau de plage 3',
-            collision: false,
         },
         {
             model: 'prop_beachflag_le',
             label: 'Drapeau de plage 4',
-            collision: false,
         },
         {
             model: 'prop_boogbd_stack_01',
@@ -2679,7 +2593,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'p_blueprints_01_s',
             label: 'Plans de construction',
-            collision: false,
         },
         {
             model: 'prop_cementbags01',
@@ -3312,112 +3225,90 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_tool_adjspanner',
             label: 'Clé à molette',
-            collision: false,
         },
         {
             model: 'prop_tool_consaw',
             label: 'Scie circulaire',
-            collision: false,
         },
         {
             model: 'prop_tool_drill',
             label: 'Perceuse',
-            collision: false,
         },
         {
             model: 'prop_tool_hammer',
             label: 'Marteau',
-            collision: false,
         },
         {
             model: 'prop_tool_hardhat',
             label: 'Casque de chantier',
-            collision: false,
         },
         {
             model: 'prop_tool_jackham',
             label: 'Marteau piqueur',
-            collision: false,
         },
         {
             model: 'prop_tool_mallet',
             label: 'Maillet',
-            collision: false,
         },
         {
             model: 'prop_tool_nailgun',
             label: 'Cloueuse',
-            collision: false,
         },
         {
             model: 'prop_tool_pickaxe',
             label: 'Pioche',
-            collision: false,
         },
         {
             model: 'prop_tool_pliers',
             label: 'Pince',
-            collision: false,
         },
         {
             model: 'prop_tool_rake',
             label: 'Râteau',
-            collision: false,
         },
         {
             model: 'prop_tool_screwdvr01',
             label: 'Tournevis 1',
-            collision: false,
         },
         {
             model: 'prop_tool_screwdvr02',
             label: 'Tournevis 2',
-            collision: false,
         },
         {
             model: 'prop_tool_shovel',
             label: 'Pelle',
-            collision: false,
         },
         {
             model: 'prop_tool_shovel006',
             label: 'Pelle 2',
-            collision: false,
         },
         {
             model: 'prop_tool_shovel2',
             label: 'Pelle 3',
-            collision: false,
         },
         {
             model: 'prop_tool_shovel3',
             label: 'Pelle 4',
-            collision: false,
         },
         {
             model: 'prop_tool_shovel4',
             label: 'Pelle 5',
-            collision: false,
         },
         {
             model: 'prop_tool_shovel5',
             label: 'Pelle 6',
-            collision: false,
         },
         {
             model: 'prop_tool_sledgeham',
             label: 'Masse',
-            collision: false,
         },
         {
             model: 'prop_tool_spanner01',
             label: 'Clé plate 1',
-            collision: false,
         },
         {
             model: 'prop_tool_spanner02',
             label: 'Clé plate 2',
-            collision: false,
         },
         {
             model: 'prop_wheelbarrow01a',
@@ -3430,32 +3321,26 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_ld_fireaxe',
             label: 'Hache de pompier',
-            collision: false,
         },
         {
             model: 'prop_megaphone_01',
             label: 'Mégaphone',
-            collision: false,
         },
         {
             model: 'prop_microphone_02',
             label: 'Microphone',
-            collision: false,
         },
         {
             model: 'prop_squeegee',
             label: 'Raclette',
-            collision: false,
         },
         {
             model: 'prop_w_me_hatchet',
             label: 'Hache',
-            collision: false,
         },
         {
             model: 'p_cs_cuffs_02_s',
             label: 'Menottes',
-            collision: false,
         },
         {
             model: 'prop_lawnmower_01',
@@ -3464,47 +3349,38 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_shrub_rake',
             label: 'Râteau à feuilles',
-            collision: false,
         },
         {
             model: 'prop_paint_brush01',
             label: 'Pinceau à peinture 1',
-            collision: false,
         },
         {
             model: 'prop_paint_brush04',
             label: 'Pinceau à peinture 2',
-            collision: false,
         },
         {
             model: 'prop_paint_roller',
             label: 'Rouleau à peinture',
-            collision: false,
         },
         {
             model: 'prop_paint_spray01a',
             label: 'Bombe de peinture 1',
-            collision: false,
         },
         {
             model: 'prop_paint_spray01b',
             label: 'Bombe de peinture 2',
-            collision: false,
         },
         {
             model: 'prop_tool_torch',
             label: 'Lampe torche 3',
-            collision: false,
         },
         {
             model: 'prop_cs_sheers',
             label: 'Ciseaux de jardin',
-            collision: false,
         },
         {
             model: 'prop_tool_broom',
             label: 'Balai',
-            collision: false,
         },
     ],
     ['Route et panneaux']: [
@@ -3525,62 +3401,50 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_cs_fork',
             label: 'Fourchette',
-            collision: false,
         },
         {
             model: 'xm3_prop_xm3_coke_spoon_01a',
             label: 'Cuillère',
-            collision: false,
         },
         {
             model: 'prop_sh_tall_glass',
             label: 'Verre grand 1',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_01',
             label: 'Ensemble de verres 1',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_03',
             label: 'Ensemble de verres 2',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_04',
             label: 'Ensemble de verres 3',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_05',
             label: 'Ensemble de verres 4',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_06',
             label: 'Ensemble de verres 5',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_07',
             label: 'Ensemble de verres 6',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_08',
             label: 'Ensemble de verres 7',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_09',
             label: 'Ensemble de verres 8',
-            collision: false,
         },
         {
             model: 'prop_glass_stack_10',
             label: 'Ensemble de verres 9',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_bowl_ceramic_01',
@@ -3597,7 +3461,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_scourer_01',
             label: 'Éponge',
-            collision: false,
         },
         {
             model: 'prop_kettle',
@@ -3630,12 +3493,10 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_knife',
             label: 'Couteau de cuisine',
-            collision: false,
         },
         {
             model: 'prop_ladel',
             label: 'Louche',
-            collision: false,
         },
         {
             model: 'v_ilev_m_pitcher',
@@ -3660,12 +3521,10 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_fish_slice_01',
             label: 'Spatule',
-            collision: false,
         },
         {
             model: 'prop_cleaver',
             label: 'Couteau de boucher',
-            collision: false,
         },
         {
             model: 'prop_pot_05',
@@ -3674,7 +3533,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_whisk',
             label: 'Fouet',
-            collision: false,
         },
         {
             model: 'prop_wok',
@@ -3815,7 +3673,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_taco_01',
             label: 'Taco 1',
-            collision: false,
         },
         {
             model: 'beerrow_local',
@@ -3984,67 +3841,54 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_fib_coffee',
             label: 'Café 3',
-            collision: false,
         },
         {
             model: 'prop_ld_can_01',
             label: 'Canette de soda 1',
-            collision: false,
         },
         {
             model: 'prop_ld_flow_bottle',
             label: "Bouteille d'eau 1",
-            collision: false,
         },
         {
             model: 'prop_peanut_bowl_01',
             label: 'Bol de cacahuètes',
-            collision: false,
         },
         {
             model: 'prop_sandwich_01',
             label: 'Sandwich 1',
-            collision: false,
         },
         {
             model: 'v_ret_247_bread1',
             label: 'Pain de mie',
-            collision: false,
         },
         {
             model: 'v_ret_247_cereal1',
             label: 'Céréales 1',
-            collision: false,
         },
         {
             model: 'v_ret_247_choptom',
             label: 'Tomates',
-            collision: false,
         },
         {
             model: 'v_ret_247_eggs',
             label: 'Oeufs',
-            collision: false,
         },
         {
             model: 'v_ret_247_flour',
             label: 'Farine',
-            collision: false,
         },
         {
             model: 'v_ret_247_ketchup2',
             label: 'Ketchup 2',
-            collision: false,
         },
         {
             model: 'v_ret_247_popbot4',
             label: 'Bouteille de soda 2',
-            collision: false,
         },
         {
             model: 'v_ret_247_swtcorn2',
             label: 'Maïs',
-            collision: false,
         },
         {
             model: 'v_ret_ml_beeram',
@@ -4089,57 +3933,46 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'v_ret_ml_chips1',
             label: 'Chips 1',
-            collision: false,
         },
         {
             model: 'v_ret_ml_chips2',
             label: 'Chips 2',
-            collision: false,
         },
         {
             model: 'v_ret_ml_chips3',
             label: 'Chips 3',
-            collision: false,
         },
         {
             model: 'v_ret_ml_chips4',
             label: 'Chips 4',
-            collision: false,
         },
         {
             model: 'v_ret_ml_cigs',
             label: 'Paquet de cigarettes 1',
-            collision: false,
         },
         {
             model: 'v_ret_ml_cigs2',
             label: 'Paquet de cigarettes 2',
-            collision: false,
         },
         {
             model: 'v_ret_ml_cigs3',
             label: 'Paquet de cigarettes 3',
-            collision: false,
         },
         {
             model: 'v_ret_ml_cigs4',
             label: 'Paquet de cigarettes 4',
-            collision: false,
         },
         {
             model: 'v_ret_ml_cigs5',
             label: 'Paquet de cigarettes 5',
-            collision: false,
         },
         {
             model: 'v_ret_ml_cigs6',
             label: 'Paquet de cigarettes 6',
-            collision: false,
         },
         {
             model: 'prop_bowl_crisps',
             label: 'Bol de chips',
-            collision: false,
         },
         {
             model: 'prop_cs_burger_01',
@@ -4156,59 +3989,48 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_energy_drink',
             label: 'Boisson énergisante',
-            collision: false,
         },
         {
             model: 'prop_pineapple',
             label: 'Ananas',
-            collision: false,
         },
         {
             model: 'p_weed_bottle_s',
             label: 'Bocal de Zeed',
-            collision: false,
         },
         {
             model: 'ng_proc_food_nana1a',
             label: 'Banane',
-            collision: false,
         },
         {
             model: 'prop_pizza_box_01',
             label: 'Boîte de pizza 1',
-            collision: false,
         },
         {
             model: 'prop_pizza_box_02',
             label: 'Boîte de pizza 2',
-            collision: false,
         },
         {
             model: 'prop_pizza_box_03',
             label: 'Boîte de pizza 3',
-            collision: false,
         },
     ],
     ['Bureautique']: [
         {
             model: 'prop_cs_binder_01',
             label: 'Classeur 1',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_phone_01',
             label: 'Téléphone 1',
-            collision: false,
         },
         {
             model: 'bkr_prop_fakeid_pen_01a',
             label: 'Stylo 1',
-            collision: false,
         },
         {
             model: 'bkr_prop_fakeid_pen_02a',
             label: 'Stylo 2',
-            collision: false,
         },
         {
             model: 'ex_prop_ex_laptop_01a',
@@ -4225,32 +4047,26 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_paper_ball',
             label: 'Boule de papier 1',
-            collision: false,
         },
         {
             model: 'prop_ld_scrap',
             label: 'Papier froissé 1',
-            collision: false,
         },
         {
             model: 'prop_notepad_02',
             label: 'Bloc-notes 1',
-            collision: false,
         },
         {
             model: 'prop_pencil_01',
             label: 'Crayon 1',
-            collision: false,
         },
         {
             model: 'prop_keyboard_01a',
             label: 'Clavier 1',
-            collision: false,
         },
         {
             model: 'prop_keyboard_01b',
             label: 'Clavier 2',
-            collision: false,
         },
         {
             model: 'prop_laptop_01a',
@@ -4299,37 +4115,30 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'v_ret_gc_folder1',
             label: 'Classeur 2',
-            collision: false,
         },
         {
             model: 'v_ret_gc_folder2',
             label: 'Classeur 3',
-            collision: false,
         },
         {
             model: 'v_ret_gc_trays',
             label: 'Bac à courrier',
-            collision: false,
         },
         {
             model: 'prop_cs_scissors',
             label: 'Ciseaux',
-            collision: false,
         },
         {
             model: 'prop_cs_tablet',
             label: 'Tablette',
-            collision: false,
         },
         {
             model: 'prop_cd_folder_pile2',
             label: 'Pile de classeurs 1',
-            collision: false,
         },
         {
             model: 'prop_cd_folder_pile3',
             label: 'Pile de classeurs 2',
-            collision: false,
         },
         {
             model: 'prop_cd_paper_pile1',
@@ -4342,12 +4151,10 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_dyn_pc',
             label: "Tour d'ordinateur 1",
-            collision: false,
         },
         {
             model: 'prop_cs_mouse_01',
             label: 'Souris',
-            collision: false,
         },
         {
             model: 'prop_elec_heater_01',
@@ -4356,12 +4163,10 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_pc_02a',
             label: "Tour d'ordinateur 2",
-            collision: false,
         },
         {
             model: 'hei_prop_hst_usb_drive',
             label: 'Clé USB',
-            collision: false,
         },
     ],
     ['Télévisions']: [
@@ -4702,22 +4507,18 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_runlight_b',
             label: 'Spot lumineux bleu',
-            collision: false,
         },
         {
             model: 'prop_runlight_g',
             label: 'Spot lumineux vert',
-            collision: false,
         },
         {
             model: 'prop_runlight_r',
             label: 'Spot lumineux rouge',
-            collision: false,
         },
         {
             model: 'prop_runlight_y',
             label: 'Spot lumineux jaune',
-            collision: false,
         },
         {
             model: 'xm_base_cia_lamp_ceiling_01',
@@ -4826,67 +4627,54 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'xm_int_prop_tinsel_aven_01a',
             label: 'Guirlande 1',
-            collision: false,
         },
         {
             model: 'xm_int_prop_tinsel_truck_carmod',
             label: 'Guirlande 2',
-            collision: false,
         },
         {
             model: 'xm_int_prop_tinsel_truck_main',
             label: 'Guirlande 3',
-            collision: false,
         },
         {
             model: 'xm_prop_lab_floor_lampa',
             label: 'Lampe de laboratoire',
-            collision: false,
         },
         {
             model: 'xm_prop_lab_lamp_wall_b',
             label: 'Lampe de laboratoire murale',
-            collision: false,
         },
         {
             model: 'xs_prop_arena_lights_tube_l_a',
             label: 'Néon mural violet',
-            collision: false,
         },
         {
             model: 'xs_prop_x18_hangar_lamp_led_a',
             label: 'Lampe de hangar 1',
-            collision: false,
         },
         {
             model: 'xs_prop_x18_hangar_lamp_wall_a',
             label: 'Lampe de hangar 2',
-            collision: false,
         },
         {
             model: 'xs_prop_x18_hangar_light_a',
             label: 'Lampe de hangar 3',
-            collision: false,
         },
         {
             model: 'xs_prop_x18_hangar_light_b',
             label: 'Lampe de hangar 4',
-            collision: false,
         },
         {
             model: 'xs_propintarena_lamps_01a',
             label: "Eclairage d'arène",
-            collision: false,
         },
         {
             model: 'prop_beer_neon_01',
             label: 'Néon Liquor',
-            collision: false,
         },
         {
             model: 'prop_pharm_sign_01',
             label: 'Néon Pharmacie',
-            collision: false,
         },
     ],
     ["Décoration d'intérieur"]: [
@@ -5067,57 +4855,46 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'apa_mp_h_acc_rugwooll_03',
             label: 'Tapis 1',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_rugwooll_04',
             label: 'Tapis 2',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_rugwoolm_01',
             label: 'Tapis 3',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_rugwoolm_02',
             label: 'Tapis 4',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_rugwoolm_03',
             label: 'Tapis 5',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_rugwoolm_04',
             label: 'Tapis 6',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_rugwools_01',
             label: 'Tapis 7',
-            collision: false,
         },
         {
             model: 'apa_mp_h_acc_rugwools_03',
             label: 'Tapis 8',
-            collision: false,
         },
         {
             model: 'ex_mp_h_acc_rugwoolm_04',
             label: 'Tapis 9',
-            collision: false,
         },
         {
             model: 'hei_heist_acc_rugwooll_01',
             label: 'Tapis 10',
-            collision: false,
         },
         {
             model: 'hei_heist_acc_rugwooll_02',
             label: 'Tapis 11',
-            collision: false,
         },
     ],
     ['Affaires personnelles']: [
@@ -5160,12 +4937,10 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'p_jewel_necklace_02',
             label: 'Collier 1',
-            collision: false,
         },
         {
             model: 'p_ld_heist_bag_01',
             label: 'Sac 1',
-            collision: false,
         },
         {
             model: 'p_watch_01',
@@ -5194,77 +4969,62 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_amb_handbag_01',
             label: 'Sac à main 1',
-            collision: false,
         },
         {
             model: 'prop_amb_phone',
             label: 'Téléphone 1',
-            collision: false,
         },
         {
             model: 'prop_big_bag_01',
             label: 'Sac 2',
-            collision: false,
         },
         {
             model: 'prop_cash_dep_bag_01',
             label: 'Sac 3',
-            collision: false,
         },
         {
             model: 'prop_cs_heist_bag_01',
             label: 'Sac 4',
-            collision: false,
         },
         {
             model: 'prop_cs_heist_bag_02',
             label: 'Sac 5',
-            collision: false,
         },
         {
             model: 'prop_cs_shopping_bag',
             label: 'Sac 6',
-            collision: false,
         },
         {
             model: 'prop_cs_walking_stick',
             label: 'Canne de marche',
-            collision: false,
         },
         {
             model: 'prop_fruit_basket',
             label: 'Panier de fruits',
-            collision: false,
         },
         {
             model: 'prop_ing_camera_01',
             label: 'Caméra 1',
-            collision: false,
         },
         {
             model: 'prop_ld_case_01',
             label: 'Valise 1',
-            collision: false,
         },
         {
             model: 'prop_ld_health_pack',
             label: 'Trousse de soins',
-            collision: false,
         },
         {
             model: 'prop_ld_suitcase_01',
             label: 'Valise 2',
-            collision: false,
         },
         {
             model: 'prop_ld_suitcase_02',
             label: 'Valise 3',
-            collision: false,
         },
         {
             model: 'prop_ld_wallet_01',
             label: 'Portefeuille 2',
-            collision: false,
         },
         {
             model: 'prop_med_bag_01',
@@ -5277,32 +5037,26 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_npc_phone',
             label: 'Téléphone 2',
-            collision: false,
         },
         {
             model: 'prop_npc_phone_02',
             label: 'Téléphone 3',
-            collision: false,
         },
         {
             model: 'prop_pap_camera_01',
             label: 'Caméra 2',
-            collision: false,
         },
         {
             model: 'prop_phone_cs_frank',
             label: 'Téléphone 4',
-            collision: false,
         },
         {
             model: 'prop_phone_ing_02',
             label: 'Téléphone 5',
-            collision: false,
         },
         {
             model: 'prop_police_phone',
             label: 'Téléphone 6',
-            collision: false,
         },
         {
             model: 'prop_poly_bag_01',
@@ -5311,42 +5065,34 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_prologue_phone',
             label: 'Téléphone 7',
-            collision: false,
         },
         {
             model: 'prop_tennis_bag_01',
             label: 'Sac de tennis 1',
-            collision: false,
         },
         {
             model: 'prop_v_m_phone_01',
             label: 'Téléphone 8',
-            collision: false,
         },
         {
             model: 'p_sunglass_m_s',
             label: 'Lunettes de soleil 1',
-            collision: false,
         },
         {
             model: 'prop_ld_case_01_s',
             label: 'Valise 4',
-            collision: false,
         },
         {
             model: 'p_ld_id_card_002',
             label: "Carte d'identité 1",
-            collision: false,
         },
         {
             model: 'p_ld_id_card_01',
             label: "Carte d'identité 2",
-            collision: false,
         },
         {
             model: 'prop_aviators_01',
             label: 'Lunettes de soleil 2',
-            collision: false,
         },
         {
             model: 'prop_carrier_bag_01',
@@ -5355,42 +5101,34 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_cs_amanda_shoe',
             label: 'Chaussures 1',
-            collision: false,
         },
         {
             model: 'prop_cs_bowie_knife',
             label: 'Couteau 1',
-            collision: false,
         },
         {
             model: 'prop_cs_business_card',
             label: 'Carte banquaire 1',
-            collision: false,
         },
         {
             model: 'prop_cs_hand_radio',
             label: 'Radio 1',
-            collision: false,
         },
         {
             model: 'prop_cs_katana_01',
             label: 'Katana 1',
-            collision: false,
         },
         {
             model: 'prop_cs_lipstick',
             label: 'Rouge à lèvres 1',
-            collision: false,
         },
         {
             model: 'prop_cs_police_torch',
             label: 'Lampe torche 1',
-            collision: false,
         },
         {
             model: 'prop_cs_sol_glasses',
             label: 'Lunettes de soleil 3',
-            collision: false,
         },
         {
             model: 'prop_fag_packet_01',
@@ -5689,17 +5427,14 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_rub_tyre_01',
             label: 'Pneu 1',
-            collision: false,
         },
         {
             model: 'prop_rub_tyre_02',
             label: 'Pneu 2',
-            collision: false,
         },
         {
             model: 'prop_rub_tyre_03',
             label: 'Pneu 3',
-            collision: false,
         },
         {
             model: 'prop_car_battery_01',
@@ -5790,7 +5525,6 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_single_rose',
             label: 'Rose',
-            collision: false,
         },
         {
             model: 'prop_snow_flower_02',
@@ -6603,27 +6337,22 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'prop_acc_guitar_01',
             label: 'Guitare acoustique',
-            collision: false,
         },
         {
             model: 'prop_el_guitar_01',
             label: 'Guitare électrique 1',
-            collision: false,
         },
         {
             model: 'prop_el_guitar_02',
             label: 'Guitare électrique 2',
-            collision: false,
         },
         {
             model: 'prop_el_guitar_03',
             label: 'Guitare électrique 3',
-            collision: false,
         },
         {
             model: 'prop_bongos_01',
             label: 'Bongos',
-            collision: false,
         },
     ],
     ['Meubles']: [
@@ -6712,6 +6441,344 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         {
             model: 'ch_prop_ch_metal_detector_01a',
             label: 'Portique de sécurité',
+        },
+    ],
+    ['Courses']: [
+        {
+            model: 'prop_mk_race_chevron_01',
+            label: 'Chevron 1',
+        },
+        {
+            model: 'prop_mk_race_chevron_02',
+            label: 'Chevron 2',
+        },
+        {
+            model: 'ar_prop_ar_cp_tower_01a',
+            label: 'Tour start',
+        },
+        {
+            model: 'ar_prop_ar_cp_tower4x_01a',
+            label: 'Tour checkpoint',
+        },
+        {
+            model: 'ar_prop_ar_hoop_med_01',
+            label: 'Anneau fin',
+        },
+        {
+            model: 'ar_prop_gate_cp_90d',
+            label: 'Portique double plots (petit)',
+        },
+        {
+            model: 'ar_prop_gate_cp_90d_01a',
+            label: 'Portique double plots (grand)',
+        },
+        {
+            model: 'ar_prop_gate_cp_90d_01b',
+            label: 'Portique double plots (énorme)',
+        },
+        {
+            model: 'ar_prop_ar_jetski_ramp_01_dev',
+            label: 'Rampe jetski',
+        },
+        {
+            model: 'ar_prop_ar_neon_gate_01a',
+            label: 'Portique néon hexagonal 1',
+        },
+        {
+            model: 'ar_prop_ar_neon_gate_01b',
+            label: 'Portique néon hexagonal 2',
+        },
+        {
+            model: 'ar_prop_ar_neon_gate_03a',
+            label: 'Portique néon carré',
+        },
+        {
+            model: 'ar_prop_ar_neon_gate_04a',
+            label: 'Portique néon circulaire',
+        },
+        {
+            model: 'ar_prop_ar_neon_gate_05a',
+            label: 'Portique néon losange',
+        },
+        {
+            model: 'ar_prop_ar_jump_loop',
+            label: 'Looping',
+        },
+        {
+            model: 'ar_prop_ar_tube_2x_crn',
+            label: 'Tube (virage 90°)',
+        },
+        {
+            model: 'ar_prop_ar_tube_2x_crn_15d',
+            label: 'Tube (virage 15°)',
+        },
+        {
+            model: 'ar_prop_ar_tube_2x_crn_30d',
+            label: 'Tube (virage 30°)',
+        },
+        {
+            model: 'ar_prop_ar_tube_2x_gap_02',
+            label: 'Tube (droit à trou)',
+        },
+        {
+            model: 'ar_prop_ar_tube_2x_l',
+            label: 'Tube (droit long)',
+        },
+        {
+            model: 'ar_prop_ar_tube_2x_s',
+            label: 'Tube (droit court)',
+        },
+        {
+            model: 'ar_prop_ar_tube_2x_xxs',
+            label: 'Tube (anneau)',
+        },
+        {
+            model: 'ar_prop_ar_tube_cross',
+            label: 'Tube (croisement)',
+        },
+        {
+            model: 'ar_prop_ar_tube_fork',
+            label: 'Tube (fourche)',
+        },
+        {
+            model: 'ch_prop_ch_race_gantry_03',
+            label: 'Portique 1',
+        },
+        {
+            model: 'ch_prop_ch_race_gantry_02',
+            label: 'Portique 2',
+        },
+        {
+            model: 'ch_prop_ch_race_gantry_04',
+            label: 'Portique 3',
+        },
+        {
+            model: 'sr_prop_sr_boxpile_01',
+            label: 'Pile de caisses',
+        },
+        {
+            model: 'sr_prop_sr_tube_end',
+            label: 'Tube (début/fin)',
+        },
+        {
+            model: 'sr_prop_sr_track_wall',
+            label: 'Mur de piste',
+        },
+        {
+            model: 'sr_prop_sr_start_line_02',
+            label: 'Route (ligne de départ)',
+        },
+        {
+            model: 'sr_prop_track_straight_l_d15',
+            label: 'Route (ligne droite descente 15°)',
+        },
+        {
+            model: 'sr_prop_track_straight_l_d30',
+            label: 'Route (ligne droite descente 30°)',
+        },
+        {
+            model: 'sr_prop_track_straight_l_d45',
+            label: 'Route (ligne droite descente 45°)',
+        },
+        {
+            model: 'sr_prop_track_straight_l_d5',
+            label: 'Route (ligne droite descente 5°)',
+        },
+        {
+            model: 'sr_prop_track_straight_l_u15',
+            label: 'Route (ligne droite montée 15°)',
+        },
+        {
+            model: 'sr_prop_track_straight_l_u30',
+            label: 'Route (ligne droite montée 30°)',
+        },
+        {
+            model: 'sr_prop_track_straight_l_u45',
+            label: 'Route (ligne droite montée 45°)',
+        },
+        {
+            model: 'sr_prop_track_straight_l_u5',
+            label: 'Route (ligne droite montée 5°)',
+        },
+        {
+            model: 'stt_prop_track_bend_15d',
+            label: 'Route (virage 15°)',
+        },
+        {
+            model: 'stt_prop_track_bend_15d',
+            label: 'Route (virage 15°) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_bend_180d',
+            label: 'Route (virage 180°)',
+        },
+        {
+            model: 'stt_prop_track_bend_180d_bar',
+            label: 'Route (virage 180°) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_bend_30d',
+            label: 'Route (virage 30°)',
+        },
+        {
+            model: 'stt_prop_track_bend_30d_bar',
+            label: 'Route (virage 30°) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_bend_5d',
+            label: 'Route (virage 5°)',
+        },
+        {
+            model: 'stt_prop_track_bend_5d_bar',
+            label: 'Route (virage 5°) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_bend_bar_l',
+            label: 'Route (virage 45°) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_bend_l',
+            label: 'Route (virage 45°)',
+        },
+        {
+            model: 'stt_prop_track_bend2_l_b',
+            label: 'Route (virage large 90°)',
+        },
+        {
+            model: 'stt_prop_track_block_01',
+            label: 'Checkpoint Sprunk',
+        },
+        {
+            model: 'stt_prop_track_block_02',
+            label: 'Checkpoint Junk',
+        },
+        {
+            model: 'stt_prop_track_block_03',
+            label: 'Checkpoint Pneu',
+        },
+        {
+            model: 'stt_prop_track_chicane_l',
+            label: 'Route (chicane gauche large)',
+        },
+        {
+            model: 'stt_prop_track_chicane_l_02',
+            label: 'Route (chicane gauche serrée)',
+        },
+        {
+            model: 'stt_prop_track_chicane_r',
+            label: 'Route (chicane droite large)',
+        },
+        {
+            model: 'stt_prop_track_chicane_r_02',
+            label: 'Route (chicane droite serrée)',
+        },
+        {
+            model: 'stt_prop_track_cross',
+            label: 'Route (croisement)',
+        },
+        {
+            model: 'stt_prop_track_cross_bar',
+            label: 'Route (croisement) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_fork',
+            label: 'Route (fourche)',
+        },
+        {
+            model: 'stt_prop_track_fork_bar',
+            label: 'Route (fourche) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_link',
+            label: 'Route (lien)',
+        },
+        {
+            model: 'stt_prop_track_straight_bar_l',
+            label: 'Route (ligne droite large) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_straight_bar_m',
+            label: 'Route (ligne droite moyenne) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_straight_bar_s',
+            label: 'Route (ligne droite courte) avec barrière',
+        },
+        {
+            model: 'stt_prop_track_straight_l',
+            label: 'Route (ligne droite large)',
+        },
+        {
+            model: 'stt_prop_track_straight_m',
+            label: 'Route (ligne droite moyenne)',
+        },
+        {
+            model: 'stt_prop_track_straight_s',
+            label: 'Route (ligne droite courte)',
+        },
+        {
+            model: 'stt_prop_race_gantry_01',
+            label: 'Route (ligne de départ)',
+        },
+        {
+            model: 'stt_prop_race_start_line_01',
+            label: 'Ligne de départ moyenne',
+        },
+        {
+            model: 'stt_prop_race_start_line_01b',
+            label: 'Ligne de départ longue',
+        },
+        {
+            model: 'sum_prop_race_barrier_01_sec',
+            label: 'Barrière de sécurité (petite)',
+        },
+        {
+            model: 'sum_prop_race_barrier_02_sec',
+            label: 'Barrière de sécurité (moyenne)',
+        },
+        {
+            model: 'sum_prop_race_barrier_04_sec',
+            label: 'Barrière de sécurité (grande)',
+        },
+        {
+            model: 'sum_prop_race_barrier_08_sec',
+            label: 'Barrière de sécurité (géante)',
+        },
+        {
+            model: 'tr_prop_tr_races_barrel_01a',
+            label: 'Baril',
+        },
+        {
+            model: 'prop_tyre_wall_01',
+            label: 'Mur de pneus (petit)',
+        },
+        {
+            model: 'prop_tyre_wall_02',
+            label: 'Mur de pneus (moyen)',
+        },
+        {
+            model: 'prop_tyre_wall_03',
+            label: 'Mur de pneus (grand)',
+        },
+        {
+            model: 'prop_offroad_tyres01',
+            label: 'Chaine de pneus (offroad)',
+        },
+        {
+            model: 'prop_offroad_tyres02',
+            label: 'Pile de pneus',
+        },
+        {
+            model: 'prop_offroad_tyres01_tu',
+            label: 'Chaine de pneus (piles)',
+        },
+        {
+            model: 'xs_prop_gate_tyre_01a_wl',
+            label: 'Porte de pneus (large)',
+        },
+        {
+            model: 'xs_prop_wall_tyre_l_01a',
+            label: 'Mur de pneus (virage)',
         },
     ],
 };
