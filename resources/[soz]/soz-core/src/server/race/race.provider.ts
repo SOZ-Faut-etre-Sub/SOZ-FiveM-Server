@@ -200,7 +200,7 @@ export class RaceProvider {
             });
         }
 
-        ranks = ranks.sort((a, b) => b.time - a.time);
+        ranks = ranks.sort((a, b) => a.time - b.time);
         const returnRank = [];
         for (let i = 0; i < ranks.length; i++) {
             if (i < index) {
