@@ -60,7 +60,8 @@ export type WeaponConfig = {
         | 'ammo_13'
         | 'ammo_14'
         | 'ammo_15'
-        | 'ammo_16';
+        | 'ammo_16'
+        | 'ammo_17';
     drawPosition?: WeaponDrawPosition;
     attachments?: WeaponAttachment[];
 };
@@ -791,7 +792,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     // Shotguns
     [WeaponName.PUMPSHOTGUN]: {
         recoil: 0.4,
-        ammo: 'ammo_08',
+        ammo: 'ammo_17',
         drawPosition: { model: GetHashKey('w_sg_pumpshotgun'), ...DrawPositions['PUMP'] },
         attachments: [
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },

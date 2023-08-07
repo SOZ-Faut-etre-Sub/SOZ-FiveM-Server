@@ -1,17 +1,22 @@
+import { useBackspace } from '@public/nui/hook/control';
 import { FunctionComponent, useState } from 'react';
 
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 
 export const BreathAnalyzerApp: FunctionComponent = () => {
-    const [level, setLevel] = useState<number>(-1);
+    const [level, setLevel] = useState<string>(null);
     const [open, setOpen] = useState<boolean>(false);
 
     useNuiFocus(open, open, false);
 
     useNuiEvent('police', 'OpenBreathAnalyzer', level => {
-        setLevel(-1);
+        setLevel(null);
         setOpen(true);
-        setTimeout(() => setLevel(level), 5000);
+        setTimeout(() => setLevel(`${level.toFixed(2)} g/L`), 5000);
+    });
+
+    useBackspace(() => {
+        setOpen(false);
     });
 
     if (!open) {
@@ -39,7 +44,7 @@ export const BreathAnalyzerApp: FunctionComponent = () => {
                 }}
                 className="text-green-500 text-center"
             >
-                {level != -1 ? (
+                {level != null ? (
                     <div
                         style={{
                             width: '92px',
@@ -47,7 +52,7 @@ export const BreathAnalyzerApp: FunctionComponent = () => {
                         }}
                         className="text-green-500 text-center"
                     >
-                        {level.toFixed(2)} g/L
+                        {level}
                     </div>
                 ) : (
                     <div
