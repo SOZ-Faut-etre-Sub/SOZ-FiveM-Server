@@ -21,6 +21,7 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
     }
 
     const isStaffOrAdmin = ['staff', 'admin'].includes(data.permission);
+    const isStaffOrAdminOrGM = ['staff', 'admin', 'gamemaster'].includes(data.permission);
 
     return (
         <Menu type={MenuType.AdminMenu}>
@@ -28,7 +29,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                 <MenuTitle banner={data.banner}>Menu des admins</MenuTitle>
                 <MenuContent>
                     <MenuItemSubMenuLink id="game_master">🎲 Menu du maître du jeu</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="interactive">🗺 Informations interactives</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="interactive">
+                        🗺 Informations interactives
+                    </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="job">
                         ⛑ Gestion métier
                     </MenuItemSubMenuLink>
