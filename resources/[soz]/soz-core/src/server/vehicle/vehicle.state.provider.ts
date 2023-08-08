@@ -11,6 +11,7 @@ import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { VehicleCondition, VehicleSeat, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { Monitor } from '../monitor/monitor';
+import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
@@ -23,6 +24,9 @@ export class VehicleStateProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     @Tick(TickInterval.EVERY_SECOND, 'vehicle:state:check')
     public async checkVehicleState() {
@@ -75,6 +79,25 @@ export class VehicleStateProvider {
 
             if (owner !== state.owner) {
                 this.vehicleStateService.switchOwner(netId, owner);
+                const previousOwner = this.playerService.getPlayer(state.owner);
+
+                this.monitor.publish(
+                    'vehicle_condition_switch_owner',
+                    {
+                        vehicle_id: state.volatile.id || null,
+                        vehicle_net_id: netId,
+                        vehicle_plate: state.volatile.plate,
+                        player_source: owner,
+                    },
+                    {
+                        previous_owner: previousOwner?.citizenid,
+                        previous_owner_name: previousOwner?.charinfo.firstname + ' ' + previousOwner?.charinfo.lastname,
+                        previous_owner_source: state.owner,
+                        owner: state.owner || null,
+                        condition: state.condition || null,
+                        position: toVector3Object(state.position || [0, 0, 0]),
+                    }
+                );
             }
         }
     }
@@ -130,8 +153,29 @@ export class VehicleStateProvider {
     public updateVehicleConditionFromOwner(
         source: number,
         vehicleNetworkId: number,
-        condition: Partial<VehicleCondition>
+        condition: Partial<VehicleCondition>,
+        reason: string | null
     ): void {
+        if (reason) {
+            const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+
+            this.monitor.publish(
+                'vehicle_condition_update_reason',
+                {
+                    vehicle_id: state.volatile.id || null,
+                    vehicle_net_id: vehicleNetworkId,
+                    vehicle_plate: state.volatile.plate,
+                    player_source: source,
+                },
+                {
+                    reason,
+                    owner: state.owner || null,
+                    condition: state.condition || null,
+                    position: toVector3Object(state.position || [0, 0, 0]),
+                }
+            );
+        }
+
         this.vehicleStateService.updateVehicleConditionState(vehicleNetworkId, condition);
     }
 }
