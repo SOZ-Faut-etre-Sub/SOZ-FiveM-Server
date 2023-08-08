@@ -180,7 +180,7 @@ export class RaceProvider {
     }
 
     @Rpc(RpcServerEvent.RACE_GET_RANKING)
-    public async getRanking(source: number, raceId: number, index: number, count: number): Promise<RaceRankingInfo> {
+    public async getRanking(source: number, raceId: number): Promise<RaceRankingInfo> {
         const dbInfo = await this.prismaService.race_score.findMany({
             where: {
                 race_id: raceId,
@@ -201,20 +201,10 @@ export class RaceProvider {
         }
 
         ranks = ranks.sort((a, b) => a.time - b.time);
-        const returnRank = [];
-        for (let i = 0; i < ranks.length; i++) {
-            if (i < index) {
-                continue;
-            }
-            if (i > index + count - 1) {
-                break;
-            }
-            returnRank.push(ranks[i]);
-        }
 
         return {
             max: ranks.length,
-            ranks: returnRank,
+            ranks: ranks,
         };
     }
 

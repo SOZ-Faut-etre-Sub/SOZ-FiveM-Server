@@ -407,8 +407,8 @@ export class RaceProvider {
     }
 
     @OnNuiEvent(NuiEvent.RaceGetRanking)
-    public async onRaceGetRanking({ raceId, index, count }: { raceId: number; index: number; count: number }) {
-        return await emitRpc<RaceRankingInfo>(RpcServerEvent.RACE_GET_RANKING, raceId, index, count);
+    public async onRaceGetRanking(raceId: number) {
+        return await emitRpc<RaceRankingInfo>(RpcServerEvent.RACE_GET_RANKING, raceId);
     }
 
     private async startRace(raceId: number, test: boolean) {
@@ -431,6 +431,7 @@ export class RaceProvider {
 
         const ped = PlayerPedId();
         SetEntityInvincible(ped, true);
+        SetPlayerInvincible(PlayerId(), true);
 
         await this.resourceLoader.loadModel(hash);
 
@@ -473,24 +474,24 @@ export class RaceProvider {
         await emitRpc(RpcServerEvent.RACE_SERVER_EXIT);
 
         DoScreenFadeOut(500);
+        await wait(500);
 
         if (!race.fps) {
             RenderScriptCams(false, false, 0, false, false);
             DestroyAllCams(true);
         }
 
-        await wait(500);
-
         DeleteVehicle(vehicle);
 
         const tpCoords = race.npc
             ? ([...GetOffsetFromEntityInWorldCoords(race.npc, 0.0, 1.0, 0.0), race.npcPosition[3] + 180] as Vector4)
             : race.npcPosition;
-        this.playerPositionProvider.teleportPlayerToPosition(tpCoords);
+        await this.playerPositionProvider.teleportPlayerToPosition(tpCoords);
 
         await wait(200);
 
         SetEntityInvincible(ped, false);
+        SetPlayerInvincible(PlayerId(), false);
         SetFollowPedCamViewMode(view);
 
         if (!test && result) {

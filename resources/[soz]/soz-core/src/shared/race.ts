@@ -1,7 +1,5 @@
 import { Vector4 } from './polyzone/vector';
 
-export const nbRankDisplay = 10;
-
 export type RaceRankingInfo = {
     max: number;
     ranks: RaceRanking[];
