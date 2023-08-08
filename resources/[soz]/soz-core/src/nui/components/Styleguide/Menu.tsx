@@ -291,7 +291,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
             setDescription(description);
 
             if (ref) {
-                ref.current.scrollIntoView();
+                ref.current.scrollIntoViewIfNeeded();
             }
         }
     }, [isSelected, ref, description]);

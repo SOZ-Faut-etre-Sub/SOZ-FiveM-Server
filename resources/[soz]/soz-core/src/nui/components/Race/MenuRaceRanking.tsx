@@ -1,15 +1,8 @@
-import {
-    MainMenu,
-    Menu,
-    MenuContent,
-    MenuItemButton,
-    MenuItemText,
-    MenuTitle,
-} from '@public/nui/components/Styleguide/Menu';
+import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '@public/nui/components/Styleguide/Menu';
 import { fetchNui } from '@public/nui/fetch';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
-import { nbRankDisplay, RaceRankingInfo } from '@public/shared/race';
+import { RaceRankingInfo } from '@public/shared/race';
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 
 type MenuRaceRankingProps = {
@@ -30,15 +23,12 @@ function getDurationStr(ms: number) {
 }
 
 export const MenuRaceRank: FunctionComponent<MenuRaceRankingProps> = ({ data }) => {
-    const [index, setIndex] = useState<number>(0);
     const [ranks, setRanks] = useState<RaceRankingInfo>({ ranks: [], max: 0 });
     const banner = 'https://cfx-nui-soz-core/public/images/banner/MenuRaceRank.webp';
 
     const fetch = useCallback(() => {
-        fetchNui<any, RaceRankingInfo>(NuiEvent.RaceGetRanking, { raceId: data.id, index, count: nbRankDisplay }).then(
-            values => setRanks(values)
-        );
-    }, [index, setRanks]);
+        fetchNui<any, RaceRankingInfo>(NuiEvent.RaceGetRanking, data.id).then(values => setRanks(values));
+    }, [setRanks]);
 
     useEffect(() => {
         fetch();
@@ -49,37 +39,19 @@ export const MenuRaceRank: FunctionComponent<MenuRaceRankingProps> = ({ data }) 
             <MainMenu>
                 <MenuTitle banner={banner}>{data.name}</MenuTitle>
                 <MenuContent>
-                    {index != 0 && (
-                        <MenuItemButton
-                            onConfirm={() => {
-                                setIndex(Math.max(index - nbRankDisplay));
-                            }}
-                        >
-                            Précédent
-                        </MenuItemButton>
-                    )}
                     {ranks.ranks.map((rank, indexRank) => {
                         return (
-                            <MenuItemText key={'race_rank_' + indexRank}>
+                            <MenuItemButton key={'race_rank_' + indexRank}>
                                 <div className="flex w-full">
-                                    <span className="flex-none w-8">N°{index + indexRank + 1}</span>
+                                    <span className="flex-none w-8">N°{indexRank + 1}</span>
                                     <span className="flex-auto w-16 text-center font-lato">
                                         {getDurationStr(rank.time)}
                                     </span>
                                     <span className="flex-auto w-32 text-right">{rank.name}</span>
                                 </div>
-                            </MenuItemText>
+                            </MenuItemButton>
                         );
                     })}
-                    {index + nbRankDisplay < ranks.max && (
-                        <MenuItemButton
-                            onConfirm={() => {
-                                setIndex(Math.max(index + nbRankDisplay));
-                            }}
-                        >
-                            Suivant
-                        </MenuItemButton>
-                    )}
                 </MenuContent>
             </MainMenu>
         </Menu>
