@@ -211,6 +211,7 @@ export class LSMCDeathProvider {
                 killerentitytype: killerentitytype,
                 weaponhash: killerweapon,
                 weapondamagetype: GetWeaponDamageType(killerweapon),
+                weapongroup: GetWeapontypeGroup(killerweapon),
                 killpos: GetEntityCoords(player),
                 killerveh: killVehData,
                 ejection: Date.now() - this.vehicleSeatbeltProvider.getLastEjectTime() < 10000,
