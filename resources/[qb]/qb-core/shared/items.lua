@@ -7560,7 +7560,15 @@ QBShared.Items = {
         ['description'] = "Prestige reçu à l'occasion de la complétion du Sozédex des Rivières.",
         ['illustrator'] = '.Poulpito',
     },
-
+    ['lsmc_triathlon_2023_medal'] = {
+        ['name'] = 'lsmc_triathlon_2023_medal',
+        ['label'] = 'Médaille "Triathlon LSMC 2023"',
+        ['useable'] = false,
+        ['weight'] = 500,
+        ['type'] = 'item',
+        ['description'] = "Bravo à toi ! Tu as gagné cette médaille à la sueur de ton front en franchissant la ligne d'arrivée du Marathon LSMC 2023. Y'a pas de quoi flamber non plus, mais ça fera toujours joli dans l'étagère du salon.",
+        ['illustrator'] = '.Beardy',
+    },
 
     --- FISHES --- 
     ['petite_grosse_baleine'] = {
