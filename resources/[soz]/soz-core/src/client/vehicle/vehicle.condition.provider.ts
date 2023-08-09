@@ -41,6 +41,8 @@ export class VehicleConditionProvider {
 
     private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
+    public static updateHealthReason = new Map<number, string>();
+
     @OnEvent(ClientEvent.VEHICLE_CONDITION_REGISTER)
     private registerVehicleCondition(vehicleNetworkId: number, condition: VehicleCondition): void {
         if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
@@ -113,9 +115,20 @@ export class VehicleConditionProvider {
                 ...this.vehicleService.getVehicleConditionDiff(entityId, currentCondition, state),
             };
 
-            // if not empty
             if (Object.keys(condition).length > 0) {
-                TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER, vehicleNetworkId, condition);
+                let reason = null;
+
+                if (condition.bodyHealth >= 999.9) {
+                    reason = VehicleConditionProvider.updateHealthReason.get(entityId) || 'unknown';
+                }
+
+                // if not empty
+                TriggerServerEvent(
+                    ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER,
+                    vehicleNetworkId,
+                    condition,
+                    reason
+                );
 
                 this.currentVehicleCondition.set(vehicleNetworkId, {
                     ...currentCondition,
@@ -181,9 +194,8 @@ export class VehicleConditionProvider {
 
         const newCondition = { ...this.currentVehicleCondition.get(vehicleNetworkId), ...condition };
 
-        this.vehicleService.applyVehicleCondition(entityId, condition, newCondition);
-
         this.currentVehicleCondition.set(vehicleNetworkId, newCondition);
+        this.vehicleService.applyVehicleCondition(entityId, condition, newCondition);
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_SYNC)
@@ -290,13 +302,14 @@ export class VehicleConditionProvider {
             return;
         }
 
-        if (!this.currentVehicleCondition.get(vehicleNetworkId)) {
+        const currentCondition = this.currentVehicleCondition.get(vehicleNetworkId);
+
+        if (!currentCondition) {
             this.currentVehiclePositionForTemporaryTire = null;
 
             return;
         }
 
-        const currentCondition = this.currentVehicleCondition.get(vehicleNetworkId);
         const keys = Object.keys(currentCondition.tireTemporaryRepairDistance).map(key => parseInt(key, 10));
 
         if (keys.length === 0) {

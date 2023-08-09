@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
 import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
+import { VehicleConditionProvider } from '@public/client/vehicle/vehicle.condition.provider';
 import { ServerEvent } from '@public/shared/event';
 
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
@@ -54,6 +55,7 @@ const applyVehicleTire = (
 const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondition>> = {
     bodyHealth: {
         apply: (vehicle, value: number, condition) => {
+            VehicleConditionProvider.updateHealthReason.set(vehicle, 'apply condition');
             SetVehicleBodyHealth(vehicle, value);
 
             if (value > 999.99) {
