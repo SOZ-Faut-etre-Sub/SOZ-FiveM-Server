@@ -1,3 +1,5 @@
+import { Control } from '@public/shared/input';
+
 import { Command } from '../../core/decorators/command';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -5,7 +7,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { toVectorNorm, Vector3 } from '../../shared/polyzone/vector';
 import { VehicleClass } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -36,7 +38,7 @@ export class VehicleSeatbeltProvider {
     private lastVehicleSpeed = 0;
     private lastVehiclePosition: Vector3 | null = null;
     private lastVehicleVelocity: Vector3 | null = null;
-    private lastEjectionTime = 0;
+    private lastEjectionTimeOrDamage = 0;
 
     private async trySwitchingSeat() {
         if (this.isSwitchingSeat) {
@@ -233,6 +235,10 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
+        if (this.playerService.getPlayer().metadata.godmode) {
+            return;
+        }
+
         const vehicleEjection = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const ped = PlayerPedId();
         const vehiclePedIsIn = GetVehiclePedIsIn(ped, false);
@@ -244,15 +250,67 @@ export class VehicleSeatbeltProvider {
         const gStrengthEjected =
             THRESHOLD_G_STRENGTH_VEHICLE_CLASS[GetVehicleClass(vehicleEjection)] || THRESHOLD_G_STRENGTH_DEFAULT;
 
-        if (!this.isSeatbeltOn && gStrength > gStrengthEjected) {
-            await this.ejectPlayer(ped, vehicleEjection, velocity);
+        if (gStrength > gStrengthEjected) {
+            this.lastEjectionTimeOrDamage = Date.now();
+            if (!this.isSeatbeltOn) {
+                await this.ejectPlayer(ped, vehicleEjection, velocity);
+            } else {
+                const damage = (gStrength * toVectorNorm(velocity)) / 6;
+                SetEntityHealth(ped, Math.round(GetEntityHealth(ped) - damage));
+
+                if (damage > 5) {
+                    const blurAction = async () => {
+                        SetGameplayCamShakeAmplitude(2.0);
+                        TriggerScreenblurFadeIn(500);
+                        await wait(7000);
+                        TriggerScreenblurFadeOut(1500);
+                        for (let u = 0; u < 100; u++) {
+                            await wait(10);
+                            SetGameplayCamShakeAmplitude((2.0 * (100 - u)) / 100);
+                        }
+                        SetGameplayCamShakeAmplitude(0.0);
+                    };
+
+                    if (GetScreenblurFadeCurrentTime() == 0) {
+                        blurAction();
+                    }
+                }
+                if (damage > 30) {
+                    this.disabledAfterDamage(8000);
+                }
+            }
+        }
+    }
+
+    private async disabledAfterDamage(duration: number) {
+        const end = Date.now() + duration;
+        while (Date.now() < end) {
+            DisableControlAction(0, Control.Sprint, true);
+            DisableControlAction(0, Control.Attack, true);
+            DisableControlAction(0, Control.Aim, true);
+            DisableControlAction(0, Control.Detonate, true);
+            DisableControlAction(0, Control.ThrowGrenade, true);
+            DisableControlAction(0, Control.VehicleAccelerate, true);
+            DisableControlAction(0, Control.VehicleBrake, true);
+            DisableControlAction(0, Control.VehicleMoveLeftRight, true);
+            DisableControlAction(0, Control.VehicleMoveLeftOnly, true);
+            DisableControlAction(0, Control.VehicleMoveRightOnly, true);
+            DisableControlAction(0, Control.MeleeAttack1, true);
+            DisableControlAction(0, Control.MeleeAttack2, true);
+            DisableControlAction(0, Control.Attack2, true);
+            DisableControlAction(0, Control.MeleeAttackLight, true);
+            DisableControlAction(0, Control.MeleeAttackHeavy, true);
+            DisableControlAction(0, Control.MeleeAttackAlternate, true);
+            DisableControlAction(0, Control.MeleeBlock, true);
+            DisableControlAction(0, Control.VehicleExit, true);
+            DisableControlAction(27, Control.VehicleExit, true);
+            await wait(0);
         }
     }
 
     private async ejectPlayer(ped: number, vehicle: number, velocity: Vector3) {
         const position = GetOffsetFromEntityInWorldCoords(vehicle, 1.0, 0.0, 1.0);
         SetEntityCoords(ped, position[0], position[1], position[2], false, false, false, false);
-        this.lastEjectionTime = Date.now();
 
         await wait(0);
 
@@ -263,6 +321,6 @@ export class VehicleSeatbeltProvider {
     }
 
     public getLastEjectTime(): number {
-        return this.lastEjectionTime;
+        return this.lastEjectionTimeOrDamage;
     }
 }
