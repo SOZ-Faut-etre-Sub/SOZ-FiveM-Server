@@ -234,7 +234,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        if (NetworkGetEntityIsLocal(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
+        if (!NetworkGetEntityIsNetworked(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
             this.currentVehiclePositionForMileage = null;
 
             return;
@@ -288,7 +288,7 @@ export class VehicleConditionProvider {
             return;
         }
 
-        if (NetworkGetEntityIsLocal(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
+        if (!NetworkGetEntityIsNetworked(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
             this.currentVehiclePositionForTemporaryTire = null;
 
             return;

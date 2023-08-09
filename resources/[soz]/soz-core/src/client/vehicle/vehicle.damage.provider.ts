@@ -102,7 +102,7 @@ export class VehicleDamageProvider {
             return;
         }
 
-        if (NetworkGetEntityIsLocal(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
+        if (!NetworkGetEntityIsNetworked(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
             this.currentVehicleStatus = null;
 
             return;
@@ -231,7 +231,7 @@ export class VehicleDamageProvider {
         const vehicles: number[] = GetGamePool('CVehicle');
         for (const vehicle of vehicles) {
             if (
-                NetworkGetEntityIsLocal(vehicle) ||
+                !NetworkGetEntityIsNetworked(vehicle) ||
                 GetPlayerServerId(NetworkGetEntityOwner(vehicle)) !== GetPlayerServerId(PlayerId())
             ) {
                 continue;
