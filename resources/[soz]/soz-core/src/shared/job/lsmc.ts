@@ -15,6 +15,7 @@ export type KillData = {
     killerentitytype: number;
     weaponhash: number;
     weapondamagetype: number;
+    weapongroup: number;
     killpos: Vector3;
     killerveh?: KillerVehData;
     ejection: boolean;

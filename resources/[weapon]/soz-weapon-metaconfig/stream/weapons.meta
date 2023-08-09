@@ -7578,18 +7578,18 @@
           <BulletBendingFarRadius value="0.000000" />
           <BulletBendingZoomedRadius value="0.375000" />
           <Fx>
-            <EffectGroup>WEAPON_EFFECT_GROUP_SHOTGUN</EffectGroup>
+            <EffectGroup>WEAPON_EFFECT_GROUP_MELEE_METAL</EffectGroup>
             <FlashFx>muz_shotgun</FlashFx>
             <FlashFxAlt />
             <MuzzleSmokeFx>muz_smoking_barrel_shotgun</MuzzleSmokeFx>
-			<MuzzleSmokeFxFP>muz_smoking_barrel_fp</MuzzleSmokeFxFP>
+            <MuzzleSmokeFxFP>muz_smoking_barrel_fp</MuzzleSmokeFxFP>
             <MuzzleSmokeFxMinLevel value="0.300000" />
             <MuzzleSmokeFxIncPerShot value="0.100000" />
             <MuzzleSmokeFxDecPerSec value="0.200000" />
             <ShellFx>eject_shotgun</ShellFx>
-			<ShellFxFP>eject_shotgun_fp</ShellFxFP>
+			      <ShellFxFP>eject_shotgun_fp</ShellFxFP>
             <TracerFx />
-            <PedDamageHash>ShotgunLarge</PedDamageHash>
+	          <PedDamageHash />
             <TracerFxChanceSP value="0.150000" />
             <TracerFxChanceMP value="0.750000" />
             <FlashFxChanceSP value="1.000000" />
