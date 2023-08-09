@@ -100,6 +100,12 @@ const frontBCSO = new BoxZone([1865.68, 3682.6, 33.57], 10.0, 6.4, {
     maxZ: 35.57,
 });
 
+const lsmcParking = new BoxZone([427.27, -1325.76, 39.02], 78.8, 111.0, {
+    heading: 140.16,
+    minZ: 29.02,
+    maxZ: 48.22,
+});
+
 @Provider()
 export class VehicleSpawner {
     @Inject(VehicleStateService)
@@ -135,6 +141,7 @@ export class VehicleSpawner {
         }
 
         noSpawnZones.push(frontBCSO);
+        noSpawnZones.push(lsmcParking);
 
         this.noSpawnZone = new MultiZone<BoxZone>(noSpawnZones);
     }
@@ -157,10 +164,14 @@ export class VehicleSpawner {
 
         if (DISALLOWED_VEHICLE_MODELS[model]) {
             CancelEvent();
+
+            return;
         }
 
         if (this.noSpawnZone.isPointInside(position)) {
             CancelEvent();
+
+            return;
         }
     }
 
