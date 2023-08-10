@@ -38,6 +38,7 @@ export class VehicleSeatbeltProvider {
     private lastVehicleSpeed = 0;
     private lastVehiclePosition: Vector3 | null = null;
     private lastVehicleVelocity: Vector3 | null = null;
+    private lastVehicleHealth = 0;
     private lastEjectionTimeOrDamage = 0;
 
     private async trySwitchingSeat() {
@@ -166,13 +167,15 @@ export class VehicleSeatbeltProvider {
             this.lastVehicleSpeed = 0;
             this.lastVehiclePosition = null;
             this.isSeatbeltOn = false;
+            this.lastVehicleHealth = 0;
 
             return;
         }
 
-        if (!NetworkGetEntityIsNetworked(vehicle)) {
+        if (!NetworkGetEntityIsNetworked(vehicle) || !NetworkHasControlOfEntity(vehicle)) {
             this.lastVehicleSpeed = 0;
             this.lastVehiclePosition = null;
+            this.lastVehicleHealth = 0;
 
             return;
         }
@@ -186,11 +189,13 @@ export class VehicleSeatbeltProvider {
         const vehicleSpeed = GetEntitySpeed(vehicle);
         const vehiclePosition = GetEntityCoords(vehicle, false) as Vector3;
         const vehicleVelocity = GetEntityVelocity(vehicle) as Vector3;
+        const vehicleHealth = GetEntityHealth(vehicle);
 
         if (!this.lastVehiclePosition || !this.lastVehicleVelocity) {
             this.lastVehiclePosition = vehiclePosition;
             this.lastVehicleSpeed = vehicleSpeed;
             this.lastVehicleVelocity = vehicleVelocity;
+            this.lastVehicleHealth = vehicleHealth;
 
             return;
         }
@@ -199,7 +204,7 @@ export class VehicleSeatbeltProvider {
         const gStrength = Math.abs(acceleration / 9.81);
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        if (gStrength > THRESHOLD_G_STRENGTH_DEFAULT) {
+        if (gStrength > THRESHOLD_G_STRENGTH_DEFAULT && this.lastVehicleHealth != vehicleHealth) {
             TriggerServerEvent(
                 ServerEvent.VEHICLE_ROUTE_EJECTION,
                 vehicleNetworkId,
@@ -212,6 +217,7 @@ export class VehicleSeatbeltProvider {
         this.lastVehicleVelocity = vehicleVelocity;
         this.lastVehiclePosition = vehiclePosition;
         this.lastVehicleSpeed = vehicleSpeed;
+        this.lastVehicleHealth = vehicleHealth;
     }
 
     private getPlayersInVehicle(vehicle: number): number[] {
@@ -256,7 +262,6 @@ export class VehicleSeatbeltProvider {
                 await this.ejectPlayer(ped, vehicleEjection, velocity);
             } else {
                 const damage = (gStrength * toVectorNorm(velocity)) / 12;
-                console.log(damage, gStrength, toVectorNorm(velocity));
                 SetEntityHealth(ped, Math.round(GetEntityHealth(ped) - damage));
 
                 const duration = Math.min((1000 * damage) / 4, 6000);
