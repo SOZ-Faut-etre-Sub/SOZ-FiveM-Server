@@ -120,6 +120,7 @@ export class VehicleConditionProvider {
 
                 if (condition.bodyHealth >= 999.9) {
                     reason = VehicleConditionProvider.updateHealthReason.get(entityId) || 'unknown';
+                    VehicleConditionProvider.updateHealthReason.delete(entityId);
                 }
 
                 // if not empty
@@ -196,6 +197,7 @@ export class VehicleConditionProvider {
 
         this.currentVehicleCondition.set(vehicleNetworkId, newCondition);
         this.vehicleService.applyVehicleCondition(entityId, condition, newCondition);
+        VehicleConditionProvider.updateHealthReason.set(entityId, 'apply condition from server');
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_SYNC)
@@ -221,6 +223,7 @@ export class VehicleConditionProvider {
         }
 
         this.vehicleService.applyVehicleCondition(entityId, condition, fullCondition);
+        VehicleConditionProvider.updateHealthReason.set(entityId, 'apply condition from server when not owner');
     }
 
     @Tick(500)
