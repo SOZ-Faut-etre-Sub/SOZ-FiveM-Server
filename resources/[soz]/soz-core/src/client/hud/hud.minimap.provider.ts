@@ -1,5 +1,3 @@
-import { PlayerData } from '@public/shared/player';
-
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -27,8 +25,6 @@ export class HudMinimapProvider {
     private _haveGps = false;
 
     private _hasAdminGps = false;
-
-    private _dead = false;
 
     private _showHud = true;
 
@@ -80,9 +76,8 @@ export class HudMinimapProvider {
     }
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
-    async onPlayerUpdate(player: PlayerData): Promise<void> {
+    async onPlayerUpdate(): Promise<void> {
         this._haveGps = this.inventoryManager.hasEnoughItem('gps', 1, true);
-        this._dead = player?.metadata.isdead;
     }
 
     @Once(OnceStep.NuiLoaded)
@@ -120,7 +115,7 @@ export class HudMinimapProvider {
     }
 
     private updateShowRadar(): void {
-        const showRadar = this._showHud && ((this._inVehicle && this._haveGps && !this._dead) || this._hasAdminGps);
+        const showRadar = this._showHud && ((this._inVehicle && this._haveGps) || this._hasAdminGps);
 
         DisplayRadar(showRadar);
     }

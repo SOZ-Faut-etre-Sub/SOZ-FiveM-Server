@@ -26,7 +26,7 @@ export const Minimap: FunctionComponent = () => {
         return value < 1;
     }, []);
 
-    if (!player || player.metadata.isdead) {
+    if (!player) {
         return null;
     }
 

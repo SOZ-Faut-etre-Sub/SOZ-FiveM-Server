@@ -283,9 +283,9 @@ export class LSMCDeathProvider {
         const anim = IsPedInAnyVehicle(ped, true) ? deathVehcleAnim : deathAnim;
 
         if (!IsEntityPlayingAnim(ped, anim.base.dictionary, anim.base.name, 3)) {
-            ClearPedTasks(ped);
-            ClearPedSecondaryTask(ped);
-            this.animationService.playAnimation(anim);
+            this.animationService.playAnimation(anim, {
+                clearTasksBefore: true,
+            });
             await wait(500);
         }
     }
