@@ -171,9 +171,7 @@ export class ItemNutritionProvider {
 
         if (intoxicated) {
             this.playerService.setPlayerDisease(source, 'intoxication');
-        }
-
-        if (dyspepsia) {
+        } else if (dyspepsia) {
             this.playerService.setPlayerDisease(source, 'dyspepsie');
         }
 
