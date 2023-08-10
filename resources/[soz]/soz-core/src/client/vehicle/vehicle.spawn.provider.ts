@@ -18,6 +18,7 @@ import {
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
+import { VehicleConditionProvider } from './vehicle.condition.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -167,6 +168,7 @@ export class VehicleSpawnProvider {
         let attempts = 0;
 
         this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
+        VehicleConditionProvider.updateHealthReason.set(vehicle, 'apply condition from spawn');
 
         let networkId = NetworkGetNetworkIdFromEntity(vehicle);
 
@@ -287,8 +289,6 @@ export class VehicleSpawnProvider {
         SetVehicleHasBeenOwnedByPlayer(vehicle, true);
         SetVehicleNeedsToBeHotwired(vehicle, false);
         SetVehRadioStation(vehicle, 'OFF');
-
-        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
 
         while (IsEntityWaitingForWorldCollision(vehicle)) {
             await wait(0);
