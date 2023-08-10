@@ -70,7 +70,3 @@ export const toVector4Object = (vector: Vector4) => {
         w: vector[3],
     };
 };
-
-export const toVectorNorm = (vector: Vector3) => {
-    return Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1] + vector[2] * vector[2]);
-};
