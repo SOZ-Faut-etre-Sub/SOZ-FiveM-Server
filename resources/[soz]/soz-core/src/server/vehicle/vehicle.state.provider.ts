@@ -170,7 +170,8 @@ export class VehicleStateProvider {
                 {
                     reason,
                     owner: state.owner || null,
-                    condition: state.condition || null,
+                    old_condition: state.condition || null,
+                    new_condition: condition || null,
                     position: toVector3Object(state.position || [0, 0, 0]),
                 }
             );
