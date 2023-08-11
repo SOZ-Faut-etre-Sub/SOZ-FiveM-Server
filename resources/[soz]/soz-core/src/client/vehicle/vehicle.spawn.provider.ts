@@ -167,9 +167,6 @@ export class VehicleSpawnProvider {
         this.resourceLoader.unloadModel(hash);
         let attempts = 0;
 
-        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
-        VehicleConditionProvider.updateHealthReason.set(vehicle, 'apply condition from spawn');
-
         let networkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         if (networkId) {
@@ -321,6 +318,9 @@ export class VehicleSpawnProvider {
         if (vehicleSpawn.modification) {
             this.vehicleService.applyVehicleConfiguration(vehicle, vehicleSpawn.modification);
         }
+
+        VehicleConditionProvider.updateHealthReason.set(vehicle, 'apply condition from spawn');
+        this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
     }
 
     @Rpc(RpcClientEvent.VEHICLE_DELETE)
