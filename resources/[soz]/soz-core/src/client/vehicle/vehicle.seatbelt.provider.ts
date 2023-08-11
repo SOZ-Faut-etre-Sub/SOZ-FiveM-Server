@@ -200,8 +200,12 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
-        const acceleration = (vehicleSpeed - this.lastVehicleSpeed) / 0.5;
-        const gStrength = Math.abs(acceleration / 9.81);
+        const acceleration = [
+            (this.lastVehicleVelocity[0] - vehicleVelocity[0]) / 0.5,
+            (this.lastVehicleVelocity[1] - vehicleVelocity[1]) / 0.5,
+            (this.lastVehicleVelocity[2] - vehicleVelocity[2]) / 0.5,
+        ] as Vector3;
+        const gStrength = toVectorNorm(acceleration) / 9.81;
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
         if (gStrength > THRESHOLD_G_STRENGTH_DEFAULT && this.lastVehicleHealth != vehicleHealth) {
@@ -261,7 +265,7 @@ export class VehicleSeatbeltProvider {
             if (!this.isSeatbeltOn) {
                 await this.ejectPlayer(ped, vehicleEjection, velocity);
             } else {
-                const damage = (gStrength * toVectorNorm(velocity)) / 12;
+                const damage = (gStrength * toVectorNorm(velocity)) / 10;
                 SetEntityHealth(ped, Math.round(GetEntityHealth(ped) - damage));
 
                 const duration = Math.min((1000 * damage) / 4, 6000);
