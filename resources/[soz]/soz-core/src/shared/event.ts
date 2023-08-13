@@ -339,6 +339,7 @@ export enum ClientEvent {
     ITEM_PROTEST_SIGN_TOGGLE = 'soz-core:client:item:protest-sign:toggle',
     ITEM_UMBRELLA_TOGGLE = 'soz-core:client:item:umbrella:toggle',
     ITEM_WALK_STICK_TOGGLE = 'soz-core:client:item:walk-stick:toggle',
+    ITEM_BOOK_USE = 'soz-core:client:item:book:use',
 
     HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 
