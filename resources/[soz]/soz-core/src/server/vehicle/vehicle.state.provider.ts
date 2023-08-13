@@ -153,30 +153,8 @@ export class VehicleStateProvider {
     public updateVehicleConditionFromOwner(
         source: number,
         vehicleNetworkId: number,
-        condition: Partial<VehicleCondition>,
-        reason: string | null
+        condition: Partial<VehicleCondition>
     ): void {
-        if (reason) {
-            const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
-
-            this.monitor.publish(
-                'vehicle_condition_update_reason',
-                {
-                    vehicle_id: state.volatile.id || null,
-                    vehicle_net_id: vehicleNetworkId,
-                    vehicle_plate: state.volatile.plate,
-                    player_source: source,
-                },
-                {
-                    reason,
-                    owner: state.owner || null,
-                    old_condition: state.condition || null,
-                    new_condition: condition || null,
-                    position: toVector3Object(state.position || [0, 0, 0]),
-                }
-            );
-        }
-
         this.vehicleStateService.updateVehicleConditionState(vehicleNetworkId, condition);
     }
 }

@@ -167,11 +167,6 @@ export class VehicleDamageProvider {
         if (bodyHealthDiff > 0.1) {
             this.currentVehicleStatus.bodyHealth = lastVehicleStatus.bodyHealth - bodyHealthDiff;
             SetVehicleBodyHealth(vehicle, this.currentVehicleStatus.bodyHealth);
-
-            VehicleConditionProvider.updateHealthReason.set(
-                vehicle,
-                `update vehicle damage, previous : ${lastVehicleStatus.bodyHealth}, current : ${this.currentVehicleStatus.bodyHealth}}`
-            );
         }
 
         if (isVehicleModelElectric(GetEntityModel(vehicle))) {
