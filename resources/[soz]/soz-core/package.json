@@ -75,6 +75,7 @@
         "react-number-format": "^5.2.2",
         "react-redux": "^8.0.4",
         "react-router-dom": "^6.3.0",
+        "react-zoom-pan-pinch": "^3.1.0",
         "redux": "^4.2.0",
         "reflect-metadata": "^0.1.13",
         "reselect": "^4.1.8",

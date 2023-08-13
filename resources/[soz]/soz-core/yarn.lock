@@ -5071,13 +5071,6 @@ react-img-mapper@^1.5.1:
   dependencies:
     react-fast-compare "^3.2.0"
 
-react-img-mapper@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/react-img-mapper/-/react-img-mapper-1.5.1.tgz#810b577c6764d91f9041afc91350e3494cd12af1"
-  integrity sha512-PsWRnZqWRo2tvllxa33oTfRUJ6djRAenfpFpHwHpQQ5FbP7neziJmKOO+bxEqbut5+2rlH/HAWt31pPsV0IlKQ==
-  dependencies:
-    react-fast-compare "^3.2.0"
-
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -5131,6 +5124,11 @@ react-router@6.14.1:
   integrity sha512-U4PfgvG55LdvbQjg5Y9QRWyVxIdO1LlpYT7x+tMAxd9/vmiPuJhIwdxZuIQLN/9e3O4KFDHYfR9gzGeYMasW8g==
   dependencies:
     "@remix-run/router" "1.7.1"
+
+react-zoom-pan-pinch@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-zoom-pan-pinch/-/react-zoom-pan-pinch-3.1.0.tgz#d87a66fd22a97f5dd56b54076411a9dce1f448cd"
+  integrity sha512-a3LlP8QPgTikvteCNkZ3X6wIWC0lrg1geP5WkUJyx2MXXAhHQek3r17N1nT/esOiWGuPIECnsd9AGoK8jOeGcg==
 
 react@^18.2.0:
   version "18.2.0"
