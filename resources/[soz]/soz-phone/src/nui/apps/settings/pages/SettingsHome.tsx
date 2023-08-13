@@ -169,6 +169,13 @@ export const SettingsHome = () => {
                         value={config.handsFree}
                         onClick={curr => handleSettingChange('handsFree', !curr)}
                     />
+                    <SettingSwitch
+                        label={t('SETTINGS.OPTIONS.SILENT')}
+                        icon={<VolumeOffIcon />}
+                        color="bg-[#FF6633]"
+                        value={config.silent}
+                        onClick={curr => handleSettingChange('silent', !curr)}
+                    />
                 </List>
                 {canShowDynamicAlerts() && (
                     <>
