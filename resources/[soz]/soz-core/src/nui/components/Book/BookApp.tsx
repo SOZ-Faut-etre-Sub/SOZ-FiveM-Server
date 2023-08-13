@@ -26,14 +26,19 @@ export const BookApp = () => {
                 <div className="flex justify-center align-center">
                     <TransformWrapper limitToBounds={true} centerOnInit={true}>
                         <TransformComponent>
-                            <img
-                                src={`/public/images/book/${book.images[imageIndex]}`}
-                                alt={imageIndex.toString()}
-                                style={{
-                                    height: '90vh',
-                                    width: 'auto',
-                                }}
-                            />
+                            <div
+                                style={{ height: '90vh', width: '100vw' }}
+                                className="flex justify-center align-center"
+                            >
+                                <img
+                                    src={`/public/images/book/${book.images[imageIndex]}`}
+                                    alt={imageIndex.toString()}
+                                    style={{
+                                        height: '90vh',
+                                        width: 'auto',
+                                    }}
+                                />
+                            </div>
                         </TransformComponent>
                     </TransformWrapper>
                 </div>
