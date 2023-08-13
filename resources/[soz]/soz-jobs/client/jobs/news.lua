@@ -47,6 +47,9 @@ end)
 
 RegisterNetEvent("jobs:client:news:SellNewspaper", function()
     if QBCore.Functions.GetBlip("jobs:news:sell") ~= false then
+        QBCore.Functions.RemoveBlip("jobs:news:sell")
+        exports["qb-target"]:RemoveZone("jobs:news:sell")
+        exports["soz-core"]:DrawNotification("Tu as annulé la livraison.", "info")
         return
     end
 
