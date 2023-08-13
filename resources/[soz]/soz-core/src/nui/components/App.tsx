@@ -22,6 +22,7 @@ import { AudioApp } from './Audio/AudioApp';
 import { RepairApp } from './Bennys/RepairApp';
 import { BookApp } from './Book/BookApp';
 import { CardApp } from './Card/CardApp';
+import { FieldHealthApp } from './Field/FieldHealthApp';
 import { HudApp } from './Hud/HudApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
@@ -94,6 +95,7 @@ export const App: FunctionComponent = () => {
                 <DrugTransformApp />
                 <RaceApp />
                 <BookApp />
+                <FieldHealthApp />
                 <InputApp />
             </div>
         </Provider>

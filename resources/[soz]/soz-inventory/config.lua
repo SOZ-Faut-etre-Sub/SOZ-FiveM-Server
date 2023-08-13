@@ -16,11 +16,11 @@ Config.StorageCapacity = {
     ["cloakroom"] = {slot = 10, weight = 1000000},
     --- houses
     ["house_stash"] = {
-        [0] = {slot = 10, weight = 100000},
-        [1] = {slot = 10, weight = 200000},
-        [2] = {slot = 10, weight = 300000},
-        [3] = {slot = 10, weight = 400000},
-        [4] = {slot = 10, weight = 500000},
+        [0] = {slot = 10, weight = 200000},
+        [1] = {slot = 10, weight = 400000},
+        [2] = {slot = 10, weight = 600000},
+        [3] = {slot = 10, weight = 800000},
+        [4] = {slot = 10, weight = 1000000},
     },
     ["house_fridge"] = {slot = 10, weight = 100000},
     --- Jobs PAWL

@@ -105,24 +105,16 @@ RegisterNetEvent("police:server:RemovePoint", function(targetId, licenseType, po
         for _, allowedJob in ipairs(Config.AllowedJobInteraction) do
             if player.PlayerData.job.id == allowedJob then
                 local licenses = target.PlayerData.metadata["licences"]
+                -- Hide real value in case fake license
+                local realNewvValue = math.max(licenses[licenseType] - point, 0)
+                licenses[licenseType] = realNewvValue
 
-                if licenses[licenseType] >= point then
-                    licenses[licenseType] = licenses[licenseType] - point
+                TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
+                                   "Vous avez retiré ~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ sur le permis")
+                TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source,
+                                   "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retirés de votre permis !", "info")
 
-                    if licenses[licenseType] >= 1 then
-                        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
-                                           "Vous avez retiré ~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ sur le permis")
-                        TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source,
-                                           "~b~" .. point .. " point" .. (point > 1 and "s" or "") .. "~s~ ont été retirés de votre permis !", "info")
-                    else
-                        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Vous avez retiré le permis")
-                        TriggerClientEvent("soz-core:client:notification:draw", target.PlayerData.source, "Votre permis vous a été retiré !", "info")
-                    end
-
-                    target.Functions.SetMetaData("licences", licenses)
-                else
-                    TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Il n'y a pas assez de points sur le permis", "error")
-                end
+                target.Functions.SetMetaData("licences", licenses)
 
                 return
             end

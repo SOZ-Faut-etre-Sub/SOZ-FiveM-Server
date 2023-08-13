@@ -27,14 +27,8 @@ local function SpawnFieldZones()
             onPlayerInOut = function(isIn)
                 if isIn and PlayerData.job.id == SozJobCore.JobType.Food and PlayerData.job.onduty then
                     currentField = zoneName
-                    QBCore.Functions.TriggerCallback("soz-jobs:server:food:getFieldHealth", function(health)
-                        currentFieldHealth = health
-                        DisplayFieldHealth(true, currentField, currentFieldHealth)
-                    end, zoneName)
                 else
                     currentField = nil
-                    currentFieldHealth = nil
-                    DisplayFieldHealth(false)
                 end
             end,
         }, {
@@ -219,6 +213,11 @@ FoodJob.Functions.CollectIngredients = function(field)
         return
     end
 
+    QBCore.Functions.TriggerCallback("soz-jobs:server:food:getFieldHealth", function(health)
+        currentFieldHealth = health
+        DisplayFieldHealth(true, currentField, currentFieldHealth)
+    end, currentField)
+
     QBCore.Functions.Progressbar("food-collect-ingredients", "Vous récoltez des ingrédients", FoodConfig.Collect.Grape.Duration, false, true,
                                  {
         disableMovement = true,
@@ -250,15 +249,25 @@ FoodJob.Functions.CollectIngredients = function(field)
 
                     if currentFieldHealth == 0 then
                         exports["soz-core"]:DrawNotification("Le champ est épuisé...", "warning")
+                        currentFieldHealth = nil
+                        DisplayFieldHealth(false)
                     else
                         TriggerEvent("soz-jobs:client:food-collect-ingredients")
                     end
+                    DisplayFieldHealth(true, currentField, currentFieldHealth)
+                else
+                    currentFieldHealth = nil
+                    DisplayFieldHealth(false)
                 end
-                DisplayFieldHealth(true, currentField, currentFieldHealth)
             end, field)
         else
+            currentFieldHealth = nil
+            DisplayFieldHealth(false)
             exports["soz-core"]:DrawNotification("Vous n'avez pas récolté d'ingrédients", "error")
         end
+    end, function()
+        currentFieldHealth = nil
+        DisplayFieldHealth(false)
     end)
 end
 
@@ -382,7 +391,12 @@ end)
 ---
 local function PlayerHasKnifeEquiped()
     local ped = PlayerPedId()
-    return GetSelectedPedWeapon(ped) == FoodConfig.HuntingWeapon
+    for _, v in pairs(FoodConfig.HuntingWeapon) do
+        if GetSelectedPedWeapon(ped) == v then
+            return true
+        end
+    end
+    return false
 end
 
 for animal, _ in pairs(FoodConfig.AnimalAllowedToHunt) do
