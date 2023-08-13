@@ -20,18 +20,34 @@ local function CreateBodyMenuItems(bodyMenu, playerId, skin)
     end)
 
     -- Front
-    bodyMenu:AddTitle({label = "Front"})
+    bodyMenu:AddTitle({label = "Menton"})
 
-    CreateRangeSizeItem(bodyMenu, "Largeur du front", skin.FaceTrait.ChimpBoneWidth, function(value)
+    CreateRangeSizeItem(bodyMenu, "Largeur du menton", skin.FaceTrait.ChimpBoneWidth or 0.0, function(value)
         skin.FaceTrait.ChimpBoneWidth = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateRangeSizeItem(bodyMenu, "Taille du front", skin.FaceTrait.ChimpBoneLength, function(value)
+    CreateRangeSizeItem(bodyMenu, "Taille du menton", skin.FaceTrait.ChimpBoneLength or 0.0, function(value)
         skin.FaceTrait.ChimpBoneLength = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
-    CreateRangeSizeItem(bodyMenu, "Bas du front", skin.FaceTrait.ChimpBoneLower, function(value)
+    CreateRangeSizeItem(bodyMenu, "Bas du menton", skin.FaceTrait.ChimpBoneLower or 0.0, function(value)
         skin.FaceTrait.ChimpBoneLower = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateRangeSizeItem(bodyMenu, "Trou du menton", skin.FaceTrait.ChimpHole or 0.0, function(value)
+        skin.FaceTrait.ChimpHole = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+
+    -- Front
+    bodyMenu:AddTitle({label = "Front"})
+
+    CreateRangeSizeItem(bodyMenu, "Hauteur du Front", skin.FaceTrait.EyebrowHigh or 0.0, function(value)
+        skin.FaceTrait.EyebrowHigh = value
+        ApplyPlayerBodySkin(playerId, skin)
+    end)
+    CreateRangeSizeItem(bodyMenu, "Taille du Front", skin.FaceTrait.EyebrowForward or 0.0, function(value)
+        skin.FaceTrait.EyebrowForward = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
 
