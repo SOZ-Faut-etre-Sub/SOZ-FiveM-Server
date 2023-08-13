@@ -18,8 +18,8 @@ import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { toVector4Object, Vector2, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { BlipFactory } from '../blip';
-import { DrawService } from '../draw.service';
 import { PedFactory } from '../factory/ped.factory';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -68,8 +68,8 @@ export class RaceProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
-    @Inject(DrawService)
-    private drawService: DrawService;
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
@@ -413,6 +413,7 @@ export class RaceProvider {
 
     private async startRace(raceId: number, test: boolean) {
         const race = this.raceRepository.find(raceId);
+        const start = Date.now();
 
         const hash = GetHashKey(race.carModel);
         if (!IsModelInCdimage(hash) || !IsModelAVehicle(hash)) {
@@ -493,6 +494,19 @@ export class RaceProvider {
         SetEntityInvincible(ped, false);
         SetPlayerInvincible(PlayerId(), false);
         SetFollowPedCamViewMode(view);
+
+        this.monitor.publish(
+            'race_finish',
+            {
+                race: race.id,
+            },
+            {
+                name: race.name,
+                time: result != null ? result[0][result[0].length - 1] : 0,
+                duration: Date.now() - start,
+                complete: !test && result,
+            }
+        );
 
         if (!test && result) {
             TriggerServerEvent(ServerEvent.RACE_FINISH, raceId, result);
