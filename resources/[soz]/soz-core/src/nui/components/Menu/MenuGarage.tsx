@@ -207,9 +207,19 @@ export const VehicleList: FunctionComponent<VehicleListProps> = ({ data, setCurr
                                 key={garageVehicle.vehicle.id}
                                 title={garageVehicle.vehicle_name}
                                 titleWidth={60}
-                                description={`Kilométrage: ${(
-                                    (garageVehicle.vehicle.condition.mileage || 0) / 1000
-                                ).toFixed(2)}km`}
+                                description={
+                                    <p>
+                                        Kilométrage:
+                                        {((garageVehicle.vehicle.condition.mileage || 0) / 1000).toFixed(2)} km
+                                        <br />
+                                        {garageVehicle.price > 0 && (
+                                            <span>
+                                                Prix de sortie: ${garageVehicle.price}
+                                                <br />
+                                            </span>
+                                        )}
+                                    </p>
+                                }
                             >
                                 <MenuItemSelectOption value="take_out">
                                     Sortir {garageVehicle.price > 0 && <span>(${garageVehicle.price})</span>}

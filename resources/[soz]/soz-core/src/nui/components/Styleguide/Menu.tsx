@@ -55,7 +55,7 @@ const MenuContext = createContext<{
     activeIndex: number;
     setActiveIndex: (number: number) => void;
     visibility: boolean;
-    setDescription: (desc: string) => void;
+    setDescription: (desc: string | ReactNode) => void;
 }>({
     activeIndex: 0,
     visibility: true,
@@ -144,7 +144,7 @@ export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = (
 export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeIndex, setActiveIndex] = useState(0);
-    const [description, setDescription] = useState<string | null>(null);
+    const [description, setDescription] = useState<string | null | ReactNode>(null);
     const [visibility, setVisibility] = useState(true);
     const [pauseMenuActive, setPauseMenuActive] = useState(true);
 
@@ -254,7 +254,7 @@ type MenuItemProps = PropsWithChildren<{
     onSelected?: () => void;
     disabled?: boolean;
     selectable?: boolean;
-    description?: string;
+    description?: string | ReactNode;
     className?: string;
 }>;
 
@@ -602,7 +602,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     showAllOptions?: boolean;
     initialValue?: any;
     titleWidth?: number;
-    description?: string;
+    description?: string | ReactNode;
     useGrid?: boolean;
     alignRight?: boolean;
     descriptionValue?: (value: any) => string;
