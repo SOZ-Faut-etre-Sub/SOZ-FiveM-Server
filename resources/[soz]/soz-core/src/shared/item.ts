@@ -1,6 +1,7 @@
 import { DrugContractInfo } from '@private/shared/drugs';
 import { MissiveType } from '@private/shared/missive';
 
+import { FakeId } from './player';
 import { WeaponComponentType } from './weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from './weapons/tint';
 
@@ -209,6 +210,7 @@ export type InventoryItemMetadata = {
     length?: number;
     bait?: any;
     drugContract?: DrugContractInfo;
+    fakeIdData?: FakeId;
 };
 
 export type InventoryItem = {

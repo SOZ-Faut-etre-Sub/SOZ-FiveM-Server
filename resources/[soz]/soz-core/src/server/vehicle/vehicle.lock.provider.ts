@@ -95,9 +95,9 @@ export class VehicleLockProvider {
 
         const lockPickDuration = 10000; // 10 seconds
         const percentages = {
-            lockpick_low: 75,
-            lockpick_medium: 95,
-            lockpick_high: 100,
+            lockpick_low: 60,
+            lockpick_medium: 80,
+            lockpick_high: 99,
             lockpick: 100,
         };
 
@@ -109,6 +109,7 @@ export class VehicleLockProvider {
             return;
         }
 
+        const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
         if (item.name === 'lockpick' && inventoryItem.metadata?.type) {
             const model = GetEntityModel(closestVehicle.vehicleEntityId);
             if (GetHashKey(inventoryItem.metadata?.model) !== model) {
@@ -116,12 +117,24 @@ export class VehicleLockProvider {
 
                 return;
             }
-        }
+        } else if (
+            item.name === 'lockpick_low' &&
+            vehicleType !== 'automobile' &&
+            vehicleType !== 'bike' &&
+            vehicleType !== 'trailer'
+        ) {
+            this.notifier.notify(source, 'Ce lockpick ne peux pas crocheter ce véhicule', 'error');
 
-        const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
-
-        if (vehicleType !== 'automobile' && vehicleType !== 'bike' && vehicleType !== 'trailer') {
-            this.notifier.notify(source, 'Vous ne pouvez pas crocheter ce véhicule', 'error');
+            return;
+        } else if (
+            item.name === 'lockpick_medium' &&
+            vehicleType !== 'automobile' &&
+            vehicleType !== 'bike' &&
+            vehicleType !== 'trailer' &&
+            vehicleType !== 'boat' &&
+            vehicleType !== 'heli'
+        ) {
+            this.notifier.notify(source, 'Ce lockpick ne peux pas crocheter ce véhicule', 'error');
 
             return;
         }

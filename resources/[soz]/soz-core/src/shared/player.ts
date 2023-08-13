@@ -4,6 +4,7 @@ import { Talent } from '@private/shared/talent';
 
 import { ClothConfig } from './cloth';
 import { Disease, Organ } from './disease';
+import { DrivingSchoolLicenseType } from './driving-school';
 import { InventoryItem } from './item';
 import { JobType } from './job';
 import { Halloween2022 } from './story/halloween2022';
@@ -42,6 +43,14 @@ export type PlayerData = {
     skin: Skin;
     cloth_config: ClothConfig;
     source: number;
+};
+
+export type FakeId = {
+    id: string;
+    charinfo: PlayerCharInfo;
+    address: string;
+    job: JobType;
+    licenses: Record<DrivingSchoolLicenseType, number>;
 };
 
 // TODO: Finish to implement the other properties

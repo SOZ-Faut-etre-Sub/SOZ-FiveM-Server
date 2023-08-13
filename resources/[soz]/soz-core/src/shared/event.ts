@@ -321,6 +321,7 @@ export enum ClientEvent {
     AUDIO_PLAY = 'soz-core:client:audio:play',
     AUDIO_STOP = 'soz-core:client:audio:stop',
     CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',
+    CRIMI_USE_FAKE_CARD = 'soz-core:client:crimi:use-fake-card',
     CRIMI_REMOVE_CLOTH = 'soz-core:client:crimi:remove-cloth',
     CRIMI_ASK_REMOTE_WORKSHOP = 'soz-core:client:crimi:ask-remote-workshop',
     CRIMI_ADD_REMOTE_WORKSHOP = 'soz-core:client:crimi:add-remote-workshop',

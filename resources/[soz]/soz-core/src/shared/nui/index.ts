@@ -15,6 +15,7 @@ import { NuiClipboardMethodMap } from './clipboard';
 import { NuiClothShopMethodMap } from './cloth_shop';
 import { NuiDrugMethodMap } from './drug';
 import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
+import { NuiFieldMethodMap } from './field';
 import { NuiFishingMethodMap } from './fishing';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
@@ -66,6 +67,7 @@ export interface NuiMethodMap {
     drug: NuiDrugMethodMap;
     race: NuiRaceMethodMap;
     book: NuiBookMethodMap;
+    field: NuiFieldMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

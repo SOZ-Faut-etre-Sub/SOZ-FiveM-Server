@@ -5,12 +5,10 @@ import { Provider } from '../../core/decorators/provider';
 import { ClothConfig } from '../../shared/cloth';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
-import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { HudStateProvider } from '../hud/hud.state.provider';
 import { JobMenuProvider } from '../job/job.menu.provider';
-import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { ProgressService } from '../progress.service';
@@ -29,9 +27,6 @@ export class PlayerMenuProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
-    @Inject(Notifier)
-    private notifier: Notifier;
-
     @Inject(AnimationService)
     private animationService: AnimationService;
 
@@ -49,9 +44,6 @@ export class PlayerMenuProvider {
 
     @Inject(JobMenuProvider)
     private jobMenuProvider: JobMenuProvider;
-
-    @Inject(NuiDispatch)
-    private nuiDispatch: NuiDispatch;
 
     @Inject(ProgressService)
     private progressService: ProgressService;
@@ -88,34 +80,13 @@ export class PlayerMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuCardShow)
-    public async showCard({ type }) {
-        const position = GetEntityCoords(PlayerPedId()) as Vector3;
-        const players = this.playerService.getPlayersAround(position, 3.0);
-
-        if (players.length <= 1) {
-            this.notifier.notify("Il n'y a personne à proximité", 'error');
-            return;
-        }
-
-        await this.animationService.playAnimation({
-            base: {
-                dictionary: 'mp_common',
-                name: 'givetake2_a',
-                blendInSpeed: 8.0,
-                blendOutSpeed: 8.0,
-                options: {
-                    enablePlayerControl: true,
-                    onlyUpperBody: true,
-                },
-            },
-        });
-
-        TriggerServerEvent(ServerEvent.PLAYER_SHOW_IDENTITY, type, players);
+    public async onPlayerMenuCardShow({ type }) {
+        await this.playerService.showCard(type);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuCardSee)
     public async seeCard({ type }) {
-        const player = this.playerService.getPlayer();
+        const player = this.playerService.getId();
 
         if (!player) {
             return;

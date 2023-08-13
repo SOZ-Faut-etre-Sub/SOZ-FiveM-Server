@@ -1,3 +1,5 @@
+import { PlayerData } from '@public/shared/player';
+
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -11,9 +13,7 @@ export class PlayerIdentityProvider {
     private playerService: PlayerService;
 
     @OnEvent(ServerEvent.PLAYER_SHOW_IDENTITY)
-    public showIdentity(source, type: CardType, targets: number[]) {
-        const player = this.playerService.getPlayer(source);
-
+    public showIdentity(source, type: CardType, targets: number[], player: PlayerData) {
         for (const target of targets) {
             if (target !== source) {
                 TriggerClientEvent(ClientEvent.PLAYER_SHOW_IDENTITY, target, type, player);
