@@ -319,7 +319,6 @@ export class VehicleSpawnProvider {
             this.vehicleService.applyVehicleConfiguration(vehicle, vehicleSpawn.modification);
         }
 
-        VehicleConditionProvider.updateHealthReason.set(vehicle, 'apply condition from spawn');
         this.vehicleService.applyVehicleCondition(vehicle, condition, condition);
     }
 

@@ -41,8 +41,6 @@ export class VehicleConditionProvider {
 
     private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
-    public static updateHealthReason = new Map<number, string>();
-
     @OnEvent(ClientEvent.VEHICLE_CONDITION_REGISTER)
     private registerVehicleCondition(vehicleNetworkId: number, condition: VehicleCondition): void {
         if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
@@ -62,6 +60,7 @@ export class VehicleConditionProvider {
         }
 
         this.currentVehicleCondition.set(vehicleNetworkId, condition);
+        this.vehicleService.applyVehicleCondition(entityId, condition, condition);
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER)
@@ -116,20 +115,8 @@ export class VehicleConditionProvider {
             };
 
             if (Object.keys(condition).length > 0) {
-                let reason = null;
-
-                if (condition.bodyHealth >= 999.9) {
-                    reason = VehicleConditionProvider.updateHealthReason.get(entityId) || 'unknown';
-                    VehicleConditionProvider.updateHealthReason.delete(entityId);
-                }
-
                 // if not empty
-                TriggerServerEvent(
-                    ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER,
-                    vehicleNetworkId,
-                    condition,
-                    reason
-                );
+                TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER, vehicleNetworkId, condition);
 
                 this.currentVehicleCondition.set(vehicleNetworkId, {
                     ...currentCondition,
@@ -167,7 +154,7 @@ export class VehicleConditionProvider {
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_APPLY)
-    private async applyVehicleCondition(
+    private applyVehicleCondition(
         vehicleNetworkId: number,
         condition: Partial<VehicleCondition>,
         fullCondition: VehicleCondition
@@ -197,7 +184,6 @@ export class VehicleConditionProvider {
 
         this.currentVehicleCondition.set(vehicleNetworkId, newCondition);
         this.vehicleService.applyVehicleCondition(entityId, condition, newCondition);
-        VehicleConditionProvider.updateHealthReason.set(entityId, 'apply condition from server');
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_SYNC)
@@ -223,7 +209,6 @@ export class VehicleConditionProvider {
         }
 
         this.vehicleService.applyVehicleCondition(entityId, condition, fullCondition);
-        VehicleConditionProvider.updateHealthReason.set(entityId, 'apply condition from server when not owner');
     }
 
     @Tick(500)
