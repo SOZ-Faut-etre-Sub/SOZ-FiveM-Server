@@ -33,6 +33,8 @@ export class VehicleElectricProvider {
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
 
+    private currentCharging = new Set<number>();
+
     @OnEvent(ServerEvent.VEHICLE_CHARGE_START)
     public async startCharge(source: number, vehicleNetworkId: number, stationId: number) {
         const player = this.playerService.getPlayer(source);
@@ -43,6 +45,14 @@ export class VehicleElectricProvider {
 
         const vehicleState = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const energyToFill = Math.floor((100 - vehicleState.condition.fuelLevel) * 0.6); // 100L <=> 60kWh
+
+        if (this.currentCharging.has(vehicleNetworkId)) {
+            this.notifier.notify(source, 'Le véhicule est déjà en train de charger.', 'error');
+
+            return;
+        }
+
+        this.currentCharging.add(vehicleNetworkId);
 
         const [reservedEnergy, station, maxEnergyForMoney] = await this.lockService.lock(
             `upw_station_${stationId}`,
@@ -75,6 +85,7 @@ export class VehicleElectricProvider {
 
         if (maxEnergyForMoney <= 0) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
+            this.currentCharging.delete(vehicleNetworkId);
             TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_STOP, source);
 
             return;
@@ -82,6 +93,7 @@ export class VehicleElectricProvider {
 
         if (reservedEnergy <= 0) {
             this.notifier.notify(source, 'La station vient de se vider.', 'error');
+            this.currentCharging.delete(vehicleNetworkId);
             TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_STOP, source);
 
             return;
@@ -107,7 +119,6 @@ export class VehicleElectricProvider {
 
         if (station.price > 0 && !this.playerMoneyService.remove(source, cost)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
-            TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
             leftOver = reservedEnergy;
         } else {
             this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
@@ -115,9 +126,10 @@ export class VehicleElectricProvider {
             });
 
             this.notifier.notify(source, `Vous avez payé $${cost} pour ${totalFilled}kWh d'éléctricité.`, 'success');
-
-            TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_STOP, source);
         }
+
+        TriggerClientEvent(ClientEvent.VEHICLE_CHARGE_STOP, source);
+        this.currentCharging.delete(vehicleNetworkId);
 
         if (leftOver > 0) {
             await this.prismaService.upw_stations.update({
