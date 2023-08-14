@@ -325,6 +325,11 @@ export class RaceProvider {
         this.startRace(raceId, true);
     }
 
+    @OnNuiEvent(NuiEvent.RaceRun)
+    public async onRaceRun(raceId: number) {
+        this.startRace(raceId, false);
+    }
+
     @OnNuiEvent(NuiEvent.RaceAddCheckpoint)
     public async onRaceAddCheckpoint({ raceId, index }: { raceId: number; index: number }) {
         const radius = await this.askRadius();
@@ -422,6 +427,10 @@ export class RaceProvider {
             return;
         }
 
+        const ped = PlayerPedId();
+        const coords = GetEntityCoords(ped);
+        const heading = GetEntityHeading(ped);
+
         const [bestRun, bestSplits] = await emitRpc<[number[], number[]]>(RpcServerEvent.RACE_GET_SPLITS, race.id);
 
         this.inRace = true;
@@ -430,7 +439,6 @@ export class RaceProvider {
             this.firstPersonCheck();
         }
 
-        const ped = PlayerPedId();
         SetEntityInvincible(ped, true);
         SetPlayerInvincible(PlayerId(), true);
 
@@ -484,10 +492,7 @@ export class RaceProvider {
 
         DeleteVehicle(vehicle);
 
-        const tpCoords = race.npc
-            ? ([...GetOffsetFromEntityInWorldCoords(race.npc, 0.0, 1.0, 0.0), race.npcPosition[3] + 180] as Vector4)
-            : race.npcPosition;
-        await this.playerPositionProvider.teleportPlayerToPosition(tpCoords);
+        await this.playerPositionProvider.teleportPlayerToPosition([...coords, heading] as Vector4);
 
         await wait(200);
 
