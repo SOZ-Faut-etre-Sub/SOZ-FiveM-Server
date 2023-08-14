@@ -26,7 +26,7 @@ export const LicenseCard: FunctionComponent<LicenseCardProps> = ({ player }) => 
     return (
         <div
             style={{
-                backgroundImage: `url(/public/images/identity/licenses.png)`,
+                backgroundImage: `url(/public/images/identity/licenses.webp)`,
             }}
             className="bg-contain bg-no-repeat aspect-[855/539] h-[340px]"
         >

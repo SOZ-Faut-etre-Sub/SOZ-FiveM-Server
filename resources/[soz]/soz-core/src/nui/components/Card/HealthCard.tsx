@@ -11,7 +11,7 @@ export const HealthCard: FunctionComponent<HealthCardProps> = ({ player }) => {
     return (
         <div
             style={{
-                backgroundImage: `url(/public/images/identity/health_book.png)`,
+                backgroundImage: `url(/public/images/identity/health_book.webp)`,
             }}
             className="transition bg-cover bg-no-repeat aspect-[855/539] h-[340px]"
         >

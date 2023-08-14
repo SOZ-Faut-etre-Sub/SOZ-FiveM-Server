@@ -27,7 +27,7 @@ export const BreathAnalyzerApp: FunctionComponent = () => {
         <div
             onClick={() => setOpen(false)}
             style={{
-                backgroundImage: `url(/public/images/police/alcootest.png)`,
+                backgroundImage: `url(/public/images/police/alcootest.webp)`,
                 width: '342px',
                 height: '418px',
                 top: '50px',

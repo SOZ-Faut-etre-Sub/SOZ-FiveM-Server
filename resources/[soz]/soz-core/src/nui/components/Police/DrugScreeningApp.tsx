@@ -29,8 +29,8 @@ export const DrugScreeningApp: FunctionComponent = () => {
             style={{
                 backgroundImage: `${
                     positive
-                        ? 'url(/public/images/police/DrugTestPositif.png)'
-                        : 'url(/public/images/police/DrugTestNegatif.png)'
+                        ? 'url(/public/images/police/DrugTestPositif.webp)'
+                        : 'url(/public/images/police/DrugTestNegatif.webp)'
                 }`,
                 width: '342px',
                 height: '418px',

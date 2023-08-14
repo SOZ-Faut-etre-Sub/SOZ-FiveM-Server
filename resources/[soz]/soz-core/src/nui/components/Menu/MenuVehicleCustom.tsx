@@ -47,7 +47,7 @@ export const MenuItemSelectVehicleCustomLevel: FunctionComponent<MenuItemSelectV
             onChange={(index, value) => onChange(value)}
             title={
                 <div className="flex items-center w-[9.3em]">
-                    <img alt={image} className="ml-4 w-8 h-8" src={`/public/images/vehicle/${image}.png`} />
+                    <img alt={image} className="ml-4 w-8 h-8" src={`/public/images/vehicle/${image}.webp`} />
                     <h3 className="ml-2 uppercase">{title}</h3>
                 </div>
             }
@@ -158,7 +158,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                             onChange={(index, value) => createOnChange('turbo')(value)}
                             title={
                                 <div className="flex items-center w-[9.3rem]">
-                                    <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.png" />
+                                    <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.webp" />
                                     <h3 className="ml-2 uppercase">Turbo</h3>
                                 </div>
                             }

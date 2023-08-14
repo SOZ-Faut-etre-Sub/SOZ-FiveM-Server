@@ -13,7 +13,8 @@ export class AudioService {
 
     public playAudio(path: string, volume = 0.5): string {
         const id = uuidv4();
-        this.nuiDispatch.dispatch('audio', 'PlayAudio', { path, volume, id });
+        const basePath = GetConvar('soz_public_endpoint', 'https://soz.zerator.com') + '/static/game/';
+        this.nuiDispatch.dispatch('audio', 'PlayAudio', { path: basePath + path, volume, id });
 
         return id;
     }
