@@ -218,6 +218,7 @@ export const MenuItemSelectVehicleColor: FunctionComponent<
                 <MenuItemSelectOption value={VehicleColorCategory.Matte}>Mat</MenuItemSelectOption>
                 <MenuItemSelectOption value={VehicleColorCategory.Pearly}>Brillante</MenuItemSelectOption>
                 <MenuItemSelectOption value={VehicleColorCategory.Metal}>Métal & Chrome</MenuItemSelectOption>
+                <MenuItemSelectOption value={VehicleColorCategory.Cameleon}>Cameleon</MenuItemSelectOption>
             </MenuItemSelect>
             <MenuItemSelect
                 distance={3}

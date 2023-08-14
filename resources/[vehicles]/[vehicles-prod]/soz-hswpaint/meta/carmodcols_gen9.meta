@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CVehicleModColorsGen9>
+ <chameleon>
+    <Item>
+      <name>YKTA_MONOCHROME</name>
+      <col value="223"/>
+      <spec value="223"/>
+    </Item>
+    <Item>
+      <name>YKTA_CHROMABERA</name>
+      <col value="236"/>
+      <spec value="140"/>
+    </Item>
+    <Item>
+      <name>YKTA_ELECTRO</name>
+      <col value="240"/>
+      <spec value="240"/>
+    </Item>
+    <Item>
+      <name>YKTA_SPRUNK_EX</name>
+      <col value="226"/>
+      <spec value="226"/>
+    </Item>
+    <Item>
+      <name>YKTA_HSW</name>
+      <col value="239"/>
+      <spec value="91"/>
+    </Item>
+    <Item>
+      <name>YKTA_NITE_DAY</name>
+      <col value="224"/>
+      <spec value="61"/>
+    </Item>
+    <Item>
+      <name>YKTA_SUNSETS</name>
+      <col value="233"/>
+      <spec value="142"/>
+    </Item>
+    <Item>
+      <name>YKTA_VICE_CITY</name>
+      <col value="227"/>
+      <spec value="135"/>
+    </Item>
+    <Item>
+      <name>YKTA_SYNTHWAVE</name>
+      <col value="228"/>
+      <spec value="142"/>
+    </Item>
+    <Item>
+      <name>YKTA_VERLIERER2</name>
+      <col value="225"/>
+      <spec value="135"/>
+    </Item>
+    <Item>
+      <name>YKTA_TEMPERATUR</name>
+      <col value="238"/>
+      <spec value="238"/>
+    </Item>
+    <Item>
+      <name>YKTA_FOUR_SEASO</name>
+      <col value="229"/>
+      <spec value="229"/>
+    </Item>
+    <Item>
+      <name>YKTA_THE_SEVEN</name>
+      <col value="234"/>
+      <spec value="235"/>
+    </Item>
+    <Item>
+      <name>YKTA_M9_THROWBA</name>
+      <col value="230"/>
+      <spec value="230"/>
+    </Item>
+    <Item>
+      <name>YKTA_BUBBLEGUM</name>
+      <col value="231"/>
+      <spec value="231"/>
+    </Item>
+    <Item>
+      <name>YKTA_FULL_RBOW</name>
+      <col value="232"/>
+      <spec value="232"/>
+    </Item>
+    <Item>
+      <name>YKTA_KAMENRIDER</name>
+      <col value="235"/>
+      <spec value="235"/>
+    </Item>
+    <Item>
+      <name>YKTA_CHRISTMAS</name>
+      <col value="237"/>
+      <spec value="56"/>
+    </Item>
+    <Item>
+      <name>YKTA_MONIKA</name>
+      <col value="241"/>
+      <spec value="241"/>
+    </Item>
+    <Item>
+      <name>YKTA_FUBUKI</name>
+      <col value="242"/>
+      <spec value="242"/>
+    </Item>
+ </chameleon>
+</CVehicleModColorsGen9>

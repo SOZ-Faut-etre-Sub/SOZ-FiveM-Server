@@ -46,6 +46,7 @@ const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
     [VehicleClass.Military]: 0.536,
     [VehicleClass.Commercial]: 0.344,
     [VehicleClass.Trains]: 0.8,
+    [VehicleClass.OpenWheel]: 0.8,
 };
 
 @Provider()
