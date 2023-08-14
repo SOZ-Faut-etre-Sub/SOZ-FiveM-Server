@@ -302,6 +302,7 @@ export enum VehicleClass {
     Military = 19,
     Commercial = 20,
     Trains = 21,
+    OpenWheel = 22,
 }
 
 export enum VehicleType {
@@ -313,6 +314,7 @@ export enum VehicleType {
     Submarine = 'submarine',
     Trailer = 'trailer',
     Train = 'train',
+    OpenWheel = 'OpenWheel',
 }
 
 export const getDefaultVehicleCondition = (): VehicleCondition => ({
@@ -490,6 +492,7 @@ export const VehicleTypeFromClass: Record<VehicleClass, VehicleType> = {
     [VehicleClass.Military]: VehicleType.Automobile,
     [VehicleClass.Commercial]: VehicleType.Automobile,
     [VehicleClass.Trains]: VehicleType.Train,
+    [VehicleClass.OpenWheel]: VehicleType.OpenWheel,
 };
 
 export const LockPickAlertChance = 0.5;
