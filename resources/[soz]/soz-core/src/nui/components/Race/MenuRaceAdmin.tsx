@@ -101,6 +101,7 @@ export const RaceSubMenu: FunctionComponent<MenuRaceSubProps> = ({ data }) => {
                     </MenuItemButton>
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceDelete, data.id)}>Supprimer</MenuItemButton>
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceTry, data.id)}>Tester</MenuItemButton>
+                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceRun, data.id)}>Jouer</MenuItemButton>
                     <MenuItemSelect
                         title="Ajouter un checkpoint après"
                         value={data.checkpoints.length}
