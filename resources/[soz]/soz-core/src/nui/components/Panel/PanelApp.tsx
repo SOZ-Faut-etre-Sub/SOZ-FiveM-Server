@@ -43,21 +43,21 @@ export const PanelApp: FunctionComponent = () => {
                     className="flex flex-row items-center"
                 >
                     <div
-                        style={{ width: '99px', backgroundImage: `url(/public/images/panel/top-left.png)` }}
+                        style={{ width: '99px', backgroundImage: `url(/public/images/panel/top-left.webp)` }}
                         className="h-full z-20"
                     ></div>
                     <div
-                        style={{ backgroundImage: `url(/public/images/panel/top.png)` }}
+                        style={{ backgroundImage: `url(/public/images/panel/top.webp)` }}
                         className="grow h-full bg-center z-20"
                     ></div>
                     <div
-                        style={{ width: '103px', backgroundImage: `url(/public/images/panel/top-right.png)` }}
+                        style={{ width: '103px', backgroundImage: `url(/public/images/panel/top-right.webp)` }}
                         className="h-full z-20"
                     ></div>
                 </div>
                 <div className="flex flex-row items-center grow">
                     <div
-                        style={{ width: '99px', backgroundImage: `url(/public/images/panel/left.png)` }}
+                        style={{ width: '99px', backgroundImage: `url(/public/images/panel/left.webp)` }}
                         className="h-full bg-center z-20"
                     ></div>
                     <div className="grow h-full relative z-0">
@@ -84,7 +84,7 @@ export const PanelApp: FunctionComponent = () => {
                         </div>
                     </div>
                     <div
-                        style={{ width: '103px', backgroundImage: `url(/public/images/panel/right.png)` }}
+                        style={{ width: '103px', backgroundImage: `url(/public/images/panel/right.webp)` }}
                         className="h-full bg-center  z-20"
                     ></div>
                 </div>
@@ -95,15 +95,15 @@ export const PanelApp: FunctionComponent = () => {
                     className="flex flex-row items-center  z-20"
                 >
                     <div
-                        style={{ width: '99px', backgroundImage: `url(/public/images/panel/bottom-left.png)` }}
+                        style={{ width: '99px', backgroundImage: `url(/public/images/panel/bottom-left.webp)` }}
                         className="h-full  z-20"
                     ></div>
                     <div
-                        style={{ backgroundImage: `url(/public/images/panel/bottom.png)` }}
+                        style={{ backgroundImage: `url(/public/images/panel/bottom.webp)` }}
                         className="h-full grow bg-center z-20"
                     ></div>
                     <div
-                        style={{ width: '103px', backgroundImage: `url(/public/images/panel/bottom-right.png)` }}
+                        style={{ width: '103px', backgroundImage: `url(/public/images/panel/bottom-right.webp)` }}
                         className="h-full z-20"
                     ></div>
                 </div>

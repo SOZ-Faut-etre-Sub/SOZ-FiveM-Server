@@ -90,7 +90,7 @@ export const RadioApp: FunctionComponent = () => {
                 <img
                     className="relative"
                     style={{ height: '40vh', zIndex: 5, width: '9vw' }}
-                    src="/public/images/radio/radio.png"
+                    src="/public/images/radio/radio.webp"
                     alt="radio"
                 />
                 <div

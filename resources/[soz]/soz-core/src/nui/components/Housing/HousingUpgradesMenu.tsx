@@ -90,7 +90,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                     <MenuItemSelect
                         title={
                             <div className="flex items-center">
-                                <img alt="engine" className="ml-2 w-8 h-8" src={`/public/images/housing/maison.png`} />
+                                <img alt="engine" className="ml-2 w-8 h-8" src={`/public/images/housing/maison.webp`} />
                                 <h3 className="ml-4">Palier</h3>
                             </div>
                         }
@@ -116,7 +116,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                     <MenuItemSelect
                         title={
                             <div className="flex items-center">
-                                <img alt="engine" className="ml-2 w-8 h-8" src={`/public/images/housing/garage.png`} />
+                                <img alt="engine" className="ml-2 w-8 h-8" src={`/public/images/housing/garage.webp`} />
                                 <h3 className="ml-4">Garage</h3>
                             </div>
                         }
