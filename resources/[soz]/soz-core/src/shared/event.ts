@@ -792,6 +792,7 @@ export enum NuiEvent {
     RaceUpdateCarModel = 'soz-core:client:race:update-model',
     RaceDelete = 'soz-core:client:race:delete',
     RaceTry = 'soz-core:client:race:try',
+    RaceRun = 'soz-core:client:race:run',
     RaceAddCheckpoint = 'soz-core:client:race:add-checkpoint',
     RaceUpdateCheckPoint = 'soz-core:client:race:update-checkpoint',
     RaceDisplay = 'soz-core:client:race:display',
