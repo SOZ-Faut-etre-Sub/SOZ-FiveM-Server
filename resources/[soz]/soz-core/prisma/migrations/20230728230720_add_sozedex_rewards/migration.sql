@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE `player_sozedex_rewards` (
+CREATE TABLE IF NOT EXISTS `player_sozedex_rewards` (
     `citizenId` VARCHAR(50) NOT NULL,
     `itemId` VARCHAR(100) NOT NULL,
     `claimedAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
