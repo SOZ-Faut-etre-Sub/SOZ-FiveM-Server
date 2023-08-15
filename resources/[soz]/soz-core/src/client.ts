@@ -7,6 +7,7 @@ import { AdminModule } from './client/admin/admin.module';
 import { AfkModule } from './client/afk/afk.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
+import { BillboardModule } from './client/billboard/billboard.module';
 import { BinocularsModule } from './client/binoculars/binoculars.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
@@ -101,6 +102,7 @@ async function bootstrap() {
         VoipModule,
         RaceModule,
         GarbageModule,
+        BillboardModule,
         ...PrivateModules
     );
 
