@@ -7,7 +7,7 @@ import { SozRole } from '../../core/permissions';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
 import { RGBAColor } from '../../shared/color';
-import { NuiEvent } from '../../shared/event';
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Property } from '../../shared/housing/housing';
 import { Font } from '../../shared/hud';
 import { JobType } from '../../shared/job';
@@ -540,7 +540,7 @@ export class AdminMenuMapperProvider {
         } else if (object === 'upwpile') {
             TriggerServerEvent('soz-upw:server:AddFacility', object, vector4Position, null, job);
         } else {
-            TriggerServerEvent('admin:server:addPersistentProp', createdObject.model, event, vector4Position);
+            TriggerServerEvent(ServerEvent.ADMIN_ADD_PERSISTENT_PROP, createdObject.model, event, vector4Position);
         }
     }
 }

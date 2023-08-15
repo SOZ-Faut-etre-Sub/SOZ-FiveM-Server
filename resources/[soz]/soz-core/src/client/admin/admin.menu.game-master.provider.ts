@@ -28,13 +28,13 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'money', amount);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_MONEY, 'money', amount);
         this.notifier.notify(`Vous vous êtes donné ${amount}$ en argent propre.`, 'success');
     }
 
     @OnNuiEvent(NuiEvent.AdminGiveMarkedMoney)
     public async giveMarkedMoney(amount: number): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GIVE_MONEY, 'marked_money', amount);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_MONEY, 'marked_money', amount);
         this.notifier.notify(`Vous vous êtes donné ${amount}$ en argent sale.`, 'success');
     }
 
@@ -60,7 +60,7 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminGiveLicence)
     public async giveLicence(licence: string): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GIVE_LICENCE, licence);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_LICENSE, licence);
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleMoneyCase)
@@ -101,7 +101,8 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminSetGodMode)
     public async setGodMode(value: boolean): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_GOD_MODE, value);
+        TriggerServerEvent(ServerEvent.ADMIN_SET_GOD_MODE, value);
+
         if (value) {
             TriggerServerEvent(ServerEvent.LSMC_SET_CURRENT_DISEASE, 'false', GetPlayerServerId(PlayerId()));
         }
@@ -109,7 +110,7 @@ export class AdminMenuGameMasterProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuGameMasterUncuff)
     public async unCuff(): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_UNCUFF);
+        TriggerServerEvent(ServerEvent.ADMIN_UNCUFF_PLAYER);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuGameMasterCreateNewCharacter)

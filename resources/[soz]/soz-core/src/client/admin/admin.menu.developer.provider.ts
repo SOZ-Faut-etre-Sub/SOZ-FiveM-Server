@@ -169,7 +169,7 @@ export class AdminMenuDeveloperProvider {
         );
 
         if (citizenId) {
-            TriggerServerEvent(ServerEvent.ADMIN_CHANGE_PLAYER, citizenId);
+            TriggerServerEvent(ServerEvent.ADMIN_SWITCH_CHARACTER, citizenId);
         }
     }
 
