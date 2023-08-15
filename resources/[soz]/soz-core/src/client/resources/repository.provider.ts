@@ -6,6 +6,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
+import { BillboardRepository } from './billboard.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { HousingRepository } from './housing.repository';
@@ -47,6 +48,9 @@ export class RepositoryProvider {
     @Inject(RaceRepository)
     private raceRepository: RaceRepository;
 
+    @Inject(BillboardRepository)
+    private billboardRepository: BillboardRepository;
+
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
@@ -62,6 +66,7 @@ export class RepositoryProvider {
         await this.drugSeedlingRepository.load();
         await this.drugSellLocationRepository.load();
         await this.raceRepository.load();
+        await this.billboardRepository.load();
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
@@ -95,6 +100,9 @@ export class RepositoryProvider {
                 break;
             case 'drugSellLocation':
                 this.drugSellLocationRepository.update(data);
+                break;
+            case 'billboard':
+                this.billboardRepository.update(data);
                 break;
         }
     }

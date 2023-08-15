@@ -10,6 +10,7 @@ import { ClientEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingShop, ClothingShopCategory, ClothingShopRepositoryData } from '../../shared/shop';
 import { PrismaService } from '../database/prisma.service';
+import { BillboardRepository } from './billboard.repository';
 import { ClothingShopRepository } from './cloth.shop.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
@@ -74,6 +75,9 @@ export class RepositoryProvider {
     @Inject(RaceRepository)
     private raceRepository: RaceRepository;
 
+    @Inject(BillboardRepository)
+    private billboardRepository: BillboardRepository;
+
     private repositories: Record<string, Repository<any>> = {};
 
     @Once()
@@ -92,6 +96,7 @@ export class RepositoryProvider {
         this.repositories['drugSeedling'] = this.drugSeedlingRepository;
         this.repositories['drugSellLocation'] = this.drugSellLocationRepository;
         this.repositories['race'] = this.raceRepository;
+        this.repositories['billboard'] = this.billboardRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)
