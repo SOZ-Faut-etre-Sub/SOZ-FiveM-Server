@@ -58,9 +58,6 @@ export class VehicleDealershipProvider {
     public async initAuction() {
         const vehicles = await this.prismaService.vehicle.findMany({
             where: {
-                category: {
-                    in: ['Sports', 'Sportsclassic'],
-                },
                 price: {
                     gt: 0,
                 },
@@ -72,6 +69,15 @@ export class VehicleDealershipProvider {
         });
 
         const selectedVehicles = getRandomItems(vehicles, 2);
+
+        this.monitor.publish(
+            'vehicle_luxury_selected',
+            {},
+            {
+                model1: selectedVehicles[0].name,
+                model2: selectedVehicles[1].name,
+            }
+        );
 
         for (const index in AuctionZones) {
             const auctionZone = AuctionZones[index];
