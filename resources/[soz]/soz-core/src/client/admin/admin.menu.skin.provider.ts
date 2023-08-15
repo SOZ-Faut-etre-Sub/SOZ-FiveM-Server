@@ -2,7 +2,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Component, OutfitItem, Prop } from '../../shared/cloth';
-import { NuiEvent } from '../../shared/event';
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Err, Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
 import { ClothingService } from '../clothing/clothing.service';
@@ -150,6 +150,6 @@ export class AdminMenuSkinProvider {
                 .map(([propIndex, prop], index) => [propIndex, { ...prop, Index: index }] as [string, OutfitItem])
         ) as Record<Prop, OutfitItem>;
 
-        TriggerServerEvent('admin:skin:UpdateClothes', { Components, Props });
+        TriggerServerEvent(ServerEvent.ADMIN_SET_CLOTHES, { Components, Props });
     }
 }

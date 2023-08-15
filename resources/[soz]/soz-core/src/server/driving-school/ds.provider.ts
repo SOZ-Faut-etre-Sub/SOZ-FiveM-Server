@@ -47,21 +47,17 @@ export class DrivingSchoolProvider {
     }
 
     @On(ServerEvent.DRIVING_SCHOOL_UPDATE_LICENSE)
-    public updatePlayerLicense(source: number, licenseType: DrivingSchoolLicenseType, licenseLabel: string) {
-        const player = this.playerService.getPlayer(source);
+    public updatePlayerLicense(source: number, licenseType: DrivingSchoolLicenseType) {
+        const license = DrivingSchoolConfig.licenses[licenseType];
 
-        const licenses = player.metadata['licences'];
-        const licenseData = DrivingSchoolConfig.licenses[licenseType];
-        if (!licenses || !licenseData) {
+        if (!license) {
             this.notifier.notify(source, 'Erreur lors de la délivrance de votre permis', 'error');
+
             return;
         }
 
-        licenses[licenseType] = licenseData.points || true;
-
-        this.playerService.setPlayerMetadata(source, 'licences', licenses);
-
-        this.notifier.notify(source, `Félicitations ! Vous venez d'obtenir votre ${licenseLabel}`, 'success');
+        this.playerService.addLicence(source, license);
+        this.notifier.notify(source, `Félicitations ! Vous venez d'obtenir votre ${license.label}`, 'success');
     }
 
     @Rpc(RpcServerEvent.DRIVING_SCHOOL_SPAWN_VEHICLE)

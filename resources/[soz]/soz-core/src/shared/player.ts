@@ -18,6 +18,7 @@ export type QBCorePlayer = {
         SetClothConfig: (config: ClothConfig, skipApply: boolean) => void;
         GetMoney: (type: 'money' | 'marked_money') => number;
         SetJobDuty: (onDuty: boolean) => void;
+        SetJob: (job: JobType, grade: number) => void;
         SetSkin: (skin: Skin, skipApply: boolean) => void;
     };
     PlayerData: PlayerData;

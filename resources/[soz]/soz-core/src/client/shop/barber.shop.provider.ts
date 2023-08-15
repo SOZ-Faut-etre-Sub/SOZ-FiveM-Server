@@ -5,7 +5,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
-import { PlayerData, PlayerPedHash, Skin } from '@public/shared/player';
+import { PlayerPedHash, Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { BarberConfiguration, BarberShopColors, BarberShopItem, BarberShopLabels } from '@public/shared/shop';
 

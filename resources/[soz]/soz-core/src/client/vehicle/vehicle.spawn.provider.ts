@@ -18,7 +18,6 @@ import {
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../resources/resource.loader';
-import { VehicleConditionProvider } from './vehicle.condition.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 

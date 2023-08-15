@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
 import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
-import { VehicleConditionProvider } from '@public/client/vehicle/vehicle.condition.provider';
 import { ServerEvent } from '@public/shared/event';
 
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';

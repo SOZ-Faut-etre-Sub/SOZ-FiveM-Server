@@ -1,9 +1,12 @@
 import { ServerStateService } from '@public/server/server.state.service';
+import { ClothConfig } from '@public/shared/cloth';
+import { DrivingSchoolLicense } from '@public/shared/driving-school';
+import { JobType } from '@public/shared/job';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Disease } from '../../shared/disease';
 import { ClientEvent } from '../../shared/event';
-import { PlayerCharInfo, PlayerData, PlayerMetadata } from '../../shared/player';
+import { PlayerCharInfo, PlayerData, PlayerMetadata, Skin } from '../../shared/player';
 import { PrismaService } from '../database/prisma.service';
 import { QBCore } from '../qbcore';
 
@@ -99,7 +102,7 @@ export class PlayerService {
         } else if (player.PlayerData.metadata.health_level < 40) {
             interval = 45 * 60 * 1000; // 45 minutes
         } else if (player.PlayerData.metadata.health_level < 60) {
-            interval = 1 * 60 * 60 * 1000; // 1 hour
+            interval = 60 * 60 * 1000; // 1 hour
         }
 
         if (
@@ -159,6 +162,59 @@ export class PlayerService {
         }
 
         return null;
+    }
+
+    public updateSkin(source: number, updater: (skin: Skin) => Skin, apply: boolean): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const skin = player.PlayerData.skin;
+        const newSkin = updater(skin);
+
+        player.Functions.SetSkin(newSkin, apply);
+    }
+
+    public updateClothConfig<K extends keyof ClothConfig>(
+        source: number,
+        key: K,
+        value: ClothConfig[K],
+        apply: boolean
+    ): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const config = player.PlayerData.cloth_config;
+        config[key] = value;
+
+        player.Functions.SetClothConfig(config, apply);
+    }
+
+    public addLicence(source: number, license: DrivingSchoolLicense): void {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const licenses = player.PlayerData.metadata['licences'];
+        licenses[license.licenseType] = license.points;
+        this.setPlayerMetadata(source, 'licences', licenses);
+    }
+
+    public setJob(source: number, job: JobType, grade: number): PlayerData | null {
+        const player = this.QBCore.getPlayer(source);
+
+        if (!player) {
+            return null;
+        }
+
+        player.Functions.SetJob(job, grade);
     }
 
     public setJobDuty(source: number, onDuty: boolean): PlayerData | null {
