@@ -455,6 +455,7 @@ model investigation {
   granted                String?                  @db.LongText
   granted_services       String?                  @db.LongText
   granted_jobgrade       String?                  @db.LongText
+  granted_certifications String?                  @db.LongText
   supervisors            String?                  @db.LongText
   concerned_people       String?                  @db.LongText
   in_charge              String?                  @db.LongText
