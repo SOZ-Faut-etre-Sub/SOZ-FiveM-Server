@@ -17,24 +17,35 @@ export class BillboardProvider {
             if (!billboard.enabled) {
                 continue;
             }
-
-            console.log(billboard);
+            this.loadBillboards(
+                billboard.imageUrl,
+                billboard.originDictName,
+                billboard.originTextureName,
+                billboard.width,
+                billboard.height,
+                billboard.name
+            );
         }
     }
 
-    @Command('billboard')
-    public init(_, url) {
-        const dict = CreateRuntimeTxd('billboard_triptyque');
-        const dui = CreateDui(url, 1024, 1024);
+    public loadBillboards(
+        imageUrl: string,
+        dictName: string,
+        textureName: string,
+        width: number,
+        height: number,
+        name: string
+    ) {
+        const dict = CreateRuntimeTxd(name);
+        const dui = CreateDui(imageUrl, width, height);
         const duiHandle = GetDuiHandle(dui);
-        const runtime = CreateRuntimeTextureFromDuiHandle(dict, 'triptyque2', duiHandle);
-        console.log('INIT DONE', runtime, duiHandle, dui, dict);
-        RemoveReplaceTexture('soz_billboards_txd', 'triptyque');
-        AddReplaceTexture('soz_billboards_txd', 'triptyque', 'billboard_triptyque', 'triptyque2');
+        CreateRuntimeTextureFromDuiHandle(dict, `${name}_texture`, duiHandle);
+        RemoveReplaceTexture(dictName, textureName);
+        AddReplaceTexture(dictName, textureName, name, `${name}_texture`);
     }
 
     @Command('billboard-clear')
-    public clear() {
-        RemoveReplaceTexture('soz_billboards_txd', 'triptyque');
+    public clear(_, name) {
+        RemoveReplaceTexture('soz_billboards_txd', name);
     }
 }
