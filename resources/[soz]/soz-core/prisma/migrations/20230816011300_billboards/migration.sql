@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `billboard` (
     `originTextureName` VARCHAR(50) NOT NULL,
     `imageUrl` VARCHAR(100) NOT NULL,
     `previewImageUrl` VARCHAR(100) NOT NULL,
+    `templateImageUrl` VARCHAR(100) NOT NULL,
     `width` INTEGER NOT NULL,
     `height` INTEGER NOT NULL,
     `lastEdit` DATETIME NOT NULL,
