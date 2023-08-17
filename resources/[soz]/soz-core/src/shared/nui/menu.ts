@@ -64,6 +64,7 @@ export enum MenuType {
     VehicleCustom = 'vehicle_custom',
     VehicleDealership = 'vehicle_dealership',
     Wardrobe = 'wardrobe',
+    GarbageJobMenu = 'garbage_job_menu',
     GunSmith = 'gunsmith',
     LsmcPharmacy = 'lsmc_pharmacy',
     MandatoryJobMenu = 'mdr_job',

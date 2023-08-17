@@ -5,7 +5,6 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { Logger } from '../../core/logger';
 import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Font } from '../../shared/hud';
 import { Ok } from '../../shared/result';
@@ -15,6 +14,7 @@ import { GetObjectList, GetPedList, GetPickupList, GetVehicleList } from '../enu
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
+import { ObjectProvider } from '../object/object.provider';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 
 @Provider()
@@ -37,8 +37,8 @@ export class AdminMenuDeveloperProvider {
     @Inject(NuiZoneProvider)
     private nuiZoneProvider: NuiZoneProvider;
 
-    @Inject(Logger)
-    private logger: Logger;
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     public showCoordinates = false;
 
@@ -291,5 +291,6 @@ export class AdminMenuDeveloperProvider {
                 countPickups - countPickupsNetworked
             } not networked, ${countPickupsNetworked} networked, ${GetMaxNumNetworkPickups()} max networked`
         );
+        console.log(`Object from soz : ${this.objectProvider.getLoadedObjectsCount()} total`);
     }
 }

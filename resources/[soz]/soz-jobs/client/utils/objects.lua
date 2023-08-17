@@ -1,10 +1,5 @@
 local removalObject = {"prop_roadcone02a"}
 
-local CalculateRef = function(entity)
-    local coord = GetEntityCoords(entity)
-    return tostring(GetEntityModel(entity)) .. QBCore.Shared.Round(coord.x) .. QBCore.Shared.Round(coord.y) .. QBCore.Shared.Round(coord.z)
-end
-
 --- Targets
 CreateThread(function()
     exports["qb-target"]:AddTargetModel(removalObject,
@@ -41,10 +36,12 @@ RegisterNetEvent("job:client:RemoveObject", function(data)
         disableCombat = true,
     }, {animDict = "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", anim = "plant_floor", flags = 16}, {}, {}, function() -- Done
         StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)
+        local objectId = exports["soz-core"]:GetObjectIdFromEntity(data.entity)
+
         if data.collect then
-            TriggerServerEvent("job:server:CollectObject", CalculateRef(data.entity), GetEntityModel(data.entity))
+            TriggerServerEvent("job:server:CollectObject", objectId, GetEntityModel(data.entity))
         else
-            TriggerServerEvent("job:server:RemoveObject", CalculateRef(data.entity))
+            TriggerServerEvent("job:server:RemoveObject", objectId)
         end
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "weapons@first_person@aim_rng@generic@projectile@thermal_charge@", "plant_floor", 1.0)

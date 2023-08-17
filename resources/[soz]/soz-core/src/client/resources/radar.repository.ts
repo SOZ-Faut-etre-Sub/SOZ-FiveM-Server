@@ -1,10 +1,13 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { ObjectProvider } from '@public/client/object/object.provider';
 import { RadarList } from '@public/config/radar';
 import { Radar } from '@public/shared/vehicle/radar';
 
-import { Injectable } from '../../core/decorators/injectable';
-
 @Injectable()
 export class RadarRepository {
+    @Inject(ObjectProvider)
+    private readonly objectProvider: ObjectProvider;
+
     public get(): Record<number, Radar> {
         return RadarList;
     }
@@ -14,11 +17,18 @@ export class RadarRepository {
     }
 
     public findByEntity(entity: number): string | null {
+        const objectId = this.objectProvider.getIdFromEntity(entity);
+
+        if (!objectId) {
+            return null;
+        }
+
         for (const [radarID, radar] of Object.entries(RadarList)) {
-            if (radar.entity && radar.entity == entity) {
+            if (radar.objectId && radar.objectId == objectId) {
                 return radarID;
             }
         }
+
         return null;
     }
 

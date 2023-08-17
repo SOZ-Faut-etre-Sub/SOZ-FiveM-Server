@@ -19,11 +19,11 @@ import { JobService } from '../job/job.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { GarageRepository } from '../resources/garage.repository';
 import { VehicleRepository } from '../resources/vehicle.repository';
 import { TargetFactory } from '../target/target.factory';
-import { ObjectFactory } from '../world/object.factory';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -65,8 +65,8 @@ export class VehicleGarageProvider {
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
 
-    @Inject(ObjectFactory)
-    private objectFactory: ObjectFactory;
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     @Inject(VehicleService)
     private vehicleService: VehicleService;
@@ -144,11 +144,11 @@ export class VehicleGarageProvider {
             }
 
             if (garage.type === GarageType.Depot || garage.category == GarageCategory.Sea) {
-                this.objectFactory.create(
-                    jobGaragePayStation,
-                    [...garage.zone.center, garage.zone.heading] as Vector4,
-                    true
-                );
+                this.objectProvider.createObject({
+                    model: jobGaragePayStation,
+                    position: [...garage.zone.center, garage.zone.heading] as Vector4,
+                    id: `garage_${garageIdentifier}`,
+                });
 
                 if (garage.type === GarageType.Depot) {
                     targets.push({
@@ -164,11 +164,11 @@ export class VehicleGarageProvider {
             }
 
             if (garage.type === GarageType.Job) {
-                this.objectFactory.create(
-                    jobGaragePayStation,
-                    [...garage.zone.center, garage.zone.heading] as Vector4,
-                    true
-                );
+                this.objectProvider.createObject({
+                    model: jobGaragePayStation,
+                    position: [...garage.zone.center, garage.zone.heading] as Vector4,
+                    id: `garage_${garageIdentifier}`,
+                });
 
                 targets.push({
                     label: 'Accéder au parking entreprise',
@@ -181,11 +181,11 @@ export class VehicleGarageProvider {
             }
 
             if (garage.type === GarageType.JobLuxury) {
-                this.objectFactory.create(
-                    jobGaragePayStation,
-                    [...garage.zone.center, garage.zone.heading] as Vector4,
-                    true
-                );
+                this.objectProvider.createObject({
+                    model: jobGaragePayStation,
+                    position: [...garage.zone.center, garage.zone.heading] as Vector4,
+                    id: `garage_${garageIdentifier}`,
+                });
 
                 targets.push({
                     label: 'Accéder au parking entreprise luxe',

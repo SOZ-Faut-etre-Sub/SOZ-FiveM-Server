@@ -18,6 +18,7 @@ import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
+import { GarbageModule } from './client/job/garbage/garbage.module';
 import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { MandatoryModule } from './client/job/mdr/mdr.module';
@@ -97,6 +98,7 @@ async function bootstrap() {
         BinocularsModule,
         VoipModule,
         RaceModule,
+        GarbageModule,
         ...PrivateModules
     );
 

@@ -1,9 +1,10 @@
 import { Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Exportable } from '@core/decorators/exports';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { ResourceLoader } from '@public/client/resources/resource.loader';
-import { StateSelector, Store } from '@public/client/store/store';
+import { StateSelector } from '@public/client/store/store';
 import { getChunkId } from '@public/shared/grid';
 import { joaat } from '@public/shared/joaat';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -20,9 +21,6 @@ const OBJECT_MODELS_NO_FREEZE = [joaat('prop_cardbordbox_03a')];
 
 @Provider()
 export class ObjectProvider {
-    @Inject('Store')
-    private store: Store;
-
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
@@ -31,6 +29,24 @@ export class ObjectProvider {
     private objectsByChunk = new Map<number, WorldObject[]>();
 
     private currentChunks: number[] = [];
+
+    public getLoadedObjectsCount(): number {
+        return Object.keys(this.loadedObjects).length;
+    }
+
+    public getObjects(filter?: (object: WorldObject) => boolean): WorldObject[] {
+        const objects = [];
+
+        for (const chunk of this.objectsByChunk.values()) {
+            for (const object of chunk) {
+                if (!filter || filter(object)) {
+                    objects.push(object);
+                }
+            }
+        }
+
+        return objects;
+    }
 
     @Once(OnceStep.PlayerLoaded)
     private async setupObjects(): Promise<void> {
@@ -42,7 +58,8 @@ export class ObjectProvider {
     }
 
     @OnEvent(ClientEvent.OBJECT_CREATE)
-    public async createObject(object: WorldObject) {
+    @Exportable('CreateObject')
+    public async createObject(object: WorldObject): Promise<string> {
         const chunk = getChunkId(object.position);
 
         if (!this.objectsByChunk.has(chunk)) {
@@ -54,6 +71,29 @@ export class ObjectProvider {
         if (this.currentChunks.includes(chunk)) {
             await this.spawnObject(object);
         }
+
+        return object.id;
+    }
+
+    @Exportable('GetObjectIdFromEntity')
+    public getIdFromEntity(entity: number): string | null {
+        for (const object of Object.values(this.loadedObjects)) {
+            if (object.entity === entity) {
+                return object.object.id;
+            }
+        }
+
+        return null;
+    }
+
+    public getEntityFromId(id: string): number | null {
+        const object = this.loadedObjects[id];
+
+        if (object) {
+            return object.entity;
+        }
+
+        return null;
     }
 
     @OnEvent(ClientEvent.OBJECT_DELETE)
@@ -103,7 +143,9 @@ export class ObjectProvider {
             return;
         }
 
-        await this.resourceLoader.loadModel(object.model);
+        if (IsModelValid(object.model)) {
+            await this.resourceLoader.loadModel(object.model);
+        }
 
         const entity = CreateObjectNoOffset(
             object.model,
@@ -115,10 +157,22 @@ export class ObjectProvider {
             false
         );
 
+        if (!DoesEntityExist(entity)) {
+            return;
+        }
+
         SetEntityHeading(entity, object.position[3]);
 
         if (!OBJECT_MODELS_NO_FREEZE.includes(object.model)) {
             FreezeEntityPosition(entity, true);
+        }
+
+        if (object.placeOnGround) {
+            PlaceObjectOnGroundProperly_2(entity);
+        }
+
+        if (object.rotation) {
+            SetEntityRotation(entity, object.rotation[0], object.rotation[1], object.rotation[2], 0, false);
         }
 
         this.loadedObjects[object.id] = {

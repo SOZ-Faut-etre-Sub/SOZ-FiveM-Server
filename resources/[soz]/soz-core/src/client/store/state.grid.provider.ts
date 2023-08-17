@@ -21,8 +21,6 @@ export class StateGridProvider {
 
         if (diffAdded.length > 0 || diffRemoved.length > 0) {
             this.store.dispatch.grid.set(newChunks);
-
-            console.log(`[GRID] New Grid: ${JSON.stringify(newChunks)}`);
         }
     }
 }

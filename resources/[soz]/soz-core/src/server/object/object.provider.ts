@@ -12,7 +12,7 @@ export class ObjectProvider {
 
     public addObjects(objects: WorldObject[]): void {
         for (const object of objects) {
-            this.objects[object.id] = object;
+            this.createObject(object);
         }
     }
 
@@ -22,10 +22,17 @@ export class ObjectProvider {
     }
 
     @Exportable('CreateObject')
-    public createObject(object: WorldObject & { id?: string }): string {
-        if (!object.id) {
-            object.id = uuidv4();
-        }
+    public createObjectFromExternal(object: Omit<WorldObject, 'id'>): string {
+        const id = uuidv4();
+        const worldObject = { ...object, id };
+
+        this.createObject(worldObject);
+
+        return id;
+    }
+
+    public createObject(object: WorldObject): string {
+        this.objects[object.id] = object;
 
         TriggerClientEvent(ClientEvent.OBJECT_CREATE, -1, object);
 

@@ -1,9 +1,13 @@
 RunInverterRefreshLoop = false
 
-local entitiesToId = {}
+local objectIdJobs = {}
 
 function CreateInverterZone(identifier, data)
-    exports["soz-utils"]:CreateObjectClient(identifier, GetHashKey("upwpile"), data.coords.x, data.coords.y, data.coords.z, data.heading, 8000.0, true)
+    exports["soz-core"]:CreateObject({
+        id = identifier,
+        position = {data.coords.x, data.coords.y, data.coords.z, data.heading},
+        model = GetHashKey("upwpile"),
+    });
 
     data.options = {
         {
@@ -63,9 +67,13 @@ end
 function CreateTerminalZone(identifier, data, facility)
     local prop = getTerminalProp(facility.scope)
 
-    local entity =
-        exports["soz-utils"]:CreateObjectClient(identifier, GetHashKey(prop), data.coords.x, data.coords.y, data.coords.z, data.heading, 8000.0, true)
-    entitiesToId[entity] = {identifier = identifier, job = facility.job};
+    exports["soz-core"]:CreateObject({
+        id = identifier,
+        position = {data.coords.x, data.coords.y, data.coords.z, data.heading},
+        model = GetHashKey(prop),
+    });
+
+    objectIdJobs[identifier] = facility.job
 end
 
 function CreateTerminalTarget()
@@ -79,10 +87,13 @@ function CreateTerminalTargetScope(scope)
         {
             label = "Déposer l'énergie",
             action = function(entity)
-                TriggerEvent("soz-upw:client:HarvestLoop", {
-                    identifier = entitiesToId[entity].identifier,
-                    harvest = "terminal-in",
-                })
+                local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
+
+                if not objectId then
+                    return
+                end
+
+                TriggerEvent("soz-upw:client:HarvestLoop", {identifier = objectId, harvest = "terminal-in"})
             end,
             canInteract = function()
                 return OnDuty()
@@ -91,15 +102,24 @@ function CreateTerminalTargetScope(scope)
         {
             label = "État d'énergie",
             action = function(entity)
-                TriggerServerEvent("soz-upw:server:FacilityCapacity", {
-                    identifier = entitiesToId[entity].identifier,
-                    facility = "terminal",
-                })
+                local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
+
+                if not objectId then
+                    return
+                end
+
+                TriggerServerEvent("soz-upw:server:FacilityCapacity", {identifier = objectId, facility = "terminal"})
             end,
             scope = scope,
             canInteract = function(entity, distance, data)
+                local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
+
+                if not objectId then
+                    return false
+                end
+
                 if data.scope == "entreprise" then
-                    return OnDutyUpwOrJob(entitiesToId[entity].job)
+                    return OnDutyUpwOrJob(objectIdJobs[objectId].job)
                 else
                     return OnDuty()
                 end
@@ -109,7 +129,3 @@ function CreateTerminalTargetScope(scope)
 
     exports["qb-target"]:AddTargetModel(prop, {options = options, distance = 2})
 end
-
-exports("GetTerminalIdentifierForEntity", function(entity)
-    return entitiesToId[entity].identifier;
-end)
