@@ -52,6 +52,8 @@ export enum JobPermission {
     Investigation = 'investigation',
     ManageInvestigation = 'investigation-manage',
     InvestigationLawyer = 'investigation-lawyer',
+    ManageCertification = 'certification-manage',
+    AssignCertification = 'certification-agent',
     BaunHarvest = 'harvest',
     BaunRestock = 'restock',
     BaunCraft = 'craft',
