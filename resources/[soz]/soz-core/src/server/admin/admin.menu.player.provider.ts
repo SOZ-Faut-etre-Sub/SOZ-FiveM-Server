@@ -8,9 +8,10 @@ import { AdminPlayer } from '../../shared/admin/admin';
 import { Disease } from '../../shared/disease';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerMetadata } from '../../shared/player';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
 
@@ -28,17 +29,24 @@ export class AdminMenuPlayerProvider {
     @Inject(PrismaService)
     private prisma: PrismaService;
 
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
+
     @OnEvent(ServerEvent.ADMIN_ADD_PERSISTENT_PROP)
-    public async addPersistentProp(source: number, model: number, event: string | null, position: any) {
-        await this.prisma.persistent_prop.create({
+    public async addPersistentProp(source: number, model: number, event: string | null, position: Vector4) {
+        const prop = await this.prisma.persistent_prop.create({
             data: {
                 event,
                 model,
-                position: JSON.stringify(position),
+                position: JSON.stringify(toVector4Object(position)),
             },
         });
 
-        TriggerEvent('core:server:refreshPersistentProp');
+        this.objectProvider.createObject({
+            id: `persistent_prop_${prop.id}`,
+            model,
+            position,
+        });
     }
 
     @OnEvent(ServerEvent.ADMIN_SPECTATE_PLAYER)

@@ -1,20 +1,9 @@
-local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_garbage", "soz", "garbage:menu")
-local societyMenuState = {["displayCollect"] = false}
-
 local haveGarbageBag, garbageBagProp = false, nil
-local binModel, binLocation = GetHashKey("soz_prop_bb_bin"), {}
 
 CreateThread(function()
     exports["qb-target"]:AddBoxZone("garbage:duty", vector3(-615.5, -1622.18, 33.01), 0.6, 0.6,
                                     {name = "garbage:cloakroom", heading = 59, minZ = 32.70, maxZ = 33.30},
                                     {options = SozJobCore.Functions.GetDutyActions("garbage"), distance = 2.5})
-
-    local props = QBCore.Functions.TriggerRpc("core:server:getProps")
-    for _, prop in pairs(props) do
-        if prop.model == binModel then
-            binLocation[prop.id] = prop
-        end
-    end
 end)
 
 --- Functions
@@ -47,49 +36,6 @@ local detachBag = function()
         garbageBagProp = nil
     end
 end
-
---- Events
-RegisterNetEvent("jobs:client:garbage:OpenSocietyMenu", function()
-    if societyMenu.IsOpen then
-        societyMenu:Close()
-        return
-    end
-    societyMenu:ClearItems()
-
-    if PlayerData.job.onduty then
-        societyMenu:AddCheckbox({
-            label = "Afficher les points de collecte",
-            value = societyMenuState.displayCollect,
-            change = function(_, checked)
-                societyMenuState.displayCollect = checked
-                for binId, bin in pairs(binLocation) do
-                    if not QBCore.Functions.GetBlip("garbage_bin_" .. binId) then
-                        QBCore.Functions.CreateBlip("garbage_bin_" .. binId, {
-                            name = "Point de collecte",
-                            coords = vec3(bin.position.x, bin.position.y, bin.position.z),
-                            sprite = 365,
-                            color = 21,
-                        })
-                    end
-
-                    QBCore.Functions.HideBlip("garbage_bin_" .. binId, not checked)
-                end
-            end,
-        })
-    else
-        societyMenu:AddButton({label = "Tu n'es pas en service !", disabled = true})
-    end
-
-    if societyMenu.IsOpen then
-        MenuV:CloseAll(function()
-            societyMenu:Close()
-        end)
-    else
-        MenuV:CloseAll(function()
-            societyMenu:Open()
-        end)
-    end
-end)
 
 --- Threads
 CreateThread(function()
@@ -129,17 +75,5 @@ CreateThread(function()
         ::continue::
 
         Wait(1000)
-    end
-end)
-
-RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
-    PlayerData.job.onduty = duty
-    if not PlayerData.job.onduty then
-        for binId, bin in pairs(binLocation) do
-            local blip = QBCore.Functions.GetBlip("garbage_bin_" .. binId)
-            if blip ~= nil then
-                QBCore.Functions.RemoveBlip("garbage_bin_" .. binId)
-            end
-        end
     end
 end)

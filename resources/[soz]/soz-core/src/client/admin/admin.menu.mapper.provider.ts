@@ -23,7 +23,6 @@ import { NuiMenu } from '../nui/nui.menu';
 import { NuiObjectProvider } from '../nui/nui.object.provider';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { HousingRepository } from '../resources/housing.repository';
-import { ObjectRepository } from '../resources/object.repository';
 
 type ZoneDrawn = {
     zone: BoxZone<string>;
@@ -53,9 +52,6 @@ export class AdminMenuMapperProvider {
 
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
-
-    @Inject(ObjectRepository)
-    private objectRepository: ObjectRepository;
 
     @Inject(NuiZoneProvider)
     private nuiZoneProvider: NuiZoneProvider;

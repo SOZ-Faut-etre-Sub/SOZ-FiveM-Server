@@ -1,13 +1,17 @@
+import { ObjectProvider } from '@public/client/object/object.provider';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
-import { Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { RpcServerEvent } from '../../shared/rpc';
 
 @Injectable()
 export class FuelStationRepository {
+    @Inject(ObjectProvider)
+    private readonly objectProvider: ObjectProvider;
+
     private fuelStations: Record<string, FuelStation> = {};
     private models: number[];
 
@@ -44,13 +48,18 @@ export class FuelStationRepository {
 
     public getStationForEntity(entity: number): FuelStation | null {
         const model = GetEntityModel(entity);
+        const objectId = this.objectProvider.getIdFromEntity(entity);
+
+        if (!objectId) {
+            return null;
+        }
 
         const position = GetEntityCoords(entity, false) as Vector3;
 
         for (const stationName in this.fuelStations) {
             const station = this.fuelStations[stationName];
 
-            if (station.entity && station.entity == entity) {
+            if (station.objectId && station.objectId == objectId) {
                 return station;
             }
 
