@@ -75,6 +75,7 @@ export class RaceProvider {
     private vehicleStateService: VehicleStateService;
 
     private inRace = false;
+    private preRace = false;
     private currentAdminMenuRace: string = null;
 
     @Once(OnceStep.Start)
@@ -214,6 +215,10 @@ export class RaceProvider {
             },
             value => {
                 if (!value) {
+                    return Ok(true);
+                }
+
+                if (value == 'ped') {
                     return Ok(true);
                 }
 
@@ -421,7 +426,7 @@ export class RaceProvider {
         const start = Date.now();
 
         const hash = GetHashKey(race.carModel);
-        if (!IsModelInCdimage(hash) || !IsModelAVehicle(hash)) {
+        if (race.carModel != 'ped' && (!IsModelInCdimage(hash) || !IsModelAVehicle(hash))) {
             this.notifier.error(`could not load model with given hash or model name ${race.carModel} ${hash}`);
 
             return;
@@ -442,39 +447,44 @@ export class RaceProvider {
         SetEntityInvincible(ped, true);
         SetPlayerInvincible(PlayerId(), true);
 
-        await this.resourceLoader.loadModel(hash);
+        let vehicle = null;
+        if (race.carModel != 'ped') {
+            await this.resourceLoader.loadModel(hash);
 
-        const vehicle = CreateVehicle(hash, race.start[0], race.start[1], race.start[2], race.start[3], false, false);
-        SetVehRadioStation(vehicle, 'OFF');
-        this.vehicleStateService.setVehicleState(
-            vehicle,
-            {
-                ...getDefaultVehicleVolatileState(),
-            },
-            true
-        );
+            vehicle = CreateVehicle(hash, race.start[0], race.start[1], race.start[2], race.start[3], false, false);
+            SetVehRadioStation(vehicle, 'OFF');
+            this.vehicleStateService.setVehicleState(
+                vehicle,
+                {
+                    ...getDefaultVehicleVolatileState(),
+                },
+                true
+            );
 
-        SetVehicleModKit(vehicle, 0);
-        ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
-        SetVehicleMod(vehicle, VehicleModType.Engine, GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1, false);
-        SetVehicleMod(vehicle, VehicleModType.Brakes, GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1, false);
-        SetVehicleMod(
-            vehicle,
-            VehicleModType.Transmission,
-            GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
-            false
-        );
-        SetVehicleColours(
-            vehicle,
-            getRandomInt(0, VehicleColor.BrushedGold),
-            getRandomInt(0, VehicleColor.BrushedGold)
-        );
+            SetVehicleModKit(vehicle, 0);
+            ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
+            SetVehicleMod(vehicle, VehicleModType.Engine, GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1, false);
+            SetVehicleMod(vehicle, VehicleModType.Brakes, GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1, false);
+            SetVehicleMod(
+                vehicle,
+                VehicleModType.Transmission,
+                GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
+                false
+            );
+            SetVehicleColours(
+                vehicle,
+                getRandomInt(0, VehicleColor.BrushedGold),
+                getRandomInt(0, VehicleColor.BrushedGold)
+            );
 
-        await wait(100);
+            await wait(100);
 
-        TaskWarpPedIntoVehicle(ped, vehicle, -1);
+            TaskWarpPedIntoVehicle(ped, vehicle, -1);
 
-        this.resourceLoader.unloadModel(hash);
+            this.resourceLoader.unloadModel(hash);
+        } else {
+            await this.playerPositionProvider.teleportPlayerToPosition(race.start);
+        }
 
         await emitRpc(RpcServerEvent.RACE_SERVER_START);
 
@@ -490,7 +500,9 @@ export class RaceProvider {
             DestroyAllCams(true);
         }
 
-        DeleteVehicle(vehicle);
+        if (vehicle) {
+            DeleteVehicle(vehicle);
+        }
 
         await this.playerPositionProvider.teleportPlayerToPosition([...coords, heading] as Vector4);
 
@@ -530,6 +542,18 @@ export class RaceProvider {
         }
     }
 
+    private async pedRaceFreeze() {
+        while (this.preRace) {
+            DisableControlAction(0, Control.Sprint, true);
+            DisableControlAction(0, Control.Enter, true);
+            DisableControlAction(0, Control.MoveLeftRight, true);
+            DisableControlAction(0, Control.MoveUpDown, true);
+            DisableControlAction(0, Control.Duck, true);
+            DisableControlAction(0, Control.Jump, true);
+            await wait(0);
+        }
+    }
+
     private async runRace(race: Race, ped: number, veh: number, bestRun: number[], bestSplits: number[]) {
         let checkpointHandle = 0;
         let blipHandle = 0;
@@ -561,9 +585,14 @@ export class RaceProvider {
 
         let result: [number[], number[]] = null;
         this.inRace = true;
+        this.preRace = true;
 
-        SetVehicleHandbrake(veh, true);
-        SetVehicleBrake(veh, true);
+        if (veh) {
+            SetVehicleHandbrake(veh, true);
+            SetVehicleBrake(veh, true);
+        } else {
+            this.pedRaceFreeze();
+        }
 
         PlaySoundFrontend(-1, '5S', 'MP_MISSION_COUNTDOWN_SOUNDSET', false);
         await wait(1000);
@@ -584,8 +613,11 @@ export class RaceProvider {
         raceData[0] = Date.now();
         this.nuiDispatch.dispatch('race', 'setStart', raceData[0]);
 
-        SetVehicleHandbrake(veh, false);
-        SetVehicleBrake(veh, false);
+        if (veh) {
+            SetVehicleHandbrake(veh, false);
+            SetVehicleBrake(veh, false);
+        }
+        this.preRace = false;
 
         for (let index = 0; index < race.checkpoints.length; index++) {
             const checkpoint = race.checkpoints[index];
@@ -630,12 +662,18 @@ export class RaceProvider {
             );
 
             while (!zone.isPointInside(GetEntityCoords(ped) as Vector3)) {
-                if (!IsPedInAnyVehicle(ped, false)) {
+                if (veh && !IsPedInAnyVehicle(ped, false)) {
+                    break;
+                }
+                if (!veh && IsPedRagdoll(ped)) {
                     break;
                 }
                 await wait(1);
             }
-            if (!IsPedInAnyVehicle(ped, false)) {
+            if (veh && !IsPedInAnyVehicle(ped, false)) {
+                break;
+            }
+            if (!veh && IsPedRagdoll(ped)) {
                 break;
             }
 
@@ -694,8 +732,10 @@ export class RaceProvider {
             DeleteCheckpoint(checkpointHandle);
         }
 
-        SetVehicleHandbrake(veh, true);
-        SetVehicleBrake(veh, true);
+        if (veh) {
+            SetVehicleHandbrake(veh, true);
+            SetVehicleBrake(veh, true);
+        }
 
         if (!race.fps) {
             const camPos = GetGameplayCamCoord();
