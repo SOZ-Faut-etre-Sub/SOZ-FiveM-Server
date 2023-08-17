@@ -20,7 +20,7 @@ import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../resources/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
-import { ObjectFactory } from './../world/object.factory';
+import { ObjectProvider } from './../object/object.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -65,8 +65,8 @@ export class VehicleFuelProvider {
     @Inject(SoundService)
     private soundService: SoundService;
 
-    @Inject(ObjectFactory)
-    private objectFFactory: ObjectFactory;
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
@@ -108,7 +108,11 @@ export class VehicleFuelProvider {
                 station.fuel === FuelType.Kerosene ||
                 station.name === 'Cayo'
             ) {
-                station.entity = this.objectFFactory.create(station.model, station.position, true);
+                station.objectId = await this.objectProvider.createObject({
+                    model: station.model,
+                    position: station.position,
+                    id: `fuel_station_${station.name}`,
+                });
             }
         }
 

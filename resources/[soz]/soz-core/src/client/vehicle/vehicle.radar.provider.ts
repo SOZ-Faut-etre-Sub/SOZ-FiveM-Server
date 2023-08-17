@@ -3,9 +3,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
 import { BlipFactory } from '../blip';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { RadarRepository } from '../resources/radar.repository';
-import { ObjectFactory } from '../world/object.factory';
 
 const radar_props = GetHashKey('soz_prop_radar');
 
@@ -17,8 +17,8 @@ export class VehicleRadarProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
-    @Inject(ObjectFactory)
-    private objectFFactory: ObjectFactory;
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     @Inject(RadarRepository)
     private radarRepository: RadarRepository;
@@ -26,9 +26,13 @@ export class VehicleRadarProvider {
     private globalDisableTime = 0;
 
     @Once(OnceStep.Start)
-    onStart(): void {
+    async onStart() {
         for (const [radarID, radar] of Object.entries(this.radarRepository.get())) {
-            radar.entity = this.objectFFactory.create(radar_props, radar.props, true);
+            radar.objectId = await this.objectProvider.createObject({
+                model: radar_props,
+                position: radar.props,
+                id: 'radar_' + radarID,
+            });
 
             radar.disableTime = GetResourceKvpInt('radar/disableEndTime/' + radarID);
             this.globalDisableTime = GetResourceKvpInt('radar/disableEndTime/all');
