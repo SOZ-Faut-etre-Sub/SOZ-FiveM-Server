@@ -18,6 +18,9 @@ import { UPW_CHARGER_REFILL_VALUES } from '@public/shared/job/upw';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { joaat } from '../../../shared/joaat';
+import { ObjectProvider } from '../../object/object.provider';
+
 @Provider()
 export class UpwStationProvider {
     @Inject(PrismaService)
@@ -47,6 +50,9 @@ export class UpwStationProvider {
     @Inject(JobService)
     private jobService: JobService;
 
+    @Inject(ObjectProvider)
+    private readonly objectProvider: ObjectProvider;
+
     @Once(OnceStep.Start)
     public async onStart() {
         this.itemService.setItemUseCallback('car_charger', this.useCarCharger.bind(this));
@@ -54,7 +60,13 @@ export class UpwStationProvider {
 
     @OnEvent(ServerEvent.UPW_CREATE_CHARGER)
     public async createCharger(source: number, charger: UpwCharger) {
-        const result_charger = await this.prismaService.upw_chargers.update({
+        if (!this.inventoryManager.removeItemFromInventory(source, 'car_charger', 1)) {
+            this.notifier.notify(source, "Vous n'avez pas de chargeur de voiture.", 'error');
+
+            return;
+        }
+
+        await this.prismaService.upw_chargers.update({
             where: {
                 id: charger.id,
             },
@@ -64,7 +76,7 @@ export class UpwStationProvider {
                 },
             },
         });
-        const result_station = await this.prismaService.upw_stations.update({
+        await this.prismaService.upw_stations.update({
             where: {
                 station: charger.station,
             },
@@ -74,12 +86,15 @@ export class UpwStationProvider {
                 },
             },
         });
-        if (!result_charger || !result_station) {
-            this.notifier.notify(source, "Une erreur est survenue, la borne n'a pas été posée.", 'error');
-        }
-        this.inventoryManager.removeItemFromInventory(source, 'car_charger', 1);
-        TriggerEvent('core:server:refresh-charger-props');
+
+        this.objectProvider.createObject({
+            id: `upw_charger_${charger.station}_${charger.id}`,
+            position: charger.position,
+            model: joaat('upwcarcharger'),
+        });
+
         await this.repositoryProvider.refresh('upwCharger');
+
         this.notifier.notify(source, "Vous avez ~g~terminé~s~ l'installation de la borne de recharge.", 'success');
     }
 

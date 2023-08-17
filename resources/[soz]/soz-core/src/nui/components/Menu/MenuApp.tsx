@@ -17,6 +17,7 @@ import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
 import { DrivingSchoolMenu } from '../DrivingSchool/DrivingSchoolMenu';
 import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
+import { GarbageJobMenu } from '../Garbage/GarbageJobMenu';
 import { MenuGunSmith } from '../GunSmith/GunSmithMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
 import { JobOnDutyMenu } from '../Job/OnDutyMenu';
@@ -201,6 +202,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.JobBennys}/*`} element={<MenuBennys data={menuData} />} />
             <Route path={`/${MenuType.JobUpw}/*`} element={<MenuUpw data={menuData} />} />
             <Route path={`/${MenuType.UpwOrderMenu}/*`} element={<UpwOrderMenu data={menuData} />} />
+            <Route path={`/${MenuType.GarbageJobMenu}/*`} element={<GarbageJobMenu data={menuData} />} />
             <Route
                 path={`/${MenuType.BennysUpgradeVehicle}/*`}
                 element={<MenuBennysUpgradeVehicle data={menuData} />}

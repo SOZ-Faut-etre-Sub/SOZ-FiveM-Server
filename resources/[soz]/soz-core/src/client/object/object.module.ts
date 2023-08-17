@@ -1,7 +1,7 @@
 import { Module } from '../../core/decorators/module';
-import { ObjectService } from './object.service';
+import { ObjectProvider } from './object.provider';
 
 @Module({
-    providers: [ObjectService],
+    providers: [ObjectProvider],
 })
 export class ObjectModule {}

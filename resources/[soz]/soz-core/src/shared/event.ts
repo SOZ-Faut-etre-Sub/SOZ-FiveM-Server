@@ -356,6 +356,7 @@ export enum ClientEvent {
     JOBS_MDR_OPEN_SOCIETY_MENU = 'soz-jobs:client:mdr:OpenSocietyMenu',
     JOBS_TAXI_OPEN_SOCIETY_MENU = 'soz-jobs:client:taxi:OpenSocietyMenu',
     JOBS_LSMC_OPEN_SOCIETY_MENU = 'soz-jobs:client:lsmc:OpenSocietyMenu',
+    JOBS_GARBAGE_OPEN_SOCIETY_MENU = 'jobs:client:garbage:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
@@ -639,6 +640,7 @@ export enum NuiEvent {
 
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     FoodDisplayBlip = 'soz-core:client:job:food:display-blip',
+    GarbageDisplayBlip = 'soz-core:client:job:garbage:display-blip',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
