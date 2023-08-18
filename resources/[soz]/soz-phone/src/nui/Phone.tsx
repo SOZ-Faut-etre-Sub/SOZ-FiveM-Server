@@ -13,7 +13,9 @@ import { useAppBankService } from './services/app/useAppBankService';
 import { useAppInvoicesService } from './services/app/useAppInvoicesService';
 import { useAppNotesService } from './services/app/useAppNotesService';
 import { useAppSocietyService } from './services/app/useAppSocietyService';
+import { useAppTetrisLeaderboardService } from './services/app/useAppTetrisLeaderboardService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
+import { useAppWeatherService } from './services/app/useAppWeatherService';
 import { useTimeService } from './services/os/useTimeService';
 import { useVisibilityService } from './services/os/useVisibilityService';
 import { useApiService } from './services/useApiService';
@@ -26,7 +28,6 @@ import { useMessagesService } from './services/useMessagesService';
 import { usePhoneService } from './services/usePhoneService';
 import { usePhotoService } from './services/usePhotoService';
 import { useSimCardService } from './services/useSimCardService';
-import { useAppWeatherService } from './services/app/useAppWeatherService';
 
 function Phone() {
     const { apps } = useApps();
@@ -58,6 +59,7 @@ function Phone() {
     useAppTwitchNewsService();
     useAppSocietyService();
     useAppWeatherService();
+    useAppTetrisLeaderboardService();
 
     if (config.wallpaper === undefined) {
         return null;

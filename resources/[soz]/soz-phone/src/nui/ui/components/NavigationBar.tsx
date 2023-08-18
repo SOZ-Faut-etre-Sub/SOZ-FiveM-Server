@@ -14,7 +14,7 @@ export const NavigationBar: FunctionComponent = memo(() => {
     const config = useConfig();
 
     const color = useCallback(() => {
-        if (pathname.includes('/camera') || pathname === '/' || pathname === '/call') {
+        if (pathname.includes('/camera') || ['/', '/call', '/game-tetris'].includes(pathname)) {
             return 'bg-gray-200';
         } else {
             return config.theme.value === 'dark' ? 'bg-gray-200' : 'bg-ios-800';

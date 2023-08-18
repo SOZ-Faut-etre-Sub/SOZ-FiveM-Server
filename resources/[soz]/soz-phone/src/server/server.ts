@@ -11,3 +11,4 @@ import './twitch-news/twitch-news.controller';
 import './settings/settings.controller';
 import './bank/bank.controller';
 import './weather/weather.controller';
+import './tetris/tetris.controller';
