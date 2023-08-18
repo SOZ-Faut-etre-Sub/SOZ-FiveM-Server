@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 interface ChildProps {
-    startGame: Function
-  }
- 
- export const TetrisMenu: React.FC<ChildProps> = (props: ChildProps) => {
+    startGame: () => void;
+}
+
+export const TetrisMenu: React.FC<ChildProps> = (props: ChildProps) => {
     // create div with logo and two buttons under logo
 
-     return (
-            <div className="flex flex-col items-center justify-center absolute top-0 left-0 right-0 bottom-0 bg-black-800 text-white text-center font-bold text-xl">
-                <div className="mb-10">Tetris</div>
-                <button className="mb-5 rounded-full py-3 px-5 bg-white text-black hover:bg-black hover:text-white" onClick={() => props.startGame()}>
-                    Start
-                </button>
-                <button className="mb-5 rounded-full py-3 px-5 bg-white text-black hover:bg-black hover:text-white">
-                    Leaderboard
-                </button>
-            </div>
-     );
- };
- 
- /*
+    return (
+        <div className="flex flex-col items-center justify-center absolute top-0 left-0 right-0 bottom-0 bg-black-800 text-white text-center font-bold text-xl">
+            <div className="mb-10">Tetris</div>
+            <button
+                className="mb-5 rounded-full py-3 px-5 bg-white text-black hover:bg-black hover:text-white"
+                onClick={() => props.startGame()}
+            >
+                Start
+            </button>
+            <button className="mb-5 rounded-full py-3 px-5 bg-white text-black hover:bg-black hover:text-white">
+                Leaderboard
+            </button>
+        </div>
+    );
+};
+
+/*
  </Transition>
                  <Transition
                  show={isGameOver}
@@ -39,6 +42,5 @@ interface ChildProps {
                  </div>
                  </Transition>
  */
- 
- export default TetrisMenu;
- 
+
+export default TetrisMenu;

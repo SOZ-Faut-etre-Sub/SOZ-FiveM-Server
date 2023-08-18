@@ -1,18 +1,17 @@
-import React from 'react';
+import './assets/style.css';
 
 import { Transition } from '@headlessui/react';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { AppWrapper } from '../../ui/components/AppWrapper';
 
+import { AppWrapper } from '../../ui/components/AppWrapper';
 import { TetrisGame } from './pages/TetrisGame';
 import { TetrisLeaderboard } from './pages/TetrisLeaderboard';
-import './assets/style.css';
 
 export const GameTetris: React.FC = () => {
     return (
-            
-            <FullPageWithHeader className="bg-ios-800">
+        <FullPageWithHeader className="bg-ios-800">
             <Transition
                 appear={true}
                 show={true}
@@ -26,10 +25,9 @@ export const GameTetris: React.FC = () => {
                 <AppWrapper className="h-[850px] w-full under-top-bar" underTopBar="true">
                     <Routes>
                         <Route index element={<TetrisGame />} />
-                        <Route path="leaderboard" element={ <TetrisLeaderboard />} />
+                        <Route path="leaderboard" element={<TetrisLeaderboard />} />
                     </Routes>
                 </AppWrapper>
-                
             </Transition>
         </FullPageWithHeader>
     );

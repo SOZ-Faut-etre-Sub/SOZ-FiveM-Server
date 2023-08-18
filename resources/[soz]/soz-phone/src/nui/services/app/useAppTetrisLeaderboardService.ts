@@ -1,6 +1,6 @@
 import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
-import { useEffect } from 'react';
 import { TetrisEvents } from '@typings/app/tetris';
+import { useEffect } from 'react';
 
 import { store } from '../../store';
 
