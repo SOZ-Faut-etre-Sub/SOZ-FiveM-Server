@@ -49,11 +49,6 @@ export class FuelStationRepository {
     public getStationForEntity(entity: number): FuelStation | null {
         const model = GetEntityModel(entity);
         const objectId = this.objectProvider.getIdFromEntity(entity);
-
-        if (!objectId) {
-            return null;
-        }
-
         const position = GetEntityCoords(entity, false) as Vector3;
 
         for (const stationName in this.fuelStations) {
