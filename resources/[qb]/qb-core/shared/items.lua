@@ -7233,7 +7233,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = "Composé polycyclique complexe et le principal antagoniste des récepteurs de la morphine. Dans les cas d'intoxication aiguë aux morphiniques, la naloxone est administrée afin de déplacer la morphine de ses sites récepteurs et d'arrêter son actionComposé polycyclique complexe et le principal antagoniste des récepteurs de la morphine. Dans les cas d'intoxication aiguë aux morphiniques, la naloxone est administrée afin de déplacer la morphine de ses sites récepteurs et d'arrêter son action.",
+        ['description'] = "Composé polycyclique complexe et le principal antagoniste des récepteurs de la morphine. Dans les cas d'intoxication aiguë aux morphiniques, la naloxone est administrée afin de déplacer la morphine de ses sites récepteurs et d'arrêter son action.",
         ['illustrator'] = '.Poulpito'
     },
     
