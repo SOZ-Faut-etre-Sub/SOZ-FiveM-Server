@@ -5,7 +5,9 @@ import { appBank } from './app/bank';
 import { appInvoices } from './app/invoices';
 import { appNotes } from './app/notes';
 import { appSociety } from './app/society';
+import { appTetrisLeaderboard } from './app/tetrisLeaderboard';
 import { appTwitchNews } from './app/twitchNews';
+import { appWeather } from './app/weather';
 import { emergency } from './emergency';
 import { time } from './os/time';
 import { visibility } from './os/visibility';
@@ -13,7 +15,6 @@ import { phone } from './phone';
 import { photo } from './photo';
 import { avatar } from './sim/avatar';
 import { simCard } from './simCard';
-import { appWeather } from './app/weather';
 
 export interface RootModel extends Models<RootModel> {
     // Core models
@@ -35,6 +36,7 @@ export interface RootModel extends Models<RootModel> {
     appTwitchNews: typeof appTwitchNews;
     appSociety: typeof appSociety;
     appWeather: typeof appWeather;
+    appTetrisLeaderboard: typeof appTetrisLeaderboard;
 }
 
 export const models: RootModel = {
@@ -52,4 +54,5 @@ export const models: RootModel = {
     appSociety,
     appWeather,
     emergency,
+    appTetrisLeaderboard,
 };
