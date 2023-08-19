@@ -1,34 +1,26 @@
+import cn from 'classnames';
 import React from 'react';
 
+import { Piece } from '../game/Piece';
+
 type CellProps = {
-    type?: number;
-    x: number;
-    y: number;
+    block: Piece | 'ghost';
 };
 
-const CELL_SIZE = 30;
-
-const Cell: React.FC<CellProps> = ({ type, x, y }) => {
-    // On définit les couleurs possibles pour chaque type de cellule
-    const colors = ['', '#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff', '#fff', '#5d8921'];
-
-    // On calcule la position de la cellule en pixels en fonction de sa position sur la grille
-    const left = `${CELL_SIZE * x + 1}px`;
-    const top = `${CELL_SIZE * y + 1}px`;
-
-    // On retourne un élément div avec la bonne couleur et la bonne position
+export const Cell: React.FC<CellProps> = ({ block }) => {
     return (
         <div
-            className="tetris-cell"
-            style={{
-                width: `${CELL_SIZE - 1}px`,
-                height: `${CELL_SIZE - 1}px`,
-                left,
-                top,
-                backgroundColor: colors[type || 0],
-            }}
+            className={cn('aspect-square', {
+                //'border border-[#0d1a48]': block,
+                'bg-[#3eafff]': block === 'I',
+                'bg-[#37d437]': block === 'J',
+                'bg-[#e851ea]': block === 'L',
+                'bg-[#feda2a]': block === 'O',
+                'bg-[#e55f00]': block === 'S',
+                'bg-[#1300e5]': block === 'T',
+                'bg-[#ff4f4d]': block === 'Z',
+                'bg-[#ffffff56]': block === 'ghost',
+            })}
         />
     );
 };
-
-export default Cell;

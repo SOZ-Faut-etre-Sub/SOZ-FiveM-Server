@@ -117,7 +117,7 @@ export function viewMatrix(game: Game): Matrix {
 }
 
 export const init = (): Game => {
-    const queue = PieceQueue.create(1);
+    const queue = PieceQueue.create(5);
     const next = PieceQueue.getNextPiece(queue);
     return {
         state: 'PLAYING',
