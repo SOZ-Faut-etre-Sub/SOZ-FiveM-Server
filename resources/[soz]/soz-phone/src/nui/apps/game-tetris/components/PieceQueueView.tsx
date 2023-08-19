@@ -6,7 +6,7 @@ import PieceView from './PieceView';
 export default function PieceQueue(): JSX.Element {
     const { queue } = React.useContext(Context);
     return (
-        <div>
+        <div className="flex flex-col space-y-4 p-1">
             {queue.queue.map((piece, i) => (
                 <PieceView piece={piece} key={i} />
             ))}

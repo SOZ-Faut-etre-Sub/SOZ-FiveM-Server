@@ -1,7 +1,7 @@
 import key from 'keymaster';
 import React from 'react';
 
-import { Action } from '../components/Game';
+import { Action } from '../game/Game';
 
 export type KeyboardMap = Record<string, Action>;
 

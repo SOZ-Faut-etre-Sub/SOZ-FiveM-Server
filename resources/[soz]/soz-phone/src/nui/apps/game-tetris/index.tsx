@@ -1,17 +1,25 @@
-import './assets/style.css';
-
 import { Transition } from '@headlessui/react';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
+import cn from 'classnames';
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { AppWrapper } from '../../ui/components/AppWrapper';
+import { useBackground } from '../../ui/hooks/useBackground';
 import { TetrisGame } from './pages/TetrisGame';
 import { TetrisLeaderboard } from './pages/TetrisLeaderboard';
 
 export const GameTetris: React.FC = () => {
+    const backgroundClass = useBackground();
+    const { pathname } = useLocation();
+
     return (
-        <FullPageWithHeader className="bg-ios-800">
+        <FullPageWithHeader
+            className={cn({
+                'bg-[#38428b]': pathname === '/game-tetris',
+                [backgroundClass]: pathname !== '/game-tetris',
+            })}
+        >
             <Transition
                 appear={true}
                 show={true}
@@ -22,7 +30,7 @@ export const GameTetris: React.FC = () => {
                 leaveFrom="z-10 scale-100 opacity-100"
                 leaveTo="scale-[0.0] opacity-0"
             >
-                <AppWrapper className="h-[850px] w-full under-top-bar" underTopBar="true">
+                <AppWrapper className="h-[775px] w-full">
                     <Routes>
                         <Route index element={<TetrisGame />} />
                         <Route path="leaderboard" element={<TetrisLeaderboard />} />

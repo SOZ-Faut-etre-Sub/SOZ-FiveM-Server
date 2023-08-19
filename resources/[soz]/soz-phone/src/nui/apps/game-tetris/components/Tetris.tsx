@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useVisibility } from '../../../hooks/usePhone';
 import { fetchNui } from '../../../utils/fetchNui';
-import * as Game from '../components/Game';
+import * as Game from '../game/Game';
 import { KeyboardMap, useKeyboardControls } from '../hooks/keyboard_detection';
 import { Context } from '../utils/context';
 import Gameboard from './GameboardView';
