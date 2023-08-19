@@ -25,7 +25,6 @@ import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerPositionProvider } from '../player/player.position.provider';
-import { PlayerService } from '../player/player.service';
 import { RaceRepository } from '../resources/race.repository';
 import { ResourceLoader } from '../resources/resource.loader';
 import { TargetFactory } from '../target/target.factory';
@@ -35,9 +34,6 @@ const npcModel = 's_m_m_autoshop_02';
 
 @Provider()
 export class RaceProvider {
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
@@ -550,6 +546,10 @@ export class RaceProvider {
             DisableControlAction(0, Control.MoveUpDown, true);
             DisableControlAction(0, Control.Duck, true);
             DisableControlAction(0, Control.Jump, true);
+            DisableControlAction(0, Control.VehicleAccelerate, true);
+            DisableControlAction(0, Control.VehicleFlyThrottleUp, true);
+            DisableControlAction(0, Control.VehicleSubThrottleUp, true);
+            DisableControlAction(0, Control.VehiclePushbikePedal, true);
             await wait(0);
         }
     }
@@ -587,7 +587,12 @@ export class RaceProvider {
         this.inRace = true;
         this.preRace = true;
 
-        if (veh) {
+        if (
+            veh &&
+            !IsThisModelABicycle(race.carModel) &&
+            !IsThisModelAHeli(race.carModel) &&
+            !IsThisModelAPlane(race.carModel)
+        ) {
             SetVehicleHandbrake(veh, true);
             SetVehicleBrake(veh, true);
         } else {
