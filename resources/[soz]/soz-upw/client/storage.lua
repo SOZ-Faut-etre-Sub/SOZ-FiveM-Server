@@ -119,7 +119,7 @@ function CreateTerminalTargetScope(scope)
                 end
 
                 if data.scope == "entreprise" then
-                    return OnDutyUpwOrJob(objectIdJobs[objectId].job)
+                    return OnDutyUpwOrJob(objectIdJobs[objectId])
                 else
                     return OnDuty()
                 end
