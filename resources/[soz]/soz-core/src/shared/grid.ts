@@ -21,7 +21,7 @@ export const getChunkId = (v: Vector2 | Vector3 | Vector4): number => {
     const x = getGridChunk(v[0]);
     const y = getGridChunk(v[1]);
 
-    return (x << 2) | y[1];
+    return (x << 16) | y;
 };
 
 export const getGridChunks = (position: Vector2 | Vector3 | Vector4): number[] => {
