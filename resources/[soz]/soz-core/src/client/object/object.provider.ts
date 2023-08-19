@@ -4,7 +4,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { ResourceLoader } from '@public/client/resources/resource.loader';
-import { StateSelector } from '@public/client/store/store';
+import { wait } from '@public/core/utils';
 import { getChunkId } from '@public/shared/grid';
 import { joaat } from '@public/shared/joaat';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -112,8 +112,8 @@ export class ObjectProvider {
         this.unspawnObject(id);
     }
 
-    @StateSelector(state => state.grid)
-    private async updateSpawnObjectOnGridChange(grid: number[]) {
+    //@StateSelector(state => state.grid)
+    public async updateSpawnObjectOnGridChange(grid: number[]) {
         const removedChunks = this.currentChunks.filter(chunk => !grid.includes(chunk));
         const addedChunks = grid.filter(chunk => !this.currentChunks.includes(chunk));
 
@@ -181,6 +181,8 @@ export class ObjectProvider {
         };
 
         this.resourceLoader.unloadModel(object.model);
+
+        await wait(0);
     }
 
     private unspawnObject(id: string): void {
