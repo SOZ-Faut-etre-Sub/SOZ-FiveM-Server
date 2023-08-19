@@ -38,6 +38,10 @@ export class PlayerProvider {
         // This is an event from qb when player is fully loaded but screen is not faded out so we dont' trigger client event
         this.permissions.addPlayerRole(player.PlayerData.source, player.PlayerData.role);
         this.serverStateService.addPlayer(player.PlayerData);
+        this.playerStateService.setClientState(player.PlayerData.source, {
+            isWearingPatientOutfit: false,
+            isInventoryBusy: false,
+        });
         this.playerListStateService.handlePlayer(
             player.PlayerData,
             this.playerStateService.getClientState(player.PlayerData.source)
