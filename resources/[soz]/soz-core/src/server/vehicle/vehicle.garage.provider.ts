@@ -44,7 +44,7 @@ const ALLOWED_VEHICLE_TYPE: Record<GarageCategory, string[]> = {
     [GarageCategory.Car]: ['automobile', 'bike', 'trailer'],
     [GarageCategory.Air]: ['heli', 'plane'],
     [GarageCategory.Sea]: ['boat', 'submarine'],
-    [GarageCategory.All]: ['automobile', 'bike', 'plane', 'heli'],
+    [GarageCategory.All]: ['automobile', 'bike', 'plane', 'heli', 'boat'],
 };
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {

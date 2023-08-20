@@ -47,7 +47,7 @@ const BlipConfigMap: Partial<Record<GarageType, Partial<Record<GarageCategory, B
         [GarageCategory.Sea]: { name: 'Port Public', sprite: 356, color: 3 },
     },
     [GarageType.Depot]: {
-        [GarageCategory.Car]: { name: 'Fourrière', sprite: 68, color: 3 },
+        [GarageCategory.All]: { name: 'Fourrière', sprite: 68, color: 3 },
     },
 };
 
