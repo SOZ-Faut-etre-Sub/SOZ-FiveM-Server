@@ -809,4 +809,5 @@ export enum NuiEvent {
     RaceClearRanking = 'soz-core:client:race:clear-ranking',
     RaceGetRanking = 'soz-core:client:race:get-ranking',
     RaceFps = 'soz-core:client:race:fps',
+    RaceUpdateGarage = 'soz-core:client:race:garage',
 }

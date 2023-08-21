@@ -8,6 +8,7 @@ import { getDurationStr, Race, RaceCheckpointMenuOptions, RaceRankingInfo, Split
 import { getRandomInt } from '@public/shared/random';
 import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { GarageCategory, GarageType, PlaceCapacity } from '@public/shared/vehicle/garage';
 import { VehicleColor, VehicleModType } from '@public/shared/vehicle/modification';
 import { getDefaultVehicleVolatileState } from '@public/shared/vehicle/vehicle';
 
@@ -28,6 +29,7 @@ import { PlayerPositionProvider } from '../player/player.position.provider';
 import { RaceRepository } from '../resources/race.repository';
 import { ResourceLoader } from '../resources/resource.loader';
 import { TargetFactory } from '../target/target.factory';
+import { VehicleGarageProvider } from '../vehicle/vehicle.garage.provider';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
 const npcModel = 's_m_m_autoshop_02';
@@ -70,6 +72,9 @@ export class RaceProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
+    @Inject(VehicleGarageProvider)
+    private vehicleGarageProvider: VehicleGarageProvider;
+
     private inRace = false;
     private preRace = false;
     private currentAdminMenuRace: string = null;
@@ -97,6 +102,36 @@ export class RaceProvider {
                 action: entity => {
                     const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
                     this.nuiMenu.openMenu(MenuType.RaceRank, { id: race.id, name: race.name });
+                },
+            },
+            {
+                label: 'Accéder au parking temporaire',
+                icon: 'c:garage/ParkingPublic.png',
+                canInteract: entity => {
+                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
+                    return race && race.garageLocation != null;
+                },
+                action: entity => {
+                    const race = Object.values(this.raceRepository.get()).find(race => race.npc == entity);
+                    const id = 'race' + race.id;
+                    this.vehicleGarageProvider.enterGarage(id, {
+                        category: GarageCategory.All,
+                        type: GarageType.Public,
+                        id: id,
+                        name: id,
+                        parkingPlaces: [
+                            {
+                                center: race.garageLocation,
+                                heading: race.garageLocation[3],
+                                data: {
+                                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                                },
+                            },
+                        ],
+                        zone: {
+                            center: race.npcPosition,
+                        },
+                    });
                 },
             },
         ]);
@@ -132,6 +167,13 @@ export class RaceProvider {
                 minZ: race.npcPosition[2],
                 maxZ: race.npcPosition[2] + 2,
             }).draw([0, 255, 0], 128, 'PNJ');
+            if (race.garageLocation) {
+                new BoxZone(race.garageLocation, 1.0, 1.0, {
+                    heading: race.garageLocation[3],
+                    minZ: race.garageLocation[2],
+                    maxZ: race.garageLocation[2] + 2,
+                }).draw([0, 255, 0], 128, 'Garage Spawn');
+            }
             race.checkpoints.forEach((checkpoint, index) =>
                 new CylinderZone(
                     [checkpoint[0], checkpoint[1]] as Vector2,
@@ -299,6 +341,18 @@ export class RaceProvider {
 
         const race = this.raceRepository.find(raceId);
         race.start = [coords[0], coords[1], coords[2] - 1, heading] as Vector4;
+
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+    }
+
+    @OnNuiEvent(NuiEvent.RaceUpdateGarage)
+    public async onRaceUpdateGarage(raceId: number) {
+        const playerPed = PlayerPedId();
+        const coords = GetEntityCoords(playerPed);
+        const heading = GetEntityHeading(playerPed);
+
+        const race = this.raceRepository.find(raceId);
+        race.garageLocation = [coords[0], coords[1], coords[2] - 1, heading] as Vector4;
 
         TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
     }

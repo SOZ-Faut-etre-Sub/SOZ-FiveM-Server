@@ -548,7 +548,7 @@ export class VehicleGarageProvider {
         this.nuiMenu.closeMenu();
     }
 
-    private async enterGarage(id: string, garage: Garage) {
+    public async enterGarage(id: string, garage: Garage) {
         const vehicles = await emitRpc<GarageVehicle[]>(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES, id, garage);
         if (vehicles === null) {
             return;
