@@ -623,6 +623,7 @@ model race {
   checkpoints  String    @db.Text
   enabled      Boolean
   fps          Boolean
+  garage       String?    @db.Text
   
   scores            race_score[] @relation("race_scores_race")
   

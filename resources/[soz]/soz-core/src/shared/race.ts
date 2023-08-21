@@ -22,6 +22,7 @@ export type Race = {
     display?: boolean;
     npc?: number;
     fps: boolean;
+    garageLocation: Vector4;
 };
 
 export enum RaceCheckpointMenuOptions {

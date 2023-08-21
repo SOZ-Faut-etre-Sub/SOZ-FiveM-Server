@@ -27,6 +27,7 @@ export class RaceRepository extends Repository<Record<number, Race>> {
                 checkpoints: JSON.parse(line.checkpoints),
                 enabled: line.enabled,
                 fps: line.fps,
+                garageLocation: line.garage && JSON.parse(line.garage),
             } as Race;
         }
 

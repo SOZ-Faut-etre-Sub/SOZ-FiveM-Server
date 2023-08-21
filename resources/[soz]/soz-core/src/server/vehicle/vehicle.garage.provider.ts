@@ -319,7 +319,14 @@ export class VehicleGarageProvider {
 
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_VEHICLES)
     public async getGarageVehicles(source: number, id: string): Promise<GarageVehicle[]> {
-        const garage = (await this.garageRepository.get())[id];
+        const garage =
+            (await this.garageRepository.get())[id] ||
+            ({
+                category: GarageCategory.All,
+                id: id,
+                name: id,
+                type: GarageType.Public,
+            } as Garage);
 
         const player = this.playerService.getPlayer(source);
 

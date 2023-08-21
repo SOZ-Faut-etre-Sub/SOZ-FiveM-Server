@@ -93,6 +93,9 @@ export const RaceSubMenu: FunctionComponent<MenuRaceSubProps> = ({ data }) => {
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceUpdateStart, data.id)}>
                         Changer la position de départ
                     </MenuItemButton>
+                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceUpdateGarage, data.id)}>
+                        Changer la position du garage
+                    </MenuItemButton>
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.RaceUpdateCarModel, data.id)}>
                         Voiture: {data.carModel}
                     </MenuItemButton>
