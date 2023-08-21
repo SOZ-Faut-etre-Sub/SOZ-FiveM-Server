@@ -914,7 +914,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
     pound_paleto: {
         name: 'Fourrière',
         type: GarageType.Depot,
-        category: GarageCategory.Car,
+        category: GarageCategory.All,
         zone: new BoxZone([-217.29, 6215.21, 30.49], 1.0, 1.0, {
             heading: 45.0,
             minZ: 29.49,
@@ -950,7 +950,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
         name: 'Fourrière',
         legacyId: 'fourriere',
         type: GarageType.Depot,
-        category: GarageCategory.Car,
+        category: GarageCategory.All,
         zone: new BoxZone([403.12, -1625.36, 28.29], 1, 1, {
             heading: 51,
             minZ: 27.29,
