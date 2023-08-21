@@ -132,7 +132,7 @@ export class AdminMenuPlayerProvider {
     @OnEvent(ServerEvent.ADMIN_TELEPORT_PLAYER_TO_ME)
     public teleportPlayerToMe(source: number, player: AdminPlayer) {
         const ped = GetPlayerPed(player.id);
-        const position = GetEntityCoords(GetPlayerPed(ped));
+        const position = GetEntityCoords(GetPlayerPed(source));
 
         SetEntityCoords(ped, position[0], position[1], position[2], false, false, false, false);
 
