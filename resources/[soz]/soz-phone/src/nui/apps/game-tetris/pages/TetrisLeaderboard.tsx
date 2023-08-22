@@ -49,14 +49,12 @@ export const TetrisLeaderboard: React.FC = () => {
                             <div
                                 key={player.citizenid}
                                 className={cn('relative px-6 py-2 flex items-center space-x-3 rounded-md', {
-                                    'hover:bg-ios-600': config.theme.value === 'dark',
-                                    'hover:bg-gray-300': config.theme.value === 'light',
                                     'bg-[#FFD700]': i === 0,
                                     'bg-[#C0C0C0]': i === 1,
                                     'bg-[#CD7F32]': i === 2,
                                 })}
                             >
-                                <div className="flex-1 min-w-0 cursor-pointer">
+                                <div className="flex-1 min-w-0">
                                     <span className="absolute inset-0" aria-hidden="true" />
                                     <p
                                         className={cn('text-left text-xs font-bold', {
