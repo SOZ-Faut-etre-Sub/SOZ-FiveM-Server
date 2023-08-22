@@ -41,6 +41,7 @@ export class ObjectProvider {
 
     @Exportable('DeleteObject')
     public deleteObject(id: string): void {
+        delete this.objects[id];
         TriggerClientEvent(ClientEvent.OBJECT_DELETE, -1, id);
     }
 }
