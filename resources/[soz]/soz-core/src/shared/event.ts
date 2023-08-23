@@ -133,6 +133,10 @@ export enum ServerEvent {
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
+    PROP_REQUEST_DELETE_PROPS = 'soz-core:server:prop:request-delete',
+    PROP_REQUEST_EDIT_PROP = 'soz-core:server:prop:request-edit',
+    PROP_REQUEST_LOAD_PROPS = 'soz-core:server:prop:request-load',
+
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
     SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',
@@ -389,6 +393,12 @@ export enum ClientEvent {
 
     OBJECT_CREATE = 'soz-core:client:object:create',
     OBJECT_DELETE = 'soz-core:client:object:delete',
+
+    PROP_CREATE_CLIENTSIDE = 'soz-core:client:prop:create',
+    PROP_DELETE_CLIENTSIDE = 'soz-core:client:prop:delete',
+    PROP_EDIT_CLIENTSIDE = 'soz-core:client:prop:edit',
+    PROP_SYNC_CLIENTSIDE = 'soz-core:client:prop:sync',
+    PROP_OPEN_MENU = 'soz-core:client:prop:open-menu',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
@@ -811,6 +821,28 @@ export enum NuiEvent {
     RaceGetRanking = 'soz-core:client:race:get-ranking',
     RaceFps = 'soz-core:client:race:fps',
     RaceVehConfiguration = 'soz-core:client:race:veh-configuration',
+    RaceUpdateGarage = 'soz-core:client:race:garage',
 
     GouvAnnoncement = 'soz-core:client:gouv:annoncement',
+
+    SelectPlacedProp = 'soz-core:client:placement:select-placed-prop',
+    SelectPropToCreate = 'soz-core:client:placement:select-prop-to-create',
+    ChoosePropToCreate = 'soz-core:client:placement:choose-prop-to-create',
+    ChoosePlacedPropToEdit = 'soz-core:client:placement:choose-placed-prop-to-edit',
+    SearchProp = 'soz-core:client:placement:search-prop',
+    LeaveEditorMode = 'soz-core:client:placement:leave-mode',
+    TogglePedMovements = 'soz-core:client:placement:toggle-movements',
+    ToggleMouseSelection = 'soz-core:client:placement:toggle-mouse-selection',
+    TogglePipette = 'soz-core:client:placement:toggle-pipette',
+    ValidatePlacement = 'soz-core:client:placement:validate',
+    RequestDeleteCurrentProp = 'soz-core:client:placement:request-delete-current-prop',
+    PropPlacementReset = 'soz-core:client:placement:reset',
+    PropPlacementReturnToMainMenu = 'soz-core:client:placement:return-to-main-menu',
+    PropPlacementReturnToCollection = 'soz-core:client:placement:return-to-collection',
+    PropToggleCollision = 'soz-core:client:placement:toggle-collision',
+    SelectPlacementCollection = 'soz-core:client:placement:select-collection',
+    RequestToggleCollectionLoad = 'soz-core:client:placement:toggle-collection-load',
+    RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
+    RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
+    RequestDeleteProp = 'soz-core:client:placement:delete-prop',
 }

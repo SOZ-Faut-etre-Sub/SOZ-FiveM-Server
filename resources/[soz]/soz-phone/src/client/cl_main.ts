@@ -137,6 +137,11 @@ const checkExportCanOpen = async (): Promise<boolean> => {
 };
 
 async function togglePhone(): Promise<void> {
+    const isEditorModeActive = exports['soz-core'].IsEditorModeActive();
+    if (isEditorModeActive) {
+        return;
+    }
+
     if (global.isPhoneOpen) {
         return await hidePhone();
     }
