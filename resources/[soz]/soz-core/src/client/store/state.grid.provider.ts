@@ -4,6 +4,7 @@ import { Tick } from '../../core/decorators/tick';
 import { getGridChunks } from '../../shared/grid';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { ObjectProvider } from '../object/object.provider';
+import { PropProvider } from '../object/prop.provider';
 import { Store } from './store';
 
 @Provider()
@@ -13,6 +14,9 @@ export class StateGridProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
+
+    @Inject(PropProvider)
+    private propProvider: PropProvider;
 
     @Tick(1000)
     public async checkGridChunks() {
@@ -26,6 +30,7 @@ export class StateGridProvider {
         if (diffAdded.length > 0 || diffRemoved.length > 0) {
             this.store.dispatch.grid.set(newChunks);
             await this.objectProvider.updateSpawnObjectOnGridChange(newChunks);
+            await this.propProvider.updateSpawnPropOnGridChange(newChunks);
         }
     }
 }
