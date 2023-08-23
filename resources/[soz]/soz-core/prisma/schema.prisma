@@ -173,6 +173,27 @@ model persistent_prop {
   position String  @db.LongText
 }
 
+model collection_prop {
+  id           BigInt  @id @default(autoincrement())
+  name         String  @db.VarChar(50) @unique
+  creator      String  @db.VarChar(50)
+  date         DateTime @default(now()) @db.Timestamp(0)
+  props        placed_prop[]
+}
+
+model placed_prop {
+  id                  BigInt              @id @default(autoincrement())
+  unique_id           String              @db.VarChar(255) @unique
+  collection          String              @db.VarChar(50)
+  model               String
+  position            String              @db.LongText
+  matrix              String?             @db.LongText
+  collision           Boolean             @default(true)
+  collection_prop     collection_prop     @relation(fields: [collection], references: [name], onDelete: Cascade, onUpdate: Restrict, map: "FK_placed_prop_soz_collection_prop")
+
+  @@index([collection], map: "FK_placed_prop_soz_collection_prop")
+}
+
 model phone_calls {
   id          Int      @id @default(autoincrement())
   identifier  String?  @db.VarChar(48)
@@ -625,9 +646,9 @@ model race {
   fps           Boolean
   garage        String?    @db.Text
   configuration String?    @db.Text
-  
+
   scores            race_score[] @relation("race_scores_race")
-  
+
   @@index([name], map: "name")
 }
 
