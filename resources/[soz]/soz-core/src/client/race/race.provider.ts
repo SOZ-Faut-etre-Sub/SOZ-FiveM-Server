@@ -4,7 +4,16 @@ import { wait } from '@public/core/utils';
 import { Control } from '@public/shared/input';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { CylinderZone } from '@public/shared/polyzone/cylinder.zone';
-import { getDurationStr, Race, RaceCheckpointMenuOptions, RaceRankingInfo, SplitInfo } from '@public/shared/race';
+import {
+    getDurationStr,
+    Race,
+    RaceCheckpointMenuOptions,
+    RaceLaunchMenuOptions,
+    RaceRankingInfo,
+    RaceUpdateMenuOptions,
+    RaceVehConfigurationOptions,
+    SplitInfo,
+} from '@public/shared/race';
 import { getRandomInt } from '@public/shared/random';
 import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -30,6 +39,8 @@ import { RaceRepository } from '../resources/race.repository';
 import { ResourceLoader } from '../resources/resource.loader';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleGarageProvider } from '../vehicle/vehicle.garage.provider';
+import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
+import { VehicleService } from '../vehicle/vehicle.service';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
 const npcModel = 's_m_m_autoshop_02';
@@ -72,8 +83,14 @@ export class RaceProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
+
     @Inject(VehicleGarageProvider)
     private vehicleGarageProvider: VehicleGarageProvider;
+
+    @Inject(VehicleModificationService)
+    private vehicleModificationService: VehicleModificationService;
 
     private inRace = false;
     private preRace = false;
@@ -321,38 +338,27 @@ export class RaceProvider {
         TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
     }
 
-    @OnNuiEvent(NuiEvent.RaceUpdateNPCLocation)
-    public async onRaceUpdateNPCLocation(raceId: number) {
+    @OnNuiEvent(NuiEvent.RaceUpdateLocation)
+    public async onRaceUpdateLocation({ raceId, option }: { option: RaceUpdateMenuOptions; raceId: number }) {
+        const race = this.raceRepository.find(raceId);
+
         const playerPed = PlayerPedId();
         const coords = GetEntityCoords(playerPed);
         const heading = GetEntityHeading(playerPed);
 
-        const race = this.raceRepository.find(raceId);
-        race.npcPosition = [coords[0], coords[1], coords[2] - 1, heading] as Vector4;
+        const loc = [coords[0], coords[1], coords[2] - 1, heading] as Vector4;
 
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
-    }
-
-    @OnNuiEvent(NuiEvent.RaceUpdateStart)
-    public async onRaceUpdateStart(raceId: number) {
-        const playerPed = PlayerPedId();
-        const coords = GetEntityCoords(playerPed);
-        const heading = GetEntityHeading(playerPed);
-
-        const race = this.raceRepository.find(raceId);
-        race.start = [coords[0], coords[1], coords[2] - 1, heading] as Vector4;
-
-        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
-    }
-
-    @OnNuiEvent(NuiEvent.RaceUpdateGarage)
-    public async onRaceUpdateGarage(raceId: number) {
-        const playerPed = PlayerPedId();
-        const coords = GetEntityCoords(playerPed);
-        const heading = GetEntityHeading(playerPed);
-
-        const race = this.raceRepository.find(raceId);
-        race.garageLocation = [coords[0], coords[1], coords[2] - 1, heading] as Vector4;
+        switch (option) {
+            case RaceUpdateMenuOptions.npc:
+                race.npcPosition = loc;
+                break;
+            case RaceUpdateMenuOptions.garage:
+                race.garageLocation = loc;
+                break;
+            case RaceUpdateMenuOptions.start:
+                race.start = loc;
+                break;
+        }
 
         TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
     }
@@ -370,19 +376,45 @@ export class RaceProvider {
         TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
     }
 
+    @OnNuiEvent(NuiEvent.RaceVehConfiguration)
+    public async onRaceVehVonfiguration({ raceId, option }: { option: RaceVehConfigurationOptions; raceId: number }) {
+        const race = this.raceRepository.find(raceId);
+
+        switch (option) {
+            case RaceVehConfigurationOptions.default:
+                race.vehicleConfiguration = null;
+                break;
+            case RaceVehConfigurationOptions.current:
+                {
+                    const ped = PlayerPedId();
+                    const vehicle = GetVehiclePedIsIn(ped, false);
+                    if (!vehicle) {
+                        this.notifier.error("Tu n'es pas dans un véhicle");
+                        return;
+                    }
+
+                    if (GetEntityModel(vehicle) != GetHashKey(race.carModel)) {
+                        this.notifier.error("Tu n'es pas dans le bon modèle de véhicle");
+                        return;
+                    }
+
+                    const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
+                    race.vehicleConfiguration = configuration;
+                }
+                break;
+        }
+
+        TriggerServerEvent(ServerEvent.RACE_UPDATE, race);
+    }
+
     @OnNuiEvent(NuiEvent.RaceDelete)
     public async onRaceDelete(raceId: number) {
         TriggerServerEvent(ServerEvent.RACE_DELETE, raceId);
     }
 
-    @OnNuiEvent(NuiEvent.RaceTry)
-    public async onRaceTry(raceId: number) {
-        this.startRace(raceId, true);
-    }
-
-    @OnNuiEvent(NuiEvent.RaceRun)
-    public async onRaceRun(raceId: number) {
-        this.startRace(raceId, false);
+    @OnNuiEvent(NuiEvent.RaceMenuLaunch)
+    public async onRaceLaunch({ raceId, option }: { option: RaceLaunchMenuOptions; raceId: number }) {
+        this.startRace(raceId, option == RaceLaunchMenuOptions.test);
     }
 
     @OnNuiEvent(NuiEvent.RaceAddCheckpoint)
@@ -511,21 +543,35 @@ export class RaceProvider {
                 true
             );
 
-            SetVehicleModKit(vehicle, 0);
-            ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
-            SetVehicleMod(vehicle, VehicleModType.Engine, GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1, false);
-            SetVehicleMod(vehicle, VehicleModType.Brakes, GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1, false);
-            SetVehicleMod(
-                vehicle,
-                VehicleModType.Transmission,
-                GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
-                false
-            );
-            SetVehicleColours(
-                vehicle,
-                getRandomInt(0, VehicleColor.BrushedGold),
-                getRandomInt(0, VehicleColor.BrushedGold)
-            );
+            if (race.vehicleConfiguration) {
+                this.vehicleService.applyVehicleConfiguration(vehicle, race.vehicleConfiguration);
+            } else {
+                SetVehicleModKit(vehicle, 0);
+                ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
+                SetVehicleMod(
+                    vehicle,
+                    VehicleModType.Engine,
+                    GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1,
+                    false
+                );
+                SetVehicleMod(
+                    vehicle,
+                    VehicleModType.Brakes,
+                    GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1,
+                    false
+                );
+                SetVehicleMod(
+                    vehicle,
+                    VehicleModType.Transmission,
+                    GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
+                    false
+                );
+                SetVehicleColours(
+                    vehicle,
+                    getRandomInt(0, VehicleColor.BrushedGold),
+                    getRandomInt(0, VehicleColor.BrushedGold)
+                );
+            }
 
             await wait(100);
 

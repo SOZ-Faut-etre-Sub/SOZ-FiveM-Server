@@ -37,6 +37,7 @@ export class RaceProvider {
                 checkpoints: JSON.stringify(race.checkpoints),
                 fps: false,
                 garage: race.garageLocation && JSON.stringify(race.garageLocation),
+                configuration: race.vehicleConfiguration && JSON.stringify(race.vehicleConfiguration),
             },
         });
 
@@ -64,6 +65,7 @@ export class RaceProvider {
                 checkpoints: JSON.stringify(race.checkpoints),
                 fps: race.fps,
                 garage: race.garageLocation && JSON.stringify(race.garageLocation),
+                configuration: race.vehicleConfiguration && JSON.stringify(race.vehicleConfiguration),
             },
         });
 
