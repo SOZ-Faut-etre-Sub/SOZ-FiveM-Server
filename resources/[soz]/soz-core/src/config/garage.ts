@@ -2215,4 +2215,80 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
+    sasp: {
+        name: 'San Andreas State Police Parking',
+        type: GarageType.Job,
+        job: JobType.SASP,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-464.16, -609.59, 30.22], 1.0, 1.0, {
+            heading: 0.0,
+            minZ: 30.22,
+            maxZ: 32.32,
+        }),
+        parkingPlaces: [
+            new BoxZone([-471.16, -613.18, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-467.63, -612.91, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-464.23, -613.32, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-460.72, -612.97, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-457.04, -613.3, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+        ],
+    },
+    gouv: {
+        name: 'Gouvernement Parking',
+        type: GarageType.Job,
+        job: JobType.Gouv,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-464.17, -628.78, 30.22], 1.0, 1.0, {
+            heading: 180.0,
+            minZ: 30.22,
+            maxZ: 32.32,
+        }),
+        parkingPlaces: [
+            new BoxZone([-470.9, -624.88, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-467.28, -625.06, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-463.84, -624.23, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-460.52, -624.8, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-456.88, -625.01, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+        ],
+    },
 };

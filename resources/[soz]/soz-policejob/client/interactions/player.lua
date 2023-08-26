@@ -1,8 +1,8 @@
 -- Maybe these permissions could be included in SozJobCore.Jobs in resources/[soz]/soz-jobs/config.lua
-local jobCanFine = {"lspd", "bcso"}
-local jobCanFouille = {"lspd", "bcso", "cash-transfer"}
-local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc"}
-local jobCanBreathAnalyze = {"lspd", "bcso", "lsmc"}
+local jobCanFine = {"lspd", "bcso", "sasp"}
+local jobCanFouille = {"lspd", "bcso", "cash-transfer", "sasp"}
+local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc", "sasp"}
+local jobCanBreathAnalyze = {"lspd", "bcso", "lsmc", "sasp"}
 
 --- Targets
 Citizen.CreateThread(function()

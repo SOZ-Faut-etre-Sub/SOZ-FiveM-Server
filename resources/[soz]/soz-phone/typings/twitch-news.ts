@@ -9,7 +9,11 @@ export interface TwitchNewsMessage {
         | 'lspd'
         | 'lspd:end'
         | 'bcso'
-        | 'bcso:end';
+        | 'bcso:end'
+        | 'sasp'
+        | 'sasp:end'
+        | 'gouv'
+        | 'gouv:end';
     reporter?: string;
     reporterId?: string;
     image?: string;

@@ -161,7 +161,7 @@ local Elevators = {
         upTo = "admin:0",
         downTo = nil,
         spawnPoint = vector4(2154.62, 2920.95, -81.08, 272.4),
-        job = {fbi = 0, lspd = 0, bcso = 0},
+        job = {fbi = 0, lspd = 0, bcso = 0, sasp = 0, gouv = 0},
     },
     --- MTP
     ["mtp:0"] = {

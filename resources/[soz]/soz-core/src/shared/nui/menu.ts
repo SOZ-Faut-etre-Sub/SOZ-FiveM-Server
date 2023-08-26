@@ -81,6 +81,7 @@ export enum MenuType {
     RentBoat = 'rent_boat',
     RaceAdmin = 'RaceAdmin',
     RaceRank = 'RaceRank',
+    GouvJobMenu = 'gouv_job',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -122,4 +123,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.RentBoat]: any;
     [MenuType.RaceAdmin]: Race[];
     [MenuType.RaceRank]: { id: number; name: string };
+    [MenuType.GouvJobMenu]: { onDuty: boolean };
 }
