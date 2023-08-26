@@ -616,14 +616,15 @@ model player_sozedex_rewards {
 
 model race {
   id           Int       @id @default(autoincrement())
-  name         String    @db.VarChar(50)
-  model        String    @db.VarChar(50)
-  npc_position String    @db.Text
-  start        String    @db.Text
-  checkpoints  String    @db.Text
-  enabled      Boolean
-  fps          Boolean
-  garage       String?    @db.Text
+  name          String    @db.VarChar(50)
+  model         String    @db.VarChar(50)
+  npc_position  String    @db.Text
+  start         String    @db.Text
+  checkpoints   String    @db.Text
+  enabled       Boolean
+  fps           Boolean
+  garage        String?    @db.Text
+  configuration String?    @db.Text
   
   scores            race_score[] @relation("race_scores_race")
   
