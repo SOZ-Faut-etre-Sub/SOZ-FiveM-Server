@@ -55,7 +55,7 @@ export const SettingsHome = () => {
     const [openMenu, closeMenu, ContextMenu, isMenuOpen] = useContextMenu();
 
     const canShowDynamicAlerts = (): boolean => {
-        return ['555-LSPD', '555-BCSO', '555-FBI'].some(allowedNumber => allowedNumber === societyNumber);
+        return ['555-LSPD', '555-BCSO', '555-SASP', '555-FBI'].some(allowedNumber => allowedNumber === societyNumber);
     };
 
     const handleSettingChange = (key: string | number, value: any) => {

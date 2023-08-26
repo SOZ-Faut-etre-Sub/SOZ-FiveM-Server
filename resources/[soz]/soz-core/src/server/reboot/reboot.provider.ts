@@ -6,7 +6,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
 import { uuidv4, wait } from '../../core/utils';
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { ApiClient } from '../api/api.client';
 import { PrismaService } from '../database/prisma.service';
@@ -186,8 +186,8 @@ export class RebootProvider {
         await this.apiClient.addRebootMessage(minutes);
 
         emit(
-            ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
-            `${ClientEvent.PHONE_APP_NEWS_CREATE_BROADCAST}:${uuidv4()}`,
+            ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
+            `${ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST}:${uuidv4()}`,
             {
                 type: `reboot_${minutes}`,
                 message: `Un ouragan arrive à toute allure ! Il devrait frapper le coeur de San Andreas d'ici ${minutes} minutes. Veuillez ranger vos véhicules et vous abriter ! Votre sécurité est primordiale.`,

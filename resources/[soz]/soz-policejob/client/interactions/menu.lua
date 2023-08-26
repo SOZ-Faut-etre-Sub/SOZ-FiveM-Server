@@ -191,28 +191,28 @@ end
 
 PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
     PoliceJob.Functions.Menu.GenerateMenu(job, function(menu)
-        if PlayerData.job.id == "fbi" then
-            menu:AddButton({
-                label = "Faire une communication",
-                value = nil,
-                select = function(_, value)
-                    local message = exports["soz-core"]:Input("Message de la communication", 235)
-                    if message == nil or message == "" then
-                        exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
-                        return
-                    end
-
-                    TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
-                        type = PlayerData.job.id,
-                        message = message,
-                        reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
-                        reporterId = PlayerData.citizenid,
-                    })
-                end,
-            })
-        end
-
         if PlayerData.job.onduty then
+            if PlayerData.job.id == "fbi" or PlayerData.job.id == "sasp" then
+                menu:AddButton({
+                    label = "Faire une communication",
+                    value = nil,
+                    select = function(_, value)
+                        local message = exports["soz-core"]:Input("Message de la communication", 235)
+                        if message == nil or message == "" then
+                            exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
+                            return
+                        end
+
+                        TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
+                            type = PlayerData.job.id .. "_annoncement",
+                            message = message,
+                            reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
+                            reporterId = PlayerData.citizenid,
+                        })
+                    end,
+                })
+            end
+
             RedAlertEntity(menu, "555-POLICE")
             PropsEntity(menu)
             BadgeEntity(menu)

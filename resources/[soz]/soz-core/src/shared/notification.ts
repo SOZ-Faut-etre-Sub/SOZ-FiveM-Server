@@ -32,4 +32,4 @@ export type NotificationPoliceType =
     | 'auto-theft'
     | 'drug';
 
-export type NotificationPoliceLogoType = 'lspd' | 'bcso' | 'police';
+export type NotificationPoliceLogoType = 'lspd' | 'bcso' | 'sasp' | 'police';

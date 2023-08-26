@@ -1,4 +1,6 @@
 export enum ServerEvent {
+    PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
+
     ADMIN_RESET_HALLOWEEN = 'soz-core:server:admin:reset-halloween',
     ADMIN_ADD_MONEY = 'soz-core:server:admin:add-money',
     ADMIN_ADD_LICENSE = 'soz-core:server:admin:add-license',
@@ -312,7 +314,6 @@ export enum ClientEvent {
 
     CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
 
-    PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
     ADMIN_NOCLIP_ENABLED = 'soz-core:client:admin:noclip:enabled',
@@ -358,6 +359,7 @@ export enum ClientEvent {
     JOBS_TAXI_OPEN_SOCIETY_MENU = 'soz-jobs:client:taxi:OpenSocietyMenu',
     JOBS_LSMC_OPEN_SOCIETY_MENU = 'soz-jobs:client:lsmc:OpenSocietyMenu',
     JOBS_GARBAGE_OPEN_SOCIETY_MENU = 'jobs:client:garbage:OpenSocietyMenu',
+    JOBS_GOUV_OPEN_SOCIETY_MENU = 'soz-jobs:client:gouv:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
@@ -809,4 +811,6 @@ export enum NuiEvent {
     RaceGetRanking = 'soz-core:client:race:get-ranking',
     RaceFps = 'soz-core:client:race:fps',
     RaceVehConfiguration = 'soz-core:client:race:veh-configuration',
+
+    GouvAnnoncement = 'soz-core:client:gouv:annoncement',
 }

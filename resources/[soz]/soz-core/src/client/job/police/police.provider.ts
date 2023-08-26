@@ -8,7 +8,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { FDO } from '@public/shared/job';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -16,7 +16,6 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { AnimationStopReason } from '../../../shared/animation';
 import { AnimationService } from '../../animation/animation.service';
 
-const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD];
 const WEAPON_DIGISCANNER = -38085395;
 const RadarRange = 40;
 
@@ -59,7 +58,7 @@ export class PoliceProvider {
                 return;
             }
 
-            if (player && AllowedJob.includes(player.job.id)) {
+            if (player && FDO.includes(player.job.id)) {
                 this.takeDownFrontPlayer(playerPed);
             }
         });
