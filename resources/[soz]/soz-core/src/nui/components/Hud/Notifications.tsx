@@ -248,6 +248,10 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
         if (notification.logo === 'bcso') {
             image = '/public/images/hud/notification/bcso.webp';
         }
+
+        if (notification.logo === 'sasp') {
+            image = '/public/images/hud/notification/sasp.webp';
+        }
         return image;
     };
 

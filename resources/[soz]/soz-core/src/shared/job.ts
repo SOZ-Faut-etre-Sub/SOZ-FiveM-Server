@@ -22,7 +22,12 @@ export enum JobType {
     Baun = 'baun',
     FBI = 'fbi',
     MDR = 'mdr',
+    Gouv = 'gouv',
+    SASP = 'sasp',
 }
+
+export const BASE_FDO = [JobType.LSPD, JobType.BCSO];
+export const FDO = [JobType.FBI, JobType.LSPD, JobType.BCSO, JobType.SASP];
 
 export enum JobPermission {
     Enrollment = 'enrollment',
@@ -95,6 +100,8 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.Baun]: 'Bahama Unicorn',
     [JobType.FBI]: 'Federal Bureau of Investigation',
     [JobType.MDR]: 'Mandatory',
+    [JobType.Gouv]: 'Gouvernement',
+    [JobType.SASP]: 'San Andreas State Police',
 };
 
 export type JobPermissionData = {

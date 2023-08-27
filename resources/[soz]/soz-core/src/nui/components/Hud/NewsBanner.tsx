@@ -34,9 +34,9 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
             return '';
         }
 
-        if (/(lspd|bcso)/.test(type)) {
+        if (['lspd', 'bcso', 'sasp'].includes(news.type)) {
             return 'Avis de recherche';
-        } else if (type === 'fbi') {
+        } else if (type === 'fbi_annoncement' || type === 'sasp_annoncement' || type === 'gouv') {
             return 'Annonce';
         } else {
             return type;
@@ -53,7 +53,15 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
             backgroundImage = '/public/images/twitch-news/bcso.webp';
             break;
         case 'fbi':
+        case 'fbi_annoncement':
             backgroundImage = '/public/images/twitch-news/fbi.webp';
+            break;
+        case 'sasp':
+        case 'sasp_annoncement':
+            backgroundImage = '/public/images/twitch-news/sasp.webp';
+            break;
+        case 'gouv':
+            backgroundImage = '/public/images/twitch-news/gouv.webp';
             break;
         case 'reboot_5':
             backgroundImage = 'https://soz.zerator.com/static/images/reboot_5.png';
@@ -78,7 +86,7 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
         >
             <h3 className="flex h-[25%] justify-end text-4xl items-center pr-4 uppercase">{newsTitle(news.type)}</h3>
             <div className="pl-[28%] h-[62%] text-[0.91rem] lg:text-lg">
-                {/(lspd|bcso)/.test(news.type) ? (
+                {['lspd', 'bcso', 'sasp'].includes(news.type) ? (
                     <p className="flex flex-col justify-between p-2 h-full overflow-hidden break-words">
                         <p>
                             Les forces de l'ordre sont à la recherche de <strong>{news.message}</strong>.

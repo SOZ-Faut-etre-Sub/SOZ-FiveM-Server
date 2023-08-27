@@ -99,7 +99,7 @@ class _SocietyService {
             const contact = await this.contactsDB.addSociety(identifier, reqObj.data);
             resp({ status: 'ok', data: contact });
 
-            if (['555-LSPD', '555-BCSO', '555-POLICE'].includes(reqObj.data.number)) {
+            if (['555-LSPD', '555-BCSO', '555-SASP', '555-POLICE'].includes(reqObj.data.number)) {
                 this.policeMessageCount++;
             }
 
@@ -149,6 +149,7 @@ class _SocietyService {
             if (reqObj.data.number === '555-POLICE') {
                 const lspd = await PlayerService.getPlayersFromSocietyNumber('555-LSPD');
                 const bcso = await PlayerService.getPlayersFromSocietyNumber('555-BCSO');
+                const sasp = await PlayerService.getPlayersFromSocietyNumber('555-SASP');
                 const fbi = await PlayerService.getPlayersFromSocietyNumber('555-FBI');
 
                 const message: SocietyInsertDTO = {
@@ -166,6 +167,13 @@ class _SocietyService {
                             '555-BCSO'
                         )
                     ),
+                    '555-SASP': await this.contactsDB.addSociety(
+                        identifier,
+                        this.replaceSocietyPhoneNumber(
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                            '555-SASP'
+                        )
+                    ),
                     '555-FBI': await this.contactsDB.addSociety(
                         identifier,
                         this.replaceSocietyPhoneNumber(
@@ -175,7 +183,7 @@ class _SocietyService {
                     ),
                 };
 
-                [lspd, bcso, fbi]
+                [lspd, bcso, fbi, sasp]
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
                         const data = this.addTagForSocietyMessage(reqObj.data, originalMessageNumber);

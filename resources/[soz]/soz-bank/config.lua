@@ -167,6 +167,20 @@ Config.SafeStorages = {
         size = vec2(1.0, 1.0),
         heading = 30.0,
     },
+    ["safe_sasp"] = {
+        label = "Coffre SASP",
+        owner = "sasp",
+        position = vector3(-583.08, -590.96, 34.68),
+        size = vec2(1.00, 0.80),
+        heading = 0.0,
+    },
+    ["safe_gouv"] = {
+        label = "Coffre Gouvernement",
+        owner = "gouv",
+        position = vector3(-525.62, -590.78, 34.68),
+        size = vec2(0.40, 1.00),
+        heading = 0.0,
+    },
 }
 
 Config.ATMModels = {
