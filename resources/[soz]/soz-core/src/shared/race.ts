@@ -1,4 +1,5 @@
 import { Vector4 } from './polyzone/vector';
+import { VehicleConfiguration } from './vehicle/modification';
 
 export type RaceRankingInfo = {
     max: number;
@@ -23,12 +24,26 @@ export type Race = {
     npc?: number;
     fps: boolean;
     garageLocation: Vector4;
+    vehicleConfiguration: VehicleConfiguration;
 };
 
 export enum RaceCheckpointMenuOptions {
     delete = 'Supprimer',
     edit = 'Modifier Zone',
     goto = 'Téléportation',
+}
+export enum RaceUpdateMenuOptions {
+    npc = 'PNJ',
+    start = 'Départ',
+    garage = 'garage',
+}
+export enum RaceLaunchMenuOptions {
+    test = 'Tester',
+    play = 'Jouer',
+}
+export enum RaceVehConfigurationOptions {
+    current = 'Véhicule Actuel',
+    default = 'Par défaut',
 }
 
 export function getDurationStr(ms: number) {
