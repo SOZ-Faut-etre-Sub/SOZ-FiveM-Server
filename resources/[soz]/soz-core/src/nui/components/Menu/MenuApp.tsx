@@ -33,6 +33,7 @@ import { SuperetteShopMenu } from '../Shop/SuperetteShopMenu';
 import { TattooShopMenu } from '../Shop/TattooShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { TaxiJobMenu } from '../Taxi/TaxiJobMenu';
+import { GouvJobMenu } from './Job/GouvJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
 import { MenuUpw } from './Job/MenuUpw';
 import { MenuAlbum } from './MenuAlbum';
@@ -211,6 +212,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.RentBoat}/*`} element={<MenuRentBoat />} />
             <Route path={`/${MenuType.RaceAdmin}/*`} element={<MenuRaceAdmin data={menuData} />} />
             <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
+            <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
         </Routes>
     );
 };

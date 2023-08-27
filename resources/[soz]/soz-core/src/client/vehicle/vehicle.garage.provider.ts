@@ -307,7 +307,7 @@ export class VehicleGarageProvider {
 
                         await this.doStoreVehicle(closestPound[0], closestPound[1], entity, intValue, intCost);
                     },
-                    job: { lspd: 0, bcso: 0 },
+                    job: { lspd: 0, bcso: 0, sasp: 0 },
                     blackoutGlobal: true,
                     canInteract: (): boolean => {
                         const player = this.playerService.getPlayer();

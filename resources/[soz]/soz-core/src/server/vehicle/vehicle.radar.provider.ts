@@ -3,7 +3,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
-import { JobType } from '../../shared/job';
+import { FDO, JobType } from '../../shared/job';
 import { PlayerLicenceType } from '../../shared/player';
 import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';
@@ -188,7 +188,7 @@ export class VehicleRadarProvider {
                 `Plaque: ~b~${vehiclePlate}~s~ ~n~Rue: ~b~${streetName}~s~ ~n~Vitesse: ~r~${vehicleSpeed} km/h~s~`,
                 'CHAR_BLOCKED',
                 'info',
-                [JobType.BCSO, JobType.LSPD],
+                FDO,
                 player => {
                     const currentVehicle = GetVehiclePedIsIn(GetPlayerPed(player.source), false);
                     if (currentVehicle && RadarInformedVehicle.includes(GetEntityModel(currentVehicle))) {

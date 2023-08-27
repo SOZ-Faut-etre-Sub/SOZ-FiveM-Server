@@ -13,7 +13,7 @@ import { ResourceLoader } from '../resources/resource.loader';
 const holsterableWeaponGroups = [GetHashKey('GROUP_PISTOL'), GetHashKey('GROUP_STUNGUN')];
 const excludeWeapon = [0, GetHashKey('WEAPON_BRIEFCASE'), 966099553 /*WEAPON_OBJECT*/];
 
-const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD];
+const AllowedJob = [JobType.FBI, JobType.BCSO, JobType.LSPD, JobType.SASP];
 
 const hosterDrawable = {
     [GetHashKey('mp_m_freemode_01')]: 130,

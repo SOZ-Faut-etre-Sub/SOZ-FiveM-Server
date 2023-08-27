@@ -19,6 +19,7 @@ import { BennysModule } from './client/job/bennys/bennys.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
 import { GarbageModule } from './client/job/garbage/garbage.module';
+import { GouvModule } from './client/job/gouv/gouv.module';
 import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { MandatoryModule } from './client/job/mdr/mdr.module';
@@ -95,6 +96,7 @@ async function bootstrap() {
         PoliceModule,
         UpwModule,
         TaxiModule,
+        GouvModule,
         BinocularsModule,
         VoipModule,
         RaceModule,

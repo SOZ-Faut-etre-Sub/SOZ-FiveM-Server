@@ -9,7 +9,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { Logger } from '../../core/logger';
 import { ServerEvent } from '../../shared/event';
 import { joaat } from '../../shared/joaat';
-import { JobPermission, JobType } from '../../shared/job';
+import { FDO, JobPermission, JobType } from '../../shared/job';
 import { PlayerData } from '../../shared/player';
 import { toVector3Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItem } from '../../shared/random';
@@ -510,8 +510,7 @@ export class VehicleGarageProvider {
         } else if (
             garage.type === GarageType.Depot &&
             player.job.id !== JobType.Bennys &&
-            player.job.id !== JobType.LSPD &&
-            player.job.id !== JobType.BCSO
+            !FDO.includes(player.job.id)
         ) {
             return Err("vous n'avez pas accès à ce garage fourrière");
         } else if (
@@ -629,7 +628,7 @@ export class VehicleGarageProvider {
         if (garage.type === GarageType.Depot) {
             if (player.job.id == JobType.Bennys) {
                 state = PlayerVehicleState.InPound;
-            } else if (player.job.id == JobType.LSPD || player.job.id == JobType.BCSO) {
+            } else if (FDO.includes(player.job.id)) {
                 state = PlayerVehicleState.InFedPound;
             }
         }

@@ -454,7 +454,7 @@ export class VehicleDealershipProvider {
                         },
                     });
 
-                    livery = vehicleJob?.liverytype || null;
+                    livery = vehicleJob?.liverytype;
                 }
 
                 const plate =
