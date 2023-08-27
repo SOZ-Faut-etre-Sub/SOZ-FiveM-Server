@@ -5,6 +5,7 @@ import { ClientEvent } from '../../shared/event';
 import { BlipFactory } from '../blip';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
+import { RaceProvider } from '../race/race.provider';
 import { RadarRepository } from '../resources/radar.repository';
 
 const radar_props = GetHashKey('soz_prop_radar');
@@ -23,6 +24,9 @@ export class VehicleRadarProvider {
     @Inject(RadarRepository)
     private radarRepository: RadarRepository;
 
+    @Inject(RaceProvider)
+    private raceProvider: RaceProvider;
+
     private globalDisableTime = 0;
 
     @Once(OnceStep.Start)
@@ -39,6 +43,10 @@ export class VehicleRadarProvider {
 
             if (radar.isOnline) {
                 this.playerInOutService.add('radar' + radarID, radar.zone, isInside => {
+                    if (this.raceProvider.isInRace()) {
+                        return;
+                    }
+
                     if (isInside) {
                         if (this.globalDisableTime && this.globalDisableTime > Date.now() / 1000) {
                             return;

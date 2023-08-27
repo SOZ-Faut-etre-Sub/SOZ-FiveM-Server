@@ -957,4 +957,8 @@ export class RaceProvider {
             this.blipFactory.remove(blibId);
         }
     }
+
+    public isInRace() {
+        return this.inRace;
+    }
 }
