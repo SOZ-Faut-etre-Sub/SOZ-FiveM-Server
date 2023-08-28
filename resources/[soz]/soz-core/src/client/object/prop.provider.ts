@@ -20,13 +20,15 @@ export class PropProvider {
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
-    private loadedObjects: Record<string, SpawedWorlPlacedProp> = {};
+    private loadedProps: Record<string, SpawedWorlPlacedProp> = {};
+    private loadedDebugProps: Record<string, SpawedWorlPlacedProp> = {};
 
     private objectsByChunk = new Map<number, WorldPlacedProp[]>();
 
     private currentChunks: number[] = [];
 
-    async createProp(object: WorldPlacedProp): Promise<string> {
+    // Prop management
+    private async createProp(object: WorldPlacedProp): Promise<string> {
         const chunk = getChunkId(object.position);
 
         if (!this.objectsByChunk.has(chunk)) {
@@ -42,27 +44,39 @@ export class PropProvider {
         return object.unique_id;
     }
 
-    @Once(OnceStep.Start)
+    private async deleteProp(uniqueId: string): Promise<boolean> {
+        const prop = this.loadedProps[uniqueId];
+
+        if (!prop) {
+            return false;
+        }
+
+        if (DoesEntityExist(prop.entity)) {
+            DeleteEntity(prop.entity);
+        }
+
+        delete this.loadedProps[uniqueId];
+        return true;
+    }
+
+    @Once(OnceStep.PlayerLoaded)
     public async onStart() {
         const loadedProps = await emitRpc<WorldPlacedProp[]>(RpcServerEvent.PROP_GET_LOADED_PROPS);
         for (const prop of loadedProps) {
-            await this.createProp(prop);
+            this.createProp(prop);
         }
     }
 
     @Once(OnceStep.Stop)
-    public unloadAllObjects(): void {
-        for (const object of Object.values(this.loadedObjects)) {
-            if (DoesEntityExist(object.entity)) {
-                DeleteEntity(object.entity);
-            }
+    public async unloadAllProps(): Promise<void> {
+        for (const object of Object.values(this.loadedProps)) {
+            await this.deleteProp(object.unique_id);
         }
-
-        this.loadedObjects = {};
     }
 
-    public deleteAllObjects(): void {
-        this.unloadAllObjects();
+    public async deleteAllProps(): Promise<void> {
+        await this.unloadAllProps();
+
         this.objectsByChunk.clear();
         this.currentChunks = [];
     }
@@ -76,8 +90,8 @@ export class PropProvider {
         // Unload objects from removed chunks
         for (const chunk of removedChunks) {
             if (this.objectsByChunk.has(chunk)) {
-                for (const object of this.objectsByChunk.get(chunk)) {
-                    this.despawnProp(object.unique_id);
+                for (const prop of this.objectsByChunk.get(chunk)) {
+                    await this.deleteProp(prop.unique_id);
                 }
             }
         }
@@ -85,8 +99,8 @@ export class PropProvider {
         // Load objects from added chunks
         for (const chunk of addedChunks) {
             if (this.objectsByChunk.has(chunk)) {
-                for (const object of this.objectsByChunk.get(chunk)) {
-                    await this.spawnProp(object);
+                for (const prop of this.objectsByChunk.get(chunk)) {
+                    await this.spawnProp(prop);
                 }
             }
         }
@@ -95,10 +109,9 @@ export class PropProvider {
     // In case the client seems to desync with the server, we provide a function to resync the client
     @OnEvent(ClientEvent.PROP_SYNC_CLIENTSIDE)
     public async syncPropClientSide() {
+        await this.unloadAllProps();
+
         const loadProps = await emitRpc<WorldPlacedProp[]>(RpcServerEvent.PROP_GET_LOADED_PROPS);
-
-        this.deleteAllObjects();
-
         for (const prop of loadProps) {
             await this.createProp(prop);
         }
@@ -107,46 +120,19 @@ export class PropProvider {
     @OnEvent(ClientEvent.PROP_CREATE_CLIENTSIDE)
     public async createClientSideProp(props: WorldPlacedProp[]) {
         for (const prop of props) {
-            if (this.loadedObjects[prop.unique_id]) {
-                // Check if already exists in the world
-                if (
-                    DoesEntityExist(this.loadedObjects[prop.unique_id].entity) &&
-                    GetEntityModel(this.loadedObjects[prop.unique_id].entity) === GetHashKey(prop.model) &&
-                    GetClosestObjectOfType(
-                        prop.position[0],
-                        prop.position[1],
-                        prop.position[2],
-                        2.0,
-                        GetHashKey(prop.model),
-                        false,
-                        false,
-                        false
-                    ) === this.loadedObjects[prop.unique_id].entity
-                ) {
-                    continue;
-                } else {
-                    // If it does exist, but is not the same model, or not the same entity, despawn it and spawn a new one
-                    await this.despawnProp(prop.unique_id);
-                }
-            }
-            await this.spawnProp(prop);
+            await this.createProp(prop);
         }
     }
 
     @OnEvent(ClientEvent.PROP_DELETE_CLIENTSIDE)
     public async deleteClientSideProp(propIds: string[]) {
         for (const propId of propIds) {
-            await this.despawnProp(propId);
+            await this.deleteProp(propId);
         }
     }
 
-    @OnEvent(ClientEvent.PROP_EDIT_CLIENTSIDE)
-    public async editClientSideProp(prop: WorldPlacedProp) {
-        await this.editProp(prop.unique_id, prop);
-    }
-
     private async spawnProp(prop: WorldPlacedProp): Promise<number> {
-        if (this.loadedObjects[prop.unique_id]) {
+        if (this.loadedProps[prop.unique_id]) {
             return;
         }
 
@@ -171,61 +157,51 @@ export class PropProvider {
         SetEntityInvincible(entity, true);
         FreezeEntityPosition(entity, true); // Always freeze for the moment
 
-        this.loadedObjects[prop.unique_id] = {
+        this.loadedProps[prop.unique_id] = {
             entity,
             ...prop,
         };
         return entity;
     }
 
-    private async despawnProp(uniqueId: string): Promise<boolean> {
-        const prop = this.loadedObjects[uniqueId];
-
-        if (!prop) {
-            return false;
-        }
-
-        if (DoesEntityExist(prop.entity)) {
-            DeleteEntity(prop.entity);
-        }
-
-        delete this.loadedObjects[uniqueId];
-        return true;
-    }
-
-    private async editProp(uniqueId: string, prop: WorldPlacedProp): Promise<boolean> {
-        if (!DoesEntityExist(this.loadedObjects[uniqueId].entity)) {
-            return false;
-        }
-
-        const entity = this.loadedObjects[uniqueId].entity;
-
-        SetEntityCoordsNoOffset(entity, prop.position[0], prop.position[1], prop.position[2], false, false, false);
-        SetEntityHeading(entity, prop.position[3]);
-
-        if (prop.matrix) {
-            this.applyEntityMatrix(entity, prop.matrix);
-        }
-
-        SetEntityCollision(entity, prop.collision, false);
-        SetEntityInvincible(entity, true);
-        FreezeEntityPosition(entity, true); // Always freeze for the moment
-
-        this.loadedObjects[uniqueId] = {
-            ...prop,
-            entity,
-        };
-    }
-
     public getPropClientData(): PropClientData {
         return {
-            total: Object.keys(this.loadedObjects).length,
-            valid: Object.keys(this.loadedObjects).filter(key => DoesEntityExist(this.loadedObjects[key].entity))
-                .length,
+            total: Object.keys(this.loadedProps).length,
+            valid: Object.keys(this.loadedProps).filter(key => DoesEntityExist(this.loadedProps[key].entity)).length,
         };
+    }
+
+    // Collection
+    public async spawnCollection(collection: PropCollection): Promise<SpawnedCollection> {
+        const spawnedCollection: SpawnedCollection = {
+            ...collection,
+            props: {},
+            uuid: [],
+        };
+
+        for (const prop of Object.values(collection.props)) {
+            const prop_uuid = await this.createProp(prop);
+            spawnedCollection.uuid.push(prop_uuid);
+        }
+
+        return spawnedCollection;
+    }
+
+    public async despawnCollection(collection: SpawnedCollection): Promise<void> {
+        if (!collection.uuid) {
+            return;
+        }
+
+        for (const uuid of Object.values(collection.uuid)) {
+            await this.deleteProp(uuid);
+        }
     }
 
     public async spawnDebugProp(prop: WorldPlacedProp, onGround: boolean): Promise<number> {
+        if (this.loadedDebugProps[prop.unique_id]) {
+            return;
+        }
+
         await this.resourceLoader.loadModel(prop.model);
         const entity = CreateObjectNoOffset(
             GetHashKey(prop.model),
@@ -252,6 +228,10 @@ export class PropProvider {
             PlaceObjectOnGroundProperly(entity);
         }
 
+        this.loadedDebugProps[prop.unique_id] = {
+            entity,
+            ...prop,
+        };
         return entity;
     }
 
@@ -270,63 +250,40 @@ export class PropProvider {
     }
 
     public async despawnDebugProp(prop: SpawedWorlPlacedProp): Promise<void> {
-        if (prop.loaded) {
-            if (!this.loadedObjects[prop.unique_id]) {
-                // The prop should be loaded, but is not for this client. It shouldn't happen
-                console.error(`[PropProvider] Prop ${prop.unique_id} is loaded but not spawned. Syncing...`);
-                await this.syncPropClientSide();
-            }
-            await this.editProp(prop.unique_id, this.loadedObjects[prop.unique_id]);
-        } else {
-            if (DoesEntityExist(prop.entity)) {
-                DeleteEntity(prop.entity);
-            }
+        if (DoesEntityExist(prop.entity)) {
+            DeleteEntity(prop.entity);
         }
+
+        delete this.loadedDebugProps[prop.unique_id];
     }
 
+    // Collection
     public async spawnDebugCollection(collection: PropCollection): Promise<SpawnedCollection> {
         const spawnedCollection: SpawnedCollection = {
             ...collection,
             props: {},
         };
         for (const prop of Object.values(collection.props)) {
-            let entity: number;
-            if (prop.loaded) {
-                if (!this.loadedObjects[prop.unique_id]) {
-                    // The prop should be loaded, but is not for this client. It shouldn't happen
-                    console.error(`[PropProvider] Prop ${prop.unique_id} is loaded but not spawned. Syncing...`);
-                    await this.syncPropClientSide();
-                    entity = this.loadedObjects[prop.unique_id].entity;
-                } else {
-                    entity = this.loadedObjects[prop.unique_id].entity;
-                    if (!DoesEntityExist(entity)) {
-                        // The prop should be loaded, exists for the client, but the entity doesn't exist. It shouldn't happen
-                        console.error(`[PropProvider] Prop ${prop.unique_id} is loaded but not spawned. Syncing...`);
-                        await this.syncPropClientSide();
-                        entity = this.loadedObjects[prop.unique_id].entity;
-                    }
-                }
-                spawnedCollection.props[prop.unique_id] = {
-                    ...prop,
-                    entity: entity,
-                };
-            } else {
-                entity = await this.spawnDebugProp(prop, false);
-                spawnedCollection.props[prop.unique_id] = {
-                    ...prop,
-                    entity: entity,
-                };
-            }
+            const entity = await this.spawnDebugProp(prop, false);
+            spawnedCollection.props[prop.unique_id] = {
+                ...prop,
+                entity: entity,
+            };
         }
         return spawnedCollection;
     }
 
     public async despawnDebugCollection(spawnedCollection: SpawnedCollection): Promise<void> {
+        if (!spawnedCollection.props) {
+            return;
+        }
+
         for (const prop of Object.values(spawnedCollection.props)) {
             await this.despawnDebugProp(prop);
         }
     }
 
+    // Utils
     public makeEntityMatrix = (entity: number): Float32Array => {
         const [f, r, u, a] = GetEntityMatrix(entity);
 

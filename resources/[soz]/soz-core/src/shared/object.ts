@@ -43,6 +43,7 @@ export type PropCollection = PropCollectionData & {
 
 export type SpawnedCollection = PropCollectionData & {
     props: Record<string, SpawedWorlPlacedProp>;
+    uuid?: string[];
 };
 
 export type PropServerData = {
