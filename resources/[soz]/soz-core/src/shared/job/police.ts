@@ -247,7 +247,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 9,
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 10,
                         Texture: 0,
                         Palette: 0,
                     },
@@ -457,7 +457,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 10,
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 11,
                         Texture: 0,
                         Palette: 0,
                     },
@@ -652,7 +652,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 9,
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 10,
                         Texture: 1,
                         Palette: 0,
                     },
@@ -845,7 +845,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: {
                         Drawable:
-                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 10,
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 11,
                         Texture: 1,
                         Palette: 0,
                     },
