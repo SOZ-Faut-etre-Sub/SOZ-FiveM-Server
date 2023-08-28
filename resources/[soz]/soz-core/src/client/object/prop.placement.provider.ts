@@ -606,8 +606,6 @@ export class PropPlacementProvider {
 
     @OnNuiEvent(NuiEvent.RequestToggleCollectionLoad)
     public async requestToggleCollectionLoad({ name, value }: { name: string; value: boolean }) {
-        await this.highlightProvider.unhighlightAllEntities();
-        await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
         const newCollection = await emitRpc<PropCollection>(
             RpcServerEvent.PROP_REQUEST_TOGGLE_LOAD_COLLECTION,
             name,
@@ -617,17 +615,26 @@ export class PropPlacementProvider {
             this.notifier.notify('Impossible de charger ou décharger la collection.', 'error');
             return;
         }
-        this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(newCollection);
-        await this.highlightProvider.highlightEntities(
-            Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
-        );
+
+        await this.highlightProvider.unhighlightAllEntities();
+
+        if (value) {
+            await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
+
+            this.editorState.currentCollection = await this.propProvider.spawnCollection(newCollection);
+        } else {
+            await this.propProvider.despawnCollection(this.editorState.currentCollection);
+
+            this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(newCollection);
+            await this.highlightProvider.highlightEntities(
+                Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
+            );
+        }
+
         const collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
         await this.refreshPropPlacementMenuData(collections, newCollection);
-        if (value) {
-            this.notifier.notify('Collection chargée !', 'success');
-        } else {
-            this.notifier.notify('Collection déchargée !', 'success');
-        }
+
+        this.notifier.notify(`Collection ${value ? 'chargée' : 'déchargée'} !`, 'success');
     }
 
     @OnNuiEvent(NuiEvent.SearchProp)
