@@ -104,7 +104,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     return (
         <Menu type={MenuType.PropPlacementMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_mapper"></MenuTitle>
+                <MenuTitle banner="https://cfx-nui-soz-core/public/images/banner/soz_hammer.webp"></MenuTitle>
                 <MenuContent>
                     <MenuTitle>
                         Charge du serveur : {serverData.loaded}/{serverData.total}
