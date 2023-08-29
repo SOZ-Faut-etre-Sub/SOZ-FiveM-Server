@@ -254,7 +254,11 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             maxZ: 48.36,
         },
         targets: [],
-        products: [{ id: 'newcomer_ticket', type: 'item', price: 1500 }],
+        products: [
+            { id: 'newcomer_ticket', type: 'item', price: 1500 },
+            { id: 'welcome_book', type: 'item', price: 150 },
+            { id: 'politic_book', type: 'item', price: 150 },
+        ],
     },
     {
         name: 'upw',
