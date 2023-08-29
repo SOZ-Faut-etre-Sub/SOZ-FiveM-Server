@@ -257,6 +257,12 @@ export class PropProvider {
         delete this.loadedDebugProps[prop.unique_id];
     }
 
+    public async despawnAllDebugProps(): Promise<void> {
+        for (const object of Object.values(this.loadedDebugProps)) {
+            await this.despawnDebugProp(object);
+        }
+    }
+
     // Collection
     public async spawnDebugCollection(collection: PropCollection): Promise<SpawnedCollection> {
         const spawnedCollection: SpawnedCollection = {

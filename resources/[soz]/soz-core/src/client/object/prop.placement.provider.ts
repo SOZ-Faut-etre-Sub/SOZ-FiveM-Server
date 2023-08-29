@@ -118,7 +118,7 @@ export class PropPlacementProvider {
     @OnNuiEvent(NuiEvent.PropPlacementReturnToMainMenu)
     public async onReturnToMainMenu() {
         if (this.editorState.currentCollection) {
-            await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
+            await this.propProvider.despawnAllDebugProps();
         }
         if (this.editorState.debugProp) {
             await this.propProvider.despawnDebugProp(this.editorState.debugProp);
@@ -221,14 +221,12 @@ export class PropPlacementProvider {
         if (!ped) {
             return;
         }
-        if (this.editorState.debugProp) {
-            await this.propProvider.despawnDebugProp(this.editorState.debugProp);
-            this.editorState.debugProp = null;
-        }
+
+        await this.propProvider.despawnAllDebugProps();
 
         const coords = GetOffsetFromEntityInWorldCoords(ped, 0, 2.0, 0);
         const debugProp: WorldPlacedProp = {
-            unique_id: null,
+            unique_id: uuidv4(),
             model: selectedProp.model,
             collection: this.editorState.currentCollection.name,
             position: [coords[0], coords[1], coords[2], 0],
@@ -236,6 +234,7 @@ export class PropPlacementProvider {
             loaded: false,
             collision: true,
         };
+        await this.propProvider.spawnDebugCollection(this.editorState.currentCollection);
         const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true);
         this.editorState.debugProp = { ...debugProp, entity: debugPropEntity } as SpawedWorlPlacedProp;
     }
@@ -345,13 +344,16 @@ export class PropPlacementProvider {
         }
 
         if (this.editorState.debugProp) {
-            if (this.editorState.debugProp.unique_id) {
-                await this.propProvider.resetDebugProp(this.editorState.debugProp);
-            } else {
-                await this.propProvider.despawnDebugProp(this.editorState.debugProp);
-            }
+            await this.propProvider.despawnAllDebugProps();
         }
         this.editorState.debugProp = null;
+
+        if (this.editorState.currentCollection) {
+            await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
+            await this.highlightProvider.highlightEntities(
+                Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
+            );
+        }
 
         if (!this.editorState.isEditorModeOn && !this.editorState.isMouseSelectionOn && !this.editorState.isPipetteOn) {
             return;

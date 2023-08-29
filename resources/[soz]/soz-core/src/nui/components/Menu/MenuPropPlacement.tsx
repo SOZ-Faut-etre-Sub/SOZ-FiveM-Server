@@ -29,6 +29,7 @@ type MenuPropPlacementProps = {
 };
 
 export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ data }) => {
+    const banner = 'https://cfx-nui-soz-core/public/images/banner/soz_hammer.webp';
     const player = usePlayer();
     const [collectionList, setCollectionList] = useState<PropCollectionData[]>(data.collections);
     const [serverData, setServerData] = useState<PropServerData>(data.serverData);
@@ -104,7 +105,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     return (
         <Menu type={MenuType.PropPlacementMenu}>
             <MainMenu>
-                <MenuTitle banner="https://cfx-nui-soz-core/public/images/banner/soz_hammer.webp"></MenuTitle>
+                <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
                     <MenuTitle>
                         Charge du serveur : {serverData.loaded}/{serverData.total}
@@ -139,7 +140,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             </MainMenu>
 
             <SubMenu id="collection">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Collection : {collection.name}</MenuTitle>
+                <MenuTitle banner={banner}>Collection : {collection.name}</MenuTitle>
                 <MenuContent>
                     <MenuTitle>
                         Props chargés : {collection.loaded_size} / {collection.size}
@@ -188,9 +189,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 </MenuContent>
             </SubMenu>
             <SubMenu id="collection/props">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">
-                    Props de la collection : {collection.name}
-                </MenuTitle>
+                <MenuTitle banner={banner}>Props de la collection : {collection.name}</MenuTitle>
                 <MenuContent>
                     <MenuItemCheckbox
                         checked={false}
@@ -249,7 +248,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             </SubMenu>
 
             <SubMenu id="collection/prop_choose">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Choisir un prop</MenuTitle>
+                <MenuTitle banner={banner}>Choisir un prop</MenuTitle>
                 <MenuContent>
                     <MenuItemButton onConfirm={onChooseCreateProp(null)}>🔎 Entrer un modèle</MenuItemButton>
                     <MenuItemSubMenuLink id={`collection/prop_search`}>🔎 Rechercher un prop</MenuItemSubMenuLink>
@@ -274,7 +273,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             </SubMenu>
 
             <SubMenu id="collection/prop_search">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Rechercher un prop</MenuTitle>
+                <MenuTitle banner={banner}>Rechercher un prop</MenuTitle>
                 <MenuContent>
                     <MenuItemButton
                         onConfirm={async () => {
@@ -304,7 +303,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
 
             {Object.keys(data.props).map(propCategory => (
                 <SubMenu key={propCategory} id={`collection/prop_choose/${propCategory}`}>
-                    <MenuTitle banner="https://nui-img/soz/menu_mapper">{propCategory}</MenuTitle>
+                    <MenuTitle banner={banner}>{propCategory}</MenuTitle>
                     <MenuContent>
                         {data.props[propCategory]
                             .sort((a, b) => a.label.localeCompare(b.label))
@@ -322,7 +321,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
             ))}
 
             <SubMenu id="editor">
-                <MenuTitle banner="https://nui-img/soz/menu_mapper">Mode Editeur</MenuTitle>
+                <MenuTitle banner={banner}>Mode Editeur</MenuTitle>
                 <MenuContent>
                     <MenuItemButton
                         onConfirm={async () => {
