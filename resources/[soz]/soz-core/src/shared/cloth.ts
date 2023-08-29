@@ -80,7 +80,7 @@ export const WardRobeElements = {
     [0]: { label: 'Casque', propId: ['Helmet'] },
     [1]: { label: 'Chapeau', propId: [0] },
     [2]: { label: 'Masque', componentId: [1] },
-    [3]: { label: 'Haut', componentId: [3, 5, 7, 8, 10, 11] },
+    [3]: { label: 'Haut', componentId: [3, 5, 7, 8, 9, 10, 11] },
     [4]: { label: 'Bas', componentId: [4, 6] },
 };
 
