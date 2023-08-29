@@ -50,6 +50,7 @@ import { MenuVehicleAuction } from './MenuVehicleAuction';
 import { MenuVehicleCustom } from './MenuVehicleCustom';
 import { MenuVehicleDealership } from './MenuVehicleDealership';
 import { MenuWardrobe } from './MenuWardrobe';
+import { MenuPropPlacement } from './MenuPropPlacement';
 
 export const MenuApp: FunctionComponent = () => {
     return (
@@ -213,6 +214,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.RaceAdmin}/*`} element={<MenuRaceAdmin data={menuData} />} />
             <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
             <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement data={menuData} />} />
         </Routes>
     );
 };

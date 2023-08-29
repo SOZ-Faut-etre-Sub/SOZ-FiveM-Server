@@ -44,6 +44,7 @@ import { VoipModule } from './server/voip/voip.module';
 import { WeaponModule } from './server/weapon/weapon.module';
 import { WeatherModule } from './server/weather/weather.module';
 import { ZEventModule } from './server/zevent/zevent.module';
+import { PropsModule } from './server/props/props.module';
 
 async function bootstrap() {
     setServiceInstance('Store', store);
@@ -88,6 +89,7 @@ async function bootstrap() {
         UpwModule,
         TaxiModule,
         RaceModule,
+        PropsModule,
         ...PrivateModules
     );
 

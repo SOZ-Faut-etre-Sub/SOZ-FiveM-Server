@@ -13,6 +13,7 @@ import { GarageMenuData } from '../vehicle/garage';
 import { VehicleCustomMenuData } from '../vehicle/modification';
 import { VehicleAuctionMenuData, VehicleDealershipMenuData, VehicleMenuData } from '../vehicle/vehicle';
 import { WeaponsMenuData } from '../weapons/weapon';
+import { PropPlacementMenuData } from './prop_placement';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -72,6 +73,7 @@ export enum MenuType {
     EasterShop = 'easter_shop',
     TaxiJobMenu = 'taxi_job',
     PlayerPersonal = 'player_personal',
+    PropPlacementMenu = 'prop_placement_menu',
     LsmcJobMenu = 'lsmc_job_menu',
     JobOnDutyMenu = 'job_on_duty,',
     Album = 'album',
@@ -124,4 +126,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.RaceAdmin]: Race[];
     [MenuType.RaceRank]: { id: number; name: string };
     [MenuType.GouvJobMenu]: { onDuty: boolean };
+    [MenuType.PropPlacementMenu]: PropPlacementMenuData;
 }
