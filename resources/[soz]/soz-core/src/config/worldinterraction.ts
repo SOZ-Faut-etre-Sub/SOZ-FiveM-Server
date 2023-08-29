@@ -177,6 +177,7 @@ export const BarbecueList = [1903501406, 286252949, 1129053052, -1581502570];
 export const SeatsTargetList = [
     GetHashKey('soz_v_club_bahbarstool'),
     GetHashKey('soz_v_club_baham_bckt_chr'),
+    GetHashKey('soz_xm_lab_chairarm_12'),
     1580642483,
     -1278649385,
     -109356459,
