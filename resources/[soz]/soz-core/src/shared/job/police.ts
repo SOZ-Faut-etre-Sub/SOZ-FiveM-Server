@@ -896,7 +896,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.BodyArmor]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] +
+                            8,
+                        Texture: 0,
+                        Palette: 0,
+                    },
                     [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Tops]: {
                         Drawable:
