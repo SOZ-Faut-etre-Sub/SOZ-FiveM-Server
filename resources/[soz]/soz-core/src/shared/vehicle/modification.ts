@@ -1331,14 +1331,16 @@ export const getVehicleCustomPrice = (
         const category = VehicleModificationPricing[key];
 
         if (category.type === 'list') {
-            const currentLevel = currentModification.modification[key];
-            const newLevel = newModification.modification[key];
+            const currentLevel = (currentModification.modification[key] as number) ?? -1;
+            const newLevel = (newModification.modification[key] as number) ?? -1;
 
             if (currentLevel !== newLevel) {
-                const level = category.priceByLevels[newLevel];
+                for (let subLevel = currentLevel + 1; subLevel < newLevel + 1; subLevel++) {
+                    const level = category.priceByLevels[subLevel];
 
-                if (level) {
-                    price = price + vehiclePrice * level;
+                    if (level) {
+                        price = price + vehiclePrice * level;
+                    }
                 }
             }
         }
