@@ -4102,14 +4102,14 @@ QBShared.Items = {
     -- other
     ['welcome_book'] = {
         ['name'] = 'welcome_book',
-        ['label'] = 'Dépliant Touristique',
+        ['label'] = 'Dépliant touristique de San Andreas',
         ['weight'] = 100,
         ['type'] = 'item',
         ['unique'] = true,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['description'] = 'Bienvenue sur SOZ !',
+        ['description'] = "Bienvenue à San Andreas ! N'hésitez pas à aller voir MANDATORY, le Gouvernement ou les Forces de l'ordre afin qu'ils t'initient à la vie de notre merveilleux État.",
         ['illustrator'] = '.Kutz',
     },
     ['health_book'] = {
@@ -4122,6 +4122,18 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Votre guide de santé..',
+        ['illustrator'] = '.NariieL',
+    },
+    ['politic_book'] = {
+        ['name'] = 'politic_book',
+        ['label'] = 'Dépliant politique de San Andreas',
+        ['weight'] = 250,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Tu souhaites comprendre et te renseigner sur la hiérarchie fédérale de San Andreas ? Ce document est idéal pour cela ! La séparation du pouvoir y est expliquée à l'aide du Législatif, du Judiciaire et de l'Exécutif.",
         ['illustrator'] = '.NariieL',
     },
 
