@@ -129,6 +129,16 @@ export enum RpcServerEvent {
     RACE_GET_SPLITS = 'soz-core:server:race:get-splits',
 
     OBJECT_GET_LIST = 'soz-core:server:object:get-list',
+
+    PROP_GET_COLLECTIONS_DATA = 'soz-core:server:prop:get-collection-names',
+    PROP_GET_PROP_COLLECTION = 'soz-core:server:prop:get-collection',
+    PROP_GET_SERVER_DATA = 'soz-core:server:prop:get-number-props',
+    PROP_GET_LOADED_PROPS = 'soz-core:server:prop:get-all-props',
+    PROP_REQUEST_CREATE_COLLECTION = 'soz-core:server:prop:create-collection',
+    PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:delete-collection',
+    PROP_REQUEST_CREATE_PROP = 'soz-core:server:prop:create-prop',
+    PROP_REQUEST_TOGGLE_LOAD_COLLECTION = 'soz-core:server:prop:load-collection',
+    PROP_REQUEST_UNLOAD_PROPS = 'soz-core:server:prop:unload-props',
 }
 
 export enum RpcClientEvent {
