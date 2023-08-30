@@ -5,8 +5,9 @@ import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { ResourceLoader } from '@public/client/resources/resource.loader';
 import { wait } from '@public/core/utils';
-import { getChunkId } from '@public/shared/grid';
+import { getChunkId, getGridChunks } from '@public/shared/grid';
 import { joaat } from '@public/shared/joaat';
+import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { ClientEvent } from '../../shared/event';
@@ -29,6 +30,8 @@ export class ObjectProvider {
     private objectsByChunk = new Map<number, WorldObject[]>();
 
     private currentChunks: number[] = [];
+
+    private disabled = false;
 
     public getLoadedObjectsCount(): number {
         return Object.keys(this.loadedObjects).length;
@@ -114,6 +117,10 @@ export class ObjectProvider {
 
     //@StateSelector(state => state.grid)
     public async updateSpawnObjectOnGridChange(grid: number[]) {
+        if (this.disabled) {
+            return;
+        }
+
         const removedChunks = this.currentChunks.filter(chunk => !grid.includes(chunk));
         const addedChunks = grid.filter(chunk => !this.currentChunks.includes(chunk));
 
@@ -195,6 +202,22 @@ export class ObjectProvider {
 
             delete this.loadedObjects[id];
         }
+    }
+
+    public disable(): void {
+        this.disabled = true;
+        this.currentChunks = [];
+        for (const id of Object.keys(this.loadedObjects)) {
+            this.unspawnObject(id);
+        }
+    }
+
+    public async enable() {
+        this.disabled = false;
+        const position = GetEntityCoords(PlayerPedId(), false) as Vector3;
+        const newChunks = getGridChunks(position);
+
+        await this.updateSpawnObjectOnGridChange(newChunks);
     }
 
     @Once(OnceStep.Stop)
