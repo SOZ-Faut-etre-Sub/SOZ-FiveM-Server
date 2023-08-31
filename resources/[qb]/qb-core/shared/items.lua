@@ -7349,6 +7349,18 @@ QBShared.Items = {
         ['description'] = "Il s'appelle Juste Leblanc... Ah bon, il n'a pas de prénom ?",
         ['illustrator'] = '.Poulpito',
     },
+    ['artisanal_jammer'] = {
+        ['name'] = 'artisanal_jammer',
+        ['label'] = "Brouilleur d'ondes artisanal",
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Ce bijou de technologie est capable de faire disparaitre n'importe quel véhicule des forces de l'ordre du radar durant environ une heure.",
+        ['illustrator'] = '.Poulpito',
+    },
 
 
     --- Fishing Items

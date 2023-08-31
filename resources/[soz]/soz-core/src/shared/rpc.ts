@@ -64,6 +64,7 @@ export enum RpcServerEvent {
     VEHICLE_GET_CONDITION = 'soz-core:rpc:vehicle:get-condition',
     VEHICLE_GET_MUTED_SIRENS = 'soz-core:rpc:vehicle:get-muted-sirens',
     VEHICLE_GET_OPENED = 'soz-core:rpc:vehicle:get-opened',
+    VEHICLE_FDO_GET_POSTIONS = 'soz-core:rpc:vehicle:fdo-get-positions',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
     VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',

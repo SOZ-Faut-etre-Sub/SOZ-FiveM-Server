@@ -28,7 +28,6 @@ export class AdminMenuInteractiveProvider {
 
     private multiplayerTags: Map<string, number> = new Map();
     private playerBlips: Map<string, number> = new Map();
-    private previousPlayers: string[] = [];
 
     @OnNuiEvent(NuiEvent.AdminToggleDisplayOwners)
     public async toggleDisplayOwners(value: boolean): Promise<void> {
