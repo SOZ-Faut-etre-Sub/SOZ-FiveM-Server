@@ -8,6 +8,7 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
 
 @Provider()
 export class AdminMenuGameMasterProvider {
@@ -22,6 +23,9 @@ export class AdminMenuGameMasterProvider {
 
     @Inject(HudMinimapProvider)
     private hudMinimapProvider: HudMinimapProvider;
+
+    @Inject(VehiclePoliceLocator)
+    private vehiclePoliceLocator: VehiclePoliceLocator;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -150,5 +154,10 @@ export class AdminMenuGameMasterProvider {
     @OnNuiEvent(NuiEvent.AdminSetAdminGPS)
     public async setAdminGPS(value: boolean): Promise<void> {
         this.hudMinimapProvider.hasAdminGps = value;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetPoliceLocator)
+    public async setAdminPoliceLocator(value: boolean): Promise<void> {
+        this.vehiclePoliceLocator.setAdminEnabled(value);
     }
 }

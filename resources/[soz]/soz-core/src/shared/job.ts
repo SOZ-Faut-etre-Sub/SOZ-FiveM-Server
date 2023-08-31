@@ -28,6 +28,7 @@ export enum JobType {
 
 export const BASE_FDO = [JobType.LSPD, JobType.BCSO];
 export const FDO = [JobType.FBI, JobType.LSPD, JobType.BCSO, JobType.SASP];
+export const FDO_NO_FBI = [JobType.LSPD, JobType.BCSO, JobType.SASP];
 
 export enum JobPermission {
     Enrollment = 'enrollment',

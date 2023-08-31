@@ -13,6 +13,7 @@ import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
+import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 
@@ -38,6 +39,9 @@ export class AdminMenuProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(VehiclePoliceLocator)
+    private vehiclePoliceLocator: VehiclePoliceLocator;
 
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
@@ -75,6 +79,7 @@ export class AdminMenuProvider {
                         invisible: !IsEntityVisible(ped),
                         moneyCase: this.playerService.getState().disableMoneyCase,
                         adminGPS: this.hudMinimapProvider.hasAdminGps,
+                        adminPoliceLocator: this.vehiclePoliceLocator.getAdminEnabled(),
                     },
                     interactive: {
                         displayOwners: this.adminMenuInteractiveProvider.intervalHandlers.displayOwners !== null,

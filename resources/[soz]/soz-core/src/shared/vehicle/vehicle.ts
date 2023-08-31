@@ -141,7 +141,6 @@ export type VehicleVolatileState = {
     speedLimit: number | null;
     isPlayerVehicle: boolean;
     isSirenMuted: boolean;
-    lastPosition: Vector3 | null;
     indicators: {
         left: boolean;
         right: boolean;
@@ -154,6 +153,11 @@ export type VehicleVolatileState = {
     secondaryRadio: RadioChannel | null;
     flatbedAttachedVehicle: number | null;
     rentOwner: string | null;
+    policeLocatorEnabled: boolean;
+    job: JobType | null;
+    model: string;
+    locatorEndJam: number;
+    label: string;
 };
 
 export enum VehicleClass {
@@ -218,7 +222,6 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     dead: false,
     isPlayerVehicle: false,
     isSirenMuted: false,
-    lastPosition: null,
     spawned: false,
     indicators: {
         left: false,
@@ -231,6 +234,11 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     secondaryRadio: null,
     flatbedAttachedVehicle: null,
     rentOwner: null,
+    policeLocatorEnabled: false,
+    job: null,
+    model: null,
+    locatorEndJam: 0,
+    label: null,
 });
 
 export type VehicleMenuData = {
@@ -243,6 +251,8 @@ export type VehicleMenuData = {
     permission: string | null;
     isBoat: boolean;
     isAnchor: boolean;
+    police: boolean;
+    policeLocator: boolean;
 };
 
 export type VehicleAuctionMenuData = {
@@ -363,4 +373,13 @@ export const LockPickAlertMessage = {
         "J'viens de me faire carjacker ! Mais oui, on m'a carjacké l'auto j'vous dis ! Cela s'est déroulé à ${0} !",
     ],
     lockpick: ["Une personne louche tripote la poignée d'une voiture proche de ${0} !"],
+};
+
+export type VehicleLocation = {
+    netId: number;
+    job: JobType;
+    plate: string;
+    name: string;
+    model: string;
+    position: Vector3;
 };

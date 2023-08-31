@@ -260,6 +260,7 @@ export enum ServerEvent {
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
     CRIMI_SMOKE_STRESS = 'soz-core:server:crimi:smoke-stress',
     CRIMI_BLOCK_DATE = 'soz-core:server:crimi:block-date',
+    CRIMI_USE_JAMMER = 'soz-core:server:crimi:use-jammer',
 
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:server:talent:disable-crimi',
 
@@ -327,6 +328,7 @@ export enum ClientEvent {
     AUDIO_STOP = 'soz-core:client:audio:stop',
     CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',
     CRIMI_USE_FAKE_CARD = 'soz-core:client:crimi:use-fake-card',
+    CRIMI_USE_JAMMER = 'soz-core:client:crimi:use-jammer',
     CRIMI_REMOVE_CLOTH = 'soz-core:client:crimi:remove-cloth',
     CRIMI_ASK_REMOTE_WORKSHOP = 'soz-core:client:crimi:ask-remote-workshop',
     CRIMI_ADD_REMOTE_WORKSHOP = 'soz-core:client:crimi:add-remote-workshop',
@@ -636,6 +638,7 @@ export enum NuiEvent {
     AdminMenuGameMasterCreateNewCharacter = 'soz-core:client:admin:game-master:create-new-character',
     AdminMenuGameMasterSwitchCharacter = 'soz-core:client:admin:game-master:switch-character',
     AdminSetAdminGPS = 'soz-core:client:admin:gps',
+    AdminSetPoliceLocator = 'soz-core:client:admin:police-locator',
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     CraftingDoCraft = 'soz-core:nui:crafting:do-craft',
     CraftingDoSalvage = 'soz-core:nui:crafting:do-salvage',
@@ -730,6 +733,7 @@ export enum NuiEvent {
     VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
     VehicleHandleRadio = 'soz-core:nui:vehicle:handle-radio',
     VehicleAnchorChange = 'soz-core:client:vehicle:anchor-change',
+    VehiclePoliceDisplay = 'soz-core:client:vehicle:police-display',
 
     VehicleGarageTakeOut = 'soz-core:client:vehicle:garage:take-out',
     VehicleGarageSetName = 'soz-core:client:vehicle:garage:set-name',

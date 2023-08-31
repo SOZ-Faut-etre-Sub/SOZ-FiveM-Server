@@ -24,6 +24,7 @@ export type GameMasterSubMenuProps = {
         adminGPS: boolean;
         moneyCase: boolean;
         invisible: boolean;
+        adminPoliceLocator: boolean;
     };
 };
 
@@ -159,6 +160,16 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     }}
                 >
                     🗺 GPS permanent
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
+                    checked={state.adminPoliceLocator}
+                    disabled={!isAdminOrStaff}
+                    onChange={async value => {
+                        state.adminPoliceLocator = value;
+                        await fetchNui(NuiEvent.AdminSetPoliceLocator, value);
+                    }}
+                >
+                    🗺️ Affichage des patrouilles
                 </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
