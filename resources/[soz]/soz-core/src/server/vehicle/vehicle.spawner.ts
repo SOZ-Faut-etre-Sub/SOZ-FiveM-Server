@@ -108,6 +108,12 @@ const lsmcParking = new BoxZone([427.27, -1325.76, 39.02], 78.8, 111.0, {
     maxZ: 48.22,
 });
 
+const lsmcMlo = new BoxZone([347.75, -1412.87, 29.43], 92.8, 87.0, {
+    heading: 228.37,
+    minZ: 28.43,
+    maxZ: 70.43,
+});
+
 @Provider()
 export class VehicleSpawner {
     @Inject(VehicleStateService)
@@ -144,6 +150,7 @@ export class VehicleSpawner {
 
         noSpawnZones.push(frontBCSO);
         noSpawnZones.push(lsmcParking);
+        noSpawnZones.push(lsmcMlo);
 
         this.noSpawnZone = new MultiZone<BoxZone>(noSpawnZones);
     }
