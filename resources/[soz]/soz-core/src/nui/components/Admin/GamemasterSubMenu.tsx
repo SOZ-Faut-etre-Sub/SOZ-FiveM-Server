@@ -35,6 +35,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
 }) => {
     const isAdmin = permission === 'admin';
     const isAdminOrStaff = isAdmin || permission === 'staff';
+    const isAdminOrStaffOrGM = isAdminOrStaff || permission === 'gamemaster';
     const player = usePlayer();
 
     if (!player) {
@@ -151,7 +152,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                 </MenuItemButton>
                 <MenuItemCheckbox
                     checked={state.adminGPS}
-                    disabled={!isAdminOrStaff}
+                    disabled={!isAdminOrStaffOrGM}
                     onChange={async value => {
                         state.adminGPS = value;
                         await fetchNui(NuiEvent.AdminSetAdminGPS, value);
