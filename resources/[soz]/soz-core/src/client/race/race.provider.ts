@@ -1,3 +1,4 @@
+import { Exportable } from '@public/core/decorators/exports';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
@@ -34,6 +35,7 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { RaceRepository } from '../resources/race.repository';
 import { ResourceLoader } from '../resources/resource.loader';
@@ -91,6 +93,9 @@ export class RaceProvider {
 
     @Inject(VehicleModificationService)
     private vehicleModificationService: VehicleModificationService;
+
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     private inRace = false;
     private preRace = false;
@@ -526,6 +531,8 @@ export class RaceProvider {
             this.firstPersonCheck();
         }
 
+        this.objectProvider.disable();
+
         SetEntityInvincible(ped, true);
         SetPlayerInvincible(PlayerId(), true);
 
@@ -601,6 +608,8 @@ export class RaceProvider {
         }
 
         await this.playerPositionProvider.teleportPlayerToPosition([...coords, heading] as Vector4);
+
+        this.objectProvider.enable();
 
         await wait(200);
 
@@ -958,6 +967,7 @@ export class RaceProvider {
         }
     }
 
+    @Exportable('IsInRace')
     public isInRace() {
         return this.inRace;
     }
