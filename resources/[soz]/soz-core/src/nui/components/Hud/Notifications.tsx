@@ -86,6 +86,7 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
                 {isAdvancedNotification(notification) && (
                     <div className="flex items-center mb-2">
                         <img
+                            className="w-16"
                             src={
                                 notification.image.startsWith('http')
                                     ? notification.image
