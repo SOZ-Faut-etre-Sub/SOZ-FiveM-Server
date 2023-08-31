@@ -117,9 +117,6 @@ export class PropPlacementProvider {
 
     @OnNuiEvent(NuiEvent.PropPlacementReturnToMainMenu)
     public async onReturnToMainMenu() {
-        if (this.editorState.currentCollection) {
-            await this.propProvider.despawnAllDebugProps();
-        }
         if (this.editorState.debugProp) {
             await this.propProvider.despawnDebugProp(this.editorState.debugProp);
         }
@@ -343,16 +340,11 @@ export class PropPlacementProvider {
             return;
         }
 
-        if (this.editorState.debugProp) {
-            await this.propProvider.despawnAllDebugProps();
-        }
+        await this.propProvider.despawnAllDebugProps();
         this.editorState.debugProp = null;
 
         if (this.editorState.currentCollection) {
             await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
-            await this.highlightProvider.highlightEntities(
-                Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
-            );
         }
 
         if (!this.editorState.isEditorModeOn && !this.editorState.isMouseSelectionOn && !this.editorState.isPipetteOn) {
