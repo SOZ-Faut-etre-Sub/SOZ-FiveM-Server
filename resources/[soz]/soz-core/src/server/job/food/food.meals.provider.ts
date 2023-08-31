@@ -10,13 +10,13 @@ import { ProgressService } from '../../player/progress.service';
 
 @Provider()
 export class FoodMealsProvider {
-    private readonly LIMIT_OF_ORDERS = 8;
+    private readonly LIMIT_OF_ORDERS = 12;
 
-    private readonly MEAL_BOXES_PER_ORDER = 10;
+    private readonly MEAL_BOXES_PER_ORDER = 12;
 
     private readonly MEAL_BOX_ITEM = 'meal_box';
 
-    private readonly ORDER_PRICE = 4000;
+    private readonly ORDER_PRICE = 3000;
 
     private orderedMeals = 0;
 
