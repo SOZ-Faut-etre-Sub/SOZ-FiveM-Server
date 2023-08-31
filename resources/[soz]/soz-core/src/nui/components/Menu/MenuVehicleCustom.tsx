@@ -170,7 +170,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                     <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer les changements</span>
-                            <span>${price.toFixed(0)}</span>
+                            <span>$ {Intl.NumberFormat('fr-FR').format(price)}</span>
                         </div>
                     </MenuItemButton>
                 </MenuContent>
