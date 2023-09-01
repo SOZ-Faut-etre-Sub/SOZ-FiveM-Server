@@ -9,7 +9,7 @@ export const ActionButton: React.FC<any> = ({ children, ...props }) => {
     return (
         <div
             {...props}
-            className={cn('flex flex-col justify-center items-center rounded-xl p-3', {
+            className={cn(props.className, 'flex flex-col justify-center items-center rounded-xl p-3', {
                 'bg-ios-700 text-[#347DD9]': config.theme.value === 'dark',
                 'bg-white text-gray-700': config.theme.value === 'light',
                 'bg-opacity-50 cursor-not-allowed': props.disabled,

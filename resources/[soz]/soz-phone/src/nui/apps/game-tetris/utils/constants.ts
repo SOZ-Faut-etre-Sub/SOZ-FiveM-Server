@@ -91,4 +91,10 @@ export const MockTetrisLeaderboard: TetrisLeaderboard[] = [
         score: 1000,
         game_played: 10,
     },
+    {
+        citizenid: '1',
+        player_name: 'John Doe',
+        score: 10000,
+        game_played: 10,
+    },
 ];
