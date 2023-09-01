@@ -83,7 +83,7 @@ export const TetrisGame: React.FC = () => {
                                     <Gameboard />
                                 </div>
                                 <div className="border-2 border-white h-fit w-3/12 ml-2 rounded">
-                                    <div className="bg-white text-center text-[#38428b]">Next pieces</div>
+                                    <div className="bg-white text-center text-[#38428b]">Pièces</div>
                                     <PieceQueue />
                                 </div>
                             </section>
