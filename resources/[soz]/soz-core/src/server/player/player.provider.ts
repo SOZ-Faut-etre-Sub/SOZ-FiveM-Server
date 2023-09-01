@@ -9,6 +9,7 @@ import { Permissions } from '../../core/permissions';
 import { ServerEvent } from '../../shared/event';
 import { PlayerClientState, PlayerData, PlayerListStateKey, PlayerServerState } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
+import { PermissionService } from '../permission.service';
 import { QBCore } from '../qbcore';
 import { ServerStateService } from '../server.state.service';
 import { PlayerListStateService } from './player.list.state.service';
@@ -22,6 +23,9 @@ export class PlayerProvider {
     @Inject(Permissions)
     private permissions: Permissions;
 
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
+
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
 
@@ -34,18 +38,21 @@ export class PlayerProvider {
     private jwtTokenCache: Record<string, string> = {};
 
     @On('QBCore:Server:PlayerLoaded', false)
-    onPlayerLoaded(player: any) {
+    onPlayerLoaded(data: any) {
+        const player = data.PlayerData as PlayerData;
+
         // This is an event from qb when player is fully loaded but screen is not faded out so we dont' trigger client event
-        this.permissions.addPlayerRole(player.PlayerData.source, player.PlayerData.role);
-        this.serverStateService.addPlayer(player.PlayerData);
-        this.playerStateService.setClientState(player.PlayerData.source, {
+        this.permissions.addPlayerRole(player.source, player.role);
+        this.serverStateService.addPlayer(player);
+        this.playerStateService.setClientState(player.source, {
             isWearingPatientOutfit: false,
             isInventoryBusy: false,
         });
-        this.playerListStateService.handlePlayer(
-            player.PlayerData,
-            this.playerStateService.getClientState(player.PlayerData.source)
-        );
+        this.playerListStateService.handlePlayer(player, this.playerStateService.getClientState(player.source));
+
+        if (this.permissionService.isGameMaster(player.source)) {
+            TriggerEvent('housing:server:GiveAdminAccess', player.source, 'cayo_villa', 'villa_cayo', player.citizenid);
+        }
     }
 
     @On('QBCore:Server:PlayerUpdate', false)
