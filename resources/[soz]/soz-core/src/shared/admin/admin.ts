@@ -39,6 +39,7 @@ export type GameMasterSubMenuState = {
     moneyCase: boolean;
     invisible: boolean;
     adminGPS: boolean;
+    adminPoliceLocator: boolean;
 };
 
 export type InteractiveSubMenuState = {
