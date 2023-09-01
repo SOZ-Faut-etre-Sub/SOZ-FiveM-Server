@@ -1,6 +1,7 @@
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { wait } from '@public/core/utils';
 import { ClientEvent } from '@public/shared/event';
 
 import { BillboardRepository } from '../resources/billboard.repository';
@@ -16,6 +17,9 @@ export class BillboardProvider {
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoriesLoaded() {
+        //Billboards : Attente du chargement de l'ensemble des ressources
+        await wait(15000);
+
         const billboards = this.billboardRepository.get();
         for (const billboard of Object.values(billboards)) {
             if (!billboard.enabled) {
@@ -29,6 +33,7 @@ export class BillboardProvider {
                 billboard.height,
                 billboard.name
             );
+            await wait(0);
         }
     }
 
