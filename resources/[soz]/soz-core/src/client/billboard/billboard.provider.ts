@@ -1,14 +1,18 @@
-import { Command } from '@public/core/decorators/command';
-import { Once, OnceStep } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { ClientEvent } from '@public/shared/event';
 
 import { BillboardRepository } from '../resources/billboard.repository';
+import { BillboardService } from './billboard.service';
 
 @Provider()
 export class BillboardProvider {
     @Inject(BillboardRepository)
     private billboardRepository: BillboardRepository;
+
+    @Inject(BillboardService)
+    private billboardService: BillboardService;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoriesLoaded() {
@@ -17,7 +21,7 @@ export class BillboardProvider {
             if (!billboard.enabled) {
                 continue;
             }
-            this.loadBillboards(
+            this.billboardService.loadBillboard(
                 billboard.imageUrl,
                 billboard.originDictName,
                 billboard.originTextureName,
@@ -28,24 +32,31 @@ export class BillboardProvider {
         }
     }
 
-    public loadBillboards(
-        imageUrl: string,
-        dictName: string,
-        textureName: string,
-        width: number,
-        height: number,
-        name: string
-    ) {
-        const dict = CreateRuntimeTxd(name);
-        const dui = CreateDui(imageUrl, width, height);
-        const duiHandle = GetDuiHandle(dui);
-        CreateRuntimeTextureFromDuiHandle(dict, `${name}_texture`, duiHandle);
-        RemoveReplaceTexture(dictName, textureName);
-        AddReplaceTexture(dictName, textureName, name, `${name}_texture`);
+    @OnEvent(ClientEvent.BILLBOARD_UPDATE)
+    public async updateBillboard(billboard) {
+        this.billboardRepository.updateBillboard(billboard);
+
+        if (!billboard.enabled) {
+            this.deleteBillboard(billboard);
+            return;
+        }
+
+        this.billboardService.loadBillboard(
+            billboard.imageUrl,
+            billboard.originDictName,
+            billboard.originTextureName,
+            billboard.width,
+            billboard.height,
+            billboard.name
+        );
     }
 
-    @Command('billboard-clear')
-    public clear(_, name) {
-        RemoveReplaceTexture('soz_billboards_txd', name);
+    @OnEvent(ClientEvent.BILLBOARD_DELETE)
+    public async deleteBillboard(billboard) {
+        if (!billboard || !billboard.id) {
+            return;
+        }
+        this.billboardRepository.deleteBillboard(billboard.id);
+        RemoveReplaceTexture(billboard.originDictName, billboard.originTextureName);
     }
 }

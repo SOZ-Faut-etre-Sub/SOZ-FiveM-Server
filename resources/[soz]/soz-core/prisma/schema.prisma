@@ -682,9 +682,10 @@ model billboard {
     originTextureName   String    @db.VarChar(50)
     imageUrl            String    @db.VarChar(100)
     previewImageUrl     String    @db.VarChar(100)
+    templateImageUrl    String    @db.VarChar(100)
     width               Int       @db.Int
     height              Int       @db.Int
-    lastEdit            DateTime  @db.DateTime()
+    lastEdit            DateTime  @default(now()) @db.Timestamp(0)
     lastEditor          Int       @db.Int
     enabled             Boolean
 }

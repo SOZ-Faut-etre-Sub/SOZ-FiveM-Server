@@ -1,16 +1,15 @@
-import { Vector3 } from './polyzone/vector';
-
 export type Billboard = {
-    id: number;
+    id?: number;
     name: string;
-    position: Vector3;
+    position: string;
     originDictName: string;
     originTextureName: string;
     imageUrl: string;
     previewImageUrl: string;
+    templateImageUrl: string;
     width: number;
     height: number;
-    lastEdit: Date;
+    lastEdit?: number;
     lastEditor: number;
     enabled: boolean;
 };

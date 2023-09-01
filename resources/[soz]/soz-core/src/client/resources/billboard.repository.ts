@@ -1,6 +1,6 @@
 import { Injectable } from '@core/decorators/injectable';
 import { emitRpc } from '@core/rpc';
-import { Billboard } from '@public/shared/repository';
+import { Billboard } from '@public/shared/billboard';
 
 import { RpcServerEvent } from '../../shared/rpc';
 
@@ -15,7 +15,6 @@ export class BillboardRepository {
     public update(objects: Record<number, Billboard>) {
         this.objects = objects;
     }
-
     public get(): Record<number, Billboard> {
         return this.objects;
     }
@@ -27,19 +26,20 @@ export class BillboardRepository {
         return this.objects[id];
     }
 
-    public updateBillboard(race: Billboard) {
+    public updateBillboard(billboard: Billboard) {
         if (!this.objects) {
             return null;
         }
 
-        return race;
+        this.objects[billboard.id] = billboard
+        return;
     }
 
-    public deleteBillboard(raceId: number) {
+    public deleteBillboard(billboardId: number) {
         if (!this.objects) {
             return;
         }
 
-        delete this.objects[raceId];
+        delete this.objects[billboardId];
     }
 }

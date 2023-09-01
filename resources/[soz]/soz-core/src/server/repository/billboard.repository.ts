@@ -1,17 +1,13 @@
-import { Billboard } from '@public/shared/repository';
+import { Billboard } from '@public/shared/billboard';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { PrismaService } from '../database/prisma.service';
-import { PlayerService } from '../player/player.service';
 import { Repository } from './repository';
 
 @Injectable()
 export class BillboardRepository extends Repository<Record<number, Billboard>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     protected async load(): Promise<Record<number, Billboard>> {
         const data = await this.prismaService.billboard.findMany();
@@ -26,12 +22,13 @@ export class BillboardRepository extends Repository<Record<number, Billboard>> {
                 originTextureName: line.originTextureName,
                 imageUrl: line.imageUrl,
                 previewImageUrl: line.previewImageUrl,
+                templateImageUrl: line.templateImageUrl,
                 width: line.width,
                 height: line.height,
-                lastEdit: line.lastEdit,
+                lastEdit: line.lastEdit.getTime(),
                 lastEditor: line.lastEditor,
                 enabled: line.enabled,
-            } as Billboard;
+            };
         }
 
         return billboardList;
