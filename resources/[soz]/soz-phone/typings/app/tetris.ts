@@ -4,6 +4,7 @@ export interface TetrisScore {
 
 export interface TetrisLeaderboard {
     citizenid: string;
+    avatar: string;
     player_name: string;
     score: number;
     game_played: number;

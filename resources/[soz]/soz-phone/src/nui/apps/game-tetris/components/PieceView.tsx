@@ -1,44 +1,35 @@
-import cn from 'classnames';
 import React from 'react';
 
-import { getBlocks, getClassName, Piece } from '../game/Piece';
-import { usePieceColor } from '../hooks/usePieceColor';
+import I from '../assets/piece_I.svg';
+import J from '../assets/piece_J.svg';
+import L from '../assets/piece_L.svg';
+import O from '../assets/piece_O.svg';
+import S from '../assets/piece_S.svg';
+import T from '../assets/piece_T.svg';
+import Z from '../assets/piece_Z.svg';
+import { Piece } from '../game/Piece';
 
 type Props = {
     piece?: Piece;
 };
 
-const defaultBlock = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-] as const;
-
 const PieceView: React.FC<Props> = ({ piece }): JSX.Element => {
-    const fromPiece = piece && getBlocks(piece)[0];
-    const blocks = fromPiece ?? defaultBlock;
-    const pieceColor = usePieceColor();
-
-    const rows = blocks.map((row, i) => {
-        const blocksInRow = row.map((block, j) => {
-            return (
-                <td
-                    key={j}
-                    className={cn('h-5 w-5', {
-                        [pieceColor(piece)]: block,
-                    })}
-                />
-            );
-        });
-
-        return <tr key={i}>{blocksInRow}</tr>;
-    });
-    return (
-        <table className="h-full w-full">
-            <tbody>{rows}</tbody>
-        </table>
-    );
+    switch (piece) {
+        case 'I':
+            return <I />;
+        case 'J':
+            return <J />;
+        case 'L':
+            return <L />;
+        case 'O':
+            return <O />;
+        case 'S':
+            return <S />;
+        case 'T':
+            return <T />;
+        case 'Z':
+            return <Z />;
+    }
 };
 
 export default PieceView;

@@ -1,6 +1,5 @@
 import { Transition } from '@headlessui/react';
-import { ChevronLeftIcon, PlusIcon } from '@heroicons/react/outline';
-import { ChatIcon, PencilAltIcon, PhoneIcon, TrashIcon } from '@heroicons/react/solid';
+import { ChevronLeftIcon } from '@heroicons/react/outline';
 import cn from 'classnames';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -12,18 +11,17 @@ import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppWrapper } from '../../../ui/components/AppWrapper';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
-import { DayAgo } from '../../../ui/components/DayAgo';
-import { useBackground } from '../../../ui/hooks/useBackground';
-import { ActionButton } from '../../../ui/old_components/ActionButton';
 import { Button } from '../../../ui/old_components/Button';
-import { NumberField, TextField } from '../../../ui/old_components/Input';
-import GameTetrisIcon from '../icon';
 
 export const TetrisLeaderboard: React.FC = () => {
     const config = useConfig();
     const navigate = useNavigate();
 
-    const tetrisLeaderboard = useSelector((state: RootState) => state.appTetrisLeaderboard);
+    const tetrisLeaderboard = useSelector((state: RootState) => state.appTetrisLeaderboard).sort(
+        (a, b) => b.score - a.score
+    );
+    const top3 = tetrisLeaderboard.slice(0, 3);
+    const rest = tetrisLeaderboard.slice(3);
 
     return (
         <Transition
@@ -37,51 +35,53 @@ export const TetrisLeaderboard: React.FC = () => {
             leaveTo="translate-x-full"
         >
             <AppWrapper>
-                <AppTitle title="Zetris Top15">
+                <AppTitle title="Classement">
                     <Button className="flex items-center text-base" onClick={() => navigate(-1)}>
                         <ChevronLeftIcon className="h-5 w-5" />
                         Fermer
                     </Button>
                 </AppTitle>
                 <AppContent>
-                    <div className="space-y-1">
-                        {tetrisLeaderboard.map((player, i) => (
+                    <div className="py-8 grid grid-cols-3 text-center gap-3">
+                        {top3.map((player, i) => (
                             <div
                                 key={player.citizenid}
-                                className={cn('relative px-6 py-2 flex items-center space-x-3 rounded-md', {
-                                    'bg-[#FFD700]': i === 0,
-                                    'bg-[#C0C0C0]': i === 1,
-                                    'bg-[#CD7F32]': i === 2,
+                                className={cn('flex flex-col w-full rounded-md shadow', {
+                                    'text-white bg-ios-700': config.theme.value === 'dark',
+                                    'bg-white': config.theme.value === 'light',
+                                    'order-2 border-t-4 border-[#FFD700] scale-110': i === 0,
+                                    'order-1 border-t-4 border-[#C0C0C0]': i === 1,
+                                    'order-3 border-t-4 border-[#CD7F32]': i === 2,
+                                })}
+                                title={`${player.game_played} parties jouée`}
+                            >
+                                <div className="flex justify-center">
+                                    <ContactPicture picture={player.avatar} size="large" />
+                                </div>
+                                <div className="flex flex-col justify-between h-full">
+                                    <p className="items-start p-1.5">{player.player_name}</p>
+                                    <p className="p-2 text-lg font-semibold">{player.score}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="pt-4 space-y-3">
+                        {rest.map((player, i) => (
+                            <div
+                                key={player.citizenid}
+                                className={cn('w-full rounded-md shadow', {
+                                    'text-white bg-ios-700': config.theme.value === 'dark',
+                                    'bg-white': config.theme.value === 'light',
                                 })}
                             >
-                                <div className="flex-1 min-w-0">
-                                    <span className="absolute inset-0" aria-hidden="true" />
-                                    <p
-                                        className={cn('text-left text-xs font-bold', {
-                                            'text-white': config.theme.value === 'dark',
-                                            'text-gray-500': config.theme.value === 'light',
-                                        })}
-                                    >
-                                        <span
-                                            className={cn('rounded-full px-3 py-0', {
-                                                'bg-gray-200': config.theme.value === 'light',
-                                                'bg-gray-600': config.theme.value === 'dark',
-                                            })}
-                                        >
-                                            {player.player_name}
-                                        </span>
-                                    </p>
-                                    <p
-                                        className={cn('text-left text-sm font-medium break-words', {
-                                            'text-gray-100': config.theme.value === 'dark',
-                                            'text-gray-700': config.theme.value === 'light',
-                                        })}
-                                    >
-                                        {player.score}
-                                    </p>
-                                    <p className="flex justify-between text-left text-xs text-gray-400">
-                                        <span>{player.game_played} parties jouée</span>
-                                    </p>
+                                <div className="flex justify-between items-center">
+                                    <div className="flex-shrink text-gray-500 p-4">#{i + 4}</div>
+                                    <div className="flex-shrink py-2">
+                                        <ContactPicture picture={player.avatar} />
+                                    </div>
+
+                                    <div className="flex-grow p-4">{player.player_name}</div>
+                                    <div className="flex-shrink font-semibold text-xl p-4">{player.score}</div>
                                 </div>
                             </div>
                         ))}
