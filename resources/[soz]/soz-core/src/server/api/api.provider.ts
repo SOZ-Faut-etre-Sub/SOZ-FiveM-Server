@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
+import { BillboardService } from '../billboard/billboard.service';
 import { ItemService } from '../item/item.service';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
@@ -17,6 +18,9 @@ export class ApiProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(BillboardService)
+    private billboardService: BillboardService;
 
     @Get('/active-players')
     public async getActivePlayers(): Promise<Response> {
@@ -54,6 +58,31 @@ export class ApiProvider {
         const player = this.playerService.getPlayerByCitizenId(data.player);
         if (player && player.source) {
             this.playerService.setPlayerMetadata(player.source, 'rp_death', data.value);
+        }
+        return Response.ok();
+    }
+
+    @Post('/twitch-news/update-billboard')
+    public async updateBillboard(request: Request): Promise<Response> {
+        const data = JSON.parse(await request.body);
+        const billboard = data.billboard;
+
+        try {
+            this.billboardService.updateBillboard(source, billboard);
+        } catch (error) {
+            return Response.internalServerError("La mise à jour du panneau d'affichage à échouée");
+        }
+        return Response.ok();
+    }
+
+    @Post('/twitch-news/delete-billboard')
+    public async deleteBillboard(request: Request): Promise<Response> {
+        const data = JSON.parse(await request.body);
+        const billboardId = data.billboardId;
+        try {
+            this.billboardService.deleteBillboard(source, billboardId);
+        } catch (error) {
+            return Response.internalServerError("La supression du panneau d'affichage à échouée");
         }
         return Response.ok();
     }

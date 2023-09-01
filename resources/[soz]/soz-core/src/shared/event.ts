@@ -547,6 +547,9 @@ export enum ClientEvent {
 
     RACE_ADD_UPDATE = 'soz-core:client:race:add-update',
     RACE_DELETE = 'soz-core:client:race:delete',
+
+    BILLBOARD_UPDATE = 'soz-core:client:billboard:update',
+    BILLBOARD_DELETE = 'soz-core:client:billboard:delete',
 }
 
 export enum GameEvent {
