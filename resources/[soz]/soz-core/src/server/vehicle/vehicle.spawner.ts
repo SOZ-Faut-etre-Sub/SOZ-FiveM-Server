@@ -7,6 +7,7 @@ import { uuidv4, wait } from '@core/utils';
 import { PlayerVehicle } from '@prisma/client';
 import { DealershipConfig } from '@public/config/dealership';
 import { GarageRepository } from '@public/server/repository/garage.repository';
+import { JobType } from '@public/shared/job';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { MultiZone } from '@public/shared/polyzone/multi.zone';
 import { RpcClientEvent } from '@public/shared/rpc';
@@ -18,6 +19,7 @@ import { getDefaultVehicleConfiguration, VehicleColor, VehicleConfiguration } fr
 import {
     getDefaultVehicleCondition,
     getDefaultVehicleVolatileState,
+    VehicleCategory,
     VehicleCondition,
     VehicleSpawn,
     VehicleType,
@@ -278,6 +280,11 @@ export class VehicleSpawner {
             open: false,
             owner: player.citizenid,
             defaultOwner: vehicle.citizenid,
+            job: vehicle.job as JobType,
+            class: vehicle.category as VehicleCategory,
+            locatorEndJam: this.vehicleStateService.getJamLocator(vehicle.plate),
+            model: vehicle.vehicle,
+            label: vehicle.label,
         };
 
         const hash = parseInt(vehicle.hash || '0', 10);

@@ -194,10 +194,7 @@ export class VehicleLockProvider {
         }
 
         if (vehicleState.volatile.isPlayerVehicle) {
-            const playerVehicle = await this.prismaService.playerVehicle.findUnique({
-                where: { plate: vehicleState.volatile.plate },
-            });
-            if (playerVehicle.job) {
+            if (vehicleState.volatile.job) {
                 this.notifier.notify(
                     source,
                     '~r~Le véhicule déverrouillé appartient visiblement à une entreprise en ville',

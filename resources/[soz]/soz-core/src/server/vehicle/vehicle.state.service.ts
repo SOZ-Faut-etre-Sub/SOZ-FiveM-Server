@@ -1,6 +1,6 @@
 import { Injectable } from '@core/decorators/injectable';
 import { ClientEvent } from '@public/shared/event';
-import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { Vector4 } from '@public/shared/polyzone/vector';
 
 import {
     getDefaultVehicleCondition,
@@ -14,7 +14,7 @@ import {
 type VehicleState = {
     volatile: VehicleVolatileState;
     condition: VehicleCondition;
-    position: Vector3 | Vector4 | null;
+    position: Vector4 | null;
     owner: number;
 };
 
@@ -43,6 +43,8 @@ export class VehicleStateService {
     private vehicleSeats: Map<number, Map<number, VehicleSeat>> = new Map<number, Map<number, VehicleSeat>>();
 
     public vehicleOpened: Set<number> = new Set();
+
+    private vehicleLocatorJam: Map<string, number> = new Map<string, number>();
 
     public getVehicleState(vehicleNetworkId: number): Readonly<VehicleState> {
         if (this.state.has(vehicleNetworkId)) {
@@ -82,7 +84,7 @@ export class VehicleStateService {
         return this.state;
     }
 
-    public updateVehiclePosition(vehicleNetworkId: number, position: Vector3): void {
+    public updateVehiclePosition(vehicleNetworkId: number, position: Vector4): void {
         if (!this.state.has(vehicleNetworkId)) {
             return;
         }
@@ -115,6 +117,10 @@ export class VehicleStateService {
 
         if (!entityId) {
             return;
+        }
+
+        if (newState.volatile.locatorEndJam > 0) {
+            this.vehicleLocatorJam.set(newState.volatile.plate, newState.volatile.locatorEndJam);
         }
 
         const owner = NetworkGetEntityOwner(entityId);
@@ -226,7 +232,7 @@ export class VehicleStateService {
     public register(
         netId: number,
         owner: number,
-        position: Vector3 | Vector4,
+        position: Vector4,
         volatile: VehicleVolatileState,
         condition: VehicleCondition
     ) {
@@ -326,5 +332,9 @@ export class VehicleStateService {
             this.vehicleOpened.delete(vehicleNetworkId);
             TriggerClientEvent(ClientEvent.VEHICLE_SET_OPEN_LIST, -1, [...this.vehicleOpened]);
         }
+    }
+
+    public getJamLocator(plate: string) {
+        return this.vehicleLocatorJam.get(plate) || 0;
     }
 }
