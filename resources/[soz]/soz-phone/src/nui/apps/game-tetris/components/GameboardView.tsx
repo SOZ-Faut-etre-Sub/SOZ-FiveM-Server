@@ -9,7 +9,7 @@ export default function GameboardView(): JSX.Element {
     const matrix = viewMatrix(game);
 
     return (
-        <div className="border-4 border-blue-400 bg-[#0d1a48] p-1 rounded-xl overflow-hidden h-[550px]">
+        <div className="border-4 border-blue-400 bg-[#0d1a48]/60 p-1 rounded-xl overflow-hidden h-[550px]">
             <table className="h-full w-full border-collapse border border-slate-500">
                 <tbody>
                     {matrix.map((row, i) => {
