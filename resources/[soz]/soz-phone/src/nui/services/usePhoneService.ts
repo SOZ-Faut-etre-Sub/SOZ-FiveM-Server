@@ -25,6 +25,7 @@ export const usePhoneService = () => {
 
     useEffect(() => {
         store.dispatch.phone.loadConfig();
+        store.dispatch.phone.loadCitizenID();
     }, []);
 
     useNuiEvent('PHONE', 'startRestart', () => {
