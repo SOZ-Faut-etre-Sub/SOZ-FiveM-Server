@@ -1008,6 +1008,9 @@ function GetOrCreateInventory(storageType, invID, ctx)
             if ctx then
                 tier = ctx.apartmentTier
             end
+            if invID == "villa_cayo" then
+                tier = -1
+            end
             targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig[tier].slot, storageConfig[tier].weight, invID)
         end
     elseif storageType == "house_fridge" then

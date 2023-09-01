@@ -619,7 +619,7 @@ export class VehicleGarageProvider {
 
         const freePlaces = await this.getFreePlaces(source, id, garage);
 
-        if (freePlaces !== null && freePlaces <= 0) {
+        if (freePlaces !== null && freePlaces <= 0 && id != `property_cayo_villa`) {
             this.notifier.notify(source, 'Ce garage est plein.', 'error');
             return;
         }
