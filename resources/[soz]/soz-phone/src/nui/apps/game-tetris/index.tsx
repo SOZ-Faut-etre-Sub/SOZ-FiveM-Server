@@ -20,6 +20,14 @@ export const GameTetris: React.FC = () => {
                 [backgroundClass]: pathname !== '/game-tetris',
             })}
         >
+            {pathname === '/game-tetris' && (
+                <div
+                    className="overflow-hidden absolute inset-0 bg-cover bg-center z-0"
+                    style={{
+                        backgroundImage: `url(media/tetris_bg.webp)`,
+                    }}
+                />
+            )}
             <Transition
                 appear={true}
                 show={true}

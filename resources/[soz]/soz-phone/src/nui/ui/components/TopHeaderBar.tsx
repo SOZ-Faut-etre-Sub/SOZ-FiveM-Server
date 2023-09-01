@@ -36,7 +36,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     }, [notifications, setBarUncollapsed]);
 
     const color = () => {
-        if (['/', '/emergency', '/weather'].includes(pathname)) {
+        if (['/', '/emergency', '/weather', '/game-tetris'].includes(pathname)) {
             return 'text-white';
         } else if (pathname === '/call' || (call && pathname.includes('/phone'))) {
             return 'text-white';
@@ -50,7 +50,7 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     return (
         <>
             <div
-                className={cn(`z-40 grid grid-cols-3 px-5 py-3 text-sm w-full`, color(), {
+                className={cn(`relative z-40 grid grid-cols-3 px-5 py-3 text-sm w-full`, color(), {
                     'cursor-pointer': !emergency,
                 })}
                 onClick={
