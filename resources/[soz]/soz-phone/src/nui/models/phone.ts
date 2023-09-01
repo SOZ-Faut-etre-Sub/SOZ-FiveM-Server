@@ -1,9 +1,7 @@
 import { createModel } from '@rematch/core';
 
 import { ServerPromiseResp } from '../../../typings/common';
-import { Message, MessageEvents } from '../../../typings/messages';
 import { PhoneEvents } from '../../../typings/phone';
-import { MockConversationMessages } from '../apps/messages/utils/constants';
 import { IPhoneSettings } from '../apps/settings/hooks/useSettings';
 import config from '../config/default.json';
 import { fetchNui } from '../utils/fetchNui';

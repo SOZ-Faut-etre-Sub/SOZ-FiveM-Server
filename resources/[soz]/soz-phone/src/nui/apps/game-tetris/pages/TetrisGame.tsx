@@ -1,4 +1,3 @@
-import { Dialog } from '@headlessui/react';
 import cn from 'classnames';
 import React, { FunctionComponent, useMemo } from 'react';
 import { useSelector } from 'react-redux';
