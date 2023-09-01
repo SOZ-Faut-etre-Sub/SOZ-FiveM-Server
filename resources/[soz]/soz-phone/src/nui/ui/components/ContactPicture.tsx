@@ -6,7 +6,7 @@ import { useConfig } from '../../hooks/usePhone';
 type Props = {
     picture?: string;
     useOffset?: boolean;
-    size?: 'small' | 'large';
+    size?: 'small' | 'medium' | 'large';
 };
 
 export const ContactPicture: FunctionComponent<Props> = ({ picture, useOffset = true, size = 'small' }) => {
@@ -18,6 +18,7 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, useOffset = 
                 'bg-ios-700': config.theme.value === 'dark',
                 'bg-gray-300': config.theme.value === 'light',
                 'h-10 w-10': size === 'small',
+                'h-14 w-14': size === 'medium',
                 'h-20 w-20': size === 'large',
             })}
             style={{ backgroundImage: `url(${picture})`, backgroundPosition: useOffset ? '-300px 0' : undefined }}
