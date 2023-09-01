@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE IF NOT EXISTS `billboard` (
-    `id` INTEGER NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
     `position` VARCHAR(50) NOT NULL,
     `originDictName` VARCHAR(50) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `billboard` (
     `templateImageUrl` VARCHAR(100) NOT NULL,
     `width` INTEGER NOT NULL,
     `height` INTEGER NOT NULL,
-    `lastEdit` DATETIME NOT NULL,
+    `lastEdit` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `lastEditor` INTEGER NOT NULL,
     `enabled` Boolean NOT NULL,
 
