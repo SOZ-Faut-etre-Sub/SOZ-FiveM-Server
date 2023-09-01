@@ -470,6 +470,41 @@ QBCore.Functions.CreateCallback("housing:server:GetPlayerAccess", function(sourc
     cb(access)
 end)
 
+AddEventHandler("housing:server:GiveAdminAccess", function(source, propertyId, apartmentId, citizenId)
+    local targetProperty = nil
+    for _, property in pairs(Properties) do
+        if property.identifier == propertyId then
+            targetProperty = property
+            break
+        end
+    end
+
+    if targetProperty == nil then
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Cette property n'existe pas", "error")
+        return
+    end
+
+    local targetApartment = nil
+    for _, apartment in pairs(targetProperty:GetApartments()) do
+        if apartment.identifier == apartmentId then
+            targetApartment = apartment
+            break
+        end
+    end
+
+    if targetApartment == nil then
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Cet appartement n'existe pas", "error")
+        return
+    end
+
+    if targetApartment:IsAvailable() then
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Cet appartement est en vente", "error")
+        return
+    end
+
+    targetApartment:AddTemporaryAccess(citizenId)
+end)
+
 RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apartmentId, target)
     local Player = QBCore.Functions.GetPlayer(source)
     local Target = QBCore.Functions.GetPlayer(target)
