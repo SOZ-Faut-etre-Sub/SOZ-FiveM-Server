@@ -91,6 +91,11 @@ export class VehiclePoliceLocator {
                 return;
             }
 
+            if (GetPedInVehicleSeat(vehicule, -1) != playerPed && GetPedInVehicleSeat(vehicule, 0) != playerPed) {
+                this.clear();
+                return;
+            }
+
             const vehState = await this.vehicleStateService.getVehicleState(vehicule);
             if (!vehState.policeLocatorEnabled) {
                 this.clear();
