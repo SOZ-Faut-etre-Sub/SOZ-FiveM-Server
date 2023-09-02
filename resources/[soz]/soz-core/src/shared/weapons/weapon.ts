@@ -86,6 +86,7 @@ export enum WeaponName {
     SWITCHBLADE = 'WEAPON_SWITCHBLADE',
     BATTLEAXE = 'WEAPON_BATTLEAXE',
     STONE_HATCHET = 'WEAPON_STONE_HATCHET',
+    CANDYCANE = 'WEAPON_CANDYCANE',
 
     // Handguns
     PISTOL = 'WEAPON_PISTOL',
@@ -107,6 +108,7 @@ export enum WeaponName {
     CERAMICPISTOL = 'WEAPON_CERAMICPISTOL',
     NAVYREVOLVER = 'WEAPON_NAVYREVOLVER',
     GADGETPISTOL = 'WEAPON_GADGETPISTOL',
+    PISTOLXM3 = 'WEAPON_PISTOLXM3',
 
     // SMG
     MICROSMG = 'WEAPON_MICROSMG',
@@ -117,6 +119,7 @@ export enum WeaponName {
     MACHINEPISTOL = 'WEAPON_MACHINEPISTOL',
     MINISMG = 'WEAPON_MINISMG',
     RAYCARBINE = 'WEAPON_RAYCARBINE',
+    TECPISTOL = 'WEAPON_TECPISTOL',
 
     // Assault Rifles
     ASSAULTRIFLE = 'WEAPON_ASSAULTRIFLE',
@@ -162,6 +165,7 @@ export enum WeaponName {
     COMPACTLAUNCHER = 'WEAPON_COMPACTLAUNCHER',
     RAYMINIGUN = 'WEAPON_RAYMINIGUN',
     EMPLAUNCHER = 'WEAPON_EMPLAUNCHER',
+    RAILGUNXM3 = 'WEAPON_RAILGUNXM3',
 
     // Sniper Rifles
     SNIPERRIFLE = 'WEAPON_SNIPERRIFLE',
@@ -182,6 +186,7 @@ export enum WeaponName {
     BALL = 'WEAPON_BALL',
     SMOKEGRENADE = 'WEAPON_SMOKEGRENADE',
     FLARE = 'WEAPON_FLARE',
+    ACIDPACKAGE = 'WEAPON_ACIDPACKAGE',
 
     // Other
     PETROLCAN = 'WEAPON_PETROLCAN',
@@ -287,6 +292,9 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.STONE_HATCHET]: {
         drawPosition: { model: GetHashKey('w_me_stonehatchet'), ...DrawPositions['LMG'] },
+    },
+    [WeaponName.CANDYCANE]: {
+        drawPosition: { model: GetHashKey('W_ME_Candy_XM3'), ...DrawPositions['LMG'] },
     },
 
     // Handguns
@@ -511,6 +519,13 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.1,
         ammo: 'ammo_01',
     },
+    [WeaponName.PISTOLXM3]: {
+        recoil: 0.1,
+        ammo: 'ammo_01',
+        attachments: [
+            { label: 'Silencieux', component: 'COMPONENT_PISTOLXM3_SUPP', type: WeaponComponentType.Suppressor },
+        ],
+    },
 
     // SMGs
     [WeaponName.MICROSMG]: {
@@ -598,6 +613,15 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         attachments: [
             { label: 'Grand chargeur', component: 'COMPONENT_ASSAULTSMG_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Lampe torche', component: 'COMPONENT_AT_AR_FLSH', type: WeaponComponentType.Flashlight },
+            { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_MACRO', type: WeaponComponentType.Scope },
+            { label: 'Silencieux', component: 'COMPONENT_AT_AR_SUPP_02', type: WeaponComponentType.Suppressor },
+        ],
+    },
+    [WeaponName.TECPISTOL]: {
+        recoil: 0.05,
+        ammo: 'ammo_01',
+        attachments: [
+            { label: 'Grand chargeur', component: 'COMPONENT_TECPISTOL_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_MACRO', type: WeaponComponentType.Scope },
             { label: 'Silencieux', component: 'COMPONENT_AT_AR_SUPP_02', type: WeaponComponentType.Suppressor },
         ],
@@ -969,6 +993,10 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.4,
         ammo: 'ammo_14',
     },
+    [WeaponName.RAILGUNXM3]: {
+        recoil: 0.4,
+        ammo: 'ammo_14',
+    },
 
     // Sniper
     [WeaponName.SNIPERRIFLE]: {
@@ -1050,6 +1078,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.BALL]: { attachments: [] },
     [WeaponName.SMOKEGRENADE]: { attachments: [] },
     [WeaponName.FLARE]: { attachments: [] },
+    [WeaponName.ACIDPACKAGE]: { attachments: [] },
 
     // Other
     [WeaponName.PETROLCAN]: { attachments: [] },
