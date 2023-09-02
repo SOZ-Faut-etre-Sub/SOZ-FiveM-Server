@@ -130,7 +130,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                 </MenuItemButton>
                 {Object.keys(characters).length > 0 && (
                     <MenuItemSelect
-                        disabled={!isAdminOrStaff}
+                        disabled={!isAdminOrStaffOrGM}
                         onConfirm={async (index, value) => {
                             await fetchNui(NuiEvent.AdminMenuGameMasterSwitchCharacter, value);
                         }}
@@ -144,7 +144,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     </MenuItemSelect>
                 )}
                 <MenuItemButton
-                    disabled={!isAdminOrStaff}
+                    disabled={!isAdminOrStaffOrGM}
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminMenuGameMasterCreateNewCharacter);
                     }}
