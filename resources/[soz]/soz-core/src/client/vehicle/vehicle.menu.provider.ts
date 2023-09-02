@@ -270,9 +270,7 @@ export class VehicleMenuProvider {
             permission: isAllowed ? permission : null,
             isAnchor: IsBoatAnchoredAndFrozen(vehicle),
             isBoat: GetVehicleClass(vehicle) == VehicleClass.Boats,
-            police:
-                FDO.includes(player.job.id) &&
-                !!FDO.find(job => vehicleState.plate.startsWith(this.jobService.getJob(job).platePrefix)),
+            police: FDO.includes(player.job.id) && FDO.includes(vehicleState.job),
             policeLocator: vehicleState.policeLocatorEnabled,
         });
     }
