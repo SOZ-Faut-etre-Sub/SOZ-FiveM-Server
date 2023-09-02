@@ -7,7 +7,6 @@ import { tetrisLogger } from './tetris.utils';
 class _TetrisService {
     private readonly tetrisDB: _TetrisDB;
     private tetrisLeaderboard: TetrisLeaderboard[];
-    private lowestScore: number;
 
     constructor() {
         this.tetrisDB = TetrisDB;
@@ -28,11 +27,9 @@ class _TetrisService {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
 
-        if (reqObj.data.score > this.lowestScore) {
-            this.fetchLeaderboard().catch(e => {
-                tetrisLogger.error(`Error occured in fetchLeaderboard update event, Error:  ${e.message}`);
-            });
-        }
+        this.fetchLeaderboard().catch(e => {
+            tetrisLogger.error(`Error occured in fetchLeaderboard update event, Error:  ${e.message}`);
+        });
     }
 
     async getLeaderboard(reqObj: PromiseRequest<string>, resp: PromiseEventResp<TetrisLeaderboard[]>): Promise<void> {
@@ -48,7 +45,6 @@ class _TetrisService {
         try {
             const leaderboard = await this.tetrisDB.getLeaderboard();
             this.tetrisLeaderboard = leaderboard;
-            this.lowestScore = leaderboard[leaderboard.length - 1].score;
             emitNet(TetrisEvents.BROADCAST_LEADERBOARD, -1, this.tetrisLeaderboard);
         } catch (e) {
             tetrisLogger.error(`Error in fetchLeaderboard, ${e.toString()}`);
