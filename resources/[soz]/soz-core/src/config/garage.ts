@@ -46,8 +46,8 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
-    spanish_avenue: {
-        name: 'Spanish Avenue Parking',
+    multicolor_parking: {
+        name: 'Multicolor Parking',
         legacyId: 'spanishave',
         type: GarageType.Private,
         category: GarageCategory.Car,
