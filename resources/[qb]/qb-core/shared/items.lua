@@ -255,6 +255,17 @@ QBShared.Items = {
         ['description'] = 'Retour à l\'âge de pierre.',
         ['illustrator'] = '.Smogogo',
     },
+    ['weapon_candycane'] = {
+        ['name'] = 'weapon_candycane',
+        ['label'] = 'Canne à sucre',
+        ['weight'] = 500,
+        ['type'] = 'weapon',
+        ['ammotype'] = nil,
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'La magie de Noel.',
+        ['illustrator'] = '.NariieL'
+    },
 
     -- Handguns
     ['weapon_pistol'] = {
@@ -451,6 +462,27 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Arme Pistolet considérée par certains comme étant un gadget'
     },
+    ['weapon_stungun_mp'] = {
+        ['name'] = 'weapon_stungun_mp',
+        ['label'] = 'Taser 2',
+        ['weight'] = 500,
+        ['type'] = 'weapon',
+        ['ammotype'] = nil,
+        ['unique'] = true,
+        ['useable'] = false,
+        ['description'] = 'Arme électrique de corps à corps, causant une paralysie.'
+    },
+    ['weapon_pistolxm3'] = {
+        ['name'] = 'weapon_pistolxm3',
+        ['label'] = 'Pistolet WM 29',
+        ['weight'] = 1500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_PISTOL',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Un petit pistolet mais efficace.',
+        ['illustrator'] = '.NariieL'
+    },
 
     -- Submachine Guns
     ['weapon_microsmg'] = {
@@ -533,6 +565,17 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = true,
         ['description'] = 'Adapté pour dégommer tout ce qui passe à votre portée.'
+    },
+    ['weapon_tecpistol'] = {
+        ['name'] = 'weapon_tecpistol',
+        ['label'] = 'Mitraillette Tactique',
+        ['weight'] = 1500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_SMG',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = "La puissance de feu d'une mitraillette avec la taille d'un pistolet.",
+        ['illustrator'] = '.NariieL'
     },
 
     -- Shotguns
@@ -759,6 +802,17 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Fusil d\'assaut lourd de qualité.'
     },
+    ['weapon_tacticalrifle'] = {
+        ['name'] = 'weapon_tacticalrifle',
+        ['label'] = 'Fusil tactique',
+        ['weight'] = 4000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_RIFLE',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = 'Fusil d\'assaut tactique.',
+        ['illustrator'] = '.NariieL'
+    },
 
     -- Light Machine Guns
     ['weapon_mg'] = {
@@ -873,6 +927,17 @@ QBShared.Items = {
         ['useable'] = true,
         ['description'] = 'Un fusil à lunette.'
     },
+    ['weapon_precisionrifle'] = {
+        ['name'] = 'weapon_precisionrifle',
+        ['label'] = 'Fusil de précision',
+        ['weight'] = 4500,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_SNIPER',
+        ['unique'] = true,
+        ['useable'] = true,
+        ['description'] = "Un fusil de précision lourd sans lunette",
+        ['illustrator'] = '.NariieL'
+    },
 
     -- Heavy Weapons
     ['weapon_rpg'] = {
@@ -974,6 +1039,15 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = false,
         ['description'] = 'Un lance-grenades dans un format très compacté.'
+    },
+    ['weapon_railgunxm3'] = {
+        ['name'] = 'weapon_railgunxm3',
+        ['label'] = 'Railgun',
+        ['weight'] = 6000,
+        ['type'] = 'weapon',
+        ['ammotype'] = 'AMMO_FLARE',
+        ['unique'] = true,
+        ['useable'] = false,
     },
 
     -- Throwables
@@ -1079,6 +1153,16 @@ QBShared.Items = {
         ['unique'] = true,
         ['useable'] = false,
         ['description'] = 'Petit dispositif pyrotechnique utilisés pour l\'éclairage et la signalisation.'
+    },
+    ['weapon_acidpackage'] = {
+        ['name'] = 'weapon_acidpackage',
+        ['label'] = "Journal",
+        ['weight'] = 800,
+        ['type'] = 'weapon',
+        ['ammotype'] = nil,
+        ['unique'] = true,
+        ['useable'] = false,
+        ['description'] = 'Chute de News'
     },
     -- Miscellaneous
     ['weapon_petrolcan'] = {
