@@ -260,7 +260,9 @@ local function CreateInvoice(Emitter, Target, account, targetAccount, label, amo
             created_at = os.time() * 1000,
         }
 
-        TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id, label, amount, SozJobCore.Jobs[Emitter.PlayerData.job.id].label)
+        if PlayerHaveAccessToInvoices(Target.PlayerData, targetAccount) then
+            TriggerClientEvent("banking:client:invoiceReceived", Target.PlayerData.source, id, label, amount, SozJobCore.Jobs[Emitter.PlayerData.job.id].label)
+        end
 
         local invoiceJob = ""
 
@@ -349,7 +351,7 @@ RegisterNetEvent("banking:server:sendSocietyInvoice", function(target, label, am
 
     if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "paper", 1) then
         if CreateInvoice(Player, Target, Player.PlayerData.job.id, Target.PlayerData.job.id, label, tonumber(amount), kind) then
-            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre facture a bien été émise")
+            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Votre facture ~g~Société~s~ a bien été émise")
         end
     else
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas de papier", "error")
