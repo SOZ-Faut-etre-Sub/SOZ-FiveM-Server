@@ -18,7 +18,7 @@ export class BillboardProvider {
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoriesLoaded() {
         //Billboards : Attente du chargement de l'ensemble des ressources
-        await wait(15000);
+        await wait(10000);
 
         const billboards = this.billboardRepository.get();
         for (const billboard of Object.values(billboards)) {

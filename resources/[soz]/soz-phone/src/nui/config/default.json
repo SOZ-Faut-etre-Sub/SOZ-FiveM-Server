@@ -215,7 +215,7 @@
         "notiSoundVol": 50,
         "societyNotificationVol": 50,
         "handsFree": false,
-        "silent": false,
+        "planeMode": false,
         "dynamicAlert": false,
         "dynamicAlertVol": 50,
         "dynamicAlertDuration": {
