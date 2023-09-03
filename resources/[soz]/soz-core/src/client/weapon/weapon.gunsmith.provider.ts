@@ -16,6 +16,8 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { WeaponDrawingProvider } from './weapon.drawing.provider';
+import { WeaponHolsterProvider } from './weapon.holster.provider';
 import { WeaponService } from './weapon.service';
 
 @Provider()
@@ -41,6 +43,12 @@ export class WeaponGunsmithProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
+    @Inject(WeaponHolsterProvider)
+    private weaponHolsterProvider: WeaponHolsterProvider;
+
+    @Inject(WeaponDrawingProvider)
+    private weaponDrawingProvider: WeaponDrawingProvider;
+
     @OnEvent(ClientEvent.WEAPON_OPEN_GUNSMITH)
     async openGunsmith() {
         const weapons = this.inventoryManager.getItems().filter(item => item.type === 'weapon');
@@ -52,6 +60,7 @@ export class WeaponGunsmithProvider {
         }
 
         await this.weaponService.clear();
+        this.weaponDrawingProvider.onUseWeapon(null);
 
         this.nuiMenu.openMenu(
             MenuType.GunSmith,
@@ -78,7 +87,6 @@ export class WeaponGunsmithProvider {
             }
         );
     }
-
     @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
     public async resetGunSmith({ menuType }) {
         if (menuType !== MenuType.GunSmith) {
@@ -87,20 +95,14 @@ export class WeaponGunsmithProvider {
 
         this.animationService.stop();
         await this.weaponService.clear();
+        this.weaponDrawingProvider.onUseWeapon(null);
 
-        await this.playerService.updateState({
+        this.playerService.updateState({
             isInShop: false,
         });
-
-        const weapon = this.weaponService.getCurrentWeapon();
-        if (weapon) {
-            await this.weaponService.set(weapon);
-        }
     }
 
-    // Tint
-    @OnNuiEvent(NuiEvent.GunSmithPreviewTint)
-    async previewTint({ slot, tint }: { slot: number; tint: number }) {
+    public async setWeapon(player: number, slot: number) {
         const weapon = this.weaponService.getWeaponFromSlot(slot);
         if (!weapon) {
             return;
@@ -108,19 +110,22 @@ export class WeaponGunsmithProvider {
 
         const previewWeapon = this.weaponService.getCurrentWeapon();
         if (previewWeapon?.name !== weapon.name) {
-            await this.weaponService.clear();
-        }
-
-        if (!previewWeapon) {
+            this.weaponDrawingProvider.onUseWeapon(weapon);
             await this.weaponService.set(weapon);
         }
 
+        return GetHashKey(weapon.name);
+    }
+
+    // Tint
+    @OnNuiEvent(NuiEvent.GunSmithPreviewTint)
+    async previewTint({ slot, tint }: { slot: number; tint: number }) {
         const player = PlayerPedId();
-        const weaponHash = GetSelectedPedWeapon(player);
+        const weaponHash = await this.setWeapon(player, slot);
 
         SetPedWeaponTintIndex(player, weaponHash, Number(tint));
 
-        await this.setupAnimation();
+        this.setupAnimation();
     }
 
     // Attachment
@@ -134,23 +139,8 @@ export class WeaponGunsmithProvider {
         attachment: string;
         attachmentList: WeaponAttachment[];
     }) {
-        const weapon = this.weaponService.getWeaponFromSlot(slot);
-        if (!weapon) {
-            return;
-        }
-
-        const previewWeapon = this.weaponService.getCurrentWeapon();
-        if (previewWeapon?.name !== weapon.name) {
-            await this.weaponService.clear();
-            await this.weaponService.set(weapon);
-        }
-
-        if (!previewWeapon) {
-            await this.weaponService.set(weapon);
-        }
-
         const player = PlayerPedId();
-        const weaponHash = GetSelectedPedWeapon(player);
+        const weaponHash = await this.setWeapon(player, slot);
 
         if (attachment) {
             GiveWeaponComponentToPed(player, weaponHash, GetHashKey(attachment));
@@ -163,7 +153,7 @@ export class WeaponGunsmithProvider {
             }
         }
 
-        await this.setupAnimation();
+        this.setupAnimation();
     }
 
     @OnNuiEvent(NuiEvent.GunSmithApplyConfiguration)
@@ -248,20 +238,33 @@ export class WeaponGunsmithProvider {
         this.nuiMenu.closeMenu(false);
     }
 
+    private inSetup = false;
     private async setupAnimation() {
-        const player = PlayerPedId();
-
-        await this.playerService.updateState({
-            isInShop: true,
-        });
-
-        if (IsEntityPlayingAnim(player, 'missbigscore1guard_wait_rifle', 'wait_base', 3)) {
+        if (this.inSetup) {
             return;
         }
 
-        this.animationService.stop();
-        await wait(300);
-        await this.animationService.playAnimation(
+        this.inSetup = true;
+        await wait(200);
+        const player = PlayerPedId();
+
+        this.playerService.updateState({
+            isInShop: true,
+        });
+
+        while (this.weaponHolsterProvider.isInAnimation()) {
+            await wait(200);
+        }
+
+        if (IsEntityPlayingAnim(player, 'missbigscore1guard_wait_rifle', 'wait_base', 3)) {
+            this.inSetup = false;
+            return;
+        }
+
+        await this.animationService.stop();
+        await wait(200);
+
+        this.animationService.playAnimation(
             {
                 base: {
                     dictionary: 'missbigscore1guard_wait_rifle',
@@ -276,5 +279,7 @@ export class WeaponGunsmithProvider {
                 resetWeapon: false,
             }
         );
+        await wait(200);
+        this.inSetup = false;
     }
 }
