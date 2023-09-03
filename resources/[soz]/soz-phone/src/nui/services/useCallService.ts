@@ -1,9 +1,11 @@
 import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { ActiveCall, CallEvents } from '@typings/call';
+import { config } from 'process';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useConfig } from '../hooks/usePhone';
 import { useEndDialSound } from '../os/call/hooks/useEndDialSound';
 import { RootState, store } from '../store';
 
@@ -12,7 +14,7 @@ export const useCallService = () => {
     const { startTone } = useEndDialSound();
     const navigate = useNavigate();
     const { pathname } = useLocation();
-
+    const config = useConfig();
     const [modalHasBeenOpenedThisCall, setModalOpened] = useState<boolean>(false);
 
     useEffect(() => {
@@ -23,7 +25,7 @@ export const useCallService = () => {
         if (!modal && pathname === '/call') {
             navigate('/', { replace: true });
         }
-        if (modal && !modalHasBeenOpenedThisCall && pathname !== '/call') {
+        if (modal && !config.planeMode && !modalHasBeenOpenedThisCall && pathname !== '/call') {
             navigate('/call');
         }
     }, [navigate, modal, pathname, modalHasBeenOpenedThisCall]);

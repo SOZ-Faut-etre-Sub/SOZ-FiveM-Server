@@ -25,11 +25,11 @@ const PhoneWrapper: React.FC<PropsWithChildren> = memo(({ children }) => {
             return 'translate-y-[1000px]';
         }
 
-        if (settings.handsFree && !settings.silent && !visibility && !!call) {
+        if (settings.handsFree && !settings.planeMode && !visibility && !!call) {
             return 'translate-y-[650px]';
         }
 
-        if (settings.handsFree && !settings.silent && !visibility && notifVisibility) {
+        if (settings.handsFree && !settings.planeMode && !visibility && notifVisibility) {
             return 'translate-y-[800px]';
         }
         return visibility ? 'translate-y-0' : 'translate-y-[1000px]';

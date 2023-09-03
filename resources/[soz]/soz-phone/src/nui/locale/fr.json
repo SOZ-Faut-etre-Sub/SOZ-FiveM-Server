@@ -43,7 +43,7 @@
                     "DESCRIPTION": "Masquer les images par défaut"
                 },
                 "HAND_FREE": "Kit mains libres",
-                "SILENT": "Mode ne pas déranger",
+                "PLANE_MODE": "Mode avion",
                 "DYNAMIC_ALERTS": "Alertes dynamiques",
                 "DYNAMIC_ALERTS_VOLUME": "Volume des alertes dynamiques",
                 "DYNAMIC_ALERTS_DURATION": "Durée des alertes dynamiques",

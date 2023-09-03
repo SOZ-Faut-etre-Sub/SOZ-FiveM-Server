@@ -1,4 +1,4 @@
-import { ChatAltIcon } from '@heroicons/react/outline';
+import { ChatAltIcon, PaperAirplaneIcon } from '@heroicons/react/outline';
 import {
     AdjustmentsIcon,
     BellIcon,
@@ -170,11 +170,11 @@ export const SettingsHome = () => {
                         onClick={curr => handleSettingChange('handsFree', !curr)}
                     />
                     <SettingSwitch
-                        label={t('SETTINGS.OPTIONS.SILENT')}
-                        icon={<VolumeOffIcon />}
+                        label={t('SETTINGS.OPTIONS.PLANE_MODE')}
+                        icon={<PaperAirplaneIcon />}
                         color="bg-[#FF6633]"
-                        value={config.silent}
-                        onClick={curr => handleSettingChange('silent', !curr)}
+                        value={config.planeMode}
+                        onClick={curr => handleSettingChange('planeMode', !curr)}
                     />
                 </List>
                 {canShowDynamicAlerts() && (

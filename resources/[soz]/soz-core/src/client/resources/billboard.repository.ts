@@ -31,7 +31,7 @@ export class BillboardRepository {
             return null;
         }
 
-        this.objects[billboard.id] = billboard
+        this.objects[billboard.id] = billboard;
         return;
     }
 
