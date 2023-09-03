@@ -282,7 +282,7 @@ export class BennysVehicleProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer.png',
+                icon: 'c:mechanic/repair_diag.png',
                 label: 'Faire un diagnostic',
                 color: 'bennys',
                 blackoutGlobal: true,
