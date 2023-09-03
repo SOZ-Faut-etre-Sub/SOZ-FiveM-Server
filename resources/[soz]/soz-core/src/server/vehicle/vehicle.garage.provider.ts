@@ -389,7 +389,7 @@ export class VehicleGarageProvider {
 
             const permission = this.getPermissionForGarage(garage.type, garage.category);
 
-            if (permission && this.jobService.hasPermission(player, player.job.id, permission)) {
+            if (permission && this.jobService.hasPermission(player, player.job.id, permission) && player.job.onduty) {
                 or.push({ job: player.job.id });
             }
 
@@ -505,6 +505,17 @@ export class VehicleGarageProvider {
             )
         ) {
             return Err("vous n'avez pas la permission de ranger un véhicule entreprise dans un garage publique/privé");
+        } else if (
+            (garage.type === GarageType.Private || garage.type === GarageType.Public) &&
+            vehicle.job &&
+            this.jobService.hasPermission(
+                player,
+                player.job.id,
+                this.getPermissionForGarage(garage.type, garage.category)
+            ) &&
+            !player.job.onduty
+        ) {
+            return Err("vous n'êtes pas en service pour ranger un véhicule entrprise");
         } else if (garage.type === GarageType.Job && garage.job !== player.job.id) {
             return Err("vous n'avez pas accès à ce garage entreprise");
         } else if (
@@ -755,7 +766,8 @@ export class VehicleGarageProvider {
                             garage.type === GarageType.Public ||
                             garage.type === GarageType.Depot) &&
                         (playerVehicle.job !== player.job.id ||
-                            !this.jobService.hasPermission(player, player.job.id, permission))
+                            !this.jobService.hasPermission(player, player.job.id, permission) ||
+                            !player.job.onduty)
                     ) {
                         this.notifier.notify(source, "Vous n'avez pas l'autorisation de sortir ce véhicule.", 'error');
 
