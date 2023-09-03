@@ -4,9 +4,9 @@ Config = {}
 Config.debug = false
 
 --- Voice Proximity
-Config.whisperRange = 2
+Config.whisperRange = 2.0
 Config.normalRange = 4.5
-Config.shoutRange = 8
+Config.shoutRange = 8.0
 Config.megaphoneRange = 38.0
 Config.microphoneRange = 38.0
 
