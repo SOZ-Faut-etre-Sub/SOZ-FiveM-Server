@@ -1,5 +1,3 @@
-import { PlayerService } from '@public/client/player/player.service';
-
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -24,9 +22,6 @@ export class WeaponDrawingProvider {
 
     @Inject(WeaponService)
     private weaponService: WeaponService;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     private async updateWeaponDrawList(playerItem: Record<string, InventoryItem> | InventoryItem[]) {
         const weaponToDraw = Object.values(playerItem)
@@ -184,7 +179,7 @@ export class WeaponDrawingProvider {
         });
 
         const weapon = this.weaponService.getCurrentWeapon();
-        const weaponModel = Weapons[usedWeapon.name.toUpperCase()]?.drawPosition?.model;
+        const weaponModel = Weapons[usedWeapon?.name.toUpperCase()]?.drawPosition?.model;
         if (weaponModel) {
             if (this.weaponAttached[weaponModel]) {
                 SetEntityVisible(this.weaponAttached[weaponModel], !weapon, false);
