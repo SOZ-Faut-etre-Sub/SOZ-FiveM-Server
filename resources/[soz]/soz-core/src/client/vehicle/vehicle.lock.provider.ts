@@ -522,6 +522,9 @@ export class VehicleLockProvider {
     public onLockpick(type: string) {
         const coords = GetEntityCoords(PlayerPedId());
         const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+        if (zoneID == 'ISHEIST') {
+            return;
+        }
         const zone = GetLabelText(zoneID);
 
         const messages = [...LockPickAlertMessage.all, ...LockPickAlertMessage[type]];

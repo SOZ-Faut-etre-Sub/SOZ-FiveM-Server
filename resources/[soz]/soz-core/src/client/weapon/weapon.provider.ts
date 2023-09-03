@@ -217,7 +217,7 @@ export class WeaponProvider {
 
             const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
 
-            if ('ARMYB' != zoneID) {
+            if ('ARMYB' != zoneID && 'ISHEIST' != zoneID) {
                 const zone = GetLabelText(zoneID);
                 const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
 
@@ -248,7 +248,11 @@ export class WeaponProvider {
 
     @OnEvent(ClientEvent.WEAPON_EXPLOSION)
     async onExplosion(x: number, y: number, z: number) {
-        const zone = GetLabelText(GetNameOfZone(x, y, z));
+        const zoneID = GetNameOfZone(x, y, z);
+        if (zoneID == 'ISHEIST') {
+            return;
+        }
+        const zone = GetLabelText(zoneID);
 
         const message = getRandomItem(ExplosionMessage);
 
