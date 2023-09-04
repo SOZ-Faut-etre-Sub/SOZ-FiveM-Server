@@ -83,9 +83,18 @@ RegisterNetEvent("jobs:client:news:SellNewspaper", function()
 end)
 
 RegisterNetEvent("jobs:client:news:newspaperSold", function()
-    TriggerServerEvent("jobs:server:news:newspaperSold")
-    exports["qb-target"]:RemoveZone("jobs:news:sell")
-    QBCore.Functions.RemoveBlip("jobs:news:sell")
+    QBCore.Functions.Progressbar("sellNewspaper", "Vente de journaux", 2000, false, false,
+    {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function()
+        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+        TriggerServerEvent("jobs:server:news:newspaperSold")
+        exports["qb-target"]:RemoveZone("jobs:news:sell")
+        QBCore.Functions.RemoveBlip("jobs:news:sell")
+    end)
 end)
 
 RegisterNetEvent("jobs:client:news:farmNewspaper", function()
