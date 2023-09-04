@@ -19,11 +19,11 @@ export const getSoundSettings = (
         return app
             ? {
                   sound: getPath[type](settings[`${app}_${type}`]?.value || settings[type].value),
-                  volume: settings.silent ? 0 : (settings[`${app}_${type}Vol`] || settings[`${type}Vol`]) / 100,
+                  volume: settings.planeMode ? 0 : (settings[`${app}_${type}Vol`] || settings[`${type}Vol`]) / 100,
               }
             : {
                   sound: getPath[type](settings[type as string].value),
-                  volume: settings.silent ? 0 : settings[`${type}Vol`] / 100,
+                  volume: settings.planeMode ? 0 : settings[`${type}Vol`] / 100,
               };
     } catch (e) {
         console.error('getSoundSettings.ts error', e, 'Using default sounds');
