@@ -23,6 +23,7 @@ export class BillboardProvider {
         const billboards = this.billboardRepository.get();
         for (const billboard of Object.values(billboards)) {
             if (!billboard.enabled) {
+                RemoveReplaceTexture(billboard.originDictName, billboard.originTextureName);
                 continue;
             }
             this.billboardService.loadBillboard(
@@ -42,7 +43,7 @@ export class BillboardProvider {
         this.billboardRepository.updateBillboard(billboard);
 
         if (!billboard.enabled) {
-            this.deleteBillboard(billboard);
+            RemoveReplaceTexture(billboard.originDictName, billboard.originTextureName);
             return;
         }
 
@@ -57,7 +58,7 @@ export class BillboardProvider {
     }
 
     @OnEvent(ClientEvent.BILLBOARD_DELETE)
-    public async deleteBillboard(billboard) {
+    public async deleteBillboardTexture(billboard) {
         if (!billboard || !billboard.id) {
             return;
         }
