@@ -97,7 +97,7 @@ export const NewsCloakroom: WardrobeConfig = {
         },
         ['Tenue décontractée']: {
             Components: {
-                [3]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [4]: { Drawable: 153, Texture: 0, Palette: 0 },
                 [6]: { Drawable: 3, Texture: 4, Palette: 0 },
                 [7]: { Drawable: 0, Texture: 0, Palette: 0 },
