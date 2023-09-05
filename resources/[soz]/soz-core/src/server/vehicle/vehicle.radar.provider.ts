@@ -53,7 +53,7 @@ export class VehicleRadarProvider {
         const state = this.vehicleStateService.getVehicleState(vehicleID);
         const vehiclePlate = state.volatile.plate || GetVehicleNumberPlateText(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
-        const fine = Math.round((vehicleSpeed - radar.speed) * 10);
+        const fine = Math.round((vehicleSpeed - radar.speed) * 6);
         const vehicleType = GetVehicleType(vehicle);
         const vehiclePosition = GetEntityCoords(vehicle);
 
