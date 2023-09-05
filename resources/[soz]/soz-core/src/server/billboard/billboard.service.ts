@@ -36,7 +36,7 @@ export class BillboardService {
     public async updateBillboard(source: number, billboard: any) {
         const existingBillboard = await this.database.billboard.findFirst({
             where: {
-                name: billboard.name,
+                id: billboard.id,
             },
         });
 

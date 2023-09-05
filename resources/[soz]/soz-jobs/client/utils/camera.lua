@@ -113,19 +113,19 @@ local createCameraThread = function()
             -- ARRIERE
             {name = "_bwd_180_loop", button1 = 33, button2 = nil},
             -- ARRIERE DROIT
-            {name = "_bwd_135_loop", button1 = 33 , button2 = 35},
+            {name = "_bwd_135_loop", button1 = 33, button2 = 35},
             -- ARRIERE GAUCHE
-            {name = "_bwd_-135_loop", button1 = 33 , button2 = 34},
+            {name = "_bwd_-135_loop", button1 = 33, button2 = 34},
             -- GAUCHE
-            {name = "_bwd_-90_loop", button1 = nil , button2 = 34},
+            {name = "_bwd_-90_loop", button1 = nil, button2 = 34},
             -- DROITE
-            {name = "_fwd_90_loop", button1 = nil , button2 = 35},
+            {name = "_fwd_90_loop", button1 = nil, button2 = 35},
             -- AVANT DROITE
-            {name = "_fwd_45_loop", button1 = 32 , button2 = 35},
+            {name = "_fwd_45_loop", button1 = 32, button2 = 35},
             -- AVANT GAUCHE
-            {name = "_fwd_-45_loop", button1 = 32 , button2 = 34},
+            {name = "_fwd_-45_loop", button1 = 32, button2 = 34},
             -- AVANT
-            {name = "_fwd_0_loop", button1 = 32 , button2 = nil},
+            {name = "_fwd_0_loop", button1 = 32, button2 = nil},
         }
 
         if not IsPedSittingInAnyVehicle(player) then
@@ -170,13 +170,12 @@ local createCameraThread = function()
             SetTaskMoveNetworkSignalFloat(player, "Pitch", camPitch)
             SetTaskMoveNetworkSignalFloat(player, "Heading", camHeading * -1.0 + 1.0)
 
-            
             local isZPressed = IsControlPressed(0, 32)
             local isSPressed = IsControlPressed(0, 33)
             local isQPressed = IsControlPressed(0, 34)
             local isDPressed = IsControlPressed(0, 35)
-            local isShiftPressed = IsControlPressed(0,21)
-            
+            local isShiftPressed = IsControlPressed(0, 21)
+
             for i = 1, #animTable do
                 local animData = animTable[i]
                 local isYAxisPressed = false
@@ -189,7 +188,6 @@ local createCameraThread = function()
                 elseif animData.button1 == nil and not isZPressed and not isSPressed then
                     isYAxisPressed = true
                 end
-                
 
                 if animData.button2 == 34 and isQPressed then
                     isXAxisPressed = true
@@ -197,24 +195,25 @@ local createCameraThread = function()
                     isXAxisPressed = true
                 elseif animData.button2 == nil and not isQPressed and not isDPressed then
                     isXAxisPressed = true
-                end         
-                
-                if isXAxisPressed and isYAxisPressed and not IsPedSittingInAnyVehicle(player) then
-                    TaskPlayAnim(player, "move_strafe@first_person@generic", (isShiftPressed and 'run' or 'walk')..animData.name, 5.0, 1.0, -1, 1, 0.1)
-                    while ((animData.button1 ~= nil and IsControlPressed(0, animData.button1)) or (animData.button1 == nil and not IsControlPressed(0, 32) and not IsControlPressed(0,33))) and 
-                        ((animData.button2 ~= nil and IsControlPressed(0, animData.button2)) or (animData.button2 == nil and not IsControlPressed(0, 34) and not IsControlPressed(0,35))) and 
-                        ((isShiftPressed and IsControlPressed(0, 21)) or (not isShiftPressed and not IsControlPressed(0, 21)))  do 
+                end
 
+                if isXAxisPressed and isYAxisPressed and not IsPedSittingInAnyVehicle(player) then
+                    TaskPlayAnim(player, "move_strafe@first_person@generic", (isShiftPressed and "run" or "walk") .. animData.name, 5.0, 1.0, -1, 1, 0.1)
+                    while ((animData.button1 ~= nil and IsControlPressed(0, animData.button1)) or
+                        (animData.button1 == nil and not IsControlPressed(0, 32) and not IsControlPressed(0, 33))) and
+                        ((animData.button2 ~= nil and IsControlPressed(0, animData.button2)) or
+                            (animData.button2 == nil and not IsControlPressed(0, 34) and not IsControlPressed(0, 35))) and
+                        ((isShiftPressed and IsControlPressed(0, 21)) or (not isShiftPressed and not IsControlPressed(0, 21))) do
 
                         CheckInputRotation(cam, zoomvalue)
                         if not IsPedSittingInAnyVehicle(player) then
                             SetEntityHeading(player, new_z)
                         end
-                        Wait(0) 
+                        Wait(0)
                     end
-                    StopAnimTask(player, "move_strafe@first_person@generic", (isShiftPressed and 'run' or 'walk')..animData.name, 2.0)
+                    StopAnimTask(player, "move_strafe@first_person@generic", (isShiftPressed and "run" or "walk") .. animData.name, 2.0)
                 end
-            end           
+            end
 
             Wait(1)
         end
