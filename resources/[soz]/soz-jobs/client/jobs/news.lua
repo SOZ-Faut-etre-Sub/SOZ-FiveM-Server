@@ -84,7 +84,7 @@ end)
 
 RegisterNetEvent("jobs:client:news:newspaperSold", function()
     QBCore.Functions.Progressbar("sellNewspaper", "Vente de journaux", 2000, false, false,
-    {
+                                 {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
