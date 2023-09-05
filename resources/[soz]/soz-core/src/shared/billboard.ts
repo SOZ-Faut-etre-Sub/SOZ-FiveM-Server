@@ -10,6 +10,6 @@ export type Billboard = {
     width: number;
     height: number;
     lastEdit?: number;
-    lastEditor: number;
+    lastEditor: string;
     enabled: boolean;
 };
