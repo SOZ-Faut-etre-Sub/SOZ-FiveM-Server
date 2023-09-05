@@ -28,6 +28,9 @@ export const EntityConfig: Record<number, Record<string, Vector4>> = {
     [GetHashKey('soz_v_club_baham_bckt_chr')]: {
         [0]: [0.0, 0.0, 0.1, 0],
     },
+    [GetHashKey('soz_xm_lab_chairarm_12')]: {
+        [0]: [0.0, 0.0, 0.46, 0],
+    },
     [-1761659350]: {
         [0]: [-0.02, -0.12, 0.5, 0],
     },
