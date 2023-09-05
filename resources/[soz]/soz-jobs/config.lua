@@ -43,6 +43,7 @@ SozJobCore.JobPermission = {
     SocietyPrivatePort = "society-private-port",
     SocietyViewCompanyPanel = "society-view-company-panel",
     NewsManageArticle = "manage-article",
+    NewsManageBillboards = 'manage-billboards',
     OnDutyView = "view-employe-on-duty",
     CashTransfer = {
         CollectBags = "collect-bags",
@@ -432,7 +433,8 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
 
-            [SozJobCore.JobPermission.NewsManageArticle] = {label = "Gérer les articles sur le site"},
+            [SozJobCore.JobPermission.NewsManageArticle] = {label = "Gérer les articles sur le panel"},
+            [SozJobCore.JobPermission.NewsManageBillboards] = {label = "Gérer les panneaux sur le panel"},
         },
         bossZones = {
             {
