@@ -46,6 +46,7 @@ export enum JobPermission {
     SocietyPrivatePort = 'society-private-port',
     SocietyViewCompanyPanel = 'society-view-company-panel',
     NewsManageArticle = 'manage-article',
+    NewsManageBillboards = 'manage-billboards',
     CashTransfer_CollectBags = 'collect-bags',
     CashTransfer_CollectSecure = 'collect-secure',
     CashTransfer_ResaleBags = 'resale-bags',
