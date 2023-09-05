@@ -65,10 +65,10 @@ export class ApiProvider {
     @Post('/twitch-news/update-billboard')
     public async updateBillboard(request: Request): Promise<Response> {
         const data = JSON.parse(await request.body);
-        const billboard = data.billboard;
+        const billboardId = data.billboardId;
 
         try {
-            this.billboardService.updateBillboard(source, billboard);
+            this.billboardService.updateBillboard(source, billboardId);
         } catch (error) {
             return Response.internalServerError("La mise à jour du panneau d'affichage à échouée");
         }

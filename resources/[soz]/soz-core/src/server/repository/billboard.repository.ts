@@ -25,7 +25,7 @@ export class BillboardRepository extends Repository<Record<number, Billboard>> {
                 templateImageUrl: line.templateImageUrl,
                 width: line.width,
                 height: line.height,
-                lastEdit: line.lastEdit.getTime(),
+                lastEdit: line.lastEdit,
                 lastEditor: line.lastEditor,
                 enabled: line.enabled,
             };
