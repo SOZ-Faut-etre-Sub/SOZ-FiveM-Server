@@ -33,41 +33,16 @@ export class BillboardService {
         }
     }
 
-    public async updateBillboard(source: number, billboard: any) {
-        const existingBillboard = await this.database.billboard.findFirst({
+    public async updateBillboard(source: number, billboardId: number) {
+        const updatedBillboard = await this.database.billboard.findUnique({
             where: {
-                id: billboard.id,
+                id: billboardId,
             },
         });
 
-        if (existingBillboard) {
-            await this.database.billboard.update({
-                data: {
-                    name: billboard.name,
-                    enabled: billboard.enabled,
-                    height: billboard.height,
-                    width: billboard.width,
-                    imageUrl: billboard.imageUrl,
-                    previewImageUrl: billboard.previewImageUrl,
-                    templateImageUrl: billboard.templateImageUrl,
-                    lastEditor: billboard.lastEditor,
-                    originDictName: billboard.originDictName,
-                    originTextureName: billboard.originTextureName,
-                    position: billboard.position,
-                },
-                where: {
-                    id: existingBillboard.id,
-                },
-            });
-        } else {
-            await this.database.billboard.create({
-                data: billboard,
-            });
-        }
-
         const billboards = await this.billboardRepository.get();
-        billboards[billboard.id] = billboard;
+        billboards[billboardId] = updatedBillboard;
 
-        TriggerClientEvent(ClientEvent.BILLBOARD_UPDATE, -1, billboard);
+        TriggerClientEvent(ClientEvent.BILLBOARD_UPDATE, -1, updatedBillboard);
     }
 }

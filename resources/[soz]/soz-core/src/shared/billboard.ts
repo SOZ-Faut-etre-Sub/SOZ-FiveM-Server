@@ -9,7 +9,7 @@ export type Billboard = {
     templateImageUrl: string;
     width: number;
     height: number;
-    lastEdit?: number;
+    lastEdit?: Date;
     lastEditor: string;
     enabled: boolean;
 };
