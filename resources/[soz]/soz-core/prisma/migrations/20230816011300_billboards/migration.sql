@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `billboard` (
     `width` INTEGER NOT NULL,
     `height` INTEGER NOT NULL,
     `lastEdit` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
-    `lastEditor` INTEGER NOT NULL,
+    `lastEditor` VARCHAR(50) NOT NULL,
     `enabled` Boolean NOT NULL,
 
     PRIMARY KEY (`id`)
