@@ -8,7 +8,7 @@ export class _TetrisDB {
         ]);
     }
 
-    getLeaderboard(): TetrisLeaderboard[] {
+    getLeaderboard(): Promise<TetrisLeaderboard[]> {
         return exports.oxmysql.query_async(
             `
             SELECT player.citizenid, phone_profile.avatar, concat(JSON_VALUE(player.charinfo, '$.firstname'), ' ', JSON_VALUE(player.charinfo, '$.lastname')) as player_name, MAX(tetris_score.score) AS score, try_count.game_played
