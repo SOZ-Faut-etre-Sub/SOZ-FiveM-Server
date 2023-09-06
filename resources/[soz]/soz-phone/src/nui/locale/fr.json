@@ -44,6 +44,7 @@
                 },
                 "HAND_FREE": "Kit mains libres",
                 "PLANE_MODE": "Mode avion",
+                "PLANE_MODE_ACTIVATED":"Mode avion activé",
                 "DYNAMIC_ALERTS": "Alertes dynamiques",
                 "DYNAMIC_ALERTS_VOLUME": "Volume des alertes dynamiques",
                 "DYNAMIC_ALERTS_DURATION": "Durée des alertes dynamiques",
