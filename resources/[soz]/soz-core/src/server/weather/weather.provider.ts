@@ -18,6 +18,7 @@ import { DaySummerTemperature, ForecastAdderTemperatures, NightSummerTemperature
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 const MAX_FORECASTS = 5;
+const UPDATE_TIME_INTERVAL = 5;
 
 @Provider()
 export class WeatherProvider {
@@ -52,9 +53,9 @@ export class WeatherProvider {
 
     private stormDeadline = 0; // timestamp
 
-    @Tick(TickInterval.EVERY_SECOND, 'weather:time:advance', true)
+    @Tick(TickInterval.EVERY_SECOND * UPDATE_TIME_INTERVAL, 'weather:time:advance', true)
     async advanceTime(context: Context) {
-        this.currentTime.second += INCREMENT_SECOND;
+        this.currentTime.second += INCREMENT_SECOND * UPDATE_TIME_INTERVAL;
 
         if (this.currentTime.second >= 60) {
             const incrementMinutes = Math.floor(this.currentTime.second / 60);
@@ -74,8 +75,6 @@ export class WeatherProvider {
             }
         }
 
-        await context.wait(100);
-
         if (isFeatureEnabled(Feature.Halloween)) {
             if (this.currentTime.hour >= 2 && this.currentTime.hour < 23) {
                 this.currentTime.hour = 23;
@@ -83,8 +82,6 @@ export class WeatherProvider {
                 this.currentTime.second = 0;
             }
         }
-
-        await context.wait(100);
 
         TriggerClientEvent(ClientEvent.STATE_UPDATE_TIME, -1, this.currentTime);
     }
