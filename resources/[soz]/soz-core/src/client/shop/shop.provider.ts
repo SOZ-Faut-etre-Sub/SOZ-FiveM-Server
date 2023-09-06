@@ -191,8 +191,7 @@ export class ShopProvider {
                     icon: 'c:shop/mask.png',
                     blackoutGlobal: true,
                     action: () => {
-                        this.currentShopBrand = ShopBrand.Mask;
-                        this.openShop();
+                        this.clothingShopProvider.openShop(ShopBrand.Mask, 'mask');
                     },
                 },
                 {
