@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useCitizenID } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
+import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { ActionButton } from '../../../ui/old_components/ActionButton';
 import Tetris from '../components/Tetris';
@@ -54,6 +55,7 @@ export const TetrisGame: React.FC = () => {
     }, [playerCitizenID, tetrisLeaderboard]);
 
     const onClickLeaderboard = () => {
+        store.dispatch.appTetrisLeaderboard.loadLeaderboard();
         navigate('/game-tetris/leaderboard');
     };
 
