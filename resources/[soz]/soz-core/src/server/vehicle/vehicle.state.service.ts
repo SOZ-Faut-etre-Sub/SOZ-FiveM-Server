@@ -24,7 +24,7 @@ const VehicleConditionSyncStrategy: Record<keyof VehicleCondition, VehicleSyncSt
     engineHealth: VehicleSyncStrategy.None,
     bodyHealth: VehicleSyncStrategy.None,
     tankHealth: VehicleSyncStrategy.None,
-    dirtLevel: VehicleSyncStrategy.AllServer,
+    dirtLevel: VehicleSyncStrategy.None,
     doorStatus: VehicleSyncStrategy.None,
     windowStatus: VehicleSyncStrategy.None,
     tireHealth: VehicleSyncStrategy.None,

@@ -165,6 +165,8 @@ function StartConsumptionLoop()
                 exports["soz-core"]:SetGlobalState({blackoutLevel = newBlackoutLevel})
             end
 
+            local energies = {}
+
             -- Handle job terminal consumption
             for jobId, v in pairs(SozJobCore.Jobs) do
                 local terminal = GetTerminalJob(jobId)
@@ -177,11 +179,13 @@ function StartConsumptionLoop()
                         terminal:Consume(consumptionJobThisTick)
                     end
 
-                    exports["soz-core"]:SetJobEnergy(jobId, terminal:GetEnergyPercent())
+                    energies[jobId] = terminal:GetEnergyPercent()
                 else
-                    exports["soz-core"]:SetJobEnergy(jobId, 100)
+                    energies[jobId] = 100
                 end
             end
+
+            exports["soz-core"]:SetJobEnergies(energies)
 
             Citizen.Wait(Config.Production.Tick)
         end
