@@ -22,7 +22,7 @@ export class BillboardProvider {
 
         const billboards = this.billboardRepository.get();
         for (const billboard of Object.values(billboards)) {
-            if (!billboard.enabled) {
+            if (!billboard.enabled || !billboard.imageUrl) {
                 RemoveReplaceTexture(billboard.originDictName, billboard.originTextureName);
                 continue;
             }
@@ -42,7 +42,7 @@ export class BillboardProvider {
     public async updateBillboard(billboard) {
         this.billboardRepository.updateBillboard(billboard);
 
-        if (!billboard.enabled) {
+        if (!billboard.enabled || !billboard.imageUrl) {
             RemoveReplaceTexture(billboard.originDictName, billboard.originTextureName);
             return;
         }
