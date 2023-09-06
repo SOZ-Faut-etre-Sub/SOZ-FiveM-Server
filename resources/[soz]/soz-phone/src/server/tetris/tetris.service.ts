@@ -27,9 +27,7 @@ class _TetrisService {
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
 
-        this.fetchLeaderboard().catch(e => {
-            tetrisLogger.error(`Error occured in fetchLeaderboard update event, Error:  ${e.message}`);
-        });
+        this.tetrisLeaderboard = await this.tetrisDB.getLeaderboard();
     }
 
     async getLeaderboard(reqObj: PromiseRequest<string>, resp: PromiseEventResp<TetrisLeaderboard[]>): Promise<void> {
@@ -43,8 +41,7 @@ class _TetrisService {
 
     async fetchLeaderboard(): Promise<void> {
         try {
-            const leaderboard = await this.tetrisDB.getLeaderboard();
-            this.tetrisLeaderboard = leaderboard;
+            this.tetrisLeaderboard = await this.tetrisDB.getLeaderboard();
             emitNet(TetrisEvents.BROADCAST_LEADERBOARD, -1, this.tetrisLeaderboard);
         } catch (e) {
             tetrisLogger.error(`Error in fetchLeaderboard, ${e.toString()}`);
