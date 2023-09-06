@@ -34,7 +34,7 @@ export const global = createModel<RootModel>()({
             [JobType.Upw]: 100,
             [JobType.Gouv]: 100,
             [JobType.SASP]: 100,
-        },
+        } as Record<JobType, number>,
         weather: 'CLEAR',
         snow: false,
         streamUrls: {
@@ -49,8 +49,8 @@ export const global = createModel<RootModel>()({
         setStreamUrl(state, { stream, url }: { stream: keyof GlobalState['streamUrls']; url: string }) {
             return { ...state, streamUrls: { ...state.streamUrls, [stream]: url } };
         },
-        setJobEnergy(state, { job, energy }: { job: JobType; energy: number }) {
-            return { ...state, jobEnergy: { ...state.jobEnergy, [job]: energy } };
+        setJobEnergies(state, energies: Partial<Record<JobType, number>>) {
+            return { ...state, jobEnergy: { ...state.jobEnergy, ...energies } };
         },
     },
     effects: () => ({}),

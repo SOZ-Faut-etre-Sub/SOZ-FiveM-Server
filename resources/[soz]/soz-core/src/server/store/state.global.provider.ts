@@ -34,9 +34,9 @@ export class StateGlobalProvider {
         this.store.dispatch.global.update(state);
     }
 
-    @Exportable('SetJobEnergy')
-    setJobEnergy(job: JobType, energy: number) {
-        this.store.dispatch.global.setJobEnergy({ job, energy });
+    @Exportable('SetJobEnergies')
+    setJobEnergies(energies: Partial<Record<JobType, number>>) {
+        this.store.dispatch.global.setJobEnergies(energies);
     }
 
     @On('QBCore:Server:PlayerLoaded', false)
