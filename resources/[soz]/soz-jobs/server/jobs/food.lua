@@ -162,6 +162,10 @@ RegisterNetEvent("jobs:server:food:hunting", function(huntId)
     local rewardSuccess = false
     local position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
 
+    if not DoesEntityExist(NetworkGetEntityFromNetworkId(huntId)) then
+        return
+    end
+
     for item, reward in pairs(FoodConfig.HuntingReward) do
         local amount = math.random(reward.min, reward.max)
 

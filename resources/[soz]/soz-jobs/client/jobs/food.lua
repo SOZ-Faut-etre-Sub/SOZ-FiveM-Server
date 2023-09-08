@@ -448,7 +448,9 @@ RegisterNetEvent("jobs:client:food:hunting", function(data)
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         if hasKnife then
-            TriggerServerEvent("jobs:server:food:hunting", NetworkGetNetworkIdFromEntity(data.entity))
+            if DoesEntityExist(data.entity) then
+                TriggerServerEvent("jobs:server:food:hunting", NetworkGetNetworkIdFromEntity(data.entity))
+            end
         else
             exports["soz-core"]:DrawNotification("L'animal ne respire plus...", "info")
         end
