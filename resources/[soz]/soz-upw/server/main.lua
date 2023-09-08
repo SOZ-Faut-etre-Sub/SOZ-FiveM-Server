@@ -84,6 +84,8 @@ MySQL.ready(function()
     StartProductionLoop()
     StartConsumptionLoop()
     StartSaveLoop()
+
+    TriggerEvent("soz-upw:server:onPollutionManagerReady")
 end)
 
 --
