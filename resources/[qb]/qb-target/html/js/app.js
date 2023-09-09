@@ -1,4 +1,4 @@
-const generateItem = function (index, item) {
+const generateItem = function(index, item) {
   let iconHTML = '';
 
   if (item.icon === undefined) {
@@ -72,7 +72,7 @@ const Targeting = Vue.createApp({
       if (element.dataset.id) {
         fetch(`https://${GetParentResourceName()}/selectTarget`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json; charset=UTF-8', },
+          headers: {'Content-Type': 'application/json; charset=UTF-8',},
           body: JSON.stringify(Number(element.dataset.id) + 1)
         }).then(() => {
           this.TargetHTML = "";
@@ -83,7 +83,7 @@ const Targeting = Vue.createApp({
       if (event.button === 2) {
         fetch(`https://${GetParentResourceName()}/closeTarget`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json; charset=UTF-8', },
+          headers: {'Content-Type': 'application/json; charset=UTF-8',},
           body: ''
         }).then(() => {
           this.CloseTarget();
@@ -95,7 +95,7 @@ const Targeting = Vue.createApp({
       if (event.key === 'Escape' || event.key === 'Backspace') {
         fetch(`https://${GetParentResourceName()}/closeTarget`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json; charset=UTF-8', },
+          headers: {'Content-Type': 'application/json; charset=UTF-8',},
           body: ''
         }).then(() => {
           this.CloseTarget();
@@ -140,10 +140,7 @@ const Targeting = Vue.createApp({
         this.TargetHTML = "";
         let TargetLabel = this.TargetHTML;
         this.CurrentIcon = this.SuccessEyeIcon;
-        const sortedItems = items.data.sort((a, b) => {
-          return a.label.localeCompare(b.label)
-        })
-        sortedItems.forEach(function (item, index) {
+        items.data.forEach(function (item, index) {
           let left = Math.cos(index / items.data.length * Math.PI * 2).toFixed(6);
           let top = Math.sin(index / items.data.length * Math.PI * 2).toFixed(6);
 
@@ -165,10 +162,7 @@ const Targeting = Vue.createApp({
     ValidTarget(items) {
       this.TargetHTML = "";
       let TargetLabel = this.TargetHTML;
-      const sortedItems = items.data.sort((a, b) => {
-        return a.label.localeCompare(b.label)
-      })
-      sortedItems.forEach(function (item, index) {
+      items.data.forEach(function (item, index) {
         TargetLabel += generateItem(index, item);
       });
       this.TargetHTML = TargetLabel;
@@ -187,5 +181,5 @@ const Targeting = Vue.createApp({
   }
 });
 
-Targeting.use(Quasar, { config: {} });
+Targeting.use(Quasar, {config: {}});
 Targeting.mount("#app");
