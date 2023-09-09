@@ -127,6 +127,7 @@ local function CheckEntity(hit, datatable, entity, distance)
 					icon = data.icon,
 					label = data.label,
 					color = data.color,
+					slot = slot
 				}
 				sendDistance[data.distance] = true
 			else sendDistance[data.distance] = false end
@@ -267,6 +268,7 @@ local function EnableTarget()
 											icon = data.icon,
 											label = data.label,
 											color = data.color,
+											slot = slot
 										}
 										sendDistance[data.distance] = true
 									else sendDistance[data.distance] = false end
@@ -352,6 +354,7 @@ local function EnableTarget()
 									icon = data.icon,
 									label = data.label,
 									color = data.color,
+									slot = slot
 								}
 							end
 						end
@@ -971,6 +974,8 @@ RegisterNUICallback('selectTarget', function(option, cb)
 	targetActive, success, hasFocus = false, false, false
 	if sendData then
 		local data = sendData[option]
+		print(json.encode(sendData))
+		print(json.encode(sendData[option]))
 		if data then
 			table_wipe(sendData)
 			CreateThread(function()
