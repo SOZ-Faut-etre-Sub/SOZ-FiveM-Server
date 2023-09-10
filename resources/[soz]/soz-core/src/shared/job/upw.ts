@@ -235,6 +235,7 @@ export const UPW_CHARGER_REFILL_VALUES: Record<string, number> = {
     ['energy_cell_fossil']: 40,
     ['energy_cell_hydro']: 30,
     ['energy_cell_wind']: 20,
+    ['energy_cell_solar']: 20,
 };
 
 export type MenuUpwData = {
