@@ -1,4 +1,5 @@
-import { Context } from '../../core/context';
+import { On } from '@public/core/decorators/event';
+
 import { Command } from '../../core/decorators/command';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
@@ -34,6 +35,7 @@ export class WeatherProvider {
     private currentTime: Time = { hour: 2, minute: 0, second: 0 };
 
     private shouldUpdateWeather = true;
+    private pollutionManagerReady = false;
 
     // See forecast.ts for the list of available forecasts
     private forecast: Forecast = Summer;
@@ -54,7 +56,7 @@ export class WeatherProvider {
     private stormDeadline = 0; // timestamp
 
     @Tick(TickInterval.EVERY_SECOND * UPDATE_TIME_INTERVAL, 'weather:time:advance', true)
-    async advanceTime(context: Context) {
+    async advanceTime() {
         this.currentTime.second += INCREMENT_SECOND * UPDATE_TIME_INTERVAL;
 
         if (this.currentTime.second >= 60) {
@@ -89,6 +91,9 @@ export class WeatherProvider {
     @Tick(TickInterval.EVERY_SECOND, 'weather:next-weather')
     async updateWeather() {
         if (!this.shouldUpdateWeather) {
+            return;
+        }
+        if (!this.pollutionManagerReady) {
             return;
         }
 
@@ -291,5 +296,10 @@ export class WeatherProvider {
         const { min, max } = ForecastAdderTemperatures[weather];
 
         return getRandomInt(baseMin + min, baseMax + max);
+    }
+
+    @On('soz-upw:server:onPollutionManagerReady', true)
+    public onPollutionManagerReady() {
+        this.pollutionManagerReady = true;
     }
 }
