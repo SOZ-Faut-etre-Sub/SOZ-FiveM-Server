@@ -127,7 +127,6 @@ local function CheckEntity(hit, datatable, entity, distance)
 					icon = data.icon,
 					label = data.label,
 					color = data.color,
-					slot = slot
 				}
 				sendDistance[data.distance] = true
 			else sendDistance[data.distance] = false end
@@ -268,7 +267,6 @@ local function EnableTarget()
 											icon = data.icon,
 											label = data.label,
 											color = data.color,
-											slot = slot
 										}
 										sendDistance[data.distance] = true
 									else sendDistance[data.distance] = false end
@@ -354,7 +352,6 @@ local function EnableTarget()
 									icon = data.icon,
 									label = data.label,
 									color = data.color,
-									slot = slot
 								}
 							end
 						end

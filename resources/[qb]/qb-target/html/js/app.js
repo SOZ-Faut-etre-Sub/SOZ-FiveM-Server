@@ -1,17 +1,18 @@
-const generateItem = function (item) {
+const generateItem = function(index, item) {
   let iconHTML = '';
+
   if (item.icon === undefined) {
-    iconHTML = `<i class="fas fa-question" data-id="${item.slot}"></i>`
+    iconHTML = `<i class="fas fa-question" data-id="${index}"></i>`
   } else if (item.icon.startsWith('c:')) {
-    iconHTML = `<img src="/html/img/${item.icon.substring(2)}" data-id="${item.slot}" alt="" />`
+    iconHTML = `<img src="/html/img/${item.icon.substring(2)}" data-id="${index}" alt="" />`
   } else {
-    iconHTML = `<i class="${item.icon}" data-id="${item.slot}"></i>`
+    iconHTML = `<i class="${item.icon}" data-id="${index}"></i>`
   }
 
   return `
-        <div class="target-item ${item.color}" data-id="${item.slot}">
-            <span class="tooltip" data-id="${item.slot}">${item.label}</span>
-            <span class="icon" data-id="${item.slot}">${iconHTML}</span>
+        <div class="target-item ${item.color}" data-id="${index}">
+            <span class="tooltip" data-id="${index}">${item.label}</span>
+            <span class="icon" data-id="${index}">${iconHTML}</span>
         </div>
       `;
 }
@@ -71,8 +72,8 @@ const Targeting = Vue.createApp({
       if (element.dataset.id) {
         fetch(`https://${GetParentResourceName()}/selectTarget`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json; charset=UTF-8', },
-          body: JSON.stringify(Number(element.dataset.id))
+          headers: {'Content-Type': 'application/json; charset=UTF-8',},
+          body: JSON.stringify(Number(element.dataset.id) + 1)
         }).then(() => {
           this.TargetHTML = "";
           this.Show = false;
@@ -143,10 +144,10 @@ const Targeting = Vue.createApp({
           let left = Math.cos(index / items.data.length * Math.PI * 2).toFixed(6);
           let top = Math.sin(index / items.data.length * Math.PI * 2).toFixed(6);
 
-          TargetLabel += generateItem(item);
+          TargetLabel += generateItem(index, item);
 
           setTimeout(() => {
-            const element = document.querySelector(`div.target-item[data-id="${item.slot}"]`);
+            const element = document.querySelector(`div.target-item[data-id="${index}"]`);
             if (element === null) return;
 
             element.style.transform = `scale(1) translateY(calc(120px * ${top})) translateX(calc(120px * ${left}))`
@@ -161,11 +162,8 @@ const Targeting = Vue.createApp({
     ValidTarget(items) {
       this.TargetHTML = "";
       let TargetLabel = this.TargetHTML;
-      const sortedItems = items.data.sort((a, b) => {
-        return a.label.localeCompare(b.label)
-      })
-      sortedItems.forEach(function (item) {
-        TargetLabel += generateItem(item);
+      items.data.forEach(function (item, index) {
+        TargetLabel += generateItem(index, item);
       });
       this.TargetHTML = TargetLabel;
     },
