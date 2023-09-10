@@ -57,6 +57,10 @@ export class VehicleRadarProvider {
         const vehicleType = GetVehicleType(vehicle);
         const vehiclePosition = GetEntityCoords(vehicle);
 
+        if (radar.destroyed) {
+            return;
+        }
+
         if (vehicleSpeed - 5 > radar.speed) {
             TriggerClientEvent(ClientEvent.VEHICLE_RADAR_FLASHED, source);
 

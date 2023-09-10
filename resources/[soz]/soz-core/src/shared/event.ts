@@ -220,7 +220,8 @@ export enum ServerEvent {
 
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
 
-    VANDALISM_END = 'soz-core:server:vandalism:end',
+    VANDALISM_ABORT = 'soz-core:server:vandalism:abort',
+    VANDALISM_REPAIR = 'soz-core:server:vandalism:repair',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
     MDR_MONEY_CLEANING = 'soz-core:server:mdr:money-cleaning',
@@ -550,6 +551,10 @@ export enum ClientEvent {
 
     BILLBOARD_UPDATE = 'soz-core:client:billboard:update',
     BILLBOARD_DELETE = 'soz-core:client:billboard:delete',
+
+    VANDALISM_ABORT = 'soz-core:client:vandalism:abort',
+    VANDALISM_STEP = 'soz-core:client:vandalism:step',
+    VANDALISM_UPDATE_PROP = 'soz-core:client:vandalism:update-prop',
 }
 
 export enum GameEvent {

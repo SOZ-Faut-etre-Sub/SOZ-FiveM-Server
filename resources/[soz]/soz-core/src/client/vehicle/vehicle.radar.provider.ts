@@ -8,7 +8,7 @@ import { PlayerInOutService } from '../player/player.inout.service';
 import { RaceProvider } from '../race/race.provider';
 import { RadarRepository } from '../resources/radar.repository';
 
-const radar_props = GetHashKey('soz_prop_radar');
+const radar_props = GetHashKey('soz_prop_radar_2');
 
 @Provider()
 export class VehicleRadarProvider {

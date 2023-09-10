@@ -64,6 +64,14 @@ local function getTerminalProp(scope)
     end
 end
 
+local function getTerminalTargetProp(scope)
+    if scope == "default" then
+        return {"soz_prop_elec01", "soz_prop_elec01_hs2"}
+    elseif scope == "entreprise" then
+        return {"soz_prop_elec02", "soz_prop_elec02_hs2"}
+    end
+end
+
 function CreateTerminalZone(identifier, data, facility)
     local prop = getTerminalProp(facility.scope)
 
@@ -82,7 +90,7 @@ function CreateTerminalTarget()
 end
 
 function CreateTerminalTargetScope(scope)
-    local prop = getTerminalProp(scope)
+    local prop = getTerminalTargetProp(scope)
     local options = {
         {
             label = "Déposer l'énergie",

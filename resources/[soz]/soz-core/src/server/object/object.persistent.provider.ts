@@ -21,12 +21,16 @@ export class ObjectPersistentProvider {
             const position = JSON.parse(prop.position);
 
             return {
-                id: `persistent_prop_${prop.id}`,
+                id: this.getPrefixId() + prop.id,
                 model: prop.model,
                 position: [position.x, position.y, position.z, position.w] as Vector4,
             };
         });
 
         this.objectProvider.addObjects(objects);
+    }
+
+    public getPrefixId() {
+        return 'persistent_prop_';
     }
 }
