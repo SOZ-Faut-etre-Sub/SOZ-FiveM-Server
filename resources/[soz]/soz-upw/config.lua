@@ -14,7 +14,12 @@ Config.Blip = {
 Config.InverterMaxCapacity = 300000
 
 Config.Items = {
-    Energy = {fossil1 = "energy_cell_fossil", hydro1 = "energy_cell_hydro", wind1 = "energy_cell_wind"},
+    Energy = {
+        fossil1 = "energy_cell_fossil",
+        hydro1 = "energy_cell_hydro",
+        wind1 = "energy_cell_wind",
+        solar1 = "energy_cell_solar",
+    },
     Waste = {Hydro = "seeweed_acid"},
 }
 
@@ -26,9 +31,10 @@ Config.Production = {
         energy_cell_fossil = GetConvarInt("soz_upw_energy_per_cell_fossil", 1),
         energy_cell_hydro = GetConvarInt("soz_upw_energy_per_cell_hydro", 1),
         energy_cell_wind = GetConvarInt("soz_upw_energy_per_cell_wind", 1),
+        energy_cell_solar = GetConvarInt("soz_upw_energy_per_cell_solar", 1),
     },
     WastePerHarvest = GetConvarInt("soz_upw_waste_per_harvest", 1),
-    HourBoost = {fossil1 = 1, hydro1 = 1, wind1 = 1},
+    HourBoost = {fossil1 = 1, hydro1 = 1, wind1 = 1, solar1 = 1},
 }
 
 Config.Consumption = {
@@ -81,7 +87,17 @@ Config.Upw = {}
 Config.Upw.Accounts = {FarmAccount = "farm_upw", SafeAccount = "safe_upw"}
 Config.Upw.Resale = {
     Duration = 5000,
-    EnergyCellPrice = {["energy_cell_fossil"] = 20, ["energy_cell_hydro"] = 45, ["energy_cell_wind"] = 100},
-    EnergyCellPriceGlobal = {["energy_cell_fossil"] = 30, ["energy_cell_hydro"] = 18, ["energy_cell_wind"] = 12},
+    EnergyCellPrice = {
+        ["energy_cell_fossil"] = 40,
+        ["energy_cell_hydro"] = 90,
+        ["energy_cell_wind"] = 200,
+        ["energy_cell_solar"] = 200,
+    },
+    EnergyCellPriceGlobal = {
+        ["energy_cell_fossil"] = 90,
+        ["energy_cell_hydro"] = 54,
+        ["energy_cell_wind"] = 36,
+        ["energy_cell_solar"] = 36,
+    },
     Zone = {coords = vector3(291.97, -2885.82, 6.01), sx = 5.2, sy = 3.8, heading = 0, minZ = 5.01, maxZ = 8.21},
 }
