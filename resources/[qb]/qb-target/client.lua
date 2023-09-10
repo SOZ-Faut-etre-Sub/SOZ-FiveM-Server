@@ -971,6 +971,8 @@ RegisterNUICallback('selectTarget', function(option, cb)
 	targetActive, success, hasFocus = false, false, false
 	if sendData then
 		local data = sendData[option]
+		print(json.encode(sendData))
+		print(json.encode(sendData[option]))
 		if data then
 			table_wipe(sendData)
 			CreateThread(function()
