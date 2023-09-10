@@ -1,9 +1,9 @@
 import { useNuiEvent } from '@libs/nui/hooks/useNuiEvent';
 import { TwitchNewsEvents, TwitchNewsMessage } from '@typings/twitch-news';
 import { useEffect } from 'react';
-import { store } from '../../store';
-import { useTwitchNewsNotifications } from '../../apps/twitch-news/hooks/useTwitchNewsNotifications';
 
+import { useTwitchNewsNotifications } from '../../apps/twitch-news/hooks/useTwitchNewsNotifications';
+import { store } from '../../store';
 
 export const useAppTwitchNewsService = () => {
     const { setNotification } = useTwitchNewsNotifications();
