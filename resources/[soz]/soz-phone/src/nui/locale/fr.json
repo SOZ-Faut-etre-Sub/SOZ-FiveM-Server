@@ -257,11 +257,6 @@
             "WRITE_TO_CLIPBOARD_TOOLTIP": "Copier {{ content }}",
             "WRITE_TO_CLIPBOARD_MESSAGE": "{{content}} copié dans le presse-papier!"
         },
-        "TWITCH_NEWS":{
-            "NOTIFICATION":{
-                "TITLE":"Twitch News !"
-            }
-        },
         "COMING_SOON": "Coming soon...",
         "INITIALIZING": "Initialisation",
         "APPS_DIALER": "Téléphone",
