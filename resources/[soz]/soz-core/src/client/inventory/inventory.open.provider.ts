@@ -11,7 +11,7 @@ import { AnimationService } from '../animation/animation.service';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 
-const bins = GetHashKey('soz_prop_bb_bin');
+const bins = [GetHashKey('soz_prop_bb_bin'), GetHashKey('soz_prop_bb_bin_hs2')];
 
 @Provider()
 export class InventoryOpenProvider {
