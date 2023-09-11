@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { PrismaService } from '@public/server/database/prisma.service';
-import { Repository } from '@public/server/repository/repository';
+
+import { RepositoryLegacy } from '../../../src/server/repository/repositoryLegacy';
 
 @Injectable()
-export class DrugSeedlingRepository extends Repository<number> {
+export class DrugSeedlingRepository extends RepositoryLegacy<number> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

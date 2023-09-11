@@ -22,7 +22,7 @@ import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { NuiObjectProvider } from '../nui/nui.object.provider';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
-import { HousingRepository } from '../resources/housing.repository';
+import { HousingRepository } from '../repository/housing.repository';
 
 type ZoneDrawn = {
     zone: BoxZone<string>;

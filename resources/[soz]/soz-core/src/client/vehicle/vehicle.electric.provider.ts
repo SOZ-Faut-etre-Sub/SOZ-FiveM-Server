@@ -18,7 +18,7 @@ import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
-import { UpwChargerRepository } from '../resources/upw.station.repository';
+import { UpwChargerRepository } from '../repository/upw.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';

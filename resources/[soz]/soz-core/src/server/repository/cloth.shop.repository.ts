@@ -11,10 +11,10 @@ import {
 import { ProperTorsos } from '../../config/shops';
 import { Component } from '../../shared/cloth';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 @Injectable()
-export class ClothingShopRepository extends Repository<ClothingShopRepositoryData> {
+export class ClothingShopRepository extends RepositoryLegacy<ClothingShopRepositoryData> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

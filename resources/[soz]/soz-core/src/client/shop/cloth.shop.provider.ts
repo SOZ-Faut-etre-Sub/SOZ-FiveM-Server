@@ -1,7 +1,7 @@
 import { Logger } from '@core/logger';
 import { Notifier } from '@public/client/notifier';
-import { GloveShopRepository } from '@public/client/resources/glove.shop.repository';
-import { UnderTypesShopRepository } from '@public/client/resources/under_types.shop.repository';
+import { GloveShopRepository } from '@public/client/repository/glove.shop.repository';
+import { UnderTypesShopRepository } from '@public/client/repository/under_types.shop.repository';
 import { ShopBrand, ShopsConfig, UndershirtCategoryNeedingReplacementTorso } from '@public/config/shops';
 import { On, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
@@ -19,8 +19,8 @@ import { ClothingService } from '../clothing/clothing.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { ResourceLoader } from '../resources/resource.loader';
-import { ClothingShopRepository } from '../resources/shop.repository';
+import { ResourceLoader } from '../repository/resource.loader';
+import { ClothingShopRepository } from '../repository/shop.repository';
 
 @Provider()
 export class ClothingShopProvider {

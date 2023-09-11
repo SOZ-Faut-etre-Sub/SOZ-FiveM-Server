@@ -8,7 +8,7 @@ import { JobType } from '@public/shared/job';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { PlayerService } from '../player/player.service';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 
 const holsterableWeaponGroups = [GetHashKey('GROUP_PISTOL'), GetHashKey('GROUP_STUNGUN')];
 const excludeWeapon = [0, GetHashKey('WEAPON_BRIEFCASE'), 966099553 /*WEAPON_OBJECT*/];

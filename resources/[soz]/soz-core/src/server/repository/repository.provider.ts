@@ -2,11 +2,12 @@ import { DrugSeedlingRepository } from '@private/server/resources/drug.seedling.
 import { DrugSellLocationRepository } from '@private/server/resources/drug.sell.location.repository';
 
 import { Once, OnceStep } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
+import { Inject, MultiInject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
+import { RepositoryType } from '../../shared/repository';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingShop, ClothingShopCategory, ClothingShopRepositoryData } from '../../shared/shop';
 import { PrismaService } from '../database/prisma.service';
@@ -19,7 +20,7 @@ import { HousingRepository } from './housing.repository';
 import { JobGradeRepository } from './job.grade.repository';
 import { ObjectRepository } from './object.repository';
 import { RaceRepository } from './race.repository';
-import { Repository } from './repository';
+import { Repository, RepositoryLegacy } from './repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
 import { UpwChargerRepository } from './upw.charger.repository';
 import { UpwStationRepository } from './upw.station.repository';
@@ -78,48 +79,68 @@ export class RepositoryProvider {
     @Inject(BillboardRepository)
     private billboardRepository: BillboardRepository;
 
-    private repositories: Record<string, Repository<any>> = {};
+    private legacyRepositories: Record<string, RepositoryLegacy<any>> = {};
+
+    private repositories: Record<RepositoryType, Repository<any>> = {} as Record<RepositoryType, Repository<any>>;
+
+    public constructor(@MultiInject(Repository) repositories: Repository<any>[]) {
+        for (const repository of repositories) {
+            this.repositories[repository.type as RepositoryType] = repository;
+        }
+    }
 
     @Once()
     public setup() {
-        this.repositories['garage'] = this.garageRepository;
-        this.repositories['vehicle'] = this.vehicleRepository;
-        this.repositories['jobGrade'] = this.jobGradeRepository;
-        this.repositories['fuelStation'] = this.fuelStationRepository;
-        this.repositories['upwCharger'] = this.upwChargerRepository;
-        this.repositories['upwStation'] = this.upwStationRepository;
-        this.repositories['housing'] = this.housingRepository;
-        this.repositories['object'] = this.objectRepository;
-        this.repositories['clothingShop'] = this.clothingShopRepository;
-        this.repositories['gloveShop'] = this.gloveShopRepository;
-        this.repositories['underTypesShop'] = this.underTypesShopRepository;
-        this.repositories['drugSeedling'] = this.drugSeedlingRepository;
-        this.repositories['drugSellLocation'] = this.drugSellLocationRepository;
-        this.repositories['race'] = this.raceRepository;
-        this.repositories['billboard'] = this.billboardRepository;
+        this.legacyRepositories['garage'] = this.garageRepository;
+        this.legacyRepositories['vehicle'] = this.vehicleRepository;
+        this.legacyRepositories['jobGrade'] = this.jobGradeRepository;
+        this.legacyRepositories['fuelStation'] = this.fuelStationRepository;
+        this.legacyRepositories['upwCharger'] = this.upwChargerRepository;
+        this.legacyRepositories['upwStation'] = this.upwStationRepository;
+        this.legacyRepositories['object'] = this.objectRepository;
+        this.legacyRepositories['clothingShop'] = this.clothingShopRepository;
+        this.legacyRepositories['gloveShop'] = this.gloveShopRepository;
+        this.legacyRepositories['underTypesShop'] = this.underTypesShopRepository;
+        this.legacyRepositories['drugSeedling'] = this.drugSeedlingRepository;
+        this.legacyRepositories['drugSellLocation'] = this.drugSellLocationRepository;
+        this.legacyRepositories['race'] = this.raceRepository;
+        this.legacyRepositories['billboard'] = this.billboardRepository;
     }
 
     @Once(OnceStep.DatabaseConnected)
     public async init() {
-        for (const repositoryName of Object.keys(this.repositories)) {
-            await this.repositories[repositoryName].init();
+        for (const repositoryName of Object.keys(this.legacyRepositories)) {
+            await this.legacyRepositories[repositoryName].init();
+        }
+
+        for (const repository of Object.values(this.repositories)) {
+            await repository.init();
         }
 
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
 
     @Rpc(RpcServerEvent.REPOSITORY_GET_DATA)
+    public async getLegacyData(source: number, repositoryName: string): Promise<any> {
+        if (this.legacyRepositories[repositoryName]) {
+            return await this.legacyRepositories[repositoryName].get();
+        }
+
+        return null;
+    }
+
+    @Rpc(RpcServerEvent.REPOSITORY_GET_DATA_2)
     public async getData(source: number, repositoryName: string): Promise<any> {
         if (this.repositories[repositoryName]) {
-            return await this.repositories[repositoryName].get();
+            return await this.legacyRepositories[repositoryName].get();
         }
 
         return null;
     }
 
     public async refresh(repositoryName: string): Promise<any | null> {
-        if (this.repositories[repositoryName]) {
-            const data = await this.repositories[repositoryName].refresh();
+        if (this.legacyRepositories[repositoryName]) {
+            const data = await this.legacyRepositories[repositoryName].refresh();
 
             TriggerClientEvent(ClientEvent.REPOSITORY_SYNC_DATA, -1, repositoryName, data);
 
@@ -148,10 +169,10 @@ export class RepositoryProvider {
     }
 
     private async getClothingData(source: number, playerPedHash: number): Promise<ClothingShopRepositoryData> {
-        if (!this.repositories['clothingShop']) {
+        if (!this.legacyRepositories['clothingShop']) {
             return null;
         }
-        const shop: ClothingShopRepositoryData = await this.repositories['clothingShop'].get();
+        const shop: ClothingShopRepositoryData = await this.legacyRepositories['clothingShop'].get();
 
         // remove categories from another ped model
         return {

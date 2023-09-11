@@ -6,7 +6,7 @@ import { ClientEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
 import { WeaponDrawPosition, Weapons } from '../../shared/weapons/weapon';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 import { WeaponService } from './weapon.service';
 
 @Provider()

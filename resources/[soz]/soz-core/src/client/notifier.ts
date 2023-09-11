@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
-import { ResourceLoader } from '@public/client/resources/resource.loader';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { AdvancedNotification, NotificationType, TPoliceNotification } from '@public/shared/notification';
 
 @Injectable()
