@@ -66,8 +66,8 @@ export class VehicleConditionProvider {
 
         this.currentVehicleCondition.set(vehicleNetworkId, condition);
 
-        this.vehicleService.applyVehicleCondition(entityId, condition, condition);
         this.vehicleService.applyVehicleConfiguration(entityId, configuration);
+        this.vehicleService.applyVehicleCondition(entityId, condition, condition);
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER)
