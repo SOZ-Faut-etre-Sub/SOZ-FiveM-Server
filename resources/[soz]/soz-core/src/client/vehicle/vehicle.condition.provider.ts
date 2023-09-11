@@ -4,6 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
@@ -42,7 +43,11 @@ export class VehicleConditionProvider {
     private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_REGISTER)
-    private registerVehicleCondition(vehicleNetworkId: number, condition: VehicleCondition): void {
+    private registerVehicleCondition(
+        vehicleNetworkId: number,
+        condition: VehicleCondition,
+        configuration: VehicleConfiguration
+    ): void {
         if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
             return;
         }
@@ -60,7 +65,9 @@ export class VehicleConditionProvider {
         }
 
         this.currentVehicleCondition.set(vehicleNetworkId, condition);
+
         this.vehicleService.applyVehicleCondition(entityId, condition, condition);
+        this.vehicleService.applyVehicleConfiguration(entityId, configuration);
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER)
