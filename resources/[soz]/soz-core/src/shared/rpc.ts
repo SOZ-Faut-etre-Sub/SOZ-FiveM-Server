@@ -47,6 +47,7 @@ export enum RpcServerEvent {
     STORY_HALLOWEEN_SCENARIO4 = 'soz-story:server:halloween4',
 
     REPOSITORY_GET_DATA = 'soz-core:repository:get-data',
+    REPOSITORY_GET_DATA_2 = 'soz-core:repository:get-data-2',
     REPOSITORY_CLOTHING_GET_SHOP = 'soz-core:repository:clothing:get-shop',
 
     VEHICLE_CUSTOM_GET_MODS = 'soz-core:vehicle:custom:get-mods',

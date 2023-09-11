@@ -4,7 +4,7 @@ import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { PlayerService } from '../player/player.service';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 
 @Provider()
 export class AnimationPointProvider {

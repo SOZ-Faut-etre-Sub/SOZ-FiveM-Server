@@ -2,10 +2,10 @@ import { Inject, Injectable } from '@public/core/decorators/injectable';
 import { ClothingShopID, ClothingShopItemData, GloveShopRepositoryData } from '@public/shared/shop';
 
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 @Injectable()
-export class GloveShopRepository extends Repository<GloveShopRepositoryData> {
+export class GloveShopRepository extends RepositoryLegacy<GloveShopRepositoryData> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

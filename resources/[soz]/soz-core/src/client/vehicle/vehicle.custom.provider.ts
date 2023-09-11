@@ -19,7 +19,7 @@ import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { VehicleRepository } from '../resources/vehicle.repository';
+import { VehicleRepository } from '../repository/vehicle.repository';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleModificationService } from './vehicle.modification.service';
 import { VehicleService } from './vehicle.service';

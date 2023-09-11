@@ -2,10 +2,10 @@ import { Billboard } from '@public/shared/billboard';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 @Injectable()
-export class BillboardRepository extends Repository<Record<number, Billboard>> {
+export class BillboardRepository extends RepositoryLegacy<Record<number, Billboard>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

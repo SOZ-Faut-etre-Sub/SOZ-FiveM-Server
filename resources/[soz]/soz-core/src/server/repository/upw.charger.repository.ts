@@ -4,10 +4,10 @@ import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Logger } from '../../core/logger';
 import { UpwCharger } from '../../shared/fuel';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 @Injectable()
-export class UpwChargerRepository extends Repository<Record<number, UpwCharger>> {
+export class UpwChargerRepository extends RepositoryLegacy<Record<number, UpwCharger>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

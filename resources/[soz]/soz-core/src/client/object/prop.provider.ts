@@ -13,7 +13,7 @@ import {
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { getChunkId } from '../../shared/grid';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 
 @Provider()
 export class PropProvider {

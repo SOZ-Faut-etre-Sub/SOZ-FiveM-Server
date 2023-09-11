@@ -1,7 +1,7 @@
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { PlayerService } from '@public/client/player/player.service';
-import { ResourceLoader } from '@public/client/resources/resource.loader';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { On, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
