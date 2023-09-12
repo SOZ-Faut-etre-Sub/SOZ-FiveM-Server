@@ -1,4 +1,4 @@
-import { Injectable } from '../../core/decorators/injectable';
+import { Inject, Injectable } from '../../core/decorators/injectable';
 import {
     HornLabelList,
     VehicleConfiguration,
@@ -10,6 +10,7 @@ import {
     VehicleWheelType,
 } from '../../shared/vehicle/modification';
 import { isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
+import { ResourceLoader } from '../resources/resource.loader';
 
 const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.Spoiler]: 'Aileron',
@@ -456,6 +457,9 @@ const VehicleModificationHelpers: VehicleModificationHelperType<keyof VehicleMod
 
 @Injectable()
 export class VehicleModificationService {
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
     public createOptions(vehicle: number): VehicleUpgradeOptions {
         if (!HasThisAdditionalTextLoaded('mod_mnu', 10)) {
             ClearAdditionalText(10, true);

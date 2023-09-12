@@ -413,14 +413,7 @@ export class VehicleSpawner {
                 return null;
             }
 
-            this.vehicleStateService.register(
-                netId,
-                player,
-                vehicle.position,
-                volatile,
-                condition,
-                vehicle.modification
-            );
+            this.vehicleStateService.register(netId, player, vehicle.position, volatile, condition);
 
             return netId;
         } catch (e) {

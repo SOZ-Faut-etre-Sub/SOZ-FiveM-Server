@@ -15,12 +15,12 @@ import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
-import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../resources/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
+import { ObjectProvider } from './../object/object.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
