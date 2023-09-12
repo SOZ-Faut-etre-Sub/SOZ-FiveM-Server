@@ -1,37 +1,24 @@
+import { SnakeLeaderboard, SnakeScore } from '../../../typings/app/snake';
+
 export class _SnakeDB {
-    /**
-     * Find a player highscore from its citizenid
-     * @param citizenid - the citizenid to search for
-     */
-    async getHighscore(citizenid: string): Promise<number> {
-        const result = await exports.oxmysql.single_async('SELECT highscore FROM snake WHERE citizenid = ? LIMIT 1', [
-            citizenid,
-        ]);
-        return result ? result.highscore : 0;
-    }
-
-    /**
-     * Update a player highscore from its citizenid
-     * @param citizenid - the citizenid to search for
-     * @param highscore - the highscore to set
-     */
-    async updateHighscore(citizenid: string, highscore: number): Promise<any> {
-        return await exports.oxmysql.update_async('UPDATE snake SET highscore = ? WHERE citizenid = ?', [
-            highscore,
-            citizenid,
+    async addScore(identifier: string, score: SnakeScore): Promise<number> {
+        return await exports.oxmysql.insert_async('INSERT INTO snake_score (identifier, score) VALUES (?, ?)', [
+            identifier,
+            score.score,
         ]);
     }
 
-    /**
-     * Register a player highscore
-     * @param citizenid - the citizenid to set
-     * @param highscore - the highscore to set
-     */
-    async insertHighscore(citizenid: string, highscore: number): Promise<any> {
-        await exports.oxmysql.update_async('INSERT INTO snake (citizenId, highscore) VALUES (?,?)', [
-            citizenid,
-            highscore,
-        ]);
+    getLeaderboard(): Promise<SnakeLeaderboard[]> {
+        return exports.oxmysql.query_async(
+            `
+            SELECT player.citizenid, phone_profile.avatar, concat(JSON_VALUE(player.charinfo, '$.firstname'), ' ', JSON_VALUE(player.charinfo, '$.lastname')) as player_name, MAX(snake_score.score) AS score, try_count.game_played
+            FROM snake_score
+                LEFT JOIN player ON player.citizenid = snake_score.identifier
+                LEFT JOIN phone_profile ON JSON_VALUE(player.charinfo, '$.phone') = phone_profile.number
+                LEFT JOIN (SELECT COUNT(*) as game_played, snake_score.identifier FROM snake_score GROUP BY snake_score.identifier) AS try_count ON player.citizenid = try_count.identifier GROUP BY player.citizenid, try_count.game_played ORDER BY score DESC
+        `,
+            []
+        );
     }
 }
 

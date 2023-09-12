@@ -1,10 +1,11 @@
-import { SnakeEvents } from '../../../typings/snake';
-import { sendSnakeEvent } from '../../utils/messages';
+import { SnakeEvents, SnakeLeaderboard } from '../../../typings/app/snake';
+import apps from '../../utils/apps';
+import { sendMessage } from '../../utils/messages';
 import { RegisterNuiProxy } from '../cl_utils';
 
-RegisterNuiProxy(SnakeEvents.GET_HIGHSCORE);
-RegisterNuiProxy(SnakeEvents.SET_HIGHSCORE);
+RegisterNuiProxy(SnakeEvents.SEND_SCORE);
+RegisterNuiProxy(SnakeEvents.FETCH_LEADERBOARD);
 
-onNet(SnakeEvents.UPDATE_HIGHSCORE, (result: number) => {
-    sendSnakeEvent(SnakeEvents.UPDATE_HIGHSCORE, result);
+onNet(SnakeEvents.BROADCAST_LEADERBOARD, (result: SnakeLeaderboard) => {
+    sendMessage(apps.SNAKE, SnakeEvents.BROADCAST_LEADERBOARD, result);
 });

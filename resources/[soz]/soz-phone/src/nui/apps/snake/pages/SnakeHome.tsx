@@ -1,15 +1,36 @@
-import { Button } from '@ui/old_components/Button';
+import { SnakeEvents } from '@typings/app/snake';
+import { AppContent } from '@ui/components/AppContent';
+import { DataContainer } from '@ui/components/games/DataContainer';
+import { LeaderBoardIcon } from '@ui/components/games/LeaderBoardIcon';
+import { ActionButton } from '@ui/old_components/ActionButton';
+import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import React, { memo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { useConfig } from '../../../hooks/usePhone';
+import { useCitizenID } from '../../../hooks/usePhone';
 import { RootState } from '../../../store';
-import { useSnakeAPI } from '../hooks/useSnakeAPI';
+import { store } from '../../../store';
+import DownLeft from '../ui/downleft.png';
+import DownRight from '../ui/downright.png';
+import Food from '../ui/fruit.png';
+import HeadDown from '../ui/headdown.png';
+import HeadLeft from '../ui/headleft.png';
+import HeadRight from '../ui/headright.png';
+import HeadUp from '../ui/headup.png';
+import LeftRight from '../ui/leftright.png';
+import TailDown from '../ui/taildown.png';
+import TailLeft from '../ui/tailleft.png';
+import TailRight from '../ui/tailright.png';
+import TailUp from '../ui/tailup.png';
+import UpDown from '../ui/updown.png';
+import UpLeft from '../ui/upleft.png';
+import UpRight from '../ui/upright.png';
+import Wall from '../ui/wall.png';
 import { useInterval } from '../utils/interval';
 
 export const SnakeHome = memo(() => {
-    const config = useConfig();
     const size = 20;
     const initialRows = [];
     for (let i = 0; i < size; i++) {
@@ -19,24 +40,71 @@ export const SnakeHome = memo(() => {
         }
     }
 
-    const { updateHighscore } = useSnakeAPI();
+    for (let i = 0; i < size; i++) {
+        initialRows[0][i] = 'wall';
+        initialRows[i][0] = 'wall';
+        initialRows[size - 1][i] = 'wall';
+        initialRows[i][size - 1] = 'wall';
+    }
 
-    const handleNewHighScore = async (newHighscore: number) => {
-        updateHighscore(newHighscore);
+    const navigate = useNavigate();
+
+    const onClickLeaderboard = () => {
+        store.dispatch.appSnakeLeaderboard.loadLeaderboard();
+        navigate('/snake/leaderboard');
     };
 
     const randomPosition = () => {
-        const position = { x: Math.floor(Math.random() * size), y: Math.floor(Math.random() * size) };
+        let position = {
+            x: -1,
+            y: -1,
+        };
+        if (snake.length != size * size) {
+            // food spawnable
+            let foodOnSnake = false;
+            do {
+                foodOnSnake = false;
+                position = {
+                    x: Math.floor(Math.random() * (size - 2)) + 1,
+                    y: Math.floor(Math.random() * (size - 2)) + 1,
+                };
+                for (let i = 0; i < snake.length; i++) {
+                    if (position.x == snake[i].x && position.y == snake[i].y) {
+                        foodOnSnake = true;
+                    }
+                }
+            } while (foodOnSnake);
+        }
         return position;
     };
 
     const [rows, setRows] = useState(initialRows);
-    const [snake, setSnake] = useState([]);
+    const [snake, setSnake] = useState([
+        { x: size / 2, y: 3 },
+        { x: size / 2, y: 2 },
+        { x: size / 2, y: 1 },
+    ]);
     const [direction, setDirection] = useState('right');
     const [nextDirection, setNextDirection] = useState('right'); // buffer to avoid some problems with half-turn
     const [food, setFood] = useState(randomPosition);
-    const highScore = useSelector((state: RootState) => state.appSnake);
-    const [isMoving, setMoving] = useState(false);
+    const [isMoving, setMoving] = useState(true);
+
+    const playerCitizenID = useCitizenID();
+    const snakeLeaderboard = useSelector((state: RootState) => state.appSnakeLeaderboard);
+
+    const highScore = useMemo(() => {
+        if (!snakeLeaderboard) return null;
+
+        const player = snakeLeaderboard.sort((a, b) => b.score - a.score).find(p => p.citizenid === playerCitizenID);
+        if (!player) return null;
+
+        return player.score;
+    }, [playerCitizenID, snakeLeaderboard]);
+
+    function handleDefeat(score: number) {
+        setMoving(false);
+        fetchNui(SnakeEvents.SEND_SCORE, { score });
+    }
 
     const changeDirectionWithKeys = (e: KeyboardEvent) => {
         e.preventDefault();
@@ -65,24 +133,52 @@ export const SnakeHome = memo(() => {
 
     const displaySnake = () => {
         const newRows = initialRows;
-        switch (direction) {
-            case 'right':
-                newRows[snake[0].x][snake[0].y] = 'snakeheadright';
-                break;
-            case 'left':
-                newRows[snake[0].x][snake[0].y] = 'snakeheadleft';
-                break;
-            case 'up':
-                newRows[snake[0].x][snake[0].y] = 'snakeheadup';
-                break;
-            case 'down':
-                newRows[snake[0].x][snake[0].y] = 'snakeheaddown';
-                break;
-        }
-        for (let i = 1; i < snake.length; i++) {
-            newRows[snake[i].x][snake[i].y] = 'snake';
-        }
         newRows[food.x][food.y] = 'food';
+        if (snake[0].y < snake[1].y) {
+            newRows[snake[0].x][snake[0].y] = 'snakeheadleft';
+        } else if (snake[0].x > snake[1].x) {
+            newRows[snake[0].x][snake[0].y] = 'snakeheaddown';
+        } else if (snake[0].y > snake[1].y) {
+            newRows[snake[0].x][snake[0].y] = 'snakeheadright';
+        } else if (snake[0].x < snake[1].x) {
+            newRows[snake[0].x][snake[0].y] = 'snakeheadup';
+        }
+        for (let i = 1; i < snake.length - 1; i++) {
+            const prev = snake[i - 1];
+            const next = snake[i + 1];
+            const current = snake[i];
+
+            if ((prev.x < current.x && next.x > current.x) || (next.x < current.x && prev.x > current.x)) {
+                // Up-Down
+                newRows[snake[i].x][snake[i].y] = 'snakeupdown';
+            } else if ((prev.x < current.x && next.y > current.y) || (next.x < current.x && prev.y > current.y)) {
+                // Angle Left-Down
+                newRows[snake[i].x][snake[i].y] = 'snakeupright';
+            } else if ((prev.y < current.y && next.y > current.y) || (next.y < current.y && prev.y > current.y)) {
+                // Left-Right
+                newRows[snake[i].x][snake[i].y] = 'snakeleftright';
+            } else if ((prev.y < current.y && next.x < current.x) || (next.y < current.y && prev.x < current.x)) {
+                // Angle Top-Left
+                newRows[snake[i].x][snake[i].y] = 'snakeupleft';
+            } else if ((prev.x > current.x && next.y < current.y) || (next.x > current.x && prev.y < current.y)) {
+                // Angle Right-Up
+                newRows[snake[i].x][snake[i].y] = 'snakedownleft';
+            } else if ((prev.y > current.y && next.x > current.x) || (next.y > current.y && prev.x > current.x)) {
+                // Angle Down-Right
+                newRows[snake[i].x][snake[i].y] = 'snakedownright';
+            }
+        }
+        const prev = snake[snake.length - 2];
+        const tail = snake[snake.length - 1];
+        if (prev.y < tail.y) {
+            newRows[snake[snake.length - 1].x][snake[snake.length - 1].y] = 'snaketailright';
+        } else if (prev.x > tail.x) {
+            newRows[snake[snake.length - 1].x][snake[snake.length - 1].y] = 'snaketailup';
+        } else if (prev.y > tail.y) {
+            newRows[snake[snake.length - 1].x][snake[snake.length - 1].y] = 'snaketailleft';
+        } else if (prev.x < tail.x) {
+            newRows[snake[snake.length - 1].x][snake[snake.length - 1].y] = 'snaketaildown';
+        }
         setRows(newRows);
     };
 
@@ -138,44 +234,120 @@ export const SnakeHome = memo(() => {
             for (let i = 1; i < newSnake.length; i++) {
                 // defeat if the head is on a body cell
                 if (newSnake[0].x == newSnake[i].x && newSnake[0].y == newSnake[i].y) {
-                    setMoving(false);
-                    if (newSnake.length > highScore) {
-                        handleNewHighScore(newSnake.length);
-                    }
+                    handleDefeat(newSnake.length);
                 }
+            }
+            if (newSnake[0].x == 0 || newSnake[0].x == size - 1 || newSnake[0].y == 0 || newSnake[0].y == size - 1) {
+                handleDefeat(newSnake.length);
             }
             setSnake(newSnake);
             displaySnake();
         }
     };
-    useInterval(moveSnake, 100);
+    useInterval(moveSnake, 170);
 
     const displayRows = rows.map(row => (
         <>
             {row.map(e => {
                 switch (e) {
                     case 'blank':
+                        return <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}></div>;
+                    case 'snakeleftright':
                         return (
-                            <div
-                                className={cn('w-1/10 aspect-square', {
-                                    'bg-ios-700': config.theme.value === 'dark',
-                                    'bg-white': config.theme.value === 'light',
-                                })}
-                            ></div>
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={LeftRight}></img>
+                            </div>
                         );
-
-                    case 'snake':
-                        return <div className="w-1/10 aspect-square bg-green-900"></div>;
+                    case 'snakeupdown':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={UpDown}></img>
+                            </div>
+                        );
                     case 'snakeheadup':
-                        return <div className="w-1/10 aspect-square bg-green-900 rounded-t-3xl"></div>;
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={HeadUp}></img>
+                            </div>
+                        );
+                    case 'snakedownleft':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={DownLeft}></img>
+                            </div>
+                        );
+                    case 'snakedownright':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={DownRight}></img>
+                            </div>
+                        );
+                    case 'snakeupleft':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={UpLeft}></img>
+                            </div>
+                        );
+                    case 'snakeupright':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={UpRight}></img>
+                            </div>
+                        );
                     case 'snakeheaddown':
-                        return <div className="w-1/10 aspect-square bg-green-900 rounded-b-3xl"></div>;
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={HeadDown}></img>
+                            </div>
+                        );
                     case 'snakeheadleft':
-                        return <div className="w-1/10 aspect-square bg-green-900 rounded-l-3xl"></div>;
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={HeadLeft}></img>
+                            </div>
+                        );
                     case 'snakeheadright':
-                        return <div className="w-1/10 aspect-square bg-green-900 rounded-r-3xl"></div>;
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={HeadRight}></img>
+                            </div>
+                        );
+                    case 'snaketailup':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={TailUp}></img>
+                            </div>
+                        );
+                    case 'snaketaildown':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={TailDown}></img>
+                            </div>
+                        );
+                    case 'snaketailleft':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={TailLeft}></img>
+                            </div>
+                        );
+                    case 'snaketailright':
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={TailRight}></img>
+                            </div>
+                        );
                     case 'food':
-                        return <div className="w-1/10 aspect-square bg-red-700 rounded-full"></div>;
+                        return (
+                            <div className={cn('w-1/10 aspect-square bg-ios-700 opacity-75')}>
+                                <img src={Food}></img>
+                            </div>
+                        );
+                    case 'wall':
+                        return (
+                            <div className="w-1/10">
+                                <img src={Wall}></img>
+                            </div>
+                        );
                 }
             })}
         </>
@@ -186,48 +358,51 @@ export const SnakeHome = memo(() => {
         setNextDirection('right');
         setMoving(true);
         setSnake([
-            { x: size / 2, y: size / 2 },
-            { x: size / 2, y: size / 2 - 1 },
-            { x: size / 2, y: size / 2 - 2 },
+            { x: size / 2, y: 3 },
+            { x: size / 2, y: 2 },
+            { x: size / 2, y: 1 },
         ]);
         setFood(randomPosition);
     };
 
     return (
-        <>
-            <div className="grid grid-cols-[repeat(20,_minmax(0,_1fr))] pt-6 p-3">{displayRows}</div>
-            <div className="flex pt-10 p-6 w-1/2 mx-auto text-center">
-                <Button
-                    className={cn(
-                        'w-full mx-auto text-center flex flex-col justify-center items-center rounded-xl p-3',
-                        {
-                            'bg-ios-700 text-[#347DD9]': config.theme.value === 'dark',
-                            'bg-white text-gray-700': config.theme.value === 'light',
-                        }
+        <AppContent scrollable={false}>
+            <>
+                <div
+                    className={cn({
+                        'opacity-80': isMoving === false,
+                    })}
+                >
+                    {snake.length > highScore && (
+                        <div className="absolute -rotate-12 -top-6 left-1/3 bg-yellow-500 text-sm text-white font-bold px-2 py-1 rounded">
+                            Nouveau record !
+                        </div>
                     )}
-                    onClick={handleStart}
-                >
-                    <p className="text-sm text-center">Start</p>
-                </Button>
-            </div>
-            <div className="grid grid-cols-2 pt-6 p-3">
-                <div
-                    className={cn('w-1/2 mx-auto text-center', {
-                        'text-white': config.theme.value === 'dark',
-                        'text-black': config.theme.value === 'light',
-                    })}
-                >
-                    Score: <br /> {snake.length}
+                    <header className="flex justify-around items-center text-white font-semibold px-2 mt-6">
+                        <DataContainer title="Taille" value={snake.length} big />
+                    </header>
+                    <div className="grid grid-cols-[repeat(20,_minmax(0,_1fr))] pt-6 p-3">{displayRows}</div>
+
+                    <ActionButton className="mt-6 bg-opacity-80" onClick={onClickLeaderboard}>
+                        <LeaderBoardIcon /> Voir le classement
+                    </ActionButton>
+
+                    {isMoving === false && (
+                        <div className="fixed inset-0 flex items-center justify-around m-4">
+                            <div className="bg-black/70 p-4 w-full rounded-lg">
+                                <div className="text-red-400 text-4xl text-center py-4 font-bold">
+                                    Vous avez perdu !
+                                </div>
+                                <p className="text-white py-4">Vous avez atteint la taille {snake.length}.</p>
+                                <p className="text-white pt-4 pb-8">
+                                    Votre meilleur score est de {snake.length > highScore ? snake.length : highScore}.
+                                </p>
+                                <ActionButton onClick={handleStart}>Recommencer</ActionButton>
+                            </div>
+                        </div>
+                    )}
                 </div>
-                <div
-                    className={cn('w-1/2 mx-auto text-center', {
-                        'text-white': config.theme.value === 'dark',
-                        'text-black': config.theme.value === 'light',
-                    })}
-                >
-                    High Score: <br /> {highScore}
-                </div>
-            </div>
-        </>
+            </>
+        </AppContent>
     );
 });

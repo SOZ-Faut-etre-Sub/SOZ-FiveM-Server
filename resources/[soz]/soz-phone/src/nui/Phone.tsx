@@ -12,7 +12,7 @@ import PhoneWrapper from './PhoneWrapper';
 import { useAppBankService } from './services/app/useAppBankService';
 import { useAppInvoicesService } from './services/app/useAppInvoicesService';
 import { useAppNotesService } from './services/app/useAppNotesService';
-import { useAppSnakeService } from './services/app/useAppSnakeService';
+import { useAppSnakeLeaderboardService } from './services/app/useAppSnakeLeaderboardService';
 import { useAppSocietyService } from './services/app/useAppSocietyService';
 import { useAppTetrisLeaderboardService } from './services/app/useAppTetrisLeaderboardService';
 import { useAppTwitchNewsService } from './services/app/useAppTwitchNewsService';
@@ -61,7 +61,7 @@ function Phone() {
     useAppSocietyService();
     useAppWeatherService();
     useAppTetrisLeaderboardService();
-    useAppSnakeService();
+    useAppSnakeLeaderboardService();
 
     if (config.wallpaper === undefined) {
         return null;

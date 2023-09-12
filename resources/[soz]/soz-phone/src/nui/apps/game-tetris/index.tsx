@@ -1,13 +1,15 @@
 import { Transition } from '@headlessui/react';
+import Leaderboard from '@ui/components/games/LeaderBoard';
 import { FullPageWithHeader } from '@ui/layout/FullPageWithHeader';
 import cn from 'classnames';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
+import { RootState } from '../../store';
 import { AppWrapper } from '../../ui/components/AppWrapper';
 import { useBackground } from '../../ui/hooks/useBackground';
 import { TetrisGame } from './pages/TetrisGame';
-import { TetrisLeaderboard } from './pages/TetrisLeaderboard';
 
 export const GameTetris: React.FC = () => {
     const backgroundClass = useBackground();
@@ -41,7 +43,14 @@ export const GameTetris: React.FC = () => {
                 <AppWrapper className="h-[775px] w-full">
                     <Routes>
                         <Route index element={<TetrisGame />} />
-                        <Route path="leaderboard" element={<TetrisLeaderboard />} />
+                        <Route
+                            path="leaderboard"
+                            element={
+                                <Leaderboard
+                                    leaderboard={useSelector((state: RootState) => state.appTetrisLeaderboard)}
+                                />
+                            }
+                        />
                     </Routes>
                 </AppWrapper>
             </Transition>

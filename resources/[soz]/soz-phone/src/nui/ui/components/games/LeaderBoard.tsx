@@ -1,27 +1,23 @@
 import { Transition } from '@headlessui/react';
 import { ChevronLeftIcon } from '@heroicons/react/outline';
+import { LeaderboardInterface } from '@typings/common';
 import cn from 'classnames';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { useConfig } from '../../../hooks/usePhone';
-import { RootState } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { AppTitle } from '../../../ui/components/AppTitle';
 import { AppWrapper } from '../../../ui/components/AppWrapper';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
 import { Button } from '../../../ui/old_components/Button';
 
-export const TetrisLeaderboard: React.FC = () => {
+export const Leaderboard = ({ leaderboard }: { leaderboard: LeaderboardInterface[] }) => {
     const config = useConfig();
     const navigate = useNavigate();
 
-    const tetrisLeaderboard = useSelector((state: RootState) => state.appTetrisLeaderboard).sort(
-        (a, b) => b.score - a.score
-    );
-    const top3 = tetrisLeaderboard.slice(0, 3);
-    const rest = tetrisLeaderboard.slice(3);
+    const top3 = leaderboard.slice(0, 3);
+    const rest = leaderboard.slice(3);
 
     return (
         <Transition
@@ -53,7 +49,6 @@ export const TetrisLeaderboard: React.FC = () => {
                                     'order-1 border-t-4 border-[#C0C0C0]': i === 1,
                                     'order-3 border-t-4 border-[#CD7F32]': i === 2,
                                 })}
-                                title={`${player.game_played} parties jouée`}
                             >
                                 <div className="flex justify-center">
                                     <ContactPicture picture={player.avatar} size="large" />
@@ -61,6 +56,7 @@ export const TetrisLeaderboard: React.FC = () => {
                                 <div className="flex flex-col justify-between h-full">
                                     <p className="items-start p-1.5">{player.player_name}</p>
                                     <p className="p-2 text-lg font-semibold">{player.score}</p>
+                                    <p>{`${player.game_played} partie(s) jouée(s)`}</p>
                                 </div>
                             </div>
                         ))}
@@ -80,7 +76,11 @@ export const TetrisLeaderboard: React.FC = () => {
                                         <ContactPicture picture={player.avatar} />
                                     </div>
 
-                                    <div className="flex-grow p-4">{player.player_name}</div>
+                                    <div className="flex-grow p-4">
+                                        {player.player_name}
+                                        <br />
+                                        {`${player.game_played} partie(s) jouée(s)`}
+                                    </div>
                                     <div className="flex-shrink font-semibold text-xl p-4">{player.score}</div>
                                 </div>
                             </div>
@@ -92,4 +92,4 @@ export const TetrisLeaderboard: React.FC = () => {
     );
 };
 
-export default TetrisLeaderboard;
+export default Leaderboard;
