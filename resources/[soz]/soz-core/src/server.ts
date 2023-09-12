@@ -30,6 +30,7 @@ import { UpwModule } from './server/job/upw/upw.module';
 import { MonitorModule } from './server/monitor/monitor.module';
 import { ObjectModule } from './server/object/object.module';
 import { PlayerModule } from './server/player/player.module';
+import { PropsModule } from './server/props/props.module';
 import { RaceModule } from './server/race/race.module';
 import { RebootModule } from './server/reboot/reboot.module';
 import { RepositoryModule } from './server/repository/repository.module';
@@ -44,7 +45,6 @@ import { VoipModule } from './server/voip/voip.module';
 import { WeaponModule } from './server/weapon/weapon.module';
 import { WeatherModule } from './server/weather/weather.module';
 import { ZEventModule } from './server/zevent/zevent.module';
-import { PropsModule } from './server/props/props.module';
 
 async function bootstrap() {
     setServiceInstance('Store', store);

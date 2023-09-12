@@ -24,12 +24,12 @@ import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiPoliceMethodMap } from './police';
 import { NuiProgressMethodMap } from './progress';
+import { NuiPlacementPropMethodMap } from './prop_placement';
 import { NuiRaceMethodMap } from './race';
 import { NuiRepairMethodMap } from './repair';
 import { NuiSozedexMethodMap } from './sozedex';
 import { NuiTaxiMethodMap } from './taxi';
 import { NuiUpwOrderMenuMethodMap } from './upw_order_menu';
-import { NuiPlacementPropMethodMap } from './prop_placement';
 
 export interface NuiGlobalMethodMap {
     PauseMenuActive: boolean;

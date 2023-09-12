@@ -1,6 +1,7 @@
 import { Injectable } from '@core/decorators/injectable';
 import { ClientEvent } from '@public/shared/event';
 import { Vector4 } from '@public/shared/polyzone/vector';
+import { getDefaultVehicleConfiguration, VehicleConfiguration } from '@public/shared/vehicle/modification';
 
 import {
     getDefaultVehicleCondition,
@@ -14,6 +15,7 @@ import {
 type VehicleState = {
     volatile: VehicleVolatileState;
     condition: VehicleCondition;
+    configuration: VehicleConfiguration;
     position: Vector4 | null;
     owner: number;
 };
@@ -54,6 +56,7 @@ export class VehicleStateService {
         return {
             volatile: getDefaultVehicleVolatileState(),
             condition: getDefaultVehicleCondition(),
+            configuration: getDefaultVehicleConfiguration(),
             owner: null,
             position: null,
         };
@@ -93,6 +96,15 @@ export class VehicleStateService {
         state.position = position;
     }
 
+    public updateVehicleConfiguration(vehicleNetworkId: number, configuration: VehicleConfiguration): void {
+        if (!this.state.has(vehicleNetworkId)) {
+            return;
+        }
+
+        const state = this.state.get(vehicleNetworkId);
+        state.configuration = configuration;
+    }
+
     public updateVehicleVolatileState(
         vehicleNetworkId: number,
         state: Partial<VehicleVolatileState>,
@@ -107,6 +119,7 @@ export class VehicleStateService {
                 ...state,
             },
             condition: previousState.condition,
+            configuration: previousState.configuration,
             owner: previousState.owner,
             position: previousState.position,
         };
@@ -168,6 +181,7 @@ export class VehicleStateService {
                 ...previousState.condition,
                 ...condition,
             },
+            configuration: previousState.configuration,
             owner: previousState.owner,
             position: previousState.position,
         };
@@ -234,16 +248,18 @@ export class VehicleStateService {
         owner: number,
         position: Vector4,
         volatile: VehicleVolatileState,
-        condition: VehicleCondition
+        condition: VehicleCondition,
+        configuration: VehicleConfiguration
     ) {
         this.state.set(netId, {
             volatile,
             condition,
+            configuration,
             owner,
             position,
         });
 
-        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, condition);
+        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, condition, configuration);
     }
 
     public switchOwner(netId, owner) {
@@ -263,7 +279,7 @@ export class VehicleStateService {
             owner,
         });
 
-        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, state.condition);
+        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, state.condition, state.configuration);
     }
 
     public unregister(netId) {
