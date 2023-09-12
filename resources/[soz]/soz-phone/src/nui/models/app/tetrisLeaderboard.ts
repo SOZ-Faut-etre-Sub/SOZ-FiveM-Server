@@ -1,14 +1,14 @@
 import { createModel } from '@rematch/core';
 
-import { TetrisEvents, TetrisLeaderboard } from '../../../../typings/app/tetris';
-import { ServerPromiseResp } from '../../../../typings/common';
+import { TetrisEvents } from '../../../../typings/app/tetris';
+import { LeaderboardInterface, ServerPromiseResp } from '../../../../typings/common';
 import { MockTetrisLeaderboard } from '../../apps/game-tetris/utils/constants';
 import { fetchNui } from '../../utils/fetchNui';
 import { buildRespObj } from '../../utils/misc';
 import { RootModel } from '..';
 
 export const appTetrisLeaderboard = createModel<RootModel>()({
-    state: [] as TetrisLeaderboard[],
+    state: [] as LeaderboardInterface[],
     reducers: {
         set: (state, payload) => {
             return [...payload];
@@ -20,7 +20,7 @@ export const appTetrisLeaderboard = createModel<RootModel>()({
     effects: dispatch => ({
         // loader
         async loadLeaderboard() {
-            fetchNui<ServerPromiseResp<TetrisLeaderboard[]>>(
+            fetchNui<ServerPromiseResp<LeaderboardInterface[]>>(
                 TetrisEvents.FETCH_LEADERBOARD,
                 undefined,
                 buildRespObj(MockTetrisLeaderboard)
@@ -29,7 +29,7 @@ export const appTetrisLeaderboard = createModel<RootModel>()({
             });
         },
 
-        async broadcastLeaderboard(leaderboard: TetrisLeaderboard[]) {
+        async broadcastLeaderboard(leaderboard: LeaderboardInterface[]) {
             dispatch.appTetrisLeaderboard.set(leaderboard);
         },
     }),

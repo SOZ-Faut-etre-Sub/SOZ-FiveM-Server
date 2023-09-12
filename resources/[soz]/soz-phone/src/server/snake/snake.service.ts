@@ -1,4 +1,5 @@
-import { SnakeEvents, SnakeLeaderboard, SnakeScore } from '../../../typings/app/snake';
+import { SnakeEvents, SnakeScore } from '../../../typings/app/snake';
+import { LeaderboardInterface } from '../../../typings/common';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import SnakeDB, { _SnakeDB } from './snake.db';
@@ -6,7 +7,7 @@ import { snakeLogger } from './snake.utils';
 
 class _SnakeService {
     private readonly snakeDB: _SnakeDB;
-    private snakeLeaderboard: SnakeLeaderboard[];
+    private snakeLeaderboard: LeaderboardInterface[];
 
     constructor() {
         this.snakeDB = SnakeDB;
@@ -30,7 +31,10 @@ class _SnakeService {
         this.snakeLeaderboard = await this.snakeDB.getLeaderboard();
     }
 
-    async getLeaderboard(reqObj: PromiseRequest<string>, resp: PromiseEventResp<SnakeLeaderboard[]>): Promise<void> {
+    async getLeaderboard(
+        reqObj: PromiseRequest<string>,
+        resp: PromiseEventResp<LeaderboardInterface[]>
+    ): Promise<void> {
         try {
             resp({ status: 'ok', data: this.snakeLeaderboard });
         } catch (e) {

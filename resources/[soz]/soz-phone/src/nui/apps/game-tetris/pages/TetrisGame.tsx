@@ -1,7 +1,6 @@
-import { DataContainer } from '@ui/components/games/DataContainer';
 import { LeaderBoardIcon } from '@ui/components/games/LeaderBoardIcon';
 import cn from 'classnames';
-import React, { useMemo } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +10,27 @@ import { store } from '../../../store';
 import { AppContent } from '../../../ui/components/AppContent';
 import { ActionButton } from '../../../ui/old_components/ActionButton';
 import Tetris from '../components/Tetris';
+
+type DataContainerProps = {
+    title: string;
+    value: string | number;
+    big?: boolean;
+};
+
+const DataContainer: FunctionComponent<DataContainerProps> = ({ title, value, big = false }) => {
+    return (
+        <div className="border-2 border-white h-fit w-3/12 ml-2 rounded">
+            <div className="bg-white text-center text-[#38428b]">{title}</div>
+            <p
+                className={cn('p-1 text-center', {
+                    'text-2xl': big,
+                })}
+            >
+                {value}
+            </p>
+        </div>
+    );
+};
 
 export const TetrisGame: React.FC = () => {
     const navigate = useNavigate();

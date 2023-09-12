@@ -561,10 +561,10 @@ model shop_content {
   @@index([shop_id], map: "shop_id")
 }
 
-model snake {
-  id          Int       @id @default(autoincrement())
-  citizenid   String    @db.VarChar(50)
-  highscore   Int
+model snake_score {
+  id         Int    @id @default(autoincrement())
+  identifier String @db.VarChar(50)
+  score      Int
 }
 
 enum bank_accounts_account_type {

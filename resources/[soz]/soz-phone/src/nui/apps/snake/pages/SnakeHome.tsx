@@ -1,11 +1,10 @@
 import { SnakeEvents } from '@typings/app/snake';
 import { AppContent } from '@ui/components/AppContent';
-import { DataContainer } from '@ui/components/games/DataContainer';
 import { LeaderBoardIcon } from '@ui/components/games/LeaderBoardIcon';
 import { ActionButton } from '@ui/old_components/ActionButton';
 import { fetchNui } from '@utils/fetchNui';
 import cn from 'classnames';
-import React, { memo, useMemo, useState } from 'react';
+import React, { FunctionComponent, memo, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,21 +29,39 @@ import UpRight from '../ui/upright.png';
 import Wall from '../ui/wall.png';
 import { useInterval } from '../utils/interval';
 
+type DataContainerProps = {
+    title: string;
+    value: string | number;
+};
+
+const DataContainer: FunctionComponent<DataContainerProps> = ({ title, value }) => {
+    return (
+        <div id="arcade" className="h-fit w-3/12 ml-2 rounded">
+            <div className="text-center">{title}</div>
+            <p className={cn('p-1 text-center text-2xl')}>{value}</p>
+        </div>
+    );
+};
+
 export const SnakeHome = memo(() => {
-    const size = 20;
+    const verticalSize = 20;
+    const horizontalSize = 30;
     const initialRows = [];
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < horizontalSize; i++) {
         initialRows.push([]);
-        for (let k = 0; k < size; k++) {
+        for (let k = 0; k < verticalSize; k++) {
             initialRows[i].push('blank');
         }
     }
 
-    for (let i = 0; i < size; i++) {
-        initialRows[0][i] = 'wall';
+    for (let i = 0; i < horizontalSize; i++) {
         initialRows[i][0] = 'wall';
-        initialRows[size - 1][i] = 'wall';
-        initialRows[i][size - 1] = 'wall';
+        initialRows[i][verticalSize - 1] = 'wall';
+    }
+
+    for (let i = 0; i < verticalSize; i++) {
+        initialRows[0][i] = 'wall';
+        initialRows[horizontalSize - 1][i] = 'wall';
     }
 
     const navigate = useNavigate();
@@ -59,14 +76,14 @@ export const SnakeHome = memo(() => {
             x: -1,
             y: -1,
         };
-        if (snake.length != size * size) {
+        if (snake.length != (horizontalSize - 1) * (verticalSize - 1)) {
             // food spawnable
             let foodOnSnake = false;
             do {
                 foodOnSnake = false;
                 position = {
-                    x: Math.floor(Math.random() * (size - 2)) + 1,
-                    y: Math.floor(Math.random() * (size - 2)) + 1,
+                    x: Math.floor(Math.random() * (horizontalSize - 2)) + 1,
+                    y: Math.floor(Math.random() * (verticalSize - 2)) + 1,
                 };
                 for (let i = 0; i < snake.length; i++) {
                     if (position.x == snake[i].x && position.y == snake[i].y) {
@@ -80,9 +97,9 @@ export const SnakeHome = memo(() => {
 
     const [rows, setRows] = useState(initialRows);
     const [snake, setSnake] = useState([
-        { x: size / 2, y: 3 },
-        { x: size / 2, y: 2 },
-        { x: size / 2, y: 1 },
+        { x: verticalSize / 2, y: 3 },
+        { x: verticalSize / 2, y: 2 },
+        { x: verticalSize / 2, y: 1 },
     ]);
     const [direction, setDirection] = useState('right');
     const [nextDirection, setNextDirection] = useState('right'); // buffer to avoid some problems with half-turn
@@ -152,16 +169,16 @@ export const SnakeHome = memo(() => {
                 // Up-Down
                 newRows[snake[i].x][snake[i].y] = 'snakeupdown';
             } else if ((prev.x < current.x && next.y > current.y) || (next.x < current.x && prev.y > current.y)) {
-                // Angle Left-Down
+                // Angle Up-Right
                 newRows[snake[i].x][snake[i].y] = 'snakeupright';
             } else if ((prev.y < current.y && next.y > current.y) || (next.y < current.y && prev.y > current.y)) {
                 // Left-Right
                 newRows[snake[i].x][snake[i].y] = 'snakeleftright';
             } else if ((prev.y < current.y && next.x < current.x) || (next.y < current.y && prev.x < current.x)) {
-                // Angle Top-Left
+                // Angle Up-Left
                 newRows[snake[i].x][snake[i].y] = 'snakeupleft';
             } else if ((prev.x > current.x && next.y < current.y) || (next.x > current.x && prev.y < current.y)) {
-                // Angle Right-Up
+                // Angle Down-Left
                 newRows[snake[i].x][snake[i].y] = 'snakedownleft';
             } else if ((prev.y > current.y && next.x > current.x) || (next.y > current.y && prev.x > current.x)) {
                 // Angle Down-Right
@@ -210,16 +227,16 @@ export const SnakeHome = memo(() => {
             }
             switch (direction) {
                 case 'right':
-                    newSnake.push({ x: snake[0].x, y: (snake[0].y + 1) % size });
+                    newSnake.push({ x: snake[0].x, y: (snake[0].y + 1) % verticalSize });
                     break;
                 case 'left':
-                    newSnake.push({ x: snake[0].x, y: (snake[0].y - 1 + size) % size });
+                    newSnake.push({ x: snake[0].x, y: (snake[0].y - 1 + verticalSize) % verticalSize });
                     break;
                 case 'up':
-                    newSnake.push({ x: (snake[0].x - 1 + size) % size, y: snake[0].y });
+                    newSnake.push({ x: (snake[0].x - 1 + horizontalSize) % horizontalSize, y: snake[0].y });
                     break;
                 case 'down':
-                    newSnake.push({ x: (snake[0].x + 1) % size, y: snake[0].y });
+                    newSnake.push({ x: (snake[0].x + 1) % horizontalSize, y: snake[0].y });
                     break;
             }
             snake.forEach(cell => {
@@ -234,11 +251,17 @@ export const SnakeHome = memo(() => {
             for (let i = 1; i < newSnake.length; i++) {
                 // defeat if the head is on a body cell
                 if (newSnake[0].x == newSnake[i].x && newSnake[0].y == newSnake[i].y) {
-                    handleDefeat(newSnake.length);
+                    handleDefeat((newSnake.length - 3) * 100);
                 }
             }
-            if (newSnake[0].x == 0 || newSnake[0].x == size - 1 || newSnake[0].y == 0 || newSnake[0].y == size - 1) {
-                handleDefeat(newSnake.length);
+            if (
+                newSnake[0].x == 0 ||
+                newSnake[0].x == horizontalSize - 1 ||
+                newSnake[0].y == 0 ||
+                newSnake[0].y == verticalSize - 1
+            ) {
+                // defeat if next move put snake on wall
+                handleDefeat((newSnake.length - 3) * 100);
             }
             setSnake(newSnake);
             displaySnake();
@@ -358,9 +381,9 @@ export const SnakeHome = memo(() => {
         setNextDirection('right');
         setMoving(true);
         setSnake([
-            { x: size / 2, y: 3 },
-            { x: size / 2, y: 2 },
-            { x: size / 2, y: 1 },
+            { x: verticalSize / 2, y: 3 },
+            { x: verticalSize / 2, y: 2 },
+            { x: verticalSize / 2, y: 1 },
         ]);
         setFood(randomPosition);
     };
@@ -373,13 +396,14 @@ export const SnakeHome = memo(() => {
                         'opacity-80': isMoving === false,
                     })}
                 >
-                    {snake.length > highScore && (
+                    {(snake.length - 3) * 100 > highScore && (
                         <div className="absolute -rotate-12 -top-6 left-1/3 bg-yellow-500 text-sm text-white font-bold px-2 py-1 rounded">
                             Nouveau record !
                         </div>
                     )}
                     <header className="flex justify-around items-center text-white font-semibold px-2 mt-6">
-                        <DataContainer title="Taille" value={snake.length} big />
+                        <DataContainer title="Taille" value={snake.length} />
+                        <DataContainer title="Score" value={(snake.length - 3) * 100} />
                     </header>
                     <div className="grid grid-cols-[repeat(20,_minmax(0,_1fr))] pt-6 p-3">{displayRows}</div>
 
@@ -393,9 +417,12 @@ export const SnakeHome = memo(() => {
                                 <div className="text-red-400 text-4xl text-center py-4 font-bold">
                                     Vous avez perdu !
                                 </div>
-                                <p className="text-white py-4">Vous avez atteint la taille {snake.length}.</p>
+                                <p className="text-white py-4">
+                                    Vous avez atteint la taille {(snake.length - 3) * 100}.
+                                </p>
                                 <p className="text-white pt-4 pb-8">
-                                    Votre meilleur score est de {snake.length > highScore ? snake.length : highScore}.
+                                    Votre meilleur score est de{' '}
+                                    {(snake.length - 3) * 100 > highScore ? (snake.length - 3) * 100 : highScore}.
                                 </p>
                                 <ActionButton onClick={handleStart}>Recommencer</ActionButton>
                             </div>
