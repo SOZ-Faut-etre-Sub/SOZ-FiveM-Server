@@ -158,6 +158,8 @@ Citizen.CreateThread(function()
         })
         QBCore.Functions.HideBlip("job_upw_resell", true)
     end
+
+    TriggerEvent("upw:init:end")
 end)
 
 function CreateZone(identifier, zoneType, data)
