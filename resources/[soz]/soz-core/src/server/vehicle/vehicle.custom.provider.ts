@@ -63,6 +63,8 @@ export class VehicleCustomProvider {
             this.notifier.notify(source, 'Le véhicule a été modifié');
         }
 
+        this.vehicleStateService.updateVehicleConfiguration(vehicleNetworkId, mods);
+
         return mods;
     }
 
