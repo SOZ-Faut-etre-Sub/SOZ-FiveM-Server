@@ -1,5 +1,5 @@
 import { emitRpc } from '../../core/rpc';
-import { RepositoryConfig } from '../../shared/repository';
+import { RepositoryConfig, RepositoryType } from '../../shared/repository';
 import { RpcServerEvent } from '../../shared/rpc';
 
 export abstract class Repository<
@@ -7,9 +7,9 @@ export abstract class Repository<
     K extends keyof RepositoryConfig[T] = keyof RepositoryConfig[T],
     V extends RepositoryConfig[T][K] = RepositoryConfig[T][K]
 > {
-    public readonly type!: T;
-
     private data: Record<K, V> = {} as Record<K, V>;
+
+    public abstract type: RepositoryType;
 
     async init(): Promise<void> {
         this.data = (await emitRpc(RpcServerEvent.REPOSITORY_GET_DATA_2, this.type)) as Record<K, V>;
@@ -24,7 +24,7 @@ export abstract class Repository<
     }
 
     public find(id: K): V | null {
-        return this.data[id] ?? null;
+        return this.data[id] ?? this.data[id.toString()] ?? null;
     }
 
     public get(predicate?: (value: V, index: number, array: V[]) => T): V[] {

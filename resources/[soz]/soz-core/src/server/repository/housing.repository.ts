@@ -12,6 +12,8 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
+    public type = RepositoryType.Housing;
+
     private serializeProperty(property: housing_property): Property {
         return {
             id: property.id,
