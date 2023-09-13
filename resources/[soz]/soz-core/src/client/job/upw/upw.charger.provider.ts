@@ -1,5 +1,5 @@
 import { ProgressService } from '@public/client/progress.service';
-import { UpwChargerRepository } from '@public/client/resources/upw.station.repository';
+import { UpwChargerRepository } from '@public/client/repository/upw.station.repository';
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';

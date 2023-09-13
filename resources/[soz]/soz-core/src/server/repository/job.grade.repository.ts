@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { JobGrade, JobPermission } from '../../shared/job';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 @Injectable()
-export class JobGradeRepository extends Repository<JobGrade[]> {
+export class JobGradeRepository extends RepositoryLegacy<JobGrade[]> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

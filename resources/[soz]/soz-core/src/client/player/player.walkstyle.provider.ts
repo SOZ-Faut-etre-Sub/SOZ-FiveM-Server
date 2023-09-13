@@ -4,7 +4,7 @@ import { Provider } from '@core/decorators/provider';
 
 import { ClientEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 import { PlayerService } from './player.service';
 
 export type WalkStyleConf = {

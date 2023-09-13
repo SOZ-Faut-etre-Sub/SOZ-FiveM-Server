@@ -11,7 +11,7 @@ import {
 } from '../../shared/animation';
 import { transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { WeaponName } from '../../shared/weapons/weapon';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 
 const defaultPlayOptions: PlayOptions = {
     ped: null,

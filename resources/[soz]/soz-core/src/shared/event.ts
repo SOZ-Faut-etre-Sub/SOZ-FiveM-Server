@@ -439,6 +439,8 @@ export enum ClientEvent {
     PROGRESS_STOP = 'soz-core:client:progress:stop',
 
     REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
+    REPOSITORY_SET_DATA = 'soz-core:client:repository:set-data',
+    REPOSITORY_DELETE_DATA = 'soz-core:client:repository:delete-data',
 
     STATE_UPDATE_GLOBAL = 'soz-core:client:state:update-global',
     STATE_UPDATE_TIME = 'soz-core:client:state:update-time',

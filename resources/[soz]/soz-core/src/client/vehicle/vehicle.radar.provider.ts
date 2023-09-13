@@ -6,7 +6,7 @@ import { BlipFactory } from '../blip';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { RaceProvider } from '../race/race.provider';
-import { RadarRepository } from '../resources/radar.repository';
+import { RadarRepository } from '../repository/radar.repository';
 
 const radar_props = GetHashKey('soz_prop_radar_2');
 

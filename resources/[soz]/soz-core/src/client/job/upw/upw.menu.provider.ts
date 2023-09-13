@@ -1,6 +1,6 @@
 import { BlipFactory } from '@public/client/blip';
 import { NuiMenu } from '@public/client/nui/nui.menu';
-import { UpwChargerRepository } from '@public/client/resources/upw.station.repository';
+import { UpwChargerRepository } from '@public/client/repository/upw.station.repository';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';

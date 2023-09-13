@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { WorldObject } from '../../shared/object';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 @Injectable()
-export class ObjectRepository extends Repository<WorldObject[]> {
+export class ObjectRepository extends RepositoryLegacy<WorldObject[]> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

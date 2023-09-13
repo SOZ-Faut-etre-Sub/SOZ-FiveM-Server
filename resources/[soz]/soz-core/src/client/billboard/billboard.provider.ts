@@ -4,7 +4,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
 import { ClientEvent } from '@public/shared/event';
 
-import { BillboardRepository } from '../resources/billboard.repository';
+import { BillboardRepository } from '../repository/billboard.repository';
 import { BillboardService } from './billboard.service';
 
 @Provider()

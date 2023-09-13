@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { Vector4 } from '@public/shared/polyzone/vector';
 
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 import { ShopProvider } from './shop.provider';
 
 export type ShopInfo = {
