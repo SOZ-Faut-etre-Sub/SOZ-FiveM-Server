@@ -689,3 +689,13 @@ model billboard {
     lastEditor          String    @db.VarChar(50)
     enabled             Boolean
 }
+
+model vandalism_props {
+  id               String    @db.VarChar(50) 
+  kind             String    @db.VarChar(50) 
+  location         String    @db.Text
+  model_group      String    @db.VarChar(50)
+  value            Int       @db.Int
+
+  @@id([id, kind])
+}

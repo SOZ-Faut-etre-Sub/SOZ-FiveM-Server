@@ -44,4 +44,8 @@ export class ObjectProvider {
         delete this.objects[id];
         TriggerClientEvent(ClientEvent.OBJECT_DELETE, -1, id);
     }
+
+    public getObject(id: string): WorldObject {
+        return this.objects[id];
+    }
 }
