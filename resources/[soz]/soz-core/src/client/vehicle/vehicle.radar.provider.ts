@@ -76,6 +76,8 @@ export class VehicleRadarProvider {
                 });
             }
         }
+
+        TriggerEvent(ClientEvent.VEHICLE_RADAR_ENDINIT);
     }
 
     @OnEvent(ClientEvent.VEHICLE_RADAR_FLASHED)
