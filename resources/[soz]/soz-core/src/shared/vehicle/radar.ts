@@ -8,4 +8,5 @@ export type Radar = {
     speed: number;
     objectId?: string;
     disableTime?: number;
+    destroyed?: boolean;
 };

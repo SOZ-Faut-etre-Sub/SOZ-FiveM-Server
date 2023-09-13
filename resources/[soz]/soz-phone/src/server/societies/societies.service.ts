@@ -59,9 +59,18 @@ class _SocietyService {
         reqObj: PromiseRequest<PreDBSociety>,
         resp: PromiseEventResp<number>
     ): Promise<void> {
-        const player = PlayerService.getPlayer(reqObj.source);
+        let username: string = null;
+        let identifier: string = null;
+        if (reqObj.data.overrideIdentifier) {
+            username = reqObj.data.overrideIdentifier;
+            identifier = reqObj.data.overrideIdentifier;
+        } else {
+            const player = PlayerService.getPlayer(reqObj.source);
+            username = player?.username;
+            identifier = player.getPhoneNumber();
+        }
+
         const originalMessageNumber = reqObj.data.number;
-        let identifier = player.getPhoneNumber();
 
         if (reqObj.data.position) {
             const ped = GetPlayerPed(reqObj.source.toString());
@@ -70,20 +79,17 @@ class _SocietyService {
             reqObj.data.pedPosition = JSON.stringify({ x: playerX, y: playerY, z: playerZ });
         }
 
-        if (reqObj.data.overrideIdentifier) {
-            identifier = reqObj.data.overrideIdentifier;
-        }
         if (reqObj.data.anonymous) {
             identifier = `#${identifier}`;
         }
 
-        if (reqObj.data.number === '555-FBI' && player?.username) {
+        if (reqObj.data.number === '555-FBI' && username) {
             const url = GetConvar('soz_api_endpoint', 'https://api.soz.zerator.com') + '/discord/send-fbi';
             await axios.post(
                 url,
                 {
-                    phone: player.getPhoneNumber(),
-                    username: player.username,
+                    phone: identifier,
+                    username: username,
                     data: reqObj.data.message,
                 },
                 {

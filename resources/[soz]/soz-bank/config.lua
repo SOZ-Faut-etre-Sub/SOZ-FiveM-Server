@@ -185,9 +185,13 @@ Config.SafeStorages = {
 
 Config.ATMModels = {
     ["prop_atm_01"] = "small",
+    ["soz_prop_atm_01_hs2"] = "small",
     ["prop_atm_02"] = "big",
+    ["soz_prop_atm_02_hs2"] = "big",
     ["prop_atm_03"] = "big",
+    ["soz_prop_atm_03_hs2"] = "big",
     ["prop_fleeca_atm"] = "big",
+    ["soz_prop_fleeca_atm_hs2"] = "big",
     ["soz_atm_entreprise"] = "ent",
 }
 

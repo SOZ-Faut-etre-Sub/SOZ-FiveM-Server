@@ -220,7 +220,8 @@ export enum ServerEvent {
 
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
 
-    VANDALISM_END = 'soz-core:server:vandalism:end',
+    VANDALISM_ABORT = 'soz-core:server:vandalism:abort',
+    VANDALISM_REPAIR = 'soz-core:server:vandalism:repair',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
     MDR_MONEY_CLEANING = 'soz-core:server:mdr:money-cleaning',
@@ -460,6 +461,7 @@ export enum ClientEvent {
     VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
     VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
+    VEHICLE_RADAR_ENDINIT = 'soz-core:client:radar:init-end',
     VEHICLE_UPDATE_STATE = 'soz-core:client:vehicle:update-state',
     VEHICLE_DELETE_STATE = 'soz-core:client:vehicle:delete-state',
     VEHICLE_LOCKPICK = 'soz-core:client:vehicle:lockpick',
@@ -550,6 +552,10 @@ export enum ClientEvent {
 
     BILLBOARD_UPDATE = 'soz-core:client:billboard:update',
     BILLBOARD_DELETE = 'soz-core:client:billboard:delete',
+
+    VANDALISM_ABORT = 'soz-core:client:vandalism:abort',
+    VANDALISM_STEP = 'soz-core:client:vandalism:step',
+    VANDALISM_UPDATE_PROP = 'soz-core:client:vandalism:update-prop',
 }
 
 export enum GameEvent {
