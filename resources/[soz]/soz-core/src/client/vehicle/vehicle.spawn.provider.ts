@@ -206,6 +206,13 @@ export class VehicleSpawnProvider {
         await this.doSpawn(vehicle, networkId, vehicleSpawn, volatile, condition);
         this.lastVehicleSpawn = vehicle;
 
+        if (GetVehicleClass(vehicle) == VehicleClass.Boats) {
+            SetVehicleEngineOn(vehicle, false, false, true);
+
+            SetBoatAnchor(vehicle, true);
+            SetBoatFrozenWhenAnchored(vehicle, true);
+        }
+
         return networkId;
     }
 
