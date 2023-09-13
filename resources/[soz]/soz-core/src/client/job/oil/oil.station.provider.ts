@@ -13,7 +13,7 @@ import { Notifier } from '../../notifier';
 import { InputService } from '../../nui/input.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
-import { FuelStationRepository } from '../../resources/fuel.station.repository';
+import { FuelStationRepository } from '../../repository/fuel.station.repository';
 
 @Provider()
 export class OilStationProvider {

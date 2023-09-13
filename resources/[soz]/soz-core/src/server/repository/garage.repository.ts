@@ -3,7 +3,7 @@ import { Inject, Injectable } from '../../core/decorators/injectable';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Garage, GarageCategory, GarageType } from '../../shared/vehicle/garage';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 type DatabaseZone = {
     x: number;
@@ -15,7 +15,7 @@ type DatabaseZone = {
 };
 
 @Injectable()
-export class GarageRepository extends Repository<Record<string, Garage>> {
+export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 

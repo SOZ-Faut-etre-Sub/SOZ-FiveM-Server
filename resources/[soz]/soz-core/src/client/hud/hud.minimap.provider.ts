@@ -9,7 +9,7 @@ import { Minimap } from '../../shared/hud';
 import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { NuiDispatch } from '../nui/nui.dispatch';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 
 @Provider()
 export class HudMinimapProvider {

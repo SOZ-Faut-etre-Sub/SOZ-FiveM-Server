@@ -18,7 +18,7 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
-import { FuelStationRepository } from '../resources/fuel.station.repository';
+import { FuelStationRepository } from '../repository/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';

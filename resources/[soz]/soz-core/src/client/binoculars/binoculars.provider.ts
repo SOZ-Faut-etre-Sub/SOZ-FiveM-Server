@@ -1,4 +1,4 @@
-import { ResourceLoader } from '@public/client/resources/resource.loader';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { ClientEvent } from '@public/shared/event';
 
 import { OnEvent } from '../../core/decorators/event';

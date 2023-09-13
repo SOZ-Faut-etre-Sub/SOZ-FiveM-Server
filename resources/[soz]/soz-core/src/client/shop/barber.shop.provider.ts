@@ -13,7 +13,7 @@ import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 
 @Provider()
 export class BarberShopProvider {

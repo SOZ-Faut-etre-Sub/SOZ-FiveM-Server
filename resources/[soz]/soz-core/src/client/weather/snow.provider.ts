@@ -1,7 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Weather } from '../../shared/weather';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 import { StateSelector, Store } from '../store/store';
 
 const WEATHER_WITH_SNOW: Weather[] = ['BLIZZARD', 'SNOWLIGHT', 'SNOW'];

@@ -3,7 +3,7 @@ import { Exportable } from '@core/decorators/exports';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
-import { ResourceLoader } from '@public/client/resources/resource.loader';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { wait } from '@public/core/utils';
 import { getChunkId, getGridChunks } from '@public/shared/grid';
 import { joaat } from '@public/shared/joaat';

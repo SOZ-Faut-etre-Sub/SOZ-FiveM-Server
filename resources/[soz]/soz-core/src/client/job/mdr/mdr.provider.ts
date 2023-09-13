@@ -2,7 +2,7 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Notifier } from '@public/client/notifier';
-import { ResourceLoader } from '@public/client/resources/resource.loader';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { JobPermission, JobType } from '@public/shared/job';

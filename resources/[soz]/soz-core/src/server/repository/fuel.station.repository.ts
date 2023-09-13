@@ -4,7 +4,7 @@ import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 /**
  * "length": 22.2,
@@ -33,7 +33,7 @@ type DatabaseZone = {
 };
 
 @Injectable()
-export class FuelStationRepository extends Repository<Record<string, FuelStation>> {
+export class FuelStationRepository extends RepositoryLegacy<Record<string, FuelStation>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
