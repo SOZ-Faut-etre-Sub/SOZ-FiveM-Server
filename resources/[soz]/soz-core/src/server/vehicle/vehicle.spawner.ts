@@ -419,7 +419,7 @@ export class VehicleSpawner {
                 vehicle.position,
                 volatile,
                 condition,
-                vehicle.modification
+                vehicle.modification || getDefaultVehicleConfiguration()
             );
 
             return netId;
