@@ -5,8 +5,10 @@ import { Repository } from './repository';
 
 @Injectable(HousingRepository, Repository)
 export class HousingRepository extends Repository<RepositoryType.Housing> {
+    public type = RepositoryType.Housing;
+
     public findProperty(propertyId: number): Property | null {
-        return this.get().find(property => property.id === propertyId) ?? null;
+        return this.find(propertyId);
     }
 
     public findApartment(propertyId: number, apartmentId: number): Apartment | null {

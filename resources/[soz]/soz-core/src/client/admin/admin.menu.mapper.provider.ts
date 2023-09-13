@@ -242,7 +242,7 @@ export class AdminMenuMapperProvider {
             });
         }
 
-        return emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_UPDATE_PROPERTY_ZONE, propertyId, newZone, type);
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_UPDATE_PROPERTY_ZONE, propertyId, newZone, type);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperUpdateApartmentZone)
@@ -277,7 +277,7 @@ export class AdminMenuMapperProvider {
             });
         }
 
-        return emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_UPDATE_APARTMENT_ZONE, apartmentId, newZone, type);
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_UPDATE_APARTMENT_ZONE, apartmentId, newZone, type);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperAddApartment)

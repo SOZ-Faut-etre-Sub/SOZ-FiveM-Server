@@ -10,7 +10,6 @@ import { ClientEvent } from '../../shared/event';
 import { RepositoryType } from '../../shared/repository';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingShop, ClothingShopCategory, ClothingShopRepositoryData } from '../../shared/shop';
-import { PrismaService } from '../database/prisma.service';
 import { BillboardRepository } from './billboard.repository';
 import { ClothingShopRepository } from './cloth.shop.repository';
 import { FuelStationRepository } from './fuel.station.repository';
@@ -28,9 +27,6 @@ import { VehicleRepository } from './vehicle.repository';
 
 @Provider()
 export class RepositoryProvider {
-    @Inject(PrismaService)
-    private prismaService: PrismaService;
-
     @Inject(GarageRepository)
     private garageRepository: GarageRepository;
 
@@ -130,9 +126,9 @@ export class RepositoryProvider {
     }
 
     @Rpc(RpcServerEvent.REPOSITORY_GET_DATA_2)
-    public async getData(source: number, repositoryName: string): Promise<any> {
+    public async getData(source: number, repositoryName: string): Promise<Record<any, any>> {
         if (this.repositories[repositoryName]) {
-            return await this.legacyRepositories[repositoryName].get();
+            return await this.repositories[repositoryName].raw();
         }
 
         return null;

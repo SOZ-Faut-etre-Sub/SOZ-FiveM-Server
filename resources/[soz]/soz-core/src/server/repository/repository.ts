@@ -1,5 +1,5 @@
 import { ClientEvent } from '@public/shared/event';
-import { RepositoryConfig } from '@public/shared/repository';
+import { RepositoryConfig, RepositoryType } from '@public/shared/repository';
 
 export abstract class RepositoryLegacy<T> {
     private data: T | null;
@@ -45,7 +45,7 @@ export abstract class Repository<
     K extends keyof RepositoryConfig[T] = keyof RepositoryConfig[T],
     V extends RepositoryConfig[T][K] = RepositoryConfig[T][K]
 > {
-    public readonly type!: T;
+    public abstract type: RepositoryType;
 
     protected data: Record<K, V>;
 
@@ -87,6 +87,14 @@ export abstract class Repository<
         return this.data[id] ?? null;
     }
 
+    public async raw(): Promise<Record<K, V>> {
+        if (this.loadPromise) {
+            await this.loadPromise;
+        }
+
+        return this.data;
+    }
+
     public async get(predicate?: (value: V, index: number, array: V[]) => T): Promise<V[]> {
         if (this.loadPromise) {
             await this.loadPromise;
@@ -102,7 +110,7 @@ export abstract class Repository<
     }
 
     protected sync(key: K) {
-        TriggerClientEvent(ClientEvent.REPOSITORY_SET_DATA, this.type, key, this.data[key]);
+        TriggerClientEvent(ClientEvent.REPOSITORY_SET_DATA, -1, this.type, key, this.data[key]);
     }
 
     protected abstract load(): Promise<Record<K, V>>;
