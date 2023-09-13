@@ -46,7 +46,7 @@ export const BookApp = () => {
                 <div className="flex justify-center align-center">
                     <div className="flex pb-3 flex-row justify-between" style={{ width: '20vw' }}>
                         <button
-                            className="mt-1 cursor-pointer text-2xl text-white"
+                            className="mt-1 cursor-pointer text-4xl text-white"
                             onClick={() => {
                                 if (imageIndex > 0) {
                                     setImageIndex(imageIndex - 1);
@@ -56,7 +56,11 @@ export const BookApp = () => {
                             &#x1f844;
                         </button>
                         <button
-                            className="mt-1 cursor-pointer text-2xl text-white"
+                            className="mt-1 cursor-pointer text-8xl text-white stroke-black"
+                            style={{
+                                WebkitTextStrokeColor: 'black',
+                                WebkitTextStrokeWidth: '2px',
+                            }}
                             onClick={() => {
                                 setImageIndex(0);
                                 setBook(null);
@@ -65,7 +69,7 @@ export const BookApp = () => {
                             &#xd7;
                         </button>
                         <button
-                            className="mt-1 cursor-pointer text-2xl text-white"
+                            className="mt-1 cursor-pointer text-4xl text-white"
                             onClick={() => {
                                 if (imageIndex < book.images.length - 1) {
                                     setImageIndex(imageIndex + 1);
