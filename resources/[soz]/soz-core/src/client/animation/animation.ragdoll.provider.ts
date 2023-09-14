@@ -3,13 +3,9 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { wait } from '../../core/utils';
 import { PlayerService } from '../player/player.service';
-import { AnimationService } from './animation.service';
 
 @Provider()
 export class AnimationRagdollProvider {
-    @Inject(AnimationService)
-    private animationService: AnimationService;
-
     @Inject(PlayerService)
     private playerService: PlayerService;
 
@@ -27,6 +23,15 @@ export class AnimationRagdollProvider {
     public async toggleRagdoll() {
         if (this.ragdoll) {
             this.ragdoll = false;
+            return;
+        }
+
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        if (player.metadata && player.metadata.inside.apartment) {
             return;
         }
 
