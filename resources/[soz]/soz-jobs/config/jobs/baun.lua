@@ -3,6 +3,7 @@ BaunConfig = {}
 BaunConfig.Blips = {
     {Id = "jobs:baun:bahama", Name = "Bahama Unicorn", Icon = 806, Coords = vector2(-1393.49, -598.06), Scale = 1.2},
     {Id = "jobs:baun:unicorn", Name = "Bahama Unicorn", Icon = 806, Coords = vector2(127.57, -1288.96), Scale = 1.2},
+    {Id = "jobs:baun:yellowjack", Name = "Bahama Unicorn", Icon = 806, Coords = vector2(1987.18, 3049.03), Scale = 1.2},
 }
 
 BaunConfig.HarvestZones = {
