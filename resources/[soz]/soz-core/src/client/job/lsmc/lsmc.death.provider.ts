@@ -7,6 +7,7 @@ import { Monitor } from '@public/client/monitor/monitor';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
+import { PhoneService } from '@public/client/phone/phone.service';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerWalkstyleProvider } from '@public/client/player/player.walkstyle.provider';
@@ -133,6 +134,9 @@ export class LSMCDeathProvider {
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
+
     @Inject(Monitor)
     public monitor: Monitor;
 
@@ -258,6 +262,10 @@ export class LSMCDeathProvider {
                 isInventoryBusy: false,
             });
 
+            if (this.phoneService.isPhoneVisible()) {
+                this.phoneService.setPhoneFocus(false);
+            }
+
             const playerMetadata = this.playerService.getPlayer().metadata;
             const injuries = playerMetadata.injuries_count;
             const status =
@@ -277,7 +285,12 @@ export class LSMCDeathProvider {
                         return Ok(true);
                     }
                 )
-                .then(reasonMort => TriggerServerEvent(ServerEvent.LSMC_SET_DEATH_REASON, reasonMort));
+                .then(reasonMort => {
+                    TriggerServerEvent(ServerEvent.LSMC_SET_DEATH_REASON, reasonMort);
+                    if (this.phoneService.isPhoneVisible()) {
+                        this.phoneService.setPhoneFocus(true);
+                    }
+                });
         }
     }
 
