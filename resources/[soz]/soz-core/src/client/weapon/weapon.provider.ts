@@ -211,7 +211,7 @@ export class WeaponProvider {
             !messageExclude.includes(GetHashKey(weapon.name)) &&
             !messageExcludeGroups.includes(weaponGroup) &&
             Math.random() < 0.6 &&
-            Date.now() - this.lastPoliceCall > 120000
+            Date.now() - this.lastPoliceCall > 60000
         ) {
             const coords = GetEntityCoords(player);
 
@@ -232,15 +232,10 @@ export class WeaponProvider {
 
                 const message = getRandomItem(GunShotMessage);
 
-                TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-                    anonymous: true,
-                    number: '555-POLICE',
-                    message: `${zone}: ${message.replace('${0}', name)}`,
-                    htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
-                    position: true,
-                    info: { type: 'shooting' },
-                    overrideIdentifier: 'System',
-                });
+                const alertMessage = `${zone}: ${message.replace('${0}', name)}`;
+                const htmlMessage = `${zone}: ${message.replace('${0}', nameHtml)}`;
+
+                TriggerServerEvent(ServerEvent.WEAPON_SHOOTING_ALERT, alertMessage, htmlMessage, zoneID);
             }
         }
         await this.weapon.recoil();
