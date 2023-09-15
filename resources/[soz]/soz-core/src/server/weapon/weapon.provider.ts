@@ -1,4 +1,5 @@
 import { uuidv4 } from '@public/core/utils';
+import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -68,14 +69,16 @@ export class WeaponProvider {
             return;
         }
 
+        const coords = GetEntityCoords(GetPlayerPed(source)) as Vector3;
+
         TriggerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-POLICE',
             message: alertMessage,
             htmlMessage: htmlMessage,
-            position: true,
             info: { type: 'shooting' },
             overrideIdentifier: 'System',
+            pedPosition: JSON.stringify(toVector3Object(coords)),
         });
 
         this.lastAlertByZone[zoneID] = Date.now();
