@@ -115,6 +115,11 @@ export class VehicleStateProvider {
             return;
         }
 
+        if (!IsEntityAMissionEntity(vehicleEntityId)) {
+            SetEntityAsMissionEntity(vehicleEntityId, true, true);
+            SetEntityCleanupByEngine(vehicleEntityId, false);
+        }
+
         this.vehicleStateService.setVehicleState(vehicleEntityId, state, registerState);
     }
 

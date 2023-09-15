@@ -686,21 +686,23 @@ export class VehicleModificationService {
             SetVehicleLivery(vehicle, -1);
         }
 
-        for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
-            value.apply(vehicle, configuration.modification[key], configuration);
-        }
+        if (configuration.extra) {
+            for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
+                value.apply(vehicle, configuration.modification[key], configuration);
+            }
 
-        const defaultExtra = !VehNoDefaultExtra.includes(GetEntityModel(vehicle));
+            const defaultExtra = !VehNoDefaultExtra.includes(GetEntityModel(vehicle));
 
-        for (let i = 1; i < 15; i++) {
-            if (DoesExtraExist(vehicle, i)) {
-                const haxExtra = configuration.extra[i] === undefined ? true : configuration.extra[i];
+            for (let i = 1; i < 15; i++) {
+                if (DoesExtraExist(vehicle, i)) {
+                    const haxExtra = configuration.extra[i] === undefined ? true : configuration.extra[i];
 
-                if (configuration.extra[i] === undefined && !defaultExtra) {
-                    continue;
+                    if (configuration.extra[i] === undefined && !defaultExtra) {
+                        continue;
+                    }
+
+                    SetVehicleExtra(vehicle, i, !haxExtra);
                 }
-
-                SetVehicleExtra(vehicle, i, !haxExtra);
             }
         }
     }
