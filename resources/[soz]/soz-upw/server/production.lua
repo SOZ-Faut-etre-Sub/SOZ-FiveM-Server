@@ -189,7 +189,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
 
         TriggerEvent("soz-core:server:monitor:add-event", "job_upw_energy_restock", {
             item_id = item,
-            player_citizenid = Player.PlayerData.citizenid,
+            player_citizen_id = Player.PlayerData.citizenid,
         }, {
             item_label = item.label,
             quantity = 1,
@@ -210,7 +210,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
             p:resolve(success, reason)
 
             TriggerEvent("soz-core:server:monitor:add-event", "job_upw_energy_collect",
-                         {item_id = sharedItem.name, player_citizenid = Player.PlayerData.citizenid},
+                         {item_id = sharedItem.name, player_citizen_id = Player.PlayerData.citizenid},
                          {
                 item_label = sharedItem.label,
                 quantity = 1,
