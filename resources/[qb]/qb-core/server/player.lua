@@ -502,12 +502,6 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
         if not skipApply then
             TriggerClientEvent("soz-character:Client:ApplyCurrentClothConfig", self.PlayerData.source)
-            local playerState = exports['soz-core']:GetPlayerState(self.PlayerData.source)
-            if playerState ~= nil and playerState.isWearingPatientOutfit then
-                exports['soz-core']:SetPlayerState(self.PlayerData.source, {
-                    isWearingPatientOutfit = false
-                })
-            end
         end
 
         exports['soz-core']:Log('DEBUG', 'Update player cloth config ' .. json.encode(config), { player = self.PlayerData })

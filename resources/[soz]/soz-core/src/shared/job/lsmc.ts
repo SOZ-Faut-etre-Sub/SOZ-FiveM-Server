@@ -69,6 +69,7 @@ export const PatientClothes: WardrobeConfig = {
                 [Prop.RightHand]: { Clear: true },
                 [Prop.Helmet]: { Clear: true },
             },
+            GlovesID: 0,
         },
     },
     [joaat('mp_f_freemode_01')]: {
@@ -97,6 +98,7 @@ export const PatientClothes: WardrobeConfig = {
                 [Prop.RightHand]: { Clear: true },
                 [Prop.Helmet]: { Clear: true },
             },
+            GlovesID: 0,
         },
     },
 };

@@ -26,6 +26,7 @@ export const PrisonerClothes = {
             [Prop.RightHand]: { Clear: true },
             [Prop.Helmet]: { Clear: true },
         },
+        GlovesID: 0,
     },
     [GetHashKey('mp_f_freemode_01')]: {
         Components: {
@@ -48,6 +49,7 @@ export const PrisonerClothes = {
             [Prop.RightHand]: { Clear: true },
             [Prop.Helmet]: { Clear: true },
         },
+        GlovesID: 0,
     },
 };
 
