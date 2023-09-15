@@ -162,6 +162,7 @@ export class VehicleSpawnProvider {
         }
 
         SetEntityAsMissionEntity(vehicle, true, true);
+        SetEntityCleanupByEngine(vehicle, false);
 
         this.resourceLoader.unloadModel(hash);
         let attempts = 0;

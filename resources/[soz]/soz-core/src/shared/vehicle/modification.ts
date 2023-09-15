@@ -313,7 +313,7 @@ export type VehicleConfiguration = {
     customWheelFront?: boolean;
     customWheelRear?: boolean;
     modification: VehicleModification;
-    extra: Record<number, boolean>;
+    extra?: Record<number, boolean>;
 };
 
 export enum VehicleModType {

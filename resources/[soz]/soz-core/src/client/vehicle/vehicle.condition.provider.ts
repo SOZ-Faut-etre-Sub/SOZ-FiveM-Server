@@ -66,7 +66,7 @@ export class VehicleConditionProvider {
 
         this.currentVehicleCondition.set(vehicleNetworkId, condition);
 
-        this.vehicleService.applyVehicleConfiguration(entityId, configuration);
+        this.vehicleService.applyVehicleConfigurationPerformance(entityId, configuration);
         this.vehicleService.applyVehicleCondition(entityId, condition, condition);
     }
 

@@ -6,7 +6,7 @@ import { ServerEvent } from '@public/shared/event';
 
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { VehicleConfiguration } from '../../shared/vehicle/modification';
+import { VehicleConfiguration, VehicleModification } from '../../shared/vehicle/modification';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
@@ -379,6 +379,38 @@ export class VehicleService {
 
             helper.apply(vehicle, value, condition);
         }
+    }
+
+    public applyVehicleConfigurationPerformance(vehicle: number, modification: VehicleConfiguration): void {
+        const modificationPerformance = {} as VehicleModification;
+
+        if (modification.modification.engine) {
+            modificationPerformance.engine = modification.modification.engine;
+        }
+
+        if (modification.modification.brakes) {
+            modificationPerformance.brakes = modification.modification.brakes;
+        }
+
+        if (modification.modification.transmission) {
+            modificationPerformance.transmission = modification.modification.transmission;
+        }
+
+        if (modification.modification.suspension) {
+            modificationPerformance.suspension = modification.modification.suspension;
+        }
+
+        if (modification.modification.armor) {
+            modificationPerformance.armor = modification.modification.armor;
+        }
+
+        if (modification.modification.turbo) {
+            modificationPerformance.turbo = modification.modification.turbo;
+        }
+
+        this.vehicleModificationService.applyVehicleConfiguration(vehicle, {
+            modification: modificationPerformance,
+        });
     }
 
     public applyVehicleConfiguration(vehicle: number, modification: VehicleConfiguration): void {
