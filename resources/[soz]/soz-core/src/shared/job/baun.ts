@@ -53,6 +53,15 @@ export const baunCraftZones: NamedZone[] = [
         minZ: 30.82,
         maxZ: 31.22,
     },
+    {
+        name: 'baun:yellowjack:craft:1',
+        center: [1980.87, 3052.41, 47.21],
+        length: 0.6,
+        width: 0.25,
+        heading: 238.8,
+        minZ: 47.12,
+        maxZ: 47.72,
+    },
 ];
 
 export const baunCraftProcesses: BaunCraftProcess[] = [
