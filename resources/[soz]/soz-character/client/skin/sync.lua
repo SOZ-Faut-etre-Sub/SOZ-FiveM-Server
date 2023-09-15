@@ -25,6 +25,11 @@ end)
 -- Apply la configuration de vetements du joueur (données persisté)
 RegisterNetEvent("soz-character:Client:ApplyCurrentClothConfig", function()
     ApplyPlayerClothConfig(PlayerId(), PlayerData.cloth_config)
+
+    local playerState = exports["soz-core"]:GetPlayerState()
+    if playerState.isWearingPatientOutfit then
+        exports["soz-core"]:SetPlayerState({isWearingPatientOutfit = false})
+    end
 end)
 
 -- Apply le skin du joueur (données persisté)

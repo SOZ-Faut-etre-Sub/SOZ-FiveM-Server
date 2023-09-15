@@ -145,6 +145,10 @@ function MergeClothSet(base, override)
         base.Props[tostring(propId)] = Clone(prop)
     end
 
+    if override.GlovesID ~= nil then
+        base.GlovesID = override.GlovesID
+    end
+
     return base
 end
 
@@ -322,8 +326,8 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, override)
     end
 
-    if not clothConfig.Config.HideGloves and clothConfig.BaseClothSet.GlovesID ~= nil then
-        local gloves = exports["soz-core"]:GetGloves(clothConfig.BaseClothSet.GlovesID)
+    if not clothConfig.Config.HideGloves and clothSet.GlovesID ~= nil then
+        local gloves = exports["soz-core"]:GetGloves(clothSet.GlovesID)
         local currentTorsoDrawable = clothSet.Components["3"].Drawable
 
         if gloves ~= nil then

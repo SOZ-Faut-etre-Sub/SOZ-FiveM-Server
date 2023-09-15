@@ -70,6 +70,7 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, m
                 clothConfig.Config["ShowHelmet"] = true
             end
         end
+        clothConfig["JobClothSet"].GlovesID = clothes.GlovesID
     end
 
     if not merge then
