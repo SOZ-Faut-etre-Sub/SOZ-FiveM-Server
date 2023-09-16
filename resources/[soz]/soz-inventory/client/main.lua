@@ -66,7 +66,7 @@ function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
 
         if tempAmount <= 0 then
             exports["soz-core"]:DrawNotification("Cet inventaire est déjà plein", "error")
-            return amount
+            return 0
         end
 
         if maxAmount < amount then
@@ -87,7 +87,7 @@ RegisterNUICallback("transfertItem", function(data, cb)
 
     amount = getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
 
-    if (not amount) then
+    if not amount or amount == 0 then
         return
     end
 
@@ -125,7 +125,7 @@ RegisterNUICallback("sortItem", function(data, cb)
 
     amount = getAmountFromShortcutModifier(keyModifier, amount)
 
-    if (not amount) then
+    if not amount or amount == 0 then
         return
     end
 
