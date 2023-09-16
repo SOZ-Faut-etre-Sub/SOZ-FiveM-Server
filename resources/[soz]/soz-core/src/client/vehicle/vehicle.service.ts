@@ -408,9 +408,7 @@ export class VehicleService {
             modificationPerformance.turbo = modification.modification.turbo;
         }
 
-        this.vehicleModificationService.applyVehicleConfiguration(vehicle, {
-            modification: modificationPerformance,
-        });
+        this.vehicleModificationService.applyVehicleModification(vehicle, modification, modificationPerformance, true);
     }
 
     public applyVehicleConfiguration(vehicle: number, modification: VehicleConfiguration): void {
