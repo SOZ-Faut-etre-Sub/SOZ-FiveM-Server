@@ -47,6 +47,7 @@ export class PlayerProvider {
         this.playerStateService.setClientState(player.source, {
             isWearingPatientOutfit: false,
             isInventoryBusy: false,
+            isDead: player.metadata.isdead,
         });
         this.playerListStateService.handlePlayer(player, this.playerStateService.getClientState(player.source));
 
@@ -93,7 +94,7 @@ export class PlayerProvider {
 
     @Rpc(RpcServerEvent.PLAYER_GET_CLIENT_STATE)
     public getClientState(source: number, target: number | null): PlayerClientState {
-        return this.playerStateService.getClientState(target === null ? source : target);
+        return this.playerStateService.getClientState(target ?? source);
     }
 
     @Rpc(RpcServerEvent.PLAYER_GET_LIST_STATE)
