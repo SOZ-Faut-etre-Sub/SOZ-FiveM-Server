@@ -15,6 +15,9 @@ export enum RpcServerEvent {
     ADMIN_MAPPER_REMOVE_PROPERTY = 'soz-core:admin:mapper:remove-property',
     ADMIN_MAPPER_REMOVE_APARTMENT = 'soz-core:admin:mapper:remove-apartment',
 
+    ADMIN_MAPPER_ADD_ZONE = 'soz-core:admin:mapper:add-zone',
+    ADMIN_MAPPER_REMOVE_ZONE = 'soz-core:admin:mapper:remove-zone',
+
     BENNYS_GET_ORDERS = 'soz-core:server:job:bennys:get-orders',
     BENNYS_CANCEL_ORDER = 'soz-core:server:job:bennys:cancel-order',
     BENNYS_ORDER_VEHICLE = 'soz-core:server:job:bennys:order-vehicle',
