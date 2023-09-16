@@ -381,6 +381,20 @@ export class VehicleService {
         }
     }
 
+    public getClientVehicleCondition(vehicle: number, state: VehicleVolatileState): VehicleCondition {
+        const condition = {} as VehicleCondition;
+
+        for (const [key, helper] of Object.entries(VehicleConditionHelpers)) {
+            condition[key] = helper.get(vehicle, state);
+        }
+
+        return condition;
+    }
+
+    public getClientVehicleConfiguration(vehicle: number): VehicleConfiguration {
+        return this.vehicleModificationService.getVehicleConfiguration(vehicle);
+    }
+
     public applyVehicleConfigurationPerformance(vehicle: number, modification: VehicleConfiguration): void {
         const modificationPerformance = {} as VehicleModification;
 
