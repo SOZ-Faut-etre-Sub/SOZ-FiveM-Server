@@ -687,7 +687,7 @@ export class VehicleModificationService {
         }
 
         if (configuration.modification) {
-            this.applyVehicleModification(vehicle, configuration, configuration.modification);
+            this.applyVehicleModification(vehicle, configuration, configuration.modification, false, true);
         }
 
         if (configuration.extra) {
@@ -711,14 +711,17 @@ export class VehicleModificationService {
         vehicle: number,
         configuration: VehicleConfiguration,
         modification: VehicleModification,
-        setModKit = false
+        setModKit: boolean,
+        applyNull: boolean
     ): void {
         if (setModKit) {
             SetVehicleModKit(vehicle, 0);
         }
 
         for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
-            value.apply(vehicle, modification[key], configuration);
+            if (modification[key] != null || applyNull) {
+                value.apply(vehicle, modification[key], configuration);
+            }
         }
     }
 
