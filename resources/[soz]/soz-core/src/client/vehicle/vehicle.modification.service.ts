@@ -686,11 +686,11 @@ export class VehicleModificationService {
             SetVehicleLivery(vehicle, -1);
         }
 
-        if (configuration.extra) {
-            for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
-                value.apply(vehicle, configuration.modification[key], configuration);
-            }
+        if (configuration.modification) {
+            this.applyVehicleModification(vehicle, configuration, configuration.modification);
+        }
 
+        if (configuration.extra) {
             const defaultExtra = !VehNoDefaultExtra.includes(GetEntityModel(vehicle));
 
             for (let i = 1; i < 15; i++) {
@@ -704,6 +704,21 @@ export class VehicleModificationService {
                     SetVehicleExtra(vehicle, i, !haxExtra);
                 }
             }
+        }
+    }
+
+    public applyVehicleModification(
+        vehicle: number,
+        configuration: VehicleConfiguration,
+        modification: VehicleModification,
+        setModKit = false
+    ): void {
+        if (setModKit) {
+            SetVehicleModKit(vehicle, 0);
+        }
+
+        for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
+            value.apply(vehicle, modification[key], configuration);
         }
     }
 
