@@ -259,7 +259,7 @@ export class VehicleStateService {
             position,
         });
 
-        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, condition, configuration);
+        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, condition, configuration, false);
     }
 
     public switchOwner(netId, owner) {
@@ -268,8 +268,9 @@ export class VehicleStateService {
         }
 
         const state = this.state.get(netId);
+        const useExistingState = state.owner === null;
 
-        // can be null if stolen car
+        // can be null if stolen/force/open car
         if (state.owner) {
             TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER, state.owner, netId);
         }
@@ -279,7 +280,14 @@ export class VehicleStateService {
             owner,
         });
 
-        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, state.condition, state.configuration);
+        TriggerClientEvent(
+            ClientEvent.VEHICLE_CONDITION_REGISTER,
+            owner,
+            netId,
+            state.condition,
+            state.configuration,
+            useExistingState
+        );
     }
 
     public unregister(netId) {
