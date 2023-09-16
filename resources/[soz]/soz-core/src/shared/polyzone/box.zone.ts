@@ -30,6 +30,16 @@ export type LegacyHousingZone = {
     maxZ?: number;
 };
 
+export enum ZoneType {
+    NoStress = 'NoStress',
+}
+
+export type ZoneTyped = Zone<{
+    id: number;
+    type: ZoneType;
+    name: string;
+}>;
+
 export const createZoneFromLegacyData = (data: LegacyHousingZone): Zone | null => {
     if (data === null) {
         return null;

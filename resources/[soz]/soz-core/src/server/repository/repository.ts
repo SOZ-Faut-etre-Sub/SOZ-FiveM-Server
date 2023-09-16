@@ -67,7 +67,7 @@ export abstract class Repository<
     public async delete(id: K): Promise<void> {
         delete this.data[id];
 
-        TriggerClientEvent(ClientEvent.REPOSITORY_DELETE_DATA, this.type, id);
+        TriggerClientEvent(ClientEvent.REPOSITORY_DELETE_DATA, -1, this.type, id);
     }
 
     public async set(id: K, value: V): Promise<void> {

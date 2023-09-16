@@ -7,7 +7,6 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
-import { RepositoryType } from '../../shared/repository';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingShop, ClothingShopCategory, ClothingShopRepositoryData } from '../../shared/shop';
 import { BillboardRepository } from './billboard.repository';
@@ -77,13 +76,8 @@ export class RepositoryProvider {
 
     private legacyRepositories: Record<string, RepositoryLegacy<any>> = {};
 
-    private repositories: Record<RepositoryType, Repository<any>> = {} as Record<RepositoryType, Repository<any>>;
-
-    public constructor(@MultiInject(Repository) repositories: Repository<any>[]) {
-        for (const repository of repositories) {
-            this.repositories[repository.type as RepositoryType] = repository;
-        }
-    }
+    @MultiInject(Repository)
+    private repositories: Repository<any>[];
 
     @Once()
     public setup() {
@@ -109,7 +103,7 @@ export class RepositoryProvider {
             await this.legacyRepositories[repositoryName].init();
         }
 
-        for (const repository of Object.values(this.repositories)) {
+        for (const repository of this.repositories) {
             await repository.init();
         }
 
@@ -126,12 +120,14 @@ export class RepositoryProvider {
     }
 
     @Rpc(RpcServerEvent.REPOSITORY_GET_DATA_2)
-    public async getData(source: number, repositoryName: string): Promise<Record<any, any>> {
-        if (this.repositories[repositoryName]) {
-            return await this.repositories[repositoryName].raw();
+    public async getData(source: number, type: string): Promise<Record<any, any>> {
+        const repository = this.repositories.find(repository => repository.type === type);
+
+        if (!repository) {
+            return null;
         }
 
-        return null;
+        return repository.get();
     }
 
     public async refresh(repositoryName: string): Promise<any | null> {

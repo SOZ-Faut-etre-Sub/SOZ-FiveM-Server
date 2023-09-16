@@ -1,3 +1,5 @@
+import { ZoneTyped } from '@public/shared/polyzone/box.zone';
+
 import { Billboard } from './billboard';
 import { GlovesItem } from './cloth';
 import { FuelStation, UpwCharger, UpwStation } from './fuel';
@@ -26,11 +28,13 @@ export enum RepositoryType {
     StationFuel = 'stationFuel',
     StationUpw = 'stationUpw',
     Vehicle = 'vehicle',
+    Zone = 'zone',
 }
 
 export interface RepositoryConfig extends Record<RepositoryType, Record<any, any>> {
     // Implemented
     [RepositoryType.Housing]: Record<number, Property>;
+    [RepositoryType.Zone]: Record<number, ZoneTyped>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;
