@@ -2,8 +2,10 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
@@ -43,11 +45,12 @@ export class VehicleConditionProvider {
     private currentVehiclePositionForTemporaryTire: CurrentVehiclePosition | null = null;
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_REGISTER)
-    private registerVehicleCondition(
+    private async registerVehicleCondition(
         vehicleNetworkId: number,
         condition: VehicleCondition,
-        configuration: VehicleConfiguration
-    ): void {
+        configuration: VehicleConfiguration,
+        useExistingState: boolean
+    ) {
         if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
             return;
         }
@@ -64,10 +67,26 @@ export class VehicleConditionProvider {
             return;
         }
 
-        this.currentVehicleCondition.set(vehicleNetworkId, condition);
+        if (!useExistingState) {
+            this.currentVehicleCondition.set(vehicleNetworkId, condition);
+            this.vehicleService.applyVehicleConfigurationPerformance(entityId, configuration);
+            this.vehicleService.applyVehicleCondition(entityId, condition, condition);
+        } else {
+            // This is trigger when a new vehicle is registered without a spawn, like the vehicle was forced by a player
+            const state = await this.vehicleStateService.getVehicleState(entityId);
+            const currentVehicleCondition = this.vehicleService.getClientVehicleCondition(entityId, state);
+            const currentVehicleConfiguration = this.vehicleService.getClientVehicleConfiguration(entityId);
 
-        this.vehicleService.applyVehicleConfigurationPerformance(entityId, configuration);
-        this.vehicleService.applyVehicleCondition(entityId, condition, condition);
+            this.currentVehicleCondition.set(vehicleNetworkId, currentVehicleCondition);
+            TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER, vehicleNetworkId, condition);
+
+            await emitRpc<VehicleConfiguration>(
+                RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
+                vehicleNetworkId,
+                currentVehicleConfiguration,
+                currentVehicleConfiguration
+            );
+        }
     }
 
     @OnEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER)
