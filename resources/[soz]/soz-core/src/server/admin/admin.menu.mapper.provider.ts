@@ -4,15 +4,19 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Property } from '../../shared/housing/housing';
-import { Zone } from '../../shared/polyzone/box.zone';
+import { Zone, ZoneTyped } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PlayerService } from '../player/player.service';
 import { HousingRepository } from '../repository/housing.repository';
+import { ZoneRepository } from '../repository/zone.repository';
 
 @Provider()
 export class AdminMenuMapperProvider {
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
+
+    @Inject(ZoneRepository)
+    private zoneRepository: ZoneRepository;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
@@ -93,6 +97,20 @@ export class AdminMenuMapperProvider {
         await this.housingRepository.removeApartment(id);
 
         return this.housingRepository.get();
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_ADD_ZONE)
+    public async addZone(source: number, zone: Zone): Promise<ZoneTyped[]> {
+        await this.zoneRepository.addZone(zone);
+
+        return this.zoneRepository.get();
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_REMOVE_ZONE)
+    public async removeZone(source: number, id: number): Promise<ZoneTyped[]> {
+        await this.zoneRepository.removeZone(id);
+
+        return this.zoneRepository.get();
     }
 
     @Command('housekey', { role: ['staff', 'admin'], description: '/housekey propertyname apartmentname' })

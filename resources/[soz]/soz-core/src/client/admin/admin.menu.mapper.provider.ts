@@ -12,7 +12,7 @@ import { Property } from '../../shared/housing/housing';
 import { Font } from '../../shared/hud';
 import { JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
-import { BoxZone, Zone } from '../../shared/polyzone/box.zone';
+import { BoxZone, Zone, ZoneType, ZoneTyped } from '../../shared/polyzone/box.zone';
 import { toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -23,6 +23,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { NuiObjectProvider } from '../nui/nui.object.provider';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { HousingRepository } from '../repository/housing.repository';
+import { ZoneRepository } from '../repository/zone.repository';
 
 type ZoneDrawn = {
     zone: BoxZone<string>;
@@ -52,6 +53,9 @@ export class AdminMenuMapperProvider {
 
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
+
+    @Inject(ZoneRepository)
+    private zoneRepository: ZoneRepository;
 
     @Inject(NuiZoneProvider)
     private nuiZoneProvider: NuiZoneProvider;
@@ -128,6 +132,7 @@ export class AdminMenuMapperProvider {
         this.nuiMenu.openMenu(MenuType.AdminMapperMenu, {
             properties: this.housingRepository.get(),
             showInterior: this.showInteriorData,
+            zones: this.zoneRepository.get(),
         });
     }
 
@@ -538,5 +543,71 @@ export class AdminMenuMapperProvider {
         } else {
             TriggerServerEvent(ServerEvent.ADMIN_ADD_PERSISTENT_PROP, createdObject.model, event, vector4Position);
         }
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperAddZone)
+    public async addZone({ type }: { type: ZoneType }): Promise<ZoneTyped[]> {
+        const name = await this.inputService.askInput(
+            {
+                title: 'Nom de la zone',
+                defaultValue: '',
+            },
+            value => {
+                if (!value) {
+                    return Err('Le nom ne peut pas être vide');
+                }
+
+                return Ok(value);
+            }
+        );
+
+        const newZone = await this.nuiZoneProvider.askZone(null);
+
+        if (!newZone) {
+            return;
+        }
+
+        return await emitRpc<ZoneTyped[]>(RpcServerEvent.ADMIN_MAPPER_ADD_ZONE, {
+            ...newZone,
+            data: {
+                type,
+                name,
+                id: null,
+            },
+        });
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperDeleteZone)
+    public async deleteZone({ id }: { id: number }): Promise<ZoneTyped[]> {
+        return await emitRpc<ZoneTyped[]>(RpcServerEvent.ADMIN_MAPPER_REMOVE_ZONE, id);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperShowZone)
+    public async showZone({ id, show }: { id: number; show: boolean }): Promise<void> {
+        const showId = `zone-${id}`;
+
+        // Remove existing zone if any
+        this.zonesDrawn = this.zonesDrawn.filter(zoneDrawn => zoneDrawn.id !== showId);
+
+        if (!show) {
+            return;
+        }
+
+        const zone = this.zoneRepository.find(id);
+
+        if (!zone) {
+            return;
+        }
+
+        this.zonesDrawn.push({
+            zone: BoxZone.fromZone({
+                ...zone,
+                data: zone.data.name,
+            }),
+            id: showId,
+            color: COLOR_BY_TYPE.entry,
+            type: 'zone',
+            name: zone.data.name,
+        });
     }
 }
