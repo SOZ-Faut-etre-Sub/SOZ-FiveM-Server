@@ -114,7 +114,6 @@ export class PlayerStressProvider {
                 const boxZone = BoxZone.fromZone(zone);
 
                 if (boxZone.isPointInside(checkZonePosition)) {
-                    console.log('PlayerStressProvider: updateStress: point inside no stress zone');
                     return;
                 }
             }
