@@ -6,7 +6,7 @@ import { Property } from '../../../../shared/housing/housing';
 import { AdminMapperMenuData } from '../../../../shared/housing/menu';
 import { JobType } from '../../../../shared/job';
 import { MenuType } from '../../../../shared/nui/menu';
-import { Zone } from '../../../../shared/polyzone/box.zone';
+import { Zone, ZoneType, ZoneTyped } from '../../../../shared/polyzone/box.zone';
 import { fetchNui } from '../../../fetch';
 import { useJobs } from '../../../hook/job';
 import {
@@ -30,6 +30,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
     const navigate = useNavigate();
     const location = useLocation();
     const [properties, setProperties] = useState<AdminMapperMenuData['properties']>([]);
+    const [zones, setZones] = useState<AdminMapperMenuData['zones']>([]);
     const [selectedObject, setSelectedObject] = useState<string>('soz_prop_bb_bin');
     const jobs = useJobs();
     const [job, setJob] = useState<JobType | null>(null);
@@ -37,6 +38,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
 
     useEffect(() => {
         setProperties(data?.properties || []);
+        setZones(data?.zones || []);
     }, [data]);
 
     const onDrugAdminMenuOpen = () => {
@@ -70,6 +72,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     </MenuItemCheckbox>
                     <MenuItemButton onConfirm={onDrugAdminMenuOpen}>💊 Drogue</MenuItemButton>
                     <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
+                    <MenuItemSubMenuLink id="zones">🗺️ Gestion des zones</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">
@@ -366,6 +369,57 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     ))}
                 </Fragment>
             ))}
+            <SubMenu id="zones">
+                <MenuTitle banner="https://nui-img/soz/menu_mapper">
+                    Des zones, des zoneuh, oui mais des panzazones !
+                </MenuTitle>
+                <MenuContent>
+                    <MenuItemSelect
+                        title="Ajouter une zone"
+                        onConfirm={async (index, value) => {
+                            const zones = (await fetchNui(NuiEvent.AdminMenuMapperAddZone, {
+                                type: value,
+                            })) as ZoneTyped[];
+
+                            setZones(zones);
+                        }}
+                    >
+                        <MenuItemSelectOption value={ZoneType.NoStress}>No stress zone</MenuItemSelectOption>
+                    </MenuItemSelect>
+                    {zones.map(zone => (
+                        <MenuItemSelect
+                            key={`zone-${zone.data.id}`}
+                            title={zone.data.name}
+                            onConfirm={async (index, action) => {
+                                if (action === 'delete') {
+                                    const zones = (await fetchNui(NuiEvent.AdminMenuMapperDeleteZone, {
+                                        id: zone.data.id,
+                                    })) as ZoneTyped[];
+
+                                    setZones(zones);
+                                }
+
+                                if (action === 'teleport') {
+                                    fetchNui(NuiEvent.AdminMenuMapperTeleportToZone, { zone });
+                                }
+
+                                if (action === 'show') {
+                                    fetchNui(NuiEvent.AdminMenuMapperShowZone, { id: zone.data.id, show: true });
+                                }
+
+                                if (action === 'hide') {
+                                    fetchNui(NuiEvent.AdminMenuMapperShowZone, { id: zone.data.id, show: false });
+                                }
+                            }}
+                        >
+                            <MenuItemSelectOption value="teleport">Téléporter</MenuItemSelectOption>
+                            <MenuItemSelectOption value="show">Afficher</MenuItemSelectOption>
+                            <MenuItemSelectOption value="hide">Cacher</MenuItemSelectOption>
+                            <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                        </MenuItemSelect>
+                    ))}
+                </MenuContent>
+            </SubMenu>
         </Menu>
     );
 };

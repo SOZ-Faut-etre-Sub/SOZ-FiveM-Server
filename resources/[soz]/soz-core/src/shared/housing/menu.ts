@@ -1,4 +1,5 @@
 import { Property } from '@public/shared/housing/housing';
+import { ZoneTyped } from '@public/shared/polyzone/box.zone';
 
 export type HousingUpgradesMenuData = {
     currentTier: number;
@@ -9,5 +10,6 @@ export type HousingUpgradesMenuData = {
 
 export type AdminMapperMenuData = {
     properties: Property[];
+    zones: ZoneTyped[];
     showInterior: boolean;
 };

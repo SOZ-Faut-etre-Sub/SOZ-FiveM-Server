@@ -10,10 +10,12 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { Item } from '../../shared/item';
 import { PlayerData } from '../../shared/player';
+import { BoxZone, ZoneType } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
+import { ZoneRepository } from '../repository/zone.repository';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 
@@ -73,6 +75,9 @@ export class PlayerStressProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
+    @Inject(ZoneRepository)
+    private zoneRepository: ZoneRepository;
+
     private isStressUpdated = false;
     private wasDead = false;
     private wasHandcuff = false;
@@ -93,11 +98,26 @@ export class PlayerStressProvider {
         [StressLooseType.DrinkAlcohol]: null,
     };
 
-    private updateStress(type: StressLooseType): void {
+    private updateStress(type: StressLooseType, checkZonePosition: Vector3 = null): void {
         const lastUsedAt = this.lastStressTypeUsedAt[type];
 
         if (lastUsedAt !== null && GetGameTimer() - lastUsedAt < IntervalByStressLooseType[type] * 60 * 1000) {
             return;
+        }
+
+        if (checkZonePosition !== null) {
+            for (const zone of this.zoneRepository.get()) {
+                if (zone.data.type !== ZoneType.NoStress) {
+                    continue;
+                }
+
+                const boxZone = BoxZone.fromZone(zone);
+
+                if (boxZone.isPointInside(checkZonePosition)) {
+                    console.log('PlayerStressProvider: updateStress: point inside no stress zone');
+                    return;
+                }
+            }
         }
 
         const stressPoints = PointsByStressLooseType[type];
@@ -171,16 +191,14 @@ export class PlayerStressProvider {
             return;
         }
 
-        const distance = getDistance(
-            GetEntityCoords(eventEntity) as Vector3,
-            GetEntityCoords(PlayerPedId()) as Vector3
-        );
+        const playerPosition = GetEntityCoords(PlayerPedId()) as Vector3;
+        const distance = getDistance(GetEntityCoords(eventEntity) as Vector3, playerPosition);
 
         if (distance > trigger_distance) {
             return;
         }
 
-        this.updateStress(type);
+        this.updateStress(type, playerPosition);
     }
 
     @Tick(TickInterval.EVERY_SECOND)

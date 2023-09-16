@@ -6,7 +6,6 @@ import { Inject, MultiInject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { OnceLoader } from '../../core/loader/once.loader';
 import { ClientEvent } from '../../shared/event';
-import { RepositoryType } from '../../shared/repository';
 import { BillboardRepository } from './billboard.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
@@ -52,13 +51,8 @@ export class RepositoryProvider {
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
 
-    private repositories: Record<RepositoryType, Repository<any>> = {} as Record<RepositoryType, Repository<any>>;
-
-    public constructor(@MultiInject(Repository) repositories: Repository<any>[]) {
-        for (const repository of repositories) {
-            this.repositories[repository.type as RepositoryType] = repository;
-        }
-    }
+    @MultiInject(Repository)
+    private repositories: Repository<any>[];
 
     @Once(OnceStep.PlayerLoaded)
     public async onRepositoryStart() {
@@ -73,7 +67,7 @@ export class RepositoryProvider {
         await this.raceRepository.load();
         await this.billboardRepository.load();
 
-        for (const repository of Object.values(this.repositories)) {
+        for (const repository of this.repositories) {
             await repository.init();
         }
 
@@ -81,8 +75,8 @@ export class RepositoryProvider {
     }
 
     @OnEvent(ClientEvent.REPOSITORY_SET_DATA)
-    onAddData(repositoryName: string, key: any, data: any) {
-        const repository = this.repositories[repositoryName as RepositoryType];
+    onAddData(type: string, key: any, data: any) {
+        const repository = this.repositories.find(repository => repository.type === type);
 
         if (!repository) {
             return;
@@ -92,8 +86,8 @@ export class RepositoryProvider {
     }
 
     @OnEvent(ClientEvent.REPOSITORY_DELETE_DATA)
-    onDeleteData(repositoryName: string, key: any) {
-        const repository = this.repositories[repositoryName as RepositoryType];
+    onDeleteData(type: string, key: any) {
+        const repository = this.repositories.find(repository => repository.type === type);
 
         if (!repository) {
             return;
