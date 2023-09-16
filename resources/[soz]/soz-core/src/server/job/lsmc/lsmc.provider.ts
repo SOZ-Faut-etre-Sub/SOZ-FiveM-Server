@@ -44,7 +44,7 @@ export class LSMCProvider {
             return false;
         }
 
-        if (this.playerInjuryProvider.hasMaxInjuries(target)) {
+        if (this.playerInjuryProvider.remainingForcedITT(target) > 0) {
             return false;
         }
 

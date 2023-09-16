@@ -172,7 +172,7 @@ export class RaceProvider {
     }
 
     @Tick(TickInterval.EVERY_FRAME, 'race-display')
-    public displayLoop() {
+    public raceDisplayLoop() {
         const races = this.raceRepository.get();
         for (const race of Object.values(races)) {
             if (!race.display) {
