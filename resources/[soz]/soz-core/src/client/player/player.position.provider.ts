@@ -28,7 +28,7 @@ export class PlayerPositionProvider {
 
         DoScreenFadeOut(this.fadeDelay);
         await wait(this.fadeDelay);
-        this.weaponDrawingProvider.undrawWeapons();
+        await this.weaponDrawingProvider.undrawWeapons();
 
         FreezeEntityPosition(playerPed, true);
 
@@ -39,11 +39,12 @@ export class PlayerPositionProvider {
             await wait(1);
         }
 
-        FreezeEntityPosition(playerPed, false);
+        await wait(1000);
 
-        await wait(this.fadeDelay);
+        FreezeEntityPosition(playerPed, false);
 
         this.weaponDrawingProvider.drawWeapons();
         DoScreenFadeIn(this.fadeDelay);
+        await wait(this.fadeDelay);
     }
 }
