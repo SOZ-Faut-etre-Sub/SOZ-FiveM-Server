@@ -23,6 +23,8 @@ function restock(data)
             else
                 if reason == "missing_ingredient" then
                     exports["soz-core"]:DrawNotification(finished_message)
+                elseif reason == "invalid_weight" then
+                    exports["soz-core"]:DrawNotification("Le stockage est plein... ", "error")
                 else
                     exports["soz-core"]:DrawNotification(string.format("Une erreur est survenue: %s.", reason), "error")
                 end
