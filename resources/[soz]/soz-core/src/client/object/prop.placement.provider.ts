@@ -12,10 +12,12 @@ import {
     PropCollection,
     PropCollectionData,
     PropServerData,
+    PropState,
     SpawedWorlPlacedProp,
     SpawnedCollection,
     WorldPlacedProp,
 } from '@public/shared/object';
+import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { Err, Ok } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -24,6 +26,8 @@ import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { ProgressService } from '../progress.service';
+import { CircularCameraProvider } from './circular.camera.provider';
 import { PropHighlightProvider } from './prop.highlight.provider';
 import { PropProvider } from './prop.provider';
 
@@ -36,7 +40,10 @@ type EditorState = {
     isMouseSelectionOn: boolean;
     isPipetteOn: boolean;
     snapMode?: boolean;
+    previousPosition?: Vector3;
 };
+
+export const PROP_MAX_DISTANCE = 50.0;
 
 @Provider()
 export class PropPlacementProvider {
@@ -61,6 +68,12 @@ export class PropPlacementProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(CircularCameraProvider)
+    private circularCamera: CircularCameraProvider;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
+
     private editorState: EditorState = null;
 
     @Once(OnceStep.Start)
@@ -75,9 +88,7 @@ export class PropPlacementProvider {
     @OnEvent(ClientEvent.PROP_OPEN_MENU)
     public async openPlacementMenu() {
         if (this.menu.getOpened() === MenuType.PropPlacementMenu) {
-            await this.onLeaveEditorMode();
-            await this.onReturnToMainMenu();
-            this.editorState = null;
+            await this.doCloseEditor();
             this.menu.closeMenu();
             return;
         }
@@ -110,6 +121,20 @@ export class PropPlacementProvider {
         if (menuType !== MenuType.PropPlacementMenu) {
             return;
         }
+        await this.doCloseEditor();
+    }
+
+    @OnEvent(ClientEvent.PROP_ON_GRID_CHANGE)
+    public async onGridChange() {
+        if (!this.editorState) {
+            return;
+        }
+        this.notifier.notify('Changement de zone, fermeture du menu...', 'warning');
+        await this.doCloseEditor();
+        this.menu.closeMenu();
+    }
+
+    public async doCloseEditor() {
         await this.onLeaveEditorMode();
         await this.onReturnToMainMenu();
         this.editorState = null;
@@ -117,8 +142,8 @@ export class PropPlacementProvider {
 
     @OnNuiEvent(NuiEvent.PropPlacementReturnToMainMenu)
     public async onReturnToMainMenu() {
-        if (this.editorState.debugProp) {
-            await this.propProvider.despawnDebugProp(this.editorState.debugProp);
+        if (this.editorState.currentCollection) {
+            await this.propProvider.despawnDebugPropsOfCollection(this.editorState.currentCollection);
         }
         this.editorState = {
             debugProp: null,
@@ -130,16 +155,6 @@ export class PropPlacementProvider {
             isPipetteOn: false,
         };
         await this.highlightProvider.unhighlightAllEntities();
-    }
-
-    @OnNuiEvent(NuiEvent.PropPlacementReturnToCollection)
-    public async onReturnToCollection() {
-        if (!this.editorState || !this.editorState.currentCollection) {
-            return;
-        }
-        await this.highlightProvider.highlightEntities(
-            Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
-        );
     }
 
     @OnNuiEvent(NuiEvent.RequestCreatePropCollection)
@@ -166,10 +181,11 @@ export class PropPlacementProvider {
         if (!newCollections) {
             return;
         }
+
         for (const prop of Object.values(this.editorState.currentCollection.props)) {
             prop.loaded = false;
         }
-        await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
+        await this.propProvider.despawnDebugPropsOfCollection(this.editorState.currentCollection);
         this.editorState.currentCollection = null;
         await this.refreshPropPlacementMenuData(newCollections);
     }
@@ -201,7 +217,7 @@ export class PropPlacementProvider {
         if (!collection) {
             return null;
         }
-        this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(collection);
+        this.editorState.currentCollection = await this.propProvider.fetchCollection(collection);
         await this.highlightProvider.unhighlightAllEntities();
         await this.highlightProvider.highlightEntities(
             Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
@@ -218,8 +234,10 @@ export class PropPlacementProvider {
         if (!ped) {
             return;
         }
-
-        await this.propProvider.despawnAllDebugProps();
+        if (this.editorState.debugProp) {
+            await this.propProvider.despawnOrResetProp(this.editorState.debugProp);
+            this.editorState.debugProp = null;
+        }
 
         const coords = GetOffsetFromEntityInWorldCoords(ped, 0, 2.0, 0);
         const debugProp: WorldPlacedProp = {
@@ -231,9 +249,12 @@ export class PropPlacementProvider {
             loaded: false,
             collision: true,
         };
-        await this.propProvider.spawnDebugCollection(this.editorState.currentCollection);
-        const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true);
-        this.editorState.debugProp = { ...debugProp, entity: debugPropEntity } as SpawedWorlPlacedProp;
+        const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true, PropState.unplaced);
+        this.editorState.debugProp = {
+            ...debugProp,
+            entity: debugPropEntity,
+            state: PropState.unplaced,
+        } as SpawedWorlPlacedProp;
     }
 
     @OnNuiEvent(NuiEvent.SelectPlacedProp)
@@ -275,7 +296,7 @@ export class PropPlacementProvider {
         }
         const coords = GetOffsetFromEntityInWorldCoords(ped, 0, 2.0, 0);
         const debugProp: WorldPlacedProp = {
-            unique_id: null,
+            unique_id: uuidv4(),
             model: propToCreate.model,
             collection: null,
             position: [coords[0], coords[1], coords[2], 0],
@@ -283,15 +304,24 @@ export class PropPlacementProvider {
             loaded: false,
             collision: true,
         };
-        const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true);
-        this.editorState.debugProp = { ...debugProp, entity: debugPropEntity } as SpawedWorlPlacedProp;
+        const debugPropEntity = await this.propProvider.spawnDebugProp(debugProp, true, PropState.unplaced);
+        this.editorState.debugProp = {
+            ...debugProp,
+            entity: debugPropEntity,
+            state: PropState.unplaced,
+        } as SpawedWorlPlacedProp;
         await this.enterEditorMode();
         return Ok(true);
     }
 
-    public async enterEditorMode() {
-        EnterCursorMode();
+    public async enterEditorMode(enterCursorMode = true) {
+        if (enterCursorMode) {
+            EnterCursorMode();
+        }
+        const [x, y, z] = this.editorState.debugProp.position;
+        this.circularCamera.createCamera([x, y, z]);
         this.editorState.isEditorModeOn = true;
+        this.nuiDispatch.dispatch('placement_prop', 'EnterEditorMode');
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -307,7 +337,7 @@ export class PropPlacementProvider {
         DisableAllControlActions(0);
 
         if (this.editorState.snapMode) {
-            PlaceObjectOnGroundProperly(entity);
+            PlaceObjectOnGroundProperly_2(entity);
         }
 
         const matrixBuffer = this.propProvider.makeEntityMatrix(entity);
@@ -319,18 +349,27 @@ export class PropPlacementProvider {
                 this.propProvider.applyEntityNormalizedMatrix(entity, matrixBuffer);
             }
         }
-    }
 
-    @OnNuiEvent(NuiEvent.TogglePedMovements)
-    public async onTogglePedMovements({ value }: { value: boolean }) {
-        if (!this.editorState || !this.editorState.debugProp) {
-            return;
+        if (IsDisabledControlJustReleased(0, 24)) {
+            const entityPos = GetEntityCoords(entity, false) as Vector3;
+            const pedPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
+            const distance = getDistance(pedPosition, entityPos);
+            if (distance > PROP_MAX_DISTANCE) {
+                this.notifier.notify('Vous ne pouvez pas déplacer ce prop plus loin ! Rapprochez vous.', 'error');
+                const previousPos = this.editorState.previousPosition;
+                SetEntityCoordsNoOffset(entity, previousPos[0], previousPos[1], previousPos[2], false, false, false);
+                return;
+            }
+            this.editorState.previousPosition = entityPos;
+            this.circularCamera.updateTarget(entityPos);
         }
-        this.editorState.isEditorModeOn = value;
-        if (value) {
-            EnterCursorMode();
-        } else {
+
+        // To allow camera rotation, Cursor mode is disabled when right click is pressed
+        if (IsDisabledControlJustPressed(0, 25)) {
             LeaveCursorMode();
+        }
+        if (IsDisabledControlJustReleased(0, 25)) {
+            EnterCursorMode();
         }
     }
 
@@ -340,16 +379,23 @@ export class PropPlacementProvider {
             return;
         }
 
-        await this.propProvider.despawnAllDebugProps();
-        this.editorState.debugProp = null;
+        if (this.editorState.debugProp) {
+            this.propProvider.despawnOrResetProp(this.editorState.debugProp);
+        }
 
         if (this.editorState.currentCollection) {
-            await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
+            await this.highlightProvider.highlightEntities(
+                Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
+            );
         }
+
+        this.editorState.debugProp = null;
 
         if (!this.editorState.isEditorModeOn && !this.editorState.isMouseSelectionOn && !this.editorState.isPipetteOn) {
             return;
         }
+
+        this.circularCamera.deleteCamera();
 
         EnableAllControlActions(0);
         LeaveCursorMode();
@@ -408,15 +454,14 @@ export class PropPlacementProvider {
 
     @OnNuiEvent(NuiEvent.ValidatePlacement)
     public async validatePlacement() {
-        // If its an prop creation, the debug prop won't have an unique_id yet.
-        // If it has one, therefore it is an edit.
         if (!this.editorState || !this.editorState.debugProp || !DoesEntityExist(this.editorState.debugProp.entity)) {
             return Err(false);
         }
-        if (this.editorState.debugProp.unique_id) {
-            return await this.validateEditProp();
-        } else {
+
+        if (this.editorState.debugProp.state === PropState.unplaced) {
             return await this.validateCreateProp();
+        } else {
+            return await this.validateEditProp();
         }
     }
 
@@ -431,11 +476,27 @@ export class PropPlacementProvider {
             matrix: matrix,
         };
 
-        TriggerServerEvent(ServerEvent.PROP_REQUEST_EDIT_PROP, editedProp);
+        await this.highlightProvider.unhighlightAllEntities();
+
+        // Request edit for other clients.
+        TriggerServerEvent(ServerEvent.PROP_REQUEST_EDIT_PROP, editedProp, true);
+
+        // Edit position for my client if the prop is loaded.
+        if (debugProp.loaded) {
+            await this.propProvider.editClientSideProp(debugProp, editedProp);
+        }
+
+        // Fetch prop. Undefined if the prop is not loaded.
+        const newProp = this.propProvider.getProp(debugProp.unique_id);
+        const newEntity = newProp ? newProp.entity : debugProp.entity;
+
         this.editorState.currentCollection.props[debugProp.unique_id] = {
             ...editedProp,
-            entity: debugProp.entity,
+            entity: newEntity,
+            state: debugProp.loaded ? PropState.loaded : PropState.placed,
         };
+
+        this.highlightProvider.highlightEntities([newEntity]);
         this.editorState.debugProp = null;
         await this.onLeaveEditorMode();
 
@@ -447,7 +508,7 @@ export class PropPlacementProvider {
         const coords = GetEntityCoords(debugProp.entity, false);
         const heading = GetEntityHeading(debugProp.entity);
         const matrix = this.propProvider.makeEntityMatrix(debugProp.entity);
-        const id = uuidv4();
+        const id = debugProp.unique_id;
         const worldPlacedProp: WorldPlacedProp = {
             unique_id: id,
             model: debugProp.model,
@@ -467,6 +528,7 @@ export class PropPlacementProvider {
         this.editorState.currentCollection.props[id] = {
             ...worldPlacedProp,
             entity: debugProp.entity,
+            state: PropState.placed,
         };
         this.editorState.currentCollection.size += 1;
         this.editorState.debugProp = null;
@@ -523,7 +585,10 @@ export class PropPlacementProvider {
         }
         const prop = this.editorState.currentCollection.props[id];
 
-        this.editorState.debugProp = { ...prop };
+        this.editorState.debugProp = {
+            ...prop,
+            state: prop.loaded ? PropState.loaded : PropState.placed,
+        };
         await this.enterEditorMode();
         return Ok(true);
     }
@@ -580,8 +645,7 @@ export class PropPlacementProvider {
             if (this.editorState.isMouseSelectionOn) {
                 this.editorState.debugProp = { ...obj };
                 this.editorState.isMouseSelectionOn = false;
-                this.nuiDispatch.dispatch('placement_prop', 'EnterEditorMode');
-                this.editorState.isEditorModeOn = true;
+                await this.enterEditorMode(false);
                 return;
             }
             if (this.editorState.isPipetteOn) {
@@ -593,17 +657,27 @@ export class PropPlacementProvider {
                 this.editorState.isPipetteOn = false;
                 LeaveCursorMode();
                 await this.onChoosePropToCreate({ selectedProp });
-                this.nuiDispatch.dispatch('placement_prop', 'EnterEditorMode');
             }
         }
     }
 
     @OnNuiEvent(NuiEvent.RequestToggleCollectionLoad)
     public async requestToggleCollectionLoad({ name, value }: { name: string; value: boolean }) {
+        const { completed } = await this.progressService.progress(
+            'prop_toggle_load',
+            (value ? 'Chargement' : 'Déchargement') + ' de la collection...',
+            5000
+        );
+
+        if (!completed) {
+            return;
+        }
+
         const newCollection = await emitRpc<PropCollection>(
             RpcServerEvent.PROP_REQUEST_TOGGLE_LOAD_COLLECTION,
             name,
-            value
+            value,
+            true
         );
         if (!newCollection) {
             this.notifier.notify('Impossible de charger ou décharger la collection.', 'error');
@@ -611,24 +685,28 @@ export class PropPlacementProvider {
         }
 
         await this.highlightProvider.unhighlightAllEntities();
+        await this.propProvider.despawnAllDebugProps();
 
         if (value) {
-            await this.propProvider.despawnDebugCollection(this.editorState.currentCollection);
-
-            this.editorState.currentCollection = await this.propProvider.spawnCollection(newCollection);
+            await this.propProvider.createClientSideProp(Object.values(newCollection.props));
         } else {
-            await this.propProvider.despawnCollection(this.editorState.currentCollection);
-
-            this.editorState.currentCollection = await this.propProvider.spawnDebugCollection(newCollection);
-            await this.highlightProvider.highlightEntities(
-                Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
-            );
+            await this.propProvider.deleteClientSideProp(Object.values(newCollection.props));
         }
+
+        this.notifier.notify(`Collection ${value ? 'chargée' : 'déchargée'} !`, 'success');
+
+        if (!this.editorState || !this.editorState.currentCollection) {
+            return;
+        }
+
+        this.editorState.currentCollection = await this.propProvider.fetchCollection(newCollection);
+
+        await this.highlightProvider.highlightEntities(
+            Object.values(this.editorState.currentCollection.props).map(prop => prop.entity)
+        );
 
         const collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
         await this.refreshPropPlacementMenuData(collections, newCollection);
-
-        this.notifier.notify(`Collection ${value ? 'chargée' : 'déchargée'} !`, 'success');
     }
 
     @OnNuiEvent(NuiEvent.SearchProp)
