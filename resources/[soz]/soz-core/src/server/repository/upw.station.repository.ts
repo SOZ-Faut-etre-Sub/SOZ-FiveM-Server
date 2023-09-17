@@ -29,6 +29,7 @@ export class UpwStationRepository extends RepositoryLegacy<Record<string, UpwSta
                     max_stock: station.max_stock,
                     price: station.price,
                     stock: station.stock,
+                    job: station.job,
                 };
             } catch (e) {
                 this.logger.error('cannot load station: ', station.station, e);

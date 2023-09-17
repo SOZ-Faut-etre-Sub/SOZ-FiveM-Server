@@ -94,6 +94,7 @@ function CreateTerminalTargetScope(scope)
     local options = {
         {
             label = "Déposer l'énergie",
+            icon = "c:upw/deposer.png",
             action = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 
@@ -109,6 +110,7 @@ function CreateTerminalTargetScope(scope)
         },
         {
             label = "État d'énergie",
+            icon = "c:fuel/battery.png",
             action = function(entity)
                 local objectId = exports["soz-core"]:GetObjectIdFromEntity(entity)
 

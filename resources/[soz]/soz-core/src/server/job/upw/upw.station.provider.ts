@@ -6,7 +6,9 @@ import { PrismaService } from '@public/server/database/prisma.service';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
 import { JobService } from '@public/server/job.service';
+import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
+import { PlayerMoneyService } from '@public/server/player/player.money.service';
 import { PlayerService } from '@public/server/player/player.service';
 import { ProgressService } from '@public/server/player/progress.service';
 import { RepositoryProvider } from '@public/server/repository/repository.provider';
@@ -52,6 +54,12 @@ export class UpwStationProvider {
 
     @Inject(ObjectProvider)
     private readonly objectProvider: ObjectProvider;
+
+    @Inject(PlayerMoneyService)
+    private playerMoneyService: PlayerMoneyService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Once(OnceStep.Start)
     public async onStart() {
@@ -136,6 +144,7 @@ export class UpwStationProvider {
             return;
         }
         const newStock = Math.min(stationToRefill.stock + UPW_CHARGER_REFILL_VALUES[cell], stationToRefill.max_stock);
+
         await this.prismaService.upw_stations.update({
             where: {
                 station: station,
@@ -146,7 +155,33 @@ export class UpwStationProvider {
                 },
             },
         });
+        const restockPrice = UPW_CHARGER_REFILL_VALUES[cell] * 3;
+        if (station) {
+            await this.playerMoneyService.transfer('farm_upw', 'safe_upw', restockPrice);
+        }
+
         this.notifier.notify(source, `Charge... ~b~${newStock}/${stationToRefill.max_stock} kWh`);
+
+        const currentStation = await this.prismaService.upw_stations.findFirst({
+            where: {
+                station: station,
+            },
+        });
+
+        const item = this.inventoryManager.getFirstItemInventory(source, cell);
+        this.monitor.publish(
+            'job_upw_station_restock',
+            {
+                player_source: source,
+                item_id: item.name,
+            },
+            {
+                item_label: item.label,
+                station_position: currentStation.position,
+                station_name: currentStation.station,
+                price: restockPrice,
+            }
+        );
     }
 
     @OnEvent(ServerEvent.UPW_SET_CHARGER_PRICE)

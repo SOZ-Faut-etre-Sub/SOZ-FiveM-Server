@@ -317,7 +317,7 @@ export class VehicleFuelProvider {
             },
             {
                 icon: 'c:fuel/pistolet.png',
-                label: 'Déposer le pistolet',
+                label: 'Reposer le pistolet',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
