@@ -25,8 +25,15 @@ export type DebugProp = {
     matrix: Float32Array;
 };
 
+export const enum PropState {
+    unplaced = 0,
+    placed = 1,
+    loaded = 2,
+}
+
 export type SpawedWorlPlacedProp = WorldPlacedProp & {
     entity: number;
+    state: PropState;
 };
 
 export type PropCollectionData = {
@@ -53,5 +60,5 @@ export type PropServerData = {
 
 export type PropClientData = {
     total: number;
-    valid: number;
+    chunk: number;
 };
