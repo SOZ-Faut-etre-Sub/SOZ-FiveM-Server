@@ -86,6 +86,7 @@ model upw_stations {
   max_stock Int            @default(600)
   price     Float?         @default(0.00) @db.Float
   position  String         @db.Text
+  job       String?        @db.Text
   chargers  upw_chargers[]
 }
 

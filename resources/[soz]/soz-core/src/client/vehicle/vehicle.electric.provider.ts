@@ -186,6 +186,28 @@ export class VehicleElectricProvider {
                 item: 'energy_cell_wind',
             },
             {
+                label: "Recharger à l'énergie solaire",
+                color: JobType.Upw,
+                icon: 'c:fuel/charger.png',
+                blackoutGlobal: true,
+                blackoutJob: JobType.Upw,
+                job: JobType.Upw,
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+                    return player && player.job.onduty;
+                },
+                action: entity => {
+                    const position = GetEntityCoords(entity) as Vector3;
+                    const charger = this.upwChargerRepository.getClosestCharger(position);
+
+                    if (!charger) {
+                        return false;
+                    }
+                    this.refillStation(charger.station, 'energy_cell_solar');
+                },
+                item: 'energy_cell_solar',
+            },
+            {
                 label: 'État de la station',
                 color: JobType.Upw,
                 icon: 'c:fuel/battery.png',
@@ -217,9 +239,19 @@ export class VehicleElectricProvider {
                         return false;
                     }
 
-                    const station = this.upwChargerRepository.getStationForEntity(entity);
+                    const stationName = this.upwChargerRepository.getStationForEntity(entity);
+
+                    if (!stationName) {
+                        return false;
+                    }
+
+                    const station = this.upwChargerRepository.getStation(stationName);
 
                     if (!station) {
+                        return false;
+                    }
+
+                    if (station.job && (player.job.id !== station.job || !player.job.onduty)) {
                         return false;
                     }
 
@@ -233,7 +265,7 @@ export class VehicleElectricProvider {
             },
             {
                 icon: 'c:fuel/plug.png',
-                label: 'Déposer la prise',
+                label: 'Reposer la prise',
                 action: (entity: number) => {
                     this.toggleStationPlug(entity);
                 },

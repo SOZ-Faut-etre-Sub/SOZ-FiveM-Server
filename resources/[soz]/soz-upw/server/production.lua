@@ -187,16 +187,35 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
                          Config.Upw.Resale.EnergyCellPriceGlobal[firstItem.item.name] or 0)
         end
 
+        TriggerEvent("soz-core:server:monitor:add-event", "job_upw_energy_restock", {
+            item_id = item,
+            player_citizen_id = Player.PlayerData.citizenid,
+        }, {
+            item_label = item.label,
+            quantity = 1,
+            resale_price = Config.Upw.Resale.EnergyCellPriceGlobal[item] or 0,
+            scope = facility.scope,
+            terminal_position = facility.zone.coords,
+        }, true)
+
         p:resolve(true, nil)
     else
         local count = 1
-
+        local sharedItem = QBCore.Shared.Items[item]
         if harvestType == "waste" and identifier == "hydro1" then
             count = 3
         end
 
         exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, item, count, nil, nil, function(success, reason)
             p:resolve(success, reason)
+
+            TriggerEvent("soz-core:server:monitor:add-event", "job_upw_energy_collect",
+                         {item_id = sharedItem.name, player_citizen_id = Player.PlayerData.citizenid},
+                         {
+                item_label = sharedItem.label,
+                quantity = 1,
+                terminal_position = facility.zones.energyZone.coords,
+            }, true)
         end)
     end
 

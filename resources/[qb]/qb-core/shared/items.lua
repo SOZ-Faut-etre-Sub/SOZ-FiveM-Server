@@ -4108,6 +4108,18 @@ QBShared.Items = {
         ['description'] = '',
         ['illustrator'] = '.Smogogo & Omega'
     },
+    ['energy_cell_solar'] = {
+        ['name'] = 'energy_cell_solar',
+        ['label'] = "Cellule d'énergie solaire",
+        ['weight'] = 5000,
+        ['type'] = 'energy',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = false,
+        ['combinable'] = nil,
+        ['description'] = '',
+        ['illustrator'] = '.Smogogo & Omega'
+    },
     ['seeweed_acid'] = {
         ['name'] = 'seeweed_acid',
         ['label'] = "Acide d’algue conditionnée",

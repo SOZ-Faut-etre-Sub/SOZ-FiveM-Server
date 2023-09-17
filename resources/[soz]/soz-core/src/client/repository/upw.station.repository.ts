@@ -34,6 +34,11 @@ export class UpwChargerRepository {
                 }
 
                 const station = this.upwStation[charger.station];
+
+                if (station.job) {
+                    continue;
+                }
+
                 if (!this.blipFactory.exist('job_upw_station_' + station.id)) {
                     this.blipFactory.create('job_upw_station_' + station.id, {
                         coords: toVector4Object(station.position),
@@ -93,5 +98,9 @@ export class UpwChargerRepository {
     public updateDisplayLocation(value: boolean) {
         this.displayLocation = value;
         this.updateBlips();
+    }
+
+    public getStation(name: string): UpwStation {
+        return this.upwStation[name];
     }
 }
