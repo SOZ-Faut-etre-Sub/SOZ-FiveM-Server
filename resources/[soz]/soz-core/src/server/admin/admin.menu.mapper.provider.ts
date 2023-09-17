@@ -99,6 +99,20 @@ export class AdminMenuMapperProvider {
         return this.housingRepository.get();
     }
 
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_ADD_PROPERTY_CULLING)
+    public async addPropertyCulling(source: number, id: number, culling: number): Promise<Property[]> {
+        await this.housingRepository.addPropertyExteriorCulling(id, culling);
+
+        return this.housingRepository.get();
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_MAPPER_REMOVE_PROPERTY_CULLING)
+    public async removePropertyCulling(source: number, id: number, culling: number): Promise<Property[]> {
+        await this.housingRepository.removePropertyExteriorCulling(id, culling);
+
+        return this.housingRepository.get();
+    }
+
     @Rpc(RpcServerEvent.ADMIN_MAPPER_ADD_ZONE)
     public async addZone(source: number, zone: Zone): Promise<ZoneTyped[]> {
         await this.zoneRepository.addZone(zone);
