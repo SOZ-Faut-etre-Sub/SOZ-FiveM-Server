@@ -5,9 +5,10 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { getRandomFloat } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
-import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleCondition, VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleFuelProvider } from './vehicle.fuel.provider';
@@ -74,7 +75,12 @@ export class VehicleConditionProvider {
         } else {
             // This is trigger when a new vehicle is registered without a spawn, like the vehicle was forced by a player
             const state = await this.vehicleStateService.getVehicleState(entityId);
-            const currentVehicleCondition = this.vehicleService.getClientVehicleCondition(entityId, state);
+            const currentVehicleCondition: VehicleCondition = {
+                ...getDefaultVehicleCondition(),
+                ...this.vehicleService.getClientVehicleCondition(entityId, state),
+                oilLevel: getRandomFloat(0, 100),
+                fuelLevel: getRandomFloat(0, 100),
+            };
             const currentVehicleConfiguration = this.vehicleService.getClientVehicleConfiguration(entityId);
 
             this.currentVehicleCondition.set(vehicleNetworkId, currentVehicleCondition);
@@ -84,7 +90,9 @@ export class VehicleConditionProvider {
                 RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
                 vehicleNetworkId,
                 currentVehicleConfiguration,
-                currentVehicleConfiguration
+                currentVehicleConfiguration,
+                null,
+                false
             );
         }
     }

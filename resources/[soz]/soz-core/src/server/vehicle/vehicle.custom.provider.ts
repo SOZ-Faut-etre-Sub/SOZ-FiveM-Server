@@ -28,7 +28,8 @@ export class VehicleCustomProvider {
         vehicleNetworkId: number,
         mods: VehicleConfiguration,
         originalConfiguration: VehicleConfiguration,
-        price: number | null
+        price: number | null = null,
+        notify = true
     ) {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
@@ -59,7 +60,7 @@ export class VehicleCustomProvider {
 
         if (price) {
             this.notifier.notify(source, `Vous avez payé $${price.toFixed(0)} pour modifier votre véhicule.`);
-        } else {
+        } else if (notify) {
             this.notifier.notify(source, 'Le véhicule a été modifié');
         }
 
