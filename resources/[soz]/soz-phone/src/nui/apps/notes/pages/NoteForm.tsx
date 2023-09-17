@@ -1,5 +1,5 @@
-import { Transition } from '@headlessui/react';
-import { ChevronLeftIcon, TrashIcon } from '@heroicons/react/outline';
+import { Menu, Transition } from '@headlessui/react';
+import { CheckIcon, ChevronLeftIcon, TrashIcon } from '@heroicons/react/outline';
 import { AppContent } from '@ui/components/AppContent';
 import { AppTitle } from '@ui/components/AppTitle';
 import { Button } from '@ui/old_components/Button';
@@ -71,12 +71,31 @@ export const NoteForm: React.FC = () => {
     const NoteActions = (
         <div className="flex">
             {!isNewNote && (
-                <Button
-                    className="flex items-center w-full text-red-400 py-2 hover:text-red-500"
-                    onClick={handleDeleteNote}
-                >
-                    <TrashIcon className="mr-5 h-5 w-5" />
-                </Button>
+                <Menu>
+                    <Menu.Button className="flex items-center w-full text-red-400 py-2 hover:text-red-500">
+                        <TrashIcon className="mr-2 h-5 w-5" />
+                    </Menu.Button>
+                    <Transition
+                        enter="transition duration-100 ease-out"
+                        enterFrom="transform scale-95 opacity-0"
+                        enterTo="transform scale-100 opacity-100"
+                        leave="transition duration-75 ease-out"
+                        leaveFrom="transform scale-100 opacity-100"
+                        leaveTo="transform scale-95 opacity-0"
+                        className="absolute z-50 right-0 w-56"
+                    >
+                        <Menu.Items className="mt-2 origin-top-right bg-ios-800 bg-opacity-70 divide-y divide-gray-600 divide-opacity-50 rounded-md shadow-lg focus:outline-none">
+                            <Menu.Item>
+                                <Button
+                                    className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                    onClick={handleDeleteNote}
+                                >
+                                    <CheckIcon className="mx-3 h-5 w-5" /> Supprimer
+                                </Button>
+                            </Menu.Item>
+                        </Menu.Items>
+                    </Transition>
+                </Menu>
             )}
             <Button
                 className={cn('flex items-center w-full py-2', {
@@ -86,7 +105,7 @@ export const NoteForm: React.FC = () => {
                 disabled={watch('title')?.length <= 0}
                 onClick={isNewNote ? handleNewNote : handleUpdateNote}
             >
-                <SaveIcon className="h-5 w-5" />
+                <SaveIcon className="ml-2 h-5 w-5" />
             </Button>
         </div>
     );
