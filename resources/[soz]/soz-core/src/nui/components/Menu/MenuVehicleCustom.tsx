@@ -80,6 +80,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                 vehicleEntityId: data.vehicle,
                 originalConfiguration: data.originalConfiguration,
                 vehicleConfiguration: configuration,
+                onlyPerformance: true,
             });
         }
     }, [configuration, data]);
@@ -98,6 +99,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
             originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: configuration,
             usePricing: true,
+            onlyPerformance: true,
         });
     };
 
