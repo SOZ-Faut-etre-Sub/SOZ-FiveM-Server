@@ -278,6 +278,31 @@
       </Tuning>
     </Item>
     <Item>
+      <Name>SozHeavyDefaultStandardLatchShut</Name>
+      <Tuning>
+        <AutoOpenVolumeOffset x="0.000000" y="0.000000" z="0.000000" />
+        <Flags>DelayDoorClosingForPlayer</Flags>
+        <AutoOpenRadiusModifier value="1.000000" />
+        <AutoOpenRate value="0.500000" />
+        <AutoOpenCosineAngleBetweenThreshold value="-1.000000" />
+        <AutoOpenCloseRateTaper value="false" />
+        <UseAutoOpenTriggerBox value="false" />
+        <CustomTriggerBox value="false" />
+        <TriggerBoxMinMax>
+          <min x="0.000000" y="0.000000" z="0.000000" w="0.000000" />
+          <max x="0.000000" y="0.000000" z="0.000000" w="0.000000" />
+        </TriggerBoxMinMax>
+        <BreakableByVehicle value="false" />
+        <BreakingImpulse value="0.000000" />
+        <ShouldLatchShut value="true" />
+        <MassMultiplier value="5.000000" />
+        <WeaponImpulseMultiplier value="5.000000" />
+        <RotationLimitAngle value="0.000000" />
+        <TorqueAngularVelocityLimit value="5.000000" />
+        <StdDoorRotDir>StdDoorOpenBothDir</StdDoorRotDir>
+      </Tuning>
+    </Item>
+    <Item>
       <Name>NoRotationLimitStandardLatchShut</Name>
       <Tuning>
         <AutoOpenVolumeOffset x="0.000000" y="0.000000" z="0.000000" />
@@ -876,6 +901,31 @@
         <StdDoorRotDir>StdDoorOpenBothDir</StdDoorRotDir>
       </Tuning>
     </Item>
+    <Item>
+      <Name>SupermodGarage</Name>
+      <Tuning>
+        <AutoOpenVolumeOffset x="0" y="-1.675" z="-2.45" />
+        <Flags />
+        <AutoOpenRadiusModifier value="2.763" />
+        <AutoOpenRate value="1" />
+        <AutoOpenCosineAngleBetweenThreshold value="-1" />
+        <AutoOpenCloseRateTaper value="true" />
+        <UseAutoOpenTriggerBox value="true" />
+        <CustomTriggerBox value="false" />
+        <TriggerBoxMinMax>
+          <min x="0" y="0" z="0" />
+          <max x="0" y="0" z="0" />
+        </TriggerBoxMinMax>
+        <BreakableByVehicle value="false" />
+        <BreakingImpulse value="0" />
+        <ShouldLatchShut value="false" />
+        <MassMultiplier value="1" />
+        <WeaponImpulseMultiplier value="1" />
+        <RotationLimitAngle value="0" />
+        <TorqueAngularVelocityLimit value="5" />
+        <StdDoorRotDir>StdDoorOpenBothDir</StdDoorRotDir>
+      </Tuning>
+    </Item>
   </NamedTuningArray>
   <ModelToTuneMapping>
     <Item>
@@ -1250,7 +1300,7 @@
       <ModelName>hei_prop_station_gate</ModelName>
       <TuningName>SlidingHorizontalPoliceSPVehiclesAndMPPlayerPeds</TuningName>
     </Item>
-    <!--Custom SOZ-->
+    <!--  LSMC  -->
     <Item>
       <ModelName>soz_lsmc_firewoodwide</ModelName>
       <TuningName>DefaultStandardLatchShut</TuningName>
@@ -1264,12 +1314,87 @@
       <TuningName>DefaultStandardLatchShut</TuningName>
     </Item>
     <Item>
+      <ModelName>v_ilev_ra_door1_l</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>v_ilev_ra_door1_r</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+
+    <!--  MTP -->
+    <Item>
       <ModelName>soz_mtp_room02_garagedoor</ModelName>
-      <TuningName>DefaultGarage</TuningName>
+      <TuningName>SupermodGarage</TuningName>
     </Item>
     <Item>
       <ModelName>soz_mtp_room02_garagedoor01</ModelName>
-      <TuningName>DefaultGarage</TuningName>
+      <TuningName>SupermodGarage</TuningName>
+    </Item>
+    <Item>
+      <ModelName>v_ilev_cd_door2</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>soz_mtp_door</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>soz_mtp_door02</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>soz_mtp_door03</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <!--  UPW -->
+    <Item>
+      <ModelName>soz_upw_door</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>v_ilev_cm_door1</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <!-- Bahama -->
+    <Item>
+      <ModelName>soz_bahamasdoor</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <!--  Stonk -->
+    <Item>
+      <ModelName>u_vaultdoor</ModelName>
+      <TuningName>SozHeavyDefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>u_maindor</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>v_ilev_ph_gendoor004</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>v_ilev_gtdoor</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>ba_prop_door_club_trad_wc</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <!--  Electric Conc -->
+    <Item>
+      <ModelName>v_ilev_csr_door_l</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>v_ilev_csr_door_r</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <!--  Marina  -->
+    <Item>
+      <ModelName>ex_prop_exec_office_door01</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
     </Item>
   </ModelToTuneMapping>
 </CDoorTuningFile>
