@@ -107,7 +107,7 @@ function Account.Create(id, label, accountType, owner, money, marked_money, coor
         if string.find(self.id, "safe_") == nil then
             self.id = "safe_" .. self.id
         end
-        self.max = 600000
+        self.max = 900000
     end
 
     if self.type == "house_safe" then
