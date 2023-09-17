@@ -610,4 +610,40 @@ export class AdminMenuMapperProvider {
             name: zone.data.name,
         });
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperAddPropertyCulling)
+    public async addPropertyCulling({ propertyId }: { propertyId: number }): Promise<Property[]> {
+        const cullingString = await this.inputService.askInput(
+            {
+                title: 'Hash du batiment',
+                defaultValue: '',
+            },
+            value => {
+                if (!value) {
+                    return Err('Le hash ne peut pas être vide');
+                }
+
+                return Ok(value);
+            }
+        );
+
+        const culling = Number(cullingString);
+
+        if (isNaN(culling) || culling === 0) {
+            return this.housingRepository.get();
+        }
+
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_ADD_PROPERTY_CULLING, propertyId, culling);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperRemovePropertyCulling)
+    public async removePropertyCulling({
+        propertyId,
+        culling,
+    }: {
+        propertyId: number;
+        culling: number;
+    }): Promise<Property[]> {
+        return await emitRpc<Property[]>(RpcServerEvent.ADMIN_MAPPER_REMOVE_PROPERTY_CULLING, propertyId, culling);
+    }
 }

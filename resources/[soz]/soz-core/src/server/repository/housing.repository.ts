@@ -46,6 +46,48 @@ export class HousingRepository extends Repository<RepositoryType.Housing> {
         };
     }
 
+    public async addPropertyExteriorCulling(propertyId: number, culling: number): Promise<void> {
+        const property = await this.find(propertyId);
+
+        if (!property) {
+            return;
+        }
+
+        await this.prismaService.housing_property.update({
+            where: {
+                id: propertyId,
+            },
+            data: {
+                exterior_culling: JSON.stringify([...property.exteriorCulling, culling]),
+            },
+        });
+
+        this.data[propertyId].exteriorCulling.push(culling);
+        this.sync(propertyId);
+    }
+
+    public async removePropertyExteriorCulling(propertyId: number, culling: number): Promise<void> {
+        const property = await this.find(propertyId);
+
+        if (!property) {
+            return;
+        }
+
+        const exteriorCulling = property.exteriorCulling.filter(c => c !== culling);
+
+        await this.prismaService.housing_property.update({
+            where: {
+                id: propertyId,
+            },
+            data: {
+                exterior_culling: JSON.stringify(exteriorCulling),
+            },
+        });
+
+        this.data[propertyId].exteriorCulling = exteriorCulling;
+        this.sync(propertyId);
+    }
+
     protected async load(): Promise<Record<string, Property>> {
         const properties = await this.prismaService.housing_property.findMany();
         const appartments = await this.prismaService.housing_apartment.findMany();

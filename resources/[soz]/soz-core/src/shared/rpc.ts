@@ -12,6 +12,8 @@ export enum RpcServerEvent {
     ADMIN_MAPPER_UPDATE_PROPERTY_ZONE = 'soz-core:admin:mapper:update-property-zone',
     ADMIN_MAPPER_ADD_APARTMENT = 'soz-core:admin:mapper:add-apartment',
     ADMIN_MAPPER_ADD_PROPERTY = 'soz-core:admin:mapper:add-property',
+    ADMIN_MAPPER_ADD_PROPERTY_CULLING = 'soz-core:admin:mapper:add-property-culling',
+    ADMIN_MAPPER_REMOVE_PROPERTY_CULLING = 'soz-core:admin:mapper:remove-property-culling',
     ADMIN_MAPPER_REMOVE_PROPERTY = 'soz-core:admin:mapper:remove-property',
     ADMIN_MAPPER_REMOVE_APARTMENT = 'soz-core:admin:mapper:remove-apartment',
 
