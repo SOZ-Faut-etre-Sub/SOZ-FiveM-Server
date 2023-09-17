@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { PlayerAnimationProvider } from './player.animation.provider';
+import { PlayerAntiFallDownProvider } from './player.antifalldown.provider';
 import { PlayerDiseaseProvider } from './player.disease.provider';
 import { PlayerEffectProvider } from './player.effect.provider';
 import { PlayerHealthProvider } from './player.health.provider';
@@ -19,6 +20,7 @@ import { ProgressProvider } from './progress.provider';
 @Module({
     providers: [
         PlayerAnimationProvider,
+        PlayerAntiFallDownProvider,
         PlayerDiseaseProvider,
         PlayerEffectProvider,
         PlayerHealthProvider,
