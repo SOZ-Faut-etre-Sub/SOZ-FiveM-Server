@@ -1,5 +1,6 @@
 import { Menu, Transition } from '@headlessui/react';
 import {
+    ChatIcon,
     PhoneIcon,
     PhoneIncomingIcon,
     PhoneMissedCallIcon,
@@ -145,7 +146,7 @@ export const DialerHistory: React.FC = () => {
                                                             navigate(`/contacts/${getIdByNumber(contactNumber)}`)
                                                         }
                                                     >
-                                                        <UserAddIcon className="mx-3 h-5 w-5" /> Éditer
+                                                        <UserAddIcon className="mx-3 h-5 w-5" /> {t('GENERIC_EDIT')}
                                                     </Button>
                                                 </Menu.Item>
                                             )}
@@ -154,7 +155,7 @@ export const DialerHistory: React.FC = () => {
                                                     className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                                     onClick={() => navigate(`/messages/new/${contactNumber}`)}
                                                 >
-                                                    <PhoneIcon className="mx-3 h-5 w-5" /> Message
+                                                    <ChatIcon className="mx-3 h-5 w-5" /> {t('GENERIC_MESSAGE')}
                                                 </Button>
                                             </Menu.Item>
                                         </Menu.Items>
