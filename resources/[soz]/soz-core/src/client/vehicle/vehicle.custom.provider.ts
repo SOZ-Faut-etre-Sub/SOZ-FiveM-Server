@@ -18,20 +18,12 @@ import {
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
-import { PlayerService } from '../player/player.service';
 import { VehicleRepository } from '../repository/vehicle.repository';
-import { TargetFactory } from '../target/target.factory';
 import { VehicleModificationService } from './vehicle.modification.service';
 import { VehicleService } from './vehicle.service';
 
 @Provider()
 export class VehicleCustomProvider {
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
-    @Inject(TargetFactory)
-    private targetFactory: TargetFactory;
-
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
@@ -124,10 +116,14 @@ export class VehicleCustomProvider {
             SetVehicleLights(menuData.vehicle, 0);
 
             if (menuData.originalConfiguration) {
-                this.vehicleModificationService.applyVehicleConfiguration(
-                    menuData.vehicle,
-                    menuData.originalConfiguration
-                );
+                if (menuType === MenuType.VehicleCustom) {
+                    this.vehicleService.applyVehicleConfigurationPerformance(
+                        menuData.vehicle,
+                        menuData.originalConfiguration
+                    );
+                } else {
+                    this.vehicleService.applyVehicleConfiguration(menuData.vehicle, menuData.originalConfiguration);
+                }
             }
         }
     }
@@ -141,13 +137,19 @@ export class VehicleCustomProvider {
         vehicleEntityId,
         vehicleConfiguration,
         originalConfiguration,
+        onlyPerformance,
     }): Promise<VehicleUpgradeOptions> {
         if (!vehicleEntityId || !vehicleConfiguration) {
             return null;
         }
 
         const diff = getVehicleConfigurationDiff(originalConfiguration, vehicleConfiguration);
-        this.vehicleModificationService.applyVehicleConfiguration(vehicleEntityId, diff);
+
+        if (onlyPerformance) {
+            this.vehicleService.applyVehicleConfigurationPerformance(vehicleEntityId, diff);
+        } else {
+            this.vehicleService.applyVehicleConfiguration(vehicleEntityId, diff);
+        }
 
         return this.vehicleModificationService.createOptions(vehicleEntityId);
     }
@@ -160,6 +162,7 @@ export class VehicleCustomProvider {
         vehicleConfiguration,
         originalConfiguration,
         usePricing,
+        onlyPerformance,
     }): Promise<void> {
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
         const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
@@ -174,7 +177,12 @@ export class VehicleCustomProvider {
             SetVehicleUndriveable(vehicleEntityId, false);
             SetVehicleLights(vehicleEntityId, 0);
 
-            this.vehicleService.applyVehicleConfiguration(vehicleEntityId, originalConfiguration);
+            if (onlyPerformance) {
+                this.vehicleService.applyVehicleConfigurationPerformance(vehicleEntityId, originalConfiguration);
+            } else {
+                this.vehicleService.applyVehicleConfiguration(vehicleEntityId, originalConfiguration);
+            }
+
             this.nuiMenu.closeMenu();
 
             return;
@@ -195,7 +203,12 @@ export class VehicleCustomProvider {
         SetVehicleUndriveable(vehicleEntityId, false);
         SetVehicleLights(vehicleEntityId, 0);
 
-        this.vehicleService.applyVehicleConfiguration(vehicleEntityId, newVehicleConfiguration);
+        if (onlyPerformance) {
+            this.vehicleService.applyVehicleConfigurationPerformance(vehicleEntityId, newVehicleConfiguration);
+        } else {
+            this.vehicleService.applyVehicleConfiguration(vehicleEntityId, newVehicleConfiguration);
+        }
+
         this.nuiMenu.closeMenu();
     }
 
