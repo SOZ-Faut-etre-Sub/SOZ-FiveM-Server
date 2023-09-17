@@ -151,7 +151,7 @@ export class PropsProvider {
     // Need to unload before deleting!
     @OnEvent(ServerEvent.PROP_REQUEST_DELETE_PROPS)
     public async deleteProps(source: number, propIds: string[]) {
-        await this.unloadProps(source, propIds);
+        await this.unloadProps(source, propIds, []);
 
         for (const propId of propIds) {
             const propCollectionName = this.collectionOfProp[propId];
@@ -191,7 +191,7 @@ export class PropsProvider {
     }
 
     @OnEvent(ServerEvent.PROP_REQUEST_EDIT_PROP)
-    public async editProp(source: number, prop: WorldPlacedProp) {
+    public async editProp(source: number, prop: WorldPlacedProp, excludeSource = false) {
         if (!prop.collection || !this.collections[prop.collection]) {
             this.notifier.notify(
                 source,
@@ -223,15 +223,18 @@ export class PropsProvider {
             },
         });
 
+        const oldProp = this.collections[prop.collection].props[prop.unique_id];
+
         this.collections[prop.collection].props[prop.unique_id] = prop;
 
-        await this.editPropToAllClients(prop.unique_id, prop);
+        const exclude = excludeSource ? [source] : [];
+        await this.editPropToAllClients(oldProp, prop, exclude);
 
         this.notifier.notify(source, `L'objet ${prop.unique_id} a été modifié`, 'success');
     }
 
     @Rpc(RpcServerEvent.PROP_REQUEST_TOGGLE_LOAD_COLLECTION)
-    public async toggleLoadCollection(source: number, collectionName: string, value: boolean) {
+    public async toggleLoadCollection(source: number, collectionName: string, value: boolean, excludeSource = false) {
         if (!this.collections[collectionName]) {
             this.notifier.notify(
                 source,
@@ -241,16 +244,17 @@ export class PropsProvider {
             return;
         }
         const keys = Object.keys(this.collections[collectionName].props);
+        const excludes = excludeSource ? [source] : [];
         if (value) {
-            await this.loadProps(source, keys);
+            await this.loadProps(source, keys, excludes);
         } else {
-            await this.unloadProps(source, keys);
+            await this.unloadProps(source, keys, excludes);
         }
         return await this.getCollection(source, collectionName);
     }
 
     @OnEvent(ServerEvent.PROP_REQUEST_LOAD_PROPS)
-    public async loadProps(source: number, propIds: string[]) {
+    public async loadProps(source: number, propIds: string[], excludes: number[]) {
         const propsToLoad: WorldPlacedProp[] = [];
 
         for (const propId of propIds) {
@@ -275,12 +279,12 @@ export class PropsProvider {
             this.collections[propCollection].props[propId].loaded = true;
         }
 
-        await this.createPropsToAllClients(propsToLoad);
+        await this.createPropsToAllClients(propsToLoad, excludes);
     }
 
     @Rpc(RpcServerEvent.PROP_REQUEST_UNLOAD_PROPS)
-    public async unloadProps(source: number, propIds: string[]) {
-        const propIdsToUnload: string[] = [];
+    public async unloadProps(source: number, propIds: string[], excludes: number[]) {
+        const propToUnload: WorldPlacedProp[] = [];
 
         for (const propId of propIds) {
             const propCollection = this.collectionOfProp[propId];
@@ -297,14 +301,14 @@ export class PropsProvider {
                 this.notifier.notify(source, `Impossible de charger l'objet ${propId} car il n'existe pas.`, 'error');
                 continue;
             }
-            propIdsToUnload.push(prop.unique_id);
+            propToUnload.push(prop);
             if (this.collections[propCollection].props[propId].loaded) {
                 this.collections[propCollection].loaded_size--;
             }
             this.collections[propCollection].props[propId].loaded = false;
         }
 
-        await this.deletePropsToAllClients(propIdsToUnload);
+        await this.deletePropsToAllClients(propToUnload, excludes);
     }
 
     @Rpc(RpcServerEvent.PROP_GET_COLLECTIONS_DATA)
@@ -372,22 +376,13 @@ export class PropsProvider {
         this.itemService.setItemUseCallback('soz_hammer', this.onUseSozHammer.bind(this));
     }
 
-    public async createPropsToClient(source: number, props: WorldPlacedProp[]) {
-        TriggerClientEvent(ClientEvent.PROP_CREATE_CLIENTSIDE, source, props);
+    public async createPropsToAllClients(props: WorldPlacedProp[], excludes: number[] = []) {
+        TriggerClientEvent(ClientEvent.PROP_CREATE_CLIENTSIDE, -1, props, excludes);
     }
-    public async createPropsToAllClients(props: WorldPlacedProp[]) {
-        TriggerClientEvent(ClientEvent.PROP_CREATE_CLIENTSIDE, -1, props);
+    public async deletePropsToAllClients(props: WorldPlacedProp[], excludes: number[] = []) {
+        TriggerClientEvent(ClientEvent.PROP_DELETE_CLIENTSIDE, -1, props, excludes);
     }
-    public async deletePropsToClient(source: number, propIds: string[]) {
-        TriggerClientEvent(ClientEvent.PROP_DELETE_CLIENTSIDE, source, propIds);
-    }
-    public async deletePropsToAllClients(propIds: string[]) {
-        TriggerClientEvent(ClientEvent.PROP_DELETE_CLIENTSIDE, -1, propIds);
-    }
-    public async editPropToClient(source: number, propId: string, prop: WorldPlacedProp) {
-        TriggerClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, source, propId, prop);
-    }
-    public async editPropToAllClients(propId: string, prop: WorldPlacedProp) {
-        TriggerClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, -1, prop);
+    public async editPropToAllClients(oldProp: WorldPlacedProp, newProp: WorldPlacedProp, excludes: number[] = []) {
+        TriggerClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, -1, oldProp, newProp, excludes);
     }
 }
