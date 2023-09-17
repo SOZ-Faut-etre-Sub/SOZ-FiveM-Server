@@ -67,9 +67,6 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
         if (location.pathname == `/${MenuType.PropPlacementMenu}/collection`) {
             await fetchNui(NuiEvent.PropPlacementReturnToMainMenu);
         }
-        if (location.pathname == `/${MenuType.PropPlacementMenu}/collection/props`) {
-            await fetchNui(NuiEvent.PropPlacementReturnToCollection);
-        }
     });
 
     if (!player) {
@@ -95,10 +92,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
 
     const onChooseCreateProp = (selectedProp: PlacementProp | null) => {
         return async () => {
-            const result: Result<any, never> = await fetchNui(NuiEvent.ChoosePropToCreate, { selectedProp });
-            if (isOk(result)) {
-                navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
-            }
+            await fetchNui(NuiEvent.ChoosePropToCreate, { selectedProp });
         };
     };
 
@@ -108,9 +102,10 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
                     <MenuTitle>
-                        Charge du serveur : {serverData.loaded}/{serverData.total}
+                        Serveur : {serverData.loaded}/{serverData.total}
                     </MenuTitle>
-                    <MenuTitle>Charge du client : {clientData.total}</MenuTitle>
+                    <MenuTitle> Total Client : {clientData.total}</MenuTitle>
+                    <MenuTitle> Chunk Client : {clientData.chunk}</MenuTitle>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.RequestCreatePropCollection);
@@ -225,17 +220,9 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                                         await fetchNui(NuiEvent.RequestDeleteProp, { id: prop.unique_id });
                                     }
                                     if (value == 'edit') {
-                                        const result: Result<any, never> = await fetchNui(
-                                            NuiEvent.ChoosePlacedPropToEdit,
-                                            {
-                                                id: prop.unique_id,
-                                            }
-                                        );
-                                        if (isOk(result)) {
-                                            navigate(`/${MenuType.PropPlacementMenu}/editor`, {
-                                                state: { ...location.state, activeIndex: 0 },
-                                            });
-                                        }
+                                        await fetchNui(NuiEvent.ChoosePlacedPropToEdit, {
+                                            id: prop.unique_id,
+                                        });
                                     }
                                 }}
                             >
@@ -389,19 +376,12 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         🔄 Réinitialiser tout
                     </MenuItemButton>
-                    <MenuItemCheckbox
-                        checked={true}
-                        onChange={async value => {
-                            await fetchNui(NuiEvent.TogglePedMovements, { value: value });
-                        }}
-                    >
-                        Afficher la souris
-                    </MenuItemCheckbox>
                     <MenuTitle>Contrôle du mode editeur</MenuTitle>
                     <MenuItemText> Mode Translation : T</MenuItemText>
                     <MenuItemText> Mode Rotation : R</MenuItemText>
                     <MenuItemText> Mode Scale : S</MenuItemText>
                     <MenuItemText> Coordonnées locales : L</MenuItemText>
+                    <MenuItemText> Rotation Camera : Clic Droit</MenuItemText>
                 </MenuContent>
             </SubMenu>
         </Menu>
