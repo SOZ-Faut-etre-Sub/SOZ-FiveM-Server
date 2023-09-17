@@ -603,6 +603,8 @@ export enum NuiEvent {
     AdminMenuMapperAddZone = 'soz-core:nui:admin:mapper:add-zone',
     AdminMenuMapperDeleteZone = 'soz-core:nui:admin:mapper:delete-zone',
     AdminMenuMapperShowZone = 'soz-core:nui:admin:mapper:show-zone',
+    AdminMenuMapperAddPropertyCulling = 'soz-core:nui:admin:mapper:add-property-culling',
+    AdminMenuMapperRemovePropertyCulling = 'soz-core:nui:admin:mapper:remove-property-culling',
     AdminMenuPlayerHandleDiseaseOption = 'soz-core:client:admin:handle-disease-option',
     AdminMenuPlayerHandleEffectsOption = 'soz-core:client:admin:handle-effects-option',
     AdminMenuPlayerHandleHealthOption = 'soz-core:client:admin:handle-health-option',
