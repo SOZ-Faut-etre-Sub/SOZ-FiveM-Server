@@ -206,6 +206,37 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                             >
                                 ➕ Ajouter un appartement
                             </MenuItemButton>
+                            <MenuItemSelect
+                                title="🏢 Cullings"
+                                onConfirm={async (index, identifier) => {
+                                    if (identifier === 'add') {
+                                        const properties = await fetchNui<any, Property[]>(
+                                            NuiEvent.AdminMenuMapperAddPropertyCulling,
+                                            { propertyId: property.id }
+                                        );
+
+                                        setProperties(properties);
+                                    } else {
+                                        const culling = Number(identifier);
+
+                                        const properties = await fetchNui<any, Property[]>(
+                                            NuiEvent.AdminMenuMapperRemovePropertyCulling,
+                                            { propertyId: property.id, culling }
+                                        );
+
+                                        setProperties(properties);
+                                    }
+                                }}
+                            >
+                                <MenuItemSelectOption key="add" helper="Ajouter" value="add">
+                                    Ajouter un culling
+                                </MenuItemSelectOption>
+                                {property.exteriorCulling.map(culling => (
+                                    <MenuItemSelectOption key={culling} helper={`Supprimer ${culling}`} value={culling}>
+                                        Supprimer "{culling}"
+                                    </MenuItemSelectOption>
+                                ))}
+                            </MenuItemSelect>
                             <MenuItemButton
                                 onConfirm={async () => {
                                     const properties = await fetchNui<any, Property[]>(
