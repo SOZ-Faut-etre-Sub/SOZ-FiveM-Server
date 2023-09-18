@@ -1396,5 +1396,9 @@
       <ModelName>ex_prop_exec_office_door01</ModelName>
       <TuningName>DefaultStandardLatchShut</TuningName>
     </Item>
+    <Item>
+      <ModelName>lr_prop_supermod_door_01</ModelName>
+      <TuningName>SupermodGarage</TuningName>
+    </Item>
   </ModelToTuneMapping>
 </CDoorTuningFile>
