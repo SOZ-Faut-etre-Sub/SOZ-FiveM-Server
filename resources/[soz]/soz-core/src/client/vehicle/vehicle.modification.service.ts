@@ -687,7 +687,7 @@ export class VehicleModificationService {
         }
 
         if (configuration.modification) {
-            this.applyVehicleModification(vehicle, configuration, configuration.modification, false, true);
+            this.applyVehicleModification(vehicle, configuration, configuration.modification, false, null);
         }
 
         if (configuration.extra) {
@@ -712,16 +712,20 @@ export class VehicleModificationService {
         configuration: VehicleConfiguration,
         modification: VehicleModification,
         setModKit: boolean,
-        applyNull: boolean
+        properties: null | (keyof VehicleModification)[]
     ): void {
         if (setModKit) {
             SetVehicleModKit(vehicle, 0);
         }
 
-        for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
-            if (modification[key] != null || applyNull) {
-                value.apply(vehicle, modification[key], configuration);
-            }
+        if (!properties || properties.length === 0) {
+            properties = Object.keys(VehicleModificationHelpers) as (keyof VehicleModification)[];
+        }
+
+        for (const key of properties) {
+            const value = VehicleModificationHelpers[key];
+
+            value.apply(vehicle, modification[key], configuration);
         }
     }
 
