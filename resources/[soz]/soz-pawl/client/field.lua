@@ -39,8 +39,24 @@ local function TreeInteraction(identifier, position)
             },
             {
                 color = "pawl",
+                label = "Tronçonner",
+                icon = "c:pawl/harvest-chainsaw.png",
+                event = "pawl:client:checkChainsawFuel",
+                item = Config.FastHarvest.RequiredWeapon,
+                canInteract = function()
+                    return not harvesting and PlayerData.job.onduty
+                end,
+                job = "pawl",
+                blackoutGlobal = true,
+                blackoutJob = "pawl",
+                --- metadata
+                identifier = identifier,
+                position = position,
+            },
+            {
+                color = "pawl",
                 label = "Récolter la sève",
-                icon = "c:pawl/harvest.png",
+                icon = "c:pawl/harvest-sap.png",
                 event = "pawl:client:harvestTreeSap",
                 item = Config.Harvest.RequiredWeapon,
                 canInteract = function()
@@ -61,7 +77,7 @@ local function TreeInteraction(identifier, position)
             {
                 color = "crimi",
                 label = "Récolter des champignons",
-                icon = "c:pawl/harvest.png",
+                icon = "c:pawl/harvest-mushroom.png",
                 event = "soz-core:client:drugs:harvest-champi",
                 position = position,
                 canInteract = function()
@@ -110,6 +126,56 @@ RegisterNetEvent("pawl:client:harvestTree", function(data)
     end
 
     TriggerEvent("soz-core:client:weapon:use-weapon-name", Config.Harvest.RequiredWeapon)
+    harvesting = false
+end)
+
+local createChainsawThread = function()
+    CreateThread(function()
+        while harvesting do
+            TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 2, "pawl/chainsaw", 6000);
+            Wait(7000)
+        end
+    end)
+end
+
+RegisterNetEvent("pawl:client:checkChainsawFuel", function()
+    TriggerEvent("soz-core:client:job:pawl:fast-harvest-tree");
+end)
+
+RegisterNetEvent("pawl:client:fastHarvestTree", function(data)
+    harvesting = true
+    local ped = PlayerPedId()
+    Wait(500)
+
+    exports["soz-core"]:DrawNotification("Vous êtes en train de ~g~tronçonner l'arbre~s~.")
+
+    createChainsawThread()
+
+    local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous tronçonnez...", Config.FastHarvest.Duration, false, true,
+                                                        {disableMovement = true, disableCombat = true}, {
+        animDict = "anim@amb@business@cfm@cfm_cut_sheets@",
+        anim = "load_and_tune_guilotine_v1_billcutter",
+        flags = 17,
+    }, {
+        bone = 28422,
+        model = "prop_tool_consaw",
+        coords = {x = 0.12, y = 0.02, z = 0.0001},
+        rotation = {x = 90.0, y = 180.0, z = -40.0},
+    }, {})
+
+    if success then
+        local cutTree = QBCore.Functions.TriggerRpc("pawl:server:harvestTree", data.identifier, data.position)
+        if cutTree then
+            table.insert(Config.Field.List[data.identifier], GetGameTimer())
+
+            local treeKey = ConcatPosition(data.position)
+            SapHarvestedTrees[treeKey] = nil
+
+            exports["soz-core"]:DrawNotification("Vous avez ~g~tronçonné~s~ l’arbre.")
+        else
+            exports["soz-core"]:DrawNotification("Vous avez ~r~raté~s~ la découpe de l’arbre.")
+        end
+    end
     harvesting = false
 end)
 

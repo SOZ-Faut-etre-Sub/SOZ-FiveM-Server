@@ -92,6 +92,7 @@ export type InventoryItemMetadata = {
     crafted?: boolean;
     crateElements?: MealMetadata[];
     bait?: BaitMetadata;
+    fuel?: number;
     weight?: number;
     length?:number;
 };
