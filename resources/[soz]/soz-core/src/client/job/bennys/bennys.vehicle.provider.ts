@@ -1,4 +1,4 @@
-import { JobPermission, JobType } from '@public/shared/job';
+import { JobType } from '@public/shared/job';
 import { isVehicleModelElectric, isVehicleModelTrailer } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
@@ -21,7 +21,6 @@ import { TargetFactory } from '../../target/target.factory';
 import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
 import { VehicleService } from '../../vehicle/vehicle.service';
 import { VehicleStateService } from '../../vehicle/vehicle.state.service';
-import { JobService } from '../job.service';
 
 @Provider()
 export class BennysVehicleProvider {
@@ -54,9 +53,6 @@ export class BennysVehicleProvider {
 
     @Inject(PhoneService)
     private phoneService: PhoneService;
-
-    @Inject(JobService)
-    private jobService: JobService;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
@@ -103,58 +99,6 @@ export class BennysVehicleProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public setupBennysJob() {
-        const dutyTargets = [
-            {
-                icon: 'fas fa-sign-in-alt',
-                label: 'Prendre son service',
-                action: () => {
-                    TriggerServerEvent('QBCore:ToggleDuty');
-                },
-                canInteract: () => {
-                    return !this.playerService.isOnDuty();
-                },
-                job: JobType.Bennys,
-            },
-            {
-                icon: 'fas fa-sign-in-alt',
-                label: 'Finir son service',
-                action: () => {
-                    TriggerServerEvent('QBCore:ToggleDuty');
-                },
-                canInteract: () => {
-                    return this.playerService.isOnDuty();
-                },
-                job: JobType.Bennys,
-            },
-            {
-                icon: 'fas fa-users',
-                label: 'Employé(e)s en service',
-                action: () => {
-                    TriggerServerEvent('QBCore:GetEmployOnDuty');
-                },
-                canInteract: () => {
-                    const player = this.playerService.getPlayer();
-                    return (
-                        this.playerService.isOnDuty() &&
-                        this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                    );
-                },
-                job: JobType.Bennys,
-            },
-        ];
-
-        this.targetFactory.createForModel(-1830645735, dutyTargets);
-
-        this.targetFactory.createForBoxZone(
-            'bennys_duty_north',
-            new BoxZone([1908.09, 3090.02, 46.93], 2.8, 0.8, {
-                heading: 330.0,
-                minZ: 45.93,
-                maxZ: 46.932,
-            }),
-            dutyTargets
-        );
-
         this.targetFactory.createForAllVehicle([
             {
                 icon: 'c:mechanic/repair_engine.png',

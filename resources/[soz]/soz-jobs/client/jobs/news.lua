@@ -3,112 +3,112 @@ local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_li
 
 --- Targets
 CreateThread(function()
-    exports["qb-target"]:AddBoxZone("news:duty", vector3(-587.75, -934.67, 23.82), 0.4, 0.8, {
-        name = "news:duty",
-        heading = 32,
-        minZ = 23.72,
-        maxZ = 24.32,
-    }, {options = SozJobCore.Functions.GetDutyActions("news"), distance = 2.5})
+    --exports["qb-target"]:AddBoxZone("news:duty", vector3(-587.75, -934.67, 23.82), 0.4, 0.8, {
+    --    name = "news:duty",
+    --    heading = 32,
+    --    minZ = 23.72,
+    --    maxZ = 24.32,
+    --}, {options = SozJobCore.Functions.GetDutyActions("news"), distance = 2.5})
 
-    exports["qb-target"]:AddTargetModel(removalObject, {
-        options = {
-            {
-                label = "Récupérer",
-                color = "news",
-                icon = "c:jobs/recuperer.png",
-                event = "job:client:RemoveObject",
-                job = "news",
-                collect = true,
-            },
-        },
-        distance = 2.5,
-    })
+    --exports["qb-target"]:AddTargetModel(removalObject, {
+    --    options = {
+    --        {
+    --            label = "Récupérer",
+    --            color = "news",
+    --            icon = "c:jobs/recuperer.png",
+    --            event = "job:client:RemoveObject",
+    --            job = "news",
+    --            collect = true,
+    --        },
+    --    },
+    --    distance = 2.5,
+    --})
 
-    exports["qb-target"]:AddBoxZone("jobs:news:farm", vector3(-564.09, -917.33, 33.34), 1, 1, {
-        name = "jobs:news:sell",
-        minZ = 32.34,
-        maxZ = 33.5,
-    }, {
-        options = {
-            {
-                label = "Imprimer",
-                color = "news",
-                icon = "c:news/imprimer.png",
-                event = "jobs:client:news:farmNewspaper",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-                job = "news",
-            },
-        },
-        distance = 2.5,
-    })
+    --exports["qb-target"]:AddBoxZone("jobs:news:farm", vector3(-564.09, -917.33, 33.34), 1, 1, {
+    --    name = "jobs:news:sell",
+    --    minZ = 32.34,
+    --    maxZ = 33.5,
+    --}, {
+    --    options = {
+    --        {
+    --            label = "Imprimer",
+    --            color = "news",
+    --            icon = "c:news/imprimer.png",
+    --            event = "jobs:client:news:farmNewspaper",
+    --            canInteract = function()
+    --                return PlayerData.job.onduty
+    --            end,
+    --            job = "news",
+    --        },
+    --    },
+    --    distance = 2.5,
+    --})
 end)
 
-RegisterNetEvent("jobs:client:news:SellNewspaper", function()
-    if QBCore.Functions.GetBlip("jobs:news:sell") ~= false then
-        QBCore.Functions.RemoveBlip("jobs:news:sell")
-        exports["qb-target"]:RemoveZone("jobs:news:sell")
-        exports["soz-core"]:DrawNotification("Tu as annulé la livraison.", "info")
-        return
-    end
+--RegisterNetEvent("jobs:client:news:SellNewspaper", function()
+--    if QBCore.Functions.GetBlip("jobs:news:sell") ~= false then
+--        QBCore.Functions.RemoveBlip("jobs:news:sell")
+--        exports["qb-target"]:RemoveZone("jobs:news:sell")
+--        exports["soz-core"]:DrawNotification("Tu as annulé la livraison.", "info")
+--        return
+--    end
+--
+--    local delivery = NewsConfig.Deliveries[math.random(#NewsConfig.Deliveries)]
+--
+--    exports["qb-target"]:AddBoxZone("jobs:news:sell", delivery, 1.0, 1.0,
+--                                    {
+--        name = "jobs:news:sell",
+--        heading = delivery.w,
+--        minZ = delivery.z - 1.5,
+--        maxZ = delivery.z + 1.5,
+--    }, {
+--        options = {
+--            {
+--                label = "Livrer",
+--                color = "news",
+--                icon = "c:news/livrer.png",
+--                event = "jobs:client:news:newspaperSold",
+--                canInteract = function()
+--                    return PlayerData.job.onduty
+--                end,
+--                job = "news",
+--            },
+--        },
+--        distance = 2.5,
+--    })
+--
+--    QBCore.Functions.CreateBlip("jobs:news:sell", {name = "Point de livraison", coords = delivery, route = true})
+--
+--    exports["soz-core"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
+--end)
 
-    local delivery = NewsConfig.Deliveries[math.random(#NewsConfig.Deliveries)]
+--RegisterNetEvent("jobs:client:news:newspaperSold", function()
+--    QBCore.Functions.Progressbar("sellNewspaper", "Vente de journaux", 2000, false, false,
+--                                 {
+--        disableMovement = true,
+--        disableCarMovement = true,
+--        disableMouse = false,
+--        disableCombat = true,
+--    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function()
+--        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+--        TriggerServerEvent("jobs:server:news:newspaperSold")
+--        exports["qb-target"]:RemoveZone("jobs:news:sell")
+--        QBCore.Functions.RemoveBlip("jobs:news:sell")
+--    end)
+--end)
 
-    exports["qb-target"]:AddBoxZone("jobs:news:sell", delivery, 1.0, 1.0,
-                                    {
-        name = "jobs:news:sell",
-        heading = delivery.w,
-        minZ = delivery.z - 1.5,
-        maxZ = delivery.z + 1.5,
-    }, {
-        options = {
-            {
-                label = "Livrer",
-                color = "news",
-                icon = "c:news/livrer.png",
-                event = "jobs:client:news:newspaperSold",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-                job = "news",
-            },
-        },
-        distance = 2.5,
-    })
-
-    QBCore.Functions.CreateBlip("jobs:news:sell", {name = "Point de livraison", coords = delivery, route = true})
-
-    exports["soz-core"]:DrawNotification("Une station a besoin de journaux. Sa position est sur ton ~y~GPS", "info")
-end)
-
-RegisterNetEvent("jobs:client:news:newspaperSold", function()
-    QBCore.Functions.Progressbar("sellNewspaper", "Vente de journaux", 2000, false, false,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function()
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
-        TriggerServerEvent("jobs:server:news:newspaperSold")
-        exports["qb-target"]:RemoveZone("jobs:news:sell")
-        QBCore.Functions.RemoveBlip("jobs:news:sell")
-    end)
-end)
-
-RegisterNetEvent("jobs:client:news:farmNewspaper", function()
-    QBCore.Functions.Progressbar("farmNewspaper", "Récupération de journaux", 10000, false, false,
-                                 {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function()
-        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
-        TriggerServerEvent("jobs:server:news:newspaperFarm")
-    end)
-end)
+--RegisterNetEvent("jobs:client:news:farmNewspaper", function()
+--    QBCore.Functions.Progressbar("farmNewspaper", "Récupération de journaux", 10000, false, false,
+--                                 {
+--        disableMovement = true,
+--        disableCarMovement = true,
+--        disableMouse = false,
+--        disableCombat = true,
+--    }, {animDict = "anim@narcotics@trash", anim = "drop_front", flags = 16}, {}, {}, function()
+--        StopAnimTask(PlayerPedId(), "anim@narcotics@trash", "drop_front", 1.0)
+--        TriggerServerEvent("jobs:server:news:newspaperFarm")
+--    end)
+--end)
 
 RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
     if societyMenu.IsOpen then

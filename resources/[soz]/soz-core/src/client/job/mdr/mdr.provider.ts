@@ -13,7 +13,6 @@ import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 import { JobPermissionService } from '../job.permission.service';
-import { JobService } from '../job.service';
 
 @Provider()
 export class MandatoryProvider {
@@ -41,9 +40,6 @@ export class MandatoryProvider {
     @Inject(JobPermissionService)
     private jobPermissionService: JobPermissionService;
 
-    @Inject(JobService)
-    private jobService: JobService;
-
     private state = {
         radar: false,
     };
@@ -51,54 +47,6 @@ export class MandatoryProvider {
     @Once(OnceStep.PlayerLoaded)
     public setupMdrJob() {
         this.createBlips();
-
-        this.targetFactory.createForBoxZone(
-            'mdr:duty',
-            {
-                center: [-553.85, -185.33, 38.22],
-                length: 1.0,
-                width: 1.0,
-                minZ: 37.22,
-                maxZ: 40.22,
-            },
-            [
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Prise de service',
-                    canInteract: () => {
-                        return !this.playerService.isOnDuty();
-                    },
-                    job: JobType.MDR,
-                },
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Fin de service',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
-                    job: JobType.MDR,
-                },
-                {
-                    icon: 'fas fa-users',
-                    label: 'Employé(e)s en service',
-                    action: () => {
-                        TriggerServerEvent('QBCore:GetEmployOnDuty');
-                    },
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-                        return (
-                            this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                        );
-                    },
-                    job: JobType.MDR,
-                },
-            ]
-        );
 
         this.targetFactory.createForBoxZone(
             'mdr:wash',
