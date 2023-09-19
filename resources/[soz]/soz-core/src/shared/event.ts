@@ -41,7 +41,6 @@ export enum ServerEvent {
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
     BASE_CHANGE_VEHICLE_SEAT = 'baseevents:changeVehicleSeat',
 
-    BAUN_CRAFT = 'soz-core:server:job:baun:craft',
     BAUN_RESELL = 'soz-core:server:job:baun:resell',
 
     BENNYS_ESTIMATE_VEHICLE = 'soz-core:server:job:bennys:estimate-vehicle',
@@ -69,7 +68,6 @@ export enum ServerEvent {
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
     FOOD_EASTER_HARVEST = 'soz-core:server:job:food:easter-harvest',
 
-    FFS_CRAFT = 'soz-core:server:job:ffs:craft',
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',

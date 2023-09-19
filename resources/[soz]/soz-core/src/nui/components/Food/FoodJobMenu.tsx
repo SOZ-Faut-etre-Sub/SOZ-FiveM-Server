@@ -73,6 +73,7 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
                     {Object.keys(data.recipes).map(category => (
                         <MenuItemSubMenuLink
                             id={`recipe_${category}`}
+                            key={`recipe_${category}`}
                         >{`Livre de recettes ${data.recipes[category].icon} ${category}`}</MenuItemSubMenuLink>
                     ))}
                     <MenuItemCheckbox
@@ -103,7 +104,7 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
                                         setCurrentRecipe(recipe);
                                     }}
                                 >
-                                    {items.find(elem => elem.name == output)?.label}
+                                    {recipe.amount}x {items.find(elem => elem.name == output)?.label}
                                 </MenuItemSelectOption>
                             ))}
                         </MenuItemSelect>

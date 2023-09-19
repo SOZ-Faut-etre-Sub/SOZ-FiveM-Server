@@ -143,7 +143,7 @@ export class CraftProvider {
 
         this.inventoryManager.addItemToInventory(source, itemId, recipe.amount);
 
-        this.notifier.notify(source, `Vous avez créé ~g~${item.label}~s~.`, 'success');
+        this.notifier.notify(source, `Vous avez confectionné ~y~${recipe.amount}~s~ ~g~${item.label}~s~.`, 'success');
 
         this.monitor.publish(
             'drug_transfrom',

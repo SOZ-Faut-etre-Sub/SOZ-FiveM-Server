@@ -1,5 +1,7 @@
 import { Feature } from '../features';
 import { JobType } from '../job';
+import { BaunCraftsLists } from '../job/baun';
+import { FFSCraftsLists } from '../job/ffs';
 import { FoodCraftsLists } from '../job/food';
 
 export type CraftCategory = {
@@ -30,4 +32,6 @@ export type CraftsList = {
 
 export const Crafts: Record<string, Record<string, CraftCategory>> = {
     [JobType.Food]: FoodCraftsLists,
+    [JobType.Baun]: BaunCraftsLists,
+    [JobType.Ffs]: FFSCraftsLists,
 };
