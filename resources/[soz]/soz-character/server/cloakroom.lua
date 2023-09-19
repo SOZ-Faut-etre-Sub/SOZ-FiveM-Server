@@ -52,7 +52,7 @@ QBCore.Functions.CreateCallback("soz-character:server:SavePlayerClothe", functio
                 Player.PlayerData.metadata.inside.apartment,
             })
             if apartment then
-                playerApartmentTier = apartment.tier
+                playerApartmentTier = apartment.tier or 0
             end
         end
         local max = Config.CloakroomUpgrades[playerApartmentTier]
