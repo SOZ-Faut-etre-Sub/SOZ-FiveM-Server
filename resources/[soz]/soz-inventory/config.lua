@@ -25,9 +25,9 @@ Config.StorageCapacity = {
     },
     ["house_fridge"] = {slot = 10, weight = 100000},
     --- Jobs PAWL
-    ["log_storage"] = {slot = 10, weight = 20000000},
-    ["plank_storage"] = {slot = 10, weight = 1000000},
-    ["sawdust_storage"] = {slot = 10, weight = 1000000},
+    ["log_storage"] = {slot = 10, weight = 40000000},
+    ["plank_storage"] = {slot = 10, weight = 2000000},
+    ["sawdust_storage"] = {slot = 10, weight = 2000000},
     ["log_processing"] = {slot = 10, weight = 400000},
     --- Jobs UPW
     ["inverter"] = {slot = 100, weight = 2000000},

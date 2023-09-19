@@ -117,6 +117,11 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         options = craftOptions,
         distance = 2.5,
     })
+    exports["qb-target"]:AddBoxZone("pawl:crafting3", vector3(-533.17, 5293.16, 74.17), 1.0, 1.8,
+                                    {name = "pawl:crafting3", heading = 179.59, minZ = 73.21, maxZ = 75.86}, {
+        options = craftOptions,
+        distance = 2.5,
+    })
 
     -- Target
     exports["qb-target"]:AddBoxZone("pawl:duty", vector3(-539.36, 5305.28, 76.37), 0.4, 1.2, {

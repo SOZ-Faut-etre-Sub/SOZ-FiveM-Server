@@ -14,7 +14,11 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             maxZ: 77.37,
         },
         targets: [],
-        products: [{ id: 'weapon_hatchet', type: 'weapon', price: 100 }],
+        products: [
+            { id: 'weapon_hatchet', type: 'weapon', price: 100 },
+            { id: 'weapon_flaregun', type: 'weapon', price: 500 },
+            { id: 'ammo_03', type: 'weapon', price: 10 },
+        ],
     },
     {
         name: 'stonk',

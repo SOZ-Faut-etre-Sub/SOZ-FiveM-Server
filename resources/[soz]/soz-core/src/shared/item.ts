@@ -209,6 +209,7 @@ export type InventoryItemMetadata = {
     weight?: number;
     length?: number;
     bait?: any;
+    fuel?: number;
     drugContract?: DrugContractInfo;
     fakeIdData?: FakeId;
 };

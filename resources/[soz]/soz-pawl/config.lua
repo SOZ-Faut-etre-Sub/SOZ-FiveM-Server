@@ -22,14 +22,22 @@ Config.Harvest = {
     SecondaryRewardItems = {{name = "sap", amount = 20}},
 }
 
+Config.FastHarvest = {
+    Duration = 15000,
+    SapDuration = 8000,
+    RequiredWeapon = "chainsaw",
+    RewardItems = {{name = "tree_trunk", amount = 1}},
+    SecondaryRewardItems = {{name = "sap", amount = 20}},
+}
+
 Config.Processing = {
     Duration = 300000,
     ProcessingStorage = "pawl_log_processing",
     ProcessingItem = "tree_trunk",
-    ProcessingAmount = 1,
+    ProcessingAmount = 3,
     PlankStorage = "pawl_plank_storage",
     PlankItem = "wood_plank",
-    PlankAmount = 10,
+    PlankAmount = 30,
     SawdustStorage = "pawl_sawdust_storage",
     SawdustItem = "sawdust",
     SawdustAmount = 20,

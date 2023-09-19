@@ -4309,10 +4309,10 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['description'] = '',
         ['resellPrice'] = {
-            [1] = 80,
-            [2] = 250,
-            [3] = 800,
-            [4] = 3000,
+            [1] = 160,
+            [2] = 500,
+            [3] = 1600,
+            [4] = 6000,
         },
         ['resellZkeaQty'] = {
             [1] = 1,
@@ -7476,6 +7476,19 @@ QBShared.Items = {
         ['illustrator'] = '.Poulpito',
     },
 
+    --- PAWL
+    ['chainsaw'] = {
+        ['name'] = 'chainsaw',
+        ['label'] = "Tronçonneuse",
+        ['weight'] = 4000,
+        ['useable'] = true,
+        ['type'] = 'item',
+        ['shouldClose'] = true,
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Outil des enfers qui coupe des arbres.",
+        ['illustrator'] = '.Aurukh'
+    },
 
     --- Fishing Items
     ['basic_rod'] = {
