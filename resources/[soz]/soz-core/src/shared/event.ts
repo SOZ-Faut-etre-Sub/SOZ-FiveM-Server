@@ -64,7 +64,6 @@ export enum ServerEvent {
 
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 
-    FOOD_CRAFT = 'soz-core:server:job:food:craft',
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
@@ -864,4 +863,7 @@ export enum NuiEvent {
     RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
     RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
     RequestDeleteProp = 'soz-core:client:placement:delete-prop',
+
+    CraftDoRecipe = 'soz-core:client:craft:do-recipe',
+    CraftCancel = 'soz-core:client:craft:cancel',
 }

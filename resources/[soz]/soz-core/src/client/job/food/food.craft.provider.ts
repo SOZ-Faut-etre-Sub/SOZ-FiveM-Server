@@ -1,110 +1,53 @@
-import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { emitRpc } from '@public/core/rpc';
+import { CraftsList } from '@public/shared/craft/craft';
+import { JobType } from '@public/shared/job';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { ServerEvent } from '../../../shared/event';
-import { FoodConfig, FoodCraftProcess } from '../../../shared/job/food';
-import { InventoryManager } from '../../inventory/inventory.manager';
-import { ItemService } from '../../item/item.service';
+import { CraftZones } from '../../../shared/job/food';
 import { PlayerService } from '../../player/player.service';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { TargetFactory } from '../../target/target.factory';
+import { JobService } from '../job.service';
 
 @Provider()
 export class FoodCraftProvider {
-    @Inject(ItemService)
-    private itemService: ItemService;
-
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
+    @Inject(JobService)
+    private jobService: JobService;
+
     @Once(OnceStep.PlayerLoaded)
     public setupFoodCraft() {
-        // 3 craft zones
-        const wineTargets: TargetOptions[] = FoodConfig.processes.wineProcesses.map(craftProcess => {
-            const method: (craft: FoodCraftProcess, icon: string, duration: number) => TargetOptions =
-                this.craftProcessToTarget.bind(this);
-            return method(craftProcess, 'c:/food/craft_wine.png', FoodConfig.duration.craftWine);
+        CraftZones.forEach(zone => {
+            this.targetFactory.createForBoxZone(zone.name, zone, [
+                {
+                    label: 'Transformer',
+                    blackoutGlobal: true,
+                    blackoutJob: JobType.Food,
+                    icon: 'c:/food/chef.png',
+                    color: JobType.Food,
+                    job: JobType.Food,
+                    canInteract: () => {
+                        return this.playerService.isOnDuty();
+                    },
+                    action: async () => {
+                        const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, JobType.Food);
+                        crafting.title = this.jobService.getJob(JobType.Food).label;
+                        crafting.subtitle = 'Transformation';
+                        this.nuiDispatch.dispatch('craft', 'ShowCraft', crafting);
+                    },
+                },
+            ]);
         });
-
-        const juiceTargets: TargetOptions[] = FoodConfig.processes.juiceProcesses.map(craftProcess => {
-            const method: (craft: FoodCraftProcess, icon: string, duration: number) => TargetOptions =
-                this.craftProcessToTarget.bind(this);
-            return method(craftProcess, 'c:/food/craft_wine.png', FoodConfig.duration.craftJuice);
-        });
-
-        FoodConfig.zones.wineCraftZones.forEach(zone => {
-            this.targetFactory.createForBoxZone(zone.name, zone, [...wineTargets, ...juiceTargets]);
-        });
-
-        const sausageTargets: TargetOptions[] = FoodConfig.processes.sausageProcesses.map(craftProcess => {
-            const method: (craft: FoodCraftProcess, icon: string, duration: number) => TargetOptions =
-                this.craftProcessToTarget.bind(this);
-            return method(craftProcess, 'c:/food/craft_sausage.png', FoodConfig.duration.craftSausage);
-        });
-
-        FoodConfig.zones.sausageCraftZones.forEach(zone => {
-            this.targetFactory.createForBoxZone(zone.name, zone, sausageTargets);
-        });
-
-        let cheeseTargets: TargetOptions[] = FoodConfig.processes.cheeseProcesses.map(craftProcess => {
-            const method: (craft: FoodCraftProcess, icon: string, duration: number) => TargetOptions =
-                this.craftProcessToTarget.bind(this);
-            return method(craftProcess, 'c:/food/craft_cheese.png', FoodConfig.duration.craftCheese);
-        });
-
-        if (isFeatureEnabled(Feature.Easter)) {
-            const easterTargets: TargetOptions[] = FoodConfig.processes.easterProcesses.map(craftProcess => {
-                const method: (craft: FoodCraftProcess, icon: string, duration: number) => TargetOptions =
-                    this.craftProcessToTarget.bind(this);
-                return method(craftProcess, 'c:/food/craft_easter.png', FoodConfig.duration.craftEaster);
-            });
-
-            cheeseTargets = [...easterTargets, ...cheeseTargets];
-        }
-
-        FoodConfig.zones.cheeseCraftZones.forEach(zone => {
-            this.targetFactory.createForBoxZone(zone.name, zone, cheeseTargets);
-        });
-    }
-
-    private craftProcessToTarget(craftProcess: FoodCraftProcess, icon: string, duration: number): TargetOptions {
-        const outputItem = this.itemService.getItem(craftProcess.output.id);
-        return {
-            label: outputItem.label,
-            icon,
-            color: 'food',
-            job: 'food',
-            blackoutGlobal: true,
-            blackoutJob: 'food',
-            canInteract: () => {
-                const items = this.inventoryManager.getItems();
-
-                for (const input of craftProcess.inputs) {
-                    let totalAmount = 0;
-                    for (const item of items) {
-                        if (totalAmount >= input.amount) {
-                            break;
-                        }
-                        if (item.name === input.id && !this.itemService.isExpired(item)) {
-                            totalAmount += item.amount;
-                        }
-                    }
-                    if (totalAmount < input.amount) {
-                        return false;
-                    }
-                }
-                return this.playerService.isOnDuty();
-            },
-            action: () => {
-                TriggerServerEvent(ServerEvent.FOOD_CRAFT, craftProcess, duration);
-            },
-        };
     }
 }
