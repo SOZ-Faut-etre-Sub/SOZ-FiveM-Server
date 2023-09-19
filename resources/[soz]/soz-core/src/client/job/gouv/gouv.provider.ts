@@ -4,14 +4,11 @@ import { Provider } from '@core/decorators/provider';
 import { InputService } from '@public/client/nui/input.service';
 import { uuidv4 } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 
 import { BlipFactory } from '../../blip';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
-import { TargetFactory } from '../../target/target.factory';
-import { JobService } from '../job.service';
 
 @Provider()
 export class GouvProvider {
@@ -24,67 +21,12 @@ export class GouvProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
-    @Inject(TargetFactory)
-    private targetFactory: TargetFactory;
-
     @Inject(InputService)
     private inputService: InputService;
-
-    @Inject(JobService)
-    private jobService: JobService;
 
     @Once(OnceStep.PlayerLoaded)
     public setupMdrJob() {
         this.createBlips();
-
-        this.targetFactory.createForBoxZone(
-            'gouv:duty',
-            {
-                center: [-547.61, -611.22, 34.68],
-                length: 0.6,
-                width: 0.4,
-                minZ: 33.68,
-                maxZ: 35.68,
-                heading: 270,
-            },
-            [
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Prise de service',
-                    canInteract: () => {
-                        return !this.playerService.isOnDuty();
-                    },
-                    job: JobType.Gouv,
-                },
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Fin de service',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
-                    job: JobType.Gouv,
-                },
-                {
-                    icon: 'fas fa-users',
-                    label: 'Employé(e)s en service',
-                    action: () => {
-                        TriggerServerEvent('QBCore:GetEmployOnDuty');
-                    },
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-                        return (
-                            this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                        );
-                    },
-                    job: JobType.Gouv,
-                },
-            ]
-        );
     }
 
     @OnEvent(ClientEvent.JOBS_GOUV_OPEN_SOCIETY_MENU)

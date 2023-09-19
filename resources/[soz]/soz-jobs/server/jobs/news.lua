@@ -22,49 +22,49 @@ QBCore.Functions.CreateUseableItem("n_bmic", function(source, item)
 end)
 
 --- Events
-RegisterNetEvent("jobs:server:news:newspaperSold", function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    local newspaperAmount = math.random(NewsConfig.SellAmount.min, NewsConfig.SellAmount.max)
+--RegisterNetEvent("jobs:server:news:newspaperSold", function()
+--    local Player = QBCore.Functions.GetPlayer(source)
+--    local newspaperAmount = math.random(NewsConfig.SellAmount.min, NewsConfig.SellAmount.max)
+--
+--    local playerNewspaper = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "newspaper", nil, true)
+--
+--    if playerNewspaper < 1 then
+--        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ~r~n'avez plus~s~ de journaux", "error")
+--
+--        return
+--    end
+--
+--    if newspaperAmount > playerNewspaper then
+--        newspaperAmount = playerNewspaper
+--    end
+--
+--    TriggerEvent("banking:server:TransferMoney", "farm_news", "safe_news", newspaperAmount * NewsConfig.SellPrice)
+--    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "newspaper", newspaperAmount)
+--    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez vendu ~g~" .. newspaperAmount .. " journaux")
+--
+--    exports["soz-core"]:Event("job_news_sell_newspaper", {player_source = Player.PlayerData.source},
+--                              {
+--        quantity = tonumber(newspaperAmount),
+--        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+--    })
+--end)
 
-    local playerNewspaper = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "newspaper", nil, true)
-
-    if playerNewspaper < 1 then
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ~r~n'avez plus~s~ de journaux", "error")
-
-        return
-    end
-
-    if newspaperAmount > playerNewspaper then
-        newspaperAmount = playerNewspaper
-    end
-
-    TriggerEvent("banking:server:TransferMoney", "farm_news", "safe_news", newspaperAmount * NewsConfig.SellPrice)
-    exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "newspaper", newspaperAmount)
-    TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez vendu ~g~" .. newspaperAmount .. " journaux")
-
-    exports["soz-core"]:Event("job_news_sell_newspaper", {player_source = Player.PlayerData.source},
-                              {
-        quantity = tonumber(newspaperAmount),
-        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
-    })
-end)
-
-RegisterNetEvent("jobs:server:news:newspaperFarm", function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    local newspaperAmount = math.random(NewsConfig.SellAmount.min * NewsConfig.FarmMultiplier, NewsConfig.SellAmount.max * NewsConfig.FarmMultiplier)
-
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "newspaper", newspaperAmount, nil, nil, function(success)
-        if success then
-            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez récupéré ~g~" .. newspaperAmount .. " journaux")
-        end
-    end)
-
-    exports["soz-core"]:Event("job_news_print_newspaper", {player_source = Player.PlayerData.source},
-                              {
-        quantity = tonumber(newspaperAmount),
-        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
-    })
-end)
+--RegisterNetEvent("jobs:server:news:newspaperFarm", function()
+--    local Player = QBCore.Functions.GetPlayer(source)
+--    local newspaperAmount = math.random(NewsConfig.SellAmount.min * NewsConfig.FarmMultiplier, NewsConfig.SellAmount.max * NewsConfig.FarmMultiplier)
+--
+--    exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "newspaper", newspaperAmount, nil, nil, function(success)
+--        if success then
+--            TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez récupéré ~g~" .. newspaperAmount .. " journaux")
+--        end
+--    end)
+--
+--    exports["soz-core"]:Event("job_news_print_newspaper", {player_source = Player.PlayerData.source},
+--                              {
+--        quantity = tonumber(newspaperAmount),
+--        position = GetEntityCoords(GetPlayerPed(Player.PlayerData.source)),
+--    })
+--end)
 
 RegisterNetEvent("jobs:server:news:UseMobileItem", function(item, event)
     local Player = QBCore.Functions.GetPlayer(source)
