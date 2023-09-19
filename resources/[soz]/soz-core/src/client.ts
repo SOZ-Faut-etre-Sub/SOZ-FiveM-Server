@@ -9,6 +9,7 @@ import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { BillboardModule } from './client/billboard/billboard.module';
 import { BinocularsModule } from './client/binoculars/binoculars.module';
+import { CraftModule } from './client/craft/craft.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
 import { HousingModule } from './client/housing/housing.module';
@@ -103,6 +104,7 @@ async function bootstrap() {
         RaceModule,
         GarbageModule,
         BillboardModule,
+        CraftModule,
         ...PrivateModules
     );
 

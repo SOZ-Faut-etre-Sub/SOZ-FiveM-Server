@@ -1,94 +1,12 @@
 import { WardrobeConfig } from '../cloth';
+import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
+import { joaat } from '../joaat';
 import { NamedZone } from '../polyzone/box.zone';
 
-export type FoodRecipe = {
-    canCraft: boolean;
-    inputs: {
-        label: string;
-        hasRequiredAmount: boolean;
-        amount: number;
-    }[];
-    output: {
-        label: string;
-        amount: number;
-    };
-};
-
-export type FoodCraftProcess = {
-    inputs: {
-        id: string;
-        amount: number;
-    }[];
-    output: {
-        id: string;
-        amount: number;
-    };
-};
-
-const wineCraftZones: NamedZone[] = [
+export const CraftZones: NamedZone[] = [
     {
-        name: 'food_craft_wine',
-        center: [-1887.8, 2063.9, 141.0],
-        length: 0.4,
-        width: 1.4,
-        heading: 340,
-        minZ: 140.0,
-        maxZ: 142.0,
-    },
-];
-
-const wineProcesses: FoodCraftProcess[] = [
-    {
-        inputs: [{ id: 'grape1', amount: 10 }],
-        output: { id: 'wine1', amount: 1 },
-    },
-    {
-        inputs: [{ id: 'grape2', amount: 10 }],
-        output: { id: 'wine2', amount: 1 },
-    },
-    {
-        inputs: [{ id: 'grape3', amount: 10 }],
-        output: { id: 'wine3', amount: 1 },
-    },
-    {
-        inputs: [{ id: 'grape4', amount: 10 }],
-        output: { id: 'wine4', amount: 1 },
-    },
-];
-
-// No craft zone for juice as it's the same as wine for now.
-
-const juiceProcesses: FoodCraftProcess[] = [
-    {
-        inputs: [{ id: 'grape1', amount: 4 }],
-        output: { id: 'grapejuice1', amount: 4 },
-    },
-    {
-        inputs: [{ id: 'grape2', amount: 4 }],
-        output: { id: 'grapejuice2', amount: 4 },
-    },
-    {
-        inputs: [{ id: 'grape3', amount: 4 }],
-        output: { id: 'grapejuice3', amount: 4 },
-    },
-    {
-        inputs: [
-            { id: 'grape1', amount: 2 },
-            { id: 'grape2', amount: 2 },
-            { id: 'grape3', amount: 2 },
-            { id: 'grape4', amount: 2 },
-        ],
-        output: { id: 'grapejuice4', amount: 4 },
-    },
-    {
-        inputs: [{ id: 'grape4', amount: 4 }],
-        output: { id: 'grapejuice5', amount: 4 },
-    },
-];
-
-const cheeseCraftZones: NamedZone[] = [
-    {
-        name: 'food_craft_cheese',
+        name: 'food_craft_1',
         center: [-1882.53, 2069.2, 141.0],
         length: 2.2,
         width: 1.15,
@@ -96,50 +14,8 @@ const cheeseCraftZones: NamedZone[] = [
         minZ: 140.0,
         maxZ: 141.45,
     },
-];
-
-const cheeseProcesses: FoodCraftProcess[] = [
     {
-        inputs: [{ id: 'skimmed_milk', amount: 1 }],
-        output: { id: 'cheese1', amount: 3 },
-    },
-    {
-        inputs: [{ id: 'milk', amount: 1 }],
-        output: { id: 'cheese2', amount: 3 },
-    },
-    {
-        inputs: [{ id: 'milk', amount: 1 }],
-        output: { id: 'cheese3', amount: 3 },
-    },
-    {
-        inputs: [{ id: 'semi_skimmed_milk', amount: 1 }],
-        output: { id: 'cheese4', amount: 3 },
-    },
-    {
-        inputs: [{ id: 'semi_skimmed_milk', amount: 1 }],
-        output: { id: 'cheese5', amount: 3 },
-    },
-    {
-        inputs: [{ id: 'semi_skimmed_milk', amount: 1 }],
-        output: { id: 'cheese6', amount: 3 },
-    },
-    {
-        inputs: [{ id: 'milk', amount: 1 }],
-        output: { id: 'cheese7', amount: 3 },
-    },
-    {
-        inputs: [{ id: 'skimmed_milk', amount: 1 }],
-        output: { id: 'cheese8', amount: 3 },
-    },
-    {
-        inputs: [{ id: 'skimmed_milk', amount: 1 }],
-        output: { id: 'cheese9', amount: 3 },
-    },
-];
-
-const sausageCraftZones: NamedZone[] = [
-    {
-        name: 'food_craft_sausage',
+        name: 'food_craft_2',
         center: [-1880.22, 2068.34, 141.0],
         length: 2.15,
         width: 1.15,
@@ -149,101 +25,210 @@ const sausageCraftZones: NamedZone[] = [
     },
 ];
 
-const sausageProcesses: FoodCraftProcess[] = [
-    {
-        inputs: [
-            { id: 'abat', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'rognon', amount: 4 },
-            { id: 'tripe', amount: 4 },
-            { id: 'viande', amount: 4 },
-        ],
-        output: { id: 'sausage1', amount: 4 },
+export const FoodCraftsLists: Record<string, CraftCategory> = {
+    Vins: {
+        duration: 20000,
+        icon: '🍷',
+        recipes: {
+            wine1: {
+                inputs: {
+                    grape1: { count: 10 },
+                },
+                amount: 1,
+            },
+            wine2: {
+                inputs: {
+                    grape2: { count: 10 },
+                },
+                amount: 1,
+            },
+            wine3: {
+                inputs: {
+                    grape3: { count: 10 },
+                },
+                amount: 1,
+            },
+            wine4: {
+                inputs: {
+                    grape4: { count: 10 },
+                },
+                amount: 1,
+            },
+        },
     },
-    {
-        inputs: [
-            { id: 'abat', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'rognon', amount: 4 },
-            { id: 'tripe', amount: 4 },
-            { id: 'viande', amount: 4 },
-        ],
-        output: { id: 'sausage2', amount: 4 },
+    Jus: {
+        duration: 8000,
+        icon: '🧃',
+        recipes: {
+            grapejuice1: {
+                inputs: {
+                    grape1: { count: 4 },
+                },
+                amount: 4,
+            },
+            grapejuice2: {
+                inputs: {
+                    grape2: { count: 4 },
+                },
+                amount: 4,
+            },
+            grapejuice3: {
+                inputs: {
+                    grape3: { count: 4 },
+                },
+                amount: 4,
+            },
+            grapejuice4: {
+                inputs: {
+                    grape1: { count: 2 },
+                    grape2: { count: 2 },
+                    grape3: { count: 2 },
+                    grape4: { count: 2 },
+                },
+                amount: 4,
+            },
+            grapejuice5: {
+                inputs: {
+                    grape4: { count: 4 },
+                },
+                amount: 4,
+            },
+        },
     },
-    {
-        inputs: [
-            { id: 'abat', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'rognon', amount: 4 },
-            { id: 'tripe', amount: 4 },
-            { id: 'viande', amount: 4 },
-        ],
-        output: { id: 'sausage3', amount: 4 },
+    Fromage: {
+        duration: 6000,
+        icon: '🧀',
+        recipes: {
+            cheese1: {
+                inputs: {
+                    skimmed_milk: { count: 1 },
+                },
+                amount: 3,
+            },
+            cheese2: {
+                inputs: {
+                    milk: { count: 1 },
+                },
+                amount: 3,
+            },
+            cheese3: {
+                inputs: {
+                    milk: { count: 1 },
+                },
+                amount: 3,
+            },
+            cheese4: {
+                inputs: {
+                    semi_skimmed_milk: { count: 1 },
+                },
+                amount: 3,
+            },
+            cheese5: {
+                inputs: {
+                    semi_skimmed_milk: { count: 1 },
+                },
+                amount: 3,
+            },
+            cheese6: {
+                inputs: {
+                    semi_skimmed_milk: { count: 1 },
+                },
+                amount: 3,
+            },
+            cheese7: {
+                inputs: {
+                    milk: { count: 1 },
+                },
+                amount: 3,
+            },
+            cheese8: {
+                inputs: {
+                    skimmed_milk: { count: 1 },
+                },
+                amount: 3,
+            },
+            cheese9: {
+                inputs: {
+                    skimmed_milk: { count: 1 },
+                },
+                amount: 3,
+            },
+        },
     },
-    {
-        inputs: [
-            { id: 'abat', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'rognon', amount: 4 },
-            { id: 'tripe', amount: 4 },
-            { id: 'viande', amount: 4 },
-        ],
-        output: { id: 'sausage4', amount: 4 },
+    Saucisses: {
+        duration: 8000,
+        icon: '🌭',
+        recipes: {
+            sausage1: {
+                inputs: {
+                    abat: { count: 4 },
+                    langue: { count: 4 },
+                    rognon: { count: 4 },
+                    tripe: { count: 4 },
+                    viande: { count: 4 },
+                },
+                amount: 4,
+            },
+            sausage2: {
+                inputs: {
+                    abat: { count: 4 },
+                    langue: { count: 4 },
+                    rognon: { count: 4 },
+                    tripe: { count: 4 },
+                    viande: { count: 4 },
+                },
+                amount: 4,
+            },
+            sausage3: {
+                inputs: {
+                    abat: { count: 4 },
+                    langue: { count: 4 },
+                    rognon: { count: 4 },
+                    tripe: { count: 4 },
+                    viande: { count: 4 },
+                },
+                amount: 4,
+            },
+            sausage4: {
+                inputs: {
+                    abat: { count: 4 },
+                    langue: { count: 4 },
+                    rognon: { count: 4 },
+                    tripe: { count: 4 },
+                    viande: { count: 4 },
+                },
+                amount: 4,
+            },
+            sausage5: {
+                inputs: {
+                    abat: { count: 4 },
+                    langue: { count: 4 },
+                    rognon: { count: 4 },
+                    tripe: { count: 4 },
+                    viande: { count: 4 },
+                },
+                amount: 4,
+            },
+        },
     },
-    {
-        inputs: [
-            { id: 'abat', amount: 4 },
-            { id: 'langue', amount: 4 },
-            { id: 'rognon', amount: 4 },
-            { id: 'tripe', amount: 4 },
-            { id: 'viande', amount: 4 },
-        ],
-        output: { id: 'sausage5', amount: 4 },
-    },
-    {
-        inputs: [
-            { id: 'chocolat_egg', amount: 2 },
-            { id: 'chocolat_milk_egg', amount: 2 },
-        ],
-        output: { id: 'easter_basket', amount: 1 },
-    },
-];
-
-const easterProcesses: FoodCraftProcess[] = [
-    {
-        inputs: [
-            { id: 'chocolat_egg', amount: 2 },
-            { id: 'chocolat_milk_egg', amount: 2 },
-        ],
-        output: { id: 'easter_basket', amount: 1 },
-    },
-];
-
-export const FoodConfig = {
-    duration: {
-        default: 4000,
-        craftSausage: 8000,
-        craftWine: 20000,
-        craftCheese: 6000,
-        craftJuice: 8000,
-        craftEaster: 5000,
-    },
-    zones: {
-        wineCraftZones,
-        cheeseCraftZones,
-        sausageCraftZones,
-    },
-    processes: {
-        juiceProcesses,
-        wineProcesses,
-        cheeseProcesses,
-        sausageProcesses,
-        easterProcesses,
+    Pâques: {
+        feature: Feature.Easter,
+        duration: 5000,
+        icon: '🥚',
+        recipes: {
+            easter_basket: {
+                inputs: {
+                    chocolat_egg: { count: 2 },
+                    chocolat_milk_egg: { count: 2 },
+                },
+                amount: 1,
+            },
+        },
     },
 };
 
 export const FoodCloakroom: WardrobeConfig = {
-    [GetHashKey('mp_m_freemode_01')]: {
+    [joaat('mp_m_freemode_01')]: {
         ['Tenue de Direction']: {
             Components: {
                 [3]: { Drawable: 6, Texture: 0, Palette: 0 },
@@ -311,7 +296,7 @@ export const FoodCloakroom: WardrobeConfig = {
         },
     },
 
-    [GetHashKey('mp_f_freemode_01')]: {
+    [joaat('mp_f_freemode_01')]: {
         ['Tenue de Direction']: {
             Components: {
                 [3]: { Drawable: 3, Texture: 0, Palette: 0 },

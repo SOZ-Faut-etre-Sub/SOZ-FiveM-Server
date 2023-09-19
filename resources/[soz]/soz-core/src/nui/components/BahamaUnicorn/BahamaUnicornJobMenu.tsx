@@ -2,7 +2,6 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { BaunRecipe } from '../../../shared/job/baun';
-import { FoodRecipe } from '../../../shared/job/food';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { CraftList } from '../Shared/CraftList';
@@ -35,7 +34,7 @@ type BahamaUnicornStateProps = {
 export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_baun';
     const [state, setState] = useState(null);
-    const [currentRecipe, setCurrentRecipe] = useState<FoodRecipe>();
+    const [currentRecipe, setCurrentRecipe] = useState<BaunRecipe>();
 
     useEffect(() => {
         if (data && data.state) {
