@@ -223,7 +223,9 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
                     <h2 className="uppercase font-bold text-xl ml-4">{title}</h2>
                 </div>
                 <div className="rounded-lg border-2 border-gray-500 p-2 max-h-[50%] flex flex-col">
-                    <h3 className="mb-2 text-lg">{selectedItem.label}</h3>
+                    <h3 className="mb-2 text-lg">
+                        {craftList.categories[selected.category].recipes[selected.id].amount}x {selectedItem.label}
+                    </h3>
                     <div className="flex justify-center items-center aspect-square min-h-0">
                         <img
                             alt={selectedItem.name}

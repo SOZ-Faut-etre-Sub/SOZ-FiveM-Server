@@ -155,7 +155,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
-    Saucisses: {
+    Saucissons: {
         duration: 8000,
         icon: '🌭',
         recipes: {

@@ -90,7 +90,7 @@ export class CraftProvider {
                 [
                     {
                         name: itemId,
-                        amount: 1,
+                        amount: recipe.amount,
                         metadata: {},
                     },
                 ]
@@ -123,6 +123,9 @@ export class CraftProvider {
             {
                 dictionary: 'mp_fm_intro_cut',
                 name: 'fixing_a_ped',
+                options: {
+                    repeat: true,
+                },
             },
             {
                 useAnimationService: true,
@@ -138,7 +141,7 @@ export class CraftProvider {
             this.inventoryManager.removeNotExpiredItem(source, requiredItemId, input.count);
         }
 
-        this.inventoryManager.addItemToInventory(source, itemId);
+        this.inventoryManager.addItemToInventory(source, itemId, recipe.amount);
 
         this.notifier.notify(source, `Vous avez créé ~g~${item.label}~s~.`, 'success');
 
