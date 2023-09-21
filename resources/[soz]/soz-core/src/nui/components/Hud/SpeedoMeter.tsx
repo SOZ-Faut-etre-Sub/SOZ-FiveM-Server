@@ -185,12 +185,16 @@ export const SpeedoMeter: FunctionComponent = () => {
     const player = usePlayer();
     const inVehicle = vehicle.seat !== null;
     const [isPilot, setIsPilot] = useState(false);
+    const [timeout, initTimeout] = useState<NodeJS.Timeout>(null);
 
     useEffect(() => {
+        clearTimeout(timeout);
         if (vehicle.seat === null) {
-            setTimeout(() => {
-                setIsPilot(false);
-            }, 1000);
+            initTimeout(
+                setTimeout(() => {
+                    setIsPilot(false);
+                }, 1000)
+            );
         } else {
             setIsPilot(vehicle.seat === -1);
         }
