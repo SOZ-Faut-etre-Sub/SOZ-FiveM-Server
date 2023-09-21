@@ -28,8 +28,12 @@ export class GarbageProvider {
     public async onDisplayBlip({ value }: { value: boolean }) {
         this.displayBinBlip = value;
 
-        const binModel = GetHashKey('soz_prop_bb_bin');
-        const bins = this.objectProvider.getObjects(object => object.model === binModel);
+        const binModels = [
+            GetHashKey('soz_prop_bb_bin'),
+            GetHashKey('soz_prop_bb_bin_hs2'),
+            GetHashKey('soz_prop_bb_bin_hs3'),
+        ];
+        const bins = this.objectProvider.getObjects(object => binModels.includes(object.model));
 
         for (const bin of bins) {
             if (value) {
