@@ -37,7 +37,7 @@ function QBCore.Player.Login(source, citizenid, newData)
                 if apartment then
                     PlayerData.address = apartment.label
                     PlayerData.apartment = apartment
-                    PlayerData.apartment.price = QBCore.Shared.Round(apartment.price * 4 / 5)
+                    PlayerData.apartment.price = apartment.price
                 else
                     PlayerData.apartment = nil
                 end
