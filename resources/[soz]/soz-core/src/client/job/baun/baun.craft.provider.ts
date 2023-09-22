@@ -1,58 +1,18 @@
+import { CraftService } from '@public/client/craft/craft.service';
+import { JobType } from '@public/shared/job';
+
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { ServerEvent } from '../../../shared/event';
-import { BaunCraftProcess, baunCraftProcesses, baunCraftZones } from '../../../shared/job/baun';
-import { InventoryManager } from '../../inventory/inventory.manager';
-import { ItemService } from '../../item/item.service';
-import { PlayerService } from '../../player/player.service';
-import { TargetFactory, TargetOptions } from '../../target/target.factory';
+import { baunCraftZones } from '../../../shared/job/baun';
 
 @Provider()
 export class BaunCraftProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
-    @Inject(ItemService)
-    private itemService: ItemService;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
-    @Inject(TargetFactory)
-    private targetFactory: TargetFactory;
+    @Inject(CraftService)
+    private craftService: CraftService;
 
     @Once(OnceStep.PlayerLoaded)
     public setupBaunCraftZone() {
-        const targets: TargetOptions[] = baunCraftProcesses.map(craftProcess => {
-            return this.craftProcessToTarget(craftProcess, 'c:/baun/craft.png');
-        });
-
-        baunCraftZones.forEach(zone => {
-            this.targetFactory.createForBoxZone(zone.name, zone, targets);
-        });
-    }
-
-    private craftProcessToTarget(craftProcess: BaunCraftProcess, icon: string): TargetOptions {
-        const outputItem = this.itemService.getItem(craftProcess.output.id);
-        return {
-            icon,
-            label: 'Confectionner: ' + outputItem.label,
-            job: 'baun',
-            color: 'baun',
-            blackoutGlobal: true,
-            blackoutJob: 'ffs',
-            canInteract: () => {
-                for (const input of craftProcess.inputs) {
-                    if (!this.inventoryManager.hasEnoughItem(input.id, input.amount, true)) {
-                        return false;
-                    }
-                }
-                return this.playerService.isOnDuty();
-            },
-            action: () => {
-                TriggerServerEvent(ServerEvent.BAUN_CRAFT, craftProcess);
-            },
-        };
+        this.craftService.createBtargetZoneCraft(baunCraftZones, 'c:/baun/craft.png', 'Confectionner', JobType.Baun);
     }
 }

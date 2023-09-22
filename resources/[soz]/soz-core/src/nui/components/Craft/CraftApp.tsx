@@ -154,7 +154,7 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
                     .map(([itemId, recipe]) => {
                         const item = items.find(i => i.name === itemId);
                         const check = recipe;
-                        const isSelected = selected.id === itemId;
+                        const isSelected = selected.id === itemId && selected.category === category;
                         const classes = classNames('w-36 h-36 box-border rounded-lg bg-black/60 cursor-pointer', {
                             'border-2 border-green-500': isSelected,
                             grayscale: !check.canCraft,
