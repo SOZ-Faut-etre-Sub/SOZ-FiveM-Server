@@ -45,9 +45,9 @@ MySQL.ready(function()
     for _, apartment in pairs(apartments or {}) do
         Properties[apartment.property_id]:AddApartment(apartment.id,
                                                        Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.roommate,
-                                                                     QBCore.Shared.Round(apartment.price * 4 / 5), apartment.inside_coord, apartment.exit_zone,
-                                                                     apartment.fridge_zone, apartment.stash_zone, apartment.closet_zone, apartment.money_zone,
-                                                                     apartment.tier, apartment.has_parking_place))
+                                                                     apartment.price, apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone,
+                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone, apartment.tier,
+                                                                     apartment.has_parking_place))
     end
 end)
 

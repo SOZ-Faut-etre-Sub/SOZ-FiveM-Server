@@ -14,8 +14,8 @@ import { getRandomInt, getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, ForecastWithTemperature, TemperatureRange, Time, Weather } from '../../shared/weather';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
-import { Polluted, Summer } from './forecast';
-import { DaySummerTemperature, ForecastAdderTemperatures, NightSummerTemperature } from './temperature';
+import { Polluted, SpringAutumn } from './forecast';
+import { DayAutumnTemperature, ForecastAdderTemperatures, NightAutumnTemperature } from './temperature';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
 const MAX_FORECASTS = 5;
@@ -38,11 +38,11 @@ export class WeatherProvider {
     private pollutionManagerReady = false;
 
     // See forecast.ts for the list of available forecasts
-    private forecast: Forecast = Summer;
+    private forecast: Forecast = SpringAutumn;
     // See temperature.ts for the list of available temperature ranges,
     // please ensure that the day and night temperature ranges are using the same season
-    private dayTemperatureRange: TemperatureRange = DaySummerTemperature;
-    private nightTemperatureRange: TemperatureRange = NightSummerTemperature;
+    private dayTemperatureRange: TemperatureRange = DayAutumnTemperature;
+    private nightTemperatureRange: TemperatureRange = NightAutumnTemperature;
 
     private defaultWeather: Weather = 'CLEAR';
     private incomingForecasts: ForecastWithTemperature[] = [
