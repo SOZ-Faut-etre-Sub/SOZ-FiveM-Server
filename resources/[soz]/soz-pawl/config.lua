@@ -43,36 +43,6 @@ Config.Processing = {
     SawdustAmount = 20,
 }
 
-Config.CraftDuration = 15000
-Config.Craft = {
-    ["police_barrier"] = {
-        Name = "Barrière de circulation",
-        SourceItem = "wood_plank",
-        RewardItem = "police_barrier",
-        RewardAmount = 1,
-    },
-    ["paper"] = {Name = "Feuilles de papier", SourceItem = "wood_plank", RewardItem = "paper", RewardAmount = 10},
-    ["empty_lunchbox"] = {
-        Name = "Paniers-repas",
-        SourceItem = "wood_plank",
-        RewardItem = "empty_lunchbox",
-        RewardAmount = 4,
-    },
-    ["cabinet_zkea"] = {
-        Name = "Meuble ZKEA",
-        SourceItem = "wood_plank",
-        SourceItemAmount = 2,
-        RewardItem = "cabinet_zkea",
-        RewardTier = {
-            [1] = {Id = 4, Name = "Divin", Chance = GetConvarInt("soz_pawl_craft_chance_tier_4", 25)},
-            [2] = {Id = 3, Name = "Sublime", Chance = GetConvarInt("soz_pawl_craft_chance_tier_3", 25)},
-            [3] = {Id = 2, Name = "Joli", Chance = GetConvarInt("soz_pawl_craft_chance_tier_2", 25)},
-            [4] = {Id = 1, Name = "Banal", Chance = GetConvarInt("soz_pawl_craft_chance_tier_1", 25)},
-        },
-        RewardAmount = 1,
-    },
-}
-
 Config.Degradation = {}
 Config.Degradation.Tick = 60 * 1000
 Config.Degradation.Level = {Green = 0, Yellow = 1, Red = 2}
