@@ -71,13 +71,13 @@ export const PlayerContainer = () => {
                     console.error(e, event.data.playerInventory, event.data.playerMoney);
                     closeNUI(() => closeMenu());
                 }
-            } else if (event.data.action === 'closeInventory') {
+            } else if (display && event.data.action === 'closeInventory') {
                 closeNUI(() => closeMenu());
             } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
                 closeMenu();
             }
         },
-        [setDisplay, closeMenu, setPlayerMoney, setPlayerInventory, setPlayerShortcuts]
+        [setDisplay, closeMenu, setPlayerMoney, setPlayerInventory, setPlayerShortcuts, display]
     );
 
     const onKeyDownReceived = useCallback(
