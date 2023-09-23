@@ -27,6 +27,13 @@ export const CraftZones: NamedZone[] = [
 
 export const FoodCraftsLists: Record<string, CraftCategory> = {
     Vins: {
+        animation: {
+            dictionary: 'amb@prop_human_bbq@male@idle_a',
+            name: 'idle_b',
+            options: {
+                repeat: true,
+            },
+        },
         duration: 20000,
         icon: '🍷',
         recipes: {
@@ -57,6 +64,13 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
         },
     },
     Jus: {
+        animation: {
+            dictionary: 'amb@prop_human_bbq@male@idle_a',
+            name: 'idle_b',
+            options: {
+                repeat: true,
+            },
+        },
         duration: 8000,
         icon: '🧃',
         recipes: {

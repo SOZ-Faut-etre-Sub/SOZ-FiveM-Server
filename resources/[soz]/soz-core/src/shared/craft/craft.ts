@@ -1,3 +1,4 @@
+import { AnimationInfo } from '../animation';
 import { Feature } from '../features';
 import { JobType } from '../job';
 import { BaunCraftsLists } from '../job/baun';
@@ -9,6 +10,7 @@ export type CraftCategory = {
     duration: number;
     feature?: Feature;
     icon?: string;
+    animation?: AnimationInfo;
 };
 
 export type CraftRecipe = {

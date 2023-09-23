@@ -120,7 +120,7 @@ export class CraftProvider {
             'craft_transform',
             `Création de "${item.label}"`,
             crafts[category].duration,
-            {
+            crafts[category].animation || {
                 dictionary: 'mp_fm_intro_cut',
                 name: 'fixing_a_ped',
                 options: {
@@ -146,12 +146,14 @@ export class CraftProvider {
         this.notifier.notify(source, `Vous avez confectionné ~y~${recipe.amount}~s~ ~g~${item.label}~s~.`, 'success');
 
         this.monitor.publish(
-            'drug_transfrom',
+            'craft',
             {
                 player_source: source,
+                type: type,
             },
             {
                 item: item.name,
+                category: category,
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             }
         );
