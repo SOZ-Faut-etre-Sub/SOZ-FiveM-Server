@@ -148,6 +148,11 @@ export enum RpcServerEvent {
 
     CRAFT_GET_RECIPES = 'soz-core:server:craft:get-recipes',
     CRAFT_DO_RECIPES = 'soz-core:server:craft:do-recipes',
+
+    FDF_TREE_HARVEST = 'soz-core:server:fdf:tree-harvest',
+    FDF_TREE_GET = 'soz-core:server:fdf:tree-get',
+    FDF_CROP_GET = 'soz-core:server:fdf:crop-get',
+    FDF_FIELD_ISPLOW = 'soz-core:server:fdf:field-isplow',
 }
 
 export enum RpcClientEvent {
@@ -159,4 +164,5 @@ export enum RpcClientEvent {
     VEHICLE_DELETE = 'soz-core:rpc:client:vehicle:delete',
     MONITOR_GET_TRACES = 'soz-core:rpc:client:monitor:get-traces',
     DRUG_CHECK_ZONE = 'soz-core:rpc:client:drug:check-zone',
+    FDF_CHECK_ZONE = 'soz-core:rpc:client:fdf:check-zone',
 }

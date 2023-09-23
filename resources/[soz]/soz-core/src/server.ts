@@ -18,6 +18,7 @@ import { InventoryModule } from './server/inventory/inventory.module';
 import { ItemModule } from './server/item/item.module';
 import { BaunModule } from './server/job/baun/baun.module';
 import { BennysModule } from './server/job/bennys/bennys.module';
+import { FDFModule } from './server/job/fdf/fdf.module';
 import { FightForStyleModule } from './server/job/ffs/ffs.module';
 import { FoodModule } from './server/job/food/food.module';
 import { JobModule } from './server/job/job.module';
@@ -94,6 +95,7 @@ async function bootstrap() {
         RaceModule,
         PropsModule,
         CraftModule,
+        FDFModule,
         ...PrivateModules
     );
 
