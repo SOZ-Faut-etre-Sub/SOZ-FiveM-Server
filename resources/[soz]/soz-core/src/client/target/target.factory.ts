@@ -1,4 +1,5 @@
 import { JobType } from '@public/shared/job';
+import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Zone } from '../../shared/polyzone/box.zone';
@@ -68,6 +69,30 @@ export class TargetFactory {
             {
                 debugPoly: zone.debugPoly || false,
                 heading: zone.heading,
+                minZ: zone.minZ,
+                maxZ: zone.maxZ,
+                name: id,
+            },
+            {
+                options: targets,
+                distance: distance,
+            }
+        );
+
+        this.zones[id] = zone;
+    }
+
+    public createForPolygoneZone(
+        id: string,
+        zone: PolygonZone<any>,
+        targets: TargetOptions[],
+        distance = DEFAULT_DISTANCE
+    ) {
+        exports['qb-target'].AddPolyZone(
+            id,
+            zone.getPoints().map(vector => ({ x: vector[0], y: vector[1] })),
+            {
+                debugPoly: zone.debugPoly || false,
                 minZ: zone.minZ,
                 maxZ: zone.maxZ,
                 name: id,

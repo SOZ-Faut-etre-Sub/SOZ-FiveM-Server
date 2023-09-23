@@ -144,6 +144,7 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
         if amount and tonumber(amount) > 0 then
             local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
             if playerIdx == -1 then -- Is NPC
+                print("currentResellZone", currentResellZone)
                 if currentResellZone ~= nil then
                     TriggerServerEvent("inventory:server:ResellItem", data, tonumber(amount), currentResellZone)
                 else

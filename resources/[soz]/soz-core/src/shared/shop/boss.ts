@@ -329,4 +329,25 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         targets: [],
         products: [],
     },
+    {
+        name: 'fdf',
+        job: JobType.FDF,
+        zone: {
+            center: [2429.9, 4969.22, 46.82],
+            length: 1.0,
+            width: 1.0,
+            heading: 225.64,
+            minZ: 45.82,
+            maxZ: 47.82,
+            debugPoly: false,
+        },
+        targets: [],
+        products: [
+            { id: 'potato_seed', type: 'item', price: 5 },
+            { id: 'tomato_seed', type: 'item', price: 5 },
+            { id: 'corn_seed', type: 'item', price: 5 },
+            { id: 'cabage_seed', type: 'item', price: 5 },
+            { id: 'pumpkin_seed', type: 'item', price: 5 },
+        ],
+    },
 ];

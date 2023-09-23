@@ -50,4 +50,13 @@ export class VehicleCommandProvider {
             fuelLevel: newlevel,
         });
     }
+
+    @Command('oil', { role: ['admin'], description: 'Set oil level (Admin Only)' })
+    async oilCommand(source: number, newlevel: number) {
+        const closestVehicle = await this.vehicleSpawner.getClosestVehicle(source);
+
+        this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
+            oilLevel: newlevel,
+        });
+    }
 }

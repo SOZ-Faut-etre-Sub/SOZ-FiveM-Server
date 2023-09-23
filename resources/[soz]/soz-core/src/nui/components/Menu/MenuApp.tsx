@@ -15,6 +15,7 @@ import { AdminMenuMapper } from '../Admin/Mapper/AdminMenuMapper';
 import { BahamaUnicornJobMenu } from '../BahamaUnicorn/BahamaUnicornJobMenu';
 import { BennysOrderMenu } from '../Bennys/BennysOrderMenu';
 import { DrivingSchoolMenu } from '../DrivingSchool/DrivingSchoolMenu';
+import { FdfJobMenu } from '../FDF/FdfJobMenu';
 import { FightForStyleJobMenu } from '../FightForStyle/FightForStyleJobMenu';
 import { FoodJobMenu } from '../Food/FoodJobMenu';
 import { GarbageJobMenu } from '../Garbage/GarbageJobMenu';
@@ -215,6 +216,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
             <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement data={menuData} />} />
+            <Route path={`/${MenuType.FDFJobMenu}/*`} element={<FdfJobMenu data={menuData} />} />
         </Routes>
     );
 };

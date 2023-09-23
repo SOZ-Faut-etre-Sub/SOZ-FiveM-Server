@@ -124,6 +124,13 @@ CreateThread(function()
         minZ = 34.38,
         maxZ = 34.68,
     }, {options = callSociety("555-GOUV"), distance = 2.5})
+
+    exports["qb-target"]:AddBoxZone("fdf:gouv", vector3(2441.57, 4971.27, 47.11), 0.2, 0.3, {
+        name = "bell:fdf",
+        heading = 198.15,
+        minZ = 46.71,
+        maxZ = 47.11,
+    }, {options = callSociety("555-FDF"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)

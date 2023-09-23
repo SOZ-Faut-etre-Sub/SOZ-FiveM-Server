@@ -174,6 +174,13 @@ Config.SafeStorages = {
         size = vec2(1.00, 0.80),
         heading = 0.0,
     },
+    ["safe_fdf"] = {
+        label = "Coffre Ferme de Fou",
+        owner = "fdf",
+        position = vector3(2436.49, 4964.26, 46.81),
+        size = vec2(1.00, 0.85),
+        heading = 43.58,
+    },
     ["safe_gouv"] = {
         label = "Coffre Gouvernement",
         owner = "gouv",
