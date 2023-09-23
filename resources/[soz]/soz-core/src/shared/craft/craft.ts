@@ -37,3 +37,9 @@ export const Crafts: Record<string, Record<string, CraftCategory>> = {
     [JobType.Baun]: BaunCraftsLists,
     [JobType.Ffs]: FFSCraftsLists,
 };
+
+export const CraftEvent: Record<string, string> = {
+    [JobType.Food]: 'job_cm_food_craft',
+    [JobType.Baun]: 'job_baun_craft',
+    [JobType.Ffs]: 'job_ffs_craft',
+};
