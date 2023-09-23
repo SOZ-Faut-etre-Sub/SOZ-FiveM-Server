@@ -9,6 +9,7 @@ import { useConfig } from '../../../../hooks/usePhone';
 import { SendIcon } from '../../../../ui/assets/send';
 import { TextareaField } from '../../../../ui/old_components/Input';
 import { useMessageAPI } from '../../hooks/useMessageAPI';
+import {CustomEmoji} from "../../../../config/CustomEmoji";
 
 interface IProps {
     onAddImageClick(): void;
@@ -53,6 +54,7 @@ const MessageInput: FunctionComponent<IProps> = ({ messageConversationId, onAddI
                     <Picker
                         data={data}
                         set="apple"
+                        custom={CustomEmoji}
                         onEmojiSelect={handleEmojiAppend}
                         navPosition="bottom"
                         previewPosition="none"
