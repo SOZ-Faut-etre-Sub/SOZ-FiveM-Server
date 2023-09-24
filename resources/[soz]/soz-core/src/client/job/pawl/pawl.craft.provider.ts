@@ -34,7 +34,7 @@ export class PawlCraftProvider {
                     label: 'Fabriquer',
                     blackoutGlobal: true,
                     blackoutJob: JobType.Pawl,
-                    icon: 'c:/food/chef.png',
+                    icon: 'c:/pawl/start-prod.png',
                     color: JobType.Pawl,
                     job: JobType.Pawl,
                     canInteract: () => {

@@ -229,7 +229,7 @@ RegisterNetEvent("pawl:client:syncField", function(identifier, data)
     if data then
         for _, v in pairs(data) do
             if (currentTime - v.harvestTime) * 1000 >= Config.Field.RefillDelay then
-                local model = v.model:find("^soz_") and v.model or "soz_"..v.model
+                local model = v.model:find("^soz_") and v.model or "soz_" .. v.model
                 local tree = CreateObjectNoOffset(model, v.position.x, v.position.y, v.position.z, false, false, false)
                 SetEntityHeading(tree, v.position.w or 0.0)
                 FreezeEntityPosition(tree, true)
