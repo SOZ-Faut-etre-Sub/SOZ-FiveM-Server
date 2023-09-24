@@ -11,6 +11,8 @@ Config.Blip = {
         {Coords = vector3(-866.77, 1928.964, 150.5528), Radius = 200.0},
         {Coords = vector3(545.7898, 4193.535, 42.58311), Radius = 150.0},
         {Coords = vector3(-938.01, 2574.81, 77.93), Radius = 150.0},
+        {Coords = vector3(1713.70, 5150.39, 126.54), Radius = 150.0},
+        {Coords = vector3(509.6548, 2234.974, 64.58481), Radius = 150.0},
     },
 }
 
@@ -78,6 +80,8 @@ Config.Field = {
         ["raton_canyon"] = {},
         ["alamo_sea"] = {},
         ["chaparral"] = {},
+        ["grapeseed"] = {},
+        ["baytree_canyon"] = {},
     },
     Sap = {
         ["paleto_cove"] = {},
@@ -85,6 +89,8 @@ Config.Field = {
         ["raton_canyon"] = {},
         ["alamo_sea"] = {},
         ["chaparral"] = {},
+        ["grapeseed"] = {},
+        ["baytree_canyon"] = {},
     },
     Capacity = 5,
     RefillDelay = 4 * 60 * 60 * 1000,
