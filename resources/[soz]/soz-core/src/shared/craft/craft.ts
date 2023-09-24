@@ -1,3 +1,4 @@
+import { AnimationInfo } from '../animation';
 import { Feature } from '../features';
 import { JobType } from '../job';
 import { BaunCraftsLists } from '../job/baun';
@@ -9,6 +10,7 @@ export type CraftCategory = {
     duration: number;
     feature?: Feature;
     icon?: string;
+    animation?: AnimationInfo;
 };
 
 export type CraftRecipe = {
@@ -34,4 +36,10 @@ export const Crafts: Record<string, Record<string, CraftCategory>> = {
     [JobType.Food]: FoodCraftsLists,
     [JobType.Baun]: BaunCraftsLists,
     [JobType.Ffs]: FFSCraftsLists,
+};
+
+export const CraftEvent: Record<string, string> = {
+    [JobType.Food]: 'job_cm_food_craft',
+    [JobType.Baun]: 'job_baun_craft',
+    [JobType.Ffs]: 'job_ffs_craft',
 };
