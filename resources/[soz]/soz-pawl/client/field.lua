@@ -138,8 +138,8 @@ local createChainsawThread = function()
     end)
 end
 
-RegisterNetEvent("pawl:client:checkChainsawFuel", function()
-    TriggerEvent("soz-core:client:job:pawl:fast-harvest-tree");
+RegisterNetEvent("pawl:client:checkChainsawFuel", function(data)
+    TriggerEvent("soz-core:client:job:pawl:fast-harvest-tree", data);
 end)
 
 RegisterNetEvent("pawl:client:fastHarvestTree", function(data)
