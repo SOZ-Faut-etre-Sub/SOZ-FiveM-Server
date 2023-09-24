@@ -1,8 +1,6 @@
 import { Provider } from '@core/decorators/provider';
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
-import { Tick, TickInterval } from '@public/core/decorators/tick';
-import { wait } from '@public/core/utils';
 
 import { BlipFactory } from '../blip';
 
@@ -33,6 +31,8 @@ export class CayoMapProvider {
         });
     }
 
+    /*
+    //Disable as it causes lags when opening map
     @Tick(TickInterval.EVERY_FRAME)
     public async displayLoop() {
         if (IsPauseMenuActive() && !IsMinimapInInterior()) {
@@ -42,4 +42,5 @@ export class CayoMapProvider {
             await wait(500);
         }
     }
+    */
 }
