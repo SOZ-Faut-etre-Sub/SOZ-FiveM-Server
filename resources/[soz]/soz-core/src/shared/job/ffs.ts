@@ -41,7 +41,15 @@ export enum LuxuryGarment {
 
 export const FFSCraftsLists: Record<string, CraftCategory> = {
     Fibres: {
-        duration: 8000,
+        animation: {
+            name: 'base',
+            dictionary: 'amb@prop_human_seat_sewing@female@base',
+            options: {
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        },
+        duration: 2000,
         icon: '🧶',
         recipes: {
             [FabricMaterial.NATURAL_FIBER]: {
@@ -77,6 +85,14 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
     },
     ['Vêtements en fibres naturelles']: {
+        animation: {
+            name: 'base',
+            dictionary: 'amb@prop_human_seat_sewing@female@base',
+            options: {
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        },
         duration: 8000,
         icon: '🧥',
         recipes: {
@@ -131,6 +147,14 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
     },
     ['Vêtements en fibres artificielles']: {
+        animation: {
+            name: 'base',
+            dictionary: 'amb@prop_human_seat_sewing@female@base',
+            options: {
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        },
         duration: 8000,
         icon: '🧥',
         recipes: {
@@ -149,6 +173,14 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
     },
     ['Vêtements en fibres synthétique']: {
+        animation: {
+            name: 'base',
+            dictionary: 'amb@prop_human_seat_sewing@female@base',
+            options: {
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        },
         duration: 8000,
         icon: '👕',
         recipes: {
@@ -179,6 +211,14 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
     },
     ['Tenues']: {
+        animation: {
+            name: 'base',
+            dictionary: 'amb@prop_human_seat_sewing@female@base',
+            options: {
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        },
         duration: 8000,
         icon: '⚒️',
         recipes: {
@@ -192,6 +232,14 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
     },
     ['Accessoires']: {
+        animation: {
+            name: 'base',
+            dictionary: 'amb@prop_human_seat_sewing@female@base',
+            options: {
+                repeat: true,
+                onlyUpperBody: true,
+            },
+        },
         duration: 8000,
         icon: '👞',
         recipes: {

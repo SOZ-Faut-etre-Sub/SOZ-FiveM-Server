@@ -1,7 +1,7 @@
 import { Provider } from '@core/decorators/provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
-import { Crafts, CraftsList } from '@public/shared/craft/craft';
+import { CraftEvent, Crafts, CraftsList } from '@public/shared/craft/craft';
 import { isFeatureEnabled } from '@public/shared/features';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -120,7 +120,7 @@ export class CraftProvider {
             'craft_transform',
             `Création de "${item.label}"`,
             crafts[category].duration,
-            {
+            crafts[category].animation || {
                 dictionary: 'mp_fm_intro_cut',
                 name: 'fixing_a_ped',
                 options: {
@@ -146,13 +146,17 @@ export class CraftProvider {
         this.notifier.notify(source, `Vous avez confectionné ~y~${recipe.amount}~s~ ~g~${item.label}~s~.`, 'success');
 
         this.monitor.publish(
-            'drug_transfrom',
+            CraftEvent[type] || 'craft',
             {
+                item_id: itemId,
                 player_source: source,
             },
             {
-                item: item.name,
+                item_label: item.label,
+                quantity: recipe.amount,
                 position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                type: type,
+                category: category,
             }
         );
 
