@@ -17,6 +17,7 @@ import { useSociety } from '../../../hooks/app/useSociety';
 import { useConfig } from '../../../hooks/usePhone';
 import { DayAgo } from '../../../ui/components/DayAgo';
 import { useMessageNotifications } from '../hooks/useMessageNotifications';
+import Emoji from "../../../ui/components/Emoji";
 
 const MessagesList = (): any => {
     const config = useConfig();
@@ -108,7 +109,15 @@ const MessagesList = (): any => {
                                             'text-gray-700': config.theme.value === 'light',
                                         })}
                                     >
-                                        {message.message}
+
+                                        {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map((text, i) => {
+                                            if (text.startsWith(':') && text.endsWith(':')) {
+
+                                                return <Emoji key={i} emoji={text} />;
+                                            }
+
+                                            return <React.Fragment key={i}>{text}</React.Fragment>;
+                                        })}
                                     </p>
                                     <p className="flex justify-between text-left text-xs text-gray-400">
                                         {message.isDone ? (
