@@ -18,7 +18,7 @@ export class PawlHarvestProvider {
     private notifier: Notifier;
 
     @OnEvent(ClientEvent.PAWL_FAST_HARVEST_TREE)
-    public fastHarvest() {
+    public fastHarvest(data) {
         const items = this.inventoryManager.getItems();
         const chainsaw = items.find(item => item.name === 'chainsaw');
 
@@ -31,6 +31,6 @@ export class PawlHarvestProvider {
             slot: chainsaw.slot,
             fuel: chainsaw.metadata.fuel,
         });
-        TriggerEvent('pawl:client:fastHarvestTree', source);
+        TriggerEvent('pawl:client:fastHarvestTree', data);
     }
 }
