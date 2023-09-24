@@ -120,7 +120,14 @@ export const PawlCloakroom: WardrobeConfig = {
 export const PawlCraftsLists: Record<string, CraftCategory> = {
     Objets: {
         duration: 15000,
-        icon: '🍷',
+        animation: {
+            dictionary: 'mp_arresting',
+            name: 'a_uncuff',
+            options: {
+                onlyUpperBody: true,
+                repeat: true,
+            },
+        },
         recipes: {
             police_barrier: {
                 inputs: {

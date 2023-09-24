@@ -5,7 +5,6 @@ import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { log } from 'console';
 
 @Provider()
 export class PawlHarvestProvider {

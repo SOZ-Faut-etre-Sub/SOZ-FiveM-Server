@@ -143,7 +143,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'pommade', type: 'item', price: 15 },
             { id: 'tissue', type: 'item', price: 5 },
             { id: 'weapon_fireextinguisher', type: 'weapon', metadata: { ammo: 400 }, price: 5 },
-            { id: 'walkstick', type: 'item', price: 15 },
             { id: 'poumon', type: 'item', price: 2000 },
             { id: 'rein', type: 'item', price: 2000 },
             { id: 'foie', type: 'item', price: 2000 },

@@ -50,4 +50,5 @@ export const CraftEvent: Record<string, string> = {
     [JobType.Food]: 'job_cm_food_craft',
     [JobType.Baun]: 'job_baun_craft',
     [JobType.Ffs]: 'job_ffs_craft',
+    [JobType.Pawl]: 'job_pawl_craft',
 };
