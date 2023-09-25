@@ -127,7 +127,7 @@ export class RepositoryProvider {
             return null;
         }
 
-        return repository.get();
+        return repository.raw();
     }
 
     public async refresh(repositoryName: string): Promise<any | null> {
