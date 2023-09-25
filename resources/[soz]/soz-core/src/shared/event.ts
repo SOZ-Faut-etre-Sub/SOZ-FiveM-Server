@@ -493,6 +493,7 @@ export enum ClientEvent {
     WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
     WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
     WEAPON_EXPLOSION = 'soz-core:client:weapon:explosion',
+    WEAPON_CLEAR_WEAPON = 'soz-core:client:weapon:clear',
 
     MDR_USE_TICKET = 'soz-core:client:mdr:use-ticket',
     HEIST_GUARD = 'soz-core:client:heist:guard',
