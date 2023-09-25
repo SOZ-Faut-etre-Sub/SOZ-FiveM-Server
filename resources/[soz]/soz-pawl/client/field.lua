@@ -145,12 +145,11 @@ end)
 RegisterNetEvent("pawl:client:fastHarvestTree", function(data)
     harvesting = true
     local ped = PlayerPedId()
-    Wait(500)
-
+    TriggerEvent('soz-core:client:weapon:clear');
+    Wait(2000)
     exports["soz-core"]:DrawNotification("Vous êtes en train de ~g~tronçonner l'arbre~s~.")
-
+    
     createChainsawThread()
-
     local success, _ = exports["soz-utils"]:Progressbar("harvest-tree", "Vous tronçonnez...", Config.FastHarvest.Duration, false, true,
                                                         {disableMovement = true, disableCombat = true}, {
         animDict = "anim@amb@business@cfm@cfm_cut_sheets@",
