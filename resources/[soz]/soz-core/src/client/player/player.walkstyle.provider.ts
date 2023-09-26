@@ -54,7 +54,7 @@ export class PlayerWalkstyleProvider {
 
         ResetPedMovementClipset(ped, transitionSpeed);
 
-        if (walkStyle === null || walkStyle === '') {
+        if (!walkStyle) {
             return;
         }
 
