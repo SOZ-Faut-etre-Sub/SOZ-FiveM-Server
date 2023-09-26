@@ -145,7 +145,7 @@ end)
 RegisterNetEvent("pawl:client:fastHarvestTree", function(data)
     harvesting = true
     local ped = PlayerPedId()
-    TriggerEvent('soz-core:client:weapon:clear');
+    TriggerEvent("soz-core:client:weapon:clear");
     Wait(2000)
     exports["soz-core"]:DrawNotification("Vous êtes en train de ~g~tronçonner l'arbre~s~.")
     
