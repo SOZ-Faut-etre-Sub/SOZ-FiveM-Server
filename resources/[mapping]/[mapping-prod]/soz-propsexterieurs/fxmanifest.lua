@@ -14,3 +14,4 @@ data_file 'DLC_ITYP_REQUEST' "stream/soz_atm_entreprise.ytyp"
 data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_radar_2.ytyp'
 data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_atm.ytyp'
 data_file 'DLC_ITYP_REQUEST' 'stream/soz_prop_gas_pump.ytyp'
+data_file 'DLC_ITYP_REQUEST' 'stream/soz_trees_marked_props.ytyp'

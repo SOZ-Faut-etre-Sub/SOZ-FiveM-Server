@@ -68,6 +68,10 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if (item?.metadata?.bait) {
                 itemExtraLabel += ` [${item.metadata.bait?.label}]`
             }
+        } else if(item.name === 'chainsaw'){
+            if (item?.metadata?.fuel) {
+                itemExtraLabel += ` [${item.metadata.fuel.toString()} L]`
+            }
         } else if(item.type === 'fish'){
             if(item?.metadata?.weight && item?.metadata?.length){
                 secondaryDescription += '<div style="display:flex;flex-direction:column;margin-top:0.5rem;">'
