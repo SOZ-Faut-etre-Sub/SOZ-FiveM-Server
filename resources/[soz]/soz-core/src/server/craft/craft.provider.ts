@@ -3,7 +3,9 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
 import { CraftEvent, Crafts, CraftsList } from '@public/shared/craft/craft';
 import { isFeatureEnabled } from '@public/shared/features';
+import { InventoryItemMetadata } from '@public/shared/item';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
+import { getRandomKeyWeighted } from '@public/shared/random';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -141,7 +143,20 @@ export class CraftProvider {
             this.inventoryManager.removeNotExpiredItem(source, requiredItemId, input.count);
         }
 
-        this.inventoryManager.addItemToInventory(source, itemId, recipe.amount);
+        const metadata: InventoryItemMetadata = {};
+        if (recipe.rewardTier) {
+            const rewiardTier: Record<string, number> = {};
+            for (const [name, reward] of Object.entries(recipe.rewardTier)) {
+                rewiardTier[name] = reward.chance;
+            }
+
+            const rewardName = getRandomKeyWeighted(rewiardTier);
+
+            metadata.tier = recipe.rewardTier[rewardName].id;
+            metadata.label = rewardName;
+        }
+
+        this.inventoryManager.addItemToInventory(source, itemId, recipe.amount, metadata);
 
         this.notifier.notify(source, `Vous avez confectionné ~y~${recipe.amount}~s~ ~g~${item.label}~s~.`, 'success');
 

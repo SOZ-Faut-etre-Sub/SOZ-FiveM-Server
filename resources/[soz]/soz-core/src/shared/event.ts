@@ -143,6 +143,9 @@ export enum ServerEvent {
     UPW_REFILL_STATION = 'soz-core:server:job:upw:refill-station',
     UPW_CHANGE_BATTERY = 'soz-core:server:job:upw:change-battery',
     UPW_SET_CHARGER_PRICE = 'soz-core:server:job:upw:set-charger-price',
+
+    PAWL_DECREASE_CHAINSAW_FUEL = 'soz-core:server:job:pawl:decrease-chainsaw-fuel',
+
     SHOP_BUY = 'soz-core:server:shop:buy',
     SHOP_TATTOO_RESET = 'soz-core:server:shop:tattoo-reset',
     ZKEA_CHECK_STOCK = 'soz-core:client:shop:zkea:check-stock',
@@ -479,6 +482,8 @@ export enum ClientEvent {
     UPW_OPEN_CLOAKROOM = 'soz-core:client:job:upw:open-cloakroom',
     UPW_CREATE_CHARGER = 'soz-core:client:job:upw:create-charger',
 
+    PAWL_FAST_HARVEST_TREE = 'soz-core:client:job:pawl:fast-harvest-tree',
+
     RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
@@ -488,6 +493,7 @@ export enum ClientEvent {
     WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
     WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
     WEAPON_EXPLOSION = 'soz-core:client:weapon:explosion',
+    WEAPON_CLEAR_WEAPON = 'soz-core:client:weapon:clear',
 
     MDR_USE_TICKET = 'soz-core:client:mdr:use-ticket',
     HEIST_GUARD = 'soz-core:client:heist:guard',
