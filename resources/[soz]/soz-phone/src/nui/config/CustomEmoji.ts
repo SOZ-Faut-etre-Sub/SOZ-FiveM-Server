@@ -93,8 +93,8 @@ export const CustomEmoji = [
       {
         id: 'stonk',
         name: 'Stonk Security',
-        keywords: ['stonk', 'Stonk Security'],
-        skins: [{ src: 'media/society_icon/stonk.webp' }],
+        keywords: ['stonk'],
+        skins: [{ src: 'media/emojis/society/stonk.png' }],
       },
       {
         id: 'tn',

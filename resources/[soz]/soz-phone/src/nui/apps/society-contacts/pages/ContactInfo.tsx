@@ -1,26 +1,33 @@
-import { Transition } from '@headlessui/react';
-import { ChevronLeftIcon } from '@heroicons/react/outline';
-import { ChatIcon } from '@heroicons/react/solid';
-import { SocietiesDatabaseLimits } from '@typings/society';
-import { AppContent } from '@ui/components/AppContent';
-import { AppTitle } from '@ui/components/AppTitle';
-import { ActionButton } from '@ui/old_components/ActionButton';
-import { Button } from '@ui/old_components/Button';
-import { TextareaField } from '@ui/old_components/Input';
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import {Transition} from '@headlessui/react';
+import {ChevronLeftIcon, EmojiHappyIcon} from '@heroicons/react/outline';
+import {ChatIcon} from '@heroicons/react/solid';
+import {SocietiesDatabaseLimits} from '@typings/society';
+import {AppContent} from '@ui/components/AppContent';
+import {AppTitle} from '@ui/components/AppTitle';
+import {ActionButton} from '@ui/old_components/ActionButton';
+import {Button} from '@ui/old_components/Button';
+import {TextareaField} from '@ui/old_components/Input';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {useNavigate, useParams} from 'react-router-dom';
 
-import { useSociety } from '../../../hooks/app/useSociety';
-import { Checkbox } from '../../../ui/components/Checkbox';
-import { ContactPicture } from '../../../ui/components/ContactPicture';
-import { useContactsAPI } from '../hooks/useContactsAPI';
+import {useSociety} from '../../../hooks/app/useSociety';
+import {Checkbox} from '../../../ui/components/Checkbox';
+import {ContactPicture} from '../../../ui/components/ContactPicture';
+import {useContactsAPI} from '../hooks/useContactsAPI';
+import {CustomEmoji} from "../../../config/CustomEmoji";
+import Picker from '@emoji-mart/react';
+import data from '@emoji-mart/data/sets/14/apple.json';
+import {useConfig} from "../../../hooks/usePhone";
+import cn from "classnames";
+
 
 const ContactsInfoPage: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
     const { getContact } = useSociety();
+    const config = useConfig();
     const { sendSocietyMessage } = useContactsAPI();
     const contact = getContact(parseInt(id));
 
@@ -28,6 +35,12 @@ const ContactsInfoPage: React.FC = () => {
     const [message, setMessage] = useState('');
     const [anonymous, setAnonymous] = useState(false);
     const [position, setPosition] = useState(true);
+    const [emojiKeyboard, setEmojiKeyboard] = useState(false);
+
+
+    const handleEmojiAppend = async (emojiData: { shortcodes: string }) => {
+        setMessage(prev => prev + emojiData.shortcodes + ' ');
+    };
 
     const handleNumberChange: React.ChangeEventHandler<HTMLInputElement> = e => {
         const inputVal = e.currentTarget.value;
@@ -37,6 +50,7 @@ const ContactsInfoPage: React.FC = () => {
 
     const handleSend = () => {
         if (message.length >= 5) {
+            setEmojiKeyboard(false);
             sendSocietyMessage({ number: contact.number, message, anonymous, position });
             navigate('/society-contacts', { replace: true });
         }
@@ -65,6 +79,20 @@ const ContactsInfoPage: React.FC = () => {
                     <ContactPicture picture={contact.avatar} useOffset={false} size="large" />
                 </div>
                 <div>
+                    {emojiKeyboard && (
+                      <div className="absolute w-full z-10 top-[100px] left-[25px] right-0 opacity-90">
+                          <Picker
+                            data={data}
+                            set="apple"
+                            custom={CustomEmoji}
+                            onEmojiSelect={handleEmojiAppend}
+                            navPosition="bottom"
+                            previewPosition="none"
+                            searchPosition="none"
+                            className="w-full"
+                          />
+                      </div>
+                    )}
                     <TextareaField
                         value={message}
                         rows={14}
@@ -74,6 +102,25 @@ const ContactsInfoPage: React.FC = () => {
                     />
                 </div>
                 <div className="mx-10">
+                    <div
+                      className="flex items-center py-2 cursor-pointer"
+                      onClick={() => setEmojiKeyboard(s => !s)}
+                    >
+                        <EmojiHappyIcon
+                          className={cn(
+                            'pointer-events-none inline-block self-center h-5 w-5 mx-2',
+                          )}
+                        />
+                        <span
+                          className={cn('text-sm font-medium ', {
+                              'text-gray-100': config.theme.value === 'dark',
+                              'text-gray-900': config.theme.value === 'light',
+                          })}
+                        >
+                            Ajouter un emoji
+                        </span>
+
+                    </div>
                     <Checkbox
                         title="Envoyer avec ma position"
                         enabled={position}
