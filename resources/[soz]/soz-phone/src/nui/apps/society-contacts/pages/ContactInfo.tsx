@@ -1,24 +1,24 @@
-import {Transition} from '@headlessui/react';
-import {ChevronLeftIcon, EmojiHappyIcon} from '@heroicons/react/outline';
-import {ChatIcon} from '@heroicons/react/solid';
-import {SocietiesDatabaseLimits} from '@typings/society';
-import {AppContent} from '@ui/components/AppContent';
-import {AppTitle} from '@ui/components/AppTitle';
-import {ActionButton} from '@ui/old_components/ActionButton';
-import {Button} from '@ui/old_components/Button';
-import {TextareaField} from '@ui/old_components/Input';
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useNavigate, useParams} from 'react-router-dom';
+import { Transition } from '@headlessui/react';
+import { ChevronLeftIcon, EmojiHappyIcon } from '@heroicons/react/outline';
+import { ChatIcon } from '@heroicons/react/solid';
+import { SocietiesDatabaseLimits } from '@typings/society';
+import { AppContent } from '@ui/components/AppContent';
+import { AppTitle } from '@ui/components/AppTitle';
+import { ActionButton } from '@ui/old_components/ActionButton';
+import { Button } from '@ui/old_components/Button';
+import { TextareaField } from '@ui/old_components/Input';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import {useSociety} from '../../../hooks/app/useSociety';
-import {Checkbox} from '../../../ui/components/Checkbox';
-import {ContactPicture} from '../../../ui/components/ContactPicture';
-import {useContactsAPI} from '../hooks/useContactsAPI';
-import {CustomEmoji} from "../../../config/CustomEmoji";
+import { useSociety } from '../../../hooks/app/useSociety';
+import { Checkbox } from '../../../ui/components/Checkbox';
+import { ContactPicture } from '../../../ui/components/ContactPicture';
+import { useContactsAPI } from '../hooks/useContactsAPI';
+import { CustomEmoji } from "../../../config/CustomEmoji";
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data/sets/14/apple.json';
-import {useConfig} from "../../../hooks/usePhone";
+import { useConfig } from "../../../hooks/usePhone";
 import cn from "classnames";
 
 
