@@ -96,13 +96,15 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
         return
     end
 
+    local ped = GetPlayerPed(Player.PlayerData.source);
+
     if blockedCrimiDate[target] and blockedCrimiDate[target] > GetGameTimer() then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous devez attendre après avoir réalisé une action criminelle",
                            "error")
         return
     end
 
-    local vehicleId = GetVehiclePedIsIn(GetPlayerPed(Player.PlayerData.source), false)
+    local vehicleId = GetVehiclePedIsIn(ped, false)
     if vehicleId ~= 0 then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous devez d'abord descendre de votre véhicule.", "error")
         return
@@ -115,7 +117,9 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
     end
 
     local inside = Player.PlayerData.metadata["inside"]
-    inside.exitCoord = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
+
+    local coords = GetEntityCoords(ped)
+    inside.exitCoord = {x = coords.x, y = coords.y, z = coords.z, w = GetEntityHeading(ped)}
     Player.Functions.SetMetaData("inside", inside)
 
     TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, apartment:GetInsideCoord(), propertyId, apartmentId)
