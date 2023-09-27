@@ -11,6 +11,8 @@ Config.Blip = {
         {Coords = vector3(-866.77, 1928.964, 150.5528), Radius = 200.0},
         {Coords = vector3(545.7898, 4193.535, 42.58311), Radius = 150.0},
         {Coords = vector3(-938.01, 2574.81, 77.93), Radius = 150.0},
+        {Coords = vector3(1713.70, 5150.39, 126.54), Radius = 150.0},
+        {Coords = vector3(509.6548, 2234.974, 64.58481), Radius = 150.0},
     },
 }
 
@@ -22,47 +24,25 @@ Config.Harvest = {
     SecondaryRewardItems = {{name = "sap", amount = 20}},
 }
 
+Config.FastHarvest = {
+    Duration = 15000,
+    SapDuration = 8000,
+    RequiredWeapon = "chainsaw",
+    RewardItems = {{name = "tree_trunk", amount = 1}},
+    SecondaryRewardItems = {{name = "sap", amount = 20}},
+}
+
 Config.Processing = {
     Duration = 300000,
     ProcessingStorage = "pawl_log_processing",
     ProcessingItem = "tree_trunk",
-    ProcessingAmount = 1,
+    ProcessingAmount = 3,
     PlankStorage = "pawl_plank_storage",
     PlankItem = "wood_plank",
-    PlankAmount = 10,
+    PlankAmount = 30,
     SawdustStorage = "pawl_sawdust_storage",
     SawdustItem = "sawdust",
     SawdustAmount = 20,
-}
-
-Config.CraftDuration = 15000
-Config.Craft = {
-    ["police_barrier"] = {
-        Name = "Barrière de circulation",
-        SourceItem = "wood_plank",
-        RewardItem = "police_barrier",
-        RewardAmount = 1,
-    },
-    ["paper"] = {Name = "Feuilles de papier", SourceItem = "wood_plank", RewardItem = "paper", RewardAmount = 10},
-    ["empty_lunchbox"] = {
-        Name = "Paniers-repas",
-        SourceItem = "wood_plank",
-        RewardItem = "empty_lunchbox",
-        RewardAmount = 4,
-    },
-    ["cabinet_zkea"] = {
-        Name = "Meuble ZKEA",
-        SourceItem = "wood_plank",
-        SourceItemAmount = 2,
-        RewardItem = "cabinet_zkea",
-        RewardTier = {
-            [1] = {Id = 4, Name = "Divin", Chance = GetConvarInt("soz_pawl_craft_chance_tier_4", 25)},
-            [2] = {Id = 3, Name = "Sublime", Chance = GetConvarInt("soz_pawl_craft_chance_tier_3", 25)},
-            [3] = {Id = 2, Name = "Joli", Chance = GetConvarInt("soz_pawl_craft_chance_tier_2", 25)},
-            [4] = {Id = 1, Name = "Banal", Chance = GetConvarInt("soz_pawl_craft_chance_tier_1", 25)},
-        },
-        RewardAmount = 1,
-    },
 }
 
 Config.Degradation = {}
@@ -100,6 +80,8 @@ Config.Field = {
         ["raton_canyon"] = {},
         ["alamo_sea"] = {},
         ["chaparral"] = {},
+        ["grapeseed"] = {},
+        ["baytree_canyon"] = {},
     },
     Sap = {
         ["paleto_cove"] = {},
@@ -107,6 +89,8 @@ Config.Field = {
         ["raton_canyon"] = {},
         ["alamo_sea"] = {},
         ["chaparral"] = {},
+        ["grapeseed"] = {},
+        ["baytree_canyon"] = {},
     },
     Capacity = 5,
     RefillDelay = 4 * 60 * 60 * 1000,

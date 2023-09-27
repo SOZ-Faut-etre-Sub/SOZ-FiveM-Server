@@ -251,10 +251,15 @@ export const DrivingSchoolConfig = {
     startSpeeches: [
         {
             message: 'Ton examen va débuter. Boucle ta ceinture et nous pouvons partir.',
-            exclude: [DrivingSchoolLicenseType.Moto],
+            exclude: [DrivingSchoolLicenseType.Moto, DrivingSchoolLicenseType.Boat],
         },
         {
             message: 'Suis ton GPS à allure modérée, et respecte les autres usagers de la route.',
+            exclude: [DrivingSchoolLicenseType.Boat, DrivingSchoolLicenseType.Heli],
+        },
+        {
+            message: "Releve l'ancre, boucle ta ceinture, on est parti à une allure modérée",
+            include: [DrivingSchoolLicenseType.Boat],
         },
     ],
     vehicleLimits: {

@@ -43,11 +43,11 @@ export const ShopContainer = () => {
 
     const onKeyDownReceived = useCallback(
         (event: KeyboardEvent) => {
-            if (!event.repeat && event.key === 'Escape') {
+            if (display && !event.repeat && event.key === 'Escape') {
                 closeNUI(() => { closeMenu(); })
             }
         },
-        [closeMenu],
+        [closeMenu, display],
     );
 
     const calcCartPrice = (cartContent: ShopItem[]) => {

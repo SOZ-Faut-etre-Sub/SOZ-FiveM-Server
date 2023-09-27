@@ -211,7 +211,6 @@ RegisterNetEvent("pawl:server:startProcessingTree", function(data)
     end)
 end)
 
---- Crafting
 function pairsByKeys(t)
     local a = {}
     for n in pairs(t) do
@@ -229,63 +228,6 @@ function pairsByKeys(t)
     end
     return iter
 end
-
-RegisterNetEvent("pawl:server:craft", function(identifier)
-    local Player = QBCore.Functions.GetPlayer(source)
-    if Player == nil then
-        return
-    end
-
-    local craft = Config.Craft[identifier]
-    if craft == nil then
-        return
-    end
-
-    if not exports["soz-inventory"]:CanCarryItem(Player.PlayerData.source, craft.RewardItem, craft.RewardAmount) then
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas fabriquer d'objet en ce moment.", "error")
-        return
-    end
-
-    local craftItemInventory = exports["soz-inventory"]:GetItem(Player.PlayerData.source, craft.SourceItem, nil, true)
-
-    if craftItemInventory < (craft.SourceItemAmount or 1) then
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous n'avez pas assez de planches !", "error")
-        return
-    end
-
-    local metadata = {}
-    if craft.RewardTier then
-        math.randomseed(GetGameTimer())
-        local random = math.random(1, 100)
-
-        for _, tier in pairsByKeys(craft.RewardTier) do
-            metadata.tier = tier.Id
-            metadata.label = tier.Name
-
-            if random <= tier.Chance then
-                break
-            end
-        end
-    end
-
-    if exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, craft.SourceItem, craft.SourceItemAmount or 1) then
-        exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, craft.RewardItem, craft.RewardAmount, metadata, nil,
-                                         function(success, reason)
-            if success then
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
-                                   "Vous avez fabriqué  ~g~" .. craft.RewardAmount .. " " .. craft.Name .. "~s~ !", "success")
-
-                exports["soz-core"]:Event("job_pawl_craft", {
-                    player_source = Player.PlayerData.source,
-                    item = craft.RewardItem,
-                    tier = metadata.tier,
-                }, {amount = craft.RewardAmount})
-            else
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas récupérer d'objet !", "error")
-            end
-        end)
-    end
-end)
 
 exports("GetMetrics", function()
     local metrics = {degradation_percent = GetDegradationPercentage(), fields = {}}

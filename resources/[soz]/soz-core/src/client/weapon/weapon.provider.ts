@@ -116,6 +116,11 @@ export class WeaponProvider {
         this.playerService.updateState({ isInventoryBusy: false });
     }
 
+    @OnEvent(ClientEvent.WEAPON_CLEAR_WEAPON)
+    async onClearWeapon() {
+        await this.weapon.clear();
+    }
+
     private async onUseAmmoLoop(ammoName: string) {
         if (!this.weapon.getCurrentWeapon()) {
             return;

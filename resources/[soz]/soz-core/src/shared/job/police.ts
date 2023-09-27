@@ -106,7 +106,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -161,7 +161,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -316,7 +316,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -371,7 +371,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -529,7 +529,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -565,7 +565,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -722,7 +722,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -758,7 +758,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -1196,7 +1196,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
                         Drawable:
@@ -1237,7 +1237,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -1280,7 +1280,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
                         Drawable:
@@ -1321,7 +1321,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -1366,7 +1366,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
                         Drawable:
@@ -1407,7 +1407,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -1450,7 +1450,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
                         Drawable:
@@ -1491,7 +1491,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {

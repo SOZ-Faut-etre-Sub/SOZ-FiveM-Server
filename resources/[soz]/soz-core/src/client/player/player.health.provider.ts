@@ -300,6 +300,26 @@ export class PlayerHealthProvider {
         }
     }
 
+    @Tick(TickInterval.EVERY_SECOND)
+    private async updateArmorMetadata(): Promise<void> {
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        const metadataArmor = player.metadata.armor;
+
+        if (metadataArmor.hidden) {
+            return;
+        }
+
+        const armor = GetPedArmour(PlayerPedId());
+        if (armor != metadataArmor.current) {
+            metadataArmor.current = armor;
+            TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'armor', metadataArmor);
+        }
+    }
+
     private async doStrengthExercise(type: keyof PlayerServerStateExercise) {
         const playerState = await emitRpc<PlayerServerState>(RpcServerEvent.PLAYER_GET_SERVER_STATE);
 
