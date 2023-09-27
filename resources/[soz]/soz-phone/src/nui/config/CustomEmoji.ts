@@ -5,14 +5,14 @@ export const CustomEmoji = [
     emojis: [
       {
         id: 'baun',
-        name: 'BAUB',
+        name: 'BAUN',
         keywords: ['baun'],
         skins: [{ src: 'media/emojis/society/baun.png' }],
       },
       {
         id: 'bb',
         name: 'BlueBird',
-        keywords: ['bb', 'bluebird'],
+        keywords: ['bb'],
         skins: [{ src: 'media/emojis/society/bb.png' }],
       },
       {
@@ -24,7 +24,7 @@ export const CustomEmoji = [
       {
         id: 'cjr',
         name: 'Carl Junior Service',
-        keywords: ['cjr', 'Carl Jnr', 'Carl Junior Service'],
+        keywords: ['cjr'],
         skins: [{ src: 'media/emojis/society/cjr.png' }],
       }, {
         id: 'cm',
@@ -33,14 +33,27 @@ export const CustomEmoji = [
         skins: [{ src: 'media/emojis/society/cm.png' }],
       },
       {
+        id: 'fbi',
+        name: 'FBI',
+        keywords: ['fbi'],
+        skins: [{ src: 'media/emojis/society/fbi.png' }],
+      },
+      {
         id: 'ffs',
         name: 'Fight For Style',
-        keywords: ['ffs', 'fight for style'],
+        keywords: ['ffs'],
         skins: [{ src: 'media/emojis/society/ffs.png' }],
-      }, {
+      },
+      {
+        'id': 'gouv',
+        'name': 'Gouvernement',
+        'keywords': ['gouv'],
+        'skins': [{'src': 'media/emojis/society/gouv.png'}],
+      },
+      {
         id: 'lsmc',
         name: 'Los Santos Medical Center',
-        keywords: ['lsmc', 'Los Santos Medical Center'],
+        keywords: ['lsmc'],
         skins: [{ src: 'media/emojis/society/lsmc.png' }],
       },
       {
@@ -48,7 +61,13 @@ export const CustomEmoji = [
         name: 'LSPD',
         keywords: ['lspd'],
         skins: [{ src: 'media/emojis/society/lspd.png' }],
-      }, {
+      },
+      {
+        id: 'mdr',
+        name: 'Mandatory',
+        keywords: ['mdr'],
+        skins: [{ src: 'media/emojis/society/mdr.png' }],
+      },{
         id: 'mtp',
         name: 'Michel Transport Petrol',
         keywords: ['mtp'],
@@ -62,27 +81,34 @@ export const CustomEmoji = [
       }, {
         id: 'pawl',
         name: 'Pipe and Wooden Leg',
-        keywords: ['pawl', 'Pipe and Wooden Leg'],
+        keywords: ['pawl'],
         skins: [{ src: 'media/emojis/society/pawl.png' }],
+      },
+      {
+        id: 'sasp',
+        name: 'San Andreas State Police',
+        keywords: ['sasp'],
+        skins: [{ src: 'media/emojis/society/sasp.png' }],
       },
       {
         id: 'stonk',
         name: 'Stonk Security',
         keywords: ['stonk', 'Stonk Security'],
-        skins: [{ src: 'media/emojis/society/stonk.png' }],
+        skins: [{ src: 'media/society_icon/stonk.webp' }],
       },
       {
         id: 'tn',
         name: 'Twitch News',
-        keywords: ['tn', 'Twitch News'],
+        keywords: ['tn'],
         skins: [{ src: 'media/emojis/society/tn.png' }],
       },
       {
         id: 'upw',
         name: 'Unexpected Power & Water',
-        keywords: ['upw', 'Unexpected Power & Water'],
+        keywords: ['upw'],
         skins: [{ src: 'media/emojis/society/upw.png' }],
-      }
+      },
+
     ],
   },
 ]
