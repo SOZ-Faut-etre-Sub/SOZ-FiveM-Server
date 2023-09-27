@@ -247,7 +247,7 @@ export class VehicleGarageProvider {
             return HouseGarageLimits[apartmentTier] ?? 0;
         }
 
-        return 38;
+        return 60;
     }
 
     @Rpc(RpcServerEvent.VEHICLE_GARAGE_GET_FREE_PLACES)

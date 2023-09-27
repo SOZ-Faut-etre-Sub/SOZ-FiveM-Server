@@ -8,6 +8,36 @@ Config.Storages["food_fridge"] = {
     heading = 251.1,
 }
 
+Config.Storages["food_fridge2"] = {
+    label = "Frigo Château Marius",
+    type = "fridge",
+    owner = "food",
+    position = vector3(-1927.72, 2042.20, 140.73),
+    size = vector2(1.0, 3.4),
+    offsetUpZ = 2.0,
+    heading = 257.32,
+}
+
+Config.Storages["food_fridge3"] = {
+    label = "Frigo Château Marius",
+    type = "fridge",
+    owner = "food",
+    position = vector3(-1926.27, 2048.37, 140.73),
+    size = vector2(1.0, 3.6),
+    offsetUpZ = 2.0,
+    heading = 256.38,
+}
+
+Config.Storages["food_fridge4"] = {
+    label = "Frigo Château Marius",
+    type = "fridge",
+    owner = "food",
+    position = vector3(-1924.85, 2054.54, 140.73),
+    size = vector2(1.5, 3.4),
+    offsetUpZ = 2.0,
+    heading = 256.22,
+}
+
 Config.Storages["food_storage"] = {
     label = "Stockage Château Marius",
     type = "storage",

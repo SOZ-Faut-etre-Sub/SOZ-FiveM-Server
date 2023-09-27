@@ -13,8 +13,8 @@ import { NuiAudioMethodMap } from './audio';
 import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
 import { NuiClothShopMethodMap } from './cloth_shop';
+import { NuiCraftMethodMap } from './craft';
 import { NuiDrugMethodMap } from './drug';
-import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
 import { NuiFieldMethodMap } from './field';
 import { NuiFishingMethodMap } from './fishing';
 import { NuiHoodMethodMap } from './hood';
@@ -44,7 +44,6 @@ export interface NuiMethodMap {
     upw_order_menu: NuiUpwOrderMenuMethodMap;
     clipboard: NuiClipboardMethodMap;
     cloth_shop: NuiClothShopMethodMap;
-    ffs_recipe_book: NuiFfsRecipeBookMethodMap;
     global: NuiGlobalMethodMap;
     input: NuiInputMethodMap;
     menu: NuiMenuMethodMap;
@@ -70,6 +69,7 @@ export interface NuiMethodMap {
     book: NuiBookMethodMap;
     field: NuiFieldMethodMap;
     placement_prop: NuiPlacementPropMethodMap;
+    craft: NuiCraftMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

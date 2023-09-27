@@ -124,6 +124,8 @@ export class VehicleConditionProvider {
         // loop through all vehicles we have to check
         for (const [vehicleNetworkId, currentCondition] of this.currentVehicleCondition) {
             if (!NetworkDoesNetworkIdExist(vehicleNetworkId)) {
+                this.currentVehicleCondition.delete(vehicleNetworkId);
+
                 continue;
             }
 
@@ -131,11 +133,15 @@ export class VehicleConditionProvider {
 
             // cannot check a vehicle that does not exist
             if (!entityId) {
+                this.currentVehicleCondition.delete(vehicleNetworkId);
+
                 continue;
             }
 
             // cannot check a vehicle where we are not the owner
             if (!NetworkHasControlOfEntity(entityId)) {
+                this.currentVehicleCondition.delete(vehicleNetworkId);
+
                 continue;
             }
 

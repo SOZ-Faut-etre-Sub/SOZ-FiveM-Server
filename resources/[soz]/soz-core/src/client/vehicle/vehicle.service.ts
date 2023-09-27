@@ -396,38 +396,12 @@ export class VehicleService {
     }
 
     public applyVehicleConfigurationPerformance(vehicle: number, modification: VehicleConfiguration): void {
-        const modificationPerformance = {} as VehicleModification;
-
-        if (modification.modification.engine) {
-            modificationPerformance.engine = modification.modification.engine;
-        }
-
-        if (modification.modification.brakes) {
-            modificationPerformance.brakes = modification.modification.brakes;
-        }
-
-        if (modification.modification.transmission) {
-            modificationPerformance.transmission = modification.modification.transmission;
-        }
-
-        if (modification.modification.suspension) {
-            modificationPerformance.suspension = modification.modification.suspension;
-        }
-
-        if (modification.modification.armor) {
-            modificationPerformance.armor = modification.modification.armor;
-        }
-
-        if (modification.modification.turbo) {
-            modificationPerformance.turbo = modification.modification.turbo;
-        }
-
         this.vehicleModificationService.applyVehicleModification(
             vehicle,
             modification,
-            modificationPerformance,
+            modification.modification,
             true,
-            false
+            ['turbo', 'armor', 'suspension', 'transmission', 'brakes', 'engine']
         );
     }
 

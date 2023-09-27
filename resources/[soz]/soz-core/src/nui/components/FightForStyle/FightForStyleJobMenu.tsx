@@ -1,10 +1,11 @@
+import { useItems } from '@public/nui/hook/data';
+import { CraftCategory, CraftRecipe } from '@public/shared/craft/craft';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
-import { FfsRecipe } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import { CraftList } from '../Shared/CraftList';
+import { CraftInputs } from '../Shared/CraftInputs';
 import {
     MainMenu,
     Menu,
@@ -20,7 +21,7 @@ import {
 
 type FightForStyleStateProps = {
     data: {
-        recipes: FfsRecipe[];
+        recipes: Record<string, CraftCategory>;
         state: {
             ffs_cotton_bale: boolean;
         };
@@ -31,14 +32,12 @@ type FightForStyleStateProps = {
 export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_ffs';
     const [blips, setBlips] = useState(null);
-    const [inputs, setInputs] = useState(null);
+    const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>();
+    const items = useItems();
 
     useEffect(() => {
         if (data && data.state) {
             setBlips(data.state);
-        }
-        if (data && data.recipes) {
-            setInputs([]);
         }
     }, [data]);
 
@@ -71,7 +70,12 @@ export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = 
             <MainMenu>
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
-                    <MenuItemSubMenuLink id="recipe">Livre de recettes</MenuItemSubMenuLink>
+                    {Object.keys(data.recipes).map(category => (
+                        <MenuItemSubMenuLink
+                            id={`recipe_${category}`}
+                            key={`recipe_${category}`}
+                        >{`Livre de recettes ${data.recipes[category].icon} ${category}`}</MenuItemSubMenuLink>
+                    ))}
                     <MenuItemCheckbox
                         checked={blips['ffs_cotton_bale']}
                         onChange={value => displayBlip('ffs_cotton_bale', value)}
@@ -80,24 +84,26 @@ export const FightForStyleJobMenu: FunctionComponent<FightForStyleStateProps> = 
                     </MenuItemCheckbox>
                 </MenuContent>
             </MainMenu>
-            <SubMenu id="recipe">
-                <MenuTitle banner={banner}>Livre de recettes</MenuTitle>
-                <MenuContent>
-                    <MenuItemSelect title={'Vêtement'}>
-                        {recipes.map(recipe => (
-                            <MenuItemSelectOption
-                                key={recipe.label}
-                                onSelected={() => {
-                                    setInputs([...recipe.inputs]);
-                                }}
-                            >
-                                {recipe.label}
-                            </MenuItemSelectOption>
-                        ))}
-                    </MenuItemSelect>
-                    <CraftList inputs={inputs} />
-                </MenuContent>
-            </SubMenu>
+            {Object.entries(data.recipes).map(([name, category]) => (
+                <SubMenu id={`recipe_${name}`}>
+                    <MenuTitle banner={banner}>{`Livre de recettes ${data.recipes[name].icon} ${name}`}</MenuTitle>
+                    <MenuContent>
+                        <MenuItemSelect title="" titleWidth={0}>
+                            {Object.entries(category.recipes).map(([output, recipe]) => (
+                                <MenuItemSelectOption
+                                    key={output}
+                                    onSelected={() => {
+                                        setCurrentRecipe(recipe);
+                                    }}
+                                >
+                                    {recipe.amount}x {items.find(elem => elem.name == output)?.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        {currentRecipe && <CraftInputs inputs={currentRecipe.inputs} />}
+                    </MenuContent>
+                </SubMenu>
+            ))}
         </Menu>
     );
 };

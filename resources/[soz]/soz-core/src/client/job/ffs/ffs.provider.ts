@@ -1,10 +1,12 @@
+import { emitRpc } from '@public/core/rpc';
+import { CraftsList } from '@public/shared/craft/craft';
 import { JobPermission, JobType } from '@public/shared/job';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
-import { FfsConfig, FfsRecipe, Process } from '../../../shared/job/ffs';
 import { MenuType } from '../../../shared/nui/menu';
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../inventory/inventory.manager';
@@ -101,23 +103,15 @@ export class FightForStyleProvider {
     }
 
     @OnEvent(ClientEvent.JOBS_FFS_OPEN_SOCIETY_MENU)
-    public onOpenSocietyMenu() {
+    public async onOpenSocietyMenu() {
         if (this.nuiMenu.getOpened() === MenuType.FightForStyleJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }
 
-        const transformProcesses = Object.values(FfsConfig.transform.processes);
-        const { craftProcesses, luxuryCraftProcesses, shoesCraftProcesses } = FfsConfig.craft.processes;
-        const recipes = [
-            ...this.computeRecipes(transformProcesses),
-            ...this.computeRecipes(craftProcesses),
-            ...this.computeRecipes(luxuryCraftProcesses),
-            ...this.computeRecipes(shoesCraftProcesses),
-        ];
-        recipes.sort((a, b) => a.label.slice(2).localeCompare(b.label.slice(2)));
+        const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, JobType.Ffs);
         this.nuiMenu.openMenu(MenuType.FightForStyleJobMenu, {
-            recipes,
+            recipes: crafting.categories,
             state: this.state,
             onDuty: this.playerService.isOnDuty(),
         });
@@ -137,30 +131,5 @@ export class FightForStyleProvider {
             scale: 0.9,
         });
         this.blipFactory.hide('ffs_cotton_bale', true);
-    }
-
-    private computeRecipes(craftProcesses: Process[]): FfsRecipe[] {
-        return craftProcesses.map(craftProcess => {
-            let canCraft = true;
-            const inputs = [];
-            for (const input of craftProcess.inputs) {
-                const hasRequiredAmount = this.inventoryManager.hasEnoughItem(input.id, input.amount);
-                inputs.push({
-                    label: this.itemService.getItem(input.id).label,
-                    hasRequiredAmount,
-                    amount: input.amount,
-                });
-                canCraft = canCraft && hasRequiredAmount;
-            }
-            return {
-                canCraft: canCraft,
-                label: craftProcess.label,
-                inputs: inputs,
-                output: {
-                    label: this.itemService.getItem(craftProcess.output.id).label,
-                    amount: craftProcess.output.amount,
-                },
-            };
-        });
     }
 }

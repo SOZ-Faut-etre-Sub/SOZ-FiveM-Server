@@ -9,6 +9,7 @@ import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
 import { BillboardModule } from './client/billboard/billboard.module';
 import { BinocularsModule } from './client/binoculars/binoculars.module';
+import { CraftModule } from './client/craft/craft.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
 import { HousingModule } from './client/housing/housing.module';
@@ -25,6 +26,7 @@ import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { MandatoryModule } from './client/job/mdr/mdr.module';
 import { OilModule } from './client/job/oil/oil.module';
+import { PawlModule } from './client/job/pawl/pawl.module';
 import { PoliceModule } from './client/job/police/police.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { TaxiModule } from './client/job/taxi/taxi.module';
@@ -89,6 +91,7 @@ async function bootstrap() {
         VehicleModule,
         FactoryModule,
         OilModule,
+        PawlModule,
         WeaponModule,
         InventoryModule,
         DrivingSchoolModule,
@@ -103,6 +106,7 @@ async function bootstrap() {
         RaceModule,
         GarbageModule,
         BillboardModule,
+        CraftModule,
         ...PrivateModules
     );
 

@@ -10,6 +10,7 @@ import { ChainMiddlewareTickServerFactory } from './core/middleware/middleware.t
 import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
 import { ApiModule } from './server/api/api.module';
+import { CraftModule } from './server/craft/craft.module';
 import { DatabaseModule } from './server/database/database.module';
 import { DrivingSchoolModule } from './server/driving-school/ds.module';
 import { FieldModule } from './server/farm/field.module';
@@ -23,6 +24,7 @@ import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { MdrModule } from './server/job/mdr/mdr.module';
 import { OilModule } from './server/job/oil/oil.module';
+import { PawlModule } from './server/job/pawl/pawl.module';
 import { PoliceModule } from './server/job/police/police.module';
 import { StonkModule } from './server/job/stonk/stonk.module';
 import { TaxiModule } from './server/job/taxi/taxi.module';
@@ -80,6 +82,7 @@ async function bootstrap() {
         StoryModule,
         AfkModule,
         OilModule,
+        PawlModule,
         WeaponModule,
         InventoryModule,
         DrivingSchoolModule,
@@ -90,6 +93,7 @@ async function bootstrap() {
         TaxiModule,
         RaceModule,
         PropsModule,
+        CraftModule,
         ...PrivateModules
     );
 

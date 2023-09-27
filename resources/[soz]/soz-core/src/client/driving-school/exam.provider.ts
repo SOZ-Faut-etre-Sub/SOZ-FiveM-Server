@@ -282,7 +282,8 @@ export class ExamProvider {
 
     private displayInstructorStartSpeech(licenseType: DrivingSchoolLicenseType) {
         DrivingSchoolConfig.startSpeeches
-            .filter(s => Array.isArray(s.exclude) && !s.exclude.includes(licenseType))
+            .filter(s => !s.exclude || !s.exclude.includes(licenseType))
+            .filter(s => !s.include || s.include.includes(licenseType))
             .forEach(s => {
                 this.notifier.notify(s.message, 'info');
             });

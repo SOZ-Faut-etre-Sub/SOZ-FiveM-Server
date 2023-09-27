@@ -1,4 +1,36 @@
 import { Component, WardrobeConfig } from '../cloth';
+import { CraftCategory } from '../craft/craft';
+import { NamedZone } from '../polyzone/box.zone';
+
+export const CraftZones: NamedZone[] = [
+    {
+        name: 'pawl_craft_1',
+        center: [-523.25, 5288.06, 74.21],
+        length: 1.0,
+        width: 1.8,
+        heading: 75,
+        minZ: 73.21,
+        maxZ: 75.86,
+    },
+    {
+        name: 'pawl_craft_2',
+        center: [-524.71, 5283.68, 74.17],
+        length: 1.0,
+        width: 1.8,
+        heading: 235,
+        minZ: 73.21,
+        maxZ: 75.86,
+    },
+    {
+        name: 'pawl_craft_3',
+        center: [-533.17, 5293.16, 74.17],
+        length: 1.0,
+        width: 1.8,
+        heading: 179.59,
+        minZ: 73.21,
+        maxZ: 75.86,
+    },
+];
 
 export const PawlCloakroom: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
@@ -81,6 +113,58 @@ export const PawlCloakroom: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 259, Texture: 2, Palette: 0 },
             },
             Props: {},
+        },
+    },
+};
+
+export const PawlCraftsLists: Record<string, CraftCategory> = {
+    Objets: {
+        duration: 15000,
+        animation: {
+            dictionary: 'mp_arresting',
+            name: 'a_uncuff',
+            options: {
+                onlyUpperBody: true,
+                repeat: true,
+            },
+        },
+        recipes: {
+            police_barrier: {
+                inputs: {
+                    wood_plank: { count: 1 },
+                },
+                amount: 1,
+            },
+            paper: {
+                inputs: {
+                    wood_plank: { count: 1 },
+                },
+                amount: 10,
+            },
+            empty_lunchbox: {
+                inputs: {
+                    wood_plank: { count: 1 },
+                },
+                amount: 4,
+            },
+            cabinet_zkea: {
+                inputs: {
+                    wood_plank: { count: 2 },
+                },
+                rewardTier: {
+                    Divin: { id: 4, chance: GetConvarInt('soz_pawl_craft_chance_tier_4', 25) },
+                    Sublime: { id: 3, chance: GetConvarInt('soz_pawl_craft_chance_tier_3', 25) },
+                    Joli: { id: 2, chance: GetConvarInt('soz_pawl_craft_chance_tier_2', 25) },
+                    Banal: { id: 1, chance: GetConvarInt('soz_pawl_craft_chance_tier_1', 25) },
+                },
+                amount: 1,
+            },
+            walkstick: {
+                inputs: {
+                    wood_plank: { count: 1 },
+                },
+                amount: 4,
+            },
         },
     },
 };
