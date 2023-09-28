@@ -9,7 +9,7 @@ import { convertTypeToName, isBCSOMessage, isLSPDMessage, isPoliceMessage, isSAS
 import { PoliceContent } from './PoliceContent';
 
 export const Card: FunctionComponent<TwitchNewsMessage> = memo(
-    ({ type, image, message, reporter, createdAt, job }: TwitchNewsMessage) => {
+    ({ type, image, message, reporter, createdAt, job, reason }: TwitchNewsMessage) => {
         const config = useConfig();
 
         return (
@@ -47,7 +47,7 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
                             })}
                         >
                             {isPoliceMessage(type) ? (
-                                <PoliceContent type={type} message={message} job={job} />
+                                <PoliceContent type={type} message={message} job={job} reason={reason} />
                             ) : (
                                 <>{message}</>
                             )}

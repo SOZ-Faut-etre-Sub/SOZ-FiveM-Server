@@ -17,6 +17,7 @@ export interface TwitchNewsMessage {
     reporter?: string;
     reporterId?: string;
     image?: string;
+    reason?: string;
     message: string;
     createdAt?: string;
     job: string;
