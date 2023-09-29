@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import React, { forwardRef } from 'react';
 import Emoji from "../components/Emoji";
+import EmojiTextRenderer from "../components/EmojiTextRender";
 
 export const Alert: React.FC<any> = forwardRef(({ children, severity, icon, ...props }, ref) => {
     const IconComponent = icon;
@@ -21,13 +22,9 @@ export const Alert: React.FC<any> = forwardRef(({ children, severity, icon, ...p
                     })}
                 />
             )}
-            <div className="flex-grow">{children.split(/(:[a-zA-Z0-9-_+]+:)/g).map((text, i) => {
-                if (text.startsWith(':') && text.endsWith(':')) {
-                    return <Emoji key={i} emoji={text} />;
-                }
-
-                return <React.Fragment key={i}>{text}</React.Fragment>;
-            })}</div>
+            <div className="flex-grow">
+                <EmojiTextRenderer text={children} />
+            </div>
         </div>
     );
 });
