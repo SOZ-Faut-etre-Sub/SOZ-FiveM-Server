@@ -10,7 +10,6 @@ import { TextareaField } from '@ui/old_components/Input';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { useSociety } from '../../../hooks/app/useSociety';
 import { Checkbox } from '../../../ui/components/Checkbox';
 import { ContactPicture } from '../../../ui/components/ContactPicture';
@@ -20,7 +19,6 @@ import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data/sets/14/apple.json';
 import { useConfig } from "../../../hooks/usePhone";
 import cn from "classnames";
-
 
 const ContactsInfoPage: React.FC = () => {
     const { id } = useParams();
