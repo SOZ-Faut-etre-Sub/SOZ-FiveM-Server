@@ -1,3 +1,5 @@
+import { JobType } from '@public/shared/job';
+import { PlayerCriminalState } from '@public/shared/player';
 import { Gauge } from 'prom-client';
 
 import { Inject } from '../../core/decorators/injectable';
@@ -65,7 +67,10 @@ export class MonitorPlayerProvider {
                 id: player.citizenid,
                 name: player.charinfo.firstname + ' ' + player.charinfo.lastname,
                 license: player.license,
-                job: player.job.id,
+                job:
+                    player.job.id == JobType.Unemployed && player.metadata.criminal_state == PlayerCriminalState.Allowed
+                        ? 'crimi'
+                        : player.job.id,
                 grade: player.job.grade,
             };
             const previousLabels = this.lastPlayers[player.citizenid];
