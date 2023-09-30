@@ -128,6 +128,7 @@ export const PawlCraftsLists: Record<string, CraftCategory> = {
                 repeat: true,
             },
         },
+        event: 'job_pawl_craft',
         recipes: {
             police_barrier: {
                 inputs: {
