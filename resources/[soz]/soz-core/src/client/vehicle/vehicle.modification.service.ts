@@ -28,7 +28,7 @@ const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.Fender]: 'Aile',
 };
 
-const VehNoDefaultExtra = [GetHashKey('tropic'), GetHashKey('tropic2'), GetHashKey('tropic3')];
+const VehNoDefaultExtra = [GetHashKey('tropic'), GetHashKey('tropic2'), GetHashKey('tropic3'), GetHashKey('benson')];
 
 const ModExclusion: Record<number, VehicleModType[]> = {
     [GetHashKey('sentinel')]: [VehicleModType.ColumnShifterLevers, VehicleModType.Speakers],

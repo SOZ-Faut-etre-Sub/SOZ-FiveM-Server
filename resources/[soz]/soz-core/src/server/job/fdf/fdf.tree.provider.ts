@@ -43,7 +43,10 @@ export class FDFTreeProvider {
             item: item,
         });
 
-        this.notifier.notify(source, `Vous avez taillé un arbre, d'ici deux heures ses fruits seront récoltables.`);
+        this.notifier.notify(
+            source,
+            `Vous avez ~g~taillé~s~ cet arbre, ses fruits seront prêts à être récoltés d'ici à deux heures.`
+        );
 
         this.monitor.publish(
             'job_fdf_cut_tree',
@@ -68,7 +71,10 @@ export class FDFTreeProvider {
         tree.nbWater++;
         tree.lastWater = Date.now();
 
-        this.notifier.notify(source, `Vous avez arrosé un arbre, ses fruits seront récoltables un peu plus tôt.`);
+        this.notifier.notify(
+            source,
+            `Vous avez ~g~arrosé~s~ cet arbre, ses fruits seront prêts à être récoltés un peu plus tôt.`
+        );
 
         this.monitor.publish(
             'job_fdf_water_tree',

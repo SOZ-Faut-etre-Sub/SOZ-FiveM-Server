@@ -293,7 +293,7 @@ export class FDFFieldProvider {
 
         this.notifier.notify(
             source,
-            `Vous avez ~g~labouré~s~ ce champs, il peut maintenant acceuillir des plantations.`
+            `Vous avez terminé de ~g~labourer~s~ champ, il est maintenant prêt pour accueillir les plantations.`
         );
 
         this.monitor.publish(

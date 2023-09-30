@@ -36,6 +36,7 @@ Config.FarmAccountMoney = {
     ["farm_pawl"] = {money = 300000, marked_money = 0},
     ["farm_baun"] = {money = 300000, marked_money = 0},
     ["farm_ffs"] = {money = 300000, marked_money = 0},
+    ["farm_fdf"] = {money = 300000, marked_money = 0},
 }
 
 Config.SocietyTaxes = {
@@ -50,6 +51,7 @@ Config.SocietyTaxes = {
         ["pawl"] = {"pawl", "safe_pawl"},
         ["taxi"] = {"taxi", "safe_taxi"},
         ["upw"] = {"upw", "safe_upw"},
+        ["fdf"] = {"fdf", "safe_fdf"},
     },
 
     taxRepartition = {["lspd"] = 30, ["bcso"] = 30, ["lsmc"] = 30, ["cash-transfer"] = 2, ["mdr"] = 8},

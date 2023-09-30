@@ -343,11 +343,11 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         },
         targets: [],
         products: [
-            { id: 'potato_seed', type: 'item', price: 5 },
-            { id: 'tomato_seed', type: 'item', price: 5 },
-            { id: 'corn_seed', type: 'item', price: 5 },
-            { id: 'cabage_seed', type: 'item', price: 5 },
-            { id: 'pumpkin_seed', type: 'item', price: 5 },
+            { id: 'potato_seed', type: 'item', price: 2 },
+            { id: 'tomato_seed', type: 'item', price: 2 },
+            { id: 'corn_seed', type: 'item', price: 2 },
+            { id: 'cabage_seed', type: 'item', price: 2 },
+            { id: 'pumpkin_seed', type: 'item', price: 2 },
         ],
     },
 ];

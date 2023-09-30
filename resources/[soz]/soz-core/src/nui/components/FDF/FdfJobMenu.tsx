@@ -1,13 +1,26 @@
-import { CraftCategory } from '@public/shared/craft/craft';
+import { useItems } from '@public/nui/hook/data';
+import { CraftCategory, CraftRecipe } from '@public/shared/craft/craft';
 import { FDFFieldBlips, FDFFieldKind, FDFFieldMenu } from '@public/shared/job/fdf';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../Styleguide/Menu';
+import { CraftInputs } from '../Shared/CraftInputs';
+import {
+    MainMenu,
+    Menu,
+    MenuContent,
+    MenuItemCheckbox,
+    MenuItemSelect,
+    MenuItemSelectOption,
+    MenuItemSubMenuLink,
+    MenuItemText,
+    MenuTitle,
+    SubMenu,
+} from '../Styleguide/Menu';
 
-type FoodStateProps = {
+type FDFStateProps = {
     data: {
         recipes: Record<string, CraftCategory>;
         state: {
@@ -20,9 +33,11 @@ type FoodStateProps = {
     };
 };
 
-export const FdfJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
+export const FdfJobMenu: FunctionComponent<FDFStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_fdf';
     const [blips, setBlips] = useState(null);
+    const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>();
+    const items = useItems();
 
     useEffect(() => {
         if (data && data.state) {
@@ -62,8 +77,34 @@ export const FdfJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
                             {FDFFieldMenu[kind]}
                         </MenuItemCheckbox>
                     ))}
+                    {Object.keys(data.recipes).map(category => (
+                        <MenuItemSubMenuLink
+                            id={`recipe_${category}`}
+                            key={`recipe_${category}`}
+                        >{`Livre de recettes ${category}`}</MenuItemSubMenuLink>
+                    ))}
                 </MenuContent>
             </MainMenu>
+            {Object.entries(data.recipes).map(([name, category]) => (
+                <SubMenu id={`recipe_${name}`} key={`recipe_${name}`}>
+                    <MenuTitle banner={banner}>{`Livre de recettes ${name}`}</MenuTitle>
+                    <MenuContent>
+                        <MenuItemSelect title="" titleWidth={0}>
+                            {Object.entries(category.recipes).map(([output, recipe]) => (
+                                <MenuItemSelectOption
+                                    key={output}
+                                    onSelected={() => {
+                                        setCurrentRecipe(recipe);
+                                    }}
+                                >
+                                    {recipe.amount}x {items.find(elem => elem.name == output)?.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        {currentRecipe && <CraftInputs inputs={currentRecipe.inputs} />}
+                    </MenuContent>
+                </SubMenu>
+            ))}
         </Menu>
     );
 };
