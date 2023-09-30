@@ -49,6 +49,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
                 onlyUpperBody: true,
             },
         },
+        event: 'job_ffs_transform ',
         duration: 2000,
         icon: '🧶',
         recipes: {
@@ -95,6 +96,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
         duration: 8000,
         icon: '🧥',
+        event: 'job_ffs_craft',
         recipes: {
             [Garment.TOP]: {
                 amount: 1,
@@ -157,6 +159,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
         duration: 8000,
         icon: '🧥',
+        event: 'job_ffs_craft',
         recipes: {
             [Garment.TOP]: {
                 amount: 1,
@@ -183,6 +186,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
         duration: 8000,
         icon: '👕',
+        event: 'job_ffs_craft',
         recipes: {
             [Garment.PANT]: {
                 amount: 1,
@@ -221,6 +225,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
         duration: 8000,
         icon: '⚒️',
+        event: 'job_ffs_craft',
         recipes: {
             work_clothes: {
                 amount: 4,
@@ -242,6 +247,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
         duration: 8000,
         icon: '👞',
+        event: 'job_ffs_craft',
         recipes: {
             [Garment.SHOES]: {
                 amount: 1,
