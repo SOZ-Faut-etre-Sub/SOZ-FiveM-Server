@@ -5,7 +5,6 @@ import { AnimationService } from '@public/client/animation/animation.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
 import { emitRpc } from '@public/core/rpc';
-import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { canTreeBeHarvest, canTreeBeWater, FDFTreeField, TreeStatus } from '@public/shared/job/fdf';
@@ -69,9 +68,7 @@ export class FDFTreeProvider {
                                 name: 'goggles_down',
                                 dictionary: 'veh@bike@sport@front@base',
                                 options: {
-                                    enablePlayerControl: false,
                                     repeat: true,
-                                    onlyUpperBody: true,
                                 },
                             },
                             {
@@ -117,9 +114,7 @@ export class FDFTreeProvider {
                                 name: 'fire',
                                 dictionary: 'weapon@w_sp_jerrycan',
                                 options: {
-                                    enablePlayerControl: false,
                                     repeat: true,
-                                    onlyUpperBody: true,
                                 },
                                 props: [
                                     {
@@ -178,9 +173,6 @@ export class FDFTreeProvider {
                                 dictionary: 'anim@amb@waving@male',
                                 name: 'ground_wave',
                                 options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
                                     repeat: true,
                                 },
                             },
@@ -191,7 +183,20 @@ export class FDFTreeProvider {
 
                         let remaining = 0;
                         do {
-                            await wait(2000);
+                            const { completed } = await this.progressService.progress(
+                                'fdf_tree_harvest',
+                                'Récolte en cours...',
+                                2000,
+                                null,
+                                {
+                                    allowExistingAnimation: true,
+                                }
+                            );
+
+                            if (!completed) {
+                                break;
+                            }
+
                             if (cancelled) {
                                 break;
                             }

@@ -2,6 +2,7 @@ import { AnimationInfo } from '../animation';
 import { Feature } from '../features';
 import { JobType } from '../job';
 import { BaunCraftsLists } from '../job/baun';
+import { FDFCraftsLists } from '../job/fdf';
 import { FFSCraftsLists } from '../job/ffs';
 import { FoodCraftsLists } from '../job/food';
 import { PawlCraftsLists } from '../job/pawl';
@@ -45,4 +46,5 @@ export const Crafts: Record<string, Record<string, CraftCategory>> = {
     [JobType.Baun]: BaunCraftsLists,
     [JobType.Ffs]: FFSCraftsLists,
     [JobType.Pawl]: PawlCraftsLists,
+    [JobType.FDF]: FDFCraftsLists,
 };

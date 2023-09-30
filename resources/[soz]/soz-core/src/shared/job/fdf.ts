@@ -39,17 +39,6 @@ export const FDFFieldMenu: Record<FDFFieldBlips, string> = {
 };
 
 export const FDFTreeField: Partial<Record<FDFFieldKind, PolygonZone<Vector4>>> = {
-    [FDFFieldKind.apple]: new PolygonZone(
-        [
-            [2338.036545732639, 5070.262655737755],
-            [2270.662524319363, 5005.807913211236],
-            [2366.3449580911583, 4908.560406943154],
-            [2438.248325481797, 4987.715353905546],
-        ],
-        {
-            data: [2358.09, 4738.21, 34.54, 30.0],
-        }
-    ),
     [FDFFieldKind.orange]: new PolygonZone(
         [
             [2304.0664509024155, 4779.650921890116],
@@ -58,6 +47,17 @@ export const FDFTreeField: Partial<Record<FDFFieldKind, PolygonZone<Vector4>>> =
             [2441.079166717649, 4595.898366441706],
             [2494.298981951666, 4645.0875120540495],
             [2366.3449580911583, 4764.3853249759395],
+        ],
+        {
+            data: [2358.09, 4738.21, 34.54, 30.0],
+        }
+    ),
+    [FDFFieldKind.apple]: new PolygonZone(
+        [
+            [2338.036545732639, 5070.262655737755],
+            [2270.662524319363, 5005.807913211236],
+            [2366.3449580911583, 4908.560406943154],
+            [2438.248325481797, 4987.715353905546],
         ],
         {
             data: [2346.96, 4996.11, 42.73, 30.0],
@@ -541,7 +541,7 @@ export function canCropBeHarvest(crop: FDFCrop): boolean {
 
 export const FDFConfig = {
     waterDelay: 20 * 60000,
-    waterDelayTst: 60000,
+    waterDelayTst: 20000,
     hillDelay: 30 * 60000,
     hillDelayTst: 60000,
     waterGain: 10 * 60000,
@@ -576,143 +576,215 @@ export const FDFConfig = {
     ],
 };
 
-//TODO
-export const fdfCraftZones: NamedZone[] = [
+export const FDFCraftZones: NamedZone[] = [
     {
-        name: 'baun:unicorn:craft:1',
-        center: [130.19, -1280.92, 29.27],
-        length: 0.2,
-        width: 0.2,
-        heading: 25,
-        minZ: 29.27,
-        maxZ: 29.67,
+        name: 'fdf_craft_1',
+        center: [2442.03, 4975.97, 47.41],
+        length: 1.4,
+        width: 2.0,
+        heading: 39.36,
+        minZ: 46.61,
+        maxZ: 47.21,
     },
     {
-        name: 'baun:bahama:craft:1',
-        center: [-1392.21, -606.3, 30.32],
-        length: 0.2,
-        width: 0.2,
-        heading: 0,
-        minZ: 30.37,
-        maxZ: 30.77,
+        name: 'fdf_craft_2',
+        center: [2438.34, 4975.62, 46.81],
+        length: 1.0,
+        width: 3.2,
+        heading: 314.45,
+        minZ: 45.81,
+        maxZ: 47.81,
     },
     {
-        name: 'baun:bahama:craft:2',
-        center: [-1377.96, -628.86, 30.82],
-        length: 0.2,
-        width: 0.2,
-        heading: 0,
-        minZ: 30.82,
-        maxZ: 31.22,
-    },
-    {
-        name: 'baun:yellowjack:craft:1',
-        center: [1980.87, 3052.41, 47.21],
-        length: 0.6,
-        width: 0.25,
-        heading: 238.8,
-        minZ: 47.12,
-        maxZ: 47.72,
+        name: 'fdf_craft_3',
+        center: [2446.25, 4971.45, 46.86],
+        length: 3.2,
+        width: 1.6,
+        heading: 60.34,
+        minZ: 46.66,
+        maxZ: 47.06,
     },
 ];
 
-//TODO
 export const FDFCraftsLists: Record<string, CraftCategory> = {
-    Cocktails: {
-        duration: 4000,
+    Palette: {
+        duration: 20000,
+        event: 'job_fdf_craft',
         recipes: {
-            narito: {
+            vegetable_palette: {
                 amount: 1,
                 inputs: {
-                    rhum: { count: 1 },
-                    cane_sugar: { count: 1 },
-                    green_lemon: { count: 1 },
-                    fruit_slice: { count: 1 },
-                    ice_cube: { count: 1 },
-                    straw: { count: 1 },
-                    tumbler: { count: 1 },
+                    potato: { count: 20 },
+                    tomato: { count: 20 },
+                    corn: { count: 20 },
+                    pumpkin_fresh: { count: 5 },
+                    cabage: { count: 5 },
                 },
             },
-            lapicolada: {
+            fruit_palette: {
                 amount: 1,
                 inputs: {
-                    rhum: { count: 1 },
-                    coconut_milk: { count: 1 },
-                    ananas_juice: { count: 1 },
-                    fruit_slice: { count: 1 },
-                    ice_cube: { count: 1 },
-                    straw: { count: 1 },
-                    tumbler: { count: 1 },
+                    apple: { count: 30 },
+                    orange: { count: 30 },
                 },
             },
-            sunrayou: {
+        },
+    },
+    Plat: {
+        duration: 6000,
+        event: 'job_fdf_craft',
+        recipes: {
+            popcorn: {
                 amount: 1,
                 inputs: {
-                    tequila: { count: 1 },
-                    orange_juice: { count: 1 },
-                    strawberry_juice: { count: 1 },
-                    cane_sugar: { count: 1 },
-                    fruit_slice: { count: 1 },
-                    ice_cube: { count: 1 },
-                    straw: { count: 1 },
-                    tumbler: { count: 1 },
+                    corn: { count: 8 },
                 },
             },
-            ponche: {
+            fruit_salad: {
                 amount: 1,
                 inputs: {
-                    rhum: { count: 1 },
-                    orange_juice: { count: 1 },
-                    ananas_juice: { count: 1 },
-                    cane_sugar: { count: 1 },
-                    ice_cube: { count: 1 },
-                    straw: { count: 1 },
-                    tumbler: { count: 1 },
+                    apple: { count: 2 },
+                    orange: { count: 2 },
                 },
             },
-            pinkenny: {
+            creamed_corn: {
                 amount: 1,
                 inputs: {
-                    vodka: { count: 1 },
-                    green_lemon: { count: 1 },
-                    strawberry_juice: { count: 1 },
-                    apple_juice: { count: 1 },
-                    cane_sugar: { count: 1 },
-                    ice_cube: { count: 1 },
-                    straw: { count: 1 },
-                    tumbler: { count: 1 },
+                    corn: { count: 2 },
                 },
             },
-            phasmopolitan: {
+            vegetable_festival: {
                 amount: 1,
                 inputs: {
-                    gin: { count: 1 },
-                    green_lemon: { count: 1 },
-                    ice_cube: { count: 1 },
-                    straw: { count: 1 },
-                    tumbler: { count: 1 },
+                    potato: { count: 2 },
+                    tomato: { count: 2 },
+                    corn: { count: 2 },
+                    pumpkin_fresh: { count: 1 },
+                    cabage: { count: 1 },
                 },
             },
-            escalier: {
-                amount: 1,
+            cabbage_salad: {
+                amount: 2,
                 inputs: {
-                    cognac: { count: 1 },
-                    orange_juice: { count: 1 },
-                    ice_cube: { count: 1 },
-                    straw: { count: 1 },
-                    tumbler: { count: 1 },
+                    cabage: { count: 1 },
                 },
             },
-            whicanelle: {
+            stuffed_tomatoes: {
                 amount: 1,
                 inputs: {
-                    whisky: { count: 1 },
-                    apple_juice: { count: 1 },
-                    green_lemon: { count: 1 },
-                    cane_sugar: { count: 1 },
-                    ice_cube: { count: 1 },
-                    straw: { count: 1 },
-                    tumbler: { count: 1 },
+                    tomato: { count: 2 },
+                },
+            },
+            veggie_gathering: {
+                amount: 1,
+                inputs: {
+                    potato: { count: 2 },
+                    cabage: { count: 1 },
+                    corn: { count: 2 },
+                },
+            },
+            country_feast: {
+                amount: 1,
+                inputs: {
+                    pumpkin_fresh: { count: 1 },
+                    cabage: { count: 1 },
+                    tomato: { count: 2 },
+                    corn: { count: 2 },
+                },
+            },
+            fried_potatoes: {
+                amount: 1,
+                inputs: {
+                    potato: { count: 2 },
+                },
+            },
+            vegetable_dance: {
+                amount: 1,
+                inputs: {
+                    potato: { count: 2 },
+                    corn: { count: 2 },
+                },
+            },
+            autumn_symphony: {
+                amount: 1,
+                inputs: {
+                    potato: { count: 2 },
+                    corn: { count: 1 },
+                    apple: { count: 2 },
+                    orange: { count: 2 },
+                },
+            },
+        },
+    },
+    Boisson: {
+        duration: 6000,
+        event: 'job_fdf_craft',
+        recipes: {
+            pumpkin_potage: {
+                amount: 2,
+                inputs: {
+                    pumpkin_fresh: { count: 1 },
+                },
+            },
+            smoothie_fruity: {
+                amount: 1,
+                inputs: {
+                    apple: { count: 2 },
+                    orange: { count: 2 },
+                },
+            },
+            apple_juice_drink: {
+                amount: 1,
+                inputs: {
+                    apple: { count: 2 },
+                },
+            },
+            tomato_juice: {
+                amount: 1,
+                inputs: {
+                    tomato: { count: 2 },
+                },
+            },
+            orange_juice_drink: {
+                amount: 1,
+                inputs: {
+                    orange: { count: 2 },
+                },
+            },
+            multifruit: {
+                amount: 1,
+                inputs: {
+                    orange: { count: 2 },
+                    apple: { count: 2 },
+                    pumpkin_fresh: { count: 1 },
+                    tomato: { count: 2 },
+                },
+            },
+            pumpkin_lemonade: {
+                amount: 1,
+                inputs: {
+                    orange: { count: 2 },
+                    pumpkin_fresh: { count: 1 },
+                },
+            },
+            tomato_tonic: {
+                amount: 1,
+                inputs: {
+                    apple: { count: 2 },
+                    tomato: { count: 1 },
+                },
+            },
+            cabbage_chaos: {
+                amount: 2,
+                inputs: {
+                    cabage: { count: 1 },
+                },
+            },
+            fresh_tomachou: {
+                amount: 1,
+                inputs: {
+                    cabage: { count: 1 },
+                    tomato: { count: 2 },
                 },
             },
         },
@@ -741,7 +813,7 @@ export const FDFCloakroom: WardrobeConfig = {
                 [8]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 325, Texture: 11, Palette: 0 },
             },
-            Props: { [0]: { Drawable: 13, Texture: 3, Palette: 0 } },
+            Props: { [0]: { Drawable: 13, Texture: 1, Palette: 0 } },
         },
         ['Stagiaire']: {
             Components: {
@@ -752,7 +824,7 @@ export const FDFCloakroom: WardrobeConfig = {
                 [8]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 56, Texture: 0, Palette: 0 },
             },
-            Props: { [0]: { Drawable: 13, Texture: 3, Palette: 0 } },
+            Props: { [0]: { Drawable: 13, Texture: 1, Palette: 0 } },
         },
     },
     [joaat('mp_f_freemode_01')]: {

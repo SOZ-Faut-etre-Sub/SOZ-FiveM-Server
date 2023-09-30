@@ -32,9 +32,9 @@ const RAKE_TRAILER = GetHashKey('raketrailer');
 const TRACTOR2 = GetHashKey('tractor2');
 
 const CheckPointMessages: Record<number, string> = {
-    2: "C'est bien, continue comme ca et ce champs sera labouré en moins de deux",
-    5: 'On est à la moitié, donc il reste encore une moitié',
-    8: 'Presque fini, passe bien dans tous les coins',
+    2: 'Excellent travail, continuez ainsi et le champ sera achevé rapidement.',
+    5: 'Vous avez ~g~labouré~s~ la moitié du champ, continuez comme ça !',
+    8: 'Nous y sommes presque, assurez-vous de bien couvrir tous les coins.',
 };
 
 @Provider()
@@ -235,7 +235,7 @@ export class FDFFieldProvider {
         const ped = PlayerPedId();
         const coords = GetEntityCoords(ped) as Vector3;
         const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
-        this.notifier.notify('Remonte dans ton tracteur pour commencer le labourage');
+        this.notifier.notify('Retourne à ton tracteur pour entamer le labour.');
 
         for (let k = 0; k < 100; k++) {
             await wait(100);
@@ -267,7 +267,7 @@ export class FDFFieldProvider {
             const coords = GetEntityCoords(ped) as Vector3;
             if (!veh || GetEntityModel(veh) != TRACTOR2) {
                 this.notifier.notify(
-                    "Il faut être dans un tracteur pour labourer, y a plus qu'à recommencer ...",
+                    "Il faut être dans un tracteur pour labourer, y a plus qu'à ~r~recommencer~s~ ...",
                     'error'
                 );
                 break;
@@ -275,17 +275,20 @@ export class FDFFieldProvider {
 
             const [attached, attachedVed] = GetVehicleTrailerVehicle(veh);
             if (!attached || attachedVed != trailer) {
-                this.notifier.notify("Elle est la où charrue?, y a plus qu'à recommencer ...", 'error');
+                this.notifier.notify("Elle est la où charrue?, y a plus qu'à ~r~recommencer~s~ ...", 'error');
                 break;
             }
 
             if (!FDFFields[field].isPointInside(coords)) {
                 if (outWarnDate == 0) {
-                    this.notifier.notify('Reste dans le champs ou il faudra tout recommencer ...', 'error');
+                    this.notifier.notify(
+                        'Restez dans le champ, sinon il faudra ~r~recommencer~s~ tout le travail.',
+                        'error'
+                    );
                     outWarnDate = Date.now();
                 } else if (Date.now() - outWarnDate > 10000) {
                     this.notifier.notify(
-                        "Il faut être dans un champs pour labourer, y a plus qu'à recommencer ...",
+                        "Il faut être dans un champs pour labourer, y a plus qu'à ~r~recommencer~s~ ...",
                         'error'
                     );
                     break;
@@ -296,7 +299,7 @@ export class FDFFieldProvider {
 
             if (GetEntitySpeed(ped) * 3.6 > 15) {
                 this.notifier.notify(
-                    "Tu as tout salopé tout le travail en roulant si vite, y a plus qu'à recommencer ...",
+                    'Tu roule trop vite, tu as gâché tout le travail. Il va falloir tout refaire maintenant.',
                     'error'
                 );
                 break;
@@ -307,7 +310,7 @@ export class FDFFieldProvider {
                     continue;
                 }
 
-                if (getDistance(coords, checkpoints[index]) < 5.0) {
+                if (getDistance(coords, checkpoints[index]) < 8.0) {
                     done[index] = true;
                     const mesg = CheckPointMessages[done.filter(Boolean).length];
                     if (mesg) {

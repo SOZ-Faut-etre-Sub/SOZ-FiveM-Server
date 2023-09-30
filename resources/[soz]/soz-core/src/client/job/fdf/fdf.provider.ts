@@ -1,13 +1,25 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { CraftService } from '@public/client/craft/craft.service';
 import { PedFactory } from '@public/client/factory/ped.factory';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
+import { emitRpc } from '@public/core/rpc';
+import { CraftsList } from '@public/shared/craft/craft';
 import { ClientEvent, NuiEvent } from '@public/shared/event';
 import { JobPermission, JobType } from '@public/shared/job';
-import { FDFConfig, FDFFieldBlips, FDFFieldKind, FDFFields, FDFGreenHouse, FDFTreeField } from '@public/shared/job/fdf';
+import {
+    FDFConfig,
+    FDFCraftZones,
+    FDFFieldBlips,
+    FDFFieldKind,
+    FDFFields,
+    FDFGreenHouse,
+    FDFTreeField,
+} from '@public/shared/job/fdf';
 import { MenuType } from '@public/shared/nui/menu';
 import { toVector4Object, Vector4 } from '@public/shared/polyzone/vector';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { BlipFactory } from '../../blip';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -38,6 +50,9 @@ export class FDFProvider {
     @Inject(PedFactory)
     private pedFactory: PedFactory;
 
+    @Inject(CraftService)
+    private craftService: CraftService;
+
     private state = {
         [FDFFieldBlips.field]: false,
         [FDFFieldBlips.greenhouse]: false,
@@ -50,6 +65,8 @@ export class FDFProvider {
     @Once(OnceStep.PlayerLoaded)
     public setupFDFJob() {
         Object.values(FDFFieldBlips).forEach(kind => this.areaBlips.set(kind, []));
+
+        this.craftService.createBtargetZoneCraft(FDFCraftZones, 'c:/food/chef.png', 'Préparer', JobType.FDF);
 
         this.targetFactory.createForBoxZone(
             'fdf:duty',
@@ -115,6 +132,8 @@ export class FDFProvider {
                     isInside
                         ? {
                               ZoneName: zone.name,
+                              SourceAccount: 'farm_fdf',
+                              TargetAccount: 'safe_fdf',
                           }
                         : null
                 );
@@ -139,13 +158,15 @@ export class FDFProvider {
     }
 
     @OnEvent(ClientEvent.JOBS_FDF_OPEN_SOCIETY_MENU)
-    public onOpenSocietyMenu() {
+    public async onOpenSocietyMenu() {
         if (this.nuiMenu.getOpened() === MenuType.FDFJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }
 
+        const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, JobType.FDF);
         this.nuiMenu.openMenu(MenuType.FDFJobMenu, {
+            recipes: crafting.categories,
             state: this.state,
             onDuty: this.playerService.isOnDuty(),
         });

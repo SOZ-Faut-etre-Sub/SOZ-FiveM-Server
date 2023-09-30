@@ -8,6 +8,16 @@ Config.Storages["fdf_fridge"] = {
     offsetUpZ = 1.5,
 }
 
+Config.Storages["fdf_fridge2"] = {
+    label = "Ferme de Fou",
+    type = "fridge",
+    owner = "fdf",
+    position = vector3(2441.24, 4980.16, 46.81),
+    size = vec2(1.0, 1.0),
+    heading = 223.53,
+    offsetUpZ = 2.0,
+}
+
 Config.Storages["fdf_stash"] = {
     label = "Ferme de Fou",
     type = "storage",

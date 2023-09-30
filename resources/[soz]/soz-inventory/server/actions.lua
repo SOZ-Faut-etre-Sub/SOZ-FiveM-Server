@@ -181,7 +181,6 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
     end
 
     if resellZone.ZoneName == "Resell:fish" then
-        print(json.encode(item), amount)
         TriggerEvent("soz-core:server:fishing:resell", source, item, amount)
         return
     end
