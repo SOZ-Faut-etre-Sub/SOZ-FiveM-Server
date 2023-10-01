@@ -1,6 +1,7 @@
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 
 import { uuidv4 } from '../../../core/utils';
+import { JobType } from '../../../shared/job';
 import { News } from '../../../shared/news';
 import { useNuiEvent } from '../../hook/nui';
 
@@ -70,7 +71,11 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
             backgroundImage = 'https://soz.zerator.com/static/images/reboot_15.png';
             break;
         default:
-            backgroundImage = '/public/images/twitch-news/default.webp';
+            if (news.job === JobType.YouNews) {
+                backgroundImage = '/public/images/twitch-news/younews.webp';
+            } else {
+                backgroundImage = '/public/images/twitch-news/default.webp';
+            }
             break;
     }
 

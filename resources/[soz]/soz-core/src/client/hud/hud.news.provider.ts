@@ -21,11 +21,12 @@ export class HudNewsProvider {
     }
 
     @OnEvent(ClientEvent.NEWS_DRAW)
-    public drawNews(type: string, message: string, reporter: string): void {
+    public drawNews(type: string, message: string, reporter: string, job: string): void {
         this.nuiDispatch.dispatch('hud', 'AddNews', {
             type,
             message,
             reporter,
+            job,
         });
     }
 }

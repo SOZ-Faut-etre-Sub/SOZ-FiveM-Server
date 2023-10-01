@@ -4,4 +4,5 @@ export type News = {
     reporter?: string;
     image?: string;
     message: string;
+    job: string;
 };

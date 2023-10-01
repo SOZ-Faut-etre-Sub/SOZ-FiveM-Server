@@ -67,13 +67,12 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         name: 'you-news',
         job: JobType.YouNews,
         zone: {
-            // @TODO News
-            center: [-567.59, -922.01, 28.82],
-            length: 0.4,
-            width: 2.8,
-            heading: 0,
-            minZ: 27.82,
-            maxZ: 30.82,
+            center: [-1067.29, -244.13, 44.02],
+            length: 0.8,
+            width: 1.4,
+            heading: 297.35,
+            minZ: 43.02,
+            maxZ: 45.02,
         },
         targets: [],
         products: [

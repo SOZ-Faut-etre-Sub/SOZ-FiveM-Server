@@ -69,6 +69,7 @@ export class GouvProvider {
                     message: msg,
                     reporter: player.charinfo.firstname + ' ' + player.charinfo.lastname,
                     reporterId: player.citizenid,
+                    job: player.job.id,
                 }
             );
         }
