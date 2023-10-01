@@ -158,7 +158,7 @@ export class LSMCProvider {
                         return deadPed !== null;
                     },
                     action: async entity => {
-                        const ped = await this.getDeadPedInVehicle(entity);
+                        const ped = this.getDeadPedInVehicle(entity);
                         const coords = GetEntityCoords(PlayerPedId());
 
                         TriggerServerEvent(
@@ -176,7 +176,7 @@ export class LSMCProvider {
 
     private getDeadPedInVehicle(entity: number) {
         const vehicleSeats = GetVehicleModelNumberOfSeats(GetEntityModel(entity));
-        for (let i = -1; i < vehicleSeats - 2; i++) {
+        for (let i = -1; i < vehicleSeats; i++) {
             const ped = GetPedInVehicleSeat(entity, i);
 
             const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped));
