@@ -19,12 +19,12 @@ const DutyZoneConfig: Zone<JobType>[] = [
     },
     {
         data: JobType.YouNews,
-        center: [-1082.59, -246.58, 37.76],
-        length: 1.6,
-        width: 5.2,
-        heading: 27.89,
-        minZ: 36.76,
-        maxZ: 38.76,
+        center: [-1080.13, -244.47, 44.02],
+        length: 1.2,
+        width: 1.8,
+        heading: 207.83,
+        minZ: 43.02,
+        maxZ: 45.02,
     },
     {
         data: JobType.Ffs,
