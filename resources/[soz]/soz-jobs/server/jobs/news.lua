@@ -1,25 +1,25 @@
 --- Items
-QBCore.Functions.CreateUseableItem("newspaper", function(source, item)
-    local Player = QBCore.Functions.GetPlayer(source)
+--QBCore.Functions.CreateUseableItem("newspaper", function(source, item)
+--    local Player = QBCore.Functions.GetPlayer(source)
+--
+--    if Player.PlayerData.job.id ~= SozJobCore.JobType.News then
+--        return
+--    end
+--
+--    TriggerClientEvent("jobs:client:news:SellNewspaper", source)
+--end)
 
-    if Player.PlayerData.job.id ~= SozJobCore.JobType.News then
-        return
-    end
-
-    TriggerClientEvent("jobs:client:news:SellNewspaper", source)
-end)
-
-QBCore.Functions.CreateUseableItem("n_camera", function(source, item)
-    TriggerClientEvent("jobs:utils:camera:toggle", source)
-end)
-
-QBCore.Functions.CreateUseableItem("n_mic", function(source, item)
-    TriggerClientEvent("jobs:utils:mic:toggle", source)
-end)
-
-QBCore.Functions.CreateUseableItem("n_bmic", function(source, item)
-    TriggerClientEvent("jobs:utils:bmic:toggle", source)
-end)
+--QBCore.Functions.CreateUseableItem("n_camera", function(source, item)
+--    TriggerClientEvent("jobs:utils:camera:toggle", source)
+--end)
+--
+--QBCore.Functions.CreateUseableItem("n_mic", function(source, item)
+--    TriggerClientEvent("jobs:utils:mic:toggle", source)
+--end)
+--
+--QBCore.Functions.CreateUseableItem("n_bmic", function(source, item)
+--    TriggerClientEvent("jobs:utils:bmic:toggle", source)
+--end)
 
 --- Events
 --RegisterNetEvent("jobs:server:news:newspaperSold", function()
@@ -66,14 +66,14 @@ end)
 --    })
 --end)
 
-RegisterNetEvent("jobs:server:news:UseMobileItem", function(item, event)
-    local Player = QBCore.Functions.GetPlayer(source)
-
-    if Player.PlayerData.job.id ~= SozJobCore.JobType.News then
-        return
-    end
-
-    if (exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) or 0) >= 1 then
-        TriggerClientEvent(event, Player.PlayerData.source)
-    end
-end)
+--RegisterNetEvent("jobs:server:news:UseMobileItem", function(item, event)
+--    local Player = QBCore.Functions.GetPlayer(source)
+--
+--    if Player.PlayerData.job.id ~= SozJobCore.JobType.News then
+--        return
+--    end
+--
+--    if (exports["soz-inventory"]:GetItem(Player.PlayerData.source, item, nil, true) or 0) >= 1 then
+--        TriggerClientEvent(event, Player.PlayerData.source)
+--    end
+--end)

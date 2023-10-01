@@ -411,7 +411,7 @@ SozJobCore.Jobs = {
         label = "Twitch News",
         platePrefix = "NEWS",
         grades = {},
-        menuCallback = "jobs:client:news:OpenSocietyMenu",
+        menuCallback = "soz-jobs:client:twitch-news:OpenSocietyMenu",
         canInvoice = true,
         permissions = {
             [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},

@@ -102,6 +102,7 @@ export enum ServerEvent {
 
     NEWS_NEWSPAPER_SOLD = 'soz-core:server:job:news:newspaper-sold',
     NEWS_NEWSPAPER_FARM = 'soz-core:server:job:news:newspaper-farm',
+    NEWS_PLACE_OBJECT = 'soz-core:server:job:news:place-object',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:server:oil:refill-kerosene-station',
@@ -371,7 +372,6 @@ export enum ClientEvent {
     ITEM_BOOK_USE = 'soz-core:client:item:book:use',
     ITEM_CAMERA_TOGGLE = 'soz-core:client:item:camera:toggle',
     ITEM_MICROPHONE_TOGGLE = 'soz-core:client:item:microphone:toggle',
-    ITEM_BIG_MICROPHONE_TOGGLE = 'soz-core:client:item:big-microphone:toggle',
 
     HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 
@@ -385,6 +385,7 @@ export enum ClientEvent {
     JOBS_GARBAGE_OPEN_SOCIETY_MENU = 'jobs:client:garbage:OpenSocietyMenu',
     JOBS_FDF_OPEN_SOCIETY_MENU = 'soz-jobs:client:fdf:OpenSocietyMenu',
     JOBS_GOUV_OPEN_SOCIETY_MENU = 'soz-jobs:client:gouv:OpenSocietyMenu',
+    JOBS_TWITCH_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:twitch-news:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
@@ -690,6 +691,9 @@ export enum NuiEvent {
     JobPlaceProps = 'soz-core:client:job:place-props',
 
     LsmcPharmacyBuyItem = 'soz-core:nui:job:lsmc:pharmacy:buy-item',
+
+    NewsCreateAnnounce = 'soz-core:nui:news:create-announce',
+    NewsPlaceObject = 'soz-core:client:news:place-object',
 
     BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
     BennysOrder = 'soz-core:client:job:bennys:order',

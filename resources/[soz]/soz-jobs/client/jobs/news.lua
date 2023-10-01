@@ -110,80 +110,70 @@ end)
 --    end)
 --end)
 
-RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
-    if societyMenu.IsOpen then
-        societyMenu:Close()
-        return
-    end
-    societyMenu:ClearItems()
-
-    societyMenu:AddSlider({
-        label = "Faire une communication",
-        value = "nil",
-        values = {
-            {label = "Annonce", value = "annonce"},
-            {label = "Breaking News", value = "breaking-news"},
-            {label = "Publicité", value = "publicité"},
-            {label = "Fait Divers", value = "fait-divers"},
-            {label = "Info Trafic", value = "info-traffic"},
-        },
-        select = function(_, value)
-            local message = exports["soz-core"]:Input("Message de la communication", 235)
-            if message == nil or message == "" then
-                exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
-                return
-            end
-
-            TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
-                type = value,
-                message = message,
-                reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
-                reporterId = PlayerData.citizenid,
-            })
-
-            TriggerServerEvent("soz-core:server:monitor:add-event", "job_news_create_flash", {flash_type = value},
-                               {message = message, position = GetEntityCoords(PlayerPedId())}, true)
-        end,
-    })
-
-    societyMenu:AddSlider({
-        label = "Poser un objet",
-        value = nil,
-        values = {
-            {label = "Fond vert", value = {item = "n_fix_greenscreen", props = "prop_ld_greenscreen_01"}},
-            {label = "Caméra fixe", value = {item = "n_fix_camera", props = "prop_tv_cam_02", rotation = 180.0}},
-            {label = "Lumière fixe", value = {item = "n_fix_light", props = "prop_kino_light_01", rotation = 180.0}},
-            {label = "Micro sur pied", value = {item = "n_fix_mic", props = "v_ilev_fos_mic"}},
-        },
-        select = function(_, value)
-            TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation)
-            societyMenu:Close()
-        end,
-    })
-
-    societyMenu:AddSlider({
-        label = "Utiliser un objet mobile",
-        value = nil,
-        values = {
-            {label = "Caméra", value = {item = "n_camera", event = "jobs:utils:camera:toggle"}},
-            {label = "Micro main", value = {item = "n_mic", event = "jobs:utils:mic:toggle"}},
-            {label = "Micro sur une perche", value = {item = "n_bmic", event = "jobs:utils:bmic:toggle"}},
-        },
-        select = function(_, value)
-            TriggerServerEvent("jobs:server:news:UseMobileItem", value.item, value.event)
-            societyMenu:Close()
-        end,
-    })
-
-    societyMenu:Open()
-end)
-
---- Threads
-CreateThread(function()
-    QBCore.Functions.CreateBlip("jobs:news", {
-        name = "Twitch News",
-        coords = vector3(-589.86, -930.61, 23.82),
-        sprite = 590,
-        scale = 1.0,
-    })
-end)
+--RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
+--    if societyMenu.IsOpen then
+--        societyMenu:Close()
+--        return
+--    end
+--    societyMenu:ClearItems()
+--
+--    societyMenu:AddSlider({
+--        label = "Faire une communication",
+--        value = "nil",
+--        values = {
+--            {label = "Annonce", value = "annonce"},
+--            {label = "Breaking News", value = "breaking-news"},
+--            {label = "Publicité", value = "publicité"},
+--            {label = "Fait Divers", value = "fait-divers"},
+--            {label = "Info Trafic", value = "info-traffic"},
+--        },
+--        select = function(_, value)
+--            local message = exports["soz-core"]:Input("Message de la communication", 235)
+--            if message == nil or message == "" then
+--                exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
+--                return
+--            end
+--
+--            TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
+--                type = value,
+--                message = message,
+--                reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
+--                reporterId = PlayerData.citizenid,
+--            })
+--
+--            TriggerServerEvent("soz-core:server:monitor:add-event", "job_news_create_flash", {flash_type = value},
+--                               {message = message, position = GetEntityCoords(PlayerPedId())}, true)
+--        end,
+--    })
+--
+--    societyMenu:AddSlider({
+--        label = "Poser un objet",
+--        value = nil,
+--        values = {
+--            {label = "Fond vert", value = {item = "n_fix_greenscreen", props = "prop_ld_greenscreen_01"}},
+--            {label = "Caméra fixe", value = {item = "n_fix_camera", props = "prop_tv_cam_02", rotation = 180.0}},
+--            {label = "Lumière fixe", value = {item = "n_fix_light", props = "prop_kino_light_01", rotation = 180.0}},
+--            {label = "Micro sur pied", value = {item = "n_fix_mic", props = "v_ilev_fos_mic"}},
+--        },
+--        select = function(_, value)
+--            TriggerServerEvent("job:server:placeProps", value.item, value.props, value.rotation)
+--            societyMenu:Close()
+--        end,
+--    })
+--
+--    societyMenu:AddSlider({
+--        label = "Utiliser un objet mobile",
+--        value = nil,
+--        values = {
+--            {label = "Caméra", value = {item = "n_camera", event = "jobs:utils:camera:toggle"}},
+--            {label = "Micro main", value = {item = "n_mic", event = "jobs:utils:mic:toggle"}},
+--            {label = "Micro sur une perche", value = {item = "n_bmic", event = "jobs:utils:bmic:toggle"}},
+--        },
+--        select = function(_, value)
+--            TriggerServerEvent("jobs:server:news:UseMobileItem", value.item, value.event)
+--            societyMenu:Close()
+--        end,
+--    })
+--
+--    societyMenu:Open()
+--end)
