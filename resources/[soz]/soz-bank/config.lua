@@ -27,6 +27,7 @@ Config.FarmAccountMoney = {
     ["bennys_reseller"] = {money = 100000000, marked_money = 0},
     ["farm_bennys"] = {money = 300000, marked_money = 0},
     ["farm_news"] = {money = 300000, marked_money = 0},
+    ["farm_younews"] = {money = 300000, marked_money = 0},
     ["farm_stonk"] = {money = 300000, marked_money = 0},
     ["farm_mtp"] = {money = 300000, marked_money = 0},
     ["farm_garbage"] = {money = 300000, marked_money = 0},

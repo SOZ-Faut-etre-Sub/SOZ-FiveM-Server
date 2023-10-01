@@ -42,6 +42,13 @@ CreateThread(function()
         minZ = 24.0,
         maxZ = 24.10,
     }, {options = callSociety("555-NEWS"), distance = 2.5})
+    -- // @TODO News
+    exports["qb-target"]:AddBoxZone("bell:you-news", vector3(-586.9, -933.61, 23.82), 0.25, 0.35, {
+        name = "bell:news",
+        heading = 33,
+        minZ = 24.0,
+        maxZ = 24.10,
+    }, {options = callSociety("555-YOUN"), distance = 2.5})
 
     exports["qb-target"]:AddBoxZone("bell:food", vector2(-1884.4, 2063.0), 0.5, 0.5, {
         name = "bell:food",

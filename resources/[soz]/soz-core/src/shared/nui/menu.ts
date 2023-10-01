@@ -1,3 +1,4 @@
+import { JobType } from '@public/shared/job';
 import { NuiJobEmployeeOnDuty } from '@public/shared/nui/job';
 import { PlayerPersonalMenuData } from '@public/shared/nui/player';
 
@@ -56,7 +57,7 @@ export enum MenuType {
     Garage = 'garage_menu',
     JobBennys = 'job_bennys',
     JobUpw = 'job_upw',
-    JobTwitchNews = 'job_twitch_news',
+    JobNews = 'job_news',
     UpwOrderMenu = 'upw_order',
     OilSetStationPrice = 'oil_set_station_price',
     SetHealthState = 'set_health_state',
@@ -130,5 +131,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.GouvJobMenu]: { onDuty: boolean };
     [MenuType.PropPlacementMenu]: PropPlacementMenuData;
     [MenuType.FDFJobMenu]: any;
-    [MenuType.JobTwitchNews]: never;
+    [MenuType.JobNews]: { job: JobType };
 }

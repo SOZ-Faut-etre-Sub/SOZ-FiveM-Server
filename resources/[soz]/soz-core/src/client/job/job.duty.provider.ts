@@ -18,6 +18,15 @@ const DutyZoneConfig: Zone<JobType>[] = [
         maxZ: 24.32,
     },
     {
+        data: JobType.YouNews,
+        center: [-587.75, -934.67, 23.82], // @TODO News
+        length: 0.4,
+        width: 0.8,
+        heading: 32,
+        minZ: 23.72,
+        maxZ: 24.32,
+    },
+    {
         data: JobType.Ffs,
         center: [707.29, -967.58, 30.41],
         length: 0.35,

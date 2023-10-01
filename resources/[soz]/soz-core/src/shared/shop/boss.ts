@@ -64,6 +64,31 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         ],
     },
     {
+        name: 'you-news',
+        job: JobType.YouNews,
+        zone: {
+            // @TODO News
+            center: [-567.59, -922.01, 28.82],
+            length: 0.4,
+            width: 2.8,
+            heading: 0,
+            minZ: 27.82,
+            maxZ: 30.82,
+        },
+        targets: [],
+        products: [
+            { id: 'armor', type: 'item', metadata: { label: 'Twitch News', type: 'news' }, price: 150 },
+            { id: 'n_fix_camera', type: 'item', price: 250 },
+            { id: 'n_fix_greenscreen', type: 'item', price: 150 },
+            { id: 'n_fix_light', type: 'item', price: 80 },
+            { id: 'n_fix_mic', type: 'item', price: 60 },
+            { id: 'n_mic', type: 'item', price: 50 },
+            { id: 'n_camera', type: 'item', price: 250 },
+            { id: 'n_bmic', type: 'item', price: 100 },
+            { id: 'microphone', type: 'item', price: 50 },
+        ],
+    },
+    {
         name: 'food',
         job: JobType.Food,
         zone: {
