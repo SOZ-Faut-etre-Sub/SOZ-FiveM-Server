@@ -10,7 +10,7 @@ import { joaat } from '@public/shared/joaat';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { WorldObject } from '../../shared/object';
 
 type SpawnedObject = {
@@ -49,6 +49,14 @@ export class ObjectProvider {
         }
 
         return objects;
+    }
+
+    public collectObject(entity: number): void {
+        const id = this.getIdFromEntity(entity);
+
+        if (id) {
+            TriggerServerEvent(ServerEvent.OBJECT_COLLECT, id);
+        }
     }
 
     @Once(OnceStep.PlayerLoaded)

@@ -2,6 +2,7 @@ import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
+import { JobType } from '../../../shared/job';
 import { getRandomInt } from '../../../shared/random';
 import { BankService } from '../../bank/bank.service';
 import { InventoryManager } from '../../inventory/inventory.manager';
@@ -133,7 +134,14 @@ export class NewsFarmProvider {
             return;
         }
 
-        await this.bankService.transferBankMoney('farm_news', 'safe_news', amount * 50);
+        if (player.job.id === JobType.News) {
+            await this.bankService.transferBankMoney('farm_news', 'safe_news', amount * 50);
+        }
+
+        if (player.job.id === JobType.YouNews) {
+            await this.bankService.transferBankMoney('farm_you-news', 'safe_you_news', amount * 50);
+        }
+
         this.notifier.notify(source, `Vous avez vendu ~g~${amount} journaux.`);
 
         TriggerClientEvent(ClientEvent.NEWS_NEWSPAPER_SOLD, source);

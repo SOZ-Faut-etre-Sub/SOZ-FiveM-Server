@@ -8,6 +8,7 @@ import { Vector4 } from '../../../shared/polyzone/vector';
 import { getRandomItem } from '../../../shared/random';
 import { BlipFactory } from '../../blip';
 import { Notifier } from '../../notifier';
+import { ObjectProvider } from '../../object/object.provider';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -24,6 +25,9 @@ export class NewsProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     private currentZone: Vector4 = null;
 
@@ -50,11 +54,13 @@ export class NewsProvider {
                     label: 'Récupérer',
                     color: 'news',
                     icon: 'c:jobs/recuperer.png',
-                    event: 'job:client:RemoveObject', // @TODO in core
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
 
                         return player && (player.job.id === JobType.News || player.job.id === JobType.YouNews);
+                    },
+                    action: object => {
+                        this.objectProvider.collectObject(object);
                     },
                 },
             ]

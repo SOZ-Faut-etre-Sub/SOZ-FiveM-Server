@@ -9,7 +9,7 @@ import { convertTypeToName, isBCSOMessage, isLSPDMessage, isPoliceMessage, isSAS
 import { PoliceContent } from './PoliceContent';
 
 export const Card: FunctionComponent<TwitchNewsMessage> = memo(
-    ({ type, image, message, reporter, createdAt }: TwitchNewsMessage) => {
+    ({ type, image, message, reporter, createdAt, job }: TwitchNewsMessage) => {
         const config = useConfig();
 
         return (
@@ -20,7 +20,8 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
                     'border-[#3336E1]': isLSPDMessage(type),
                     'border-[#2d5547]': isBCSOMessage(type),
                     'border-[#c1b7af]': isSASPMessage(type),
-                    'border-[#6741b1]': isPoliceMessage(type) === false,
+                    'border-[#6741b1]': isPoliceMessage(type) === false && job === 'news',
+                    'border-[#B11F1E]': isPoliceMessage(type) === false && job !== 'news',
                 })}
             >
                 <div className={`relative p-3 flex items-center space-x-3`}>

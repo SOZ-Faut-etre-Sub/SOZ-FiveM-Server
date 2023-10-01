@@ -100,9 +100,12 @@ export enum ServerEvent {
     MONITOR_ADD_EVENT = 'soz-core:server:monitor:add-event',
     MONITOR_LOG = 'soz-core:server:monitor:log',
 
+    NEWS_ADD_FLASH = 'soz-core:server:news:add-flash',
     NEWS_NEWSPAPER_SOLD = 'soz-core:server:job:news:newspaper-sold',
     NEWS_NEWSPAPER_FARM = 'soz-core:server:job:news:newspaper-farm',
     NEWS_PLACE_OBJECT = 'soz-core:server:job:news:place-object',
+
+    OBJECT_COLLECT = 'soz-core:server:object:collect',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:server:oil:refill-kerosene-station',
@@ -180,8 +183,6 @@ export enum ServerEvent {
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
     TAXI_NPC_PAY = 'soz-core:server:taxi:npc-pay',
-
-    TWITCH_ADD_FLASH_NEWS = 'soz-core:server:twitch:add-flash-news', // @TODO News
 
     VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
     VEHICLE_USE_BODY_REPAIR_KIT = 'soz-core:server:vehicle:use-body-repair-kit',

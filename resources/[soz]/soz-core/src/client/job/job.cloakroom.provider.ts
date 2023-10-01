@@ -32,6 +32,7 @@ const jobStorage: Partial<Record<JobType, WardrobeConfig>> = {
     baun: BaunCloakroom,
     oil: OilCloakroom,
     news: NewsCloakroom,
+    [JobType.YouNews]: NewsCloakroom,
     garbage: GarbageCloakroom,
     food: FoodCloakroom,
     ffs: FfsCloakroom,

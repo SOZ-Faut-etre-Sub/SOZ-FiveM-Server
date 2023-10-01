@@ -72,6 +72,7 @@ export class NewsMenuProvider {
                 message,
                 reporter: player.charinfo.firstname + ' ' + player.charinfo.lastname,
                 reporterId: player.citizenid,
+                job: player.job.id,
             }
         );
 

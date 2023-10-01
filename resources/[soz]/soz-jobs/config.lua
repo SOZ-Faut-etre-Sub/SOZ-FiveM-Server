@@ -454,7 +454,6 @@ SozJobCore.Jobs = {
         phone = "555-NEWS",
         canReceiveSocietyInvoice = true,
     },
-    -- // @TODO News
     [SozJobCore.JobType.YouNews] = {
         label = "You News",
         platePrefix = "YOUN",
@@ -487,15 +486,14 @@ SozJobCore.Jobs = {
         },
         bossZones = {
             {
-                x = -576.17,
-                y = -937.34,
-                z = 28.82,
-                sx = 5.8,
-                sy = 10.8,
-                heading = 0,
-                minZ = 27.82,
-                maxZ = 31.82,
-                debugPoly = false,
+                x = -1052.93,
+                y = -231.10,
+                z = 44.02,
+                sx = 1.60,
+                sy = 2.60,
+                heading = 27.28,
+                minZ = 43.02,
+                maxZ = 45.02,
             },
         },
         phone = "555-YOUN",

@@ -1,10 +1,10 @@
 import { TwitchNewsMessage } from '../../../typings/twitch-news';
 
 export class _TwitchNewsDB {
-    async addNews({ type, image, message, reporter, reporterId }: TwitchNewsMessage): Promise<number> {
+    async addNews({ type, image, message, reporter, reporterId, job }: TwitchNewsMessage): Promise<number> {
         return await exports.oxmysql.insert_async(
-            'INSERT INTO phone_twitch_news (type, image, message, reporter, reporterId) VALUES (?, ?, ?, ?, ?)',
-            [type, image, message, reporter, reporterId]
+            'INSERT INTO phone_twitch_news (type, image, message, reporter, reporterId, job) VALUES (?, ?, ?, ?, ?, ?)',
+            [type, image, message, reporter, reporterId, job || 'news']
         );
     }
 
