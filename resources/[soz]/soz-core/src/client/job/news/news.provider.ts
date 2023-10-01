@@ -37,14 +37,14 @@ export class NewsProvider {
             coords: { x: -589.86, y: -930.61, z: 23.82 },
             name: 'Twitch News',
             sprite: 590,
-            scale: 1.0,
+            scale: 0.9,
         });
 
-        this.blipFactory.create('jobs:news', {
-            coords: { x: -589.86, y: -930.61, z: 23.82 },
+        this.blipFactory.create('jobs-you-news', {
+            coords: { x: -1081.28, y: -261.62, z: 37.8 },
             name: 'You News',
-            sprite: 590,
-            scale: 1.0,
+            sprite: 733,
+            scale: 0.9,
         });
 
         this.targetFactory.createForModel(
