@@ -56,6 +56,7 @@ export enum MenuType {
     Garage = 'garage_menu',
     JobBennys = 'job_bennys',
     JobUpw = 'job_upw',
+    JobTwitchNews = 'job_twitch_news',
     UpwOrderMenu = 'upw_order',
     OilSetStationPrice = 'oil_set_station_price',
     SetHealthState = 'set_health_state',
@@ -75,7 +76,7 @@ export enum MenuType {
     PlayerPersonal = 'player_personal',
     PropPlacementMenu = 'prop_placement_menu',
     LsmcJobMenu = 'lsmc_job_menu',
-    JobOnDutyMenu = 'job_on_duty,',
+    JobOnDutyMenu = 'job_on_duty',
     Album = 'album',
     DrugShop = 'drug_shop',
     DrugGarden = 'drug_garden',
@@ -129,4 +130,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.GouvJobMenu]: { onDuty: boolean };
     [MenuType.PropPlacementMenu]: PropPlacementMenuData;
     [MenuType.FDFJobMenu]: any;
+    [MenuType.JobTwitchNews]: never;
 }

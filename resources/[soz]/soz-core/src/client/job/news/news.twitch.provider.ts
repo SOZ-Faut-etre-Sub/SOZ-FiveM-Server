@@ -12,7 +12,7 @@ import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
-export class TwitchNewsProvider {
+export class NewsTwitchProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
@@ -29,6 +29,13 @@ export class TwitchNewsProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onTwitchNewsLoad() {
+        this.blipFactory.create('jobs:news', {
+            coords: { x: -589.86, y: -930.61, z: 23.82 },
+            name: 'Twitch News',
+            sprite: 590,
+            scale: 1.0,
+        });
+
         this.targetFactory.createForModel(
             ['prop_ld_greenscreen_01', 'prop_tv_cam_02', 'prop_kino_light_01', 'v_ilev_fos_mic'],
             [

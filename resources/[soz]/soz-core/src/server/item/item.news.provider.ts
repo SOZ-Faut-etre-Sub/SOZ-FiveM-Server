@@ -30,10 +30,16 @@ export class ItemNewsProvider {
             TriggerClientEvent(ClientEvent.NEWS_NEWSPAPER_SELL, source);
         });
 
-        this.item.setItemUseCallback('n_camera', source => {});
+        this.item.setItemUseCallback('n_camera', source => {
+            TriggerClientEvent(ClientEvent.ITEM_CAMERA_TOGGLE, source);
+        });
 
-        this.item.setItemUseCallback('n_mic', source => {});
+        this.item.setItemUseCallback('n_mic', source => {
+            TriggerClientEvent(ClientEvent.ITEM_MICROPHONE_TOGGLE, source, 'microphone');
+        });
 
-        this.item.setItemUseCallback('n_bmic', source => {});
+        this.item.setItemUseCallback('n_bmic', source => {
+            TriggerClientEvent(ClientEvent.ITEM_MICROPHONE_TOGGLE, source, 'big_microphone');
+        });
     }
 }

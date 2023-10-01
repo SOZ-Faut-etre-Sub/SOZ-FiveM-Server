@@ -24,6 +24,7 @@ import { FoodModule } from './server/job/food/food.module';
 import { JobModule } from './server/job/job.module';
 import { LSMCModule } from './server/job/lsmc/lsmc.module';
 import { MdrModule } from './server/job/mdr/mdr.module';
+import { NewsModule } from './server/job/news/news.module';
 import { OilModule } from './server/job/oil/oil.module';
 import { PawlModule } from './server/job/pawl/pawl.module';
 import { PoliceModule } from './server/job/police/police.module';
@@ -96,6 +97,7 @@ async function bootstrap() {
         PropsModule,
         CraftModule,
         FDFModule,
+        NewsModule,
         ...PrivateModules
     );
 
