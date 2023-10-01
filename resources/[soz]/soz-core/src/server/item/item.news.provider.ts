@@ -23,7 +23,7 @@ export class ItemNewsProvider {
                 return;
             }
 
-            if (player.job.id !== JobType.News) {
+            if (player.job.id !== JobType.News && player.job.id !== JobType.YouNews) {
                 return;
             }
 

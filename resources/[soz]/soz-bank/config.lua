@@ -48,7 +48,7 @@ Config.SocietyTaxes = {
         ["food"] = {"food", "safe_food"},
         ["garbage"] = {"garbage", "safe_garbage"},
         ["news"] = {"news", "safe_news"},
-        ["you-news"] = {"you-news", "safe_you_news"},
+        ["you-news"] = {"you-news", "safe_you-news"},
         ["oil"] = {"oil", "safe_oil"},
         ["pawl"] = {"pawl", "safe_pawl"},
         ["taxi"] = {"taxi", "safe_taxi"},
@@ -94,7 +94,7 @@ Config.SafeStorages = {
         position = vector3(-575.83, -937.5, 28.7),
         size = vec2(1.3, 2.5),
     },
-    ["safe_you_news"] = {
+    ["safe_you-news"] = {
         label = "Coffre You News",
         owner = "you-news",
         position = vector3(-1057.23, -234.11, 44.02),

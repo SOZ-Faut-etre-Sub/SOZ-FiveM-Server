@@ -54,11 +54,22 @@ export class NewsProvider {
                     label: 'Récupérer',
                     color: 'news',
                     icon: 'c:jobs/recuperer.png',
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        return player && (player.job.id === JobType.News || player.job.id === JobType.YouNews);
+                    job: JobType.News,
+                    action: object => {
+                        this.objectProvider.collectObject(object);
                     },
+                },
+            ]
+        );
+
+        this.targetFactory.createForModel(
+            ['prop_ld_greenscreen_01', 'prop_tv_cam_02', 'prop_kino_light_01', 'v_ilev_fos_mic'],
+            [
+                {
+                    label: 'Récupérer',
+                    color: 'you-news',
+                    icon: 'c:jobs/recuperer.png',
+                    job: JobType.YouNews,
                     action: object => {
                         this.objectProvider.collectObject(object);
                     },
@@ -83,17 +94,34 @@ export class NewsProvider {
                     action: () => {
                         TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_FARM);
                     },
+                    job: JobType.News,
                     canInteract: () => {
-                        const player = this.playerService.getPlayer();
+                        return this.playerService.isOnDuty();
+                    },
+                },
+            ]
+        );
 
-                        if (!player) {
-                            return false;
-                        }
-
-                        if (player.job.id !== JobType.News && player.job.id !== JobType.YouNews) {
-                            return false;
-                        }
-
+        this.targetFactory.createForBoxZone(
+            'jobs:you-news:farm',
+            {
+                center: [-1056.23, -244.2, 44.02],
+                heading: 207.41,
+                length: 6.6,
+                width: 16.6,
+                minZ: 43.02,
+                maxZ: 45.02,
+            },
+            [
+                {
+                    label: 'Imprimer',
+                    color: 'you-news',
+                    icon: 'c:news/imprimer.png',
+                    action: () => {
+                        TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_FARM);
+                    },
+                    job: JobType.YouNews,
+                    canInteract: () => {
                         return this.playerService.isOnDuty();
                     },
                 },
@@ -103,6 +131,12 @@ export class NewsProvider {
 
     @OnEvent(ClientEvent.NEWS_NEWSPAPER_SELL)
     public async onNewspaperSell() {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
         if (this.currentZone) {
             this.clearSell();
             this.notifier.notify('Vous avez annulé la livraison de journaux', 'info');
@@ -124,22 +158,13 @@ export class NewsProvider {
             [
                 {
                     label: 'Livrer',
-                    color: 'news',
+                    color: player.job.id,
                     icon: 'c:news/livrer.png',
                     action: () => {
                         TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_SOLD);
                     },
+                    job: player.job.id,
                     canInteract: () => {
-                        const player = this.playerService.getPlayer();
-
-                        if (!player) {
-                            return false;
-                        }
-
-                        if (player.job.id !== JobType.News && player.job.id !== JobType.YouNews) {
-                            return false;
-                        }
-
                         return this.playerService.isOnDuty();
                     },
                 },
