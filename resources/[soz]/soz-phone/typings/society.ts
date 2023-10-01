@@ -74,6 +74,7 @@ export const SocietyNumberList: SocietyNumber = {
     lsmc: '555-LSMC',
     bcso: '555-BCSO',
     news: '555-NEWS',
+    'you-news': '555-YOUN',
     garbage: '555-BLUEBIRD',
     taxi: '555-CARLJR',
     food: '555-MARIUS',
