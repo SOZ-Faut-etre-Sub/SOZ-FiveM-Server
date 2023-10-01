@@ -36,6 +36,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
         },
         duration: 20000,
         icon: '🍷',
+        event: 'job_cm_food_craft',
         recipes: {
             wine1: {
                 inputs: {
@@ -73,6 +74,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
         },
         duration: 8000,
         icon: '🧃',
+        event: 'job_cm_food_craft',
         recipes: {
             grapejuice1: {
                 inputs: {
@@ -112,6 +114,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
     Fromage: {
         duration: 6000,
         icon: '🧀',
+        event: 'job_cm_food_craft',
         recipes: {
             cheese1: {
                 inputs: {
@@ -172,6 +175,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
     Saucissons: {
         duration: 8000,
         icon: '🌭',
+        event: 'job_cm_food_craft',
         recipes: {
             sausage1: {
                 inputs: {
@@ -229,6 +233,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
         feature: Feature.Easter,
         duration: 5000,
         icon: '🥚',
+        event: 'job_cm_food_craft',
         recipes: {
             easter_basket: {
                 inputs: {

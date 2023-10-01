@@ -51,6 +51,7 @@ export const BaunCraftsLists: Record<string, CraftCategory> = {
             },
         },
         duration: 4000,
+        event: 'job_baun_craft',
         recipes: {
             narito: {
                 amount: 1,
