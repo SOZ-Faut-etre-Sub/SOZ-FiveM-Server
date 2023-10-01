@@ -3,7 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { uuidv4 } from '../../../core/utils';
 import { ServerEvent } from '../../../shared/event';
-import { Vector3, Vector4 } from '../../../shared/polyzone/vector';
+import { Vector4 } from '../../../shared/polyzone/vector';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { ObjectProvider } from '../../object/object.provider';
