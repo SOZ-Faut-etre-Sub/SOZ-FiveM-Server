@@ -88,9 +88,17 @@ export class PlayerCleanService {
             },
         });
 
-        for (const housingOwnerIdentifier of housingOwnerIdentifiers) {
-            exports['soz-bank'].ClearAccount(housingOwnerIdentifier.identifier);
-        }
+        await this.prismaService.bank_accounts.updateMany({
+            where: {
+                houseid: {
+                    in: housingOwnerIdentifiers.map(h => 'property_' + h.identifier),
+                },
+            },
+            data: {
+                money: 0,
+                marked_money: 0,
+            },
+        });
 
         const housingRoommateUpdated = await this.prismaService.housing_apartment.updateMany({
             data: {
