@@ -485,16 +485,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.NewsManageBillboards] = {label = "Gérer les panneaux sur le panel"},
         },
         bossZones = {
-            {
-                x = -1052.93,
-                y = -231.10,
-                z = 44.02,
-                sx = 1.60,
-                sy = 2.60,
-                heading = 27.28,
-                minZ = 43.02,
-                maxZ = 45.02,
-            },
+            {x = -1052.93, y = -231.10, z = 44.02, sx = 1.60, sy = 2.60, heading = 27.28, minZ = 43.02, maxZ = 45.02},
         },
         phone = "555-YOUN",
         canReceiveSocietyInvoice = true,

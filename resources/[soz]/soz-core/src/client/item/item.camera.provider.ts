@@ -8,6 +8,7 @@ import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { PlayerService } from '../player/player.service';
 
 const FOV_MAX = 70.0;
 const FOV_MIN = 5.0;
@@ -33,6 +34,9 @@ export class ItemCameraProvider {
 
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
+
+    @Inject(PlayerService)
+    private readonly playerService: PlayerService;
 
     private currentAnimation: AnimationRunner = null;
 
@@ -153,6 +157,12 @@ export class ItemCameraProvider {
 
     @OnEvent(ClientEvent.ITEM_CAMERA_TOGGLE)
     public async onToggleCamera() {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
         if (this.currentAnimation) {
             this.currentAnimation.cancel();
 
@@ -187,14 +197,14 @@ export class ItemCameraProvider {
 
         this.cam = this.createCamera();
 
-        this.nuiDispatch.dispatch('hud', 'SetTwitchNewsOverlay', true);
+        this.nuiDispatch.dispatch('hud', 'SetTwitchNewsOverlay', player.job.id);
 
         await this.currentAnimation;
 
         this.deleteCamera();
 
         this.currentAnimation = null;
-        this.nuiDispatch.dispatch('hud', 'SetTwitchNewsOverlay', false);
+        this.nuiDispatch.dispatch('hud', 'SetTwitchNewsOverlay', null);
     }
 
     private createCamera(): number {
