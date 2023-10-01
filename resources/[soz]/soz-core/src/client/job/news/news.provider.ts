@@ -12,7 +12,7 @@ import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
 @Provider()
-export class NewsTwitchProvider {
+export class NewsProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
@@ -36,6 +36,13 @@ export class NewsTwitchProvider {
             scale: 1.0,
         });
 
+        this.blipFactory.create('jobs:news', {
+            coords: { x: -589.86, y: -930.61, z: 23.82 },
+            name: 'You News',
+            sprite: 590,
+            scale: 1.0,
+        });
+
         this.targetFactory.createForModel(
             ['prop_ld_greenscreen_01', 'prop_tv_cam_02', 'prop_kino_light_01', 'v_ilev_fos_mic'],
             [
@@ -44,7 +51,11 @@ export class NewsTwitchProvider {
                     color: 'news',
                     icon: 'c:jobs/recuperer.png',
                     event: 'job:client:RemoveObject', // @TODO in core
-                    job: JobType.News,
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+
+                        return player && (player.job.id === JobType.News || player.job.id === JobType.YouNews);
+                    },
                 },
             ]
         );
@@ -66,8 +77,17 @@ export class NewsTwitchProvider {
                     action: () => {
                         TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_FARM);
                     },
-                    job: JobType.News,
                     canInteract: () => {
+                        const player = this.playerService.getPlayer();
+
+                        if (!player) {
+                            return false;
+                        }
+
+                        if (player.job.id !== JobType.News && player.job.id !== JobType.YouNews) {
+                            return false;
+                        }
+
                         return this.playerService.isOnDuty();
                     },
                 },
@@ -104,9 +124,18 @@ export class NewsTwitchProvider {
                         TriggerServerEvent(ServerEvent.NEWS_NEWSPAPER_SOLD);
                     },
                     canInteract: () => {
+                        const player = this.playerService.getPlayer();
+
+                        if (!player) {
+                            return false;
+                        }
+
+                        if (player.job.id !== JobType.News && player.job.id !== JobType.YouNews) {
+                            return false;
+                        }
+
                         return this.playerService.isOnDuty();
                     },
-                    job: JobType.News,
                 },
             ]
         );

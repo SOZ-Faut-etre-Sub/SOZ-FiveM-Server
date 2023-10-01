@@ -3,6 +3,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { uuidv4 } from '../../../core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
+import { JobType } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { toVector3Object, Vector3 } from '../../../shared/polyzone/vector';
 import { Monitor } from '../../monitor/monitor';
@@ -26,14 +27,23 @@ export class NewsMenuProvider {
     private monitor: Monitor;
 
     @OnEvent(ClientEvent.JOBS_TWITCH_NEWS_OPEN_SOCIETY_MENU)
-    public onOpenSocietyMenu() {
-        if (this.nuiMenu.getOpened() === MenuType.JobTwitchNews) {
+    public onOpenTwitchNewsMenu() {
+        this.toggleSocietyMenu(JobType.News);
+    }
+
+    @OnEvent(ClientEvent.JOBS_YOU_NEWS_OPEN_SOCIETY_MENU)
+    public onOpenYouNewsMenu() {
+        this.toggleSocietyMenu(JobType.YouNews);
+    }
+
+    private toggleSocietyMenu(job: JobType) {
+        if (this.nuiMenu.getOpened() === MenuType.JobNews) {
             this.nuiMenu.closeMenu();
 
             return;
         }
 
-        this.nuiMenu.openMenu(MenuType.JobTwitchNews);
+        this.nuiMenu.openMenu(MenuType.JobNews, { job });
     }
 
     @OnNuiEvent(NuiEvent.NewsCreateAnnounce)

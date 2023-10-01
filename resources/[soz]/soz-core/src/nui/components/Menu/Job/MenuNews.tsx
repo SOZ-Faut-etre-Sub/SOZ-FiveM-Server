@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../../shared/event';
+import { JobType } from '../../../../shared/job';
 import { MenuType } from '../../../../shared/nui/menu';
 import { fetchNui } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
@@ -14,9 +15,22 @@ import {
     MenuTitle,
 } from '../../Styleguide/Menu';
 
-export const MenuTwitchNews: FunctionComponent = () => {
+type MenuNewsProps = {
+    data?: {
+        job: JobType;
+    };
+};
+
+export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
     const player = usePlayer();
-    const banner = 'https://nui-img/soz/menu_job_news';
+
+    if (!data) {
+        return null;
+    }
+
+    const banner =
+        data.job === JobType.News ? 'https://nui-img/soz/menu_job_news' : '/public/images/menu/banner/younews.webp';
+
     if (!player?.job.onduty) {
         return (
             <Menu type={MenuType.JobUpw}>
@@ -31,7 +45,7 @@ export const MenuTwitchNews: FunctionComponent = () => {
     }
 
     return (
-        <Menu type={MenuType.JobTwitchNews}>
+        <Menu type={MenuType.JobNews}>
             <MainMenu>
                 <MenuTitle banner={banner}>Twitch News </MenuTitle>
                 <MenuContent>

@@ -181,7 +181,7 @@ export enum ServerEvent {
 
     TAXI_NPC_PAY = 'soz-core:server:taxi:npc-pay',
 
-    TWITCH_ADD_FLASH_NEWS = 'soz-core:server:twitch:add-flash-news',
+    TWITCH_ADD_FLASH_NEWS = 'soz-core:server:twitch:add-flash-news', // @TODO News
 
     VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
     VEHICLE_USE_BODY_REPAIR_KIT = 'soz-core:server:vehicle:use-body-repair-kit',
@@ -386,6 +386,7 @@ export enum ClientEvent {
     JOBS_FDF_OPEN_SOCIETY_MENU = 'soz-jobs:client:fdf:OpenSocietyMenu',
     JOBS_GOUV_OPEN_SOCIETY_MENU = 'soz-jobs:client:gouv:OpenSocietyMenu',
     JOBS_TWITCH_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:twitch-news:OpenSocietyMenu',
+    JOBS_YOU_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:you-news:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
