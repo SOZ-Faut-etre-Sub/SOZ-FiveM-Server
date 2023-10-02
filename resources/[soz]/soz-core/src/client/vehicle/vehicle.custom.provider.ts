@@ -247,12 +247,6 @@ export class VehicleCustomProvider {
             return;
         }
 
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicleEntityId);
-
-        if (!vehicleNetworkId) {
-            return;
-        }
-
         let i = 0;
 
         while (!NetworkHasControlOfEntity(vehicleEntityId) && i < 20) {
