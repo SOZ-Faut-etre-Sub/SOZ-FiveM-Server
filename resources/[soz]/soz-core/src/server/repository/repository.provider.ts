@@ -134,7 +134,7 @@ export class RepositoryProvider {
         if (this.legacyRepositories[repositoryName]) {
             const data = await this.legacyRepositories[repositoryName].refresh();
 
-            TriggerClientEvent(ClientEvent.REPOSITORY_SYNC_DATA, -1, repositoryName, data);
+            TriggerLatentClientEvent(ClientEvent.REPOSITORY_SYNC_DATA, -1, 16 * 1024, repositoryName, data);
 
             return data;
         }
