@@ -61,14 +61,14 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
                 SetVehicleFixed(vehicle);
             }
 
-            SetVehicleEngineHealth(vehicle, condition.engineHealth);
-            SetVehiclePetrolTankHealth(vehicle, condition.tankHealth);
+            SetVehicleEngineHealth(vehicle, Math.max(condition.engineHealth, 0));
+            SetVehiclePetrolTankHealth(vehicle, Math.max(condition.tankHealth, 600));
         },
         get: vehicle => GetVehicleBodyHealth(vehicle),
     },
     engineHealth: {
         apply: (vehicle, value: number) => {
-            SetVehicleEngineHealth(vehicle, value);
+            SetVehicleEngineHealth(vehicle, Math.max(value, 0));
         },
         get: vehicle => GetVehicleEngineHealth(vehicle),
     },
@@ -84,7 +84,7 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
     },
     tankHealth: {
         apply: (vehicle, value: number) => {
-            SetVehiclePetrolTankHealth(vehicle, value);
+            SetVehiclePetrolTankHealth(vehicle, Math.max(value, 600));
         },
         get: vehicle => GetVehiclePetrolTankHealth(vehicle),
     },
