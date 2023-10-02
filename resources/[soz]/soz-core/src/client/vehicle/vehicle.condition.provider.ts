@@ -70,8 +70,8 @@ export class VehicleConditionProvider {
 
         if (!useExistingState) {
             this.currentVehicleCondition.set(vehicleNetworkId, condition);
-            this.vehicleService.applyVehicleConfigurationPerformance(entityId, configuration);
             this.vehicleService.applyVehicleCondition(entityId, condition, condition);
+            this.vehicleService.applyVehicleConfigurationPerformance(entityId, configuration);
         } else {
             // This is trigger when a new vehicle is registered without a spawn, like the vehicle was forced by a player
             const state = await this.vehicleStateService.getVehicleState(entityId);
