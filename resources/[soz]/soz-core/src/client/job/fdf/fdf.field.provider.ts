@@ -192,6 +192,47 @@ export class FDFFieldProvider {
                         TriggerServerEvent(ServerEvent.FDF_FIELD_DESTROY, id);
                     },
                 },
+                {
+                    label: 'Vérifier',
+                    color: JobType.FDF,
+                    icon: 'c:crimi/time.png',
+                    blackoutJob: JobType.FDF,
+                    blackoutGlobal: true,
+                    job: JobType.FDF,
+                    canInteract: async entity => {
+                        if (!this.playerService.isOnDuty()) {
+                            return false;
+                        }
+
+                        const id = this.objectProvider.getIdFromEntity(entity);
+                        if (!id) {
+                            return false;
+                        }
+
+                        return true;
+                    },
+                    action: async entity => {
+                        const id = this.objectProvider.getIdFromEntity(entity);
+
+                        const { completed } = await this.progressService.progress(
+                            'drugs_water',
+                            'Vérification en cours ...',
+                            4000,
+                            {
+                                dictionary: 'anim@amb@business@weed@weed_inspecting_lo_med_hi@',
+                                name: 'weed_crouch_checkingleaves_idle_01_inspector',
+                                options: {
+                                    repeat: true,
+                                },
+                            }
+                        );
+                        if (!completed) {
+                            return;
+                        }
+
+                        TriggerServerEvent(ServerEvent.FDF_FIELD_CHECK, id);
+                    },
+                },
             ]);
         });
 
@@ -297,7 +338,7 @@ export class FDFFieldProvider {
                 outWarnDate = 0;
             }
 
-            if (GetEntitySpeed(ped) * 3.6 > 15) {
+            if (GetEntitySpeed(ped) * 3.6 > 20) {
                 this.notifier.notify(
                     'Tu roule trop vite, tu as gâché tout le travail. Il va falloir tout refaire maintenant.',
                     'error'

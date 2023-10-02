@@ -401,12 +401,14 @@ export type FDFFieldsConfigType = {
     hillingText: string;
     progressText: string;
     hillingAnim: ProgressAnimation;
+    hillLabel: string;
 };
 
 export const FDFFieldConfig: FDFFieldsConfigType = {
     fields: FDFFields,
     maxprop: 40,
     speedLabel: 'Butter',
+    hillLabel: 'Buttage effectué',
     hillingText: 'Vous avez butté un plant, il sera récoltable un peu plus tôt.',
     progressText: 'Buttage en cours...',
     hillingAnim: {
@@ -418,8 +420,9 @@ export const FDFGreenhouseConfig: FDFFieldsConfigType = {
     fields: FDFGreenHouse,
     maxprop: 20,
     speedLabel: 'Répulser',
+    hillLabel: 'Répulsion effectué',
     hillingText: 'Vous avez répulsé un plant, il sera récoltable un peu plus tôt.',
-    progressText: 'Répulsage en cours...',
+    progressText: 'Répulsion en cours...',
     hillingAnim: {
         dictionary: 'anim@amb@business@weed@weed_inspecting_lo_med_hi@',
         name: 'weed_spraybottle_stand_kneeling_01_inspector',
@@ -478,6 +481,14 @@ export type FDFCrop = {
     field: string;
 };
 
+export function harvestTreeDiff(tree: TreeStatus): number {
+    const env = GetConvar('soz_core_environment', 'development') as Environment;
+    const waterGain = env == 'production' ? FDFConfig.waterGain : FDFConfig.waterGainTst;
+
+    const now = Date.now();
+    return FDFConfig.treeHarvestDelay - now + tree.cutDate - tree.nbWater * waterGain;
+}
+
 export function canTreeBeWater(tree: TreeStatus): boolean {
     if (!tree) {
         return false;
@@ -485,14 +496,13 @@ export function canTreeBeWater(tree: TreeStatus): boolean {
 
     const env = GetConvar('soz_core_environment', 'development') as Environment;
     const delay = env == 'production' ? FDFConfig.waterDelay : FDFConfig.waterDelayTst;
-    const waterGain = env == 'production' ? FDFConfig.waterGain : FDFConfig.waterGainTst;
 
     const now = Date.now();
     if (now < tree.lastWater + delay) {
         return false;
     }
 
-    if (now - tree.cutDate + tree.nbWater * waterGain > FDFConfig.treeHarvestDelay) {
+    if (harvestTreeDiff(tree) < 0) {
         return false;
     }
 
@@ -504,11 +514,7 @@ export function canTreeBeHarvest(tree: TreeStatus): boolean {
         return false;
     }
 
-    const env = GetConvar('soz_core_environment', 'development') as Environment;
-    const waterGain = env == 'production' ? FDFConfig.waterGain : FDFConfig.waterGainTst;
-
-    const now = Date.now();
-    if (now - tree.cutDate + tree.nbWater * waterGain < FDFConfig.treeHarvestDelay) {
+    if (harvestTreeDiff(tree) > 0) {
         return false;
     }
 
@@ -527,16 +533,20 @@ export function canCropBeHilled(crop: FDFCrop): boolean {
     return now - crop.createdAt > delay && !crop.hilled;
 }
 
+export function harvestDiff(crop: FDFCrop): number {
+    const env = GetConvar('soz_core_environment', 'development') as Environment;
+    const hillGain = env == 'production' ? FDFConfig.hillGain : FDFConfig.hillGainTst;
+
+    const now = Date.now();
+    return FDFConfig.cropHarvestDelay - now + crop.createdAt - (crop.hilled ? hillGain : 0);
+}
+
 export function canCropBeHarvest(crop: FDFCrop): boolean {
     if (!crop) {
         return false;
     }
 
-    const env = GetConvar('soz_core_environment', 'development') as Environment;
-    const hillGain = env == 'production' ? FDFConfig.hillGain : FDFConfig.hillGainTst;
-
-    const now = Date.now();
-    return now - crop.createdAt + (crop.hilled ? hillGain : 0) > FDFConfig.cropHarvestDelay;
+    return harvestDiff(crop) < 0;
 }
 
 export const FDFConfig = {

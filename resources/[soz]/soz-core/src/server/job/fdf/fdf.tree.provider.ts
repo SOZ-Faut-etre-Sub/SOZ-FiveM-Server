@@ -7,10 +7,11 @@ import { ItemService } from '@public/server/item/item.service';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { ServerEvent } from '@public/shared/event';
-import { canTreeBeHarvest, canTreeBeWater, FDFConfig, TreeStatus } from '@public/shared/job/fdf';
+import { canTreeBeHarvest, canTreeBeWater, FDFConfig, harvestTreeDiff, TreeStatus } from '@public/shared/job/fdf';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomInt } from '@public/shared/random';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { formatDuration } from '@public/shared/utils/timeformat';
 
 @Provider()
 export class FDFTreeProvider {
@@ -143,5 +144,27 @@ export class FDFTreeProvider {
     @Rpc(RpcServerEvent.FDF_TREE_GET)
     public onHarvestGet(source: number, id: number): TreeStatus {
         return this.treeStatus.get(id);
+    }
+
+    @OnEvent(ServerEvent.FDF_TREE_CHECK)
+    async drugsCheck(source: number, id: number): Promise<void> {
+        const tree = this.treeStatus.get(id);
+        if (!tree) {
+            return;
+        }
+
+        const diff = Math.max(harvestTreeDiff(tree), 0);
+
+        this.notifier.notify(
+            source,
+            `<span style="text-decoration: underline;">État de l'arbre fruitier.</span>~n~` +
+                (diff > 0
+                    ? `<strong>Temps avant récolte :</strong> ${formatDuration(diff)}~n~`
+                    : `<strong>Prêt à être récolté :</strong> ${tree.objectRemaining} ${
+                          this.itemService.getItem(tree.item).label
+                      }~n~`) +
+                `<strong>Arrosage :</strong> ${tree.nbWater}`,
+            'success'
+        );
     }
 }
