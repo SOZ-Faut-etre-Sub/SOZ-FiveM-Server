@@ -12,8 +12,10 @@ export class ObjectProvider {
 
     public addObjects(objects: WorldObject[]): void {
         for (const object of objects) {
-            this.createObject(object);
+            this.objects[object.id] = object;
         }
+
+        TriggerLatentClientEvent(ClientEvent.OBJECT_CREATE, -1, 16 * 1024, objects);
     }
 
     @Rpc(RpcServerEvent.OBJECT_GET_LIST)
@@ -32,20 +34,31 @@ export class ObjectProvider {
     }
 
     public createObject(object: WorldObject): string {
-        this.objects[object.id] = object;
-
-        TriggerClientEvent(ClientEvent.OBJECT_CREATE, -1, object);
+        this.addObjects([object]);
 
         return object.id;
     }
 
     @Exportable('DeleteObject')
     public deleteObject(id: string): void {
-        delete this.objects[id];
-        TriggerClientEvent(ClientEvent.OBJECT_DELETE, -1, id);
+        this.deleteObjects([id]);
+    }
+
+    public deleteObjects(ids: string[]): void {
+        for (const id of ids) {
+            delete this.objects[id];
+        }
+
+        TriggerLatentClientEvent(ClientEvent.OBJECT_DELETE, -1, 16 * 1024, ids);
     }
 
     public getObject(id: string): WorldObject {
         return this.objects[id];
+    }
+
+    public updateObject(object: WorldObject) {
+        this.objects[object.id] = object;
+
+        TriggerClientEvent(ClientEvent.OBJECT_EDIT, -1, object);
     }
 }
