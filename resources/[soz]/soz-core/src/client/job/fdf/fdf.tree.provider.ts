@@ -128,6 +128,8 @@ export class FDFTreeProvider {
                                             position: [0.35, 0.0, 0.25],
                                             rotation: [0.0, 0.0, 0.0],
                                             scale: 2.0,
+                                            manualLoop: true,
+                                            duration: 5000,
                                         },
                                     },
                                 ],
@@ -204,6 +206,48 @@ export class FDFTreeProvider {
                         } while (remaining > 0);
 
                         runner.cancel();
+                    },
+                },
+                {
+                    label: 'Vérifier',
+                    color: JobType.FDF,
+                    icon: 'c:crimi/time.png',
+                    blackoutJob: JobType.FDF,
+                    blackoutGlobal: true,
+                    job: JobType.FDF,
+                    canInteract: async entity => {
+                        if (!this.playerService.isOnDuty()) {
+                            return false;
+                        }
+
+                        const [field, id] = this.getFieldId(entity);
+                        if (!field) {
+                            return false;
+                        }
+
+                        const tree = await this.getTreeStatus(id);
+                        return !!tree;
+                    },
+                    action: async entity => {
+                        const [, id] = this.getFieldId(entity);
+
+                        const { completed } = await this.progressService.progress(
+                            'drugs_water',
+                            'Vérification en cours ...',
+                            4000,
+                            {
+                                dictionary: 'anim@amb@business@weed@weed_inspecting_lo_med_hi@',
+                                name: 'weed_crouch_checkingleaves_idle_01_inspector',
+                                options: {
+                                    repeat: true,
+                                },
+                            }
+                        );
+                        if (!completed) {
+                            return;
+                        }
+
+                        TriggerServerEvent(ServerEvent.FDF_TREE_CHECK, id);
                     },
                 },
             ]

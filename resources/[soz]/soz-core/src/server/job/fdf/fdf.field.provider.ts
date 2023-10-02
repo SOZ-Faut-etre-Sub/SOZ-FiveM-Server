@@ -13,10 +13,20 @@ import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
 import { InventoryItem, Item } from '@public/shared/item';
 import { JobType } from '@public/shared/job';
-import { canCropBeHarvest, canCropBeHilled, FDFCrop, FDFCropConfig, FDFCropType } from '@public/shared/job/fdf';
+import {
+    canCropBeHarvest,
+    canCropBeHilled,
+    FDFCrop,
+    FDFCropConfig,
+    FDFCropType,
+    FDFFieldConfig,
+    FDFGreenhouseConfig,
+    harvestDiff,
+} from '@public/shared/job/fdf';
 import { getLocationHash } from '@public/shared/locationhash';
 import { getDistance, rad, toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
+import { formatDuration } from '@public/shared/utils/timeformat';
 
 @Provider()
 export class FDFFieldProvider {
@@ -43,6 +53,7 @@ export class FDFFieldProvider {
 
     private cropsPerField = new Map<string, Map<string, FDFCrop>>();
     private crops = new Map<string, FDFCrop>();
+    private cropRemainingBerforePlow = new Map<string, number>();
 
     @Once()
     public async onStart() {
@@ -130,11 +141,10 @@ export class FDFFieldProvider {
                 this.notifier.notify(source, 'Impossible placer un plant dans un champs non labouré', 'error');
                 return;
             }
-
             if (items.size > 0) {
                 const [first] = items.values();
                 if (first.type != type) {
-                    this.notifier.notify(source, 'Impossible de mélanger les cultures dans le même champs', 'error');
+                    this.notifier.notify(source, 'Impossible de mélanger les cultures dans le même champ', 'error');
                     return;
                 }
 
@@ -150,6 +160,17 @@ export class FDFFieldProvider {
                     }
                 }
             }
+
+            const remainingBeforePlow = this.cropRemainingBerforePlow.get(field);
+            if (remainingBeforePlow <= 0) {
+                this.notifier.notify(
+                    source,
+                    'La terre doit de nouveau être travaillée avant de pouvoir y semer de nouvelles graines',
+                    'error'
+                );
+                return;
+            }
+
             items.set(id, {
                 coords: coords,
                 createdAt: Date.now(),
@@ -158,6 +179,8 @@ export class FDFFieldProvider {
                 field: field,
             });
             this.crops.set(id, items.get(id));
+
+            this.cropRemainingBerforePlow.set(field, remainingBeforePlow - 1);
 
             this.objectProvider.createObject({
                 id: id,
@@ -241,6 +264,9 @@ export class FDFFieldProvider {
         this.objectProvider.deleteObject(id);
         this.crops.delete(id);
         this.cropsPerField.get(crop.field).delete(id);
+        if (this.cropsPerField.get(crop.field).size <= 0) {
+            this.cropsPerField.delete(crop.field);
+        }
 
         this.monitor.publish(
             'job_fdf_field_harvest',
@@ -291,6 +317,10 @@ export class FDFFieldProvider {
     public onFiledPlow(source: number, name: string) {
         this.cropsPerField.set(name, new Map());
 
+        const fields = [FDFFieldConfig, FDFGreenhouseConfig];
+        const config = fields.find(item => Object.keys(item.fields).includes(name));
+        this.cropRemainingBerforePlow.set(name, config.maxprop);
+
         this.notifier.notify(
             source,
             `Vous avez terminé de ~g~labourer~s~ champ, il est maintenant prêt pour accueillir les plantations.`
@@ -316,5 +346,26 @@ export class FDFFieldProvider {
     @Rpc(RpcServerEvent.FDF_CROP_GET)
     public onHarvestGet(source: number, id: string): FDFCrop {
         return this.crops.get(id);
+    }
+
+    @OnEvent(ServerEvent.FDF_FIELD_CHECK)
+    async drugsCheck(source: number, id: string): Promise<void> {
+        const crop = this.crops.get(id);
+        if (!crop) {
+            return;
+        }
+
+        const diff = Math.max(harvestDiff(crop), 0);
+        const config = FDFCropConfig[crop.type].fieldConfig;
+
+        this.notifier.notify(
+            source,
+            `<span style="text-decoration: underline;">État de la plantation.</span>~n~` +
+                (diff > 0
+                    ? `<strong>Temps avant récolte :</strong> ${formatDuration(diff)}~n~`
+                    : '<strong>Prêt à être récolté</strong>~n~') +
+                `<strong>${config.hillLabel} :</strong> ${crop.hilled ? 'Oui' : 'Non'}`,
+            'success'
+        );
     }
 }

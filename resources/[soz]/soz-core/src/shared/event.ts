@@ -304,11 +304,13 @@ export enum ServerEvent {
 
     FDF_TREE_CUT = 'soz-core:server:fdf:tree-cut',
     FDF_TREE_WATER = 'soz-core:server:fdf:tree-water',
+    FDF_TREE_CHECK = 'soz-core:server:fdf:tree-check',
     FDF_FIELD_HILLING = 'soz-core:server:fdf:field-hilling',
     FDF_FIELD_HARVEST = 'soz-core:server:fdf:field-harvest',
     FDF_FIELD_DESTROY = 'soz-core:server:fdf:field-destroy',
     FDF_FIELD_PLOW = 'soz-core:server:fdf:field-plow',
     FDF_FIELD_PLANT = 'soz-core:server:fdf:field-plant',
+    FDF_FIELD_CHECK = 'soz-core:server:fdf:field-check',
 }
 
 export enum ClientEvent {
