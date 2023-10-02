@@ -54,6 +54,13 @@ const applyVehicleTire = (
 const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondition>> = {
     bodyHealth: {
         apply: (vehicle, value: number, condition) => {
+            const currentValue = GetVehicleBodyHealth(vehicle);
+
+            // avoid over repair
+            if (Math.abs(currentValue - value) < 0.01) {
+                return;
+            }
+
             SetVehicleBodyHealth(vehicle, value);
 
             if (value > 999.99) {
