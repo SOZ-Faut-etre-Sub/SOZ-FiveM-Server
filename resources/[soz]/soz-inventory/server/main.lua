@@ -167,11 +167,12 @@ end
 
 function Inventory.SetMaxWeight(inv, weight)
     inv = Inventory(inv)
+    local overloaded = inv.maxWeight < inv.weight
     if inv then
         inv.maxWeight = weight
     end
-    if inv.type == "player" and inv.maxWeight < inv.weight then
-        TriggerClientEvent("inventory:client:overloaded", inv.id, true)
+    if inv.type == "player" and (inv.maxWeight < inv.weight or (overloaded and inv.maxWeight >= inv.weight)) then
+        TriggerClientEvent("inventory:client:overloaded", inv.id, inv.maxWeight < inv.weight)
     end
 end
 exports("CalculateWeight", Inventory.CalculateWeight)
