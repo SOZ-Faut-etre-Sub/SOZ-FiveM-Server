@@ -173,6 +173,10 @@ end
 function Account.Clear(acc)
     acc = Account(acc)
 
+    if not acc then
+        return
+    end
+
     acc.money = 0
     acc.marked_money = 0
     acc.changed = true
