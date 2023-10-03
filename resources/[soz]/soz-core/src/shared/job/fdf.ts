@@ -502,7 +502,7 @@ export function canTreeBeWater(tree: TreeStatus): boolean {
         return false;
     }
 
-    if (harvestTreeDiff(tree) < 0) {
+    if (canTreeBeHarvest(tree)) {
         return false;
     }
 
@@ -523,6 +523,10 @@ export function canTreeBeHarvest(tree: TreeStatus): boolean {
 
 export function canCropBeHilled(crop: FDFCrop): boolean {
     if (!crop) {
+        return false;
+    }
+
+    if (canCropBeHarvest(crop)) {
         return false;
     }
 

@@ -125,7 +125,7 @@ CreateThread(function()
         maxZ = 34.68,
     }, {options = callSociety("555-GOUV"), distance = 2.5})
 
-    exports["qb-target"]:AddBoxZone("fdf:gouv", vector3(2449.50, 4968.37, 46.57), 0.3, 0.4, {
+    exports["qb-target"]:AddBoxZone("bell:fdf", vector3(2449.50, 4968.37, 46.57), 0.3, 0.4, {
         name = "bell:fdf",
         heading = 251.91,
         minZ = 46.37,
