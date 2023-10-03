@@ -131,6 +131,12 @@ CreateThread(function()
         minZ = 46.37,
         maxZ = 46.57,
     }, {options = callSociety("555-FDF"), distance = 2.5})
+    exports["qb-target"]:AddBoxZone("bell:dmc", vector3(1078.02, -1980.91, 31.37),  0.55, 0.50, {
+        name = "bell:gouv",
+        heading = 338,
+        minZ = 31.72,
+        maxZ = 31.87,
+    }, {options = callSociety("555-DMC"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)

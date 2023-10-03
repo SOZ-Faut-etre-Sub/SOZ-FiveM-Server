@@ -88,4 +88,5 @@ export const SocietyNumberList: SocietyNumber = {
     sasp: '555-SASP',
     fdf: '555-FDF',
     gouv: '555-GOUV',
+    dmc: '555-DMC',
 };

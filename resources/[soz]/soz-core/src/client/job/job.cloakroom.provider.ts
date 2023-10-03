@@ -3,6 +3,7 @@ import { JobType } from '@public/shared/job';
 import { BaunCloakroom } from '@public/shared/job/baun';
 import { NewGarrayCloakroom } from '@public/shared/job/bennys';
 import { CjrCloakroom } from '@public/shared/job/cjr';
+import { DmcCloakroom } from '@public/shared/job/dmc';
 import { FDFCloakroom } from '@public/shared/job/fdf';
 import { FfsCloakroom } from '@public/shared/job/ffs';
 import { FoodCloakroom } from '@public/shared/job/food';
@@ -40,6 +41,7 @@ const jobStorage: Partial<Record<JobType, WardrobeConfig>> = {
     lsmc: LsmcCloakroom,
     gouv: GouvCloakroom,
     fdf: FDFCloakroom,
+    dmc: DmcCloakroom,
 };
 
 @Provider()

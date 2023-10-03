@@ -2337,4 +2337,46 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
+    dmc: {
+        name: 'DeMetal Company Parking',
+        type: GarageType.Job,
+        job: JobType.DMC,
+        category: GarageCategory.Car,
+        // Position of the garage
+        zone: new BoxZone([1057.85, -1958.45, 30.01], 1.0, 1.0, {
+            heading: 90.01,
+            minZ: 30.01,
+            maxZ: 32.01,
+        }),
+
+        parkingPlaces: [
+            new BoxZone([1073.8, -1949.57, 31.03], 9.4, 4.8, {
+                heading: 142.44,
+                minZ: 30.03,
+                maxZ: 32.23,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+                debugPoly: true,
+            }),
+            new BoxZone([1057.94, -1972.02, 31.01], 11.4, 4.8, {
+                heading: 323.98,
+                minZ: 30.01,
+                maxZ: 32.01,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+                debugPoly: true,
+            }),
+            new BoxZone([1062.71, -1977.14, 31.02], 9.8, 5.2, {
+                heading: 325.17,
+                minZ: 30.02,
+                maxZ: 32.02,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+                debugPoly: true,
+            }),
+        ],
+    },
 };

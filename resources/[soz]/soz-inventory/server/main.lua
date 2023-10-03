@@ -174,6 +174,7 @@ function Inventory.SetMaxWeight(inv, weight)
         TriggerClientEvent("inventory:client:overloaded", inv.id, true)
     end
 end
+exports("CalculateAvailableWeight", Inventory.CalculateAvailableWeight)
 exports("CalculateWeight", Inventory.CalculateWeight)
 exports("SetMaxWeight", Inventory.SetMaxWeight)
 
@@ -996,7 +997,7 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("bin_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
-    elseif storageType == "trunk" or storageType == "brickade" or storageType == "tanker" or storageType == "trailerlogs" or storageType == "trash" then
+    elseif storageType == "trunk" or storageType == "brickade" or storageType == "tanker" or storageType == "trailerlogs" or storageType == "trash" or storageType == "tiptruck" then
         targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then

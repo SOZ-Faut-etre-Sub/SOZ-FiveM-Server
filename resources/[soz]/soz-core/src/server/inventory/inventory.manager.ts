@@ -97,6 +97,10 @@ export class InventoryManager {
         return this.sozInventory.CalculateWeight(storage.inventory);
     }
 
+    public async getAvailableWeight(inv: string): Promise<number> {
+        return this.sozInventory.CalculateAvailableWeight(inv);
+    }
+
     public findItem(source: number, predicate: (item: InventoryItem) => boolean): InventoryItem | null {
         const items = this.playerService.getPlayer(source).items;
 
@@ -113,6 +117,10 @@ export class InventoryManager {
 
     public getItem(inventory: number | string, itemId: string, metadata?: InventoryItemMetadata): any {
         return this.sozInventory.GetItem(inventory, itemId, metadata);
+    }
+
+    public getAllItems(inventory: string): InventoryItem[] {
+        return this.sozInventory.GetAllItems(inventory);
     }
 
     public getItemCount(inventory: number | string, itemId: string, metadata: InventoryItemMetadata = null): number {
@@ -198,6 +206,23 @@ export class InventoryManager {
         let success, reason;
 
         this.sozInventory.AddItem(source, source, itemId, amount, metadata, slot, (s, r) => {
+            success = s;
+            reason = r;
+        });
+
+        return { success, reason };
+    }
+
+    public addItemToInventoryNotPlayer(
+        source: string,
+        itemId: string,
+        amount = 1,
+        metadata?: InventoryItemMetadata,
+        slot?: number
+    ): { success: boolean; reason?: string } {
+        let success, reason;
+
+        this.sozInventory.AddItem(-2, source, itemId, amount, metadata, slot, (s, r) => {
             success = s;
             reason = r;
         });

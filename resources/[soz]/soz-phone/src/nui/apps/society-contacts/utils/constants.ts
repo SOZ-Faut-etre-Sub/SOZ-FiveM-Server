@@ -121,4 +121,10 @@ export const SocietyContactsState: Society[] = [
         number: '555-FDF',
         avatar: 'media/society_icon/fdf.webp',
     },
+    {
+        id: 21,
+        display: 'DeMetal Company',
+        number: '555-DMC',
+        avatar: 'media/society_icon/dmc.webp',
+    },
 ];

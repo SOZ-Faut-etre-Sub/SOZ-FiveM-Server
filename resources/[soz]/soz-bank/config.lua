@@ -37,6 +37,7 @@ Config.FarmAccountMoney = {
     ["farm_baun"] = {money = 300000, marked_money = 0},
     ["farm_ffs"] = {money = 300000, marked_money = 0},
     ["farm_fdf"] = {money = 300000, marked_money = 0},
+    ["farm_dmc"] = {money = 300000, marked_money = 0},
 }
 
 Config.SocietyTaxes = {
@@ -52,6 +53,7 @@ Config.SocietyTaxes = {
         ["taxi"] = {"taxi", "safe_taxi"},
         ["upw"] = {"upw", "safe_upw"},
         ["fdf"] = {"fdf", "safe_fdf"},
+        ["dmc"] = {"dmc", "safe_dmc"},
     },
 
     taxRepartition = {["lspd"] = 30, ["bcso"] = 30, ["lsmc"] = 30, ["cash-transfer"] = 2, ["mdr"] = 8},
@@ -189,6 +191,13 @@ Config.SafeStorages = {
         position = vector3(-525.62, -590.78, 34.68),
         size = vec2(0.40, 1.00),
         heading = 0.0,
+    },
+    ["safe_dmc"] = {
+        label = "Coffre DeMetal Company",
+        owner = "dmc",
+        position = vector3(1076.19, -2008.55, 32.09),
+        size = vec2(1.00, 2.00),
+        heading = 143.57,
     },
 }
 

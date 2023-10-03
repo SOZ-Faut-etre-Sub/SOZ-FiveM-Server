@@ -34,6 +34,7 @@ export const global = createModel<RootModel>()({
             [JobType.Upw]: 100,
             [JobType.SASP]: 100,
             [JobType.Gouv]: 100,
+            [JobType.DMC]: 100,
         },
         weather: 'CLEAR',
         snow: false,
