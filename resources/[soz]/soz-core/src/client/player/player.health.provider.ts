@@ -573,6 +573,7 @@ export class PlayerHealthProvider {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
                     label: 'Faire des tractions',
+                    icon: 'c:/sport/traction.png',
                     canInteract: () => true,
                     action: () => {
                         this.doChinUps(coords);
@@ -585,6 +586,7 @@ export class PlayerHealthProvider {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
                     label: 'Faire des haltères',
+                    icon: 'c:/sport/halteres.png',
                     canInteract: () => true,
                     action: () => {
                         this.doFreeWeight();
