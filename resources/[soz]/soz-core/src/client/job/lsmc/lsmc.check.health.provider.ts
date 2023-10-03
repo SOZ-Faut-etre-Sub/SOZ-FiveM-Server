@@ -113,6 +113,7 @@ export class LSMCCheckHealthProvider {
             {
                 label: 'Prise de sang pour test',
                 color: 'lsmc',
+                icon: 'c:ems/take_blood.png',
                 job: 'lsmc',
                 canInteract: () => {
                     return this.playerService.isOnDuty();
@@ -122,6 +123,7 @@ export class LSMCCheckHealthProvider {
             },
             {
                 label: 'Etat de santé',
+                icon: 'c:ems/health_state.png',
                 color: 'lsmc',
                 job: 'lsmc',
                 canInteract: () => {
@@ -131,6 +133,7 @@ export class LSMCCheckHealthProvider {
             },
             {
                 label: 'Modifier la carte de santé',
+                icon: 'c:ems/health_card.png',
                 color: 'lsmc',
                 job: 'lsmc',
                 canInteract: () => {
@@ -163,6 +166,7 @@ export class LSMCCheckHealthProvider {
             [
                 {
                     label: 'Analyse urinaire',
+                    icon: 'c:ems/urine_test.png',
                     color: 'lsmc',
                     job: 'lsmc',
                     canInteract: () => {
@@ -176,6 +180,7 @@ export class LSMCCheckHealthProvider {
                 },
                 {
                     label: 'Analyse de sang',
+                    icon: 'c:ems/blood_test.png',
                     color: 'lsmc',
                     job: 'lsmc',
                     canInteract: () => {
