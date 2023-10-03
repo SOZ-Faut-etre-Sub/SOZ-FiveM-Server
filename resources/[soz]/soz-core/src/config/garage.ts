@@ -1669,6 +1669,27 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
+    upw_air: {
+        name: 'Unexpected Power and Water Air Parking',
+        type: GarageType.Job,
+        job: JobType.Upw,
+        category: GarageCategory.Air,
+        zone: new BoxZone([619.57, 2803.31, 64.75], 1.0, 1.0, {
+            heading: 277.75,
+            minZ: 64.75,
+            maxZ: 66.75,
+        }),
+        parkingPlaces: [
+            new BoxZone([629.88, 2801.22, 67.53], 10.8, 6.4, {
+                heading: 94.54,
+                minZ: 66.53,
+                maxZ: 68.53,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
     baun_bahama: {
         name: 'Bahama Mamas Parking',
         type: GarageType.Job,
@@ -1895,7 +1916,6 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 heading: 27.32,
                 minZ: 37.1,
                 maxZ: 40.1,
-                debugPoly: true,
                 data: {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
                 },
