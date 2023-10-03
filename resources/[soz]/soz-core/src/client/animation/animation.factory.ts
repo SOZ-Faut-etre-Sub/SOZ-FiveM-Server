@@ -5,6 +5,7 @@ import {
     Animation,
     AnimationInfo,
     animationOptionsToFlags,
+    AnimationProps,
     AnimationStopReason,
     PlayOptions,
     Scenario,
@@ -220,22 +221,7 @@ export class AnimationFactory {
                     );
 
                     if (prop.fx) {
-                        UseParticleFxAsset(prop.fx.dictionary);
-
-                        StartNetworkedParticleFxLoopedOnEntity(
-                            prop.fx.name,
-                            propId,
-                            prop.fx.position[0],
-                            prop.fx.position[1],
-                            prop.fx.position[2],
-                            prop.fx.rotation[0],
-                            prop.fx.rotation[1],
-                            prop.fx.rotation[2],
-                            prop.fx.scale,
-                            false,
-                            false,
-                            false
-                        );
+                        this.fxLoop(propId, prop);
                     }
 
                     props.push(propId);
@@ -284,6 +270,28 @@ export class AnimationFactory {
                 }
             }
         }, options);
+    }
+
+    private async fxLoop(entity: number, prop: AnimationProps) {
+        do {
+            UseParticleFxAsset(prop.fx.dictionary);
+            StartNetworkedParticleFxLoopedOnEntity(
+                prop.fx.name,
+                entity,
+                prop.fx.position[0],
+                prop.fx.position[1],
+                prop.fx.position[2],
+                prop.fx.rotation[0],
+                prop.fx.rotation[1],
+                prop.fx.rotation[2],
+                prop.fx.scale,
+                false,
+                false,
+                false
+            );
+
+            await wait(prop.fx.duration);
+        } while (prop.fx.manualLoop && DoesEntityExist(entity));
     }
 
     public createScenario(scenario: Scenario, options: Partial<PlayOptions> = {}): AnimationRunner {

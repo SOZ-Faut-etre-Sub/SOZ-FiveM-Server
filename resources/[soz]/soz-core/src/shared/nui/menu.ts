@@ -84,6 +84,7 @@ export enum MenuType {
     RaceAdmin = 'RaceAdmin',
     RaceRank = 'RaceRank',
     GouvJobMenu = 'gouv_job',
+    FDFJobMenu = 'fdd_job',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -127,4 +128,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.RaceRank]: { id: number; name: string };
     [MenuType.GouvJobMenu]: { onDuty: boolean };
     [MenuType.PropPlacementMenu]: PropPlacementMenuData;
+    [MenuType.FDFJobMenu]: any;
 }
