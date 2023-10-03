@@ -198,3 +198,12 @@ RegisterNetEvent("soz-upw:server:ConsumeTerminalRatio", function(id, value)
         terminal:ConsumeRatio(value)
     end
 end)
+
+function ConsumeJobTerminal(jobId, value)
+    local terminal = GetTerminalJob(jobId);
+    if terminal and terminal:CanConsume() then
+        terminal:Consume(value)
+    end
+end
+
+exports('ConsumeJobTerminal', ConsumeJobTerminal)

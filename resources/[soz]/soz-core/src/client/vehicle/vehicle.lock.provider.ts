@@ -46,6 +46,7 @@ const VEHICLE_TRUNK_TYPES = {
     [GetHashKey('brickade')]: 'brickade',
     [GetHashKey('brickade1')]: 'brickade',
     [GetHashKey('trash')]: 'trash',
+    [GetHashKey('tiptruck2')]: 'tiptruck',
 };
 
 type TrunkOpened = {

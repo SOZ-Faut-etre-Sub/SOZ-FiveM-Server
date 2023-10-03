@@ -61,6 +61,11 @@ export enum ServerEvent {
     DRIVING_SCHOOL_UPDATE_LICENSE = 'soz-core:server:driving-school:update-license',
     DRIVING_SCHOOL_UPDATE_VEHICLE_LIMIT = 'soz-core:server:driving-school:update-vehicle-limit',
 
+    DMC_HARVEST = 'soz-core:server:job:dmc:harvest',
+    DMC_TOGGLE_CONVERTER = 'soz-core:server:job:dmc:toggle-converter',
+    DMC_SET_CONVERTER_TARGET_TEMPERATURE = 'soz-core:server:job:dmc:set-converter-target-temperature',
+    DMC_RESTOCK = 'soz-core:server:job:dmc:restock',
+
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
@@ -92,6 +97,8 @@ export enum ServerEvent {
     LSMC_SET_HAZMAT = 'soz-core:server:job:lsmc:set-hazmat',
     LSMC_SET_CURRENT_ORGAN = 'soz-core:server:job:lsmc:set-organ',
     LSMC_SET_PATIENT_OUTFIT = 'soz-core:server:job:lsmc:set-patient-outfit',
+
+    LSC_CHECK_STOCK = 'soz-core:server:job:lsc:check-stock',
 
     MISSIVE_CREATE_ITEM = 'soz-core:server:missive:create-item',
     MISSIVE_DELETE_ITEM = 'soz-core:server:missive:delete-item',
@@ -389,6 +396,7 @@ export enum ClientEvent {
     JOBS_GOUV_OPEN_SOCIETY_MENU = 'soz-jobs:client:gouv:OpenSocietyMenu',
     JOBS_TWITCH_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:twitch-news:OpenSocietyMenu',
     JOBS_YOU_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:you-news:OpenSocietyMenu',
+    JOBS_DMC_OPEN_SOCIETY_MENU = 'soz-jobs:client:dmc:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
@@ -405,6 +413,9 @@ export enum ClientEvent {
     LSMC_APPLY_OUTFIT = 'soz-core:client:lsmc:ApplyDutyClothing',
     LSMC_TELEPORTATION = 'soz-core:lsmc:client:teleportation',
     LSMC_HEAL = 'soz-core:lsmc:client:heal',
+
+    LSC_ENTER_SHOP = 'soz-core:client:job:lsc:enter-shop',
+    LSC_EXIT_SHOP = 'soz-core:client:job:lsc:exit-shop',
 
     MISSIVE_SHOW_ITEM = 'soz-core:client:missive:show-item',
     MONITOR_START_TRACING = 'soz-core:client:monitor:start-tracing',
@@ -895,4 +906,6 @@ export enum NuiEvent {
 
     CraftDoRecipe = 'soz-core:client:craft:do-recipe',
     CraftCancel = 'soz-core:client:craft:cancel',
+
+    DmcToggleBlip = 'soz-core:client:job:dmc:toggle-blip',
 }

@@ -2,6 +2,7 @@ import { AnimationInfo } from '../animation';
 import { Feature } from '../features';
 import { JobType } from '../job';
 import { BaunCraftsLists } from '../job/baun';
+import { DmcCraftsLists } from '../job/dmc';
 import { FDFCraftsLists } from '../job/fdf';
 import { FFSCraftsLists } from '../job/ffs';
 import { FoodCraftsLists } from '../job/food';
@@ -21,6 +22,7 @@ export type CraftRecipe = {
     amount: number;
     canCraft?: boolean;
     rewardTier?: Record<string, CraftRewardTier>;
+    specificCertificate?: string;
 };
 
 export type CraftRewardTier = {
@@ -47,4 +49,13 @@ export const Crafts: Record<string, Record<string, CraftCategory>> = {
     [JobType.Ffs]: FFSCraftsLists,
     [JobType.Pawl]: PawlCraftsLists,
     [JobType.FDF]: FDFCraftsLists,
+    [JobType.DMC]: DmcCraftsLists,
+};
+
+export const CraftEvent: Record<string, string> = {
+    [JobType.Food]: 'job_cm_food_craft',
+    [JobType.Baun]: 'job_baun_craft',
+    [JobType.Ffs]: 'job_ffs_craft',
+    [JobType.Pawl]: 'job_pawl_craft',
+    [JobType.DMC]: 'job_dmc_craft',
 };

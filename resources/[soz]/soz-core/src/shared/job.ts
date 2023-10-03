@@ -26,6 +26,7 @@ export enum JobType {
     Gouv = 'gouv',
     FDF = 'fdf',
     SASP = 'sasp',
+    DMC = 'dmc',
 }
 
 export const BASE_FDO = [JobType.LSPD, JobType.BCSO];
@@ -87,7 +88,7 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.Adsl]: 'ADSL',
     [JobType.Delivery]: 'Fougère Prime',
     [JobType.Religious]: 'InfoChat',
-    [JobType.Scrapper]: 'DeMetal Company',
+    [JobType.Scrapper]: 'OldMetal',
     [JobType.LSPD]: 'Los Santos Police Department',
     [JobType.BCSO]: 'Blaine County Sheriff Office',
     [JobType.LSMC]: 'Los Santos Medical Center',
@@ -108,6 +109,7 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.Gouv]: 'Gouvernement',
     [JobType.FDF]: 'Ferme de Fou',
     [JobType.SASP]: 'San Andreas State Police',
+    [JobType.DMC]: 'DeMetal Company',
 };
 
 export type JobPermissionData = {

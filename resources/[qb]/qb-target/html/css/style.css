@@ -105,6 +105,10 @@ body {
 .target-item.crimi {
   --item-color: 0;
 }
+.target-item.dmc {
+  --item-color: 180;
+}
+
 
 .target-item .tooltip {
   position: absolute;

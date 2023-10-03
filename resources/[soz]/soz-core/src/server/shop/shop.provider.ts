@@ -149,6 +149,16 @@ export class ShopProvider {
         this.notifier.notify(source, `Il reste ${amount} ~b~meubles Zkea~s~ en stock.`, 'info');
     }
 
+    @OnEvent(ServerEvent.LSC_CHECK_STOCK)
+    public async lscCheckStock(source: number) {
+        const amount = this.inventoryManager.getItemCount('ls_custom_storage', 'ls_custom_upgrade_part');
+        this.notifier.notify(
+            source,
+            `Il reste ${amount || 0} ~b~Pièces d'amélioration certifiées~s~ en stock.`,
+            'info'
+        );
+    }
+
     public async shopBarberBuy(source: number, product: BarberShopItem) {
         if (!this.shopPay(source, product.price)) {
             this.notifier.notify(source, `Ah mais t'es pauvre en fait ! Reviens quand t'auras de quoi payer.`, 'error');

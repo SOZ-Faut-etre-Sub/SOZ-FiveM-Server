@@ -27,6 +27,7 @@ SozJobCore.JobType = {
     SASP = "sasp",
     FDF = "fdf",
     Gouv = "gouv",
+    DMC = "dmc",
 }
 
 SozJobCore.JobPermission = {
@@ -138,8 +139,8 @@ SozJobCore.Jobs = {
         canReceiveSocietyInvoice = false,
     },
     [SozJobCore.JobType.Scrapper] = {
-        label = "DeMetal Company",
-        platePrefix = "DEMC",
+        label = "OldMetal",
+        platePrefix = "OMC",
         temporary = {
             payout = 2,
             vehicule_position = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67},
@@ -990,6 +991,48 @@ SozJobCore.Jobs = {
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}, canReceiveSocietyInvoice = false},
+    [SozJobCore.JobType.DMC] = {
+        label = "DeMetal Company",
+        platePrefix = "DMC",
+        grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyBankInvoices] = {label = "Accès aux outils de facturation société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyMoneyStorage] = {label = "Accès au coffre-fort de société"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.SocietyPublicGarage] = {
+                label = "Ranger/sortir les véhicules des garages publics",
+            },
+            [SozJobCore.JobPermission.SocietyPrivateGarage] = {
+                label = "Ranger/sortir les véhicules des garages privés",
+            },
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
+            [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
+            [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
+            [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
+        },
+        bossZones = {
+            {x = 1077.99, y = -1979.487, z = 31.37, sx = 7.80, sy = 4.20, heading = 235.70, minZ = 30.37, maxZ = 32.97},
+        },
+        menuCallback = "soz-jobs:client:dmc:OpenSocietyMenu",
+        canInvoice = true,
+        phone = "555-DMC",
+        canReceiveSocietyInvoice = true,
+        resell = {
+            primary = {
+                coords = vector4(-132.70, -2383.92, 6.00, 174.18), -- Must be vec4
+                ZoneName = "Resell:LSPort:Dmc",
+                SourceAccount = "farm_dmc",
+                TargetAccount = "safe_dmc",
+            },
+            secondary = {ZoneName = "Resell:LSCustom", SourceAccount = "farm_dmc", TargetAccount = "safe_dmc"},
+        },
+    }
 }
 
 SozJobCore.adsl_payout = 12
@@ -1086,37 +1129,6 @@ SozJobCore.religion_clothes = {
     },
 }
 
-SozJobCore.metal_payout = 2
-SozJobCore.metal_vehicule = {x = -346.18, y = -1569.38, z = 25.23, w = 17.67}
-SozJobCore.metal_clothes = {
-    [GetHashKey("mp_m_freemode_01")] = {
-        Components = {
-            [3] = {Drawable = 0, Texture = 0, Palette = 0},
-            [4] = {Drawable = 9, Texture = 8, Palette = 0},
-            [6] = {Drawable = 25, Texture = 0, Palette = 0},
-            [7] = {Drawable = 0, Texture = 0, Palette = 0},
-            [8] = {Drawable = 59, Texture = 0, Palette = 0},
-            [9] = {Drawable = 0, Texture = 0, Palette = 0},
-            [10] = {Drawable = 0, Texture = 0, Palette = 0},
-            [11] = {Drawable = 22, Texture = 1, Palette = 0},
-        },
-        Props = {},
-    },
-    [GetHashKey("mp_f_freemode_01")] = {
-        Components = {
-            [3] = {Drawable = 14, Texture = 0, Palette = 0},
-            [4] = {Drawable = 11, Texture = 2, Palette = 0},
-            [6] = {Drawable = 25, Texture = 0, Palette = 0},
-            [7] = {Drawable = 0, Texture = 0, Palette = 0},
-            [8] = {Drawable = 36, Texture = 0, Palette = 0},
-            [9] = {Drawable = 0, Texture = 0, Palette = 0},
-            [10] = {Drawable = 0, Texture = 0, Palette = 0},
-            [11] = {Drawable = 14, Texture = 3, Palette = 0},
-        },
-        Props = {},
-    },
-}
-
 SozJobCore.adsl = {
     {x = 406.88, y = -968.05, z = 29.45, sx = 1.8, sy = 1.2, heading = 358, minZ = 27.8, maxZ = 30.4},
     {x = -245.4, y = -705.67, z = 33.57, sx = 1.8, sy = 0.8, heading = 343, minZ = 32.17, maxZ = 34.17},
@@ -1140,14 +1152,6 @@ SozJobCore.religion = {
     {x = -1517.37, y = -433.94, z = 63.06, sx = 45.4, sy = 53.8, heading = 49, minZ = 34.46, maxZ = 43.46},
     {x = 235.83, y = 235.83, z = 105.5, sx = 45.8, sy = 54.0, heading = 340, minZ = 104.0, maxZ = 110.0},
     {x = -1221.01, y = -1546.34, z = 18.48, sx = 48.8, sy = 76.6, heading = 305, minZ = 3.08, maxZ = 7.08},
-}
-
-SozJobCore.metal = {
-    {x = -454.83, y = -1678.6, z = 19.03, sx = 4.2, sy = 2.4, heading = 336, minZ = 17.83, maxZ = 19.83},
-    {x = -443.72, y = -1676.47, z = 19.03, sx = 2.25, sy = 4.0, heading = 340, minZ = 17.28, maxZ = 19.88},
-    {x = -474.17, y = -1677.17, z = 19.0, sx = 2.8, sy = 2.2, heading = 335, minZ = 17.4, maxZ = 19.4},
-    {x = -474.31, y = -1680.6, z = 19.03, sx = 2.2, sy = 3.0, heading = 337, minZ = 17.63, maxZ = 19.63},
-    {x = -475.62, y = -1729.28, z = 18.69, sx = 2.4, sy = 4.4, heading = 14, minZ = 17.49, maxZ = 19.49},
 }
 
 SozJobCore.FieldHealthStates = {[0] = "0000", [1] = "1000", [2] = "1100", [3] = "1110", [4] = "1111"}

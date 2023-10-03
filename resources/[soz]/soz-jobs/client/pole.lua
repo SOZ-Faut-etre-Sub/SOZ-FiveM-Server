@@ -66,15 +66,6 @@ exports["qb-target"]:AddBoxZone("pole emploi", vector3(236.46, -409.33, 47.92), 
         },
         {
             icon = "fas fa-sign-in-alt",
-            label = "Gps DeMetal",
-            job = SozJobCore.JobType.Scrapper,
-            action = function()
-                notif()
-                JobPosition("metal", metal_position, 280)
-            end,
-        },
-        {
-            icon = "fas fa-sign-in-alt",
             label = "Gps InfoChat",
             job = SozJobCore.JobType.Religious,
             action = function()
@@ -90,10 +81,6 @@ local function JobPanel(menu)
     local adsl = menu:AddButton({label = "Adsl", description = " Poseur de cable d'ADSL "})
     local livraison = menu:AddButton({label = "Fougère Prime", description = "Livraison à Domicile"})
     local religion = menu:AddButton({label = "InfoChat", description = "Religion"})
-    local metal = menu:AddButton({
-        label = "DeMetal Company",
-        description = "Récolte de metal, Industrie Métallurgique",
-    })
     adsl:On("select", function()
         if blip ~= nil then
             destroyblip(blip)
@@ -114,13 +101,6 @@ local function JobPanel(menu)
         end
         notif()
         JobPosition("religion", religion_position, 280)
-    end)
-    metal:On("select", function()
-        if blip ~= nil then
-            destroyblip(blip)
-        end
-        notif()
-        JobPosition("metal", metal_position, 280)
     end)
 end
 

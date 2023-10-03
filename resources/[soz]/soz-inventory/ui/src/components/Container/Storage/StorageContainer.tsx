@@ -34,6 +34,8 @@ export const StorageContainer = () => {
         if (type === 'trailerlogs') type = 'trunk';
         if (type === 'brickade') type = 'trunk';
         if (type === 'trash') type = 'trunk';
+        if (type === 'tiptruck') type = 'trunk';
+        if (type === 'metal_storage') type = 'default';
         if (type === 'storage') type = 'default';
         if (type === 'storage_tank') type = 'default';
 

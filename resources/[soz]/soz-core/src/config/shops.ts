@@ -33,6 +33,7 @@ export enum ShopBrand {
     Barber = 'barber',
     Ammunation = 'ammunation',
     Zkea = 'zkea',
+    LsCustom = 'ls-custom',
 }
 
 export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
@@ -144,6 +145,13 @@ export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
         blipSprite: 123,
         blipColor: 69,
         pedModel: 'ig_brad',
+        banner: 'https://nui-img/soz/menu_shop_supermarket',
+    },
+    [ShopBrand.LsCustom]: {
+        label: 'LS Custom',
+        blipSprite: 72,
+        blipColor: 46,
+        pedModel: 'S_F_M_Autoshop_01',
         banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
 };
@@ -449,6 +457,26 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     ['ammunation11']: {
         brand: ShopBrand.Ammunation,
         location: [-1304.12, -395.54, 36.7, 61.39],
+    },
+    ['ls-custom1']: {
+        brand: ShopBrand.LsCustom,
+        location: [-347.03, -133.49, 39.01, 255.29],
+    },
+    ['ls-custom2']: {
+        brand: ShopBrand.LsCustom,
+        location: [-1148.42, -1999.73, 13.18, 138.83],
+    },
+    ['ls-custom3']: {
+        brand: ShopBrand.LsCustom,
+        location: [736.8, -1086.06, 22.17, 91.97],
+    },
+    ['ls-custom4']: {
+        brand: ShopBrand.LsCustom,
+        location: [109.52, 6631.23, 31.79, 188.73],
+    },
+    ['ls-custom5']: {
+        brand: ShopBrand.LsCustom,
+        location: [1172.25, 2636.44, 37.79, 314.48],
     },
 };
 
