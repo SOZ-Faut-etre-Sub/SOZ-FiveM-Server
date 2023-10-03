@@ -742,6 +742,7 @@ export class PlayerHealthProvider {
                 options: [
                     {
                         label: 'Prendre un abonnement.',
+                        icon: 'c:/sport/abonnement.png',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
 
@@ -757,6 +758,7 @@ export class PlayerHealthProvider {
                     },
                     {
                         label: 'Renouveler son abonnement.',
+                        icon: 'c:/sport/renouvellement.png',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
 
