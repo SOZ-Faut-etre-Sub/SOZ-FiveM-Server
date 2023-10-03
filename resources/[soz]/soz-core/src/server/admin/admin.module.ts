@@ -1,4 +1,5 @@
 import { Module } from '../../core/decorators/module';
+import { AdminMenuCharacterProvider } from './admin.menu.character.provider';
 import { AdminMenuGameProvider } from './admin.menu.game.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 import { AdminMenuMapperProvider } from './admin.menu.mapper.provider';
@@ -14,6 +15,7 @@ import { AdminProvider } from './admin.provider';
         AdminMenuPlayerProvider,
         AdminMenuVehicleProvider,
         AdminProvider,
+        AdminMenuCharacterProvider,
     ],
 })
 export class AdminModule {}

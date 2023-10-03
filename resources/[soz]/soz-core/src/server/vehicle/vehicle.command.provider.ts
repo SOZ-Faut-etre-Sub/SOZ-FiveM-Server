@@ -16,7 +16,7 @@ export class VehicleCommandProvider {
     @Inject(Logger)
     private logger: Logger;
 
-    @Command('car', { role: ['staff', 'admin'], description: 'Spawn Vehicle (Admin Only)' })
+    @Command('car', { role: ['staff', 'admin', 'gamemaster'], description: 'Spawn Vehicle (Admin Only)' })
     async createCarCommand(source: number, model: string) {
         const spawned = await this.vehicleSpawner.spawnTemporaryVehicle(source, model);
 

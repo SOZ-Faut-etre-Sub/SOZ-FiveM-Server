@@ -1,4 +1,3 @@
-import { PlayerCharInfo } from '@public/shared/player';
 import { FunctionComponent } from 'react';
 
 import { SozRole } from '../../../core/permissions';
@@ -19,7 +18,6 @@ import {
 export type GameMasterSubMenuProps = {
     banner: string;
     permission: SozRole;
-    characters: Record<string, PlayerCharInfo>;
     state: {
         adminGPS: boolean;
         moneyCase: boolean;
@@ -28,12 +26,7 @@ export type GameMasterSubMenuProps = {
     };
 };
 
-export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
-    characters,
-    banner,
-    permission,
-    state,
-}) => {
+export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ banner, permission, state }) => {
     const isAdmin = permission === 'admin';
     const isAdminOrStaff = isAdmin || permission === 'staff';
     const isAdminOrStaffOrGM = isAdminOrStaff || permission === 'gamemaster';
@@ -127,29 +120,6 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     }}
                 >
                     Se libérer des menottes
-                </MenuItemButton>
-                {Object.keys(characters).length > 0 && (
-                    <MenuItemSelect
-                        disabled={!isAdminOrStaffOrGM}
-                        onConfirm={async (index, value) => {
-                            await fetchNui(NuiEvent.AdminMenuGameMasterSwitchCharacter, value);
-                        }}
-                        title="Changer de personnage"
-                    >
-                        {Object.keys(characters).map(citizenId => (
-                            <MenuItemSelectOption key={citizenId} value={citizenId}>
-                                {characters[citizenId].firstname} {characters[citizenId].lastname}
-                            </MenuItemSelectOption>
-                        ))}
-                    </MenuItemSelect>
-                )}
-                <MenuItemButton
-                    disabled={!isAdminOrStaffOrGM}
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuGameMasterCreateNewCharacter);
-                    }}
-                >
-                    Créer nouveau personnage
                 </MenuItemButton>
                 <MenuItemCheckbox
                     checked={state.adminGPS}

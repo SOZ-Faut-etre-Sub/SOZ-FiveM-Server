@@ -1368,6 +1368,7 @@ export type VehicleCustomMenuData = {
     options: VehicleUpgradeOptions;
     originalConfiguration: VehicleConfiguration;
     currentConfiguration: VehicleConfiguration;
+    admin: boolean;
 };
 
 export const HornLabelList: Record<number, { name: string; label: string }> = {

@@ -214,7 +214,7 @@ export class VehicleCustomProvider {
         this.nuiMenu.closeMenu();
     }
 
-    public async upgradeVehicle(vehicleEntityId: number) {
+    public async upgradeVehicle(vehicleEntityId: number, admin: boolean) {
         const options = this.vehicleModificationService.createOptions(vehicleEntityId);
         const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(vehicleEntityId));
 
@@ -237,6 +237,7 @@ export class VehicleCustomProvider {
             options,
             originalConfiguration: { ...vehicleConfiguration },
             currentConfiguration: vehicleConfiguration,
+            admin: admin,
         });
     }
 
