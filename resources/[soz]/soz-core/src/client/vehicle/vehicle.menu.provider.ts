@@ -146,7 +146,7 @@ export class VehicleMenuProvider {
     }
 
     @OnNuiEvent(NuiEvent.VehicleOpenLSCustom)
-    async handleVehicleLSCustom() {
+    async handleVehicleLSCustom(admin?: boolean) {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
@@ -156,7 +156,7 @@ export class VehicleMenuProvider {
 
         this.nuiMenu.closeMenu();
 
-        await this.vehicleCustomProvider.upgradeVehicle(vehicle);
+        await this.vehicleCustomProvider.upgradeVehicle(vehicle, admin);
 
         return true;
     }

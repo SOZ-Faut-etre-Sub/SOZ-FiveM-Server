@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 import { AdminMenuData } from '../../../shared/admin/admin';
 import { MenuType } from '../../../shared/nui/menu';
 import { MainMenu, Menu, MenuContent, MenuItemSubMenuLink, MenuTitle } from '../Styleguide/Menu';
+import { CharacterSubMenu } from './CharacterSubMenu';
 import { DeveloperSubMenu } from './DeveloperSubMenu';
 import { GameMasterSubMenu } from './GamemasterSubMenu';
 import { InteractiveSubMenu } from './InteractiveSubMenu';
@@ -36,25 +37,24 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                         ⛑ Gestion métier
                     </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="skin">🐕 Modification du style du joueur</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="vehicle">
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="vehicle">
                         🚗 Gestion du véhicule
                     </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="players">👨‍💻 Gestion des joueurs</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="character">
+                        👨‍💼 Gestion des personnages
+                    </MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
-            <GameMasterSubMenu
-                characters={data.characters}
-                banner={data.banner}
-                permission={data.permission}
-                state={data.state.gameMaster}
-            />
+            <GameMasterSubMenu banner={data.banner} permission={data.permission} state={data.state.gameMaster} />
             <InteractiveSubMenu banner={data.banner} state={data.state.interactive} />
             <JobSubMenu banner={data.banner} />
             <SkinSubMenu banner={data.banner} state={data.state.skin} />
             <VehicleSubMenu banner={data.banner} permission={data.permission} state={data.state.vehicule} />
             <PlayerSubMenu banner={data.banner} permission={data.permission} />
             <DeveloperSubMenu banner={data.banner} state={data.state.developer} />
+            <CharacterSubMenu banner={data.banner} characters={data.characters} />
         </Menu>
     );
 };

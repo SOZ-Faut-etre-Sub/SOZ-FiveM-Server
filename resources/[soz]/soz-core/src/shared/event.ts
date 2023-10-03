@@ -667,10 +667,11 @@ export enum NuiEvent {
     AdminMenuSkinCopy = 'soz-core:client:admin:skin:copy',
     AdminMenuSkinLookAtDrawable = 'soz-core:client:admin:skin:look-at-drawable',
     AdminMenuSkinSave = 'soz-core:client:admin:skin:save',
-    AdminMenuGameMasterCreateNewCharacter = 'soz-core:client:admin:game-master:create-new-character',
-    AdminMenuGameMasterSwitchCharacter = 'soz-core:client:admin:game-master:switch-character',
     AdminSetAdminGPS = 'soz-core:client:admin:gps',
     AdminSetPoliceLocator = 'soz-core:client:admin:police-locator',
+    AdminMenuCharacterCreateNew = 'soz-core:client:admin:character:create-new',
+    AdminMenuCharacterSwitch = 'soz-core:client:admin:character:switch',
+
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     CraftingDoCraft = 'soz-core:nui:crafting:do-craft',
     CraftingDoSalvage = 'soz-core:nui:crafting:do-salvage',
