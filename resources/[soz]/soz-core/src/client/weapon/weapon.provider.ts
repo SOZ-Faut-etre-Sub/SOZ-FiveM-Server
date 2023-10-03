@@ -66,6 +66,7 @@ export class WeaponProvider {
 
         SetWeaponDamageModifier(WeaponName.UNARMED, 0.5);
         SetWeaponDamageModifier(WeaponName.BAT, 0.2);
+        SetWeaponDamageModifier(WeaponName.PICKAXE, 0.2);
         SetWeaponDamageModifier(WeaponName.CROWBAR, 0.2);
         SetWeaponDamageModifier(WeaponName.GOLFCLUB, 0.2);
         SetWeaponDamageModifier(WeaponName.HAMMER, 0.2);

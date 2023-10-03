@@ -8,8 +8,15 @@ type MenuJobOnDutyProps = {
     data: NuiJobEmployeeOnDuty;
 };
 
+const banners_in_core = ['dmc'];
+
 export const JobOnDutyMenu: FunctionComponent<MenuJobOnDutyProps> = ({ data }) => {
-    const banner = `https://nui-img/soz/menu_job_${data.job}`;
+    let banner;
+    if (banners_in_core.includes(data.job)) {
+        banner = `https://cfx-nui-soz-core/public/images/banner/menu_job_${data.job}.webp`;
+    } else {
+        banner = `https://nui-img/soz/menu_job_${data.job}`;
+    }
 
     if (!data.state.length) {
         return null;

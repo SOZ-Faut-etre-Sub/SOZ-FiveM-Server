@@ -20,6 +20,10 @@ export class PlayerMoneyService {
         return this.QBCore.getPlayer(source).Functions.RemoveMoney(type, money);
     }
 
+    public get(source: number, type: 'money' | 'marked_money' = 'money'): number {
+        return this.QBCore.getPlayer(source).Functions.GetMoney(type);
+    }
+
     public async transfer(
         sourceAccount: string,
         targetAccount: string,

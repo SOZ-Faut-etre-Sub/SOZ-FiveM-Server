@@ -7,6 +7,7 @@ import { WardrobeMenuData } from '../cloth';
 import { DrivingSchoolMenuData } from '../driving-school';
 import { FuelType } from '../fuel';
 import { AdminMapperMenuData, HousingUpgradesMenuData } from '../housing/menu';
+import { DmcJobMenuData } from '../job/dmc';
 import { MenuUpwData, UpwOrderMenuData } from '../job/upw';
 import { Race } from '../race';
 import { BossShopMenu, ShopProduct } from '../shop';
@@ -87,6 +88,7 @@ export enum MenuType {
     RaceRank = 'RaceRank',
     GouvJobMenu = 'gouv_job',
     FDFJobMenu = 'fdf_job',
+    DmcJobMenu = 'dmc_job',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -132,4 +134,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.PropPlacementMenu]: PropPlacementMenuData;
     [MenuType.FDFJobMenu]: any;
     [MenuType.JobNews]: { job: JobType };
+    [MenuType.DmcJobMenu]: DmcJobMenuData;
 }
