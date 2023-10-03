@@ -541,7 +541,12 @@ export class AdminMenuMapperProvider {
         } else if (object === 'upwpile') {
             TriggerServerEvent('soz-upw:server:AddFacility', object, vector4Position, null, job);
         } else {
-            TriggerServerEvent(ServerEvent.ADMIN_ADD_PERSISTENT_PROP, createdObject.model, event, vector4Position);
+            TriggerServerEvent(
+                ServerEvent.ADMIN_ADD_PERSISTENT_PROP,
+                createdObject.model,
+                event,
+                createdObject.position
+            );
         }
     }
 
