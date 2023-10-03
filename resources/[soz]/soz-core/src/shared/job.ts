@@ -23,6 +23,7 @@ export enum JobType {
     FBI = 'fbi',
     MDR = 'mdr',
     Gouv = 'gouv',
+    FDF = 'fdf',
     SASP = 'sasp',
 }
 
@@ -103,6 +104,7 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.FBI]: 'Federal Bureau of Investigation',
     [JobType.MDR]: 'Mandatory',
     [JobType.Gouv]: 'Gouvernement',
+    [JobType.FDF]: 'Ferme de Fou',
     [JobType.SASP]: 'San Andreas State Police',
 };
 

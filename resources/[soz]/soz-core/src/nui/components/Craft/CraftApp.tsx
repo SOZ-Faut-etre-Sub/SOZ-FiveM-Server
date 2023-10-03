@@ -1,4 +1,5 @@
 import { fetchNui } from '@public/nui/fetch';
+import { useBackspace } from '@public/nui/hook/control';
 import { useItems } from '@public/nui/hook/data';
 import { useNuiEvent, useNuiFocus } from '@public/nui/hook/nui';
 import { useOutside } from '@public/nui/hook/outside';
@@ -40,6 +41,10 @@ export const CraftApp: FunctionComponent = () => {
 
     const refOutside = useOutside({
         click: () => setCraftList(null),
+    });
+
+    useBackspace(() => {
+        setCraftList(null);
     });
 
     const doCraft = useCallback(async () => {

@@ -115,4 +115,10 @@ export const SocietyContactsState: Society[] = [
         number: '555-GOUV',
         avatar: 'media/society_icon/gouv.webp',
     },
+    {
+        id: 19,
+        display: 'Ferme de Fou',
+        number: '555-FDF',
+        avatar: 'media/society_icon/fdf.webp',
+    },
 ];

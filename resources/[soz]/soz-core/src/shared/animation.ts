@@ -87,6 +87,8 @@ export type Vfx = {
     scale: number;
     position: Vector3;
     rotation: Vector3;
+    manualLoop?: boolean;
+    duration?: number;
 };
 
 export type AnimationProps = {

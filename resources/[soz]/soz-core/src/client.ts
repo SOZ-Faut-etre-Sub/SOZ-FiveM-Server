@@ -18,6 +18,7 @@ import { InventoryModule } from './client/inventory/inventory.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
+import { FDFModule } from './client/job/fdf/fdf.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
 import { GarbageModule } from './client/job/garbage/garbage.module';
@@ -107,6 +108,7 @@ async function bootstrap() {
         GarbageModule,
         BillboardModule,
         CraftModule,
+        FDFModule,
         ...PrivateModules
     );
 
