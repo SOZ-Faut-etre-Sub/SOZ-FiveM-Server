@@ -406,7 +406,7 @@ export type FDFFieldsConfigType = {
 
 export const FDFFieldConfig: FDFFieldsConfigType = {
     fields: FDFFields,
-    maxprop: 40,
+    maxprop: 120,
     speedLabel: 'Butter',
     hillLabel: 'Buttage effectué',
     hillingText: 'Vous avez butté un plant, il sera récoltable un peu plus tôt.',
@@ -418,7 +418,7 @@ export const FDFFieldConfig: FDFFieldsConfigType = {
 
 export const FDFGreenhouseConfig: FDFFieldsConfigType = {
     fields: FDFGreenHouse,
-    maxprop: 20,
+    maxprop: 30,
     speedLabel: 'Répulser',
     hillLabel: 'Répulsion effectué',
     hillingText: 'Vous avez répulsé un plant, il sera récoltable un peu plus tôt.',
