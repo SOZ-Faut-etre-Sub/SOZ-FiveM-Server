@@ -101,7 +101,8 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     end
     PlayerData.metadata['hunger'] = PlayerData.metadata['hunger'] or 100
     PlayerData.metadata['thirst'] = PlayerData.metadata['thirst'] or 100
-    PlayerData.metadata['alcohol'] = PlayerData.metadata['alcohol'] or 0
+    --NaN check
+    PlayerData.metadata['alcohol'] = PlayerData.metadata['alcohol'] == PlayerData.metadata['alcohol'] and PlayerData.metadata['alcohol'] or 0
     PlayerData.metadata['fiber'] = PlayerData.metadata['fiber'] or 70
     PlayerData.metadata['lipid'] = PlayerData.metadata['lipid'] or 70
     PlayerData.metadata['sugar'] = PlayerData.metadata['sugar'] or 70
