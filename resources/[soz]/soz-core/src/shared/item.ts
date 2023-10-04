@@ -25,7 +25,8 @@ export type ItemType =
     | 'liquor'
     | 'fish'
     | 'fishing_garbage'
-    | 'outfit';
+    | 'outfit'
+    | 'tool';
 
 type BaseItem = {
     name: string;
@@ -81,6 +82,10 @@ export type LogItem = BaseItem & {
 
 export type SawdustItem = BaseItem & {
     type: 'sawdust';
+};
+
+export type ToolItem = BaseItem & {
+    type: 'tool';
 };
 
 export type PlankItem = BaseItem & {
@@ -249,4 +254,5 @@ export type Item =
     | GarmentItem
     | OutfitItem
     | FishItem
-    | FishingGarbageItem;
+    | FishingGarbageItem
+    | ToolItem;
