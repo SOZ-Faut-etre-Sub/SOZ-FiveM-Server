@@ -73,19 +73,25 @@ end)
 RegisterNUICallback("player/giveItem", function(data, cb)
     SetNuiFocus(false, false)
 
-    local player, distance = QBCore.Functions.GetClosestPlayer()
-    if player ~= -1 and distance < 2.0 then
-        local amount = data.amount
+    local playerState = exports["soz-core"]:GetPlayerState()
 
-        if amount > 1 then
-            amount = exports["soz-core"]:Input("Quantité", 5, data.amount)
-        end
-
-        if amount and tonumber(amount) > 0 then
-            TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(player), data, tonumber(amount))
-        end
+    if playerState.isInHub then
+        exports["soz-core"]:DrawNotification("Pas d'échange dans le Hub", "error")
     else
-        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        local player, distance = QBCore.Functions.GetClosestPlayer()
+        if player ~= -1 and distance < 2.0 then
+            local amount = data.amount
+
+            if amount > 1 then
+                amount = exports["soz-core"]:Input("Quantité", 5, data.amount)
+            end
+
+            if amount and tonumber(amount) > 0 then
+                TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(player), data, tonumber(amount))
+            end
+        else
+            exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        end
     end
 
     cb(true)
@@ -94,15 +100,21 @@ end)
 RegisterNUICallback("player/giveMoney", function(data, cb)
     SetNuiFocus(false, false)
 
-    local player, distance = QBCore.Functions.GetClosestPlayer()
-    if player ~= -1 and distance < 2.0 then
-        local amount = exports["soz-core"]:Input("Quantité", 12)
+    local playerState = exports["soz-core"]:GetPlayerState()
 
-        if amount and tonumber(amount) > 0 then
-            TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "money", math.ceil(tonumber(amount)))
-        end
+    if playerState.isInHub then
+        exports["soz-core"]:DrawNotification("Pas d'échange dans le Hub", "error")
     else
-        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        local player, distance = QBCore.Functions.GetClosestPlayer()
+        if player ~= -1 and distance < 2.0 then
+            local amount = exports["soz-core"]:Input("Quantité", 12)
+
+            if amount and tonumber(amount) > 0 then
+                TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "money", math.ceil(tonumber(amount)))
+            end
+        else
+            exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        end
     end
 
     cb(true)
@@ -111,15 +123,21 @@ end)
 RegisterNUICallback("player/giveMarkedMoney", function(data, cb)
     SetNuiFocus(false, false)
 
-    local player, distance = QBCore.Functions.GetClosestPlayer()
-    if player ~= -1 and distance < 2.0 then
-        local amount = exports["soz-core"]:Input("Quantité", 12)
+    local playerState = exports["soz-core"]:GetPlayerState()
 
-        if amount and tonumber(amount) > 0 then
-            TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "marked_money", math.ceil(tonumber(amount)))
-        end
+    if playerState.isInHub then
+        exports["soz-core"]:DrawNotification("Pas d'échange dans le Hub", "error")
     else
-        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        local player, distance = QBCore.Functions.GetClosestPlayer()
+        if player ~= -1 and distance < 2.0 then
+            local amount = exports["soz-core"]:Input("Quantité", 12)
+
+            if amount and tonumber(amount) > 0 then
+                TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(player), "marked_money", math.ceil(tonumber(amount)))
+            end
+        else
+            exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        end
     end
 
     cb(true)
@@ -150,7 +168,13 @@ RegisterNUICallback("player/giveItemToTarget", function(data, cb)
                     exports["soz-core"]:DrawNotification("Vous n'êtes pas dans une zone de revente", "error")
                 end
             else
-                TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(playerIdx), data, tonumber(amount))
+                local playerState = exports["soz-core"]:GetPlayerState()
+
+                if playerState.isInHub then
+                    exports["soz-core"]:DrawNotification("Pas d'échange dans le Hub", "error")
+                else
+                    TriggerServerEvent("inventory:server:GiveItem", GetPlayerServerId(playerIdx), data, tonumber(amount))
+                end
             end
         end
     else
@@ -164,19 +188,25 @@ RegisterNUICallback("player/giveMoneyToTarget", function(data, cb)
     local hit, _, _, entityHit, entityType, _ = ScreenToWorld()
     SetNuiFocus(false, false)
 
-    if hit == 1 and entityType == 1 then
-        local amount = exports["soz-core"]:Input("Quantité", 12)
+    local playerState = exports["soz-core"]:GetPlayerState()
 
-        if amount and tonumber(amount) > 0 then
-            local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
-            if playerIdx == -1 then -- Is NPC
-                exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
-            else
-                TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(playerIdx), "money", math.ceil(tonumber(amount)))
-            end
-        end
+    if playerState.isInHub then
+        exports["soz-core"]:DrawNotification("Pas d'échange dans le Hub", "error")
     else
-        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        if hit == 1 and entityType == 1 then
+            local amount = exports["soz-core"]:Input("Quantité", 12)
+
+            if amount and tonumber(amount) > 0 then
+                local playerIdx = NetworkGetPlayerIndexFromPed(entityHit)
+                if playerIdx == -1 then -- Is NPC
+                    exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+                else
+                    TriggerServerEvent("inventory:server:GiveMoney", GetPlayerServerId(playerIdx), "money", math.ceil(tonumber(amount)))
+                end
+            end
+        else
+            exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+        end
     end
 
     cb(true)
