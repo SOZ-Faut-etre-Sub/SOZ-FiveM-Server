@@ -60,7 +60,8 @@ export type ItemType =
     | 'fishing_bait'
     | 'crate'
     | 'fish'
-    | 'fishing_garbage';
+    | 'fishing_garbage'
+    | 'tool';
 
 export type MealMetadata = {
         name: string;

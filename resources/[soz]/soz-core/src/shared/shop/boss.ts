@@ -18,6 +18,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'weapon_hatchet', type: 'weapon', price: 100 },
             { id: 'weapon_flaregun', type: 'weapon', price: 500 },
             { id: 'ammo_03', type: 'weapon', price: 10 },
+            { id: 'chainsaw', type: 'tool', price: 260 },
         ],
     },
     {

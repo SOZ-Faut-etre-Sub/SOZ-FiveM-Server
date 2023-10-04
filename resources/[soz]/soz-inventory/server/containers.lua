@@ -34,7 +34,7 @@ Container["ammo"] = InventoryContainer:new({
 
 Container["armory"] = InventoryContainer:new({
     type = "armory",
-    allowedTypes = {"weapon"},
+    allowedTypes = {"weapon", "tool"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
@@ -69,6 +69,7 @@ Container["trunk"] = InventoryContainer:new({
         "outfit",
         "crate",
         "drug_pot",
+        "tool",
     },
 })
 
@@ -97,6 +98,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "outfit",
         "crate",
         "drug_pot",
+        "tool",
     },
 })
 
@@ -145,13 +147,13 @@ Container["storage_tank"] = InventoryContainer:new({
 --- Todo: convert to storage type : storage
 Container["seizure"] = InventoryContainer:new({
     type = "seizure",
-    allowedTypes = {"weapon", "weapon_attachment", "weapon_ammo", "drug", "item", "item_illegal", "drug_pot"},
+    allowedTypes = {"weapon", "weapon_attachment", "weapon_ammo", "drug", "item", "item_illegal", "drug_pot", "tool"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 --- Todo: convert to storage type : storage
 Container["boss_storage"] = InventoryContainer:new({
     type = "boss_storage",
-    allowedTypes = {"weapon", "weapon_ammo", "item", "oil_and_item"},
+    allowedTypes = {"weapon", "weapon_ammo", "item", "oil_and_item", "tool"},
     inventoryPermissionCallback = function(player, owner)
         return SozJobCore.Functions.HasPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyPrivateStorage)
     end,
@@ -201,6 +203,7 @@ Container["bin"] = InventoryDatastore:new({
         "outfit",
         "crate",
         "drug_pot",
+        "tool",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -252,6 +255,7 @@ Container["house_stash"] = InventoryContainer:new({
         "fishing_bait",
         "fish",
         "drug_pot",
+        "tool",
     },
 })
 Container["house_fridge"] = InventoryContainer:new({
