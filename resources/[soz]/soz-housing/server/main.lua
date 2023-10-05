@@ -116,16 +116,14 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
         return
     end
 
-    local inside = Player.PlayerData.metadata["inside"]
-
-    local coords = GetEntityCoords(ped)
-    inside.exitCoord = {x = coords.x, y = coords.y, z = coords.z, w = GetEntityHeading(ped)}
-    Player.Functions.SetMetaData("inside", inside)
+    if Player.PlayerData.metadata["inside"].apartment then
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous êtes déjà dans une habitation", "error")
+    end
 
     TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, apartment:GetInsideCoord(), propertyId, apartmentId)
 end)
 
-RegisterNetEvent("housing:server:CompleteSetPlayerInApartment", function(propertyId, apartmentId)
+RegisterNetEvent("housing:server:CompleteSetPlayerInApartment", function(propertyId, apartmentId, coords, heading)
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then
         return
@@ -133,6 +131,9 @@ RegisterNetEvent("housing:server:CompleteSetPlayerInApartment", function(propert
 
     local inside = Player.PlayerData.metadata["inside"]
 
+    if not inside.apartment then
+        inside.exitCoord = {x = coords.x, y = coords.y, z = coords.z, w = heading}
+    end
     inside.apartment = apartmentId
     inside.property = propertyId
     Player.Functions.SetMetaData("inside", inside)
