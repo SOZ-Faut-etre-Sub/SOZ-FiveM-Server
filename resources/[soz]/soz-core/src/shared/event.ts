@@ -181,6 +181,7 @@ export enum ServerEvent {
     TWITCH_ADD_FLASH_NEWS = 'soz-core:server:twitch:add-flash-news',
 
     VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
+    VEHICLE_USE_BODY_REPAIR_KIT = 'soz-core:server:vehicle:use-body-repair-kit',
     VEHICLE_USE_CLEANING_KIT = 'soz-core:server:vehicle:use-cleaning-kit',
     VEHICLE_USE_WHEEL_KIT = 'soz-core:server:vehicle:use-wheel-kit',
     VEHICLE_FORCE_OPEN = 'soz-core:server:vehicle:force-open',
