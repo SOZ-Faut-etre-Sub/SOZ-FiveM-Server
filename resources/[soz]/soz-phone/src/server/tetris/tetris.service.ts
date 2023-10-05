@@ -1,4 +1,5 @@
-import { TetrisEvents, TetrisLeaderboard, TetrisScore } from '../../../typings/app/tetris';
+import { TetrisEvents, TetrisScore } from '../../../typings/app/tetris';
+import { LeaderboardInterface } from '../../../typings/common';
 import { PromiseEventResp, PromiseRequest } from '../lib/PromiseNetEvents/promise.types';
 import PlayerService from '../players/player.service';
 import TetrisDB, { _TetrisDB } from './tetris.db';
@@ -6,7 +7,7 @@ import { tetrisLogger } from './tetris.utils';
 
 class _TetrisService {
     private readonly tetrisDB: _TetrisDB;
-    private tetrisLeaderboard: TetrisLeaderboard[];
+    private tetrisLeaderboard: LeaderboardInterface[];
 
     constructor() {
         this.tetrisDB = TetrisDB;
@@ -30,7 +31,10 @@ class _TetrisService {
         this.tetrisLeaderboard = await this.tetrisDB.getLeaderboard();
     }
 
-    async getLeaderboard(reqObj: PromiseRequest<string>, resp: PromiseEventResp<TetrisLeaderboard[]>): Promise<void> {
+    async getLeaderboard(
+        reqObj: PromiseRequest<string>,
+        resp: PromiseEventResp<LeaderboardInterface[]>
+    ): Promise<void> {
         try {
             resp({ status: 'ok', data: this.tetrisLeaderboard });
         } catch (e) {

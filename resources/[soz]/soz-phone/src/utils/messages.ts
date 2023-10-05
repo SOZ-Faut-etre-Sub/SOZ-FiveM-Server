@@ -41,3 +41,7 @@ export function sendDialerEvent(method: string, data: any = {}): void {
 export function sendWeatherEvent(method: string, data: any = {}): void {
     sendMessage(apps.WEATHER, method, data);
 }
+
+export function sendSnakeEvent(method: string, data: any = {}): void {
+    sendMessage(apps.SNAKE, method, data);
+}

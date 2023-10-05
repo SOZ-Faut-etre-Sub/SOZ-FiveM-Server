@@ -12,3 +12,4 @@ import './settings/settings.controller';
 import './bank/bank.controller';
 import './weather/weather.controller';
 import './tetris/tetris.controller';
+import './snake/snake.controller';

@@ -21,6 +21,8 @@ import PhotoApp from '../../../apps/photo';
 import PhotoIcon from '../../../apps/photo/icon';
 import { SettingsApp } from '../../../apps/settings';
 import SettingsIcon from '../../../apps/settings/icon';
+import SnakeIcon from '../../../apps/snake/icon';
+import { SnakeApp } from '../../../apps/snake/SnakeApp';
 import { SocietyContactsApp } from '../../../apps/society-contacts';
 import SocietyContactIcon from '../../../apps/society-contacts/icon';
 import { SocietyMessagesApp } from '../../../apps/society-messages';
@@ -154,5 +156,12 @@ export const APPS: IAppConfig[] = [
         path: '/game-tetris',
         component: <GameTetris />,
         icon: GameTetrisIcon,
+    },
+    {
+        id: 'snake',
+        nameLocale: 'APPS_SNAKE',
+        path: '/snake',
+        component: <SnakeApp />,
+        icon: SnakeIcon,
     },
 ];

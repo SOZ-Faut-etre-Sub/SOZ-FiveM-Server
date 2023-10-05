@@ -1,4 +1,5 @@
-import { TetrisEvents, TetrisLeaderboard, TetrisScore } from '../../../typings/app/tetris';
+import { TetrisEvents, TetrisScore } from '../../../typings/app/tetris';
+import { LeaderboardInterface } from '../../../typings/common';
 import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import TetrisService from './tetris.service';
 import { tetrisLogger } from './tetris.utils';
@@ -10,7 +11,7 @@ onNetPromise<TetrisScore, void>(TetrisEvents.SEND_SCORE, (reqObj, resp) => {
     });
 });
 
-onNetPromise<string, TetrisLeaderboard[]>(TetrisEvents.FETCH_LEADERBOARD, (reqObj, resp) => {
+onNetPromise<string, LeaderboardInterface[]>(TetrisEvents.FETCH_LEADERBOARD, (reqObj, resp) => {
     TetrisService.getLeaderboard(reqObj, resp).catch(e => {
         tetrisLogger.error(
             `Error occured in fetch fetch tetris leaderboard event (${reqObj.source}), Error:  ${e.message}`

@@ -1,4 +1,5 @@
-import { TetrisLeaderboard, TetrisScore } from '../../../typings/app/tetris';
+import { TetrisScore } from '../../../typings/app/tetris';
+import { LeaderboardInterface } from '../../../typings/common';
 
 export class _TetrisDB {
     async addScore(identifier: string, score: TetrisScore): Promise<number> {
@@ -8,7 +9,7 @@ export class _TetrisDB {
         ]);
     }
 
-    getLeaderboard(): Promise<TetrisLeaderboard[]> {
+    getLeaderboard(): Promise<LeaderboardInterface[]> {
         return exports.oxmysql.query_async(
             `
             SELECT player.citizenid, phone_profile.avatar, concat(JSON_VALUE(player.charinfo, '$.firstname'), ' ', JSON_VALUE(player.charinfo, '$.lastname')) as player_name, MAX(tetris_score.score) AS score, try_count.game_played

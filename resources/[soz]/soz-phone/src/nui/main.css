@@ -8,6 +8,7 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Prompt");
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
 
 body {
   font-family: 'SF Pro', sans-serif;
@@ -46,4 +47,8 @@ a:active {
 }
 *::-webkit-scrollbar-thumb {
     background-color: #666;
+}
+
+#arcade {
+  font-family: 'Press Start 2P', cursive;
 }
