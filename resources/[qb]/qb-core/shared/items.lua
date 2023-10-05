@@ -3222,7 +3222,7 @@ QBShared.Items = {
         ['illustrator'] = '.LeakFlood',
     },
     ['bodyrepairkit'] = {
-        ['name'] = 'repairkit',
+        ['name'] = 'bodyrepairkit',
         ['label'] = 'Kit de réparation carosserie',
         ['weight'] = 10000,
         ['type'] = 'item',
