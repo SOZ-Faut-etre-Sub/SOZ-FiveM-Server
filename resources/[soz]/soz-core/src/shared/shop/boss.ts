@@ -76,7 +76,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         },
         targets: [],
         products: [
-            { id: 'armor', type: 'item', metadata: { label: 'Twitch News', type: 'news' }, price: 150 },
+            { id: 'armor', type: 'item', metadata: { label: 'You News', type: 'you-news' }, price: 150 },
             { id: 'n_fix_camera', type: 'item', price: 250 },
             { id: 'n_fix_greenscreen', type: 'item', price: 150 },
             { id: 'n_fix_light', type: 'item', price: 80 },

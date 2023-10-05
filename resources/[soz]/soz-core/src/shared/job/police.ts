@@ -1130,6 +1130,7 @@ export const Armors = {
             Palette: 0,
         },
         ['news']: { Drawable: 27, Texture: 2, Palette: 0 }, // is unmarked, need reskin
+        ['you-news']: { Drawable: 27, Texture: 4, Palette: 0 }, // is unmarked, need reskin
         ['sasp1']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 9,
             Texture: 0,
