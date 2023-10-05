@@ -41,10 +41,10 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                         🚗 Gestion du véhicule
                     </MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="players">👨‍💻 Gestion des joueurs</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="character">
                         👨‍💼 Gestion des personnages
                     </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
             <GameMasterSubMenu banner={data.banner} permission={data.permission} state={data.state.gameMaster} />
