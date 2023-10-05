@@ -26,8 +26,8 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer.png',
-                label: 'Mécanique (kit)',
+                icon: 'c:mechanic/reparer_mecanique.png',
+                label: 'Réparer mécanique (kit)',
                 item: 'repairkit',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
@@ -39,8 +39,8 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer_carrosserie.png',
-                label: 'Carosserie (kit)',
+                icon: 'c:mechanic/reparer_carosserie.png',
+                label: 'Réparer carosserie (kit)',
                 item: 'bodyrepairkit',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
