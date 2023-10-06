@@ -64,6 +64,30 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         ],
     },
     {
+        name: 'you-news',
+        job: JobType.YouNews,
+        zone: {
+            center: [-1067.29, -244.13, 44.02],
+            length: 0.8,
+            width: 1.4,
+            heading: 297.35,
+            minZ: 43.02,
+            maxZ: 45.02,
+        },
+        targets: [],
+        products: [
+            { id: 'armor', type: 'item', metadata: { label: 'You News', type: 'you-news' }, price: 150 },
+            { id: 'n_fix_camera', type: 'item', price: 250 },
+            { id: 'n_fix_greenscreen', type: 'item', price: 150 },
+            { id: 'n_fix_light', type: 'item', price: 80 },
+            { id: 'n_fix_mic', type: 'item', price: 60 },
+            { id: 'n_mic', type: 'item', price: 50 },
+            { id: 'n_camera', type: 'item', price: 250 },
+            { id: 'n_bmic', type: 'item', price: 100 },
+            { id: 'microphone', type: 'item', price: 50 },
+        ],
+    },
+    {
         name: 'food',
         job: JobType.Food,
         zone: {

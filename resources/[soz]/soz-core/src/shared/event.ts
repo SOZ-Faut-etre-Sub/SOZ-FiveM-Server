@@ -91,6 +91,7 @@ export enum ServerEvent {
     LSMC_TOOGLE_ITT = 'soz-core:server:job:lsmc:toggle-itt',
     LSMC_SET_HAZMAT = 'soz-core:server:job:lsmc:set-hazmat',
     LSMC_SET_CURRENT_ORGAN = 'soz-core:server:job:lsmc:set-organ',
+    LSMC_SET_PATIENT_OUTFIT = 'soz-core:server:job:lsmc:set-patient-outfit',
 
     MISSIVE_CREATE_ITEM = 'soz-core:server:missive:create-item',
     MISSIVE_DELETE_ITEM = 'soz-core:server:missive:delete-item',
@@ -99,7 +100,12 @@ export enum ServerEvent {
     MONITOR_ADD_EVENT = 'soz-core:server:monitor:add-event',
     MONITOR_LOG = 'soz-core:server:monitor:log',
 
-    LSMC_SET_PATIENT_OUTFIT = 'soz-core:server:job:lsmc:set-patient-outfit',
+    NEWS_ADD_FLASH = 'soz-core:server:news:add-flash',
+    NEWS_NEWSPAPER_SOLD = 'soz-core:server:job:news:newspaper-sold',
+    NEWS_NEWSPAPER_FARM = 'soz-core:server:job:news:newspaper-farm',
+    NEWS_PLACE_OBJECT = 'soz-core:server:job:news:place-object',
+
+    OBJECT_COLLECT = 'soz-core:server:object:collect',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:server:oil:refill-kerosene-station',
@@ -177,8 +183,6 @@ export enum ServerEvent {
     REPOSITORY_REFRESH_DATA = 'soz-core:server:repository:refresh-data',
 
     TAXI_NPC_PAY = 'soz-core:server:taxi:npc-pay',
-
-    TWITCH_ADD_FLASH_NEWS = 'soz-core:server:twitch:add-flash-news',
 
     VEHICLE_USE_REPAIR_KIT = 'soz-core:server:vehicle:use-repair-kit',
     VEHICLE_USE_BODY_REPAIR_KIT = 'soz-core:server:vehicle:use-body-repair-kit',
@@ -367,6 +371,8 @@ export enum ClientEvent {
     ITEM_UMBRELLA_TOGGLE = 'soz-core:client:item:umbrella:toggle',
     ITEM_WALK_STICK_TOGGLE = 'soz-core:client:item:walk-stick:toggle',
     ITEM_BOOK_USE = 'soz-core:client:item:book:use',
+    ITEM_CAMERA_TOGGLE = 'soz-core:client:item:camera:toggle',
+    ITEM_MICROPHONE_TOGGLE = 'soz-core:client:item:microphone:toggle',
 
     HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 
@@ -380,6 +386,8 @@ export enum ClientEvent {
     JOBS_GARBAGE_OPEN_SOCIETY_MENU = 'jobs:client:garbage:OpenSocietyMenu',
     JOBS_FDF_OPEN_SOCIETY_MENU = 'soz-jobs:client:fdf:OpenSocietyMenu',
     JOBS_GOUV_OPEN_SOCIETY_MENU = 'soz-jobs:client:gouv:OpenSocietyMenu',
+    JOBS_TWITCH_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:twitch-news:OpenSocietyMenu',
+    JOBS_YOU_NEWS_OPEN_SOCIETY_MENU = 'soz-jobs:client:you-news:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
@@ -401,6 +409,9 @@ export enum ClientEvent {
     MONITOR_START_TRACING = 'soz-core:client:monitor:start-tracing',
 
     NEWS_DRAW = 'soz-core:client:news:draw',
+    NEWS_NEWSPAPER_SELL = 'soz-core:client:news:newspaper-sell',
+    NEWS_NEWSPAPER_SOLD = 'soz-core:client:news:newspaper-sold',
+
     NOTIFICATION_DRAW = 'soz-core:client:notification:draw',
     NOTIFICATION_DRAW_ADVANCED = 'soz-core:client:notification:draw-advanced',
     NUI_SHOW_PANEL = 'soz-core:client:nui:show-panel',
@@ -682,6 +693,9 @@ export enum NuiEvent {
     JobPlaceProps = 'soz-core:client:job:place-props',
 
     LsmcPharmacyBuyItem = 'soz-core:nui:job:lsmc:pharmacy:buy-item',
+
+    NewsCreateAnnounce = 'soz-core:nui:news:create-announce',
+    NewsPlaceObject = 'soz-core:client:news:place-object',
 
     BennysCancelOrder = 'soz-core:client:job:bennys:cancel-order',
     BennysOrder = 'soz-core:client:job:bennys:order',

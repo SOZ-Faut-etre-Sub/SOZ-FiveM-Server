@@ -121,4 +121,10 @@ export const SocietyContactsState: Society[] = [
         number: '555-FDF',
         avatar: 'media/society_icon/fdf.webp',
     },
+    {
+        id: 21,
+        display: 'YouNews',
+        number: '555-YOUN',
+        avatar: 'media/society_icon/you-news.webp',
+    },
 ];

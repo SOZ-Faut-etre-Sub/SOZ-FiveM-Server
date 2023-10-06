@@ -78,6 +78,9 @@ body {
 .target-item.news {
   --item-color: 264;
 }
+.target-item.you-news {
+  --item-color: 10;
+}
 .target-item.taxi {
   --item-color: 60;
 }

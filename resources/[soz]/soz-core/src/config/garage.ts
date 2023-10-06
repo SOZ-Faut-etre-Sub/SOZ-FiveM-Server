@@ -1450,6 +1450,42 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
+    you_news: {
+        name: 'You News Parking',
+        type: GarageType.Job,
+        job: JobType.YouNews,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-1043.74, -221.81, 36.88], 1.0, 1.0, {
+            heading: 244.07,
+            minZ: 35.88,
+            maxZ: 38.88,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1057.99, -224.41, 38.13], 8.4, 4.2, { heading: 228.64, minZ: 37.13, maxZ: 40.13 }),
+            new BoxZone([-1065.08, -229.31, 38.19], 8.2, 4.0, { heading: 60.05, minZ: 37.13, maxZ: 40.13 }),
+        ],
+    },
+    you_news_air: {
+        name: 'You News Air Parking',
+        type: GarageType.Job,
+        job: JobType.YouNews,
+        category: GarageCategory.Air,
+        zone: new BoxZone([-1063.46, -238.52, 53.0], 1.0, 1.0, {
+            heading: 22.96,
+            minZ: 52.0,
+            maxZ: 55.0,
+        }),
+        parkingPlaces: [
+            new BoxZone([-1052.29, -236.13, 54.38], 10.6, 11.2, {
+                heading: -64.18,
+                minZ: 53.38,
+                maxZ: 56.38,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
     mtp: {
         name: 'Michel Transport Petrol Parking',
         type: GarageType.Job,
