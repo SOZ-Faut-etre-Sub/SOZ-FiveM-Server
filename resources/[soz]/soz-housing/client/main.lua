@@ -10,7 +10,6 @@ Properties = {}
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
     TriggerEvent("housing:client:SyncProperties")
-    LaunchExteriorCullingThread()
 end)
 
 RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
@@ -33,11 +32,10 @@ RegisterNetEvent("QBCore:Player:SetPlayerData", function(data)
 end)
 
 --- Utils Functions
-function LaunchExteriorCullingThread()
-    Citizen.CreateThread(function()
-        Citizen.Wait(2000)
-
-        while Housing.Functions.IsInsideApartment() do
+Citizen.CreateThread(function()
+    Citizen.Wait(2000)
+    while true do
+        if Housing.Functions.IsInsideApartment() then
             local propertyId = PlayerData.metadata["inside"].property
             local interiorId = GetInteriorFromEntity(PlayerPedId())
 
@@ -47,15 +45,14 @@ function LaunchExteriorCullingThread()
                 end
             end
 
-            Citizen.Wait(0)
         end
-    end)
-end
+        Citizen.Wait(0)
+    end
+end)
 
 --- Main Functions
 RegisterNetEvent("housing:client:Teleport", function(coords, propertyId, apartmentId)
     Housing.Functions.Teleport("Ouvre la porte", coords, propertyId, apartmentId)
-    LaunchExteriorCullingThread()
 end)
 
 RegisterNetEvent("housing:client:UpdateApartment", function(propertyId, apartmentId, data)
@@ -157,6 +154,5 @@ AddEventHandler("onResourceStart", function(resource)
         Citizen.Wait(3000)
 
         TriggerEvent("housing:client:SyncProperties")
-        LaunchExteriorCullingThread()
     end
 end)

@@ -24,7 +24,7 @@ end
 
 --- Other functions
 Housing.Functions.IsInsideApartment = function()
-    return PlayerData.metadata["inside"].apartment ~= false
+    return PlayerData and PlayerData.metadata["inside"].apartment ~= false
 end
 
 Housing.Functions.GenerateMenu = function(cb)
@@ -56,11 +56,13 @@ Housing.Functions.Teleport = function(title, coords, propertyId, apartmentId)
         DoScreenFadeOut(500)
         Citizen.Wait(500)
 
+        local exitcoords = GetEntityCoords(ped)
+        local heading = GetEntityHeading(ped)
         SetPedCoordsKeepVehicle(ped, coords.x, coords.y, coords.z)
         SetEntityHeading(ped, coords.w or 0)
 
         DoScreenFadeIn(500)
-        TriggerServerEvent("housing:server:CompleteSetPlayerInApartment", propertyId, apartmentId)
+        TriggerServerEvent("housing:server:CompleteSetPlayerInApartment", propertyId, apartmentId, exitcoords, heading)
     end)
 end
 
