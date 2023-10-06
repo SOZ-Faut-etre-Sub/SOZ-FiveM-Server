@@ -5,6 +5,7 @@ export type FocusInput = {
     cursor: boolean;
     keepInput: boolean;
     disableKeepInputControls: Control[];
+    disableKeepInputGroups: number[];
 };
 
 export type SetFocusInput = {
