@@ -183,3 +183,42 @@ QBCore.Functions.CreateCallback("soz-jobs:server:baun:createCocktailBox", functi
         cb(success)
     end)
 end)
+
+QBCore.Functions.CreateCallback("soz-jobs:server:baun:createIceCubes", function(source, cb)
+    local player = QBCore.Functions.GetPlayer(source)
+    local bottleToRemove = 1
+    local itemToRemove = "water_bottle"
+    for _, item in pairs(player.PlayerData.items) do
+        if item.name == itemToRemove and item.amount > 0 and not exports["soz-utils"]:ItemIsExpired(item) then
+            local amount = item.amount > bottleToRemove and bottleToRemove or item.amount
+            bottleToRemove = bottleToRemove - amount
+
+            if bottleToRemove == 0 then
+                break
+            end
+        end
+    end
+
+    if bottleToRemove ~= 0 then
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vous devez avoir au moins 1 bouteille d'eau pour créer des glaçons.", "error")
+        cb(false)
+        return
+    end
+
+    if not exports["soz-inventory"]:CanCarryItem(source, "ice_cube", 6) then
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines.", "error")
+        cb(false)
+        return
+    end
+
+    player.Functions.RemoveItem(itemToRemove, 1)
+
+    exports["soz-inventory"]:AddItem(source, source, "ice_cube", 6, nil, nil, function(success, reason)
+        if not success then
+            TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines...", "error")
+        else
+            TriggerClientEvent("soz-core:client:notification:draw", source, "Vous avez fait 6 glaçons.", "success")
+        end
+        cb(success)
+    end)
+end)

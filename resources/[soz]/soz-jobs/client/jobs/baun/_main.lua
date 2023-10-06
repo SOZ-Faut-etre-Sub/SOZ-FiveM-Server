@@ -34,6 +34,11 @@ RegisterNetEvent("soz-jobs:client:baun:createCocktailBox", function()
     end)
 end)
 
+RegisterNetEvent("soz-jobs:client:baun:createIceCubes", function()
+    QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createIceCubes", function()
+    end)
+end)
+
 exports["qb-target"]:AddBoxZone("baun:bahama:duty", vector3(-1388.11, -606.23, 30.32), 0.55, 0.55,
                                 {name = "baun:bahama:duty", heading = 16, minZ = 30.32, maxZ = 30.87},
                                 {options = SozJobCore.Functions.GetDutyActions("baun"), distance = 2.5})
