@@ -1,7 +1,7 @@
 import { Provider } from '@core/decorators/provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
-import { CraftEvent, Crafts, CraftsList } from '@public/shared/craft/craft';
+import { Crafts, CraftsList } from '@public/shared/craft/craft';
 import { isFeatureEnabled } from '@public/shared/features';
 import { InventoryItemMetadata } from '@public/shared/item';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
@@ -161,7 +161,7 @@ export class CraftProvider {
         this.notifier.notify(source, `Vous avez confectionné ~y~${recipe.amount}~s~ ~g~${item.label}~s~.`, 'success');
 
         this.monitor.publish(
-            CraftEvent[type] || 'craft',
+            crafts[category].event,
             {
                 item_id: itemId,
                 player_source: source,

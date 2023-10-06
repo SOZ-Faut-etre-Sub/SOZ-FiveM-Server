@@ -170,6 +170,9 @@ function Inventory.SetMaxWeight(inv, weight)
     if inv then
         inv.maxWeight = weight
     end
+    if inv.type == "player" and inv.maxWeight < inv.weight then
+        TriggerClientEvent("inventory:client:overloaded", inv.id, true)
+    end
 end
 exports("CalculateWeight", Inventory.CalculateWeight)
 exports("SetMaxWeight", Inventory.SetMaxWeight)
@@ -595,6 +598,7 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOw
     if type(item) ~= "table" then
         item = QBCore.Shared.Items[item]
     end
+    local overloaded = inv.type == "player" and inv.maxWeight < inv.weight
     amount = math.floor(amount + 0.5)
     if item and amount > 0 then
         if metadata ~= nil then
@@ -656,6 +660,11 @@ function Inventory.RemoveItem(inv, item, amount, metadata, slot, allowMoreThanOw
             inv.changed = true
             _G.Container[inv.type]:SyncInventory(inv.id, inv.items)
         end
+
+        if overloaded and inv.maxWeight >= inv.weight then
+            TriggerClientEvent("inventory:client:overloaded", inv.id, false)
+        end
+
         return removed
     end
     return false

@@ -116,6 +116,8 @@ const lsmcMlo = new BoxZone([347.75, -1412.87, 29.43], 92.8, 87.0, {
     maxZ: 70.43,
 });
 
+const VEHICLE_INVERTED_SPAWN = ['raketrailer'];
+
 @Provider()
 export class VehicleSpawner {
     @Inject(VehicleStateService)
@@ -394,6 +396,10 @@ export class VehicleSpawner {
         condition: VehicleCondition
     ): Promise<number | null> {
         const volatile = this.getSpawnVolatileState(vehicle, volatileState);
+
+        if (VEHICLE_INVERTED_SPAWN.includes(vehicle.model)) {
+            vehicle.position[3] = (vehicle.position[3] + 180) % 360;
+        }
 
         try {
             const [netId, entityId] = await this.spawnVehicleFromClient(player, vehicle, volatile, condition);

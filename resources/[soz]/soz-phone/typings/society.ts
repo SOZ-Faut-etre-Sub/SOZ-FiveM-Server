@@ -86,5 +86,6 @@ export const SocietyNumberList: SocietyNumber = {
     ffs: '555-FFS',
     mdr: '555-MDR',
     sasp: '555-SASP',
+    fdf: '555-FDF',
     gouv: '555-GOUV',
 };

@@ -36,6 +36,7 @@ Config.FarmAccountMoney = {
     ["farm_pawl"] = {money = 300000, marked_money = 0},
     ["farm_baun"] = {money = 300000, marked_money = 0},
     ["farm_ffs"] = {money = 300000, marked_money = 0},
+    ["farm_fdf"] = {money = 300000, marked_money = 0},
 }
 
 Config.SocietyTaxes = {
@@ -50,6 +51,7 @@ Config.SocietyTaxes = {
         ["pawl"] = {"pawl", "safe_pawl"},
         ["taxi"] = {"taxi", "safe_taxi"},
         ["upw"] = {"upw", "safe_upw"},
+        ["fdf"] = {"fdf", "safe_fdf"},
     },
 
     taxRepartition = {["lspd"] = 30, ["bcso"] = 30, ["lsmc"] = 30, ["cash-transfer"] = 2, ["mdr"] = 8},
@@ -173,6 +175,13 @@ Config.SafeStorages = {
         position = vector3(-583.08, -590.96, 34.68),
         size = vec2(1.00, 0.80),
         heading = 0.0,
+    },
+    ["safe_fdf"] = {
+        label = "Coffre Ferme de Fou",
+        owner = "fdf",
+        position = vector3(2436.49, 4964.26, 46.81),
+        size = vec2(1.00, 0.85),
+        heading = 43.58,
     },
     ["safe_gouv"] = {
         label = "Coffre Gouvernement",

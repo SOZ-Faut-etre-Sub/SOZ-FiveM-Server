@@ -2253,6 +2253,52 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
+    fdf: {
+        name: 'Ferme de Fou Parking',
+        type: GarageType.Job,
+        job: JobType.FDF,
+        category: GarageCategory.Car,
+        allowTrailers: true,
+        zone: new BoxZone([2500.78, 4966.17, 43.57], 1.0, 1.0, {
+            heading: 147.74,
+            minZ: 43.57,
+            maxZ: 44.87,
+        }),
+        parkingPlaces: [
+            new BoxZone([2501.12, 4951.41, 44.45], 6.8, 4.0, {
+                heading: 320.04,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2510.71, 4955.8, 44.63], 6.8, 4.0, {
+                heading: 302.38,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2528.25, 4963.21, 44.35], 6.8, 4.0, {
+                heading: 38.48,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2529.69, 4974.13, 44.91], 6.8, 4.0, {
+                heading: 121.77,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
     gouv: {
         name: 'Gouvernement Parking',
         type: GarageType.Job,

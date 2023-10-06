@@ -377,12 +377,12 @@ export class PropsProvider {
     }
 
     public async createPropsToAllClients(props: WorldPlacedProp[], excludes: number[] = []) {
-        TriggerClientEvent(ClientEvent.PROP_CREATE_CLIENTSIDE, -1, props, excludes);
+        TriggerLatentClientEvent(ClientEvent.PROP_CREATE_CLIENTSIDE, -1, 16 * 1024, props, excludes);
     }
     public async deletePropsToAllClients(props: WorldPlacedProp[], excludes: number[] = []) {
-        TriggerClientEvent(ClientEvent.PROP_DELETE_CLIENTSIDE, -1, props, excludes);
+        TriggerLatentClientEvent(ClientEvent.PROP_DELETE_CLIENTSIDE, -1, 16 * 1024, props, excludes);
     }
     public async editPropToAllClients(oldProp: WorldPlacedProp, newProp: WorldPlacedProp, excludes: number[] = []) {
-        TriggerClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, -1, oldProp, newProp, excludes);
+        TriggerLatentClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, -1, 16 * 1024, oldProp, newProp, excludes);
     }
 }

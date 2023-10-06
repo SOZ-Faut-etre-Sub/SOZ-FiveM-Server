@@ -115,7 +115,13 @@ export class PropProvider {
         }
 
         if (DoesEntityExist(prop.entity)) {
-            DeleteEntity(prop.entity);
+            if (GetEntityModel(prop.entity) == GetHashKey(prop.model)) {
+                DeleteEntity(prop.entity);
+            } else {
+                console.trace('Attemp to delete an entity of wrong model', GetEntityModel(prop.entity));
+            }
+        } else {
+            console.trace('Attemp to delete an non existing entity');
         }
 
         delete this.loadedProps[uniqueId];
@@ -302,7 +308,13 @@ export class PropProvider {
         }
 
         if (DoesEntityExist(prop.entity)) {
-            DeleteEntity(prop.entity);
+            if (GetEntityModel(prop.entity) == GetHashKey(prop.model)) {
+                DeleteEntity(prop.entity);
+            } else {
+                console.trace('Attemp to delete an debug entity of wrong model', GetEntityModel(prop.entity));
+            }
+        } else {
+            console.trace('Attemp to delete an non existing debug entity');
         }
 
         delete this.loadedDebugProps[prop.unique_id];

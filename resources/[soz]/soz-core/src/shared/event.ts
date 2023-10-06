@@ -301,6 +301,16 @@ export enum ServerEvent {
     RACE_DELETE = 'soz-core:server:race:delete',
     RACE_FINISH = 'soz-core:server:race:finish',
     RACE_CLEAR_RANKING = 'soz-core:server:race:clear-ranking',
+
+    FDF_TREE_CUT = 'soz-core:server:fdf:tree-cut',
+    FDF_TREE_WATER = 'soz-core:server:fdf:tree-water',
+    FDF_TREE_CHECK = 'soz-core:server:fdf:tree-check',
+    FDF_FIELD_HILLING = 'soz-core:server:fdf:field-hilling',
+    FDF_FIELD_HARVEST = 'soz-core:server:fdf:field-harvest',
+    FDF_FIELD_DESTROY = 'soz-core:server:fdf:field-destroy',
+    FDF_FIELD_PLOW = 'soz-core:server:fdf:field-plow',
+    FDF_FIELD_PLANT = 'soz-core:server:fdf:field-plant',
+    FDF_FIELD_CHECK = 'soz-core:server:fdf:field-check',
 }
 
 export enum ClientEvent {
@@ -367,6 +377,7 @@ export enum ClientEvent {
     JOBS_TAXI_OPEN_SOCIETY_MENU = 'soz-jobs:client:taxi:OpenSocietyMenu',
     JOBS_LSMC_OPEN_SOCIETY_MENU = 'soz-jobs:client:lsmc:OpenSocietyMenu',
     JOBS_GARBAGE_OPEN_SOCIETY_MENU = 'jobs:client:garbage:OpenSocietyMenu',
+    JOBS_FDF_OPEN_SOCIETY_MENU = 'soz-jobs:client:fdf:OpenSocietyMenu',
     JOBS_GOUV_OPEN_SOCIETY_MENU = 'soz-jobs:client:gouv:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
@@ -677,6 +688,7 @@ export enum NuiEvent {
 
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     FoodDisplayBlip = 'soz-core:client:job:food:display-blip',
+    FdfDisplayBlip = 'soz-core:client:job:fdf:display-blip',
     GarbageDisplayBlip = 'soz-core:client:job:garbage:display-blip',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
