@@ -1,16 +1,15 @@
-import { PropClientData, PropCollection, PropCollectionData, PropServerData } from '../object';
+import { PropCollection, PropCollectionData, PropServerData } from '../object';
 
 export type PropPlacementMenuData = {
     props: PlacementPropList;
     serverData: PropServerData;
-    clientData: PropClientData;
     collections: PropCollectionData[];
 };
 
 export type NuiPlacementPropMethodMap = {
     SetCollectionList: PropCollectionData[];
     SetCollection: PropCollection;
-    SetDatas: { serverData: PropServerData; clientData: PropClientData };
+    SetDatas: { serverData: PropServerData };
     EnterEditorMode: void;
     SetCurrentSearch: string;
 };
