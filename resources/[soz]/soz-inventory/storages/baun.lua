@@ -38,6 +38,30 @@ local function getCocktailTargetOption()
     }
 end
 
+local function getIceMachineTargetOption()
+    return {
+        color = "baun",
+        label = "Faire des glaçons",
+        icon = "c:baun/ice.png",
+        type = "client",
+        event = "soz-jobs:client:baun:createIceCubes",
+        blackoutGlobal = true,
+        blackoutJob = "baun",
+        job = "baun",
+        canInteract = function()
+            local numberOfWaterBottle = 0
+            for _, item in pairs(PlayerData.items) do
+                if item.name == "water_bottle" and not exports["soz-utils"]:ItemIsExpired(item) then
+                    numberOfWaterBottle = numberOfWaterBottle + item.amount
+                end
+            end
+            return PlayerData.job.onduty and numberOfWaterBottle >= 1
+        end,
+    }
+end
+
+-- BOSS STORAGES
+
 Config.Storages["baun_bahama_boss_storage"] = {
     label = "Stockage Patron Bahama Mamas",
     type = "boss_storage",
@@ -60,6 +84,8 @@ Config.Storages["baun_unicorn_boss_storage"] = {
     maxZ = 29.27,
 }
 
+-- STORAGES
+
 Config.Storages["baun_bahama_storage"] = {
     label = "Stockage Bahama Mamas",
     type = "storage",
@@ -76,11 +102,11 @@ Config.Storages["baun_unicorn_storage"] = {
     label = "Stockage Vanilla Unicorn",
     type = "storage",
     owner = "baun",
-    position = vector3(95.4, -1295.67, 29.27),
-    size = vec2(1, 2.8),
-    heading = 30,
+    position = vector3(131.23, -1282.60, 29.27),
+    size = vec2(1.00, 1.20),
+    heading = 120.28,
     minZ = 28.27,
-    maxZ = 31.07,
+    maxZ = 29.22,
     targetOptions = {getCocktailTargetOption()},
 }
 
@@ -95,6 +121,59 @@ Config.Storages["baun_yellowjack_storage"] = {
     maxZ = 47.22,
     targetOptions = {getCocktailTargetOption()},
 }
+
+-- ICE MACHINES
+
+Config.Storages["baun_unicorn_ice_machine"] = {
+    label = "Machine à glaçon Vanilla Unicorn",
+    type = "furniture_storage",
+    owner = "baun",
+    position = vector3(127.81, -1281.97, 28.32),
+    size = vec2(1.20, 0.80),
+    heading = 299.97,
+    minZ = 27.32,
+    maxZ = 29.32,
+    targetOptions = {getIceMachineTargetOption()},
+}
+
+Config.Storages["baun_bahama_ice_machine_1"] = {
+    label = "Machine à glaçon Vanilla Unicorn",
+    type = "furniture_storage",
+    owner = "baun",
+    position = vector3(-1389.45, -599.76, 30.32),
+    size = vec2(1.40, 0.80),
+    heading = 123.19,
+    minZ = 29.32,
+    maxZ = 30.32,
+    targetOptions = {getIceMachineTargetOption()},
+    
+}
+
+Config.Storages["baun_bahama_ice_machine_2"] = {
+    label = "Machine à glaçon Vanilla Unicorn",
+    type = "furniture_storage",
+    owner = "baun",
+    position = vector3(-1378.70, -631.53, 30.82),
+    size = vec2(1.20, 1.00),
+    heading = 33.34,
+    minZ = 29.32,
+    maxZ = 30.32,
+    targetOptions = {getIceMachineTargetOption()},
+}
+
+Config.Storages["baun_yellowjack_ice_machine"] = {
+    label = "Machine à glaçon Vanilla Unicorn",
+    type = "furniture_storage",
+    owner = "baun",
+    position = vector3(1983.46, 3052.34, 46.22),
+    size = vec2(1.20, 0.80),
+    heading = 58.99,
+    minZ = 45.22,
+    maxZ = 47.22,
+    targetOptions = {getIceMachineTargetOption()},
+}
+
+-- FRIDGES
 
 Config.Storages["baun_bahama_fridge"] = {
     label = "Frigo - Bahama Mamas",
@@ -111,11 +190,11 @@ Config.Storages["baun_unicorn_fridge"] = {
     label = "Frigo - Vanilla Unicorn",
     type = "fridge",
     owner = "baun",
-    position = vector3(92.88, -1290.84, 29.27),
-    size = vec2(0.75, 0.85),
-    heading = 30,
+    position = vector3(132.44, -1287.82, 29.27),
+    size = vec2(1.00, 1.00),
+    heading = 30.13,
     minZ = 28.27,
-    maxZ = 30.27,
+    maxZ = 30.47,
 }
 
 Config.Storages["baun_yellowjack_fridge"] = {
@@ -128,6 +207,8 @@ Config.Storages["baun_yellowjack_fridge"] = {
     minZ = 46.22,
     maxZ = 48.22,
 }
+
+-- LIQUOR
 
 Config.Storages["baun_unicorn_liquor_storage_1"] = {
     label = "Frigo - Vanilla Unicorn",
@@ -152,6 +233,8 @@ Config.Storages["baun_unicorn_liquor_storage_2"] = {
     heading = 30,
     targetOptions = {getTargetOption("baun_unicorn_liquor_storage_2", "liquor_crate")},
 }
+
+-- FLAVOR
 
 Config.Storages["baun_unicorn_flavor_storage_1"] = {
     label = "Coffre à saveurs - Vanilla Unicorn",
@@ -193,11 +276,11 @@ Config.Storages["baun_bahama_fridge_storage_2"] = {
     label = "Frigo - Bahama Mamas",
     type = "liquor_storage",
     owner = "baun",
-    position = vector3(-1391.59, -606.41, 30.32),
-    size = vec2(2.7, 0.3),
-    minZ = 29.32,
-    maxZ = 30.32,
-    heading = 32,
+    position = vector3(-1391.91, -606.70, 30.27),
+    size = vec2(0.80, 2.80),
+    minZ = 29.07,
+    maxZ = 30.27,
+    heading = 305.35,
     targetOptions = {getTargetOption("baun_bahama_fridge_storage_2", "liquor_crate")},
 }
 
