@@ -79,26 +79,35 @@ export class FightForStyleRestockProvider {
     @OnEvent(ServerEvent.FFS_RESTOCK)
     public async onRestock(source: number, brand: ClothingBrand, garment: Garment | LuxuryGarment) {
         const item = this.inventoryManager.getFirstItemInventory(source, garment);
+        const maxItemsToRestockInLoop = 5;
 
         if (!item) {
             return;
         }
 
         this.notifier.notify(source, 'Vous ~g~commencez~s~ à restocker le magasin de vêtements', 'success');
-        const { completed } = await this.progressService.progress(source, 'restock', 'Restockage', 2000 * item.amount, {
-            name: 'base',
-            dictionary: 'amb@prop_human_bum_bin@base',
-            flags: 1,
-        });
 
-        if (!completed) {
-            return;
-        }
+        let amountLeft = item.amount;
+        do {
+            const loopAmount = Math.min(maxItemsToRestockInLoop, amountLeft);
 
-        this.inventoryManager.removeItemFromInventory(source, garment, item.amount);
+            const { completed } = await this.progressService.progress(source, 'restock', 'Restockage', 2000 * maxItemsToRestockInLoop, {
+                name: 'base',
+                dictionary: 'amb@prop_human_bum_bin@base',
+                flags: 1,
+            });
 
-        // Restock shops
-        await this.restockLoop(brand, garment, item.amount);
+            if (!completed) {
+                return;
+            }
+
+            this.inventoryManager.removeItemFromInventory(source, garment, loopAmount);
+
+            // Restock shops
+            await this.restockLoop(source, brand, garment, loopAmount);
+
+            amountLeft -= loopAmount;
+        } while (amountLeft > 0);
 
         const totalAmount = item.amount * FfsConfig.restock.getRewardFromDeliveredGarment(garment);
         TriggerEvent(ServerEvent.BANKING_TRANSFER_MONEY, 'farm_ffs', 'safe_ffs', totalAmount);
@@ -119,7 +128,7 @@ export class FightForStyleRestockProvider {
         this.notifier.notify(source, 'Vous avez ~r~terminé~s~ de restocker le magasin de vêtements.', 'success');
     }
 
-    public async restockLoop(brand: ClothingBrand, garment: Garment | LuxuryGarment, amount: number) {
+    public async restockLoop(source: number, brand: ClothingBrand, garment: Garment | LuxuryGarment, amount: number) {
         const sexes = [PlayerPedHash.Male, PlayerPedHash.Female];
         const category = this.garmentToCategory(garment);
 
@@ -136,6 +145,8 @@ export class FightForStyleRestockProvider {
             [PlayerPedHash.Male]: [],
             [PlayerPedHash.Female]: [],
         };
+        const allItems: ClothingShopItem[] = [];
+
         for (const [genderHash, shop_content] of Object.entries(repo.categories)) {
             for (const shop_category of Object.values(shop_content[shopId])) {
                 if (
@@ -146,53 +157,31 @@ export class FightForStyleRestockProvider {
                     Object.values(shop_category.content).forEach(items => {
                         items.forEach(item => allItemsByGender[parseInt(genderHash)].push(item));
                     });
+                    Object.values(shop_category.content).forEach(items => {
+                        items.forEach(item => allItems.push(item));
+                    });
                 }
             }
         }
 
-        let amountLeft = amount;
-        while (amountLeft > 0) {
-            const loopAmount = Math.min(5, amountLeft); // <--- LoopAmount decreased to 5 to increase the diversity of restocked items
-            amountLeft -= loopAmount;
-            const loopSex = sexes[Math.floor(Math.random() * 2)];
-            let loopItems = allItemsByGender[loopSex];
-            if (loopItems.length == 0) {
-                for (const items of Object.values(allItemsByGender)) {
-                    if (items.length > 0) {
-                        loopItems = items;
-                        break;
-                    }
-                }
-            }
-            const randomItem = loopItems[Math.floor(Math.random() * loopItems.length)];
-            if (!randomItem || !loopItems) {
-                return;
-            }
-            let sameModelsIds: number[] = [];
-            if (randomItem.modelLabel != null) {
-                const sameModelLabelItems = loopItems.filter(
-                    item => item.modelLabel != null && item.modelLabel === randomItem.modelLabel
-                );
-                sameModelsIds = sameModelLabelItems.map(item => item.id);
-            } else {
-                continue;
-            }
+        let allItemsSortedByStock: ClothingShopItem[] = allItems.sort((a,b) => (a.stock > b.stock) ? 1 : -1);
+        let itemToRestock = allItemsSortedByStock[0];
 
-            // Update SQL database
-            await this.prismaService.shop_content.updateMany({
-                where: {
-                    id: {
-                        in: sameModelsIds,
-                    },
+        // Update SQL database
+        await this.prismaService.shop_content.updateMany({
+            where: {
+                id: itemToRestock.id,
+            },
+            data: {
+                stock: {
+                    increment: amount,
                 },
-                data: {
-                    stock: {
-                        increment: loopAmount,
-                    },
-                },
-            });
-        }
+            },
+        });
 
+        itemToRestock.stock += amount;
+        this.notifier.notify(source, `Vous avez restock ~o~${amount}~s~ ~g~${itemToRestock.modelLabel} ${itemToRestock.colorLabel}~s~. Il y en a désormais ~o~${itemToRestock.stock}~s~ en stock.`, 'success');
+        
         // Update repository
         await this.clothingShopRepository.init();
     }
