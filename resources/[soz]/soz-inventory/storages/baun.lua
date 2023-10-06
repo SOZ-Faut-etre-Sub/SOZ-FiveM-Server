@@ -146,7 +146,7 @@ Config.Storages["baun_bahama_ice_machine_1"] = {
     minZ = 29.32,
     maxZ = 30.32,
     targetOptions = {getIceMachineTargetOption()},
-    
+
 }
 
 Config.Storages["baun_bahama_ice_machine_2"] = {
@@ -206,6 +206,45 @@ Config.Storages["baun_yellowjack_fridge"] = {
     heading = 327.65,
     minZ = 46.22,
     maxZ = 48.22,
+}
+
+-- SNACKS
+
+Config.Storages["baun_bahama_snack_storage"] = {
+    label = "Snacks - Bahama Mamas",
+    type = "snack_storage",
+    owner = "baun",
+    position = vector3(-1393.41, -601.61, 30.47),
+    size = vec2(0.80, 1.30),
+    heading = 266.56,
+    minZ = 28.42,
+    maxZ = 30.27,
+    targetOptions = {getTargetOption("baun_bahama_snack_storage", "snack_crate")},
+
+}
+
+Config.Storages["baun_unicorn_snack_storage"] = {
+    label = "Snacks - Unicorn",
+    type = "snack_storage",
+    owner = "baun",
+    position = vector3(127.87, -1282.88, 28.22),
+    size = vec2(1.00, 0.65),
+    heading = 300.37,
+    minZ = 27.22,
+    maxZ = 29.22,
+    targetOptions = {getTargetOption("baun_unicorn_snack_storage", "snack_crate")},
+}
+
+Config.Storages["baun_yellowjack_snack_storage"] = {
+    label = "Snacks - Unicorn",
+    type = "snack_storage",
+    owner = "baun",
+    position = vector3(1983.08, 3049.19, 47.22),
+    size = vec2(0.40, 3.20),
+    heading = 327.35,
+    minZ = 46.22,
+    maxZ = 47.07,
+    targetOptions = {getTargetOption("baun_yellowjack_snack_storage", "snack_crate")},
 }
 
 -- LIQUOR

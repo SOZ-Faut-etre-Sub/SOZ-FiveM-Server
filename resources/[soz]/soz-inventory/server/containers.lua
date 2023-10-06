@@ -320,6 +320,12 @@ Container["furniture_storage"] = InventoryContainer:new({
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
+Container["snack_storage"] = InventoryContainer:new({
+    type = "snack_storage",
+    allowedTypes = {"food"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+})
+
 --- Jobs BB
 Container["recycler_processing"] = InventoryContainer:new({
     type = "recycler_processing",

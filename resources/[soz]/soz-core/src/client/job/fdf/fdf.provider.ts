@@ -59,6 +59,7 @@ export class FDFProvider {
         [FDFFieldBlips.apple]: false,
         [FDFFieldBlips.orange]: false,
         [FDFFieldBlips.resell]: false,
+        [FDFFieldBlips.lemon]: false,
     };
     private areaBlips = new Map<FDFFieldBlips, number[]>();
 
@@ -209,6 +210,9 @@ export class FDFProvider {
                 case FDFFieldBlips.orange:
                     this.createOrangeBlips();
                     break;
+                case FDFFieldBlips.lemon:
+                    this.createLemonBlips();
+                    break;
             }
         } else {
             const blips = this.areaBlips.get(type);
@@ -237,6 +241,10 @@ export class FDFProvider {
 
     private createOrangeBlips() {
         this.createAreaBlips(FDFFieldBlips.orange, 47, FDFTreeField[FDFFieldKind.orange].data);
+    }
+
+    private createLemonBlips() {
+        this.createAreaBlips(FDFFieldBlips.lemon, 46, FDFTreeField[FDFFieldKind.lemon].data);
     }
 
     private createAreaBlips(name: FDFFieldBlips, color: number, data: Vector4) {
