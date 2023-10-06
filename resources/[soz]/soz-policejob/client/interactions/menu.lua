@@ -124,7 +124,7 @@ local function WantedEntity(menu, job)
                     end
 
                     TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
-                                       {type = job, message = name})
+                                       {type = job, message = name, job = job})
                     menu:Close()
                 end,
             })
@@ -208,6 +208,7 @@ PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
                             message = message,
                             reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
                             reporterId = PlayerData.citizenid,
+                            job = PlayerData.job.id,
                         })
                     end,
                 })

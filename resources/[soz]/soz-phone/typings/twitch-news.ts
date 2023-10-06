@@ -19,6 +19,7 @@ export interface TwitchNewsMessage {
     image?: string;
     message: string;
     createdAt?: string;
+    job: string;
 }
 
 export enum SocietiesDatabaseLimits {
@@ -29,5 +30,5 @@ export enum TwitchNewsEvents {
     FETCH_NEWS = 'phone:app:news:fetchNews',
     RELOAD_NEWS = 'phone:app:news:reloadNews',
     CREATE_NEWS_BROADCAST = 'phone:app:news:createNewsBroadcast',
-    API_NEWS_BROADCAST = 'soz-core:server:twitch:add-flash-news',
+    API_NEWS_BROADCAST = 'soz-core:server:news:add-flash',
 }

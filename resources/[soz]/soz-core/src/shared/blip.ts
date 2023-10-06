@@ -14,6 +14,7 @@ export interface Blip {
     friendly?: boolean;
     routeColor?: number;
     scale?: number;
+    route?: boolean;
     name: string;
     coords: { x: number; y: number; z?: number };
 }

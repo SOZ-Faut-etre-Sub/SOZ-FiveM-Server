@@ -25,6 +25,7 @@ export const global = createModel<RootModel>()({
             [JobType.LSPD]: 100,
             [JobType.MDR]: 100,
             [JobType.News]: 100,
+            [JobType.YouNews]: 100,
             [JobType.Oil]: 100,
             [JobType.Pawl]: 100,
             [JobType.Religious]: 100,

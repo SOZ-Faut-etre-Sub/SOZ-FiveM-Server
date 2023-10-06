@@ -10,12 +10,11 @@ import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { JobPermission, JobType } from '@public/shared/job';
+import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { PlayerListStateService } from '../../player/player.list.state.service';
-import { JobService } from '../job.service';
 
 @Provider()
 export class LSMCProvider {
@@ -30,9 +29,6 @@ export class LSMCProvider {
 
     @Inject(ResourceLoader)
     public resourceLoader: ResourceLoader;
-
-    @Inject(JobService)
-    private jobService: JobService;
 
     @Inject(Notifier)
     public notifier: Notifier;
@@ -54,55 +50,6 @@ export class LSMCProvider {
             sprite: 61,
             scale: 1.01,
         });
-
-        this.targetFactory.createForBoxZone(
-            'duty:lsmc',
-            {
-                center: [356.62, -1417.61, 32.51],
-                length: 0.65,
-                width: 0.5,
-                minZ: 32.41,
-                maxZ: 32.61,
-                heading: 325,
-            },
-            [
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Prise de service',
-                    canInteract: () => {
-                        return !this.playerService.isOnDuty();
-                    },
-                    job: JobType.LSMC,
-                },
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Fin de service',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
-                    job: JobType.LSMC,
-                },
-                {
-                    icon: 'fas fa-users',
-                    label: 'Employé(e)s en service',
-                    action: () => {
-                        TriggerServerEvent('QBCore:GetEmployOnDuty');
-                    },
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-                        return (
-                            this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                        );
-                    },
-                    job: JobType.LSMC,
-                },
-            ]
-        );
 
         const lit_ems = [2117668672, 1631638868, -1182962909];
 

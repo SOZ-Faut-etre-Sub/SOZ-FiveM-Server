@@ -298,6 +298,7 @@ model phone_twitch_news {
   reporterId String?  @db.VarChar(70)
   image      String?  @db.VarChar(256)
   message    String   @db.VarChar(512)
+  job        String   @db.VarChar(50) @default("news")
   createdAt  DateTime @default(now()) @db.Timestamp(0)
 
   @@index([type], map: "type")

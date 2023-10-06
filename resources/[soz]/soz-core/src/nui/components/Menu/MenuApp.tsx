@@ -36,6 +36,7 @@ import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { TaxiJobMenu } from '../Taxi/TaxiJobMenu';
 import { GouvJobMenu } from './Job/GouvJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
+import { MenuNews } from './Job/MenuNews';
 import { MenuUpw } from './Job/MenuUpw';
 import { MenuAlbum } from './MenuAlbum';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
@@ -216,7 +217,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
             <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement data={menuData} />} />
-            <Route path={`/${MenuType.FDFJobMenu}/*`} element={<FdfJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.JobNews}/*`} element={<MenuNews data={menuData} />} />
         </Routes>
     );
 };
