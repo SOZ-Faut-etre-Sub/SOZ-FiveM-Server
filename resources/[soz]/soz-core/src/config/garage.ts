@@ -2341,10 +2341,18 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
                 },
             }),
-            new BoxZone([2510.71, 4955.8, 44.63], 6.8, 4.0, {
-                heading: 302.38,
-                minZ: 44.52,
-                maxZ: 46.52,
+            new BoxZone([2498.71, 4983.14, 44.52], 12.2, 3.8, {
+                heading: 218.72,
+                minZ: 43.52,
+                maxZ: 45.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2513.6, 4954.82, 44.55], 9.0, 3.4, {
+                heading: 39.04,
+                minZ: 43.55,
+                maxZ: 45.55,
                 data: {
                     capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
                 },
