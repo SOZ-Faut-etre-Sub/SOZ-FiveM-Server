@@ -42,6 +42,18 @@ BaunConfig.HarvestZones = {
             },
         },
     },
+    {
+        item = "snack_crate",
+        zones = {
+            {
+                ped = {model = "a_f_y_business_01", coords = vector4(-753.54, -2571.96, 13.83, 236.79)},
+                center = vector3(-753.60, -2571.93, 13.90),
+                length = 0.8,
+                width = 0.8,
+                options = {name = "baun:harvest:snack:1", heading = 320, minZ = 13.90, maxZ = 16},
+            },
+        },
+    },
 }
 
 BaunConfig.Restock = {
@@ -65,9 +77,13 @@ BaunConfig.Restock = {
     },
     ["furniture_crate"] = {
         {itemId = "straw", quantity = 10},
-        {itemId = "ice_cube", quantity = 35},
         {itemId = "fruit_slice", quantity = 12},
         {itemId = "tumbler", quantity = 10},
+    },
+    ["snack_crate"] = {
+        {itemId = "tapas", quantity = 10},
+        {itemId = "peanuts", quantity = 10},
+        {itemId = "olive", quantity = 10},
     },
 }
 

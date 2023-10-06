@@ -35,6 +35,7 @@ Config.StorageCapacity = {
     ["flavor_storage"] = {slot = 100, weight = 400000},
     ["liquor_storage"] = {slot = 100, weight = 600000},
     ["furniture_storage"] = {slot = 100, weight = 200000},
+    ["snack_storage"] = {slot = 100, weight = 200000},
     --- Jobs BlueBird
     ["recycler_processing"] = {slot = 100, weight = 400000},
     --- Zkea
