@@ -52,13 +52,39 @@ export class VehicleConditionProvider {
             return;
         }
 
-        this.notifier.notify(source, 'Votre véhicule a été réparé.');
+        this.notifier.notify(source, 'Votre véhicule a été réparé mécaniquement.');
 
         this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
             engineHealth: 1000,
             tankHealth: 1000,
             doorStatus: {},
             windowStatus: {},
+        });
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_USE_BODY_REPAIR_KIT)
+    public async onVehicleUseBodyRepairKit(source: number, vehicleNetworkId: number) {
+        if (!this.inventoryManager.removeItemFromInventory(source, 'bodyrepairkit', 1)) {
+            this.notifier.notify(source, "Vous n'avez pas de kit de réparation carosserie.");
+
+            return;
+        }
+
+        const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
+        const damageDiff = 1000 - state.condition.bodyHealth;
+        const repairTime = (damageDiff * 20000) / 2000 + 10000; // Between 10s and 30s
+
+        if (!(await this.doRepairVehicle(source, repairTime))) {
+            return;
+        }
+
+        this.notifier.notify(source, 'La carosserie de votre véhicule a été réparée.');
+
+        this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
+            bodyHealth: 1000,
+            doorStatus: {},
+            windowStatus: {},
+            dirtLevel: 0,
         });
     }
 
