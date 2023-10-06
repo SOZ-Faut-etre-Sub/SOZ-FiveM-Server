@@ -138,6 +138,39 @@ export const NewsCloakroom: WardrobeConfig = {
     },
 };
 
+export const YouNewsCloakroom: WardrobeConfig = {
+    [GetHashKey('mp_m_freemode_01')]: {
+        ['Tenue de travail']: {
+            Components: {
+                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 1, Texture: 0, Palette: 0 },
+                [7]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 146, Texture: 2, Palette: 0 },
+            },
+            Props: {},
+        },
+    },
+    [GetHashKey('mp_f_freemode_01')]: {
+        ['Tenue de travail']: {
+            Components: {
+                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 6, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [7]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 0, Texture: 4, Palette: 0 },
+            },
+            Props: {},
+        },
+    },
+};
+
 export const NewsDeliveryZones: Vector4[] = [
     [-1028.855957, -214.12674, 36.920403, 333.26409912109],
     [-1054.103394, -1320.988403, 4.536674, 66.45777130127],
