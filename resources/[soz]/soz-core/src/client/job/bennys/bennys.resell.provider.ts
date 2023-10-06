@@ -32,16 +32,22 @@ export class BennysResellProvider {
 
     @Once(OnceStep.Start)
     public onStart() {
-        const resellZone = BennysConfig.Resell.zone;
-        const zone: BoxZone = new BoxZone(resellZone.center, resellZone.length, resellZone.width, {
-            maxZ: resellZone.maxZ,
-            minZ: resellZone.minZ,
-            heading: resellZone.heading,
-        });
+        const resellZones = BennysConfig.Resell;
 
+        resellZones.map(resellZone => {
+            const zone: BoxZone = new BoxZone(resellZone.zone.center, resellZone.zone.length, resellZone.zone.width, {
+                maxZ: resellZone.zone.maxZ,
+                minZ: resellZone.zone.minZ,
+                heading: resellZone.zone.heading,
+            });
+            this.createZone(zone, resellZone.types, resellZone.label);
+        });
+    }
+
+    public createZone(zone, allowedTypes: Array<number>, label) {
         this.targetFactory.createForAllVehicle([
             {
-                label: 'Vendre',
+                label: label,
                 icon: 'c:/mechanic/resell.png',
                 job: 'bennys',
                 blackoutGlobal: true,
@@ -49,16 +55,17 @@ export class BennysResellProvider {
                 canInteract: entity => {
                     const coords = GetEntityCoords(entity, false);
                     const point: Vector3 = [coords[0], coords[1], coords[2]];
+                    const vehicleType = GetVehicleClass(entity);
                     return (
                         this.playerService.isOnDuty() &&
                         this.QBCore.hasJobPermission('bennys', JobPermission.BennysResell) &&
-                        zone.isPointInside(point)
+                        zone.isPointInside(point) &&
+                        allowedTypes.includes(vehicleType)
                     );
                 },
                 action: async entity => {
                     const displayName = GetDisplayNameFromVehicleModel(GetEntityModel(entity));
                     const label = GetLabelText(displayName).toLowerCase();
-
                     const value = await this.inputService.askInput(
                         {
                             title: 'Veuillez confirmer le modèle suivant: ' + label,

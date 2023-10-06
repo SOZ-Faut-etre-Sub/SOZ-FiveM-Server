@@ -25,14 +25,32 @@ const defaultUpgradeConfiguration: VehicleConfiguration = {
     },
 };
 
-const resellZone: NamedZone = {
-    name: 'bennys_resell',
+const carResellZone: NamedZone = {
+    name: 'bennys_resell_car',
     center: [260.77, 2578.32, 45.1],
     length: 5.8,
     width: 9.8,
     minZ: 44.1,
     maxZ: 49.1,
     heading: 10,
+};
+const boatResellZone: NamedZone = {
+    name: 'bennys_resell_boat',
+    center: [3375.48, 5181.24, -0.43],
+    length: 15.8,
+    width: 14.8,
+    minZ: -1.43,
+    maxZ: 5.57,
+    heading: 82.78,
+};
+const heliResellZone: NamedZone = {
+    name: 'bennys_resell_heli',
+    center: [2135.2, 4810.26, 41.05],
+    length: 29.6,
+    width: 22.2,
+    minZ: 40.05,
+    maxZ: 45.65,
+    heading: 113.97,
 };
 
 export const BennysConfig = {
@@ -44,9 +62,23 @@ export const BennysConfig = {
         zone: orderZone,
         waitingTime: 60, // In minutes
     },
-    Resell: {
-        zone: resellZone,
-    },
+    Resell: [
+        {
+            label: 'Vendre (Terrestre)',
+            zone: carResellZone,
+            types: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 17, 18, 19, 20, 21, 22],
+        },
+        {
+            label: 'Vendre (Aquatique)',
+            zone: boatResellZone,
+            types: [14],
+        },
+        {
+            label: 'Vendre (Aérien)',
+            zone: heliResellZone,
+            types: [15, 16],
+        },
+    ],
 };
 
 export type BennysOrder = {

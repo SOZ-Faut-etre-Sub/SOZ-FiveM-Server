@@ -67,9 +67,12 @@ export class BennysResellProvider {
         }
 
         const sellPrice = result.ok / 2;
+        const gainPrice = result.ok * 0.1;
 
         const cashTransferResult = await this.bankService.transferCashMoney('bennys_reseller', source, sellPrice);
-        if (isOk(cashTransferResult)) {
+        const bennysGain = await this.bankService.transferBankMoney('bennys_reseller', 'safe_bennys', gainPrice);
+
+        if (isOk(cashTransferResult) && isOk(bennysGain)) {
             this.notifier.notify(source, `Vous avez vendu ce véhicule pour ~g~$${sellPrice.toLocaleString()}~s~.`);
             DeleteEntity(entity);
             await this.prismaService.playerVehicle.delete({

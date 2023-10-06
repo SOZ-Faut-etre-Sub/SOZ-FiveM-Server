@@ -3211,7 +3211,7 @@ QBShared.Items = {
     -- Vehicle Tools
     ['repairkit'] = {
         ['name'] = 'repairkit',
-        ['label'] = 'Kit de réparation',
+        ['label'] = 'Kit de réparation mécanique',
         ['weight'] = 25000,
         ['type'] = 'item',
         ['unique'] = false,
@@ -3219,6 +3219,18 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = 'Une belle boîte à outils avec des trucs pour réparer votre véhicule.',
+        ['illustrator'] = '.LeakFlood',
+    },
+    ['bodyrepairkit'] = {
+        ['name'] = 'bodyrepairkit',
+        ['label'] = 'Kit de réparation carosserie',
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Un ensemble de matériaux de réparations pour la carosserie.',
         ['illustrator'] = '.LeakFlood',
     },
     ['cleaningkit'] = {
