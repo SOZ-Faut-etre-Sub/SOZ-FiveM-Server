@@ -43,7 +43,7 @@ export class InputService {
                 maxCharacters: 3,
             },
             input => {
-                if (input.toLowerCase() === 'oui' || input.toLowerCase() === 'non') {
+                if (input && (input.toLowerCase() === 'oui' || input.toLowerCase() === 'non')) {
                     return Ok(null);
                 }
 

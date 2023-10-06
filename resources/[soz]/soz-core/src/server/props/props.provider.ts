@@ -3,13 +3,21 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { PropCollection, PropCollectionData, PropServerData, WorldPlacedProp } from '@public/shared/object';
+import {
+    DebugProp,
+    PropCollection,
+    PropCollectionData,
+    PropServerData,
+    WorldObject,
+    WorldPlacedProp,
+} from '@public/shared/object';
 import { Err } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PrismaService } from '../database/prisma.service';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 
 @Provider()
@@ -25,6 +33,9 @@ export class PropsProvider {
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     private collections: Record<string, PropCollection> = {};
     private collectionOfProp: Record<string, string> = {};
@@ -50,19 +61,23 @@ export class PropsProvider {
                 continue;
             }
             const prop: WorldPlacedProp = {
-                unique_id: placedProp.unique_id,
-                model: placedProp.model,
                 collection: placedProp.collection,
-                position: JSON.parse(placedProp.position),
-                matrix: placedProp.matrix ? JSON.parse(placedProp.matrix) : null,
                 loaded: false,
-                collision: placedProp.collision,
+                model: placedProp.model,
+                object: {
+                    id: placedProp.unique_id,
+                    model: GetHashKey(placedProp.model),
+                    position: JSON.parse(placedProp.position),
+                    matrix: placedProp.matrix ? JSON.parse(placedProp.matrix) : null,
+                    noCollision: !placedProp.collision,
+                },
             };
             this.collections[placedProp.collection].props[placedProp.unique_id] = prop;
             this.collections[placedProp.collection].size++;
             this.collectionOfProp[placedProp.unique_id] = placedProp.collection;
         }
     }
+
     @Rpc(RpcServerEvent.PROP_REQUEST_CREATE_COLLECTION)
     public async createCollection(source: number, collection_name: string): Promise<PropCollectionData[]> {
         if (this.collections[collection_name]) {
@@ -92,11 +107,11 @@ export class PropsProvider {
 
     @Rpc(RpcServerEvent.PROP_REQUEST_DELETE_COLLECTION)
     public async deleteCollection(source: number, collectionName: string): Promise<PropCollectionData[]> {
-        if (!this.collections[collectionName]) {
+        const collection = this.collections[collectionName];
+        if (!collection) {
             this.notifier.notify(source, `La collection ${collectionName} n'existe pas`, 'error');
         } else {
-            const propsToDelete = Object.keys(this.collections[collectionName].props);
-            await this.deleteProps(source, propsToDelete); // Need to delete props of this collection!
+            this.unloadCollection(source, collection);
             await this.prismaService.collection_prop.delete({
                 where: {
                     name: collectionName,
@@ -109,132 +124,114 @@ export class PropsProvider {
     }
 
     @Rpc(RpcServerEvent.PROP_REQUEST_CREATE_PROP)
-    public async createProps(source: number, prop: WorldPlacedProp) {
+    public async createProp(source: number, prop: DebugProp) {
         if (prop.collection && !this.collections[prop.collection]) {
             this.notifier.notify(
                 source,
-                `Impossible de créer le prop ${prop.unique_id} car sa collection ${prop.collection} n'existe pas`,
+                `Impossible de créer le prop car sa collection ${prop.collection} n'existe pas`,
                 'error'
             );
             return Err("Collection doesn't exist");
         }
 
-        if (this.collections[prop.collection].props[prop.unique_id]) {
-            this.notifier.notify(
-                source,
-                `Impossible de créer le prop ${prop.unique_id} car il existe déjà dans la collection ${prop.collection}`,
-                'error'
-            );
-            return Err('Prop already exists');
-        }
-
         await this.prismaService.placed_prop.create({
             data: {
-                unique_id: prop.unique_id,
+                unique_id: prop.id,
                 model: prop.model,
                 collection: prop.collection,
                 position: JSON.stringify(prop.position),
                 matrix: prop.matrix ? JSON.stringify(prop.matrix) : null,
-                collision: prop.collision ? prop.collision : true,
+                collision: prop.collision,
             },
         });
 
-        this.collections[prop.collection].props[prop.unique_id] = prop;
+        this.collections[prop.collection].props[prop.id] = {
+            collection: prop.collection,
+            loaded: false,
+            model: prop.model,
+            object: {
+                id: prop.id,
+                model: GetHashKey(prop.model),
+                position: prop.position,
+                matrix: prop.matrix,
+                noCollision: !prop.collision,
+            },
+        };
         this.collections[prop.collection].size++;
-        this.collectionOfProp[prop.unique_id] = prop.collection;
+        this.collectionOfProp[prop.id] = prop.collection;
 
         this.notifier.notify(source, 'Le prop a bien été créé !', 'success');
 
-        return await this.getCollection(source, prop.collection);
+        return this.collections[prop.collection].props[prop.id];
     }
 
     // Need to unload before deleting!
-    @OnEvent(ServerEvent.PROP_REQUEST_DELETE_PROPS)
-    public async deleteProps(source: number, propIds: string[]) {
-        await this.unloadProps(source, propIds, []);
+    @OnEvent(ServerEvent.PROP_REQUEST_DELETE_PROP)
+    public async deleteProps(source: number, propCollectionName: string, propId: string) {
+        this.deletePropsToAllClients([propId]);
 
-        for (const propId of propIds) {
-            const propCollectionName = this.collectionOfProp[propId];
-            if (!propCollectionName) {
-                this.notifier.notify(
-                    source,
-                    `Impossible de supprimer l'objet ${propId} car il n'a pas de collection.`,
-                    'error'
-                );
-                continue;
-            }
-            const propCollection = this.collections[propCollectionName];
-            if (!propCollection) {
-                this.notifier.notify(
-                    source,
-                    `Impossible de supprimer l'objet ${propId} car sa collection n'existe pas.`,
-                    'error'
-                );
-                continue;
-            }
-            if (!propCollection.props[propId]) {
-                this.notifier.notify(source, `Impossible de supprimer l'objet ${propId} car il n'existe pas.`, 'error');
-                continue;
-            }
-
-            await this.prismaService.placed_prop.delete({
-                where: {
-                    unique_id: propId,
-                },
-            });
-
-            delete this.collectionOfProp[propId];
-            delete this.collections[propCollectionName].props[propId];
-            this.collections[propCollectionName].size--;
-        }
-        this.notifier.notify(source, `Les props ont été supprimés`, 'success');
-    }
-
-    @OnEvent(ServerEvent.PROP_REQUEST_EDIT_PROP)
-    public async editProp(source: number, prop: WorldPlacedProp, excludeSource = false) {
-        if (!prop.collection || !this.collections[prop.collection]) {
+        const propCollection = this.collections[propCollectionName];
+        if (!propCollection) {
             this.notifier.notify(
                 source,
-                `Impossible de modifier l'objet ${prop.unique_id} car sa collection n'existe pas.`,
+                `Impossible de supprimer l'objet ${propId} car sa collection n'existe pas.`,
                 'error'
             );
             return;
         }
 
-        if (!this.collections[prop.collection].props[prop.unique_id]) {
-            this.notifier.notify(
-                source,
-                `Impossible de modifier l'objet ${prop.unique_id} car il n'existe pas.`,
-                'error'
-            );
+        if (!propCollection.props[propId]) {
+            this.notifier.notify(source, `Impossible de supprimer l'objet ${propId} car il n'existe pas.`, 'error');
+            return;
+        }
+
+        await this.prismaService.placed_prop.delete({
+            where: {
+                unique_id: propId,
+            },
+        });
+
+        delete this.collectionOfProp[propId];
+        delete this.collections[propCollectionName].props[propId];
+        this.collections[propCollectionName].size--;
+        this.notifier.notify(source, `Les props ont été supprimés`, 'success');
+    }
+
+    @OnEvent(ServerEvent.PROP_REQUEST_EDIT_PROP)
+    public async editProp(source: number, prop: WorldObject, loaded: boolean) {
+        const collectionName = this.collectionOfProp[prop.id];
+        const collection = this.collections[collectionName];
+
+        if (!collectionName) {
+            this.notifier.notify(source, `Impossible de modifier l'objet ${prop.id} car il n'existe pas.`, 'error');
             return;
         }
 
         await this.prismaService.placed_prop.update({
             where: {
-                unique_id: prop.unique_id,
+                unique_id: prop.id,
             },
             data: {
-                model: prop.model,
-                collection: prop.collection,
                 position: JSON.stringify(prop.position),
                 matrix: prop.matrix ? JSON.stringify(prop.matrix) : null,
-                collision: prop.collision ? prop.collision : true,
+                collision: !prop.noCollision,
             },
         });
 
-        const oldProp = this.collections[prop.collection].props[prop.unique_id];
+        const oldProp = collection.props[prop.id];
+        oldProp.object.position = prop.position;
+        oldProp.object.matrix = prop.matrix;
+        oldProp.object.noCollision = prop.noCollision;
 
-        this.collections[prop.collection].props[prop.unique_id] = prop;
+        if (loaded) {
+            this.editPropToAllClients(prop);
+        }
 
-        const exclude = excludeSource ? [source] : [];
-        await this.editPropToAllClients(oldProp, prop, exclude);
-
-        this.notifier.notify(source, `L'objet ${prop.unique_id} a été modifié`, 'success');
+        this.notifier.notify(source, `L'objet ${prop.id} a été modifié`, 'success');
     }
 
     @Rpc(RpcServerEvent.PROP_REQUEST_TOGGLE_LOAD_COLLECTION)
-    public async toggleLoadCollection(source: number, collectionName: string, value: boolean, excludeSource = false) {
+    public async toggleLoadCollection(source: number, collectionName: string, value: boolean) {
         if (!this.collections[collectionName]) {
             this.notifier.notify(
                 source,
@@ -243,72 +240,32 @@ export class PropsProvider {
             );
             return;
         }
-        const keys = Object.keys(this.collections[collectionName].props);
-        const excludes = excludeSource ? [source] : [];
         if (value) {
-            await this.loadProps(source, keys, excludes);
+            this.loadCollection(source, this.collections[collectionName]);
         } else {
-            await this.unloadProps(source, keys, excludes);
+            this.unloadCollection(source, this.collections[collectionName]);
         }
         return await this.getCollection(source, collectionName);
     }
 
-    @OnEvent(ServerEvent.PROP_REQUEST_LOAD_PROPS)
-    public async loadProps(source: number, propIds: string[], excludes: number[]) {
-        const propsToLoad: WorldPlacedProp[] = [];
-
-        for (const propId of propIds) {
-            const propCollection = this.collectionOfProp[propId];
-            if (!propCollection) {
-                this.notifier.notify(
-                    source,
-                    `Impossible de charger l'objet ${propId} car sa collection n'existe pas.`,
-                    'error'
-                );
-                continue;
-            }
-            const prop = this.collections[propCollection].props[propId];
-            if (!prop) {
-                this.notifier.notify(source, `Impossible de charger l'objet ${propId} car il n'existe pas.`, 'error');
-                continue;
-            }
-            propsToLoad.push(prop);
-            if (!this.collections[propCollection].props[propId].loaded) {
-                this.collections[propCollection].loaded_size++;
-            }
-            this.collections[propCollection].props[propId].loaded = true;
-        }
-
-        await this.createPropsToAllClients(propsToLoad, excludes);
+    public loadCollection(source: number, collection: PropCollection) {
+        collection.loaded_size = Object.keys(collection.props).length;
+        this.createPropsToAllClients(
+            Object.values(collection.props).map(item => {
+                item.loaded = true;
+                return item.object;
+            })
+        );
     }
 
-    @Rpc(RpcServerEvent.PROP_REQUEST_UNLOAD_PROPS)
-    public async unloadProps(source: number, propIds: string[], excludes: number[]) {
-        const propToUnload: WorldPlacedProp[] = [];
-
-        for (const propId of propIds) {
-            const propCollection = this.collectionOfProp[propId];
-            if (!propCollection) {
-                this.notifier.notify(
-                    source,
-                    `Impossible de décharger l'objet ${propId} car sa collection n'existe pas.`,
-                    'error'
-                );
-                continue;
-            }
-            const prop = this.collections[propCollection].props[propId];
-            if (!prop) {
-                this.notifier.notify(source, `Impossible de charger l'objet ${propId} car il n'existe pas.`, 'error');
-                continue;
-            }
-            propToUnload.push(prop);
-            if (this.collections[propCollection].props[propId].loaded) {
-                this.collections[propCollection].loaded_size--;
-            }
-            this.collections[propCollection].props[propId].loaded = false;
-        }
-
-        await this.deletePropsToAllClients(propToUnload, excludes);
+    public unloadCollection(source: number, collection: PropCollection) {
+        collection.loaded_size = 0;
+        this.deletePropsToAllClients(
+            Object.values(collection.props).map(item => {
+                item.loaded = false;
+                return item.object.id;
+            })
+        );
     }
 
     @Rpc(RpcServerEvent.PROP_GET_COLLECTIONS_DATA)
@@ -376,13 +333,15 @@ export class PropsProvider {
         this.itemService.setItemUseCallback('soz_hammer', this.onUseSozHammer.bind(this));
     }
 
-    public async createPropsToAllClients(props: WorldPlacedProp[], excludes: number[] = []) {
-        TriggerLatentClientEvent(ClientEvent.PROP_CREATE_CLIENTSIDE, -1, 16 * 1024, props, excludes);
+    public createPropsToAllClients(props: WorldObject[]) {
+        this.objectProvider.addObjects(props);
     }
-    public async deletePropsToAllClients(props: WorldPlacedProp[], excludes: number[] = []) {
-        TriggerLatentClientEvent(ClientEvent.PROP_DELETE_CLIENTSIDE, -1, 16 * 1024, props, excludes);
+    public deletePropsToAllClients(propIds: string[]) {
+        for (const propId of propIds) {
+            this.objectProvider.deleteObject(propId);
+        }
     }
-    public async editPropToAllClients(oldProp: WorldPlacedProp, newProp: WorldPlacedProp, excludes: number[] = []) {
-        TriggerLatentClientEvent(ClientEvent.PROP_EDIT_CLIENTSIDE, -1, 16 * 1024, oldProp, newProp, excludes);
+    public async editPropToAllClients(prop: WorldObject) {
+        this.objectProvider.updateObject(prop);
     }
 }
