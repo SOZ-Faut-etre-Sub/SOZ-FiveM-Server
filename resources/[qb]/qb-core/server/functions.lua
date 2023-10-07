@@ -372,7 +372,15 @@ function QBCore.Functions.HasPermission(source, _permission)
                 return true
             end
 
+            if QBCore.Config.Server.PermissionList[license].permission == 'staff' and permission == 'gamemaster' then
+                return true
+            end
+
             if QBCore.Config.Server.PermissionList[license].permission == 'staff' and permission == 'helper' then
+                return true
+            end
+            
+            if QBCore.Config.Server.PermissionList[license].permission == 'gamemaster' and permission == 'helper' then
                 return true
             end
 
