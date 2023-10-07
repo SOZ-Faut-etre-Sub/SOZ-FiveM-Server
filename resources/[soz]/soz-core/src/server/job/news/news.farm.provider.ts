@@ -126,7 +126,7 @@ export class NewsFarmProvider {
             return;
         }
 
-        const amount = getRandomInt(Math.max(2, maxAmountInventory), Math.min(maxAmountInventory, 10));
+        const amount = getRandomInt(Math.min(2, maxAmountInventory), Math.min(maxAmountInventory, 10));
 
         if (!this.inventoryManager.removeItemFromInventory(source, 'newspaper', amount)) {
             this.notifier.error(source, 'Impossible de vendre les journaux');
