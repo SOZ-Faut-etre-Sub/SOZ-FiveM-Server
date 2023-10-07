@@ -280,6 +280,19 @@ export const BaunCraftsLists: Record<string, CraftCategory> = {
                     tumbler: { count: 1 },
                 },
             },
+        },
+    },
+    Boissons: {
+        animation: {
+            dictionary: 'anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal',
+            name: 'pour_one',
+            options: {
+                repeat: true,
+            },
+        },
+        duration: 4000,
+        event: 'job_baun_craft',
+        recipes: {
             lemonade_glass: {
                 amount: 4,
                 inputs: {
