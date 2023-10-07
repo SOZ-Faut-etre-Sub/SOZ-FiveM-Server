@@ -39,7 +39,7 @@ Citizen.CreateThread(function()
             local propertyId = PlayerData.metadata["inside"].property
             local interiorId = GetInteriorFromEntity(PlayerPedId())
 
-            if interiorId ~= 0 and propertyId then
+            if interiorId ~= 0 and propertyId and Properties[propertyId] then
                 for _, hash in pairs(Properties[propertyId]:GetExteriorCulling() or {}) do
                     EnableExteriorCullModelThisFrame(hash)
                 end
