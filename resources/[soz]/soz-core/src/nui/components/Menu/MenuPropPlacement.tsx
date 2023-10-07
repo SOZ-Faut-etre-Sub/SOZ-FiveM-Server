@@ -36,6 +36,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     const [collection, setCollection] = useState<PropCollection>({
         name: '',
         creator_citizenID: '',
+        creatorName: '',
         creation_date: new Date(),
         size: 0,
         loaded_size: 0,
@@ -114,7 +115,11 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     </MenuItemButton>
                     <MenuTitle>Collections :</MenuTitle>
                     {collectionList.map(collection => (
-                        <MenuItemButton key={collection.name} onConfirm={selectCollection(collection.name)}>
+                        <MenuItemButton
+                            key={collection.name}
+                            onConfirm={selectCollection(collection.name)}
+                            description={collection.creatorName}
+                        >
                             <div className="pr-2 flex items-center justify-between">
                                 <span>
                                     {collection.loaded_size == 0 || collection.loaded_size > collection.size

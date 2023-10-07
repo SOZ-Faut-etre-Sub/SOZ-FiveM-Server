@@ -37,6 +37,7 @@ export const enum PropState {
 export type PropCollectionData = {
     name: string;
     creator_citizenID: string;
+    creatorName: string;
     creation_date: Date;
     size: number;
     loaded_size: number;
