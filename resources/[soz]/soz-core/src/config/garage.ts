@@ -689,52 +689,52 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
         }),
         parkingPlaces: [
             new BoxZone([-604.14, -2220.94, 6.0], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 5.0,
                 maxZ: 9.0,
             }),
             new BoxZone([-623.71, -2204.67, 6.0], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 5.0,
                 maxZ: 9.0,
             }),
             new BoxZone([-643.02, -2188.49, 5.99], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
             new BoxZone([-649.01, -2173.48, 5.99], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
             new BoxZone([-595.38, -2201.37, 5.99], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
             new BoxZone([-635.07, -2157.95, 5.99], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
             new BoxZone([-593.41, -2167.22, 5.99], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
             new BoxZone([-577.67, -2190.13, 5.99], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
             new BoxZone([-606.81, -2165.66, 5.99], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
             new BoxZone([-619.56, -2180.8, 5.99], 8, 4, {
-                heading: 5,
+                heading: 185,
                 minZ: 4.99,
                 maxZ: 8.99,
             }),
