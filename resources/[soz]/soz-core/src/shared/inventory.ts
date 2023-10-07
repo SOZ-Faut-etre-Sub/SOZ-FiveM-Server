@@ -11,6 +11,7 @@ export enum StorageType {
     FurnitureStorage = 'furniture_storage',
     Inverter = 'inverter',
     LiquorStorage = 'liquor_storage',
+    SnackStorage = 'snack_storage',
     LogProcessing = 'log_processing',
     LogStorage = 'log_storage',
     Organ = 'organ',
