@@ -7,7 +7,7 @@ import { MenuType } from '@public/shared/nui/menu';
 import { PlacementProp, PropPlacementMenuData } from '@public/shared/nui/prop_placement';
 import { PropCollection, PropCollectionData, PropServerData } from '@public/shared/object';
 import { isOk, Result } from '@public/shared/result';
-import { FunctionComponent, useCallback, useEffect, useState } from 'react';
+import { FunctionComponent, useCallback, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
