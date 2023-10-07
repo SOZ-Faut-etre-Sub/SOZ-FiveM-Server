@@ -1,3 +1,4 @@
+import { Command } from '@public/core/decorators/command';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -16,8 +17,10 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PrismaService } from '../database/prisma.service';
 import { ItemService } from '../item/item.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
+import { PermissionService } from '../permission.service';
 import { PlayerService } from '../player/player.service';
 
 @Provider()
@@ -37,6 +40,12 @@ export class PropsProvider {
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
+
     private collections: Record<string, PropCollection> = {};
     private collectionOfProp: Record<string, string> = {};
 
@@ -49,6 +58,7 @@ export class PropsProvider {
             this.collections[propCollection.name] = {
                 name: propCollection.name,
                 creator_citizenID: propCollection.creator,
+                creatorName: await this.playerService.getNameFromCitizenId(propCollection.creator),
                 creation_date: propCollection.date,
                 size: 0,
                 loaded_size: 0,
@@ -83,26 +93,38 @@ export class PropsProvider {
         if (this.collections[collection_name]) {
             this.notifier.notify(source, `La collection ${collection_name} existe déjà`, 'error');
         } else {
-            const citizenId = this.playerService.getPlayer(source).citizenid;
+            const player = this.playerService.getPlayer(source);
             const creation_date = new Date();
             await this.prismaService.collection_prop.create({
                 data: {
                     name: collection_name,
-                    creator: citizenId,
+                    creator: player.citizenid,
                     date: creation_date,
                 },
             });
             this.collections[collection_name] = {
                 name: collection_name,
-                creator_citizenID: citizenId,
+                creator_citizenID: player.citizenid,
+                creatorName: player.charinfo.firstname + ' ' + player.charinfo.lastname,
                 creation_date: creation_date,
                 size: 0,
                 loaded_size: 0,
                 props: {},
             };
             this.notifier.notify(source, `La collection ${collection_name} a été créée`, 'success');
+
+            this.monitor.publish(
+                'hammer_create_collection',
+                {
+                    player_source: source,
+                },
+                {
+                    collection_name: collection_name,
+                }
+            );
         }
-        return this.getCollectionData();
+
+        return this.getCollectionData(source);
     }
 
     @Rpc(RpcServerEvent.PROP_REQUEST_DELETE_COLLECTION)
@@ -119,8 +141,18 @@ export class PropsProvider {
             });
             delete this.collections[collectionName];
             this.notifier.notify(source, `La collection ${collectionName} a été supprimée`, 'success');
+
+            this.monitor.publish(
+                'hammer_delete_collection',
+                {
+                    player_source: source,
+                },
+                {
+                    collection_name: collectionName,
+                }
+            );
         }
-        return this.getCollectionData();
+        return this.getCollectionData(source);
     }
 
     @Rpc(RpcServerEvent.PROP_REQUEST_CREATE_PROP)
@@ -133,7 +165,10 @@ export class PropsProvider {
             );
             return Err("Collection doesn't exist");
         }
-
+        if (this.collectionOfProp[prop.id]) {
+            this.notifier.notify(source, `Impossible de créer le prop car son id ${prop.id} existe déjà`, 'error');
+            return Err('id already exist');
+        }
         await this.prismaService.placed_prop.create({
             data: {
                 unique_id: prop.id,
@@ -160,12 +195,21 @@ export class PropsProvider {
         this.collections[prop.collection].size++;
         this.collectionOfProp[prop.id] = prop.collection;
 
+        this.monitor.publish(
+            'hammer_create_prop',
+            {
+                player_source: source,
+            },
+            {
+                prop: prop,
+            }
+        );
+
         this.notifier.notify(source, 'Le prop a bien été créé !', 'success');
 
         return this.collections[prop.collection].props[prop.id];
     }
 
-    // Need to unload before deleting!
     @OnEvent(ServerEvent.PROP_REQUEST_DELETE_PROP)
     public async deleteProps(source: number, propCollectionName: string, propId: string) {
         this.deletePropsToAllClients([propId]);
@@ -191,10 +235,21 @@ export class PropsProvider {
             },
         });
 
+        this.monitor.publish(
+            'hammer_delete_prop',
+            {
+                player_source: source,
+            },
+            {
+                prop: this.collectionOfProp[propId],
+            }
+        );
+
         delete this.collectionOfProp[propId];
         delete this.collections[propCollectionName].props[propId];
         this.collections[propCollectionName].size--;
-        this.notifier.notify(source, `Les props ont été supprimés`, 'success');
+
+        this.notifier.notify(source, `L'objet a été supprimés`, 'success');
     }
 
     @OnEvent(ServerEvent.PROP_REQUEST_EDIT_PROP)
@@ -227,6 +282,16 @@ export class PropsProvider {
             this.editPropToAllClients(prop);
         }
 
+        this.monitor.publish(
+            'hammer_edit_prop',
+            {
+                player_source: source,
+            },
+            {
+                prop: prop,
+            }
+        );
+
         this.notifier.notify(source, `L'objet ${prop.id} a été modifié`, 'success');
     }
 
@@ -245,6 +310,18 @@ export class PropsProvider {
         } else {
             this.unloadCollection(source, this.collections[collectionName]);
         }
+
+        this.monitor.publish(
+            'hammer_load_unload_collection',
+            {
+                player_source: source,
+            },
+            {
+                collection_name: collectionName,
+                loading: value,
+            }
+        );
+
         return await this.getCollection(source, collectionName);
     }
 
@@ -269,13 +346,26 @@ export class PropsProvider {
     }
 
     @Rpc(RpcServerEvent.PROP_GET_COLLECTIONS_DATA)
-    public async getCollectionData(): Promise<PropCollectionData[]> {
+    public async getCollectionData(source: number): Promise<PropCollectionData[]> {
         const collectionDatas: PropCollectionData[] = [];
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        const isStaff = this.permissionService.isStaff(source);
 
         for (const propCollection of Object.values(this.collections)) {
+            if (!isStaff && player.citizenid != propCollection.creator_citizenID) {
+                continue;
+            }
+            const creatorName = isStaff
+                ? await this.playerService.getNameFromCitizenId(propCollection.creator_citizenID)
+                : null;
             collectionDatas.push({
                 name: propCollection.name,
                 creator_citizenID: propCollection.creator_citizenID,
+                creatorName: creatorName,
                 creation_date: propCollection.creation_date,
                 size: propCollection.size,
                 loaded_size: propCollection.loaded_size,
@@ -343,5 +433,25 @@ export class PropsProvider {
     }
     public async editPropToAllClients(prop: WorldObject) {
         this.objectProvider.updateObject(prop);
+    }
+
+    @Command('tpcollection', {
+        role: ['staff', 'admin', 'gamemaster'],
+        description: 'TP to a props collection (Admin Only)',
+    })
+    public tpcollection(source: number, collectionName: string) {
+        const collection = this.collections[collectionName];
+        if (!collection) {
+            this.notifier.notify(source, `La collection ${collectionName} n'existe pas`, 'error');
+            return;
+        }
+
+        const [firstProp] = Object.values(collection.props);
+        if (!firstProp) {
+            this.notifier.notify(source, `La collection ${collectionName} n'a pas de props`, 'error');
+            return;
+        }
+
+        TriggerClientEvent(ClientEvent.PLAYER_TELEPORT, source, firstProp.object.position);
     }
 }

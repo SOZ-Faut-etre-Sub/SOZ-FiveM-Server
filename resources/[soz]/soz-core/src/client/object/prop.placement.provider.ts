@@ -52,9 +52,6 @@ export class PropPlacementProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
     @Inject(CircularCameraProvider)
     private circularCamera: CircularCameraProvider;
 
@@ -66,6 +63,9 @@ export class PropPlacementProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     private debugProp: DebugProp | null;
     private isEditorModeOn: boolean;
@@ -92,6 +92,7 @@ export class PropPlacementProvider {
         this.currentCollection = null;
         this.isMouseSelectionOn = false;
         this.isPipetteOn = false;
+        this.snapMode = false;
     }
 
     @OnEvent(ClientEvent.PROP_OPEN_MENU)
@@ -102,11 +103,7 @@ export class PropPlacementProvider {
             return;
         }
         const serverData = await emitRpc<PropServerData>(RpcServerEvent.PROP_GET_SERVER_DATA);
-        let collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
-        const playerData = this.playerService.getPlayer();
-        if (!['admin', 'staff'].includes(playerData.role)) {
-            collections = collections.filter(c => c.creator_citizenID == playerData.citizenid);
-        }
+        const collections = await emitRpc<PropCollectionData[]>(RpcServerEvent.PROP_GET_COLLECTIONS_DATA);
 
         this.resetEditortState();
         this.menu.openMenu(MenuType.PropPlacementMenu, {
@@ -183,12 +180,7 @@ export class PropPlacementProvider {
         currentCollection?: PropCollection | null
     ) {
         if (propCollectionDatas) {
-            const playerData = this.playerService.getPlayer();
-            let collections = propCollectionDatas;
-            if (!['admin', 'staff'].includes(playerData.role)) {
-                collections = propCollectionDatas.filter(c => c.creator_citizenID == playerData.citizenid);
-            }
-            this.nuiDispatch.dispatch('placement_prop', 'SetCollectionList', collections);
+            this.nuiDispatch.dispatch('placement_prop', 'SetCollectionList', propCollectionDatas);
         }
         if (currentCollection) {
             this.nuiDispatch.dispatch('placement_prop', 'SetCollection', currentCollection);
@@ -204,6 +196,7 @@ export class PropPlacementProvider {
             return null;
         }
 
+        const collectionName = this.currentCollection.name;
         for (const prop of Object.values(this.currentCollection.props)) {
             // setup already loaded props
             this.debugProps[prop.object.id] = {
@@ -223,14 +216,27 @@ export class PropPlacementProvider {
         this.highlightProvider.unhighlightAllEntities();
         this.highlightProvider.highlightEntities(
             Object.values(this.debugProps)
-                .filter(prop => prop.collection == this.currentCollection.name)
+                .filter(prop => prop.collection == collectionName)
                 .map(prop => prop.entity)
         );
     }
 
     @OnNuiEvent(NuiEvent.SelectPlacementCollection)
     public async onSelectCollection({ collectionName }: { collectionName: string }): Promise<PropCollection> {
-        this.currentCollection = await emitRpc<PropCollection>(RpcServerEvent.PROP_GET_PROP_COLLECTION, collectionName);
+        const collectionToOpen = await emitRpc<PropCollection>(RpcServerEvent.PROP_GET_PROP_COLLECTION, collectionName);
+        const playerData = this.playerService.getPlayer();
+        if (!['admin', 'staff'].includes(playerData.role)) {
+            const [firstProp] = Object.values(collectionToOpen.props);
+            if (
+                firstProp &&
+                getDistance(firstProp.object.position, GetEntityCoords(PlayerPedId()) as Vector3) > 100.0
+            ) {
+                this.notifier.notify('Tu es trop loin de la collection', 'error');
+                return null;
+            }
+        }
+
+        this.currentCollection = collectionToOpen;
         await this.loadCurrentCollection();
 
         return this.currentCollection;
@@ -338,10 +344,6 @@ export class PropPlacementProvider {
 
         DisableAllControlActions(0);
 
-        if (this.snapMode) {
-            PlaceObjectOnGroundProperly_2(entity);
-        }
-
         const matrixBuffer = this.makeEntityMatrix(entity);
         const changed = DrawGizmo(matrixBuffer as any, `Gismo_editor_${entity}`);
         if (changed) {
@@ -353,6 +355,9 @@ export class PropPlacementProvider {
         }
 
         if (IsDisabledControlJustReleased(0, 24)) {
+            if (this.snapMode) {
+                PlaceObjectOnGroundProperly(entity);
+            }
             const entityPos = GetEntityCoords(entity, false) as Vector3;
             const pedPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
             const distance = getDistance(pedPosition, entityPos);
@@ -437,6 +442,9 @@ export class PropPlacementProvider {
         }
         if (snap != null) {
             this.snapMode = snap;
+            if (this.snapMode && this.debugProp) {
+                PlaceObjectOnGroundProperly_2(this.debugProp.entity);
+            }
         }
         if (scale) {
             const rot = GetEntityRotation(this.debugProp.entity);
@@ -512,7 +520,7 @@ export class PropPlacementProvider {
             return Err(false);
         }
 
-        this.currentCollection.props[debugProp.id] = prop;
+        this.currentCollection.props[prop.object.id] = prop;
         this.currentCollection.size += 1;
         this.debugProp = null;
 
