@@ -596,6 +596,7 @@ model drugs_seedling {
   citizenid  String   @db.VarChar(50)
   skillBoost Boolean
   property   Int?
+  in_mlo     Boolean  @default(false)
 }
 
 model drugs_sell_location {
