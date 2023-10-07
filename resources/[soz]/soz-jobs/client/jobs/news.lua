@@ -1,4 +1,5 @@
 local societyMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu")
+local newsCreationSubMenu = MenuV:CreateMenu(nil, "", "menu_job_news", "soz", "news:menu:create-news")
 local removalObject = {"prop_ld_greenscreen_01", "prop_tv_cam_02", "prop_kino_light_01", "v_ilev_fos_mic"}
 
 --- Targets
@@ -117,9 +118,11 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
     end
     societyMenu:ClearItems()
 
-    societyMenu:AddSlider({
-        label = "Faire une communication",
-        value = "nil",
+    newsCreationSubMenu:ClearItems()
+
+    local typeSlider = newsCreationSubMenu:AddSlider({
+        label = "Type de communication",
+        value = "annonce",
         values = {
             {label = "Annonce", value = "annonce"},
             {label = "Breaking News", value = "breaking-news"},
@@ -127,24 +130,55 @@ RegisterNetEvent("jobs:client:news:OpenSocietyMenu", function()
             {label = "Fait Divers", value = "fait-divers"},
             {label = "Info Trafic", value = "info-traffic"},
         },
-        select = function(_, value)
-            local message = exports["soz-core"]:Input("Message de la communication", 235)
+    })
+
+    local newsType = "annonce"
+
+    typeSlider:On("select", function(_, newValue, _)
+        newsType = newValue
+    end)
+
+    local imageButton = newsCreationSubMenu:AddButton({label = "Lien de l'image (facultatif)"})
+
+    local image = ""
+
+    imageButton:On("select", function()
+        image = exports["soz-core"]:Input("Lien de l'image de la communication", 255, image)
+    end)
+
+    local messageButton = newsCreationSubMenu:AddButton({label = "Message", length = 235})
+
+    local message = ""
+
+    messageButton:On("select", function()
+        message = exports["soz-core"]:Input("Message de la communication", 235, message)
+    end)
+
+    newsCreationSubMenu:AddButton({
+        label = "Envoyer",
+        select = function()
+            if newsType == nil or newsType == "" then
+                exports["soz-core"]:DrawNotification("Vous devez choisir un type de communication", "error")
+                return
+            end
             if message == nil or message == "" then
                 exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
                 return
             end
-
             TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
-                type = value,
+                type = newsType,
                 message = message,
                 reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
                 reporterId = PlayerData.citizenid,
+                image = image,
             })
 
             TriggerServerEvent("soz-core:server:monitor:add-event", "job_news_create_flash", {flash_type = value},
                                {message = message, position = GetEntityCoords(PlayerPedId())}, true)
         end,
     })
+
+    societyMenu:AddButton({label = "Faire une communication", value = newsCreationSubMenu})
 
     societyMenu:AddSlider({
         label = "Poser un objet",
