@@ -57,7 +57,6 @@ export class LSMCDeathProvider {
                 isWearingPatientOutfit: true,
             });
             datas.inside = player.metadata.inside;
-            datas.inside.exitCoord = false;
             datas.inside.apartment = false;
             datas.inside.property = null;
         }
@@ -65,13 +64,16 @@ export class LSMCDeathProvider {
         if (player.metadata.mort) {
             this.notifier.notify(source, player.metadata.mort, 'success', 30000);
         }
+        if (player.metadata.drug >= 100) {
+            this.notifier.notify(source, 'Cette personne a subit une overdose de drogue.', 'success', 30000);
+        }
 
         TriggerClientEvent(ClientEvent.LSMC_REVIVE, player.source, admin, uniteHU, uniteHUBed);
 
         datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', 30, 0, 100);
         datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', 30, 0, 100);
         datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', -50, 0, 100);
-        datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', -50, 0, 100);
+        datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', -50, 0, 110);
         datas.isdead = false;
         datas.mort = '';
 

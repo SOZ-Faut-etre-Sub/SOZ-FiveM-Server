@@ -2,7 +2,7 @@ import { Injectable } from '@core/decorators/injectable';
 
 @Injectable()
 export class PlayerInjuryProvider {
-    public hasMaxInjuries(target: number): boolean {
-        return false;
+    public remainingForcedITT(target: number): number {
+        return 0;
     }
 }

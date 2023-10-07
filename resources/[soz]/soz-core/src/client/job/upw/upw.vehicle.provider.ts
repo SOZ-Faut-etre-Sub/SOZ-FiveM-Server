@@ -22,7 +22,7 @@ export class UpwVehicleProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    public async onStart() {
+    public async setupUpwBattery() {
         this.targetFactory.createForAllVehicle([
             {
                 icon: 'c:mechanic/car_battery.png',

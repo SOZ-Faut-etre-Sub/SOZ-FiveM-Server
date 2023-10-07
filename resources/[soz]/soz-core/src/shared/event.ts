@@ -1,24 +1,46 @@
 export enum ServerEvent {
-    ADMIN_RESET_SKIN = 'soz-core:server:admin:reset-skin',
+    PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
+
     ADMIN_RESET_HALLOWEEN = 'soz-core:server:admin:reset-halloween',
+    ADMIN_ADD_MONEY = 'soz-core:server:admin:add-money',
+    ADMIN_ADD_LICENSE = 'soz-core:server:admin:add-license',
     ADMIN_SET_AIO = 'soz-core:server:admin:set-aio',
     ADMIN_SET_METADATA = 'soz-core:server:admin:set-metadata',
+    ADMIN_SET_DISEASE = 'soz-core:server:admin:set-disease',
     ADMIN_SET_STAMINA = 'soz-core:server:admin:set-stamina',
     ADMIN_SET_STRENGTH = 'soz-core:server:admin:set-strength',
     ADMIN_SET_STRESS_LEVEL = 'soz-core:server:admin:set-stress-level',
     ADMIN_SET_INJURIES_COUNT = 'soz-core:server:admin:set-injuries-count',
     ADMIN_SET_REPUTATION = 'soz-core:server:admin:set-reputation',
+    ADMIN_SET_DRUG_EFFECT = 'soz-core:server:admin:set-drug-effect',
+    ADMIN_SET_ALCOHOL_EFFECT = 'soz-core:server:admin:set-drug-effect',
+    ADMIN_SET_JOB = 'soz-core:server:admin:add-license',
+    ADMIN_SET_CLOTHES = 'soz-core:server:admin:set-clothes',
+    ADMIN_SET_GOD_MODE = 'soz-core:server:admin:set-god-mode',
+    ADMIN_KILL_PLAYER = 'soz-core:server:admin:kill-player',
+    ADMIN_RESET_EFFECT = 'soz-core:server:admin:reset-effect',
+    ADMIN_FREEZE_PLAYER = 'soz-core:server:admin:freeze-player',
+    ADMIN_UNFREEZE_PLAYER = 'soz-core:server:admin:unfreeze-player',
+    ADMIN_SPECTATE_PLAYER = 'soz-core:server:admin:spectate-player',
+    ADMIN_TELEPORT_TO_PLAYER = 'soz-core:server:admin:teleport-to-player',
+    ADMIN_TELEPORT_PLAYER_TO_ME = 'soz-core:server:admin:teleport-player-to-me',
+    ADMIN_UNCUFF_PLAYER = 'soz-core:server:admin:uncuff-player',
+    ADMIN_RESET_SKIN = 'soz-core:server:admin:reset-skin',
     ADMIN_RESET_CRIMI = 'soz-core:server:admin:reset-crimi',
+    ADMIN_RESET_CLIENT_STATE = 'soz-core:server:admin:reset-client-state',
     ADMIN_VEHICLE_SEE_CAR_PRICE = 'soz-core:server:admin:vehicle:see-car-price',
     ADMIN_VEHICLE_CHANGE_CAR_PRICE = 'soz-core:server:admin:vehicle:change-car-price',
     ADMIN_VEHICLE_SPAWN = 'soz-core:server:admin:vehicle:spawn',
     ADMIN_VEHICLE_DELETE = 'soz-core:server:admin:vehicle:delete',
+    ADMIN_CREATE_CHARACTER = 'soz-core:server:admin:create-character',
+    ADMIN_SWITCH_CHARACTER = 'soz-core:server:admin:switch-character',
+    ADMIN_ADD_PERSISTENT_PROP = 'soz-core:server:admin:add-persistent-prop',
+    ADMIN_ADD_VEHICLE = 'soz-core:server:admin:add-vehicle',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
     BASE_CHANGE_VEHICLE_SEAT = 'baseevents:changeVehicleSeat',
 
-    BAUN_CRAFT = 'soz-core:server:job:baun:craft',
     BAUN_RESELL = 'soz-core:server:job:baun:resell',
 
     BENNYS_ESTIMATE_VEHICLE = 'soz-core:server:job:bennys:estimate-vehicle',
@@ -41,13 +63,11 @@ export enum ServerEvent {
 
     FIVEM_PLAYER_CONNECTING = 'playerConnecting',
 
-    FOOD_CRAFT = 'soz-core:server:job:food:craft',
     FOOD_ORDER_MEALS = 'soz-core:server:job:food:order-meals',
     FOOD_RETRIEVE_ORDER = 'soz-core:server:job:food:retrieve-order',
     FOOD_RETRIEVE_STATE = 'soz-core:server:job:food:retrieve-state',
     FOOD_EASTER_HARVEST = 'soz-core:server:job:food:easter-harvest',
 
-    FFS_CRAFT = 'soz-core:server:job:ffs:craft',
     FFS_HARVEST = 'soz-core:server:job:ffs:harvest',
     FFS_RESTOCK = 'soz-core:server:job:ffs:restock',
     FFS_TRANSFORM = 'soz-core:server:job:ffs:transform',
@@ -110,8 +130,11 @@ export enum ServerEvent {
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
+    PROP_REQUEST_DELETE_PROPS = 'soz-core:server:prop:request-delete',
+    PROP_REQUEST_EDIT_PROP = 'soz-core:server:prop:request-edit',
+    PROP_REQUEST_LOAD_PROPS = 'soz-core:server:prop:request-load',
+
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
-    SHOP_MASK_BUY = 'soz-core:server:shop:mask:buy',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
     SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',
     SHOP_VALIDATE_CART = 'soz-core:server:shop:validate-cart',
@@ -121,25 +144,15 @@ export enum ServerEvent {
     UPW_CHANGE_BATTERY = 'soz-core:server:job:upw:change-battery',
     UPW_SET_CHARGER_PRICE = 'soz-core:server:job:upw:set-charger-price',
 
+    PAWL_DECREASE_CHAINSAW_FUEL = 'soz-core:server:job:pawl:decrease-chainsaw-fuel',
+
+    SHOP_BUY = 'soz-core:server:shop:buy',
+    SHOP_TATTOO_RESET = 'soz-core:server:shop:tattoo-reset',
+    ZKEA_CHECK_STOCK = 'soz-core:client:shop:zkea:check-stock',
+
     AFK_KICK = 'soz-core:server:afk:kick',
 
     // not core
-    ADMIN_ADD_VEHICLE = 'admin:vehicle:addVehicle',
-    ADMIN_CHANGE_PLAYER = 'admin:server:ChangePlayer',
-    ADMIN_GIVE_LICENCE = 'admin:gamemaster:giveLicence',
-    ADMIN_GIVE_MONEY = 'admin:gamemaster:giveMoney',
-    ADMIN_GOD_MODE = 'admin:gamemaster:godmode',
-    ADMIN_TELEPORT_TO_PLAYER = 'admin:server:goto',
-    ADMIN_TELEPORT_PLAYER_TO_ME = 'admin:server:bring',
-    ADMIN_FREEZE = 'admin:server:freeze',
-    ADMIN_KILL = 'admin:server:kill',
-    ADMIN_REVIVE = 'admin:server:revive',
-    ADMIN_SET_JOB = 'admin:jobs:setjob',
-    ADMIN_SPECTATE = 'admin:server:spectate',
-    ADMIN_UNCUFF = 'admin:gamemaster:unCuff',
-    ADMIN_UNFREEZE = 'admin:server:unfreeze',
-    ADMIN_CREATE_CHARACTER = 'soz-core:server:admin:create-character',
-    ADMIN_SWITCH_CHARACTER = 'soz-core:server:admin:switch-character',
 
     BANKING_TRANSFER_MONEY = 'banking:server:TransferMoney',
     CHARACTER_SET_JOB_CLOTHES = 'soz-character:server:SetPlayerJobClothes',
@@ -176,6 +189,7 @@ export enum ServerEvent {
     VEHICLE_GARAGE_STORE = 'soz-core:server:vehicle:garage:store',
     VEHICLE_GARAGE_RETRIEVE = 'soz-core:server:vehicle:garage:retrieve',
     VEHICLE_GARAGE_RENAME = 'soz-core:server:vehicle:garage:rename',
+    VEHICLE_GARAGE_TRANSFER = 'soz-core:server:vehicle:garage:transfer',
     VEHICLE_SET_DEAD = 'soz-core:server:vehicle:set-dead',
     VEHICLE_WASH = 'soz-core:server:vehicle:wash',
     VEHICLE_FUEL_START = 'soz-core:server:vehicle:fuel:start',
@@ -205,8 +219,10 @@ export enum ServerEvent {
     INVENTORY_SET_ITEM_SHORTCUT = 'soz-core:server:inventory:set-item-usage',
 
     WEAPON_SHOOTING = 'soz-core:server:weapon:shooting',
+    WEAPON_SHOOTING_ALERT = 'soz-core:server:weapon:shooting-alert',
 
-    VANDALISM_END = 'soz-core:server:vandalism:end',
+    VANDALISM_ABORT = 'soz-core:server:vandalism:abort',
+    VANDALISM_REPAIR = 'soz-core:server:vandalism:repair',
 
     MDR_SHOW_TICKET = 'soz-core:server:mdr:show-ticket',
     MDR_MONEY_CLEANING = 'soz-core:server:mdr:money-cleaning',
@@ -246,17 +262,65 @@ export enum ServerEvent {
     CRIMI_UNHOOD = 'soz-core:server:crimi:unhood',
     CRIMI_SMOKE_STRESS = 'soz-core:server:crimi:smoke-stress',
     CRIMI_BLOCK_DATE = 'soz-core:server:crimi:block-date',
+    CRIMI_USE_JAMMER = 'soz-core:server:crimi:use-jammer',
 
     TALENT_TREE_DISABLE_CRIMI = 'soz-core:server:talent:disable-crimi',
 
     CRAFTING_TRAINING = 'soz-core:crafting:craft-training',
+
+    ALERT_POLICE = 'soz-core:alert:notification:draw-police',
+    ALERT_MESSAGE = 'phone:createSocietyMessagesBroadcast',
+
+    FISHING_SUCCESS = 'soz-core:server:fishing:success',
+    FISHING_GARBAGE = 'soz-core:server:fishing:garbage',
+    FISHING_RESELL = 'soz-core:server:fishing:resell',
+    FISHING_RENT_BOAT = 'soz-core:server:fishing:rent-boat',
+    FISHING_REMOVE_BAIT = 'soz-core:server:fishing:remove-bait',
+    FISHING_RETURN_BOAT = 'soz-core:server:fishing:return-boat',
+
+    SOZEDEX_CLAIM_REWARD = 'soz-core:server:sozedex:claim-reward',
+
+    DRUGS_SHOP_BUY = 'soz-core:server:drug:shop-buy',
+    DRUGS_ADD_SKILL = 'soz-core:server:drug:add-skill',
+    DRUGS_HARVEST_FIELDS = 'soz-core:server:drugs:harvest-fields',
+    DRUGS_WATER = 'soz-core:server:drugs:water',
+    DRUGS_CHECK = 'soz-core:server:drugs:check',
+    DRUGS_HARVEST = 'soz-core:server:drugs:harvest',
+    DRUGS_DESTROY = 'soz-core:server:drugs:destroy',
+    DRUGS_SELL_PED = 'soz-core:server:drugs:sell-ped',
+    DRUGS_SELL_CONTRACT = 'soz-core:server:drugs:sell-contract',
+    DRUGS_STOLEN = 'soz-core:server:drugs:stolen',
+    DRUGS_GARDEN_ADD = 'soz-core:server:drugs:garden-add',
+    DRUGS_GARDEN_REMOVE = 'soz-core:server:drugs:garden-remove',
+    DRUGS_ZONE_ADD = 'soz-core:server:drugs:zone-add',
+    DRUGS_ZONE_DELETE = 'soz-core:server:drugs:zone-delete',
+    DRUGS_ZONE_UPDATE = 'soz-core:server:drugs:zone-update',
+
+    RACE_ADD = 'soz-core:server:race:add',
+    RACE_UPDATE = 'soz-core:server:race:update',
+    RACE_DELETE = 'soz-core:server:race:delete',
+    RACE_FINISH = 'soz-core:server:race:finish',
+    RACE_CLEAR_RANKING = 'soz-core:server:race:clear-ranking',
+
+    FDF_TREE_CUT = 'soz-core:server:fdf:tree-cut',
+    FDF_TREE_WATER = 'soz-core:server:fdf:tree-water',
+    FDF_TREE_CHECK = 'soz-core:server:fdf:tree-check',
+    FDF_FIELD_HILLING = 'soz-core:server:fdf:field-hilling',
+    FDF_FIELD_HARVEST = 'soz-core:server:fdf:field-harvest',
+    FDF_FIELD_DESTROY = 'soz-core:server:fdf:field-destroy',
+    FDF_FIELD_PLOW = 'soz-core:server:fdf:field-plow',
+    FDF_FIELD_PLANT = 'soz-core:server:fdf:field-plant',
+    FDF_FIELD_CHECK = 'soz-core:server:fdf:field-check',
 }
 
 export enum ClientEvent {
     ADMIN_OPEN_MENU = 'soz-core:client:admin:openMenu',
+    ADMIN_MAPPER_OPEN_MENU = 'soz-core:client:admin:mapper:openMenu',
     ADMIN_SHOW_GPS = 'soz-core:client:admin:show-gps',
+    ADMIN_SPECTATE_PLAYER = 'soz-core:client:admin:spectate-player',
+    ADMIN_KILL_PLAYER = 'soz-core:client:admin:kill-player',
     ANIMATION_SURRENDER = 'soz-core:client:animation:surrender',
-    ANIMATION_GIVE = 'animation:client:give',
+    ANIMATION_GIVE = 'soz-core:client:animation:give',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
@@ -267,7 +331,6 @@ export enum ClientEvent {
 
     CHARACTER_REQUEST_CHARACTER_WIZARD = 'soz-character:client:RequestCharacterWizard',
 
-    PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
     ADMIN_NOCLIP_ENABLED = 'soz-core:client:admin:noclip:enabled',
@@ -276,6 +339,8 @@ export enum ClientEvent {
     AUDIO_PLAY = 'soz-core:client:audio:play',
     AUDIO_STOP = 'soz-core:client:audio:stop',
     CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',
+    CRIMI_USE_FAKE_CARD = 'soz-core:client:crimi:use-fake-card',
+    CRIMI_USE_JAMMER = 'soz-core:client:crimi:use-jammer',
     CRIMI_REMOVE_CLOTH = 'soz-core:client:crimi:remove-cloth',
     CRIMI_ASK_REMOTE_WORKSHOP = 'soz-core:client:crimi:ask-remote-workshop',
     CRIMI_ADD_REMOTE_WORKSHOP = 'soz-core:client:crimi:add-remote-workshop',
@@ -296,7 +361,11 @@ export enum ClientEvent {
     HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
 
     ITEM_USE = 'soz-core:client:item:use',
+    ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',
+    ITEM_PROTEST_SIGN_TOGGLE = 'soz-core:client:item:protest-sign:toggle',
     ITEM_UMBRELLA_TOGGLE = 'soz-core:client:item:umbrella:toggle',
+    ITEM_WALK_STICK_TOGGLE = 'soz-core:client:item:walk-stick:toggle',
+    ITEM_BOOK_USE = 'soz-core:client:item:book:use',
 
     HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 
@@ -307,11 +376,15 @@ export enum ClientEvent {
     JOBS_MDR_OPEN_SOCIETY_MENU = 'soz-jobs:client:mdr:OpenSocietyMenu',
     JOBS_TAXI_OPEN_SOCIETY_MENU = 'soz-jobs:client:taxi:OpenSocietyMenu',
     JOBS_LSMC_OPEN_SOCIETY_MENU = 'soz-jobs:client:lsmc:OpenSocietyMenu',
+    JOBS_GARBAGE_OPEN_SOCIETY_MENU = 'jobs:client:garbage:OpenSocietyMenu',
+    JOBS_FDF_OPEN_SOCIETY_MENU = 'soz-jobs:client:fdf:OpenSocietyMenu',
+    JOBS_GOUV_OPEN_SOCIETY_MENU = 'soz-jobs:client:gouv:OpenSocietyMenu',
 
     JOBS_CHECK_CLOAKROOM_STORAGE = 'soz-jobs:client:check-cloakroom-storage',
     JOB_OPEN_MENU = 'soz-core:client:job:open-menu',
     JOB_DUTY_CHANGE = 'QBCore:Client:SetDuty',
     JOB_OPEN_CLOAKROOM = 'soz-core:client:job::OpenCloakroomMenu',
+    JOB_OPEN_ON_DUTY_MENU = 'soz-job:client:OpenOnDutyMenu',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
@@ -336,12 +409,25 @@ export enum ClientEvent {
     OBJECT_CREATE = 'soz-core:client:object:create',
     OBJECT_DELETE = 'soz-core:client:object:delete',
 
+    PROP_CREATE_CLIENTSIDE = 'soz-core:client:prop:create',
+    PROP_DELETE_CLIENTSIDE = 'soz-core:client:prop:delete',
+    PROP_EDIT_CLIENTSIDE = 'soz-core:client:prop:edit',
+    PROP_SYNC_CLIENTSIDE = 'soz-core:client:prop:sync',
+    PROP_OPEN_MENU = 'soz-core:client:prop:open-menu',
+    PROP_ON_GRID_CHANGE = 'soz-core:client:prop:on-grid-change',
+
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
     OIL_UPDATE_STATION_PRICE = 'soz-core:client:oil:update-station-price',
 
+    PHONE_APP_WEATHER_UPDATE_FORECASTS = 'phone:app:weather:updateForecasts',
+    PHONE_APP_WEATHER_UPDATE_STORM_ALERT = 'phone:app:weather:updateStormAlert',
+
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
     STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
+
+    SHOP_OPEN_MENU = 'soz-core:client:shops:open-menu',
+    SHOP_UPDATE_STOCKS = 'soz-core:client:shops:update-stocks',
 
     // Temp event which should be internally used by a service when only soz core
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
@@ -354,7 +440,6 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     PLAYER_UPDATE = 'soz-core:client:player:update',
-    PLAYER_UPDATE_WALK_STYLE = 'soz-core:client:player:update-walk-style',
     PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
     PLAYER_SET_UNLIMITED_SPRINT = 'soz-core:client:player:set-unlimited-sprint',
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
@@ -367,6 +452,8 @@ export enum ClientEvent {
     PROGRESS_STOP = 'soz-core:client:progress:stop',
 
     REPOSITORY_SYNC_DATA = 'soz-core:client:repository:sync-data',
+    REPOSITORY_SET_DATA = 'soz-core:client:repository:set-data',
+    REPOSITORY_DELETE_DATA = 'soz-core:client:repository:delete-data',
 
     STATE_UPDATE_GLOBAL = 'soz-core:client:state:update-global',
     STATE_UPDATE_TIME = 'soz-core:client:state:update-time',
@@ -389,6 +476,7 @@ export enum ClientEvent {
     VEHICLE_SET_TRUNK_STATE = 'soz-core:client:vehicle:set-trunk-state',
     VEHICLE_RADAR_FLASHED = 'soz-core:client:vehicle:radar:flashed',
     VEHICLE_RADAR_TRIGGER = 'soz-core:client:radar:trigger',
+    VEHICLE_RADAR_ENDINIT = 'soz-core:client:radar:init-end',
     VEHICLE_UPDATE_STATE = 'soz-core:client:vehicle:update-state',
     VEHICLE_DELETE_STATE = 'soz-core:client:vehicle:delete-state',
     VEHICLE_LOCKPICK = 'soz-core:client:vehicle:lockpick',
@@ -405,6 +493,8 @@ export enum ClientEvent {
     UPW_OPEN_CLOAKROOM = 'soz-core:client:job:upw:open-cloakroom',
     UPW_CREATE_CHARGER = 'soz-core:client:job:upw:create-charger',
 
+    PAWL_FAST_HARVEST_TREE = 'soz-core:client:job:pawl:fast-harvest-tree',
+
     RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
 
     ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
@@ -414,6 +504,7 @@ export enum ClientEvent {
     WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',
     WEAPON_OPEN_GUNSMITH = 'soz-core:client:weapon:open-gunsmith',
     WEAPON_EXPLOSION = 'soz-core:client:weapon:explosion',
+    WEAPON_CLEAR_WEAPON = 'soz-core:client:weapon:clear',
 
     MDR_USE_TICKET = 'soz-core:client:mdr:use-ticket',
     HEIST_GUARD = 'soz-core:client:heist:guard',
@@ -442,15 +533,47 @@ export enum ClientEvent {
     HUB_ENTER = 'soz-core:client:hub:enter',
     HUB_REMOVE_STATUS = 'soz-core:client:hub:remove-status',
 
-    CRIMI_HOOD = 'soz-core:server:crimi:hood',
-    CRIMI_SMOKE = 'soz-core:server:crimi:smoke',
+    CRIMI_HOOD = 'soz-core:client:crimi:hood',
+    CRIMI_SMOKE = 'soz-core:client:crimi:smoke',
 
-    EASTER_EAR_TOGGLE = 'soz-core:server:easter:toogle-ear',
+    FISHING_ROD_TOGGLE = 'soz-core:server:fishing:toggle-rod',
+    FISHING_BAIT_TOGGLE = 'soz-core:server:fishing:toggle-bait',
+
+    EASTER_EAR_TOGGLE = 'soz-core:client:easter:toogle-ear',
 
     BINOCULARS_TOGGLE = 'items:binoculars:toggle',
     BINOCULARS_SET = 'items:binoculars:set',
 
     RACKET_START_PHASE = 'soz-core:client:racket:start-phase',
+
+    // Not core
+    LOCATION_ENTER = 'locations:zone:enter',
+    LOCATION_EXIT = 'locations:zone:exit',
+
+    // Sozedex
+    NUI_SHOW_SOZEDEX = 'soz-core:client:nui:show-sozedex',
+    NUI_HIDE_SOZEDEX = 'soz-core:client:nui:hide-sozedex',
+
+    DRUGS_SHOW_CONTRACT = 'soz-core:client:drug:show-contract',
+    DRUGS_HARVEST_CHAMPI = 'soz-core:client:drugs:harvest-champi',
+    DRUGS_HARVEST_ZEED = 'soz-core:client:drugs:harvest-zeed',
+    DRUGS_DELETE = 'soz-core:client:drugs:delete',
+    DRUGS_ADD = 'soz-core:client:drugs:add',
+    DRUGS_UPDATE_SEED = 'soz-core:client:drugs:update-seed',
+    DRUGS_POLICE_ALERT = 'soz-core:client:drugs:police-alert',
+    DRUGS_CONSUME = 'soz-core:client:drugs:consume',
+    DRUGS_ZONE_ADD_UPDATE = 'soz-core:client:drugs:zone-add',
+    DRUGS_ZONE_DELETE = 'soz-core:client:drugs:zone-delete',
+
+    RACE_ADD_UPDATE = 'soz-core:client:race:add-update',
+    RACE_DELETE = 'soz-core:client:race:delete',
+
+    BILLBOARD_UPDATE = 'soz-core:client:billboard:update',
+    BILLBOARD_DELETE = 'soz-core:client:billboard:delete',
+
+    VANDALISM_ABORT = 'soz-core:client:vandalism:abort',
+    VANDALISM_STEP = 'soz-core:client:vandalism:step',
+    VANDALISM_UPDATE_PROP = 'soz-core:client:vandalism:update-prop',
 }
 
 export enum GameEvent {
@@ -459,11 +582,13 @@ export enum GameEvent {
     CEventVehicleCollision = 'CEventVehicleCollision',
     CEventExplosionHeard = 'CEventExplosionHeard',
     CEventGunShot = 'CEventGunShot',
+    CEventNetworkEntityDamage = 'CEventNetworkEntityDamage',
 }
 
 export enum NuiEvent {
     AdminAutoPilot = 'soz-core:client:admin:autopilot',
     AdminChangePlayer = 'soz-core:client:admin:change-player',
+    AdminTriggerNotification = 'soz-core:client:admin:trigger-notification',
     AdminCopyCoords = 'soz-core:client:admin:copy-coords',
     AdminCreateZone = 'soz-core:client:admin:create-zone',
     AdminGetJobs = 'soz-core:client:admin:get-jobs',
@@ -472,6 +597,28 @@ export enum NuiEvent {
     AdminGiveLicence = 'soz-core:client:admin:give-licence',
     AdminGiveMoney = 'soz-core:client:admin:give-money',
     AdminGiveMarkedMoney = 'soz-core:client:admin:give-marked-money',
+    AdminMenuMapperShowPropertyZone = 'soz-core:nui:admin:mapper:show-property-zone',
+    AdminMenuMapperShowApartmentZone = 'soz-core:nui:admin:mapper:show-apartment-zone',
+    AdminMenuMapperTeleportToZone = 'soz-core:nui:admin:mapper:teleport-to-zone',
+    AdminMenuMapperUpdatePropertyZone = 'soz-core:nui:admin:mapper:update-property-zone',
+    AdminMenuMapperUpdateApartmentZone = 'soz-core:nui:admin:mapper:update-apartment-zone',
+    AdminMenuMapperTeleportToInsideCoords = 'soz-core:nui:admin:mapper:teleport-to-inside-coords',
+    AdminMenuMapperSetInsideCoords = 'soz-core:nui:admin:mapper:set-inside-coords',
+    AdminMenuMapperAddApartment = 'soz-core:nui:admin:mapper:add-apartment',
+    AdminMenuMapperAddProperty = 'soz-core:nui:admin:mapper:add-property',
+    AdminMenuMapperSetApartmentName = 'soz-core:nui:admin:mapper:set-apartment-name',
+    AdminMenuMapperSetApartmentPrice = 'soz-core:nui:admin:mapper:set-apartment-price',
+    AdminMenuMapperSetApartmentIdentifier = 'soz-core:nui:admin:mapper:set-apartment-identifier',
+    AdminMenuMapperDeleteApartment = 'soz-core:nui:admin:mapper:delete-apartment',
+    AdminMenuMapperDeleteProperty = 'soz-core:nui:admin:mapper:delete-property',
+    AdminMenuMapperShowAllProperty = 'soz-core:nui:admin:mapper:show-all-property',
+    AdminMenuMapperAddObject = 'soz-core:nui:admin:mapper:add-object',
+    AdminMenuMapperSetShowInterior = 'soz-core:nui:admin:mapper:set-show-interior',
+    AdminMenuMapperAddZone = 'soz-core:nui:admin:mapper:add-zone',
+    AdminMenuMapperDeleteZone = 'soz-core:nui:admin:mapper:delete-zone',
+    AdminMenuMapperShowZone = 'soz-core:nui:admin:mapper:show-zone',
+    AdminMenuMapperAddPropertyCulling = 'soz-core:nui:admin:mapper:add-property-culling',
+    AdminMenuMapperRemovePropertyCulling = 'soz-core:nui:admin:mapper:remove-property-culling',
     AdminMenuPlayerHandleDiseaseOption = 'soz-core:client:admin:handle-disease-option',
     AdminMenuPlayerHandleEffectsOption = 'soz-core:client:admin:handle-effects-option',
     AdminMenuPlayerHandleHealthOption = 'soz-core:client:admin:handle-health-option',
@@ -486,6 +633,8 @@ export enum NuiEvent {
     AdminMenuPlayerHandleInjuriesUpdate = 'soz-core:client:admin:handle-injuries-update',
     AdminMenuPlayerHandleSetReputation = 'soz-core:client:admin:set-reputation',
     AdminMenuPlayerHandleResetCrimi = 'soz-core:client:admin:reset-crimi',
+    AdminMenuPlayerHandleResetClientState = 'soz-core:client:admin:reset-client-state',
+    AdminMenuPlayerSearch = 'soz-core:client:admin:search',
     AdminResetHealthData = 'soz-core:client:admin:reset-health-data',
     AdminSetGodMode = 'soz-core:client:admin:set-god-mode',
     AdminSetJob = 'soz-core:client:admin:set-job',
@@ -521,6 +670,7 @@ export enum NuiEvent {
     AdminMenuGameMasterCreateNewCharacter = 'soz-core:client:admin:game-master:create-new-character',
     AdminMenuGameMasterSwitchCharacter = 'soz-core:client:admin:game-master:switch-character',
     AdminSetAdminGPS = 'soz-core:client:admin:gps',
+    AdminSetPoliceLocator = 'soz-core:client:admin:police-locator',
     BaunDisplayBlip = 'soz-core:client:job:baun:display-blip',
     CraftingDoCraft = 'soz-core:nui:crafting:do-craft',
     CraftingDoSalvage = 'soz-core:nui:crafting:do-salvage',
@@ -538,6 +688,8 @@ export enum NuiEvent {
 
     FfsDisplayBlip = 'soz-core:client:job:ffs:display-blip',
     FoodDisplayBlip = 'soz-core:client:job:food:display-blip',
+    FdfDisplayBlip = 'soz-core:client:job:fdf:display-blip',
+    GarbageDisplayBlip = 'soz-core:client:job:garbage:display-blip',
     PlayerSetHealthBookField = 'soz-core:client:player:health-book:set',
     InputSet = 'soz-core:client:input:set',
     InputCancel = 'soz-core:client:input:cancel',
@@ -579,9 +731,23 @@ export enum NuiEvent {
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 
-    ShopMaskBuy = 'soz-core:client:shop:mask:buy',
-    ShopMaskPreview = 'soz-core:client:shop:mask:preview',
-    ShopMaskSelectCategory = 'soz-core:client:shop:mask:select-category',
+    BossShopBuy = 'soz-core:client:shop:boss:buy',
+
+    SuperetteShopBuy = 'soz-core:client:shop:superette:buy',
+    TattooShopResetTattos = 'soz-core:client:shop:tattoo:resetTattos',
+    TattooShopBuy = 'soz-core:client:shop:tattoo:buy',
+    TattoShopPreview = 'soz-core:client:shop:tattoo:preview',
+    TattooShopSelectCategory = 'soz-core:client:shop:tattoo:select-category',
+    ClothingShopPreview = 'soz-core:client:shop:clothing:preview',
+    ClothingShopBuy = 'soz-core:client:shop:clothing:buy',
+    ClothingShopBackspace = 'soz-core:client:shop:clothing:backspace',
+    ClothShopToggleCamera = 'soz-core:client:shop:clothing:toggle-camera',
+    JewelryShopPreview = 'soz-core:client:shop:jewelry:preview',
+    JewelryShopBuy = 'soz-core:client:shop:jewelry:buy',
+    JewelryShopBackspace = 'soz-core:client:shop:jewelry:backspace',
+    JewelryShopToggleCamera = 'soz-core:client:shop:jewelry:toggle-camera',
+    BarberShopPreview = 'soz-core:client:shop:barber:preview',
+    BarberShopBuy = 'soz-core:client:shop:barber:buy',
 
     TriggerServerEvent = 'soz-core:nui:trigger-server-event',
     TriggerClientEvent = 'soz-core:nui:trigger-client-event',
@@ -599,12 +765,15 @@ export enum NuiEvent {
     VehicleOpenLSCustom = 'soz-core:nui:vehicle:open-ls-custom',
     VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
     VehicleHandleRadio = 'soz-core:nui:vehicle:handle-radio',
+    VehicleAnchorChange = 'soz-core:client:vehicle:anchor-change',
+    VehiclePoliceDisplay = 'soz-core:client:vehicle:police-display',
 
     VehicleGarageTakeOut = 'soz-core:client:vehicle:garage:take-out',
     VehicleGarageSetName = 'soz-core:client:vehicle:garage:set-name',
     VehicleGarageStore = 'soz-core:client:vehicle:garage:store',
     VehicleGarageStoreTrailer = 'soz-core:client:vehicle:garage:store-trailer',
     VehicleGarageShowPlaces = 'soz-core:client:vehicle:garage:show-places',
+    VehicleGarageTransfer = 'soz-core:client:vehicle:garage:transfer',
 
     VoipCloseRadio = 'soz-core:nui:voip:close-radio',
     VoipEnableRadio = 'soz-core:nui:voip:enable-radio',
@@ -621,7 +790,6 @@ export enum NuiEvent {
 
     GunSmithRenameWeapon = 'soz-core:client:job:gunsmith:rename-weapon',
     GunSmithPreviewTint = 'soz-core:client:job:gunsmith:preview-tint',
-    GunSmithPreviewAnimation = 'soz-core:client:job:gunsmith:preview-animation',
     GunSmithPreviewAttachment = 'soz-core:client:job:gunsmith:preview-attachment',
     GunSmithApplyConfiguration = 'soz-core:client:job:gunsmith:apply-configuration',
 
@@ -647,4 +815,71 @@ export enum NuiEvent {
     TaxiSetMission = 'soz-core:client:taxi:set-mission',
     TaxiSetHorodateur = 'soz-core:client:taxi:set-horodateur',
     TaxiDisplayHorodateur = 'soz-core:client:taxi:display-horodateur',
+
+    AlbumPlay = 'soz-core:client:album:play',
+    AlbumVolume = 'soz-core:client:album:volume',
+    SuccessFishing = 'soz-core:client:fishing:success',
+    StopFishing = 'soz-core:client:fishing:stop',
+    FishingSuccessHit = 'soz-core:client:fishing:success-hit',
+    ClaimReward = 'soz-core:client:sozedex:claim-reward',
+
+    BoatRent = 'soz-core:client:fishing:rent-boat',
+    BoatReturn = 'soz-core:client:fishing:return-boat',
+    SozedexClosed = 'soz-core:nui:sozedex:closed',
+
+    DrugSkillTreeBuy = 'soz-core:client:drug:skill-buy',
+    DrugLocationGps = 'soz-core:client:drug:location-gps',
+    DrugGardenEnter = 'soz-core:client:drug:garden-enter',
+    DrugGardenAdd = 'soz-core:client:drug:garden-add',
+    DrugGardenRemove = 'soz-core:client:drug:garden-remove',
+    DrugZoneHide = 'soz-core:client:drug:zone-hide',
+    DrugZoneAdd = 'soz-core:client:drug:zone-add',
+    DrugUpdateZone = 'soz-core:client:drug:zone-update',
+    DrugAdminMenuOpen = 'soz-core:client:drug:admin-menu-open',
+    DrugTransformDoTransform = 'soz-core:client:drug:transform-doit',
+    DrugTransformCancel = 'soz-core:client:drug:transform-cancel',
+    DrugContractExit = 'soz-core:client:drug:contract-exit',
+
+    RaceAdminMenuOpen = 'soz-core:client:race:open-menu',
+    RaceAdd = 'soz-core:client:race:add',
+    RaceEnable = 'soz-core:client:race:enable',
+    RaceRename = 'soz-core:client:race:rename',
+    RaceUpdateLocation = 'soz-core:client:race:update-location',
+    RaceUpdateCarModel = 'soz-core:client:race:update-model',
+    RaceDelete = 'soz-core:client:race:delete',
+    RaceMenuLaunch = 'soz-core:client:race:menu-launch',
+    RaceAddCheckpoint = 'soz-core:client:race:add-checkpoint',
+    RaceUpdateCheckPoint = 'soz-core:client:race:update-checkpoint',
+    RaceDisplay = 'soz-core:client:race:display',
+    RaceTPStart = 'soz-core:client:race:tp',
+    RaceCurrrent = 'soz-core:client:race:current',
+    RaceClearRanking = 'soz-core:client:race:clear-ranking',
+    RaceGetRanking = 'soz-core:client:race:get-ranking',
+    RaceFps = 'soz-core:client:race:fps',
+    RaceVehConfiguration = 'soz-core:client:race:veh-configuration',
+    RaceUpdateGarage = 'soz-core:client:race:garage',
+
+    GouvAnnoncement = 'soz-core:client:gouv:annoncement',
+
+    SelectPlacedProp = 'soz-core:client:placement:select-placed-prop',
+    SelectPropToCreate = 'soz-core:client:placement:select-prop-to-create',
+    ChoosePropToCreate = 'soz-core:client:placement:choose-prop-to-create',
+    ChoosePlacedPropToEdit = 'soz-core:client:placement:choose-placed-prop-to-edit',
+    SearchProp = 'soz-core:client:placement:search-prop',
+    LeaveEditorMode = 'soz-core:client:placement:leave-mode',
+    ToggleMouseSelection = 'soz-core:client:placement:toggle-mouse-selection',
+    TogglePipette = 'soz-core:client:placement:toggle-pipette',
+    ValidatePlacement = 'soz-core:client:placement:validate',
+    RequestDeleteCurrentProp = 'soz-core:client:placement:request-delete-current-prop',
+    PropPlacementReset = 'soz-core:client:placement:reset',
+    PropPlacementReturnToMainMenu = 'soz-core:client:placement:return-to-main-menu',
+    PropToggleCollision = 'soz-core:client:placement:toggle-collision',
+    SelectPlacementCollection = 'soz-core:client:placement:select-collection',
+    RequestToggleCollectionLoad = 'soz-core:client:placement:toggle-collection-load',
+    RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
+    RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
+    RequestDeleteProp = 'soz-core:client:placement:delete-prop',
+
+    CraftDoRecipe = 'soz-core:client:craft:do-recipe',
+    CraftCancel = 'soz-core:client:craft:cancel',
 }

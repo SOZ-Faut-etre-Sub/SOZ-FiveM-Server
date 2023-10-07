@@ -21,7 +21,7 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
 
@@ -87,8 +87,8 @@ export class VehicleDealershipProvider {
         }
     }
 
-    @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded() {
+    @Once(OnceStep.Start)
+    public async onStart() {
         for (const [dealership, config] of Object.entries(DealershipConfig)) {
             if (!isFeatureEnabled(Feature.Boat) && dealership === DealershipType.Boat) {
                 continue;
@@ -117,6 +117,7 @@ export class VehicleDealershipProvider {
                     z: config.position[2],
                     w: config.position[3],
                 },
+                scenario: config.task,
                 target: {
                     options: [
                         {

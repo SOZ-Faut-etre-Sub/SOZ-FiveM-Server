@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Artboard_2" data-name="Artboard 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 750">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #db2622;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #862321;
+      }
+
+      .cls-3 {
+        fill: #b12825;
+      }
+    </style>
+  </defs>
+  <g>
+    <rect class="cls-2" x="313.14" y="375" width="123.66" height="123.49"/>
+    <polygon class="cls-1" points="313.14 498.49 313.14 375 436.8 375 313.14 498.49"/>
+    <rect class="cls-3" x="338.47" y="400.29" width="73" height="72.9"/>
+  </g>
+  <g>
+    <rect class="cls-2" x="189.5" y="251.51" width="123.66" height="123.49"/>
+    <polygon class="cls-1" points="189.5 375 189.5 251.51 313.16 251.51 189.5 375"/>
+    <rect class="cls-3" x="214.83" y="276.81" width="73" height="72.9"/>
+  </g>
+  <g>
+    <rect class="cls-2" x="436.83" y="375" width="123.67" height="123.49"/>
+    <polygon class="cls-1" points="436.83 498.49 436.83 375 560.5 375 436.83 498.49"/>
+    <rect class="cls-3" x="462.16" y="400.29" width="73" height="72.9"/>
+  </g>
+  <g>
+    <rect class="cls-2" x="313.2" y="251.51" width="123.66" height="123.49"/>
+    <polygon class="cls-1" points="313.2 375 313.2 251.51 436.86 251.51 313.2 375"/>
+    <rect class="cls-3" x="338.53" y="276.81" width="73" height="72.9"/>
+  </g>
+</svg>

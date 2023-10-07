@@ -1,3 +1,4 @@
+import { NuiBookMethodMap } from '@public/shared/nui/book';
 import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
 import { NuiHudMethodMap } from '@public/shared/nui/hud';
@@ -11,16 +12,22 @@ import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSub
 import { NuiAudioMethodMap } from './audio';
 import { NuiBennysOrderMenuMethodMap } from './bennys_order_menu';
 import { NuiClipboardMethodMap } from './clipboard';
-import { NuiFfsRecipeBookMethodMap } from './ffs_recipe_book';
+import { NuiClothShopMethodMap } from './cloth_shop';
+import { NuiCraftMethodMap } from './craft';
+import { NuiDrugMethodMap } from './drug';
+import { NuiFieldMethodMap } from './field';
+import { NuiFishingMethodMap } from './fishing';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
-import { NuiMaskShopMethodMap } from './mask_shop';
 import { NuiMenuMethodMap } from './menu';
 import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiPoliceMethodMap } from './police';
 import { NuiProgressMethodMap } from './progress';
+import { NuiPlacementPropMethodMap } from './prop_placement';
+import { NuiRaceMethodMap } from './race';
 import { NuiRepairMethodMap } from './repair';
+import { NuiSozedexMethodMap } from './sozedex';
 import { NuiTaxiMethodMap } from './taxi';
 import { NuiUpwOrderMenuMethodMap } from './upw_order_menu';
 
@@ -36,10 +43,9 @@ export interface NuiMethodMap {
     bennys_order_menu: NuiBennysOrderMenuMethodMap;
     upw_order_menu: NuiUpwOrderMenuMethodMap;
     clipboard: NuiClipboardMethodMap;
-    ffs_recipe_book: NuiFfsRecipeBookMethodMap;
+    cloth_shop: NuiClothShopMethodMap;
     global: NuiGlobalMethodMap;
     input: NuiInputMethodMap;
-    mask_shop: NuiMaskShopMethodMap;
     menu: NuiMenuMethodMap;
     player: NuiPLayerMethodMap;
     progress: NuiProgressMethodMap;
@@ -49,6 +55,7 @@ export interface NuiMethodMap {
     missive: NuiMissiveMethodMap;
     police: NuiPoliceMethodMap;
     crafting: NuiCraftingMethodMap;
+    fishing: NuiFishingMethodMap;
     item: NuiItemMethodMap;
     hood: NuiHoodMethodMap;
     taxi: NuiTaxiMethodMap;
@@ -56,6 +63,13 @@ export interface NuiMethodMap {
     hud: NuiHudMethodMap;
     radio: NuiRadioMethodMap;
     radio_vehicle: NuiRadioVehicleMethodMap;
+    sozedex: NuiSozedexMethodMap;
+    drug: NuiDrugMethodMap;
+    race: NuiRaceMethodMap;
+    book: NuiBookMethodMap;
+    field: NuiFieldMethodMap;
+    placement_prop: NuiPlacementPropMethodMap;
+    craft: NuiCraftMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

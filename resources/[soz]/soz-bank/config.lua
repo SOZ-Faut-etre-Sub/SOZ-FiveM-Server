@@ -25,17 +25,18 @@ Config.ErrorMessage = {
 Config.FarmAccountMoney = {
     ["bank_refill"] = {money = 10000000, marked_money = 0},
     ["bennys_reseller"] = {money = 100000000, marked_money = 0},
-    ["farm_bennys"] = {money = 200000, marked_money = 0},
-    ["farm_news"] = {money = 200000, marked_money = 0},
-    ["farm_stonk"] = {money = 200000, marked_money = 0},
-    ["farm_mtp"] = {money = 200000, marked_money = 0},
-    ["farm_garbage"] = {money = 200000, marked_money = 0},
-    ["farm_taxi"] = {money = 200000, marked_money = 0},
-    ["farm_food"] = {money = 200000, marked_money = 0},
-    ["farm_upw"] = {money = 200000, marked_money = 0},
-    ["farm_pawl"] = {money = 200000, marked_money = 0},
-    ["farm_baun"] = {money = 200000, marked_money = 0},
-    ["farm_ffs"] = {money = 200000, marked_money = 0},
+    ["farm_bennys"] = {money = 300000, marked_money = 0},
+    ["farm_news"] = {money = 300000, marked_money = 0},
+    ["farm_stonk"] = {money = 300000, marked_money = 0},
+    ["farm_mtp"] = {money = 300000, marked_money = 0},
+    ["farm_garbage"] = {money = 300000, marked_money = 0},
+    ["farm_taxi"] = {money = 300000, marked_money = 0},
+    ["farm_food"] = {money = 300000, marked_money = 0},
+    ["farm_upw"] = {money = 300000, marked_money = 0},
+    ["farm_pawl"] = {money = 300000, marked_money = 0},
+    ["farm_baun"] = {money = 300000, marked_money = 0},
+    ["farm_ffs"] = {money = 300000, marked_money = 0},
+    ["farm_fdf"] = {money = 300000, marked_money = 0},
 }
 
 Config.SocietyTaxes = {
@@ -50,6 +51,7 @@ Config.SocietyTaxes = {
         ["pawl"] = {"pawl", "safe_pawl"},
         ["taxi"] = {"taxi", "safe_taxi"},
         ["upw"] = {"upw", "safe_upw"},
+        ["fdf"] = {"fdf", "safe_fdf"},
     },
 
     taxRepartition = {["lspd"] = 30, ["bcso"] = 30, ["lsmc"] = 30, ["cash-transfer"] = 2, ["mdr"] = 8},
@@ -167,13 +169,38 @@ Config.SafeStorages = {
         size = vec2(1.0, 1.0),
         heading = 30.0,
     },
+    ["safe_sasp"] = {
+        label = "Coffre SASP",
+        owner = "sasp",
+        position = vector3(-583.08, -590.96, 34.68),
+        size = vec2(1.00, 0.80),
+        heading = 0.0,
+    },
+    ["safe_fdf"] = {
+        label = "Coffre Ferme de Fou",
+        owner = "fdf",
+        position = vector3(2436.49, 4964.26, 46.81),
+        size = vec2(1.00, 0.85),
+        heading = 43.58,
+    },
+    ["safe_gouv"] = {
+        label = "Coffre Gouvernement",
+        owner = "gouv",
+        position = vector3(-525.62, -590.78, 34.68),
+        size = vec2(0.40, 1.00),
+        heading = 0.0,
+    },
 }
 
 Config.ATMModels = {
     ["prop_atm_01"] = "small",
+    ["soz_prop_atm_01_hs2"] = "small",
     ["prop_atm_02"] = "big",
+    ["soz_prop_atm_02_hs2"] = "big",
     ["prop_atm_03"] = "big",
+    ["soz_prop_atm_03_hs2"] = "big",
     ["prop_fleeca_atm"] = "big",
+    ["soz_prop_fleeca_atm_hs2"] = "big",
     ["soz_atm_entreprise"] = "ent",
 }
 
@@ -188,6 +215,7 @@ Config.BankPedLocations = {
     ["fleeca5"] = vector4(-2961.13, 482.98, 15.7, 85.95),
     ["fleeca6"] = vector4(1175.01, 2708.3, 38.09, 176.68),
     ["fleeca7"] = vector4(-112.26, 6471.04, 31.63, 132.8),
+    ["fleeca8"] = vector4(5057.64, -5193.98, 2.48, 99.10),
 }
 
 Config.BankAtmDefault = {

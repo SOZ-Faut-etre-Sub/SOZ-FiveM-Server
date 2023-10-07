@@ -1,14 +1,18 @@
 import { Vector4 } from '@public/shared/polyzone/vector';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Logger } from '../../core/logger';
 import { UpwCharger } from '../../shared/fuel';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 @Injectable()
-export class UpwChargerRepository extends Repository<Record<number, UpwCharger>> {
+export class UpwChargerRepository extends RepositoryLegacy<Record<number, UpwCharger>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     protected async load(): Promise<Record<number, UpwCharger>> {
         const stations = await this.prismaService.upw_chargers.findMany();
@@ -25,8 +29,7 @@ export class UpwChargerRepository extends Repository<Record<number, UpwCharger>>
                     active: station.active == 1,
                 };
             } catch (e) {
-                console.error('cannot load charger: ', station.station, e);
-                continue;
+                this.logger.error('cannot load charger: ', station.station, e);
             }
         }
 

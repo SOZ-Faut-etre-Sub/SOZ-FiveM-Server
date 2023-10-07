@@ -18,6 +18,7 @@ export enum WeaponName {
     CERAMICPISTOL = 'weapon_ceramicpistol',
     NAVYREVOLVER = 'weapon_navyrevolver',
     GADGETPISTOL = 'weapon_gadgetpistol',
+    PISTOLXM3 = 'weapon_pistolxm3',
 
     // SMG
     MICROSMG = 'weapon_microsmg',
@@ -28,6 +29,7 @@ export enum WeaponName {
     MACHINEPISTOL = 'weapon_machinepistol',
     MINISMG = 'weapon_minismg',
     RAYCARBINE = 'weapon_raycarbine',
+    TECPISTOL = 'weapon_tecpistol',
 
     // Assault Rifles
     ASSAULTRIFLE = 'weapon_assaultrifle',
@@ -73,6 +75,7 @@ export enum WeaponName {
     COMPACTLAUNCHER = 'weapon_compactlauncher',
     RAYMINIGUN = 'weapon_rayminigun',
     EMPLAUNCHER = 'weapon_emplauncher',
+    RAILGUNXM3 = 'weapon_railgunxm3',
 
     // Sniper Rifles
     SNIPERRIFLE = 'weapon_sniperrifle',
@@ -101,6 +104,7 @@ export const WeaponAmmo: {[key: string]: string} = {
     [WeaponName.CERAMICPISTOL]: '9x19 AP',
     [WeaponName.NAVYREVOLVER]: '.357 Magnum',
     [WeaponName.GADGETPISTOL]: '9x19 AP',
+    [WeaponName.PISTOLXM3]: '9x19 AP',
     [WeaponName.MICROSMG]: '9x19 AP',
     [WeaponName.SMG]: '9x19 AP',
     [WeaponName.ASSAULTSMG]: '5.7x28 SB193',
@@ -109,6 +113,7 @@ export const WeaponAmmo: {[key: string]: string} = {
     [WeaponName.MACHINEPISTOL]: '9x19 AP',
     [WeaponName.MINISMG]: '9x19 AP',
     [WeaponName.RAYCARBINE]: 'Munition Alien',
+    [WeaponName.TECPISTOL]: '9x19 AP',
     [WeaponName.ASSAULTRIFLE]: '7.62x39 BP',
     [WeaponName.ASSAULTRIFLE_MK2]: '7.62x39 BP',
     [WeaponName.CARBINERIFLE]: '5.56x45 M995',
@@ -122,7 +127,7 @@ export const WeaponAmmo: {[key: string]: string} = {
     [WeaponName.MILITARYRIFLE]: '7.62x51 M62',
     [WeaponName.HEAVYRIFLE]: '7.62x51 M62',
     [WeaponName.TACTICALRIFLE]: '5.56x45 M995',
-    [WeaponName.PUMPSHOTGUN]: '12/70 Buckshot',
+    [WeaponName.PUMPSHOTGUN]: 'Billes caoutchouc',
     [WeaponName.SAWNOFFSHOTGUN]: '12/70 Buckshot',
     [WeaponName.ASSAULTSHOTGUN]: '12/70 Buckshot',
     [WeaponName.BULLPUPSHOTGUN]: '12/70 Buckshot',
@@ -146,6 +151,7 @@ export const WeaponAmmo: {[key: string]: string} = {
     [WeaponName.COMPACTLAUNCHER]: '40x46mm M381',
     [WeaponName.RAYMINIGUN]: 'Munition Alien',
     [WeaponName.EMPLAUNCHER]: 'Munition Alien',
+    [WeaponName.RAILGUNXM3]: 'Munition Alien',
     [WeaponName.SNIPERRIFLE]: '.50 BMG',
     [WeaponName.HEAVYSNIPER]: '.50 BMG',
     [WeaponName.HEAVYSNIPER_MK2]: '.50 BMG',

@@ -1,6 +1,10 @@
 PlayerData = QBCore.Functions.GetPlayerData()
 local mask = 0
 
+-----------------------------------------------------
+-- All the + 0.0 are needed to convert from integer to num ber (float) as values may come from Typescript removing comma
+-----------------------------------------------------
+
 local function ApplyPlayerModelHash(playerId, hash)
     if hash == GetEntityModel(GetPlayerPed(playerId)) then
         return
@@ -22,19 +26,19 @@ end
 local function ApplyPedHair(ped, hair)
     SetPedComponentVariation(ped, ComponentType.Hair, hair.HairType, 0, 0);
     SetPedHairColor(ped, hair.HairColor, hair.HairSecondaryColor or 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, hair.EyebrowOpacity or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Eyebrows, hair.EyebrowType, (hair.EyebrowOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Eyebrows, 1, hair.EyebrowColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.FacialHair, hair.BeardType, hair.BeardOpacity or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.FacialHair, hair.BeardType, (hair.BeardOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.FacialHair, 1, hair.BeardColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.ChestHair, hair.ChestHairType, hair.ChestHairOpacity or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.ChestHair, hair.ChestHairType, (hair.ChestHairOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.ChestHair, 1, hair.ChestHairColor, 0);
 end
 
 local function ApplyPedFaceTrait(ped, faceTrait, model)
     if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
-        SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, model.ShapeMix, model.SkinMix, 0, false);
+        SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     else
-        SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, model.ShapeMix, model.SkinMix, 0, false);
+        SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     end
 
     SetPedEyeColor(ped, faceTrait.EyeColor);
@@ -45,11 +49,11 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
     SetPedHeadOverlay(ped, HeadOverlayType.BodyBlemishes, faceTrait.BodyBlemish, 1.0);
     SetPedHeadOverlay(ped, HeadOverlayType.AddBodyBlemishes, faceTrait.AddBodyBlemish, 1.0);
 
-    SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, faceTrait.EyesOpening);
-    SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, faceTrait.EyebrowForward);
-    SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, faceTrait.EyebrowHigh);
+    SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, (faceTrait.EyesOpening or 0) + 0.0);
 
     if MaskResetFace[GetEntityModel(ped)] and MaskResetFace[GetEntityModel(ped)][mask] then
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, -1.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, -1.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, 0.0);
@@ -68,32 +72,34 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
         SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, 0.0);
     else
-        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, faceTrait.CheeksBoneHigh);
-        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, faceTrait.CheeksBoneWidth);
-        SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, faceTrait.CheeksWidth);
-        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLength, faceTrait.ChimpBoneLength);
-        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLowering, faceTrait.ChimpBoneLower);
-        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneWidth, faceTrait.ChimpBoneWidth);
-        SetPedFaceFeature(ped, FaceFeatureType.ChimpHole, faceTrait.ChimpHole);
-        SetPedFaceFeature(ped, FaceFeatureType.JawBoneBackLength, faceTrait.JawBoneBackLength);
-        SetPedFaceFeature(ped, FaceFeatureType.JawBoneWidth, faceTrait.JawBoneWidth);
-        SetPedFaceFeature(ped, FaceFeatureType.LipsThickness, faceTrait.LipsThickness);
-        SetPedFaceFeature(ped, FaceFeatureType.NeckThickness, faceTrait.NeckThickness);
-        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, faceTrait.NoseBoneHigh);
-        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneTwist, faceTrait.NoseBoneTwist);
-        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLength, faceTrait.NosePeakLength);
-        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLowering, faceTrait.NosePeakLower);
-        SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, faceTrait.NosePeakHeight);
-        SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, faceTrait.NoseWidth);
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, (faceTrait.EyebrowHigh or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, (faceTrait.EyebrowForward or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, (faceTrait.CheeksBoneHigh or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, (faceTrait.CheeksBoneWidth or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, (faceTrait.CheeksWidth or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLength, (faceTrait.ChimpBoneLength or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneLowering, (faceTrait.ChimpBoneLower or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpBoneWidth, (faceTrait.ChimpBoneWidth or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.ChimpHole, (faceTrait.ChimpHole or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.JawBoneBackLength, (faceTrait.JawBoneBackLength or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.JawBoneWidth, (faceTrait.JawBoneWidth or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.LipsThickness, (faceTrait.LipsThickness or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NeckThickness, (faceTrait.NeckThickness or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, (faceTrait.NoseBoneHigh or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneTwist, (faceTrait.NoseBoneTwist or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLength, (faceTrait.NosePeakLength or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakLowering, (faceTrait.NosePeakLower or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NosePeakHeight, (faceTrait.NosePeakHeight or 0) + 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseWidth, (faceTrait.NoseWidth or 0) + 0.0);
     end
 end
 
 local function ApplyPedMakeup(ped, makeup)
-    SetPedHeadOverlay(ped, HeadOverlayType.Lipstick, makeup.LipstickType, makeup.LipstickOpacity or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Lipstick, makeup.LipstickType, (makeup.LipstickOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Lipstick, 2, makeup.LipstickColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Blush, makeup.BlushType, makeup.BlushOpacity or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Blush, makeup.BlushType, (makeup.BlushOpacity or 0) + 0.0 or 1.0);
     SetPedHeadOverlayColor(ped, HeadOverlayType.Blush, 2, makeup.BlushColor, 0);
-    SetPedHeadOverlay(ped, HeadOverlayType.Makeup, makeup.FullMakeupType, makeup.FullMakeupOpacity or 1.0);
+    SetPedHeadOverlay(ped, HeadOverlayType.Makeup, makeup.FullMakeupType, (makeup.FullMakeupOpacity or 0) + 0.0 or 1.0);
 
     if makeup.FullMakeupDefaultColor then
         SetPedHeadOverlayColor(ped, HeadOverlayType.Makeup, 0, 0, 0);
@@ -137,6 +143,10 @@ function MergeClothSet(base, override)
 
     for propId, prop in pairs(override.Props or {}) do
         base.Props[tostring(propId)] = Clone(prop)
+    end
+
+    if override.GlovesID ~= nil then
+        base.GlovesID = override.GlovesID
     end
 
     return base
@@ -314,6 +324,18 @@ function ClothConfigComputeToClothSet(clothConfig)
         local override = {Components = {[ComponentType.Shoes] = getNakedComponent(ComponentType.Shoes)}}
 
         clothSet = MergeClothSet(clothSet, override)
+    end
+
+    if not clothConfig.Config.HideGloves and clothSet.GlovesID ~= nil then
+        local gloves = exports["soz-core"]:GetGloves(clothSet.GlovesID)
+        local currentTorsoDrawable = clothSet.Components["3"].Drawable
+
+        if gloves ~= nil then
+            local glovesDrawable = gloves.correspondingDrawables[tostring(currentTorsoDrawable)]
+            if glovesDrawable ~= nil then
+                clothSet.Components["3"] = {Drawable = glovesDrawable, Texture = gloves.texture, Palette = 0}
+            end
+        end
     end
 
     return clothSet

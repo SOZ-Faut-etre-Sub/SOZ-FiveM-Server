@@ -15,7 +15,7 @@ Citizen.CreateThread(function()
 				-- trying to enter a vehicle!
 				local vehicle = GetVehiclePedIsTryingToEnter(ped)
 				local seat = GetSeatPedIsTryingToEnter(ped)
-				local netId = VehToNet(vehicle)
+				local netId = NetworkGetEntityIsNetworked(vehicle) and VehToNet(vehicle) or 0
 				isEnteringVehicle = true
 				TriggerEvent('baseevents:enteringVehicle', vehicle, seat, GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)), netId)
 				TriggerServerEvent('baseevents:enteringVehicle', vehicle, seat, GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)), netId)
@@ -29,7 +29,7 @@ Citizen.CreateThread(function()
 				isInVehicle = true
 				currentVehicle = GetVehiclePedIsUsing(ped)
 				currentSeat = GetPedVehicleSeat(ped)
-                currentVehicleNetId = VehToNet(currentVehicle)
+                currentVehicleNetId = NetworkGetEntityIsNetworked(currentVehicle) and VehToNet(currentVehicle) or 0
 				TriggerEvent('baseevents:enteredVehicle', currentVehicle, currentSeat)
 				TriggerServerEvent('baseevents:enteredVehicle', currentVehicleNetId, currentSeat)
 			end
@@ -44,7 +44,7 @@ Citizen.CreateThread(function()
 				currentSeat = 0
             elseif pedInSeat ~= ped then
                 currentSeat = GetPedVehicleSeat(ped)
-                local netId = VehToNet(currentVehicle)
+                local netId = NetworkGetEntityIsNetworked(currentVehicle) and VehToNet(currentVehicle) or 0
                 TriggerEvent('baseevents:changedVehicleSeat', currentVehicle, currentSeat)
                 TriggerServerEvent('baseevents:changedVehicleSeat', netId, currentSeat)
             end

@@ -1,5 +1,6 @@
 import { PhoneEvents } from '../../../typings/phone';
 import { SocietyEvents } from '../../../typings/society';
+import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import { getSource } from '../utils/miscUtils';
 import PlayerService from './player.service';
 import { playerLogger } from './player.utils';
@@ -11,6 +12,12 @@ onNet(PhoneEvents.FETCH_CREDENTIALS, () => {
     const societyPhoneNumber = player.getSocietyPhoneNumber();
 
     emitNet(PhoneEvents.SEND_CREDENTIALS, src, phoneNumber, societyPhoneNumber);
+});
+
+onNetPromise<void, string>(PhoneEvents.SET_CITIZEN_ID, (reqObj, resp) => {
+    const src = getSource();
+
+    resp({ status: 'ok', data: PlayerService.getIdentifier(src) });
 });
 
 /**

@@ -64,18 +64,18 @@ export class PlayerHealthProvider {
         }
 
         if (player.metadata.organ === 'rein') {
-            thirstDiff -= 5.0;
+            thirstDiff -= 2.0;
         }
 
         if (player.metadata.organ === 'foie') {
-            hungerDiff -= 4.0;
+            hungerDiff -= 2.0;
         }
 
         const datas: Partial<PlayerMetadata> = {};
         datas.hunger = this.playerService.getIncrementedMetadata(player, 'hunger', hungerDiff, 0, 100);
         datas.thirst = this.playerService.getIncrementedMetadata(player, 'thirst', thirstDiff, 0, 100);
         datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', ALCOHOL_RATE, 0, 200);
-        datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', DRUG_RATE, 0, 200);
+        datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', DRUG_RATE, 0, 110);
 
         if (isFeatureEnabled(Feature.MyBodySummer)) {
             const now = new Date().getTime();

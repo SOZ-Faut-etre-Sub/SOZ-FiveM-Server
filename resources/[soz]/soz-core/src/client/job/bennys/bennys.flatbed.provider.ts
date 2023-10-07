@@ -49,7 +49,7 @@ export class BennysFlatbedProvider {
     private currentFlatbedAttach: FlatbedAttach = null;
 
     @Once(OnceStep.PlayerLoaded)
-    public async onInit() {
+    public async setupFlatbed() {
         this.targetFactory.createForAllVehicle([
             {
                 icon: 'c:mechanic/Mettre.png',

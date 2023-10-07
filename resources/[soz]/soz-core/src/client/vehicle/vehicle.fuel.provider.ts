@@ -15,12 +15,12 @@ import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
-import { FuelStationRepository } from '../resources/fuel.station.repository';
+import { FuelStationRepository } from '../repository/fuel.station.repository';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
-import { ObjectFactory } from './../world/object.factory';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
@@ -65,8 +65,8 @@ export class VehicleFuelProvider {
     @Inject(SoundService)
     private soundService: SoundService;
 
-    @Inject(ObjectFactory)
-    private objectFFactory: ObjectFactory;
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
@@ -103,8 +103,16 @@ export class VehicleFuelProvider {
                 });
             }
 
-            if (station.type === FuelStationType.Private || station.fuel === FuelType.Kerosene) {
-                station.entity = this.objectFFactory.create(station.model, station.position, true);
+            if (
+                station.type === FuelStationType.Private ||
+                station.fuel === FuelType.Kerosene ||
+                station.name === 'Cayo'
+            ) {
+                station.objectId = await this.objectProvider.createObject({
+                    model: station.model,
+                    position: station.position,
+                    id: `fuel_station_${station.name}`,
+                });
             }
         }
 
@@ -309,7 +317,7 @@ export class VehicleFuelProvider {
             },
             {
                 icon: 'c:fuel/pistolet.png',
-                label: 'Déposer le pistolet',
+                label: 'Reposer le pistolet',
                 action: (entity: number) => {
                     this.toggleStationPistol(entity);
                 },
@@ -393,7 +401,10 @@ export class VehicleFuelProvider {
         }
 
         if (
-            (IsThisModelAHeli(model) || IsThisModelAPlane(model) || isVehicleModelElectric(model)) &&
+            (IsThisModelABoat(model) ||
+                IsThisModelAHeli(model) ||
+                IsThisModelAPlane(model) ||
+                isVehicleModelElectric(model)) &&
             station.fuel === FuelType.Essence
         ) {
             this.notifier.notify("~r~Vous ne pouvez pas remplir ce véhicule avec de l'essence.", 'error');
@@ -402,7 +413,12 @@ export class VehicleFuelProvider {
             return;
         }
 
-        if (!IsThisModelAHeli(model) && !IsThisModelAPlane(model) && station.fuel === FuelType.Kerosene) {
+        if (
+            !IsThisModelABoat(model) &&
+            !IsThisModelAHeli(model) &&
+            !IsThisModelAPlane(model) &&
+            station.fuel === FuelType.Kerosene
+        ) {
             this.notifier.notify('~r~Vous ne pouvez pas remplir ce véhicule avec du kérosene.', 'error');
             await this.disableStationPistol();
 

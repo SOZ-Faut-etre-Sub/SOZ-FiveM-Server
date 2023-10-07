@@ -300,6 +300,26 @@ export class PlayerHealthProvider {
         }
     }
 
+    @Tick(TickInterval.EVERY_SECOND)
+    private async updateArmorMetadata(): Promise<void> {
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        const metadataArmor = player.metadata.armor;
+
+        if (metadataArmor.hidden) {
+            return;
+        }
+
+        const armor = GetPedArmour(PlayerPedId());
+        if (armor != metadataArmor.current) {
+            metadataArmor.current = armor;
+            TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'armor', metadataArmor);
+        }
+    }
+
     private async doStrengthExercise(type: keyof PlayerServerStateExercise) {
         const playerState = await emitRpc<PlayerServerState>(RpcServerEvent.PLAYER_GET_SERVER_STATE);
 
@@ -553,6 +573,7 @@ export class PlayerHealthProvider {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
                     label: 'Faire des tractions',
+                    icon: 'c:/sport/traction.png',
                     canInteract: () => true,
                     action: () => {
                         this.doChinUps(coords);
@@ -565,6 +586,7 @@ export class PlayerHealthProvider {
             this.targetFactory.createForBoxZone(name, zone, [
                 {
                     label: 'Faire des haltères',
+                    icon: 'c:/sport/halteres.png',
                     canInteract: () => true,
                     action: () => {
                         this.doFreeWeight();
@@ -575,7 +597,7 @@ export class PlayerHealthProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded(): Promise<void> {
+    async setupPlayerBodySummer(): Promise<void> {
         if (!isFeatureEnabled(Feature.MyBodySummer)) {
             return;
         }
@@ -720,6 +742,7 @@ export class PlayerHealthProvider {
                 options: [
                     {
                         label: 'Prendre un abonnement.',
+                        icon: 'c:/sport/abonnement.png',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
 
@@ -735,6 +758,7 @@ export class PlayerHealthProvider {
                     },
                     {
                         label: 'Renouveler son abonnement.',
+                        icon: 'c:/sport/renouvellement.png',
                         canInteract: () => {
                             const player = this.playerService.getPlayer();
 

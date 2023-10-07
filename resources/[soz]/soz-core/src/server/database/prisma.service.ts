@@ -1,11 +1,9 @@
+import { Once, OnceStep } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { OnceLoader } from '@core/loader/once.loader';
 import { Logger } from '@core/logger';
 import { Prisma, PrismaClient } from '@prisma/client';
-
-import { Once, OnceStep } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { OnceLoader } from '../../core/loader/once.loader';
-
 @Provider()
 export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, 'query' | 'error' | 'warn' | 'info'> {
     @Inject(OnceLoader)
@@ -13,7 +11,6 @@ export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, 'que
 
     @Inject(Logger)
     private logger: Logger;
-
     constructor() {
         super({
             log: [

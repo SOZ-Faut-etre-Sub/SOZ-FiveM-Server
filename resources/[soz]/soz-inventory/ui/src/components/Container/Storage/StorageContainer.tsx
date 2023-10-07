@@ -109,7 +109,7 @@ export const StorageContainer = () => {
                         },
                     );
                 }
-            } else if (event.data.action === 'closeInventory') {
+            } else if (display && event.data.action === 'closeInventory') {
                 closeNUI(
                     () => {
                         closeMenu();
@@ -122,12 +122,12 @@ export const StorageContainer = () => {
                 closeMenu();
             }
         },
-        [closeMenu, setPlayerInventory, setTargetInventory, setPlayerMoney, setTargetMoney],
+        [closeMenu, setPlayerInventory, setTargetInventory, setPlayerMoney, setTargetMoney, display],
     );
 
     const onKeyDownReceived = useCallback(
         (event: KeyboardEvent) => {
-            if (!event.repeat && event.key === 'Escape') {
+            if (display && !event.repeat && event.key === 'Escape') {
                 fetch(`https://soz-inventory/closeNUI`, {
                     method: 'POST',
                     headers: {
@@ -141,7 +141,7 @@ export const StorageContainer = () => {
                 });
             }
         },
-        [targetInventory, closeMenu],
+        [targetInventory, closeMenu, display],
     );
 
     const handleInventoryUpdate = useCallback((apiResponse: {sourceInventory?: SozInventoryModel; targetInventory?: SozInventoryModel; inverse: boolean}) => {

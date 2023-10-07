@@ -1,7 +1,7 @@
     TOP
 0  hiver BCSO
 1  pilote LSPD/BCSO
-2  moto LSPD/BCSO
+2  moto LSPD/BCSO/SASP
 3  service LSMC
 4  service LSPD/BCSO/noir
 5  service Stonks
@@ -11,6 +11,7 @@
 9  hiver Stonks
 10 intervention LSPD/BCSO
 11 anti-emeute LSPD/BCSO
+12 sport LSPD/BCSO (14 for femme)
 
     Decalque
 0  chevron 0-4
@@ -27,6 +28,8 @@
 5  anti-emeute LSPD/BCSO
 6  light crimi
 7  medium crimi
+8  bandoulière SASP       / femme armor SASP
+9  armor SASP
 
     Undershirt
 0  stonk holster radio epaule // pas utilisé?
@@ -52,13 +55,15 @@
 
     pantalon
 0  patient  //don"t use, cause tatoo duplication between legs
-1  service LSPD/BCSO
+1  service LSPD/BCSO/SASP
 2  stonk
 3  motard LSPD/BCSO
 4  lsmc
 5  pilote LSPD/BCSO
 6  intervention LSPD/BCSO
 7  antiemeute LSPD/BCSO
+8  SASP Sombre
+9  sport LSPD/BCSO (10 for femme)
 
     chapeau
 0  casquette stonk
@@ -67,6 +72,7 @@
 3  casque pompier                   //same as vanilla?
 4  casque pilote LSPD/BCSO          //logo LSPD manquant
 5  oreille lapin
+6  SASP
 
 
 

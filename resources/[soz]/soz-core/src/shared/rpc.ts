@@ -5,6 +5,20 @@ export enum RpcServerEvent {
     ADMIN_GET_VEHICLES = 'soz-core:admin:get-vehicles',
     ADMIN_IS_ALLOWED = 'soz-core:admin:is-allowed',
     ADMIN_GET_REPUTATION = 'soz-core:admin:get-reputation',
+    ADMIN_MAPPER_SET_APARTMENT_PRICE = 'soz-core:admin:mapper:set-apartment-price',
+    ADMIN_MAPPER_SET_APARTMENT_NAME = 'soz-core:admin:mapper:set-apartment-name',
+    ADMIN_MAPPER_SET_APARTMENT_IDENTIFIER = 'soz-core:admin:mapper:set-apartment-identifier',
+    ADMIN_MAPPER_UPDATE_APARTMENT_ZONE = 'soz-core:admin:mapper:update-apartment-zone',
+    ADMIN_MAPPER_UPDATE_PROPERTY_ZONE = 'soz-core:admin:mapper:update-property-zone',
+    ADMIN_MAPPER_ADD_APARTMENT = 'soz-core:admin:mapper:add-apartment',
+    ADMIN_MAPPER_ADD_PROPERTY = 'soz-core:admin:mapper:add-property',
+    ADMIN_MAPPER_ADD_PROPERTY_CULLING = 'soz-core:admin:mapper:add-property-culling',
+    ADMIN_MAPPER_REMOVE_PROPERTY_CULLING = 'soz-core:admin:mapper:remove-property-culling',
+    ADMIN_MAPPER_REMOVE_PROPERTY = 'soz-core:admin:mapper:remove-property',
+    ADMIN_MAPPER_REMOVE_APARTMENT = 'soz-core:admin:mapper:remove-apartment',
+
+    ADMIN_MAPPER_ADD_ZONE = 'soz-core:admin:mapper:add-zone',
+    ADMIN_MAPPER_REMOVE_ZONE = 'soz-core:admin:mapper:remove-zone',
 
     BENNYS_GET_ORDERS = 'soz-core:server:job:bennys:get-orders',
     BENNYS_CANCEL_ORDER = 'soz-core:server:job:bennys:cancel-order',
@@ -32,15 +46,14 @@ export enum RpcServerEvent {
     CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',
     CRAFTING_DO_SALVAGE = 'soz-core:crafting:do-salvage',
 
-    SHOP_MASK_GET_CATEGORIES = 'soz-core:shop:mask:get-categories',
-    SHOP_MASK_GET_ITEMS = 'soz-core:shop:mask:get-items',
-
     STORY_HALLOWEEN_SCENARIO1 = 'soz-story:server:halloween1',
     STORY_HALLOWEEN_SCENARIO2 = 'soz-story:server:halloween2',
     STORY_HALLOWEEN_SCENARIO3 = 'soz-story:server:halloween3',
     STORY_HALLOWEEN_SCENARIO4 = 'soz-story:server:halloween4',
 
     REPOSITORY_GET_DATA = 'soz-core:repository:get-data',
+    REPOSITORY_GET_DATA_2 = 'soz-core:repository:get-data-2',
+    REPOSITORY_CLOTHING_GET_SHOP = 'soz-core:repository:clothing:get-shop',
 
     VEHICLE_CUSTOM_GET_MODS = 'soz-core:vehicle:custom:get-mods',
     VEHICLE_CUSTOM_SET_MODS = 'soz-core:vehicle:custom:set-mods',
@@ -57,6 +70,7 @@ export enum RpcServerEvent {
     VEHICLE_GET_CONDITION = 'soz-core:rpc:vehicle:get-condition',
     VEHICLE_GET_MUTED_SIRENS = 'soz-core:rpc:vehicle:get-muted-sirens',
     VEHICLE_GET_OPENED = 'soz-core:rpc:vehicle:get-opened',
+    VEHICLE_FDO_GET_POSTIONS = 'soz-core:rpc:vehicle:fdo-get-positions',
 
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
     VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',
@@ -76,7 +90,6 @@ export enum RpcServerEvent {
     WEAPON_SET_TINT = 'soz-core:server:weapon:setTint',
     WEAPON_SET_ATTACHMENTS = 'soz-core:server:weapon:setAttachments',
 
-    VANDALISM_END = 'soz-core:server:vandalism:end',
     VANDALISM_LOAD = 'soz-core:server:vandalism:load',
     VANDALISM_CHECK = 'soz-core:server:vandalism:check',
     VANDALISM_ALERT_CHECK = 'soz-core:server:vandalism:alert-check',
@@ -96,6 +109,7 @@ export enum RpcServerEvent {
     HELICO_INIT_LIGHT = 'soz-core:server:helico:init-spotlight',
 
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
+    POLICE_DRUGLEVEL = 'soz-core:server:police:drug-level',
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
 
     BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',
@@ -104,6 +118,41 @@ export enum RpcServerEvent {
 
     RACKET_COOP_CHECK_CRIMI = 'soz-core:server:racket:check-crimi',
     RACKET_LOCK_PED = 'soz-core:server:racket:lock-ped',
+
+    DRUGS_GET_GARDEN_INFO = 'soz-core:server:drugs:garden-info',
+    DRUGS_GARDEN_ENTER = 'soz-core:server:drugs:garden-enter',
+    DRUGS_GARDEN_EXIT = 'soz-core:server:drugs:garden-exit',
+    DRUGS_GET_RECIPES = 'soz-core:server:drugs:recipes-get',
+    DRUG_DO_TRANSFORM = 'soz-core:server:drugs:recipes-transform',
+    DRUGS_PAY_LOCATION = 'soz-core:server:drugs:location-pay',
+    DRUGS_FIELD_HEALTH = 'soz-core:server:drugs:field-health',
+
+    SOZEDEX_CLAIM_REWARD = 'soz-core:server:sozedex:claim-reward',
+
+    RACE_SERVER_START = 'soz-core:server:race:start',
+    RACE_SERVER_EXIT = 'soz-core:server:race:exit',
+    RACE_GET_RANKING = 'soz-core:server:race:get-ranking',
+    RACE_GET_SPLITS = 'soz-core:server:race:get-splits',
+
+    OBJECT_GET_LIST = 'soz-core:server:object:get-list',
+
+    PROP_GET_COLLECTIONS_DATA = 'soz-core:server:prop:get-collection-names',
+    PROP_GET_PROP_COLLECTION = 'soz-core:server:prop:get-collection',
+    PROP_GET_SERVER_DATA = 'soz-core:server:prop:get-number-props',
+    PROP_GET_LOADED_PROPS = 'soz-core:server:prop:get-all-props',
+    PROP_REQUEST_CREATE_COLLECTION = 'soz-core:server:prop:create-collection',
+    PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:delete-collection',
+    PROP_REQUEST_CREATE_PROP = 'soz-core:server:prop:create-prop',
+    PROP_REQUEST_TOGGLE_LOAD_COLLECTION = 'soz-core:server:prop:load-collection',
+    PROP_REQUEST_UNLOAD_PROPS = 'soz-core:server:prop:unload-props',
+
+    CRAFT_GET_RECIPES = 'soz-core:server:craft:get-recipes',
+    CRAFT_DO_RECIPES = 'soz-core:server:craft:do-recipes',
+
+    FDF_TREE_HARVEST = 'soz-core:server:fdf:tree-harvest',
+    FDF_TREE_GET = 'soz-core:server:fdf:tree-get',
+    FDF_CROP_GET = 'soz-core:server:fdf:crop-get',
+    FDF_FIELD_ISPLOW = 'soz-core:server:fdf:field-isplow',
 }
 
 export enum RpcClientEvent {
@@ -114,4 +163,6 @@ export enum RpcClientEvent {
     VEHICLE_SPAWN_FROM_SERVER = 'soz-core:rpc:client:vehicle:spawn-from-server',
     VEHICLE_DELETE = 'soz-core:rpc:client:vehicle:delete',
     MONITOR_GET_TRACES = 'soz-core:rpc:client:monitor:get-traces',
+    DRUG_CHECK_ZONE = 'soz-core:rpc:client:drug:check-zone',
+    FDF_CHECK_ZONE = 'soz-core:rpc:client:fdf:check-zone',
 }

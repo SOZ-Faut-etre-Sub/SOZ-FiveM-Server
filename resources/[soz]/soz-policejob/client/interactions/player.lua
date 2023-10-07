@@ -1,8 +1,8 @@
 -- Maybe these permissions could be included in SozJobCore.Jobs in resources/[soz]/soz-jobs/config.lua
-local jobCanFine = {"lspd", "bcso"}
-local jobCanFouille = {"lspd", "bcso", "cash-transfer"}
-local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc"}
-local jobCanBreathAnalyze = {"lspd", "bcso", "lsmc"}
+local jobCanFine = {"lspd", "bcso", "sasp"}
+local jobCanFouille = {"lspd", "bcso", "cash-transfer", "sasp"}
+local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc", "sasp"}
+local jobCanBreathAnalyze = {"lspd", "bcso", "lsmc", "sasp"}
 
 --- Targets
 Citizen.CreateThread(function()
@@ -142,6 +142,17 @@ Citizen.CreateThread(function()
                     icon = "c:police/alcootest.png",
                     event = "police:client:breathanalyzer",
                     item = "breathanalyzer",
+                    canInteract = function(player)
+                        return PlayerData.job.onduty
+                    end,
+                    job = jobId,
+                },
+                {
+                    label = "Dépistage de drogue",
+                    color = jobId,
+                    icon = "c:police/screening.png",
+                    event = "police:client:screening_test",
+                    item = "screening_test",
                     canInteract = function(player)
                         return PlayerData.job.onduty
                     end,

@@ -3,7 +3,7 @@ import { Inject, Injectable } from '../../core/decorators/injectable';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Garage, GarageCategory, GarageType } from '../../shared/vehicle/garage';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 type DatabaseZone = {
     x: number;
@@ -15,12 +15,19 @@ type DatabaseZone = {
 };
 
 @Injectable()
-export class GarageRepository extends Repository<Record<string, Garage>> {
+export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
     protected async load(): Promise<Record<string, Garage>> {
-        const garageList = { ...GarageList };
+        const garageList: Record<string, Garage> = {};
+
+        for (const id of Object.keys(GarageList)) {
+            garageList[id] = {
+                id,
+                ...GarageList[id],
+            };
+        }
 
         const houseProperties = await this.prismaService.housing_property.findMany({
             where: {
@@ -32,7 +39,8 @@ export class GarageRepository extends Repository<Record<string, Garage>> {
             const entryZone = JSON.parse(houseProperty.entry_zone) as DatabaseZone;
             const garageZone = JSON.parse(houseProperty.garage_zone) as DatabaseZone;
 
-            const houseGarage: Garage = {
+            garageList[houseProperty.identifier] = {
+                id: `property_${houseProperty.identifier}`,
                 name: 'Garage personnel',
                 type: GarageType.House,
                 category: GarageCategory.Car,
@@ -50,8 +58,6 @@ export class GarageRepository extends Repository<Record<string, Garage>> {
                 ],
                 isTrailerGarage: houseProperty.identifier.includes('trailer'),
             };
-
-            garageList[houseProperty.identifier] = houseGarage;
         }
 
         return garageList;

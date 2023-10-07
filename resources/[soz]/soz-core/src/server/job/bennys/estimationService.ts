@@ -25,11 +25,14 @@ export class EstimationService {
 
         for (const [key, category] of Object.entries(VehicleModificationPricing)) {
             if (category.type === 'list') {
-                const currentLevel = configuration.modification[key];
-                const level = category.priceByLevels[currentLevel];
+                const currentLevel = configuration.modification[key] || -1;
 
-                if (level) {
-                    price += basePrice * level;
+                for (let subLevel = 0; subLevel <= currentLevel; subLevel++) {
+                    const level = category.priceByLevels[subLevel];
+
+                    if (level) {
+                        price = price + basePrice * level;
+                    }
                 }
             }
 

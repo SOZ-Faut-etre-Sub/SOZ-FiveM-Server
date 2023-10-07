@@ -2,28 +2,21 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Notifier } from '@public/client/notifier';
-import { ResourceLoader } from '@public/client/resources/resource.loader';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 
 import { BlipFactory } from '../../blip';
-import { InventoryManager } from '../../inventory/inventory.manager';
-import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 import { JobPermissionService } from '../job.permission.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class MandatoryProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
-    @Inject(ItemService)
-    private itemService: ItemService;
-
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
@@ -48,12 +41,15 @@ export class MandatoryProvider {
     @Inject(JobPermissionService)
     private jobPermissionService: JobPermissionService;
 
+    @Inject(JobService)
+    private jobService: JobService;
+
     private state = {
         radar: false,
     };
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupMdrJob() {
         this.createBlips();
 
         this.targetFactory.createForBoxZone(
@@ -83,6 +79,21 @@ export class MandatoryProvider {
                     label: 'Fin de service',
                     canInteract: () => {
                         return this.playerService.isOnDuty();
+                    },
+                    job: JobType.MDR,
+                },
+                {
+                    icon: 'fas fa-users',
+                    label: 'Employé(e)s en service',
+                    action: () => {
+                        TriggerServerEvent('QBCore:GetEmployOnDuty');
+                    },
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return (
+                            this.playerService.isOnDuty() &&
+                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
+                        );
                     },
                     job: JobType.MDR,
                 },
@@ -170,7 +181,8 @@ export class MandatoryProvider {
             TriggerEvent(
                 'police:client:RedCall',
                 '555-POLICE',
-                `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`
+                `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers ${name}`,
+                `Code Rouge !!! Un membre de Mandatory a besoin d'aide vers <span {class}>${name}</span>`
             );
         }
 
@@ -181,7 +193,7 @@ export class MandatoryProvider {
     public useTicket(dlc: string) {
         const [player, distance] = this.playerService.getClosestPlayer();
 
-        if (player && distance < 2.5) {
+        if (player != -1 && distance < 2.5) {
             const animDict = 'mp_common';
             this.resourceLoader.loadAnimationDictionary(animDict);
             TaskPlayAnim(PlayerPedId(), animDict, 'givetake2_a', 8.0, 8.0, -1, 0, 0, true, false, true);

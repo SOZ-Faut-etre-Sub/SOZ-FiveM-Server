@@ -1,29 +1,6 @@
 import { WardrobeConfig } from '../cloth';
+import { CraftCategory } from '../craft/craft';
 import { NamedZone } from '../polyzone/box.zone';
-
-export type BaunRecipe = {
-    canCraft: boolean;
-    inputs: {
-        label: string;
-        hasRequiredAmount: boolean;
-        amount: number;
-    }[];
-    output: {
-        label: string;
-        amount: number;
-    };
-};
-
-export type BaunCraftProcess = {
-    inputs: {
-        id: string;
-        amount: number;
-    }[];
-    output: {
-        id: string;
-        amount: number;
-    };
-};
 
 export const baunCraftZones: NamedZone[] = [
     {
@@ -53,128 +30,126 @@ export const baunCraftZones: NamedZone[] = [
         minZ: 30.82,
         maxZ: 31.22,
     },
+    {
+        name: 'baun:yellowjack:craft:1',
+        center: [1980.87, 3052.41, 47.21],
+        length: 0.6,
+        width: 0.25,
+        heading: 238.8,
+        minZ: 47.12,
+        maxZ: 47.72,
+    },
 ];
 
-export const baunCraftProcesses: BaunCraftProcess[] = [
-    {
-        inputs: [
-            { id: 'rhum', amount: 1 },
-            { id: 'cane_sugar', amount: 2 },
-            { id: 'green_lemon', amount: 2 },
-            { id: 'fruit_slice', amount: 4 },
-            { id: 'ice_cube', amount: 8 },
-            { id: 'straw', amount: 1 },
-            { id: 'tumbler', amount: 1 },
-        ],
-        output: {
-            id: 'narito',
-            amount: 1,
+export const BaunCraftsLists: Record<string, CraftCategory> = {
+    Cocktails: {
+        animation: {
+            dictionary: 'anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal',
+            name: 'pour_one',
+            options: {
+                repeat: true,
+            },
+        },
+        duration: 4000,
+        event: 'job_baun_craft',
+        recipes: {
+            narito: {
+                amount: 1,
+                inputs: {
+                    rhum: { count: 1 },
+                    cane_sugar: { count: 2 },
+                    green_lemon: { count: 2 },
+                    fruit_slice: { count: 4 },
+                    ice_cube: { count: 8 },
+                    straw: { count: 1 },
+                    tumbler: { count: 1 },
+                },
+            },
+            lapicolada: {
+                amount: 1,
+                inputs: {
+                    rhum: { count: 1 },
+                    coconut_milk: { count: 3 },
+                    ananas_juice: { count: 2 },
+                    fruit_slice: { count: 4 },
+                    ice_cube: { count: 6 },
+                    straw: { count: 1 },
+                    tumbler: { count: 1 },
+                },
+            },
+            sunrayou: {
+                amount: 1,
+                inputs: {
+                    tequila: { count: 1 },
+                    orange_juice: { count: 1 },
+                    strawberry_juice: { count: 1 },
+                    fruit_slice: { count: 4 },
+                    cane_sugar: { count: 2 },
+                    ice_cube: { count: 6 },
+                    straw: { count: 1 },
+                    tumbler: { count: 1 },
+                },
+            },
+            ponche: {
+                amount: 1,
+                inputs: {
+                    rhum: { count: 1 },
+                    orange_juice: { count: 1 },
+                    ananas_juice: { count: 1 },
+                    cane_sugar: { count: 2 },
+                    ice_cube: { count: 4 },
+                    straw: { count: 1 },
+                    tumbler: { count: 1 },
+                },
+            },
+            pinkenny: {
+                amount: 1,
+                inputs: {
+                    vodka: { count: 1 },
+                    green_lemon: { count: 1 },
+                    strawberry_juice: { count: 2 },
+                    apple_juice: { count: 3 },
+                    cane_sugar: { count: 2 },
+                    ice_cube: { count: 4 },
+                    straw: { count: 1 },
+                    tumbler: { count: 1 },
+                },
+            },
+            phasmopolitan: {
+                amount: 1,
+                inputs: {
+                    gin: { count: 1 },
+                    green_lemon: { count: 1 },
+                    ice_cube: { count: 4 },
+                    straw: { count: 1 },
+                    tumbler: { count: 1 },
+                },
+            },
+            escalier: {
+                amount: 1,
+                inputs: {
+                    cognac: { count: 1 },
+                    orange_juice: { count: 2 },
+                    ice_cube: { count: 2 },
+                    straw: { count: 1 },
+                    tumbler: { count: 1 },
+                },
+            },
+            whicanelle: {
+                amount: 1,
+                inputs: {
+                    whisky: { count: 1 },
+                    apple_juice: { count: 2 },
+                    green_lemon: { count: 1 },
+                    cane_sugar: { count: 2 },
+                    ice_cube: { count: 1 },
+                    straw: { count: 1 },
+                    tumbler: { count: 1 },
+                },
+            },
         },
     },
-    {
-        inputs: [
-            { id: 'rhum', amount: 1 },
-            { id: 'coconut_milk', amount: 3 },
-            { id: 'ananas_juice', amount: 2 },
-            { id: 'fruit_slice', amount: 4 },
-            { id: 'ice_cube', amount: 6 },
-            { id: 'straw', amount: 1 },
-            { id: 'tumbler', amount: 1 },
-        ],
-        output: {
-            id: 'lapicolada',
-            amount: 1,
-        },
-    },
-    {
-        inputs: [
-            { id: 'tequila', amount: 1 },
-            { id: 'orange_juice', amount: 1 },
-            { id: 'strawberry_juice', amount: 1 },
-            { id: 'fruit_slice', amount: 4 },
-            { id: 'cane_sugar', amount: 2 },
-            { id: 'ice_cube', amount: 6 },
-            { id: 'straw', amount: 1 },
-            { id: 'tumbler', amount: 1 },
-        ],
-        output: {
-            id: 'sunrayou',
-            amount: 1,
-        },
-    },
-    {
-        inputs: [
-            { id: 'rhum', amount: 1 },
-            { id: 'orange_juice', amount: 1 },
-            { id: 'ananas_juice', amount: 1 },
-            { id: 'cane_sugar', amount: 2 },
-            { id: 'ice_cube', amount: 4 },
-            { id: 'straw', amount: 1 },
-            { id: 'tumbler', amount: 1 },
-        ],
-        output: {
-            id: 'ponche',
-            amount: 1,
-        },
-    },
-    {
-        inputs: [
-            { id: 'vodka', amount: 1 },
-            { id: 'green_lemon', amount: 1 },
-            { id: 'strawberry_juice', amount: 2 },
-            { id: 'apple_juice', amount: 3 },
-            { id: 'cane_sugar', amount: 2 },
-            { id: 'ice_cube', amount: 4 },
-            { id: 'straw', amount: 1 },
-            { id: 'tumbler', amount: 1 },
-        ],
-        output: {
-            id: 'pinkenny',
-            amount: 1,
-        },
-    },
-    {
-        inputs: [
-            { id: 'gin', amount: 1 },
-            { id: 'green_lemon', amount: 1 },
-            { id: 'ice_cube', amount: 4 },
-            { id: 'straw', amount: 1 },
-            { id: 'tumbler', amount: 1 },
-        ],
-        output: {
-            id: 'phasmopolitan',
-            amount: 1,
-        },
-    },
-    {
-        inputs: [
-            { id: 'cognac', amount: 1 },
-            { id: 'orange_juice', amount: 2 },
-            { id: 'ice_cube', amount: 2 },
-            { id: 'straw', amount: 1 },
-            { id: 'tumbler', amount: 1 },
-        ],
-        output: {
-            id: 'escalier',
-            amount: 1,
-        },
-    },
-    {
-        inputs: [
-            { id: 'whisky', amount: 1 },
-            { id: 'apple_juice', amount: 2 },
-            { id: 'green_lemon', amount: 1 },
-            { id: 'cane_sugar', amount: 2 },
-            { id: 'ice_cube', amount: 1 },
-            { id: 'straw', amount: 1 },
-            { id: 'tumbler', amount: 1 },
-        ],
-        output: {
-            id: 'whicanelle',
-            amount: 1,
-        },
-    },
-];
+};
 
 export const BaunConfig = {
     Resell: {
@@ -182,7 +157,6 @@ export const BaunConfig = {
         reward: 1000,
     },
     DURATIONS: {
-        CRAFTING: 4000,
         RESTOCKING: 4000,
         HARVESTING: 2000,
     },

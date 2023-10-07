@@ -117,9 +117,14 @@ QBCore.Functions.CreateCallback("banking:server:TransferMoney", function(source,
             if success and sendNotificationToTarget then
                 local Target = QBCore.Functions.GetPlayerByBankAccount(accountTarget)
 
+                local Source = QBCore.Functions.GetPlayerByBankAccount(accountSource)
+                local origin = Source and (Source.PlayerData.charinfo.firstname .. " " .. Source.PlayerData.charinfo.lastname) or
+                                   SozJobCore.Jobs[accountSource].label
+
                 if Target then
                     TriggerClientEvent("soz-core:client:notification:draw-advanced", Target.PlayerData.source, "Maze Banque", "Mouvement bancaire",
-                                       "Un versement vient d'être réalisé sur votre compte", "CHAR_BANK_MAZE")
+                                       "Un virement de ~g~" .. amount .. "$~s~ de ~g~" .. origin .. "~s~ vient d'être versé sur votre compte",
+                                       "CHAR_BANK_MAZE")
                 end
             end
 

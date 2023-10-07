@@ -57,6 +57,14 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         };
     };
 
+    const onAnchorChange = (value: boolean) => {
+        fetchNui(NuiEvent.VehicleAnchorChange, value);
+    };
+
+    const onPoliceDisplay = (value: boolean) => {
+        fetchNui(NuiEvent.VehiclePoliceDisplay, value);
+    };
+
     return (
         <Menu type={MenuType.Vehicle}>
             <MainMenu>
@@ -93,6 +101,16 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                                 <MenuItemButton onConfirm={() => onOpenLSCustom()}>LS Custom</MenuItemButton>
                             )}
                         </>
+                    )}
+                    {data.isDriver && data.isBoat && (
+                        <MenuItemCheckbox onChange={onAnchorChange} checked={data.isAnchor}>
+                            Ancre baissée
+                        </MenuItemCheckbox>
+                    )}
+                    {data.police && (
+                        <MenuItemCheckbox onChange={onPoliceDisplay} checked={data.policeLocator}>
+                            Affichage des patrouilles
+                        </MenuItemCheckbox>
                     )}
                 </MenuContent>
             </MainMenu>

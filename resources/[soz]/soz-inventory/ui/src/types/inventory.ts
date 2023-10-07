@@ -25,6 +25,7 @@ export type InventoryItem = {
     weight: number;
     slot: number;
     useable: boolean;
+    usableLabel?: string;  // added by inventory on the fly
     unique: boolean;
     type: ItemType;
     amount: number;
@@ -55,7 +56,11 @@ export type ItemType =
     | 'liquor'
     | 'outfit'
     | 'key'
-    | 'crate';
+    | 'fishing_rod'
+    | 'fishing_bait'
+    | 'crate'
+    | 'fish'
+    | 'fishing_garbage';
 
 export type MealMetadata = {
         name: string;
@@ -63,6 +68,12 @@ export type MealMetadata = {
         amount: number;
         label: string;
         weight: number;
+};
+
+export type BaitMetadata = {
+    name: string;
+    metadata: InventoryItemMetadata;
+    label: string;
 };
     
 export type InventoryItemMetadata = {
@@ -80,6 +91,10 @@ export type InventoryItemMetadata = {
     attachments?: Record<string, string | null>;
     crafted?: boolean;
     crateElements?: MealMetadata[];
+    bait?: BaitMetadata;
+    fuel?: number;
+    weight?: number;
+    length?:number;
 };
 
 

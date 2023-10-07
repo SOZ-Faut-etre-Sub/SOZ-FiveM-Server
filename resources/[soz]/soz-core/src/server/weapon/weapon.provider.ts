@@ -1,3 +1,6 @@
+import { uuidv4 } from '@public/core/utils';
+import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
+
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -14,8 +17,11 @@ import { PlayerStateService } from '../player/player.state.service';
 
 const DIR_WATER_HYDRANT = 13;
 const EXP_TAG_RAYGUN = 70;
+const SMOKEGRENADELAUNCHER = 19;
+const SMOKEGRENADE = 20;
+const FLARE = 22;
 
-const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN];
+const excludeExplosionAlert = [DIR_WATER_HYDRANT, EXP_TAG_RAYGUN, SMOKEGRENADELAUNCHER, SMOKEGRENADE, FLARE];
 
 @Provider()
 export class WeaponProvider {
@@ -33,6 +39,8 @@ export class WeaponProvider {
 
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
+
+    private lastAlertByZone: Record<string, number> = {};
 
     @OnEvent(ServerEvent.WEAPON_SHOOTING)
     async onWeaponShooting(source: number, weaponSlot: number, weaponGroup: number, playerAmmo: number) {
@@ -53,6 +61,27 @@ export class WeaponProvider {
                 health: weapon.metadata.health > 0 ? weapon.metadata.health - 1 : 0,
             });
         }
+    }
+
+    @OnEvent(ServerEvent.WEAPON_SHOOTING_ALERT)
+    async onWeaponShootingAlert(source: number, alertMessage: string, htmlMessage: string, zoneID: string) {
+        if (this.lastAlertByZone[zoneID] && this.lastAlertByZone[zoneID] + 60000 > Date.now()) {
+            return;
+        }
+
+        const coords = GetEntityCoords(GetPlayerPed(source)) as Vector3;
+
+        TriggerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+            anonymous: true,
+            number: '555-POLICE',
+            message: alertMessage,
+            htmlMessage: htmlMessage,
+            info: { type: 'shooting' },
+            overrideIdentifier: 'System',
+            pedPosition: JSON.stringify(toVector3Object(coords)),
+        });
+
+        this.lastAlertByZone[zoneID] = Date.now();
     }
 
     private async useAmmo(source: number, item: InventoryItem) {
@@ -119,6 +148,7 @@ export class WeaponProvider {
         this.item.setItemUseCallback('ammo_14', this.useAmmo.bind(this));
         this.item.setItemUseCallback('ammo_15', this.useAmmo.bind(this));
         this.item.setItemUseCallback('ammo_16', this.useAmmo.bind(this));
+        this.item.setItemUseCallback('ammo_17', this.useAmmo.bind(this));
     }
 
     private getWeaponConfig(weaponName: string): WeaponConfig | null {

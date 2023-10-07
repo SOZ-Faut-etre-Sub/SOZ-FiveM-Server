@@ -9,6 +9,8 @@ import { ContactsApp } from '../../../apps/contacts';
 import ContactIcon from '../../../apps/contacts/icon';
 import { DialerApp } from '../../../apps/dialer';
 import DialerIcon from '../../../apps/dialer/icon';
+import GameTetris from '../../../apps/game-tetris';
+import GameTetrisIcon from '../../../apps/game-tetris/icon';
 import { InvoiceApp } from '../../../apps/invoices';
 import InvoiceIcon from '../../../apps/invoices/icon';
 import { MessagesApp } from '../../../apps/messages';
@@ -25,6 +27,8 @@ import { SocietyMessagesApp } from '../../../apps/society-messages';
 import SocietyMessagesIcon from '../../../apps/society-messages/icon';
 import { TwitchNewsApp } from '../../../apps/twitch-news';
 import TwitchNewsIcon from '../../../apps/twitch-news/icon';
+import { WeatherApp } from '../../../apps/weather';
+import WeatherIcon from '../../../apps/weather/icon';
 import ZutomIcon from '../../../apps/zutom/icon';
 import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 
@@ -136,5 +140,19 @@ export const APPS: IAppConfig[] = [
         home: true,
         component: <CameraApp />,
         icon: CameraIcon,
+    },
+    {
+        id: 'weather',
+        nameLocale: 'APPS_WEATHER',
+        path: '/weather',
+        component: <WeatherApp />,
+        icon: WeatherIcon,
+    },
+    {
+        id: 'game-tetris',
+        nameLocale: 'APPS_TETRIS',
+        path: '/game-tetris',
+        component: <GameTetris />,
+        icon: GameTetrisIcon,
     },
 ];

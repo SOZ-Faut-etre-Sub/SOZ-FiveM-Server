@@ -183,8 +183,8 @@ export class PlayerDiseaseProvider {
         }
     }
 
-    @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded(player: PlayerData): Promise<void> {
+    @Once(OnceStep.PlayerLoaded, true)
+    async setupPlayerDisease(player: PlayerData): Promise<void> {
         if (player.metadata.disease) {
             this.applyCurrentDiseaseEffect(player.metadata.disease);
         }

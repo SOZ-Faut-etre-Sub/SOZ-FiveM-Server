@@ -1,4 +1,4 @@
-local density = {["parked"] = 1.0, ["vehicle"] = 1.0, ["multiplier"] = 1.0, ["peds"] = 1.0, ["scenario"] = 1.0}
+local density = {["parked"] = 1.00, ["vehicle"] = 1.00, ["multiplier"] = 1.00, ["peds"] = 1.00, ["scenario"] = 1.00}
 
 CreateThread(function()
     while true do

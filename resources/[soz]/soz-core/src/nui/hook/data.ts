@@ -1,3 +1,4 @@
+import { DrugNuiZone } from '@private/shared/drugs';
 import { HudState } from '@public/shared/hud';
 import { Item } from '@public/shared/item';
 import { VehicleHud, VehicleHudSpeed } from '@public/shared/vehicle/vehicle';
@@ -36,4 +37,8 @@ export const useVehicleSpeed = (): VehicleHudSpeed => {
 
 export const useHud = (): HudState => {
     return useSelector((state: RootState) => state.hud);
+};
+
+export const useDrugLocation = (): DrugNuiZone[] => {
+    return useSelector((state: RootState) => state.drugLocation);
 };

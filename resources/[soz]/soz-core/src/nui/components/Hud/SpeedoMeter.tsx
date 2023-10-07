@@ -8,7 +8,7 @@ import {
     VehicleLockStatus,
     VehicleMidDamageThreshold,
 } from '../../../shared/vehicle/vehicle';
-import { useVehicle, useVehicleSpeed } from '../../hook/data';
+import { usePlayer, useVehicle, useVehicleSpeed } from '../../hook/data';
 import BatteryIcon from '../../icons/hud/vehicle/battery.svg';
 import EnergyIcon from '../../icons/hud/vehicle/energy.svg';
 import FuelIcon from '../../icons/hud/vehicle/fuel.svg';
@@ -182,18 +182,27 @@ const FuelGauge: FunctionComponent<{ value: number; fuelType: string }> = ({ val
 
 export const SpeedoMeter: FunctionComponent = () => {
     const vehicle = useVehicle();
+    const player = usePlayer();
     const inVehicle = vehicle.seat !== null;
     const [isPilot, setIsPilot] = useState(false);
+    const [timeout, initTimeout] = useState<NodeJS.Timeout>(null);
 
     useEffect(() => {
+        clearTimeout(timeout);
         if (vehicle.seat === null) {
-            setTimeout(() => {
-                setIsPilot(false);
-            }, 1000);
+            initTimeout(
+                setTimeout(() => {
+                    setIsPilot(false);
+                }, 1000)
+            );
         } else {
             setIsPilot(vehicle.seat === -1);
         }
     }, [vehicle.seat]);
+
+    if (player && player.metadata.isdead) {
+        return null;
+    }
 
     const classes = classNames(
         'absolute bottom-[1.2vh] left-[35vw] w-[30vw] flex justify-center transition-opacity duration-500',

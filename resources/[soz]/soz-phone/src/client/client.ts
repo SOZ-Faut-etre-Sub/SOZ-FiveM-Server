@@ -12,6 +12,8 @@ import './apps/news';
 import './apps/invoices';
 import './apps/notes';
 import './apps/societies';
+import './apps/weather';
+import './apps/tetris';
 
 import ClientUtils from './cl_utils';
 

@@ -83,6 +83,12 @@ export class VehicleStateProvider {
 
                         SetVehicleMaxSpeed(vehicle, maxSpeed / 3.6 - 0.25);
                         await wait(50);
+
+                        const newState = await this.vehicleStateService.getVehicleState(vehicle);
+
+                        if (newState.speedLimit !== speedLimit) {
+                            return;
+                        }
                     }
 
                     SetVehicleMaxSpeed(vehicle, speedLimit / 3.6 - 0.25);
@@ -107,6 +113,11 @@ export class VehicleStateProvider {
 
         if (!vehicleEntityId || !state) {
             return;
+        }
+
+        if (!IsEntityAMissionEntity(vehicleEntityId)) {
+            SetEntityAsMissionEntity(vehicleEntityId, true, true);
+            SetEntityCleanupByEngine(vehicleEntityId, false);
         }
 
         this.vehicleStateService.setVehicleState(vehicleEntityId, state, registerState);

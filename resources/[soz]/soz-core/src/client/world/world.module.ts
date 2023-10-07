@@ -1,7 +1,6 @@
 import { Module } from '../../core/decorators/module';
-import { ObjectFactory } from './object.factory';
-
+import { CayoMapProvider } from './cayo.map.provider';
 @Module({
-    providers: [ObjectFactory],
+    providers: [CayoMapProvider],
 })
 export class WorldModule {}

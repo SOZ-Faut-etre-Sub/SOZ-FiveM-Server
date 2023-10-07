@@ -1,6 +1,7 @@
 import { useNuiEvent } from '@common/hooks/useNuiEvent';
 import { useApps } from '@os/apps/hooks/useApps';
 import { PhoneEvents } from '@typings/phone';
+import { fetchNui } from '@utils/fetchNui';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,6 +26,7 @@ export const usePhoneService = () => {
 
     useEffect(() => {
         store.dispatch.phone.loadConfig();
+        store.dispatch.phone.loadCitizenID();
     }, []);
 
     useNuiEvent('PHONE', 'startRestart', () => {
@@ -39,4 +41,8 @@ export const usePhoneService = () => {
     useNuiEvent('PHONE', PhoneEvents.SET_AVAILABILITY, store.dispatch.phone.setAvailability);
     useNuiEvent('PHONE', PhoneEvents.SET_CONFIG, store.dispatch.phone.setConfig);
     useNuiEvent<string>('PHONE', PhoneEvents.OPEN_APP, handleOpenApp);
+
+    useEffect(() => {
+        fetchNui(PhoneEvents.PHONE_LOADED);
+    }, []);
 };

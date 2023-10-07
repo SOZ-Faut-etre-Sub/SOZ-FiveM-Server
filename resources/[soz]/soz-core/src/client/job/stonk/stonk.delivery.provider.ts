@@ -31,7 +31,7 @@ export class StonkDeliveryProvider {
     private currentDeliverLocation: NamedZone | null = null;
 
     @Once(OnceStep.PlayerLoaded)
-    onPlayerLoaded() {
+    setupStonkJob() {
         this.targetFactory.createForPed({
             model: 'mp_m_securoguard_01',
             coords: { w: 126.97, x: 914.39, y: -1269.36, z: 24.57 },

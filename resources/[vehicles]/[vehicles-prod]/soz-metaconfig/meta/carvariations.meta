@@ -1757,5 +1757,30 @@
             <lightSettings value="4" />
             <sirenSettings value="6" />
         </Item>
+        <Item>
+            <modelName>tropic3</modelName>
+            <colors>
+                <Item>
+                    <indices content="char_array">
+                        88
+                        88
+                        0
+                        0
+                        0
+                        0
+                    </indices>
+                    <liveries>
+                        <Item value="false" />
+                    </liveries>
+                </Item>
+            </colors>
+            <kits />
+            <windowsWithExposedEdges />
+            <plateProbabilities>
+                <Probabilities />
+            </plateProbabilities>
+            <lightSettings value="10" />
+            <sirenSettings value="0" />
+        </Item>
     </variationData>
 </CVehicleModelInfoVariation>

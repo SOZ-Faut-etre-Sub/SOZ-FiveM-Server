@@ -43,11 +43,11 @@ export const ShopContainer = () => {
 
     const onKeyDownReceived = useCallback(
         (event: KeyboardEvent) => {
-            if (!event.repeat && event.key === 'Escape') {
+            if (display && !event.repeat && event.key === 'Escape') {
                 closeNUI(() => { closeMenu(); })
             }
         },
-        [closeMenu],
+        [closeMenu, display],
     );
 
     const calcCartPrice = (cartContent: ShopItem[]) => {
@@ -114,7 +114,7 @@ export const ShopContainer = () => {
 
             let draggedItem: ShopItem = structuredClone(event.active.data.current.item)
             draggedItem.slot = event.over.data.current.slot            
-            const existingItem = cartContent.find((item) => item.name == draggedItem.name)
+            const existingItem = cartContent.find((item) => item.name == draggedItem.name && item.metadata?.label === draggedItem.metadata?.label)
             const existingSlot = cartContent.find((item) => item.slot == event?.over?.data?.current?.slot)
             
             if (!existingItem && existingSlot) return
@@ -139,7 +139,7 @@ export const ShopContainer = () => {
                     if (existingItem) {
                         updatedCart = cartContent.map(item => {
                             {
-                                if (item.name === draggedItem.name) {
+                                if (item.name === draggedItem.name && item.metadata?.label === draggedItem.metadata?.label) {
                                     return { ...item, amount: item.amount + draggedItem.amount }
                                 }
                                 return item

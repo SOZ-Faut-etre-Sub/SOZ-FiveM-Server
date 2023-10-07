@@ -7,6 +7,7 @@ import { Monitor } from '@public/client/monitor/monitor';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
+import { PhoneService } from '@public/client/phone/phone.service';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerWalkstyleProvider } from '@public/client/player/player.walkstyle.provider';
@@ -45,6 +46,8 @@ const deathVehcleAnim: Animation = {
         blendOutSpeed: 8.0,
         options: {
             repeat: true,
+            onlyUpperBody: true,
+            enablePlayerControl: true,
         },
     },
 };
@@ -131,6 +134,9 @@ export class LSMCDeathProvider {
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
+
     @Inject(Monitor)
     public monitor: Monitor;
 
@@ -211,6 +217,7 @@ export class LSMCDeathProvider {
                 killerentitytype: killerentitytype,
                 weaponhash: killerweapon,
                 weapondamagetype: GetWeaponDamageType(killerweapon),
+                weapongroup: GetWeapontypeGroup(killerweapon),
                 killpos: GetEntityCoords(player),
                 killerveh: killVehData,
                 ejection: Date.now() - this.vehicleSeatbeltProvider.getLastEjectTime() < 10000,
@@ -255,6 +262,10 @@ export class LSMCDeathProvider {
                 isInventoryBusy: false,
             });
 
+            if (this.phoneService.isPhoneVisible()) {
+                this.phoneService.setPhoneFocus(false);
+            }
+
             const playerMetadata = this.playerService.getPlayer().metadata;
             const injuries = playerMetadata.injuries_count;
             const status =
@@ -274,7 +285,12 @@ export class LSMCDeathProvider {
                         return Ok(true);
                     }
                 )
-                .then(reasonMort => TriggerServerEvent(ServerEvent.LSMC_SET_DEATH_REASON, reasonMort));
+                .then(reasonMort => {
+                    TriggerServerEvent(ServerEvent.LSMC_SET_DEATH_REASON, reasonMort);
+                    if (this.phoneService.isPhoneVisible()) {
+                        this.phoneService.setPhoneFocus(true);
+                    }
+                });
         }
     }
 
@@ -282,9 +298,9 @@ export class LSMCDeathProvider {
         const anim = IsPedInAnyVehicle(ped, true) ? deathVehcleAnim : deathAnim;
 
         if (!IsEntityPlayingAnim(ped, anim.base.dictionary, anim.base.name, 3)) {
-            this.animationService.playAnimation(anim, {
-                clearTasksBefore: true,
-            });
+            ClearPedTasks(ped);
+            ClearPedSecondaryTask(ped);
+            this.animationService.playAnimation(anim);
             await wait(500);
         }
     }
@@ -487,8 +503,9 @@ export class LSMCDeathProvider {
 
         if (
             playerData.metadata.hunger <= 0 ||
-            playerData.metadata['thirst'] <= 0 ||
-            playerData.metadata['alcohol'] >= 100
+            playerData.metadata.thirst <= 0 ||
+            playerData.metadata.alcohol >= 100 ||
+            playerData.metadata.drug >= 100
         ) {
             const ped = PlayerPedId();
 
@@ -504,7 +521,7 @@ export class LSMCDeathProvider {
                     },
                 });
 
-                this.hungerThristDeath = true;
+                this.hungerThristDeath = playerData.metadata.hunger <= 0 || playerData.metadata.thirst <= 0;
                 SetEntityHealth(ped, 0);
             }
         }

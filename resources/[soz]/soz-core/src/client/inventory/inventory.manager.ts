@@ -23,16 +23,22 @@ export class InventoryManager {
     }
 
     public hasEnoughItem(itemId: string, amount?: number, skipExpiredItem?: boolean): boolean {
+        if (amount === 0) {
+            return true;
+        }
+        if (!amount) {
+            amount = 1;
+        }
+        return this.getItemCount(itemId, skipExpiredItem) >= amount;
+    }
+
+    public getItemCount(itemId: string, skipExpiredItem?: boolean): number {
         const items = this.playerService.getPlayer().items;
         let count = 0;
 
         if (Array.isArray(items)) {
             for (const item of items) {
                 if (item.name === itemId) {
-                    if (!amount) {
-                        return true;
-                    }
-
                     if (skipExpiredItem && this.itemService.isExpired(item)) {
                         continue;
                     }
@@ -45,10 +51,6 @@ export class InventoryManager {
                 const item = items[slot];
 
                 if (item.name === itemId) {
-                    if (!amount) {
-                        return true;
-                    }
-
                     if (skipExpiredItem && this.itemService.isExpired(item)) {
                         continue;
                     }
@@ -58,10 +60,7 @@ export class InventoryManager {
             }
         }
 
-        if (amount) {
-            return count >= amount;
-        }
-        return false;
+        return count;
     }
 
     public findItem(predicate: (item: InventoryItem) => boolean): InventoryItem | null {

@@ -41,5 +41,16 @@ export const AudioApp: FunctionComponent = () => {
         });
     });
 
+    useAudioNuiEvent('VolumeAudio', audio => {
+        setAudio(state => {
+            if (state[audio.id]) {
+                const html = state[audio.id];
+                html.volume = audio.volume;
+            }
+
+            return state;
+        });
+    });
+
     return null;
 };

@@ -2,6 +2,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import {
+    getDefaultVehicleCondition,
     isVehicleModelElectric,
     VehicleClass,
     VehicleLightState,
@@ -83,9 +84,7 @@ export class HudVehicleProvider {
             this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
                 seat,
                 seatbelt:
-                    vehicleClass !== VehicleClass.Motorcycles &&
-                    vehicleClass !== VehicleClass.Cycles &&
-                    vehicleClass !== VehicleClass.Boats
+                    vehicleClass !== VehicleClass.Motorcycles && vehicleClass !== VehicleClass.Cycles
                         ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
                         : null,
             });
@@ -93,16 +92,15 @@ export class HudVehicleProvider {
             return;
         }
 
-        const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
-        const condition = this.vehicleConditionProvider.getVehicleCondition(vehicleNetworkId);
+        const condition = NetworkGetEntityIsNetworked(vehicle)
+            ? this.vehicleConditionProvider.getVehicleCondition(NetworkGetNetworkIdFromEntity(vehicle))
+            : getDefaultVehicleCondition();
 
         if (null === condition) {
             this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
                 seat,
                 seatbelt:
-                    vehicleClass !== VehicleClass.Motorcycles &&
-                    vehicleClass !== VehicleClass.Cycles &&
-                    vehicleClass !== VehicleClass.Boats
+                    vehicleClass !== VehicleClass.Motorcycles && vehicleClass !== VehicleClass.Cycles
                         ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
                         : null,
             });
@@ -123,9 +121,7 @@ export class HudVehicleProvider {
             fuelLevel: condition.fuelLevel,
             engineHealth: GetVehicleEngineHealth(vehicle),
             seatbelt:
-                vehicleClass !== VehicleClass.Motorcycles &&
-                vehicleClass !== VehicleClass.Cycles &&
-                vehicleClass !== VehicleClass.Boats
+                vehicleClass !== VehicleClass.Motorcycles && vehicleClass !== VehicleClass.Cycles
                     ? this.vehicleSeatbeltProvider.isSeatbeltOnForPlayer()
                     : null,
             oilLevel: condition.oilLevel,

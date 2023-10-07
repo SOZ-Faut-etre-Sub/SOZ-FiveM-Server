@@ -45,9 +45,9 @@ MySQL.ready(function()
     for _, apartment in pairs(apartments or {}) do
         Properties[apartment.property_id]:AddApartment(apartment.id,
                                                        Apartment:new(apartment.identifier, apartment.label, apartment.owner, apartment.roommate,
-                                                                     QBCore.Shared.Round(apartment.price * 4 / 5), apartment.inside_coord, apartment.exit_zone,
-                                                                     apartment.fridge_zone, apartment.stash_zone, apartment.closet_zone, apartment.money_zone,
-                                                                     apartment.tier, apartment.has_parking_place))
+                                                                     apartment.price, apartment.inside_coord, apartment.exit_zone, apartment.fridge_zone,
+                                                                     apartment.stash_zone, apartment.closet_zone, apartment.money_zone, apartment.tier,
+                                                                     apartment.has_parking_place))
     end
 end)
 
@@ -96,13 +96,15 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
         return
     end
 
+    local ped = GetPlayerPed(Player.PlayerData.source);
+
     if blockedCrimiDate[target] and blockedCrimiDate[target] > GetGameTimer() then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous devez attendre après avoir réalisé une action criminelle",
                            "error")
         return
     end
 
-    local vehicleId = GetVehiclePedIsIn(GetPlayerPed(Player.PlayerData.source), false)
+    local vehicleId = GetVehiclePedIsIn(ped, false)
     if vehicleId ~= 0 then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous devez d'abord descendre de votre véhicule.", "error")
         return
@@ -115,7 +117,9 @@ RegisterNetEvent("housing:server:SetPlayerInApartment", function(propertyId, apa
     end
 
     local inside = Player.PlayerData.metadata["inside"]
-    inside.exitCoord = GetEntityCoords(GetPlayerPed(Player.PlayerData.source))
+
+    local coords = GetEntityCoords(ped)
+    inside.exitCoord = {x = coords.x, y = coords.y, z = coords.z, w = GetEntityHeading(ped)}
     Player.Functions.SetMetaData("inside", inside)
 
     TriggerClientEvent("housing:client:Teleport", Player.PlayerData.source, apartment:GetInsideCoord(), propertyId, apartmentId)
@@ -298,6 +302,9 @@ RegisterNetEvent("housing:server:SellApartment", function(propertyId, apartmentI
             apartmentId,
         })
 
+        exports["soz-inventory"]:ClearByOwner(apartment.identifier);
+        exports["soz-bank"]:ClearAccount(apartment.identifier);
+
         if apartment:HasRoommate() then
             local roommateCitizenId = apartment:GetRoomMate()
             MySQL.update.await("UPDATE player_vehicles SET garage = 'airportpublic' WHERE citizenid = ? and garage = ?",
@@ -467,6 +474,41 @@ QBCore.Functions.CreateCallback("housing:server:GetPlayerAccess", function(sourc
     cb(access)
 end)
 
+AddEventHandler("housing:server:GiveAdminAccess", function(source, propertyId, apartmentId, citizenId)
+    local targetProperty = nil
+    for _, property in pairs(Properties) do
+        if property.identifier == propertyId then
+            targetProperty = property
+            break
+        end
+    end
+
+    if targetProperty == nil then
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Cette property n'existe pas", "error")
+        return
+    end
+
+    local targetApartment = nil
+    for _, apartment in pairs(targetProperty:GetApartments()) do
+        if apartment.identifier == apartmentId then
+            targetApartment = apartment
+            break
+        end
+    end
+
+    if targetApartment == nil then
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Cet appartement n'existe pas", "error")
+        return
+    end
+
+    if targetApartment:IsAvailable() then
+        TriggerClientEvent("soz-core:client:notification:draw", source, "Cet appartement est en vente", "error")
+        return
+    end
+
+    targetApartment:AddTemporaryAccess(citizenId)
+end)
+
 RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apartmentId, target)
     local Player = QBCore.Functions.GetPlayer(source)
     local Target = QBCore.Functions.GetPlayer(target)
@@ -489,8 +531,8 @@ RegisterNetEvent("housing:server:GiveTemporaryAccess", function(propertyId, apar
 
     apartment:AddTemporaryAccess(Target.PlayerData.citizenid)
 
-    TriggerClientEvent("animation:client:give", Player.PlayerData.source);
-    TriggerClientEvent("animation:client:give", Target.PlayerData.source);
+    TriggerClientEvent("soz-core:client:animation:give", Player.PlayerData.source);
+    TriggerClientEvent("soz-core:client:animation:give", Target.PlayerData.source);
 
     TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous avez donné un accès à votre maison")
     TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous avez reçu un accès à une maison")

@@ -7,6 +7,7 @@ import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
 import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
 
+import { Logger } from '../../../core/logger';
 import { VehicleStateService } from '../../vehicle/vehicle.state.service';
 
 @Provider()
@@ -23,12 +24,15 @@ export class UpwVehicleProvider {
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
 
+    @Inject(Logger)
+    private logger: Logger;
+
     @OnEvent(ServerEvent.UPW_CHANGE_BATTERY)
     public async onChangeBattery(source: number, vehicleNetworkId: number) {
         const vehicleEntity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
 
         if (!vehicleEntity) {
-            console.error(`[UPW] Vehicle entity not found for network id ${vehicleNetworkId}`);
+            this.logger.error(`[UPW] Vehicle entity not found for network id ${vehicleNetworkId}`);
 
             return;
         }

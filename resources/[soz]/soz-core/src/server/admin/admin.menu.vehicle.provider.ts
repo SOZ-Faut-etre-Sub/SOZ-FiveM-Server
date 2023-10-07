@@ -5,7 +5,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { ServerEvent } from '../../shared/event';
 import { JobType } from '../../shared/job';
 import { RpcServerEvent } from '../../shared/rpc';
-import { Vehicle, VehicleMaxStock } from '../../shared/vehicle/vehicle';
+import { Vehicle } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
@@ -28,7 +28,6 @@ export class AdminMenuVehicleProvider {
             .map(v => ({
                 ...v,
                 jobName: JSON.parse(v.jobName) as { [key in JobType]: string },
-                maxStock: VehicleMaxStock[v.category],
             }));
     }
 

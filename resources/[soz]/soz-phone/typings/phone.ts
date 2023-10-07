@@ -22,6 +22,8 @@ export enum PhoneEvents {
     FETCH_CREDENTIALS = 'phone:getCredentials',
     TOGGLE_KEYS = 'phone:toggleAllControls',
     SET_PLAYER_LOADED = 'phone:setPlayerLoaded',
+    SET_CITIZEN_ID = 'phone:setCitizenID',
+    PHONE_LOADED = 'phone:setPlayerLoaded',
 }
 
 // Used to standardize the server response

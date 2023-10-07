@@ -27,7 +27,7 @@ export const TaxiHorodateurApp: FunctionComponent = () => {
         <div
             className="absolute bottom-5 right-5 font-lato"
             style={{
-                backgroundImage: `url(/public/images/taxi/Brouznouf_Z7_.png)`,
+                backgroundImage: `url(/public/images/taxi/Brouznouf_Z7_.webp)`,
                 width: '560px',
                 height: '279px',
             }}

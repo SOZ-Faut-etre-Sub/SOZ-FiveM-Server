@@ -1,13 +1,14 @@
-import { Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Once, OnceStep, OnEvent, OnGameEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { uuidv4 } from '@public/core/utils';
 import { Control } from '@public/shared/input';
+import { Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomItem } from '@public/shared/random';
 
-import { ClientEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
@@ -26,7 +27,8 @@ const messageExcludeGroups = [
     GetHashKey('GROUP_STUNGUN'),
 ];
 
-const messageExclude = [GetHashKey('weapon_musket'), GetHashKey('weapon_raypistol')];
+const messageExclude = [GetHashKey('weapon_musket'), GetHashKey('weapon_raypistol'), GetHashKey('weapon_pumpshotgun')];
+const NonLethalWeapons = [GetHashKey('weapon_pumpshotgun')];
 
 @Provider()
 export class WeaponProvider {
@@ -57,11 +59,12 @@ export class WeaponProvider {
     private lastPoliceCall = 0;
 
     @Once(OnceStep.PlayerLoaded)
-    async onPlayerLoaded() {
+    async setupWeaponDamageModifier() {
         SetWeaponsNoAutoswap(true);
 
         await this.weapon.clear();
 
+        SetWeaponDamageModifier(WeaponName.UNARMED, 0.5);
         SetWeaponDamageModifier(WeaponName.BAT, 0.2);
         SetWeaponDamageModifier(WeaponName.CROWBAR, 0.2);
         SetWeaponDamageModifier(WeaponName.GOLFCLUB, 0.2);
@@ -111,6 +114,11 @@ export class WeaponProvider {
         await this.onUseAmmoLoop(ammoName);
 
         this.playerService.updateState({ isInventoryBusy: false });
+    }
+
+    @OnEvent(ClientEvent.WEAPON_CLEAR_WEAPON)
+    async onClearWeapon() {
+        await this.weapon.clear();
     }
 
     private async onUseAmmoLoop(ammoName: string) {
@@ -208,28 +216,31 @@ export class WeaponProvider {
             !messageExclude.includes(GetHashKey(weapon.name)) &&
             !messageExcludeGroups.includes(weaponGroup) &&
             Math.random() < 0.6 &&
-            Date.now() - this.lastPoliceCall > 120000
+            Date.now() - this.lastPoliceCall > 60000
         ) {
             const coords = GetEntityCoords(player);
-            const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
-            let name = GetStreetNameFromHashKey(street);
-            if (street2) {
-                name += ' et ' + GetStreetNameFromHashKey(street2);
-            }
 
             const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
 
-            if ('ARMYB' != zoneID) {
+            if ('ARMYB' != zoneID && 'ISHEIST' != zoneID) {
                 const zone = GetLabelText(zoneID);
+                const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
+
+                const name = `${GetStreetNameFromHashKey(street)}${
+                    street2 ? ` et ${GetStreetNameFromHashKey(street2)}` : ''
+                }`;
+                const nameHtml = `<span {class}>${GetStreetNameFromHashKey(street)}</span>${
+                    street2 ? ` et <span {class}>${GetStreetNameFromHashKey(street2)}</span>` : ''
+                }`;
+
                 this.lastPoliceCall = Date.now();
 
-                TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
-                    anonymous: true,
-                    number: '555-POLICE',
-                    message: `${zone}: ${getRandomItem(GunShotMessage).replace('${0}', name)}`,
-                    position: true,
-                    overrideIdentifier: 'System',
-                });
+                const message = getRandomItem(GunShotMessage);
+
+                const alertMessage = `${zone}: ${message.replace('${0}', name)}`;
+                const htmlMessage = `${zone}: ${message.replace('${0}', nameHtml)}`;
+
+                TriggerServerEvent(ServerEvent.WEAPON_SHOOTING_ALERT, alertMessage, htmlMessage, zoneID);
             }
         }
         await this.weapon.recoil();
@@ -237,13 +248,21 @@ export class WeaponProvider {
 
     @OnEvent(ClientEvent.WEAPON_EXPLOSION)
     async onExplosion(x: number, y: number, z: number) {
-        const zone = GetLabelText(GetNameOfZone(x, y, z));
+        const zoneID = GetNameOfZone(x, y, z);
+        if (zoneID == 'ISHEIST') {
+            return;
+        }
+        const zone = GetLabelText(zoneID);
+
+        const message = getRandomItem(ExplosionMessage);
 
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-POLICE',
-            message: getRandomItem(ExplosionMessage).replace('${0}', zone),
+            message: message.replace('${0}', zone),
+            htmlMessage: message.replace('${0}', `<span {class}>${zone}</span>`),
             position: false,
+            info: { type: 'explosion' },
             overrideIdentifier: 'System',
             pedPosition: JSON.stringify({ x: x, y: y, z: z }),
         });
@@ -292,6 +311,32 @@ export class WeaponProvider {
                 await this.weapon.clear();
                 await this.weaponDrawingProvider.refreshDrawWeapons();
             }
+        }
+    }
+
+    @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
+    public gameEventTriggered(
+        victim: number,
+        attacker: number,
+        unkInt1: number,
+        unkBool1: number,
+        unkBool2: number,
+        isFatal: boolean,
+        weaponHash: number
+    ) {
+        const playerPed = PlayerPedId();
+        if (playerPed == victim && NonLethalWeapons.includes(weaponHash) && !IsPedRagdoll(playerPed)) {
+            this.weapon.clear();
+            SetPedToRagdoll(playerPed, 10000, 10000, 0, false, false, false);
+            const attackerCoords = GetEntityCoords(attacker);
+            const victimCoords = GetEntityCoords(victim);
+            const vec = [
+                victimCoords[0] - attackerCoords[0],
+                victimCoords[1] - attackerCoords[1],
+                victimCoords[2] - attackerCoords[2],
+            ] as Vector3;
+            const magnitude = Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+            SetEntityVelocity(playerPed, (2 * vec[0]) / magnitude, (2 * vec[1]) / magnitude, (2 * vec[2]) / magnitude);
         }
     }
 }

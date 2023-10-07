@@ -1,5 +1,5 @@
 local giveAnimation = function(src)
-    TriggerClientEvent("animation:client:give", src)
+    TriggerClientEvent("soz-core:client:animation:give", src)
 end
 
 QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function(source, cb, type, id)
@@ -7,10 +7,10 @@ QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function
         id = source
     end
 
-    local ply = Player(id)
+    local playerState = exports["soz-core"]:GetPlayerState(source)
     local Player = QBCore.Functions.GetPlayer(id)
 
-    if Player and not ply.state.inv_busy then
+    if Player and not playerState.isInventoryBusy then
         cb(Inventory(id))
     else
         TriggerClientEvent("soz-core:client:notification:draw", source, "Inventaire en cours d'utilisation", "warning")
@@ -19,7 +19,7 @@ QBCore.Functions.CreateCallback("inventory:server:openPlayerInventory", function
 end)
 
 RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
-    local ply = Player(source)
+    local playerState = exports["soz-core"]:GetPlayerState(source)
     local Player = QBCore.Functions.GetPlayer(source)
     local itemData = Player.Functions.GetItemBySlot(slot)
 
@@ -31,7 +31,7 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
         return
     end
 
-    if ply.state.inv_busy then
+    if playerState.isInventoryBusy then
         TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Une action est déjà en cours !", "warning")
         return
     end
@@ -39,15 +39,9 @@ RegisterNetEvent("inventory:server:UseItemSlot", function(slot)
     itemData.slot = slot
 
     if itemData.type == "weapon" then
-        if not ply.state.is_in_hub then
-            TriggerClientEvent("soz-core:client:weapon:use-weapon", Player.PlayerData.source, itemData)
-        end
-    elseif itemData.useable then
-        if itemData and itemData.amount > 0 then
-            if QBCore.Functions.CanUseItem(itemData.name) then
-                QBCore.Functions.UseItem(Player.PlayerData.source, itemData)
-            end
-        end
+        TriggerClientEvent("soz-core:client:weapon:use-weapon", Player.PlayerData.source, itemData)
+    elseif itemData and itemData.amount > 0 and QBCore.Functions.CanUseItem(itemData.name) then
+        QBCore.Functions.UseItem(Player.PlayerData.source, itemData)
     end
 end)
 
@@ -79,8 +73,10 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, item, amount)
                 giveAnimation(Player.PlayerData.source)
                 giveAnimation(Target.PlayerData.source)
             else
-                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Vous ne pouvez pas donner cet objet !", "error")
-                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source, "Vous ne pouvez pas recevoir d'objet !", "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source,
+                                   "Vous ne pouvez pas donner cet objet !" .. Config.ErrorMessage[reason] or reason, "error")
+                TriggerClientEvent("soz-core:client:notification:draw", Target.PlayerData.source,
+                                   "Vous ne pouvez pas recevoir d'objet !" .. Config.ErrorMessage[reason] or reason, "error")
             end
         end)
     else
@@ -184,9 +180,19 @@ RegisterServerEvent("inventory:server:ResellItem", function(item, amount, resell
         return
     end
 
+    if resellZone.ZoneName == "Resell:fish" then
+        TriggerEvent("soz-core:server:fishing:resell", source, item, amount)
+        return
+    end
+
     local itemSpec = QBCore.Shared.Items[item.name]
+    if itemSpec == nil or not itemSpec.resellPrice or not itemSpec.resellZone then
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Cet objet ne peut pas être revendu", "error")
+        return
+    end
+
     if itemSpec == nil or not itemSpec.resellPrice or not itemSpec.resellZone or itemSpec.resellZone ~= resellZone.ZoneName then
-        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Cet item ne peut pas être revendu", "error")
+        TriggerClientEvent("soz-core:client:notification:draw", Player.PlayerData.source, "Cet objet ne peut pas être revendu ici", "error")
         return
     end
 

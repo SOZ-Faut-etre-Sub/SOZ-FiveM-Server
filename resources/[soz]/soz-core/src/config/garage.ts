@@ -2,7 +2,7 @@ import { JobType } from '../shared/job';
 import { BoxZone } from '../shared/polyzone/box.zone';
 import { Garage, GarageCategory, GarageType, PlaceCapacity } from '../shared/vehicle/garage';
 
-export const GarageList: Record<string, Garage> = {
+export const GarageList: Record<string, Omit<Garage, 'id'>> = {
     motel: {
         name: 'Motel Parking',
         legacyId: 'motelgarage',
@@ -46,8 +46,8 @@ export const GarageList: Record<string, Garage> = {
             }),
         ],
     },
-    spanish_avenue: {
-        name: 'Spanish Avenue Parking',
+    multicolor_parking: {
+        name: 'Multicolor Parking',
         legacyId: 'spanishave',
         type: GarageType.Private,
         category: GarageCategory.Car,
@@ -743,7 +743,7 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 5,
                 maxZ: 6.002,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
             new BoxZone([-641.07, -2212.31, 6.0], 1.0, 1.0, {
@@ -751,7 +751,7 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 5.0,
                 maxZ: 8.0,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
             new BoxZone([-634.45, -2209.31, 6.0], 1.0, 1.0, {
@@ -759,10 +759,11 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 5.0,
                 maxZ: 8.0,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
+        transferList: ['cayo'],
     },
     bell_farms: {
         name: 'Bell Farms Parking',
@@ -826,6 +827,7 @@ export const GarageList: Record<string, Garage> = {
                 maxZ: 34.23,
             }),
         ],
+        transferList: ['cayo'],
     },
     marina_drive_air: {
         name: 'Marina Drive Air Parking',
@@ -912,7 +914,7 @@ export const GarageList: Record<string, Garage> = {
     pound_paleto: {
         name: 'Fourrière',
         type: GarageType.Depot,
-        category: GarageCategory.Car,
+        category: GarageCategory.All,
         zone: new BoxZone([-217.29, 6215.21, 30.49], 1.0, 1.0, {
             heading: 45.0,
             minZ: 29.49,
@@ -939,7 +941,7 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 30.49,
                 maxZ: 31.492,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -948,7 +950,7 @@ export const GarageList: Record<string, Garage> = {
         name: 'Fourrière',
         legacyId: 'fourriere',
         type: GarageType.Depot,
-        category: GarageCategory.Car,
+        category: GarageCategory.All,
         zone: new BoxZone([403.12, -1625.36, 28.29], 1, 1, {
             heading: 51,
             minZ: 27.29,
@@ -990,7 +992,7 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 28.29,
                 maxZ: 29.292,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -1164,33 +1166,34 @@ export const GarageList: Record<string, Garage> = {
             maxZ: 35.83,
         }),
         parkingPlaces: [
-            new BoxZone([1880.6, 3698.22, 33.32], 6.0, 3.2, {
-                heading: 20.0,
+            new BoxZone([1879.49, 3697.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+            new BoxZone([1877.25, 3701.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+            new BoxZone([1875.0, 3705.0, 33.35], 6.0, 3.2, {
+                heading: 299.0,
+                minZ: 32.25,
+                maxZ: 34.25,
+            }),
+
+            new BoxZone([1867.12, 3693.23, 33.71], 6.0, 3.0, {
+                heading: 210.0,
                 minZ: 32.73,
                 maxZ: 35.73,
             }),
-            new BoxZone([1875.74, 3695.93, 33.43], 6.0, 3.2, {
-                heading: 20.0,
-                minZ: 32.73,
-                maxZ: 35.73,
-            }),
-            new BoxZone([1866.94, 3695.74, 33.65], 5.2, 3.4, {
-                heading: 330.0,
-                minZ: 32.65,
-                maxZ: 35.65,
-            }),
-            new BoxZone([1865.08, 3699.11, 33.73], 6.0, 3.0, {
-                heading: 329.0,
-                minZ: 32.73,
-                maxZ: 35.73,
-            }),
-            new BoxZone([1863.16, 3702.3, 33.6], 5.8, 3.2, {
-                heading: 331.0,
+            new BoxZone([1863.21, 3699.52, 33.66], 6.0, 3.0, {
+                heading: 210.0,
                 minZ: 32.6,
                 maxZ: 35.6,
             }),
-            new BoxZone([1861.48, 3705.73, 33.47], 6.0, 3.0, {
-                heading: 330.0,
+            new BoxZone([1860.17, 3705.15, 33.47], 6.0, 3.0, {
+                heading: 30.0,
                 minZ: 32.47,
                 maxZ: 35.47,
             }),
@@ -1288,7 +1291,7 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 45.92,
                 maxZ: 48.922,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -1463,6 +1466,9 @@ export const GarageList: Record<string, Garage> = {
                 heading: 45.0,
                 minZ: 30.42,
                 maxZ: 33.42,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
             }),
             new BoxZone([-257.71, 6061.84, 31.35], 13.4, 3.6, {
                 heading: 46.0,
@@ -1526,7 +1532,7 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 73.23,
                 maxZ: 74.23,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
         ],
@@ -1689,7 +1695,7 @@ export const GarageList: Record<string, Garage> = {
                 minZ: 27.67,
                 maxZ: 30.672,
                 data: {
-                    capacity: [PlaceCapacity.Large],
+                    capacity: [PlaceCapacity.Large, PlaceCapacity.Medium],
                 },
             }),
             new BoxZone([-1415.16, -630.19, 28.67], 7.0, 3.0, {
@@ -1896,30 +1902,39 @@ export const GarageList: Record<string, Garage> = {
             }),
         ],
     },
-    marina_boat: {
-        name: 'Port de la Marina',
+    docks_boat: {
+        name: 'Port des docks',
         type: GarageType.Public,
         category: GarageCategory.Sea,
-        zone: new BoxZone([-916.48, -1386.73, 5.19], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([11.4, -2801.96, 1.53], 2.0, 2.0, {
+            heading: 180,
+            minZ: 1.0,
+            maxZ: 3.0,
         }),
         parkingPlaces: [
-            new BoxZone([-921.16, -1373.03, 1.6], 15, 7.2, {
-                heading: 20,
+            new BoxZone([6.64, -2767.71, 1.0], 4.0, 2.8, {
+                heading: 175.66,
                 minZ: 0.0,
-                maxZ: 7.6,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
             }),
-            new BoxZone([-929.64, -1376.04, 1.6], 15, 7.2, {
-                heading: 20,
+            new BoxZone([6.2, -2785.6, 1.0], 15, 7.2, {
+                heading: 180.79,
                 minZ: 0.0,
-                maxZ: 7.6,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
             }),
-            new BoxZone([-929.64, -1376.04, 1.6], 15, 7.2, {
+            new BoxZone([13.49, -2805.52, 1.0, 90.25], 15, 7.2, {
                 heading: 20,
                 minZ: 0.0,
-                maxZ: 7.6,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
             }),
         ],
     },
@@ -1927,44 +1942,399 @@ export const GarageList: Record<string, Garage> = {
         name: 'Port de Paleto',
         type: GarageType.Public,
         category: GarageCategory.Sea,
-        zone: new BoxZone([-277.46, 6637.2, 7.48], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([-1604.67, 5256.23, 1.09], 1.0, 1.0, {
+            heading: 204.64,
+            minZ: 1.09,
+            maxZ: 3.09,
         }),
-        parkingPlaces: [],
-    },
-    millars_boat: {
-        name: 'Port Millars',
-        type: GarageType.Public,
-        category: GarageCategory.Sea,
-        zone: new BoxZone([1299.24, 4216.69, 33.9], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
-        }),
-        parkingPlaces: [],
+        parkingPlaces: [
+            new BoxZone([-1600.13, 5251.14, 1.0], 4.0, 2.8, {
+                heading: 206.7,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-1603.82, 5262.27, 1.0], 15, 7.2, {
+                heading: 16.98,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
     },
     catfish_boat: {
         name: 'Port Catfish',
+        type: GarageType.Private,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([3860.63, 4464.8, 1.72], 2.0, 2.0, {
+            heading: 359.72,
+            minZ: 1.72,
+            maxZ: 3.72,
+        }),
+        parkingPlaces: [
+            new BoxZone([3861.84, 4468.79, 1.0], 4.0, 2.8, {
+                heading: 266,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([3851.86, 4467.84, 1.0], 15, 7.2, {
+                heading: 267,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([3854.24, 4455.14, 1.0], 15, 7.2, {
+                heading: 281,
+                minZ: 0.0,
+                maxZ: 2.0,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    marina_boat: {
+        name: 'Port de la marina',
+        type: GarageType.Private,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([-865.03, -1324.79, 0.61], 2.0, 2.0, {
+            heading: 110,
+            minZ: 0.61,
+            maxZ: 2.61,
+        }),
+        parkingPlaces: [
+            new BoxZone([-858.23, -1327.47, 1.61], 7.6, 3.2, {
+                heading: 110,
+                minZ: 0.61,
+                maxZ: 2.61,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-851.49, -1333.47, 1.61], 5.0, 3.0, {
+                heading: 110,
+                minZ: 0.61,
+                maxZ: 2.61,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([-847.74, -1341.81, 1.61], 4.8, 2.2, {
+                heading: 110,
+                minZ: 0.61,
+                maxZ: 2.61,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    millars_boat: {
+        name: 'Port Millars',
+        type: GarageType.Private,
+        category: GarageCategory.Sea,
+        zone: new BoxZone([1304.67, 4229.28, 32.91], 1.0, 1.0, {
+            heading: 260.28,
+            minZ: 32.91,
+            maxZ: 34.91,
+        }),
+        parkingPlaces: [
+            new BoxZone([1311.12, 4226.4, 32.92], 6.6, 2.4, {
+                heading: 80,
+                minZ: 31.92,
+                maxZ: 33.92,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([1330.73, 4223.11, 32.92], 5.2, 2.2, {
+                heading: 80,
+                minZ: 31.92,
+                maxZ: 33.92,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([1324.44, 4232.46, 32.92], 6.6, 2.4, {
+                heading: 80,
+                minZ: 31.92,
+                maxZ: 33.92,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    cayo: {
+        name: 'Cayo Perico Parking',
+        legacyId: 'cayo',
+        type: GarageType.Public,
+        category: GarageCategory.All,
+        zone: new BoxZone([4461.58, -4469.03, 4.24], 0.7, 1.0, {
+            heading: 290.0,
+            minZ: 3.24,
+            maxZ: 6.24,
+        }),
+        parkingPlaces: [
+            // Air
+            new BoxZone([4470.46, -4461.85, 4.23], 15.8, 15.8, {
+                heading: 20.0,
+                minZ: 3.23,
+                maxZ: 6.23,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([4487.8, -4455.43, 4.22], 15.8, 15.8, {
+                heading: 20.0,
+                minZ: 3.22,
+                maxZ: 6.22,
+                data: {
+                    capacity: [PlaceCapacity.Large],
+                },
+            }),
+            // Car
+            new BoxZone([4506.77, -4468.29, 4.19], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.19,
+                maxZ: 6.19,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4509.83, -4466.26, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4512.98, -4464.79, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4516.57, -4463.56, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+
+            new BoxZone([4460.9, -4480.77, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4454.84, -4483.18, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4450.79, -4484.52, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4446.19, -4486.15, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4442.47, -4487.54, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+            new BoxZone([4439.06, -4488.85, 4.21], 3.4, 9.2, {
+                heading: 200.0,
+                minZ: 3.21,
+                maxZ: 6.21,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium],
+                },
+            }),
+        ],
+        transferList: ['airport_public', 'bell_farms'],
+    },
+    cayo_boat: {
+        name: 'Port Cayo',
         type: GarageType.Public,
         category: GarageCategory.Sea,
-        zone: new BoxZone([3865.66, 4463.73, 2.72], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+        zone: new BoxZone([4930.15, -5146.44, 1.46], 1.0, 1.0, {
+            heading: 64.91,
+            minZ: 1.46,
+            maxZ: 3.46,
         }),
-        parkingPlaces: [],
+        parkingPlaces: [
+            new BoxZone([4933.47, -5151.1, 2.46], 6.6, 2.4, {
+                heading: 64.07,
+                minZ: 1.46,
+                maxZ: 3.46,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([4935.34, -5144.98, 2.47], 5.0, 2.2, {
+                heading: 65.45,
+                minZ: 1.47,
+                maxZ: 3.47,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
     },
-    sea_pound: {
-        name: 'Fourrière Maritime',
-        type: GarageType.Depot,
-        category: GarageCategory.Sea,
-        zone: new BoxZone([-772.98, -1430.76, 1.59], 4.0, 2.8, {
-            heading: 340,
-            minZ: 43.92008972167969,
-            maxZ: 46.92008972167969,
+    sasp: {
+        name: 'San Andreas State Police Parking',
+        type: GarageType.Job,
+        job: JobType.SASP,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-464.16, -609.59, 30.22], 1.0, 1.0, {
+            heading: 0.0,
+            minZ: 30.22,
+            maxZ: 32.32,
         }),
-        parkingPlaces: [],
+        parkingPlaces: [
+            new BoxZone([-471.16, -613.18, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-467.63, -612.91, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-464.23, -613.32, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-460.72, -612.97, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-457.04, -613.3, 31.17], 6.8, 4.0, {
+                heading: 180.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+        ],
+    },
+    fdf: {
+        name: 'Ferme de Fou Parking',
+        type: GarageType.Job,
+        job: JobType.FDF,
+        category: GarageCategory.Car,
+        allowTrailers: true,
+        zone: new BoxZone([2500.78, 4966.17, 43.57], 1.0, 1.0, {
+            heading: 147.74,
+            minZ: 43.57,
+            maxZ: 44.87,
+        }),
+        parkingPlaces: [
+            new BoxZone([2501.12, 4951.41, 44.45], 6.8, 4.0, {
+                heading: 320.04,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2510.71, 4955.8, 44.63], 6.8, 4.0, {
+                heading: 302.38,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2528.25, 4963.21, 44.35], 6.8, 4.0, {
+                heading: 38.48,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+            new BoxZone([2529.69, 4974.13, 44.91], 6.8, 4.0, {
+                heading: 121.77,
+                minZ: 44.52,
+                maxZ: 46.52,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+    gouv: {
+        name: 'Gouvernement Parking',
+        type: GarageType.Job,
+        job: JobType.Gouv,
+        category: GarageCategory.Car,
+        zone: new BoxZone([-464.17, -628.78, 30.22], 1.0, 1.0, {
+            heading: 180.0,
+            minZ: 30.22,
+            maxZ: 32.32,
+        }),
+        parkingPlaces: [
+            new BoxZone([-470.9, -624.88, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-467.28, -625.06, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-463.84, -624.23, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-460.52, -624.8, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+            new BoxZone([-456.88, -625.01, 31.17], 6.8, 4.0, {
+                heading: 0.0,
+                minZ: 31.17,
+                maxZ: 33.17,
+            }),
+        ],
     },
 };

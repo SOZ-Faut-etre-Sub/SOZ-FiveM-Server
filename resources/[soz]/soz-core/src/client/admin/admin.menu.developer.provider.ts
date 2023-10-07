@@ -1,16 +1,20 @@
+import { NotificationPoliceLogoType, NotificationPoliceType, NotificationType } from '@public/shared/notification';
+
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { NuiEvent, ServerEvent } from '../../shared/event';
 import { Font } from '../../shared/hud';
 import { Ok } from '../../shared/result';
 import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
+import { GetObjectList, GetPedList, GetPickupList, GetVehicleList } from '../enumerate';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
-import { NuiMenu } from '../nui/nui.menu';
+import { NuiZoneProvider } from '../nui/nui.zone.provider';
+import { ObjectProvider } from '../object/object.provider';
 import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 
 @Provider()
@@ -30,48 +34,29 @@ export class AdminMenuDeveloperProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    @Inject(NuiMenu)
-    private nuiMenu: NuiMenu;
+    @Inject(NuiZoneProvider)
+    private nuiZoneProvider: NuiZoneProvider;
+
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     public showCoordinates = false;
 
     public showMileage = false;
 
-    private isCreatingZone = false;
-
     @OnNuiEvent(NuiEvent.AdminCreateZone)
     public async createZone(): Promise<void> {
-        if (!this.isCreatingZone) {
-            this.isCreatingZone = true;
-            TriggerEvent('polyzone:pzcreate', 'box', 'create_zone', ['box', 'create_zone', 1, 1]);
-            this.nuiMenu.closeMenu();
-        }
-    }
-    @Command('soz_admin_finish_create_zone', {
-        description: "Valider la création d'une zone",
-        keys: [
-            {
-                mapper: 'keyboard',
-                key: 'E',
-            },
-        ],
-    })
-    public async endCreatingZone() {
-        if (this.isCreatingZone) {
-            this.isCreatingZone = false;
-            const zone = exports['PolyZone'].EndPolyZone();
-            this.clipboard.copy(
-                `new BoxZone([${zone.center.x.toFixed(2)}, ${zone.center.y.toFixed(2)}, ${zone.center.z.toFixed(
-                    2
-                )}], ${zone.length.toFixed(2)}, ${zone.width.toFixed(2)}, {
-                    heading: ${zone.heading.toFixed(2)},
-                    minZ: ${(zone.center.z - 1.0).toFixed(2)},
-                    maxZ: ${(zone.center.z + 2.0).toFixed(2)},
-                });`
-            );
+        const zone = await this.nuiZoneProvider.askZone();
 
-            TriggerEvent(ClientEvent.ADMIN_OPEN_MENU, 'developer');
-        }
+        this.clipboard.copy(
+            `new BoxZone([${zone.center[0].toFixed(2)}, ${zone.center[1].toFixed(2)}, ${zone.center[2].toFixed(
+                2
+            )}], ${zone.length.toFixed(2)}, ${zone.width.toFixed(2)}, {
+                heading: ${zone.heading.toFixed(2)},
+                minZ: ${(zone.minZ || zone.center[2] - 1.0).toFixed(2)},
+                maxZ: ${(zone.maxZ || zone.center[2] + 2.0).toFixed(2)},
+            });`
+        );
     }
 
     @OnNuiEvent(NuiEvent.AdminToggleNoClip)
@@ -184,7 +169,53 @@ export class AdminMenuDeveloperProvider {
         );
 
         if (citizenId) {
-            TriggerServerEvent(ServerEvent.ADMIN_CHANGE_PLAYER, citizenId);
+            TriggerServerEvent(ServerEvent.ADMIN_SWITCH_CHARACTER, citizenId);
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.AdminTriggerNotification)
+    public async triggerNotification(type: 'basic' | 'advanced' | 'police') {
+        const notificationStyle = await this.input.askInput(
+            {
+                title: 'Notification style',
+                defaultValue: 'info',
+                maxCharacters: 32,
+            },
+            () => {
+                return Ok(true);
+            }
+        );
+
+        if (notificationStyle) {
+            // this.notifier.notify('Message de notification' + style, notificationStyle as NotificationType);
+            if (type === 'basic') {
+                this.notifier.notify(
+                    `Message de notification ${notificationStyle}`,
+                    notificationStyle as NotificationType
+                );
+            }
+            if (type === 'advanced') {
+                await this.notifier.notifyAdvanced({
+                    title: 'Titre test',
+                    subtitle: 'Sous-titre de test',
+                    message: 'Message de notification',
+                    image: '',
+                    style: notificationStyle as NotificationType,
+                    delay: 5000,
+                });
+            }
+            if (type === 'police') {
+                await this.notifier.notifyPolice({
+                    message: 'Message de notification',
+                    policeStyle: notificationStyle as NotificationPoliceType,
+                    style: 'info' as NotificationType,
+                    delay: 5000,
+                    title: 'Titre test',
+                    hour: '00:24',
+                    logo: 'bcso' as NotificationPoliceLogoType,
+                    notificationId: 777,
+                });
+            }
         }
     }
 
@@ -194,5 +225,72 @@ export class AdminMenuDeveloperProvider {
         TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'hunger', 100);
         TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'alcohol', 0);
         TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'drug', 0);
+    }
+
+    @Command('debug-entity')
+    public async debugObjects(): Promise<void> {
+        const objects = GetObjectList();
+        const peds = GetPedList();
+        const vehicles = GetVehicleList();
+        const pickups = GetPickupList();
+
+        let countObjects = 0,
+            countObjectsNetworked = 0,
+            countPeds = 0,
+            countPedsNetworked = 0,
+            countVehicles = 0,
+            countVehiclesNetworked = 0,
+            countPickups = 0,
+            countPickupsNetworked = 0;
+
+        for (const object of objects) {
+            countObjects++;
+            if (NetworkGetEntityIsNetworked(object)) {
+                countObjectsNetworked++;
+            }
+        }
+
+        for (const ped of peds) {
+            countPeds++;
+            if (NetworkGetEntityIsNetworked(ped)) {
+                countPedsNetworked++;
+            }
+        }
+
+        for (const vehicle of vehicles) {
+            countVehicles++;
+            if (NetworkGetEntityIsNetworked(vehicle)) {
+                countVehiclesNetworked++;
+            }
+        }
+
+        for (const pickup of pickups) {
+            countPickups++;
+            if (NetworkGetEntityIsNetworked(pickup)) {
+                countPickupsNetworked++;
+            }
+        }
+
+        console.log(
+            `Objects : ${countObjects} total, ${
+                countObjects - countObjectsNetworked
+            } not networked, ${countObjectsNetworked} networked, ${GetMaxNumNetworkObjects()} max networked`
+        );
+        console.log(
+            `Peds : ${countPeds} total, ${
+                countPeds - countPedsNetworked
+            } not networked, ${countPedsNetworked} networked, ${GetMaxNumNetworkPeds()} max networked`
+        );
+        console.log(
+            `Vehicles : ${countVehicles} total, ${
+                countVehicles - countVehiclesNetworked
+            } not networked, ${countVehiclesNetworked} networked, ${GetMaxNumNetworkVehicles()} max networked`
+        );
+        console.log(
+            `Pikcups : ${countPickups} total, ${
+                countPickups - countPickupsNetworked
+            } not networked, ${countPickupsNetworked} networked, ${GetMaxNumNetworkPickups()} max networked`
+        );
+        console.log(`Object from soz : ${this.objectProvider.getLoadedObjectsCount()} total`);
     }
 }

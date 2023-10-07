@@ -18,8 +18,8 @@ export class PlayerStateProvider {
     @Inject(PlayerListStateService)
     private playerListStateService: PlayerListStateService;
 
-    @Once(OnceStep.PlayerLoaded)
-    public async onStart() {
+    @Once(OnceStep.PlayerLoaded, true)
+    public async setupPlayerState() {
         this.playerService.setState(await emitRpc<PlayerClientState>(RpcServerEvent.PLAYER_GET_CLIENT_STATE));
         const stateList = await emitRpc<Record<PlayerListStateKey, number[]>>(RpcServerEvent.PLAYER_GET_LIST_STATE);
 

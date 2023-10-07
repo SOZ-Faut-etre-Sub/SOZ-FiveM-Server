@@ -15,27 +15,33 @@ import { societiesLogger } from './societies.utils';
 class _SocietyService {
     private readonly contactsDB: _SocietiesDB;
     private readonly qbCore: any;
+    private policeMessageCount: number;
 
     constructor() {
         this.contactsDB = SocietiesDb;
         societiesLogger.debug('Societies service started');
         this.qbCore = global.exports['qb-core'].GetCoreObject();
+        this.policeMessageCount = 0;
     }
 
     createMessageBroadcastEvent(player: number, messageId: number, sourcePhone: string, data: PreDBSociety): void {
         const qbCorePlayer = this.qbCore.Functions.GetPlayer(player);
 
-        emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, {
+        const messageData = {
             id: messageId,
             conversation_id: data.number,
             source_phone: sourcePhone.includes('#') ? '' : sourcePhone,
             message: data.message,
+            htmlMessage: data.htmlMessage,
             position: data.pedPosition,
             isTaken: false,
             isDone: false,
             muted: !qbCorePlayer.PlayerData.job.onduty,
             createdAt: new Date().getTime(),
-        });
+            info: { ...data.info, notificationId: this.policeMessageCount, serviceNumber: data.number },
+        };
+
+        emitNet(SocietyEvents.CREATE_MESSAGE_BROADCAST, player, messageData);
     }
 
     replaceSocietyPhoneNumber(data: PreDBSociety, phoneSocietyNumber: string): PreDBSociety {
@@ -53,9 +59,18 @@ class _SocietyService {
         reqObj: PromiseRequest<PreDBSociety>,
         resp: PromiseEventResp<number>
     ): Promise<void> {
-        const player = PlayerService.getPlayer(reqObj.source);
+        let username: string = null;
+        let identifier: string = null;
+        if (reqObj.data.overrideIdentifier) {
+            username = reqObj.data.overrideIdentifier;
+            identifier = reqObj.data.overrideIdentifier;
+        } else {
+            const player = PlayerService.getPlayer(reqObj.source);
+            username = player?.username;
+            identifier = player.getPhoneNumber();
+        }
+
         const originalMessageNumber = reqObj.data.number;
-        let identifier = player.getPhoneNumber();
 
         if (reqObj.data.position) {
             const ped = GetPlayerPed(reqObj.source.toString());
@@ -64,20 +79,17 @@ class _SocietyService {
             reqObj.data.pedPosition = JSON.stringify({ x: playerX, y: playerY, z: playerZ });
         }
 
-        if (reqObj.data.overrideIdentifier) {
-            identifier = reqObj.data.overrideIdentifier;
-        }
         if (reqObj.data.anonymous) {
             identifier = `#${identifier}`;
         }
 
-        if (reqObj.data.number === '555-FBI' && player?.username) {
+        if (reqObj.data.number === '555-FBI' && username) {
             const url = GetConvar('soz_api_endpoint', 'https://api.soz.zerator.com') + '/discord/send-fbi';
             await axios.post(
                 url,
                 {
-                    phone: player.getPhoneNumber(),
-                    username: player.username,
+                    phone: identifier,
+                    username: username,
                     data: reqObj.data.message,
                 },
                 {
@@ -92,6 +104,10 @@ class _SocietyService {
         try {
             const contact = await this.contactsDB.addSociety(identifier, reqObj.data);
             resp({ status: 'ok', data: contact });
+
+            if (['555-LSPD', '555-BCSO', '555-SASP', '555-POLICE'].includes(reqObj.data.number)) {
+                this.policeMessageCount++;
+            }
 
             const players = await PlayerService.getPlayersFromSocietyNumber(reqObj.data.number);
             players.forEach(player => {
@@ -119,6 +135,8 @@ class _SocietyService {
                     ),
                 };
 
+                this.policeMessageCount++;
+
                 [lspd, bcso]
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
@@ -126,7 +144,10 @@ class _SocietyService {
                             player.source,
                             message[player.getSocietyPhoneNumber()],
                             identifier,
-                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber)
+                            this.replaceSocietyPhoneNumber(
+                                this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                                player.getSocietyPhoneNumber()
+                            )
                         );
                     });
             }
@@ -134,6 +155,7 @@ class _SocietyService {
             if (reqObj.data.number === '555-POLICE') {
                 const lspd = await PlayerService.getPlayersFromSocietyNumber('555-LSPD');
                 const bcso = await PlayerService.getPlayersFromSocietyNumber('555-BCSO');
+                const sasp = await PlayerService.getPlayersFromSocietyNumber('555-SASP');
                 const fbi = await PlayerService.getPlayersFromSocietyNumber('555-FBI');
 
                 const message: SocietyInsertDTO = {
@@ -151,6 +173,13 @@ class _SocietyService {
                             '555-BCSO'
                         )
                     ),
+                    '555-SASP': await this.contactsDB.addSociety(
+                        identifier,
+                        this.replaceSocietyPhoneNumber(
+                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber),
+                            '555-SASP'
+                        )
+                    ),
                     '555-FBI': await this.contactsDB.addSociety(
                         identifier,
                         this.replaceSocietyPhoneNumber(
@@ -160,14 +189,15 @@ class _SocietyService {
                     ),
                 };
 
-                [lspd, bcso, fbi]
+                [lspd, bcso, fbi, sasp]
                     .reduce((acc, val) => acc.concat(val), [])
                     .forEach(player => {
+                        const data = this.addTagForSocietyMessage(reqObj.data, originalMessageNumber);
                         this.createMessageBroadcastEvent(
                             player.source,
                             message[player.getSocietyPhoneNumber()],
                             identifier,
-                            this.addTagForSocietyMessage(reqObj.data, originalMessageNumber)
+                            data
                         );
                     });
             }

@@ -1,4 +1,5 @@
 import { Transition } from '@headlessui/react';
+import { PaperAirplaneIcon } from '@heroicons/react/outline';
 import cn from 'classnames';
 import React, { FunctionComponent, memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,25 +37,23 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
     }, [notifications, setBarUncollapsed]);
 
     const color = () => {
-        if (pathname === '/' || pathname === '/emergency') {
+        if (['/', '/emergency', '/weather', '/game-tetris'].includes(pathname)) {
             return 'text-white';
-        } else if (pathname === '/call' || pathname.includes('/phone')) {
+        } else if (pathname === '/call' || (call && pathname.includes('/phone'))) {
             return 'text-white';
         } else if (pathname.includes('/camera')) {
             return 'bg-black text-white';
         } else {
-            return config.theme.value === 'dark' ? 'bg-ios-800 text-white' : 'bg-ios-50 text-black';
+            return config.theme.value === 'dark' ? 'text-white' : 'text-black';
         }
     };
 
     return (
         <>
             <div
-                className={cn(
-                    `z-40 grid grid-cols-3 px-5 py-3 text-sm w-full`,
-                    emergency ? '' : 'cursor-pointer',
-                    color()
-                )}
+                className={cn(`relative z-40 grid grid-cols-3 px-5 py-3 text-sm w-full`, color(), {
+                    'cursor-pointer': !emergency,
+                })}
                 onClick={
                     emergency
                         ? () => {}
@@ -71,6 +70,9 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                             const Icon = notifIcon.icon;
                             return <Icon key={notifIcon.key} className={`text-white h-4 w-4 mr-0.5 rounded-sm`} />;
                         })}
+                    {!emergency && config.planeMode && (
+                        <PaperAirplaneIcon className={`text-white bg-orange-500 h-5 w-5 px-0.5 mr-0.5 rounded-sm`} />
+                    )}
                 </div>
 
                 <div>&nbsp;</div>
@@ -111,6 +113,22 @@ export const TopHeaderBar: FunctionComponent = memo(() => {
                                     navigate('/call');
                                 }}
                                 notificationIcon={() => <DialerIcon className="h-5 w-5 rounded-md" />}
+                                onClose={() => {}}
+                                onClickClose={() => {}}
+                            />
+                        )}
+                        {config.planeMode && (
+                            <NotificationItem
+                                app="settings"
+                                title={t('SETTINGS.OPTIONS.PLANE_MODE')}
+                                content={t('SETTINGS.OPTIONS.PLANE_MODE_ACTIVATED')}
+                                onClick={() => {
+                                    setBarUncollapsed(false);
+                                    navigate('/settings');
+                                }}
+                                notificationIcon={() => (
+                                    <PaperAirplaneIcon className="h-5 w-5 rounded-md bg-orange-500 p-0.5" />
+                                )}
                                 onClose={() => {}}
                                 onClickClose={() => {}}
                             />

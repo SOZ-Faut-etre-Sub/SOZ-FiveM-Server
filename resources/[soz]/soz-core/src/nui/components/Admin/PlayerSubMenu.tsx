@@ -220,6 +220,14 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         <MenuItemButton
                             disabled={!isAdminOrStaff}
                             onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSearch, player);
+                            }}
+                        >
+                            Fouiller
+                        </MenuItemButton>
+                        <MenuItemButton
+                            disabled={!isAdminOrStaff}
+                            onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleOpenGunSmith, player);
                             }}
                         >
@@ -343,6 +351,13 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             }}
                         >
                             Reset Criminalité
+                        </MenuItemButton>
+                        <MenuItemButton
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetClientState, player);
+                            }}
+                        >
+                            Reset Client State
                         </MenuItemButton>
                     </MenuContent>
                 </SubMenu>

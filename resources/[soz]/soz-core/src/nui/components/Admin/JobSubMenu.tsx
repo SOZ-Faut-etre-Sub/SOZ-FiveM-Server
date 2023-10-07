@@ -1,8 +1,7 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { useJobs } from '@public/nui/hook/job';
+import { NuiEvent } from '@public/shared/event';
+import { FunctionComponent } from 'react';
 
-import { NuiEvent } from '../../../shared/event';
-import { Job } from '../../../shared/job';
-import { isOk, Result } from '../../../shared/result';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
 import {
@@ -19,16 +18,8 @@ export type JobSubMenuProps = {
 };
 
 export const JobSubMenu: FunctionComponent<JobSubMenuProps> = ({ banner }) => {
-    const [jobs, setJobs] = useState<Job[]>(null);
     const player = usePlayer();
-
-    useEffect(() => {
-        fetchNui<void, Result<Job[], never>>(NuiEvent.AdminGetJobs).then(result => {
-            if (isOk(result)) {
-                setJobs(result.ok);
-            }
-        });
-    }, []);
+    const jobs = useJobs();
 
     if (!jobs || !player) {
         return null;

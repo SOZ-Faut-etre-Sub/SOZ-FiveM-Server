@@ -12,7 +12,6 @@ import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 import { ItemService } from './item.service';
 
-export const JERRYCAN_FUEL_AMOUNT = 30;
 export const BATTERY_FUEL_AMOUNT = 33;
 
 @Provider()
@@ -64,6 +63,7 @@ export class ItemFuelProvider {
         if (
             vehicleType === 'heli' ||
             vehicleType === 'plane' ||
+            vehicleType === 'boat' ||
             isVehicleModelElectric(GetEntityModel(closestVehicle.vehicleEntityId))
         ) {
             this.notifier.notify(source, 'Vous ne pouvez pas utiliser ce carburant pour ce véhicule.', 'error');
@@ -138,7 +138,7 @@ export class ItemFuelProvider {
 
         const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
 
-        if (vehicleType !== 'heli' && vehicleType !== 'plane') {
+        if (vehicleType !== 'heli' && vehicleType !== 'plane' && vehicleType !== 'boat') {
             this.notifier.notify(source, 'Vous ne pouvez pas utiliser ce carburant pour ce véhicule', 'error');
 
             return;
@@ -181,7 +181,11 @@ export class ItemFuelProvider {
             }
         );
 
-        const filledFuel = Math.round(progress * JERRYCAN_FUEL_AMOUNT);
+        const amount = {
+            kerozene_jerrycan_low: 20,
+            kerosene_jerrycan: 30,
+        }[item.name];
+        const filledFuel = Math.round(progress * amount);
 
         this.vehicleStateService.updateVehicleCondition(closestVehicle.vehicleNetworkId, {
             fuelLevel: vehicleState.condition.fuelLevel + filledFuel,
@@ -320,6 +324,7 @@ export class ItemFuelProvider {
         this.item.setItemUseCallback('essence_jerrycan', this.useEssenceJerrycan.bind(this));
         this.item.setItemUseCallback('essence_jerrycan_low', this.useEssenceJerrycan.bind(this));
         this.item.setItemUseCallback('kerosene_jerrycan', this.useKeroseneJerrycan.bind(this));
+        this.item.setItemUseCallback('kerozene_jerrycan_low', this.useKeroseneJerrycan.bind(this));
         this.item.setItemUseCallback('oil_jerrycan', this.useOilJerrycan.bind(this));
         this.item.setItemUseCallback('car_portable_battery', this.usePortableBattery.bind(this));
     }

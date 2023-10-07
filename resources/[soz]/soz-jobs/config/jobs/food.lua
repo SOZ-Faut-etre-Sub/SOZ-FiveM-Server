@@ -179,7 +179,8 @@ FoodConfig.Zones = {
     },
 }
 
-FoodConfig.HuntingWeapon = GetHashKey("weapon_machete")
+FoodConfig.HuntingWeapon = {GetHashKey("weapon_machete"), GetHashKey("weapon_knife"), GetHashKey("weapon_switchblade")}
+
 FoodConfig.AnimalAllowedToHunt = {
     [GetHashKey("a_c_boar")] = true,
     [GetHashKey("a_c_chickenhawk")] = true,

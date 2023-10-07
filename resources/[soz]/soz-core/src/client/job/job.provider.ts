@@ -1,8 +1,11 @@
 import { JobBlips } from '../../config/job';
 import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { JobType } from '../../shared/job';
+import { MenuType } from '../../shared/nui/menu';
 import { Ok } from '../../shared/result';
 import { BlipFactory } from '../blip';
 import { ItemService } from '../item/item.service';
@@ -31,7 +34,7 @@ export class JobProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Once(OnceStep.PlayerLoaded)
+    @Once(OnceStep.Start)
     public async onStart() {
         for (const [job, blips] of Object.entries(JobBlips)) {
             for (const blipIndex in blips) {
@@ -45,5 +48,13 @@ export class JobProvider {
     public async onPlaceProps(props: { item: string; props: string }) {
         TriggerServerEvent(ServerEvent.JOBS_PLACE_PROPS, props.item, props.props);
         return Ok(true);
+    }
+
+    @OnEvent(ClientEvent.JOB_OPEN_ON_DUTY_MENU)
+    public async openOnDutyMenu(player_names: string[], job: JobType) {
+        this.nuiMenu.openMenu(MenuType.JobOnDutyMenu, {
+            state: player_names,
+            job: job,
+        });
     }
 }

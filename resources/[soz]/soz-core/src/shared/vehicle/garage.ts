@@ -15,6 +15,7 @@ export enum GarageCategory {
     Car = 'car',
     Air = 'air',
     Sea = 'sea',
+    All = 'all',
 }
 
 export enum PlaceCapacity {
@@ -36,6 +37,7 @@ export type GarageParkingPlaceData = {
 };
 
 export type Garage = {
+    id: string;
     name: string;
     legacyId?: string;
     type: GarageType;
@@ -45,10 +47,12 @@ export type Garage = {
     allowTrailers?: boolean;
     parkingPlaces: Zone<GarageParkingPlaceData>[];
     isTrailerGarage?: boolean;
+    transferList?: string[];
 };
 
 export type GarageVehicle = {
     vehicle: PlayerServerVehicle;
+    weight: number | null;
     price: number | null;
     name: string | null;
 };
@@ -60,4 +64,12 @@ export type GarageMenuData = {
     id: string;
     max_places: number | null;
     has_fake_ticket: boolean;
+    transferGarageList: {
+        id: string;
+        garage: Garage;
+    }[];
 };
+
+export function getTransferPrice(weight: number) {
+    return 100 + Math.round((weight / 1000) * 15);
+}

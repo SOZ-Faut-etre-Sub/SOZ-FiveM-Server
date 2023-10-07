@@ -7,6 +7,7 @@ import { uuidv4, wait } from '@core/utils';
 import { PlayerVehicle } from '@prisma/client';
 import { DealershipConfig } from '@public/config/dealership';
 import { GarageRepository } from '@public/server/repository/garage.repository';
+import { JobType } from '@public/shared/job';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { MultiZone } from '@public/shared/polyzone/multi.zone';
 import { RpcClientEvent } from '@public/shared/rpc';
@@ -14,10 +15,11 @@ import { Ear } from '@public/shared/voip';
 
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
-import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
+import { getDefaultVehicleConfiguration, VehicleColor, VehicleConfiguration } from '../../shared/vehicle/modification';
 import {
     getDefaultVehicleCondition,
     getDefaultVehicleVolatileState,
+    VehicleCategory,
     VehicleCondition,
     VehicleSpawn,
     VehicleType,
@@ -41,6 +43,7 @@ const VEHICLE_HAS_RADIO = [
     'mule6',
     'taco1',
     'dynasty2',
+    'tropic3',
     'trash',
     'stockade',
     'baller8',
@@ -76,6 +79,7 @@ const VEHICLE_HAS_RADIO = [
     'fbi2',
     'cogfbi',
     'paragonfbi',
+    'dodgebana',
     'sadler1',
     'hauler1',
     'brickade1',
@@ -85,9 +89,34 @@ const VEHICLE_HAS_RADIO = [
     'bcsoc7',
     'lspdgallardo',
     'bcsomanchez',
+    'predator',
+    'sasp1',
+    'xls2',
+    'schafter6',
 ];
 
 const DISALLOWED_VEHICLE_MODELS = { [GetHashKey('dune2')]: true };
+
+//Prevent police bike to spawn inside custom BCSO mapping
+const frontBCSO = new BoxZone([1865.68, 3682.6, 33.57], 10.0, 6.4, {
+    heading: 300.0,
+    minZ: 32.57,
+    maxZ: 35.57,
+});
+
+const lsmcParking = new BoxZone([427.27, -1325.76, 39.02], 78.8, 111.0, {
+    heading: 140.16,
+    minZ: 29.02,
+    maxZ: 48.22,
+});
+
+const lsmcMlo = new BoxZone([347.75, -1412.87, 29.43], 92.8, 87.0, {
+    heading: 228.37,
+    minZ: 28.43,
+    maxZ: 70.43,
+});
+
+const VEHICLE_INVERTED_SPAWN = ['raketrailer'];
 
 @Provider()
 export class VehicleSpawner {
@@ -123,6 +152,10 @@ export class VehicleSpawner {
             noSpawnZones.push(BoxZone.default(dealership.showroom.position, 10, 10));
         }
 
+        noSpawnZones.push(frontBCSO);
+        noSpawnZones.push(lsmcParking);
+        noSpawnZones.push(lsmcMlo);
+
         this.noSpawnZone = new MultiZone<BoxZone>(noSpawnZones);
     }
 
@@ -144,10 +177,14 @@ export class VehicleSpawner {
 
         if (DISALLOWED_VEHICLE_MODELS[model]) {
             CancelEvent();
+
+            return;
         }
 
         if (this.noSpawnZone.isPointInside(position)) {
             CancelEvent();
+
+            return;
         }
     }
 
@@ -245,6 +282,11 @@ export class VehicleSpawner {
             open: false,
             owner: player.citizenid,
             defaultOwner: vehicle.citizenid,
+            job: vehicle.job as JobType,
+            class: vehicle.category as VehicleCategory,
+            locatorEndJam: this.vehicleStateService.getJamLocator(vehicle.plate),
+            model: vehicle.vehicle,
+            label: vehicle.label,
         };
 
         const hash = parseInt(vehicle.hash || '0', 10);
@@ -283,12 +325,11 @@ export class VehicleSpawner {
         const modelHash = GetHashKey(model);
         const volatileState = {
             ...getDefaultVehicleVolatileState(),
-            isPlayerVehicle: true,
+            isPlayerVehicle: false,
             owner: player.citizenid,
             open: true,
         };
         const condition = getDefaultVehicleCondition();
-
         return this.spawn(
             source,
             {
@@ -302,6 +343,52 @@ export class VehicleSpawner {
         );
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    public async spawnRentVehicle(
+        source: number,
+        model: string,
+        data: { position: Vector4; color: number }
+    ): Promise<null | number | object> {
+        const player = this.playerService.getPlayer(source);
+        const position = data.position;
+        const color = data.color;
+
+        if (!player) {
+            return null;
+        }
+
+        const modelHash = GetHashKey(model);
+        const volatileState = {
+            ...getDefaultVehicleVolatileState(),
+            isPlayerVehicle: false,
+            owner: player.citizenid,
+            open: false,
+            rentOwner: player.citizenid,
+        };
+        const condition = getDefaultVehicleCondition();
+        return this.spawn(
+            source,
+            {
+                hash: modelHash,
+                model,
+                position,
+                warp: false,
+                modification: {
+                    color: {
+                        primary: VehicleColor.MetallicWhite,
+                        secondary: color,
+                        pearlescent: null,
+                        rim: null,
+                    },
+                    modification: {},
+                    extra: {},
+                },
+            },
+            volatileState,
+            condition
+        );
+    }
+
     private async spawn(
         player: number,
         vehicle: VehicleSpawn,
@@ -309,6 +396,10 @@ export class VehicleSpawner {
         condition: VehicleCondition
     ): Promise<number | null> {
         const volatile = this.getSpawnVolatileState(vehicle, volatileState);
+
+        if (VEHICLE_INVERTED_SPAWN.includes(vehicle.model)) {
+            vehicle.position[3] = (vehicle.position[3] + 180) % 360;
+        }
 
         try {
             const [netId, entityId] = await this.spawnVehicleFromClient(player, vehicle, volatile, condition);
@@ -328,7 +419,14 @@ export class VehicleSpawner {
                 return null;
             }
 
-            this.vehicleStateService.register(netId, player, vehicle.position, volatile, condition);
+            this.vehicleStateService.register(
+                netId,
+                player,
+                vehicle.position,
+                volatile,
+                condition,
+                vehicle.modification || getDefaultVehicleConfiguration()
+            );
 
             return netId;
         } catch (e) {

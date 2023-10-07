@@ -2,9 +2,11 @@ import { Command } from '../../core/decorators/command';
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Logger } from '../../core/logger';
 import { AnimationConfigItem, MoodConfigItem, WalkConfigItem } from '../../shared/animation';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Shortcut } from '../../shared/nui/player';
+import { getRandomItem } from '../../shared/random';
 import { Err, Ok } from '../../shared/result';
 import { AnimationService } from '../animation/animation.service';
 import { Notifier } from '../notifier';
@@ -32,6 +34,9 @@ export class PlayerAnimationProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     @Command('animation_stop', {
         description: "Stop l'animation en cours",
@@ -192,7 +197,7 @@ export class PlayerAnimationProvider {
             try {
                 animation = JSON.parse(animationJson) as AnimationConfigItem;
             } catch (e) {
-                console.error(e);
+                this.logger.error(`Error while parsing animation ${key}`, e);
             }
         }
 
@@ -282,7 +287,7 @@ export class PlayerAnimationProvider {
                 try {
                     animation = JSON.parse(animationJson) as AnimationConfigItem;
                 } catch (e) {
-                    console.error(e);
+                    this.logger.error(`Error while parsing animation ${key}`, e);
                 }
             }
 
@@ -354,6 +359,23 @@ export class PlayerAnimationProvider {
         }
 
         return false;
+    }
+
+    @OnEvent(ClientEvent.ANIMATION_GIVE)
+    public async playGiveAnimation() {
+        const randomAnimation = getRandomItem(['givetake1_a', 'givetake2_a', 'givetake1_b', 'givetake2_b']);
+
+        await this.animationService.playAnimation({
+            base: {
+                dictionary: 'mp_common',
+                name: randomAnimation,
+                duration: 2000,
+                options: {
+                    enablePlayerControl: true,
+                    onlyUpperBody: true,
+                },
+            },
+        });
     }
 
     @OnEvent(ClientEvent.ANIMATION_SURRENDER)

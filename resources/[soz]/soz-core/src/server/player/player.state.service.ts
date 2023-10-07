@@ -26,7 +26,7 @@ export class PlayerStateService {
     }
 
     public getClientStateByCitizenId(citizenId: string) {
-        if (!this.serverStateByCitizenId[citizenId]) {
+        if (!this.clientStateByCitizenId[citizenId]) {
             this.clientStateByCitizenId[citizenId] = this.getDefaultPlayerClientState();
         }
 
@@ -146,6 +146,11 @@ export class PlayerStateService {
             escorting: null,
             isLooted: false,
             isZipped: false,
+            carryBox: false,
         };
+    }
+
+    public resetClientState(source: number) {
+        this.setClientState(source, this.getDefaultPlayerClientState());
     }
 }

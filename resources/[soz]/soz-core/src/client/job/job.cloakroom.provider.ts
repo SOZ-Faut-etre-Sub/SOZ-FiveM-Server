@@ -3,9 +3,11 @@ import { JobType } from '@public/shared/job';
 import { BaunCloakroom } from '@public/shared/job/baun';
 import { NewGarrayCloakroom } from '@public/shared/job/bennys';
 import { CjrCloakroom } from '@public/shared/job/cjr';
+import { FDFCloakroom } from '@public/shared/job/fdf';
 import { FfsCloakroom } from '@public/shared/job/ffs';
 import { FoodCloakroom } from '@public/shared/job/food';
 import { GarbageCloakroom } from '@public/shared/job/garbage';
+import { GouvCloakroom } from '@public/shared/job/gouv';
 import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '@public/shared/job/lsmc';
 import { NewsCloakroom } from '@public/shared/job/news';
 import { OilCloakroom } from '@public/shared/job/oil';
@@ -36,6 +38,8 @@ const jobStorage: Partial<Record<JobType, WardrobeConfig>> = {
     ['cash-transfer']: StonkCloakroom,
     bennys: NewGarrayCloakroom,
     lsmc: LsmcCloakroom,
+    gouv: GouvCloakroom,
+    fdf: FDFCloakroom,
 };
 
 @Provider()
@@ -73,6 +77,10 @@ export class JobCloakroomProvider {
     }
 
     public async openCloakroom(storageIdToSave: string, config: WardrobeConfig, customLabel?: string) {
+        if (!config) {
+            return;
+        }
+
         const outfitSelection = await this.playerWardrobe.selectOutfit(config, 'Tenue civile', customLabel);
 
         if (outfitSelection.canceled) {

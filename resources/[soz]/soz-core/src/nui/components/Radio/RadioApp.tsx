@@ -16,7 +16,7 @@ export const RadioApp: FunctionComponent = () => {
     const [radio, setRadio] = useState<Radio>(null);
     const [display, setDisplay] = useState(false);
     const [currentChannelType, setCurrentChannelType] = useState<RadioChannelType>(RadioChannelType.Primary);
-    const { control, handleSubmit, setValue } = useForm();
+    const { control, handleSubmit, setValue } = useForm<{ frequency: string }, any, { frequency: string }>();
 
     useNuiEvent('radio', 'Open', setRadio);
     useNuiEvent(
@@ -49,7 +49,7 @@ export const RadioApp: FunctionComponent = () => {
         if (radio) {
             const frequency =
                 currentChannelType === RadioChannelType.Primary ? radio.primary.frequency : radio.secondary.frequency;
-            setValue('frequency', frequency);
+            setValue('frequency', frequency.toString());
         }
     }, [radio, currentChannelType]);
 
@@ -90,7 +90,7 @@ export const RadioApp: FunctionComponent = () => {
                 <img
                     className="relative"
                     style={{ height: '40vh', zIndex: 5, width: '9vw' }}
-                    src="/public/images/radio/radio.png"
+                    src="/public/images/radio/radio.webp"
                     alt="radio"
                 />
                 <div

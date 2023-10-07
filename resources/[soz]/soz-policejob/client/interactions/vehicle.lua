@@ -14,7 +14,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 canInteract = function(player)
                     return PlayerData.job.onduty
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["sasp"] = 0},
                 blackoutGlobal = true,
                 blackoutJob = true,
             },
@@ -26,7 +26,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 canInteract = function(player)
                     return PlayerData.job.onduty
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["sasp"] = 0},
             },
             {
                 label = "Ouvrir",
@@ -36,7 +36,7 @@ RegisterNetEvent("QBCore:Client:SetDuty", function(duty)
                 canInteract = function(player)
                     return PlayerData.job.onduty
                 end,
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["sasp"] = 0},
             },
         },
         distance = 1.5,

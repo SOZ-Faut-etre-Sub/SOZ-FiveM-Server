@@ -24,6 +24,7 @@ export type GameMasterSubMenuProps = {
         adminGPS: boolean;
         moneyCase: boolean;
         invisible: boolean;
+        adminPoliceLocator: boolean;
     };
 };
 
@@ -35,6 +36,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
 }) => {
     const isAdmin = permission === 'admin';
     const isAdminOrStaff = isAdmin || permission === 'staff';
+    const isAdminOrStaffOrGM = isAdminOrStaff || permission === 'gamemaster';
     const player = usePlayer();
 
     if (!player) {
@@ -128,7 +130,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                 </MenuItemButton>
                 {Object.keys(characters).length > 0 && (
                     <MenuItemSelect
-                        disabled={!isAdminOrStaff}
+                        disabled={!isAdminOrStaffOrGM}
                         onConfirm={async (index, value) => {
                             await fetchNui(NuiEvent.AdminMenuGameMasterSwitchCharacter, value);
                         }}
@@ -142,7 +144,7 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                     </MenuItemSelect>
                 )}
                 <MenuItemButton
-                    disabled={!isAdminOrStaff}
+                    disabled={!isAdminOrStaffOrGM}
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminMenuGameMasterCreateNewCharacter);
                     }}
@@ -151,13 +153,23 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({
                 </MenuItemButton>
                 <MenuItemCheckbox
                     checked={state.adminGPS}
-                    disabled={!isAdminOrStaff}
+                    disabled={!isAdminOrStaffOrGM}
                     onChange={async value => {
                         state.adminGPS = value;
                         await fetchNui(NuiEvent.AdminSetAdminGPS, value);
                     }}
                 >
                     🗺 GPS permanent
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
+                    checked={state.adminPoliceLocator}
+                    disabled={!isAdminOrStaff}
+                    onChange={async value => {
+                        state.adminPoliceLocator = value;
+                        await fetchNui(NuiEvent.AdminSetPoliceLocator, value);
+                    }}
+                >
+                    🗺️ Affichage des patrouilles
                 </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>

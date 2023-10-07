@@ -1,14 +1,18 @@
 import { Vector4 } from '@public/shared/polyzone/vector';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Logger } from '../../core/logger';
 import { UpwStation } from '../../shared/fuel';
 import { PrismaService } from '../database/prisma.service';
-import { Repository } from './repository';
+import { RepositoryLegacy } from './repository';
 
 @Injectable()
-export class UpwStationRepository extends Repository<Record<string, UpwStation>> {
+export class UpwStationRepository extends RepositoryLegacy<Record<string, UpwStation>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     protected async load(): Promise<Record<string, UpwStation>> {
         const stations = await this.prismaService.upw_stations.findMany();
@@ -25,10 +29,10 @@ export class UpwStationRepository extends Repository<Record<string, UpwStation>>
                     max_stock: station.max_stock,
                     price: station.price,
                     stock: station.stock,
+                    job: station.job,
                 };
             } catch (e) {
-                console.error('cannot load station: ', station.station, e);
-                continue;
+                this.logger.error('cannot load station: ', station.station, e);
             }
         }
 

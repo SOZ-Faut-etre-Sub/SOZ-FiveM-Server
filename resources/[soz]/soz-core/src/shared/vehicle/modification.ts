@@ -313,7 +313,7 @@ export type VehicleConfiguration = {
     customWheelFront?: boolean;
     customWheelRear?: boolean;
     modification: VehicleModification;
-    extra: Record<number, boolean>;
+    extra?: Record<number, boolean>;
 };
 
 export enum VehicleModType {
@@ -1283,27 +1283,27 @@ export const VehicleXenonColorChoices: Record<VehicleXenonColor, VehicleColorCho
 
 export const VehicleModificationPricing: Partial<Record<keyof VehicleModification, VehicleLsCustomBaseConfigItem>> = {
     engine: {
-        priceByLevels: [0.1, 0.15, 0.2, 0.25, 0.3],
+        priceByLevels: [0.04, 0.05, 0.07, 0.1, 0.12],
         type: 'list',
     },
     brakes: {
-        priceByLevels: [0.08, 0.1, 0.12, 0.14, 0.16],
+        priceByLevels: [0.05, 0.06, 0.07, 0.08, 0.09],
         type: 'list',
     },
     transmission: {
-        priceByLevels: [0.08, 0.11, 0.14, 0.17, 0.2],
+        priceByLevels: [0.05, 0.06, 0.08, 0.09, 0.1],
         type: 'list',
     },
     suspension: {
-        priceByLevels: [0.06, 0.09, 0.12, 0.15, 0.18],
+        priceByLevels: [0.05, 0.06, 0.07, 0.09, 0.1],
         type: 'list',
     },
     armor: {
-        priceByLevels: [0.25, 0.35, 0.45, 0.55, 0.65],
+        priceByLevels: [0.04, 0.08, 0.1, 0.12, 0.16],
         type: 'list',
     },
     turbo: {
-        priceByLevels: [0, 0.2],
+        priceByLevels: [0, 0.1],
         type: 'toggle',
     },
 };
@@ -1315,7 +1315,6 @@ export const getDefaultVehicleConfiguration = (): VehicleConfiguration => ({
         pearlescent: 0,
         rim: 0,
     },
-    plateStyle: VehicleLicensePlateStyle.BlueOnWhite1,
     modification: {},
     extra: {},
 });
@@ -1332,14 +1331,16 @@ export const getVehicleCustomPrice = (
         const category = VehicleModificationPricing[key];
 
         if (category.type === 'list') {
-            const currentLevel = currentModification.modification[key];
-            const newLevel = newModification.modification[key];
+            const currentLevel = (currentModification.modification[key] as number) ?? -1;
+            const newLevel = (newModification.modification[key] as number) ?? -1;
 
             if (currentLevel !== newLevel) {
-                const level = category.priceByLevels[newLevel];
+                for (let subLevel = currentLevel + 1; subLevel < newLevel + 1; subLevel++) {
+                    const level = category.priceByLevels[subLevel];
 
-                if (level) {
-                    price = price + vehiclePrice * level;
+                    if (level) {
+                        price = price + vehiclePrice * level;
+                    }
                 }
             }
         }

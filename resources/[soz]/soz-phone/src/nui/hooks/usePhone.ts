@@ -61,3 +61,8 @@ export const useCallModal = () => {
     const state = useSelector((state: RootState) => state.phone);
     return state.callModal;
 };
+
+export const useCitizenID = () => {
+    const state = useSelector((state: RootState) => state.phone);
+    return state.citizenID;
+};

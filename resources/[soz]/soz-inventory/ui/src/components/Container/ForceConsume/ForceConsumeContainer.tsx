@@ -45,7 +45,7 @@ export const ForceConsumeContainer = () => {
             
                 setPlayerInventory(event.data.playerInventory.items
                     .filter((i: InventoryItem) => i !== null)
-                    .map((i: InventoryItem) => ({ ...i, disabled: (i.type != 'food' && i.type != 'drink' && i.type != 'cocktail' && i.type != 'liquor') }))
+                    .map((i: InventoryItem) => ({ ...i, disabled: (i.type != 'food' && i.type != 'drink' && i.type != 'cocktail' && i.type != 'liquor' && i.type != 'drug') }))
                 );
                 targetId = event.data.targetId;
                 setDisplay(true);

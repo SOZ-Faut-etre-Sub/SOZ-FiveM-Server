@@ -2,6 +2,7 @@ function CreateResaleZone(data)
     data.options = {
         {
             label = "Vendre l'énergie",
+            icon = "c:upw/vendre.png",
             event = "soz-upw:client:ResaleEnergy",
             canInteract = function()
                 return OnDuty()

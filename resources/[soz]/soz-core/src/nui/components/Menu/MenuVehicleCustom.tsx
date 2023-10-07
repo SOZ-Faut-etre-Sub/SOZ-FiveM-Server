@@ -47,7 +47,7 @@ export const MenuItemSelectVehicleCustomLevel: FunctionComponent<MenuItemSelectV
             onChange={(index, value) => onChange(value)}
             title={
                 <div className="flex items-center w-[9.3em]">
-                    <img alt={image} className="ml-4 w-8 h-8" src={`/public/images/vehicle/${image}.png`} />
+                    <img alt={image} className="ml-4 w-8 h-8" src={`/public/images/vehicle/${image}.webp`} />
                     <h3 className="ml-2 uppercase">{title}</h3>
                 </div>
             }
@@ -80,6 +80,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                 vehicleEntityId: data.vehicle,
                 originalConfiguration: data.originalConfiguration,
                 vehicleConfiguration: configuration,
+                onlyPerformance: true,
             });
         }
     }, [configuration, data]);
@@ -98,6 +99,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
             originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: configuration,
             usePricing: true,
+            onlyPerformance: true,
         });
     };
 
@@ -158,7 +160,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                             onChange={(index, value) => createOnChange('turbo')(value)}
                             title={
                                 <div className="flex items-center w-[9.3rem]">
-                                    <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.png" />
+                                    <img alt="Turbo" className="ml-4 w-8 h-8" src="/public/images/vehicle/turbo.webp" />
                                     <h3 className="ml-2 uppercase">Turbo</h3>
                                 </div>
                             }
@@ -170,7 +172,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                     <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer les changements</span>
-                            <span>${price.toFixed(0)}</span>
+                            <span>$ {Intl.NumberFormat('fr-FR').format(price)}</span>
                         </div>
                     </MenuItemButton>
                 </MenuContent>

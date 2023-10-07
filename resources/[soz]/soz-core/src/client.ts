@@ -7,7 +7,9 @@ import { AdminModule } from './client/admin/admin.module';
 import { AfkModule } from './client/afk/afk.module';
 import { AnimationModule } from './client/animation/animation.module';
 import { BankModule } from './client/bank/bank.module';
+import { BillboardModule } from './client/billboard/billboard.module';
 import { BinocularsModule } from './client/binoculars/binoculars.module';
+import { CraftModule } from './client/craft/craft.module';
 import { DrivingSchoolModule } from './client/driving-school/ds.module';
 import { FactoryModule } from './client/factory/factory.module';
 import { HousingModule } from './client/housing/housing.module';
@@ -16,12 +18,16 @@ import { InventoryModule } from './client/inventory/inventory.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
+import { FDFModule } from './client/job/fdf/fdf.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
+import { GarbageModule } from './client/job/garbage/garbage.module';
+import { GouvModule } from './client/job/gouv/gouv.module';
 import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { MandatoryModule } from './client/job/mdr/mdr.module';
 import { OilModule } from './client/job/oil/oil.module';
+import { PawlModule } from './client/job/pawl/pawl.module';
 import { PoliceModule } from './client/job/police/police.module';
 import { StonkModule } from './client/job/stonk/stonk.module';
 import { TaxiModule } from './client/job/taxi/taxi.module';
@@ -30,7 +36,8 @@ import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
 import { ObjectModule } from './client/object/object.module';
 import { PlayerModule } from './client/player/player.module';
-import { RepositoryModule } from './client/resources/repository.module';
+import { RaceModule } from './client/race/race.module';
+import { RepositoryModule } from './client/repository/repository.module';
 import { ShopModule } from './client/shop/shop.module';
 import { store } from './client/store/store';
 import { StoreModule } from './client/store/store.module';
@@ -85,6 +92,7 @@ async function bootstrap() {
         VehicleModule,
         FactoryModule,
         OilModule,
+        PawlModule,
         WeaponModule,
         InventoryModule,
         DrivingSchoolModule,
@@ -93,8 +101,14 @@ async function bootstrap() {
         PoliceModule,
         UpwModule,
         TaxiModule,
+        GouvModule,
         BinocularsModule,
         VoipModule,
+        RaceModule,
+        GarbageModule,
+        BillboardModule,
+        CraftModule,
+        FDFModule,
         ...PrivateModules
     );
 

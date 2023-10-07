@@ -5,13 +5,14 @@ import {
     Animation,
     AnimationInfo,
     animationOptionsToFlags,
+    AnimationProps,
     AnimationStopReason,
     PlayOptions,
     Scenario,
 } from '../../shared/animation';
 import { transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { WeaponName } from '../../shared/weapons/weapon';
-import { ResourceLoader } from '../resources/resource.loader';
+import { ResourceLoader } from '../repository/resource.loader';
 
 const defaultPlayOptions: PlayOptions = {
     ped: null,
@@ -219,6 +220,10 @@ export class AnimationFactory {
                         true
                     );
 
+                    if (prop.fx) {
+                        this.fxLoop(propId, prop);
+                    }
+
                     props.push(propId);
                 }
             }
@@ -259,11 +264,34 @@ export class AnimationFactory {
                         this.resourceLoader.unloadAnimationDictionary(animation.exit.dictionary);
                     }
 
+                    RemoveParticleFxFromEntity(prop);
                     DetachEntity(prop, false, false);
                     DeleteEntity(prop);
                 }
             }
         }, options);
+    }
+
+    private async fxLoop(entity: number, prop: AnimationProps) {
+        do {
+            UseParticleFxAsset(prop.fx.dictionary);
+            StartNetworkedParticleFxLoopedOnEntity(
+                prop.fx.name,
+                entity,
+                prop.fx.position[0],
+                prop.fx.position[1],
+                prop.fx.position[2],
+                prop.fx.rotation[0],
+                prop.fx.rotation[1],
+                prop.fx.rotation[2],
+                prop.fx.scale,
+                false,
+                false,
+                false
+            );
+
+            await wait(prop.fx.duration);
+        } while (prop.fx.manualLoop && DoesEntityExist(entity));
     }
 
     public createScenario(scenario: Scenario, options: Partial<PlayOptions> = {}): AnimationRunner {

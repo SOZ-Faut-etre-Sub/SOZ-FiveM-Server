@@ -1,5 +1,4 @@
 local voiceProximity = 2
-local muted = false
 
 local function SetVoiceProximity(proximity)
     local proximityConfig = Config.voiceRanges[proximity]

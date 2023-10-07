@@ -1,7 +1,9 @@
 import { Menu, Transition } from '@headlessui/react';
+import { DuplicateIcon } from '@heroicons/react/outline';
 import { BookmarkIcon, ChatIcon, LocationMarkerIcon, PhoneIcon } from '@heroicons/react/solid';
 import { useCall } from '@os/call/hooks/useCall';
 import LogDebugEvent from '@os/debug/LogDebugEvents';
+import { setClipboard } from '@os/phone/hooks/useClipboard';
 import { ServerPromiseResp } from '@typings/common';
 import { MessageEvents } from '@typings/messages';
 import { SocietyEvents } from '@typings/society';
@@ -156,7 +158,15 @@ const MessagesList = (): any => {
                                         className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
                                         onClick={() => setWaypoint(message.position)}
                                     >
-                                        <LocationMarkerIcon className="mx-3 h-5 w-5" /> Aller a la position
+                                        <LocationMarkerIcon className="mx-3 h-5 w-5" /> Aller à la position
+                                    </Button>
+                                )}
+                                {message.message && (
+                                    <Button
+                                        className="flex items-center w-full text-white px-2 py-2 hover:text-gray-300"
+                                        onClick={() => setClipboard(message.message)}
+                                    >
+                                        <DuplicateIcon className="mx-3 h-5 w-5" /> Copier le texte{' '}
                                     </Button>
                                 )}
 

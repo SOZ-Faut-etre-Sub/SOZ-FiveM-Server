@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["filterJson"]
+  previewFeatures = ["metrics"]
   binaryTargets   = ["native", "linux-musl", "windows"]
   engineType      = "binary"
 }
@@ -80,42 +80,43 @@ model fuel_storage {
 }
 
 model upw_stations {
-  id              Int     @id @default(autoincrement())
-  station         String  @db.VarChar(15) @unique
-  stock           Int     @default(0)
-  max_stock       Int     @default(600)
-  price           Float?  @default(0.00) @db.Float
-  position        String  @db.Text
-  chargers        upw_chargers[]
+  id        Int            @id @default(autoincrement())
+  station   String         @unique @db.VarChar(15)
+  stock     Int            @default(0)
+  max_stock Int            @default(600)
+  price     Float?         @default(0.00) @db.Float
+  position  String         @db.Text
+  job       String?        @db.Text
+  chargers  upw_chargers[]
 }
 
 model upw_chargers {
-  id              Int              @id @default(autoincrement())
-  station         String
-  position        String
-  active          Int              @default(0)
-  upw_station     upw_stations     @relation(fields: [station], references: [station], onDelete: Cascade, onUpdate: Restrict, map: "FK_upw_chargers_soz_test.upw_stations")
+  id          Int          @id @default(autoincrement())
+  station     String
+  position    String
+  active      Int          @default(0)
+  upw_station upw_stations @relation(fields: [station], references: [station], onDelete: Cascade, onUpdate: Restrict, map: "FK_upw_chargers_soz_test.upw_stations")
 
   @@index([station], map: "FK_upw_chargers_soz_test.upw_stations")
 }
 
 model housing_apartment {
-  id               Int              @id @default(autoincrement())
-  property_id      Int
-  identifier       String?          @db.VarChar(50)
-  label            String?          @db.VarChar(50)
-  price            Int?
-  owner            String?          @db.VarChar(50)
-  roommate         String?          @db.VarChar(50)
-  inside_coord     String?          @db.LongText
-  exit_zone        String?          @db.LongText
-  fridge_zone      String?          @db.LongText
-  stash_zone       String?          @db.LongText
-  closet_zone      String?          @db.LongText
-  money_zone       String?          @db.LongText
-  tier             Int?
+  id                Int              @id @default(autoincrement())
+  property_id       Int
+  identifier        String?          @db.VarChar(50)
+  label             String?          @db.VarChar(50)
+  price             Int?
+  owner             String?          @db.VarChar(50)
+  roommate          String?          @db.VarChar(50)
+  inside_coord      String?          @db.LongText
+  exit_zone         String?          @db.LongText
+  fridge_zone       String?          @db.LongText
+  stash_zone        String?          @db.LongText
+  closet_zone       String?          @db.LongText
+  money_zone        String?          @db.LongText
+  tier              Int?
   has_parking_place Int?
-  housing_property housing_property @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
+  housing_property  housing_property @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
 
   @@index([property_id], map: "housing_apartment_housing_property_id_fk")
 }
@@ -171,6 +172,27 @@ model persistent_prop {
   model    Int
   event    String? @db.VarChar(20)
   position String  @db.LongText
+}
+
+model collection_prop {
+  id      BigInt        @id @default(autoincrement())
+  name    String        @unique @db.VarChar(50)
+  creator String        @db.VarChar(50)
+  date    DateTime      @default(now()) @db.Timestamp(0)
+  props   placed_prop[]
+}
+
+model placed_prop {
+  id              BigInt          @id @default(autoincrement())
+  unique_id       String          @unique @db.VarChar(255)
+  collection      String          @db.VarChar(50)
+  model           String
+  position        String          @db.LongText
+  matrix          String?         @db.LongText
+  collision       Boolean         @default(true)
+  collection_prop collection_prop @relation(fields: [collection], references: [name], onDelete: Cascade, onUpdate: Restrict, map: "FK_placed_prop_soz_collection_prop")
+
+  @@index([collection], map: "FK_placed_prop_soz_collection_prop")
 }
 
 model phone_calls {
@@ -282,29 +304,32 @@ model phone_twitch_news {
 }
 
 model player {
-  id                     Int                      @default(autoincrement())
-  citizenid              String                   @id @db.VarChar(50)
-  cid                    Int?
-  license                String                   @db.VarChar(255)
-  name                   String                   @db.VarChar(255)
-  money                  String                   @db.Text
-  charinfo               String?                  @db.Text
-  job                    String                   @db.Text
-  gang                   String?                  @db.Text
-  position               String                   @db.Text
-  metadata               String                   @db.Text
-  inventory              String?                  @db.LongText
-  last_updated           DateTime                 @default(now()) @db.Timestamp(0)
-  created_at             DateTime                 @default(now()) @db.Timestamp(0)
-  is_default             Int                      @default(0)
-  skin                   String?                  @db.Text
-  cloth_config           String?                  @db.Text
-  features               String?                  @default("[]") @db.Text
-  player_cloth_set       player_cloth_set[]
-  player_vehicles        PlayerVehicle[]
-  records_history_player player_records_history[] @relation("records_history_player")
-  records_history_author player_records_history[] @relation("records_history_author")
+  id                      Int                      @default(autoincrement())
+  citizenid               String                   @id @db.VarChar(50)
+  cid                     Int?
+  license                 String                   @db.VarChar(255)
+  name                    String                   @db.VarChar(255)
+  money                   String                   @db.Text
+  charinfo                String?                  @db.Text
+  job                     String                   @db.Text
+  gang                    String?                  @db.Text
+  position                String                   @db.Text
+  metadata                String                   @db.Text
+  inventory               String?                  @db.LongText
+  last_updated            DateTime                 @default(now()) @db.Timestamp(0)
+  created_at              DateTime                 @default(now()) @db.Timestamp(0)
+  is_default              Int                      @default(0)
+  skin                    String?                  @db.Text
+  cloth_config            String?                  @db.Text
+  features                String?                  @default("[]") @db.Text
+  player_cloth_set        player_cloth_set[]
+  player_vehicles         PlayerVehicle[]
+  records_history_player  player_records_history[] @relation("records_history_player")
+  records_history_author  player_records_history[] @relation("records_history_author")
   records_history_deletor player_records_history[] @relation("records_history_deletor")
+  fishes                  player_fish[]            @relation("fishes")
+  sozedex_rewards         player_sozedex_rewards[] @relation("sozedex_rewards")
+  race_scores             race_score[]             @relation("race_scores")
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -400,6 +425,7 @@ model Vehicle {
   jobName         String? @map("job_name") @db.Text
   stock           Int?    @default(0)
   radio           Boolean @default(false)
+  maxStock        Int?    @default(2)
 
   @@index([category])
   @@index([dealershipId], map: "vehicles_dealership_idx")
@@ -450,6 +476,7 @@ model investigation {
   granted                String?                  @db.LongText
   granted_services       String?                  @db.LongText
   granted_jobgrade       String?                  @db.LongText
+  granted_certifications String?                  @db.LongText
   supervisors            String?                  @db.LongText
   concerned_people       String?                  @db.LongText
   in_charge              String?                  @db.LongText
@@ -463,7 +490,7 @@ model investigation_revision {
   investigationId Int?
   citizenid       String         @db.VarChar(255)
   content         String         @db.LongText
-  note            String         @db.LongText @default("")
+  note            String         @default("") @db.LongText
   created_at      DateTime?      @default(now()) @db.Timestamp(0)
   investigation   investigation? @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_investigation")
 
@@ -474,7 +501,7 @@ model player_records_history {
   id               Int       @id @unique(map: "playerrecordshistory_id_uindex") @default(autoincrement())
   citizenid        String    @db.VarChar(255)
   author_citizenid String    @db.VarChar(255)
-  delete_citizenid String?    @db.VarChar(255)
+  delete_citizenid String?   @db.VarChar(255)
   type             String    @db.VarChar(128)
   content          String?   @db.LongText
   isDeleted        Boolean?  @default(false)
@@ -483,7 +510,7 @@ model player_records_history {
   deleted_at       DateTime? @db.Timestamp(0)
   concerned_player player    @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_target", name: "records_history_player")
   author           player    @relation(fields: [author_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_author", name: "records_history_author")
-  deletor          player?    @relation(fields: [delete_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_deletor", name: "records_history_deletor")
+  deletor          player?   @relation(fields: [delete_citizenid], references: [citizenid], onDelete: Cascade, map: "FK_playerrecordshistory_deletor", name: "records_history_deletor")
 
   @@index([citizenid], map: "citizenid")
 }
@@ -556,4 +583,133 @@ enum report_type {
   investigation
   report
   complaint
+}
+
+model drugs_seedling {
+  id         Int      @id @default(autoincrement())
+  drug       String
+  location   String   @db.Text
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  nb_water   Int
+  garden     String?  @db.VarChar(50)
+  citizenid  String   @db.VarChar(50)
+  skillBoost Boolean
+  property   Int?
+}
+
+model drugs_sell_location {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(50)
+  type String @db.VarChar(50)
+  zone String @db.Text
+
+  @@unique([name, type])
+}
+
+model drugs_garden_guest {
+  id        Int    @id @default(autoincrement())
+  citizenid String @db.VarChar(50)
+  guest     String @db.VarChar(50)
+
+  @@unique([citizenid, guest])
+}
+
+model player_fish {
+  player     player   @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_fish_player", name: "fishes")
+  citizenId  String   @db.VarChar(50)
+  fishId     String   @db.VarChar(100)
+  quantity   Int
+  maxWidth   Int
+  maxWeight  Int
+  maxResell  Int
+  lastFishAt DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([citizenId, fishId])
+}
+
+model player_sozedex_rewards {
+  player    player   @relation(fields: [citizenId], references: [citizenid], onDelete: Cascade, map: "FK_player_sozedex_rewards", name: "sozedex_rewards")
+  citizenId String   @db.VarChar(50)
+  itemId    String   @db.VarChar(100)
+  claimedAt DateTime @default(now()) @db.Timestamp(0)
+
+  @@id([citizenId, itemId])
+}
+
+model race {
+  id           Int       @id @default(autoincrement())
+  name          String    @db.VarChar(50)
+  model         String    @db.VarChar(50)
+  npc_position  String    @db.Text
+  start         String    @db.Text
+  checkpoints   String    @db.Text
+  enabled       Boolean
+  fps           Boolean
+  garage        String?    @db.Text
+  configuration String?    @db.Text
+
+  scores race_score[] @relation("race_scores_race")
+
+  @@index([name], map: "name")
+}
+
+model race_score {
+  player      player @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_race_scores_player", name: "race_scores")
+  citizenid   String @db.VarChar(50)
+  race        race   @relation(fields: [race_id], references: [id], onDelete: Cascade, map: "FK_race_id", name: "race_scores_race")
+  race_id     Int
+  best_run    String @db.Text
+  best_splits String @db.Text
+
+  @@id([citizenid, race_id])
+}
+
+model radar {
+  id               Int    @id
+  speed_record     Int
+  citizedid_record String @db.VarChar(50)
+}
+
+model tetris_score {
+  id         Int    @id @default(autoincrement())
+  identifier String @db.VarChar(50)
+  score      Int
+}
+model billboard {
+    id                  Int       @id @default(autoincrement())
+    name                String    @db.VarChar(50)
+    position            String    @db.VarChar(50)
+    originDictName      String    @db.VarChar(50)
+    originTextureName   String    @db.VarChar(50)
+    imageUrl            String    @db.VarChar(200)
+    previewImageUrl     String    @db.VarChar(200)
+    templateImageUrl    String    @db.VarChar(200)
+    width               Int       @db.Int
+    height              Int       @db.Int
+    lastEdit            DateTime  @default(now()) @db.Timestamp(0)
+    lastEditor          String    @db.VarChar(50)
+    enabled             Boolean
+}
+
+model vandalism_props {
+  id               String    @db.VarChar(50)
+  kind             String    @db.VarChar(50)
+  location         String    @db.Text
+  model_group      String    @db.VarChar(50)
+  value            Int       @db.Int
+
+  @@id([id, kind])
+}
+
+enum ZoneType {
+    NoStress
+}
+
+model Zone {
+    id               Int       @id @default(autoincrement())
+    type             ZoneType  @default(NoStress)
+    zone             String    @db.LongText
+    name             String    @db.VarChar(50)
+
+    @@map("zone")
 }

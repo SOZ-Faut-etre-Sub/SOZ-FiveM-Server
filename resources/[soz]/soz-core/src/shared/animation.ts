@@ -81,11 +81,22 @@ export type Scenario = {
     shouldTeleport?: boolean;
 };
 
+export type Vfx = {
+    dictionary: string;
+    name: string;
+    scale: number;
+    position: Vector3;
+    rotation: Vector3;
+    manualLoop?: boolean;
+    duration?: number;
+};
+
 export type AnimationProps = {
     model: string;
     bone: number;
     position: Vector3;
     rotation: Vector3;
+    fx?: Vfx;
 };
 
 export type AnimationInfo = {

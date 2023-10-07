@@ -1,8 +1,14 @@
 import '../styles/index.scss';
 
 import { CraftingApp } from '@private/nui/crafting/CraftingApp';
+import { DrugContractApp } from '@private/nui/drug/DrugContractApp';
+import { DrugSkillApp } from '@private/nui/drug/DrugSkillApp';
+import { DrugTransformApp } from '@private/nui/drug/DrugTransformApp';
+import { FishingApp } from '@private/nui/fishing/FishingApp';
 import { HoodApp } from '@private/nui/hood/HoodApp';
 import { MissiveApp } from '@private/nui/missive/MissiveApp';
+import { SozedexApp } from '@private/nui/sozedex/SozedexApp';
+import { StatePrivateApp } from '@private/nui/StatePrivateApp';
 import { TalentApp } from '@private/nui/Talent/TalentApp';
 import classNames from 'classnames';
 import { FunctionComponent, useEffect, useState } from 'react';
@@ -14,14 +20,19 @@ import { useNuiEvent } from '../hook/nui';
 import { store } from '../store';
 import { AudioApp } from './Audio/AudioApp';
 import { RepairApp } from './Bennys/RepairApp';
+import { BookApp } from './Book/BookApp';
 import { CardApp } from './Card/CardApp';
+import { CraftApp } from './Craft/CraftApp';
+import { FieldHealthApp } from './Field/FieldHealthApp';
 import { HudApp } from './Hud/HudApp';
 import { InputApp } from './Input/InputApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
 import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
+import { DrugScreeningApp } from './Police/DrugScreeningApp';
 import { RadarApp } from './Police/RadarApp';
 import { ProgressApp } from './Progress/ProgressApp';
+import { RaceApp } from './Race/RaceApp';
 import { RadioApp } from './Radio/RadioApp';
 import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { StateApp } from './StateApp';
@@ -39,6 +50,11 @@ export const App: FunctionComponent = () => {
         'opacity-100': !pauseMenuActive && !hideHud,
     });
 
+    const menuClasses = classNames('font-prompt overflow-hidden', {
+        'opacity-0': pauseMenuActive,
+        'opacity-100': !pauseMenuActive,
+    });
+
     useEffect(() => {
         const interval = setInterval(() => {
             fetchNui(NuiEvent.Ping);
@@ -50,12 +66,13 @@ export const App: FunctionComponent = () => {
     return (
         <Provider store={store}>
             <StateApp />
+            <StatePrivateApp />
             <AudioApp />
             <div className={classes}>
                 <HudApp />
                 <CardApp />
             </div>
-            <div className="font-prompt overflow-hidden">
+            <div className={menuClasses}>
                 <MenuApp />
             </div>
             <div className={classes}>
@@ -63,14 +80,24 @@ export const App: FunctionComponent = () => {
                 <PanelApp />
                 <RepairApp />
                 <MissiveApp />
+                <DrugContractApp />
                 <RadarApp />
                 <RadioApp />
                 <RadioVehicleApp />
                 <BreathAnalyzerApp />
+                <DrugScreeningApp />
                 <HoodApp />
                 <TaxiHorodateurApp />
                 <TalentApp />
                 <CraftingApp />
+                <FishingApp />
+                <SozedexApp />
+                <DrugSkillApp />
+                <DrugTransformApp />
+                <RaceApp />
+                <BookApp />
+                <FieldHealthApp />
+                <CraftApp />
                 <InputApp />
             </div>
         </Provider>

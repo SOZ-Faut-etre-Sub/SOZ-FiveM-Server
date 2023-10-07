@@ -46,6 +46,14 @@ export const getDistance = (a: Vector2 | Vector3 | Vector4, b: Vector2 | Vector3
     return Math.sqrt(x * x + y * y);
 };
 
+export const fromVector3Object = ({ x, y, z }: { x: number; y: number; z: number }): Vector3 => {
+    return [x, y, z];
+};
+
+export const fromVector4Object = ({ x, y, z, w }: { x: number; y: number; z: number; w: number }): Vector4 => {
+    return [x, y, z, w];
+};
+
 export const toVector3Object = (vector: Vector3 | Vector4) => {
     return {
         x: vector[0],
@@ -65,4 +73,8 @@ export const toVector4Object = (vector: Vector4) => {
         z: vector[2],
         w: vector[3],
     };
+};
+
+export const toVectorNorm = (vector: Vector3) => {
+    return Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1] + vector[2] * vector[2]);
 };

@@ -19,6 +19,7 @@ export class CameraService {
         PointCamAtCoord(cam, target[0], target[1], target[2]);
         SetCamActive(cam, true);
         RenderScriptCams(true, true, 1000, true, true);
+        return cam;
     }
 
     public deleteCamera() {

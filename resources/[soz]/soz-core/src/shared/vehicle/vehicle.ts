@@ -141,7 +141,6 @@ export type VehicleVolatileState = {
     speedLimit: number | null;
     isPlayerVehicle: boolean;
     isSirenMuted: boolean;
-    lastPosition: Vector3 | null;
     indicators: {
         left: boolean;
         right: boolean;
@@ -153,6 +152,12 @@ export type VehicleVolatileState = {
     primaryRadio: RadioChannel | null;
     secondaryRadio: RadioChannel | null;
     flatbedAttachedVehicle: number | null;
+    rentOwner: string | null;
+    policeLocatorEnabled: boolean;
+    job: JobType | null;
+    model: string;
+    locatorEndJam: number;
+    label: string;
 };
 
 export enum VehicleClass {
@@ -217,7 +222,6 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     dead: false,
     isPlayerVehicle: false,
     isSirenMuted: false,
-    lastPosition: null,
     spawned: false,
     indicators: {
         left: false,
@@ -229,6 +233,12 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     primaryRadio: null,
     secondaryRadio: null,
     flatbedAttachedVehicle: null,
+    rentOwner: null,
+    policeLocatorEnabled: false,
+    job: null,
+    model: null,
+    locatorEndJam: 0,
+    label: null,
 });
 
 export type VehicleMenuData = {
@@ -239,6 +249,10 @@ export type VehicleMenuData = {
     hasRadio: boolean;
     insideLSCustom: boolean;
     permission: string | null;
+    isBoat: boolean;
+    isAnchor: boolean;
+    police: boolean;
+    policeLocator: boolean;
 };
 
 export type VehicleAuctionMenuData = {
@@ -256,34 +270,6 @@ export type VehicleDealershipMenuData = {
 export const VehicleMidDamageThreshold = 700;
 export const VehicleHighDamageThreshold = 400;
 export const VehicleCriticalDamageThreshold = 101;
-
-export const VehicleMaxStock: Record<keyof typeof VehicleCategory, number> = {
-    Boats: 0,
-    Commercial: 0,
-    Compacts: 8,
-    Coupes: 6,
-    Cycles: 100,
-    Emergency: 0,
-    Helicopters: 3,
-    Industrial: 0,
-    Military: 0,
-    Motorcycles: 6,
-    'Off-road': 4,
-    Planes: 0,
-    Sedans: 6,
-    Service: 0,
-    Suvs: 4,
-    Super: 0,
-    Sports: 0,
-    Sportsclassics: 0,
-    Trains: 0,
-    Utility: 0,
-    Vans: 6,
-    Openwheel: 0,
-    Muscle: 3,
-    Electric: 6, // I don't know what this is.
-    Quads: 6,
-};
 
 export enum VehicleCategory {
     Boats = 'Bateaux',
@@ -387,4 +373,13 @@ export const LockPickAlertMessage = {
         "J'viens de me faire carjacker ! Mais oui, on m'a carjacké l'auto j'vous dis ! Cela s'est déroulé à ${0} !",
     ],
     lockpick: ["Une personne louche tripote la poignée d'une voiture proche de ${0} !"],
+};
+
+export type VehicleLocation = {
+    netId: number;
+    job: JobType;
+    plate: string;
+    name: string;
+    model: string;
+    position: Vector3;
 };

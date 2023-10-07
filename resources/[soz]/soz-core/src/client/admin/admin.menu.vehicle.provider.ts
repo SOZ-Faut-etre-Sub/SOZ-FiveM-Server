@@ -9,16 +9,12 @@ import { groupBy } from '../../shared/utils/array';
 import { VehicleConfiguration, VehicleModType } from '../../shared/vehicle/modification';
 import { Vehicle, VehicleCategory } from '../../shared/vehicle/vehicle';
 import { InputService } from '../nui/input.service';
-import { NuiDispatch } from '../nui/nui.dispatch';
 import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { VehicleModificationService } from '../vehicle/vehicle.modification.service';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
 @Provider()
 export class AdminMenuVehicleProvider {
-    @Inject(NuiDispatch)
-    private nuiDispatch: NuiDispatch;
-
     @Inject(InputService)
     private inputService: InputService;
 
@@ -110,14 +106,16 @@ export class AdminMenuVehicleProvider {
         const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
         const vehicleName = GetDisplayNameFromVehicleModel(vehicleModel).toLowerCase();
+        const vehicleClass = GetVehicleClass(vehicle);
 
-        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, configuration);
+        TriggerServerEvent(ServerEvent.ADMIN_ADD_VEHICLE, vehicleModel, vehicleName, vehicleClass, configuration);
         return Ok(true);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuVehicleSetFBIConfig)
     public async onAdminMenuVehicleSetFBIConfig() {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+
         if (vehicle) {
             const configuration = this.vehicleModificationService.getVehicleConfiguration(vehicle);
             const fbiConfiguration: VehicleConfiguration = {
@@ -139,8 +137,17 @@ export class AdminMenuVehicleProvider {
                 },
             };
 
-            this.vehicleModificationService.applyVehicleConfiguration(vehicle, fbiConfiguration);
+            const vehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
+            const newVehicleConfiguration = await emitRpc<VehicleConfiguration>(
+                RpcServerEvent.VEHICLE_CUSTOM_SET_MODS,
+                vehicleNetworkId,
+                fbiConfiguration,
+                configuration
+            );
+
+            this.vehicleModificationService.applyVehicleConfiguration(vehicle, newVehicleConfiguration);
         }
+
         return Ok(true);
     }
 

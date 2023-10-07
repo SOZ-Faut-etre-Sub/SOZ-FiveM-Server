@@ -14,7 +14,7 @@ export class FightForStyleHarvestProvider {
     private playerService: PlayerService;
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupFfsJobHarvest() {
         this.targetFactory.createForBoxZone(
             'ffs_harvest_zone',
             {

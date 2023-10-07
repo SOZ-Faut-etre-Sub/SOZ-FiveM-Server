@@ -1,10 +1,11 @@
+import { useItems } from '@public/nui/hook/data';
+import { CraftCategory, CraftRecipe } from '@public/shared/craft/craft';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
-import { FoodRecipe } from '../../../shared/job/food';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import { CraftList } from '../Shared/CraftList';
+import { CraftInputs } from '../Shared/CraftInputs';
 import {
     MainMenu,
     Menu,
@@ -20,7 +21,7 @@ import {
 
 type FoodStateProps = {
     data: {
-        recipes: FoodRecipe[];
+        recipes: Record<string, CraftCategory>;
         state: {
             displayMilkBlip: boolean;
             displayEasterEggBlip: boolean;
@@ -33,7 +34,8 @@ type FoodStateProps = {
 export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
     const banner = 'https://nui-img/soz/menu_job_food';
     const [blips, setBlips] = useState(null);
-    const [currentRecipe, setCurrentRecipe] = useState<FoodRecipe>(null);
+    const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>(null);
+    const items = useItems();
 
     useEffect(() => {
         if (data && data.state) {
@@ -68,7 +70,12 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
             <MainMenu>
                 <MenuTitle banner={banner}></MenuTitle>
                 <MenuContent>
-                    <MenuItemSubMenuLink id="recipe">Livre de recettes</MenuItemSubMenuLink>
+                    {Object.keys(data.recipes).map(category => (
+                        <MenuItemSubMenuLink
+                            id={`recipe_${category}`}
+                            key={`recipe_${category}`}
+                        >{`Livre de recettes ${data.recipes[category].icon} ${category}`}</MenuItemSubMenuLink>
+                    ))}
                     <MenuItemCheckbox
                         checked={data.state.displayMilkBlip}
                         onChange={value => displayBlip('displayMilkBlip', value)}
@@ -85,24 +92,26 @@ export const FoodJobMenu: FunctionComponent<FoodStateProps> = ({ data }) => {
                     )}
                 </MenuContent>
             </MainMenu>
-            <SubMenu id="recipe">
-                <MenuTitle banner={banner}>Livre de recettes</MenuTitle>
-                <MenuContent>
-                    <MenuItemSelect title={'Recette'}>
-                        {data.recipes.map(recipe => (
-                            <MenuItemSelectOption
-                                key={recipe.output.label}
-                                onSelected={() => {
-                                    setCurrentRecipe(recipe);
-                                }}
-                            >
-                                {recipe.output.label}
-                            </MenuItemSelectOption>
-                        ))}
-                    </MenuItemSelect>
-                    {currentRecipe && <CraftList inputs={currentRecipe.inputs} />}
-                </MenuContent>
-            </SubMenu>
+            {Object.entries(data.recipes).map(([name, category]) => (
+                <SubMenu id={`recipe_${name}`}>
+                    <MenuTitle banner={banner}>{`Livre de recettes ${data.recipes[name].icon} ${name}`}</MenuTitle>
+                    <MenuContent>
+                        <MenuItemSelect title="" titleWidth={0}>
+                            {Object.entries(category.recipes).map(([output, recipe]) => (
+                                <MenuItemSelectOption
+                                    key={output}
+                                    onSelected={() => {
+                                        setCurrentRecipe(recipe);
+                                    }}
+                                >
+                                    {recipe.amount}x {items.find(elem => elem.name == output)?.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        {currentRecipe && <CraftInputs inputs={currentRecipe.inputs} />}
+                    </MenuContent>
+                </SubMenu>
+            ))}
         </Menu>
     );
 };

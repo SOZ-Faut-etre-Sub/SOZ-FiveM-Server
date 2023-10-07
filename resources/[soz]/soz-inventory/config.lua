@@ -16,17 +16,18 @@ Config.StorageCapacity = {
     ["cloakroom"] = {slot = 10, weight = 1000000},
     --- houses
     ["house_stash"] = {
-        [0] = {slot = 10, weight = 100000},
-        [1] = {slot = 10, weight = 200000},
-        [2] = {slot = 10, weight = 300000},
-        [3] = {slot = 10, weight = 400000},
-        [4] = {slot = 10, weight = 500000},
+        [-1] = {slot = 10, weight = 1000000000}, -- for GM House
+        [0] = {slot = 10, weight = 200000},
+        [1] = {slot = 10, weight = 400000},
+        [2] = {slot = 10, weight = 600000},
+        [3] = {slot = 10, weight = 800000},
+        [4] = {slot = 10, weight = 1000000},
     },
     ["house_fridge"] = {slot = 10, weight = 100000},
     --- Jobs PAWL
-    ["log_storage"] = {slot = 10, weight = 20000000},
-    ["plank_storage"] = {slot = 10, weight = 1000000},
-    ["sawdust_storage"] = {slot = 10, weight = 1000000},
+    ["log_storage"] = {slot = 10, weight = 40000000},
+    ["plank_storage"] = {slot = 10, weight = 2000000},
+    ["sawdust_storage"] = {slot = 10, weight = 2000000},
     ["log_processing"] = {slot = 10, weight = 400000},
     --- Jobs UPW
     ["inverter"] = {slot = 100, weight = 2000000},
@@ -50,6 +51,7 @@ Config.ErrorMessage = {
     ["not_allowed_item"] = "L'objet ne peut pas aller dans ce stockage !",
     ["get_not_allowed"] = "Ce stockage ne peut pas vous donner cet objet !",
     ["put_not_allowed"] = "Ce stockage ne peut pas accepter votre objet !",
+    ["invalid_alreadyhaveone"] = "Vous avez déjà un tel object sur vous !",
 }
 
 Config.crateMaxWeight = 12000

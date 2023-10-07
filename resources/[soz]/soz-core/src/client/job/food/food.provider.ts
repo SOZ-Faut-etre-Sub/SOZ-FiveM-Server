@@ -2,10 +2,13 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { TargetFactory } from '@public/client/target/target.factory';
+import { emitRpc } from '@public/core/rpc';
+import { CraftsList } from '@public/shared/craft/craft';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
-import { FoodConfig, FoodCraftProcess, FoodRecipe } from '@public/shared/job/food';
+import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { BlipFactory } from '../../blip';
 import { InventoryManager } from '../../inventory/inventory.manager';
@@ -46,7 +49,7 @@ export class FoodProvider {
     }
 
     @Once(OnceStep.PlayerLoaded)
-    public onPlayerLoaded() {
+    public setupFoodJob() {
         this.blipFactory.create('displayMilkBlip', {
             name: 'Point de récolte du lait',
             coords: { x: 2416.01, y: 4993.49, z: 46.22 },
@@ -97,61 +100,16 @@ export class FoodProvider {
     }
 
     @OnEvent(ClientEvent.JOBS_FOOD_OPEN_SOCIETY_MENU)
-    public onOpenSocietyMenu() {
+    public async onOpenSocietyMenu() {
         if (this.nuiMenu.getOpened() === MenuType.FoodJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }
-        const sortFunction = (a, b) => a.output.label.localeCompare(b.output.label);
-        let processes = [
-            ...this.computeRecipes(FoodConfig.processes.wineProcesses, '🍷').sort(sortFunction),
-            ...this.computeRecipes(FoodConfig.processes.juiceProcesses, '🧃').sort(sortFunction),
-            ...this.computeRecipes(FoodConfig.processes.cheeseProcesses, '🧀').sort(sortFunction),
-            ...this.computeRecipes(FoodConfig.processes.sausageProcesses, '🌭').sort(sortFunction),
-        ];
-
-        if (isFeatureEnabled(Feature.Easter)) {
-            processes = [
-                ...this.computeRecipes(FoodConfig.processes.easterProcesses, '🥚').sort(sortFunction),
-                ...processes,
-            ];
-        }
-
+        const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, JobType.Food);
         this.nuiMenu.openMenu(MenuType.FoodJobMenu, {
-            recipes: processes,
+            recipes: crafting.categories,
             state: this.state,
             onDuty: this.playerService.isOnDuty(),
-        });
-    }
-
-    private computeRecipes(craftProcesses: FoodCraftProcess[], prefixIcon: string): FoodRecipe[] {
-        return craftProcesses.map(craftProcess => {
-            let canCraft = true;
-            const inputs = [];
-            for (const input of craftProcess.inputs) {
-                const item = this.itemService.getItem(input.id);
-                const hasRequiredAmount = !!this.inventoryManager.hasEnoughItem(input.id, input.amount, true);
-                inputs.push({
-                    label: input.amount > 1 && item.pluralLabel ? item.pluralLabel : item.label,
-                    hasRequiredAmount,
-                    amount: input.amount,
-                });
-                canCraft = canCraft && hasRequiredAmount;
-            }
-            const outputItem = this.itemService.getItem(craftProcess.output.id);
-            return {
-                canCraft,
-                inputs,
-                output: {
-                    label:
-                        prefixIcon +
-                        ' ' +
-                        (craftProcess.output.amount > 1 && outputItem.pluralLabel
-                            ? outputItem.pluralLabel
-                            : outputItem.label),
-                    amount: craftProcess.output.amount,
-                },
-            };
         });
     }
 }

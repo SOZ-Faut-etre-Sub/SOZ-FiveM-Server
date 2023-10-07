@@ -33,6 +33,8 @@ export class VehicleFuelProvider {
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
 
+    private currentFilling = new Set<number>();
+
     @OnEvent(ServerEvent.VEHICLE_FUEL_START)
     public async startFuel(source: number, vehicleNetworkId: number, stationId: number) {
         const player = this.playerService.getPlayer(source);
@@ -40,6 +42,14 @@ export class VehicleFuelProvider {
         if (!player) {
             return;
         }
+
+        if (this.currentFilling.has(vehicleNetworkId)) {
+            this.notifier.notify(source, 'Le véhicule est déjà en train de se faire remplir.', 'error');
+
+            return;
+        }
+
+        this.currentFilling.add(vehicleNetworkId);
 
         const vehicleState = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const fuelToFill = Math.floor(100 - vehicleState.condition.fuelLevel);
@@ -55,6 +65,11 @@ export class VehicleFuelProvider {
 
                 const maxFuelForMoney = station.price > 0 ? Math.floor(player.money.money / station.price) : fuelToFill;
                 const reservedFuel = Math.min(fuelToFill, station.stock, maxFuelForMoney);
+                let reservedFuelTx = reservedFuel;
+
+                if (station.station === 'Cayo_heli' || station.station === 'Cayo') {
+                    reservedFuelTx = 0;
+                }
 
                 await this.prismaService.fuel_storage.update({
                     where: {
@@ -62,7 +77,7 @@ export class VehicleFuelProvider {
                     },
                     data: {
                         stock: {
-                            decrement: reservedFuel,
+                            decrement: reservedFuelTx,
                         },
                     },
                 });
@@ -74,6 +89,7 @@ export class VehicleFuelProvider {
 
         if (maxFuelMoney <= 0) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
+            this.currentFilling.delete(vehicleNetworkId);
             TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
 
             return;
@@ -81,6 +97,7 @@ export class VehicleFuelProvider {
 
         if (reservedFuel <= 0) {
             this.notifier.notify(source, 'La station vient de se vider.', 'error');
+            this.currentFilling.delete(vehicleNetworkId);
             TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
 
             return;
@@ -115,7 +132,6 @@ export class VehicleFuelProvider {
 
         if (station.price > 0 && !this.playerMoneyService.remove(source, cost)) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
-            TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
             leftOver = reservedFuel;
         } else {
             this.vehicleStateService.updateVehicleCondition(vehicleNetworkId, {
@@ -123,9 +139,10 @@ export class VehicleFuelProvider {
             });
 
             this.notifier.notify(source, `Vous avez payé $${cost} pour ${totalFilled}L de carburant.`, 'success');
-
-            TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
         }
+
+        TriggerClientEvent(ClientEvent.VEHICLE_FUEL_STOP, source);
+        this.currentFilling.delete(vehicleNetworkId);
 
         if (leftOver > 0) {
             await this.prismaService.fuel_storage.update({

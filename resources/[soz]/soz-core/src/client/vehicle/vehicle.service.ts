@@ -6,7 +6,7 @@ import { ServerEvent } from '@public/shared/event';
 
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { VehicleConfiguration } from '../../shared/vehicle/modification';
+import { VehicleConfiguration, VehicleModification } from '../../shared/vehicle/modification';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
@@ -53,10 +53,7 @@ const applyVehicleTire = (
 
 const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondition>> = {
     bodyHealth: {
-        apply: (vehicle, value: number) => {
-            const previousEngineHealth = GetVehicleEngineHealth(vehicle);
-            const previousTankHealth = GetVehiclePetrolTankHealth(vehicle);
-
+        apply: (vehicle, value: number, condition) => {
             SetVehicleBodyHealth(vehicle, value);
 
             if (value > 999.99) {
@@ -64,14 +61,14 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
                 SetVehicleFixed(vehicle);
             }
 
-            SetVehicleEngineHealth(vehicle, previousEngineHealth);
-            SetVehiclePetrolTankHealth(vehicle, previousTankHealth);
+            SetVehicleEngineHealth(vehicle, Math.max(condition.engineHealth, 0));
+            SetVehiclePetrolTankHealth(vehicle, Math.max(condition.tankHealth, 600));
         },
         get: vehicle => GetVehicleBodyHealth(vehicle),
     },
     engineHealth: {
         apply: (vehicle, value: number) => {
-            SetVehicleEngineHealth(vehicle, value);
+            SetVehicleEngineHealth(vehicle, Math.max(value, 0));
         },
         get: vehicle => GetVehicleEngineHealth(vehicle),
     },
@@ -87,7 +84,7 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
     },
     tankHealth: {
         apply: (vehicle, value: number) => {
-            SetVehiclePetrolTankHealth(vehicle, value);
+            SetVehiclePetrolTankHealth(vehicle, Math.max(value, 600));
         },
         get: vehicle => GetVehiclePetrolTankHealth(vehicle),
     },
@@ -347,14 +344,6 @@ export class VehicleService {
         return closestVehicle;
     }
 
-    public syncVehicle(vehicle: number, state: VehicleVolatileState): void {
-        SetVehicleModKit(vehicle, 0);
-
-        if (state.plate) {
-            SetVehicleNumberPlateText(vehicle, state.plate);
-        }
-    }
-
     public getVehicleConditionDiff(
         vehicle: number,
         previousCondition: Partial<VehicleCondition>,
@@ -390,6 +379,30 @@ export class VehicleService {
 
             helper.apply(vehicle, value, condition);
         }
+    }
+
+    public getClientVehicleCondition(vehicle: number, state: VehicleVolatileState): VehicleCondition {
+        const condition = {} as VehicleCondition;
+
+        for (const [key, helper] of Object.entries(VehicleConditionHelpers)) {
+            condition[key] = helper.get(vehicle, state);
+        }
+
+        return condition;
+    }
+
+    public getClientVehicleConfiguration(vehicle: number): VehicleConfiguration {
+        return this.vehicleModificationService.getVehicleConfiguration(vehicle);
+    }
+
+    public applyVehicleConfigurationPerformance(vehicle: number, modification: VehicleConfiguration): void {
+        this.vehicleModificationService.applyVehicleModification(
+            vehicle,
+            modification,
+            modification.modification,
+            true,
+            ['turbo', 'armor', 'suspension', 'transmission', 'brakes', 'engine']
+        );
     }
 
     public applyVehicleConfiguration(vehicle: number, modification: VehicleConfiguration): void {

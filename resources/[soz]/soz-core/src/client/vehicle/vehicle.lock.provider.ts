@@ -82,7 +82,7 @@ export class VehicleLockProvider {
     private vehicleOpened: Set<number> = new Set();
 
     @Once(OnceStep.PlayerLoaded)
-    public async onPlayerLoaded() {
+    public async setupVehicleOpened() {
         const vehicleOpened = await emitRpc<number[]>(RpcServerEvent.VEHICLE_GET_OPENED);
 
         this.vehicleOpened = new Set(vehicleOpened);
@@ -314,13 +314,13 @@ export class VehicleLockProvider {
         const center = [
             position[0] + (max[0] + min[0]) / 2,
             position[1] + (max[1] + min[1]) / 2,
-            position[2] + (max[2] + min[2]) / 2,
+            position[2] + min[2],
         ] as Vector3;
 
         const vehicleTrunkZone = new BoxZone(center, max[1] - min[1] + 3.0, max[0] - min[0] + 3.0, {
             heading: GetEntityHeading(vehicle),
-            minZ: center[2] + min[2] - 3.0,
-            maxZ: center[2] + max[2] + 3.0,
+            minZ: center[2],
+            maxZ: center[2] + 6.0,
         });
 
         const pedPosition = GetEntityCoords(ped, false) as Vector3;
@@ -522,15 +522,22 @@ export class VehicleLockProvider {
     public onLockpick(type: string) {
         const coords = GetEntityCoords(PlayerPedId());
         const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+        if (zoneID == 'ISHEIST') {
+            return;
+        }
         const zone = GetLabelText(zoneID);
 
         const messages = [...LockPickAlertMessage.all, ...LockPickAlertMessage[type]];
 
+        const message = getRandomItem(messages);
+
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-POLICE',
-            message: getRandomItem(messages).replace('${0}', zone),
+            message: message.replace('${0}', zone),
+            htmlMessage: message.replace('${0}', `<span {class}>${zone}</span>`),
             position: true,
+            info: { type: 'auto-theft' },
             overrideIdentifier: 'System',
         });
     }

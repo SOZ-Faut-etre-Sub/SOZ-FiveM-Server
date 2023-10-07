@@ -3,11 +3,12 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
 import { BlipFactory } from '../blip';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
-import { RadarRepository } from '../resources/radar.repository';
-import { ObjectFactory } from '../world/object.factory';
+import { RaceProvider } from '../race/race.provider';
+import { RadarRepository } from '../repository/radar.repository';
 
-const radar_props = GetHashKey('soz_prop_radar');
+const radar_props = GetHashKey('soz_prop_radar_2');
 
 @Provider()
 export class VehicleRadarProvider {
@@ -17,24 +18,35 @@ export class VehicleRadarProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
-    @Inject(ObjectFactory)
-    private objectFFactory: ObjectFactory;
+    @Inject(ObjectProvider)
+    private objectProvider: ObjectProvider;
 
     @Inject(RadarRepository)
     private radarRepository: RadarRepository;
 
+    @Inject(RaceProvider)
+    private raceProvider: RaceProvider;
+
     private globalDisableTime = 0;
 
     @Once(OnceStep.Start)
-    onStart(): void {
+    async onStart() {
         for (const [radarID, radar] of Object.entries(this.radarRepository.get())) {
-            radar.entity = this.objectFFactory.create(radar_props, radar.props, true);
+            radar.objectId = await this.objectProvider.createObject({
+                model: radar_props,
+                position: radar.props,
+                id: 'radar_' + radarID,
+            });
 
             radar.disableTime = GetResourceKvpInt('radar/disableEndTime/' + radarID);
             this.globalDisableTime = GetResourceKvpInt('radar/disableEndTime/all');
 
             if (radar.isOnline) {
                 this.playerInOutService.add('radar' + radarID, radar.zone, isInside => {
+                    if (this.raceProvider.isInRace()) {
+                        return;
+                    }
+
                     if (isInside) {
                         if (this.globalDisableTime && this.globalDisableTime > Date.now() / 1000) {
                             return;
@@ -64,6 +76,8 @@ export class VehicleRadarProvider {
                 });
             }
         }
+
+        TriggerEvent(ClientEvent.VEHICLE_RADAR_ENDINIT);
     }
 
     @OnEvent(ClientEvent.VEHICLE_RADAR_FLASHED)

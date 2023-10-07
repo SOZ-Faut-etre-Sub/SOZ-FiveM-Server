@@ -1,19 +1,16 @@
+import { JobPermission, JobType } from '@public/shared/job';
 import { isVehicleModelElectric, isVehicleModelTrailer } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Tick, TickInterval } from '../../../core/decorators/tick';
-import { emitRpc } from '../../../core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
-import { JobType } from '../../../shared/job';
 import { BennysConfig } from '../../../shared/job/bennys';
 import { MenuType } from '../../../shared/nui/menu';
 import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { MultiZone } from '../../../shared/polyzone/multi.zone';
 import { Vector3 } from '../../../shared/polyzone/vector';
-import { RpcServerEvent } from '../../../shared/rpc';
-import { VehicleConfiguration } from '../../../shared/vehicle/modification';
 import { Notifier } from '../../notifier';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { NuiMenu } from '../../nui/nui.menu';
@@ -24,6 +21,7 @@ import { TargetFactory } from '../../target/target.factory';
 import { VehicleModificationService } from '../../vehicle/vehicle.modification.service';
 import { VehicleService } from '../../vehicle/vehicle.service';
 import { VehicleStateService } from '../../vehicle/vehicle.state.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class BennysVehicleProvider {
@@ -56,6 +54,9 @@ export class BennysVehicleProvider {
 
     @Inject(PhoneService)
     private phoneService: PhoneService;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
@@ -93,10 +94,15 @@ export class BennysVehicleProvider {
             minZ: 43.81,
             maxZ: 50.812,
         }),
+        new BoxZone([5126.11, -4649.94, 0.62], 71.0, 29.2, {
+            heading: 255.65,
+            minZ: -0.38,
+            maxZ: 1.62,
+        }),
     ]);
 
     @Once(OnceStep.PlayerLoaded)
-    public onStart() {
+    public setupBennysJob() {
         const dutyTargets = [
             {
                 icon: 'fas fa-sign-in-alt',
@@ -117,6 +123,21 @@ export class BennysVehicleProvider {
                 },
                 canInteract: () => {
                     return this.playerService.isOnDuty();
+                },
+                job: JobType.Bennys,
+            },
+            {
+                icon: 'fas fa-users',
+                label: 'Employé(e)s en service',
+                action: () => {
+                    TriggerServerEvent('QBCore:GetEmployOnDuty');
+                },
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+                    return (
+                        this.playerService.isOnDuty() &&
+                        this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
+                    );
                 },
                 job: JobType.Bennys,
             },
@@ -261,7 +282,7 @@ export class BennysVehicleProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer.png',
+                icon: 'c:mechanic/repair_diag.png',
                 label: 'Faire un diagnostic',
                 color: 'bennys',
                 blackoutGlobal: true,

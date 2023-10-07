@@ -107,7 +107,7 @@ function Account.Create(id, label, accountType, owner, money, marked_money, coor
         if string.find(self.id, "safe_") == nil then
             self.id = "safe_" .. self.id
         end
-        self.max = 600000
+        self.max = 900000
     end
 
     if self.type == "house_safe" then
@@ -169,6 +169,15 @@ function Account.RemoveMoney(acc, money, money_type)
         return false, "no_account_money"
     end
 end
+
+function Account.Clear(acc)
+    acc = Account(acc)
+
+    acc.money = 0
+    acc.marked_money = 0
+    acc.changed = true
+end
+exports("ClearAccount", Account.Clear)
 
 function Account.TransfertMoney(accSource, accTarget, money, cb)
     accSource = Account(accSource)

@@ -1,4 +1,4 @@
-import { OnNuiEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
@@ -66,10 +66,9 @@ export class AdminMenuPlayerProvider {
         this.nuiDispatch.dispatch('admin_player_submenu', 'SetSearchFilter', player || '');
     }
 
-    @OnNuiEvent(NuiEvent.AdminMenuPlayerSpectate)
-    public async spectate(player: AdminPlayer): Promise<void> {
-        TriggerServerEvent(ServerEvent.ADMIN_SPECTATE, player);
-        this.notifier.notify(`Vous êtes maintenant en mode spectateur sur ~g~${player.name}.`, 'info');
+    @OnEvent(ClientEvent.ADMIN_KILL_PLAYER)
+    public async killPlayer(): Promise<void> {
+        SetEntityHealth(PlayerPedId(), 0);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleHealthOption)
@@ -77,8 +76,13 @@ export class AdminMenuPlayerProvider {
         if (!ALLOWED_HEALTH_OPTIONS.includes(action)) {
             return;
         }
-        const event: ServerEvent = action === 'kill' ? ServerEvent.ADMIN_KILL : ServerEvent.ADMIN_REVIVE;
-        TriggerServerEvent(event, player);
+
+        if (action === 'kill') {
+            TriggerServerEvent(ServerEvent.ADMIN_KILL_PLAYER, player);
+        } else {
+            TriggerServerEvent(ServerEvent.LSMC_REVIVE, player.id, true, false, false);
+        }
+
         this.notifier.notify(`Le joueur ~g~${player.name}~s~ a été ~r~${action}.`, 'info');
     }
 
@@ -87,7 +91,8 @@ export class AdminMenuPlayerProvider {
         if (!ALLOWED_MOVEMENT_OPTIONS.includes(action)) {
             return;
         }
-        const event: ServerEvent = action === 'freeze' ? ServerEvent.ADMIN_FREEZE : ServerEvent.ADMIN_UNFREEZE;
+        const event: ServerEvent =
+            action === 'freeze' ? ServerEvent.ADMIN_FREEZE_PLAYER : ServerEvent.ADMIN_UNFREEZE_PLAYER;
         TriggerServerEvent(event, player);
         this.notifier.notify(`Le joueur ~g~${player.name}~s~ est maintenant ~r~${action}.`, 'info');
     }
@@ -127,13 +132,24 @@ export class AdminMenuPlayerProvider {
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleEffectsOption)
     public async handleEffectsOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
-        TriggerServerEvent(`admin:server:effect:${action}`, player.id);
+        if (action === 'normal') {
+            TriggerServerEvent(ServerEvent.ADMIN_RESET_EFFECT, player);
+        }
+
+        if (action === 'alcohol') {
+            TriggerServerEvent(ServerEvent.ADMIN_SET_ALCOHOL_EFFECT, player);
+        }
+
+        if (action === 'drug') {
+            TriggerServerEvent(ServerEvent.ADMIN_SET_DRUG_EFFECT, player);
+        }
+
         this.notifier.notify(`L'effet ~g~${action}~s~ a été appliqué sur le joueur ~g~${player.name}~s~.`, 'info');
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleDiseaseOption)
     public async handleDiseaseOption({ action, player }: { action: string; player: AdminPlayer }): Promise<void> {
-        TriggerServerEvent('admin:server:disease', player.id, action);
+        TriggerServerEvent(ServerEvent.ADMIN_SET_DISEASE, player, action);
         this.notifier.notify(`La maladie ~g~${action}~s~ a été appliquée sur le joueur ~g~${player.name}~s~.`, 'info');
     }
 
@@ -247,5 +263,15 @@ export class AdminMenuPlayerProvider {
             TriggerServerEvent(ServerEvent.ADMIN_RESET_CRIMI, player.id);
         }
         return;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetClientState)
+    public async handleResetClientState(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_RESET_CLIENT_STATE, player.id);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerSearch)
+    public async handleResePlayerSearch(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent('inventory:server:openInventory', 'player', player.id);
     }
 }

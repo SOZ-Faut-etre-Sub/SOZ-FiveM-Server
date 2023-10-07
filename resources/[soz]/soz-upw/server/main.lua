@@ -84,6 +84,8 @@ MySQL.ready(function()
     StartProductionLoop()
     StartConsumptionLoop()
     StartSaveLoop()
+
+    TriggerEvent("soz-upw:server:onPollutionManagerReady")
 end)
 
 --
@@ -125,6 +127,8 @@ RegisterNetEvent("soz-upw:server:AddFacility", function(model, coords, scope, jo
     if scope and scope == "entreprise" then
         if job == nil then
             TriggerClientEvent("soz-core:client:notification:draw", source, "Pas d'entreprise sélectionnée", "error")
+
+            return
         end
     end
 

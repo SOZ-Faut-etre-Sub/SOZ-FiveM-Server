@@ -1,5 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { CheckIcon } from '@heroicons/react/solid';
+import { useNuiEvent } from '@public/nui/hook/nui';
+import { slugify } from '@public/nui/utils/slugify';
 import {
     createDescendantContext,
     Descendant,
@@ -52,9 +54,11 @@ const MenuItemSelectDescendantContext = createDescendantContext<MenuSelectDescen
 const MenuContext = createContext<{
     activeIndex: number;
     setActiveIndex: (number: number) => void;
-    setDescription: (desc: string) => void;
+    visibility: boolean;
+    setDescription: (desc: string | ReactNode) => void;
 }>({
     activeIndex: 0,
+    visibility: true,
     setActiveIndex: () => {},
     setDescription: () => {},
 });
@@ -93,9 +97,11 @@ export type SubMenuProps = {
 };
 
 export const SubMenu: FunctionComponent<PropsWithChildren<SubMenuProps>> = ({ children, id }) => {
+    const slugId = slugify(id);
+
     return (
         <Routes>
-            <Route path={`/${id}`} element={<MenuContainer>{children}</MenuContainer>} />
+            <Route path={`/${slugId}`} element={<MenuContainer>{children}</MenuContainer>} />
         </Routes>
     );
 };
@@ -138,11 +144,19 @@ export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = (
 export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeIndex, setActiveIndex] = useState(0);
-    const [description, setDescription] = useState<string | null>(null);
+    const [description, setDescription] = useState<string | null | ReactNode>(null);
+    const [visibility, setVisibility] = useState(true);
+    const [pauseMenuActive, setPauseMenuActive] = useState(true);
+
+    useNuiEvent('global', 'PauseMenuActive', setPauseMenuActive);
+
+    useNuiEvent('menu', 'SetMenuVisibility', setVisibility);
 
     return (
         <DescendantProvider context={MenuDescendantContext} items={descendants} set={setDescendants}>
-            <MenuContext.Provider value={{ activeIndex, setActiveIndex, setDescription }}>
+            <MenuContext.Provider
+                value={{ activeIndex, setActiveIndex, setDescription, visibility: visibility && !pauseMenuActive }}
+            >
                 <MenuControls>
                     <ul className="bg-black/50 py-1 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
                         {children}
@@ -157,7 +171,7 @@ export const MenuContent: FunctionComponent<PropsWithChildren> = ({ children }) 
 };
 
 const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    const { activeIndex, setActiveIndex } = useContext(MenuContext);
+    const { activeIndex, setActiveIndex, visibility } = useContext(MenuContext);
     const menuItems = useDescendants(MenuDescendantContext);
     const location = useLocation();
     const navigate = useNavigate();
@@ -170,6 +184,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
 
     useArrowDown(() => {
         let newIndex = activeIndex;
+
+        if (!visibility) {
+            return;
+        }
 
         do {
             newIndex = newIndex + 1;
@@ -195,6 +213,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     useArrowUp(() => {
         let newIndex = activeIndex;
 
+        if (!visibility) {
+            return;
+        }
+
         do {
             newIndex = newIndex - 1;
 
@@ -217,6 +239,10 @@ const MenuControls: FunctionComponent<PropsWithChildren> = ({ children }) => {
     });
 
     useBackspace(() => {
+        if (!visibility) {
+            return;
+        }
+
         navigate(-1);
     });
 
@@ -228,7 +254,7 @@ type MenuItemProps = PropsWithChildren<{
     onSelected?: () => void;
     disabled?: boolean;
     selectable?: boolean;
-    description?: string;
+    description?: string | ReactNode;
     className?: string;
 }>;
 
@@ -241,7 +267,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     description = null,
     className = null,
 }) => {
-    const { activeIndex, setDescription, setActiveIndex } = useContext(MenuContext);
+    const { activeIndex, setDescription, setActiveIndex, visibility } = useContext(MenuContext);
     const ref = useRef(null);
     const [element, setElement] = useState(null);
     const handleRefSet = useCallback(refValue => {
@@ -265,13 +291,13 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
             setDescription(description);
 
             if (ref) {
-                ref.current.scrollIntoView();
+                ref.current.scrollIntoViewIfNeeded();
             }
         }
     }, [isSelected, ref, description]);
 
     useEnter(() => {
-        if (!isSelected) {
+        if (!isSelected || !visibility) {
             return;
         }
 
@@ -283,7 +309,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     });
 
     const onClick = () => {
-        if (disabled) {
+        if (disabled || !visibility) {
             return;
         }
 
@@ -291,7 +317,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     };
 
     const onOver = () => {
-        if (disabled) {
+        if (disabled || !visibility) {
             return;
         }
 
@@ -404,6 +430,22 @@ type MenuItemSubMenuLinkProps = PropsWithChildren<{
     description?: string;
 }>;
 
+export const useMenuNavigate = (id: string): (() => void) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const type = useContext(MenuTypeContext);
+    const slugId = slugify(id);
+    const state = location.state as { activeIndex: number } | undefined;
+
+    return () =>
+        navigate(`/${type}/${slugId}`, {
+            state: {
+                ...(state || {}),
+                activeIndex: 0,
+            },
+        });
+};
+
 export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = ({
     children,
     id,
@@ -411,25 +453,10 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
     description = null,
     disabled = false,
 }) => {
-    const location = useLocation();
-    const type = useContext(MenuTypeContext);
-    const navigate = useNavigate();
-    const state = location.state as { activeIndex: number } | undefined;
+    const navigateTo = useMenuNavigate(id);
 
     return (
-        <MenuItemContainer
-            onSelected={onSelected}
-            onConfirm={() =>
-                navigate(`/${type}/${id}`, {
-                    state: {
-                        ...(state || {}),
-                        activeIndex: 0,
-                    },
-                })
-            }
-            disabled={disabled}
-            description={description}
-        >
+        <MenuItemContainer onSelected={onSelected} onConfirm={navigateTo} disabled={disabled} description={description}>
             <div className="flex items-center justify-between">
                 <div>{children}</div>
                 <div>
@@ -461,6 +488,7 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
     const initialValueRef = useRef(initialValue);
     const isItemSelected = useContext(MenuSelectedContext);
     const menuItems = useDescendants(MenuItemSelectDescendantContext);
+    const { visibility } = useContext(MenuContext);
 
     useReset(() => {
         if (isItemSelected) {
@@ -515,12 +543,20 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
     };
 
     useArrowLeft(() => {
+        if (!visibility) {
+            return;
+        }
+
         if (isItemSelected) {
             goLeft();
         }
     });
 
     useArrowRight(() => {
+        if (!visibility) {
+            return;
+        }
+
         if (isItemSelected) {
             goRight();
         }
@@ -557,6 +593,7 @@ type MenuItemSelectProps = PropsWithChildren<{
     title: string | ReactNode;
     onConfirm?: (index: number, value: any | undefined) => void;
     onSelected?: () => void;
+    onSelectedValue?: (index: number, value: any | undefined) => void;
     onChange?: (index: number, value: any) => void;
     disabled?: boolean;
     value?: any;
@@ -565,9 +602,10 @@ type MenuItemSelectProps = PropsWithChildren<{
     showAllOptions?: boolean;
     initialValue?: any;
     titleWidth?: number;
-    description?: string;
+    description?: string | ReactNode;
     useGrid?: boolean;
     alignRight?: boolean;
+    descriptionValue?: (value: any) => string;
     equalityFn?: (a: any, b: any) => boolean;
 }>;
 
@@ -575,6 +613,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     children,
     onConfirm,
     onSelected,
+    onSelectedValue,
     onChange,
     title,
     disabled = false,
@@ -587,6 +626,7 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
     description = null,
     useGrid = false,
     alignRight = false,
+    descriptionValue,
     equalityFn = (a, b) => a === b,
 }) => {
     const [descendants, setDescendants] = useDescendantsInit();
@@ -622,10 +662,16 @@ export const MenuItemSelect: FunctionComponent<MenuItemSelectProps> = ({
 
     return (
         <MenuItemContainer
-            onSelected={onSelected}
+            onSelected={
+                onSelected
+                    ? onSelected
+                    : onSelectedValue
+                    ? () => onSelectedValue(activeOptionIndex, activeValue)
+                    : undefined
+            }
             onConfirm={onItemConfirm}
             disabled={disabled}
-            description={description}
+            description={descriptionValue ? descriptionValue(activeValue) : description}
         >
             <DescendantProvider
                 key={keyDescendant}
@@ -817,6 +863,7 @@ type MenuItemSelectOptionProps = PropsWithChildren<{
     helper?: ReactNode;
     useGrid?: boolean;
     highlight?: boolean;
+    disabled?: boolean;
 }>;
 
 export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> = ({
@@ -825,6 +872,7 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
     value = null,
     description = null,
     helper = null,
+    disabled = false,
 }) => {
     const [handleRefSet, show, , onClick] = useSelectOption(value, onSelected, description, helper, helper);
 
@@ -833,6 +881,8 @@ export const MenuItemSelectOption: FunctionComponent<MenuItemSelectOptionProps> 
             ref={handleRefSet}
             className={cn('truncate', {
                 hidden: !show,
+                'text-white/50': disabled,
+                'text-white': !disabled,
             })}
             onClick={onClick}
         >

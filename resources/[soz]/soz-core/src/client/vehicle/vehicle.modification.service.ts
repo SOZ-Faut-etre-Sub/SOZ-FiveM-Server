@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '../../core/decorators/injectable';
+import { Injectable } from '../../core/decorators/injectable';
 import {
     HornLabelList,
     VehicleConfiguration,
@@ -10,7 +10,6 @@ import {
     VehicleWheelType,
 } from '../../shared/vehicle/modification';
 import { isVehicleModelElectric, VehicleClass } from '../../shared/vehicle/vehicle';
-import { ResourceLoader } from '../resources/resource.loader';
 
 const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.Spoiler]: 'Aileron',
@@ -28,6 +27,8 @@ const ModTypeLabels: Partial<Record<VehicleModType, string>> = {
     [VehicleModType.PlateHolder]: 'Contour de plaque',
     [VehicleModType.Fender]: 'Aile',
 };
+
+const VehNoDefaultExtra = [GetHashKey('tropic'), GetHashKey('tropic2'), GetHashKey('tropic3'), GetHashKey('benson')];
 
 const ModExclusion: Record<number, VehicleModType[]> = {
     [GetHashKey('sentinel')]: [VehicleModType.ColumnShifterLevers, VehicleModType.Speakers],
@@ -455,9 +456,6 @@ const VehicleModificationHelpers: VehicleModificationHelperType<keyof VehicleMod
 
 @Injectable()
 export class VehicleModificationService {
-    @Inject(ResourceLoader)
-    private resourceLoader: ResourceLoader;
-
     public createOptions(vehicle: number): VehicleUpgradeOptions {
         if (!HasThisAdditionalTextLoaded('mod_mnu', 10)) {
             ClearAdditionalText(10, true);
@@ -688,14 +686,46 @@ export class VehicleModificationService {
             SetVehicleLivery(vehicle, -1);
         }
 
-        for (const [key, value] of Object.entries(VehicleModificationHelpers)) {
-            value.apply(vehicle, configuration.modification[key], configuration);
+        if (configuration.modification) {
+            this.applyVehicleModification(vehicle, configuration, configuration.modification, false, null);
         }
 
-        for (const extraStr of Object.keys(configuration.extra)) {
-            const extra = parseInt(extraStr, 10);
+        if (configuration.extra) {
+            const defaultExtra = !VehNoDefaultExtra.includes(GetEntityModel(vehicle));
 
-            SetVehicleExtra(vehicle, extra, !configuration.extra[extra]);
+            for (let i = 1; i < 15; i++) {
+                if (DoesExtraExist(vehicle, i)) {
+                    const haxExtra = configuration.extra[i] === undefined ? true : configuration.extra[i];
+
+                    if (configuration.extra[i] === undefined && !defaultExtra) {
+                        continue;
+                    }
+
+                    SetVehicleExtra(vehicle, i, !haxExtra);
+                }
+            }
+        }
+    }
+
+    public applyVehicleModification(
+        vehicle: number,
+        configuration: VehicleConfiguration,
+        modification: VehicleModification,
+        setModKit: boolean,
+        properties: null | (keyof VehicleModification)[]
+    ): void {
+        if (setModKit) {
+            SetVehicleModKit(vehicle, 0);
+        }
+
+        if (!properties || properties.length === 0) {
+            properties = Object.keys(VehicleModificationHelpers) as (keyof VehicleModification)[];
+        }
+
+        for (const key of properties) {
+            const value = VehicleModificationHelpers[key];
+
+            value.apply(vehicle, modification[key], configuration);
         }
     }
 

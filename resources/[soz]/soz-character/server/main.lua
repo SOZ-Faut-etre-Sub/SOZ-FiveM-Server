@@ -32,6 +32,13 @@ RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
         clothConfig["BaseClothSet"].Props[tostring(propId)] = prop
     end
 
+    if clothes.GlovesID then
+        clothConfig["BaseClothSet"].GlovesID = clothes.GlovesID
+    end
+    if clothes.TopID then
+        clothConfig["BaseClothSet"].TopID = clothes.TopID
+    end
+
     clothConfig["TemporaryClothSet"] = nil
 
     Player.Functions.SetClothConfig(clothConfig, false)
@@ -63,6 +70,7 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, m
                 clothConfig.Config["ShowHelmet"] = true
             end
         end
+        clothConfig["JobClothSet"].GlovesID = clothes.GlovesID
     end
 
     if not merge then

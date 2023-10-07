@@ -1,3 +1,6 @@
+import { FDO } from '@public/shared/job';
+import { VehicleClass } from '@public/shared/vehicle/vehicle';
+
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -8,25 +11,25 @@ import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
+import { JobService } from '../job/job.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { VoipRadioVehicleProvider } from '../voip/voip.radio.vehicle.provider';
 import { VehicleCustomProvider } from './vehicle.custom.provider';
-import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
 @Provider()
 export class VehicleMenuProvider {
-    @Inject(VehicleService)
-    private vehicleService: VehicleService;
-
     @Inject(Notifier)
     private notifier: Notifier;
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(InputService)
     private inputService: InputService;
@@ -158,6 +161,41 @@ export class VehicleMenuProvider {
         return true;
     }
 
+    @OnNuiEvent(NuiEvent.VehicleAnchorChange)
+    async handleAnchorChange(status: boolean) {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            return false;
+        }
+
+        SetBoatAnchor(vehicle, status);
+        SetBoatFrozenWhenAnchored(vehicle, status);
+
+        if (status) {
+            this.notifier.notify("Vous avez ~g~baissé~s~ l'ancre.");
+        } else {
+            this.notifier.notify("Vous avez ~r~relevé~s~ l'ancre.");
+        }
+
+        return true;
+    }
+
+    @OnNuiEvent(NuiEvent.VehiclePoliceDisplay)
+    async handlePoliceDisplay(status: boolean) {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            return false;
+        }
+
+        this.vehicleStateService.updateVehicleState(vehicle, {
+            policeLocatorEnabled: status,
+        });
+    }
+
     @Tick(TickInterval.EVERY_SECOND)
     public checkCloseMenu(): void {
         if (this.nuiMenu.getOpened() !== MenuType.Vehicle) {
@@ -184,6 +222,11 @@ export class VehicleMenuProvider {
         ],
     })
     async openMenu() {
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
@@ -225,6 +268,10 @@ export class VehicleMenuProvider {
             hasRadio: vehicleState.hasRadio,
             insideLSCustom: this.vehicleCustomProvider.isPedInsideCustomZone(),
             permission: isAllowed ? permission : null,
+            isAnchor: IsBoatAnchoredAndFrozen(vehicle),
+            isBoat: GetVehicleClass(vehicle) == VehicleClass.Boats,
+            police: FDO.includes(player.job.id) && FDO.includes(vehicleState.job),
+            policeLocator: vehicleState.policeLocatorEnabled,
         });
     }
 }

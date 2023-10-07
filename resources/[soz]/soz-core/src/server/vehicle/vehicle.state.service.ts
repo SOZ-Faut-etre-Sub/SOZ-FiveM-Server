@@ -1,6 +1,7 @@
 import { Injectable } from '@core/decorators/injectable';
 import { ClientEvent } from '@public/shared/event';
-import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { Vector4 } from '@public/shared/polyzone/vector';
+import { getDefaultVehicleConfiguration, VehicleConfiguration } from '@public/shared/vehicle/modification';
 
 import {
     getDefaultVehicleCondition,
@@ -14,7 +15,8 @@ import {
 type VehicleState = {
     volatile: VehicleVolatileState;
     condition: VehicleCondition;
-    position: Vector3 | Vector4 | null;
+    configuration: VehicleConfiguration;
+    position: Vector4 | null;
     owner: number;
 };
 
@@ -24,7 +26,7 @@ const VehicleConditionSyncStrategy: Record<keyof VehicleCondition, VehicleSyncSt
     engineHealth: VehicleSyncStrategy.None,
     bodyHealth: VehicleSyncStrategy.None,
     tankHealth: VehicleSyncStrategy.None,
-    dirtLevel: VehicleSyncStrategy.AllServer,
+    dirtLevel: VehicleSyncStrategy.None,
     doorStatus: VehicleSyncStrategy.None,
     windowStatus: VehicleSyncStrategy.None,
     tireHealth: VehicleSyncStrategy.None,
@@ -44,6 +46,8 @@ export class VehicleStateService {
 
     public vehicleOpened: Set<number> = new Set();
 
+    private vehicleLocatorJam: Map<string, number> = new Map<string, number>();
+
     public getVehicleState(vehicleNetworkId: number): Readonly<VehicleState> {
         if (this.state.has(vehicleNetworkId)) {
             return this.state.get(vehicleNetworkId);
@@ -52,6 +56,7 @@ export class VehicleStateService {
         return {
             volatile: getDefaultVehicleVolatileState(),
             condition: getDefaultVehicleCondition(),
+            configuration: getDefaultVehicleConfiguration(),
             owner: null,
             position: null,
         };
@@ -82,13 +87,22 @@ export class VehicleStateService {
         return this.state;
     }
 
-    public updateVehiclePosition(vehicleNetworkId: number, position: Vector3): void {
+    public updateVehiclePosition(vehicleNetworkId: number, position: Vector4): void {
         if (!this.state.has(vehicleNetworkId)) {
             return;
         }
 
         const state = this.state.get(vehicleNetworkId);
         state.position = position;
+    }
+
+    public updateVehicleConfiguration(vehicleNetworkId: number, configuration: VehicleConfiguration): void {
+        if (!this.state.has(vehicleNetworkId)) {
+            return;
+        }
+
+        const state = this.state.get(vehicleNetworkId);
+        state.configuration = configuration;
     }
 
     public updateVehicleVolatileState(
@@ -105,6 +119,7 @@ export class VehicleStateService {
                 ...state,
             },
             condition: previousState.condition,
+            configuration: previousState.configuration,
             owner: previousState.owner,
             position: previousState.position,
         };
@@ -115,6 +130,10 @@ export class VehicleStateService {
 
         if (!entityId) {
             return;
+        }
+
+        if (newState.volatile.locatorEndJam > 0) {
+            this.vehicleLocatorJam.set(newState.volatile.plate, newState.volatile.locatorEndJam);
         }
 
         const owner = NetworkGetEntityOwner(entityId);
@@ -162,6 +181,7 @@ export class VehicleStateService {
                 ...previousState.condition,
                 ...condition,
             },
+            configuration: previousState.configuration,
             owner: previousState.owner,
             position: previousState.position,
         };
@@ -226,18 +246,20 @@ export class VehicleStateService {
     public register(
         netId: number,
         owner: number,
-        position: Vector3 | Vector4,
+        position: Vector4,
         volatile: VehicleVolatileState,
-        condition: VehicleCondition
+        condition: VehicleCondition,
+        configuration: VehicleConfiguration
     ) {
         this.state.set(netId, {
             volatile,
             condition,
+            configuration,
             owner,
             position,
         });
 
-        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, condition);
+        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, condition, configuration, false);
     }
 
     public switchOwner(netId, owner) {
@@ -246,8 +268,9 @@ export class VehicleStateService {
         }
 
         const state = this.state.get(netId);
+        const useExistingState = state.owner === null;
 
-        // can be null if stolen car
+        // can be null if stolen/force/open car
         if (state.owner) {
             TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER, state.owner, netId);
         }
@@ -257,7 +280,14 @@ export class VehicleStateService {
             owner,
         });
 
-        TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_REGISTER, owner, netId, state.condition);
+        TriggerClientEvent(
+            ClientEvent.VEHICLE_CONDITION_REGISTER,
+            owner,
+            netId,
+            state.condition,
+            state.configuration,
+            useExistingState
+        );
     }
 
     public unregister(netId) {
@@ -326,5 +356,9 @@ export class VehicleStateService {
             this.vehicleOpened.delete(vehicleNetworkId);
             TriggerClientEvent(ClientEvent.VEHICLE_SET_OPEN_LIST, -1, [...this.vehicleOpened]);
         }
+    }
+
+    public getJamLocator(plate: string) {
+        return this.vehicleLocatorJam.get(plate) || 0;
     }
 }

@@ -26,6 +26,7 @@ export const PrisonerClothes = {
             [Prop.RightHand]: { Clear: true },
             [Prop.Helmet]: { Clear: true },
         },
+        GlovesID: 0,
     },
     [GetHashKey('mp_f_freemode_01')]: {
         Components: {
@@ -48,6 +49,7 @@ export const PrisonerClothes = {
             [Prop.RightHand]: { Clear: true },
             [Prop.Helmet]: { Clear: true },
         },
+        GlovesID: 0,
     },
 };
 
@@ -104,7 +106,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -159,7 +161,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -245,10 +247,20 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue Sportive']: {
                 Components: {
                     [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 168, Texture: 0, Palette: 0 },
+                    [Component.Legs]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 10,
+                        Texture: 0,
+                        Palette: 0,
+                    },
                     [Component.Shoes]: { Drawable: 2, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 454, Texture: 1, Palette: 0 },
+                    [Component.Tops]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 12,
+                        Texture: 1,
+                        Palette: 0,
+                    },
                 },
                 Props: {},
             },
@@ -304,7 +316,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -359,7 +371,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -445,10 +457,20 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue Sportive']: {
                 Components: {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 179, Texture: 0, Palette: 0 },
+                    [Component.Legs]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 11,
+                        Texture: 0,
+                        Palette: 0,
+                    },
                     [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 487, Texture: 1, Palette: 0 },
+                    [Component.Tops]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Tops] + 14,
+                        Texture: 1,
+                        Palette: 0,
+                    },
                 },
                 Props: {},
             },
@@ -507,7 +529,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -543,7 +565,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -630,10 +652,20 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue Sportive']: {
                 Components: {
                     [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 168, Texture: 1, Palette: 0 },
+                    [Component.Legs]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 10,
+                        Texture: 1,
+                        Palette: 0,
+                    },
                     [Component.Shoes]: { Drawable: 2, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 454, Texture: 0, Palette: 0 },
+                    [Component.Tops]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 12,
+                        Texture: 0,
+                        Palette: 0,
+                    },
                 },
                 Props: {},
             },
@@ -690,7 +722,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -726,7 +758,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 8, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -813,12 +845,236 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Tenue Sportive']: {
                 Components: {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 179, Texture: 1, Palette: 0 },
+                    [Component.Legs]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 11,
+                        Texture: 1,
+                        Palette: 0,
+                    },
                     [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                    [Component.Tops]: { Drawable: 487, Texture: 0, Palette: 0 },
+                    [Component.Tops]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Tops] + 14,
+                        Texture: 0,
+                        Palette: 0,
+                    },
                 },
                 Props: {},
+            },
+        },
+    },
+    [JobType.SASP]: {
+        [GetHashKey('mp_m_freemode_01')]: {
+            [DUTY_OUTFIT_NAME]: {
+                Components: {
+                    [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
+                    [Component.Legs]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 1,
+                        Texture: 2,
+                        Palette: 0,
+                    },
+                    [Component.Bag]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Bag] + 2,
+                        Texture: 1,
+                        Palette: 0,
+                    },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Accessories]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
+                                Component.Accessories
+                            ] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Undershirt]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
+                                Component.Undershirt
+                            ] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.BodyArmor]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] +
+                            8,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Tops]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 2,
+                        Texture: 2,
+                        Palette: 0,
+                    },
+                },
+                Props: {
+                    [Prop.Hat]: {
+                        Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat] + 6,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                },
+            },
+            ['Tenue sombre']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 22, Texture: 0, Palette: 0 },
+                    [Component.Legs]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 8,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Bag]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Bag] + 2,
+                        Texture: 1,
+                        Palette: 0,
+                    },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Accessories]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
+                                Component.Accessories
+                            ] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Undershirt]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][
+                                Component.Undershirt
+                            ] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.BodyArmor]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] +
+                            8,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Tops]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 2,
+                        Texture: 3,
+                        Palette: 0,
+                    },
+                },
+                Props: {
+                    [Prop.Hat]: {
+                        Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat] + 7,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                },
+            },
+        },
+        [GetHashKey('mp_f_freemode_01')]: {
+            [DUTY_OUTFIT_NAME]: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 1,
+                        Texture: 2,
+                        Palette: 0,
+                    },
+                    [Component.Bag]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Bag] + 2,
+                        Texture: 1,
+                        Palette: 0,
+                    },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Accessories]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
+                                Component.Accessories
+                            ] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Undershirt]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
+                                Component.Undershirt
+                            ] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Tops]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Tops] + 2,
+                        Texture: 2,
+                        Palette: 0,
+                    },
+                },
+                Props: {
+                    [Prop.Hat]: {
+                        Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Prop.Hat] + 6,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                },
+            },
+            ['Tenue sombre']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Legs] + 8,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Bag]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Bag] + 2,
+                        Texture: 1,
+                        Palette: 0,
+                    },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Accessories]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
+                                Component.Accessories
+                            ] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.Undershirt]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][
+                                Component.Undershirt
+                            ] + 4,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                    [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Tops]: {
+                        Drawable:
+                            VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.Tops] + 2,
+                        Texture: 3,
+                        Palette: 0,
+                    },
+                },
+                Props: {
+                    [Prop.Hat]: {
+                        Drawable: VanillaPropDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Prop.Hat] + 7,
+                        Texture: 0,
+                        Palette: 0,
+                    },
+                },
             },
         },
     },
@@ -842,11 +1098,16 @@ export const RankOutfit = {
         [66]: [2, 7], // Undersheriff
         [38]: [1, 0], // Sheriff
     },
+    [JobType.SASP]: {},
 };
 
 export const Armors = {
     [GetHashKey('mp_m_freemode_01')]: {
-        ['unmark']: { Drawable: 59, Texture: 0, Palette: 0 },
+        ['unmark']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 2,
+            Texture: 0,
+            Palette: 0,
+        },
         ['lspd']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 1,
             Texture: 0,
@@ -869,9 +1130,23 @@ export const Armors = {
             Palette: 0,
         },
         ['news']: { Drawable: 27, Texture: 2, Palette: 0 }, // is unmarked, need reskin
+        ['sasp1']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 9,
+            Texture: 0,
+            Palette: 0,
+        },
+        ['sasp2']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 10,
+            Texture: 0,
+            Palette: 0,
+        },
     },
     [GetHashKey('mp_f_freemode_01')]: {
-        ['unmark']: { Drawable: 59, Texture: 7, Palette: 0 },
+        ['unmark']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] + 2,
+            Texture: 7,
+            Palette: 0,
+        },
         ['lspd']: {
             Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] + 1,
             Texture: 0,
@@ -894,6 +1169,16 @@ export const Armors = {
             Palette: 0,
         },
         ['news']: { Drawable: 31, Texture: 2, Palette: 0 }, // is unmarked, need reskin
+        ['sasp1']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] + 8,
+            Texture: 0,
+            Palette: 0,
+        },
+        ['sasp2']: {
+            Drawable: VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_f_freemode_01')][Component.BodyArmor] + 8,
+            Texture: 0,
+            Palette: 0,
+        },
     },
 };
 
@@ -911,7 +1196,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
                         Drawable:
@@ -952,7 +1237,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -995,7 +1280,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
                         Drawable:
@@ -1036,7 +1321,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 0,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -1081,7 +1366,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
                         Drawable:
@@ -1122,7 +1407,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {
@@ -1165,7 +1450,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
                         Drawable:
@@ -1206,7 +1491,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                         Texture: 1,
                         Palette: 0,
                     },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: {

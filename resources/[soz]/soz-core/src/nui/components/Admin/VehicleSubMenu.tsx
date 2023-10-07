@@ -56,6 +56,9 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
     const onOpenBennysUpgrade = () => {
         fetchNui(NuiEvent.BennysUpgradeVehicle);
     };
+    const onOpenLSCustom = () => {
+        fetchNui(NuiEvent.VehicleOpenLSCustom);
+    };
 
     return (
         <>
@@ -71,6 +74,7 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                     </MenuItemButton>
                     <MenuItemSubMenuLink id={'vehicles_catalog'}>📝 Catalogue des véhicules</MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={onOpenBennysUpgrade}>🔧 Améliorer le véhicule</MenuItemButton>
+                    <MenuItemButton onConfirm={() => onOpenLSCustom()}>🚀 LS Custom</MenuItemButton>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleRepair);

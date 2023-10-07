@@ -89,35 +89,6 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         distance = 2.5,
     })
 
-    -- Craft
-    local craftOptions = {}
-    for craftId, craft in pairs(Config.Craft) do
-        craftOptions[#craftOptions + 1] = {
-            color = "pawl",
-            label = craft.Name,
-            icon = ("c:pawl/craft-%s.png"):format(craftId),
-            event = "pawl:client:craft",
-            canInteract = function()
-                return PlayerData.job.onduty
-            end,
-            identifier = craftId,
-            job = "pawl",
-            blackoutGlobal = true,
-            blackoutJob = "pawl",
-        }
-    end
-
-    exports["qb-target"]:AddBoxZone("pawl:crafting1", vector3(-523.25, 5288.06, 74.21), 1.0, 1.8,
-                                    {name = "pawl:crafting1", heading = 75, minZ = 73.21, maxZ = 75.86}, {
-        options = craftOptions,
-        distance = 2.5,
-    })
-    exports["qb-target"]:AddBoxZone("pawl:crafting2", vector3(-524.71, 5283.68, 74.17), 1.0, 1.8,
-                                    {name = "pawl:crafting2", heading = 235, minZ = 73.21, maxZ = 75.86}, {
-        options = craftOptions,
-        distance = 2.5,
-    })
-
     -- Target
     exports["qb-target"]:AddBoxZone("pawl:duty", vector3(-539.36, 5305.28, 76.37), 0.4, 1.2, {
         name = "pawl:duty",
@@ -125,17 +96,6 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         minZ = 76.12,
         maxZ = 76.77,
     }, {options = SozJobCore.Functions.GetDutyActions("pawl"), distance = 2.5})
-end)
-
-RegisterNetEvent("pawl:client:craft", function(data)
-    local success, _ = exports["soz-utils"]:Progressbar("craft", "", Config.CraftDuration, false, true, {
-        disableMovement = true,
-        disableCombat = true,
-    }, {animDict = "mp_arresting", anim = "a_uncuff", flags = 17}, {}, {})
-
-    if success then
-        TriggerServerEvent("pawl:server:craft", data.identifier)
-    end
 end)
 
 --- Degradation

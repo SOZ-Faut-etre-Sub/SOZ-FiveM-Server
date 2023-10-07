@@ -9,7 +9,7 @@ CreateThread(function()
                 label = "Démonter",
                 icon = "c:jobs/demonter.png",
                 event = "police:client:RequestRemoveSpike",
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["sasp"] = 0},
             },
         },
         distance = 2.5,
@@ -20,7 +20,7 @@ CreateThread(function()
                 label = "Démonter",
                 icon = "c:jobs/demonter.png",
                 event = "job:client:RemoveObject",
-                job = {["lspd"] = 0, ["bcso"] = 0},
+                job = {["lspd"] = 0, ["bcso"] = 0, ["sasp"] = 0},
             },
         },
         distance = 2.5,
@@ -69,22 +69,27 @@ end)
 --- Threads
 CreateThread(function()
     while true do
-        local pos = GetEntityCoords(PlayerPedId(), true)
-        local current, dist
+        if exports["soz-core"]:IsInRace() then
+            closestSpike = null
+            Wait(1000)
+        else
+            local pos = GetEntityCoords(PlayerPedId(), true)
+            local current, dist
 
-        for spikeID, spike in pairs(spawnedSpikes) do
-            if current == nil then
-                dist = #(pos - vector3(spike.x, spike.y, spike.z))
-                current = spikeID
-            elseif current then
-                if #(pos - vector3(spike.x, spike.y, spike.z)) < dist then
+            for spikeID, spike in pairs(spawnedSpikes) do
+                if current == nil then
+                    dist = #(pos - vector3(spike.x, spike.y, spike.z))
                     current = spikeID
+                elseif current then
+                    if #(pos - vector3(spike.x, spike.y, spike.z)) < dist then
+                        current = spikeID
+                    end
                 end
             end
-        end
-        closestSpike = current
+            closestSpike = current
 
-        Wait(500)
+            Wait(500)
+        end
     end
 end)
 

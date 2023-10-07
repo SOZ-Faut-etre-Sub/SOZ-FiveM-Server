@@ -9,8 +9,8 @@ const CallContactContainer = () => {
 
     const { getDisplayByNumber, getPictureByNumber } = useContact();
 
-    const getDisplayOrNumber = () =>
-        call.isTransmitter ? getDisplayByNumber(call?.receiver) : getDisplayByNumber(call?.transmitter);
+    const remoteNumber = call.isTransmitter ? call?.receiver : call?.transmitter;
+    const shouldDisplayNumber = remoteNumber != getDisplayByNumber(remoteNumber);
 
     return (
         <div className="flex flex-col justify-center items-center mt-24 text-white">
@@ -18,7 +18,8 @@ const CallContactContainer = () => {
                 size={'large'}
                 picture={call.isTransmitter ? getPictureByNumber(call.receiver) : getPictureByNumber(call?.transmitter)}
             />
-            <div className="text-3xl font-light max-w-[90%] truncate">{getDisplayOrNumber()}</div>
+            <div className="text-3xl font-light max-w-[90%] truncate">{getDisplayByNumber(remoteNumber)}</div>
+            {shouldDisplayNumber && <p>{remoteNumber}</p>}
         </div>
     );
 };

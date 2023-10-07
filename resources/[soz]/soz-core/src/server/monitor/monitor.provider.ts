@@ -2,12 +2,17 @@ import { collectDefaultMetrics, register } from 'prom-client';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Get } from '../../core/decorators/http';
+import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Response } from '../../core/http/response';
 import { ServerEvent } from '../../shared/event';
+import { PrismaService } from '../database/prisma.service';
 
 @Provider()
 export class MonitorProvider {
+    @Inject(PrismaService)
+    private readonly prisma: PrismaService;
+
     private clientMetrics: string[] = [];
 
     public constructor() {
@@ -21,7 +26,8 @@ export class MonitorProvider {
 
     @Get('/metrics')
     public async getMetrics(): Promise<Response> {
-        const metrics = (await register.metrics()) + this.clientMetrics.join('\n');
+        const prismaMetrics = await this.prisma.$metrics.prometheus();
+        const metrics = (await register.metrics()) + this.clientMetrics.join('\n') + prismaMetrics;
         this.clientMetrics = [];
 
         return Response.ok(metrics);

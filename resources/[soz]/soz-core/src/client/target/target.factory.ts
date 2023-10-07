@@ -1,4 +1,5 @@
 import { JobType } from '@public/shared/job';
+import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Zone } from '../../shared/polyzone/box.zone';
@@ -15,7 +16,6 @@ export type TargetOptions = {
     canInteract?: (entity) => boolean | Promise<boolean>;
     action?: (entity) => void;
     job?: string | JobType | Partial<{ [key in JobType]: number }>;
-    license?: string;
     item?: string;
 };
 
@@ -82,6 +82,30 @@ export class TargetFactory {
         this.zones[id] = zone;
     }
 
+    public createForPolygoneZone(
+        id: string,
+        zone: PolygonZone<any>,
+        targets: TargetOptions[],
+        distance = DEFAULT_DISTANCE
+    ) {
+        exports['qb-target'].AddPolyZone(
+            id,
+            zone.getPoints().map(vector => ({ x: vector[0], y: vector[1] })),
+            {
+                debugPoly: zone.debugPoly || false,
+                minZ: zone.minZ,
+                maxZ: zone.maxZ,
+                name: id,
+            },
+            {
+                options: targets,
+                distance: distance,
+            }
+        );
+
+        this.zones[id] = zone;
+    }
+
     public createForAllPlayer(targets: TargetOptions[], distance = DEFAULT_DISTANCE) {
         exports['qb-target'].AddGlobalPlayer({
             options: targets,
@@ -133,6 +157,17 @@ export class TargetFactory {
         distance = DEFAULT_DISTANCE
     ) {
         exports['qb-target'].AddTargetModel(models, {
+            options: targets,
+            distance: distance,
+        });
+    }
+
+    public createForEntity(
+        entities: string[] | number[] | string | number,
+        targets: TargetOptions[],
+        distance = DEFAULT_DISTANCE
+    ) {
+        exports['qb-target'].AddTargetEntity(entities, {
             options: targets,
             distance: distance,
         });

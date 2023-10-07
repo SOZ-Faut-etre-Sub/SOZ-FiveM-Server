@@ -7,6 +7,7 @@ import { TwitchNewsMessage } from '../../../../../typings/twitch-news';
 import { useConfig } from '../../../hooks/usePhone';
 import { PictureReveal } from '../../../ui/old_components/PictureReveal';
 import { convertTypeToName, isBCSOMessage, isLSPDMessage, isPoliceMessage } from '../utils/isPolice';
+import { convertTypeToName, isBCSOMessage, isLSPDMessage, isPoliceMessage, isSASPMessage } from '../utils/isPolice';
 import { PoliceContent } from './PoliceContent';
 
 export const Card: FunctionComponent<TwitchNewsMessage> = memo(
@@ -20,6 +21,7 @@ export const Card: FunctionComponent<TwitchNewsMessage> = memo(
                     'bg-white': config.theme.value === 'light',
                     'border-[#3336E1]': isLSPDMessage(type),
                     'border-[#2d5547]': isBCSOMessage(type),
+                    'border-[#c1b7af]': isSASPMessage(type),
                     'border-[#6741b1]': isPoliceMessage(type) === false,
                 })}
             >

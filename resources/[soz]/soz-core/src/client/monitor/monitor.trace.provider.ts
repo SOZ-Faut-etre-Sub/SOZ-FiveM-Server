@@ -28,4 +28,17 @@ export class MonitorTraceProvider {
 
         console.log(`[TRACE] Ending trace`);
     }
+
+    @Command('sampling-profiler')
+    async startSamplingProfiler(source: number, time: string) {
+        const timeInMs = parseInt(time);
+        Citizen.startProfiling();
+
+        console.log(`[TRACE] Starting profiling for ${timeInMs}ms`);
+
+        await wait(timeInMs);
+        Citizen.stopProfiling();
+
+        console.log(`[TRACE] Ending profiling`);
+    }
 }

@@ -103,4 +103,22 @@ export const SocietyContactsState: Society[] = [
         number: '555-POLICE',
         avatar: 'media/society_icon/fdo.webp',
     },
+    {
+        id: 18,
+        display: 'SASP',
+        number: '555-SASP',
+        avatar: 'media/society_icon/sasp.webp',
+    },
+    {
+        id: 19,
+        display: 'Gouvernement',
+        number: '555-GOUV',
+        avatar: 'media/society_icon/gouv.webp',
+    },
+    {
+        id: 20,
+        display: 'Ferme de Fou',
+        number: '555-FDF',
+        avatar: 'media/society_icon/fdf.webp',
+    },
 ];

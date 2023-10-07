@@ -13,20 +13,29 @@ export const fetchNui = async <I, R>(event: NuiEvent, input?: I, options?: Fetch
         return null;
     }
 
-    const response = await fetch(`https://${GetParentResourceName()}/` + event.toString(), {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: JSON.stringify(input || null),
-        signal: controller.signal,
-    });
+    try {
+        const response = await fetch(`https://${GetParentResourceName()}/` + event.toString(), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(input || null),
+            signal: controller.signal,
+        });
 
-    if (id) {
-        clearTimeout(id);
+        if (response.status === 404) {
+            throw new Error(`Nui event ${event.toString()} no handler found`);
+        }
+
+        return (await response.json()) as R;
+    } catch (e) {
+        console.error(`Failed to fetch ${event.toString()}`, e);
+        throw e;
+    } finally {
+        if (id) {
+            clearTimeout(id);
+        }
     }
-
-    return (await response.json()) as R;
 };
 
 export const triggerClientEvent = async (event: ServerEvent | string, ...args: any[]): Promise<void> => {

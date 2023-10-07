@@ -6,15 +6,16 @@ import { Notifier } from '@public/client/notifier';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerWalkstyleProvider } from '@public/client/player/player.walkstyle.provider';
-import { ResourceLoader } from '@public/client/resources/resource.loader';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { PlayerListStateService } from '../../player/player.list.state.service';
+import { JobService } from '../job.service';
 
 @Provider()
 export class LSMCProvider {
@@ -29,6 +30,9 @@ export class LSMCProvider {
 
     @Inject(ResourceLoader)
     public resourceLoader: ResourceLoader;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Inject(Notifier)
     public notifier: Notifier;
@@ -79,6 +83,21 @@ export class LSMCProvider {
                     label: 'Fin de service',
                     canInteract: () => {
                         return this.playerService.isOnDuty();
+                    },
+                    job: JobType.LSMC,
+                },
+                {
+                    icon: 'fas fa-users',
+                    label: 'Employé(e)s en service',
+                    action: () => {
+                        TriggerServerEvent('QBCore:GetEmployOnDuty');
+                    },
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return (
+                            this.playerService.isOnDuty() &&
+                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
+                        );
                     },
                     job: JobType.LSMC,
                 },
@@ -139,7 +158,7 @@ export class LSMCProvider {
                         return deadPed !== null;
                     },
                     action: async entity => {
-                        const ped = await this.getDeadPedInVehicle(entity);
+                        const ped = this.getDeadPedInVehicle(entity);
                         const coords = GetEntityCoords(PlayerPedId());
 
                         TriggerServerEvent(
@@ -157,7 +176,7 @@ export class LSMCProvider {
 
     private getDeadPedInVehicle(entity: number) {
         const vehicleSeats = GetVehicleModelNumberOfSeats(GetEntityModel(entity));
-        for (let i = -1; i < vehicleSeats - 2; i++) {
+        for (let i = -1; i < vehicleSeats; i++) {
             const ped = GetPedInVehicleSeat(entity, i);
 
             const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(ped));

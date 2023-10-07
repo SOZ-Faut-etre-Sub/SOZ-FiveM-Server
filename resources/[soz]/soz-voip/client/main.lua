@@ -1,4 +1,5 @@
 local voiceTarget = 1
+muted = false
 
 -- Call module
 CallModuleInstance = ModuleCall:new(Config.volumeCall)
@@ -270,4 +271,27 @@ RegisterNetEvent("voip:client:reset", function()
     -- Allow voice loop to reinit state
     restarting = false
     exports["soz-core"]:DrawNotification("Voip réactivée.", "info")
+end)
+
+Citizen.CreateThread(function()
+    RequestAnimDict("facials@gen_female@base")
+    RequestAnimDict("mp_facial")
+
+    local talkingPlayers = {}
+    while true do
+        Citizen.Wait(300)
+        local player = PlayerId()
+
+        for k, v in pairs(GetActivePlayers()) do
+            local boolTalking = NetworkIsPlayerTalking(v) and (player ~= v or not muted)
+            if boolTalking then
+                PlayFacialAnim(GetPlayerPed(v), "mic_chatter", "mp_facial")
+                talkingPlayers[v] = true
+            elseif not boolTalking and talkingPlayers[v] then
+                -- shortest facial anim to stop mic_chatter animtation
+                PlayFacialAnim(GetPlayerPed(v), "dead_1", "facials@gen_female@base")
+                talkingPlayers[v] = nil
+            end
+        end
+    end
 end)

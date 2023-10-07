@@ -22,7 +22,14 @@ export enum JobType {
     Baun = 'baun',
     FBI = 'fbi',
     MDR = 'mdr',
+    Gouv = 'gouv',
+    FDF = 'fdf',
+    SASP = 'sasp',
 }
+
+export const BASE_FDO = [JobType.LSPD, JobType.BCSO];
+export const FDO = [JobType.FBI, JobType.LSPD, JobType.BCSO, JobType.SASP];
+export const FDO_NO_FBI = [JobType.LSPD, JobType.BCSO, JobType.SASP];
 
 export enum JobPermission {
     Enrollment = 'enrollment',
@@ -34,8 +41,13 @@ export enum JobPermission {
     SocietyBankAccount = 'society-bank-account',
     SocietyBankInvoices = 'society-bank-invoices',
     SocietyTakeOutPound = 'society-take-out-pound',
+    SocietyPublicGarage = 'society-public-garage',
+    SocietyPrivateGarage = 'society-private-garage',
+    SocietyPublicPort = 'society-public-port',
+    SocietyPrivatePort = 'society-private-port',
     SocietyViewCompanyPanel = 'society-view-company-panel',
     NewsManageArticle = 'manage-article',
+    NewsManageBillboards = 'manage-billboards',
     CashTransfer_CollectBags = 'collect-bags',
     CashTransfer_CollectSecure = 'collect-secure',
     CashTransfer_ResaleBags = 'resale-bags',
@@ -48,6 +60,9 @@ export enum JobPermission {
     Investigation = 'investigation',
     ManageInvestigation = 'investigation-manage',
     InvestigationLawyer = 'investigation-lawyer',
+    ManageCertification = 'certification-manage',
+    AssignCertification = 'certification-agent',
+    ManageRoster = 'roster-manage',
     BaunHarvest = 'harvest',
     BaunRestock = 'restock',
     BaunCraft = 'craft',
@@ -63,6 +78,7 @@ export enum JobPermission {
     UpwOrder = 'order',
     UpwChangePrice = 'upw-change-price',
     FDOFedPound = 'fdo-fed-pound',
+    OnDutyView = 'view-employe-on-duty',
 }
 
 export const JobLabel: Record<JobType, string> = {
@@ -87,6 +103,9 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.Baun]: 'Bahama Unicorn',
     [JobType.FBI]: 'Federal Bureau of Investigation',
     [JobType.MDR]: 'Mandatory',
+    [JobType.Gouv]: 'Gouvernement',
+    [JobType.FDF]: 'Ferme de Fou',
+    [JobType.SASP]: 'San Andreas State Police',
 };
 
 export type JobPermissionData = {
