@@ -217,6 +217,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
             <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement data={menuData} />} />
+            <Route path={`/${MenuType.FDFJobMenu}/*`} element={<FdfJobMenu data={menuData} />} />
             <Route path={`/${MenuType.JobNews}/*`} element={<MenuNews data={menuData} />} />
         </Routes>
     );
