@@ -18,6 +18,7 @@ export type TreeStatus = {
 export enum FDFFieldKind {
     apple = 'apple',
     orange = 'orange',
+    lemon = 'lemon',
     field = 'field',
     greenhouse = 'greenhouse',
 }
@@ -25,6 +26,7 @@ export enum FDFFieldKind {
 export enum FDFFieldBlips {
     apple = 'apple',
     orange = 'orange',
+    lemon = 'lemon',
     field = 'field',
     greenhouse = 'greenhouse',
     resell = 'resell',
@@ -35,6 +37,7 @@ export const FDFFieldMenu: Record<FDFFieldBlips, string> = {
     [FDFFieldBlips.greenhouse]: 'Afficher les serres',
     [FDFFieldBlips.apple]: 'Afficher les pommiers',
     [FDFFieldBlips.orange]: 'Afficher les orangers',
+    [FDFFieldBlips.lemon]: 'Afficher les citronniers',
     [FDFFieldBlips.resell]: 'Afficher les points de vente',
 };
 
@@ -61,6 +64,18 @@ export const FDFTreeField: Partial<Record<FDFFieldKind, PolygonZone<Vector4>>> =
         ],
         {
             data: [2346.96, 4996.11, 42.73, 30.0],
+        }
+    ),
+    [FDFFieldKind.lemon]: new PolygonZone(
+        [
+            [1906.0501731416343, 4719.719319190019],
+            [2110.436910370144, 4903.471874638429],
+            [2169.884576323034, 4840.713309546818],
+            [2139.3114909758333, 4823.186142719431],
+            [1908.3148461303153, 4710.1076470588705],
+        ],
+        {
+            data: [2106.58, 4845.93, 41.48, 30.0],
         }
     ),
 };
@@ -779,6 +794,12 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 inputs: {
                     orange: { count: 2 },
                     pumpkin_fresh: { count: 1 },
+                },
+            },
+            lemonade_bottle: {
+                amount: 1,
+                inputs: {
+                    lemon: { count: 2 },
                 },
             },
             tomato_tonic: {
