@@ -86,7 +86,7 @@ export enum MenuType {
     RaceAdmin = 'RaceAdmin',
     RaceRank = 'RaceRank',
     GouvJobMenu = 'gouv_job',
-    FDFJobMenu = 'fdd_job',
+    FDFJobMenu = 'fdf_job',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
