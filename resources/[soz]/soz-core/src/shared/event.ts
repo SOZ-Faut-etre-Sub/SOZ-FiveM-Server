@@ -106,6 +106,8 @@ export enum ServerEvent {
     NEWS_PLACE_OBJECT = 'soz-core:server:job:news:place-object',
 
     OBJECT_COLLECT = 'soz-core:server:object:collect',
+    OBJECT_ATTACHED_REGISTER = 'soz-core:client:object:attached:register',
+    OBJECT_ATTACHED_UNREGISTER = 'soz-core:client:object:attached:unregister',
 
     OIL_REFILL_ESSENCE_STATION = 'soz-core:server:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:server:oil:refill-kerosene-station',

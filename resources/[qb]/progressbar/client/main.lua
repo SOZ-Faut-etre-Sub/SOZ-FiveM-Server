@@ -168,6 +168,7 @@ function ActionStart()
 
                     local netid = ObjToNet(modelSpawn)
                     SetNetworkIdCanMigrate(netid, false)
+                    TriggerServerEvent("soz-core:client:object:attached:register", netid)
                     if Action.prop.bone == nil then
                         Action.prop.bone = 60309
                     end
@@ -200,6 +201,7 @@ function ActionStart()
 
                         local netid = ObjToNet(modelSpawn)
                         SetNetworkIdCanMigrate(netid, false)
+                        TriggerServerEvent("soz-core:client:object:attached:register", netid)
                         if Action.propTwo.bone == nil then
                             Action.propTwo.bone = 60309
                         end
@@ -263,6 +265,7 @@ function ActionCleanup()
     end
 
     for _, v in pairs(playerProps) do
+        TriggerServerEvent("soz-core:client:object:attached:unregister", ObjToNet(v))
         DeleteEntity(v)
     end
     playerProps = {}
@@ -270,10 +273,12 @@ function ActionCleanup()
 
     if prop_net and NetworkDoesNetworkIdExist(prop_net) then
         DetachEntity(NetToObj(prop_net), 1, 1)
+        TriggerServerEvent("soz-core:client:object:attached:unregister", prop_net)
         DeleteEntity(NetToObj(prop_net))
     end
     if propTwo_net and NetworkDoesNetworkIdExist(propTwo_net) then
         DetachEntity(NetToObj(propTwo_net), 1, 1)
+        TriggerServerEvent("soz-core:client:object:attached:unregister", propTwo_net)
         DeleteEntity(NetToObj(propTwo_net))
     end
     prop_net = nil
