@@ -520,6 +520,7 @@ export class VehicleFuelProvider {
         RopeUnloadTextures();
         DeleteRope(this.currentStationPistol.rope);
         SetEntityAsMissionEntity(this.currentStationPistol.object, true, true);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentStationPistol.object));
         DeleteEntity(this.currentStationPistol.object);
 
         this.currentStationPistol = null;
@@ -564,7 +565,10 @@ export class VehicleFuelProvider {
             true
         );
 
-        SetNetworkIdCanMigrate(ObjToNet(object), false);
+        const netId = ObjToNet(object);
+        SetNetworkIdCanMigrate(netId, false);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
+
         AttachEntityToEntity(
             object,
             PlayerPedId(),

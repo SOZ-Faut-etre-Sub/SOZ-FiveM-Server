@@ -450,6 +450,7 @@ export class VehicleElectricProvider {
         RopeUnloadTextures();
         DeleteRope(this.currentStationPlug.rope);
         SetEntityAsMissionEntity(this.currentStationPlug.object, true, true);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentStationPlug.object));
         DeleteEntity(this.currentStationPlug.object);
 
         this.currentStationPlug = null;
@@ -498,7 +499,10 @@ export class VehicleElectricProvider {
             true
         );
 
-        SetNetworkIdCanMigrate(ObjToNet(object), false);
+        const netId = ObjToNet(object);
+        SetNetworkIdCanMigrate(netId, false);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
+
         AttachEntityToEntity(
             object,
             PlayerPedId(),
