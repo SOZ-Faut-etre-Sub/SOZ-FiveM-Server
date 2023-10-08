@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { wait, waitUntil } from '@core/utils';
+import { ServerEvent } from '@public/shared/event';
 
 import {
     Animation,
@@ -200,7 +201,9 @@ export class AnimationFactory {
                     );
 
                     SetEntityAsMissionEntity(propId, true, true);
-                    SetNetworkIdCanMigrate(NetworkGetNetworkIdFromEntity(propId), false);
+                    const netId = ObjToNet(propId);
+                    SetNetworkIdCanMigrate(netId, false);
+                    TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
 
                     AttachEntityToEntity(
                         propId,
@@ -266,6 +269,7 @@ export class AnimationFactory {
 
                     RemoveParticleFxFromEntity(prop);
                     DetachEntity(prop, false, false);
+                    TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(prop));
                     DeleteEntity(prop);
                 }
             }

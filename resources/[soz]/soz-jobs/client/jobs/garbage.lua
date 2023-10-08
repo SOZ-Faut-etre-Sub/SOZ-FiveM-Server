@@ -24,7 +24,9 @@ local attachBag = function()
     if garbageBagProp == nil then
         local player = PlayerPedId()
         garbageBagProp = CreateObject(GetHashKey("prop_cs_rub_binbag_01"), GetEntityCoords(player), true)
-        SetNetworkIdCanMigrate(ObjToNet(garbageBagProp), false)
+        local netId = ObjToNet(garbageBagProp)
+        TriggerServerEvent("soz-core:client:object:attached:register", netId)
+        SetNetworkIdCanMigrate(netId, false)
         AttachEntityToEntity(garbageBagProp, player, GetPedBoneIndex(player, 57005), 0.12, 0.0, -0.05, 220.0, 120.0, 0.0, true, true, false, true, 1, true)
     end
 end
@@ -32,6 +34,7 @@ end
 local detachBag = function()
     if garbageBagProp ~= nil then
         DetachEntity(garbageBagProp, true, false)
+        TriggerServerEvent("soz-core:client:object:attached:unregister", ObjToNet(garbageBagProp))
         DeleteObject(garbageBagProp)
         garbageBagProp = nil
     end

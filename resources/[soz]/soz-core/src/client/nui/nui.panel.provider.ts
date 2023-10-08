@@ -1,7 +1,7 @@
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent, NuiEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
 import { NuiDispatch } from './nui.dispatch';
@@ -46,6 +46,8 @@ export class NuiPanelProvider {
 
         const netId = ObjToNet(this.tablet);
         SetNetworkIdCanMigrate(netId, false);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
+
         AttachEntityToEntity(
             this.tablet,
             ped,
@@ -71,6 +73,7 @@ export class NuiPanelProvider {
             return;
         }
 
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.tablet));
         DeleteEntity(this.tablet);
         this.tablet = null;
         this.animationService.stop();
