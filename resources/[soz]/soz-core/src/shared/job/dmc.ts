@@ -308,27 +308,33 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
             weapon_flashlight: {
                 inputs: {
                     aluminium_ingot: { count: 1 },
-                    weapon_certificate: { count: 1 },
+                    weapon_certificate: {
+                        count: 1,
+                        metadata: { craftCertificate: 'weapon_flashlight', label: 'Lampe de poche' },
+                    },
                 },
                 amount: 1,
-                specificCertificate: 'weapon_certificate',
             },
             weapon_nightstick: {
                 inputs: {
                     iron_ingot: { count: 1 },
-                    weapon_certificate: { count: 1 },
+                    weapon_certificate: {
+                        count: 1,
+                        metadata: { craftCertificate: 'weapon_nightstick', label: 'Matraque' },
+                    },
                 },
                 amount: 1,
-                specificCertificate: 'weapon_certificate',
             },
             weapon_pumpshotgun: {
                 inputs: {
                     iron_ingot: { count: 2 },
                     steel_ingot: { count: 2 },
-                    weapon_certificate: { count: 1 },
+                    weapon_certificate: {
+                        count: 1,
+                        metadata: { craftCertificate: 'weapon_pumpshotgun', label: 'Remington 870 Non lethal' },
+                    },
                 },
                 amount: 1,
-                specificCertificate: 'weapon_certificate',
             },
         },
     },
@@ -348,39 +354,47 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
                 inputs: {
                     aluminium_ingot: { count: 2 },
                     steel_ingot: { count: 2 },
-                    weapon_certificate: { count: 1 },
+                    weapon_certificate: {
+                        count: 1,
+                        metadata: { craftCertificate: 'weapon_pistol_mk2', label: 'Pistolet Mk II' },
+                    },
                 },
                 amount: 1,
-                specificCertificate: 'weapon_certificate',
             },
             weapon_revolver_mk2: {
                 inputs: {
                     iron_ingot: { count: 2 },
                     steel_ingot: { count: 2 },
-                    weapon_certificate: { count: 1 },
+                    weapon_certificate: {
+                        count: 1,
+                        metadata: { craftCertificate: 'weapon_revolver_mk2', label: 'Revolver lourd Mk II' },
+                    },
                 },
                 amount: 1,
-                specificCertificate: 'weapon_certificate',
             },
             weapon_smg: {
                 inputs: {
                     steel_ingot: { count: 3 },
                     iron_ingot: { count: 2 },
                     aluminium_ingot: { count: 3 },
-                    weapon_certificate: { count: 1 },
+                    weapon_certificate: {
+                        count: 1,
+                        metadata: { craftCertificate: 'weapon_smg', label: 'Mitraillette' },
+                    },
                 },
                 amount: 1,
-                specificCertificate: 'weapon_certificate',
             },
             weapon_assaultsmg: {
                 inputs: {
                     steel_ingot: { count: 3 },
                     iron_ingot: { count: 3 },
                     aluminium_ingot: { count: 2 },
-                    weapon_certificate: { count: 1 },
+                    weapon_certificate: {
+                        count: 1,
+                        metadata: { craftCertificate: 'weapon_assaultsmg', label: 'P90 GEN2' },
+                    },
                 },
                 amount: 1,
-                specificCertificate: 'weapon_certificate',
             },
         },
     },
