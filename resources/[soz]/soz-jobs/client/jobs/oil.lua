@@ -351,8 +351,10 @@ RegisterNetEvent("jobs:client:fueler:PrepareTankerRefill", function(data)
 
     --- Create nozzle prop
     if Tanker.nozzle == nil then
-        Tanker.nozzle = CreateObject(GetHashKey("hei_prop_hei_hose_nozzle"), pCoords.x, pCoords.y, pCoords.z + 1.2, true, true, true);
-        SetNetworkIdCanMigrate(ObjToNet(Tanker.nozzle), false)
+        Tanker.nozzle = CreateObject(GetHashKey("hei_prop_hei_hose_nozzle"), pCoords.x, pCoords.y, pCoords.z + 1.2, true, true, true)
+        local netId = ObjToNet(Tanker.nozzle)
+        SetNetworkIdCanMigrate(netId, false)
+        TriggerServerEvent("soz-core:client:object:attached:register", netId)
         AttachEntityToEntity(Tanker.nozzle, playerPed, GetPedBoneIndex(playerPed, 60309), 0.10, 0.0, 0.012, 210.0, 90.0, 20.0, 1, 0, 0, 0, 2, 1)
     end
 
@@ -406,6 +408,7 @@ RegisterNetEvent("jobs:client:fueler:CancelTankerRefill", function(data)
 
     if Tanker.nozzle ~= nil then
         DetachEntity(Tanker.nozzle, true, false)
+        TriggerServerEvent("soz-core:client:object:attached:unregister", ObjToNet(Tanker.nozzle))
         DeleteEntity(Tanker.nozzle)
 
         Tanker.nozzle = nil

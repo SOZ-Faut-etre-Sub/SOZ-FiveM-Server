@@ -216,6 +216,7 @@ export class BennysFlatbedProvider {
         RopeUnloadTextures();
         DeleteRope(this.currentFlatbedAttach.rope);
         SetEntityAsMissionEntity(this.currentFlatbedAttach.object, true, true);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentFlatbedAttach.object));
         DeleteEntity(this.currentFlatbedAttach.object);
 
         this.currentFlatbedAttach = null;
@@ -261,7 +262,10 @@ export class BennysFlatbedProvider {
             true
         );
 
-        SetNetworkIdCanMigrate(ObjToNet(object), false);
+        const netId = ObjToNet(object);
+        SetNetworkIdCanMigrate(netId, false);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
+
         AttachEntityToEntity(
             object,
             PlayerPedId(),
