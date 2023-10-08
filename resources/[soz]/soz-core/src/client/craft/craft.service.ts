@@ -50,7 +50,8 @@ export class CraftService {
                     blackoutJob: job,
                     canInteract: () => {
                         if (options) {
-                            if (options.weapon && this.weaponService.getCurrentWeapon().name !== options.weapon) {
+                            const currentWeapon = this.weaponService.getCurrentWeapon();
+                            if (options.weapon && (!currentWeapon || currentWeapon.name !== options.weapon)) {
                                 return false;
                             }
                         }

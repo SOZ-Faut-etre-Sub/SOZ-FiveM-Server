@@ -50,7 +50,13 @@ export class CraftProvider {
                 recipe.canCraft = true;
 
                 for (const [inputItem, input] of Object.entries(recipe.inputs)) {
-                    input.check = this.inventoryManager.hasEnoughItem(source, inputItem, input.count, true);
+                    input.check = this.inventoryManager.hasEnoughItem(
+                        source,
+                        inputItem,
+                        input.count,
+                        true,
+                        input.metadata
+                    );
                     recipe.canCraft = recipe.canCraft && input.check;
                 }
             }
@@ -117,17 +123,6 @@ export class CraftProvider {
             }
         }
 
-        if (
-            recipe.specificCertificate &&
-            this.inventoryManager.getItemCount(source, recipe.specificCertificate, {
-                craftCertificate: itemId,
-                label: this.itemService.getItem(itemId).label,
-            }) < 1
-        ) {
-            this.notifier.error(source, "Vous n'avez pas le bon certificat pour créer '" + item.label + "'.");
-            return await this.getTransformRecipes(source, type, true);
-        }
-
         const { completed } = await this.progressService.progress(
             source,
             'craft_transform',
@@ -151,15 +146,7 @@ export class CraftProvider {
 
         for (const requiredItemId of Object.keys(recipe.inputs)) {
             const input = recipe.inputs[requiredItemId];
-            // Treat specific certificate differently and check its metadata matches the item to create
-            if (recipe.specificCertificate && requiredItemId == recipe.specificCertificate) {
-                this.inventoryManager.removeItemFromInventory(source, requiredItemId, input.count, {
-                    craftCertificate: itemId,
-                    label: this.itemService.getItem(itemId).label,
-                });
-            } else {
-                this.inventoryManager.removeNotExpiredItem(source, requiredItemId, input.count);
-            }
+            this.inventoryManager.removeNotExpiredItem(source, requiredItemId, input.count, input.metadata);
         }
 
         const metadata: InventoryItemMetadata = {};

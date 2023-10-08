@@ -1,5 +1,6 @@
 import { AnimationInfo } from '../animation';
 import { Feature } from '../features';
+import { InventoryItemMetadata } from '../item';
 import { JobType } from '../job';
 import { BaunCraftsLists } from '../job/baun';
 import { DmcCraftsLists } from '../job/dmc';
@@ -22,7 +23,6 @@ export type CraftRecipe = {
     amount: number;
     canCraft?: boolean;
     rewardTier?: Record<string, CraftRewardTier>;
-    specificCertificate?: string;
 };
 
 export type CraftRewardTier = {
@@ -33,6 +33,7 @@ export type CraftRewardTier = {
 export type CraftInput = {
     check?: boolean;
     count: number;
+    metadata?: InventoryItemMetadata;
 };
 
 export type CraftsList = {
