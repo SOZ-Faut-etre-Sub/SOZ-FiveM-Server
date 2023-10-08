@@ -326,6 +326,35 @@ Container["snack_storage"] = InventoryContainer:new({
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
+Container["smuggling_box"] = InventoryDatastore:new({
+    type = "storage",
+    allowedTypes = {
+        "item",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
+        "drug",
+        "food",
+        "drink",
+        "cocktail",
+        "item_illegal",
+        "organ",
+        "oil",
+        "oil_and_item",
+        "log",
+        "sawdust",
+        "plank",
+        "flavor",
+        "furniture",
+        "liquor",
+        "outfit",
+        "crate",
+        "drug_pot",
+        "tool",
+    },
+})
+
 --- Jobs BB
 Container["recycler_processing"] = InventoryContainer:new({
     type = "recycler_processing",
