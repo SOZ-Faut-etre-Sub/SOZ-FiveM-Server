@@ -43,7 +43,7 @@ Config.StorageCapacity = {
     --- Smuggling Box
     ["smuggling_box"] = {slot = 100, weight = 100000},
     --- Jobs DMC
-    ["metal_converter"] = {slot = 100, weight= 500000},
+    ["metal_converter"] = {slot = 100, weight = 500000},
     ["metal_incinerator"] = {slot = 100, weight = 500000},
     ["metal_storage"] = {slot = 100, weight = 10000000},
     --- LS Custom

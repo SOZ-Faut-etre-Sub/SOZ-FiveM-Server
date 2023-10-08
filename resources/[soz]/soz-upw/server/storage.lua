@@ -206,4 +206,4 @@ function ConsumeJobTerminal(jobId, value)
     end
 end
 
-exports('ConsumeJobTerminal', ConsumeJobTerminal)
+exports("ConsumeJobTerminal", ConsumeJobTerminal)

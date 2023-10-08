@@ -1032,7 +1032,7 @@ SozJobCore.Jobs = {
             },
             secondary = {ZoneName = "Resell:LSCustom", SourceAccount = "farm_dmc", TargetAccount = "safe_dmc"},
         },
-    }
+    },
 }
 
 SozJobCore.adsl_payout = 12

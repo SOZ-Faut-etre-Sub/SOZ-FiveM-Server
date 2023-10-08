@@ -7,13 +7,8 @@ Locations["ls-custom"] = {
         maxZ = 42.01,
         debugPoly = LocationDebugPoly,
     }),
-    [2] = BoxZone:Create(vector3(-1154.88, -2005.4, 13.18), 10, 18, {
-        name = "ls-custom2",
-        heading = 45,
-        minZ = 12.18,
-        maxZ = 16.18,
-        debugPoly = LocationDebugPoly,
-    }),
+    [2] = BoxZone:Create(vector3(-1154.88, -2005.4, 13.18), 10, 18,
+                         {name = "ls-custom2", heading = 45, minZ = 12.18, maxZ = 16.18, debugPoly = LocationDebugPoly}),
     [3] = BoxZone:Create(vector3(731.87, -1087.88, 22.17), 10, 10, {
         name = "ls-custom3",
         heading = 0,
@@ -22,13 +17,8 @@ Locations["ls-custom"] = {
         debugPoly = LocationDebugPoly,
     }),
     -- Paleto LSCustom is large to allow Trunk customization
-    [4] = BoxZone:Create(vector3(103.78, 6628.37, 31.40), 22.60, 22.80, {
-        name = "ls-custom4",
-        heading = 45,
-        minZ = 30.40,
-        maxZ = 37.00,
-        debugPoly = LocationDebugPoly,
-    }),
+    [4] = BoxZone:Create(vector3(103.78, 6628.37, 31.40), 22.60, 22.80,
+                         {name = "ls-custom4", heading = 45, minZ = 30.40, maxZ = 37.00, debugPoly = LocationDebugPoly}),
     [5] = BoxZone:Create(vector3(1175.88, 2640.3, 37.79), 10, 10, {
         name = "ls-custom5",
         heading = 45,
