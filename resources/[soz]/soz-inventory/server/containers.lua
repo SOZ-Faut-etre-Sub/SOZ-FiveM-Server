@@ -362,8 +362,9 @@ local canAccessConverter = function(player, owner)
     if player.PlayerData.job.id ~= owner or not player.PlayerData.job.onduty then
         return false
     end
-    if not exports['soz-core']:CanAccessConverter() then
-        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source, "Impossible d'accéder au Convertisseur lorsque sa température s'ajuste.", "error")
+    if not exports["soz-core"]:CanAccessConverter() then
+        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
+                           "Impossible d'accéder au Convertisseur lorsque sa température s'ajuste.", "error")
         return false
     end
     return true
@@ -373,7 +374,7 @@ Container["metal_converter"] = InventoryContainer:new({
     type = "metal_converter",
     allowedTypes = {"metal"},
     inventoryPermissionCallback = canAccessConverter,
-    syncCallback = function (id, items)
+    syncCallback = function(id, items)
         local inv = GetOrCreateInventory("metal_converter", id)
         if not inv then
             return false
@@ -389,11 +390,7 @@ Container["metal_converter"] = InventoryContainer:new({
 
 Container["metal_incinerator"] = InventoryContainer:new({
     type = "metal_incinerator",
-    allowedTypes = {
-        'metal',
-        'weapon',
-        'weapon_ammo',
-    },
+    allowedTypes = {"metal", "weapon", "weapon_ammo"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
     inventoryGetContentCallback = function()
         return false
@@ -402,17 +399,14 @@ Container["metal_incinerator"] = InventoryContainer:new({
 
 Container["metal_storage"] = InventoryContainer:new({
     type = "metal_storage",
-    allowedTypes = {
-        "item", "oil_and_item", "outfit", "crate", "drug_pot", "metal",
-    },
+    allowedTypes = {"item", "oil_and_item", "outfit", "crate", "drug_pot", "metal"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
-
 
 --- LS Custom
 Container["ls_custom_storage"] = InventoryContainer:new({
     type = "ls_custom_storage",
-    allowedTypes = {'item'},
+    allowedTypes = {"item"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 

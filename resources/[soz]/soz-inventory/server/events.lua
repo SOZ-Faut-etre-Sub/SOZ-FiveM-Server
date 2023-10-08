@@ -132,7 +132,7 @@ RegisterServerEvent("inventory:server:closeInventoryAllUsers", function(invID)
             TriggerClientEvent("inventory:client:closeInventory", player)
         end
     end
-    
+
 end)
 
 RegisterServerEvent("inventory:server:renameItem", function(label, item)
