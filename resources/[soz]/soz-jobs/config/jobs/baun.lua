@@ -83,7 +83,7 @@ BaunConfig.Restock = {
     ["snack_crate"] = {
         {itemId = "tapas", quantity = 10},
         {itemId = "peanuts", quantity = 10},
-        {itemId = "olive", quantity = 10},
+        {itemId = "olives", quantity = 10},
     },
 }
 
