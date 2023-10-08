@@ -243,7 +243,7 @@ export class PlayerService {
             });
 
             if (!dbInfo) {
-                return null;
+                return 'Inconnu';
             }
 
             const charInfo = JSON.parse(dbInfo.charinfo) as PlayerCharInfo;
