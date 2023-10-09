@@ -328,7 +328,7 @@ Container["snack_storage"] = InventoryContainer:new({
 })
 
 Container["smuggling_box"] = InventoryDatastore:new({
-    type = "storage",
+    type = "smuggling_box",
     allowedTypes = {
         "item",
         "fishing_rod",
@@ -353,6 +353,10 @@ Container["smuggling_box"] = InventoryDatastore:new({
         "crate",
         "drug_pot",
         "tool",
+        "energy",
+        "metal",
+        "weapon",
+        "weapon_ammo",
     },
 })
 
