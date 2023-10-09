@@ -57,23 +57,27 @@ export class VehicleCustomProvider {
             return originalConfiguration;
         }
 
-        // LS Custom upgrade parts
-        const upgradedParts = this.getLSCustomUpgradedPart(originalConfiguration, mods);
-
-        if (
-            upgradedParts > 0 &&
-            !this.inventoryManager.removeItemFromInventory('ls_custom_storage', 'ls_custom_upgrade_part', upgradedParts)
-        ) {
-            this.notifier.notify(
-                source,
-                `Le stock du LS Custom n'est pas suffisant. Impossible d'améliorer votre véhicule !`,
-                'error'
-            );
-
-            return originalConfiguration;
-        }
-
         if (price) {
+            // LS Custom upgrade parts
+            const upgradedParts = this.getLSCustomUpgradedPart(originalConfiguration, mods);
+
+            if (
+                upgradedParts > 0 &&
+                !this.inventoryManager.removeItemFromInventory(
+                    'ls_custom_storage',
+                    'ls_custom_upgrade_part',
+                    upgradedParts
+                )
+            ) {
+                this.notifier.notify(
+                    source,
+                    `Le stock du LS Custom n'est pas suffisant. Impossible d'améliorer votre véhicule !`,
+                    'error'
+                );
+
+                return originalConfiguration;
+            }
+
             this.playerMoneyService.remove(source, price);
         }
 
