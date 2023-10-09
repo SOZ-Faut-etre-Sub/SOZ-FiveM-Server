@@ -12,4 +12,5 @@ export type Billboard = {
     lastEdit?: Date;
     lastEditor: string;
     enabled: boolean;
+    owner: string;
 };
