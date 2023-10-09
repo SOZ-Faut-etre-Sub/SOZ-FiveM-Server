@@ -205,7 +205,7 @@ export class PropPlacementProvider {
                 id: prop.object.id,
                 matrix: prop.object.matrix,
                 entity: prop.loaded
-                    ? this.objectProvider.getEntityFromId(prop.object.id)
+                    ? await this.getCollectionLoadedEntity(prop.object.id)
                     : await this.spawnDebugProp(prop.object),
                 state: prop.loaded ? PropState.loaded : PropState.placed,
                 model: prop.model,
@@ -219,6 +219,16 @@ export class PropPlacementProvider {
                 .filter(prop => prop.collection == collectionName)
                 .map(prop => prop.entity)
         );
+    }
+
+    private async getCollectionLoadedEntity(id: string) {
+        for (let i = 0; i < 10; i++) {
+            const entity = this.objectProvider.getEntityFromId(id);
+            if (entity) {
+                return entity;
+            }
+            await wait(10 * i);
+        }
     }
 
     @OnNuiEvent(NuiEvent.SelectPlacementCollection)
@@ -277,6 +287,7 @@ export class PropPlacementProvider {
                 model: GetHashKey(propToCreate.model),
                 position: [coords[0], coords[1], coords[2], 0],
                 noCollision: false,
+                placeOnGround: true,
             }),
             state: PropState.unplaced,
         };
@@ -312,7 +323,7 @@ export class PropPlacementProvider {
             propToCreate = {
                 model: propModel,
                 label: GetLabelText(propModel),
-            } as PlacementProp;
+            };
         } else {
             propToCreate = selectedProp;
         }
@@ -701,7 +712,7 @@ export class PropPlacementProvider {
     // Debug Prop Managment
     public async spawnDebugProp(prop: WorldObject): Promise<number> {
         await this.resourceLoader.loadModel(prop.model);
-        const entity = CreateObjectNoOffset(
+        const entity = CreateObject(
             prop.model,
             prop.position[0],
             prop.position[1],
@@ -721,7 +732,9 @@ export class PropPlacementProvider {
         SetEntityCollision(entity, false, false);
         SetEntityInvincible(entity, true);
         FreezeEntityPosition(entity, true); // Always freeze for the moment
-        PlaceObjectOnGroundProperly(entity);
+        if (prop.placeOnGround) {
+            PlaceObjectOnGroundProperly(entity);
+        }
 
         return entity;
     }
