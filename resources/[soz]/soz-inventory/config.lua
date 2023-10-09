@@ -37,7 +37,7 @@ Config.StorageCapacity = {
     ["furniture_storage"] = {slot = 100, weight = 200000},
     ["snack_storage"] = {slot = 100, weight = 200000},
     --- Jobs BlueBird
-    ["recycler_processing"] = {slot = 100, weight = 400000},
+    ["recycler_processing"] = {slot = 100, weight = 800000},
     --- Zkea
     ["cabinet_storage"] = {slot = 1, weight = 1600000}, -- 400 cabinet_zkea maximum
     --- Smuggling Box
