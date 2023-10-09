@@ -34,6 +34,7 @@ export const DrawPositions: Record<string, Omit<WeaponDrawPosition, 'model'>> = 
     RPG: { position: [0.173, -0.14, -0.02], rotation: [0, 0, 0] }, // RPG & Sniper
     LMG: { position: [0.05, -0.14, -0.15], rotation: [0, 45, 0] }, // LMG & Corps à corps
     PUMP: { position: [0.05, -0.14, -0.15], rotation: [0, -40, 0] }, // Pompe
+    PIX: { position: [0.05, -0.14, -0.15], rotation: [60, 90, -85] }, // Custom Pickaxe
 };
 
 export type WeaponDrawPosition = {
@@ -87,6 +88,7 @@ export enum WeaponName {
     BATTLEAXE = 'WEAPON_BATTLEAXE',
     STONE_HATCHET = 'WEAPON_STONE_HATCHET',
     CANDYCANE = 'WEAPON_CANDYCANE',
+    PICKAXE = 'WEAPON_PICKAXE',
 
     // Handguns
     PISTOL = 'WEAPON_PISTOL',
@@ -295,6 +297,9 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     },
     [WeaponName.CANDYCANE]: {
         drawPosition: { model: GetHashKey('W_ME_Candy_XM3'), ...DrawPositions['LMG'] },
+    },
+    [WeaponName.PICKAXE]: {
+        drawPosition: { model: GetHashKey('w_me_pickaxe'), ...DrawPositions['PIX'] },
     },
 
     // Handguns

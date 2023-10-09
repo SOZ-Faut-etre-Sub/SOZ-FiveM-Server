@@ -23,6 +23,10 @@ export enum StorageType {
     Storage = 'storage',
     StorageTank = 'storage_tank',
     Trunk = 'trunk',
+    MetalConverter = 'metal_converter',
+    MetalIncinerator = 'metal_incinerator',
+    MetalStorage = 'metal_storage',
+    LsCustomStorage = 'ls_custom_storage',
 }
 
 export type Storage = {

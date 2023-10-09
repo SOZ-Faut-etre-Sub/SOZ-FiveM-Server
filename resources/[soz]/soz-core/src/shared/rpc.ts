@@ -29,6 +29,8 @@ export enum RpcServerEvent {
     DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:server:driving-school:spawn-vehicle',
     DRIVING_SCHOOL_CHECK_REMAINING_SLOTS = 'soz-core:server:driving-school:check-vehicle-slots',
 
+    DMC_GET_CONVERTER_STATE = 'soz-core:server:job:dmc:get-converter-state',
+
     INVENTORY_SEARCH = 'soz-core:inventory:search',
 
     JOB_GET_JOBS = 'soz-core:jobs:get-jobs',
