@@ -63,3 +63,14 @@ Config.Storages["dmc_cloackroom"] = {
     heading = 145,
     targetOptions = getCloakroomTargetOptions("dmc", "dmc_cloackroom"),
 }
+
+Config.Storages["dmc_armory"] = {
+    label = "Armurerie - DeMetal Company",
+    type = "armory",
+    owner = "dmc",
+    position = vector3(1071.54, -2005.44, 31.53),
+    size = vec2(1.25, 1.80),
+    heading = 145.38,
+    minZ = 30.53,
+    maxZ = 32.53,
+}
