@@ -42,6 +42,12 @@ Config.StorageCapacity = {
     ["cabinet_storage"] = {slot = 1, weight = 1600000}, -- 400 cabinet_zkea maximum
     --- Smuggling Box
     ["smuggling_box"] = {slot = 100, weight = 100000},
+    --- Jobs DMC
+    ["metal_converter"] = {slot = 100, weight = 500000},
+    ["metal_incinerator"] = {slot = 100, weight = 500000},
+    ["metal_storage"] = {slot = 100, weight = 10000000},
+    --- LS Custom
+    ["ls_custom_storage"] = {slot = 1, weight = 800000}, -- 400 ls_custom_upgrade_part maximum
 }
 
 Config.ErrorMessage = {

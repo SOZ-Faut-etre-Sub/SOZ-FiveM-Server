@@ -105,6 +105,7 @@ Container["temporary_trunk"] = InventoryDatastore:new({
 Container["tanker"] = InventoryContainer:new({type = "trunk", allowedTypes = {"oil", "oil_and_item"}})
 Container["brickade"] = InventoryContainer:new({type = "trunk", allowedTypes = {"energy"}})
 Container["trailerlogs"] = InventoryContainer:new({type = "trunk", allowedTypes = {"log"}})
+Container["tiptruck"] = InventoryContainer:new({type = "trunk", allowedTypes = {"metal"}})
 Container["trash"] = InventoryContainer:new({
     type = "trunk",
     allowedTypes = {
@@ -353,6 +354,60 @@ Container["smuggling_box"] = InventoryDatastore:new({
         "drug_pot",
         "tool",
     },
+})
+
+--- Jobs DMC
+
+local canAccessConverter = function(player, owner)
+    if player.PlayerData.job.id ~= owner or not player.PlayerData.job.onduty then
+        return false
+    end
+    if not exports["soz-core"]:CanAccessConverter() then
+        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
+                           "Impossible d'accéder au Convertisseur lorsque sa température s'ajuste.", "error")
+        return false
+    end
+    return true
+end
+
+Container["metal_converter"] = InventoryContainer:new({
+    type = "metal_converter",
+    allowedTypes = {"metal"},
+    inventoryPermissionCallback = canAccessConverter,
+    syncCallback = function(id, items)
+        local inv = GetOrCreateInventory("metal_converter", id)
+        if not inv then
+            return false
+        end
+        if table.length(inv.users) > 0 then
+            for player, _ in pairs(inv.users) do
+                TriggerClientEvent("inventory:client:updateTargetStoragesState", player, inv)
+            end
+        end
+
+    end,
+})
+
+Container["metal_incinerator"] = InventoryContainer:new({
+    type = "metal_incinerator",
+    allowedTypes = {"metal", "weapon", "weapon_ammo"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+    inventoryGetContentCallback = function()
+        return false
+    end,
+})
+
+Container["metal_storage"] = InventoryContainer:new({
+    type = "metal_storage",
+    allowedTypes = {"item", "oil_and_item", "outfit", "crate", "drug_pot", "metal"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+})
+
+--- LS Custom
+Container["ls_custom_storage"] = InventoryContainer:new({
+    type = "ls_custom_storage",
+    allowedTypes = {"item"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
 --- Jobs BB

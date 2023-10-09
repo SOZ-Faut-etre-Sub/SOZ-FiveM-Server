@@ -97,6 +97,10 @@ export class InventoryManager {
         return this.sozInventory.CalculateWeight(storage.inventory);
     }
 
+    public async getAvailableWeight(inv: string): Promise<number> {
+        return this.sozInventory.CalculateAvailableWeight(inv);
+    }
+
     public findItem(source: number, predicate: (item: InventoryItem) => boolean): InventoryItem | null {
         const items = this.playerService.getPlayer(source).items;
 
@@ -113,6 +117,10 @@ export class InventoryManager {
 
     public getItem(inventory: number | string, itemId: string, metadata?: InventoryItemMetadata): any {
         return this.sozInventory.GetItem(inventory, itemId, metadata);
+    }
+
+    public getAllItems(inventory: string): InventoryItem[] {
+        return this.sozInventory.GetAllItems(inventory);
     }
 
     public getItemCount(inventory: number | string, itemId: string, metadata: InventoryItemMetadata = null): number {
@@ -140,7 +148,7 @@ export class InventoryManager {
         return this.removeItemFromInventory(source, item.name, amount, item.metadata, item.slot);
     }
 
-    public removeNotExpiredItem(source, itemId: string, amount = 1): boolean {
+    public removeNotExpiredItem(source, itemId: string, amount = 1, metadata?: InventoryItemMetadata): boolean {
         const items = this.getItems(source);
         const countBySlot = new Map<number, number>();
         let count = 0;
@@ -149,6 +157,19 @@ export class InventoryManager {
             if (item.name === itemId) {
                 if (this.itemService.isItemExpired(item)) {
                     continue;
+                }
+
+                if (metadata) {
+                    let metadataOK = false;
+                    for (const key of Object.keys(metadata)) {
+                        if (metadata[key] == item.metadata[key]) {
+                            metadataOK = true;
+                            break;
+                        }
+                    }
+                    if (!metadataOK) {
+                        continue;
+                    }
                 }
 
                 if (count + item.amount > amount) {
@@ -205,6 +226,23 @@ export class InventoryManager {
         return { success, reason };
     }
 
+    public addItemToInventoryNotPlayer(
+        source: string,
+        itemId: string,
+        amount = 1,
+        metadata?: InventoryItemMetadata,
+        slot?: number
+    ): { success: boolean; reason?: string } {
+        let success, reason;
+
+        this.sozInventory.AddItem(-2, source, itemId, amount, metadata, slot, (s, r) => {
+            success = s;
+            reason = r;
+        });
+
+        return { success, reason };
+    }
+
     public canCarryItem(source: number, itemId: string, amount: number, metadata?: InventoryItemMetadata): boolean {
         return this.sozInventory.CanCarryItem(source, itemId, amount, metadata);
     }
@@ -235,9 +273,19 @@ export class InventoryManager {
         return this.sozInventory.CanSwapItems(source, outItems, inItems);
     }
 
-    public hasEnoughItem(source: number, itemId: string, amount?: number, skipExpiredItem?: boolean): boolean {
+    public hasEnoughItem(
+        source: number,
+        itemId: string,
+        amount?: number,
+        skipExpiredItem?: boolean,
+        metadata?: InventoryItemMetadata
+    ): boolean {
         const items = this.getItems(source);
         let count = 0;
+
+        if (amount <= 0) {
+            return true;
+        }
 
         for (const item of items) {
             if (item.name === itemId) {
@@ -245,8 +293,17 @@ export class InventoryManager {
                     continue;
                 }
 
-                if (!amount) {
-                    return true;
+                if (metadata) {
+                    let metadataOK = false;
+                    for (const key of Object.keys(metadata)) {
+                        if (metadata[key] == item.metadata[key]) {
+                            metadataOK = true;
+                            break;
+                        }
+                    }
+                    if (!metadataOK) {
+                        continue;
+                    }
                 }
 
                 count += item.amount;

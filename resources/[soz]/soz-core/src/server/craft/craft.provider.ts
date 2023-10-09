@@ -50,7 +50,13 @@ export class CraftProvider {
                 recipe.canCraft = true;
 
                 for (const [inputItem, input] of Object.entries(recipe.inputs)) {
-                    input.check = this.inventoryManager.hasEnoughItem(source, inputItem, input.count, true);
+                    input.check = this.inventoryManager.hasEnoughItem(
+                        source,
+                        inputItem,
+                        input.count,
+                        true,
+                        input.metadata
+                    );
                     recipe.canCraft = recipe.canCraft && input.check;
                 }
             }
@@ -140,7 +146,7 @@ export class CraftProvider {
 
         for (const requiredItemId of Object.keys(recipe.inputs)) {
             const input = recipe.inputs[requiredItemId];
-            this.inventoryManager.removeNotExpiredItem(source, requiredItemId, input.count);
+            this.inventoryManager.removeNotExpiredItem(source, requiredItemId, input.count, input.metadata);
         }
 
         const metadata: InventoryItemMetadata = {};

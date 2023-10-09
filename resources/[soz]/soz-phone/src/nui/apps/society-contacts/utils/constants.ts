@@ -127,4 +127,10 @@ export const SocietyContactsState: Society[] = [
         number: '555-YOUN',
         avatar: 'media/society_icon/you-news.webp',
     },
+    {
+        id: 22,
+        display: 'DeMetal Company',
+        number: '555-DMC',
+        avatar: 'media/society_icon/dmc.webp',
+    },
 ];

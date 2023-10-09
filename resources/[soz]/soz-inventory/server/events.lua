@@ -119,6 +119,22 @@ RegisterServerEvent("inventory:server:closeInventory", function(invID)
     end
 end)
 
+RegisterServerEvent("inventory:server:closeInventoryAllUsers", function(invID)
+    local targetInv = Inventory(invID)
+
+    if not targetInv then
+        return
+    end
+
+    if table.length(targetInv.users) > 0 then
+        for player, _ in pairs(targetInv.users) do
+            targetInv.users[player] = nil
+            TriggerClientEvent("inventory:client:closeInventory", player)
+        end
+    end
+
+end)
+
 RegisterServerEvent("inventory:server:renameItem", function(label, item)
     local inventorySource = Inventory(source)
     local metadata = item.metadata

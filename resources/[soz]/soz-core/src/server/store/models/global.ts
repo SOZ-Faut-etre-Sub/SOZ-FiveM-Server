@@ -36,6 +36,7 @@ export const global = createModel<RootModel>()({
             [JobType.FDF]: 100,
             [JobType.Gouv]: 100,
             [JobType.SASP]: 100,
+            [JobType.DMC]: 100,
         } as Record<JobType, number>,
         weather: 'CLEAR',
         snow: false,

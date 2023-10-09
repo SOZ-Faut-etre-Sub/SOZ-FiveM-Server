@@ -9,6 +9,11 @@ import { JobService } from '../job/job.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory } from '../target/target.factory';
+import { WeaponService } from '../weapon/weapon.service';
+
+export class craftOptions {
+    weapon: string;
+}
 
 @Injectable()
 export class CraftService {
@@ -24,7 +29,16 @@ export class CraftService {
     @Inject(JobService)
     private jobService: JobService;
 
-    public createBtargetZoneCraft(zones: NamedZone[], icon: string, label: string, job: JobType) {
+    @Inject(WeaponService)
+    private weaponService: WeaponService;
+
+    public createBtargetZoneCraft(
+        zones: NamedZone[],
+        icon: string,
+        label: string,
+        job: JobType,
+        options?: craftOptions
+    ) {
         zones.forEach(zone =>
             this.targetFactory.createForBoxZone(zone.name, zone, [
                 {
@@ -35,6 +49,12 @@ export class CraftService {
                     blackoutGlobal: true,
                     blackoutJob: job,
                     canInteract: () => {
+                        if (options) {
+                            const currentWeapon = this.weaponService.getCurrentWeapon();
+                            if (options.weapon && (!currentWeapon || currentWeapon.name !== options.weapon)) {
+                                return false;
+                            }
+                        }
                         return this.playerService.isOnDuty();
                     },
                     action: async () => {
