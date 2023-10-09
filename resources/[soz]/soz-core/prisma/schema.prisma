@@ -690,6 +690,7 @@ model billboard {
     height              Int       @db.Int
     lastEdit            DateTime  @default(now()) @db.Timestamp(0)
     lastEditor          String    @db.VarChar(50)
+    owner               String    @db.VarChar(50)
     enabled             Boolean
 }
 
