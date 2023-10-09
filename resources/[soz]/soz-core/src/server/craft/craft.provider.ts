@@ -111,7 +111,7 @@ export class CraftProvider {
         for (const requiredItemId of Object.keys(recipe.inputs)) {
             const input = recipe.inputs[requiredItemId];
 
-            if (!this.inventoryManager.hasEnoughItem(source, requiredItemId, input.count, true)) {
+            if (!this.inventoryManager.hasEnoughItem(source, requiredItemId, input.count, true, input.metadata)) {
                 const requiredItem = this.itemService.getItem(requiredItemId);
 
                 this.notifier.error(
