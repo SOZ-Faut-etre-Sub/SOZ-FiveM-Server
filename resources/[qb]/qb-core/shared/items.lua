@@ -6219,7 +6219,7 @@ QBShared.Items = {
         ['type'] = 'item_illegal',
         ['unique'] = false,
         ['useable'] = false,
-        ['description'] = 'Issue du trie sélectif.',
+        ['description'] = 'Issu du tri sélectif.',
         ['illustrator'] = '.DaraBesque',
     },
     ['cigarette_used'] = {
@@ -7982,7 +7982,7 @@ QBShared.Items = {
         ['type'] = 'food',
         ['durability'] = 14,
         ['description'] = "Idéal pour les cocktails.",
-        ['illustrator'] = '.Sniteur',
+        ['illustrator'] = '.Moustash',
     },
     ['potato'] = {
         ['name'] = 'potato',
