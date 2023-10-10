@@ -38,15 +38,3 @@ RegisterNetEvent("soz-jobs:client:baun:createIceCubes", function()
     QBCore.Functions.TriggerCallback("soz-jobs:server:baun:createIceCubes", function()
     end)
 end)
-
-exports["qb-target"]:AddBoxZone("baun:bahama:duty", vector3(-1388.11, -606.23, 30.32), 0.55, 0.55,
-                                {name = "baun:bahama:duty", heading = 16, minZ = 30.32, maxZ = 30.87},
-                                {options = SozJobCore.Functions.GetDutyActions("baun"), distance = 2.5})
-
-exports["qb-target"]:AddBoxZone("baun:unicorn:duty", vector3(133.53, -1286.86, 29.27), 0.45, 0.5,
-                                {name = "baun:unicorn:duty", heading = 345, minZ = 29.27, maxZ = 29.67},
-                                {options = SozJobCore.Functions.GetDutyActions("baun"), distance = 2.5})
-
-exports["qb-target"]:AddBoxZone("baun:yellowjack:duty", vector3(1981.85, 3053.75, 47.22), 0.6, 0.4,
-                                {name = "baun:yellowjack:duty", heading = 58.15, minZ = 47.12, maxZ = 47.62},
-                                {options = SozJobCore.Functions.GetDutyActions("baun"), distance = 2.5})
