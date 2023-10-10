@@ -7432,7 +7432,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['carrybox'] = 'prop_mp_drug_pack_blue',
+        ['carrybox'] = 'soz_pack_drugs_3',
         ['description'] = "Il y a assez de Psilocybine à l'intérieur pour faire une soirée avec pleins d'amis.",
         ['illustrator'] = '.Sniteur'
     },
@@ -7525,7 +7525,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['carrybox'] = 'prop_mp_drug_package',
+        ['carrybox'] = 'soz_pack_drugs_4',
         ['description'] = "Il y a assez de Zeed à l'intérieur pour faire une soirée avec pleins d'amis.",
         ['illustrator'] = '.Sniteur'
     },
@@ -7623,7 +7623,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['carrybox'] = 'prop_mp_drug_pack_red',
+        ['carrybox'] = 'soz_pack_drugs_2',
         ['description'] = "Il y a assez de Pandoxine à l'intérieur pour faire une soirée avec pleins d'amis.",
         ['illustrator'] = '.Sniteur'
     },
@@ -7724,7 +7724,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['combinable'] = nil,
-        ['carrybox'] = 'prop_mp_drug_package',
+        ['carrybox'] = 'soz_pack_drugs_1',
         ['description'] = "Il y a assez de Krakenine à l'intérieur pour faire une soirée avec pleins d'amis.",
         ['illustrator'] = '.Sniteur'
     },
