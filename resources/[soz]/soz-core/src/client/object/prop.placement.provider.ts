@@ -531,6 +531,7 @@ export class PropPlacementProvider {
             return Err(false);
         }
 
+        debugProp.state = PropState.placed;
         this.currentCollection.props[prop.object.id] = prop;
         this.currentCollection.size += 1;
         this.debugProp = null;
@@ -712,7 +713,7 @@ export class PropPlacementProvider {
     // Debug Prop Managment
     public async spawnDebugProp(prop: WorldObject): Promise<number> {
         await this.resourceLoader.loadModel(prop.model);
-        const entity = CreateObject(
+        const entity = CreateObjectNoOffset(
             prop.model,
             prop.position[0],
             prop.position[1],
