@@ -1,8 +1,9 @@
-import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { NuiEvent } from '../../shared/event';
+import { wait } from '../../core/utils';
+import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { MultiZone } from '../../shared/polyzone/multi.zone';
@@ -15,6 +16,7 @@ import {
     VehicleCustomMenuData,
     VehicleUpgradeOptions,
 } from '../../shared/vehicle/modification';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
@@ -236,5 +238,27 @@ export class VehicleCustomProvider {
             originalConfiguration: { ...vehicleConfiguration },
             currentConfiguration: vehicleConfiguration,
         });
+    }
+
+    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
+    @OnEvent(ClientEvent.BASE_CHANGE_VEHICLE_SEAT)
+    public async onVehicleEnterSyncModification(vehicleEntityId: number, seat: number) {
+        if (seat !== VehicleSeat.Driver) {
+            return;
+        }
+
+        let i = 0;
+
+        while (!NetworkHasControlOfEntity(vehicleEntityId) && i < 20) {
+            await wait(500);
+            i++;
+        }
+
+        if (!NetworkHasControlOfEntity(vehicleEntityId)) {
+            return;
+        }
+
+        const configuration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
+        this.vehicleService.applyVehicleConfigurationPerformance(vehicleEntityId, configuration);
     }
 }

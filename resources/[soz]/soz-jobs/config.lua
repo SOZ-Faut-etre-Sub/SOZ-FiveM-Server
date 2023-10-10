@@ -24,6 +24,7 @@ SozJobCore.JobType = {
     Debug = "debug",
     MDR = "mdr",
     SASP = "sasp",
+    FDF = "fdf",
     Gouv = "gouv",
 }
 
@@ -916,6 +917,39 @@ SozJobCore.Jobs = {
         menuCallback = "police:client:OpenSocietyMenu",
         canInvoice = true,
         phone = "555-SASP",
+        canReceiveSocietyInvoice = true,
+    },
+    [SozJobCore.JobType.FDF] = {
+        label = "Ferme de Fou",
+        platePrefix = "FDF",
+        grades = {},
+        permissions = {
+            [SozJobCore.JobPermission.Enrollment] = {label = "Gestion des recrutements"},
+            [SozJobCore.JobPermission.ManageGrade] = {label = "Gestion des grades"},
+            [SozJobCore.JobPermission.SocietyBankAccount] = {label = "Accès au compte société"},
+            [SozJobCore.JobPermission.SocietyBankInvoices] = {label = "Accès aux outils de facturation société"},
+            [SozJobCore.JobPermission.SocietyPrivateStorage] = {label = "Accès aux stockages société privés"},
+            [SozJobCore.JobPermission.SocietyMoneyStorage] = {label = "Accès au coffre-fort de société"},
+            [SozJobCore.JobPermission.SocietyDealershipVehicle] = {label = "Accès aux concessionnaires de véhicules"},
+            [SozJobCore.JobPermission.SocietyTakeOutPound] = {label = "Sortir les véhicules de la fourrière"},
+            [SozJobCore.JobPermission.SocietyPublicGarage] = {
+                label = "Ranger/sortir les véhicules des garages publics",
+            },
+            [SozJobCore.JobPermission.SocietyPrivateGarage] = {
+                label = "Ranger/sortir les véhicules des garages privés",
+            },
+            [SozJobCore.JobPermission.SocietyPublicPort] = {label = "Ranger/sortir les véhicules des ports publics"},
+            [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
+            [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
+            [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
+        },
+        bossZones = {
+            {x = 2443.96, y = 4974.61, z = 47.39, sx = 23.20, sy = 47.80, heading = 226.09, minZ = 44.39, maxZ = 55.39},
+        },
+        menuCallback = "soz-jobs:client:fdf:OpenSocietyMenu",
+        canInvoice = true,
+        phone = "555-FDF",
         canReceiveSocietyInvoice = true,
     },
     [SozJobCore.JobType.Debug] = {label = "Debug job", grades = {}, permissions = {}, canReceiveSocietyInvoice = false},

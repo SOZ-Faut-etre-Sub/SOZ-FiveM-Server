@@ -2,6 +2,7 @@ import { AnimationInfo } from '../animation';
 import { Feature } from '../features';
 import { JobType } from '../job';
 import { BaunCraftsLists } from '../job/baun';
+import { FDFCraftsLists } from '../job/fdf';
 import { FFSCraftsLists } from '../job/ffs';
 import { FoodCraftsLists } from '../job/food';
 import { PawlCraftsLists } from '../job/pawl';
@@ -12,6 +13,7 @@ export type CraftCategory = {
     feature?: Feature;
     icon?: string;
     animation?: AnimationInfo;
+    event: string;
 };
 
 export type CraftRecipe = {
@@ -44,11 +46,5 @@ export const Crafts: Record<string, Record<string, CraftCategory>> = {
     [JobType.Baun]: BaunCraftsLists,
     [JobType.Ffs]: FFSCraftsLists,
     [JobType.Pawl]: PawlCraftsLists,
-};
-
-export const CraftEvent: Record<string, string> = {
-    [JobType.Food]: 'job_cm_food_craft',
-    [JobType.Baun]: 'job_baun_craft',
-    [JobType.Ffs]: 'job_ffs_craft',
-    [JobType.Pawl]: 'job_pawl_craft',
+    [JobType.FDF]: FDFCraftsLists,
 };

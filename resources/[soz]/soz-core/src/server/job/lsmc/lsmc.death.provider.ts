@@ -57,7 +57,6 @@ export class LSMCDeathProvider {
                 isWearingPatientOutfit: true,
             });
             datas.inside = player.metadata.inside;
-            datas.inside.exitCoord = false;
             datas.inside.apartment = false;
             datas.inside.property = null;
         }

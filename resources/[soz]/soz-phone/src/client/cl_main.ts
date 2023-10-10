@@ -241,6 +241,11 @@ RegisterNuiCB<void>(EmergencyEvents.UHU_CALL, async (_, cb) => {
     cb({});
 });
 
+RegisterNuiCB<void>(PhoneEvents.PHONE_LOADED, async (_, cb) => {
+    updateAvailability();
+    cb({});
+});
+
 setInterval(async () => {
     const ped = PlayerPedId();
     const isSwimming = IsPedSwimming(ped);

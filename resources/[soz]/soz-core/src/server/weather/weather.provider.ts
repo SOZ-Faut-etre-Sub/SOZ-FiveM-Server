@@ -44,14 +44,15 @@ export class WeatherProvider {
     private dayTemperatureRange: TemperatureRange = DayAutumnTemperature;
     private nightTemperatureRange: TemperatureRange = NightAutumnTemperature;
 
-    private defaultWeather: Weather = 'CLEAR';
-    private incomingForecasts: ForecastWithTemperature[] = [
-        {
-            weather: this.defaultWeather,
-            temperature: this.getTemperature(this.defaultWeather, this.currentTime),
-            duration: 1000 * 10,
-        },
-    ];
+    private defaultWeather: Weather = isFeatureEnabled(Feature.Halloween) ? 'NEUTRAL' : 'OVERCAST';
+
+    private currentForecast: ForecastWithTemperature = {
+        weather: this.defaultWeather,
+        temperature: this.getTemperature(this.defaultWeather, this.currentTime),
+        duration: 1000 * 10,
+    };
+
+    private incomingForecasts: ForecastWithTemperature[] = [this.currentForecast];
 
     private stormDeadline = 0; // timestamp
 
@@ -97,27 +98,15 @@ export class WeatherProvider {
             return;
         }
 
-        let weather = this.incomingForecasts.shift();
-        if (!weather) {
-            // This happens when the getTemperature crashes because the PollutionManager is not ready yet.
-            // Ideally, you should migrate soz-upw to soz-core and then try to remove this block and see if it works.
-            // Just check the logs of the server, if it loops indefinitely, then you need to keep this block.
-            weather = {
-                weather: this.defaultWeather,
-                temperature: this.getTemperature(this.defaultWeather, this.currentTime),
-                duration: 1000 * 10,
-            };
-        }
+        const weather = this.incomingForecasts.shift();
+        this.currentForecast = weather;
         this.store.dispatch.global.update({ weather: weather.weather });
         this.prepareForecasts(weather.weather);
 
-        const defaultWeather = isFeatureEnabled(Feature.Halloween) ? 'NEUTRAL' : 'OVERCAST';
-        const currentWeather = this.store.getState().global.weather || defaultWeather;
-
-        this.store.dispatch.global.update({ weather: this.getNextWeather(currentWeather) });
         TriggerClientEvent(ClientEvent.PHONE_APP_WEATHER_UPDATE_FORECASTS, -1);
 
-        await wait(weather.duration || (Math.random() * 5 + 10) * 60 * 1000);
+        const duration = weather.duration || (Math.random() * 5 + 10) * 60 * 1000;
+        await wait(duration);
     }
 
     @Exportable('setWeatherUpdate')
@@ -197,7 +186,7 @@ export class WeatherProvider {
 
     @Exportable('getWeatherForecasts')
     getWeatherForecasts(): ForecastWithTemperature[] {
-        return this.incomingForecasts;
+        return [this.currentForecast, ...this.incomingForecasts];
     }
 
     @Exportable('getStormAlert')
@@ -285,7 +274,6 @@ export class WeatherProvider {
 
             transitions = {};
         }
-
         return getRandomKeyWeighted<Weather>(transitions, currentWeather) as Weather;
     }
 

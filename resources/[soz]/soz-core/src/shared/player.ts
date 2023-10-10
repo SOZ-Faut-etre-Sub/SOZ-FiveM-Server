@@ -216,7 +216,7 @@ export enum PlayerCriminalState {
 export type PlayerInsideState = {
     apartment: number | false;
     property: number | null;
-    exitCoord: { x: number; y: number; z: number } | false;
+    exitCoord: { x: number; y: number; z: number; w: number } | false;
 };
 
 export type PlayerMetadata = PlayerHealthBook & {

@@ -1,18 +1,21 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { PrismaService } from '../database/prisma.service';
+import { Monitor } from '../monitor/monitor';
 
 @Injectable()
 export class PlayerCleanService {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
+    @Inject(Monitor)
+    private monitor: Monitor;
+
     async getPlayerToCleans(): Promise<string[]> {
         const playersToClean = (await this.prismaService.$queryRawUnsafe(
             `SELECT p.citizenId
-             FROM soz_api.accounts a
-                      INNER JOIN soz_api.account_identities ai ON a.id = ai.accountId AND ai.identityType = 'STEAM'
-                      INNER JOIN soz_fivem.player p ON ai.identityId = p.license
-             WHERE a.updatedAt < DATE_SUB(CURDATE(),INTERVAL 30 DAY) AND a.whitelistStatus IN ('DENIED', 'INACTIVE') AND p.is_default = 1`
+             FROM soz_fivem.player p
+                      INNER JOIN soz_fivem.housing_apartment h ON h.owner = p.citizenId
+             WHERE p.last_updated < DATE_SUB(CURDATE(),INTERVAL 30 DAY) AND p.is_default = 0`
         )) as { citizenId: string }[];
 
         const ids = [];
@@ -22,7 +25,11 @@ export class PlayerCleanService {
         }
 
         const deletedPlayersToClean = (await this.prismaService.$queryRawUnsafe(
-            `SELECT p.citizenId FROM soz_fivem.player p LEFT JOIN soz_api.account_identities ai ON p.license = ai.identityId AND ai.identityType = 'STEAM' WHERE ai.identityType IS NULL AND p.is_default = 1`
+            `SELECT p.citizenId 
+             FROM soz_fivem.player p 
+                LEFT JOIN soz_api.account_identities ai ON p.license = ai.identityId AND ai.identityType = 'STEAM' 
+                INNER JOIN soz_fivem.housing_apartment h ON h.owner = p.citizenId
+             WHERE ai.identityType IS NULL AND p.is_default = 0`
         )) as { citizenId: string }[];
 
         for (const data of deletedPlayersToClean) {
@@ -81,9 +88,17 @@ export class PlayerCleanService {
             },
         });
 
-        for (const housingOwnerIdentifier of housingOwnerIdentifiers) {
-            exports['soz-bank'].ClearAccount(housingOwnerIdentifier.identifier);
-        }
+        await this.prismaService.bank_accounts.updateMany({
+            where: {
+                houseid: {
+                    in: housingOwnerIdentifiers.map(h => 'property_' + h.identifier),
+                },
+            },
+            data: {
+                money: 0,
+                marked_money: 0,
+            },
+        });
 
         const housingRoommateUpdated = await this.prismaService.housing_apartment.updateMany({
             data: {
@@ -95,6 +110,15 @@ export class PlayerCleanService {
                 },
             },
         });
+
+        this.monitor.publish(
+            'house_owner_cleanup',
+            {},
+            {
+                cititzenIds: JSON.stringify(disabledCitizenIds),
+                house: JSON.stringify(housingOwnerIdentifiers.map(h => h.identifier)),
+            }
+        );
 
         return [housingOwnerUpdated.count, housingRoommateUpdated.count];
     }
