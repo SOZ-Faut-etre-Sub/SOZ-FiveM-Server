@@ -138,13 +138,6 @@ end
 CreateThread(function()
     CreateTankerAction()
 
-    exports["qb-target"]:AddBoxZone("mtp:duty", vector3(-230.65, 6088.05, 31.39), 0.10, 3.10, {
-        name = "mtp:duty",
-        heading = 315,
-        minZ = 30.39,
-        maxZ = 33.39,
-    }, {options = SozJobCore.Functions.GetDutyActions("oil"), distance = 2.5})
-
     exports["qb-target"]:AddBoxZone("mtp:fuel_craft", vector3(-203.11, 6115.01, 31.35), 2.80, 3.20,
                                     {name = "fuel_craft", heading = 315, minZ = 30.35, maxZ = 33.35}, {
         options = {

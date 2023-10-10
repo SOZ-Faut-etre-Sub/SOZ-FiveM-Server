@@ -111,56 +111,6 @@ export class DmcProvider {
     public setupDmcJob() {
         this.createBlips();
 
-        // Duty zone
-        this.targetFactory.createForBoxZone(
-            'dmc:duty',
-            {
-                center: [1078.86, -1974.87, 31.47],
-                length: 0.4,
-                width: 1.2,
-                minZ: 31.07,
-                maxZ: 32.47,
-                heading: 324.53,
-            },
-            [
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Prise de service',
-                    canInteract: () => {
-                        return !this.playerService.isOnDuty();
-                    },
-                    job: JobType.DMC,
-                },
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Fin de service',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
-                    job: JobType.DMC,
-                },
-                {
-                    icon: 'fas fa-users',
-                    label: 'Employé(e)s en service',
-                    action: () => {
-                        TriggerServerEvent('QBCore:GetEmployOnDuty');
-                    },
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-                        return (
-                            this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                        );
-                    },
-                    job: JobType.DMC,
-                },
-            ]
-        );
-
         // Converter zone
         this.targetFactory.createForBoxZone(
             'dmc:converter',

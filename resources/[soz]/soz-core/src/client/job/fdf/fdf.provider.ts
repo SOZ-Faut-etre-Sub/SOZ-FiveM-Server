@@ -69,55 +69,6 @@ export class FDFProvider {
 
         this.craftService.createBtargetZoneCraft(FDFCraftZones, 'c:/food/chef.png', 'Préparer', JobType.FDF);
 
-        this.targetFactory.createForBoxZone(
-            'fdf:duty',
-            {
-                center: [2437.28, 4964.28, 47.21],
-                heading: 45,
-                length: 0.2,
-                width: 1.8,
-                minZ: 47.01,
-                maxZ: 48.21,
-            },
-            [
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Prise de service',
-                    canInteract: () => {
-                        return !this.playerService.isOnDuty();
-                    },
-                    job: JobType.FDF,
-                },
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Fin de service',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
-                    job: JobType.FDF,
-                },
-                {
-                    icon: 'fas fa-users',
-                    label: 'Employé(e)s en service',
-                    action: () => {
-                        TriggerServerEvent('QBCore:GetEmployOnDuty');
-                    },
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-                        return (
-                            this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                        );
-                    },
-                    job: JobType.FDF,
-                },
-            ]
-        );
-
         FDFConfig.resellZones.forEach((zone, index) => {
             this.pedFactory.createPed({
                 coords: toVector4Object(zone.npcCoord),
