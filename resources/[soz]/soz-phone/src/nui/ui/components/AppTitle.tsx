@@ -9,11 +9,12 @@ import { useConfig } from '../../hooks/usePhone';
 interface AppTitleProps extends HTMLAttributes<HTMLDivElement> {
     app?: IApp;
     title?: string;
+    subtitle?: string;
     action?: JSX.Element;
     isBigHeader?: boolean;
 }
 
-export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, action, children }) => {
+export const AppTitle: React.FC<AppTitleProps> = ({ app, title, subtitle, isBigHeader, action, children }) => {
     const [t] = useTranslation();
     const config = useConfig();
     const { pathname } = useLocation();
@@ -32,6 +33,8 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
                     'pt-8 text-3xl': isBigHeader,
                     'pt-3 text-2xl': !isBigHeader,
                     'text-xl': children,
+                    'grid-rows-2': subtitle != null,
+                    'grid-rows-1': subtitle == null,
                 })}
             >
                 {children && <div className="flex items-center text-[#347DD9]">{children}</div>}
@@ -44,6 +47,7 @@ export const AppTitle: React.FC<AppTitleProps> = ({ app, title, isBigHeader, act
                     {title ? title : t(app.nameLocale)}
                 </div>
                 {action && <div className="justify-self-end text-[#347DD9] font-normal text-base">{action}</div>}
+                {subtitle != null && <div className={cn('truncate text-center text-sm col-span-4')}>{subtitle}</div>}
             </h2>
         </div>
     );
