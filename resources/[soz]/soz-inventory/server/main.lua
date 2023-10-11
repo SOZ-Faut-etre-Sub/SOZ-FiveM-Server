@@ -401,6 +401,7 @@ end
 
 function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slotId)
     local slot = -1
+    local exist = false
 
     if slotItem.name == "empty_lunchbox" then
         Inventory.RemoveItem(inv, slotItem.name, 1, nil, slotId)
@@ -410,13 +411,23 @@ function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item,
     end
 
     local lunchboxTotalWeight = Inventory.getCrateWeight(slotItem.metadata)
-    table.insert(slotItem.metadata.crateElements, {
-        name = item.name,
-        label = item.label,
-        metadata = metadata,
-        amount = amount,
-        weight = Inventory.GetItemWeight(item, metadata, 1),
-    })
+
+    for _, element in pairs(slotItem.metadata.crateElements) do
+        if element.name == item.name and metadata.expiration == element.metadata.expiration then
+            element.amount = element.amount + amount
+            exist = true
+        end
+    end
+
+    if not exist then
+        table.insert(slotItem.metadata.crateElements, {
+            name = item.name,
+            label = item.label,
+            metadata = metadata,
+            amount = amount,
+            weight = Inventory.GetItemWeight(item, metadata, 1),
+        })
+    end
 
     local notificationLunchboxLabel = tostring(slotItem.label)
     if slotItem.metadata.label then
