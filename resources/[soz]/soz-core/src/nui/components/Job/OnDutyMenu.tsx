@@ -8,7 +8,7 @@ type MenuJobOnDutyProps = {
     data: NuiJobEmployeeOnDuty;
 };
 
-const banners_in_core = ['dmc'];
+const banners_in_core = ['dmc', 'you-news'];
 
 export const JobOnDutyMenu: FunctionComponent<MenuJobOnDutyProps> = ({ data }) => {
     let banner;

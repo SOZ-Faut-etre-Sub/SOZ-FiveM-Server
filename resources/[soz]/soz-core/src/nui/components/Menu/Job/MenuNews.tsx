@@ -29,13 +29,17 @@ export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
     }
 
     const banner =
-        data.job === JobType.News ? 'https://nui-img/soz/menu_job_news' : '/public/images/menu/banner/younews.webp';
+        data.job === JobType.News
+            ? 'https://nui-img/soz/menu_job_news'
+            : '/public/images/banner/menu_job_you-news.webp';
+
+    const jobLabel = data.job === JobType.News ? 'Twitch News' : 'You News';
 
     if (!player?.job.onduty) {
         return (
             <Menu type={MenuType.JobUpw}>
                 <MainMenu>
-                    <MenuTitle banner={banner}>Twitch News</MenuTitle>
+                    <MenuTitle banner={banner}>{jobLabel}</MenuTitle>
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -47,7 +51,7 @@ export const MenuNews: FunctionComponent<MenuNewsProps> = ({ data }) => {
     return (
         <Menu type={MenuType.JobNews}>
             <MainMenu>
-                <MenuTitle banner={banner}>Twitch News </MenuTitle>
+                <MenuTitle banner={banner}>{jobLabel}</MenuTitle>
                 <MenuContent>
                     <MenuItemSelect
                         title="Faire une communication"
