@@ -143,6 +143,7 @@ export enum RpcServerEvent {
     PROP_GET_SERVER_DATA = 'soz-core:server:prop:get-number-props',
     PROP_GET_LOADED_PROPS = 'soz-core:server:prop:get-all-props',
     PROP_REQUEST_CREATE_COLLECTION = 'soz-core:server:prop:create-collection',
+    PROP_REQUEST_RENAME_COLLECTION = 'soz-core:server:prop:rename-collection',
     PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:delete-collection',
     PROP_REQUEST_CREATE_PROP = 'soz-core:server:prop:create-prop',
     PROP_REQUEST_TOGGLE_LOAD_COLLECTION = 'soz-core:server:prop:load-collection',

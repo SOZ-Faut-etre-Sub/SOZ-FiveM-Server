@@ -185,6 +185,9 @@ export class ObjectProvider {
 
         if (IsModelValid(object.model)) {
             await this.resourceLoader.loadModel(object.model);
+        } else {
+            console.log(`Model ${object.model} is not valid for ${object.id}`);
+            return;
         }
 
         let entity = CreateObjectNoOffset(
