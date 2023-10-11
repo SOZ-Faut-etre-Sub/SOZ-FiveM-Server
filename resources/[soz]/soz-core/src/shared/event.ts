@@ -903,6 +903,7 @@ export enum NuiEvent {
     RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
     RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
     RequestDeleteProp = 'soz-core:client:placement:delete-prop',
+    PlacementCollectionRename = 'soz-core:client:placement:rename-collection',
 
     CraftDoRecipe = 'soz-core:client:craft:do-recipe',
     CraftCancel = 'soz-core:client:craft:cancel',

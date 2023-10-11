@@ -33,6 +33,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     const player = usePlayer();
     const [collectionList, setCollectionList] = useState<PropCollectionData[]>(data.collections);
     const [serverData, setServerData] = useState<PropServerData>(data.serverData);
+    const [showAll, setShowAll] = useState<boolean>(true);
     const [collection, setCollection] = useState<PropCollection>({
         name: '',
         creator_citizenID: '',
@@ -70,6 +71,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     }, [location.pathname]);
 
     useBackspace(leaveEditorMode);
+
+    const selectShowAll = useCallback(value => setShowAll(value), [showAll, setShowAll, collectionList]);
 
     if (!player) {
         return null;
@@ -113,28 +116,40 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         ➕ Créer une Collection
                     </MenuItemButton>
-                    <MenuTitle>Collections :</MenuTitle>
-                    {collectionList.map(collection => (
-                        <MenuItemButton
-                            key={collection.name}
-                            onConfirm={selectCollection(collection.name)}
-                            description={collection.creatorName}
+                    <MenuTitle>Collections</MenuTitle>
+                    {['staff', 'admin'].includes(player.role) && (
+                        <MenuItemCheckbox
+                            checked={true}
+                            onChange={async value => {
+                                selectShowAll(value);
+                            }}
                         >
-                            <div className="pr-2 flex items-center justify-between">
-                                <span>
-                                    {collection.loaded_size == 0 || collection.loaded_size > collection.size
-                                        ? '🔴'
-                                        : collection.loaded_size < collection.size
-                                        ? '🔵'
-                                        : '🟢'}{' '}
-                                    {collection.name}
-                                </span>
-                                <span>
-                                    {collection.loaded_size}/{collection.size}
-                                </span>
-                            </div>
-                        </MenuItemButton>
-                    ))}
+                            Voir toutes les collections
+                        </MenuItemCheckbox>
+                    )}
+                    {collectionList
+                        .filter(collection => showAll || collection.creator_citizenID == player.citizenid)
+                        .map(collection => (
+                            <MenuItemButton
+                                key={collection.name}
+                                onConfirm={selectCollection(collection.name)}
+                                description={collection.creatorName}
+                            >
+                                <div className="pr-2 flex items-center justify-between">
+                                    <span>
+                                        {collection.loaded_size == 0 || collection.loaded_size > collection.size
+                                            ? '🔴'
+                                            : collection.loaded_size < collection.size
+                                            ? '🔵'
+                                            : '🟢'}{' '}
+                                        {collection.name}
+                                    </span>
+                                    <span>
+                                        {collection.loaded_size}/{collection.size}
+                                    </span>
+                                </div>
+                            </MenuItemButton>
+                        ))}
                 </MenuContent>
             </MainMenu>
 
@@ -175,6 +190,14 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                         }}
                     >
                         🌬️ Décharger la collection
+                    </MenuItemButton>
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.PlacementCollectionRename);
+                            navigate(-1);
+                        }}
+                    >
+                        ✎ Renommer la collection
                     </MenuItemButton>
                     <MenuItemButton
                         onConfirm={async () => {
