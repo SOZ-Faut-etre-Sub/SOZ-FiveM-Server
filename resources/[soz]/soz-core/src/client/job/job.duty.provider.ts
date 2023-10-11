@@ -187,15 +187,6 @@ const DutyZoneConfig: Zone<JobType>[] = [
         heading: 58,
     },
     {
-        data: JobType.LSPD,
-        center: [580.91, -29.72, 76.63],
-        length: 0.6,
-        width: 9.0,
-        minZ: 75.63,
-        maxZ: 78.637,
-        heading: 350,
-    },
-    {
         data: JobType.BCSO,
         center: [1853.753052, 3688.094727, 35.412041],
         length: 0.47,
@@ -203,15 +194,6 @@ const DutyZoneConfig: Zone<JobType>[] = [
         minZ: 34.2,
         maxZ: 34.8,
         heading: 65,
-    },
-    {
-        data: JobType.BCSO,
-        center: [1864.93, 3681.1, 30.27],
-        length: 1.0,
-        width: 7.8,
-        minZ: 29.27,
-        maxZ: 32.27,
-        heading: 30,
     },
     {
         data: JobType.Pawl,
