@@ -60,6 +60,34 @@ export class VehicleMenuProvider {
         return true;
     }
 
+    @Command('setvehiclelimiter', {
+        description: 'Activer / Désactiver le limiteur',
+        keys: [{ mapper: 'keyboard', key: '!' }],
+    })
+    async setSpeedLimit() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (!vehicle) {
+            return false;
+        }
+
+        const state = await this.vehicleStateService.getVehicleState(vehicle).then(data => {
+            return data;
+        });
+
+        const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
+        const speedLimit = state.speedLimit ? null : Math.round(currentSpeed);
+
+        this.vehicleStateService.updateVehicleState(vehicle, { speedLimit }, false);
+
+        if (speedLimit == 0 || speedLimit == null) {
+            this.notifier.notify('Limiteur de vitesse ~r~désactivé~s~.');
+        } else {
+            this.notifier.notify(`Limiteur de vitesse ~g~activé~s~ à ${speedLimit} km/h.`);
+        }
+    }
+
     @OnNuiEvent<null | number, boolean>(NuiEvent.VehicleSetSpeedLimit)
     async setVehicleSpeedLimit(speedLimit: null | number) {
         const ped = PlayerPedId();
