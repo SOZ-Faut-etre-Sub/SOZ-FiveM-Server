@@ -1,5 +1,5 @@
 import { FDO } from '@public/shared/job';
-import { VehicleClass } from '@public/shared/vehicle/vehicle';
+import { VehicleClass, VehicleVolatileState } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -58,6 +58,35 @@ export class VehicleMenuProvider {
         SetVehicleEngineOn(vehicle, engineOn, false, true);
 
         return true;
+    }
+
+    @Command('setvehiclelimiter', {
+        description: 'Activer / Désactiver le limiteur',
+        keys: [{ mapper: 'keyboard', key: '!' }],
+    })
+    async setSpeedLimit() {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        let currentSpeedLimit = null;
+
+        if (!vehicle) {
+            return false;
+        }
+
+        await this.vehicleStateService.getVehicleState(vehicle).then(data => {
+            currentSpeedLimit = data.speedLimit;
+        });
+
+        const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
+        const speedLimit = currentSpeedLimit ? null : Math.round(currentSpeed);
+
+        this.vehicleStateService.updateVehicleState(vehicle, { speedLimit }, false);
+
+        if (speedLimit == 0 || speedLimit == null) {
+            this.notifier.notify('Limiteur de vitesse ~r~désactivé~s~.');
+        } else {
+            this.notifier.notify(`Limiteur de vitesse ~g~activé~s~ à ${speedLimit} km/h.`);
+        }
     }
 
     @OnNuiEvent<null | number, boolean>(NuiEvent.VehicleSetSpeedLimit)
