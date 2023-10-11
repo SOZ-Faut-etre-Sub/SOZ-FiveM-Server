@@ -127,6 +127,55 @@ export class PropsProvider {
         return this.getCollectionData(source);
     }
 
+    @Rpc(RpcServerEvent.PROP_REQUEST_RENAME_COLLECTION)
+    public async renameCollection(source: number, oldName: string, newName: string): Promise<PropCollectionData[]> {
+        const collection = this.collections[oldName];
+        if (!collection) {
+            this.notifier.notify(source, `La collection ${oldName} n'existe pas`, 'error');
+        } else if (this.collections[newName]) {
+            this.notifier.notify(source, `La collection ${newName} existe déjà`, 'error');
+        } else {
+            await this.prismaService.collection_prop.create({
+                data: {
+                    creator: collection.creator_citizenID,
+                    date: collection.creation_date,
+                    name: newName,
+                },
+            });
+            await this.prismaService.placed_prop.updateMany({
+                where: {
+                    collection: oldName,
+                },
+                data: {
+                    collection: newName,
+                },
+            });
+            await this.prismaService.collection_prop.delete({
+                where: {
+                    name: oldName,
+                },
+            });
+
+            this.collections[newName] = this.collections[oldName];
+            delete this.collections[oldName];
+            this.collections[newName].name = newName;
+            this.notifier.notify(source, `La collection ~r~${oldName}~s~ a été renommé en ~g~${newName}~s~`, 'success');
+
+            this.monitor.publish(
+                'hammer_rename_collection',
+                {
+                    player_source: source,
+                },
+                {
+                    oldName: oldName,
+                    newName: newName,
+                }
+            );
+        }
+
+        return this.getCollectionData(source);
+    }
+
     @Rpc(RpcServerEvent.PROP_REQUEST_DELETE_COLLECTION)
     public async deleteCollection(source: number, collectionName: string): Promise<PropCollectionData[]> {
         const collection = this.collections[collectionName];

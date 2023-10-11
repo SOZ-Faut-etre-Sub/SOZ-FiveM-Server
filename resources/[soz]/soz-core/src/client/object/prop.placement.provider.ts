@@ -159,6 +159,26 @@ export class PropPlacementProvider {
         await this.refreshPropPlacementMenuData(newCollections);
     }
 
+    @OnNuiEvent(NuiEvent.PlacementCollectionRename)
+    public async onPlacementCollectionRename() {
+        const oldname = this.currentCollection.name;
+        const name = await this.inputService.askInput({
+            title: 'Nom de la collection',
+            defaultValue: oldname,
+            maxCharacters: 50,
+        });
+        if (!name) {
+            return oldname;
+        }
+        const newCollections = await emitRpc<PropCollectionData[]>(
+            RpcServerEvent.PROP_REQUEST_RENAME_COLLECTION,
+            oldname,
+            name
+        );
+
+        await this.refreshPropPlacementMenuData(newCollections);
+    }
+
     @OnNuiEvent(NuiEvent.RequestDeletePropCollection)
     public async onRequestDeletePropCollection({ name }: { name: string }) {
         const result = await this.inputService.askConfirm(`Êtes-vous sûr de vouloir supprimer la collection ${name} ?`);
@@ -712,7 +732,13 @@ export class PropPlacementProvider {
 
     // Debug Prop Managment
     public async spawnDebugProp(prop: WorldObject): Promise<number> {
-        await this.resourceLoader.loadModel(prop.model);
+        if (IsModelValid(prop.model)) {
+            await this.resourceLoader.loadModel(prop.model);
+        } else {
+            console.log(`Placement: Model ${prop.model} is not valid for ${prop.id}`);
+            return 0;
+        }
+
         const entity = CreateObjectNoOffset(
             prop.model,
             prop.position[0],
