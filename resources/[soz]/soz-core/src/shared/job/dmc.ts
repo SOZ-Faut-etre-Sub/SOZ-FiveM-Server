@@ -473,6 +473,13 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
                 },
                 amount: 5,
             },
+            cone: {
+                inputs: {
+                    aluminium_ingot: { count: 5 },
+                    utilitary_certificate: { count: 1 },
+                },
+                amount: 5,
+            },
             police_pliers: {
                 inputs: {
                     aluminium_ingot: { count: 5 },
