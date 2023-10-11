@@ -200,5 +200,9 @@ export class VehicleCustomProvider {
 
         const configuration = await this.vehicleService.getVehicleConfiguration(vehicleEntityId);
         this.vehicleService.applyVehicleConfigurationPerformance(vehicleEntityId, configuration);
+
+        if (GetVehicleHasKers(vehicleEntityId)) {
+            SetVehicleKersAllowed(vehicleEntityId, false);
+        }
     }
 }
