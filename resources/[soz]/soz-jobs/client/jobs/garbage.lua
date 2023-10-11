@@ -1,11 +1,5 @@
 local haveGarbageBag, garbageBagProp = false, nil
 
-CreateThread(function()
-    exports["qb-target"]:AddBoxZone("garbage:duty", vector3(-615.5, -1622.18, 33.01), 0.6, 0.6,
-                                    {name = "garbage:cloakroom", heading = 59, minZ = 32.70, maxZ = 33.30},
-                                    {options = SozJobCore.Functions.GetDutyActions("garbage"), distance = 2.5})
-end)
-
 --- Functions
 local function isPlayingGarbageAnim(ped)
     return IsEntityPlayingAnim(ped, "missfbi4prepp1", "_bag_pickup_garbage_man", 3) or IsEntityPlayingAnim(ped, "missfbi4prepp1", "_bag_throw_garbage_man", 3)

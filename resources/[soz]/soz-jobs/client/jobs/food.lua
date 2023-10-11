@@ -147,46 +147,6 @@ Citizen.CreateThread(function()
         scale = FoodConfig.Blip.Scale,
     })
 
-    -- DUTY
-    exports["qb-target"]:AddBoxZone("food:duty", vector2(-1876.2, 2059.5), 0.6, 0.7, {
-        heading = 70.25,
-        minZ = 140.75,
-        maxZ = 141.5,
-    }, {
-        options = {
-            {
-                type = "server",
-                icon = "fas fa-sign-in-alt",
-                label = "Prise de service",
-                event = "QBCore:ToggleDuty",
-                canInteract = function()
-                    return not PlayerData.job.onduty
-                end,
-                job = SozJobCore.JobType.Food,
-            },
-            {
-                type = "server",
-                icon = "fas fa-sign-out-alt",
-                label = "Fin de service",
-                event = "QBCore:ToggleDuty",
-                canInteract = function()
-                    return PlayerData.job.onduty
-                end,
-                job = SozJobCore.JobType.Food,
-            },
-            {
-                type = "server",
-                event = "QBCore:GetEmployOnDuty",
-                icon = "fas fa-users",
-                label = "Employé(e)s en service",
-                canInteract = function()
-                    return PlayerData.job.onduty and SozJobCore.Functions.HasPermission(PlayerData.job.id, SozJobCore.JobPermission.OnDutyView)
-                end,
-                job = SozJobCore.JobType.Food,
-            },
-        },
-    })
-
     SpawnFieldZones()
 end)
 
