@@ -7,7 +7,7 @@ import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { emitRpc } from '@public/core/rpc';
 import { CraftsList } from '@public/shared/craft/craft';
 import { ClientEvent, NuiEvent } from '@public/shared/event';
-import { JobPermission, JobType } from '@public/shared/job';
+import { JobType } from '@public/shared/job';
 import {
     FDFConfig,
     FDFCraftZones,
