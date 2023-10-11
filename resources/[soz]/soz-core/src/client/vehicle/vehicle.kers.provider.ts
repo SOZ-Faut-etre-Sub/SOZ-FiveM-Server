@@ -1,9 +1,11 @@
+import { OnEvent } from '@public/core/decorators/event';
+import { ClientEvent } from '@public/shared/event';
+
 import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
 
 @Provider()
 export class VehicleKersProvider {
-    @Tick(TickInterval.EVERY_FRAME)
+    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     public disableKers(): void {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
