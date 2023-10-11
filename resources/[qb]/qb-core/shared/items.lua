@@ -8423,7 +8423,7 @@ QBShared.Items = {
     },
     ['pumpkin_lemonade'] = {
         ['name'] = 'pumpkin_lemonade',
-        ['label'] = "Citronnade à la Citrouille",
+        ['label'] = "Orangeade à la Citrouille",
         ['weight'] = 400,
         ['useable'] = true,
         ['type'] = 'drink',
