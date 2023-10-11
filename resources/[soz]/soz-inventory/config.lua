@@ -16,7 +16,7 @@ Config.StorageCapacity = {
     ["cloakroom"] = {slot = 10, weight = 1000000},
     --- houses
     ["house_stash"] = {
-        [-1] = {slot = 10, weight = 1000000000}, -- for GM House
+        [-2] = {slot = 10, weight = 1000000000}, -- for GM House
         [0] = {slot = 10, weight = 200000},
         [1] = {slot = 10, weight = 400000},
         [2] = {slot = 10, weight = 600000},
