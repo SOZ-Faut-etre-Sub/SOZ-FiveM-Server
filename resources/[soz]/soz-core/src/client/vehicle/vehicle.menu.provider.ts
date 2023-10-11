@@ -1,5 +1,5 @@
 import { FDO } from '@public/shared/job';
-import { VehicleClass, VehicleVolatileState } from '@public/shared/vehicle/vehicle';
+import { VehicleClass } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -67,18 +67,17 @@ export class VehicleMenuProvider {
     async setSpeedLimit() {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
-        let currentSpeedLimit = null;
 
         if (!vehicle) {
             return false;
         }
 
-        await this.vehicleStateService.getVehicleState(vehicle).then(data => {
-            currentSpeedLimit = data.speedLimit;
+        const state = await this.vehicleStateService.getVehicleState(vehicle).then(data => {
+            return data;
         });
 
         const currentSpeed = GetEntitySpeed(vehicle) * 3.6;
-        const speedLimit = currentSpeedLimit ? null : Math.round(currentSpeed);
+        const speedLimit = state.speedLimit ? null : Math.round(currentSpeed);
 
         this.vehicleStateService.updateVehicleState(vehicle, { speedLimit }, false);
 
