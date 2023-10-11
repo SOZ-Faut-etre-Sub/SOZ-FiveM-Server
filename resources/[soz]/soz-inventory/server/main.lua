@@ -1040,15 +1040,20 @@ function GetOrCreateInventory(storageType, invID, ctx)
     elseif storageType == "house_stash" then
         targetInv = Inventory("house_stash_" .. invID)
 
+        local tier = 0
+        if ctx then
+            tier = exports["soz-housing"]:GetApartmentTier(ctx.propertyId, ctx.apartmentId)
+        end
+        if invID == "villa_cayo" then
+            tier = -2
+        end
+
         if targetInv == nil then
-            local tier = 0
-            if ctx then
-                tier = ctx.apartmentTier
-            end
-            if invID == "villa_cayo" then
-                tier = -1
-            end
             targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig[tier].slot, storageConfig[tier].weight, invID)
+        else
+            if targetInv.maxWeight ~= storageConfig[tier].weight then
+                Inventory.SetHouseStashMaxWeightFromTier(invID, tier)
+            end
         end
     elseif storageType == "house_fridge" then
         targetInv = Inventory("house_fridge_" .. invID)
