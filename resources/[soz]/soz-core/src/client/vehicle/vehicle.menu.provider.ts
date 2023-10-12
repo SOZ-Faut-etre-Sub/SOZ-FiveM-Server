@@ -60,7 +60,7 @@ export class VehicleMenuProvider {
         return true;
     }
 
-    @Command('setvehiclelimiter', {
+    @Command('vehiclelimitersetter', {
         description: 'Activer / Désactiver le limiteur',
         keys: [{ mapper: 'keyboard', key: '/' }],
     })
