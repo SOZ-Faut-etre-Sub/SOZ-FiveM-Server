@@ -77,7 +77,7 @@ const MessagesList = (): any => {
                 {({ width, height }) => (
                     <List
                         rowCount={sortedMessages.length}
-                        rowRenderer={({ index, parent, isVisible, style }) => {
+                        rowRenderer={({ index, parent, style }) => {
                             const message = sortedMessages[index];
 
                             if (!message) {
