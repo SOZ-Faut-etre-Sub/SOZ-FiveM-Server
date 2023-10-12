@@ -23,7 +23,7 @@ export class NuiProvider {
 
     private disabledControls: Partial<Record<Control, boolean>> = {};
 
-    private disabledGroups = new Set<number>();
+    private disabledAllControls = false;
 
     @Inject(OnceLoader)
     private onceLoader: OnceLoader;
@@ -72,8 +72,9 @@ export class NuiProvider {
             DisableControlAction(0, Number(control), true);
         }
 
-        for (const group of this.disabledGroups) {
-            DisableAllControlActions(group);
+        if (this.disabledAllControls) {
+            DisableAllControlActions(0);
+            EnableControlAction(0, Control.PushToTalk, true);
         }
     }
 
@@ -82,7 +83,7 @@ export class NuiProvider {
         this.cursor = false;
         this.keepInput = false;
         this.disabledControls = {};
-        this.disabledGroups.clear();
+        this.disabledAllControls = false;
 
         for (const focus of Object.values(this.state)) {
             this.keyboard = this.keyboard || focus.keyboard;
@@ -93,9 +94,7 @@ export class NuiProvider {
                 this.disabledControls[control] = true;
             }
 
-            for (const group of focus.disableKeepInputGroups || []) {
-                this.disabledGroups.add(group);
-            }
+            this.disabledAllControls = this.disabledAllControls || focus.disableAllControls;
         }
 
         SetNuiFocus(this.keyboard, this.cursor);

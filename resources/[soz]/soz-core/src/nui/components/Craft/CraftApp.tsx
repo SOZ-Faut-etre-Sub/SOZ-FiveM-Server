@@ -26,7 +26,7 @@ export const CraftApp: FunctionComponent = () => {
     const [showUnavailable, setShowUnavailable] = useState<boolean>(true);
     const [isCrafting, setIsCrafting] = useState<boolean>(false);
 
-    useNuiFocus(craftList !== null, craftList !== null, craftList !== null, [], craftList !== null ? [0] : []);
+    useNuiFocus(craftList !== null, craftList !== null, craftList !== null, [], craftList !== null);
 
     useNuiEvent('craft', 'ShowCraft', data => {
         const firstCategory = Object.keys(data.categories)[0] || null;
