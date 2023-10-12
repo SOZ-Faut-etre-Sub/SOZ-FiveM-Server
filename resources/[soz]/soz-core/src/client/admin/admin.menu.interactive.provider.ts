@@ -1,3 +1,5 @@
+import { wait } from '@public/core/utils';
+
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -143,6 +145,7 @@ export class AdminMenuInteractiveProvider {
 
         this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
             const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
+
             this.playerBlips.forEach((BlipValue, BlipKey) => {
                 if (!players.some(player => player.citizenId === BlipKey)) {
                     this.QBCore.removeBlip('admin:player-blip:' + BlipKey);
@@ -167,6 +170,7 @@ export class AdminMenuInteractiveProvider {
                     });
                     SetBlipCategory(createdBlip, 7);
                     this.playerBlips.set(player.citizenId, createdBlip);
+                    await wait(1);
                 }
             }
         }, 2500);
