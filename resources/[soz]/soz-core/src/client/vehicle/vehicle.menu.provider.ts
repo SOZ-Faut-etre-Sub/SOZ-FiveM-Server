@@ -62,7 +62,7 @@ export class VehicleMenuProvider {
 
     @Command('vehiclelimitersetter', {
         description: 'Activer / Désactiver le limiteur',
-        keys: [{ mapper: 'keyboard', key: '/' }],
+        keys: [{ mapper: 'keyboard', key: 'slash' }],
     })
     async setSpeedLimit() {
         const ped = PlayerPedId();
