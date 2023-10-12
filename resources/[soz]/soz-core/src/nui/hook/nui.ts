@@ -127,14 +127,15 @@ export const useNuiFetch = <I, R>(event: NuiEvent): UseNuiResponse<I, R> => {
  * @param keyboard {boolean} if keyboard should be focus
  * @param cursor {boolean} if cursor should be focus
  * @param keepInput {boolean} if input should be forwarded to game
- * @param disableKeepInputControls
+ * @param disableKeepInputControls {boolean} Game inputs to disable
+ * @param disableAllControls {boolean} if Game inputs must be disable excpt push to talk
  */
 export const useNuiFocus = (
     keyboard: boolean,
     cursor: boolean,
     keepInput: boolean,
     disableKeepInputControls: Control[] = [],
-    disableKeepInputGroups: number[] = []
+    disableAllControls = false
 ) => {
     useEffect(() => {
         const id = uuidv4();
@@ -146,7 +147,7 @@ export const useNuiFocus = (
                 cursor,
                 keepInput,
                 disableKeepInputControls,
-                disableKeepInputGroups,
+                disableAllControls,
             },
         });
 
