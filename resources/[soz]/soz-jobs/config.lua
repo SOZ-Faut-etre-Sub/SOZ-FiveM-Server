@@ -866,13 +866,12 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
-
             [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès aux registre des véhicules"},
             [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
             [SozJobCore.JobPermission.ManageInvestigation] = {label = "Gérer les enquêtes"},
+            [SozJobCore.JobPermission.Mdr.ViewCitizenData] = {label = "Accès aux casiers judiciaires"},
             [SozJobCore.JobPermission.InvestigationLawyer] = {label = "Avocat dans les enquêtes"},
             [SozJobCore.JobPermission.Mdr.ViewOtherJobs] = {label = "Accès aux infos des entreprises"},
-            [SozJobCore.JobPermission.Mdr.ViewCitizenData] = {label = "Accès aux infos des citoyens"},
             [SozJobCore.JobPermission.Mdr.MarkedMoneyCleaning] = {label = "Accès à la réhabilitation des billets"},
         },
         bossZones = {
@@ -906,6 +905,9 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.SocietyPrivatePort] = {label = "Ranger/sortir les véhicules des ports privés"},
             [SozJobCore.JobPermission.SocietyViewCompanyPanel] = {label = "Accès au panel entreprise"},
             [SozJobCore.JobPermission.SocietyShop] = {label = "Accès aux magasins de société"},
+            [SozJobCore.JobPermission.Investigation] = {label = "Accès aux enquêtes"},
+            [SozJobCore.JobPermission.Mdr.ViewCitizenData] = {label = "Accès aux casiers judiciaires"},
+            [SozJobCore.JobPermission.VehicleRegistrar] = {label = "Accès aux registre des véhicules"},
             [SozJobCore.JobPermission.OnDutyView] = {label = "Voir les employé(e)s en service"},
         },
         bossZones = {
