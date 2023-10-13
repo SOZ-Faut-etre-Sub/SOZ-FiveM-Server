@@ -183,8 +183,12 @@ export class AdminMenuInteractiveProvider {
         }
 
         const players = await emitRpc<AdminPlayer[]>(RpcServerEvent.ADMIN_GET_PLAYERS);
+        const playerId = PlayerId();
 
         players.forEach(player => {
+            if (player.id == GetPlayerServerId(playerId)) {
+                return;
+            }
             this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.id));
 
             let name = player.rpFullName;
