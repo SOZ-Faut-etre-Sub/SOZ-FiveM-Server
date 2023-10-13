@@ -7,14 +7,23 @@ import { emitRpc } from '../../core/rpc';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { RpcServerEvent } from '../../shared/rpc';
 
-const ModelMapping: Record<number, number> = {
-    [GetHashKey('prop_gas_pump_1a')]: GetHashKey('soz_prop_gas_pump_1a_hs2'),
-    [GetHashKey('prop_gas_pump_1b')]: GetHashKey('soz_prop_gas_pump_1b_hs2'),
-    [GetHashKey('prop_gas_pump_1c')]: GetHashKey('soz_prop_gas_pump_1c_hs2'),
-    [GetHashKey('prop_gas_pump_1d')]: GetHashKey('soz_prop_gas_pump_1d_hs2'),
-    [GetHashKey('prop_gas_pump_old2')]: GetHashKey('soz_prop_gas_pump_old2_hs2'),
-    [GetHashKey('prop_gas_pump_old3')]: GetHashKey('soz_prop_gas_pump_old3_hs2'),
-    [GetHashKey('prop_vintage_pump')]: GetHashKey('soz_prop_vintage_pump_hs2'),
+const ModelMapping: Record<number, number[]> = {
+    [GetHashKey('prop_gas_pump_1a')]: [GetHashKey('soz_prop_gas_pump_1a_hs2'), GetHashKey('soz_prop_gas_pump_1a_hs3')],
+    [GetHashKey('prop_gas_pump_1b')]: [GetHashKey('soz_prop_gas_pump_1b_hs2'), GetHashKey('soz_prop_gas_pump_1b_hs3')],
+    [GetHashKey('prop_gas_pump_1c')]: [GetHashKey('soz_prop_gas_pump_1c_hs2'), GetHashKey('soz_prop_gas_pump_1c_hs3')],
+    [GetHashKey('prop_gas_pump_1d')]: [GetHashKey('soz_prop_gas_pump_1d_hs2'), GetHashKey('soz_prop_gas_pump_1d_hs3')],
+    [GetHashKey('prop_gas_pump_old2')]: [
+        GetHashKey('soz_prop_gas_pump_old2_hs2'),
+        GetHashKey('soz_prop_gas_pump_old2_hs3'),
+    ],
+    [GetHashKey('prop_gas_pump_old3')]: [
+        GetHashKey('soz_prop_gas_pump_old3_hs2'),
+        GetHashKey('soz_prop_gas_pump_old3_hs3'),
+    ],
+    [GetHashKey('prop_vintage_pump')]: [
+        GetHashKey('soz_prop_vintage_pump_hs2'),
+        GetHashKey('soz_prop_vintage_pump_hs3'),
+    ],
 };
 
 @Injectable()
@@ -36,7 +45,7 @@ export class FuelStationRepository {
             if (!this.models.includes(station.model)) {
                 this.models.push(station.model);
                 if (ModelMapping[station.model]) {
-                    this.models.push(ModelMapping[station.model]);
+                    this.models.push(ModelMapping[station.model][0]);
                 }
             }
         }
@@ -67,11 +76,15 @@ export class FuelStationRepository {
         for (const stationName in this.fuelStations) {
             const station = this.fuelStations[stationName];
 
-            if (station.objectId && station.objectId == objectId) {
-                return station;
+            if (station.objectId) {
+                if (station.objectId == objectId) {
+                    return station;
+                } else {
+                    continue;
+                }
             }
 
-            if (station.model != model && ModelMapping[station.model] != model) {
+            if (station.model != model && !ModelMapping[station.model].includes(model)) {
                 continue;
             }
 
