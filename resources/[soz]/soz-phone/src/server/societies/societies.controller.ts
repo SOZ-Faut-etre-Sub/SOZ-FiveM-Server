@@ -3,6 +3,12 @@ import { onNetPromise } from '../lib/PromiseNetEvents/onNetPromise';
 import SocietyService from './societies.service';
 import { societiesLogger } from './societies.utils';
 
+const exps = global.exports;
+
+exps('sendSocietyMessage', (reqObj: PreDBSociety) =>
+    SocietyService.handleSendSocietyMessage({ data: reqObj, source: null }, () => {})
+);
+
 onNetPromise<PreDBSociety, number>(SocietyEvents.SEND_SOCIETY_MESSAGE, (reqObj, resp) => {
     SocietyService.handleSendSocietyMessage(reqObj, resp).catch(e => {
         societiesLogger.error(`Error occured in fetch contacts event (${reqObj.source}), Error:  ${e.message}`);
