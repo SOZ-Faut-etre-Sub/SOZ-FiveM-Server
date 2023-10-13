@@ -36,7 +36,6 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
         products: [
             { id: 'outfit', type: 'item', metadata: { label: 'STONK', type: 'stonk' }, price: 100 },
             { id: 'armor', type: 'item', metadata: { label: 'STONK', type: 'stonk' }, price: 150 },
-            { id: 'weapon_pistol', type: 'weapon', price: 300 },
         ],
     },
     {
