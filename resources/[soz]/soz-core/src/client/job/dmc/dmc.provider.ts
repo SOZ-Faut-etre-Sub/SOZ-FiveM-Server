@@ -10,7 +10,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { JobPermission, JobType } from '@public/shared/job';
+import { JobType } from '@public/shared/job';
 import { DMC_CRAFT_ZONES, DmcConverterState } from '@public/shared/job/dmc';
 import { MenuType } from '@public/shared/nui/menu';
 import { RpcServerEvent } from '@public/shared/rpc';

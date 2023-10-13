@@ -95,6 +95,9 @@ const VEHICLE_HAS_RADIO = [
     'schafter6',
     'tractor2',
     'benson',
+    'tiptruck2',
+    'rubble',
+
 ];
 
 const DISALLOWED_VEHICLE_MODELS = { [GetHashKey('dune2')]: true };
