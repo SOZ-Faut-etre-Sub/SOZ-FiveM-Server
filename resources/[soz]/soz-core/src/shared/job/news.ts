@@ -140,31 +140,110 @@ export const NewsCloakroom: WardrobeConfig = {
 
 export const YouNewsCloakroom: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
-        ['Tenue de travail']: {
+        ['Tenue classe']: {
             Components: {
-                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 10, Texture: 0, Palette: 0 },
-                [6]: { Drawable: 1, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 1, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 24, Texture: 4, Palette: 0 },
+                [6]: { Drawable: 10, Texture: 0, Palette: 0 },
                 [7]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 33, Texture: 0, Palette: 0 },
                 [9]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [10]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 146, Texture: 2, Palette: 0 },
+                [11]: { Drawable: 29, Texture: 4, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue casual']: {
+            Components: {
+                [3]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [7]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 75, Texture: 1, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 4, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue passe-Partout']: {
+            Components: {
+                [3]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 148, Texture: 2, Palette: 0 },
+                [6]: { Drawable: 32, Texture: 12, Palette: 0 },
+                [7]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 0, Texture: 2, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 122, Texture: 5, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue de livraison']: {
+            Components: {
+                [3]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 50, Texture: 0, Palette: 0 },
+                [7]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 15, Texture: 2, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 374, Texture: 8, Palette: 0 },
             },
             Props: {},
         },
     },
+
     [GetHashKey('mp_f_freemode_01')]: {
-        ['Tenue de travail']: {
+        ['Tenue classe']: {
             Components: {
-                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 6, Texture: 0, Palette: 0 },
-                [6]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 23, Texture: 7, Palette: 0 },
+                [6]: { Drawable: 108, Texture: 3, Palette: 0 },
                 [7]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 40, Texture: 2, Palette: 0 },
                 [9]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [10]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 0, Texture: 4, Palette: 0 },
+                [11]: { Drawable: 25, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue casual']: {
+            Components: {
+                [3]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 6, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 108, Texture: 1, Palette: 0 },
+                [7]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 77, Texture: 1, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 7, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue passe-partout']: {
+            Components: {
+                [3]: { Drawable: 5, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 112, Texture: 1, Palette: 0 },
+                [6]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [7]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 23, Texture: 1, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 35, Texture: 5, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Tenue de livraison']: {
+            Components: {
+                [3]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 30, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 51, Texture: 0, Palette: 0 },
+                [7]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 392, Texture: 8, Palette: 0 },
             },
             Props: {},
         },
