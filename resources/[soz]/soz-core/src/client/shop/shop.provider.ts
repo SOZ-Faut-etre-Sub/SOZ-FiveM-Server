@@ -1,9 +1,10 @@
-import { BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
+import { BrandConfig, BrandsConfig, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
@@ -170,7 +171,7 @@ export class ShopProvider {
             }
             if (brandConfig.pedModel) {
                 const pedId = await this.pedFactory.createPed({
-                    model: brandConfig.pedModel,
+                    model: this.getBrandPedModel(brandConfig),
                     coords: {
                         x: config.location[0],
                         y: config.location[1],
@@ -272,7 +273,10 @@ export class ShopProvider {
             BrandsConfig[this.currentShopBrand] &&
             BrandsConfig[this.currentShopBrand].pedModel
         ) {
-            this.targetFactory.createForModel(BrandsConfig[this.currentShopBrand].pedModel, this.shopActions);
+            this.targetFactory.createForModel(
+                this.getBrandPedModel(BrandsConfig[this.currentShopBrand]),
+                this.shopActions
+            );
         }
     }
 
@@ -282,7 +286,7 @@ export class ShopProvider {
             BrandsConfig[this.currentShopBrand] &&
             BrandsConfig[this.currentShopBrand].pedModel
         ) {
-            this.targetFactory.removeTargetModel([BrandsConfig[this.currentShopBrand].pedModel], []);
+            this.targetFactory.removeTargetModel([this.getBrandPedModel(BrandsConfig[this.currentShopBrand])], []);
         }
     }
 
@@ -316,6 +320,10 @@ export class ShopProvider {
             case ShopBrand.Barber:
                 this.barberShopProvider.openShop();
         }
+    }
+
+    private getBrandPedModel(brandConfig: BrandConfig) {
+        return isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : brandConfig.pedModel;
     }
 
     @Exportable('GetCurrentShop')

@@ -27,8 +27,8 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
     },
     [Feature.Halloween]: {
         production: false,
-        development: false,
-        test: false,
+        development: true,
+        test: true,
     },
     [Feature.HalloweenReboot]: {
         production: true,
@@ -37,23 +37,23 @@ const FeatureConfig: Record<Feature, { [P in Environment]?: boolean }> = {
     },
     [Feature.HalloweenScenario1]: {
         production: false,
-        development: false,
-        test: false,
+        development: true,
+        test: true,
     },
     [Feature.HalloweenScenario2]: {
         production: false,
-        development: false,
-        test: false,
+        development: true,
+        test: true,
     },
     [Feature.HalloweenScenario3]: {
         production: false,
-        development: false,
-        test: false,
+        development: true,
+        test: true,
     },
     [Feature.HalloweenScenario4]: {
         production: false,
-        development: false,
-        test: false,
+        development: true,
+        test: true,
     },
     [Feature.Boat]: {
         production: true,

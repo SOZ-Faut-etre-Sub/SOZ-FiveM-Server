@@ -14,7 +14,7 @@ import { getRandomInt, getRandomKeyWeighted } from '../../shared/random';
 import { Forecast, ForecastWithTemperature, TemperatureRange, Time, Weather } from '../../shared/weather';
 import { Pollution } from '../pollution';
 import { Store } from '../store/store';
-import { Polluted, SpringAutumn } from './forecast';
+import { Halloween, Polluted, SpringAutumn } from './forecast';
 import { DayAutumnTemperature, ForecastAdderTemperatures, NightAutumnTemperature } from './temperature';
 
 const INCREMENT_SECOND = (3600 * 24) / (60 * 48);
@@ -38,7 +38,7 @@ export class WeatherProvider {
     private pollutionManagerReady = false;
 
     // See forecast.ts for the list of available forecasts
-    private forecast: Forecast = SpringAutumn;
+    private forecast: Forecast = isFeatureEnabled(Feature.Halloween) ? Halloween : SpringAutumn;
     // See temperature.ts for the list of available temperature ranges,
     // please ensure that the day and night temperature ranges are using the same season
     private dayTemperatureRange: TemperatureRange = DayAutumnTemperature;
