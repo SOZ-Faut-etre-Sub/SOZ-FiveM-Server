@@ -55,7 +55,7 @@ const DmcConverterRecipes: Record<string, DmcConverterRecipe> = {
 export const DmcConverterConfig = {
     converterStorage: 'dmc_converter',
     converterDelay: 10000, // in ms
-    energyPerTick: 0.25, // 10s -> 0.025% <=> 1h -> 9% energy
+    energyPerTick: 0.055, // 10s -> 0.0055% <=> 1h -> ~2% energy
     recipes: DmcConverterRecipes,
 };
 
