@@ -26,7 +26,7 @@ onNetPromise<DeleteNoteDTO, DeleteNoteDTO>(NotesEvents.DELETE_NOTE, async (reqOb
 
 onNetPromise<NoteItem, void>(NotesEvents.UPDATE_NOTE, async (reqObj, resp) => {
     NotesService.handleUpdateNote(reqObj, resp).catch(e => {
-        notesLogger.error(`Error occured in fetch note event (${reqObj.source}), Error:  ${e.message}`);
+        notesLogger.error(`Error occured in update note event (${reqObj.source}), Error:  ${e.message}`);
         resp({ status: 'error', errorMsg: 'UNKNOWN_ERROR' });
     });
 });

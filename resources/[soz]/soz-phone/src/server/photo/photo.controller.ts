@@ -12,7 +12,7 @@ onNetPromise<string, GalleryPhoto>(PhotoEvents.UPLOAD_PHOTO, (reqObj, resp) => {
 
 onNetPromise<void, GalleryPhoto[]>(PhotoEvents.FETCH_PHOTOS, (reqObj, resp) => {
     PhotoService.handleFetchPhotos(reqObj, resp).catch(e => {
-        photoLogger.error(`Error occurred in upload photo event (${reqObj.source}), Error: ${e.message}`);
+        photoLogger.error(`Error occurred in fetch photo event (${reqObj.source}), Error: ${e.message}`);
         resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });
 });

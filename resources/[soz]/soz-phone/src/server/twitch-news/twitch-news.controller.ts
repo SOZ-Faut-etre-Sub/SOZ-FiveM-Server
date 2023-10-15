@@ -12,7 +12,7 @@ onNetPromise<string, TwitchNewsMessage[]>(TwitchNewsEvents.FETCH_NEWS, (reqObj, 
 
 onNetPromise<TwitchNewsMessage, number>(TwitchNewsEvents.CREATE_NEWS_BROADCAST, (reqObj, resp) => {
     TwitchNewsService.handleSendNews(reqObj, resp).catch(e => {
-        twitchNewsLogger.error(`Error occured in fetch contacts event (${reqObj.source}), Error:  ${e.message}`);
+        twitchNewsLogger.error(`Error occured in create news broadcast event (${reqObj.source}), Error:  ${e.message}`);
         resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });
 });
