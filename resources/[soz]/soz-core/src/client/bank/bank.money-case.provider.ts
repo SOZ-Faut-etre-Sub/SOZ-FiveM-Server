@@ -1,3 +1,5 @@
+import { Control } from '@public/shared/input';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -20,41 +22,32 @@ export class BankMoneyCaseProvider {
     @Inject(WeaponHolsterProvider)
     private weaponHolsterProvider: WeaponHolsterProvider;
 
+    private disableAttack = false;
+
     private shouldDisplayMoneyCase(): boolean {
-        if (this.playerService.getPlayer() === null) {
+        const player = this.playerService.getPlayer();
+
+        this.disableAttack =
+            player !== null &&
+            !this.playerService.getState().disableMoneyCase &&
+            !this.weaponHolsterProvider.isInAnimation() &&
+            !this.playerService.getState().isInShop &&
+            (this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item, 1) ||
+                Object.values(player.money).reduce((a, b) => a + b) >= MONEY_CASE_TRIGGER);
+
+        if (!this.disableAttack) {
             return false;
         }
 
-        if (this.playerService.getState().disableMoneyCase) {
-            return false;
-        }
-
-        if (this.weaponHolsterProvider.isInAnimation()) {
-            return false;
-        }
-
-        if (this.playerService.getState().isInShop) {
-            return false;
-        }
-
-        if (this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item, 1)) {
-            return true;
-        }
-
-        const player = PlayerPedId();
+        const playerPed = PlayerPedId();
         const isPhoneVisible = exports['soz-phone'].isPhoneVisible();
-        const getVehicleTryingToEnter = GetVehiclePedIsTryingToEnter(player);
-        const isInsideVehicle = IsPedInVehicle(player, GetVehiclePedIsIn(player, false), true);
+        const isInsideVehicle = IsPedInAnyVehicle(playerPed, true);
 
         if (isPhoneVisible || isInsideVehicle) {
             return false;
         }
 
-        if (getVehicleTryingToEnter !== 0) {
-            return false;
-        }
-
-        return Object.values(this.playerService.getPlayer().money).reduce((a, b) => a + b) >= MONEY_CASE_TRIGGER;
+        return true;
     }
 
     private hasMoneyCase(): boolean {
@@ -85,24 +78,28 @@ export class BankMoneyCaseProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     public async onTick() {
-        if (!this.hasMoneyCase()) {
+        if (!this.disableAttack) {
             return;
         }
 
-        DisableControlAction(0, 24, true); // Attack
-        DisableControlAction(0, 257, true); // Attack 2
-        DisableControlAction(0, 25, true); // Aim
-        DisableControlAction(0, 263, true); // Melee Attack 1
-        DisableControlAction(0, 45, true); // Reload
-        DisableControlAction(0, 44, true); // Cover
-        DisableControlAction(0, 37, true); // Select Weapon
-        DisableControlAction(2, 36, true); // Disable going stealth
-        DisableControlAction(0, 47, true); // Disable weapon
-        DisableControlAction(0, 264, true); // Disable melee
-        DisableControlAction(0, 257, true); // Disable melee
-        DisableControlAction(0, 140, true); // Disable melee
-        DisableControlAction(0, 141, true); // Disable melee
-        DisableControlAction(0, 142, true); // Disable melee
-        DisableControlAction(0, 143, true); // Disable melee
+        DisableControlAction(0, Control.Attack, true);
+        DisableControlAction(0, Control.Attack2, true);
+        DisableControlAction(0, Control.Aim, true);
+        DisableControlAction(0, Control.MeleeAttack1, true);
+        DisableControlAction(0, Control.MeleeAttack2, true);
+        DisableControlAction(0, Control.Reload, true);
+        DisableControlAction(0, Control.Cover, true);
+        DisableControlAction(0, Control.SelectWeapon, true);
+        DisableControlAction(0, Control.Duck, true);
+        DisableControlAction(0, Control.Detonate, true);
+        DisableControlAction(0, Control.MeleeAttackLight, true);
+        DisableControlAction(0, Control.MeleeAttackHeavy, true);
+        DisableControlAction(0, Control.MeleeAttackAlternate, true);
+        DisableControlAction(0, Control.MeleeBlock, true);
+        DisableControlAction(0, Control.VehicleAim, true);
+        DisableControlAction(0, Control.VehicleAttack, true);
+        DisableControlAction(0, Control.VehicleAttack2, true);
+        DisableControlAction(0, Control.VehiclePassengerAim, true);
+        DisableControlAction(0, Control.VehiclePassengerAttack, true);
     }
 }
