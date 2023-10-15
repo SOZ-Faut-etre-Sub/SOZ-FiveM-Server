@@ -1310,7 +1310,7 @@
       <TuningName>DefaultStandardLatchShut</TuningName>
     </Item>
     <Item>
-      <ModelName>v_ilev_fib_door1</ModelName>
+      <ModelName>soz_v_ilev_fib_door1</ModelName>
       <TuningName>DefaultStandardLatchShut</TuningName>
     </Item>
     <Item>
