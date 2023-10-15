@@ -23,7 +23,7 @@ class _SettingsService {
 
             resp({ status: 'ok', data: contact });
         } catch (e) {
-            settingsLogger.error(`Error in handleAddSociety, ${e.toString()}`);
+            settingsLogger.error(`Error in handleUpdateProfilePicture, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }

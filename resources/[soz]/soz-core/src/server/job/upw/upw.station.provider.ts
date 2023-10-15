@@ -168,7 +168,7 @@ export class UpwStationProvider {
             },
         });
 
-        const item = this.inventoryManager.getFirstItemInventory(source, cell);
+        const item = this.itemService.getItem(cell);
         this.monitor.publish(
             'job_upw_station_restock',
             {

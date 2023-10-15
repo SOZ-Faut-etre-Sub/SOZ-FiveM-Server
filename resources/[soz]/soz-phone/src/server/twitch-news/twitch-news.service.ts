@@ -45,7 +45,7 @@ class _TwitchNewsService {
                 reqObj.data.job
             );
         } catch (e) {
-            twitchNewsLogger.error(`Error in handleAddSociety, ${e.toString()}`);
+            twitchNewsLogger.error(`Error in handleSendNews, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -55,7 +55,7 @@ class _TwitchNewsService {
             const contact = await this.twitchNewsDB.getNews();
             resp({ status: 'ok', data: contact });
         } catch (e) {
-            twitchNewsLogger.error(`Error in handleAddSociety, ${e.toString()}`);
+            twitchNewsLogger.error(`Error in fetchNews, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
