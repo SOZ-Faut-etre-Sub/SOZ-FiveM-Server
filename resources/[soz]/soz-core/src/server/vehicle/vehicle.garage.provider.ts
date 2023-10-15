@@ -1027,8 +1027,8 @@ export class VehicleGarageProvider {
                 });
 
                 if (appartements.length == 0) {
+                    // not owner or roomate, see owns vehicle
                     citizenIds.add(player.citizenid);
-                    this.logger.error('no appartements found for property', propertyId);
                 }
 
                 for (const appartement of appartements) {

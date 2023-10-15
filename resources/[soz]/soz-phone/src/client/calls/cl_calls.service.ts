@@ -1,5 +1,5 @@
 import { IAlertProps } from '../../../typings/alerts';
-import { ActiveCall, CallEvents, CallRejectReasons } from '../../../typings/call';
+import { ActiveCall, CallEvents } from '../../../typings/call';
 
 export class CallService {
     private currentCall: number;
@@ -46,7 +46,7 @@ export class CallService {
     handleStartCall(transmitter: string, receiver: string, isTransmitter: boolean, isUnavailable: boolean) {
         // If we're already in a call we want to automatically reject
         if (this.hasAnActiveCall() || this.isInCall()) {
-            emitNet(CallEvents.REJECTED, transmitter, CallRejectReasons.BUSY_LINE);
+            //Currently we let the caller wait indefinitly, so no rejection send to caller
             return;
         }
 

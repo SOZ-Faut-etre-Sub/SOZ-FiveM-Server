@@ -12,7 +12,7 @@ onNetPromise<void, Contact[]>(ContactEvents.GET_CONTACTS, (reqObj, resp) => {
 
 onNetPromise<PreDBContact, Contact>(ContactEvents.ADD_CONTACT, (reqObj, resp) => {
     ContactService.handleAddContact(reqObj, resp).catch(e => {
-        contactsLogger.error(`Error occured in fetch contacts event (${reqObj.source}), Error:  ${e.message}`);
+        contactsLogger.error(`Error occured in add contacts event (${reqObj.source}), Error:  ${e.message}`);
         resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });
 });
