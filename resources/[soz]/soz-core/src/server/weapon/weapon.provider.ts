@@ -1,4 +1,3 @@
-import { uuidv4 } from '@public/core/utils';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 
 import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
@@ -71,7 +70,7 @@ export class WeaponProvider {
 
         const coords = GetEntityCoords(GetPlayerPed(source)) as Vector3;
 
-        TriggerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+        exports['soz-phone'].sendSocietyMessage({
             anonymous: true,
             number: '555-POLICE',
             message: alertMessage,
@@ -157,8 +156,6 @@ export class WeaponProvider {
 
     @On('explosionEvent')
     public onExplosion(unk: any, source: number, explosionData) {
-        this.logger.info('Explosion ' + JSON.stringify(explosionData));
-
         if (excludeExplosionAlert.includes(explosionData.explosionType)) {
             return;
         }
