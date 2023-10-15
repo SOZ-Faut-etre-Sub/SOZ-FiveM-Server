@@ -49,7 +49,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
                 onlyUpperBody: true,
             },
         },
-        event: 'job_ffs_transform ',
+        event: 'job_ffs_transform',
         duration: 2000,
         icon: '🧶',
         recipes: {
