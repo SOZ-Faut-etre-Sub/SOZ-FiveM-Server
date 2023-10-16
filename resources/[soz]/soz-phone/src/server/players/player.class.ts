@@ -31,6 +31,13 @@ export class Player {
     }
 
     /**
+     * Returns username for a user
+     */
+    public getUsername(): string | null {
+        return this.username;
+    }
+
+    /**
      * Returns the stored firstname for a user
      */
     public getFirstName(): string | null {
