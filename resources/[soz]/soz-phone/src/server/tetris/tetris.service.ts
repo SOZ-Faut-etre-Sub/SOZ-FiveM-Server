@@ -19,7 +19,7 @@ class _TetrisService {
         tetrisLogger.debug(reqObj.data);
 
         const player = PlayerService.getPlayer(reqObj.source);
-        const identifier = PlayerService.getPlayer(reqObj.source).getIdentifier();
+        const identifier = player.getIdentifier();
 
         try {
             await this.tetrisDB.addScore(identifier, reqObj.data);
@@ -33,9 +33,9 @@ class _TetrisService {
         if (!leaderboardForPlayer) {
             leaderboardForPlayer = {
                 citizenid: identifier,
-                avatar: await SettingsDb.getProfilePicture(identifier),
+                avatar: await SettingsDb.getProfilePicture(player.getPhoneNumber()),
                 game_played: 0,
-                player_name: player.getFirstName() + ' ' + player.getLastName(),
+                player_name: player.getUsername(),
                 score: 0,
             };
             this.tetrisLeaderboard.push(leaderboardForPlayer);
@@ -46,9 +46,7 @@ class _TetrisService {
             leaderboardForPlayer.score = reqObj.data.score;
         }
 
-        this.tetrisLeaderboard = await this.tetrisDB.getDBLeaderboard();
-
-        this.tetrisLeaderboard = this.tetrisLeaderboard.sort((a, b) => a.score - b.score);
+        this.tetrisLeaderboard = this.tetrisLeaderboard.sort((a, b) => b.score - a.score);
     }
 
     async getLeaderboard(reqObj: PromiseRequest<string>, resp: PromiseEventResp<TetrisLeaderboard[]>): Promise<void> {
