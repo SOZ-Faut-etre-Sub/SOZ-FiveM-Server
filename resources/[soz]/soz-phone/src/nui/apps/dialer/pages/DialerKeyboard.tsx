@@ -1,5 +1,5 @@
 import { useQueryParams } from '@common/hooks/useQueryParams';
-import { BackspaceIcon, PhoneIcon } from '@heroicons/react/solid';
+import { BackspaceIcon, PhoneIcon, ChatAltIcon} from '@heroicons/react/solid';
 import cn from 'classnames';
 import React, { useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -38,6 +38,14 @@ const DialerKeyboard: React.FC = () => {
         }
         setValue('number', number + val);
     };
+
+    const startMessage = (phoneNumber: string) => {
+        if (phoneNumber.length !== 8) {
+            return;
+        }
+        navigate(`/messages/new/${phoneNumber}`);
+    };
+
     const removeOne = () => setValue('number', watch('number').toString().slice(0, -1));
 
     const handleCall = () => {
@@ -45,8 +53,7 @@ const DialerKeyboard: React.FC = () => {
         if (number.length !== 8) {
             return;
         }
-
-        initializeCall(watch('number').toString());
+        initializeCall(number);
     };
 
     useLayoutEffect(() => {
@@ -91,12 +98,20 @@ const DialerKeyboard: React.FC = () => {
                         <DialerButton label={9} onClick={() => add('9')} />
                         <DialerButton label="-" onClick={() => add('-')} />
                         <DialerButton label={0} onClick={() => add('0')} />
-                        <DialerButton label={<BackspaceIcon className="h-8 w-8" />} onClick={removeOne} />
+                        <DialerButton label={<BackspaceIcon className="h-8 w-8" />} onClick={removeOne} />                   
+                    </div>
+                    <div className="grid grid-cols-2 justify-items-center mx-8">               
                         <DialerButton
                             type="submit"
                             label={<PhoneIcon className="text-white h-8 w-8" />}
                             onClick={handleCall}
-                            className="col-start-2 bg-[#2DD158] hover:bg-[#21B147]"
+                            className="bg-[#2DD158] hover:bg-[#21B147]"
+                        />                            
+                        <DialerButton
+                            type="submit"
+                            label={<ChatAltIcon className="text-white h-12 w-12" />}
+                            onClick={() => startMessage(watch('number').toString())}
+                            className="bg-[#2DD158] hover:bg-[#21B147]"
                         />
                     </div>
                 </div>
