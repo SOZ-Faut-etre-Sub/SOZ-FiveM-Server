@@ -33,7 +33,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     const player = usePlayer();
     const [collectionList, setCollectionList] = useState<PropCollectionData[]>(data.collections);
     const [serverData, setServerData] = useState<PropServerData>(data.serverData);
-    const [showAll, setShowAll] = useState<boolean>(true);
+    const [showAll, setShowAll] = useState<boolean>(false);
     const [collection, setCollection] = useState<PropCollection>({
         name: '',
         creator_citizenID: '',
@@ -119,7 +119,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     <MenuTitle>Collections</MenuTitle>
                     {['staff', 'admin'].includes(player.role) && (
                         <MenuItemCheckbox
-                            checked={true}
+                            checked={showAll}
                             onChange={async value => {
                                 selectShowAll(value);
                             }}
@@ -243,17 +243,26 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                                     await fetchNui(NuiEvent.SelectPlacedProp, { id: prop.object.id });
                                 }}
                                 onConfirm={async (_, value) => {
-                                    if (value == 'delete') {
-                                        await fetchNui(NuiEvent.RequestDeleteProp, { id: prop.object.id });
-                                    }
-                                    if (value == 'edit') {
-                                        await fetchNui(NuiEvent.ChoosePlacedPropToEdit, {
-                                            id: prop.object.id,
-                                        });
+                                    switch (value) {
+                                        case 'delete':
+                                            await fetchNui(NuiEvent.RequestDeleteProp, { id: prop.object.id });
+                                            break;
+
+                                        case 'edit':
+                                            await fetchNui(NuiEvent.ChoosePlacedPropToEdit, {
+                                                id: prop.object.id,
+                                            });
+                                            break;
+                                        case 'duplicate':
+                                            onChooseCreateProp({
+                                                model: prop.model,
+                                            })();
+                                            break;
                                     }
                                 }}
                             >
                                 <MenuItemSelectOption value="edit">Editer</MenuItemSelectOption>
+                                <MenuItemSelectOption value="duplicate">Dupliquer</MenuItemSelectOption>
                                 <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
                             </MenuItemSelect>
                         );
