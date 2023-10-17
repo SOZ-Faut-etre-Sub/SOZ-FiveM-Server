@@ -57,6 +57,14 @@ export enum VehicleSeat {
     ExtraSeat3 = 5,
     ExtraSeat4 = 6,
     ExtraSeat5 = 7,
+    ExtraSeat6 = 8,
+    ExtraSeat7 = 9,
+    ExtraSeat8 = 10,
+    ExtraSeat9 = 11,
+    ExtraSeat10 = 12,
+    ExtraSeat11 = 13,
+    ExtraSeat12 = 14,
+    ExtraSeat13 = 15,
 }
 
 export enum VehicleSyncStrategy {

@@ -15,7 +15,9 @@ import { RpcServerEvent } from '../../shared/rpc';
 import {
     LockPickAlertMessage,
     VehicleClass,
+    VehicleDoorIndex,
     VehicleLockStatus,
+    VehicleSeat,
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
@@ -26,17 +28,108 @@ import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
-const DOOR_INDEX_CONFIG = {
-    seat_dside_f: -1,
-    seat_pside_f: 0,
-    seat_dside_r: 1,
-    seat_pside_r: 2,
-    door_dside_f: -1,
-    door_pside_f: 0,
-    door_dside_r: 1,
-    door_pside_r: 2,
-    wheel_lr: [3, 5],
-    wheel_rr: [4, 6],
+const DoorType = {
+    Door: 'door',
+    Bone: 'bone',
+};
+
+type VehicleSeatConfig = {
+    type: string;
+    doorIndex?: number;
+    seatIndex: number;
+    seatBone?: string;
+    doorBone?: string;
+};
+
+const SEATS_CONFIG: Record<string, VehicleSeatConfig> = {
+    ['driver_seat']: {
+        type: DoorType.Door,
+        doorIndex: VehicleDoorIndex.FrontLeftDoor,
+        seatIndex: VehicleSeat.Driver,
+        seatBone: 'seat_dside_f',
+        doorBone: 'door_dside_f',
+    },
+    ['passenger_seat']: {
+        type: DoorType.Door,
+        doorIndex: VehicleDoorIndex.FrontRightDoor,
+        seatIndex: VehicleSeat.Copilot,
+        seatBone: 'seat_pside_f',
+        doorBone: 'door_pside_f',
+    },
+    ['rear_left_seat']: {
+        type: DoorType.Door,
+        doorIndex: VehicleDoorIndex.BackLeftDoor,
+        seatIndex: VehicleSeat.BackLeft,
+        seatBone: 'seat_dside_r',
+        doorBone: 'door_dside_r',
+    },
+    ['rear_right_seat']: {
+        type: DoorType.Door,
+        doorIndex: VehicleDoorIndex.BackRightDoor,
+        seatIndex: VehicleSeat.BackRight,
+        seatBone: 'seat_pside_r',
+        doorBone: 'door_pside_r',
+    },
+    ['extra_1']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat1,
+        seatBone: 'wheel_lr',
+    },
+    ['extra_2']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat2,
+        seatBone: 'wheel_rr',
+    },
+    ['extra_3']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat3,
+        seatBone: 'wheel_lr',
+    },
+    ['extra_4']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat5,
+        seatBone: 'wheel_rr',
+    },
+    ['extra_5']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat6,
+        seatBone: 'wheel_lr',
+    },
+    ['extra_6']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat7,
+        seatBone: 'wheel_rr',
+    },
+    ['extra_7']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat8,
+        seatBone: 'wheel_lr',
+    },
+    ['extra_8']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat9,
+        seatBone: 'wheel_rr',
+    },
+    ['extra_9']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat10,
+        seatBone: 'wheel_lr',
+    },
+    ['extra_10']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat11,
+        seatBone: 'wheel_rr',
+    },
+    ['extra_11']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat12,
+        seatBone: 'wheel_lr',
+    },
+    ['extra_12']: {
+        type: DoorType.Bone,
+        seatIndex: VehicleSeat.ExtraSeat13,
+        seatBone: 'wheel_rr',
+    },
 };
 
 const VEHICLE_TRUNK_TYPES = {
@@ -47,6 +140,12 @@ const VEHICLE_TRUNK_TYPES = {
     [GetHashKey('brickade1')]: 'brickade',
     [GetHashKey('trash')]: 'trash',
     [GetHashKey('tiptruck2')]: 'tiptruck',
+};
+
+// A list of vehicles using exlusively seat bones, as the native GetEntryPositionOfDoor has a bad behavior with them. Fill in more vehicles if needed.
+const VEHICLE_FORCE_USE_BONES = {
+    [GetHashKey('bus')]: 'bus',
+    [GetHashKey('cargobob')]: 'cargobob',
 };
 
 type TrunkOpened = {
@@ -201,55 +300,60 @@ export class VehicleLockProvider {
         const minDistance = 2.0;
         let closestDoor = null;
 
-        for (const [door, seatIndex] of Object.entries(DOOR_INDEX_CONFIG)) {
-            let useSeat = false;
-            let availableSeatIndex = 0;
-
-            if (typeof seatIndex === 'number') {
-                availableSeatIndex = seatIndex;
-                const ped = GetPedInVehicleSeat(vehicle, seatIndex);
-                useSeat = ped == 0 || !IsPedAPlayer(ped);
-            } else {
-                availableSeatIndex = maxSeats;
-
-                for (const seat of seatIndex) {
-                    if (!useSeat && GetPedInVehicleSeat(vehicle, seat) == 0) {
-                        useSeat = true;
-                        availableSeatIndex = seat;
-                    }
-                }
-            }
+        for (const seatName of Object.keys(SEATS_CONFIG)) {
+            const seat = SEATS_CONFIG[seatName];
+            const availableSeatIndex = seat.seatIndex;
+            const ped = GetPedInVehicleSeat(vehicle, availableSeatIndex);
+            let useSeat = ped == 0 || !IsPedAPlayer(ped);
 
             if (availableSeatIndex > maxSeats - 1) {
                 useSeat = false;
             }
 
             if (useSeat) {
-                const doorPosition = GetWorldPositionOfEntityBone(
-                    vehicle,
-                    GetEntityBoneIndexByName(vehicle, door)
-                ) as Vector3;
-                const distance = getDistance(playerPosition, doorPosition);
+                let entryPosition: Vector3;
+                if (seat.type === DoorType.Door && !VEHICLE_FORCE_USE_BONES[GetEntityModel(vehicle)]) {
+                    entryPosition = GetEntryPositionOfDoor(vehicle, seat.doorIndex) as Vector3;
+                } else {
+                    const bone = seat.seatBone;
+                    entryPosition = GetWorldPositionOfEntityBone(
+                        vehicle,
+                        GetEntityBoneIndexByName(vehicle, bone)
+                    ) as Vector3;
+                }
+
+                const distance = getDistance(playerPosition, entryPosition);
 
                 if (closestDoor === null) {
                     if (distance <= minDistance) {
                         closestDoor = {
-                            door,
                             distance,
-                            doorPosition,
+                            entryPosition,
                             seatIndex: availableSeatIndex,
                         };
                     }
                 } else {
                     if (distance < closestDoor.distance) {
                         closestDoor = {
-                            door,
                             distance,
-                            doorPosition,
+                            entryPosition,
                             seatIndex: availableSeatIndex,
                         };
                     }
                 }
+            }
+        }
+
+        // Special workaround for Motorcycles, we never want the player to enter the passenger seat if the driver seat is available
+        if (
+            closestDoor &&
+            GetVehicleClass(vehicle) === VehicleClass.Motorcycles &&
+            closestDoor.seatIndex === VehicleSeat.Copilot
+        ) {
+            const ped = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver);
+
+            if (ped === 0 || !IsPedAPlayer(ped)) {
+                closestDoor.seatIndex = VehicleSeat.Driver;
             }
         }
 
