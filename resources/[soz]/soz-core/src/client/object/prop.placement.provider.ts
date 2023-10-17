@@ -355,6 +355,10 @@ export class PropPlacementProvider {
             propToCreate = selectedProp;
         }
 
+        if (!propToCreate.label) {
+            propToCreate.label = GetLabelText(propToCreate.model);
+        }
+
         await this.spawnNewDebug(propToCreate);
         await this.enterEditorMode();
         return Ok(true);
@@ -392,12 +396,14 @@ export class PropPlacementProvider {
             }
         }
 
+        const entityPos = GetEntityCoords(entity) as Vector3;
+        if (this.snapMode && getDistance(this.debugProp.position, entityPos) > 0.001) {
+            PlaceObjectOnGroundProperly(entity);
+            this.refreshPositionFromGame(this.debugProp);
+        }
+
         if (IsDisabledControlJustReleased(0, 24)) {
-            if (this.snapMode) {
-                PlaceObjectOnGroundProperly(entity);
-            }
-            const entityPos = GetEntityCoords(entity, false) as Vector3;
-            const pedPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
+            const pedPosition = GetEntityCoords(PlayerPedId()) as Vector3;
             const distance = getDistance(pedPosition, entityPos);
             if (distance > PROP_MAX_DISTANCE) {
                 this.notifier.notify('Vous ne pouvez pas déplacer ce prop plus loin ! Rapprochez vous.', 'error');
