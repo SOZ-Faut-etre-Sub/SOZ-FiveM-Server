@@ -4,7 +4,7 @@ import { VehicleClass } from '@public/shared/vehicle/vehicle';
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ServerEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -52,5 +52,20 @@ export class VehicleProvider {
         const garageConfig = GarageList[garage];
 
         this.notifier.notify(source, 'Une version de ce véhicule ~g~a été ajouté~s~ au ' + garageConfig.name);
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_DEBUG_OWNER)
+    public askDetachVehicle(source: number, vehNetworkId: number) {
+        const veh = NetworkGetEntityFromNetworkId(vehNetworkId);
+
+        if (!veh) {
+            return;
+        }
+
+        const owner = NetworkGetEntityOwner(veh);
+
+        if (owner > 0) {
+            TriggerClientEvent(ClientEvent.VEHICLE_DEBUG_OWNER, owner, vehNetworkId);
+        }
     }
 }

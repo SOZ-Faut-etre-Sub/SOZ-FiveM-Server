@@ -6,7 +6,7 @@ import { ServerEvent } from '@public/shared/event';
 
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { VehicleConfiguration, VehicleModification } from '../../shared/vehicle/modification';
+import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import { VehicleCondition, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { Qbcore } from '../qbcore';
@@ -279,7 +279,14 @@ export class VehicleService {
         }
 
         if (!NetworkHasControlOfEntity(vehicle) || !NetworkHasControlOfNetworkId(vehicleNetworkId)) {
-            this.logger.error(`failed to get ownership of vehicle ${vehicle} / ${vehicleNetworkId} [${context}]`);
+            const owner = NetworkGetEntityOwner(vehicle);
+            const ownerServerID = GetPlayerServerId(owner);
+            this.logger.error(
+                `failed to get ownership of vehicle ${vehicle} / ${vehicleNetworkId} current owner ${owner}/${ownerServerID} [${context}]`
+            );
+
+            //Try debugging the vehicle by requesting the owner server side
+            TriggerServerEvent(ServerEvent.VEHICLE_DEBUG_OWNER, vehicleNetworkId);
 
             return false;
         }
