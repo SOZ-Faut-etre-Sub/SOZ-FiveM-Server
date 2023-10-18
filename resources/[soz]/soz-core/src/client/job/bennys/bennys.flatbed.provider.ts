@@ -368,35 +368,59 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        await this.vehicleService.getVehicleOwnership(flatbed, flatbedNetworkId, 'flatbed while detaching');
-
         const attachedVehicle = NetworkGetEntityFromNetworkId(attachedVehicleNetworkId);
 
         if (!attachedVehicle) {
             return;
         }
 
-        const flatbedPosition = GetEntityCoords(flatbed, true) as Vector4;
-        const attachedVehiclePosition = GetEntityCoords(attachedVehicle, true) as Vector4;
-
-        DetachEntity(attachedVehicle, true, true);
-
-        SetEntityCoords(
-            attachedVehicle,
-            flatbedPosition[0] - (flatbedPosition[0] - attachedVehiclePosition[0]) * 6,
-            flatbedPosition[1] - (flatbedPosition[1] - attachedVehiclePosition[1]) * 6,
-            flatbedPosition[2],
-            false,
-            false,
-            false,
-            true
+        const controlFlatbed = await this.vehicleService.getVehicleOwnership(
+            flatbed,
+            flatbedNetworkId,
+            'flatbed while detaching'
         );
 
-        SetVehicleOnGroundProperly(attachedVehicle);
+        if (!controlFlatbed) {
+            this.notifier.notify('Impossible de prendre le contrôle du flatbed, ressayer plus tard', 'error');
 
-        // if (!SetVehicleOnGroundProperly(attachedVehicle)) {
-        //     SetEntityAsMissionEntity(attachedVehicle, true, true);
-        // }
+            return;
+        }
+
+        const controlTarget = await this.vehicleService.getVehicleOwnership(
+            attachedVehicle,
+            attachedVehicleNetworkId,
+            'flatbedAttachedVehicle while detaching'
+        );
+
+        if (!controlTarget) {
+            this.notifier.notify('Impossible de prendre le controle du vehicule cible, ressayer plus tard', 'error');
+
+            return;
+        }
+
+        if (IsEntityAttached(attachedVehicle)) {
+            const flatbedPosition = GetEntityCoords(flatbed, true) as Vector4;
+            const attachedVehiclePosition = GetEntityCoords(attachedVehicle, true) as Vector4;
+
+            DetachEntity(attachedVehicle, true, true);
+
+            SetEntityCoords(
+                attachedVehicle,
+                flatbedPosition[0] - (flatbedPosition[0] - attachedVehiclePosition[0]) * 6,
+                flatbedPosition[1] - (flatbedPosition[1] - attachedVehiclePosition[1]) * 6,
+                flatbedPosition[2],
+                false,
+                false,
+                false,
+                true
+            );
+
+            SetVehicleOnGroundProperly(attachedVehicle);
+
+            // if (!SetVehicleOnGroundProperly(attachedVehicle)) {
+            //     SetEntityAsMissionEntity(attachedVehicle, true, true);
+            // }
+        }
 
         TriggerServerEvent(ServerEvent.BENNYS_FLATBED_DETACH_VEHICLE, flatbedNetworkId);
 
@@ -433,6 +457,23 @@ export class BennysFlatbedProvider {
             return;
         }
 
+        const driverFlatBed = GetPedInVehicleSeat(this.currentFlatbedAttach.entity, -1);
+        if (driverFlatBed && IsPedAPlayer(driverFlatBed)) {
+            this.notifier.notify("Impossible de remorquer lorsqu'une autre personne conduit le flatbed", 'error');
+
+            return;
+        }
+
+        const driver = GetPedInVehicleSeat(vehicle, -1);
+        if (driver && IsPedAPlayer(driver)) {
+            this.notifier.notify(
+                "Impossible de remorquer lorsqu'une autre personne conduit le véhicule cible",
+                'error'
+            );
+
+            return;
+        }
+
         if (IsVehicleAttachedToTrailer(vehicle)) {
             DetachVehicleFromTrailer(vehicle);
 
@@ -440,22 +481,40 @@ export class BennysFlatbedProvider {
         }
 
         const flatbedNetworkId = NetworkGetNetworkIdFromEntity(this.currentFlatbedAttach.entity);
-        await this.vehicleService.getVehicleOwnership(
+        const controlFlatbed = await this.vehicleService.getVehicleOwnership(
             this.currentFlatbedAttach.entity,
             flatbedNetworkId,
             'flatbed while attaching'
         );
 
+        if (!controlFlatbed) {
+            this.notifier.notify('Impossible de prendre le contrôle du flatbed, ressayer plus tard', 'error');
+
+            return;
+        }
+
         const height = GetEntityHeightAboveGround(vehicle);
         const attachedVehicleNetworkId = NetworkGetNetworkIdFromEntity(vehicle);
 
-        await this.vehicleService.getVehicleOwnership(
+        const controlTarget = await this.vehicleService.getVehicleOwnership(
             vehicle,
             attachedVehicleNetworkId,
             'flatbedAttachedVehicle while attaching'
         );
 
-        this.attachVehicleToFlatbed(this.currentFlatbedAttach.entity, vehicle, height);
+        if (!controlTarget) {
+            this.notifier.notify('Impossible de prendre le controle du vehicule cible, ressayer plus tard', 'error');
+
+            return;
+        }
+
+        const attached = await this.attachVehicleToFlatbed(this.currentFlatbedAttach.entity, vehicle, height);
+
+        if (!attached) {
+            this.notifier.notify('Echec du remorquage, ressayer plus tard', 'error');
+
+            return;
+        }
 
         this.soundService.play('seatbelt/buckle', 0.2);
         this.notifier.notify('Le véhicule a été attaché au flatbed.');
@@ -471,7 +530,7 @@ export class BennysFlatbedProvider {
         );
     }
 
-    private attachVehicleToFlatbed(flatbed: number, vehicle: number, height: number) {
+    private async attachVehicleToFlatbed(flatbed: number, vehicle: number, height: number) {
         const attachPosition = GetOffsetFromEntityInWorldCoords(
             flatbed,
             FLATBED_OFFSET[0],
@@ -502,5 +561,9 @@ export class BennysFlatbedProvider {
             null,
             true
         );
+
+        await wait(1000);
+
+        return IsEntityAttached(vehicle);
     }
 }

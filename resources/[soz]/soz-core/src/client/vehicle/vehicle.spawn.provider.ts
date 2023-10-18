@@ -350,4 +350,15 @@ export class VehicleSpawnProvider {
 
         return true;
     }
+
+    @OnEvent(ClientEvent.VEHICLE_DEBUG_OWNER)
+    public async detachVehicle(vehNetworkId: number) {
+        const veh = NetworkGetEntityFromNetworkId(vehNetworkId);
+
+        if (!veh) {
+            return;
+        }
+
+        await this.vehicleService.getVehicleOwnership(veh, vehNetworkId, 'debug owner');
+    }
 }
