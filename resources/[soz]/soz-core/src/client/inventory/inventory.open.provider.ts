@@ -11,8 +11,6 @@ import { AnimationService } from '../animation/animation.service';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 
-const bins = [GetHashKey('soz_prop_bb_bin'), GetHashKey('soz_prop_bb_bin_hs2')];
-
 @Provider()
 export class InventoryOpenProvider {
     @Inject(TargetFactory)
@@ -24,10 +22,19 @@ export class InventoryOpenProvider {
     @Inject(SoundService)
     public soundService: SoundService;
 
+    public getBinModels() {
+        return [
+            GetHashKey('soz_prop_bb_bin'),
+            GetHashKey('soz_prop_bb_bin_hs2'),
+            GetHashKey('soz_hw_bin_1'), //Halloween
+            GetHashKey('soz_hw_bin_2'), //Halloween
+        ];
+    }
+
     @Once(OnceStep.Start)
     public init() {
         this.targetFactory.createForModel(
-            bins,
+            this.getBinModels(),
             [
                 {
                     label: 'Fouiller',
