@@ -1138,11 +1138,11 @@
     </Item>
     <Item>
       <ModelName>prop_sec_barrier_ld_01a</ModelName>
-      <TuningName>FragBarrierArmCustomBox</TuningName>
+      <TuningName>SlidingHorizontalPoliceSPVehiclesAndMPPlayerPeds</TuningName>
     </Item>
     <Item>
       <ModelName>prop_sec_barrier_ld_02a</ModelName>
-      <TuningName>TollBarrierArmCustomBox</TuningName>
+      <TuningName>SlidingHorizontalPoliceSPVehiclesAndMPPlayerPeds</TuningName>
     </Item>
     <Item>
       <ModelName>v_ilev_arm_secdoor</ModelName>
