@@ -2,7 +2,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
-import { Dialog, ScenarioState, Story } from '../../shared/story/story';
+import { Dialog, ScenarioOrder, ScenarioState, Story } from '../../shared/story/story';
 import { AudioService } from '../nui/audio.service';
 import { PlayerService } from '../player/player.service';
 import { TargetOptions } from '../target/target.factory';
@@ -54,14 +54,30 @@ export class StoryProvider {
     }
 
     public canInteractForPart(story: string, scenario: string, part: number): boolean {
-        const currentScenario = this.playerService.getPlayer().metadata[story]?.[scenario];
+        const player = this.playerService.getPlayer();
+
+        const order = ScenarioOrder.findIndex(elem => elem.scenario === scenario && elem.story === story);
+
+        if (order > 0) {
+            const prevScenario = player.metadata[ScenarioOrder[order - 1].story]?.[ScenarioOrder[order - 1].scenario];
+            if (!prevScenario) {
+                return false;
+            }
+            const parts = Object.keys(prevScenario);
+            if (parts.length == 0) {
+                return false;
+            }
+            for (const part of parts) {
+                if (prevScenario[part] != ScenarioState.Finished) {
+                    return false;
+                }
+            }
+        }
+
+        const currentScenario = player.metadata[story]?.[scenario];
 
         if (part === 0) {
             return currentScenario === undefined;
-        }
-
-        if (part === 0 || part === 1) {
-            return currentScenario?.[`part${part}`] <= ScenarioState.Running || currentScenario === undefined;
         }
 
         return currentScenario?.[`part${part}`] === ScenarioState.Running;
@@ -74,6 +90,17 @@ export class StoryProvider {
             canInteract: () => this.canInteractForPart('halloween2022', scenario, part + 1),
             action: async () => {
                 await this.launchDialog(story.dialog[`part${part}`]);
+            },
+        };
+    }
+
+    public replayYearTarget(story: Story, year: string, scenario: string, part: number, dialog: string): TargetOptions {
+        return {
+            label: 'Ré-écouter',
+            icon: 'fas fa-comment-dots',
+            canInteract: () => this.canInteractForPart('halloween' + year, scenario, part + 1),
+            action: async () => {
+                await this.launchDialog(story.dialog[dialog]);
             },
         };
     }

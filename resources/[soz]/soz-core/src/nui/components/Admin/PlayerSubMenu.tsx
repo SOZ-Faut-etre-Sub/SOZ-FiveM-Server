@@ -321,14 +321,32 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                                 ))}
                         </MenuItemSelect>
                         <MenuItemSelect
-                            title={'Réinitialiser la progression Halloween 2022'}
+                            title={'Reset Halloween 2022'}
                             onConfirm={async selectedIndex => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerHandleResetHalloween, {
                                     player,
-                                    year: '2022',
+                                    year: 'halloween2022',
                                     scenario: SCENARIO_OPTIONS[selectedIndex].value,
                                 });
                             }}
+                            titleWidth={60}
+                        >
+                            {SCENARIO_OPTIONS.map(option => (
+                                <MenuItemSelectOption key={'scenario_option_' + option.value}>
+                                    {option.label}
+                                </MenuItemSelectOption>
+                            ))}
+                        </MenuItemSelect>
+                        <MenuItemSelect
+                            title={'Reset Halloween 2023'}
+                            onConfirm={async selectedIndex => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerHandleResetHalloween, {
+                                    player,
+                                    year: 'halloween2023',
+                                    scenario: SCENARIO_OPTIONS[selectedIndex].value,
+                                });
+                            }}
+                            titleWidth={60}
                         >
                             {SCENARIO_OPTIONS.map(option => (
                                 <MenuItemSelectOption key={'scenario_option_' + option.value}>

@@ -35,3 +35,15 @@ export type Halloween2022 = {
         part7?: ScenarioState;
     };
 };
+
+export type Halloween2023 = {
+    scenario1: {
+        part1?: ScenarioState;
+        part2?: ScenarioState;
+        part3?: ScenarioState;
+        part4?: ScenarioState;
+        part5?: ScenarioState;
+        part6?: ScenarioState;
+        part7?: ScenarioState;
+    };
+};

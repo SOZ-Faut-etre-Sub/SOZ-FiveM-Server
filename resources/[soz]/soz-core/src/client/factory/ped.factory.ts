@@ -23,6 +23,7 @@ export type Ped = {
     flag?: number;
     network?: boolean;
     isScriptHostPed?: boolean;
+    isRandomClothes?: boolean;
 };
 
 export enum PedFaceFeature {
@@ -89,7 +90,11 @@ export class PedFactory {
             ped.isScriptHostPed || false
         );
 
-        SetPedDefaultComponentVariation(pedId);
+        if (ped.isRandomClothes) {
+            SetPedRandomComponentVariation(pedId, 0);
+        } else {
+            SetPedDefaultComponentVariation(pedId);
+        }
 
         if (ped.components) {
             for (const [key, value] of Object.entries(ped.components)) {

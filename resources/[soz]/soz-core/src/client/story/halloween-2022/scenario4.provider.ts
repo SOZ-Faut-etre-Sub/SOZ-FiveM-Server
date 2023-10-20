@@ -1,4 +1,9 @@
-import { Once, OnceStep } from '../../../core/decorators/event';
+import { Component, Prop } from '@public/shared/cloth';
+import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
+import { ClientEvent } from '@public/shared/event';
+import { BoxZone } from '@public/shared/polyzone/box.zone';
+
+import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
@@ -10,10 +15,8 @@ import { Halloween2022Scenario4 } from '../../../shared/story/halloween-2022/sce
 import { Dialog } from '../../../shared/story/story';
 import { AnimationService } from '../../animation/animation.service';
 import { BlipFactory } from '../../blip';
-import { EntityFactory } from '../../factory/entity.factory';
 import { PedFactory } from '../../factory/ped.factory';
 import { Notifier } from '../../notifier';
-import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
 import { StoryProvider } from '../story.provider';
@@ -26,14 +29,8 @@ export class Halloween2022Scenario4Provider {
     @Inject(PedFactory)
     private pedFactory: PedFactory;
 
-    @Inject(EntityFactory)
-    private entityFactory: EntityFactory;
-
     @Inject(StoryProvider)
     private storyService: StoryProvider;
-
-    @Inject(PlayerService)
-    private playerService: PlayerService;
 
     @Inject(AnimationService)
     private animationService: AnimationService;
@@ -53,14 +50,6 @@ export class Halloween2022Scenario4Provider {
             return;
         }
 
-        this.blipFactory.create('halloween_scenario4', {
-            name: 'Activité suspecte',
-            coords: { x: -1538.24, y: 217.14, z: 59.88 },
-            sprite: 484,
-            scale: 0.99,
-            color: 44,
-        });
-
         await this.createPedsFiB();
         await this.createPedDOA();
         await this.createPedSheriffNord();
@@ -74,22 +63,53 @@ export class Halloween2022Scenario4Provider {
         // Caméo de la mort
         await this.createPedNariieL();
         await this.createPedDraglock();
+        await this.createPedOjymas();
+
         await this.createPedPoulpito();
         await this.createPedSniteur();
-        await this.createPedKaemy();
-        await this.createPedBrouznouf();
-        await this.createPedFrozennide();
-        await this.createPedMcFloy(); // TODO: text
-        await this.createPedBlaqq(); // TODO: text
-        await this.createPedRigonkmalk();
         await this.createPedOneiluj();
         await this.createPedLasbou();
-        await this.createPedTheSeds();
+        await this.createPedMarverikG(); // TODO: text
         await this.createPedDaelbhas();
-        await this.createPedOjymas();
-        await this.createPedPano();
-        await this.createPedVik();
+
+        await this.createPedBrouznouf();
+        await this.createPedLaikker(); // TODO: text
+        await this.createPedMoustache(); // TODO: text
+        await this.createPedSilverlord(); //TODO text
+
+        await this.createPedRigonkmalk();
+        await this.createPedAurukh(); // TODO: text
+
+        await this.createPedDarabesque(); //TODO text
+        await this.createPedPoulpitor(); //TODO text
+        await this.createPedBalrock(); //TODO text
+        await this.createPedTluap(); //TODO text
         await this.createPedDream();
+        await this.createPedKaemy();
+    }
+
+    @OnEvent(ClientEvent.PLAYER_UPDATE)
+    public createBlip() {
+        if (!isFeatureEnabled(Feature.HalloweenScenario4)) {
+            return;
+        }
+
+        if (!this.storyService.canInteractForPart('halloween2022', 'scenario4', 0)) {
+            return;
+        }
+
+        const blipId = 'halloween2022_scenario4';
+        if (this.blipFactory.exist(blipId)) {
+            return;
+        }
+
+        this.blipFactory.create(blipId, {
+            name: 'Activité suspecte',
+            coords: { x: -1538.24, y: 217.14, z: 59.88 },
+            sprite: 484,
+            scale: 0.99,
+            color: 44,
+        });
     }
 
     private async createPedsFiB() {
@@ -728,155 +748,204 @@ export class Halloween2022Scenario4Provider {
         );
     }
 
-    private async createPedTheSeds() {
+    private async createPedDarabesque() {
         await this.pedFactory.createPed({
             model: 'mp_f_freemode_01',
             coords: { x: 2132.94, y: 2924.91, z: -62.9, w: 234.28 },
             modelCustomization: {
-                Father: 12,
+                Hash: -1667301416,
+                Father: 4,
                 ShapeMix: 0.75,
-                SkinMix: 0.3,
-                Mother: 31,
+                Mother: 35,
+                SkinMix: 0.6,
             },
             components: {
                 1: [0, 0, 0],
-                3: [9, 0, 0],
-                4: [3, 7, 0],
-                6: [52, 0, 0],
+                3: [6, 0, 0],
+                4: [1, 15, 0],
+                6: [90, 14, 0],
                 7: [8, 0, 0],
-                8: [51, 1, 0],
+                8: [5, 7, 0],
                 9: [0, 0, 0],
-                10: [44, 9, 0],
-                11: [192, 2, 0],
+                10: [0, 0, 0],
+                11: [427, 4, 0],
             },
             props: {
-                0: [32, 1, 0],
+                0: [112, 19, 0],
+                1: [11, 6, 0],
+                2: [15, 0, 0],
+                6: [19, 2, 0],
+                7: [2, 0, 0],
             },
             face: {
-                CheeksBoneHigh: 0.0,
-                NosePeakLength: 0.0,
-                ChimpBoneWidth: 0.0,
-                NoseWidth: 0.0,
-                ChimpBoneLength: 0.0,
-                ChimpHole: 0.0,
-                JawBoneWidth: 0.0,
-                Ageing: -1,
-                EyebrowHigh: 0.0,
-                NeckThickness: 0.0,
+                Moles: 0,
+                CheeksBoneHigh: 0.9,
                 NoseBoneHigh: 0.0,
-                EyeColor: 0,
-                Moles: 3,
-                ChimpBoneLower: 0.0,
-                NosePeakLower: 0.0,
-                CheeksBoneWidth: 0.0,
-                JawBoneBackLength: 0.0,
-                CheeksWidth: 0.0,
-                Complexion: -1,
-                BodyBlemish: -1,
-                NoseBoneTwist: 0.0,
-                NosePeakHeight: 0.0,
-                EyebrowForward: 0.0,
+                BodyBlemish: 11,
                 AddBodyBlemish: -1,
-                EyesOpening: 0.0,
-                Blemish: 1,
-                LipsThickness: 0.8,
+                EyesOpening: 0.3,
+                JawBoneWidth: 0.0,
+                CheeksBoneWidth: 0.0,
+                NosePeakLower: 0.0,
+                JawBoneBackLength: 0.2,
+                ChimpBoneLower: 0.0,
+                ChimpBoneLength: 0.0,
+                NosePeakHeight: 0.6,
+                Complexion: -1,
+                LipsThickness: 0.7,
+                Ageing: -1,
+                NoseBoneTwist: 0.0,
+                EyebrowHigh: 0.0,
+                ChimpHole: 0.0,
+                NosePeakLength: -0.6,
+                CheeksWidth: 0.0,
+                ChimpBoneWidth: 0.0,
+                NeckThickness: 0.3,
+                EyeColor: 6,
+                NoseWidth: -0.7,
+                EyebrowForward: -0.3,
+                Blemish: 3,
             },
             hair: {
-                BeardType: -1,
-                BeardColor: 0,
-                EyebrowColor: 57,
-                HairColor: 35,
-                BeardOpacity: 1.0,
                 HairSecondaryColor: 32,
-                ChestHairOpacity: 1.0,
-                ChestHairColor: 0,
-                EyebrowType: 0,
                 ChestHairType: -1,
                 EyebrowOpacity: 1.0,
-                HairType: 81,
+                BeardType: -1,
+                ChestHairColor: 0,
+                ChestHairOpacity: 1.0,
+                BeardColor: 0,
+                HairColor: 0,
+                HairType: 80,
+                EyebrowType: 3,
+                EyebrowColor: 0,
+                BeardOpacity: 1.0,
             },
             makeup: {
-                FullMakeupType: 55,
-                LipstickOpacity: 1.0,
-                BlushOpacity: 0.6,
-                FullMakeupOpacity: 0.65,
-                FullMakeupPrimaryColor: 56,
-                LipstickColor: 0,
-                FullMakeupSecondaryColor: 52,
-                LipstickType: 0,
-                BlushType: -1,
                 BlushColor: 0,
+                FullMakeupOpacity: 1.0,
+                FullMakeupSecondaryColor: 0,
+                LipstickColor: 11,
+                LipstickType: 4,
+                FullMakeupType: 32,
+                FullMakeupPrimaryColor: 0,
+                BlushType: -1,
+                FullMakeupDefaultColor: 1,
+                BlushOpacity: 1.0,
+                LipstickOpacity: 0.5,
             },
             tattoos: [
-                { collection: 598190139, overlay: -1352706360 },
-                { collection: -1056335443, overlay: 1617489838 },
-                { collection: 598190139, overlay: -766009308 },
-                { collection: -1016521996, overlay: -131581709 },
-                { collection: -1056335443, overlay: 1027059614 },
-                { collection: -240234547, overlay: -2015343582 },
-                { collection: 1347816957, overlay: 373164468 },
-                { collection: -1201369729, overlay: -358202620 },
-                { collection: -1368357453, overlay: 363449858 },
-                { collection: 598190139, overlay: 1103130600 },
-                { collection: -1398869298, overlay: -1156010272 },
-                { collection: -1201369729, overlay: -38278649 },
-                { collection: 598190139, overlay: -766009308 },
-                { collection: 1926256505, overlay: 1896039464 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: 1832021545 },
-                { collection: 1616273011, overlay: -648193607 },
-                { collection: 1616273011, overlay: -648193607 },
-                { collection: 1616273011, overlay: -648193607 },
-                { collection: 1616273011, overlay: -648193607 },
-                { collection: 1616273011, overlay: -648193607 },
-                { collection: 1616273011, overlay: -648193607 },
-                { collection: 1616273011, overlay: -648193607 },
-                { collection: 1616273011, overlay: 2025651359 },
-                { collection: 1616273011, overlay: 2025651359 },
-                { collection: -1398869298, overlay: 1252285617 },
-                { collection: -1398869298, overlay: 1252285617 },
-                { collection: -1398869298, overlay: 1252285617 },
-                { collection: -1398869298, overlay: 1252285617 },
-                { collection: -1398869298, overlay: 1252285617 },
-                { collection: -1398869298, overlay: 1252285617 },
-                { collection: -1398869298, overlay: 1252285617 },
-                { collection: -975527441, overlay: 962023066 },
-                { collection: -975527441, overlay: 962023066 },
-                { collection: -975527441, overlay: 962023066 },
-                { collection: -975527441, overlay: 962023066 },
-                { collection: -975527441, overlay: 962023066 },
-                { collection: -975527441, overlay: 962023066 },
-                { collection: -975527441, overlay: 962023066 },
-                { collection: 598190139, overlay: -150640257 },
-                { collection: 598190139, overlay: -150640257 },
-                { collection: 598190139, overlay: -150640257 },
-                { collection: 598190139, overlay: -922055286 },
-                { collection: 598190139, overlay: -922055286 },
-                { collection: 598190139, overlay: -922055286 },
-                { collection: 598190139, overlay: -922055286 },
-                { collection: 598190139, overlay: -922055286 },
-                { collection: 598190139, overlay: -150640257 },
-                { collection: 598190139, overlay: -150640257 },
-                { collection: 598190139, overlay: -150640257 },
-                { collection: 598190139, overlay: -150640257 },
-                { collection: 598190139, overlay: -150640257 },
-                { collection: 62137527, overlay: -481389646 },
-                { collection: 62137527, overlay: -481389646 },
-                { collection: 62137527, overlay: -481389646 },
-                { collection: 62137527, overlay: -481389646 },
-                { collection: 62137527, overlay: -481389646 },
-                { collection: 62137527, overlay: -481389646 },
-                { collection: -1016521996, overlay: -1545551839 },
-                { collection: -1016521996, overlay: -1545551839 },
-                { collection: -1016521996, overlay: -1545551839 },
+                {
+                    collection: -1368357453,
+                    overlay: 1600841937,
+                },
+                {
+                    collection: -1368357453,
+                    overlay: 21830981,
+                },
+                {
+                    collection: 1347816957,
+                    overlay: 1864088729,
+                },
+                {
+                    collection: 1347816957,
+                    overlay: 1424803201,
+                },
+                {
+                    collection: -1201369729,
+                    overlay: -1011813098,
+                },
+                {
+                    collection: -1368357453,
+                    overlay: 421656072,
+                },
+                {
+                    collection: 1347816957,
+                    overlay: 1928040960,
+                },
+                {
+                    collection: -1368357453,
+                    overlay: -1598237536,
+                },
+                {
+                    collection: -1201369729,
+                    overlay: -1897002095,
+                },
+                {
+                    collection: 1347816957,
+                    overlay: -978468741,
+                },
+                {
+                    collection: -1201369729,
+                    overlay: 890225886,
+                },
+                {
+                    collection: -1201369729,
+                    overlay: 1121411181,
+                },
+                {
+                    collection: -1368357453,
+                    overlay: -1458871109,
+                },
+                {
+                    collection: 1347816957,
+                    overlay: -978468741,
+                },
+                {
+                    collection: -1368357453,
+                    overlay: 21830981,
+                },
+                {
+                    collection: -1201369729,
+                    overlay: 1121411181,
+                },
+                {
+                    collection: -1368357453,
+                    overlay: 1600841937,
+                },
+                {
+                    collection: 1616273011,
+                    overlay: -1814153457,
+                },
+                {
+                    collection: -1201369729,
+                    overlay: 427888057,
+                },
+                {
+                    collection: -1201369729,
+                    overlay: -1011813098,
+                },
+                {
+                    collection: 1026837500,
+                    overlay: -1363418653,
+                },
+                {
+                    collection: 1026837500,
+                    overlay: -1363418653,
+                },
+                {
+                    collection: -1368357453,
+                    overlay: 89152577,
+                },
+                {
+                    collection: 1026837500,
+                    overlay: 1654019571,
+                },
+                {
+                    collection: -1201369729,
+                    overlay: -2092436411,
+                },
+                {
+                    collection: -1368357453,
+                    overlay: -1598237536,
+                },
+                {
+                    collection: 1026837500,
+                    overlay: 415527077,
+                },
+                {
+                    collection: 1347816957,
+                    overlay: 98665018,
+                },
             ],
             invincible: true,
             freeze: true,
@@ -887,7 +956,7 @@ export class Halloween2022Scenario4Provider {
         });
 
         this.targetFactory.createForBoxZone(
-            'halloween2022:scenario4:createPedTheSeds',
+            'halloween2022:scenario4:createPedDaraBesque',
             {
                 center: [2132.94, 2924.91, -62.9],
                 length: 1,
@@ -898,118 +967,115 @@ export class Halloween2022Scenario4Provider {
             },
             [
                 {
-                    label: 'TheSeds',
+                    label: 'DaraBesque',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify(
-                            "J'suis encore en retard dans mes corrections... Hein, quoi? Oui, je viendrai tester plus tard... Mais pas besoin, l'event a été fantastique, non?",
-                            'info'
-                        );
+                        this.notifier.notify('...', 'info');
                     },
                 },
             ]
         );
     }
 
-    private async createPedVik() {
+    private async createPedTluap() {
         await this.pedFactory.createPed({
             model: 'mp_m_freemode_01',
             coords: { x: 2055.13, y: 2941.55, z: -62.9, w: 356.66 },
             modelCustomization: {
-                Father: 43,
-                ShapeMix: 0.35,
-                SkinMix: 0.55,
-                Mother: 31,
+                Father: 13,
+                Mother: 41,
+                ShapeMix: 0.3,
+                SkinMix: 0.8,
+                Hash: 1885233650,
             },
             components: {
-                1: [51, 1, 0],
-                3: [5, 0, 0],
-                4: [71, 0, 0],
-                6: [51, 0, 0],
-                7: [0, 0, 0],
-                8: [15, 0, 0],
+                1: [0, 0, 0],
+                3: [6, 0, 0],
+                4: [73, 0, 0],
+                6: [24, 0, 0],
+                7: [112, 2, 0],
+                8: [2, 2, 0],
                 9: [0, 0, 0],
                 10: [0, 0, 0],
-                11: [237, 2, 0],
+                11: [151, 3, 0],
             },
             props: {
-                0: [83, 5, 0],
-                1: [5, 3, 0],
-                7: [5, 0, 0],
+                0: [5, 0, 0],
+                1: [24, 2, 0],
             },
             face: {
-                CheeksBoneHigh: 0.0,
                 NosePeakLength: 0.0,
-                ChimpBoneWidth: 0.0,
-                NoseWidth: -0.5,
-                ChimpBoneLength: 0.0,
-                ChimpHole: 0.0,
-                JawBoneWidth: 0.5,
-                Ageing: -1,
-                EyebrowHigh: 0.0,
-                NeckThickness: 0.2,
-                NoseBoneHigh: 0.8,
-                NosePeakHeight: -0.4,
-                Moles: -1,
-                BodyBlemish: -1,
-                NoseBoneTwist: -0.1,
+                NoseWidth: 0.0,
                 ChimpBoneLower: 0.0,
-                JawBoneBackLength: -0.2,
-                CheeksWidth: 0.0,
-                Complexion: -1,
-                NosePeakLower: 0.0,
-                CheeksBoneWidth: 0.0,
-                Blemish: -1,
-                EyebrowForward: 0.0,
-                AddBodyBlemish: -1,
-                EyesOpening: 0.5,
-                EyeColor: 0,
+                NeckThickness: 0.0,
+                ChimpBoneLength: 0.0,
                 LipsThickness: 0.0,
+                Complexion: -1,
+                EyesOpening: 0.0,
+                JawBoneWidth: 0.0,
+                ChimpBoneWidth: 0.0,
+                EyebrowForward: 0.0,
+                BodyBlemish: -1,
+                NosePeakHeight: 0.0,
+                CheeksBoneHigh: 0.0,
+                NosePeakLower: 0.0,
+                ChimpHole: 0.0,
+                NoseBoneTwist: 0.0,
+                CheeksWidth: 0.0,
+                JawBoneBackLength: 0.0,
+                Moles: -1,
+                EyeColor: 7,
+                NoseBoneHigh: 0.0,
+                Blemish: -1,
+                EyebrowHigh: 0.0,
+                CheeksBoneWidth: 0.0,
+                Ageing: 8,
+                AddBodyBlemish: -1,
             },
             hair: {
-                BeardType: 26,
-                BeardColor: 0,
-                EyebrowColor: 62,
-                HairColor: 58,
+                HairColor: 29,
+                BeardType: 18,
                 BeardOpacity: 1.0,
-                HairSecondaryColor: 0,
+                ChestHairType: 0,
+                EyebrowColor: 29,
                 ChestHairOpacity: 1.0,
-                ChestHairColor: 0,
-                EyebrowType: 0,
-                ChestHairType: 1,
+                ChestHairColor: 29,
+                BeardColor: 29,
+                HairType: 0,
+                HairSecondaryColor: 29,
+                EyebrowType: 17,
                 EyebrowOpacity: 1.0,
-                HairType: 19,
             },
             makeup: {
-                FullMakeupType: -1,
+                FullMakeupDefaultColor: 1,
+                BlushColor: 0,
                 LipstickOpacity: 1.0,
-                BlushOpacity: 1.0,
+                FullMakeupType: -1,
+                BlushType: -1,
+                FullMakeupPrimaryColor: 0,
                 FullMakeupOpacity: 1.0,
+                FullMakeupSecondaryColor: 0,
+                BlushOpacity: 1.0,
                 LipstickType: -1,
                 LipstickColor: 0,
-                FullMakeupPrimaryColor: 0,
-                FullMakeupSecondaryColor: 0,
-                BlushType: -1,
-                BlushColor: 0,
             },
             tattoos: [
-                { collection: 598190139, overlay: -1352706360 },
-                { collection: -1719270477, overlay: 472458130 },
-                { collection: 1529191571, overlay: 1045897298 },
-                { collection: 1529191571, overlay: 2088037441 },
-                { collection: -240234547, overlay: -964908188 },
-                { collection: -240234547, overlay: 682382693 },
-                { collection: 598190139, overlay: 701448198 },
-                { collection: 598190139, overlay: 1369179057 },
-                { collection: -1398869298, overlay: 1395583642 },
-                { collection: -363871405, overlay: -1732002225 },
-                { collection: 1529191571, overlay: -1502257606 },
-                { collection: -1016521996, overlay: -256036523 },
-                { collection: -240234547, overlay: 1396060544 },
-                { collection: 1529191571, overlay: -1528465573 },
-                { collection: 598190139, overlay: 1029633009 },
-                { collection: -240234547, overlay: -1937668252 },
-                { collection: 1616273011, overlay: 291473683 },
+                {
+                    collection: -1719270477,
+                    overlay: 472458130,
+                },
+                {
+                    collection: -240234547,
+                    overlay: -964908188,
+                },
+                {
+                    collection: -240234547,
+                    overlay: 682382693,
+                },
+                {
+                    collection: -363871405,
+                    overlay: -1677889748,
+                },
             ],
             invincible: true,
             freeze: true,
@@ -1020,7 +1086,7 @@ export class Halloween2022Scenario4Provider {
         });
 
         this.targetFactory.createForBoxZone(
-            'halloween2022:scenario4:createPedVik',
+            'halloween2022:scenario4:createPedTluap',
             {
                 center: [2055.13, 2941.55, -62.9],
                 length: 1,
@@ -1031,13 +1097,10 @@ export class Halloween2022Scenario4Provider {
             },
             [
                 {
-                    label: 'Vik',
+                    label: 'Tluap',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify(
-                            "Jamais vu autant de monde avoir des hallucinations... Ok ok j'ai fais 2-3 crises cardiaques mais c'était bien fun.",
-                            'info'
-                        );
+                        this.notifier.notify('...', 'info');
                     },
                 },
             ]
@@ -1599,77 +1662,78 @@ export class Halloween2022Scenario4Provider {
         );
     }
 
-    private async createPedFrozennide() {
+    private async createPedLaikker() {
         await this.pedFactory.createPed({
             model: 'mp_m_freemode_01',
             coords: { x: 2050.93 + 0.3, y: 2984.02 + 0.45, z: -62.4 - 0.5, w: 329.0 },
-            modelCustomization: { SkinMix: 0.75, Father: 10, Mother: 31, ShapeMix: 0.25 },
+            modelCustomization: { SkinMix: 0.75, Hash: 1885233650, Father: 5, ShapeMix: 0.15, Mother: 29 },
             components: {
-                4: [103, 1, 0],
-                3: [11, 0, 0],
-                6: [1, 0, 0],
+                4: [103, 0, 0],
+                3: [0, 0, 0],
+                6: [1, 2, 0],
                 1: [0, 0, 0],
                 7: [0, 0, 0],
                 8: [15, 0, 0],
                 10: [0, 0, 0],
-                11: [354, 11, 0],
+                11: [354, 0, 0],
                 9: [0, 0, 0],
             },
             props: {},
             face: {
                 ChimpBoneLower: 0.0,
-                NoseBoneHigh: -0.3,
-                EyesOpening: -0.6,
-                EyeColor: 5,
-                Complexion: -1,
-                ChimpBoneLength: 0.0,
-                LipsThickness: 0.4,
-                CheeksBoneHigh: -0.7,
-                CheeksWidth: -0.5,
-                NosePeakLower: 0.0,
-                CheeksBoneWidth: -0.6,
-                EyebrowHigh: 0.0,
-                NeckThickness: -0.5,
-                NosePeakHeight: -0.1,
-                Ageing: 0,
-                Moles: -1,
-                ChimpBoneWidth: 0.0,
-                EyebrowForward: 0.3,
-                JawBoneWidth: 0.3,
-                JawBoneBackLength: 0.2,
                 BodyBlemish: -1,
-                NosePeakLength: -0.5,
-                ChimpHole: 0.0,
-                NoseWidth: 0.5,
-                AddBodyBlemish: -1,
+                Complexion: -1,
+                NeckThickness: 0.0,
+                EyebrowForward: 0.4,
+                LipsThickness: 0.0,
+                EyeColor: -1,
+                CheeksBoneWidth: 0.0,
+                EyebrowHigh: 0.0,
+                NosePeakLength: 0.0,
+                NoseBoneHigh: 0.0,
+                CheeksBoneHigh: 0.0,
+                ChimpBoneLength: 0.0,
                 Blemish: -1,
+                AddBodyBlemish: -1,
+                Ageing: -1,
+                CheeksWidth: 0.0,
+                NosePeakLower: 0.0,
+                ChimpHole: 0.0,
+                ChimpBoneWidth: 0.0,
+                Moles: -1,
                 NoseBoneTwist: 0.0,
+                EyesOpening: 0.0,
+                JawBoneWidth: 0.0,
+                JawBoneBackLength: 0.0,
+                NosePeakHeight: 0.0,
+                NoseWidth: 0.0,
             },
             hair: {
-                BeardType: 10,
-                EyebrowColor: 2,
-                BeardColor: 2,
-                ChestHairType: 4,
-                ChestHairOpacity: 0.8,
+                HairType: 10,
+                ChestHairType: 0,
+                HairColor: 4,
+                ChestHairOpacity: 1.0,
+                EyebrowType: 12,
+                BeardOpacity: 1.0,
+                BeardType: -1,
+                BeardColor: 0,
+                ChestHairColor: 1,
+                HairSecondaryColor: 60,
+                EyebrowColor: 3,
                 EyebrowOpacity: 1.0,
-                EyebrowType: 26,
-                HairColor: 1,
-                HairType: 31,
-                ChestHairColor: 2,
-                BeardOpacity: 0.85,
-                HairSecondaryColor: 27,
             },
             makeup: {
-                LipstickColor: 0,
-                BlushColor: 0,
                 FullMakeupOpacity: 1.0,
-                LipstickType: -1,
-                FullMakeupType: -1,
                 BlushOpacity: 1.0,
+                FullMakeupType: -1,
+                LipstickColor: 0,
+                FullMakeupPrimaryColor: 0,
+                BlushType: -1,
+                LipstickType: -1,
                 LipstickOpacity: 1.0,
                 FullMakeupSecondaryColor: 0,
-                BlushType: -1,
-                FullMakeupPrimaryColor: 0,
+                FullMakeupDefaultColor: 1,
+                BlushColor: 0,
             },
             tattoos: [],
             invincible: true,
@@ -1681,7 +1745,7 @@ export class Halloween2022Scenario4Provider {
         });
 
         this.targetFactory.createForBoxZone(
-            'halloween2022:scenario4:createPedFrozennide',
+            'halloween2022:scenario4:createPedLaikker',
             {
                 center: [2050.93 + 0.3, 2984.02 + 0.45, -62.4 - 0.5],
                 length: 1.5,
@@ -1692,97 +1756,123 @@ export class Halloween2022Scenario4Provider {
             },
             [
                 {
-                    label: 'Frozennide',
+                    label: 'Laikker',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify(
-                            'Je ne suis pas souvent en ville, mais à chaque fois que je viens, il pleut... bref...',
-                            'info'
-                        );
+                        this.notifier.notify('...', 'info');
                     },
                 },
             ]
         );
     }
 
-    private async createPedMcFloy() {
+    private async createPedMoustache() {
         await this.pedFactory.createPed({
             model: 'mp_m_freemode_01',
             coords: { x: 2052.05 + 0.27, y: 2983.15 + 0.45, z: -62.4 - 0.5, w: 334.0 },
-            modelCustomization: { SkinMix: 0.5, Father: 0, Mother: 33, ShapeMix: 0.3 },
+            modelCustomization: { Mother: 31, ShapeMix: 0.55, Hash: 1885233650, SkinMix: 1, Father: 4 },
             components: {
                 9: [0, 0, 0],
                 7: [0, 0, 0],
                 8: [15, 0, 0],
-                6: [20, 0, 0],
-                3: [11, 0, 0],
-                4: [25, 0, 0],
+                6: [12, 3, 0],
+                3: [14, 0, 0],
+                4: [4, 0, 0],
                 1: [0, 0, 0],
                 10: [0, 0, 0],
-                11: [260, 14, 0],
+                11: [6, 6, 0],
             },
             props: {
-                1: [33, 0, 0],
-                7: [2, 0, 0],
-                0: [12, 0, 0],
-                6: [19, 1, 0],
+                0: [7, 77, 0],
+                1: [7, 0, 0],
+                7: [5, 0, 0],
             },
             face: {
-                CheeksBoneHigh: -0.6,
-                EyebrowHigh: 0.0,
-                NoseWidth: 0.2,
-                EyebrowForward: -0.1,
-                JawBoneBackLength: 0.1,
-                NeckThickness: 0.3,
-                CheeksWidth: -0.2,
-                NosePeakLower: 0.3,
+                LipsThickness: 0.5,
+                NosePeakLength: 0,
+                ChimpBoneWidth: 0,
+                NosePeakHeight: -0.5,
+                NoseWidth: -0.4,
                 Moles: -1,
-                NoseBoneTwist: 0.0,
-                ChimpBoneLength: 0.1,
-                NoseBoneHigh: 0.0,
-                Ageing: -1,
-                JawBoneWidth: 0.6,
-                Blemish: -1,
-                CheeksBoneWidth: 0.7,
-                LipsThickness: 0.3,
+                ChimpHole: 0,
+                EyebrowHigh: 0,
+                EyeColor: 0,
                 Complexion: -1,
-                NosePeakHeight: -0.4,
-                AddBodyBlemish: -1,
+                Blemish: -1,
+                CheeksBoneHigh: 0.3,
+                NosePeakLower: 0,
+                EyesOpening: 0.2,
+                CheeksBoneWidth: -0.4,
                 BodyBlemish: -1,
-                NosePeakLength: 0.3,
-                EyesOpening: -0.2,
-                ChimpHole: 0.0,
-                EyeColor: 3,
-                ChimpBoneWidth: 0.4,
-                ChimpBoneLower: -0.1,
+                NoseBoneTwist: 0,
+                CheeksWidth: 0.3,
+                AddBodyBlemish: -1,
+                NeckThickness: 0,
+                ChimpBoneLower: 0,
+                Ageing: -1,
+                EyebrowForward: -0.4,
+                NoseBoneHigh: 0,
+                ChimpBoneLength: 0,
+                JawBoneBackLength: -0.1,
+                JawBoneWidth: 0.4,
             },
             hair: {
-                HairType: 17,
-                EyebrowType: 28,
-                BeardColor: 60,
-                EyebrowOpacity: 1.0,
-                ChestHairType: 1,
-                HairSecondaryColor: 5,
-                ChestHairColor: 61,
-                ChestHairOpacity: 1.0,
-                BeardType: 10,
-                HairColor: 58,
-                EyebrowColor: 61,
-                BeardOpacity: 1.0,
+                ChestHairColor: 0,
+                BeardType: 11,
+                EyebrowColor: 0,
+                ChestHairType: 0,
+                HairSecondaryColor: 4,
+                EyebrowType: 30,
+                EyebrowOpacity: 1,
+                BeardColor: 2,
+                HairType: 80,
+                HairColor: 61,
+                BeardOpacity: 0.95,
+                ChestHairOpacity: 1,
             },
             makeup: {
-                LipstickColor: 0,
-                BlushOpacity: 1.0,
-                LipstickOpacity: 1.0,
                 FullMakeupSecondaryColor: 0,
-                LipstickType: -1,
-                FullMakeupOpacity: 1.0,
-                BlushColor: 0,
-                BlushType: -1,
+                LipstickColor: 0,
+                FullMakeupDefaultColor: 1,
                 FullMakeupPrimaryColor: 0,
                 FullMakeupType: -1,
+                LipstickType: -1,
+                BlushType: -1,
+                BlushOpacity: 1,
+                FullMakeupOpacity: 1,
+                BlushColor: 0,
+                LipstickOpacity: 1,
             },
-            tattoos: [],
+            tattoos: [
+                {
+                    collection: 1926256505,
+                    overlay: 662247816,
+                },
+                {
+                    collection: 1926256505,
+                    overlay: 1031130678,
+                },
+                {
+                    collection: 1347816957,
+                    overlay: 1505585597,
+                },
+                {
+                    collection: 62137527,
+                    overlay: -2088194624,
+                },
+                {
+                    collection: 601646824,
+                    overlay: -738078859,
+                },
+                {
+                    collection: 1926256505,
+                    overlay: 1745422723,
+                },
+                {
+                    collection: 1529191571,
+                    overlay: 2088037441,
+                },
+            ],
             invincible: true,
             freeze: true,
             blockevents: true,
@@ -1792,7 +1882,7 @@ export class Halloween2022Scenario4Provider {
         });
 
         this.targetFactory.createForBoxZone(
-            'halloween2022:scenario4:createPedMcFloy',
+            'halloween2022:scenario4:createPedMoustache',
             {
                 center: [2052.05 + 0.27, 2983.15 + 0.45, -62.4 - 0.5],
                 length: 1,
@@ -1803,90 +1893,92 @@ export class Halloween2022Scenario4Provider {
             },
             [
                 {
-                    label: 'McFloy',
+                    label: 'Moustache',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify(
-                            "... Prononce un truc incompréhensible mais ça avait l'air intéressant ...",
-                            'info'
-                        );
+                        this.notifier.notify('...', 'info');
                     },
                 },
             ]
         );
     }
 
-    private async createPedBlaqq() {
+    private async createPedAurukh() {
         await this.pedFactory.createPed({
             model: 'mp_m_freemode_01',
             coords: { x: 2048.51 + 0.5, y: 2981.56, z: -62.39 - 0.5, w: 283.99 },
-            modelCustomization: { Father: 43, SkinMix: 0.5, Mother: 34, ShapeMix: 0.5 },
+            modelCustomization: { Mother: 31, ShapeMix: 0.5, Hash: 1885233650, SkinMix: 0.5, Father: 4 },
             components: {
-                11: [89, 0, 0],
+                11: [61, 2, 0],
                 10: [0, 0, 0],
                 1: [0, 0, 0],
-                3: [6, 0, 0],
-                4: [0, 1, 0],
-                6: [1, 0, 0],
+                3: [1, 0, 0],
+                4: [128, 18, 0],
+                6: [99, 6, 0],
                 7: [0, 0, 0],
                 8: [15, 0, 0],
                 9: [0, 0, 0],
             },
-            props: {},
+            props: {
+                0: [13, 7, 0],
+                1: [23, 9, 0],
+                6: [1, 0, 0],
+            },
             face: {
-                CheeksWidth: -0.3,
-                ChimpHole: 0.0,
-                LipsThickness: 0.7,
-                NeckThickness: -1.0,
-                NosePeakLower: -0.9,
-                NoseBoneTwist: 0.0,
-                Ageing: -1,
-                BodyBlemish: 0,
-                EyesOpening: 1.0,
-                ChimpBoneLength: 0.0,
-                NoseWidth: -1.0,
-                ChimpBoneWidth: 1.0,
-                ChimpBoneLower: 0.0,
+                LipsThickness: 0.1,
+                NosePeakLength: 0,
+                ChimpBoneWidth: 0,
+                Moles: -1,
+                NoseWidth: -0.2,
+                EyebrowHigh: 0,
+                ChimpHole: 0,
+                JawBoneBackLength: -0.1,
+                EyeColor: 3,
+                CheeksBoneWidth: -0.2,
+                Blemish: 0,
+                CheeksBoneHigh: 0,
+                NosePeakLower: 0,
+                NosePeakHeight: 0,
+                NoseBoneHigh: 0,
+                NoseBoneTwist: 0,
+                EyesOpening: 0,
+                CheeksWidth: -0.8,
                 AddBodyBlemish: -1,
+                NeckThickness: 0.1,
+                ChimpBoneLower: 0,
+                Ageing: 0,
+                EyebrowForward: 0,
                 Complexion: -1,
-                JawBoneWidth: -1.0,
-                NosePeakLength: -0.7,
-                EyebrowHigh: 0.0,
-                EyebrowForward: 1.0,
-                NosePeakHeight: 0.4,
-                CheeksBoneWidth: 0.6,
-                NoseBoneHigh: -0.4,
-                Blemish: -1,
-                JawBoneBackLength: -1.0,
-                EyeColor: 2,
-                Moles: 6,
-                CheeksBoneHigh: 0.4,
+                ChimpBoneLength: 0,
+                BodyBlemish: 0,
+                JawBoneWidth: 0.2,
             },
             hair: {
-                BeardType: 4,
-                ChestHairOpacity: 1.0,
-                HairSecondaryColor: 2,
+                HairSecondaryColor: 5,
+                BeardType: 14,
+                EyebrowColor: 61,
+                HairColor: 5,
                 ChestHairColor: 0,
-                BeardOpacity: 1.0,
-                HairType: 36,
-                EyebrowColor: 56,
-                HairColor: 61,
-                EyebrowType: 0,
-                EyebrowOpacity: 1.0,
-                BeardColor: 0,
+                BeardOpacity: 0.95,
+                EyebrowOpacity: 0.65,
                 ChestHairType: -1,
+                HairType: 2,
+                BeardColor: 4,
+                EyebrowType: 0,
+                ChestHairOpacity: 0.2,
             },
             makeup: {
-                FullMakeupPrimaryColor: 0,
-                BlushOpacity: 0.5,
-                LipstickOpacity: 1.0,
-                FullMakeupType: -1,
-                BlushType: 0,
                 FullMakeupSecondaryColor: 0,
                 LipstickColor: 0,
-                BlushColor: 1,
+                FullMakeupDefaultColor: 1,
+                FullMakeupPrimaryColor: 0,
+                LipstickOpacity: 1,
+                FullMakeupType: -1,
+                BlushType: -1,
+                BlushOpacity: 1,
+                FullMakeupOpacity: 1,
+                BlushColor: 0,
                 LipstickType: -1,
-                FullMakeupOpacity: 1.0,
             },
             tattoos: [],
             invincible: true,
@@ -1898,7 +1990,7 @@ export class Halloween2022Scenario4Provider {
         });
 
         this.targetFactory.createForBoxZone(
-            'halloween2022:scenario4:createPedBlaqq',
+            'halloween2022:scenario4:createPedAurukh',
             {
                 center: [2048.51 + 0.5, 2981.56, -62.39 - 0.5],
                 length: 1,
@@ -1909,13 +2001,10 @@ export class Halloween2022Scenario4Provider {
             },
             [
                 {
-                    label: 'BlaqqEndWhyT',
+                    label: 'Aurukh',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify(
-                            "... Prononce un truc incompréhensible mais ça avait l'air intéressant ...",
-                            'info'
-                        );
+                        this.notifier.notify('...', 'info');
                     },
                 },
             ]
@@ -2038,18 +2127,30 @@ export class Halloween2022Scenario4Provider {
             coords: { x: 2091.11, y: 2932.34, z: -62.9, w: 270.43 },
             modelCustomization: { Father: 43, ShapeMix: 0.5, SkinMix: 0.6, Mother: 30 },
             components: {
-                1: [0, 0, 0],
-                3: [11, 0, 0],
-                4: [22, 8, 0],
+                3: [22, 0, 0],
+                4: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 8, 0, 0],
+                5: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Bag] + 2, 1, 0],
                 6: [51, 0, 0],
-                7: [8, 0, 0],
-                8: [38, 1, 0],
-                9: [0, 0, 0],
-                10: [43, 0, 0],
-                11: [190, 3, 0],
+                7: [
+                    VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Accessories] + 4,
+                    0,
+                    0,
+                ],
+                8: [
+                    VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Undershirt] + 4,
+                    0,
+                    0,
+                ],
+                9: [
+                    VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 8,
+                    0,
+                    0,
+                ],
+                10: [0, 0, 0],
+                11: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 2, 3, 0],
             },
             props: {
-                0: [33, 1, 0],
+                0: [VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat] + 7, 0, 0],
             },
             face: {
                 CheeksBoneHigh: 0.0,
@@ -2146,18 +2247,31 @@ export class Halloween2022Scenario4Provider {
             coords: { x: 2093.17, y: 2932.41, z: -62.9, w: 79.39 },
             modelCustomization: { SkinMix: 0.5, ShapeMix: 0.5, Mother: 26, Father: 43 },
             components: {
-                1: [0, 0, 0],
-                3: [11, 0, 0],
-                4: [35, 0, 0],
-                5: [52, 0, 0],
+                3: [22, 0, 0],
+                4: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Legs] + 1, 2, 0],
+                5: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Bag] + 2, 1, 0],
                 6: [51, 0, 0],
-                7: [8, 0, 0],
-                8: [56, 0, 0],
-                9: [0, 0, 0],
-                10: [44, 5, 0],
-                11: [190, 0, 0],
+                7: [
+                    VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Accessories] + 4,
+                    0,
+                    0,
+                ],
+                8: [
+                    VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Undershirt] + 4,
+                    0,
+                    0,
+                ],
+                9: [
+                    VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.BodyArmor] + 8,
+                    0,
+                    0,
+                ],
+                10: [0, 0, 0],
+                11: [VanillaComponentDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Component.Tops] + 2, 2, 0],
             },
-            props: {},
+            props: {
+                0: [VanillaPropDrawableIndexMaxValue[GetHashKey('mp_m_freemode_01')][Prop.Hat] + 6, 0, 0],
+            },
             face: {
                 CheeksBoneHigh: 0.0,
                 NosePeakLength: 0.0,
@@ -2465,81 +2579,84 @@ export class Halloween2022Scenario4Provider {
         );
     }
 
-    private async createPedPano() {
+    private async createPedPoulpitor() {
         await this.pedFactory.createPed({
             model: 'mp_m_freemode_01',
             coords: { x: 2053.91, y: 2942.04, z: -62.9, w: 357.21 },
-            modelCustomization: { Father: 16, SkinMix: 0.8, Mother: 26, ShapeMix: 0.45 },
+            modelCustomization: { Father: 1, Mother: 22, ShapeMix: 0.05, Hash: 1885233650, SkinMix: 0.35 },
             components: {
-                9: [0, 0, 0],
-                8: [15, 0, 0],
-                7: [0, 0, 0],
-                6: [8, 8, 0],
-                4: [8, 14, 0],
-                3: [11, 0, 0],
-                10: [0, 0, 0],
-                11: [234, 25, 0],
                 1: [0, 0, 0],
+                9: [0, 0, 0],
+                8: [146, 0, 0],
+                7: [22, 1, 0],
+                6: [104, 3, 0],
+                4: [24, 5, 0],
+                3: [4, 0, 0],
+                10: [0, 0, 0],
+                11: [31, 5, 0],
             },
             props: {
-                0: [122, 0, 0],
-                6: [31, 0, 0],
-                1: [5, 0, 0],
+                0: [146, 0, 0],
+                1: [8, 1, 0],
+                2: [2, 0, 0],
+                6: [16, 1, 0],
+                7: [8, 2, 0],
             },
             face: {
-                LipsThickness: 0.5,
-                EyebrowHigh: 0.0,
-                JawBoneWidth: 0.3,
-                EyesOpening: 0.0,
-                AddBodyBlemish: -1,
-                NoseWidth: -0.9,
-                ChimpBoneLength: 0.0,
-                ChimpBoneWidth: 0.0,
-                NoseBoneHigh: 0.5,
-                Ageing: -1,
-                EyeColor: 7,
-                ChimpHole: 0.0,
-                EyebrowForward: 0.0,
-                CheeksWidth: 0.0,
                 NoseBoneTwist: 0.0,
-                NosePeakLength: 0.6,
-                BodyBlemish: -1,
-                CheeksBoneHigh: 0.0,
-                NosePeakLower: 0.2,
-                Blemish: -1,
-                JawBoneBackLength: 0.0,
-                CheeksBoneWidth: 0.0,
-                Moles: -1,
-                NosePeakHeight: 0.0,
+                NoseWidth: 0.2,
+                ChimpBoneLower: 0.2,
+                NeckThickness: 0.6,
+                ChimpBoneLength: -0.3,
+                LipsThickness: -0.3,
                 Complexion: -1,
-                NeckThickness: 1.0,
-                ChimpBoneLower: 0.0,
+                EyesOpening: -0.3,
+                JawBoneWidth: 0.3,
+                ChimpBoneWidth: -0.4,
+                EyebrowForward: 0.6,
+                BodyBlemish: -1,
+                NosePeakHeight: -0.5,
+                CheeksBoneHigh: -0.6,
+                NosePeakLower: -0.1,
+                NoseBoneHigh: -0.3,
+                AddBodyBlemish: -1,
+                JawBoneBackLength: -0.2,
+                CheeksWidth: -0.3,
+                ChimpHole: 0.0,
+                EyeColor: -1,
+                NosePeakLength: -0.3,
+                Blemish: -1,
+                EyebrowHigh: 0.0,
+                CheeksBoneWidth: -0.4,
+                Ageing: 4,
+                Moles: -1,
             },
             hair: {
-                BeardType: 11,
-                EyebrowColor: 4,
-                ChestHairOpacity: 1.0,
-                ChestHairColor: 0,
-                BeardColor: 8,
-                HairType: 19,
-                HairColor: 13,
-                ChestHairType: -1,
-                EyebrowOpacity: 1.0,
-                HairSecondaryColor: 12,
+                EyebrowType: 6,
+                BeardType: 10,
                 BeardOpacity: 1.0,
-                EyebrowType: 0,
+                ChestHairType: 0,
+                EyebrowOpacity: 1.0,
+                ChestHairOpacity: 1.0,
+                HairColor: 3,
+                BeardColor: 0,
+                HairType: 5,
+                HairSecondaryColor: 29,
+                EyebrowColor: 1,
+                ChestHairColor: 0,
             },
             makeup: {
-                FullMakeupOpacity: 1.0,
-                FullMakeupPrimaryColor: 0,
-                FullMakeupType: -1,
-                LipstickColor: 0,
-                BlushOpacity: 1.0,
-                LipstickOpacity: 1.0,
-                BlushType: -1,
-                FullMakeupSecondaryColor: 0,
-                LipstickType: -1,
+                FullMakeupDefaultColor: 1,
                 BlushColor: 0,
+                LipstickOpacity: 1.0,
+                FullMakeupPrimaryColor: 0,
+                BlushType: -1,
+                LipstickColor: 0,
+                FullMakeupOpacity: 1.0,
+                FullMakeupSecondaryColor: 0,
+                BlushOpacity: 1.0,
+                LipstickType: -1,
+                FullMakeupType: -1,
             },
             tattoos: [],
             invincible: true,
@@ -2551,7 +2668,7 @@ export class Halloween2022Scenario4Provider {
         });
 
         this.targetFactory.createForBoxZone(
-            'halloween2022:scenario4:createPedPano',
+            'halloween2022:scenario4:createPedPoulpitor',
             {
                 center: [2053.91, 2942.04, -62.9],
                 length: 1,
@@ -2562,13 +2679,10 @@ export class Halloween2022Scenario4Provider {
             },
             [
                 {
-                    label: 'Pano',
+                    label: 'Poulpitor',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify(
-                            "J'ai pas les 100 citrouilles avec une carte et le no clip. PS: Pello n'est pas mort, ce n'est donc pas un fantôme.",
-                            'info'
-                        );
+                        this.notifier.notify('...', 'info');
                     },
                 },
             ]
@@ -2675,6 +2789,420 @@ export class Halloween2022Scenario4Provider {
                             "Heureusement que l'alien faisait juste son footing pour rester en forme et qu'il n'avait pas faim...",
                             'info'
                         );
+                    },
+                },
+            ]
+        );
+    }
+
+    private async createPedBalrock() {
+        await this.pedFactory.createPed({
+            model: 'mp_m_freemode_01',
+            coords: { x: 2052.84, y: 2942.7, z: -62.9, w: 313.24 },
+            modelCustomization: { SkinMix: 0.55, Mother: 26, Father: 44, ShapeMix: 0.55, Hash: 1885233650 },
+            components: {
+                1: [0, 0, 0],
+                3: [1, 0, 0],
+                4: [24, 1, 0],
+                7: [0, 0, 0],
+                6: [10, 0, 0],
+                9: [0, 0, 0],
+                8: [15, 0, 0],
+                11: [348, 9, 0],
+                10: [0, 0, 0],
+            },
+            props: {
+                0: [5, 0, 0],
+                1: [23, 9, 0],
+                2: [32, 1, 0],
+                6: [4, 1, 0],
+            },
+            face: {
+                JawBoneBackLength: 0.1,
+                ChimpHole: 0.0,
+                CheeksBoneWidth: 0.0,
+                EyebrowForward: 0.0,
+                CheeksWidth: 0.0,
+                CheeksBoneHigh: 0.0,
+                ChimpBoneLength: 0.0,
+                NosePeakLower: 0.0,
+                EyeColor: 2,
+                NosePeakHeight: -0.3,
+                ChimpBoneWidth: 0.0,
+                ChimpBoneLower: 0.0,
+                NoseWidth: -0.3,
+                AddBodyBlemish: -1,
+                NosePeakLength: 0.1,
+                NeckThickness: 0.1,
+                LipsThickness: -0.8,
+                JawBoneWidth: 0.2,
+                BodyBlemish: -1,
+                Ageing: -1,
+                Blemish: -1,
+                EyesOpening: -0.2,
+                NoseBoneHigh: 0.0,
+                EyebrowHigh: 0.0,
+                NoseBoneTwist: 0.0,
+                Complexion: -1,
+                Moles: -1,
+            },
+            hair: {
+                ChestHairOpacity: 1.0,
+                HairColor: 60,
+                BeardColor: 0,
+                EyebrowType: 12,
+                ChestHairColor: 0,
+                BeardOpacity: 1.0,
+                EyebrowColor: 0,
+                ChestHairType: 2,
+                HairSecondaryColor: 0,
+                BeardType: 10,
+                HairType: 0,
+                EyebrowOpacity: 1.0,
+            },
+            makeup: {
+                LipstickColor: 0,
+                FullMakeupSecondaryColor: 0,
+                LipstickOpacity: 1.0,
+                LipstickType: -1,
+                BlushColor: 0,
+                BlushType: -1,
+                FullMakeupPrimaryColor: 0,
+                FullMakeupDefaultColor: 1,
+                FullMakeupOpacity: 1.0,
+                FullMakeupType: -1,
+                BlushOpacity: 1.0,
+            },
+            tattoos: [
+                {
+                    collection: -1056335443,
+                    overlay: 1617489838,
+                },
+                {
+                    collection: 598190139,
+                    overlay: -1128139527,
+                },
+                {
+                    collection: -240234547,
+                    overlay: -1431574022,
+                },
+                {
+                    collection: 484754152,
+                    overlay: 956061600,
+                },
+                {
+                    collection: 1616273011,
+                    overlay: -54254731,
+                },
+                {
+                    collection: -2086773,
+                    overlay: 193320466,
+                },
+                {
+                    collection: -1719270477,
+                    overlay: -754981437,
+                },
+                {
+                    collection: -363871405,
+                    overlay: -1512326404,
+                },
+                {
+                    collection: -363871405,
+                    overlay: -1512326404,
+                },
+                {
+                    collection: -1719270477,
+                    overlay: -754981437,
+                },
+            ],
+            invincible: true,
+            freeze: true,
+            blockevents: true,
+            animDict: 'missfbi3_party_d',
+            anim: 'stand_talk_loop_b_male2',
+            flag: 1,
+        });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedBalrock',
+            {
+                ...new BoxZone([2052.91, 2942.8, -61.9], 0.8, 0.8, {
+                    heading: 131.54,
+                    minZ: -62.9,
+                    maxZ: -60.9,
+                }),
+            },
+            [
+                {
+                    label: 'Balrock',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify('...', 'info');
+                    },
+                },
+            ]
+        );
+    }
+
+    private async createPedMarverikG() {
+        await this.pedFactory.createPed({
+            model: 'mp_m_freemode_01',
+            coords: { x: 2080.95, y: 2934.67, z: -62.9, w: 173.58 },
+            modelCustomization: {
+                Father: 44,
+                Mother: 21,
+                ShapeMix: 0,
+                Hash: 1885233650,
+                SkinMix: 0.4,
+            },
+            components: {
+                3: [20, 0, 0],
+                4: [24, 5, 0],
+                6: [109, 3, 0],
+                7: [178, 7, 0],
+                8: [73, 3, 0],
+                9: [0, 0, 0],
+                10: [0, 0, 0],
+                11: [321, 0, 0],
+            },
+            props: {
+                0: [21, 3, 0],
+                1: [3, 0, 0],
+                2: [26, 2, 0],
+            },
+            face: {
+                NoseBoneTwist: 0,
+                NoseWidth: 0,
+                ChimpBoneLower: 0,
+                NeckThickness: 0,
+                ChimpBoneLength: 0,
+                LipsThickness: 0,
+                Complexion: -1,
+                EyesOpening: 0,
+                JawBoneWidth: 0,
+                ChimpBoneWidth: -0.6,
+                EyebrowForward: 0.1,
+                BodyBlemish: 0,
+                NosePeakHeight: 0,
+                CheeksBoneHigh: 0,
+                NosePeakLower: 0,
+                NoseBoneHigh: 0,
+                NosePeakLength: 0,
+                AddBodyBlemish: -1,
+                CheeksWidth: 0,
+                ChimpHole: 0,
+                EyeColor: 2,
+                JawBoneBackLength: 0,
+                Blemish: -1,
+                EyebrowHigh: 0,
+                CheeksBoneWidth: 0,
+                Ageing: 8,
+                Moles: -1,
+            },
+            hair: {
+                EyebrowType: 17,
+                BeardType: 18,
+                BeardOpacity: 1,
+                BeardColor: 29,
+                EyebrowOpacity: 1,
+                ChestHairOpacity: 1,
+                HairColor: 29,
+                ChestHairColor: 0,
+                HairType: 7,
+                HairSecondaryColor: 29,
+                EyebrowColor: 29,
+                ChestHairType: -1,
+            },
+            makeup: {
+                FullMakeupDefaultColor: 1,
+                BlushColor: 0,
+                LipstickOpacity: 1,
+                FullMakeupPrimaryColor: 0,
+                BlushType: -1,
+                LipstickColor: 0,
+                FullMakeupOpacity: 1,
+                FullMakeupSecondaryColor: 0,
+                BlushOpacity: 1,
+                LipstickType: -1,
+                FullMakeupType: -1,
+            },
+            tattoos: [
+                {
+                    collection: -363871405,
+                    overlay: -770265298,
+                },
+                {
+                    collection: -363871405,
+                    overlay: -1170154756,
+                },
+                {
+                    collection: -363871405,
+                    overlay: -1512326404,
+                },
+                {
+                    collection: -363871405,
+                    overlay: 335386038,
+                },
+                {
+                    collection: -363871405,
+                    overlay: -1732002225,
+                },
+                {
+                    collection: -240234547,
+                    overlay: -1431574022,
+                },
+                {
+                    collection: -2086773,
+                    overlay: -1953737187,
+                },
+                {
+                    collection: 598190139,
+                    overlay: 1544332704,
+                },
+                {
+                    collection: -975527441,
+                    overlay: 34276608,
+                },
+                {
+                    collection: 1616273011,
+                    overlay: 1832021545,
+                },
+                {
+                    collection: 601646824,
+                    overlay: -1509810048,
+                },
+                {
+                    collection: 601646824,
+                    overlay: 2057657792,
+                },
+            ],
+            invincible: true,
+            freeze: true,
+            blockevents: true,
+            scenario: 'WORLD_HUMAN_LEANING',
+        });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedMarverickG',
+            {
+                ...new BoxZone([2080.91, 2934.68, -61.9], 0.6, 0.6, {
+                    heading: 81.17,
+                    minZ: -62.9,
+                    maxZ: -60.9,
+                }),
+            },
+            [
+                {
+                    label: 'MarverikG',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify('...', 'info');
+                    },
+                },
+            ]
+        );
+    }
+
+    private async createPedSilverlord() {
+        await this.pedFactory.createPed({
+            model: 'mp_m_freemode_01',
+            coords: { x: 2054.25, y: 2985.42, z: -62.9, w: 345.13 },
+            modelCustomization: { Father: 20, Mother: 26, ShapeMix: 0.4, Hash: 1885233650, SkinMix: 0.45 },
+            components: {
+                11: [50, 2, 0],
+                10: [0, 0, 0],
+                1: [0, 0, 0],
+                3: [1, 0, 0],
+                4: [75, 1, 0],
+                6: [1, 2, 0],
+                7: [0, 0, 0],
+                8: [15, 0, 0],
+                9: [0, 0, 0],
+            },
+            props: {
+                0: [58, 1, 0],
+                1: [5, 1, 0],
+            },
+            face: {
+                NoseBoneTwist: 0,
+                NoseWidth: -0.5,
+                Ageing: -1,
+                NeckThickness: 0.1,
+                ChimpBoneLength: 0,
+                LipsThickness: 0,
+                Complexion: -1,
+                EyesOpening: 0.1,
+                JawBoneWidth: -0.2,
+                ChimpBoneWidth: 0,
+                EyebrowForward: 0,
+                BodyBlemish: 2,
+                NosePeakHeight: 0.1,
+                CheeksBoneHigh: 0,
+                NosePeakLower: 0,
+                NoseBoneHigh: 0,
+                Moles: -1,
+                ChimpHole: 0,
+                CheeksWidth: 0,
+                EyeColor: 1,
+                AddBodyBlemish: -1,
+                JawBoneBackLength: 0,
+                Blemish: -1,
+                EyebrowHigh: 0,
+                CheeksBoneWidth: 0,
+                NosePeakLength: 0,
+                ChimpBoneLower: 0.2,
+            },
+            hair: {
+                EyebrowType: 23,
+                BeardType: 7,
+                BeardOpacity: 0.95,
+                ChestHairType: 0,
+                EyebrowOpacity: 1,
+                ChestHairOpacity: 1,
+                EyebrowColor: 1,
+                BeardColor: 0,
+                HairType: 4,
+                HairSecondaryColor: 0,
+                HairColor: 3,
+                ChestHairColor: 0,
+            },
+            makeup: {
+                FullMakeupDefaultColor: 1,
+                BlushColor: 0,
+                LipstickOpacity: 1,
+                FullMakeupType: -1,
+                BlushType: -1,
+                FullMakeupPrimaryColor: 0,
+                FullMakeupOpacity: 1,
+                BlushOpacity: 1,
+                FullMakeupSecondaryColor: 0,
+                LipstickType: -1,
+                LipstickColor: 0,
+            },
+            tattoos: [],
+            invincible: true,
+            freeze: true,
+            blockevents: true,
+            animDict: 'switch@michael@sitting',
+            anim: 'idle',
+            flag: 1,
+        });
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario4:createPedSilverlord',
+            {
+                ...new BoxZone([2054.07, 2985.13, -62.45], 1.0, 0.8, {
+                    heading: 276.51,
+                    minZ: -63.45,
+                    maxZ: -61.45,
+                }),
+            },
+            [
+                {
+                    label: 'Silverlord',
+                    icon: 'fas fa-question',
+                    action: async () => {
+                        this.notifier.notify('...', 'info');
                     },
                 },
             ]
