@@ -62,6 +62,9 @@ export type Skin = {
         BeardType?: number;
         BeardOpacity?: number;
         BeardColor?: number;
+        EyebrowType?: number;
+        EyebrowOpacity?: number;
+        EyebrowColor?: number;
     };
     Makeup: {
         BeardType?: number;

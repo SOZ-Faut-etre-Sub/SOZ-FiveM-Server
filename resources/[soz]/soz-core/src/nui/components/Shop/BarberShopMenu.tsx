@@ -65,6 +65,16 @@ export const BarberShopMenu: FunctionComponent<MenuBarberShopStateProps> = ({ da
                         cat={content.find(cat => cat.category === 'Beard')}
                         config={configuration['Beard']}
                     />
+                    <MenuBarberEyebrowComponent
+                        cat={content.find(cat => cat.category === 'Eyebrow')}
+                        player_data={data.player_data}
+                        shop_colors={data.shop_colors}
+                        updateConfiguration={updateConfiguration}
+                    />
+                    <MenuBarberValidateButton
+                        cat={content.find(cat => cat.category === 'Eyebrow')}
+                        config={configuration['Eyebrow']}
+                    />
                     <MenuBarberMakeupComponent
                         cat={content.find(cat => cat.category === 'Makeup')}
                         player_data={data.player_data}
@@ -246,7 +256,65 @@ const MenuBarberBeardComponent: FunctionComponent<{
         </>
     );
 };
-
+const MenuBarberEyebrowComponent: FunctionComponent<{
+    cat: BarberShopCategory;
+    player_data: PlayerData;
+    shop_colors: BarberShopColors;
+    updateConfiguration: (cat: string, overlay: string, field: string, v: any) => void;
+}> = ({ cat, player_data, shop_colors, updateConfiguration }) => {
+    if (!cat) {
+        return null;
+    }
+    return (
+        <>
+            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuItemSelect
+                title="Type"
+                onChange={async (_, type) => {
+                    updateConfiguration(cat.category, cat.overlay, 'EyebrowType', type);
+                }}
+                value={player_data.skin.Hair.EyebrowType}
+            >
+                {cat.items.map(entry => (
+                    <MenuItemSelectOption key={entry.value} value={entry.value}>
+                        {entry.label}
+                    </MenuItemSelectOption>
+                ))}
+            </MenuItemSelect>
+            <MenuItemSelect
+                title="Densité"
+                onChange={async (_, density) => {
+                    updateConfiguration(cat.category, cat.overlay, 'EyebrowOpacity', density / 100);
+                }}
+                value={player_data.skin.Hair.EyebrowOpacity * 100}
+            >
+                {[...Array(20)]
+                    .map((_, i) => i * 5)
+                    .map(entry => (
+                        <MenuItemSelectOption key={entry} value={entry}>
+                            {entry}
+                        </MenuItemSelectOption>
+                    ))}
+            </MenuItemSelect>
+            <MenuItemSelect
+                title="Couleur"
+                distance={3}
+                onChange={async (_, color) => {
+                    updateConfiguration(cat.category, cat.overlay, 'EyebrowColor', color);
+                }}
+                value={player_data.skin.Hair.EyebrowColor}
+            >
+                {shop_colors.Hair.map(entry => (
+                    <MenuItemSelectOptionColor
+                        key={entry.value}
+                        value={entry.value}
+                        color={[entry.r, entry.g, entry.b]}
+                    ></MenuItemSelectOptionColor>
+                ))}
+            </MenuItemSelect>
+        </>
+    );
+};
 const MenuBarberMakeupComponent: FunctionComponent<{
     cat: BarberShopCategory;
     player_data: PlayerData;

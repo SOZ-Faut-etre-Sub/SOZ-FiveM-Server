@@ -166,6 +166,8 @@ export type BarberConfiguration = {
         HairSecondaryColor?: number;
         BeardType?: number;
         BeardColor?: number;
+        EyebrowType?: number;
+        EyebrowColor?: number;
     };
     Makeup: {
         FullMakeupType?: number;

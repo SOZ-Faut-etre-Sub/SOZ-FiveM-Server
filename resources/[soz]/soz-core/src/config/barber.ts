@@ -28,6 +28,14 @@ export const BarberShopItems: BarberShopContent = {
             items: undefined,
         },
         {
+            price: 15,
+            category: 'Eyebrow',
+            label: 'Sourcils',
+            overlay: 'Hair',
+            components: { ['EyebrowType']: true, ['EyebrowColor']: true, ['EyebrowOpacity']: true },
+            items: undefined,
+        },
+        {
             price: 20,
             category: 'Makeup',
             label: 'Maquillage',
@@ -49,6 +57,14 @@ export const BarberShopItems: BarberShopContent = {
             label: 'Cheveux',
             overlay: 'Hair',
             components: { ['HairType']: true, ['HairColor']: true, ['HairSecondaryColor']: true },
+            items: undefined,
+        },
+        {
+            price: 15,
+            category: 'Eyebrow',
+            label: 'Sourcils',
+            overlay: 'Hair',
+            components: { ['EyebrowType']: true, ['EyebrowColor']: true, ['EyebrowOpacity']: true },
             items: undefined,
         },
         {

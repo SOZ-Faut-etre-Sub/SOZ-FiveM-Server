@@ -72,11 +72,13 @@ export class BarberShopProvider {
 
         this.barberShopContent[PlayerPedHash.Male][0].items = this.barberShopLabels.HairMale;
         this.barberShopContent[PlayerPedHash.Male][1].items = this.barberShopLabels.BeardMale;
-        this.barberShopContent[PlayerPedHash.Male][2].items = this.barberShopLabels.Makeup;
+        this.barberShopContent[PlayerPedHash.Male][2].items = this.barberShopLabels.Eyebrow;
+        this.barberShopContent[PlayerPedHash.Male][3].items = this.barberShopLabels.Makeup;
         this.barberShopContent[PlayerPedHash.Female][0].items = this.barberShopLabels.HairFemale;
-        this.barberShopContent[PlayerPedHash.Female][1].items = this.barberShopLabels.Blush;
-        this.barberShopContent[PlayerPedHash.Female][2].items = this.barberShopLabels.Lipstick;
-        this.barberShopContent[PlayerPedHash.Female][3].items = this.barberShopLabels.Makeup;
+        this.barberShopContent[PlayerPedHash.Female][1].items = this.barberShopLabels.Eyebrow;
+        this.barberShopContent[PlayerPedHash.Female][2].items = this.barberShopLabels.Blush;
+        this.barberShopContent[PlayerPedHash.Female][3].items = this.barberShopLabels.Lipstick;
+        this.barberShopContent[PlayerPedHash.Female][4].items = this.barberShopLabels.Makeup;
     }
 
     public async openShop() {
@@ -85,7 +87,6 @@ export class BarberShopProvider {
         const player_data = this.playerService.getPlayer();
 
         this.setupShop();
-
         this.nuiMenu.openMenu(MenuType.BarberShop, {
             shop_content,
             shop_colors,
@@ -119,7 +120,7 @@ export class BarberShopProvider {
                 price: price,
                 overlay: overlay,
             } as BarberShopItem,
-            ShopBrand.Barber
+            ShopBrand.Barber,
         );
     }
 
@@ -136,7 +137,7 @@ export class BarberShopProvider {
                 y + PositionInBarberShop.CAMERA_OFFSET_Y,
                 z + PositionInBarberShop.CAMERA_OFFSET_Z,
             ] as Vector3,
-            [x, y, z + PositionInBarberShop.CAMERA_TARGET_Z] as Vector3
+            [x, y, z + PositionInBarberShop.CAMERA_TARGET_Z] as Vector3,
         );
 
         // Play idle animation
