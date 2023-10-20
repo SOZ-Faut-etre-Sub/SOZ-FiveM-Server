@@ -50,6 +50,13 @@ const DmcConverterRecipes: Record<string, DmcConverterRecipe> = {
         outputAmount: 2,
         temperature: 1250,
     },
+    ['halloween_uranium_ingot']: {
+        input: {
+            ['halloween_uranium_raw']: 10,
+        },
+        outputAmount: 2,
+        temperature: 1132,
+    },
 };
 
 export const DmcConverterConfig = {
@@ -486,6 +493,41 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
                     utilitary_certificate: { count: 1 },
                 },
                 amount: 5,
+            },
+        },
+    },
+    '???': {
+        animation: {
+            dictionary: 'melee@small_wpn@streamed_core_fps',
+            name: 'car_down_attack',
+            options: {
+                repeat: true,
+            },
+        },
+        duration: 5000,
+        icon: '👮',
+        event: 'job_dmc_craft',
+        recipes: {
+            halloween_atomic_compass: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 20 },
+                },
+                amount: 1,
+            },
+            halloween_atomic_gps: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 20 },
+                },
+                amount: 1,
+            },
+            halloween_brain_knife: {
+                inputs: {
+                    halloween_uranium_ingot: { count: 1 },
+                    iron_ingot: { count: 1 },
+                    steel_ingot: { count: 1 },
+                    aluminium_ingot: { count: 1 },
+                },
+                amount: 1,
             },
         },
     },

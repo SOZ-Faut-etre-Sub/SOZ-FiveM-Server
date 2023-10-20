@@ -244,6 +244,31 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    '???': {
+        feature: Feature.Easter,
+        duration: 5000,
+        icon: '🥚',
+        event: 'job_cm_food_craft',
+        recipes: {
+            halloween_midnight_cheese: {
+                inputs: {
+                    milk: { count: 1 },
+                    semi_skimmed_milk: { count: 1 },
+                    skimmed_milk: { count: 1 },
+                },
+                amount: 1,
+            },
+            halloween_damned_wine: {
+                inputs: {
+                    grape1: { count: 1 },
+                    grape2: { count: 1 },
+                    grape3: { count: 1 },
+                    grape4: { count: 1 },
+                },
+                amount: 1,
+            },
+        },
+    },
 };
 
 export const FoodCloakroom: WardrobeConfig = {

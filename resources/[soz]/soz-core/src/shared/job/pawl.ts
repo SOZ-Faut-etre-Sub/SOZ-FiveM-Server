@@ -168,4 +168,37 @@ export const PawlCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    ['???']: {
+        duration: 15000,
+        animation: {
+            dictionary: 'mp_arresting',
+            name: 'a_uncuff',
+            options: {
+                onlyUpperBody: true,
+                repeat: true,
+            },
+        },
+        event: 'job_pawl_craft',
+        recipes: {
+            witch_broom: {
+                inputs: {
+                    wood_plank: { count: 4 },
+                },
+                amount: 1,
+            },
+            small_coffin: {
+                inputs: {
+                    wood_plank: { count: 10 },
+                },
+                amount: 1,
+            },
+            halloween_scarecrow: {
+                inputs: {
+                    wood_plank: { count: 10 },
+                    halloween_uranium_raw: { count: 1 },
+                },
+                amount: 1,
+            },
+        },
+    },
 };
