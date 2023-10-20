@@ -1,4 +1,7 @@
-import { Once, OnceStep } from '../../../core/decorators/event';
+import { PlayerPositionProvider } from '@public/client/player/player.position.provider';
+import { ClientEvent } from '@public/shared/event';
+
+import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
@@ -6,12 +9,8 @@ import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { Halloween2022Scenario3 } from '../../../shared/story/halloween-2022/scenario3';
 import { Dialog } from '../../../shared/story/story';
-import { AnimationService } from '../../animation/animation.service';
 import { BlipFactory } from '../../blip';
-import { EntityFactory } from '../../factory/entity.factory';
 import { PedFactory } from '../../factory/ped.factory';
-import { PlayerService } from '../../player/player.service';
-import { ProgressService } from '../../progress.service';
 import { TargetFactory } from '../../target/target.factory';
 import { StoryProvider } from '../story.provider';
 
@@ -23,23 +22,14 @@ export class Halloween2022Scenario3Provider {
     @Inject(PedFactory)
     private pedFactory: PedFactory;
 
-    @Inject(EntityFactory)
-    private entityFactory: EntityFactory;
-
     @Inject(StoryProvider)
     private storyService: StoryProvider;
 
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
-    @Inject(AnimationService)
-    private animationService: AnimationService;
-
-    @Inject(ProgressService)
-    private progressService: ProgressService;
-
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
@@ -47,17 +37,34 @@ export class Halloween2022Scenario3Provider {
             return;
         }
 
-        this.blipFactory.create('halloween_scenario3', {
+        await this.createTourist1Ped();
+        await this.createTourist2Ped();
+        await this.createDoctorPed();
+        await this.createTPTarget();
+    }
+
+    @OnEvent(ClientEvent.PLAYER_UPDATE)
+    public createBlip() {
+        if (!isFeatureEnabled(Feature.HalloweenScenario3)) {
+            return;
+        }
+
+        if (!this.storyService.canInteractForPart('halloween2022', 'scenario3', 0)) {
+            return;
+        }
+
+        const blipId = 'halloween2022_scenario3';
+        if (this.blipFactory.exist(blipId)) {
+            return;
+        }
+
+        this.blipFactory.create(blipId, {
             name: 'Activité suspecte',
             coords: { x: 510.03, y: 5596.81, z: 792.72 },
             sprite: 484,
             scale: 0.99,
             color: 44,
         });
-
-        await this.createTourist1Ped();
-        await this.createTourist2Ped();
-        await this.createDoctorPed();
     }
 
     private async createTourist1Ped(): Promise<void> {
@@ -196,6 +203,50 @@ export class Halloween2022Scenario3Provider {
                     },
                 },
                 this.storyService.replayTarget(Halloween2022Scenario3, 'scenario3', 3),
+            ]
+        );
+    }
+
+    private async createTPTarget(): Promise<void> {
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario3:TPBunker',
+            {
+                center: [598.52, 5556.91, 715.56],
+                length: 18.4,
+                width: 15.6,
+                heading: 343,
+                minZ: 715.56,
+                maxZ: 716.16,
+            },
+            [
+                {
+                    label: 'Entrer',
+                    icon: 'c:housing/enter.png',
+                    action: async () => {
+                        this.playerPositionProvider.teleportPlayerToPosition([894.74, -3245.37, -98.26, 91.46]);
+                    },
+                },
+            ]
+        );
+
+        this.targetFactory.createForBoxZone(
+            'halloween2022:scenario3:TPBunkerBack',
+            {
+                center: [896.9, -3245.8, -99.27],
+                length: 0.4,
+                width: 5.2,
+                heading: 271,
+                minZ: -99.27,
+                maxZ: -94.07,
+            },
+            [
+                {
+                    label: 'Sortir',
+                    icon: 'c:housing/enter.png',
+                    action: async () => {
+                        this.playerPositionProvider.teleportPlayerToPosition([604.61, 5556.5, 716.76, 37.74]);
+                    },
+                },
             ]
         );
     }

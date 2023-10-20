@@ -10,24 +10,28 @@ export const AudioApp: FunctionComponent = () => {
             return;
         }
 
-        const emitter = new Audio(sound.path);
-        emitter.volume = sound.volume;
+        try {
+            const emitter = new Audio(sound.path);
+            emitter.volume = sound.volume;
 
-        setAudio(state => {
-            state[sound.id] = emitter;
-            return state;
-        });
-
-        emitter.addEventListener('ended', () => {
             setAudio(state => {
-                if (state[sound.id]) {
-                    delete state[sound.id];
-                    return state;
-                }
+                state[sound.id] = emitter;
+                return state;
             });
-        });
 
-        await emitter.play();
+            emitter.addEventListener('ended', () => {
+                setAudio(state => {
+                    if (state[sound.id]) {
+                        delete state[sound.id];
+                        return state;
+                    }
+                });
+            });
+
+            await emitter.play();
+        } catch (e) {
+            console.error(e);
+        }
     });
 
     useAudioNuiEvent('StopAudio', id => {

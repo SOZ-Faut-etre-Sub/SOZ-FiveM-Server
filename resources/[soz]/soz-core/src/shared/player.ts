@@ -7,7 +7,7 @@ import { Disease, Organ } from './disease';
 import { DrivingSchoolLicenseType } from './driving-school';
 import { InventoryItem } from './item';
 import { JobType } from './job';
-import { Halloween2022 } from './story/halloween2022';
+import { Halloween2022, Halloween2023 } from './story/halloween2022';
 
 export type QBCorePlayer = {
     Functions: {
@@ -250,6 +250,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     isWearingItem: 'zevent2022_tshirt' | null;
     gym_subscription_expire_at: number | null;
     halloween2022: Halloween2022 | null;
+    halloween2023: Halloween2023 | null;
     licences: Partial<Record<PlayerLicenceType, number>>;
     shortcuts: Record<number, Partial<InventoryItem>>;
     mort: string | null;

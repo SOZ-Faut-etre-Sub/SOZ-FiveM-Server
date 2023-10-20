@@ -148,6 +148,8 @@ export enum ServerEvent {
     PROP_REQUEST_DELETE_PROP = 'soz-core:server:prop:request-delete',
     PROP_REQUEST_EDIT_PROP = 'soz-core:server:prop:request-edit',
 
+    STORY_HALLOWEEN_2023_SCENARIO_1 = 'soz-core:server:halloween:scenario1',
+
     STORAGE_REMOVE_ITEM = 'soz-core:server:storage:remove-item',
     SHOP_BOSS_BUY = 'soz-core:server:shop:boss:buy',
     SHOP_EASTER_BUY = 'soz-core:server:shop:easter:buy',
