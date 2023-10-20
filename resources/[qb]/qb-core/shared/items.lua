@@ -224,7 +224,7 @@ QBShared.Items = {
     },
     ['weapon_garbagebag'] = {
         ['name'] = 'weapon_garbagebag',
-        ['label'] = 'Sac poubelle',
+        ['label'] = 'Sac poubelle de l\'Apocalypse', -- Sac poubelle
         ['weight'] = 2000,
         ['type'] = 'weapon',
         ['ammotype'] = nil,
@@ -1178,13 +1178,13 @@ QBShared.Items = {
     -- Miscellaneous
     ['weapon_petrolcan'] = {
         ['name'] = 'weapon_petrolcan',
-        ['label'] = 'Bidon d\'essence',
+        ['label'] =  'Jus de cadavre' -- 'Bidon d\'essence',
         ['weight'] = 1000,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_PETROLCAN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = 'De quoi faire le plein de ta caisse !',
+        ['description'] = '10 ans d\'âge..' -- 'De quoi faire le plein de ta caisse !',
         ['illustrator'] = '.LeakFlood',
     },
     ['weapon_fireextinguisher'] = {
@@ -5929,6 +5929,181 @@ QBShared.Items = {
         ['description'] = 'Un insigne indique qu’il provient des canaux de vespucci… Etrange…',
         ['illustrator'] = '.Crash'
     },
+
+    --- DMC
+    ['halloween_uranium_raw'] = {
+        ['name'] = 'halloween_uranium_raw',
+        ['label'] = "Minerai d'uranium",
+        ['weight'] = 500,
+        ['type'] = 'metal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Une sorte de pierre verte qui brille à faire fondre.',
+        ['illustrator'] = '.--'
+    },
+    ['halloween_uranium_ingot'] = {
+        ['name'] = 'halloween_uranium_ingot',
+        ['label'] = "Lingot d'uranium",
+        ['weight'] = 500,
+        ['type'] = 'metal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Lingot fluorescent, et tiède.',
+        ['illustrator'] = '.--'
+    },
+    ['halloween_atomic_compass'] = {
+        ['name'] = 'halloween_atomic_compass',
+        ['label'] = "Boussole nucléaire",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Boussole super précise fonctionnant à l'énergie atomique.",
+        ['illustrator'] = '.--'
+    },
+    ['halloween_atomic_gps'] = {
+        ['name'] = 'halloween_atomic_gps',
+        ['label'] = "GPS atomique",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "GPS basé sur l'énergie atomique",
+        ['illustrator'] = '.--'
+    },
+    ['halloween_brain_knife'] = {
+        ['name'] = 'halloween_brain_knife',
+        ['label'] = "Couteau cervelesque",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = '--.',
+        ['illustrator'] = '.--'
+    },
+
+    --- LSMC
+
+    ['halloween_prehistoric_blood_analysis'] = {
+        ['name'] = 'halloween_prehistoric_blood_analysis',
+        ['label'] = "Analyse sanguine préhistorique",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "C'est pas tout jeune..",
+        ['illustrator'] = '.--'
+    },
+
+    ['halloween_zombie_serum'] = {
+        ['name'] = 'halloween_zombie_serum',
+        ['label'] = "Sérum de dézombification",
+        ['weight'] = 200,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "L'espoir de San Andreas !",
+        ['illustrator'] = '.--'
+    },
+
+    --- FFS
+
+    ['halloween_zombie_costume'] = {
+        ['name'] = 'halloween_zombie_costume',
+        ['label'] = 'Déguisement de "Zombie"',
+        ['weight'] = 400,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Déguisement de zombie.',
+        ['illustrator'] = '.--'
+    },
+    ['halloween_alien_costume'] = {
+        ['name'] = 'halloween_alien_costume',
+        ['label'] = 'Déguisement "Alien"',
+        ['weight'] = 400,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = "Déguisement d'alien.",
+        ['illustrator'] = '.--'
+    },
+    ['halloween_gorilla_costume'] = {
+        ['name'] = 'halloween_gorilla_costume',
+        ['label'] = 'Déguisement "Gorille"',
+        ['weight'] = 400,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Déguisement de gorille.',
+        ['illustrator'] = '.--'
+    },
+    ['halloween_galactic_ranger_costume'] = {
+        ['name'] = 'halloween_galactic_ranger_costume',
+        ['label'] = 'Déguisement "Ranger Galactique"',
+        ['weight'] = 400,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Déguisement de Ranger Galactique.',
+        ['illustrator'] = '.--'
+    },
+    ['halloween_space_monkey_costume'] = {
+        ['name'] = 'halloween_space_monkey_costume',
+        ['label'] = 'Déguisement "Singe de l\'espace"',
+        ['weight'] = 400,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Déguisement de Sinbge de l\'espace.',
+        ['illustrator'] = '.--'
+    },
+    ['halloween_astronaut_costume'] = {
+        ['name'] = 'halloween_astronaut_costume',
+        ['label'] = 'Déguisement "Astronaut"',
+        ['weight'] = 400,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Déguisement d\'Astronaute.',
+        ['illustrator'] = '.--'
+    },
+    ['halloween_fury_costume'] = {
+        ['name'] = 'halloween_fury_costume',
+        ['label'] = 'Déguisement "Fury"',
+        ['weight'] = 400,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Déguisement de Fury.',
+        ['illustrator'] = '.--'
+    },
+    ['halloween_juggernaut_costume'] = {
+        ['name'] = 'halloween_juggernaut_costume',
+        ['label'] = 'Déguisement "Juggernaut"',
+        ['weight'] = 400,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Déguisement de Juggernaut.',
+        ['illustrator'] = '.--'
+    },
+
     --- PAWL
     ['small_coffin'] = {
         ['name'] = 'small_coffin',
@@ -5950,6 +6125,17 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Dérivé du Nimbus 3000, idéal pour nettoyer les nuages.',
+        ['illustrator'] = '.Smogogo'
+    },
+    ['halloween_scarecrow'] = {
+        ['name'] = 'halloween_scarecrow',
+        ['label'] = 'Épouvantail',
+        ['weight'] = 4000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Pas du tout effrayant. PAS. DU. TOUT.',
         ['illustrator'] = '.Smogogo'
     },
     --- LSMC
@@ -5993,9 +6179,71 @@ QBShared.Items = {
             ['sugar'] = 0,
             ['protein'] = 0,
             ['alcohol'] = 0,
-            ['health'] = 20,
         },
         ['illustrator'] = '.Smogogo'
+    },
+
+    --- CM
+    ['halloween_midnight_cheese'] = {
+        ['name'] = 'halloween_midnight_cheese',
+        ['label'] = 'Fromage de l\'Esprit de Minuit ',
+        ['weight'] = 300,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['durability'] = 14,
+        ['combinable'] = nil,
+        ['description'] = 'Idéal en tranche ou rapé !',
+        ['resellPrice'] = 40,
+        ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 1,
+            ['sugar'] = 0,
+            ['protein'] = 0.5,
+            ['alcohol'] = 0,
+        },
+        prop = {
+            model = 'soz_prop_food_cheese',
+            bone = 60309,
+            coords = { x = -0.01, y = -0.03, z = -0.01 },
+            rotation = { x = 0.01, y = 330.01, z = 90.01 },
+        },
+        ['illustrator'] = '.Volkstat'
+    },
+    ['halloween_damned_wine'] = {
+        ['name'] = 'halloween_damned_wine',
+        ['label'] = 'Vin des damnés',
+        ['weight'] = 1000,
+        ['type'] = 'drink',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = false,
+        ['durability'] = 3650,
+        ['combinable'] = nil,
+        ['description'] = 'Vin très foncé, notes âcres, forte odeur !',
+        ['resellPrice'] = 40,
+        ['resellZone'] = 'Resell:LSPort:Food',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 28,
+        },
+        ['prop'] = {
+            model = 'prop_wine_red',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.18 },
+        },
+        ['illustrator'] = '.Omega',
     },
     --- BAUN
     ['surprise_candie'] = {
@@ -6018,6 +6266,84 @@ QBShared.Items = {
             ['alcohol'] = 5,
         },
         ['illustrator'] = '.GautSlayer'
+    },
+    ['halloween_radioactive_beer'] = {
+        ['name'] = 'halloween_radioactive_beer',
+        ['label'] = 'Bière radioactive',
+        ['weight'] = 1000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = 'Enfin la bière que tout le monde attendais ?',
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+            ['drug'] = 30,
+        },
+        ['illustrator'] = '.GautSlayer'
+    },
+    ['halloween_bloody_mary'] = {
+        name = "halloween_bloody_mary",
+        label = "Bloody Mary",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "--",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 8,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".--"
+    },
+    ['halloween_spectral_elixir'] = {
+        name = "halloween_spectral_elixir",
+        label = "Élixir spectral",
+        weight = 300,
+        type = "cocktail",
+        unique = false,
+        useable = true,
+        expiresIn = 240, -- in minutes
+        shouldClose = true,
+        combinable = nil,
+        description = "--",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 5,
+            ['stamina'] = 0,
+            ['fiber'] = 0,
+            ['lipid'] = 0,
+            ['sugar'] = 0.5,
+            ['protein'] = 0,
+            ['alcohol'] = 8,
+        },
+        prop = {
+            model = 'prop_shots_glass_cs',
+            bone = 28422,
+            coords = { x = 0.01, y = -0.01, z = -0.01 },
+        },
+        illustrator = ".--"
     },
     ---
     ['bag_kibble'] = {
@@ -7053,7 +7379,7 @@ QBShared.Items = {
     },
     ['torn_garbagebag'] = {
         ['name'] = 'torn_garbagebag',
-        ['label'] = 'Sac de détritus déchiré',
+        ['label'] = 'Déchets infernaux' -- Sac de détritus déchiré,
         ['weight'] = 4000,
         ['type'] = 'item',
         ['unique'] = false,
