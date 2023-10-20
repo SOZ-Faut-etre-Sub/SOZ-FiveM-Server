@@ -213,7 +213,7 @@ QBCore.Functions.CreateCallback("soz-upw:server:Harvest", function(source, cb, i
                          {item_id = sharedItem.name, player_citizen_id = Player.PlayerData.citizenid},
                          {
                 item_label = sharedItem.label,
-                quantity = 1,
+                quantity = count,
                 terminal_position = facility.zones.energyZone.coords,
             }, true)
         end)
