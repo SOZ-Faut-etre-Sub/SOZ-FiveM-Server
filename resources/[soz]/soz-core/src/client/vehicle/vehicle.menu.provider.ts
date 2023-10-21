@@ -72,6 +72,12 @@ export class VehicleMenuProvider {
             return false;
         }
 
+        const isDriver = GetPedInVehicleSeat(vehicle, -1) === ped;
+
+        if (!isDriver) {
+            return false;
+        }
+
         const state = await this.vehicleStateService.getVehicleState(vehicle).then(data => {
             return data;
         });
