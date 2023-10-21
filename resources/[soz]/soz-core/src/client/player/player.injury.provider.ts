@@ -9,6 +9,20 @@ import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 
 const CRITICAL_HEALTH = 120;
 
+function setStealthKills(enabled: boolean) {
+    const stealthKills = [
+        'ACT_stealth_kill_a',
+        'ACT_stealth_kill_weapon',
+        'ACT_stealth_kill_b',
+        'ACT_stealth_kill_c',
+        'ACT_stealth_kill_d',
+        'ACT_stealth_kill_a_gardener',
+    ];
+    for (const stealthKill of stealthKills) {
+        RemoveStealthKill(GetHashKey(stealthKill), enabled);
+    }
+}
+
 @Provider()
 export class PlayerInjuryProvider {
     @Inject(Notifier)
@@ -33,6 +47,7 @@ export class PlayerInjuryProvider {
 
         if (GetEntityHealth(ped) > CRITICAL_HEALTH) {
             if (this.criticalHealthNotification) {
+                setStealthKills(true);
                 await this.playerWalkstyleProvider.updateWalkStyle('injury', null);
             }
             this.criticalHealthNotification = false;
@@ -49,6 +64,7 @@ export class PlayerInjuryProvider {
         DisableControlAction(0, 22, true); // Jump
 
         if (!this.criticalHealthNotification) {
+            setStealthKills(false);
             this.notifier.notify('Vous avez ~r~besoin~s~ de soins !', 'info');
             this.criticalHealthNotification = true;
 
