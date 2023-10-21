@@ -5,7 +5,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
-import { uuidv4, wait } from '../../core/utils';
+import { wait } from '../../core/utils';
 import { ServerEvent } from '../../shared/event';
 import { Feature, isFeatureEnabled } from '../../shared/features';
 import { ApiClient } from '../api/api.client';
@@ -185,14 +185,10 @@ export class RebootProvider {
         await this.apiClient.removeRebootMessage();
         await this.apiClient.addRebootMessage(minutes);
 
-        emit(
-            ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
-            `${ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST}:${uuidv4()}`,
-            {
-                type: `reboot_${minutes}`,
-                message: `Un ouragan arrive à toute allure ! Il devrait frapper le coeur de San Andreas d'ici ${minutes} minutes. Veuillez ranger vos véhicules et vous abriter ! Votre sécurité est primordiale.`,
-                reporter: 'San Andreas Météo',
-            }
-        );
+        exports['soz-phone'].createNewsBroadcast({
+            type: `reboot_${minutes}`,
+            message: `Un ouragan arrive à toute allure ! Il devrait frapper le coeur de San Andreas d'ici ${minutes} minutes. Veuillez ranger vos véhicules et vous abriter ! Votre sécurité est primordiale.`,
+            reporter: 'San Andreas Météo',
+        });
     }
 }
