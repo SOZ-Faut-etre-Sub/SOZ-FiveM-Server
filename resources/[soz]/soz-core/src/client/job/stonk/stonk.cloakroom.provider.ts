@@ -3,6 +3,7 @@ import { OnEvent } from '@public/core/decorators/event';
 import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { Component } from '@public/shared/cloth';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { DUTY_OUTFIT_NAME, StonkCloakroom } from '@public/shared/job/stonk';
 
@@ -27,7 +28,14 @@ export class StonkCloakRoomProvider {
         const ped = PlayerPedId();
 
         for (const [id, component] of Object.entries(StonkCloakroom[GetEntityModel(ped)]['Tenue VIP'].Components)) {
-            const drawable = GetPedDrawableVariation(ped, Number(id));
+            const numberId = Number(id);
+            const drawable = GetPedDrawableVariation(ped, Number(numberId));
+
+            // We skip the Torso because it's modified when user wear his own gloves and make this function return false
+            // even if he wear the VIP clothes
+            if (numberId == Component.Torso) {
+                continue;
+            }
 
             if (drawable != component.Drawable) {
                 return false;
