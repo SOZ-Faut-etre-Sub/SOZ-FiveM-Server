@@ -4,11 +4,13 @@ import { Provider } from '@public/core/decorators/provider';
 import { FieldProvider } from '@public/server/farm/field.provider';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
+import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
 import { ProgressService } from '@public/server/player/progress.service';
 import { ServerEvent } from '@public/shared/event';
 import { FieldItem } from '@public/shared/field';
 import { DMC_FIELDS } from '@public/shared/job/dmc';
+import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 
 @Provider()
 export class DmcHarvestProvider {
@@ -26,6 +28,9 @@ export class DmcHarvestProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Once(OnceStep.Start)
     public async init() {
@@ -86,11 +91,23 @@ export class DmcHarvestProvider {
         }
 
         for (const item of items) {
-            const { success, reason } = await this.inventoryManager.addItemToInventory(source, item.name, item.amount);
+            const { success, reason } = this.inventoryManager.addItemToInventory(source, item.name, item.amount);
             if (success) {
-                this.notifier.notify(
-                    source,
-                    `Vous avez récolté ~b~${item.amount} ~b~${this.itemService.getItem(item.name).label}.`
+                const itemInfo = this.itemService.getItem(item.name);
+                this.notifier.notify(source, `Vous avez récolté ~b~${item.amount} ~b~${itemInfo.label}.`);
+
+                this.monitor.publish(
+                    'job_dmc_harvest',
+                    {
+                        item_id: item.name,
+                        player_source: source,
+                    },
+                    {
+                        item_label: itemInfo.label,
+                        quantity: item.amount,
+                        position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+                        field: field,
+                    }
                 );
             } else if (reason == 'invalid_weight') {
                 this.notifier.notify(source, 'Vos poches sont pleines...', 'error');
@@ -100,6 +117,7 @@ export class DmcHarvestProvider {
                 return false;
             }
         }
+
         return true;
     }
 }
