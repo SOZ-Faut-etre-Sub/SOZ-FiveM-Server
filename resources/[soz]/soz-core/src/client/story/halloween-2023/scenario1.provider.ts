@@ -1,11 +1,11 @@
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Halloween2023Scenario1, Halloween2023Scenario1Alcool } from '@public/shared/story/halloween-2023/scenario1';
 
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
-import { Halloween2023Scenario1, Halloween2023Scenario1Alcool } from '../../../shared/story/halloween-2023/scenario1';
 import { BlipFactory } from '../../blip';
 import { PedFactory } from '../../factory/ped.factory';
 import { ProgressService } from '../../progress.service';
@@ -204,22 +204,23 @@ export class Halloween2023Scenario1Provider {
                         },
                     },
                     this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 1, 'part2'),
+                    this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 2, 'part2'),
                     {
                         label: 'Donner',
-                        icon: 'c:news/livrer.png',
+                        icon: 'c:pole/livrer.png',
                         canInteract: () => {
                             if (!this.storyService.canInteractForPart('halloween2023', 'scenario1', 3)) {
                                 return false;
                             }
 
-                            if (this.inventoryManager.hasEnoughItem('halloween_prehistoric_blood_analysis')) {
+                            if (!this.inventoryManager.hasEnoughItem('halloween_prehistoric_blood_analysis')) {
                                 return false;
                             }
 
                             return (
                                 this.inventoryManager
                                     .getItems()
-                                    .reduce((acc, elem) => acc + (elem.type === 'fish' ? 1 : 0), 0) >= 20
+                                    .reduce((acc, elem) => acc + (elem.type === 'fish' ? elem.amount : 0), 0) >= 20
                             );
                         },
                         action: async () => {
@@ -272,7 +273,7 @@ export class Halloween2023Scenario1Provider {
     private async createSwampPed(): Promise<void> {
         this.targetFactory.createForPed({
             model: 'a_m_m_mexlabor_01',
-            coords: { x: -2078.09, y: 2602.39, z: 2.03, w: 200.56 },
+            coords: { x: -2078.09, y: 2602.39, z: 1.03, w: 200.56 },
             invincible: true,
             freeze: true,
             blockevents: true,
@@ -291,7 +292,7 @@ export class Halloween2023Scenario1Provider {
                     this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 5, 'part5'),
                     {
                         label: 'Donner',
-                        icon: 'c:news/livrer.png',
+                        icon: 'c:pole/livrer.png',
                         canInteract: () => {
                             if (!this.storyService.canInteractForPart('halloween2023', 'scenario1', 6)) {
                                 return false;
