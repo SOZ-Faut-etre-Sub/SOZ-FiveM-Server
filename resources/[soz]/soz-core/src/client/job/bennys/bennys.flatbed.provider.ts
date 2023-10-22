@@ -7,6 +7,7 @@ import { AnimationStopReason } from '../../../shared/animation';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
 import { getDistance, Vector3, Vector4 } from '../../../shared/polyzone/vector';
+import { VehicleSeat } from '../../../shared/vehicle/vehicle';
 import { AnimationService } from '../../animation/animation.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
@@ -457,14 +458,14 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        const driverFlatBed = GetPedInVehicleSeat(this.currentFlatbedAttach.entity, -1);
+        const driverFlatBed = GetPedInVehicleSeat(this.currentFlatbedAttach.entity, VehicleSeat.Driver);
         if (driverFlatBed && IsPedAPlayer(driverFlatBed)) {
             this.notifier.notify("Impossible de remorquer lorsqu'une autre personne conduit le flatbed", 'error');
 
             return;
         }
 
-        const driver = GetPedInVehicleSeat(vehicle, -1);
+        const driver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver);
         if (driver && IsPedAPlayer(driver)) {
             this.notifier.notify(
                 "Impossible de remorquer lorsqu'une autre personne conduit le véhicule cible",

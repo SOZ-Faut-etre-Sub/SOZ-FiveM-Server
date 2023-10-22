@@ -16,6 +16,7 @@ import {
     LockPickAlertMessage,
     VehicleClass,
     VehicleLockStatus,
+    VehicleSeat,
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
@@ -118,7 +119,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        const wasPlayerDriving = GetPedInVehicleSeat(vehicle, -1) === ped;
+        const wasPlayerDriving = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
 
         if (!wasPlayerDriving) {
             return;

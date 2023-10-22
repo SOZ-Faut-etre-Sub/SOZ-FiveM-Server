@@ -3,6 +3,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { Control } from '../../shared/input';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
 import { AnimationRunner } from './animation.factory';
 import { AnimationService } from './animation.service';
@@ -23,7 +24,7 @@ export class AnimationHandsUpProvider {
             return;
         }
 
-        if (GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), -1) !== PlayerPedId()) {
+        if (GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId(), false), VehicleSeat.Driver) !== PlayerPedId()) {
             return;
         }
 

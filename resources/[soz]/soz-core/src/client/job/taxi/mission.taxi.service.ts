@@ -16,6 +16,8 @@ import {
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { getRandomItem } from '@public/shared/random';
 
+import { VehicleSeat } from '../../../shared/vehicle/vehicle';
+
 @Injectable()
 export class TaxiMissionService {
     @Inject(Notifier)
@@ -102,7 +104,7 @@ export class TaxiMissionService {
         const veh = GetVehiclePedIsIn(ped, false);
         const model = GetEntityModel(veh);
 
-        return AllowedVehicleModel.includes(model) && GetPedInVehicleSeat(veh, -1) == ped;
+        return AllowedVehicleModel.includes(model) && GetPedInVehicleSeat(veh, VehicleSeat.Driver) == ped;
     }
 
     public update() {
