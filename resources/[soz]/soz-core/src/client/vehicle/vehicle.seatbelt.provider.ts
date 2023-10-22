@@ -8,7 +8,7 @@ import { Tick } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { toVectorNorm, Vector3 } from '../../shared/polyzone/vector';
-import { VehicleClass } from '../../shared/vehicle/vehicle';
+import { VehicleClass, VehicleSeat } from '../../shared/vehicle/vehicle';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SoundService } from '../sound.service';
@@ -58,7 +58,7 @@ export class VehicleSeatbeltProvider {
             return;
         }
 
-        if (GetPedInVehicleSeat(vehicle, 0) !== PlayerPedId()) {
+        if (GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) !== PlayerPedId()) {
             return;
         }
 

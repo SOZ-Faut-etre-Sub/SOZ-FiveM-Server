@@ -10,7 +10,7 @@ import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { isVehicleModelElectric, VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
+import { isVehicleModelElectric, VehicleClass, VehicleCondition, VehicleSeat } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -434,7 +434,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        const driver = GetPedInVehicleSeat(vehicle, -1);
+        const driver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver);
 
         if (driver) {
             this.notifier.notify('Vous ne pouvez pas remplir un véhicule avec un conducteur au volant.', 'error');
