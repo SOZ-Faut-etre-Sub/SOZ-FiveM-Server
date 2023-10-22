@@ -1,5 +1,5 @@
 import { JobType } from '@public/shared/job';
-import { isVehicleModelElectric, isVehicleModelTrailer } from '@public/shared/vehicle/vehicle';
+import { isVehicleModelElectric, isVehicleModelTrailer, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -362,7 +362,7 @@ export class BennysVehicleProvider {
 
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
-        const isDriver = vehicle ? GetPedInVehicleSeat(vehicle, -1) === PlayerPedId() : false;
+        const isDriver = vehicle ? GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === PlayerPedId() : false;
 
         if (this.nuiMenu.getOpened() === MenuType.JobBennys) {
             this.nuiMenu.closeMenu();

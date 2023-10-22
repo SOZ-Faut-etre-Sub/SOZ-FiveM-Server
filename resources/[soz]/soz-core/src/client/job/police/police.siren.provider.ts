@@ -5,6 +5,7 @@ import { Provider } from '../../../core/decorators/provider';
 import { Tick } from '../../../core/decorators/tick';
 import { emitRpc } from '../../../core/rpc';
 import { RpcServerEvent } from '../../../shared/rpc';
+import { VehicleSeat } from '../../../shared/vehicle/vehicle';
 import { VehicleStateService } from '../../vehicle/vehicle.state.service';
 
 export const VehicleWithSirens = {
@@ -79,7 +80,7 @@ export class PoliceSirenProvider {
                 continue;
             }
 
-            const ped = GetPedInVehicleSeat(vehicleId, -1);
+            const ped = GetPedInVehicleSeat(vehicleId, VehicleSeat.Driver);
 
             if (!IsPedAPlayer(ped)) {
                 continue;
@@ -119,7 +120,7 @@ export class PoliceSirenProvider {
             return false;
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) !== ped) {
+        if (GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== ped) {
             return false;
         }
 

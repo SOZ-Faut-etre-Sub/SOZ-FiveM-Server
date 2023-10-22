@@ -2,6 +2,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { RadioChannel, RadioChannelType } from '../../shared/voip';
 import { VehicleStateService } from '../vehicle/vehicle.state.service';
 
@@ -18,8 +19,8 @@ export class VoipRadioProvider {
             return;
         }
 
-        const pilot = GetPedInVehicleSeat(entityId, -1);
-        const copilot = GetPedInVehicleSeat(entityId, 0);
+        const pilot = GetPedInVehicleSeat(entityId, VehicleSeat.Driver);
+        const copilot = GetPedInVehicleSeat(entityId, VehicleSeat.Copilot);
 
         const pilotServerId = NetworkGetEntityOwner(pilot);
         const copilotServerId = NetworkGetEntityOwner(copilot);
@@ -48,8 +49,8 @@ export class VoipRadioProvider {
             return;
         }
 
-        const pilot = GetPedInVehicleSeat(entityId, -1);
-        const copilot = GetPedInVehicleSeat(entityId, 0);
+        const pilot = GetPedInVehicleSeat(entityId, VehicleSeat.Driver);
+        const copilot = GetPedInVehicleSeat(entityId, VehicleSeat.Copilot);
 
         const pilotServerId = NetworkGetEntityOwner(pilot);
         const copilotServerId = NetworkGetEntityOwner(copilot);

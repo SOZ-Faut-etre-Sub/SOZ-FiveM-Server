@@ -2,6 +2,7 @@ import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
@@ -59,7 +60,7 @@ export class VehicleRadarProvider {
                         const vehicle = GetVehiclePedIsIn(ped, false);
 
                         if (vehicle) {
-                            if (GetPedInVehicleSeat(vehicle, -1) == ped) {
+                            if (GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) == ped) {
                                 const coords = GetEntityCoords(vehicle, false);
                                 const streetA = GetStreetNameAtCoord(coords[0], coords[1], coords[2])[0];
 

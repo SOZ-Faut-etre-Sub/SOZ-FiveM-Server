@@ -5,6 +5,7 @@ import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
 import { FDO, JobType } from '../../shared/job';
 import { PlayerLicenceType } from '../../shared/player';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
@@ -198,8 +199,8 @@ export class VehicleRadarProvider {
                     if (currentVehicle && RadarInformedVehicle.includes(GetEntityModel(currentVehicle))) {
                         const ped = GetPlayerPed(player.source);
                         return (
-                            GetPedInVehicleSeat(currentVehicle, -1) == ped ||
-                            GetPedInVehicleSeat(currentVehicle, 0) == ped
+                            GetPedInVehicleSeat(currentVehicle, VehicleSeat.Driver) == ped ||
+                            GetPedInVehicleSeat(currentVehicle, VehicleSeat.Copilot) == ped
                         );
                     }
                     return false;

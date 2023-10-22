@@ -2,6 +2,7 @@ import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { Ear, Radio, RadioChannel, RadioChannelType, RadioType } from '../../shared/voip';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { SoundService } from '../sound.service';
@@ -129,7 +130,10 @@ export class VoipRadioVehicleProvider {
             return;
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) !== PlayerPedId() && GetPedInVehicleSeat(vehicle, 0) !== PlayerPedId()) {
+        if (
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== PlayerPedId() &&
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) !== PlayerPedId()
+        ) {
             return;
         }
 
@@ -159,7 +163,10 @@ export class VoipRadioVehicleProvider {
         }
 
         // is drive or copilot
-        if (GetPedInVehicleSeat(vehicle, -1) !== PlayerPedId() && GetPedInVehicleSeat(vehicle, 0) !== PlayerPedId()) {
+        if (
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== PlayerPedId() &&
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) !== PlayerPedId()
+        ) {
             return;
         }
 
@@ -178,7 +185,10 @@ export class VoipRadioVehicleProvider {
         }
 
         // is drive or copilot
-        if (GetPedInVehicleSeat(vehicle, -1) !== PlayerPedId() && GetPedInVehicleSeat(vehicle, 0) !== PlayerPedId()) {
+        if (
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== PlayerPedId() &&
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) !== PlayerPedId()
+        ) {
             return;
         }
 
@@ -204,7 +214,10 @@ export class VoipRadioVehicleProvider {
             return;
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) !== PlayerPedId() && GetPedInVehicleSeat(vehicle, 0) !== PlayerPedId()) {
+        if (
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== PlayerPedId() &&
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) !== PlayerPedId()
+        ) {
             return;
         }
 
@@ -227,7 +240,10 @@ export class VoipRadioVehicleProvider {
             return;
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) !== PlayerPedId() && GetPedInVehicleSeat(vehicle, 0) !== PlayerPedId()) {
+        if (
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== PlayerPedId() &&
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) !== PlayerPedId()
+        ) {
             return;
         }
 
