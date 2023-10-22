@@ -32,6 +32,8 @@ type CurrentStationPistol = {
     filling: boolean;
 };
 
+const MAX_LENGTH_ROPE = 15.0;
+
 const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
     [VehicleClass.Helicopters]: 6.33,
 };
@@ -595,7 +597,7 @@ export class VehicleFuelProvider {
             0.0,
             0.0,
             0.0,
-            15.0,
+            MAX_LENGTH_ROPE,
             1,
             10.0,
             1.0,
@@ -642,7 +644,7 @@ export class VehicleFuelProvider {
             GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
         ) as Vector3;
 
-        if (getDistance(ropePosition, handPosition) > 15.0) {
+        if (getDistance(ropePosition, handPosition) > MAX_LENGTH_ROPE) {
             await this.disableStationPistol();
             return;
         }
