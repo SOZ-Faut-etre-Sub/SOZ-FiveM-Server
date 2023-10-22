@@ -128,5 +128,5 @@ function Field:RunBackgroundTasks()
 end
 
 function Field:SyncField()
-    TriggerClientEvent("pawl:client:syncField", -1, self.identifier, self.field or {})
+    TriggerLatentClientEvent("pawl:client:syncField", -1, 16 * 1024, self.identifier, self.field or {})
 end
