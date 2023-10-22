@@ -11,6 +11,7 @@ import { getRandomItem } from '@public/shared/random';
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem } from '../../shared/item';
 import { RpcServerEvent } from '../../shared/rpc';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { ExplosionMessage, GlobalWeaponConfig, GunShotMessage, WeaponName } from '../../shared/weapons/weapon';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PhoneService } from '../phone/phone.service';
@@ -197,7 +198,7 @@ export class WeaponProvider {
 
         if (
             IsPedArmed(player, 7) &&
-            GetPedInVehicleSeat(vehicle, -1) === player &&
+            GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === player &&
             GetEntitySpeed(vehicle) * 3.6 > 50
         ) {
             DisableControlAction(0, 24, true);
@@ -291,7 +292,7 @@ export class WeaponProvider {
             await this.weaponDrawingProvider.refreshDrawWeapons();
         }
 
-        if (GetPedInVehicleSeat(vehicle, -1) === ped && weaponDrawable) {
+        if (GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped && weaponDrawable) {
             await this.weapon.clear();
             await this.weaponDrawingProvider.refreshDrawWeapons();
         }

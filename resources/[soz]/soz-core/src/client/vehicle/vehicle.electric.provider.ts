@@ -5,7 +5,7 @@ import { UpwStation } from '@public/shared/fuel';
 import { JobType } from '@public/shared/job';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
+import { isVehicleModelElectric, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -394,7 +394,7 @@ export class VehicleElectricProvider {
             return;
         }
 
-        const driver = GetPedInVehicleSeat(vehicle, -1);
+        const driver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver);
 
         if (driver) {
             this.notifier.notify('Vous ne pouvez pas charger un véhicule avec un conducteur au volant.', 'error');

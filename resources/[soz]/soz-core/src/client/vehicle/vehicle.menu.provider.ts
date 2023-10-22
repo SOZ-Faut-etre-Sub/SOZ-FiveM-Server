@@ -1,5 +1,5 @@
 import { FDO } from '@public/shared/job';
-import { VehicleClass } from '@public/shared/vehicle/vehicle';
+import { VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -69,6 +69,12 @@ export class VehicleMenuProvider {
         const vehicle = GetVehiclePedIsIn(ped, false);
 
         if (!vehicle) {
+            return false;
+        }
+
+        const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+
+        if (!isDriver) {
             return false;
         }
 
@@ -262,8 +268,8 @@ export class VehicleMenuProvider {
             return;
         }
 
-        const isDriver = GetPedInVehicleSeat(vehicle, -1) === ped;
-        const isCopilot = GetPedInVehicleSeat(vehicle, 0) === ped;
+        const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+        const isCopilot = GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) === ped;
 
         if (!isDriver && !isCopilot) {
             return;

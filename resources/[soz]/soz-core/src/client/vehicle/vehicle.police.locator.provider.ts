@@ -5,7 +5,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
-import { VehicleLocation } from '../../shared/vehicle/vehicle';
+import { VehicleLocation, VehicleSeat } from '../../shared/vehicle/vehicle';
 import { JobService } from '../job/job.service';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
@@ -91,7 +91,10 @@ export class VehiclePoliceLocator {
                 return;
             }
 
-            if (GetPedInVehicleSeat(vehicule, -1) != playerPed && GetPedInVehicleSeat(vehicule, 0) != playerPed) {
+            if (
+                GetPedInVehicleSeat(vehicule, VehicleSeat.Driver) != playerPed &&
+                GetPedInVehicleSeat(vehicule, VehicleSeat.Copilot) != playerPed
+            ) {
                 this.clear();
                 return;
             }
