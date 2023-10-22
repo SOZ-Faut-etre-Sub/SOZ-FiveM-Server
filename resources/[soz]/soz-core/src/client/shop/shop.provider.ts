@@ -297,7 +297,7 @@ export class ShopProvider {
             case ShopBrand.RobsliquorSouth:
             case ShopBrand.Ammunation:
             case ShopBrand.Zkea:
-                this.superetteShopProvider.openShop(this.currentShopBrand);
+                this.superetteShopProvider.openShop(this.currentShopBrand, this.currentShop);
                 break;
             case ShopBrand.Ponsonbys:
             case ShopBrand.Suburban:
