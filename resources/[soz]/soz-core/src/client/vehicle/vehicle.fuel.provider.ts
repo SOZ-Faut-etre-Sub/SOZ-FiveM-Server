@@ -8,7 +8,7 @@ import { AnimationStopReason } from '../../shared/animation';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { isVehicleModelElectric, VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
@@ -641,6 +641,11 @@ export class VehicleFuelProvider {
             PlayerPedId(),
             GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
         ) as Vector3;
+
+        if (getDistance(ropePosition, handPosition) > 15.0) {
+            await this.disableStationPistol();
+            return;
+        }
 
         AttachEntitiesToRope(
             this.currentStationPistol.rope,
