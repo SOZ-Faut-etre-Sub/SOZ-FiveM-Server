@@ -1178,13 +1178,13 @@ QBShared.Items = {
     -- Miscellaneous
     ['weapon_petrolcan'] = {
         ['name'] = 'weapon_petrolcan',
-        ['label'] =  'Jus de cadavre' -- 'Bidon d\'essence',
+        ['label'] =  'Jus de cadavre', -- 'Bidon d\'essence'
         ['weight'] = 1000,
         ['type'] = 'weapon',
         ['ammotype'] = 'AMMO_PETROLCAN',
         ['unique'] = true,
         ['useable'] = false,
-        ['description'] = '10 ans d\'âge..' -- 'De quoi faire le plein de ta caisse !',
+        ['description'] = '10 ans d\'âge..', -- 'De quoi faire le plein de ta caisse !'
         ['illustrator'] = '.LeakFlood',
     },
     ['weapon_fireextinguisher'] = {
@@ -5907,6 +5907,17 @@ QBShared.Items = {
         ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2022.',
         ['illustrator'] = '.Pastouke'
     },
+    ['halloween2023_story'] = {
+        ['name'] = 'halloween2023_story',
+        ['label'] = 'Trophée d’Halloween 2023',
+        ['weight'] = 1000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2023.',
+        ['illustrator'] = '.Pastouke'
+    },
     ['old_relic'] = {
         ['name'] = 'old_relic',
         ['label'] = 'Ancienne relique',
@@ -7379,7 +7390,7 @@ QBShared.Items = {
     },
     ['torn_garbagebag'] = {
         ['name'] = 'torn_garbagebag',
-        ['label'] = 'Déchets infernaux' -- Sac de détritus déchiré,
+        ['label'] = 'Déchets infernaux', -- Sac de détritus déchiré
         ['weight'] = 4000,
         ['type'] = 'item',
         ['unique'] = false,
