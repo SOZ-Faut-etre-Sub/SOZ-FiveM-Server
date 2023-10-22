@@ -8,7 +8,7 @@ import { AnimationStopReason } from '../../shared/animation';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { isVehicleModelElectric, VehicleClass, VehicleCondition } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
@@ -31,6 +31,8 @@ type CurrentStationPistol = {
     station: string;
     filling: boolean;
 };
+
+const MAX_LENGTH_ROPE = 15.0;
 
 const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
     [VehicleClass.Helicopters]: 6.33,
@@ -595,7 +597,7 @@ export class VehicleFuelProvider {
             0.0,
             0.0,
             0.0,
-            15.0,
+            MAX_LENGTH_ROPE,
             1,
             10.0,
             1.0,
@@ -641,6 +643,11 @@ export class VehicleFuelProvider {
             PlayerPedId(),
             GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
         ) as Vector3;
+
+        if (getDistance(ropePosition, handPosition) > MAX_LENGTH_ROPE) {
+            await this.disableStationPistol();
+            return;
+        }
 
         AttachEntitiesToRope(
             this.currentStationPistol.rope,
