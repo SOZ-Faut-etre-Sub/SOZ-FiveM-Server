@@ -885,7 +885,6 @@ export const FDFCloakroom: WardrobeConfig = {
             },
             Props: {
                 [0]: { Drawable: 20, Texture: 0, Palette: 0 },
-                [1]: { Drawable: 5, Texture: 0, Palette: 0 },
             },
         },
         ['Stagiaire']: {
@@ -899,7 +898,6 @@ export const FDFCloakroom: WardrobeConfig = {
             },
             Props: {
                 [0]: { Drawable: 20, Texture: 0, Palette: 0 },
-                [1]: { Drawable: 5, Texture: 0, Palette: 0 },
             },
         },
     },
