@@ -1,5 +1,6 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
 import { Field } from '../field';
 import { JobType } from '../job';
 import { BoxZone, NamedZone } from '../polyzone/box.zone';
@@ -496,7 +497,7 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
-    '???': {
+    Halloween: {
         animation: {
             dictionary: 'melee@small_wpn@streamed_core_fps',
             name: 'car_down_attack',
@@ -504,6 +505,7 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
                 repeat: true,
             },
         },
+        feature: Feature.Halloween,
         duration: 5000,
         icon: '👮',
         event: 'job_dmc_craft',

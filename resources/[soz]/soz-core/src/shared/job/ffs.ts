@@ -1,5 +1,6 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
 import { NamedZone } from '../polyzone/box.zone';
 
 export enum SewingRawMaterial {
@@ -303,7 +304,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
-    ['???']: {
+    Halloween: {
         animation: {
             name: 'base',
             dictionary: 'amb@prop_human_seat_sewing@female@base',
@@ -314,6 +315,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         },
         duration: 8000,
         event: 'job_ffs_craft',
+        feature: Feature.Halloween,
         recipes: {
             halloween_zombie_costume: {
                 amount: 1,

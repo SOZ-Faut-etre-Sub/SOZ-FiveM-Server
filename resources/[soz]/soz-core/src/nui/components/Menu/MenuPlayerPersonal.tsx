@@ -50,7 +50,13 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                         Mon identité
                     </MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={openKeys}>Gestion des clés</MenuItemButton>
-                    <MenuItemSubMenuLink id="clothing">Gestion de la tenue</MenuItemSubMenuLink>
+                    {data.deguisement ? (
+                        <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuRemoveDeguisement)}>
+                            Enlever le déguisement
+                        </MenuItemButton>
+                    ) : (
+                        <MenuItemSubMenuLink id="clothing">Gestion de la tenue</MenuItemSubMenuLink>
+                    )}
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
                     {data.job.enabled && <MenuItemSubMenuLink id="job">Gestion de votre métier</MenuItemSubMenuLink>}

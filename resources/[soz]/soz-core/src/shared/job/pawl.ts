@@ -1,5 +1,6 @@
 import { Component, WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
 import { NamedZone } from '../polyzone/box.zone';
 
 export const CraftZones: NamedZone[] = [
@@ -168,7 +169,8 @@ export const PawlCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
-    ['???']: {
+    Halloween: {
+        feature: Feature.Halloween,
         duration: 15000,
         animation: {
             dictionary: 'mp_arresting',
