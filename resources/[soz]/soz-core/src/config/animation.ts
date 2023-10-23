@@ -9405,11 +9405,25 @@ export const Animations: AnimationConfigList = [
                         },
                     },
                     {
-                        type: 'scenario',
+                        type: 'animation',
                         name: 'Regarder sa carte',
                         rightLabel: null,
                         icon: null,
-                        scenario: { name: 'WORLD_HUMAN_TOURIST_MAP' },
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_tourist_map@female@base',
+                                name: 'base',
+                                options: { repeat: true },
+                            },
+                            props: [
+                                {
+                                    model: 'p_tourist_map_01_s',
+                                    bone: 58867,
+                                    position: [0.15, 0.081, 0.05],
+                                    rotation: [120, 160, 30],
+                                },
+                            ],
+                        },
                     },
                     {
                         type: 'animation',
