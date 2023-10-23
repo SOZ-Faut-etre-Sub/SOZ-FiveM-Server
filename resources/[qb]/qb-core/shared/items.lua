@@ -5992,9 +5992,9 @@ QBShared.Items = {
         ['weight'] = 200,
         ['type'] = 'item',
         ['unique'] = false,
-        ['useable'] = false,
+        ['useable'] = true,
         ['shouldClose'] = true,
-        ['description'] = '--.',
+        ['description'] = "Pour faire croire que l'on a quelque chose dans la tête",
         ['illustrator'] = '.--'
     },
 

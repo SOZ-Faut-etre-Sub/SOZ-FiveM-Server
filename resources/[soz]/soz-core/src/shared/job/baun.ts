@@ -1,5 +1,6 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
+import { Feature } from '../features';
 import { NamedZone } from '../polyzone/box.zone';
 
 export const baunCraftZones: NamedZone[] = [
@@ -301,7 +302,7 @@ export const BaunCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
-    '???': {
+    Halloween: {
         animation: {
             dictionary: 'anim@amb@nightclub@mini@drinking@drinking_shots@ped_a@normal',
             name: 'pour_one',
@@ -309,6 +310,7 @@ export const BaunCraftsLists: Record<string, CraftCategory> = {
                 repeat: true,
             },
         },
+        feature: Feature.Halloween,
         duration: 4000,
         event: 'job_baun_craft',
         recipes: {

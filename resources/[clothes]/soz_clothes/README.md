@@ -73,6 +73,8 @@
 4  casque pilote LSPD/BCSO          //logo LSPD manquant
 5  oreille lapin
 6  SASP
+7  SASP2
+8  Couteau Halloween
 
 
 

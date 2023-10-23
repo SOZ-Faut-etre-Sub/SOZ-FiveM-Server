@@ -1,3 +1,5 @@
+import { wait } from '@public/core/utils';
+
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -69,6 +71,7 @@ export class PlayerMenuProvider {
             scaledNui: this.hudMinimapProvider.scaledNui,
             shortcuts: this.playerAnimationProvider.getShortcuts(),
             job: this.jobMenuProvider.getJobMenuData(),
+            deguisement: this.playerService.hasDeguisement(),
         });
     }
 
@@ -147,5 +150,38 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)
     public async resetVoip() {
         TriggerEvent('voip:client:reset');
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuRemoveDeguisement)
+    public async removeDeguisement() {
+        const progress = await this.progressService.progress(
+            'switch_clothes',
+            "Changement d'habits...",
+            5000,
+            {
+                name: 'male_shower_towel_dry_to_get_dressed',
+                dictionary: 'anim@mp_yacht@shower@male@',
+                options: {
+                    cancellable: false,
+                    enablePlayerControl: false,
+                },
+            },
+            {
+                useAnimationService: true,
+                disableCombat: true,
+                disableMovement: true,
+                canCancel: false,
+            }
+        );
+
+        if (!progress.completed) {
+            return;
+        }
+
+        await wait(10);
+
+        TriggerEvent('soz-character:Client:ApplyCurrent');
+        this.playerService.setDeguisement(false);
+        this.menu.closeMenu();
     }
 }

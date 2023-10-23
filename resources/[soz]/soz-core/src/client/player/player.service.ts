@@ -20,6 +20,7 @@ export class PlayerService {
 
     private player: PlayerData | null = null;
     private fakeId: FakeId = null;
+    private deguisement = false;
 
     private state: PlayerClientState = {
         isDead: false,
@@ -170,5 +171,13 @@ export class PlayerService {
 
     public getFakeId() {
         return this.fakeId;
+    }
+
+    public setDeguisement(value: boolean) {
+        this.deguisement = value;
+    }
+
+    public hasDeguisement() {
+        return this.deguisement;
     }
 }
