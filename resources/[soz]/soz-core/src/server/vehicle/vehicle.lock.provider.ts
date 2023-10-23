@@ -65,6 +65,7 @@ export class VehicleLockProvider {
         this.item.setItemUseCallback('lockpick_low', this.useLockpick.bind(this));
         this.item.setItemUseCallback('lockpick_medium', this.useLockpick.bind(this));
         this.item.setItemUseCallback('lockpick_high', this.useLockpick.bind(this));
+        this.item.setItemUseCallback('halloween_spectral_lockpick', this.useLockpick.bind(this));
     }
 
     @OnEvent(ServerEvent.VEHICLE_SET_OPEN)
@@ -97,6 +98,7 @@ export class VehicleLockProvider {
         const percentages = {
             lockpick_low: 60,
             lockpick_medium: 80,
+            halloween_spectral_lockpick: 80,
             lockpick_high: 99,
             lockpick: 100,
         };
@@ -127,7 +129,7 @@ export class VehicleLockProvider {
 
             return;
         } else if (
-            item.name === 'lockpick_medium' &&
+            (item.name === 'lockpick_medium' || item.name === 'halloween_spectral_lockpick') &&
             vehicleType !== 'automobile' &&
             vehicleType !== 'bike' &&
             vehicleType !== 'trailer' &&
