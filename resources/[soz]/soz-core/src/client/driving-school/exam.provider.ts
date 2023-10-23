@@ -182,6 +182,13 @@ export class ExamProvider {
 
         if (this.playerService.getPlayer().metadata.isdead) {
             this.deleteVehicleAndPed();
+            if (
+                this.examState.license &&
+                (this.examState.license.licenseType === DrivingSchoolLicenseType.Heli ||
+                    this.examState.license.licenseType == DrivingSchoolLicenseType.Boat)
+            ) {
+                this.teleportPlayer(DrivingSchoolConfig.playerDefaultLocation);
+            }
         } else {
             await wait(2000);
             await this.deleteEntitiesAndTeleportBack();
