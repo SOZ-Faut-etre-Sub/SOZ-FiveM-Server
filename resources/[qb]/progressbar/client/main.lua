@@ -40,6 +40,7 @@ local isPropTwo = false
 local prop_net = nil
 local propTwo_net = nil
 local runProgThread = false
+local progressId = 0
 
 local playerProps = {}
 local playerHasProp = false
@@ -65,6 +66,7 @@ function ProgressWithStartAndTick(action, start, tick, finish)
 end
 
 function Process(action, start, tick, finish)
+    progressId = progressId + 1
     Action = action
     ActionStart()
     local ped = PlayerPedId()
@@ -79,7 +81,8 @@ function Process(action, start, tick, finish)
                 SendNUIMessage({
                     action = "progress",
                     duration = Action.duration,
-                    label = Action.label
+                    label = Action.label,
+                    progressId = progressId
                 })
             end
 
@@ -241,7 +244,10 @@ function Cancel()
     })
 end
 
-function Finish()
+function Finish(localProgressId)
+    if localProgressId ~= progressId then
+        return
+    end
     isDoingAction = false
     ActionCleanup()
     exports["soz-core"]:SetPlayerState({
@@ -357,7 +363,7 @@ RegisterNetEvent('progressbar:client:cancel', function()
 end)
 
 RegisterNUICallback('FinishAction', function(data, cb)
-    Finish()
+    Finish(data.progressId)
 end)
 
 exports("IsDoingAction", function()
