@@ -599,9 +599,9 @@ export class VehicleFuelProvider {
             0.0,
             MAX_LENGTH_ROPE,
             1,
-            10.0,
             1.0,
-            0,
+            1.0,
+            2.0,
             false,
             true,
             true,
@@ -632,6 +632,39 @@ export class VehicleFuelProvider {
         if (this.currentStationPistol.filling) {
             this.soundService.playAround('fuel/refueling', 5, 0.3);
         }
+
+        const rope = this.currentStationPistol.rope;
+        const ropeLength = GetRopeLength(rope);
+        const stationPosition = GetEntityCoords(this.currentStationPistol.entity) as Vector3;
+        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const distanceStationPlayer = getDistance(stationPosition, playerPosition);
+        console.log('distance ', distanceStationPlayer);
+        console.log('Ma taille', ropeLength);
+        if (distanceStationPlayer > ropeLength + 0.2) {
+            // current length > desired length : winding case
+            StopRopeUnwindingFront(rope);
+            StartRopeWinding(rope);
+            RopeForceLength(rope, distanceStationPlayer - 0.2);
+
+            //if (length > Length + 10f)
+            //  FixLongRopeBug();
+        } else if (distanceStationPlayer < ropeLength - 0.2) {
+            // current length < desired length : unwinding case
+            StopRopeWinding(rope);
+            StartRopeUnwindingFront(rope);
+            RopeForceLength(rope, distanceStationPlayer + 0.2);
+        }
+        // if (ropeLength + 0.5 <= distanceStationPlayer) {
+        //     console.log('Je me deroule');
+        //     StartRopeUnwindingFront(this.currentStationPistol.rope);
+        // } else if (ropeLength > distanceStationPlayer) {
+        //     console.log("Je m'enroule");
+        //     StartRopeWinding(this.currentStationPistol.rope);
+        // } else {
+        //     console.log('Je suis statique');
+        //     StopRopeWinding(this.currentStationPistol.rope);
+        //     StopRopeUnwindingFront(this.currentStationPistol.rope);
+        // }
 
         const ropePosition = GetOffsetFromEntityInWorldCoords(
             this.currentStationPistol.entity,
