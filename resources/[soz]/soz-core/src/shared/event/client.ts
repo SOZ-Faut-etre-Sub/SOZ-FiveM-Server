@@ -45,6 +45,9 @@ export enum ClientEvent {
 
     HOUSING_OPEN_UPGRADES_MENU = 'soz-core:client:housing:open-upgrades-menu',
 
+    HALLOWEEN_HAT_TOOGLE = 'soz-core:client:halloween:hat-toggle',
+    HALLOWEEN_DEGUISEMENT_USE = 'soz-core:client:halloween:use-deguisement',
+
     ITEM_USE = 'soz-core:client:item:use',
     ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',
     ITEM_PROTEST_SIGN_TOGGLE = 'soz-core:client:item:protest-sign:toggle',

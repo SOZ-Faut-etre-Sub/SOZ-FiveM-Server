@@ -6517,6 +6517,253 @@ QBShared.Items = {
         ['description'] = 'Pour transporter tes horreurs.',
         ['illustrator'] = '.SuperPG'
     },
+    --crimi
+    ['halloween_desiccated_human_intestine'] = {
+        ['name'] = 'halloween_desiccated_human_intestine',
+        ['label'] = "Intestin d'humain desséché",
+        ['weight'] = 150,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un trophée macabre récupéré d'une créature abominable. Peut être utilisé dans des rituels occultes pour restaurer la santé du joueur ou créer des potions sinistres.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_necrotic_muscle'] = {
+        ['name'] = 'halloween_necrotic_muscle',
+        ['label'] = "Muscle nécrosé",
+        ['weight'] = 100,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un morceau de chair en décomposition, émanant d'une aura malsaine. Il peut être utilisé pour renforcer les armes du joueur, augmentant leur puissance de frappe.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_fresh_brain'] = {
+        ['name'] = 'halloween_fresh_brain',
+        ['label'] = "Cervelle fraîche",
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un cerveau humain fraîchement prélevé, encore pulsant. Il est un ingrédient-clé pour concocter des potions de sagesse et de compréhension, débloquant des connaissances cachées.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_phantom_vacuum_cleaner'] = {
+        ['name'] = 'halloween_phantom_vacuum_cleaner',
+        ['label'] = "Aspirateur fantomatique",
+        ['weight'] = 250,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un dispositif mystérieux permettant de capturer des esprits et des fantômes. En l'utilisant, le joueur peut stocker des âmes pour déverrouiller des compétences spéciales ou obtenir des informations occultes.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_used_anti_vampire_stake'] = {
+        ['name'] = 'halloween_used_anti_vampire_stake',
+        ['label'] = "Pieu anti-vampire usagé",
+        ['weight'] = 150,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un pieu en bois usagé, témoignant de combats contre les vampires. Bien que légèrement ébréché, il reste efficace pour éliminer les créatures des ténèbres. Augmente les dégâts contre les vampires.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_miniature_succubus'] = {
+        ['name'] = 'halloween_miniature_succubus',
+        ['label'] = "Succube miniature",
+        ['weight'] = 150,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Une figurine ensorcelée d'un succube. Lorsqu'elle est activée, elle invoque temporairement un serviteur du chaos pour combattre à vos côtés. Attention, la magie noire a un prix.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_demon_thong'] = {
+        ['name'] = 'halloween_demon_thong',
+        ['label'] = 'String démoniaque',
+        ['weight'] = 100,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Une lingerie en soie noire, ornée de runes infernales. Augmente le charisme et la séduction de votre personnage, le rendant irrésistible aux ennemis et aux alliés.',
+        ['illustrator'] = '.'
+    },
+    ['halloween_ouija_board'] = {
+        ['name'] = 'halloween_ouija_board',
+        ['label'] = 'Planche de Ouija',
+        ['weight'] = 400,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un artefact spirituel qui permet de communiquer avec les esprits. Utilisé avec prudence, il peut révéler des informations cruciales sur l'histoire et les quêtes du jeu. Attention aux entités hostiles.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_satan_ring'] = {
+        ['name'] = 'halloween_satan_ring',
+        ['label'] = 'Bague de SATAN',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Une bague sombre incrustée de pierres précieuses sinistres. Elle confère à votre personnage des pouvoirs occultes, améliorant ses compétences magiques, mais à un coût, car elle inflige des dégâts à la santé.',
+        ['illustrator'] = '.'
+    },
+    ['halloween_hell_guide'] = {
+        ['name'] = 'halloween_hell_guide',
+        ['label'] = 'Guide des enfers',
+        ['weight'] = 200,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Un grimoire ancien renfermant des connaissances infernales. En le lisant, votre personnage obtient un aperçu des ennemis, des faiblesses et des secrets des enfers, ce qui est essentiel pour progresser.',
+        ['illustrator'] = '.'
+    },
+    ['halloween_presence_detector'] = {
+        ['name'] = 'halloween_presence_detector',
+        ['label'] = 'Détecteur de présence',
+        ['weight'] = 700,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un appareil électronique qui détecte la présence d'entités surnaturelles. Il révèle les ennemis cachés, les portes secrètes et les objets magiques, vous aidant à éviter les embuscades.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_voodoo'] = {
+        ['name'] = 'halloween_voodoo doll',
+        ['label'] = 'Poupée Vaudou',
+        ['weight'] = 250,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un objet maléfique utilisé pour influencer les ennemis. En la personnalisant, votre personnage peut infliger des malédictions, des dégâts et même contrôler ses adversaires. Utilisez-la avec précaution, car elle peut se retourner contre vous.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_necronomicon'] = {
+        ['name'] = 'halloween_necronomicon',
+        ['label'] = 'Necronomicon',
+        ['weight'] = 1000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un grimoire ancien, orné de symboles ésotériques. Ce livre maudit contient des sorts interdits et des connaissances interdites. Lorsque votre personnage l'étudie, il gagne des pouvoirs sombres et accède à des magies interdites.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_lemegeton'] = {
+        ['name'] = 'halloween_lemegeton',
+        ['label'] = 'Lemegeton',
+        ['weight'] = 1500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un manuscrit antique renfermant les noms et les sceaux de démons. En l'ouvrant, votre personnage peut invoquer des créatures diaboliques pour le servir. Utilisez-les stratégiquement pour combattre les ennemis ou résoudre des énigmes.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_infernus_dictionnary'] = {
+        ['name'] = 'halloween_infernus_dictionnary',
+        ['label'] = 'Dictionnaire infernal',
+        ['weight'] = 2000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un manuscrit antique renfermant les noms et les sceaux de démons. En l'ouvrant, votre personnage peut invoquer des créatures diaboliques pour le servir. Utilisez-les stratégiquement pour combattre les ennemis ou résoudre des énigmes.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_invocation_gem'] = {
+        ['name'] = 'halloween_invocation_gem',
+        ['label'] = "Gemme d'invocation",
+        ['weight'] = 5000,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Une gemme magique qui permet à votre personnage d'invoquer des alliés surnaturels. Chaque gemme a un pouvoir unique, que ce soit l'invocation d'un gardien, d'un esprit élémentaire ou d'une créature divine pour vous assister dans votre quête. Utilisez-les avec précaution, car elles ont un nombre limité d'utilisations.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_gut_zip'] = {
+        ['name'] = 'halloween_gut_zip',
+        ['label'] = "Zip en intestin",
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un Zip d'origine inconnue, composé d'intestins. Il vous permet de menotter vos précipices et de vous enfuir à l’aide de plates-formes inaccessibles. Un accessoire discret pour un aventurier macabre.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_fake_rpg'] = {
+        ['name'] = 'halloween_fake_rpg',
+        ['label'] = "Faux-RPG",
+        ['weight'] = 6300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Une arme de mêlée unique, ressemblant à une épée, mais qui peut projeter des ondes de choc explosives. Idéale pour le combat rapproché et la destruction de groupes d'ennemis.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_h_bomb_cigare'] = {
+        ['name'] = 'halloween_h_bomb_cigare',
+        ['label'] = "Cigare Bombe-H",
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un cigare explosif fumé comme une grenade. En l'allumant, il explose après quelques bouffées. Un outil furtif pour éliminer les gardes sans alerter les autres.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_mre_cerberus'] = {
+        ['name'] = 'halloween_mre_cerberus',
+        ['label'] = 'MRE "Cerbère"',
+        ['weight'] = 1000,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 7,
+        ['combinable'] = nil,
+        ['description'] = "Un repas prêt à l'emploi pour aventuriers téméraires. Le MRE \"Cerbère\" restaure la santé, la vigueur et la résistance de votre personnage, tout en lui conférant une immunité temporaire contre les poisons.",
+        ['nutrition'] = {
+            ['hunger'] = 50,
+            ['thirst'] = 50,
+            ['stamina'] = 0,
+            ['fiber'] = 2,
+            ['lipid'] = 2,
+            ['sugar'] = 2,
+            ['protein'] = 2,
+            ['alcohol'] = 0,
+        },
+        ['illustrator'] = '.'
+    },
+    ['halloween_spectral_lockpick'] = {
+        ['name'] = 'halloween_spectral_lockpick',
+        ['label'] = 'Crochetage spectrale',
+        ['weight'] = 300,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "Un outil mystique permettant d'ouvrir des portes et des coffres verrouillés par des énigmes magiques. Votre personnage peut décrypter les symboles mystérieux et déverrouiller des trésors cachés grâce à ce talent spécial.",
+        ['illustrator'] = '.'
+    },
+
+
+
     ['new_year_bottle_2023'] = {
         ['name'] = 'new_year_bottle_2023',
         ['label'] = 'Joyeuze année 2023',
