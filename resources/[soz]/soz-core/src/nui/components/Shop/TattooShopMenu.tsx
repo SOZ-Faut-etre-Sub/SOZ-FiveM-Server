@@ -72,6 +72,7 @@ export const TattooShopMenu: FunctionComponent<MenuTattooShopStateProps> = ({ da
                                     onSelected={async () => {
                                         await fetchNui(NuiEvent.TattoShopPreview, product);
                                     }}
+                                    description="Utilisez Shift pour changer la caméra."
                                 >
                                     <div className="flex justify-between items-center">
                                         <span>{product.Name}</span>

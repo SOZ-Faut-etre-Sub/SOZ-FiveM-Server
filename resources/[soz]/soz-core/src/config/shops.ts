@@ -392,7 +392,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     ['tattooshop2']: {
         brand: ShopBrand.Tattoo,
         location: [1862.56, 3748.41, 33.03, 33.12],
-        positionInShop: [1864.91, 3746.62, 33.03, 28.24],
+        positionInShop: [1864.46, 3747.41, 33.03, 15.11],
     },
     ['tattooshop3']: {
         brand: ShopBrand.Tattoo,
@@ -407,7 +407,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     ['tattooshop5']: {
         brand: ShopBrand.Tattoo,
         location: [1324.83, -1650.14, 52.28, 129.56],
-        positionInShop: [1321.72, -1654.25, 52.28, 9.94],
+        positionInShop: [1321.8, -1653.2, 52.28, 349.29],
     },
     ['tattooshop6']: {
         brand: ShopBrand.Tattoo,
@@ -491,14 +491,24 @@ export const ShopTattooConfig: Record<string, TattooShopCategory> = {
         ],
         player: [0.0, 0.0, 0.5],
     },
-    ['ZONE_TORSO']: {
+    ['ZONE_TORSO_FRONT']: {
         label: 'Torse',
         cam: [
             [0.0, 0.7, 0.2],
             [-0.5, 0.7, 0.2],
+            [0.5, 0.7, 0.2],
             [-0.5, -0.7, 0.2],
-            [0.0, -0.7, 0.2],
             [0.5, -0.7, 0.2],
+        ],
+        player: [0.0, 0.0, 0.2],
+    },
+    ['ZONE_TORSO_BACK']: {
+        label: 'Dos',
+        cam: [
+            [0.0, -0.7, 0.2],
+            [-0.5, -0.7, 0.2],
+            [0.5, -0.7, 0.2],
+            [-0.5, 0.7, 0.2],
             [0.5, 0.7, 0.2],
         ],
         player: [0.0, 0.0, 0.2],
@@ -506,18 +516,18 @@ export const ShopTattooConfig: Record<string, TattooShopCategory> = {
     ['ZONE_LEFT_ARM']: {
         label: 'Bras gauche',
         cam: [
-            [-0.4, 0.5, 0.2],
-            [-0.7, 0.0, 0.2],
-            [-0.4, -0.5, 0.2],
+            [-0.6, 0.7, 0.4],
+            [-0.9, 0.0, 0.4],
+            [-0.6, -0.7, 0.4],
         ],
         player: [-0.2, 0.0, 0.2],
     },
     ['ZONE_RIGHT_ARM']: {
         label: 'Bras droit',
         cam: [
-            [0.4, 0.5, 0.2],
-            [0.7, 0.0, 0.2],
-            [0.4, -0.5, 0.2],
+            [0.6, 0.7, 0.4],
+            [0.9, 0.0, 0.4],
+            [0.6, -0.5, 0.4],
         ],
         player: [0.2, 0.0, 0.2],
     },

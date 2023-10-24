@@ -6,7 +6,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpairraces_overlays',
         HashNameMale: 'MP_Airraces_Tattoo_000_M',
         HashNameFemale: 'MP_Airraces_Tattoo_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -14,7 +14,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpairraces_overlays',
         HashNameMale: 'MP_Airraces_Tattoo_001_M',
         HashNameFemale: 'MP_Airraces_Tattoo_001_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -22,7 +22,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpairraces_overlays',
         HashNameMale: 'MP_Airraces_Tattoo_002_M',
         HashNameFemale: 'MP_Airraces_Tattoo_002_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -38,7 +38,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpairraces_overlays',
         HashNameMale: 'MP_Airraces_Tattoo_004_M',
         HashNameFemale: 'MP_Airraces_Tattoo_004_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -47,7 +47,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         HashNameMale: 'MP_Airraces_Tattoo_005_M',
         HashNameFemale: 'MP_Airraces_Tattoo_005_F',
         LocalizedName: 'Ah! La belle étoile!',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -55,7 +55,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpairraces_overlays',
         HashNameMale: 'MP_Airraces_Tattoo_006_M',
         HashNameFemale: 'MP_Airraces_Tattoo_006_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -63,7 +63,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpairraces_overlays',
         HashNameMale: 'MP_Airraces_Tattoo_007_M',
         HashNameFemale: 'MP_Airraces_Tattoo_007_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -71,7 +71,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: 'MP_Bea_M_Back_000',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -79,7 +79,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: 'MP_Bea_M_Chest_000',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -87,7 +87,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: 'MP_Bea_M_Chest_001',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -183,7 +183,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: 'MP_Bea_M_Stom_000',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -191,7 +191,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: 'MP_Bea_M_Stom_001',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -199,7 +199,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Back_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -207,7 +207,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Back_001',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -215,7 +215,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Back_002',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -223,7 +223,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Chest_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -231,7 +231,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Chest_001',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -239,7 +239,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Chest_002',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -247,7 +247,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_RSide_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -279,7 +279,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Should_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -287,7 +287,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Should_001',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -295,7 +295,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Stom_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -303,7 +303,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Stom_001',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -311,7 +311,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbeach_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Bea_F_Stom_002',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -335,7 +335,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_000_M',
         HashNameFemale: 'MP_MP_Biker_Tat_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -343,7 +343,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_001_M',
         HashNameFemale: 'MP_MP_Biker_Tat_001_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -359,7 +359,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_003_M',
         HashNameFemale: 'MP_MP_Biker_Tat_003_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -375,7 +375,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_005_M',
         HashNameFemale: 'MP_MP_Biker_Tat_005_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -383,7 +383,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_006_M',
         HashNameFemale: 'MP_MP_Biker_Tat_006_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -399,7 +399,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_008_M',
         HashNameFemale: 'MP_MP_Biker_Tat_008_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -415,7 +415,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_010_M',
         HashNameFemale: 'MP_MP_Biker_Tat_010_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -423,7 +423,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_011_M',
         HashNameFemale: 'MP_MP_Biker_Tat_011_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -439,7 +439,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_013_M',
         HashNameFemale: 'MP_MP_Biker_Tat_013_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -471,7 +471,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_017_M',
         HashNameFemale: 'MP_MP_Biker_Tat_017_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -479,7 +479,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_018_M',
         HashNameFemale: 'MP_MP_Biker_Tat_018_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -487,7 +487,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_019_M',
         HashNameFemale: 'MP_MP_Biker_Tat_019_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -503,7 +503,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_021_M',
         HashNameFemale: 'MP_MP_Biker_Tat_021_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -519,7 +519,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_023_M',
         HashNameFemale: 'MP_MP_Biker_Tat_023_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -543,7 +543,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_026_M',
         HashNameFemale: 'MP_MP_Biker_Tat_026_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -567,7 +567,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_029_M',
         HashNameFemale: 'MP_MP_Biker_Tat_029_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -575,7 +575,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_030_M',
         HashNameFemale: 'MP_MP_Biker_Tat_030_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -583,7 +583,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_031_M',
         HashNameFemale: 'MP_MP_Biker_Tat_031_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -591,7 +591,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_032_M',
         HashNameFemale: 'MP_MP_Biker_Tat_032_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -607,7 +607,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_034_M',
         HashNameFemale: 'MP_MP_Biker_Tat_034_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -647,7 +647,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_039_M',
         HashNameFemale: 'MP_MP_Biker_Tat_039_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -663,7 +663,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_041_M',
         HashNameFemale: 'MP_MP_Biker_Tat_041_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -679,7 +679,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_043_M',
         HashNameFemale: 'MP_MP_Biker_Tat_043_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -735,7 +735,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_050_M',
         HashNameFemale: 'MP_MP_Biker_Tat_050_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -751,7 +751,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_052_M',
         HashNameFemale: 'MP_MP_Biker_Tat_052_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -799,7 +799,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_058_M',
         HashNameFemale: 'MP_MP_Biker_Tat_058_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -807,7 +807,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_059_M',
         HashNameFemale: 'MP_MP_Biker_Tat_059_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -815,7 +815,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbiker_overlays',
         HashNameMale: 'MP_MP_Biker_Tat_060_M',
         HashNameFemale: 'MP_MP_Biker_Tat_060_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -889,7 +889,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: 'MP_Buis_M_Stomach_000',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -897,7 +897,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: 'MP_Buis_M_Chest_000',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -905,7 +905,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: 'MP_Buis_M_Chest_001',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -913,7 +913,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: 'MP_Buis_M_Back_000',
         HashNameFemale: '',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -921,7 +921,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Buis_F_Chest_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -929,7 +929,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Buis_F_Chest_001',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -937,7 +937,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Buis_F_Chest_002',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -945,7 +945,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Buis_F_Stom_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -953,7 +953,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Buis_F_Stom_001',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -961,7 +961,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Buis_F_Stom_002',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -969,7 +969,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Buis_F_Back_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -977,7 +977,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpbusiness_overlays',
         HashNameMale: '',
         HashNameFemale: 'MP_Buis_F_Back_001',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1033,7 +1033,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_000_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1049,7 +1049,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_002_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_002_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1057,7 +1057,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_003_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_003_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1073,7 +1073,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_005_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_005_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1097,7 +1097,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_008_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_008_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1105,7 +1105,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_009_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_009_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1113,7 +1113,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_010_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_010_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1121,7 +1121,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_011_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_011_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1153,7 +1153,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_015_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_015_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1161,7 +1161,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_016_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_016_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1185,7 +1185,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_019_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_019_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1193,7 +1193,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_020_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_020_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1201,7 +1201,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_021_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_021_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1209,7 +1209,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_022_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_022_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1225,7 +1225,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_024_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_024_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1241,7 +1241,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_026_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_026_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1249,7 +1249,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2017_overlays',
         HashNameMale: 'MP_Christmas2017_Tattoo_027_M',
         HashNameFemale: 'MP_Christmas2017_Tattoo_027_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1273,7 +1273,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2018_overlays',
         HashNameMale: 'MP_Christmas2018_Tat_000_M',
         HashNameFemale: 'MP_Christmas2018_Tat_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1321,7 +1321,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_005',
         HashNameFemale: 'MP_Xmas2_F_Tat_005',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1329,7 +1329,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_006',
         HashNameFemale: 'MP_Xmas2_F_Tat_006',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1353,7 +1353,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_009',
         HashNameFemale: 'MP_Xmas2_F_Tat_009',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1369,7 +1369,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_011',
         HashNameFemale: 'MP_Xmas2_F_Tat_011',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1385,7 +1385,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_013',
         HashNameFemale: 'MP_Xmas2_F_Tat_013',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1401,7 +1401,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_015',
         HashNameFemale: 'MP_Xmas2_F_Tat_015',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1409,7 +1409,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_016',
         HashNameFemale: 'MP_Xmas2_F_Tat_016',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1417,7 +1417,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_017',
         HashNameFemale: 'MP_Xmas2_F_Tat_017',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1425,7 +1425,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_018',
         HashNameFemale: 'MP_Xmas2_F_Tat_018',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1433,7 +1433,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_019',
         HashNameFemale: 'MP_Xmas2_F_Tat_019',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1505,7 +1505,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpchristmas2_overlays',
         HashNameMale: 'MP_Xmas2_M_Tat_028',
         HashNameFemale: 'MP_Xmas2_F_Tat_028',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1521,7 +1521,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_000_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1529,7 +1529,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_001_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_001_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1593,7 +1593,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_009_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_009_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1601,7 +1601,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_010_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_010_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1617,7 +1617,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_012_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_012_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1625,7 +1625,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_013_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_013_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1633,7 +1633,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_014_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_014_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1657,7 +1657,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_017_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_017_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1665,7 +1665,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_018_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_018_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1673,7 +1673,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_019_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_019_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1681,7 +1681,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_020_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_020_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1697,7 +1697,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_022_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_022_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1745,7 +1745,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_028_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_028_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1753,7 +1753,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpgunrunning_overlays',
         HashNameMale: 'MP_Gunrunning_Tattoo_029_M',
         HashNameFemale: 'MP_Gunrunning_Tattoo_029_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1953,7 +1953,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_023_M',
         HashNameFemale: 'mpHeist3_Tat_023_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1961,7 +1961,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_024_M',
         HashNameFemale: 'mpHeist3_Tat_024_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1969,7 +1969,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_025_M',
         HashNameFemale: 'mpHeist3_Tat_025_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1977,7 +1977,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_026_M',
         HashNameFemale: 'mpHeist3_Tat_026_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -1985,7 +1985,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_027_M',
         HashNameFemale: 'mpHeist3_Tat_027_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -1993,7 +1993,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_028_M',
         HashNameFemale: 'mpHeist3_Tat_028_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2001,7 +2001,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_029_M',
         HashNameFemale: 'mpHeist3_Tat_029_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2009,7 +2009,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_030_M',
         HashNameFemale: 'mpHeist3_Tat_030_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2033,7 +2033,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_033_M',
         HashNameFemale: 'mpHeist3_Tat_033_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2049,7 +2049,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_035_M',
         HashNameFemale: 'mpHeist3_Tat_035_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2057,7 +2057,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_036_M',
         HashNameFemale: 'mpHeist3_Tat_036_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2065,7 +2065,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_037_M',
         HashNameFemale: 'mpHeist3_Tat_037_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2073,7 +2073,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_038_M',
         HashNameFemale: 'mpHeist3_Tat_038_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2081,7 +2081,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist3_overlays',
         HashNameMale: 'mpHeist3_Tat_039_M',
         HashNameFemale: 'mpHeist3_Tat_039_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2161,7 +2161,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_004_M',
         HashNameFemale: 'MP_Heist4_Tat_004_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2233,7 +2233,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_013_M',
         HashNameFemale: 'MP_Heist4_Tat_013_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2241,7 +2241,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_014_M',
         HashNameFemale: 'MP_Heist4_Tat_014_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2249,7 +2249,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_015_M',
         HashNameFemale: 'MP_Heist4_Tat_015_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2257,7 +2257,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_016_M',
         HashNameFemale: 'MP_Heist4_Tat_016_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2265,7 +2265,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_017_M',
         HashNameFemale: 'MP_Heist4_Tat_017_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2273,7 +2273,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_018_M',
         HashNameFemale: 'MP_Heist4_Tat_018_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2281,7 +2281,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_019_M',
         HashNameFemale: 'MP_Heist4_Tat_019_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2289,7 +2289,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_020_M',
         HashNameFemale: 'MP_Heist4_Tat_020_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2297,7 +2297,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_021_M',
         HashNameFemale: 'MP_Heist4_Tat_021_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2305,7 +2305,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_022_M',
         HashNameFemale: 'MP_Heist4_Tat_022_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2313,7 +2313,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_023_M',
         HashNameFemale: 'MP_Heist4_Tat_023_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2369,7 +2369,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpheist4_overlays',
         HashNameMale: 'MP_Heist4_Tat_030_M',
         HashNameFemale: 'MP_Heist4_Tat_030_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2393,7 +2393,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_000',
         HashNameFemale: 'FM_Hip_F_Tat_000',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2409,7 +2409,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_002',
         HashNameFemale: 'FM_Hip_F_Tat_002',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2441,7 +2441,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_006',
         HashNameFemale: 'FM_Hip_F_Tat_006',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2481,7 +2481,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_011',
         HashNameFemale: 'FM_Hip_F_Tat_011',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2489,7 +2489,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_012',
         HashNameFemale: 'FM_Hip_F_Tat_012',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2497,7 +2497,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_013',
         HashNameFemale: 'FM_Hip_F_Tat_013',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2585,7 +2585,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_024',
         HashNameFemale: 'FM_Hip_F_Tat_024',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2593,7 +2593,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_025',
         HashNameFemale: 'FM_Hip_F_Tat_025',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2625,7 +2625,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_029',
         HashNameFemale: 'FM_Hip_F_Tat_029',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2633,7 +2633,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_030',
         HashNameFemale: 'FM_Hip_F_Tat_030',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2641,7 +2641,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_031',
         HashNameFemale: 'FM_Hip_F_Tat_031',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2649,7 +2649,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_032',
         HashNameFemale: 'FM_Hip_F_Tat_032',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2657,7 +2657,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_033',
         HashNameFemale: 'FM_Hip_F_Tat_033',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2673,7 +2673,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_035',
         HashNameFemale: 'FM_Hip_F_Tat_035',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2721,7 +2721,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_041',
         HashNameFemale: 'FM_Hip_F_Tat_041',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2761,7 +2761,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_046',
         HashNameFemale: 'FM_Hip_F_Tat_046',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2769,7 +2769,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mphipster_overlays',
         HashNameMale: 'FM_Hip_M_Tat_047',
         HashNameFemale: 'FM_Hip_F_Tat_047',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2785,7 +2785,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpimportexport_overlays',
         HashNameMale: 'MP_MP_ImportExport_Tat_000_M',
         HashNameFemale: 'MP_MP_ImportExport_Tat_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2793,7 +2793,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpimportexport_overlays',
         HashNameMale: 'MP_MP_ImportExport_Tat_001_M',
         HashNameFemale: 'MP_MP_ImportExport_Tat_001_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2801,7 +2801,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpimportexport_overlays',
         HashNameMale: 'MP_MP_ImportExport_Tat_002_M',
         HashNameFemale: 'MP_MP_ImportExport_Tat_002_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2857,7 +2857,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpimportexport_overlays',
         HashNameMale: 'MP_MP_ImportExport_Tat_009_M',
         HashNameFemale: 'MP_MP_ImportExport_Tat_009_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2865,7 +2865,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpimportexport_overlays',
         HashNameMale: 'MP_MP_ImportExport_Tat_010_M',
         HashNameFemale: 'MP_MP_ImportExport_Tat_010_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2873,7 +2873,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpimportexport_overlays',
         HashNameMale: 'MP_MP_ImportExport_Tat_011_M',
         HashNameFemale: 'MP_MP_ImportExport_Tat_011_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2881,7 +2881,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider2_overlays',
         HashNameMale: 'MP_LR_Tat_000_M',
         HashNameFemale: 'MP_LR_Tat_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2905,7 +2905,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider2_overlays',
         HashNameMale: 'MP_LR_Tat_008_M',
         HashNameFemale: 'MP_LR_Tat_008_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2913,7 +2913,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider2_overlays',
         HashNameMale: 'MP_LR_Tat_011_M',
         HashNameFemale: 'MP_LR_Tat_011_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2921,7 +2921,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider2_overlays',
         HashNameMale: 'MP_LR_Tat_012_M',
         HashNameFemale: 'MP_LR_Tat_012_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2929,7 +2929,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider2_overlays',
         HashNameMale: 'MP_LR_Tat_016_M',
         HashNameFemale: 'MP_LR_Tat_016_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2945,7 +2945,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider2_overlays',
         HashNameMale: 'MP_LR_Tat_019_M',
         HashNameFemale: 'MP_LR_Tat_019_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -2985,7 +2985,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider2_overlays',
         HashNameMale: 'MP_LR_Tat_031_M',
         HashNameFemale: 'MP_LR_Tat_031_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -2993,7 +2993,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider2_overlays',
         HashNameMale: 'MP_LR_Tat_032_M',
         HashNameFemale: 'MP_LR_Tat_032_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3009,7 +3009,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_001_M',
         HashNameFemale: 'MP_LR_Tat_001_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3017,7 +3017,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_002_M',
         HashNameFemale: 'MP_LR_Tat_002_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3025,7 +3025,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_004_M',
         HashNameFemale: 'MP_LR_Tat_004_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3049,7 +3049,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_009_M',
         HashNameFemale: 'MP_LR_Tat_009_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3057,7 +3057,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_010_M',
         HashNameFemale: 'MP_LR_Tat_010_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3065,7 +3065,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_013_M',
         HashNameFemale: 'MP_LR_Tat_013_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3073,7 +3073,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_014_M',
         HashNameFemale: 'MP_LR_Tat_014_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3105,7 +3105,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_021_M',
         HashNameFemale: 'MP_LR_Tat_021_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3121,7 +3121,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mplowrider_overlays',
         HashNameMale: 'MP_LR_Tat_026_M',
         HashNameFemale: 'MP_LR_Tat_026_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3145,7 +3145,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe2_overlays',
         HashNameMale: 'MP_LUXE_TAT_002_M',
         HashNameFemale: 'MP_LUXE_TAT_002_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3177,7 +3177,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe2_overlays',
         HashNameMale: 'MP_LUXE_TAT_012_M',
         HashNameFemale: 'MP_LUXE_TAT_012_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3209,7 +3209,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe2_overlays',
         HashNameMale: 'MP_LUXE_TAT_022_M',
         HashNameFemale: 'MP_LUXE_TAT_022_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3225,7 +3225,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe2_overlays',
         HashNameMale: 'MP_LUXE_TAT_025_M',
         HashNameFemale: 'MP_LUXE_TAT_025_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3241,7 +3241,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe2_overlays',
         HashNameMale: 'MP_LUXE_TAT_027_M',
         HashNameFemale: 'MP_LUXE_TAT_027_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3257,7 +3257,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe2_overlays',
         HashNameMale: 'MP_LUXE_TAT_029_M',
         HashNameFemale: 'MP_LUXE_TAT_029_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3297,7 +3297,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe_overlays',
         HashNameMale: 'MP_LUXE_TAT_003_M',
         HashNameFemale: 'MP_LUXE_TAT_003_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3313,7 +3313,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe_overlays',
         HashNameMale: 'MP_LUXE_TAT_006_M',
         HashNameFemale: 'MP_LUXE_TAT_006_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3321,7 +3321,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe_overlays',
         HashNameMale: 'MP_LUXE_TAT_007_M',
         HashNameFemale: 'MP_LUXE_TAT_007_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3329,7 +3329,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe_overlays',
         HashNameMale: 'MP_LUXE_TAT_008_M',
         HashNameFemale: 'MP_LUXE_TAT_008_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3353,7 +3353,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe_overlays',
         HashNameMale: 'MP_LUXE_TAT_014_M',
         HashNameFemale: 'MP_LUXE_TAT_014_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3361,7 +3361,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe_overlays',
         HashNameMale: 'MP_LUXE_TAT_015_M',
         HashNameFemale: 'MP_LUXE_TAT_015_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3393,7 +3393,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpluxe_overlays',
         HashNameMale: 'MP_LUXE_TAT_024_M',
         HashNameFemale: 'MP_LUXE_TAT_024_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3433,7 +3433,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_004_M',
         HashNameFemale: 'MP_Security_Tat_004_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3465,7 +3465,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_008_M',
         HashNameFemale: 'MP_Security_Tat_008_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3505,7 +3505,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_013_M',
         HashNameFemale: 'MP_Security_Tat_013_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3513,7 +3513,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_014_M',
         HashNameFemale: 'MP_Security_Tat_014_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3521,7 +3521,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_015_M',
         HashNameFemale: 'MP_Security_Tat_015_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3529,7 +3529,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_016_M',
         HashNameFemale: 'MP_Security_Tat_016_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3537,7 +3537,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_017_M',
         HashNameFemale: 'MP_Security_Tat_017_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3545,7 +3545,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_018_M',
         HashNameFemale: 'MP_Security_Tat_018_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3593,7 +3593,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_024_M',
         HashNameFemale: 'MP_Security_Tat_024_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3601,7 +3601,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_025_M',
         HashNameFemale: 'MP_Security_Tat_025_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3609,7 +3609,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsecurity_overlays',
         HashNameMale: 'MP_Security_Tat_026_M',
         HashNameFemale: 'MP_Security_Tat_026_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3625,7 +3625,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_000_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3641,7 +3641,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_002_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_002_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3649,7 +3649,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_003_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_003_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3673,7 +3673,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_006_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_006_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3681,7 +3681,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_007_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_007_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3697,7 +3697,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_009_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_009_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3706,7 +3706,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         HashNameMale: 'MP_Smuggler_Tattoo_010_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_010_F',
         LocalizedName: 'On se reverra en enfer!',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3730,7 +3730,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_013_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_013_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3746,7 +3746,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_015_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_015_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3754,7 +3754,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_016_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_016_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3762,7 +3762,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_017_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_017_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3770,7 +3770,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_018_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_018_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3778,7 +3778,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_019_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_019_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3794,7 +3794,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_021_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_021_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3802,7 +3802,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_022_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_022_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3818,7 +3818,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_024_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_024_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3826,7 +3826,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpsmuggler_overlays',
         HashNameMale: 'MP_Smuggler_Tattoo_025_M',
         HashNameFemale: 'MP_Smuggler_Tattoo_025_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -3922,7 +3922,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_011_M',
         HashNameFemale: 'MP_MP_Stunt_tat_011_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3930,7 +3930,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_012_M',
         HashNameFemale: 'MP_MP_Stunt_tat_012_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3946,7 +3946,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_014_M',
         HashNameFemale: 'MP_MP_Stunt_tat_014_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3978,7 +3978,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_018_M',
         HashNameFemale: 'MP_MP_Stunt_tat_018_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -3986,7 +3986,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_019_M',
         HashNameFemale: 'MP_MP_Stunt_tat_019_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4026,7 +4026,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_024_M',
         HashNameFemale: 'MP_MP_Stunt_tat_024_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4042,7 +4042,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_026_M',
         HashNameFemale: 'MP_MP_Stunt_tat_026_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4050,7 +4050,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_027_M',
         HashNameFemale: 'MP_MP_Stunt_tat_027_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4066,7 +4066,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_029_M',
         HashNameFemale: 'MP_MP_Stunt_tat_029_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4074,7 +4074,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_030_M',
         HashNameFemale: 'MP_MP_Stunt_tat_030_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4098,7 +4098,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_033_M',
         HashNameFemale: 'MP_MP_Stunt_tat_033_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4106,7 +4106,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_034_M',
         HashNameFemale: 'MP_MP_Stunt_tat_034_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4130,7 +4130,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_037_M',
         HashNameFemale: 'MP_MP_Stunt_tat_037_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4154,7 +4154,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_040_M',
         HashNameFemale: 'MP_MP_Stunt_tat_040_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4162,7 +4162,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_041_M',
         HashNameFemale: 'MP_MP_Stunt_tat_041_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4186,7 +4186,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_044_M',
         HashNameFemale: 'MP_MP_Stunt_tat_044_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4202,7 +4202,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_046_M',
         HashNameFemale: 'MP_MP_Stunt_tat_046_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4218,7 +4218,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpstunt_overlays',
         HashNameMale: 'MP_MP_Stunt_tat_048_M',
         HashNameFemale: 'MP_MP_Stunt_tat_048_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4234,7 +4234,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_000_M',
         HashNameFemale: 'MP_Vinewood_Tat_000_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4242,7 +4242,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_001_M',
         HashNameFemale: 'MP_Vinewood_Tat_001_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4258,7 +4258,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_003_M',
         HashNameFemale: 'MP_Vinewood_Tat_003_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4282,7 +4282,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_006_M',
         HashNameFemale: 'MP_Vinewood_Tat_006_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4290,7 +4290,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_007_M',
         HashNameFemale: 'MP_Vinewood_Tat_007_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4298,7 +4298,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_008_M',
         HashNameFemale: 'MP_Vinewood_Tat_008_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4306,7 +4306,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_009_M',
         HashNameFemale: 'MP_Vinewood_Tat_009_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4314,7 +4314,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_010_M',
         HashNameFemale: 'MP_Vinewood_Tat_010_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4322,7 +4322,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_011_M',
         HashNameFemale: 'MP_Vinewood_Tat_011_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4330,7 +4330,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_012_M',
         HashNameFemale: 'MP_Vinewood_Tat_012_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4354,7 +4354,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_015_M',
         HashNameFemale: 'MP_Vinewood_Tat_015_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4362,7 +4362,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_016_M',
         HashNameFemale: 'MP_Vinewood_Tat_016_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4370,7 +4370,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_017_M',
         HashNameFemale: 'MP_Vinewood_Tat_017_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4402,7 +4402,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_021_M',
         HashNameFemale: 'MP_Vinewood_Tat_021_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4410,8 +4410,8 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_022_M',
         HashNameFemale: 'MP_Vinewood_Tat_022_F',
-        LocalizedName: "T'as pas sang balles ?",
-        Zone: 'ZONE_TORSO',
+        LocalizedName: "T 'as pas sang balles ?",
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4419,7 +4419,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_023_M',
         HashNameFemale: 'MP_Vinewood_Tat_023_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4427,7 +4427,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_024_M',
         HashNameFemale: 'MP_Vinewood_Tat_024_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4467,7 +4467,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_029_M',
         HashNameFemale: 'MP_Vinewood_Tat_029_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4475,7 +4475,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_030_M',
         HashNameFemale: 'MP_Vinewood_Tat_030_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4483,7 +4483,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_031_M',
         HashNameFemale: 'MP_Vinewood_Tat_031_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4491,7 +4491,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'mpvinewood_overlays',
         HashNameMale: 'MP_Vinewood_Tat_032_M',
         HashNameFemale: 'MP_Vinewood_Tat_032_F',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4527,7 +4527,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_003',
         HashNameFemale: 'FM_Tat_Award_F_003',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4536,7 +4536,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_004',
         HashNameFemale: 'FM_Tat_Award_F_004',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4545,7 +4545,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_005',
         HashNameFemale: 'FM_Tat_Award_F_005',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4572,7 +4572,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_008',
         HashNameFemale: 'FM_Tat_Award_F_008',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4599,7 +4599,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_011',
         HashNameFemale: 'FM_Tat_Award_F_011',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4608,7 +4608,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_012',
         HashNameFemale: 'FM_Tat_Award_F_012',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4617,7 +4617,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_013',
         HashNameFemale: 'FM_Tat_Award_F_013',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4626,7 +4626,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_014',
         HashNameFemale: 'FM_Tat_Award_F_014',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4644,7 +4644,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_016',
         HashNameFemale: 'FM_Tat_Award_F_016',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4653,7 +4653,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_017',
         HashNameFemale: 'FM_Tat_Award_F_017',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4662,7 +4662,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_018',
         HashNameFemale: 'FM_Tat_Award_F_018',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4671,7 +4671,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_Award_M_019',
         HashNameFemale: 'FM_Tat_Award_F_019',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4716,7 +4716,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_004',
         HashNameFemale: 'FM_Tat_F_004',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4761,7 +4761,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_009',
         HashNameFemale: 'FM_Tat_F_009',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4770,7 +4770,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_010',
         HashNameFemale: 'FM_Tat_F_010',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4779,7 +4779,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_011',
         HashNameFemale: 'FM_Tat_F_011',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4788,7 +4788,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_012',
         HashNameFemale: 'FM_Tat_F_012',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4797,7 +4797,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_013',
         HashNameFemale: 'FM_Tat_F_013',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4824,7 +4824,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_016',
         HashNameFemale: 'FM_Tat_F_016',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4851,7 +4851,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_019',
         HashNameFemale: 'FM_Tat_F_019',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4860,7 +4860,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_020',
         HashNameFemale: 'FM_Tat_F_020',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4896,7 +4896,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_024',
         HashNameFemale: 'FM_Tat_F_024',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4905,7 +4905,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_025',
         HashNameFemale: 'FM_Tat_F_025',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4941,7 +4941,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_029',
         HashNameFemale: 'FM_Tat_F_029',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -4950,7 +4950,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_030',
         HashNameFemale: 'FM_Tat_F_030',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
@@ -4986,7 +4986,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_034',
         HashNameFemale: 'FM_Tat_F_034',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -5004,7 +5004,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_036',
         HashNameFemale: 'FM_Tat_F_036',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -5076,7 +5076,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_044',
         HashNameFemale: 'FM_Tat_F_044',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_FRONT',
         Price: 300,
     },
     {
@@ -5085,7 +5085,7 @@ export const ShopTattooProducts: TattooShopItem[] = [
         Collection: 'multiplayer_overlays',
         HashNameMale: 'FM_Tat_M_045',
         HashNameFemale: 'FM_Tat_F_045',
-        Zone: 'ZONE_TORSO',
+        Zone: 'ZONE_TORSO_BACK',
         Price: 300,
     },
     {
