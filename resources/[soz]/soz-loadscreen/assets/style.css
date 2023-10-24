@@ -18,6 +18,19 @@ body {
     inset: 0;
 }
 
+#server-rule {
+    position: absolute;
+    text-align: center;
+    z-index: 2;
+    position: fixed;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -85%);
+    color: #f0e2e2;
+    padding: .3rem 1rem;
+    border-radius: .3rem;
+}
+
 video {
     animation: fadein 3s;
     opacity: 1;
