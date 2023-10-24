@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<timecycle_modifier_data version="1.000000">
+    <modifier name="li" numMods="17" userFlags="0">
+        <fog_moon_col_r>5.0 5.812</fog_moon_col_r>
+        <fog_moon_col_g>-8.231 -0.231</fog_moon_col_g>
+        <fog_moon_col_b>-5.027 -0.027</fog_moon_col_b>
+        <fog_moon_col_a>0.5 0.5</fog_moon_col_a>
+        <fog_moon_lighting_calc_pow>0.3 0.3</fog_moon_lighting_calc_pow>
+        <fog_east_col_r>5.0 5.812</fog_east_col_r>
+        <fog_east_col_g>-8.231 -0.231</fog_east_col_g>
+        <fog_east_col_b>-5.027 -0.027</fog_east_col_b>
+        <fog_east_col_a>0.5 0.5</fog_east_col_a>
+        <light_dir_col_r>0.9 30.0</light_dir_col_r>
+        <light_dir_col_g>0.1 -7.0</light_dir_col_g>
+        <light_dir_col_b>0.1 0.2</light_dir_col_b>
+        <light_dir_mult>0.02 1.25</light_dir_mult>
+        <light_natural_push>0.5 0.5</light_natural_push>
+        <postfx_noise>0.05</postfx_noise>
+        <postfx_noise_size>0.1</postfx_noise_size>
+        <fog_near_col_r>1.0 1.0</fog_near_col_r>
+    </modifier>
+</timecycle_modifier_data>

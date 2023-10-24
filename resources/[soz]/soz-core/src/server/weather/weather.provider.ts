@@ -290,4 +290,15 @@ export class WeatherProvider {
     public onPollutionManagerReady() {
         this.pollutionManagerReady = true;
     }
+
+    @Command('rain', { role: 'admin' })
+    setRain(source: number, rain: number): void {
+        this.store.dispatch.global.update({ rain: rain });
+    }
+
+    @Command('halloween', { role: 'admin' })
+    setTimecycleMod(source: number, on: string): void {
+        const state = on && on == 'on';
+        this.store.dispatch.global.update({ halloween: state });
+    }
 }

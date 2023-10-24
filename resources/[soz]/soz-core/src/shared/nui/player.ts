@@ -29,4 +29,6 @@ export type PlayerPersonalMenuData = {
     shortcuts: Record<string, Shortcut>;
     job: JobMenuData;
     deguisement: boolean;
+    halloween: boolean;
+    arachnophobe: boolean;
 };

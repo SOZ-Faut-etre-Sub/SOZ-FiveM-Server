@@ -1,7 +1,8 @@
 import { wait } from '@public/core/utils';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 
 import { Command } from '../../core/decorators/command';
-import { OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClothConfig } from '../../shared/cloth';
@@ -13,6 +14,7 @@ import { HudStateProvider } from '../hud/hud.state.provider';
 import { JobMenuProvider } from '../job/job.menu.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
+import { HalloweenSpiderService } from '../object/halloween.spider.service';
 import { ProgressService } from '../progress.service';
 import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerService } from './player.service';
@@ -50,6 +52,14 @@ export class PlayerMenuProvider {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
+    @Inject(HalloweenSpiderService)
+    private halloweenSpiderService: HalloweenSpiderService;
+
+    @Once()
+    public async init() {
+        await this.halloweenSpiderService.init();
+    }
+
     @Command('soz_core_toggle_personal_menu', {
         description: 'Ouvrir le menu personnel',
         passthroughNuiFocus: true,
@@ -72,6 +82,8 @@ export class PlayerMenuProvider {
             shortcuts: this.playerAnimationProvider.getShortcuts(),
             job: this.jobMenuProvider.getJobMenuData(),
             deguisement: this.playerService.hasDeguisement(),
+            halloween: isFeatureEnabled(Feature.Halloween),
+            arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
         });
     }
 
@@ -150,6 +162,11 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)
     public async resetVoip() {
         TriggerEvent('voip:client:reset');
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuHudSetArachnophobe)
+    public async toogleArachnophobe(value: boolean) {
+        this.halloweenSpiderService.updateArachnophobeMode(value);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuRemoveDeguisement)
