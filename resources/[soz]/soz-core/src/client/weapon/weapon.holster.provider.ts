@@ -51,6 +51,7 @@ export class WeaponHolsterProvider {
             (GetPedParachuteState(ped) == -1 || GetPedParachuteState(ped) == 0)
         ) {
             const newWeap = GetSelectedPedWeapon(ped);
+
             if (
                 this.currWeapon != newWeap &&
                 !excludeWeapon.includes(newWeap) &&
@@ -66,6 +67,7 @@ export class WeaponHolsterProvider {
                 await this.resourceLoader.loadAnimationDictionary('reaction@intimidation@cop@unarmed');
                 await this.resourceLoader.loadAnimationDictionary('rcmjosh4');
                 await this.resourceLoader.loadAnimationDictionary('weapons@pistol@');
+                await this.resourceLoader.loadAnimationDictionary('modifiedholster@switchblade');
 
                 if (this.currWeapon != GetHashKey('WEAPON_UNARMED')) {
                     if (
@@ -74,6 +76,8 @@ export class WeaponHolsterProvider {
                             hosterDrawable[GetEntityModel(ped)] == GetPedDrawableVariation(ped, Component.Undershirt))
                     ) {
                         await this.putWeaponInHolster(ped, pos, rot);
+                    } else if (this.currWeapon === GetHashKey('weapon_switchblade')) {
+                        await this.putWeaponSwitchblade(ped, pos, rot);
                     } else {
                         await this.putWeaponBehind(ped, pos, rot);
                     }
@@ -87,6 +91,8 @@ export class WeaponHolsterProvider {
                             hosterDrawable[GetEntityModel(ped)] == GetPedDrawableVariation(ped, Component.Undershirt))
                     ) {
                         await this.drawWeaponFromHolster(ped, pos, rot, newWeap);
+                    } else if (newWeap === GetHashKey('weapon_switchblade')) {
+                        await this.drawWeaponSwitchblade(ped, pos, rot, newWeap);
                     } else {
                         await this.drawWeaponFromBehind(ped, pos, rot, newWeap);
                     }
@@ -171,6 +177,28 @@ export class WeaponHolsterProvider {
         SetCurrentPedWeapon(ped, newWeap, true);
         await wait(1400);
     }
+    private async drawWeaponSwitchblade(ped: number, pos: Vector3, rot: number, newWeap: number) {
+        SetCurrentPedWeapon(ped, newWeap, true);
+        TaskPlayAnimAdvanced(
+            ped,
+            'modifiedholster@switchblade',
+            'unholster',
+            pos[0],
+            pos[1],
+            pos[2],
+            0,
+            0,
+            rot,
+            3.0,
+            3.0,
+            -1,
+            48,
+            0,
+            0,
+            0
+        );
+        await wait(800);
+    }
 
     private async putWeaponInHolster(ped: number, pos: Vector3, rot: number) {
         TaskPlayAnimAdvanced(
@@ -214,6 +242,28 @@ export class WeaponHolsterProvider {
             0
         );
         await wait(1400);
+    }
+
+    private async putWeaponSwitchblade(ped: number, pos: Vector3, rot: number) {
+        TaskPlayAnimAdvanced(
+            ped,
+            'modifiedholster@switchblade',
+            'holster',
+            pos[0],
+            pos[1],
+            pos[2],
+            0,
+            0,
+            rot,
+            3.0,
+            3.0,
+            -1,
+            48,
+            0.0,
+            0,
+            0
+        );
+        await wait(1300);
     }
 
     public isInAnimation() {
