@@ -601,7 +601,7 @@ export class VehicleFuelProvider {
             1,
             1.0,
             1.0,
-            1.0,
+            0,
             false,
             true,
             true,
@@ -638,20 +638,22 @@ export class VehicleFuelProvider {
         const stationPosition = GetEntityCoords(this.currentStationPistol.entity) as Vector3;
         const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
         const distanceStationPlayer = getDistance(stationPosition, playerPosition);
-        console.log('distance ', distanceStationPlayer);
-        console.log('Ma taille', ropeLength);
+        const floatingRange = 0.1;
+
         if (distanceStationPlayer < ropeLength) {
             // current length > desired length : winding case
-            console.log('Je menroule');
             StopRopeUnwindingFront(rope);
             StartRopeWinding(rope);
-            RopeForceLength(rope, distanceStationPlayer - 0.2);
+            RopeForceLength(rope, distanceStationPlayer + floatingRange);
         } else if (distanceStationPlayer > ropeLength) {
             // current length < desired length : unwinding case
-            console.log('Je me deroule');
             StopRopeWinding(rope);
             StartRopeUnwindingFront(rope);
-            RopeForceLength(rope, distanceStationPlayer + 0.2);
+            RopeForceLength(rope, distanceStationPlayer + floatingRange);
+        } else {
+            StopRopeWinding(rope);
+            StopRopeUnwindingFront(rope);
+            RopeForceLength(rope, distanceStationPlayer + floatingRange);
         }
 
         const ropePosition = GetOffsetFromEntityInWorldCoords(
