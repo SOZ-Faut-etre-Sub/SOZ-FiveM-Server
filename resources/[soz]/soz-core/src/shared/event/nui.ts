@@ -146,6 +146,7 @@ export enum NuiEvent {
     PlayerMenuJobGradePermissionUpdate = 'soz-core:nui:player:menu:job-grade-permission-update',
     PlayerMenuRemoveDeguisement = 'soz-core:nui:player:menu:cloth-remove-deguisement',
     PlayerMenuVoipReset = 'soz-core:nui:player:menu:voip-reset',
+    PlayerMenuHudSetArachnophobe = 'soz-core:nui:player:menu:arachnophobe',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
 

@@ -63,6 +63,14 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
                         Redémarrer la voip
                     </MenuItemButton>
+                    {data.halloween && (
+                        <MenuItemCheckbox
+                            checked={data.arachnophobe}
+                            onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetArachnophobe, value)}
+                        >
+                            Mode arachnophobe
+                        </MenuItemCheckbox>
+                    )}
                 </MenuContent>
             </MainMenu>
             <MenuIdentity />
