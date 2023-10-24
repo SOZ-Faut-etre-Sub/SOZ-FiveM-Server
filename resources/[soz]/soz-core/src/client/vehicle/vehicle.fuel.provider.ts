@@ -601,7 +601,7 @@ export class VehicleFuelProvider {
             1,
             1.0,
             1.0,
-            2.0,
+            1.0,
             false,
             true,
             true,
@@ -618,12 +618,12 @@ export class VehicleFuelProvider {
             filling: false,
         };
 
-        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
+        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 1.0, 1.0) as Vector3;
         AttachRopeToEntity(rope, entity, ropePosition[0], ropePosition[1], ropePosition[2], true);
         ActivatePhysics(rope);
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_FRAME)
     private async handleStationPistol() {
         if (!this.currentStationPistol) {
             return;
@@ -640,31 +640,19 @@ export class VehicleFuelProvider {
         const distanceStationPlayer = getDistance(stationPosition, playerPosition);
         console.log('distance ', distanceStationPlayer);
         console.log('Ma taille', ropeLength);
-        if (distanceStationPlayer > ropeLength + 0.2) {
+        if (distanceStationPlayer < ropeLength) {
             // current length > desired length : winding case
+            console.log('Je menroule');
             StopRopeUnwindingFront(rope);
             StartRopeWinding(rope);
             RopeForceLength(rope, distanceStationPlayer - 0.2);
-
-            //if (length > Length + 10f)
-            //  FixLongRopeBug();
-        } else if (distanceStationPlayer < ropeLength - 0.2) {
+        } else if (distanceStationPlayer > ropeLength) {
             // current length < desired length : unwinding case
+            console.log('Je me deroule');
             StopRopeWinding(rope);
             StartRopeUnwindingFront(rope);
             RopeForceLength(rope, distanceStationPlayer + 0.2);
         }
-        // if (ropeLength + 0.5 <= distanceStationPlayer) {
-        //     console.log('Je me deroule');
-        //     StartRopeUnwindingFront(this.currentStationPistol.rope);
-        // } else if (ropeLength > distanceStationPlayer) {
-        //     console.log("Je m'enroule");
-        //     StartRopeWinding(this.currentStationPistol.rope);
-        // } else {
-        //     console.log('Je suis statique');
-        //     StopRopeWinding(this.currentStationPistol.rope);
-        //     StopRopeUnwindingFront(this.currentStationPistol.rope);
-        // }
 
         const ropePosition = GetOffsetFromEntityInWorldCoords(
             this.currentStationPistol.entity,
