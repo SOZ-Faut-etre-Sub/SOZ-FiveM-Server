@@ -117,6 +117,7 @@ export type PlayOptions = {
     resetWeapon: boolean;
     clearTasksBefore: boolean;
     clearTasksAfter: boolean;
+    cancellable: boolean;
 };
 
 export type AnimationOptions = {

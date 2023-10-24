@@ -105,14 +105,35 @@ export class AnimationService {
     }
 
     public playScenario(scenario: Scenario, options?: Partial<PlayOptions>): AnimationRunner {
-        return this.animationFactory.createScenario(scenario, options);
+        const id = scenario.name;
+
+        const runner = this.animationFactory.createScenario(scenario, options);
+        this.runningAnimations.set(id, runner);
+
+        runner.finally(() => {
+            this.runningAnimations.delete(id);
+        });
+        return runner;
     }
 
     public playAnimation(animation: Animation, options?: Partial<PlayOptions>): AnimationRunner {
-        return this.animationFactory.createAnimation(animation, options);
+        const id = animation.base.dictionary + animation.base.name;
+
+        const runner = this.animationFactory.createAnimation(animation, options);
+        this.runningAnimations.set(id, runner);
+
+        runner.finally(() => {
+            this.runningAnimations.delete(id);
+        });
+        return runner;
     }
 
     public async stop(ped = PlayerPedId()): Promise<void> {
+        for (const anim of this.runningAnimations.values()) {
+            if (!anim.cancellable) {
+                return;
+            }
+        }
         ClearPedTasks(ped);
         ClearPedSecondaryTask(ped);
 
