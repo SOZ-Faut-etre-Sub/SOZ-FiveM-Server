@@ -36,6 +36,7 @@ export enum ServerEvent {
     ADMIN_SWITCH_CHARACTER = 'soz-core:server:admin:switch-character',
     ADMIN_ADD_PERSISTENT_PROP = 'soz-core:server:admin:add-persistent-prop',
     ADMIN_ADD_VEHICLE = 'soz-core:server:admin:add-vehicle',
+    ADMIN_PLAYER_SET_ZOMBIE = 'soz-core:server:admin:player:set-zombie',
 
     BASE_ENTERED_VEHICLE = 'baseevents:enteredVehicle',
     BASE_LEFT_VEHICLE = 'baseevents:leftVehicle',
@@ -142,6 +143,9 @@ export enum ServerEvent {
 
     PLAYER_ZIP = 'soz-core:server:player:zip',
     PLAYER_UNZIP = 'soz-core:server:player:unzip',
+
+    PLAYER_ZOMBIE_CONVERT = 'soz-core:server:player:zombie:convert',
+    PLAYER_ZOMBIE_REMOVE = 'soz-core:server:player:zombie:remove',
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 

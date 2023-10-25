@@ -1,6 +1,7 @@
 import { NuiBookMethodMap } from '@public/shared/nui/book';
 import { NuiCardMethodMap } from '@public/shared/nui/card';
 import { NuiCraftingMethodMap } from '@public/shared/nui/crafting';
+import { NuiZombieMethodMap } from '@public/shared/nui/halloween';
 import { NuiHudMethodMap } from '@public/shared/nui/hud';
 import { NuiItemMethodMap } from '@public/shared/nui/item';
 import { NuiMissiveMethodMap } from '@public/shared/nui/missive';
@@ -70,6 +71,7 @@ export interface NuiMethodMap {
     field: NuiFieldMethodMap;
     placement_prop: NuiPlacementPropMethodMap;
     craft: NuiCraftMethodMap;
+    zombie: NuiZombieMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

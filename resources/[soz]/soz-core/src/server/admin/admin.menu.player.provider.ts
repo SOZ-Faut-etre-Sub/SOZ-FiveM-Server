@@ -14,6 +14,7 @@ import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
+import { PlayerZombieProvider } from '../player/player.zombie.provider';
 
 @Provider()
 export class AdminMenuPlayerProvider {
@@ -31,6 +32,9 @@ export class AdminMenuPlayerProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
+
+    @Inject(PlayerZombieProvider)
+    private playerZombieProvider: PlayerZombieProvider;
 
     @OnEvent(ServerEvent.ADMIN_ADD_PERSISTENT_PROP)
     public async addPersistentProp(source: number, model: number, event: string | null, position: Vector4) {
@@ -216,5 +220,18 @@ export class AdminMenuPlayerProvider {
         this.playerStateService.resetClientState(target);
 
         this.notifier.notify(source, `L'état client du joueur a été réinitialisée.`, 'info');
+    }
+
+    @OnEvent(ServerEvent.ADMIN_PLAYER_SET_ZOMBIE)
+    public async onPlayerSetZombie(source: number, target: number, value: boolean) {
+        this.playerStateService.resetClientState(target);
+
+        if (value) {
+            this.notifier.notify(source, `Le joueur va se transformer en zombie.`, 'info');
+            this.playerZombieProvider.addZombiePlayer(target);
+        } else {
+            this.notifier.notify(source, `Le joueur redevient normal.`, 'info');
+            this.playerZombieProvider.removeZombiePlayer(target);
+        }
     }
 }
