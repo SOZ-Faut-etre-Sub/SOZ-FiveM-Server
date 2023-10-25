@@ -142,6 +142,8 @@ export enum ClientEvent {
     PLAYER_UPDATE_STATE = 'soz-core:client:player:update-state',
     PLAYER_UPDATE_LIST_STATE = 'soz-core:client:player:update-list-state',
     PLAYER_ON_DEATH = 'ems:client:onDeath',
+    PLAYER_ZOMBIE_TRANSFORM = 'soz-core:client:player:zombie:transform',
+    PLAYER_ZOMBIE_REMOVE = 'soz-core:client:player:zombie:remove',
 
     PROGRESS_START = 'soz-core:client:progress:start',
     PROGRESS_STOP = 'soz-core:client:progress:stop',

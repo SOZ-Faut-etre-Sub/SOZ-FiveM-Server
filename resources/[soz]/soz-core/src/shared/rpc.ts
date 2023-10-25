@@ -138,6 +138,8 @@ export enum RpcServerEvent {
 
     OBJECT_GET_LIST = 'soz-core:server:object:get-list',
 
+    PLAYER_IS_ZOMBIE = 'soz-core:server:player:is-zombie',
+
     PROP_GET_COLLECTIONS_DATA = 'soz-core:server:prop:get-collection-names',
     PROP_GET_PROP_COLLECTION = 'soz-core:server:prop:get-collection',
     PROP_GET_SERVER_DATA = 'soz-core:server:prop:get-number-props',

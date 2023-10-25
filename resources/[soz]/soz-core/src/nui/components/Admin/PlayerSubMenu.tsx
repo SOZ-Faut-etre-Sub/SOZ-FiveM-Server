@@ -111,6 +111,18 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                 <SubMenu id={'player_' + player.citizenId} key={player.citizenId}>
                     <MenuTitle banner={banner}>{player.name}</MenuTitle>
                     <MenuContent>
+                        <MenuItemSelect
+                            title={'Mode zombie'}
+                            onConfirm={async (_, value) => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerSetZombie, {
+                                    player,
+                                    value,
+                                });
+                            }}
+                        >
+                            <MenuItemSelectOption value={true}>Activer</MenuItemSelectOption>
+                            <MenuItemSelectOption value={false}>Désactiver</MenuItemSelectOption>
+                        </MenuItemSelect>
                         <MenuItemButton
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerSpectate, player);
