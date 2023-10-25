@@ -63,10 +63,10 @@ export class ZombieProvider {
             return;
         }
 
-        if (!Animals.includes(model)) {
-            await this.resourceLoader.loadModel(zombieModel);
-
-            setters.setModel(zombieModel);
-        }
+        // if (!Animals.includes(model)) {
+        //     await this.resourceLoader.loadModel(zombieModel);
+        //
+        //     setters.setModel(zombieModel);
+        // }
     }
 }
