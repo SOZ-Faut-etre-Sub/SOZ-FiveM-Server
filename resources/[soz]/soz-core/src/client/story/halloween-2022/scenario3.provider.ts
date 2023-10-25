@@ -1,7 +1,6 @@
 import { PlayerPositionProvider } from '@public/client/player/player.position.provider';
-import { ClientEvent } from '@public/shared/event';
 
-import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
@@ -43,7 +42,6 @@ export class Halloween2022Scenario3Provider {
         await this.createTPTarget();
     }
 
-    @OnEvent(ClientEvent.PLAYER_UPDATE)
     public createBlip() {
         if (!isFeatureEnabled(Feature.HalloweenScenario3)) {
             return;
@@ -59,7 +57,7 @@ export class Halloween2022Scenario3Provider {
         }
 
         this.blipFactory.create(blipId, {
-            name: 'Activité suspecte',
+            name: 'Horror Story I : La double personnalité. (P3)',
             coords: { x: 510.03, y: 5596.81, z: 792.72 },
             sprite: 484,
             scale: 0.99,
@@ -93,7 +91,7 @@ export class Halloween2022Scenario3Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
-                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 1),
+                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario3', 0),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO3, 'part1');
                         if (dialog) {

@@ -1,6 +1,4 @@
-import { ClientEvent } from '@public/shared/event';
-
-import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
@@ -53,7 +51,6 @@ export class Halloween2022Scenario2Provider {
         await this.spawnProps();
     }
 
-    @OnEvent(ClientEvent.PLAYER_UPDATE)
     public createBlip() {
         if (!isFeatureEnabled(Feature.HalloweenScenario2)) {
             return;
@@ -69,7 +66,7 @@ export class Halloween2022Scenario2Provider {
         }
 
         this.blipFactory.create(blipId, {
-            name: 'Activité suspecte',
+            name: 'Horror Story I : L’homme au phare. (P2)',
             coords: { x: 3314.16, y: 5179.72, z: 18.68 },
             sprite: 484,
             scale: 0.99,
@@ -103,7 +100,7 @@ export class Halloween2022Scenario2Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
-                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', 1),
+                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario2', 0),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO2, 'diag1');
                         if (dialog) {

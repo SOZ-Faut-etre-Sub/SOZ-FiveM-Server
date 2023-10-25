@@ -1,6 +1,4 @@
-import { ClientEvent } from '@public/shared/event';
-
-import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
@@ -55,7 +53,6 @@ export class Halloween2022Scenario1Provider {
         await this.spawnProps();
     }
 
-    @OnEvent(ClientEvent.PLAYER_UPDATE)
     public createBlip() {
         if (!isFeatureEnabled(Feature.HalloweenScenario1)) {
             return;
@@ -71,7 +68,7 @@ export class Halloween2022Scenario1Provider {
         }
 
         this.blipFactory.create(blipId, {
-            name: 'Activité suspecte',
+            name: 'Horror Story I : Le mystérieux meurtre. (P1)',
             coords: { x: -1647.19, y: -1064.16, z: 2.61 },
             sprite: 484,
             scale: 0.99,

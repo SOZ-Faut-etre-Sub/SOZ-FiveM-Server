@@ -26,13 +26,7 @@ export enum ScenarioState {
     Finished,
 }
 
-export const ScenarioOrder = [
-    { story: 'halloween2022', scenario: 'scenario1' },
-    { story: 'halloween2022', scenario: 'scenario2' },
-    { story: 'halloween2022', scenario: 'scenario3' },
-    { story: 'halloween2022', scenario: 'scenario4' },
-    { story: 'halloween2023', scenario: 'scenario1' },
-    { story: 'halloween2023', scenario: 'scenario2' },
-    { story: 'halloween2023', scenario: 'scenario3' },
-    { story: 'halloween2023', scenario: 'scenario4' },
-];
+export const ScenarioOrder = {
+    halloween2022: ['scenario1', 'scenario2', 'scenario3', 'scenario4'],
+    halloween2023: ['scenario1', 'scenario2', 'scenario3', 'scenario4'],
+};

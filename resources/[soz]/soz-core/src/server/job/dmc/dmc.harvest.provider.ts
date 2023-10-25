@@ -12,6 +12,12 @@ import { FieldItem } from '@public/shared/field';
 import { DMC_FIELDS } from '@public/shared/job/dmc';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
 
+const fieldMessage = {
+    dmc_iron_field: 'de fer et charbon',
+    dmc_aluminium_field: "d'aluminium",
+    dmc_uranium_field: "d'uranium",
+};
+
 @Provider()
 export class DmcHarvestProvider {
     @Inject(ProgressService)
@@ -54,7 +60,7 @@ export class DmcHarvestProvider {
         const { completed } = await this.progressService.progress(
             source,
             'dmc_harvest',
-            `Récolte ${field == 'dmc_iron_field' ? 'de fer et charbon' : "d'aluminium"}...`,
+            `Récolte ${fieldMessage[field]}...`,
             4500,
             {
                 name: 'ground_attack_on_spot',
@@ -74,6 +80,8 @@ export class DmcHarvestProvider {
             this.notifier.notify(source, `Vous avez ~r~arrêté~s~ de miner.`, 'error');
             return false;
         }
+
+        console.log(field, this.fieldService.getField(field));
 
         if (!this.fieldService.harvestField(field, 1)) {
             this.notifier.notify(source, `La mine est épuisée.`);

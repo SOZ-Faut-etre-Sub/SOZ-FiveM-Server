@@ -1,9 +1,8 @@
 import { Component, Prop } from '@public/shared/cloth';
 import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
-import { ClientEvent } from '@public/shared/event';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 
-import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
@@ -90,7 +89,6 @@ export class Halloween2022Scenario4Provider {
         await this.createPedKaemy();
     }
 
-    @OnEvent(ClientEvent.PLAYER_UPDATE)
     public createBlip() {
         if (!isFeatureEnabled(Feature.HalloweenScenario4)) {
             return;
@@ -106,7 +104,7 @@ export class Halloween2022Scenario4Provider {
         }
 
         this.blipFactory.create(blipId, {
-            name: 'Activité suspecte',
+            name: 'Horror Story I : L’amicale créature. (P4)',
             coords: { x: -1538.24, y: 217.14, z: 59.88 },
             sprite: 484,
             scale: 0.99,
@@ -213,7 +211,7 @@ export class Halloween2022Scenario4Provider {
                 {
                     label: 'Parler',
                     icon: 'fas fa-comment',
-                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 1),
+                    canInteract: () => this.storyService.canInteractForPart('halloween2022', 'scenario4', 0),
                     action: async () => {
                         const dialog = await emitRpc<Dialog | null>(RpcServerEvent.STORY_HALLOWEEN_SCENARIO4, 'part1');
                         if (dialog) {

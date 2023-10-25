@@ -19,7 +19,7 @@ export class WeatherProvider {
     async onHalloween(halloween: boolean) {
         if (halloween) {
             await this.resourceLoader.loadStreamedTextureDict('halloweenmoon');
-            SetTimecycleModifier('li');
+            SetTransitionTimecycleModifier('li', 120.0);
             AddReplaceTexture('platform:/textures/skydome', 'moon-new', 'halloweenmoon', 'moon-new');
             AddReplaceTexture('platform:/textures/skydome', 'starfield', 'halloweenmoon', 'starfield');
         } else {

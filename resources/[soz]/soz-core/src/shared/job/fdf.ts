@@ -1,6 +1,6 @@
 import { WardrobeConfig } from '../cloth';
 import { CraftCategory } from '../craft/craft';
-import { Environment } from '../features';
+import { Environment, Feature } from '../features';
 import { joaat } from '../joaat';
 import { BoxZone, NamedZone } from '../polyzone/box.zone';
 import { PolygonZone } from '../polyzone/polygon.zone';
@@ -820,6 +820,19 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 inputs: {
                     cabage: { count: 1 },
                     tomato: { count: 2 },
+                },
+            },
+        },
+    },
+    Halloween: {
+        duration: 6000,
+        event: 'job_fdf_craft',
+        feature: Feature.Halloween,
+        recipes: {
+            pumpkin_soup: {
+                amount: 3,
+                inputs: {
+                    pumpkin_fresh: { count: 2 },
                 },
             },
         },
