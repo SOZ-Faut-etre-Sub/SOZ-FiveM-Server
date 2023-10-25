@@ -5941,6 +5941,19 @@ QBShared.Items = {
         ['illustrator'] = '.Crash'
     },
 
+    --- Other
+    ['halloween_scythe'] = {
+        ['name'] = 'halloween_scythe',
+        ['label'] = 'Faux de faucheuse',
+        ['weight'] = 6000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = '--',
+        ['illustrator'] = '.Crash'
+    },
+
     --- DMC
     ['halloween_uranium_raw'] = {
         ['name'] = 'halloween_uranium_raw',
@@ -5951,7 +5964,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Une sorte de pierre verte qui brille à faire fondre.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Smogogo'
     },
     ['halloween_uranium_ingot'] = {
         ['name'] = 'halloween_uranium_ingot',
@@ -5962,7 +5975,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Lingot fluorescent, et tiède.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Kutz'
     },
     ['halloween_atomic_compass'] = {
         ['name'] = 'halloween_atomic_compass',
@@ -5973,7 +5986,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Boussole super précise fonctionnant à l'énergie atomique.",
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Arisnoe'
     },
     ['halloween_atomic_gps'] = {
         ['name'] = 'halloween_atomic_gps',
@@ -5984,7 +5997,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "GPS basé sur l'énergie atomique",
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Patsouke'
     },
     ['halloween_brain_knife'] = {
         ['name'] = 'halloween_brain_knife',
@@ -6009,7 +6022,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "C'est pas tout jeune..",
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.SuperPG'
     },
 
     ['halloween_zombie_serum'] = {
@@ -6035,7 +6048,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'Déguisement de zombie.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Sniteur'
     },
     ['halloween_alien_costume'] = {
         ['name'] = 'halloween_alien_costume',
@@ -6046,7 +6059,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = "Déguisement d'alien.",
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Sniteur'
     },
     ['halloween_gorilla_costume'] = {
         ['name'] = 'halloween_gorilla_costume',
@@ -6057,7 +6070,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'Déguisement de gorille.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Sniteur'
     },
     ['halloween_galactic_ranger_costume'] = {
         ['name'] = 'halloween_galactic_ranger_costume',
@@ -6068,7 +6081,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'Déguisement de Ranger Galactique.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Sniteur'
     },
     ['halloween_space_monkey_costume'] = {
         ['name'] = 'halloween_space_monkey_costume',
@@ -6079,7 +6092,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'Déguisement de Sinbge de l\'espace.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Sniteur'
     },
     ['halloween_astronaut_costume'] = {
         ['name'] = 'halloween_astronaut_costume',
@@ -6090,7 +6103,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'Déguisement d\'Astronaute.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Sniteur'
     },
     ['halloween_fury_costume'] = {
         ['name'] = 'halloween_fury_costume',
@@ -6101,7 +6114,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'Déguisement de Fury.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Smogogo'
     },
     ['halloween_juggernaut_costume'] = {
         ['name'] = 'halloween_juggernaut_costume',
@@ -6112,7 +6125,7 @@ QBShared.Items = {
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'Déguisement de Juggernaut.',
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.Sniteur'
     },
 
     --- PAWL
@@ -6527,7 +6540,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un trophée macabre récupéré d'une créature abominable. Peut être utilisé dans des rituels occultes pour restaurer la santé du joueur ou créer des potions sinistres.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Crash'
     },
     ['halloween_necrotic_muscle'] = {
         ['name'] = 'halloween_necrotic_muscle',
@@ -6538,7 +6551,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un morceau de chair en décomposition, émanant d'une aura malsaine. Il peut être utilisé pour renforcer les armes du joueur, augmentant leur puissance de frappe.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Crash'
     },
     ['halloween_fresh_brain'] = {
         ['name'] = 'halloween_fresh_brain',
@@ -6549,7 +6562,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un cerveau humain fraîchement prélevé, encore pulsant. Il est un ingrédient-clé pour concocter des potions de sagesse et de compréhension, débloquant des connaissances cachées.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Kutz'
     },
     ['halloween_phantom_vacuum_cleaner'] = {
         ['name'] = 'halloween_phantom_vacuum_cleaner',
@@ -6560,7 +6573,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un dispositif mystérieux permettant de capturer des esprits et des fantômes. En l'utilisant, le joueur peut stocker des âmes pour déverrouiller des compétences spéciales ou obtenir des informations occultes.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Smogogo'
     },
     ['halloween_used_anti_vampire_stake'] = {
         ['name'] = 'halloween_used_anti_vampire_stake',
@@ -6571,7 +6584,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un pieu en bois usagé, témoignant de combats contre les vampires. Bien que légèrement ébréché, il reste efficace pour éliminer les créatures des ténèbres. Augmente les dégâts contre les vampires.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Crash'
     },
     ['halloween_miniature_succubus'] = {
         ['name'] = 'halloween_miniature_succubus',
@@ -6582,7 +6595,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Une figurine ensorcelée d'un succube. Lorsqu'elle est activée, elle invoque temporairement un serviteur du chaos pour combattre à vos côtés. Attention, la magie noire a un prix.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Gautslayer'
     },
     ['halloween_demon_thong'] = {
         ['name'] = 'halloween_demon_thong',
@@ -6593,7 +6606,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Une lingerie en soie noire, ornée de runes infernales. Augmente le charisme et la séduction de votre personnage, le rendant irrésistible aux ennemis et aux alliés.',
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Gautslayer'
     },
     ['halloween_ouija_board'] = {
         ['name'] = 'halloween_ouija_board',
@@ -6604,7 +6617,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un artefact spirituel qui permet de communiquer avec les esprits. Utilisé avec prudence, il peut révéler des informations cruciales sur l'histoire et les quêtes du jeu. Attention aux entités hostiles.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Sniteur'
     },
     ['halloween_satan_ring'] = {
         ['name'] = 'halloween_satan_ring',
@@ -6615,7 +6628,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Une bague sombre incrustée de pierres précieuses sinistres. Elle confère à votre personnage des pouvoirs occultes, améliorant ses compétences magiques, mais à un coût, car elle inflige des dégâts à la santé.',
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Arisnoe'
     },
     ['halloween_hell_guide'] = {
         ['name'] = 'halloween_hell_guide',
@@ -6626,7 +6639,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Un grimoire ancien renfermant des connaissances infernales. En le lisant, votre personnage obtient un aperçu des ennemis, des faiblesses et des secrets des enfers, ce qui est essentiel pour progresser.',
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Smogogo'
     },
     ['halloween_presence_detector'] = {
         ['name'] = 'halloween_presence_detector',
@@ -6637,7 +6650,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un appareil électronique qui détecte la présence d'entités surnaturelles. Il révèle les ennemis cachés, les portes secrètes et les objets magiques, vous aidant à éviter les embuscades.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Pastouke'
     },
     ['halloween_voodoo'] = {
         ['name'] = 'halloween_voodoo doll',
@@ -6648,7 +6661,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un objet maléfique utilisé pour influencer les ennemis. En la personnalisant, votre personnage peut infliger des malédictions, des dégâts et même contrôler ses adversaires. Utilisez-la avec précaution, car elle peut se retourner contre vous.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Arisnoe'
     },
     ['halloween_necronomicon'] = {
         ['name'] = 'halloween_necronomicon',
@@ -6659,7 +6672,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un grimoire ancien, orné de symboles ésotériques. Ce livre maudit contient des sorts interdits et des connaissances interdites. Lorsque votre personnage l'étudie, il gagne des pouvoirs sombres et accède à des magies interdites.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Kutz'
     },
     ['halloween_lemegeton'] = {
         ['name'] = 'halloween_lemegeton',
@@ -6670,7 +6683,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un manuscrit antique renfermant les noms et les sceaux de démons. En l'ouvrant, votre personnage peut invoquer des créatures diaboliques pour le servir. Utilisez-les stratégiquement pour combattre les ennemis ou résoudre des énigmes.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Kutz'
     },
     ['halloween_infernus_dictionnary'] = {
         ['name'] = 'halloween_infernus_dictionnary',
@@ -6681,7 +6694,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un manuscrit antique renfermant les noms et les sceaux de démons. En l'ouvrant, votre personnage peut invoquer des créatures diaboliques pour le servir. Utilisez-les stratégiquement pour combattre les ennemis ou résoudre des énigmes.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Kutz'
     },
     ['halloween_invocation_gem'] = {
         ['name'] = 'halloween_invocation_gem',
@@ -6692,7 +6705,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Une gemme magique qui permet à votre personnage d'invoquer des alliés surnaturels. Chaque gemme a un pouvoir unique, que ce soit l'invocation d'un gardien, d'un esprit élémentaire ou d'une créature divine pour vous assister dans votre quête. Utilisez-les avec précaution, car elles ont un nombre limité d'utilisations.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Kutz'
     },
     ['halloween_gut_zip'] = {
         ['name'] = 'halloween_gut_zip',
@@ -6703,7 +6716,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un Zip d'origine inconnue, composé d'intestins. Il vous permet de menotter vos précipices et de vous enfuir à l’aide de plates-formes inaccessibles. Un accessoire discret pour un aventurier macabre.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Smogogo'
     },
     ['halloween_fake_rpg'] = {
         ['name'] = 'halloween_fake_rpg',
@@ -6714,7 +6727,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Une arme de mêlée unique, ressemblant à une épée, mais qui peut projeter des ondes de choc explosives. Idéale pour le combat rapproché et la destruction de groupes d'ennemis.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.GautSlayer'
     },
     ['halloween_h_bomb_cigare'] = {
         ['name'] = 'halloween_h_bomb_cigare',
@@ -6725,7 +6738,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un cigare explosif fumé comme une grenade. En l'allumant, il explose après quelques bouffées. Un outil furtif pour éliminer les gardes sans alerter les autres.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Pastouke'
     },
     ['halloween_mre_cerberus'] = {
         ['name'] = 'halloween_mre_cerberus',
@@ -6748,7 +6761,7 @@ QBShared.Items = {
             ['protein'] = 2,
             ['alcohol'] = 0,
         },
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Crash'
     },
     ['halloween_spectral_lockpick'] = {
         ['name'] = 'halloween_spectral_lockpick',
@@ -6759,7 +6772,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "Un outil mystique permettant d'ouvrir des portes et des coffres verrouillés par des énigmes magiques. Votre personnage peut décrypter les symboles mystérieux et déverrouiller des trésors cachés grâce à ce talent spécial.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Crash'
     },
 
 
