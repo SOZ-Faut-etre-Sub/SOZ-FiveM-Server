@@ -5,8 +5,9 @@ import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ServerEvent } from '@public/shared/event';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
-import { DMC_FIELDS_ZONES } from '@public/shared/job/dmc';
+import { DMC_FIELDS_ZONES, DMC_HALLOWEEN_FIELDS_ZONES } from '@public/shared/job/dmc';
 
 @Provider()
 export class DmcHarvestProvider {
@@ -21,8 +22,13 @@ export class DmcHarvestProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public setupDMCFields() {
-        for (const id of Object.keys(DMC_FIELDS_ZONES)) {
-            const zones = DMC_FIELDS_ZONES[id];
+        let fields = DMC_FIELDS_ZONES;
+        if (isFeatureEnabled(Feature.Halloween)) {
+            fields = { ...DMC_FIELDS_ZONES, ...DMC_HALLOWEEN_FIELDS_ZONES };
+        }
+
+        for (const id of Object.keys(fields)) {
+            const zones = fields[id];
             for (let i = 0; i < zones.length; i++) {
                 const zone = zones[i];
                 this.targetFactory.createForBoxZone(

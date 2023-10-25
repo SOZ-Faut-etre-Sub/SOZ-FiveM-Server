@@ -150,6 +150,16 @@ export const DMC_FIELDS_ZONES: Record<string, BoxZone[]> = {
     ],
 };
 
+export const DMC_HALLOWEEN_FIELDS_ZONES: Record<string, BoxZone[]> = {
+    ['dmc_uranium_field']: [
+        new BoxZone([2222.34, 3182.4, 51.01], 20.0, 1.6, {
+            heading: 220.47,
+            minZ: 50.01,
+            maxZ: 54.81,
+        }),
+    ],
+};
+
 // 20 minutes to harvest full field
 // 1 hour to refill full field
 export const DMC_FIELDS: Record<string, Field> = {
@@ -183,6 +193,26 @@ export const DMC_FIELDS: Record<string, Field> = {
         item: [
             {
                 name: 'raw_aluminium',
+                amount: 2,
+            },
+        ],
+        capacity: 240,
+        maxCapacity: 240,
+        refill: {
+            delay: 5 * 60 * 1000,
+            amount: 20,
+        },
+        harvest: {
+            delay: 0,
+            amount: 1,
+        },
+    },
+    ['dmc_uranium_field']: {
+        identifier: 'dmc_uranium_field',
+        owner: JobType.DMC,
+        item: [
+            {
+                name: 'halloween_uranium_raw',
                 amount: 2,
             },
         ],

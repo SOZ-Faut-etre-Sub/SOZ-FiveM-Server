@@ -53,13 +53,13 @@ export class StoryProvider {
         this.inCinematic = false;
     }
 
-    public canInteractForPart(story: string, scenario: string, part: number): boolean {
+    public canInteractForPart(story: 'halloween2022' | 'halloween2023', scenario: string, part: number): boolean {
         const player = this.playerService.getPlayer();
 
-        const order = ScenarioOrder.findIndex(elem => elem.scenario === scenario && elem.story === story);
+        const order = ScenarioOrder[story].findIndex(elem => elem === scenario);
 
         if (order > 0) {
-            const prevScenario = player.metadata[ScenarioOrder[order - 1].story]?.[ScenarioOrder[order - 1].scenario];
+            const prevScenario = player.metadata[story]?.[ScenarioOrder[story][order - 1]];
             if (!prevScenario) {
                 return false;
             }
@@ -94,11 +94,17 @@ export class StoryProvider {
         };
     }
 
-    public replayYearTarget(story: Story, year: string, scenario: string, part: number, dialog: string): TargetOptions {
+    public replayYearTarget(
+        story: Story,
+        year: 'halloween2022' | 'halloween2023',
+        scenario: string,
+        part: number,
+        dialog: string
+    ): TargetOptions {
         return {
             label: 'Ré-écouter',
             icon: 'fas fa-comment-dots',
-            canInteract: () => this.canInteractForPart('halloween' + year, scenario, part + 1),
+            canInteract: () => this.canInteractForPart(year, scenario, part + 1),
             action: async () => {
                 await this.launchDialog(story.dialog[dialog]);
             },

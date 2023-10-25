@@ -244,7 +244,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
-    Hallowwen: {
+    Halloween: {
         feature: Feature.Halloween,
         duration: 5000,
         icon: '🥚',

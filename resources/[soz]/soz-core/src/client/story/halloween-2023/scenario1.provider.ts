@@ -62,7 +62,7 @@ export class Halloween2023Scenario1Provider {
         }
 
         this.blipFactory.create(blipId, {
-            name: 'Activité suspecte',
+            name: 'Horror Story II : Les échoués. (P1)',
             coords: { x: -211.77, y: 6571.71, z: 10.01 },
             sprite: 484,
             scale: 0.99,
@@ -89,7 +89,13 @@ export class Halloween2023Scenario1Provider {
                             await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part1']);
                         },
                     },
-                    this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 0, 'part1'),
+                    this.storyService.replayYearTarget(
+                        Halloween2023Scenario1,
+                        'halloween2023',
+                        'scenario1',
+                        0,
+                        'part1'
+                    ),
                 ],
                 distance: 1.5,
             },
@@ -203,8 +209,20 @@ export class Halloween2023Scenario1Provider {
                             await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part2']);
                         },
                     },
-                    this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 1, 'part2'),
-                    this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 2, 'part2'),
+                    this.storyService.replayYearTarget(
+                        Halloween2023Scenario1,
+                        'halloween2023',
+                        'scenario1',
+                        1,
+                        'part2'
+                    ),
+                    this.storyService.replayYearTarget(
+                        Halloween2023Scenario1,
+                        'halloween2023',
+                        'scenario1',
+                        2,
+                        'part2'
+                    ),
                     {
                         label: 'Donner',
                         icon: 'c:pole/livrer.png',
@@ -228,7 +246,13 @@ export class Halloween2023Scenario1Provider {
                             await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part3']);
                         },
                     },
-                    this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 3, 'part3'),
+                    this.storyService.replayYearTarget(
+                        Halloween2023Scenario1,
+                        'halloween2023',
+                        'scenario1',
+                        3,
+                        'part3'
+                    ),
                 ],
                 distance: 1.5,
             },
@@ -254,7 +278,13 @@ export class Halloween2023Scenario1Provider {
                             await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part4']);
                         },
                     },
-                    this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 4, 'part4'),
+                    this.storyService.replayYearTarget(
+                        Halloween2023Scenario1,
+                        'halloween2023',
+                        'scenario1',
+                        4,
+                        'part4'
+                    ),
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
@@ -289,7 +319,13 @@ export class Halloween2023Scenario1Provider {
                             await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part5']);
                         },
                     },
-                    this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 5, 'part5'),
+                    this.storyService.replayYearTarget(
+                        Halloween2023Scenario1,
+                        'halloween2023',
+                        'scenario1',
+                        5,
+                        'part5'
+                    ),
                     {
                         label: 'Donner',
                         icon: 'c:pole/livrer.png',
@@ -307,7 +343,13 @@ export class Halloween2023Scenario1Provider {
                             await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part6']);
                         },
                     },
-                    this.storyService.replayYearTarget(Halloween2023Scenario1, '2023', 'scenario1', 6, 'part6'),
+                    this.storyService.replayYearTarget(
+                        Halloween2023Scenario1,
+                        'halloween2023',
+                        'scenario1',
+                        6,
+                        'part6'
+                    ),
                 ],
                 distance: 1.5,
             },
