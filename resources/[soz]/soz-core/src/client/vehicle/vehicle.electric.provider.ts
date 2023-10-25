@@ -3,7 +3,7 @@ import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { UpwStation } from '@public/shared/fuel';
 import { JobType } from '@public/shared/job';
-import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
+import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { isVehicleModelElectric, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
@@ -19,14 +19,16 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { UpwChargerRepository } from '../repository/upw.station.repository';
+import { RopeService } from '../rope.service';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
+const MAX_LENGTH_ROPE = 15;
+
 type CurrentStationPlug = {
     object: number;
-    rope: number;
     entity: number;
     station: string;
     filling: boolean;
@@ -66,6 +68,9 @@ export class VehicleElectricProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(RopeService)
+    private ropeService: RopeService;
 
     private currentStationPlug: CurrentStationPlug | null = null;
 
@@ -447,8 +452,7 @@ export class VehicleElectricProvider {
             return;
         }
 
-        RopeUnloadTextures();
-        DeleteRope(this.currentStationPlug.rope);
+        this.ropeService.deleteRope();
         SetEntityAsMissionEntity(this.currentStationPlug.object, true, true);
         TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentStationPlug.object));
         DeleteEntity(this.currentStationPlug.object);
@@ -486,7 +490,12 @@ export class VehicleElectricProvider {
             return;
         }
 
-        this.soundService.playAround('fuel/start_fuel', 5, 0.3);
+        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
+        if (!this.ropeService.createNewRope(ropePosition, entity, 4, 1, MAX_LENGTH_ROPE)) {
+            return;
+        }
+
+        this.soundService.playAround('prop_cs_fuel_nozle', 5, 0.3);
 
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
         const object = CreateObject(
@@ -520,36 +529,13 @@ export class VehicleElectricProvider {
             0,
             true
         );
-        RopeLoadTextures();
-
-        const [rope] = AddRope(
-            position[0],
-            position[1],
-            position[2],
-            0.0,
-            0.0,
-            0.0,
-            15.0,
-            4,
-            10.0,
-            1.0,
-            0,
-            false,
-            true,
-            true,
-            1.0,
-            false,
-            0
-        );
 
         this.currentStationPlug = {
-            rope,
             object,
             entity,
             station: station,
             filling: false,
         };
-        ActivatePhysics(rope);
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -557,27 +543,10 @@ export class VehicleElectricProvider {
         if (!this.currentStationPlug) {
             return;
         }
-        const plugPosition = GetOffsetFromEntityInWorldCoords(
-            this.currentStationPlug.object,
-            -0.02,
-            -0.145,
-            0
-        ) as Vector3;
-
-        AttachRopeToEntity(
-            this.currentStationPlug.rope,
-            PlayerPedId(),
-            plugPosition[0],
-            plugPosition[1],
-            plugPosition[2],
-            true
-        );
-
-        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const stationPosition = GetEntityCoords(this.currentStationPlug.entity, true) as Vector3;
-        if (getDistance(playerPosition, stationPosition) > 15.0) {
+        if (this.ropeService.getRopeDistance() > MAX_LENGTH_ROPE) {
             await this.disableStationPlug();
         }
+        this.ropeService.manageRopePhysics();
     }
 
     @OnEvent(ClientEvent.VEHICLE_CHARGE_START)

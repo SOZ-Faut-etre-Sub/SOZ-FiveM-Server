@@ -8,7 +8,7 @@ import { AnimationStopReason } from '../../shared/animation';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
-import { getDistance, Vector3 } from '../../shared/polyzone/vector';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { isVehicleModelElectric, VehicleClass, VehicleCondition, VehicleSeat } from '../../shared/vehicle/vehicle';
 import { AnimationService } from '../animation/animation.service';
@@ -559,8 +559,8 @@ export class VehicleFuelProvider {
         this.soundService.playAround('fuel/start_fuel', 5, 0.3);
 
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 1.0, 1.0) as Vector3;
-        if (!this.ropeService.createNewRope(position, ropePosition, entity, 1, 1.0, MAX_LENGTH_ROPE)) {
+        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
+        if (!this.ropeService.createNewRope(ropePosition, entity, 1, 1.0, MAX_LENGTH_ROPE)) {
             return;
         }
 
@@ -620,8 +620,6 @@ export class VehicleFuelProvider {
         }
 
         this.ropeService.manageRopePhysics();
-
-
     }
 
     private async getStationFuelLevel(entity: number) {

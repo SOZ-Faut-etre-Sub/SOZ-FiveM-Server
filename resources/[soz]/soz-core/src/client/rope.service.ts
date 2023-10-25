@@ -18,18 +18,16 @@ export class RopeService {
     private ropeState: RopeState | null = null;
 
     public createNewRope(
-        position: Vector3,
         attachPosition: Vector3,
         baseEntity: number,
         ropeType: number,
         initLength: number,
-        maxLength: number
+        maxLength: number,
+        ropeData?: string
     ): number | null {
-        // Fail if already exist
-        // Create
+        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
         if (this.ropeState) {
             this.notifier.notify("Vous vous surestimez. Vous n'êtes pas assez musclé pour tirer deux cordes.", 'error');
-            //TODO: Return error
             return null;
         }
         RopeLoadTextures();
@@ -52,6 +50,9 @@ export class RopeService {
             false,
             0
         );
+        if (ropeData) {
+            LoadRopeData(rope, ropeData);
+        }
         this.ropeState = {
             rope,
             baseEntity,
@@ -84,13 +85,11 @@ export class RopeService {
             StopRopeUnwindingFront(rope);
             StartRopeWinding(rope);
             RopeForceLength(rope, distanceStationPlayer + floatingRange);
-            console.log("déroule");
         } else if (distanceStationPlayer > ropeLength) {
             // current length < desired length : unwinding case
             StopRopeWinding(rope);
             StartRopeUnwindingFront(rope);
             RopeForceLength(rope, distanceStationPlayer + floatingRange);
-            console.log("enroule");
         } else {
             StopRopeWinding(rope);
             StopRopeUnwindingFront(rope);
