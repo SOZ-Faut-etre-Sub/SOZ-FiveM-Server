@@ -19,6 +19,7 @@ import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../repository/fuel.station.repository';
+import { RopeService } from '../rope.service';
 import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { VehicleService } from './vehicle.service';
@@ -26,7 +27,6 @@ import { VehicleStateService } from './vehicle.state.service';
 
 type CurrentStationPistol = {
     object: number;
-    rope: number;
     entity: number;
     station: string;
     filling: boolean;
@@ -75,6 +75,9 @@ export class VehicleFuelProvider {
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
+
+    @Inject(RopeService)
+    private ropeService: RopeService;
 
     private currentStationPistol: CurrentStationPistol | null = null;
 
@@ -519,8 +522,7 @@ export class VehicleFuelProvider {
             return;
         }
 
-        RopeUnloadTextures();
-        DeleteRope(this.currentStationPistol.rope);
+        this.ropeService.deleteRope();
         SetEntityAsMissionEntity(this.currentStationPistol.object, true, true);
         TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentStationPistol.object));
         DeleteEntity(this.currentStationPistol.object);
@@ -557,6 +559,11 @@ export class VehicleFuelProvider {
         this.soundService.playAround('fuel/start_fuel', 5, 0.3);
 
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 1.0, 1.0) as Vector3;
+        if (!this.ropeService.createNewRope(position, ropePosition, entity, 1, 1.0, MAX_LENGTH_ROPE)) {
+            return;
+        }
+
         const object = CreateObject(
             GetHashKey('prop_cs_fuel_nozle'),
             position[0],
@@ -588,39 +595,13 @@ export class VehicleFuelProvider {
             0,
             true
         );
-        RopeLoadTextures();
-
-        const [rope] = AddRope(
-            position[0],
-            position[1],
-            position[2],
-            0.0,
-            0.0,
-            0.0,
-            MAX_LENGTH_ROPE,
-            1,
-            1.0,
-            1.0,
-            0,
-            false,
-            true,
-            true,
-            1.0,
-            false,
-            0
-        );
 
         this.currentStationPistol = {
-            rope,
             object,
             entity,
             station: station.name,
             filling: false,
         };
-
-        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 1.0, 1.0) as Vector3;
-        AttachRopeToEntity(rope, entity, ropePosition[0], ropePosition[1], ropePosition[2], true);
-        ActivatePhysics(rope);
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -633,61 +614,14 @@ export class VehicleFuelProvider {
             this.soundService.playAround('fuel/refueling', 5, 0.3);
         }
 
-        const rope = this.currentStationPistol.rope;
-        const ropeLength = GetRopeLength(rope);
-        const stationPosition = GetEntityCoords(this.currentStationPistol.entity) as Vector3;
-        const playerPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const distanceStationPlayer = getDistance(stationPosition, playerPosition);
-        const floatingRange = 0.1;
-
-        if (distanceStationPlayer < ropeLength) {
-            // current length > desired length : winding case
-            StopRopeUnwindingFront(rope);
-            StartRopeWinding(rope);
-            RopeForceLength(rope, distanceStationPlayer + floatingRange);
-        } else if (distanceStationPlayer > ropeLength) {
-            // current length < desired length : unwinding case
-            StopRopeWinding(rope);
-            StartRopeUnwindingFront(rope);
-            RopeForceLength(rope, distanceStationPlayer + floatingRange);
-        } else {
-            StopRopeWinding(rope);
-            StopRopeUnwindingFront(rope);
-            RopeForceLength(rope, distanceStationPlayer + floatingRange);
-        }
-
-        const ropePosition = GetOffsetFromEntityInWorldCoords(
-            this.currentStationPistol.entity,
-            0.0,
-            0.0,
-            1.0
-        ) as Vector3;
-        const handPosition = GetWorldPositionOfEntityBone(
-            PlayerPedId(),
-            GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
-        ) as Vector3;
-
-        if (getDistance(ropePosition, handPosition) > MAX_LENGTH_ROPE) {
+        if (this.ropeService.getRopeDistance() > MAX_LENGTH_ROPE) {
             await this.disableStationPistol();
             return;
         }
 
-        AttachEntitiesToRope(
-            this.currentStationPistol.rope,
-            this.currentStationPistol.entity,
-            PlayerPedId(),
-            ropePosition[0],
-            ropePosition[1],
-            ropePosition[2],
-            handPosition[0],
-            handPosition[1],
-            handPosition[2],
-            10.0,
-            true,
-            true,
-            null,
-            'BONETAG_L_FINGER2'
-        );
+        this.ropeService.manageRopePhysics();
+
+
     }
 
     private async getStationFuelLevel(entity: number) {
