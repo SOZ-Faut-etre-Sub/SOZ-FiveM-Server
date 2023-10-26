@@ -1,3 +1,4 @@
+import { EntityFactory } from '@public/client/factory/entity.factory';
 import { PlayerPositionProvider } from '@public/client/player/player.position.provider';
 
 import { Once, OnceStep } from '../../../core/decorators/event';
@@ -30,6 +31,9 @@ export class Halloween2022Scenario3Provider {
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
 
+    @Inject(EntityFactory)
+    private entityFactory: EntityFactory;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
         if (!isFeatureEnabled(Feature.HalloweenScenario3)) {
@@ -37,9 +41,12 @@ export class Halloween2022Scenario3Provider {
         }
 
         await this.createTourist1Ped();
+        await this.createDeadPed();
         await this.createTourist2Ped();
         await this.createDoctorPed();
         await this.createTPTarget();
+
+        await this.spawnProps();
     }
 
     public createBlip() {
@@ -114,6 +121,22 @@ export class Halloween2022Scenario3Provider {
                 this.storyService.replayTarget(Halloween2022Scenario3, 'scenario3', 5),
             ]
         );
+    }
+
+    private async createDeadPed() {
+        const deadMen = await this.pedFactory.createPed({
+            model: 'A_F_Y_Tourist_02',
+            coords: { x: 599.72, y: 5556.65, z: 715.76, w: 236.37 },
+            invincible: true,
+            freeze: true,
+            blockevents: true,
+            animDict: 'dead',
+            anim: 'dead_a',
+            flag: 1,
+        });
+        ApplyPedDamagePack(deadMen, 'BigHitByVehicle', 3.0, 3.0);
+        SetPedSuffersCriticalHits(deadMen, true);
+        StopPedSpeaking(deadMen, true);
     }
 
     private async createTourist2Ped(): Promise<void> {
@@ -203,6 +226,12 @@ export class Halloween2022Scenario3Provider {
                 this.storyService.replayTarget(Halloween2022Scenario3, 'scenario3', 3),
             ]
         );
+    }
+
+    private async spawnProps() {
+        for (const prop of Halloween2022Scenario3.props) {
+            await this.entityFactory.createEntityWithRotation(GetHashKey(prop.model), ...prop.coords, ...prop.rotation);
+        }
     }
 
     private async createTPTarget(): Promise<void> {
