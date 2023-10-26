@@ -148,7 +148,7 @@ export class Halloween2022Scenario4Provider {
         ];
 
         for (const coords of note) {
-            await this.pedFactory.createPed({
+            await this.pedFactory.createPedOnGrid({
                 model: 'u_m_m_doa_01',
                 coords: { x: coords[0], y: coords[1], z: coords[2], w: coords[3] },
                 invincible: true,
@@ -160,7 +160,7 @@ export class Halloween2022Scenario4Provider {
         }
 
         for (const coords of circuler) {
-            await this.pedFactory.createPed({
+            await this.pedFactory.createPedOnGrid({
                 model: 'u_m_m_doa_01',
                 coords: { x: coords[0], y: coords[1], z: coords[2], w: coords[3] },
                 invincible: true,
@@ -172,7 +172,7 @@ export class Halloween2022Scenario4Provider {
         }
 
         for (const coords of fouille) {
-            await this.pedFactory.createPed({
+            await this.pedFactory.createPedOnGrid({
                 model: 'u_m_m_doa_01',
                 coords: { x: coords[0], y: coords[1], z: coords[2], w: coords[3] },
                 invincible: true,
@@ -186,7 +186,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedDOA() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'u_m_m_doa_01',
             coords: { x: -1543.12, y: 213.52, z: 58.08, w: 351.22 },
             invincible: true,
@@ -225,7 +225,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedSheriffNord() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 's_m_y_sheriff_01',
             coords: { x: -448.97, y: 6012.98, z: 30.72, w: 324.03 },
             invincible: true,
@@ -264,7 +264,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedSheriffSud() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 's_m_y_sheriff_01',
             coords: { x: -1545.06, y: 216.38, z: 58.21, w: 261.62 },
             invincible: true,
@@ -303,7 +303,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedAlien() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 's_m_m_movalien_01',
             coords: { x: -1586.04, y: 219.12, z: 67.66, w: 95.81 },
             invincible: true,
@@ -487,7 +487,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedNariieL() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_f_freemode_01',
             coords: { x: 2059.96, y: 2985.01, z: -62.9, w: 144.8 },
             modelCustomization: {
@@ -604,7 +604,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedKaemy() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_f_freemode_01',
             coords: { x: 2041.26, y: 2933.92, z: -62.9, w: 77.6 },
             modelCustomization: {
@@ -751,7 +751,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedDarabesque() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_f_freemode_01',
             coords: { x: 2132.94, y: 2924.91, z: -62.9, w: 234.28 },
             modelCustomization: {
@@ -983,7 +983,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedTluap() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2055.13, y: 2941.55, z: -62.9, w: 356.66 },
             modelCustomization: {
@@ -1116,7 +1116,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedDraglock() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2062.58, y: 2982.98, z: -62.9, w: 143.5 },
             modelCustomization: {
@@ -1274,7 +1274,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedPoulpito() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2038.65, y: 2934.75, z: -62.9, w: 304.07 },
             modelCustomization: {
@@ -1429,7 +1429,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedSniteur() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2039.78, y: 2937.18, z: -62.9, w: 161.24 },
             modelCustomization: {
@@ -1560,7 +1560,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedBrouznouf() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2051.49, y: 2987.67, z: -62.9, w: 166.98 },
             modelCustomization: {
@@ -1671,7 +1671,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedLaikker() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2050.93 + 0.3, y: 2984.02 + 0.45, z: -62.4 - 0.5, w: 329.0 },
             modelCustomization: { SkinMix: 0.75, Hash: 1885233650, Father: 5, ShapeMix: 0.15, Mother: 29 },
@@ -1775,7 +1775,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedMoustache() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2052.05 + 0.27, y: 2983.15 + 0.45, z: -62.4 - 0.5, w: 334.0 },
             modelCustomization: { Mother: 31, ShapeMix: 0.55, Hash: 1885233650, SkinMix: 1, Father: 4 },
@@ -1915,7 +1915,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedAurukh() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2048.51 + 0.5, y: 2981.56, z: -62.39 - 0.5, w: 283.99 },
             modelCustomization: { Mother: 31, ShapeMix: 0.5, Hash: 1885233650, SkinMix: 0.5, Father: 4 },
@@ -2026,7 +2026,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedRigonkmalk() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2050.135 + 0.3, y: 2980.486 + 0.45, z: -62.29 - 0.65, w: 334.0 },
             modelCustomization: { SkinMix: 0.1, Father: 43, Mother: 31, ShapeMix: 0.7 },
@@ -2136,7 +2136,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedOneiluj() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2091.11, y: 2932.34, z: -62.9, w: 270.43 },
             modelCustomization: { Father: 43, ShapeMix: 0.5, SkinMix: 0.6, Mother: 30 },
@@ -2256,7 +2256,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedLasbou() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2093.17, y: 2932.41, z: -62.9, w: 79.39 },
             modelCustomization: { SkinMix: 0.5, ShapeMix: 0.5, Mother: 26, Father: 43 },
@@ -2373,7 +2373,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedDaelbhas() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2108.63, y: 2943.6, z: -62.9, w: 78.8 },
             modelCustomization: { Mother: 45, ShapeMix: 0.25, Father: 42, SkinMix: 0.5 },
@@ -2483,7 +2483,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedOjymas() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2107.38, y: 2944.69, z: -62.9, w: 191.75 },
             modelCustomization: { SkinMix: 1, ShapeMix: 0, Mother: 31, Father: 8, Hash: 1885233650 },
@@ -2617,7 +2617,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedPoulpitor() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2053.91, y: 2942.04, z: -62.9, w: 357.21 },
             modelCustomization: { Father: 1, Mother: 22, ShapeMix: 0.05, Hash: 1885233650, SkinMix: 0.35 },
@@ -2730,7 +2730,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedDream() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2056.4, y: 2941.29, z: -62.9, w: 12.79 },
             modelCustomization: { SkinMix: 0.5, ShapeMix: 0.15, Father: 20, Mother: 32 },
@@ -2836,7 +2836,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedBalrock() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2052.84, y: 2942.7, z: -62.9, w: 313.24 },
             modelCustomization: { SkinMix: 0.55, Mother: 26, Father: 44, ShapeMix: 0.55, Hash: 1885233650 },
@@ -2988,7 +2988,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedMarverikG() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2080.95, y: 2934.67, z: -62.9, w: 173.58 },
             modelCustomization: {
@@ -3150,7 +3150,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedSilverlord() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2054.25, y: 2985.42, z: -62.9, w: 345.13 },
             modelCustomization: { Father: 20, Mother: 26, ShapeMix: 0.4, Hash: 1885233650, SkinMix: 0.45 },
@@ -3259,7 +3259,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedAurelien() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_m_freemode_01',
             coords: { x: 2047.15, y: 2979.47, z: -62.93, w: 320.7 },
             modelCustomization: { SkinMix: 0.5, ShapeMix: 0.5, Mother: 29, Father: 4, Hash: 1885233650 },
@@ -3364,7 +3364,7 @@ export class Halloween2022Scenario4Provider {
     }
 
     private async createPedGuegette() {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_f_freemode_01',
             coords: { x: 2048.53, y: 2978.29, z: -62.9, w: 340.7 },
             modelCustomization: {

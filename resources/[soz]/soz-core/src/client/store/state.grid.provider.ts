@@ -3,6 +3,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import { getGridChunks } from '../../shared/grid';
 import { Vector3 } from '../../shared/polyzone/vector';
+import { PedFactory } from '../factory/ped.factory';
 import { ObjectProvider } from '../object/object.provider';
 import { Store } from './store';
 
@@ -13,6 +14,9 @@ export class StateGridProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
+
+    @Inject(PedFactory)
+    private pedFactory: PedFactory;
 
     @Tick(1000)
     public async checkGridChunks() {
@@ -25,7 +29,9 @@ export class StateGridProvider {
 
         if (diffAdded.length > 0 || diffRemoved.length > 0) {
             this.store.dispatch.grid.set(newChunks);
+
             await this.objectProvider.updateSpawnObjectOnGridChange(newChunks);
+            await this.pedFactory.updateSpawnPedOnGridChange(newChunks);
         }
     }
 }

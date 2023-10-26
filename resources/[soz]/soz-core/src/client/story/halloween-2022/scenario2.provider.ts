@@ -75,7 +75,7 @@ export class Halloween2022Scenario2Provider {
     }
 
     private async createOldPed(): Promise<void> {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'ig_old_man2',
             coords: { x: 3314.16, y: 5179.72, z: 18.68, w: 240.04 },
             invincible: true,

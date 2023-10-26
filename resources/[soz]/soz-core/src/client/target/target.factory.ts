@@ -134,7 +134,7 @@ export class TargetFactory {
     }
 
     public async createForPed(ped: PedOptions) {
-        const id = await this.pedFactory.createPed(ped);
+        const id = await this.pedFactory.createPedOnGrid(ped);
 
         this.createForBoxZone(
             `entity_${id}`,

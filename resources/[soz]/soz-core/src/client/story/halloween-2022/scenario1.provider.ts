@@ -94,7 +94,7 @@ export class Halloween2022Scenario1Provider {
     }
 
     private async createMainPed(): Promise<void> {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'a_f_y_beach_01',
             coords: { x: -1647.89, y: -1064.41, z: 2.58, w: 296.46 },
             invincible: true,
@@ -146,7 +146,7 @@ export class Halloween2022Scenario1Provider {
 
     // Gang
     private async createGangPed(): Promise<void> {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'u_m_y_gunvend_01',
             coords: { x: -1021.85, y: -1020.17, z: 1.15, w: 32.55 },
             invincible: true,
@@ -190,7 +190,7 @@ export class Halloween2022Scenario1Provider {
 
     // Police
     private async createPolicePed(): Promise<void> {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 's_m_y_cop_01',
             coords: { x: -1108.03, y: -844.75, z: 18.32, w: 129.27 },
             invincible: true,

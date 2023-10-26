@@ -1,3 +1,7 @@
+import { uuidv4 } from '@core/utils';
+import { getChunkId } from '@public/shared/grid';
+import { Vector3 } from '@public/shared/polyzone/vector';
+
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -24,6 +28,10 @@ export type Ped = {
     network?: boolean;
     isScriptHostPed?: boolean;
     isRandomClothes?: boolean;
+};
+
+export type GridPed = Ped & {
+    id: string;
 };
 
 export enum PedFaceFeature {
@@ -65,12 +73,93 @@ export enum PedHeadOverlay {
     AddBodyBlemishes = 12,
 }
 
+type SpawnedPed = {
+    entity: number;
+    ped: GridPed;
+};
+
 @Provider()
 export class PedFactory {
     private peds: { [id: number]: any } = {};
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    private loadedPeds: Record<string, SpawnedPed> = {};
+
+    private pedsByChunk = new Map<number, GridPed[]>();
+
+    private currentChunks: number[] = [];
+
+    public async createPedOnGrid(ped: Ped): Promise<string> {
+        const position = [ped.coords.x, ped.coords.y, ped.coords.z] as Vector3;
+        const chunk = getChunkId(position);
+        const gridPed = {
+            ...ped,
+            id: uuidv4(),
+        };
+
+        if (!this.pedsByChunk.has(chunk)) {
+            this.pedsByChunk.set(chunk, []);
+        }
+
+        this.pedsByChunk.get(chunk).push(gridPed);
+
+        if (this.currentChunks.includes(chunk)) {
+            await this.spawnPed(gridPed);
+        }
+
+        return gridPed.id;
+    }
+
+    private async spawnPed(ped: GridPed) {
+        const entity = await this.createPed(ped);
+
+        this.loadedPeds[ped.id] = {
+            entity,
+            ped,
+        };
+    }
+
+    private unspawnPed(id: string): void {
+        const spawned = this.loadedPeds[id];
+
+        if (!spawned) {
+            return;
+        }
+
+        if (!DoesEntityExist(spawned.entity)) {
+            return;
+        }
+
+        DeletePed(spawned.entity);
+        delete this.loadedPeds[id];
+    }
+
+    public async updateSpawnPedOnGridChange(grid: number[]) {
+        const removedChunks = this.currentChunks.filter(chunk => !grid.includes(chunk));
+        const addedChunks = grid.filter(chunk => !this.currentChunks.includes(chunk));
+
+        this.currentChunks = grid;
+
+        // Unload objects from removed chunks
+        for (const chunk of removedChunks) {
+            if (this.pedsByChunk.has(chunk)) {
+                for (const ped of this.pedsByChunk.get(chunk)) {
+                    this.unspawnPed(ped.id);
+                }
+            }
+        }
+
+        // Load objects from added chunks
+        for (const chunk of addedChunks) {
+            if (this.pedsByChunk.has(chunk)) {
+                for (const ped of this.pedsByChunk.get(chunk)) {
+                    await this.spawnPed(ped);
+                }
+            }
+        }
+    }
 
     public async createPed(ped: Ped): Promise<number> {
         const hash = typeof ped.model === 'string' ? GetHashKey(ped.model) : ped.model;
