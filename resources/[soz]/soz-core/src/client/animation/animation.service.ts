@@ -175,13 +175,17 @@ export class AnimationService {
     }
 
     public async stop(ped = PlayerPedId()): Promise<void> {
-        for (const anim of this.runningAnimations.values()) {
+        for (const [id, anim] of this.runningAnimations.entries()) {
             if (!anim.runner.cancellable) {
-                return;
+                continue;
             }
+            StopAnimTask(ped, anim.dictionary, anim.name, 3);
+            this.runningAnimations.delete(id);
         }
-        ClearPedTasks(ped);
-        ClearPedSecondaryTask(ped);
+        if (this.runningAnimations.size == 0) {
+            ClearPedTasks(ped);
+            ClearPedSecondaryTask(ped);
+        }
 
         await waitUntil(async () => !IsPedUsingAnyScenario(ped), 1000);
     }
