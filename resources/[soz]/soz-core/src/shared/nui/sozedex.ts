@@ -1,4 +1,12 @@
+import { FishWithCompletion } from '../sozedex';
+
 export interface NuiSozedexMethodMap {
-    ShowSozedex: any;
+    ShowSozedex: ShowSozedexData;
     HideSozedex: never;
 }
+
+type ShowSozedexData = {
+    playerRewards: any;
+    fishesWithCompletion: Array<FishWithCompletion>;
+    event: string;
+};
