@@ -66,7 +66,6 @@ export class PlayerZombieProvider {
 
         if (this.inventoryManager.removeItemFromInventory(source, 'halloween_zombie_serum', 1)) {
             this.removeZombiePlayer(target);
-            this.notifier.notify(target, 'Vous vous sentez mieux...');
         } else {
             this.notifier.notify(source, "Vous n'avez plus de sérum...");
         }
@@ -104,7 +103,10 @@ export class PlayerZombieProvider {
         }
 
         this.zombiePlayerList.add(player.citizenid);
-        this.notifier.notify(player.source, 'Vous vous sentez étrange...');
+        this.notifier.notify(
+            player.source,
+            'Tu as été ~r~contaminé~s~ ! Trouve rapidement un ~g~sérum~s~ si tu ne veux pas te transformer en ~r~zombie~s~.'
+        );
 
         TriggerClientEvent(ClientEvent.PLAYER_ZOMBIE_TRANSFORM, source);
     }

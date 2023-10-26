@@ -183,7 +183,9 @@ export class LSMCDeathProvider {
 
             // Skip death process if player is zombie
             if (this.playerZombieProvider.isZombie() || this.playerZombieProvider.isTransforming()) {
-                this.playerZombieProvider.handleOnDeath();
+                await this.playerZombieProvider.handleOnDeath();
+
+                this.IsDead = false;
 
                 return;
             }
@@ -345,10 +347,6 @@ export class LSMCDeathProvider {
         if (uniteHU) {
             DoScreenFadeOut(1000);
             await wait(1000);
-        }
-
-        if (this.playerZombieProvider.isZombie() || this.playerZombieProvider.isTransforming()) {
-            return;
         }
 
         StopScreenEffect('DeathFailOut');
