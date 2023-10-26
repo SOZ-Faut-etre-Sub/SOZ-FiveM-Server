@@ -20,6 +20,7 @@ const defaultPlayOptions: PlayOptions = {
     resetWeapon: false,
     clearTasksBefore: false,
     clearTasksAfter: false,
+    cancellable: true,
 };
 
 class AnimationCanceller {
@@ -49,11 +50,17 @@ export class AnimationRunner implements Promise<AnimationStopReason> {
 
     readonly id = AnimationRunner.seq++;
 
+    readonly cancellable: boolean;
+
     private readonly promise: Promise<AnimationStopReason>;
 
     private animationCanceller: AnimationCanceller;
 
-    constructor(innerPromise: Promise<AnimationStopReason>, animationCanceller: AnimationCanceller) {
+    constructor(
+        innerPromise: Promise<AnimationStopReason>,
+        animationCanceller: AnimationCanceller,
+        cancellable: boolean
+    ) {
         this.promise = new Promise((resolve, reject) => {
             innerPromise
                 .then(
@@ -64,6 +71,7 @@ export class AnimationRunner implements Promise<AnimationStopReason> {
         });
 
         this.animationCanceller = animationCanceller;
+        this.cancellable = cancellable;
     }
 
     public cancel(reason: AnimationStopReason = AnimationStopReason.Canceled): void {
@@ -452,7 +460,8 @@ export class AnimationFactory {
                     ClearPedSecondaryTask(playOptions.ped);
                 }
             }),
-            animationCanceller
+            animationCanceller,
+            playOptions.cancellable
         );
     }
 }
