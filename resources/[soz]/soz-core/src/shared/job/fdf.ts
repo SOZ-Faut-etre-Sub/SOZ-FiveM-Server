@@ -828,6 +828,7 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
         duration: 6000,
         event: 'job_fdf_craft',
         feature: Feature.Halloween,
+        icon: '🎃',
         recipes: {
             pumpkin_soup: {
                 amount: 3,

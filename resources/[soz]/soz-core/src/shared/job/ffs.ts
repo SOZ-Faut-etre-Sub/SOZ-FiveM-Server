@@ -316,6 +316,7 @@ export const FFSCraftsLists: Record<string, CraftCategory> = {
         duration: 8000,
         event: 'job_ffs_craft',
         feature: Feature.Halloween,
+        icon: '🎃',
         recipes: {
             halloween_zombie_costume: {
                 amount: 1,

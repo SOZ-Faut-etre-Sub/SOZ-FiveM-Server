@@ -247,7 +247,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
     Halloween: {
         feature: Feature.Halloween,
         duration: 5000,
-        icon: '🥚',
+        icon: '🎃',
         event: 'job_cm_food_craft',
         recipes: {
             halloween_midnight_cheese: {

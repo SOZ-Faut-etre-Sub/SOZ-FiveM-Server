@@ -172,6 +172,7 @@ export const PawlCraftsLists: Record<string, CraftCategory> = {
     Halloween: {
         feature: Feature.Halloween,
         duration: 15000,
+        icon: '🎃',
         animation: {
             dictionary: 'mp_arresting',
             name: 'a_uncuff',

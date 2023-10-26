@@ -537,7 +537,7 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
         },
         feature: Feature.Halloween,
         duration: 5000,
-        icon: '👮',
+        icon: '🎃',
         event: 'job_dmc_craft',
         recipes: {
             halloween_atomic_compass: {
