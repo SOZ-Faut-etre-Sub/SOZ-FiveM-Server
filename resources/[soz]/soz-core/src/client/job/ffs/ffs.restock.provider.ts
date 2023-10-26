@@ -1,3 +1,5 @@
+import { Feature, isFeatureEnabled } from '@public/shared/features';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -57,7 +59,7 @@ export class FightForStyleRestockProvider {
             case ClothingBrand.PONSONBYS:
                 return {
                     garments: Object.values(LuxuryGarment),
-                    pedModel: 's_f_m_shop_high',
+                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_m_shop_high',
                 };
             case ClothingBrand.SUBURBAN:
                 return {
@@ -70,7 +72,7 @@ export class FightForStyleRestockProvider {
                         Garment.GLOVES,
                         Garment.UNDERWEAR_TOP,
                     ],
-                    pedModel: 's_f_y_shop_mid',
+                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_y_shop_mid',
                 };
             case ClothingBrand.BINCO:
                 return {
@@ -83,7 +85,7 @@ export class FightForStyleRestockProvider {
                         Garment.GLOVES,
                         Garment.UNDERWEAR_TOP,
                     ],
-                    pedModel: 's_f_y_shop_low',
+                    pedModel: isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : 's_f_y_shop_low',
                 };
         }
     }
