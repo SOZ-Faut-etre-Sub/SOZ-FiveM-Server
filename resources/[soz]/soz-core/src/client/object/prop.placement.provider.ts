@@ -746,7 +746,9 @@ export class PropPlacementProvider {
     // Debug Prop Managment
     public async spawnDebugProp(prop: WorldObject): Promise<number> {
         if (IsModelValid(prop.model)) {
-            await this.resourceLoader.loadModel(prop.model);
+            if (!(await this.resourceLoader.loadModel(prop.model))) {
+                return 0;
+            }
         } else {
             console.log(`Placement: Model ${prop.model} is not valid for ${prop.id}`);
             return 0;

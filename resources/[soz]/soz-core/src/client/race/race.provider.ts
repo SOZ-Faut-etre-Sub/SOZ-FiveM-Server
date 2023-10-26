@@ -538,51 +538,51 @@ export class RaceProvider {
 
         let vehicle = null;
         if (race.carModel != 'ped') {
-            await this.resourceLoader.loadModel(hash);
+            if (await this.resourceLoader.loadModel(hash)) {
+                vehicle = CreateVehicle(hash, race.start[0], race.start[1], race.start[2], race.start[3], false, false);
+                SetVehRadioStation(vehicle, 'OFF');
+                this.vehicleStateService.setVehicleState(
+                    vehicle,
+                    {
+                        ...getDefaultVehicleVolatileState(),
+                    },
+                    true
+                );
 
-            vehicle = CreateVehicle(hash, race.start[0], race.start[1], race.start[2], race.start[3], false, false);
-            SetVehRadioStation(vehicle, 'OFF');
-            this.vehicleStateService.setVehicleState(
-                vehicle,
-                {
-                    ...getDefaultVehicleVolatileState(),
-                },
-                true
-            );
+                if (race.vehicleConfiguration) {
+                    this.vehicleService.applyVehicleConfiguration(vehicle, race.vehicleConfiguration);
+                } else {
+                    SetVehicleModKit(vehicle, 0);
+                    ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
+                    SetVehicleMod(
+                        vehicle,
+                        VehicleModType.Engine,
+                        GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1,
+                        false
+                    );
+                    SetVehicleMod(
+                        vehicle,
+                        VehicleModType.Brakes,
+                        GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1,
+                        false
+                    );
+                    SetVehicleMod(
+                        vehicle,
+                        VehicleModType.Transmission,
+                        GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
+                        false
+                    );
+                    SetVehicleColours(
+                        vehicle,
+                        getRandomInt(0, VehicleColor.BrushedGold),
+                        getRandomInt(0, VehicleColor.BrushedGold)
+                    );
+                }
 
-            if (race.vehicleConfiguration) {
-                this.vehicleService.applyVehicleConfiguration(vehicle, race.vehicleConfiguration);
-            } else {
-                SetVehicleModKit(vehicle, 0);
-                ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
-                SetVehicleMod(
-                    vehicle,
-                    VehicleModType.Engine,
-                    GetNumVehicleMods(vehicle, VehicleModType.Engine) - 1,
-                    false
-                );
-                SetVehicleMod(
-                    vehicle,
-                    VehicleModType.Brakes,
-                    GetNumVehicleMods(vehicle, VehicleModType.Brakes) - 1,
-                    false
-                );
-                SetVehicleMod(
-                    vehicle,
-                    VehicleModType.Transmission,
-                    GetNumVehicleMods(vehicle, VehicleModType.Transmission) - 1,
-                    false
-                );
-                SetVehicleColours(
-                    vehicle,
-                    getRandomInt(0, VehicleColor.BrushedGold),
-                    getRandomInt(0, VehicleColor.BrushedGold)
-                );
+                await wait(100);
+
+                TaskWarpPedIntoVehicle(ped, vehicle, -1);
             }
-
-            await wait(100);
-
-            TaskWarpPedIntoVehicle(ped, vehicle, -1);
 
             this.resourceLoader.unloadModel(hash);
         } else {
