@@ -90,11 +90,14 @@ export class PedFactory {
             ped.isScriptHostPed || false
         );
 
-        if (ped.isRandomClothes) {
-            SetPedRandomComponentVariation(pedId, 0);
-        } else {
-            SetPedDefaultComponentVariation(pedId);
-        }
+        // if (ped.isRandomClothes) {
+        //     SetPedRandomComponentVariation(pedId, 0);
+        // } else {
+        //     SetPedDefaultComponentVariation(pedId);
+        // }
+        // @TODO Temporary disabled random variation as it's seems there is too much memory involved when doing that
+        // @TODO We should add a grid system to load only the peds around the player (and unload the others)
+        SetPedDefaultComponentVariation(pedId);
 
         if (ped.components) {
             for (const [key, value] of Object.entries(ped.components)) {
