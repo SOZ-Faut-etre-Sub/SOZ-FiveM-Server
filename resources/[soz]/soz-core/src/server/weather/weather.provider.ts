@@ -303,8 +303,12 @@ export class WeatherProvider {
                 value = 'HalloweenFullRed';
             } else if (value == 'light') {
                 value = 'HalloweenLightRed';
+            } else if (value == 'clear') {
+                value = 'HalloweenClearRed';
+            } else if (value == 'off') {
+                value = '';
             } else {
-                this.logger.error('Invalid value ' + value + ', expect full or light');
+                this.logger.error('Invalid value ' + value + ', expect full or light or clear or off');
             }
         }
         this.store.dispatch.global.update({ halloween: value });

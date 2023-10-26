@@ -254,6 +254,7 @@ export enum ClientEvent {
     DRUGS_SHOW_CONTRACT = 'soz-core:client:drug:show-contract',
     DRUGS_HARVEST_CHAMPI = 'soz-core:client:drugs:harvest-champi',
     DRUGS_HARVEST_ZEED = 'soz-core:client:drugs:harvest-zeed',
+    DRUGS_HARVEST_URANIUM = 'soz-core:client:drugs:harvest-uranium',
     DRUGS_DELETE = 'soz-core:client:drugs:delete',
     DRUGS_ADD = 'soz-core:client:drugs:add',
     DRUGS_UPDATE_SEED = 'soz-core:client:drugs:update-seed',
