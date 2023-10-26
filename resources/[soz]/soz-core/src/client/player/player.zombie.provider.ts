@@ -3,10 +3,12 @@ import PCancelable from 'p-cancelable';
 import { Once, OnceStep, OnEvent, OnGameEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
 import { RpcServerEvent } from '../../shared/rpc';
+import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
@@ -26,9 +28,61 @@ export class PlayerZombieProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    private isZombie = false;
+    @Inject(Notifier)
+    private readonly notifier: Notifier;
+
+    private _isZombie = false;
 
     private transform: PCancelable<void> | null = null;
+
+    public isZombie(): boolean {
+        return this._isZombie;
+    }
+
+    public isTransforming(): boolean {
+        return this.transform !== null;
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    async checkZombieFxLoop(): Promise<void> {
+        if (!this.isZombie()) {
+            return;
+        }
+
+        if (AnimpostfxIsRunning('DrugsTrevorClownsFight')) {
+            return;
+        }
+
+        AnimpostfxPlay('DrugsTrevorClownsFight', 0, true);
+    }
+
+    public async handleOnDeath() {
+        this.notifier.error('La mort nous rend plus fort...');
+
+        // If player is transforming, cancel it and make it reborn as a zombie
+        if (this.isTransforming()) {
+            await wait(5_000);
+            this.transform.cancel();
+
+            await wait(2_000);
+            await this.zombieTransform();
+
+            return;
+        }
+
+        // If player is already a zombie, wait 30 seconds and make it reborn as a zombie
+        if (this.isZombie()) {
+            await wait(30_000);
+            const ped = PlayerPedId();
+
+            const pos = GetEntityCoords(ped);
+            const heading = GetEntityHeading(ped);
+            NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, true, false);
+            SetEntityHealth(ped, 200);
+
+            return;
+        }
+    }
 
     @Once(OnceStep.PlayerLoaded)
     async onPlayerZombieStart(): Promise<void> {
@@ -37,8 +91,9 @@ export class PlayerZombieProvider {
             {
                 label: 'Dezombifier',
                 item: 'halloween_zombie_serum',
+                icon: 'c:ems/take_blood.png',
                 canInteract: entity => {
-                    if (this.isZombie) {
+                    if (this._isZombie) {
                         return false;
                     }
 
@@ -52,9 +107,9 @@ export class PlayerZombieProvider {
             },
         ]);
 
-        this.isZombie = await emitRpc<boolean>(RpcServerEvent.PLAYER_IS_ZOMBIE);
+        this._isZombie = await emitRpc<boolean>(RpcServerEvent.PLAYER_IS_ZOMBIE);
 
-        if (this.isZombie) {
+        if (this._isZombie) {
             await this.zombieTransform();
         }
     }
@@ -129,12 +184,14 @@ export class PlayerZombieProvider {
         });
 
         await this.transform;
+        await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', null);
+
         this.transform = null;
     }
 
     @OnEvent(ClientEvent.PLAYER_ZOMBIE_REMOVE)
     async onZombieRemove(): Promise<void> {
-        this.isZombie = false;
+        this._isZombie = false;
         this.nuiDispatch.dispatch('zombie', 'zombie', false);
 
         if (this.transform !== null) {
@@ -156,7 +213,7 @@ export class PlayerZombieProvider {
     }
 
     private async zombieTransform() {
-        this.isZombie = true;
+        this._isZombie = true;
         this.nuiDispatch.dispatch('zombie', 'zombie', true);
         await this.skinService.setModel('u_m_y_zombie_01');
 
@@ -179,7 +236,7 @@ export class PlayerZombieProvider {
             return;
         }
 
-        if (!this.isZombie) {
+        if (!this._isZombie) {
             return;
         }
 
