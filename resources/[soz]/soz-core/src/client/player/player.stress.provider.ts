@@ -13,6 +13,7 @@ import { PlayerData } from '../../shared/player';
 import { BoxZone, ZoneType } from '../../shared/polyzone/box.zone';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
+import { LSMCDeathProvider } from '../job/lsmc/lsmc.death.provider';
 import { Notifier } from '../notifier';
 import { ProgressService } from '../progress.service';
 import { ZoneRepository } from '../repository/zone.repository';
@@ -77,6 +78,9 @@ export class PlayerStressProvider {
 
     @Inject(ZoneRepository)
     private zoneRepository: ZoneRepository;
+
+    @Inject(LSMCDeathProvider)
+    private LSMCDeathProvider: LSMCDeathProvider;
 
     private isStressUpdated = false;
     private wasDead = false;
@@ -147,6 +151,10 @@ export class PlayerStressProvider {
             item.nutrition.alcohol > 0
         ) {
             this.updateStress(StressLooseType.DrinkAlcohol);
+        }
+
+        if (name === 'halloween_radioactive_beer') {
+            this.LSMCDeathProvider.enableRadioactiveBeerEffect();
         }
     }
 

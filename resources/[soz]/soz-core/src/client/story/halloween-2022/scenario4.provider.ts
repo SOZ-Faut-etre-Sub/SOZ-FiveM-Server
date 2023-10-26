@@ -972,7 +972,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'DaraBesque',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            "Fais pas attention à moi, j'attends juste qu'ils amènent le buffet. D'ailleurs, un conseil entre nous... évite la bière.",
+                            'info'
+                        );
                     },
                 },
             ]
@@ -1102,7 +1105,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'Tluap',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            "C'est un troisième oeil qui a poussé sur ton front là ? Mais non j'déconne !",
+                            'info'
+                        );
                     },
                 },
             ]
@@ -1761,7 +1767,7 @@ export class Halloween2022Scenario4Provider {
                     label: 'Laikker',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify("Arreter d'être surpris que ca fonctionne ...", 'info');
                     },
                 },
             ]
@@ -1898,7 +1904,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'Moustache',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            "Quoi, t'es encore là ? J'pensais que tu t'serais barré avec tout ça l'ami(e). T'es plus coriace que t'en a l'air.",
+                            'info'
+                        );
                     },
                 },
             ]
@@ -2006,7 +2015,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'Aurukh',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            'Quelqu’un n’aurait pas vu passer un troupeau de citrouille avec des pattes de loups-garous ?',
+                            'info'
+                        );
                     },
                 },
             ]
@@ -2707,7 +2719,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'Poulpitor',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            "Content de voir tout le chemin que t'as parcouru, juste pour voir Papy... Quoi ? C'est pas pour moi que t'es là ? ... Ca fait quand même plaisir de te voir, le jeune !",
+                            'info'
+                        );
                     },
                 },
             ]
@@ -2962,7 +2977,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'Balrock',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            "Hey, tu as une sale tête toi ! on dirait que tu as bien dégusté ! tu n'as même pas idée de ce qui t’attend encore, j'espère que tu as les reins solides.",
+                            'info'
+                        );
                     },
                 },
             ]
@@ -3121,7 +3139,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'MarverikG',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            'Si tu as eu peur avec ce que tu viens de voir, ne viens même pas me voir gamin. Passe ton chemin',
+                            'info'
+                        );
                     },
                 },
             ]
@@ -3227,7 +3248,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'Silverlord',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            "Vu comment vous aviez l'air de galérer avec les citrouilles, je suis bien content qu'on ai fait une carte sur le panel avec leurs positions. J'espère qu'elle t'a servie !",
+                            'info'
+                        );
                     },
                 },
             ]
@@ -3329,7 +3353,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'Aurelien',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            "Ahhh te voilà  ! Dernier petit changement d'état de ton personna... oh merde attention derrière toi ! Euh, bon courage",
+                            'info'
+                        );
                     },
                 },
             ]
@@ -3542,7 +3569,10 @@ export class Halloween2022Scenario4Provider {
                     label: 'Guegette',
                     icon: 'fas fa-question',
                     action: async () => {
-                        this.notifier.notify('...', 'info');
+                        this.notifier.notify(
+                            "Normalement, les vilains, je les mets dans mes cellules, mais toi, je vais peut-être t'envoyer ailleurs...",
+                            'info'
+                        );
                     },
                 },
             ]

@@ -8,7 +8,7 @@ export type GlobalState = {
     blackoutOverride: boolean;
     jobEnergy: Record<JobType, number>;
     weather: Weather;
-    halloween: boolean;
+    halloween: string;
     rain: number;
     snow: boolean;
     streamUrls: {

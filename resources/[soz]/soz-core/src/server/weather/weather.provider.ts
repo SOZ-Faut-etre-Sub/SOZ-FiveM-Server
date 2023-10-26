@@ -297,8 +297,16 @@ export class WeatherProvider {
     }
 
     @Command('halloween', { role: 'admin' })
-    setTimecycleMod(source: number, on: string): void {
-        const state = on && on == 'on';
-        this.store.dispatch.global.update({ halloween: state });
+    setTimecycleMod(source: number, value: string): void {
+        if (value) {
+            if (value == 'full') {
+                value = 'HalloweenFullRed';
+            } else if (value == 'light') {
+                value = 'HalloweenLightRed';
+            } else {
+                this.logger.error('Invalid value ' + value + ', expect full or light');
+            }
+        }
+        this.store.dispatch.global.update({ halloween: value });
     }
 }

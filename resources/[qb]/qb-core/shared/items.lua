@@ -6295,20 +6295,20 @@ QBShared.Items = {
         ['name'] = 'halloween_radioactive_beer',
         ['label'] = 'Bière radioactive',
         ['weight'] = 1000,
-        ['type'] = 'food',
+        ['type'] = 'drink',
         ['unique'] = false,
         ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'Enfin la bière que tout le monde attendais ?',
         ['nutrition'] = {
             ['hunger'] = 0,
-            ['thirst'] = 0,
+            ['thirst'] = 15,
             ['stamina'] = 0,
             ['fiber'] = 0,
             ['lipid'] = 0,
             ['sugar'] = 0,
             ['protein'] = 0,
-            ['alcohol'] = 0,
+            ['alcohol'] = 5,
             ['drug'] = 30,
         },
         ['illustrator'] = '.GautSlayer'
@@ -6774,8 +6774,92 @@ QBShared.Items = {
         ['description'] = "Un outil mystique permettant d'ouvrir des portes et des coffres verrouillés par des énigmes magiques. Votre personnage peut décrypter les symboles mystérieux et déverrouiller des trésors cachés grâce à ce talent spécial.",
         ['illustrator'] = '.Crash'
     },
-
-
+    ['halloween_uranium_grain'] = {
+        ['name'] = 'halloween_uranium_grain',
+        ['label'] = "Grain d'uranium",
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Un matériau radioactif rare et instable. Il peut être utilisé pour alimenter des armes nucléaires ou des dispositifs énergétiques avancés, mais sa manipulation est dangereuse.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_progenitor_reactor'] = {
+        ['name'] = 'halloween_progenitor_reactor',
+        ['label'] = 'Réacteur PROGENITOR',
+        ['weight'] = 1000,
+        ['type'] = 'drug_pot',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Un générateur d'énergie nucléaire avancé, issu de la technologie PROGENITOR. Il alimente les bases secrètes et les installations de haute technologie, débloquant des accès et des capacités spéciales pour votre personnage.",
+        ['illustrator'] = '.',
+        ['drug_pot'] = {
+            ['target'] = 'halloween_progenitor_virusz',
+            ['ingredient'] = 'halloween_uranium_grain',
+            ['nbIngredient'] = 60,
+        }
+    },
+    ['halloween_progenitor_virusz'] = {
+        ['name'] = 'halloween_progenitor_virusz',
+        ['label'] = 'PROGENITOR VIRUS-Z',
+        ['weight'] = 5000,
+        ['type'] = 'item_illegal',
+        ['durability'] = 14,
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Un échantillon du virus expérimental PROGENITOR. En le maîtrisant, votre personnage peut débloquer des capacités surhumaines, mais il doit faire face à une perte de contrôle potentielle et à des mutations dangereuses.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_processed_virusz'] = {
+        ['name'] = 'halloween_processed_virusz',
+        ['label'] = 'Virus-Z',
+        ['weight'] = 500,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Une version instable du virus PROGENITOR, répandue dans le monde post-apocalyptique. En l'ingérant ou en l'injectant, il renforce temporairement les compétences de votre personnage, mais peut entraîner des effets secondaires néfastes.",
+        ['illustrator'] = '.'
+    },
+    ['halloween_virusz_syringe'] = {
+        ['name'] = 'halloween_virusz_syringe',
+        ['label'] = 'Seringue de Virus-Z',
+        ['weight'] = 250,
+        ['type'] = 'drug',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Une seringue contenant du Virus-Z purifié. Elle peut être utilisée pour restaurer la santé de votre personnage en situation critique, mais l'utilisation abusive peut entraîner des mutations incontrôlables. Faites preuve de prudence.",
+        ['nutrition'] = {
+            ['hunger'] = 0,
+            ['thirst'] = 0,
+            ['stress'] = 0,
+            ['drug'] = 75,
+        },
+        ['illustrator'] = '.'
+    },
+    ['halloween_virusz_bag'] = {
+        ['name'] = 'halloween_virusz_bag',
+        ['label'] = 'Sachet de Virus-Z',
+        ['weight'] = 350,
+        ['type'] = 'item_illegal',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Une boisson contenant une dose contrôlée de Virus-Z. En la consommant, votre personnage peut obtenir un boost d'endurance et de résistance, mais doit gérer les risques liés à l'exposition au virus.",
+        ['illustrator'] = '.'
+    },
 
     ['new_year_bottle_2023'] = {
         ['name'] = 'new_year_bottle_2023',
