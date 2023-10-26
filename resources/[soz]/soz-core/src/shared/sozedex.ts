@@ -41,7 +41,8 @@ export const sozedexStatsZones = {
         description: {
             classic:
                 "Le Sozédex décrit la faune et la flore maritime de San Andreas. Chaque découverte est écrite dans le livre afin d'établir une base de connaissance.",
-            halloween: "Cette page du Sozédex n'aurait jamais dû être ouverte à nouveau..",
+            halloween:
+                'Il est désormais temps de découvrir ces pages remplies de créatures monstrueuses et démoniaques que seul un appât du diable est en mesure de débusquer.',
         },
         rewardTitle: {
             classic: 'Vous avez réussi !',
