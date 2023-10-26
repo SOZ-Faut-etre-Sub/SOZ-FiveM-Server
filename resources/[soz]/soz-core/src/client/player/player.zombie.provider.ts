@@ -50,8 +50,13 @@ export class PlayerZombieProvider {
     public isTransforming(): boolean {
         return this.transform !== null;
     }
+
     @Tick(TickInterval.EVERY_MINUTE)
     async checkZombieTransformingFxLoop(): Promise<void> {
+        if (!this.isTransforming()) {
+            return;
+        }
+
         AnimpostfxPlay(ZOMBIE_TRANSFORM_EFFECT, 2000, false);
     }
 
