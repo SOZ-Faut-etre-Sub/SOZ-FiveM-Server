@@ -1,3 +1,5 @@
+import { PhoneService } from '@public/client/phone/phone.service';
+import { Control } from '@public/shared/input';
 import PCancelable from 'p-cancelable';
 
 import { Once, OnceStep, OnEvent, OnGameEvent } from '../../core/decorators/event';
@@ -13,6 +15,9 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { SkinService } from '../skin/skin.service';
 import { TargetFactory } from '../target/target.factory';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
+
+const ZOMBIE_SCREEN_EFFECT = 'SwitchOpenTrevorIn';
+const ZOMBIE_TRANSFORM_EFFECT = 'MinigameEndTrevor';
 
 @Provider()
 export class PlayerZombieProvider {
@@ -31,6 +36,9 @@ export class PlayerZombieProvider {
     @Inject(Notifier)
     private readonly notifier: Notifier;
 
+    @Inject(PhoneService)
+    private readonly phoneService: PhoneService;
+
     private _isZombie = false;
 
     private transform: PCancelable<void> | null = null;
@@ -42,6 +50,10 @@ export class PlayerZombieProvider {
     public isTransforming(): boolean {
         return this.transform !== null;
     }
+    @Tick(TickInterval.EVERY_MINUTE)
+    async checkZombieTransformingFxLoop(): Promise<void> {
+        AnimpostfxPlay(ZOMBIE_TRANSFORM_EFFECT, 2000, false);
+    }
 
     @Tick(TickInterval.EVERY_FRAME)
     async checkZombieFxLoop(): Promise<void> {
@@ -49,11 +61,17 @@ export class PlayerZombieProvider {
             return;
         }
 
-        if (AnimpostfxIsRunning('DrugsTrevorClownsFight')) {
+        DisableControlAction(0, Control.VehicleAccelerate, true);
+        DisableControlAction(0, Control.VehicleBrake, true);
+        DisableControlAction(0, Control.VehicleMoveLeftRight, true);
+        DisableControlAction(0, Control.VehicleMoveLeftOnly, true);
+        DisableControlAction(0, Control.VehicleMoveRightOnly, true);
+
+        if (AnimpostfxIsRunning(ZOMBIE_SCREEN_EFFECT)) {
             return;
         }
 
-        AnimpostfxPlay('DrugsTrevorClownsFight', 0, true);
+        AnimpostfxPlay(ZOMBIE_SCREEN_EFFECT, 0, true);
     }
 
     public async handleOnDeath() {
@@ -125,7 +143,6 @@ export class PlayerZombieProvider {
                 resolve();
             });
 
-            TriggerScreenblurFadeIn(8 * 60 * 1000);
             this.nuiDispatch.dispatch('zombie', 'zombie', true);
 
             await wait(1000 * 60 * 3);
@@ -198,14 +215,10 @@ export class PlayerZombieProvider {
             this.transform.cancel();
         }
 
-        if (IsScreenblurFadeRunning()) {
-            DisableScreenblurFade();
-        } else {
-            TriggerScreenblurFadeOut(1000);
-        }
+        this.phoneService.setPhoneDisabled('zombie', false);
 
         await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', null);
-        AnimpostfxStop('DrugsTrevorClownsFight');
+        AnimpostfxStop(ZOMBIE_SCREEN_EFFECT);
 
         // Reset ped and clothes
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
@@ -217,7 +230,15 @@ export class PlayerZombieProvider {
         this.nuiDispatch.dispatch('zombie', 'zombie', true);
         await this.skinService.setModel('u_m_y_zombie_01');
 
-        AnimpostfxPlay('DrugsTrevorClownsFight', 0, true);
+        TriggerServerEvent(ServerEvent.TALENT_TREE_DISABLE_CRIMI);
+        this.phoneService.setPhoneDisabled('zombie', true);
+
+        this.notifier.notify(
+            'Tu es désormais un ~r~zombie~s~ ! Ton seul et unique bût est de contaminer la terre entière. Agis et comporte toi comme tel !',
+            'info'
+        );
+
+        AnimpostfxPlay(ZOMBIE_SCREEN_EFFECT, 0, true);
     }
 
     @OnGameEvent(GameEvent.CEventNetworkEntityDamage)

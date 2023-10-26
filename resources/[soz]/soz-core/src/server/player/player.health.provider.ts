@@ -1,3 +1,5 @@
+import { PlayerZombieProvider } from '@public/server/player/player.zombie.provider';
+
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -43,6 +45,9 @@ export class PlayerHealthProvider {
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
 
+    @Inject(PlayerZombieProvider)
+    private playerZombieProvider: PlayerZombieProvider;
+
     private yogaAndNaturalMultiplier: (source: number) => number = () => 1;
 
     @OnEvent(ServerEvent.PLAYER_NUTRITION_LOOP)
@@ -50,6 +55,10 @@ export class PlayerHealthProvider {
         const player = this.playerService.getPlayer(source);
 
         if (!player || player.metadata.godmode || player.metadata.isdead) {
+            return;
+        }
+
+        if (this.playerZombieProvider.isZombiePlayer(source)) {
             return;
         }
 
