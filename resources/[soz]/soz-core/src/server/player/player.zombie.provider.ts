@@ -1,3 +1,5 @@
+import { Command } from '@core/decorators/command';
+
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -125,5 +127,20 @@ export class PlayerZombieProvider {
         this.zombiePlayerList.delete(player.citizenid);
 
         TriggerClientEvent(ClientEvent.PLAYER_ZOMBIE_REMOVE, source);
+    }
+
+    @Command('clear-zombie', { role: 'admin' })
+    public removeAllZombie() {
+        for (const playerId of this.zombiePlayerList) {
+            const player = this.playerService.getPlayerByCitizenId(playerId);
+
+            if (!player) {
+                this.zombiePlayerList.delete(playerId);
+
+                continue;
+            }
+
+            this.removeZombiePlayer(player.source);
+        }
     }
 }
