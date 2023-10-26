@@ -74,7 +74,7 @@ export const sozedexStatsZones = {
             side: 'left',
             label: {
                 classic: Localisation.river,
-                halloween: 'Fleuves des Ténèbres',
+                halloween: 'Fleuves Ténébreux',
             },
             name: 'river',
             descriptions: {
@@ -88,7 +88,7 @@ export const sozedexStatsZones = {
             side: 'left',
             label: {
                 classic: Localisation.south_sea,
-                halloween: "Mer de l'Éternelle Nuit",
+                halloween: 'Mer de la Nuit',
             },
             name: 'south_sea',
             descriptions: {
