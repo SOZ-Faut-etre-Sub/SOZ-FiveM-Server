@@ -26,7 +26,6 @@ import { VehicleService } from './vehicle.service';
 import { VehicleStateService } from './vehicle.state.service';
 
 type CurrentStationPistol = {
-    object: number;
     entity: number;
     station: string;
     filling: boolean;
@@ -523,9 +522,6 @@ export class VehicleFuelProvider {
         }
 
         this.ropeService.deleteRope();
-        SetEntityAsMissionEntity(this.currentStationPistol.object, true, true);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentStationPistol.object));
-        DeleteEntity(this.currentStationPistol.object);
 
         this.currentStationPistol = null;
 
@@ -558,46 +554,12 @@ export class VehicleFuelProvider {
 
         this.soundService.playAround('fuel/start_fuel', 5, 0.3);
 
-        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
         const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
-        if (!this.ropeService.createNewRope(ropePosition, entity, 1, 1.0, MAX_LENGTH_ROPE)) {
+        if (!this.ropeService.createNewRope(ropePosition, entity, 1, MAX_LENGTH_ROPE, 'prop_cs_fuel_nozle')) {
             return;
         }
 
-        const object = CreateObject(
-            GetHashKey('prop_cs_fuel_nozle'),
-            position[0],
-            position[1],
-            position[2] - 1.0,
-            true,
-            true,
-            true
-        );
-
-        const netId = ObjToNet(object);
-        SetNetworkIdCanMigrate(netId, false);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
-
-        AttachEntityToEntity(
-            object,
-            PlayerPedId(),
-            GetPedBoneIndex(PlayerPedId(), 26610),
-            0.04,
-            -0.04,
-            0.02,
-            305.0,
-            270.0,
-            -40.0,
-            true,
-            true,
-            false,
-            true,
-            0,
-            true
-        );
-
         this.currentStationPistol = {
-            object,
             entity,
             station: station.name,
             filling: false,

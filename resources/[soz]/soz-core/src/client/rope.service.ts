@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
+import { ServerEvent } from '@public/shared/event';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
 import { Notifier } from './notifier';
@@ -8,6 +9,7 @@ interface RopeState {
     baseEntity: number;
     maxLength: number;
     attachPosition: Vector3;
+    holdingObjectProp: number;
 }
 
 @Injectable()
@@ -21,8 +23,8 @@ export class RopeService {
         attachPosition: Vector3,
         baseEntity: number,
         ropeType: number,
-        initLength: number,
         maxLength: number,
+        holdingObjectPropName: string,
         ropeData?: string
     ): number | null {
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
@@ -30,6 +32,7 @@ export class RopeService {
             this.notifier.notify("Vous vous surestimez. Vous n'êtes pas assez musclé pour tirer deux cordes.", 'error');
             return null;
         }
+        const initLength = getDistance(position, attachPosition);
         RopeLoadTextures();
         const [rope] = AddRope(
             position[0],
@@ -53,11 +56,43 @@ export class RopeService {
         if (ropeData) {
             LoadRopeData(rope, ropeData);
         }
+
+        const object = CreateObject(
+            GetHashKey(holdingObjectPropName),
+            position[0],
+            position[1],
+            position[2] - 1.0,
+            true,
+            true,
+            true
+        );
+        const netId = ObjToNet(object);
+        SetNetworkIdCanMigrate(netId, false);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
+        AttachEntityToEntity(
+            object,
+            PlayerPedId(),
+            GetPedBoneIndex(PlayerPedId(), 26610),
+            0.04,
+            -0.04,
+            0.02,
+            305.0,
+            270.0,
+            -40.0,
+            true,
+            true,
+            false,
+            true,
+            0,
+            true
+        );
+
         this.ropeState = {
             rope,
             baseEntity,
             maxLength,
             attachPosition,
+            holdingObjectProp: object,
         };
         AttachRopeToEntity(
             this.ropeState.rope,
@@ -133,6 +168,9 @@ export class RopeService {
     public deleteRope() {
         RopeUnloadTextures();
         DeleteRope(this.ropeState.rope);
+        SetEntityAsMissionEntity(this.ropeState.holdingObjectProp, true, true);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.ropeState.holdingObjectProp));
+        DeleteEntity(this.ropeState.holdingObjectProp);
         this.ropeState = null;
     }
 }
