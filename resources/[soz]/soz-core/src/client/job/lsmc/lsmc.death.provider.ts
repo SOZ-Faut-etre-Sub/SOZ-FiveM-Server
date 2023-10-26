@@ -24,6 +24,7 @@ import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
 
 import { Animation } from '../../../shared/animation';
+import { PlayerZombieProvider } from '../../player/player.zombie.provider';
 import { VoipService } from '../../voip/voip.service';
 
 const deathAnim: Animation = {
@@ -143,6 +144,9 @@ export class LSMCDeathProvider {
     @Inject(VoipService)
     public voipService: VoipService;
 
+    @Inject(PlayerZombieProvider)
+    public playerZombieProvider: PlayerZombieProvider;
+
     private IsDead = false;
     private hungerThristDeath = false;
     private radioactiveBeerEffect = false;
@@ -174,11 +178,18 @@ export class LSMCDeathProvider {
         if (!this.IsDead) {
             this.IsDead = true;
 
-            TriggerScreenblurFadeIn(5);
-            StartScreenEffect('DeathFailOut', 0, true);
-
             this.nuiMenu.closeAll(false);
             this.voipService.mutePlayer(true);
+
+            // Skip death process if player is zombie
+            if (this.playerZombieProvider.isZombie() || this.playerZombieProvider.isTransforming()) {
+                this.playerZombieProvider.handleOnDeath();
+
+                return;
+            }
+
+            TriggerScreenblurFadeIn(5);
+            StartScreenEffect('DeathFailOut', 0, true);
 
             const playerid = PlayerId();
             let [killer, killerweapon] = NetworkGetEntityKillerOfPlayer(playerid);
@@ -334,6 +345,10 @@ export class LSMCDeathProvider {
         if (uniteHU) {
             DoScreenFadeOut(1000);
             await wait(1000);
+        }
+
+        if (this.playerZombieProvider.isZombie() || this.playerZombieProvider.isTransforming()) {
+            return;
         }
 
         StopScreenEffect('DeathFailOut');

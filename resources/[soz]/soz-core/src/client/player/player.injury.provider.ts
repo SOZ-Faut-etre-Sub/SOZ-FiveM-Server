@@ -6,6 +6,7 @@ import { wait } from '@public/core/utils';
 import { Notifier } from '../notifier';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
+import { PlayerZombieProvider } from './player.zombie.provider';
 
 const CRITICAL_HEALTH = 120;
 
@@ -31,6 +32,9 @@ export class PlayerInjuryProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(PlayerZombieProvider)
+    private playerZombieProvider: PlayerZombieProvider;
+
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
@@ -42,6 +46,10 @@ export class PlayerInjuryProvider {
         const ped = PlayerPedId();
 
         if (player === null || player.metadata.godmode || player.metadata.isdead) {
+            return;
+        }
+
+        if (this.playerZombieProvider.isZombie()) {
             return;
         }
 
