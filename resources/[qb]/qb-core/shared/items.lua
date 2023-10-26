@@ -5437,7 +5437,7 @@ QBShared.Items = {
 
     ['horror_cauldron'] = {
         ['name'] = "horror_cauldron",
-        ['label'] = "Chaudron de l’épouvante",
+        ['label'] = "Chaudron magique",
         ['weight'] = 1600,
         ['type'] = "cocktail",
         ['unique'] = false,

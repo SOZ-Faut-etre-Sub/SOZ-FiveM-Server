@@ -11,7 +11,7 @@ export const Halloween2022Scenario4: Story = {
                 'je ne peux pas vous expliquer la situation.',
                 'Essayez d’aller jusqu’aux bureaux de Paleto, ils devraient pouvoir vous en délivrer une !',
             ],
-            timing: [250, 200, 200, 550],
+            timing: [2500, 2000, 2000, 5500],
         },
         part2: {
             audio: 'audio/halloween-2022/scenario4/part2.mp3',
@@ -22,7 +22,7 @@ export const Halloween2022Scenario4: Story = {
                 'Prenez cette autorisation, et retournez voir l’Agent.',
                 'Moi, je me casse d’ici, je n’en peux plus.',
             ],
-            timing: [150, 500, 200, 250, 200],
+            timing: [1500, 5000, 2000, 2500, 2000],
         },
         part3: {
             audio: 'audio/halloween-2022/scenario4/part3.mp3',
@@ -38,7 +38,7 @@ export const Halloween2022Scenario4: Story = {
                 'Donc maintenant, vous allez me fouiller de fond en comble cette université,',
                 'et mettre la main dessus !',
             ],
-            timing: [200, 300, 200, 350, 180, 270, 275, 400, 350, 150],
+            timing: [2000, 3000, 2000, 3500, 1800, 2700, 2750, 4000, 3500, 1500],
         },
         part4: {
             audio: 'audio/halloween-2022/scenario4/part4.mp3',
@@ -50,7 +50,7 @@ export const Halloween2022Scenario4: Story = {
                 "D'une manière plutôt floue, vous percevez une porte, dans un tunnel près du Mont Chiliad.",
                 "S'y rendre vous permettra certainement d'avoir des réponses.",
             ],
-            timing: [950, 200, 400, 380, 500, 350],
+            timing: [9500, 2000, 4000, 3800, 5000, 3500],
         },
         part5: {
             audio: 'audio/halloween-2022/scenario4/part5.mp3',
@@ -62,7 +62,7 @@ export const Halloween2022Scenario4: Story = {
                 'un écriteau mentionnant les mots “Camp, Est, Peace”.',
                 'Peut-être est-ce un indice où vous devriez vous rendre ?',
             ],
-            timing: [600, 300, 300, 300, 300, 300],
+            timing: [6000, 3000, 3000, 3000, 3000, 3000],
         },
         part6: {
             audio: '',
@@ -84,7 +84,7 @@ export const Halloween2022Scenario4: Story = {
                 "Il est certain que nous aurons l'occasion de nous voir à nouveau,",
                 "d'ici là, je vous souhaite bonne chance.",
             ],
-            timing: [180, 200, 300, 450, 300, 250, 300, 250, 200, 300, 300, 200],
+            timing: [1800, 2000, 3000, 4500, 3000, 2500, 3000, 2500, 2000, 3000, 3000, 2000],
         },
     },
     zones: [
