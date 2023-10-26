@@ -74,7 +74,9 @@ export class PedFactory {
     public async createPed(ped: Ped): Promise<number> {
         const hash = typeof ped.model === 'string' ? GetHashKey(ped.model) : ped.model;
 
-        await this.resourceLoader.loadModel(hash);
+        if (!(await this.resourceLoader.loadModel(hash))) {
+            return 0;
+        }
 
         const pedId = CreatePed(
             0,

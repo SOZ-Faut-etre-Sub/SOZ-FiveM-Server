@@ -187,7 +187,9 @@ export class AnimationFactory {
 
             if (animation.props) {
                 for (const prop of animation.props) {
-                    await this.resourceLoader.loadModel(prop.model);
+                    if (!(await this.resourceLoader.loadModel(prop.model))) {
+                        continue;
+                    }
 
                     const playerOffset = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.0, 0.0) as Vector3;
                     const propId = CreateObject(

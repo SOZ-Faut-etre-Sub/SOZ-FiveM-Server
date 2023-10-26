@@ -187,7 +187,9 @@ export class VehicleDealershipProvider {
         );
 
         for (const [name, auction] of Object.entries(this.auctionVehicles)) {
-            await this.resourceLoader.loadModel(auction.vehicle.hash);
+            if (!(await this.resourceLoader.loadModel(auction.vehicle.hash))) {
+                continue;
+            }
 
             const createdVehicle = CreateVehicle(
                 auction.vehicle.hash,
@@ -217,7 +219,9 @@ export class VehicleDealershipProvider {
         }
 
         for (const [id, vehicle] of Object.entries(this.electricShowVehicles)) {
-            await this.resourceLoader.loadModel(GetHashKey(vehicle.model));
+            if (!(await this.resourceLoader.loadModel(GetHashKey(vehicle.model)))) {
+                continue;
+            }
 
             const createdVehicle = CreateVehicle(
                 GetHashKey(vehicle.model),
@@ -299,7 +303,9 @@ export class VehicleDealershipProvider {
             return;
         }
 
-        await this.resourceLoader.loadModel(vehicle.hash);
+        if (!(await this.resourceLoader.loadModel(vehicle.hash))) {
+            return;
+        }
 
         if (this.lastVehicleShowroom) {
             this.resourceLoader.unloadModel(vehicle.hash);

@@ -49,7 +49,9 @@ export class WeaponDrawingProvider {
             if (this.weaponAttached[weapon.model]) continue;
             this.weaponAttached[weapon.model] = -1;
 
-            await this.resourceLoader.loadModel(weapon.model);
+            if (!(await this.resourceLoader.loadModel(weapon.model))) {
+                continue;
+            }
 
             const object = CreateObject(weapon.model, 1, 1, 1, true, true, false);
             this.weaponAttached[weapon.model] = object;
