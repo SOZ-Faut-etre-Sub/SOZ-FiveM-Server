@@ -45,7 +45,7 @@ export class VehicleKeysProvider {
         const targetPosition = GetEntityCoords(GetPlayerPed(target)) as Vector3;
 
         if (getDistance(sourcePosition, targetPosition) > 4.0) {
-            this.notifier.notify(source, 'Vous êtes trop loin. Rapprochez-vous', 'error');
+            this.notifier.notify(source, 'Vous êtes trop loin, rapprochez-vous.', 'error');
             return;
         }
 
