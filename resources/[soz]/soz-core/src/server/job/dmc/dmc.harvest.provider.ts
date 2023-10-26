@@ -81,8 +81,6 @@ export class DmcHarvestProvider {
             return false;
         }
 
-        console.log(field, this.fieldService.getField(field));
-
         if (!this.fieldService.harvestField(field, 1)) {
             this.notifier.notify(source, `La mine est épuisée.`);
             return false;
