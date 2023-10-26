@@ -22,7 +22,6 @@ const FLATBED_OFFSET = [0.0, -2.2, 1.1] as Vector3;
 const MAX_LENGTH_ROPE = 30;
 
 type FlatbedAttach = {
-    object: number;
     entity: number;
 };
 
@@ -191,9 +190,6 @@ export class BennysFlatbedProvider {
         }
 
         this.ropeService.deleteRope();
-        SetEntityAsMissionEntity(this.currentFlatbedAttach.object, true, true);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentFlatbedAttach.object));
-        DeleteEntity(this.currentFlatbedAttach.object);
 
         this.currentFlatbedAttach = null;
 
@@ -226,47 +222,13 @@ export class BennysFlatbedProvider {
         }
 
         const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
-        if (!this.ropeService.createNewRope(ropePosition, entity, 6, 25, MAX_LENGTH_ROPE, 'ropeFamily3')) {
+        if (!this.ropeService.createNewRope(ropePosition, entity, 6, MAX_LENGTH_ROPE, 'prop_v_hook_s', 'ropeFamily3')) {
             return;
         }
 
         this.soundService.playAround('fuel/start_fuel', 5, 0.3);
 
-        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const object = CreateObject(
-            GetHashKey('prop_v_hook_s'),
-            position[0],
-            position[1],
-            position[2] - 1.0,
-            true,
-            true,
-            true
-        );
-
-        const netId = ObjToNet(object);
-        SetNetworkIdCanMigrate(netId, false);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
-
-        AttachEntityToEntity(
-            object,
-            PlayerPedId(),
-            GetPedBoneIndex(PlayerPedId(), 26610),
-            0.04,
-            -0.04,
-            0.02,
-            305.0,
-            270.0,
-            -40.0,
-            true,
-            true,
-            false,
-            true,
-            0,
-            true
-        );
-
         this.currentFlatbedAttach = {
-            object,
             entity,
         };
     }
