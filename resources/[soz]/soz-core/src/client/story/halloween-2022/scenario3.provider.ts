@@ -66,7 +66,7 @@ export class Halloween2022Scenario3Provider {
     }
 
     private async createTourist1Ped(): Promise<void> {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'a_f_y_tourist_01',
             coords: { x: 510.03, y: 5596.81, z: 792.72, w: 255.8 },
             invincible: true,
@@ -117,7 +117,7 @@ export class Halloween2022Scenario3Provider {
     }
 
     private async createTourist2Ped(): Promise<void> {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 'mp_f_cocaine_01',
             coords: { x: 905.28, y: -3198.25, z: -98.1, w: 204.99 },
             invincible: true,
@@ -168,7 +168,7 @@ export class Halloween2022Scenario3Provider {
     }
 
     private async createDoctorPed(): Promise<void> {
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 's_m_m_doctor_01',
             coords: { x: -323.92, y: -254.14, z: 33.39, w: 234.28 },
             invincible: true,

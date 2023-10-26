@@ -101,7 +101,7 @@ export class Halloween2023Scenario1Provider {
             },
         });
 
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 's_m_m_armoured_02',
             coords: { x: -214.02, y: 6570.73, z: 10.01, w: 231.09 },
             invincible: true,
@@ -112,7 +112,7 @@ export class Halloween2023Scenario1Provider {
             flag: 1,
         });
 
-        await this.pedFactory.createPed({
+        await this.pedFactory.createPedOnGrid({
             model: 's_m_m_armoured_02',
             coords: { x: -211.31, y: 6573.46, z: 10.02, w: 215.53 },
             invincible: true,
@@ -178,7 +178,7 @@ export class Halloween2023Scenario1Provider {
 
         let index = 0;
         for (const position of crowd) {
-            await this.pedFactory.createPed({
+            await this.pedFactory.createPedOnGrid({
                 model: model[index++ % model.length],
                 coords: { x: position[0], y: position[1], z: position[2] - 1, w: position[3] },
                 invincible: true,

@@ -70,7 +70,7 @@ export class FDFProvider {
         this.craftService.createBtargetZoneCraft(FDFCraftZones, 'c:/food/chef.png', 'Préparer', JobType.FDF);
 
         FDFConfig.resellZones.forEach((zone, index) => {
-            this.pedFactory.createPed({
+            this.pedFactory.createPedOnGrid({
                 coords: toVector4Object(zone.npcCoord),
                 model: zone.npcModel,
                 freeze: true,
