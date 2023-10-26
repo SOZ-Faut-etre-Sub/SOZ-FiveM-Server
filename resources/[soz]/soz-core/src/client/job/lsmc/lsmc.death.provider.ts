@@ -145,6 +145,7 @@ export class LSMCDeathProvider {
 
     private IsDead = false;
     private hungerThristDeath = false;
+    private radioactiveBeerEffect = false;
 
     @Tick(10)
     public async deathLoop() {
@@ -493,6 +494,10 @@ export class LSMCDeathProvider {
         }
     }
 
+    public enableRadioactiveBeerEffect() {
+        this.radioactiveBeerEffect = true;
+    }
+
     @Tick(5000)
     public async hungerThirstCheckLoop() {
         const playerData = this.playerService.getPlayer();
@@ -501,14 +506,13 @@ export class LSMCDeathProvider {
             return;
         }
 
+        const ped = PlayerPedId();
         if (
             playerData.metadata.hunger <= 0 ||
             playerData.metadata.thirst <= 0 ||
             playerData.metadata.alcohol >= 100 ||
             playerData.metadata.drug >= 100
         ) {
-            const ped = PlayerPedId();
-
             if (GetEntityHealth(ped) > 0) {
                 ClearPedTasksImmediately(ped);
                 await this.animationService.playAnimation({
@@ -524,6 +528,16 @@ export class LSMCDeathProvider {
                 this.hungerThristDeath = playerData.metadata.hunger <= 0 || playerData.metadata.thirst <= 0;
                 SetEntityHealth(ped, 0);
             }
+        }
+
+        const health = GetEntityHealth(ped);
+        if (this.radioactiveBeerEffect && health > 0) {
+            const newHealth = health - 10;
+            if (newHealth < 100) {
+                this.hungerThristDeath = true;
+                this.radioactiveBeerEffect = false;
+            }
+            SetEntityHealth(ped, newHealth);
         }
     }
 }

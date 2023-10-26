@@ -81,7 +81,9 @@ export class HudMinimapProvider {
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(player: PlayerData): Promise<void> {
-        this._haveGps = this.inventoryManager.hasEnoughItem('gps', 1, true);
+        this._haveGps =
+            this.inventoryManager.hasEnoughItem('gps', 1, true) ||
+            this.inventoryManager.hasEnoughItem('halloween_atomic_gps', 1, true);
         this._dead = player?.metadata.isdead;
     }
 

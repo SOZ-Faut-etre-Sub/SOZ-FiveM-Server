@@ -1,22 +1,91 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <timecycle_modifier_data version="1.000000">
-    <modifier name="li" numMods="17" userFlags="0">
-        <fog_moon_col_r>5.0 5.812</fog_moon_col_r>
-        <fog_moon_col_g>-8.231 -0.231</fog_moon_col_g>
-        <fog_moon_col_b>-5.027 -0.027</fog_moon_col_b>
-        <fog_moon_col_a>0.5 0.5</fog_moon_col_a>
-        <fog_moon_lighting_calc_pow>0.3 0.3</fog_moon_lighting_calc_pow>
-        <fog_east_col_r>5.0 5.812</fog_east_col_r>
-        <fog_east_col_g>-8.231 -0.231</fog_east_col_g>
-        <fog_east_col_b>-5.027 -0.027</fog_east_col_b>
-        <fog_east_col_a>0.5 0.5</fog_east_col_a>
-        <light_dir_col_r>0.9 30.0</light_dir_col_r>
-        <light_dir_col_g>0.1 -7.0</light_dir_col_g>
-        <light_dir_col_b>0.1 0.2</light_dir_col_b>
-        <light_dir_mult>0.02 1.25</light_dir_mult>
-        <light_natural_push>0.5 0.5</light_natural_push>
-        <postfx_noise>0.05</postfx_noise>
-        <postfx_noise_size>0.1</postfx_noise_size>
-        <fog_near_col_r>1.0 1.0</fog_near_col_r>
-    </modifier>
+  <modifier name="HalloweenFullRed" numMods="36" userFlags="0">
+      <no_rain>1.0 1.0</no_rain>
+      <no_rain_ripples>1.0 1.0</no_rain_ripples>
+      <no_weather_fx>1.0 1.0</no_weather_fx>
+      <no_gpu_fx>1.0 1.0</no_gpu_fx>
+      <wind_speed_mult>0.0 0.0</wind_speed_mult>
+      <postfx_noise>0.00</postfx_noise>
+      <vfxlightning_visibility>0.5</vfxlightning_visibility>
+
+      <postfx_correct_col_r>1.2</postfx_correct_col_r>
+      <postfx_correct_col_g>0.2</postfx_correct_col_g>
+      <postfx_correct_col_b>0.05</postfx_correct_col_b>
+
+      <postfx_correct_cutoff>0.2</postfx_correct_cutoff>
+      <postfx_intensity_bloom>0.0</postfx_intensity_bloom>
+      <postfx_exposure>3.0</postfx_exposure>
+
+      <postfx_shift_col_r>0.0 0.0</postfx_shift_col_r>
+      <postfx_shift_col_g>0.0 0.0</postfx_shift_col_g>
+      <postfx_shift_col_b>0.0 0.0</postfx_shift_col_b>
+
+      <postfx_grad_top_col_r>0.6 0.6</postfx_grad_top_col_r>
+      <postfx_grad_top_col_g>0.0 0.0</postfx_grad_top_col_g>
+      <postfx_grad_top_col_b>0.0 0.0</postfx_grad_top_col_b>
+      
+      <postfx_grad_middle_col_r>0.6 0.6</postfx_grad_middle_col_r>
+      <postfx_grad_middle_col_g>0.3 0.3</postfx_grad_middle_col_g>
+      <postfx_grad_middle_col_b>0.3 0.3</postfx_grad_middle_col_b>
+            
+      <postfx_grad_bottom_col_r>1.0 1.0</postfx_grad_bottom_col_r>
+      <postfx_grad_bottom_col_g>1.0 1.0</postfx_grad_bottom_col_g>
+      <postfx_grad_bottom_col_b>1.0 1.0</postfx_grad_bottom_col_b>
+
+      <fog_moon_col_r>0.2 0.2</fog_moon_col_r>
+      <fog_moon_col_g>0.0 0.0</fog_moon_col_g>
+      <fog_moon_col_b>0.0 0.0</fog_moon_col_b>
+      <fog_moon_col_a>1.0 1.0</fog_moon_col_a>
+
+      <fog_haze_col_r>0.0 0.0</fog_haze_col_r>
+      <fog_haze_col_g>0.0 0.0</fog_haze_col_g>
+      <fog_haze_col_b>0.0 0.0</fog_haze_col_b>
+
+      <fog_east_col_r>1.0 1.0</fog_east_col_r>
+      <fog_east_col_g>0.0 0.0</fog_east_col_g>
+      <fog_east_col_b>0.0 0.0</fog_east_col_b>
+      <fog_east_col_a>1.0 1.0</fog_east_col_a>
+
+  </modifier>
+  <modifier name="HalloweenLightRed" numMods="36" userFlags="0">
+      <no_rain>1.0 1.0</no_rain>
+      <no_rain_ripples>1.0 1.0</no_rain_ripples>
+      <no_weather_fx>1.0 1.0</no_weather_fx>
+      <no_gpu_fx>1.0 1.0</no_gpu_fx>
+      <wind_speed_mult>0.0 0.0</wind_speed_mult>
+      <postfx_noise>0.00</postfx_noise>
+      <sky_moon_iten>50.0</sky_moon_iten>
+      <vfxlightning_visibility>0.2</vfxlightning_visibility>
+
+      <postfx_correct_col_r>1.0</postfx_correct_col_r>
+      <postfx_correct_col_g>0.4</postfx_correct_col_g>
+      <postfx_correct_col_b>0.1</postfx_correct_col_b>
+
+      <sky_cloud_density_mult>0.0 0.0</sky_cloud_density_mult>
+      <fog_moon_col_r>0.9 0.9</fog_moon_col_r>
+      <fog_moon_col_g>0.2 0.2</fog_moon_col_g>
+      <fog_moon_col_b>0.0 0.0</fog_moon_col_b>
+
+      <fog_east_col_r>0.9 0.9</fog_east_col_r>
+      <fog_east_col_g>0.2 0.2</fog_east_col_g>
+      <fog_east_col_b>0.0 0.0</fog_east_col_b>
+      <fog_east_col_a>0.0 0.0</fog_east_col_a>
+
+      <light_natural_amb_down_col_r>0.0 0.0</light_natural_amb_down_col_r>
+      <light_natural_amb_down_col_g>0.9 0.9</light_natural_amb_down_col_g>
+      <light_natural_amb_down_col_b>0.9 0.9</light_natural_amb_down_col_b>
+      <light_natural_amb_down_intensity>0.2 0.2</light_natural_amb_down_intensity>
+
+      <light_natural_amb_up_col_r>0.0 0.0</light_natural_amb_up_col_r>
+      <light_natural_amb_up_col_g>0.1 0.1</light_natural_amb_up_col_g>
+      <light_natural_amb_up_col_b>0.2 0.2</light_natural_amb_up_col_b>
+      <light_natural_amb_up_intensity>0.7 0.7</light_natural_amb_up_intensity>
+
+      <ped_light_col_r>1.0 1.0</ped_light_col_r>
+      <ped_light_col_g>1.0 1.0</ped_light_col_g>
+      <ped_light_col_b>1.0 1.0</ped_light_col_b>
+      <ped_light_mult>0.2 0.2</ped_light_mult>
+
+  </modifier>
 </timecycle_modifier_data>

@@ -40,7 +40,9 @@ export class HudCompassProvider {
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     async onPlayerUpdate(): Promise<void> {
-        this._haveCompass = this.inventoryManager.hasEnoughItem('compass', 1, true);
+        this._haveCompass =
+            this.inventoryManager.hasEnoughItem('compass', 1, true) ||
+            this.inventoryManager.hasEnoughItem('halloween_atomic_compass', 1, true);
     }
 
     @Tick()

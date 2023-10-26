@@ -1,7 +1,7 @@
-import { On, Once, OnNuiEvent } from '../../../core/decorators/event';
+import { Once, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../../shared/event';
+import { NuiEvent, ServerEvent } from '../../../shared/event';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { HealthBookLabel, HealthBookMinMax } from '../../../shared/health';
 import { MenuType } from '../../../shared/nui/menu';
@@ -95,12 +95,6 @@ export class LSMCCheckHealthProvider {
         TriggerServerEvent(ServerEvent.LSMC_SET_HEALTH_BOOK, source, field, Number(value));
 
         return Ok(true);
-    }
-
-    @On(ClientEvent.LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP)
-    public async useHorrificLollipop() {
-        const ped = PlayerPedId();
-        SetEntityHealth(ped, GetEntityHealth(ped) + 20);
     }
 
     @Once()

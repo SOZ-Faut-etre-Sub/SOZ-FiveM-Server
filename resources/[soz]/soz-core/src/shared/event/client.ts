@@ -80,7 +80,6 @@ export enum ClientEvent {
     JOB_OPEN_ON_DUTY_MENU = 'soz-job:client:OpenOnDutyMenu',
 
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
-    LSMC_HALLOWEEN_HORRIFIC_LOLLIPOP = 'lsmc:halloween:client:horror-lollipop',
     LSMC_REVIVE = 'soz-core:lsmc:client:revive',
     LSMC_CALL = 'soz-core:lsmc:client:call',
     LSMC_APPLY_PATIENT_CLOTHING = 'soz-core:client:lsmc:applyPatientClothing',

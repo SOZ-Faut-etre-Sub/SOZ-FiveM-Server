@@ -115,7 +115,7 @@ export class StoryProvider {
         this.line = ' ';
         this.drawLineDialogLoop();
         for (const line of text) {
-            let textDuration = line.length * 5;
+            let textDuration = line.length * 50;
 
             if (timing && timing.length > 0) {
                 textDuration = timing[text.indexOf(line)];
