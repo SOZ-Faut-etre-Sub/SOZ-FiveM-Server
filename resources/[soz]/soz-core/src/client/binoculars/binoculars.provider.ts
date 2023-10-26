@@ -74,7 +74,7 @@ export class BinocularsProvider {
         AddTextEntry('binoculars_help_text', text);
         DisplayHelpTextThisFrame('binoculars_help_text', false);
 
-        if (!IsPedSittingInAnyVehicle(player)) {
+        if (!IsPedInAnyVehicle(player, true)) {
             TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_BINOCULARS', 0, true);
             PlayAmbientSpeech1(PlayerPedId(), 'GENERIC_CURSE_MED', 'SPEECH_PARAMS_FORCE');
 
