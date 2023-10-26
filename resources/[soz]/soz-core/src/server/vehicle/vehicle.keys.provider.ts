@@ -1,3 +1,5 @@
+import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
+
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -39,9 +41,16 @@ export class VehicleKeysProvider {
             return;
         }
 
+        const sourcePosition = GetEntityCoords(GetPlayerPed(source)) as Vector3;
+        const targetPosition = GetEntityCoords(GetPlayerPed(target)) as Vector3;
+
+        if (getDistance(sourcePosition, targetPosition) > 4.0) {
+            this.notifier.notify(source, 'Vous êtes trop loin, rapprochez-vous.', 'error');
+            return;
+        }
+
         if (!this.vehicleStateService.hasVehicleKey(plate, sourcePlayer.citizenid)) {
             this.notifier.notify(source, "Vous n'avez pas la clé de ce véhicule.", 'error');
-
             return;
         }
 
