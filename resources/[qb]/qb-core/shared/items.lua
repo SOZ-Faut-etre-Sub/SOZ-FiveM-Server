@@ -6430,17 +6430,17 @@ QBShared.Items = {
         ['weight'] = 1000,
         ['type'] = 'food',
         ['unique'] = false,
-        ['useable'] = false,
+        ['useable'] = true,
         ['shouldClose'] = true,
         ['description'] = 'La bonne soupe de chez Mamie',
         ['nutrition'] = {
-            ['hunger'] = 0,
-            ['thirst'] = 50,
+            ['hunger'] = 15,
+            ['thirst'] = 15,
             ['stamina'] = 0,
-            ['fiber'] = 0,
+            ['fiber'] = 2,
             ['lipid'] = 0,
             ['sugar'] = 0,
-            ['protein'] = 0,
+            ['protein'] = 2,
             ['alcohol'] = 0,
         },
         ['illustrator'] = '.Crash'
@@ -8628,7 +8628,7 @@ QBShared.Items = {
         ['description'] = "Outil des enfers qui coupe des arbres.",
         ['illustrator'] = '.Aurukh'
     },
-    
+
     --Ferme de Fou
     ['apple'] = {
         ['name'] = 'apple',
@@ -9190,7 +9190,7 @@ QBShared.Items = {
         ['description'] = "C'est vraiment bon du chou et de la tomate ?",
         ['illustrator'] = '.Sniteur',
     },
-    
+
     --- DMC
     ['repair_part_motor'] ={
         ['name'] = 'repair_part_motor',
@@ -12086,7 +12086,7 @@ QBShared.Items = {
     },
 
     --- Halloween
-    
+
     ['halloween_horrostine'] = {
         ['name'] = 'halloween_horrostine',
         ['label'] = "Horrostine",
