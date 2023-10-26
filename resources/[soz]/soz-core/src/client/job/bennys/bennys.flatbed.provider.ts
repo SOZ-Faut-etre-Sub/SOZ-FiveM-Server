@@ -6,11 +6,12 @@ import { wait } from '../../../core/utils';
 import { AnimationStopReason } from '../../../shared/animation';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
-import { getDistance, Vector3, Vector4 } from '../../../shared/polyzone/vector';
+import { Vector3, Vector4 } from '../../../shared/polyzone/vector';
 import { VehicleSeat } from '../../../shared/vehicle/vehicle';
 import { AnimationService } from '../../animation/animation.service';
 import { Notifier } from '../../notifier';
 import { PlayerService } from '../../player/player.service';
+import { RopeService } from '../../rope.service';
 import { SoundService } from '../../sound.service';
 import { TargetFactory } from '../../target/target.factory';
 import { VehicleService } from '../../vehicle/vehicle.service';
@@ -18,9 +19,9 @@ import { VehicleStateService } from '../../vehicle/vehicle.state.service';
 
 const FLATBED_OFFSET = [0.0, -2.2, 1.1] as Vector3;
 
+const MAX_LENGTH_ROPE = 30;
+
 type FlatbedAttach = {
-    object: number;
-    rope: number;
     entity: number;
 };
 
@@ -46,6 +47,9 @@ export class BennysFlatbedProvider {
 
     @Inject(AnimationService)
     private animationService: AnimationService;
+
+    @Inject(RopeService)
+    private ropeService: RopeService;
 
     private currentFlatbedAttach: FlatbedAttach = null;
 
@@ -164,41 +168,12 @@ export class BennysFlatbedProvider {
         ]);
     }
 
-    @Tick()
+    @Tick(TickInterval.EVERY_FRAME)
     private async handleFlatbedAttach() {
         if (!this.currentFlatbedAttach) {
             return;
         }
-
-        const ropePosition = GetOffsetFromEntityInWorldCoords(
-            this.currentFlatbedAttach.entity,
-            0.0,
-            0.0,
-            1.0
-        ) as Vector3;
-        const handPosition = GetWorldPositionOfEntityBone(
-            PlayerPedId(),
-            GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
-        ) as Vector3;
-
-        const distance = Math.min(getDistance(ropePosition, handPosition) + 2.0, 30);
-
-        AttachEntitiesToRope(
-            this.currentFlatbedAttach.rope,
-            this.currentFlatbedAttach.entity,
-            PlayerPedId(),
-            ropePosition[0],
-            ropePosition[1],
-            ropePosition[2],
-            handPosition[0],
-            handPosition[1],
-            handPosition[2],
-            distance,
-            true,
-            true,
-            null,
-            'BONETAG_L_FINGER2'
-        );
+        this.ropeService.manageRopePhysics();
     }
 
     private async toggleFlatbedAttach(entity: number) {
@@ -214,11 +189,7 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        RopeUnloadTextures();
-        DeleteRope(this.currentFlatbedAttach.rope);
-        SetEntityAsMissionEntity(this.currentFlatbedAttach.object, true, true);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.currentFlatbedAttach.object));
-        DeleteEntity(this.currentFlatbedAttach.object);
+        this.ropeService.deleteRope();
 
         this.currentFlatbedAttach = null;
 
@@ -250,72 +221,16 @@ export class BennysFlatbedProvider {
             return;
         }
 
+        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
+        if (!this.ropeService.createNewRope(ropePosition, entity, 6, MAX_LENGTH_ROPE, 'prop_v_hook_s', 'ropeFamily3')) {
+            return;
+        }
+
         this.soundService.playAround('fuel/start_fuel', 5, 0.3);
 
-        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-        const object = CreateObject(
-            GetHashKey('prop_v_hook_s'),
-            position[0],
-            position[1],
-            position[2] - 1.0,
-            true,
-            true,
-            true
-        );
-
-        const netId = ObjToNet(object);
-        SetNetworkIdCanMigrate(netId, false);
-        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
-
-        AttachEntityToEntity(
-            object,
-            PlayerPedId(),
-            GetPedBoneIndex(PlayerPedId(), 26610),
-            0.04,
-            -0.04,
-            0.02,
-            305.0,
-            270.0,
-            -40.0,
-            true,
-            true,
-            false,
-            true,
-            0,
-            true
-        );
-        RopeLoadTextures();
-
-        const [rope] = AddRope(
-            position[0],
-            position[1],
-            position[2],
-            0.0,
-            0.0,
-            0.0,
-            30.0,
-            6,
-            25.0,
-            1.0,
-            0.5,
-            false,
-            true,
-            true,
-            1.0,
-            false,
-            0
-        );
-
         this.currentFlatbedAttach = {
-            rope,
-            object,
             entity,
         };
-
-        LoadRopeData(rope, 'ropeFamily3');
-        const ropePosition = GetOffsetFromEntityInWorldCoords(entity, 0.0, 0.0, 1.0) as Vector3;
-        AttachRopeToEntity(rope, entity, ropePosition[0], ropePosition[1], ropePosition[2], true);
-        ActivatePhysics(rope);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
