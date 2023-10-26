@@ -21,11 +21,9 @@ export class WeatherProvider {
             await this.resourceLoader.loadStreamedTextureDict('halloweenmoon');
             SetTransitionTimecycleModifier(halloween, 120.05);
             AddReplaceTexture('platform:/textures/skydome', 'moon-new', 'halloweenmoon', 'moon-new');
-            AddReplaceTexture('platform:/textures/skydome', 'starfield', 'halloweenmoon', 'starfield');
         } else {
             ClearTimecycleModifier();
             RemoveReplaceTexture('platform:/textures/skydome', 'moon-new');
-            RemoveReplaceTexture('platform:/textures/skydome', 'starfield');
         }
     }
 

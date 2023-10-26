@@ -25,7 +25,8 @@ RegisterServerEvent("inventory:server:bin-vandalism", function(invID, ctx)
     local binInv = GetOrCreateInventory(storageType, invID, ctx)
     local count = Inventory.Search(binInv, "amount", "garbagebag")
     Inventory.RemoveItem(binInv, "garbagebag", count)
-    Inventory.AddItem(source, binInv, "torn_garbagebag", math.floor(count / 2))
+    local isHalloween = exports["soz-core"]:isHalloween()
+    Inventory.AddItem(source, binInv, isHalloween and "halloween_infernus_garbage" or "torn_garbagebag", math.floor(count / 2))
 end)
 
 QBCore.Functions.CreateCallback("inventory:server:TransfertItem",

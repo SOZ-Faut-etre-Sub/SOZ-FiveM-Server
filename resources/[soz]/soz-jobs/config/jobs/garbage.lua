@@ -6,6 +6,7 @@ GarbageConfig.SellPrice = {
     ["petroleum_residue"] = 8,
     ["seeweed_acid"] = 35,
     ["torn_garbagebag"] = 16,
+    ["halloween_infernus_garbage"] = 16,
 }
 
 GarbageConfig.Processing = {Duration = 60 * 1000, ProcessingStorage = "garbage_processing", ProcessingAmount = 300}

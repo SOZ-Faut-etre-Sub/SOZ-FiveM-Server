@@ -312,6 +312,7 @@ export const BaunCraftsLists: Record<string, CraftCategory> = {
         },
         feature: Feature.Halloween,
         duration: 4000,
+        icon: '🎃',
         event: 'job_baun_craft',
         recipes: {
             surprise_candie: {

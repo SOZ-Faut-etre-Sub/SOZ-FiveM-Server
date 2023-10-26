@@ -5918,6 +5918,18 @@ QBShared.Items = {
         ['description'] = 'Preuve de la réussite d’une Horror Story lors de l’événement festif d’Halloween 2023.',
         ['illustrator'] = '.Pastouke'
     },
+    ['halloween_infernus_garbage'] = {
+        ['name'] = 'halloween_infernus_garbage',
+        ['label'] = 'Déchets infernaux',
+        ['weight'] = 4000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Quelqu'un est passé par là et à tout déchiré...",
+        ['illustrator'] = '.Crash'
+    },
     ['old_relic'] = {
         ['name'] = 'old_relic',
         ['label'] = 'Ancienne relique',
@@ -6652,8 +6664,8 @@ QBShared.Items = {
         ['description'] = "Un appareil électronique qui détecte la présence d'entités surnaturelles. Il révèle les ennemis cachés, les portes secrètes et les objets magiques, vous aidant à éviter les embuscades.",
         ['illustrator'] = '.Pastouke'
     },
-    ['halloween_voodoo'] = {
-        ['name'] = 'halloween_voodoo doll',
+    ['halloween_voodoo_doll'] = {
+        ['name'] = 'halloween_voodoo_doll',
         ['label'] = 'Poupée Vaudou',
         ['weight'] = 250,
         ['type'] = 'item_illegal',
@@ -7734,7 +7746,7 @@ QBShared.Items = {
     },
     ['torn_garbagebag'] = {
         ['name'] = 'torn_garbagebag',
-        ['label'] = 'Déchets infernaux', -- Sac de détritus déchiré
+        ['label'] = 'Sac de détritus déchiré',
         ['weight'] = 4000,
         ['type'] = 'item',
         ['unique'] = false,
