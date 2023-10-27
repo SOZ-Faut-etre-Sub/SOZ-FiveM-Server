@@ -3,7 +3,7 @@ import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Zone } from '../../shared/polyzone/box.zone';
-import { PedFactory } from '../factory/ped.factory';
+import { Ped, PedFactory } from '../factory/ped.factory';
 
 export type TargetOptions = {
     label: string;
@@ -19,21 +19,12 @@ export type TargetOptions = {
     item?: string;
 };
 
-export type PedOptions = {
+export type PedOptions = Ped & {
     spawnNow?: boolean;
-    model: string;
-    coords: { x: number; y: number; z: number; w: number };
     length?: number;
     width?: number;
     minusOne?: boolean;
-    freeze?: boolean;
-    invincible?: boolean;
-    blockevents?: boolean;
     debugPoly?: boolean;
-    scenario?: string;
-    animDict?: string;
-    anim?: string;
-    flag?: number;
     target: {
         options: TargetOptions[];
         distance: number;

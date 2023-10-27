@@ -1,4 +1,5 @@
 import { uuidv4 } from '@core/utils';
+import { AnimationProps } from '@public/shared/animation';
 import { getChunkId } from '@public/shared/grid';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -28,6 +29,7 @@ export type Ped = {
     network?: boolean;
     isScriptHostPed?: boolean;
     isRandomClothes?: boolean;
+    animprops?: AnimationProps[];
 };
 
 export type GridPed = Ped & {
@@ -81,6 +83,7 @@ type SpawnedPed = {
 @Provider()
 export class PedFactory {
     private peds: { [id: number]: any } = {};
+    private pedprops = new Map<number, number[]>();
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
@@ -131,6 +134,14 @@ export class PedFactory {
         if (!DoesEntityExist(spawned.entity)) {
             return;
         }
+
+        const props = this.pedprops.get(spawned.entity);
+        if (props) {
+            for (const prop of props) {
+                DeleteObject(prop);
+            }
+        }
+        this.pedprops.delete(spawned.entity);
 
         DeletePed(spawned.entity);
         delete this.loadedPeds[id];
@@ -275,12 +286,58 @@ export class PedFactory {
             TaskStartScenarioInPlace(pedId, ped.scenario, 0, true);
         }
 
+        if (ped.animprops) {
+            const pedprops = [];
+            for (const prop of ped.animprops) {
+                if (!(await this.resourceLoader.loadModel(prop.model))) {
+                    continue;
+                }
+
+                const playerOffset = GetOffsetFromEntityInWorldCoords(pedId, 0.0, 0.0, 0.0) as Vector3;
+                const propId = CreateObject(
+                    GetHashKey(prop.model),
+                    playerOffset[0],
+                    playerOffset[1],
+                    playerOffset[2],
+                    false,
+                    false,
+                    false
+                );
+
+                AttachEntityToEntity(
+                    propId,
+                    pedId,
+                    GetPedBoneIndex(pedId, prop.bone),
+                    prop.position[0],
+                    prop.position[1],
+                    prop.position[2],
+                    prop.rotation[0],
+                    prop.rotation[1],
+                    prop.rotation[2],
+                    true,
+                    true,
+                    false,
+                    true,
+                    0,
+                    true
+                );
+                pedprops.push(propId);
+            }
+            this.pedprops.set(pedId, pedprops);
+        }
+
         this.peds[pedId] = true;
         return pedId;
     }
 
     @Once(OnceStep.Stop)
     public async onServerStop() {
+        for (const [, props] of this.pedprops) {
+            for (const prop of props) {
+                DeleteObject(prop);
+            }
+        }
+        this.pedprops.clear();
         for (const pedId in this.peds) {
             DeletePed(Number(pedId));
         }
