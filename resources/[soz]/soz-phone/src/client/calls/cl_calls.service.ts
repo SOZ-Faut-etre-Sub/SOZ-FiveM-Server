@@ -22,6 +22,18 @@ export class CallService {
         return this.currentCallData !== null;
     }
 
+    // Wrapper around a end call event sent to avoid modules that wants to end a call to ask for the transmitter etc and make the call themselves
+    endCall() {
+        if (!this.currentCallData) {
+            return;
+        }
+
+        CallService.sendCallAction(CallEvents.END_CALL, {
+            transmitterNumber: this.currentCallData.transmitter,
+            isTransmitter: this.currentCallData.isTransmitter,
+        });
+    }
+
     isInCall() {
         return this.currentCall !== 0;
     }
