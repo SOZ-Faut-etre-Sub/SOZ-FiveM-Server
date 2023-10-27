@@ -136,6 +136,8 @@ export class RopeService {
             GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
         ) as Vector3;
 
+        const distance = Math.min(getDistance(stationPosition, handPosition) + 2.0, this.ropeState.maxLength);
+
         AttachEntitiesToRope(
             this.ropeState.rope,
             this.ropeState.baseEntity,
@@ -146,7 +148,7 @@ export class RopeService {
             handPosition[0],
             handPosition[1],
             handPosition[2],
-            10.0,
+            distance,
             true,
             true,
             null,
