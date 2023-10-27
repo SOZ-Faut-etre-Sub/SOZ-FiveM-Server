@@ -566,14 +566,23 @@ export class VehicleFuelProvider {
         };
     }
 
-    @Tick(TickInterval.EVERY_FRAME)
-    private async handleStationPistol() {
+    @Tick(TickInterval.EVERY_SECOND)
+    private async soundRefuelingTick() {
         if (!this.currentStationPistol) {
             return;
         }
 
-        if (this.currentStationPistol.filling) {
-            this.soundService.playAround('fuel/refueling', 5, 0.3);
+        if (!this.currentStationPistol.filling) {
+            return;
+        }
+
+        this.soundService.playAround('fuel/refueling', 5, 0.3);
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    private async handleStationPistolPhysics() {
+        if (!this.currentStationPistol) {
+            return;
         }
 
         if (this.ropeService.getRopeDistance() > MAX_LENGTH_ROPE) {
