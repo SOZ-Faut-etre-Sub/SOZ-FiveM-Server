@@ -477,9 +477,6 @@ export class BennysFlatbedProvider {
             null,
             true
         );
-
-        await wait(1000);
-
         return IsEntityAttached(vehicle);
     }
 }
