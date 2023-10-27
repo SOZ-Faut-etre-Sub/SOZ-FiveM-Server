@@ -1,5 +1,6 @@
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { PlayerData } from '@public/shared/player';
 import { Halloween2023Scenario1, Halloween2023Scenario1Alcool } from '@public/shared/story/halloween-2023/scenario1';
 
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
@@ -47,12 +48,13 @@ export class Halloween2023Scenario1Provider {
     }
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
-    public createBlip() {
+    public createBlip(player: PlayerData) {
         if (!isFeatureEnabled(Feature.Halloween2023Scenario1)) {
             return;
         }
 
-        if (!this.storyService.canInteractForPart('halloween2023', 'scenario1', 0)) {
+        const startedOrFinish = !!player?.metadata?.halloween2023?.scenario1;
+        if (!startedOrFinish && !this.storyService.canInteractForPart('halloween2023', 'scenario1', 0)) {
             return;
         }
 

@@ -1,3 +1,5 @@
+import { PlayerData } from '@public/shared/player';
+
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -51,12 +53,13 @@ export class Halloween2022Scenario2Provider {
         await this.spawnProps();
     }
 
-    public createBlip() {
+    public createBlip(player: PlayerData) {
         if (!isFeatureEnabled(Feature.HalloweenScenario2)) {
             return;
         }
 
-        if (!this.storyService.canInteractForPart('halloween2022', 'scenario2', 0)) {
+        const startedOrFinish = !!player?.metadata?.halloween2022?.scenario2;
+        if (!startedOrFinish && !this.storyService.canInteractForPart('halloween2022', 'scenario2', 0)) {
             return;
         }
 
