@@ -113,7 +113,7 @@ export const updateAvailability = async () => {
             await hidePhone();
         }
         if (callService.isInCall()) {
-            callService.handleEndCall();
+            callService.endCall();
             await animationService.endPhoneCall();
         }
     }
@@ -197,7 +197,7 @@ onNet('QBCore:Player:SetPlayerData', async (playerData: PlayerData) => {
 });
 
 onNet('ems:client:onDeath', () => {
-    callService.handleEndCall();
+    callService.endCall();
     animationService.endPhoneCall();
     hidePhone();
 
