@@ -1,7 +1,7 @@
 import { PhoneEvents } from '../../typings/phone';
 import { sendMessage } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
-import { callService, initializeCallHandler } from './calls/cl_calls.controller';
+import { callService, endCallHandler, initializeCallHandler } from './calls/cl_calls.controller';
 import { hidePhone, showPhone, updateAvailability } from './cl_main';
 import { verifyExportArgType } from './cl_utils';
 
@@ -59,7 +59,10 @@ exps('stopPhoneCall', async () => {
         await hidePhone();
     }
     if (callService.isInCall()) {
-        callService.handleEndCall();
+        endCallHandler({
+            transmitterNumber: callService.getTransmitterNumber(),
+            isTransmitter: callService.isTransmitter(),
+        });
         await animationService.endPhoneCall();
     }
 });
