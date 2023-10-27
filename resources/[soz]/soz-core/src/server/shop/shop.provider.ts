@@ -175,12 +175,30 @@ export class ShopProvider {
                 ...player_skin.Makeup,
                 ...product.config.Makeup,
             },
+            FaceTrait: {
+                ...player_skin.FaceTrait,
+                ...product.config.FaceTraits,
+            },
         };
         this.qbcore.getPlayer(source).Functions.SetSkin(new_skin, false);
-        const notif =
-            product.overlay == 'Hair'
-                ? `Vous avez changé de ~b~coiffure~s~ pour ~g~$${product.price}.`
-                : `Vous avez changé de ~b~maquillage~s~ pour ~g~$${product.price}.`;
+
+        let label = 'coiffure';
+        switch (product.overlay) {
+            case 'Hair':
+                break;
+            case 'Makeup':
+                label = 'maquillage';
+                break;
+            case 'FaceTraits':
+                label = 'lentilles';
+                break;
+
+            default:
+                break;
+        }
+
+        const notif = `Vous avez changé de ~b~${label}~s~ pour ~g~$${product.price}.`;
+
         this.notifier.notify(source, notif, 'success');
     }
 
