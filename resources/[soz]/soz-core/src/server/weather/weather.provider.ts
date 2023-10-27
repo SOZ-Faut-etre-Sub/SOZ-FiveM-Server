@@ -44,7 +44,7 @@ export class WeatherProvider {
     private dayTemperatureRange: TemperatureRange = DayAutumnTemperature;
     private nightTemperatureRange: TemperatureRange = NightAutumnTemperature;
 
-    private defaultWeather: Weather = isFeatureEnabled(Feature.Halloween) ? 'NEUTRAL' : 'OVERCAST';
+    private defaultWeather: Weather = isFeatureEnabled(Feature.Halloween) ? 'CLOUDS' : 'OVERCAST';
 
     private currentForecast: ForecastWithTemperature = {
         weather: this.defaultWeather,
