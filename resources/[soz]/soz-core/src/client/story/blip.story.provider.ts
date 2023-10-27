@@ -1,5 +1,6 @@
 import { OnEvent } from '@public/core/decorators/event';
 import { ClientEvent } from '@public/shared/event/client';
+import { PlayerData } from '@public/shared/player';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -27,11 +28,11 @@ export class BlipStoryProvider {
     private halloween2023Scenario1Provider: Halloween2023Scenario1Provider;
 
     @OnEvent(ClientEvent.PLAYER_UPDATE)
-    public onPlayerUpdate() {
-        this.halloween2022Scenario1Provider.createBlip();
-        this.halloween2022Scenario2Provider.createBlip();
-        this.halloween2022Scenario3Provider.createBlip();
-        this.halloween2022Scenario4Provider.createBlip();
-        this.halloween2023Scenario1Provider.createBlip();
+    public onPlayerUpdate(player: PlayerData) {
+        this.halloween2022Scenario1Provider.createBlip(player);
+        this.halloween2022Scenario2Provider.createBlip(player);
+        this.halloween2022Scenario3Provider.createBlip(player);
+        this.halloween2022Scenario4Provider.createBlip(player);
+        this.halloween2023Scenario1Provider.createBlip(player);
     }
 }

@@ -1,5 +1,6 @@
 import { Component, Prop } from '@public/shared/cloth';
 import { VanillaComponentDrawableIndexMaxValue, VanillaPropDrawableIndexMaxValue } from '@public/shared/drawable';
+import { PlayerData } from '@public/shared/player';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 
 import { Once, OnceStep } from '../../../core/decorators/event';
@@ -89,12 +90,13 @@ export class Halloween2022Scenario4Provider {
         await this.createPedKaemy();
     }
 
-    public createBlip() {
+    public createBlip(player: PlayerData) {
         if (!isFeatureEnabled(Feature.HalloweenScenario4)) {
             return;
         }
 
-        if (!this.storyService.canInteractForPart('halloween2022', 'scenario4', 0)) {
+        const startedOrFinish = !!player?.metadata?.halloween2022?.scenario4;
+        if (!startedOrFinish && !this.storyService.canInteractForPart('halloween2022', 'scenario4', 0)) {
             return;
         }
 
@@ -499,18 +501,19 @@ export class Halloween2022Scenario4Provider {
             },
             components: {
                 2: [97, 0, 0],
-                3: [32, 0, 0],
+                3: [34, 0, 0],
                 4: [201, 22, 0],
+                6: [8, 0, 0],
                 7: [148, 0, 0],
-                6: [42, 2, 0],
-                9: [55, 0, 0],
                 8: [160, 0, 0],
-                11: [477, 3, 0],
-                10: [0, 0, 0],
+                9: [54, 0, 0],
+                10: [192, 0, 0],
+                11: [366, 3, 0],
             },
             props: {
                 2: [7, 0, 0],
                 6: [7, 1, 0],
+                7: [19, 0, 0],
             },
             face: {
                 CheeksBoneHigh: 0,
@@ -568,11 +571,7 @@ export class Halloween2022Scenario4Provider {
                 FullMakeupType: 1,
                 BlushType: 0,
             },
-            tattoos: [
-                { overlay: 1617489838, collection: -1056335443 },
-                { overlay: 1697138602, collection: -1056335443 },
-                { overlay: 1697138602, collection: -1056335443 },
-            ],
+            tattoos: [],
             invincible: true,
             freeze: true,
             blockevents: true,
