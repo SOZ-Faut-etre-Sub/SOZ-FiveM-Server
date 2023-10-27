@@ -339,9 +339,6 @@ export class BennysFlatbedProvider {
         }
 
         TriggerServerEvent(ServerEvent.BENNYS_FLATBED_DETACH_VEHICLE, flatbedNetworkId);
-
-        this.soundService.play('seatbelt/unbuckle', 0.2);
-        this.notifier.notify('Le véhicule a été détaché du flatbed.');
     }
 
     public async attachVehicle(vehicle: number) {
