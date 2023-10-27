@@ -4,6 +4,8 @@ import { Provider } from '@core/decorators/provider';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
 
+import { joaat } from '../../shared/joaat';
+
 // For some reason populationPedCreating does not use int32 for model hash
 // so cannot use GetHashKey
 const Animals = [
@@ -50,6 +52,14 @@ const Animals = [
     2910340283, // A_C_Westy
 ];
 
+const AnimalsMapping: Record<number, number> = {
+    [joaat('a_c_boar')]: joaat('a_c_boar_02'),
+    [joaat('a_c_coyote')]: joaat('a_c_coyote_02'),
+    [joaat('a_c_deer')]: joaat('a_c_deer_02'),
+    [joaat('a_c_mtlion')]: joaat('a_c_mtlion_02'),
+    [joaat('a_c_pug')]: joaat('a_c_pug_02'),
+};
+
 const zombieModel = 'u_m_y_zombie_01';
 
 @Provider()
@@ -60,6 +70,14 @@ export class ZombieProvider {
     @On('populationPedCreating')
     public async onStart(x: number, y: number, z: number, model: number, setters) {
         if (!isFeatureEnabled(Feature.Halloween)) {
+            return;
+        }
+
+        if (AnimalsMapping[model]) {
+            await this.resourceLoader.loadModel(AnimalsMapping[model]);
+
+            setters.setModel(AnimalsMapping[model]);
+
             return;
         }
 
