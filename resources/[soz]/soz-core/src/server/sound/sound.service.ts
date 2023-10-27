@@ -41,4 +41,8 @@ export class SoundService {
             );
         }
     }
+
+    public play(source: number, name: string, volume: number) {
+        TriggerClientEvent('InteractSound_CL:PlayOnOne', source, name, volume);
+    }
 }
