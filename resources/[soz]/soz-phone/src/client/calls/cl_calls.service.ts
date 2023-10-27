@@ -18,6 +18,14 @@ export class CallService {
         });
     }
 
+    isTransmitter() {
+        return this.currentCallData?.isTransmitter;
+    }
+
+    getTransmitterNumber() {
+        return this.currentCallData?.transmitter;
+    }
+
     hasAnActiveCall() {
         return this.currentCallData !== null;
     }

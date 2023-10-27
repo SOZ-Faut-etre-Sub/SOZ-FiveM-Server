@@ -5,7 +5,7 @@ import { EmergencyEvents } from '../../typings/emergency';
 import { PhoneEvents } from '../../typings/phone';
 import { sendMessage } from '../utils/messages';
 import { animationService } from './animations/animation.controller';
-import { callService } from './calls/cl_calls.controller';
+import { callService, endCallHandler } from './calls/cl_calls.controller';
 import { RegisterNuiCB } from './cl_utils';
 import { removePhoneProp } from './functions';
 
@@ -113,7 +113,10 @@ export const updateAvailability = async () => {
             await hidePhone();
         }
         if (callService.isInCall()) {
-            callService.handleEndCall();
+            endCallHandler({
+                transmitterNumber: callService.getTransmitterNumber(),
+                isTransmitter: callService.isTransmitter(),
+            });
             await animationService.endPhoneCall();
         }
     }
