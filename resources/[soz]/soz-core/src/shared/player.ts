@@ -62,6 +62,9 @@ export type Skin = {
         BeardType?: number;
         BeardOpacity?: number;
         BeardColor?: number;
+        EyebrowType?: number;
+        EyebrowOpacity?: number;
+        EyebrowColor?: number;
     };
     Makeup: {
         BeardType?: number;
@@ -77,6 +80,9 @@ export type Skin = {
         LipstickType?: number;
         LipstickOpacity?: number;
         LipstickColor?: number;
+    };
+    FaceTrait: {
+        EyeColor?: number;
     };
     Model: {
         Hash: number;
