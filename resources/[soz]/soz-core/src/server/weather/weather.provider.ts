@@ -79,8 +79,8 @@ export class WeatherProvider {
         }
 
         if (isFeatureEnabled(Feature.Halloween)) {
-            if (this.currentTime.hour >= 2 && this.currentTime.hour < 23) {
-                this.currentTime.hour = 23;
+            if (this.currentTime.hour >= 2 || this.currentTime.hour < 1) {
+                this.currentTime.hour = 1;
                 this.currentTime.minute = 0;
                 this.currentTime.second = 0;
             }

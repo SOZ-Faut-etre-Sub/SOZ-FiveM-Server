@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { uuidv4, wait, waitUntil } from '@core/utils';
+import { wait, waitUntil } from '@core/utils';
 import { AnimationFactory, AnimationRunner } from '@public/client/animation/animation.factory';
 
 import { Animation, AnimationStopReason, PlayOptions, Scenario } from '../../shared/animation';
@@ -18,24 +18,6 @@ export class AnimationService {
     private animationFactory: AnimationFactory;
 
     private runningAnimations: Map<string, AnimationStored> = new Map();
-
-    private findAnimation(dictionary: string, name: string): string | null {
-        for (const [id, animation] of this.runningAnimations.entries()) {
-            if (animation.dictionary == dictionary && animation.name == name) {
-                return id;
-            }
-        }
-        return null;
-    }
-
-    private findScenario(name: string): string | null {
-        for (const [id, animation] of this.runningAnimations.entries()) {
-            if (!animation.dictionary && animation.name == name) {
-                return id;
-            }
-        }
-        return null;
-    }
 
     public async walkToCoords(coords: Vector4, duration = 1000) {
         const playerPed = PlayerPedId();
@@ -57,9 +39,9 @@ export class AnimationService {
     }
 
     public playAnimationIfNotRunning(animation: Animation, options?: Partial<PlayOptions>) {
-        const id = uuidv4();
+        const id = animation.base.dictionary + animation.base.name;
 
-        if (!this.findAnimation(animation.base.dictionary, animation.base.name)) {
+        if (!this.runningAnimations.has(id)) {
             const runner = this.animationFactory.createAnimation(animation, options);
             this.runningAnimations.set(id, {
                 runner,
@@ -74,10 +56,10 @@ export class AnimationService {
     }
 
     public stopAnimationIfRunning(animation: Animation) {
-        const [existingId] = this.findAnimation(animation.base.dictionary, animation.base.name);
+        const id = animation.base.dictionary + animation.base.name;
 
-        if (existingId) {
-            this.runningAnimations.get(existingId).runner.cancel(AnimationStopReason.Canceled);
+        if (this.runningAnimations.has(id)) {
+            this.runningAnimations.get(id).runner.cancel(AnimationStopReason.Canceled);
         }
     }
     public async walkToCoordsAvoidObstacles(coords: Vector3 | Vector4, maxDuration = 5000) {
@@ -103,12 +85,11 @@ export class AnimationService {
     }
 
     public toggleAnimation(animation: Animation, options?: Partial<PlayOptions>) {
-        const [existingId] = this.findAnimation(animation.base.dictionary, animation.base.name);
+        const id = animation.base.dictionary + animation.base.name;
 
-        if (existingId) {
-            this.runningAnimations.get(existingId).runner.cancel(AnimationStopReason.Canceled);
+        if (this.runningAnimations.has(id)) {
+            this.runningAnimations.get(id).runner.cancel(AnimationStopReason.Canceled);
         } else {
-            const id = uuidv4();
             const runner = this.animationFactory.createAnimation(animation, options);
             this.runningAnimations.set(id, {
                 runner,
@@ -123,12 +104,11 @@ export class AnimationService {
     }
 
     public toggleScenario(scenario: Scenario, options?: Partial<PlayOptions>) {
-        const [existingId] = this.findScenario(scenario.name);
+        const id = scenario.name;
 
-        if (existingId) {
-            this.runningAnimations.get(existingId).runner.cancel(AnimationStopReason.Canceled);
+        if (this.runningAnimations.has(id)) {
+            this.runningAnimations.get(id).runner.cancel(AnimationStopReason.Canceled);
         } else {
-            const id = uuidv4();
             const runner = this.animationFactory.createScenario(scenario, options);
             this.runningAnimations.set(id, {
                 runner,
@@ -143,7 +123,7 @@ export class AnimationService {
     }
 
     public playScenario(scenario: Scenario, options?: Partial<PlayOptions>): AnimationRunner {
-        const id = uuidv4();
+        const id = scenario.name;
 
         const runner = this.animationFactory.createScenario(scenario, options);
         this.runningAnimations.set(id, {
@@ -155,11 +135,12 @@ export class AnimationService {
         runner.finally(() => {
             this.runningAnimations.delete(id);
         });
+
         return runner;
     }
 
     public playAnimation(animation: Animation, options?: Partial<PlayOptions>): AnimationRunner {
-        const id = uuidv4();
+        const id = animation.base.dictionary + animation.base.name;
 
         const runner = this.animationFactory.createAnimation(animation, options);
         this.runningAnimations.set(id, {
