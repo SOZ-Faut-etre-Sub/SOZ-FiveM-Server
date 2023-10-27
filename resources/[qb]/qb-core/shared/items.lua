@@ -5952,6 +5952,17 @@ QBShared.Items = {
         ['description'] = 'Un insigne indique qu’il provient des canaux de vespucci… Etrange…',
         ['illustrator'] = '.Crash'
     },
+    ['halloween_alien_artifact'] = {
+        ['name'] = 'halloween_alien_artifact',
+        ['label'] = 'Artéfact Extraterrestre',
+        ['weight'] = 10000,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = 'Une substance verte liquide circule à l’intérieur de l’étrange objet, entouré d’un métal extrêmement solide et lourd. Quelqu’un doit bien pouvoir vous aider afin d’en apprendre plus…',
+        ['illustrator'] = '.Sniteur'
+    },
 
     --- Other
     ['halloween_scythe'] = {

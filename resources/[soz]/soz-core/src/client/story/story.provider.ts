@@ -1,3 +1,5 @@
+import { Vector4 } from '@public/shared/polyzone/vector';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -5,6 +7,7 @@ import { wait } from '../../core/utils';
 import { Dialog, ScenarioOrder, ScenarioState, Story } from '../../shared/story/story';
 import { AudioService } from '../nui/audio.service';
 import { PlayerService } from '../player/player.service';
+import { ResourceLoader } from '../repository/resource.loader';
 import { TargetOptions } from '../target/target.factory';
 
 @Provider()
@@ -15,11 +18,22 @@ export class StoryProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
     private camera: number | null = null;
     private inCinematic = false;
     private line: string;
 
-    public async launchDialog(dialog: Dialog, useCamera = false, x?: number, y?: number, z?: number, w?: number) {
+    public async launchDialog(
+        dialog: Dialog,
+        useCamera = false,
+        x?: number,
+        y?: number,
+        z?: number,
+        w?: number,
+        entity?: number
+    ) {
         this.inCinematic = true;
         if (x && y && z && w) {
             TaskGoStraightToCoord(PlayerPedId(), x, y, z, 1.0, 1000, w, 0.0);
@@ -41,8 +55,18 @@ export class StoryProvider {
             RenderScriptCams(true, true, 500, true, true);
         }
 
+        let interval = null;
+        if (entity) {
+            await this.resourceLoader.loadAnimationDictionary('mp_facial');
+            interval = setInterval(() => PlayFacialAnim(entity, 'mic_chatter', 'mp_facial'), 2000);
+        }
         this.audioService.playAudio(dialog.audio);
         await this.drawTextDialog(dialog.text, dialog.timing);
+        if (entity) {
+            clearInterval(interval);
+            await this.resourceLoader.loadAnimationDictionary('facials@gen_male@variations@normal');
+            PlayFacialAnim(entity, 'mood_normal_1', 'facials@gen_male@variations@normal');
+        }
 
         if (DoesCamExist(this.camera)) {
             RenderScriptCams(false, false, 0, true, false);
@@ -99,14 +123,15 @@ export class StoryProvider {
         year: 'halloween2022' | 'halloween2023',
         scenario: string,
         part: number,
-        dialog: string
+        dialog: string,
+        coords: Vector4
     ): TargetOptions {
         return {
             label: 'Ré-écouter',
             icon: 'fas fa-comment-dots',
             canInteract: () => this.canInteractForPart(year, scenario, part + 1),
-            action: async () => {
-                await this.launchDialog(story.dialog[dialog]);
+            action: async entity => {
+                await this.launchDialog(story.dialog[dialog], true, coords[0], coords[1], coords[2], coords[3], entity);
             },
         };
     }
