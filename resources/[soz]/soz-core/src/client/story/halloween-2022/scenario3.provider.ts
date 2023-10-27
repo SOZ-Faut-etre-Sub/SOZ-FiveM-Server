@@ -1,5 +1,6 @@
 import { EntityFactory } from '@public/client/factory/entity.factory';
 import { PlayerPositionProvider } from '@public/client/player/player.position.provider';
+import { PlayerData } from '@public/shared/player';
 
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -49,12 +50,13 @@ export class Halloween2022Scenario3Provider {
         await this.spawnProps();
     }
 
-    public createBlip() {
+    public createBlip(player: PlayerData) {
         if (!isFeatureEnabled(Feature.HalloweenScenario3)) {
             return;
         }
 
-        if (!this.storyService.canInteractForPart('halloween2022', 'scenario3', 0)) {
+        const startedOrFinish = !!player?.metadata?.halloween2022?.scenario3;
+        if (!startedOrFinish && !this.storyService.canInteractForPart('halloween2022', 'scenario3', 0)) {
             return;
         }
 
