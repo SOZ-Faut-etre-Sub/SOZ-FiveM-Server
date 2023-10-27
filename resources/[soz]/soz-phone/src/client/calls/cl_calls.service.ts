@@ -18,20 +18,16 @@ export class CallService {
         });
     }
 
-    hasAnActiveCall() {
-        return this.currentCallData !== null;
+    isTransmitter() {
+        return this.currentCallData?.isTransmitter;
     }
 
-    // Wrapper around a end call event sent to avoid modules that wants to end a call to ask for the transmitter etc and make the call themselves
-    endCall() {
-        if (!this.currentCallData) {
-            return;
-        }
+    getTransmitterNumber() {
+        return this.currentCallData?.transmitter;
+    }
 
-        CallService.sendCallAction(CallEvents.END_CALL, {
-            transmitterNumber: this.currentCallData.transmitter,
-            isTransmitter: this.currentCallData.isTransmitter,
-        });
+    hasAnActiveCall() {
+        return this.currentCallData !== null;
     }
 
     isInCall() {

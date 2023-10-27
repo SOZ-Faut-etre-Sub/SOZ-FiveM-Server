@@ -23,7 +23,9 @@ export const callService = new CallService();
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
     if (callService.isInCall()) {
-        cb({ status: 'error', errorMsg: 'ALREADY IN CALL' });
+        if (cb) {
+            cb({ status: 'error', errorMsg: 'ALREADY IN CALL' });
+        }
         return;
     }
 
@@ -38,11 +40,39 @@ export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCal
         const { transmitter, isTransmitter, receiver, isUnavailable } = serverRes.data;
         // Start the process of giving NUI feedback by opening NUI modal
         callService.handleStartCall(transmitter, receiver, isTransmitter, isUnavailable);
-        cb({ status: 'ok' });
+        if (cb) {
+            cb({ status: 'ok' });
+        }
     } catch (e) {
         console.error(e);
-        cb({ status: 'error', errorMsg: 'FAILED TO START CALL' });
+        if (cb) {
+            cb({ status: 'error', errorMsg: 'FAILED TO START CALL' });
+        }
     }
+};
+
+export const endCallHandler = async (data: EndCallDTO, cb?: NuiCallbackFunc) => {
+    if (!callService.isInCall()) {
+        if (cb) {
+            cb({ status: 'error', errorMsg: 'NOT IN CALL' });
+        }
+        return;
+    }
+
+    try {
+        const serverRes: ServerPromiseResp<void> = await ClUtils.emitNetPromise(CallEvents.END_CALL, data);
+        if (serverRes.status === 'error') console.error(serverRes.errorMsg);
+        callService.handleEndCall();
+        if (cb) {
+            cb({});
+        }
+    } catch (e) {
+        console.error(e);
+        if (cb) {
+            cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
+        }
+    }
+    animationService.endPhoneCall();
 };
 
 // Will trigger whenever somebody initializes a call to any number
@@ -79,18 +109,7 @@ onNet(CallEvents.WAS_REJECTED, async () => {
     animationService.endPhoneCall();
 });
 
-RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, async (data, cb) => {
-    try {
-        const serverRes: ServerPromiseResp<void> = await ClUtils.emitNetPromise(CallEvents.END_CALL, data);
-        if (serverRes.status === 'error') console.error(serverRes.errorMsg);
-        callService.handleEndCall();
-        cb({});
-    } catch (e) {
-        console.error(e);
-        cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
-    }
-    animationService.endPhoneCall();
-});
+RegisterNuiCB<EndCallDTO>(CallEvents.END_CALL, endCallHandler);
 
 onNet(CallEvents.WAS_ENDED, () => {
     callService.handleEndCall();
