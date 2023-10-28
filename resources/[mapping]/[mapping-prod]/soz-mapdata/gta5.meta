@@ -422,7 +422,7 @@
 	  <locked value="true"/>
 	</Item>
 	<Item>
-	  <filename>resources:/soz-mapdata/water.xml</filename>
+	  <filename>commoncrc:/data/levels/gta5/water.xml</filename>
 	  <fileType>WATER_FILE</fileType>
 	</Item>
 	<Item>
