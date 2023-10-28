@@ -7,6 +7,7 @@ import { Halloween2022Scenario2Provider } from './halloween-2022/scenario2.provi
 import { Halloween2022Scenario3Provider } from './halloween-2022/scenario3.provider';
 import { Halloween2022Scenario4Provider } from './halloween-2022/scenario4.provider';
 import { Halloween2023Scenario1Provider } from './halloween-2023/scenario1.provider';
+import { Halloween2023Scenario2Provider } from './halloween-2023/scenario2.provider';
 import { StoryProvider } from './story.provider';
 import { ZombieProvider } from './zombie.provider';
 
@@ -22,6 +23,7 @@ import { ZombieProvider } from './zombie.provider';
         Halloween2022Scenario3Provider,
         Halloween2022Scenario4Provider,
         Halloween2023Scenario1Provider,
+        Halloween2023Scenario2Provider,
     ],
 })
 export class StoryModule {}

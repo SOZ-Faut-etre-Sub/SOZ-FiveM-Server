@@ -86,9 +86,17 @@ export class Halloween2023Scenario1Provider {
                         label: 'Parler',
                         icon: 'fas fa-comment',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 0),
-                        action: async () => {
+                        action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 1);
-                            await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part1']);
+                            await this.storyService.launchDialog(
+                                Halloween2023Scenario1.dialog['part1'],
+                                true,
+                                -210.75,
+                                6570.71,
+                                10.96,
+                                49.55,
+                                entity
+                            );
                         },
                     },
                     this.storyService.replayYearTarget(
@@ -96,7 +104,8 @@ export class Halloween2023Scenario1Provider {
                         'halloween2023',
                         'scenario1',
                         0,
-                        'part1'
+                        'part1',
+                        [-210.75, 6570.71, 10.96, 49.55]
                     ),
                 ],
                 distance: 1.5,
@@ -199,16 +208,24 @@ export class Halloween2023Scenario1Provider {
             invincible: true,
             freeze: true,
             blockevents: true,
-            scenario: 's_m_m_fibsec_01',
+            scenario: 'WORLD_HUMAN_STAND_IMPATIENT_FACILITY',
             target: {
                 options: [
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 1),
-                        action: async () => {
+                        action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 2);
-                            await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part2']);
+                            await this.storyService.launchDialog(
+                                Halloween2023Scenario1.dialog['part2'],
+                                true,
+                                3382.53,
+                                3704.28,
+                                35.83,
+                                275.75,
+                                entity
+                            );
                         },
                     },
                     this.storyService.replayYearTarget(
@@ -216,14 +233,16 @@ export class Halloween2023Scenario1Provider {
                         'halloween2023',
                         'scenario1',
                         1,
-                        'part2'
+                        'part2',
+                        [3382.53, 3704.28, 35.83, 275.75]
                     ),
                     this.storyService.replayYearTarget(
                         Halloween2023Scenario1,
                         'halloween2023',
                         'scenario1',
                         2,
-                        'part2'
+                        'part2',
+                        [3382.53, 3704.28, 35.83, 275.75]
                     ),
                     {
                         label: 'Donner',
@@ -243,9 +262,17 @@ export class Halloween2023Scenario1Provider {
                                     .reduce((acc, elem) => acc + (elem.type === 'fish' ? elem.amount : 0), 0) >= 20
                             );
                         },
-                        action: async () => {
+                        action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 4);
-                            await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part3']);
+                            await this.storyService.launchDialog(
+                                Halloween2023Scenario1.dialog['part3'],
+                                true,
+                                3382.53,
+                                3704.28,
+                                35.83,
+                                275.75,
+                                entity
+                            );
                         },
                     },
                     this.storyService.replayYearTarget(
@@ -253,7 +280,8 @@ export class Halloween2023Scenario1Provider {
                         'halloween2023',
                         'scenario1',
                         3,
-                        'part3'
+                        'part3',
+                        [3382.53, 3704.28, 35.83, 275.75]
                     ),
                 ],
                 distance: 1.5,
@@ -275,9 +303,17 @@ export class Halloween2023Scenario1Provider {
                         label: 'Parler',
                         icon: 'fas fa-comment',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 4),
-                        action: async () => {
+                        action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 5);
-                            await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part4']);
+                            await this.storyService.launchDialog(
+                                Halloween2023Scenario1.dialog['part4'],
+                                true,
+                                1011.49,
+                                -2890.41,
+                                39.16,
+                                17.98,
+                                entity
+                            );
                         },
                     },
                     this.storyService.replayYearTarget(
@@ -285,15 +321,24 @@ export class Halloween2023Scenario1Provider {
                         'halloween2023',
                         'scenario1',
                         4,
-                        'part4'
+                        'part4',
+                        [1011.49, -2890.41, 39.16, 17.98]
                     ),
                     {
                         label: 'Parler',
                         icon: 'fas fa-comment',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 7),
-                        action: async () => {
+                        action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 8);
-                            await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part7']);
+                            await this.storyService.launchDialog(
+                                Halloween2023Scenario1.dialog['part7'],
+                                true,
+                                1011.49,
+                                -2890.41,
+                                39.16,
+                                17.98,
+                                entity
+                            );
                         },
                     },
                 ],
@@ -316,9 +361,17 @@ export class Halloween2023Scenario1Provider {
                         label: 'Parler',
                         icon: 'fas fa-comment',
                         canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario1', 5),
-                        action: async () => {
+                        action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 6);
-                            await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part5']);
+                            await this.storyService.launchDialog(
+                                Halloween2023Scenario1.dialog['part5'],
+                                true,
+                                -2077.01,
+                                2603.37,
+                                2.03,
+                                135.77,
+                                entity
+                            );
                         },
                     },
                     this.storyService.replayYearTarget(
@@ -326,7 +379,8 @@ export class Halloween2023Scenario1Provider {
                         'halloween2023',
                         'scenario1',
                         5,
-                        'part5'
+                        'part5',
+                        [-2077.01, 2603.37, 2.03, 135.77]
                     ),
                     {
                         label: 'Donner',
@@ -340,9 +394,17 @@ export class Halloween2023Scenario1Provider {
                                 .getItems()
                                 .some(item => Halloween2023Scenario1Alcool.includes(item.name));
                         },
-                        action: async () => {
+                        action: async entity => {
                             TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_1, 7);
-                            await this.storyService.launchDialog(Halloween2023Scenario1.dialog['part6']);
+                            await this.storyService.launchDialog(
+                                Halloween2023Scenario1.dialog['part6'],
+                                true,
+                                -2077.01,
+                                2603.37,
+                                2.03,
+                                135.77,
+                                entity
+                            );
                         },
                     },
                     this.storyService.replayYearTarget(
@@ -350,7 +412,8 @@ export class Halloween2023Scenario1Provider {
                         'halloween2023',
                         'scenario1',
                         6,
-                        'part6'
+                        'part6',
+                        [-2077.01, 2603.37, 2.03, 135.77]
                     ),
                 ],
                 distance: 1.5,
