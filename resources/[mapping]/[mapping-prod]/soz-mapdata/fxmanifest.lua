@@ -7,6 +7,7 @@ replace_level_meta 'gta5'
 files {
     'gta5.meta',
     'doortuning.ymt',
+    'water.xml',
     'soz_game.dat151.rel',
     'soz_mix.dat15.rel'
 }
