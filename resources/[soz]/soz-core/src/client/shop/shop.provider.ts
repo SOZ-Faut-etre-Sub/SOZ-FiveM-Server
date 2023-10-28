@@ -322,7 +322,7 @@ export class ShopProvider {
         }
     }
 
-    private getBrandPedModel(brandConfig: BrandConfig) {
+    public getBrandPedModel(brandConfig: BrandConfig) {
         return isFeatureEnabled(Feature.Halloween) ? 'u_m_y_zombie_01' : brandConfig.pedModel;
     }
 
