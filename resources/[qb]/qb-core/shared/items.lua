@@ -12105,7 +12105,7 @@ QBShared.Items = {
         ['min_length'] = 12,           -- taille minimale en cm
         ['max_length'] = 15,          -- taille minimale en cm
         ['sozedex_id'] = 1,
-        ['price'] = 22
+        ['price'] = 86
     },
     ['halloween_cycrabe'] = {
         ['name'] = 'halloween_cycrabe',
@@ -12125,7 +12125,7 @@ QBShared.Items = {
         ['min_length'] = 21,           -- taille minimale en cm
         ['max_length'] = 29,          -- taille minimale en cm
         ['sozedex_id'] = 2,
-        ['price'] = 22
+        ['price'] = 87
     },
     ['halloween_neostraceae_horribilis'] = {
         ['name'] = 'halloween_neostraceae_horribilis',
@@ -12145,7 +12145,7 @@ QBShared.Items = {
         ['min_length'] = 42,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
         ['sozedex_id'] = 3,
-        ['price'] = 22
+        ['price'] = 86
     },
     ['halloween_pagure_rouge'] = {
         ['name'] = 'halloween_pagure_rouge',
@@ -12165,7 +12165,7 @@ QBShared.Items = {
         ['min_length'] = 48,           -- taille minimale en cm
         ['max_length'] = 72,          -- taille minimale en cm
         ['sozedex_id'] = 4,
-        ['price'] = 22
+        ['price'] = 61
     },
     ['halloween_zilure_demoniaque'] = {
         ['name'] = 'halloween_zilure_demoniaque',
@@ -12185,7 +12185,7 @@ QBShared.Items = {
         ['min_length'] = 25,           -- taille minimale en cm
         ['max_length'] = 130,          -- taille minimale en cm
         ['sozedex_id'] = 5,
-        ['price'] = 22
+        ['price'] = 88
     },
     ['halloween_squalus_infernalis'] = {
         ['name'] = 'halloween_squalus_infernalis',
@@ -12205,7 +12205,7 @@ QBShared.Items = {
         ['min_length'] = 50,           -- taille minimale en cm
         ['max_length'] = 300,          -- taille minimale en cm
         ['sozedex_id'] = 6,
-        ['price'] = 22
+        ['price'] = 55
     },
     ['halloween_fantocean'] = {
         ['name'] = 'halloween_fantocean',
@@ -12225,7 +12225,7 @@ QBShared.Items = {
         ['min_length'] = 50,           -- taille minimale en cm
         ['max_length'] = 100,          -- taille minimale en cm
         ['sozedex_id'] = 7,
-        ['price'] = 22
+        ['price'] = 72
     },
     ['halloween_langue_de_satan'] = {
         ['name'] = 'halloween_langue_de_satan',
@@ -12245,7 +12245,7 @@ QBShared.Items = {
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 22,          -- taille minimale en cm
         ['sozedex_id'] = 8,
-        ['price'] = 22
+        ['price'] = 95
     },
     ['halloween_toxzoguille'] = {
         ['name'] = 'halloween_toxzoguille',
@@ -12265,7 +12265,7 @@ QBShared.Items = {
         ['min_length'] = 45,           -- taille minimale en cm
         ['max_length'] = 1500,          -- taille minimale en cm
         ['sozedex_id'] = 9,
-        ['price'] = 22
+        ['price'] = 87
     },
     ['halloween_melusgnark'] = {
         ['name'] = 'halloween_melusgnark',
@@ -12285,7 +12285,7 @@ QBShared.Items = {
         ['min_length'] = 13,           -- taille minimale en cm
         ['max_length'] = 48,          -- taille minimale en cm
         ['sozedex_id'] = 10,
-        ['price'] = 22
+        ['price'] = 86
     },
     ['halloween_krakenos'] = {
         ['name'] = 'halloween_krakenos',
@@ -12305,7 +12305,7 @@ QBShared.Items = {
         ['min_length'] = 200,           -- taille minimale en cm
         ['max_length'] = 300,          -- taille minimale en cm
         ['sozedex_id'] = 11,
-        ['price'] = 22
+        ['price'] = 72
     },
     ['halloween_chyrobissus'] = {
         ['name'] = 'halloween_chyrobissus',
@@ -12325,7 +12325,7 @@ QBShared.Items = {
         ['min_length'] = 50,           -- taille minimale en cm
         ['max_length'] = 150,          -- taille minimale en cm
         ['sozedex_id'] = 12,
-        ['price'] = 22
+        ['price'] = 82
     },
     ['halloween_necrocampe'] = {
         ['name'] = 'halloween_necrocampe',
@@ -12345,7 +12345,7 @@ QBShared.Items = {
         ['min_length'] = 50,           -- taille minimale en cm
         ['max_length'] = 75,          -- taille minimale en cm
         ['sozedex_id'] = 13,
-        ['price'] = 22
+        ['price'] = 68
     },
     ['halloween_piranheon'] = {
         ['name'] = 'halloween_piranheon',
@@ -12365,7 +12365,7 @@ QBShared.Items = {
         ['min_length'] = 20,           -- taille minimale en cm
         ['max_length'] = 100,          -- taille minimale en cm
         ['sozedex_id'] = 14,
-        ['price'] = 22
+        ['price'] = 77
     },
     ['halloween_crustademon'] = {
         ['name'] = 'halloween_crustademon',
@@ -12385,7 +12385,7 @@ QBShared.Items = {
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 90,          -- taille minimale en cm
         ['sozedex_id'] = 15,
-        ['price'] = 22
+        ['price'] = 86
     },
     ['halloween_octohydra_nocturne'] = {
         ['name'] = 'halloween_octohydra_nocturne',
@@ -12405,7 +12405,7 @@ QBShared.Items = {
         ['min_length'] = 100,           -- taille minimale en cm
         ['max_length'] = 350,          -- taille minimale en cm
         ['sozedex_id'] = 16,
-        ['price'] = 22
+        ['price'] = 51
     },
     ['halloween_abyssodemon'] = {
         ['name'] = 'halloween_abyssodemon',
@@ -12425,7 +12425,7 @@ QBShared.Items = {
         ['min_length'] = 75,           -- taille minimale en cm
         ['max_length'] = 150,          -- taille minimale en cm
         ['sozedex_id'] = 17,
-        ['price'] = 22
+        ['price'] = 65
     },
     ['halloween_crustamortis'] = {
         ['name'] = 'halloween_crustamortis',
@@ -12445,7 +12445,7 @@ QBShared.Items = {
         ['min_length'] = 20,           -- taille minimale en cm
         ['max_length'] = 75,          -- taille minimale en cm
         ['sozedex_id'] = 18,
-        ['price'] = 22
+        ['price'] = 85
     },
     ['halloween_oculymphe'] = {
         ['name'] = 'halloween_oculymphe',
@@ -12465,7 +12465,7 @@ QBShared.Items = {
         ['min_length'] = 3,           -- taille minimale en cm
         ['max_length'] = 15,          -- taille minimale en cm
         ['sozedex_id'] = 19,
-        ['price'] = 22
+        ['price'] = 57
     },
     ['halloween_necromurene'] = {
         ['name'] = 'halloween_necromurene',
@@ -12485,7 +12485,7 @@ QBShared.Items = {
         ['min_length'] = 42,           -- taille minimale en cm
         ['max_length'] = 145,          -- taille minimale en cm
         ['sozedex_id'] = 20,
-        ['price'] = 22
+        ['price'] = 93
     },
     ['halloween_marecaille'] = {
         ['name'] = 'halloween_marecaille',
@@ -12505,7 +12505,7 @@ QBShared.Items = {
         ['min_length'] = 27,           -- taille minimale en cm
         ['max_length'] = 132,          -- taille minimale en cm
         ['sozedex_id'] = 21,
-        ['price'] = 22
+        ['price'] = 65
     },
     ['halloween_necrotriton'] = {
         ['name'] = 'halloween_necrotriton',
@@ -12525,7 +12525,7 @@ QBShared.Items = {
         ['min_length'] = 23,           -- taille minimale en cm
         ['max_length'] = 78,          -- taille minimale en cm
         ['sozedex_id'] = 22,
-        ['price'] = 22
+        ['price'] = 93
     },
     ['halloween_zombiecetus'] = {
         ['name'] = 'halloween_zombiecetus',
@@ -12545,7 +12545,7 @@ QBShared.Items = {
         ['min_length'] = 127,           -- taille minimale en cm
         ['max_length'] = 267,          -- taille minimale en cm
         ['sozedex_id'] = 23,
-        ['price'] = 22
+        ['price'] = 62
     },
     ['halloween_krueger_des_abyss'] = {
         ['name'] = 'halloween_krueger_des_abyss',
@@ -12565,7 +12565,7 @@ QBShared.Items = {
         ['min_length'] = 27,           -- taille minimale en cm
         ['max_length'] = 84,          -- taille minimale en cm
         ['sozedex_id'] = 24,
-        ['price'] = 22
+        ['price'] = 66
     },
     ['halloween_larve_de_xenocrevisse'] = {
         ['name'] = 'halloween_larve_de_xenocrevisse',
@@ -12585,7 +12585,7 @@ QBShared.Items = {
         ['min_length'] = 4,           -- taille minimale en cm
         ['max_length'] = 32,          -- taille minimale en cm
         ['sozedex_id'] = 25,
-        ['price'] = 22
+        ['price'] = 75
     },
     ['halloween_xenocrevisse'] = {
         ['name'] = 'halloween_xenocrevisse',
@@ -12605,7 +12605,7 @@ QBShared.Items = {
         ['min_length'] = 24,           -- taille minimale en cm
         ['max_length'] = 97,          -- taille minimale en cm
         ['sozedex_id'] = 26,
-        ['price'] = 22
+        ['price'] = 93
     },
     ['halloween_corail_necrosclere'] = {
         ['name'] = 'halloween_corail_necrosclere',
@@ -12625,7 +12625,7 @@ QBShared.Items = {
         ['min_length'] = 16,           -- taille minimale en cm
         ['max_length'] = 63,          -- taille minimale en cm
         ['sozedex_id'] = 27,
-        ['price'] = 22
+        ['price'] = 72
     },
     ['halloween_mycrable'] = {
         ['name'] = 'halloween_mycrable',
@@ -12645,7 +12645,7 @@ QBShared.Items = {
         ['min_length'] = 12,           -- taille minimale en cm
         ['max_length'] = 36,          -- taille minimale en cm
         ['sozedex_id'] = 28,
-        ['price'] = 22
+        ['price'] = 86
     },
     ['halloween_poisson_clown_clown'] = {
         ['name'] = 'halloween_poisson_clown_clown',
@@ -12665,7 +12665,7 @@ QBShared.Items = {
         ['min_length'] = 10,           -- taille minimale en cm
         ['max_length'] = 30,          -- taille minimale en cm
         ['sozedex_id'] = 29,
-        ['price'] = 22
+        ['price'] = 76
     },
     ['halloween_bleurk'] = {
         ['name'] = 'halloween_bleurk',
@@ -12685,7 +12685,7 @@ QBShared.Items = {
         ['min_length'] = 6,           -- taille minimale en cm
         ['max_length'] = 68,          -- taille minimale en cm
         ['sozedex_id'] = 30,
-        ['price'] = 22
+        ['price'] = 95
     },
     ['halloween_nagabyssale'] = {
         ['name'] = 'halloween_nagabyssale',
@@ -12705,7 +12705,7 @@ QBShared.Items = {
         ['min_length'] = 45,           -- taille minimale en cm
         ['max_length'] = 190,          -- taille minimale en cm
         ['sozedex_id'] = 31,
-        ['price'] = 22
+        ['price'] = 59
     },
     ['halloween_candy_jelly_fish'] = {
         ['name'] = 'halloween_candy_jelly_fish',
@@ -12725,7 +12725,7 @@ QBShared.Items = {
         ['min_length'] = 1000,           -- taille minimale en cm
         ['max_length'] = 1250,          -- taille minimale en cm
         ['sozedex_id'] = 32,
-        ['price'] = 22
+        ['price'] = 75
     },
     ['halloween_zoctulus'] = {
         ['name'] = 'halloween_zoctulus',
@@ -12745,7 +12745,7 @@ QBShared.Items = {
         ['min_length'] = 62,           -- taille minimale en cm
         ['max_length'] = 89,          -- taille minimale en cm
         ['sozedex_id'] = 33,
-        ['price'] = 22
+        ['price'] = 84
     },
     ['halloween_barracroutta'] = {
         ['name'] = 'halloween_barracroutta',
@@ -12765,7 +12765,7 @@ QBShared.Items = {
         ['min_length'] = 166,           -- taille minimale en cm
         ['max_length'] = 398,          -- taille minimale en cm
         ['sozedex_id'] = 34,
-        ['price'] = 22
+        ['price'] = 86
     },
     ['halloween_batteraie'] = {
         ['name'] = 'halloween_batteraie',
@@ -12785,7 +12785,7 @@ QBShared.Items = {
         ['min_length'] = 1500,           -- taille minimale en cm
         ['max_length'] = 2500,          -- taille minimale en cm
         ['sozedex_id'] = 35,
-        ['price'] = 22
+        ['price'] = 88
     },
     ['halloween_nagazkill'] = {
         ['name'] = 'halloween_nagazkill',
@@ -12805,7 +12805,7 @@ QBShared.Items = {
         ['min_length'] = 43,           -- taille minimale en cm
         ['max_length'] = 86,          -- taille minimale en cm
         ['sozedex_id'] = 36,
-        ['price'] = 22
+        ['price'] = 71
     },
     ['halloween_poisson_citrouille'] = {
         ['name'] = 'halloween_poisson_citrouille',
@@ -12825,7 +12825,7 @@ QBShared.Items = {
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
         ['sozedex_id'] = 37,
-        ['price'] = 22
+        ['price'] = 91
     },
     ['halloween_cranaraignee'] = {
         ['name'] = 'halloween_cranaraignee',
@@ -12845,7 +12845,7 @@ QBShared.Items = {
         ['min_length'] = 30,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
         ['sozedex_id'] = 38,
-        ['price'] = 22
+        ['price'] = 89
     },
     ['halloween_crapamanite'] = {
         ['name'] = 'halloween_crapamanite',
@@ -12865,7 +12865,7 @@ QBShared.Items = {
         ['min_length'] = 300,           -- taille minimale en cm
         ['max_length'] = 500,          -- taille minimale en cm
         ['sozedex_id'] = 39,
-        ['price'] = 22
+        ['price'] = 68
     },
     ['halloween_crapeau_or'] = {
         ['name'] = 'halloween_crapeau_or',
@@ -12885,7 +12885,7 @@ QBShared.Items = {
         ['min_length'] = 70,           -- taille minimale en cm
         ['max_length'] = 100,          -- taille minimale en cm
         ['sozedex_id'] = 40,
-        ['price'] = 22
+        ['price'] = 53
     },
     ['halloween_anibaltortle'] = {
         ['name'] = 'halloween_anibaltortle',
@@ -12905,7 +12905,7 @@ QBShared.Items = {
         ['min_length'] = 94,           -- taille minimale en cm
         ['max_length'] = 126,          -- taille minimale en cm
         ['sozedex_id'] = 41,
-        ['price'] = 22
+        ['price'] = 78
     },
     ['halloween_maglimace'] = {
         ['name'] = 'halloween_maglimace',
@@ -12925,7 +12925,7 @@ QBShared.Items = {
         ['min_length'] = 12,           -- taille minimale en cm
         ['max_length'] = 36,          -- taille minimale en cm
         ['sozedex_id'] = 42,
-        ['price'] = 22
+        ['price'] = 79
     },
     ['halloween_zombaleine'] = {
         ['name'] = 'halloween_zombaleine',
@@ -12945,7 +12945,7 @@ QBShared.Items = {
         ['min_length'] = 350,           -- taille minimale en cm
         ['max_length'] = 400,          -- taille minimale en cm
         ['sozedex_id'] = 43,
-        ['price'] = 22
+        ['price'] = 76
     },
     ['halloween_mawgma'] = {
         ['name'] = 'halloween_mawgma',
@@ -12965,7 +12965,7 @@ QBShared.Items = {
         ['min_length'] = 120,           -- taille minimale en cm
         ['max_length'] = 350,          -- taille minimale en cm
         ['sozedex_id'] = 44,
-        ['price'] = 22
+        ['price'] = 86
     },
     ['halloween_cravone'] = {
         ['name'] = 'halloween_cravone',
@@ -12985,7 +12985,7 @@ QBShared.Items = {
         ['min_length'] = 23,           -- taille minimale en cm
         ['max_length'] = 43,          -- taille minimale en cm
         ['sozedex_id'] = 45,
-        ['price'] = 22
+        ['price'] = 93
     },
     ['halloween_fusionotik'] = {
         ['name'] = 'halloween_fusionotik',
@@ -13005,7 +13005,7 @@ QBShared.Items = {
         ['min_length'] = 9,           -- taille minimale en cm
         ['max_length'] = 19,          -- taille minimale en cm
         ['sozedex_id'] = 46,
-        ['price'] = 22
+        ['price'] = 88
     },
     ['halloween_zombescargot'] = {
         ['name'] = 'halloween_zombescargot',
@@ -13025,7 +13025,7 @@ QBShared.Items = {
         ['min_length'] = 5,           -- taille minimale en cm
         ['max_length'] = 10,          -- taille minimale en cm
         ['sozedex_id'] = 47,
-        ['price'] = 22
+        ['price'] = 65
     },
     ['halloween_sisilione'] = {
         ['name'] = 'halloween_sisilione',
@@ -13045,7 +13045,7 @@ QBShared.Items = {
         ['min_length'] = 160,           -- taille minimale en cm
         ['max_length'] = 198,          -- taille minimale en cm
         ['sozedex_id'] = 48,
-        ['price'] = 22
+        ['price'] = 92
     },
     ['halloween_vampiscargot'] = {
         ['name'] = 'halloween_vampiscargot',
@@ -13065,7 +13065,7 @@ QBShared.Items = {
         ['min_length'] = 5,           -- taille minimale en cm
         ['max_length'] = 10,          -- taille minimale en cm
         ['sozedex_id'] = 49,
-        ['price'] = 22
+        ['price'] = 80
     },
     ['halloween_machoire_hades'] = {
         ['name'] = 'halloween_machoire_hades',
@@ -13085,7 +13085,7 @@ QBShared.Items = {
         ['min_length'] = 320,           -- taille minimale en cm
         ['max_length'] = 380,          -- taille minimale en cm
         ['sozedex_id'] = 50,
-        ['price'] = 22
+        ['price'] = 85
     },
     ['halloween_millipop'] = {
         ['name'] = 'halloween_millipop',
@@ -13105,7 +13105,7 @@ QBShared.Items = {
         ['min_length'] = 230,           -- taille minimale en cm
         ['max_length'] = 370,          -- taille minimale en cm
         ['sozedex_id'] = 51,
-        ['price'] = 22
+        ['price'] = 64
     },
     ['halloween_necrojiko'] = {
         ['name'] = 'halloween_necrojiko',
@@ -13125,7 +13125,7 @@ QBShared.Items = {
         ['min_length'] = 60,           -- taille minimale en cm
         ['max_length'] = 130,          -- taille minimale en cm
         ['sozedex_id'] = 52,
-        ['price'] = 22
+        ['price'] = 54
     },
     ['halloween_redhug'] = {
         ['name'] = 'halloween_redhug',
@@ -13145,7 +13145,7 @@ QBShared.Items = {
         ['min_length'] = 230,           -- taille minimale en cm
         ['max_length'] = 350,          -- taille minimale en cm
         ['sozedex_id'] = 53,
-        ['price'] = 22
+        ['price'] = 71
     },
     ['halloween_damned_stinger'] = {
         ['name'] = 'halloween_damned_stinger',
@@ -13165,7 +13165,7 @@ QBShared.Items = {
         ['min_length'] = 36,           -- taille minimale en cm
         ['max_length'] = 58,          -- taille minimale en cm
         ['sozedex_id'] = 54,
-        ['price'] = 22
+        ['price'] = 61
     },
     ['halloween_swimming_dead'] = {
         ['name'] = 'halloween_swimming_dead',
@@ -13185,7 +13185,7 @@ QBShared.Items = {
         ['min_length'] = 12,           -- taille minimale en cm
         ['max_length'] = 50,          -- taille minimale en cm
         ['sozedex_id'] = 55,
-        ['price'] = 22
+        ['price'] = 71
     },
     ['halloween_kokichonk'] = {
         ['name'] = 'halloween_kokichonk',
@@ -13205,7 +13205,7 @@ QBShared.Items = {
         ['min_length'] = 76,           -- taille minimale en cm
         ['max_length'] = 130,          -- taille minimale en cm
         ['sozedex_id'] = 56,
-        ['price'] = 22
+        ['price'] = 54
     },
 
     ['soz_hammer'] = {
