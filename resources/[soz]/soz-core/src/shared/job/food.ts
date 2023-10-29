@@ -252,9 +252,7 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
         recipes: {
             halloween_midnight_cheese: {
                 inputs: {
-                    milk: { count: 1 },
-                    semi_skimmed_milk: { count: 1 },
-                    skimmed_milk: { count: 1 },
+                    milk: { count: 3 },
                 },
                 amount: 1,
             },
