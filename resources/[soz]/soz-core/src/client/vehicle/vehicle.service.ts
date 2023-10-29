@@ -285,9 +285,6 @@ export class VehicleService {
                 `failed to get ownership of vehicle ${vehicle} / ${vehicleNetworkId} current owner ${owner}/${ownerServerID} [${context}]`
             );
 
-            //Try debugging the vehicle by requesting the owner server side
-            TriggerServerEvent(ServerEvent.VEHICLE_DEBUG_OWNER, vehicleNetworkId);
-
             return false;
         }
 

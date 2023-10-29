@@ -103,11 +103,36 @@ export class VehicleStateProvider {
                         previous_owner: previousOwner?.citizenid,
                         previous_owner_name: previousOwner?.charinfo.firstname + ' ' + previousOwner?.charinfo.lastname,
                         previous_owner_source: state.owner,
-                        owner: state.owner || null,
+                        owner: owner,
                         condition: state.condition || null,
                         position: toVector3Object(state.position || [0, 0, 0]),
                     }
                 );
+            }
+
+            const attachedTo = GetEntityAttachedTo(entityId);
+            if (attachedTo) {
+                const attachedToNetId = NetworkGetNetworkIdFromEntity(attachedTo);
+                const attachedState = this.vehicleStateService.getVehicleState(attachedToNetId);
+                if (attachedToNetId && !attachedState.volatile.flatbedAttachedVehicle) {
+                    this.vehicleStateService.updateVehicleVolatileState(attachedToNetId, {
+                        flatbedAttachedVehicle: netId,
+                    });
+                    this.monitor.publish(
+                        'vehicle_fix_attached',
+                        {
+                            vehicle_plate: state.volatile.plate,
+                            player_source: owner,
+                        },
+                        {
+                            vehicle_id: state.volatile.id,
+                            vehicle_net_id: netId,
+                            attachedTo: attachedTo,
+                            attachedToNetId: attachedToNetId,
+                            owner: owner,
+                        }
+                    );
+                }
             }
         }
     }
