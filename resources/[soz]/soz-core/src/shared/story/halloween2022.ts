@@ -55,6 +55,24 @@ export type Halloween2023 = {
         part6?: ScenarioState;
         part7?: ScenarioState;
     };
+    scenario3: {
+        part1?: ScenarioState;
+        part2?: ScenarioState;
+        part3?: ScenarioState;
+        part4?: ScenarioState;
+        part5?: ScenarioState;
+        part6?: ScenarioState;
+        part7?: ScenarioState;
+    };
+    scenario4: {
+        part1?: ScenarioState;
+        part2?: ScenarioState;
+        part3?: ScenarioState;
+        part4?: ScenarioState;
+        part5?: ScenarioState;
+        part6?: ScenarioState;
+        part7?: ScenarioState;
+    };
 };
 
 export const DeguisementMapping: Record<string, string> = {
