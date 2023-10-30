@@ -501,6 +501,7 @@ export class LSMCDeathProvider {
             message: `Besoin d'aide vers ${streetname}`,
             position: true,
         });
+        TriggerServerEvent(ServerEvent.LSMC_NEW_URGENCY);
         this.notifier.notify('Vous avez appelé le ~g~LSMC~s~ !', 'info');
     }
 
@@ -558,12 +559,11 @@ export class LSMCDeathProvider {
         }
     }
 
-    @OnEvent(ClientEvent.LSMC_DEATH_CALL_RECEIVED)
-    public async deathCallReceived(player: number, coords: number[]) {
-        console.log(player);
+    @OnEvent(ClientEvent.LSMC_NEW_URGENCY)
+    public async newUrgency(player: number, coords: number[]) {
         this.blipFactory.create(`deathpoint_${player}`, {
             name: 'Coma',
-            sprite: 489,
+            sprite: 153,
             color: 1,
             coords: {
                 x: coords[0],
@@ -574,7 +574,7 @@ export class LSMCDeathProvider {
         });
     }
 
-    @OnEvent(ClientEvent.LSMC_PLAYER_REVIVED)
+    @OnEvent(ClientEvent.LSMC_END_URGENCY)
     public async playerRevived(player: number) {
         this.blipFactory.remove(`deathpoint_${player}`);
     }
