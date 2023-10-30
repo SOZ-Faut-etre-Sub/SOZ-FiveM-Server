@@ -9,6 +9,8 @@ import { Halloween2022Scenario2Provider } from './halloween-2022/scenario2.provi
 import { Halloween2022Scenario3Provider } from './halloween-2022/scenario3.provider';
 import { Halloween2022Scenario4Provider } from './halloween-2022/scenario4.provider';
 import { Halloween2023Scenario1Provider } from './halloween-2023/scenario1.provider';
+import { Halloween2023Scenario2Provider } from './halloween-2023/scenario2.provider';
+import { Halloween2023Scenario3Provider } from './halloween-2023/scenario3.provider';
 
 @Provider()
 export class BlipStoryProvider {
@@ -27,6 +29,12 @@ export class BlipStoryProvider {
     @Inject(Halloween2023Scenario1Provider)
     private halloween2023Scenario1Provider: Halloween2023Scenario1Provider;
 
+    @Inject(Halloween2023Scenario2Provider)
+    private halloween2023Scenario2Provider: Halloween2023Scenario2Provider;
+
+    @Inject(Halloween2023Scenario3Provider)
+    private halloween2023Scenario3Provider: Halloween2023Scenario3Provider;
+
     @OnEvent(ClientEvent.PLAYER_UPDATE)
     public onPlayerUpdate(player: PlayerData) {
         this.halloween2022Scenario1Provider.createBlip(player);
@@ -34,5 +42,7 @@ export class BlipStoryProvider {
         this.halloween2022Scenario3Provider.createBlip(player);
         this.halloween2022Scenario4Provider.createBlip(player);
         this.halloween2023Scenario1Provider.createBlip(player);
+        this.halloween2023Scenario2Provider.createBlip(player);
+        this.halloween2023Scenario3Provider.createBlip(player);
     }
 }

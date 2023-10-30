@@ -5963,6 +5963,39 @@ QBShared.Items = {
         ['description'] = 'Une substance verte liquide circule à l’intérieur de l’étrange objet, entouré d’un métal extrêmement solide et lourd. Quelqu’un doit bien pouvoir vous aider afin d’en apprendre plus…',
         ['illustrator'] = '.Sniteur'
     },
+    ['halloween_beef_with_bone'] = {
+        ['name'] = 'halloween_beef_with_bone',
+        ['label'] = 'The Beef with the bone!',
+        ['weight'] = 200,
+        ['type'] = 'food',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['durability'] = 14,
+        ['nutrition'] = {
+            ['hunger'] = 20,
+            ['thirst'] = 0,
+            ['stamina'] = 0,
+            ['fiber'] = 1,
+            ['lipid'] = 1,
+            ['sugar'] = 0,
+            ['protein'] = 0,
+            ['alcohol'] = 0,
+        },
+        ['description'] = "On vient de quatres coins de la galaxie pour se le procurer",
+        ['illustrator'] = '.Poulpito'
+    },
+    ['halloween_document_z'] = {
+        ['name'] = 'halloween_document_z',
+        ['label'] = 'Document Z',
+        ['weight'] = 250,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['description'] = "L'œil est tout et rien à la fois, il représente l'avènement d’un nouveau monde. Sous son regard, cette planète se prosternera.",
+        ['illustrator'] = '.Sniteur'
+    },
 
     --- Other
     ['halloween_scythe'] = {

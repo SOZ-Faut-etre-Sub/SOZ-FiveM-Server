@@ -1,9 +1,9 @@
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
-import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { ServerEvent } from '@public/shared/event';
 import { PlayerData } from '@public/shared/player';
 import { Halloween2023Scenario1, Halloween2023Scenario1Alcool } from '@public/shared/story/halloween-2023/scenario1';
 
-import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
+import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
@@ -47,7 +47,6 @@ export class Halloween2023Scenario1Provider {
         await this.createActionZones();
     }
 
-    @OnEvent(ClientEvent.PLAYER_UPDATE)
     public createBlip(player: PlayerData) {
         if (!isFeatureEnabled(Feature.Halloween2023Scenario1)) {
             return;
