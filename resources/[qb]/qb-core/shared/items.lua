@@ -5987,7 +5987,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Une sorte de pierre verte qui brille à faire fondre.',
-        ['illustrator'] = '.Smogogo'
+        ['illustrator'] = '.Kutz'
     },
     ['halloween_uranium_ingot'] = {
         ['name'] = 'halloween_uranium_ingot',
@@ -6020,7 +6020,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "GPS basé sur l'énergie atomique",
-        ['illustrator'] = '.Patsouke'
+        ['illustrator'] = '.Pastouke'
     },
     ['halloween_brain_knife'] = {
         ['name'] = 'halloween_brain_knife',
@@ -6057,7 +6057,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = "L'espoir de San Andreas !",
-        ['illustrator'] = '.--'
+        ['illustrator'] = '.SuperPG'
     },
 
     --- FFS
@@ -6183,7 +6183,7 @@ QBShared.Items = {
         ['useable'] = false,
         ['shouldClose'] = true,
         ['description'] = 'Pas du tout effrayant. PAS. DU. TOUT.',
-        ['illustrator'] = '.Smogogo'
+        ['illustrator'] = '.Pastouke'
     },
     --- LSMC
     ['batrachian_eye'] = {
@@ -6260,7 +6260,7 @@ QBShared.Items = {
             coords = { x = -0.01, y = -0.03, z = -0.01 },
             rotation = { x = 0.01, y = 330.01, z = 90.01 },
         },
-        ['illustrator'] = '.Volkstat'
+        ['illustrator'] = '.Arisnoe'
     },
     ['halloween_damned_wine'] = {
         ['name'] = 'halloween_damned_wine',
@@ -6290,7 +6290,7 @@ QBShared.Items = {
             bone = 28422,
             coords = { x = 0.01, y = -0.01, z = -0.18 },
         },
-        ['illustrator'] = '.Omega',
+        ['illustrator'] = '.Crash',
     },
     --- BAUN
     ['surprise_candie'] = {
@@ -6334,7 +6334,7 @@ QBShared.Items = {
             ['alcohol'] = 5,
             ['drug'] = 30,
         },
-        ['illustrator'] = '.GautSlayer'
+        ['illustrator'] = '.Kutz'
     },
     ['halloween_bloody_mary'] = {
         name = "halloween_bloody_mary",
@@ -6362,7 +6362,7 @@ QBShared.Items = {
             bone = 28422,
             coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
-        illustrator = ".--"
+        illustrator = ".Kutz"
     },
     ['halloween_spectral_elixir'] = {
         name = "halloween_spectral_elixir",
@@ -6390,7 +6390,7 @@ QBShared.Items = {
             bone = 28422,
             coords = { x = 0.01, y = -0.01, z = -0.01 },
         },
-        illustrator = ".--"
+        illustrator = ".Crash"
     },
     ---
     ['bag_kibble'] = {
@@ -6808,7 +6808,7 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Un matériau radioactif rare et instable. Il peut être utilisé pour alimenter des armes nucléaires ou des dispositifs énergétiques avancés, mais sa manipulation est dangereuse.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Crash'
     },
     ['halloween_progenitor_reactor'] = {
         ['name'] = 'halloween_progenitor_reactor',
@@ -6821,7 +6821,7 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Un générateur d'énergie nucléaire avancé, issu de la technologie PROGENITOR. Il alimente les bases secrètes et les installations de haute technologie, débloquant des accès et des capacités spéciales pour votre personnage.",
-        ['illustrator'] = '.',
+        ['illustrator'] = '.Crash',
         ['drug_pot'] = {
             ['target'] = 'halloween_progenitor_virusz',
             ['ingredient'] = 'halloween_uranium_grain',
@@ -6839,7 +6839,7 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Un échantillon du virus expérimental PROGENITOR. En le maîtrisant, votre personnage peut débloquer des capacités surhumaines, mais il doit faire face à une perte de contrôle potentielle et à des mutations dangereuses.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Crash'
     },
     ['halloween_processed_virusz'] = {
         ['name'] = 'halloween_processed_virusz',
@@ -6851,7 +6851,7 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Une version instable du virus PROGENITOR, répandue dans le monde post-apocalyptique. En l'ingérant ou en l'injectant, il renforce temporairement les compétences de votre personnage, mais peut entraîner des effets secondaires néfastes.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Pastouke'
     },
     ['halloween_virusz_syringe'] = {
         ['name'] = 'halloween_virusz_syringe',
@@ -6869,7 +6869,7 @@ QBShared.Items = {
             ['stress'] = 0,
             ['drug'] = 75,
         },
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Pastouke'
     },
     ['halloween_virusz_bag'] = {
         ['name'] = 'halloween_virusz_bag',
@@ -6881,7 +6881,7 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Une boisson contenant une dose contrôlée de Virus-Z. En la consommant, votre personnage peut obtenir un boost d'endurance et de résistance, mais doit gérer les risques liés à l'exposition au virus.",
-        ['illustrator'] = '.'
+        ['illustrator'] = '.Pastouke'
     },
 
     ['new_year_bottle_2023'] = {
