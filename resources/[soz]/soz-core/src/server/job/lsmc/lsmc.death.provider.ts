@@ -158,7 +158,6 @@ export class LSMCDeathProvider {
             return;
         }
         const allPlayersCurrentlyDeaths = this.playersNotifiedDeath.keys();
-        console.log(this.playersNotifiedDeath);
         if (onDuty) {
             for (const playerDead of allPlayersCurrentlyDeaths) {
                 const coords = GetEntityCoords(GetPlayerPed(playerDead)) as Vector3;
@@ -166,7 +165,6 @@ export class LSMCDeathProvider {
                 this.playersNotifiedDeath.get(playerDead).push(source);
             }
         } else {
-            console.log('off duty');
             for (const playerDead of allPlayersCurrentlyDeaths) {
                 TriggerLatentClientEvent(ClientEvent.LSMC_END_URGENCY, source, 16 * 1024, playerDead);
                 const list = this.playersNotifiedDeath.get(playerDead);
@@ -176,7 +174,6 @@ export class LSMCDeathProvider {
                 }
             }
         }
-        console.log(this.playersNotifiedDeath);
     }
 
     @On('playerDropped')
