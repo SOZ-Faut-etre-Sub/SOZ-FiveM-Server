@@ -38,7 +38,7 @@ export class LSMCDeathProvider {
 
     // Map the source id of the player dead and everyone that has been notified so that we can
     // inform them he has been revived even if they are not on duty anymore
-    private playersNotifiedDeath: Record<number, number[]> = {};
+    private playersNotifiedDeath: Map<number, number[]> = new Map();
 
     @OnEvent(ServerEvent.LSMC_REVIVE)
     public async revive(source: number, targetid: number, admin: boolean, uniteHU: boolean, bloodbag: boolean) {
@@ -93,10 +93,7 @@ export class LSMCDeathProvider {
             isDead: false,
         });
 
-        const playersAlerted = this.playersNotifiedDeath[targetid];
-        if (playersAlerted) {
-            playersAlerted.forEach(player => TriggerClientEvent(ClientEvent.LSMC_PLAYER_REVIVED, player, targetid));
-        }
+        this.endUrgency(targetid);
     }
 
     public getFreeBed(source: number): number {
@@ -141,13 +138,53 @@ export class LSMCDeathProvider {
     public deathReason(source: number, reason: string) {
         const deathDescription = reason ? reason : '';
         this.playerService.setPlayerMetadata(source, 'mort', deathDescription);
+        this.monitor.publish('player_dead', { player_source: source }, { reason: deathDescription });
+    }
+
+    @OnEvent(ServerEvent.LSMC_NEW_URGENCY)
+    public newUrgency(source: number) {
         const playersAlerted = [];
         const coords = GetEntityCoords(GetPlayerPed(source)) as Vector3;
         this.applyOnEachPlayerOnDuty(function (playerData) {
-            TriggerClientEvent(ClientEvent.LSMC_DEATH_CALL_RECEIVED, playerData.source, source, coords);
+            TriggerLatentClientEvent(ClientEvent.LSMC_NEW_URGENCY, playerData.source, 16 * 1024, source, coords);
             playersAlerted.push(playerData.source);
         });
-        this.playersNotifiedDeath[source] = playersAlerted;
-        this.monitor.publish('player_dead', { player_source: source }, { reason: deathDescription });
+        this.playersNotifiedDeath.set(source, playersAlerted);
+    }
+
+    @OnEvent(ServerEvent.QBCORE_SET_DUTY, false)
+    public onToggleDuty(jobid: JobType, onDuty: boolean, source: number) {
+        if (jobid != JobType.LSMC) {
+            return;
+        }
+        const allPlayersCurrentlyDeaths = this.playersNotifiedDeath.keys();
+        console.log(this.playersNotifiedDeath);
+        if (onDuty) {
+            for (const playerDead of allPlayersCurrentlyDeaths) {
+                const coords = GetEntityCoords(GetPlayerPed(playerDead)) as Vector3;
+                TriggerLatentClientEvent(ClientEvent.LSMC_NEW_URGENCY, source, 16 * 1024, playerDead, coords);
+                this.playersNotifiedDeath.get(playerDead).push(source);
+            }
+        } else {
+            console.log('off duty');
+            for (const playerDead of allPlayersCurrentlyDeaths) {
+                TriggerLatentClientEvent(ClientEvent.LSMC_END_URGENCY, source, 16 * 1024, playerDead);
+                const list = this.playersNotifiedDeath.get(playerDead);
+                const index = list.indexOf(source, 0);
+                if (index > -1) {
+                    list.splice(index, 1);
+                }
+            }
+        }
+        console.log(this.playersNotifiedDeath);
+    }
+
+    @On('playerDropped')
+    public endUrgency(source: number) {
+        const playersAlerted = this.playersNotifiedDeath.get(source);
+        if (playersAlerted) {
+            playersAlerted.forEach(player => TriggerClientEvent(ClientEvent.LSMC_END_URGENCY, player, source));
+        }
+        this.playersNotifiedDeath.delete(source);
     }
 }
