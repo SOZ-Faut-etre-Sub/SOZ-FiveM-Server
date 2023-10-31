@@ -94,7 +94,7 @@ export class PlayerZombieProvider {
             return;
         }
 
-        // If player is already a zombie, wait 30 seconds and make it reborn as a zombie
+        // If player is already a zombie, wait 20 seconds and make it reborn as a zombie
         if (this.isZombie()) {
             await wait(20_000);
             const ped = PlayerPedId();
@@ -230,6 +230,7 @@ export class PlayerZombieProvider {
         // Reset ped and clothes
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
+        SetPedArmour(PlayerPedId(), 0);
     }
 
     private async zombieTransform() {
@@ -245,8 +246,8 @@ export class PlayerZombieProvider {
             'info'
         );
 
+        SetPedArmour(PlayerPedId(), 100);
         SetWeaponDamageModifier(WeaponName.UNARMED, 1.0);
-
         AnimpostfxPlay(ZOMBIE_SCREEN_EFFECT, 0, true);
     }
 
