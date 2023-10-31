@@ -3,6 +3,7 @@ import { Provider } from '@core/decorators/provider';
 import { uuidv4, wait } from '@core/utils';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { AnimationService } from '@public/client/animation/animation.service';
+import { BlipFactory } from '@public/client/blip';
 import { Monitor } from '@public/client/monitor/monitor';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
@@ -146,6 +147,9 @@ export class LSMCDeathProvider {
 
     @Inject(PlayerZombieProvider)
     public playerZombieProvider: PlayerZombieProvider;
+
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
 
     private IsDead = false;
     private hungerThristDeath = false;
@@ -497,6 +501,7 @@ export class LSMCDeathProvider {
             message: `Besoin d'aide vers ${streetname}`,
             position: true,
         });
+        TriggerServerEvent(ServerEvent.LSMC_NEW_URGENCY);
         this.notifier.notify('Vous avez appelé le ~g~LSMC~s~ !', 'info');
     }
 
@@ -552,5 +557,25 @@ export class LSMCDeathProvider {
             }
             SetEntityHealth(ped, newHealth);
         }
+    }
+
+    @OnEvent(ClientEvent.LSMC_NEW_URGENCY)
+    public async newUrgency(player: number, coords: number[]) {
+        this.blipFactory.create(`deathpoint_${player}`, {
+            name: 'Coma',
+            sprite: 153,
+            color: 1,
+            coords: {
+                x: coords[0],
+                y: coords[1],
+                z: coords[2],
+            },
+            scale: 1.5,
+        });
+    }
+
+    @OnEvent(ClientEvent.LSMC_END_URGENCY)
+    public async playerRevived(player: number) {
+        this.blipFactory.remove(`deathpoint_${player}`);
     }
 }
