@@ -1,14 +1,30 @@
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Tick } from '../../core/decorators/tick';
 import { emitQBRpc } from '../../core/rpc';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
+import { PlayerData } from '../../shared/player';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { BlipFactory } from '../blip';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
+import { HousingRepository } from '../repository/housing.repository';
+
+const BlipSprite = {
+    house: {
+        free: 350,
+        owned: 40,
+    },
+    building: {
+        free: 476,
+        owned: 475,
+    },
+};
 
 @Provider()
 export class HousingProvider {
@@ -20,6 +36,80 @@ export class HousingProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(HousingRepository)
+    private housingRepository: HousingRepository;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
+
+    private blips = [];
+
+    @Tick()
+    public enableCulling() {
+        const player = this.playerService.getPlayer();
+
+        if (!player) {
+            return;
+        }
+
+        if (!player.metadata.inside) {
+            return;
+        }
+
+        const property = this.housingRepository.findProperty(player.metadata.inside.property);
+
+        if (!property) {
+            return;
+        }
+
+        for (const culling of property.exteriorCulling) {
+            EnableExteriorCullModelThisFrame(culling);
+        }
+    }
+
+    @OnEvent(ClientEvent.PLAYER_UPDATE)
+    public updateBlips(player: PlayerData) {
+        const hasMap = this.inventoryManager.getItemCount('house_map');
+
+        if (!hasMap && this.blips.length > 0) {
+            // Delete blips
+            for (const blip of this.blips) {
+                this.blipFactory.remove(blip);
+            }
+        }
+
+        if (hasMap && this.blips.length === 0) {
+            // Create blips
+            const properties = this.housingRepository.get();
+            const newBlips = [];
+
+            for (const property of properties) {
+                const id = `property_${property.id}`;
+                const category = property.apartments.length > 1 ? 'building' : 'house';
+                let owned = 'free';
+
+                for (const apartment of property.apartments) {
+                    if (apartment.owner === player.citizenid || apartment.roommate === player.citizenid) {
+                        owned = 'owned';
+                        break;
+                    }
+                }
+
+                newBlips.push(id);
+
+                this.blipFactory.create(id, {
+                    name: 'Habitation',
+                    position: property.entryZone.center,
+                    sprite: BlipSprite[category][owned],
+                    scale: owned === 'owned' ? 0.8 : 0.5,
+                });
+            }
+        }
+    }
 
     @OnNuiEvent<{
         tier: number;
