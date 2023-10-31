@@ -114,7 +114,11 @@ export class VehicleStateProvider {
             if (attachedTo) {
                 const attachedToNetId = NetworkGetNetworkIdFromEntity(attachedTo);
                 const attachedState = this.vehicleStateService.getVehicleState(attachedToNetId);
-                if (attachedToNetId && !attachedState.volatile.flatbedAttachedVehicle) {
+                if (
+                    attachedToNetId &&
+                    attachedState.volatile.model == 'flatbed4' &&
+                    !attachedState.volatile.flatbedAttachedVehicle
+                ) {
                     this.vehicleStateService.updateVehicleVolatileState(attachedToNetId, {
                         flatbedAttachedVehicle: netId,
                     });
