@@ -1,5 +1,6 @@
 import { PhoneService } from '@public/client/phone/phone.service';
 import { Control } from '@public/shared/input';
+import { WeaponName } from '@public/shared/weapons/weapon';
 import PCancelable from 'p-cancelable';
 
 import { Once, OnceStep, OnEvent, OnGameEvent } from '../../core/decorators/event';
@@ -95,7 +96,7 @@ export class PlayerZombieProvider {
 
         // If player is already a zombie, wait 30 seconds and make it reborn as a zombie
         if (this.isZombie()) {
-            await wait(30_000);
+            await wait(20_000);
             const ped = PlayerPedId();
 
             const pos = GetEntityCoords(ped);
@@ -150,7 +151,7 @@ export class PlayerZombieProvider {
 
             this.nuiDispatch.dispatch('zombie', 'zombie', true);
 
-            await wait(1000 * 60 * 3);
+            await wait(1000 * 60);
 
             if (isCanceled) {
                 return;
@@ -158,7 +159,7 @@ export class PlayerZombieProvider {
 
             await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@slightlydrunk');
 
-            await wait(1000 * 60 * 3);
+            await wait(1000 * 60);
 
             if (isCanceled) {
                 return;
@@ -166,7 +167,7 @@ export class PlayerZombieProvider {
 
             await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@moderatedrunk');
 
-            await wait(1000 * 60 * 2);
+            await wait(1000 * 60);
 
             if (isCanceled) {
                 return;
@@ -174,7 +175,7 @@ export class PlayerZombieProvider {
 
             await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@verydrunk');
 
-            await wait(1000 * 60 * 2);
+            await wait(1000 * 60);
 
             if (isCanceled) {
                 return;
@@ -221,6 +222,7 @@ export class PlayerZombieProvider {
         }
 
         this.phoneService.setPhoneDisabled('zombie', false);
+        SetWeaponDamageModifier(WeaponName.UNARMED, 0.5);
 
         await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', null);
         AnimpostfxStop(ZOMBIE_SCREEN_EFFECT);
@@ -242,6 +244,8 @@ export class PlayerZombieProvider {
             'Tu es désormais un ~r~zombie~s~ ! Ton seul et unique bût est de contaminer la terre entière. Agis et comporte toi comme tel !',
             'info'
         );
+
+        SetWeaponDamageModifier(WeaponName.UNARMED, 1.0);
 
         AnimpostfxPlay(ZOMBIE_SCREEN_EFFECT, 0, true);
     }
