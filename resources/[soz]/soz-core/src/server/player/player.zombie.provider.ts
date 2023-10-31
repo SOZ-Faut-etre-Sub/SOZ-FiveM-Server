@@ -1,9 +1,10 @@
 import { Command } from '@core/decorators/command';
+import { OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Rpc } from '@core/decorators/rpc';
+import { Gauge } from 'prom-client';
 
-import { OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -27,6 +28,11 @@ export class PlayerZombieProvider {
     private inventoryManager: InventoryManager;
 
     private zombiePlayerList = new Set<string>();
+
+    private zombieCount: Gauge<string> = new Gauge({
+        name: 'soz_player_zombie_count',
+        help: 'Number of zombie players',
+    });
 
     @Rpc(RpcServerEvent.PLAYER_IS_ZOMBIE)
     public isZombiePlayer(source: number): boolean {
@@ -105,6 +111,8 @@ export class PlayerZombieProvider {
         }
 
         this.zombiePlayerList.add(player.citizenid);
+        this.zombieCount.set(this.zombiePlayerList.size);
+
         this.notifier.notify(
             player.source,
             'Tu as été ~r~contaminé~s~ ! Trouve rapidement un ~g~sérum~s~ si tu ne veux pas te transformer en ~r~zombie~s~.'
@@ -125,6 +133,7 @@ export class PlayerZombieProvider {
         }
 
         this.zombiePlayerList.delete(player.citizenid);
+        this.zombieCount.set(this.zombiePlayerList.size);
 
         TriggerClientEvent(ClientEvent.PLAYER_ZOMBIE_REMOVE, source);
     }
