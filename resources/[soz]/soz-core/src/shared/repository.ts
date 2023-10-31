@@ -33,7 +33,26 @@ export enum RepositoryType {
     TowRope = 'towRope',
 }
 
-export interface RepositoryConfig extends Record<RepositoryType, Record<any, any>> {
+export type RepositoryMapping = {
+    [RepositoryType.Housing]: Property;
+    [RepositoryType.Zone]: ZoneTyped;
+    [RepositoryType.Billboard]: Billboard;
+    [RepositoryType.ChargerUpw]: UpwCharger;
+    [RepositoryType.Garage]: Garage;
+    [RepositoryType.JobGrade]: JobGrade;
+    [RepositoryType.Object]: WorldObject;
+    [RepositoryType.Race]: Race;
+    [RepositoryType.Radar]: Radar;
+    [RepositoryType.Shop]: ClothingShop;
+    [RepositoryType.ShopCategory]: any;
+    [RepositoryType.ShopUnderTypes]: number[];
+    [RepositoryType.ShopGlove]: GlovesItem;
+    [RepositoryType.StationFuel]: FuelStation;
+    [RepositoryType.StationUpw]: UpwStation;
+    [RepositoryType.Vehicle]: Vehicle;
+};
+
+export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     // Implemented
     [RepositoryType.Housing]: Record<number, Property>;
     [RepositoryType.Zone]: Record<number, ZoneTyped>;
