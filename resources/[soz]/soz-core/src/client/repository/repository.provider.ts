@@ -70,7 +70,7 @@ export class RepositoryProvider {
     }
 
     @OnEvent(ClientEvent.REPOSITORY_SET_DATA)
-    onAddData(type: string, key: any, data: any) {
+    onUpsertData(type: string, key: any, data: any) {
         const repository = this.repositories.find(repository => repository.type === type);
 
         if (!repository) {
