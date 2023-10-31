@@ -103,7 +103,7 @@ export class PlayerZombieProvider {
             const heading = GetEntityHeading(ped);
             NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, true, false);
             SetEntityHealth(ped, 200);
-
+            SetPedArmour(ped, 100);
             return;
         }
     }
@@ -230,7 +230,6 @@ export class PlayerZombieProvider {
         // Reset ped and clothes
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
-        SetPedArmour(PlayerPedId(), 0);
     }
 
     private async zombieTransform() {
@@ -246,8 +245,8 @@ export class PlayerZombieProvider {
             'info'
         );
 
-        SetPedArmour(PlayerPedId(), 100);
         SetWeaponDamageModifier(WeaponName.UNARMED, 1.0);
+        SetPedArmour(PlayerPedId(), 100);
         AnimpostfxPlay(ZOMBIE_SCREEN_EFFECT, 0, true);
     }
 
