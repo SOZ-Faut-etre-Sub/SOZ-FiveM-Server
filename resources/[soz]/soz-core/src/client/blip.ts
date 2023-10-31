@@ -8,6 +8,10 @@ export class BlipFactory {
     private QBCore: Qbcore;
 
     public create(id: string, blip: Blip): void {
+        if (blip.position) {
+            blip.coords = { x: blip.position[0], y: blip.position[1], z: blip.position[2] };
+        }
+
         this.QBCore.createBlip(id, blip);
     }
 
