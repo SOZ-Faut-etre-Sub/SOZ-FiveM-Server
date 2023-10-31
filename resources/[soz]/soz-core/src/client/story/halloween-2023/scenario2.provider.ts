@@ -4,10 +4,10 @@ import { PedFactory } from '@public/client/factory/ped.factory';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ProgressService } from '@public/client/progress.service';
 import { TargetFactory } from '@public/client/target/target.factory';
-import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
+import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { ServerEvent } from '@public/shared/event';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { PlayerData } from '@public/shared/player';
 import { toVector4Object } from '@public/shared/polyzone/vector';
@@ -51,7 +51,6 @@ export class Halloween2023Scenario2Provider {
         await this.spawnProps();
     }
 
-    @OnEvent(ClientEvent.PLAYER_UPDATE)
     public createBlip(player: PlayerData) {
         if (!isFeatureEnabled(Feature.Halloween2023Scenario2)) {
             return;
