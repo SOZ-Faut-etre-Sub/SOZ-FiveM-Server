@@ -1,7 +1,7 @@
 -- Maybe these permissions could be included in SozJobCore.Jobs in resources/[soz]/soz-jobs/config.lua
 local jobCanFine = {"lspd", "bcso", "sasp"}
 local jobCanFouille = {"lspd", "bcso", "cash-transfer", "sasp"}
-local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc", "sasp"}
+local jobCanEscort = {"lspd", "bcso", "cash-transfer", "lsmc", "sasp", "fbi"}
 local jobCanBreathAnalyze = {"lspd", "bcso", "lsmc", "sasp"}
 
 --- Targets
