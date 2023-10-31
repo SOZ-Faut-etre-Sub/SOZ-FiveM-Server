@@ -117,7 +117,7 @@ export class Halloween2023Scenario3Provider {
                                 true,
                                 794.95,
                                 1205.33,
-                                338.57,
+                                339.57,
                                 74.08,
                                 entity
                             );
@@ -129,7 +129,7 @@ export class Halloween2023Scenario3Provider {
                         'scenario3',
                         0,
                         'part1',
-                        [794.95, 1205.33, 338.57, 74.08]
+                        [794.95, 1205.33, 339.57, 74.08]
                     ),
                     {
                         label: 'Donner',
@@ -145,7 +145,7 @@ export class Halloween2023Scenario3Provider {
                                 true,
                                 794.95,
                                 1205.33,
-                                338.57,
+                                339.57,
                                 74.08,
                                 entity
                             );
@@ -157,7 +157,7 @@ export class Halloween2023Scenario3Provider {
                         'scenario3',
                         1,
                         'part2',
-                        [794.95, 1205.33, 338.57, 74.08]
+                        [794.95, 1205.33, 339.57, 74.08]
                     ),
                     {
                         label: 'Téléportation',
