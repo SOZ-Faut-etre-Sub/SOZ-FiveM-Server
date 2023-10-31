@@ -87,6 +87,8 @@ export enum ClientEvent {
     LSMC_APPLY_OUTFIT = 'soz-core:client:lsmc:ApplyDutyClothing',
     LSMC_TELEPORTATION = 'soz-core:lsmc:client:teleportation',
     LSMC_HEAL = 'soz-core:lsmc:client:heal',
+    LSMC_NEW_URGENCY = 'soz-core:lsmc:client:new-urgency',
+    LSMC_END_URGENCY = 'soz-core:lsmc:client:end-urgency',
 
     LSC_ENTER_SHOP = 'soz-core:client:job:lsc:enter-shop',
     LSC_EXIT_SHOP = 'soz-core:client:job:lsc:exit-shop',
