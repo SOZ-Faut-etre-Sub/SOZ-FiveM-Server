@@ -11,10 +11,10 @@ export class AudioService {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    public playAudio(path: string, volume = 0.5): string {
+    public playAudio(path: string, volume = 0.5, loop = false): string {
         const id = uuidv4();
         const basePath = GetConvar('soz_public_endpoint', 'https://soz.zerator.com') + '/static/game/';
-        this.nuiDispatch.dispatch('audio', 'PlayAudio', { path: basePath + path, volume, id });
+        this.nuiDispatch.dispatch('audio', 'PlayAudio', { path: basePath + path, volume, id, loop });
 
         return id;
     }

@@ -53,7 +53,6 @@ export type Halloween2023 = {
         part4?: ScenarioState;
         part5?: ScenarioState;
         part6?: ScenarioState;
-        part7?: ScenarioState;
     };
     scenario3: {
         part1?: ScenarioState;
@@ -61,8 +60,6 @@ export type Halloween2023 = {
         part3?: ScenarioState;
         part4?: ScenarioState;
         part5?: ScenarioState;
-        part6?: ScenarioState;
-        part7?: ScenarioState;
     };
     scenario4: {
         part1?: ScenarioState;
@@ -71,7 +68,6 @@ export type Halloween2023 = {
         part4?: ScenarioState;
         part5?: ScenarioState;
         part6?: ScenarioState;
-        part7?: ScenarioState;
     };
 };
 

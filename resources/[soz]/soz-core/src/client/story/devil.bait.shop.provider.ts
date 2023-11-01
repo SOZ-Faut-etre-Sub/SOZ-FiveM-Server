@@ -10,7 +10,10 @@ import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { TargetFactory } from '../target/target.factory';
+import { Halloween2023Scenario4Provider } from './halloween-2023/scenario4.provider';
+import { StoryProvider } from './story.provider';
 
 type PropFromCollection = [string, Vector4, any, number];
 
@@ -1763,6 +1766,15 @@ export class DevilBaitShopProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(StoryProvider)
+    private storyService: StoryProvider;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(Halloween2023Scenario4Provider)
+    private halloween2023Scenario4Provider: Halloween2023Scenario4Provider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
         if (!isFeatureEnabled(Feature.Halloween)) {
@@ -1883,6 +1895,14 @@ export class DevilBaitShopProvider {
                             ];
 
                             this.inventoryManager.openShopInventory(FishingProducts, 'menu_shop_devil');
+                        },
+                    },
+                    {
+                        label: 'Vendre son âme',
+                        icon: 'c:stonk/vendre.png',
+                        canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
+                        action: () => {
+                            this.halloween2023Scenario4Provider.enterFinal();
                         },
                     },
                 ],

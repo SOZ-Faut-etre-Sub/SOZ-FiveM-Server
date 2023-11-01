@@ -6,6 +6,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { SkinService } from '../skin/skin.service';
 
@@ -16,6 +17,9 @@ export class ItemHalloweenProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     private readonly skin: Wardrobe = {
         [GetHashKey('mp_m_freemode_01')]: {
@@ -62,5 +66,11 @@ export class ItemHalloweenProvider {
 
         this.skinService.setModel(pedmodel);
         this.playerService.setDeguisement(true);
+    }
+
+    @OnEvent(ClientEvent.HALLOWEEN_DEMON_ANALISYS)
+    public async onUseDemonAnalysis() {
+        this.notifier.notify('Un point a été ajouté sur votre GPS');
+        SetNewWaypoint(5046.58, -5819.29);
     }
 }
