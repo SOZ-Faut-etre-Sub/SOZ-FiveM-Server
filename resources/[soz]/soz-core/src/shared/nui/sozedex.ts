@@ -8,5 +8,4 @@ export interface NuiSozedexMethodMap {
 type ShowSozedexData = {
     playerRewards: any;
     fishesWithCompletion: Array<FishWithCompletion>;
-    event: string;
 };
