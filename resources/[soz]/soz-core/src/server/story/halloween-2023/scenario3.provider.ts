@@ -59,7 +59,6 @@ export class Halloween2023Scenario3Provider {
                 });
                 break;
             case 4:
-                this.inventoryManager.removeItemFromInventory(source, 'halloween_beef_with_bone');
                 this.playerService.setPlayerMetadata(source, 'halloween2023', {
                     ...player.metadata.halloween2023,
                     scenario3: {

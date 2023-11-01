@@ -3,7 +3,7 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Story } from '../story';
 
 export const Halloween2023Scenario3: Story = {
-    name: 'Le crystal',
+    name: 'Le visiteur',
     dialog: {
         part1: {
             audio: 'audio/halloween-2023/scenario3/part1.mp3',

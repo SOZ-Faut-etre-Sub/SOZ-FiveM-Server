@@ -91,6 +91,10 @@ export class ItemHalloweenProvider {
         TriggerClientEvent(ClientEvent.HALLOWEEN_HAT_TOOGLE, source);
     }
 
+    private async useDeamonAnalisys(source: number) {
+        TriggerClientEvent(ClientEvent.HALLOWEEN_DEMON_ANALISYS, source);
+    }
+
     @Once()
     public onStart() {
         for (const item of Object.keys(DeguisementMapping)) {
@@ -98,5 +102,6 @@ export class ItemHalloweenProvider {
         }
 
         this.item.setItemUseCallback('halloween_brain_knife', this.useHalloweenHat.bind(this));
+        this.item.setItemUseCallback('halloween_demon_analysis', this.useDeamonAnalisys.bind(this));
     }
 }

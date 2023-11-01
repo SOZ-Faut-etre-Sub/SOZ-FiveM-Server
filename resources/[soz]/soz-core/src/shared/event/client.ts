@@ -47,6 +47,7 @@ export enum ClientEvent {
 
     HALLOWEEN_HAT_TOOGLE = 'soz-core:client:halloween:hat-toggle',
     HALLOWEEN_DEGUISEMENT_USE = 'soz-core:client:halloween:use-deguisement',
+    HALLOWEEN_DEMON_ANALISYS = 'soz-core:client:halloween:use-demon-analysis',
 
     ITEM_USE = 'soz-core:client:item:use',
     ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',
