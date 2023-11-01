@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { useNotifications } from '../os/notifications/hooks/useNotifications';
 import { DEFAULT_ALERT_HIDE_TIME } from '../os/notifications/notifications.constants';
 import { RootState } from '../store';
-import { useEmergency } from './useEmergency';
 
 export const useConfig = () => {
     const state = useSelector((state: RootState) => state.phone);
@@ -60,8 +59,7 @@ export const useTime = () => {
 
 export const useCallModal = () => {
     const state = useSelector((state: RootState) => state.phone);
-    const emergency = useEmergency();
-    return !emergency && state.callModal;
+    return state.callModal;
 };
 
 export const useCitizenID = () => {
