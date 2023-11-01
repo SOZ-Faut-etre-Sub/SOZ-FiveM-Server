@@ -62,7 +62,7 @@ export class PlayerZombieProvider {
             return;
         }
 
-        const { completed } = await this.progressService.progress(source, 'analyze', 'Injection du sérum', 1000, {
+        const { completed } = await this.progressService.progress(source, 'analyze', 'Injection du sérum', 3000, {
             name: 'base',
             dictionary: 'amb@prop_human_bum_bin@base',
             flags: 1,
