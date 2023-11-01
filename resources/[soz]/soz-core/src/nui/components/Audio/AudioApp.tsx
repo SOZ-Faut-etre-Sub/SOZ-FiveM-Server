@@ -13,6 +13,7 @@ export const AudioApp: FunctionComponent = () => {
         try {
             const emitter = new Audio(sound.path);
             emitter.volume = sound.volume;
+            emitter.loop = sound.loop;
 
             setAudio(state => {
                 state[sound.id] = emitter;

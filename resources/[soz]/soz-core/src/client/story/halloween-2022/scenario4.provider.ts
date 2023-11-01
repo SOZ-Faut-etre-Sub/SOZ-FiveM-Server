@@ -69,23 +69,23 @@ export class Halloween2022Scenario4Provider {
         await this.createPedSniteur();
         await this.createPedOneiluj();
         await this.createPedLasbou();
-        await this.createPedMarverikG(); // TODO: text
+        await this.createPedMarverikG();
         await this.createPedDaelbhas();
 
         await this.createPedBrouznouf();
-        await this.createPedLaikker(); // TODO: text
-        await this.createPedMoustache(); // TODO: text
-        await this.createPedSilverlord(); //TODO text
+        await this.createPedLaikker();
+        await this.createPedMoustache();
+        await this.createPedSilverlord();
         await this.createPedGuegette();
         await this.createPedAurelien();
 
         await this.createPedRigonkmalk();
-        await this.createPedAurukh(); // TODO: text
+        await this.createPedAurukh();
 
-        await this.createPedDarabesque(); //TODO text
-        await this.createPedPoulpitor(); //TODO text
-        await this.createPedBalrock(); //TODO text
-        await this.createPedTluap(); //TODO text
+        await this.createPedDarabesque();
+        await this.createPedPoulpitor();
+        await this.createPedBalrock();
+        await this.createPedTluap();
         await this.createPedDream();
         await this.createPedKaemy();
     }
