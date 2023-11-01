@@ -94,7 +94,7 @@ export class PlayerZombieProvider {
             return;
         }
 
-        // If player is already a zombie, wait 30 seconds and make it reborn as a zombie
+        // If player is already a zombie, wait 20 seconds and make it reborn as a zombie
         if (this.isZombie()) {
             await wait(20_000);
             const ped = PlayerPedId();
@@ -103,7 +103,7 @@ export class PlayerZombieProvider {
             const heading = GetEntityHeading(ped);
             NetworkResurrectLocalPlayer(pos[0], pos[1], pos[2], heading, true, false);
             SetEntityHealth(ped, 200);
-
+            SetPedArmour(ped, 100);
             return;
         }
     }
@@ -246,7 +246,7 @@ export class PlayerZombieProvider {
         );
 
         SetWeaponDamageModifier(WeaponName.UNARMED, 1.0);
-
+        SetPedArmour(PlayerPedId(), 100);
         AnimpostfxPlay(ZOMBIE_SCREEN_EFFECT, 0, true);
     }
 
