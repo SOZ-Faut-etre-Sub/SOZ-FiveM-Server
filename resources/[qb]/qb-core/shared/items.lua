@@ -5996,6 +5996,17 @@ QBShared.Items = {
         ['description'] = "L'œil est tout et rien à la fois, il représente l'avènement d’un nouveau monde. Sous son regard, cette planète se prosternera.",
         ['illustrator'] = '.Sniteur'
     },
+    ['halloween_demon_analysis'] = {
+        ['name'] = 'halloween_demon_analysis',
+        ['label'] = 'Analyse du Démon',
+        ['weight'] = 250,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = true,
+        ['shouldClose'] = true,
+        ['description'] = "Outre l’analyse du corps, le document explique qu’il existerait en ce monde un objet capable de nous révéler l’ultime secret. Cet objet aurait été volé par Cayo Perico, mais un plan détaillé explique qu’une bouche d’égout sous-marine permettrait de le dérober.",
+        ['illustrator'] = '.Sniteur'
+    },
 
     --- Other
     ['halloween_scythe'] = {
