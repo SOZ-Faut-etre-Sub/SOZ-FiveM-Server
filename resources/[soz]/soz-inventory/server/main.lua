@@ -780,6 +780,14 @@ function Inventory.TransfertItem(source, invSource, invTarget, item, amount, met
             success, reason = s, r
         end)
 
+        exports["soz-core"]:Event("transfer_item", {
+            source_owner = invSource.owner,
+            source_id = invSource.type,
+            target_owner = invTarget.owner,
+            target_id = invTarget.type,
+            player_source = source,
+        }, {item = item.name, itemLabel = item.label, amount = amount})
+
         _G.Container[invSource.type]:SyncInventory(invSource.id, invSource.items)
         _G.Container[invTarget.type]:SyncInventory(invTarget.id, invTarget.items)
     end
