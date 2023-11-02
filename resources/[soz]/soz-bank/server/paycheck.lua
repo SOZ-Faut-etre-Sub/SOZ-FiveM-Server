@@ -38,6 +38,22 @@ function PaycheckLoop()
                 end)
             end
         end
+
+        if Player.PlayerData.metadata["is_senator"] then
+            Account.TransfertMoney("gouv", Player.PlayerData.charinfo.account, Config.SenatorPay, function(success, reason)
+                if success then
+                    TriggerClientEvent("soz-core:client:notification:draw-advanced", Player.PlayerData.source, "Maze Banque", "Mouvement bancaire",
+                                       "Votre indemnité de ~g~sénateur~s~ de ~g~" .. Config.SenatorPay .. "$~s~ vient d'être versé sur votre compte",
+                                       "CHAR_BANK_MAZE")
+
+                    exports["soz-core"]:Event("senator_paycheck", {player_source = Player.PlayerData.source}, {
+                        amount = tonumber(payment),
+                    })
+                else
+                    print(reason)
+                end
+            end)
+        end
     end
     SetTimeout(Config.PayCheckTimeOut * (60 * 1000), PaycheckLoop)
 end
