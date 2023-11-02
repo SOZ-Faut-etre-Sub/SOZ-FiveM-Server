@@ -38,13 +38,6 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        const attachedVehicle = NetworkGetEntityFromNetworkId(flatbedState.volatile.flatbedAttachedVehicle);
-
-        if (GetEntityAttachedTo(attachedVehicle)) {
-            this.notifier.error(source, 'Echec du démorquage, veuillez recommencer');
-            return;
-        }
-
         this.vehicleStateService.updateVehicleVolatileState(
             flatbedNetworkId,
             {
@@ -69,6 +62,14 @@ export class BennysFlatbedProvider {
         const attachedVehicle = NetworkGetEntityFromNetworkId(flatbedState.volatile.flatbedAttachedVehicle);
 
         if (!attachedVehicle) {
+            this.vehicleStateService.updateVehicleVolatileState(
+                flatbedNetworkId,
+                {
+                    flatbedAttachedVehicle: null,
+                },
+                null,
+                true
+            );
             return;
         }
 
