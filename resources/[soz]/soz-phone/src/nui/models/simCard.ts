@@ -94,7 +94,9 @@ export const simCard = createModel<RootModel>()({
             return {
                 ...state,
                 conversations: state.conversations.map(conversation =>
-                    conversation.conversation_id === conversation_id && conversation.phoneNumber === phone_number ? { ...conversation, masked: true } : conversation
+                    conversation.conversation_id === conversation_id && conversation.phoneNumber === phone_number
+                        ? { ...conversation, masked: true }
+                        : conversation
                 ),
             };
         },
