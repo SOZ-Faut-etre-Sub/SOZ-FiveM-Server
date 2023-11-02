@@ -187,10 +187,10 @@ class _MessagesService {
         }
     }
 
-    async handleSetConversationArchived(src: number, conversation_id: string) {
+    async handleSetConversationArchived(src: number, conversation_id: string, phoneNumber: string) {
         try {
             const identifier = PlayerService.getPlayer(src).getPhoneNumber();
-            await this.messagesDB.setMessageArchived(conversation_id, identifier);
+            await this.messagesDB.setMessageArchived(conversation_id, identifier, phoneNumber);
         } catch (e) {
             messagesLogger.error(`Failed to set message as read, ${e.toString()}`, {
                 source: src,
