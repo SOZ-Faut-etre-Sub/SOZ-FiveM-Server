@@ -370,3 +370,5 @@ Config.AtmLocations = {
     ["atm_big_1648623750"] = {accountId = "bank_pacific1", coords = {x = 265.2169, y = 210.9048}, hideBlip = true},
     ["atm_big_5274613"] = {accountId = "bank_pacific1", coords = {x = 264.8689, y = 209.9486}, hideBlip = true},
 }
+
+Config.SenatorPay = 400

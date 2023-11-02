@@ -274,4 +274,5 @@ export type PlayerMetadata = PlayerHealthBook & {
     hazmat: boolean;
     mood?: string | null;
     rp_death: boolean;
+    is_senator: boolean;
 };

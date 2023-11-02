@@ -74,6 +74,16 @@ export class ApiProvider {
         return Response.ok();
     }
 
+    @Post('/set-senator')
+    public async setSenator(request: Request): Promise<Response> {
+        const data = JSON.parse(await request.body);
+        const player = this.playerService.getPlayerByCitizenId(data.player);
+        if (player && player.source) {
+            this.playerService.setPlayerMetadata(player.source, 'is_senator', data.value);
+        }
+        return Response.ok();
+    }
+
     @Post('/twitch-news/update-billboard')
     public async updateBillboard(request: Request): Promise<Response> {
         const data = JSON.parse(await request.body);
