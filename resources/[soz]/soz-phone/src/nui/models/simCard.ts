@@ -86,15 +86,15 @@ export const simCard = createModel<RootModel>()({
                 ),
             };
         },
-        SET_CONVERSATION_AS_ARCHIVED: (state, payload: string) => {
-            if (!state.conversations.find(conversation => conversation.conversation_id === payload)) {
+        SET_CONVERSATION_AS_ARCHIVED: (state, conversation_id: string, phone_number: string) => {
+            if (!state.conversations.find(conversation => conversation.conversation_id === conversation_id)) {
                 return state;
             }
 
             return {
                 ...state,
                 conversations: state.conversations.map(conversation =>
-                    conversation.conversation_id === payload ? { ...conversation, masked: true } : conversation
+                    conversation.conversation_id === conversation_id && conversation.phoneNumber === phone_number ? { ...conversation, masked: true } : conversation
                 ),
             };
         },
@@ -197,12 +197,13 @@ export const simCard = createModel<RootModel>()({
                 })
                 .catch(() => console.error('Failed to fetch conversations'));
         },
-        async setConversationArchived(conversation_id) {
+        async setConversationArchived(data) {
             fetchNui<ServerPromiseResp<any>>(MessageEvents.SET_CONVERSATION_ARCHIVED, {
-                conversation_id: conversation_id,
+                conversation_id: data.conversation_id,
+                phone_number: data.phone_number,
             })
                 .then(() => {
-                    dispatch.simCard.SET_CONVERSATION_AS_ARCHIVED(conversation_id);
+                    dispatch.simCard.SET_CONVERSATION_AS_ARCHIVED(data.conversation_id, data.phone_number);
                 })
                 .catch(() => console.error('Failed to archive conversation'));
         },

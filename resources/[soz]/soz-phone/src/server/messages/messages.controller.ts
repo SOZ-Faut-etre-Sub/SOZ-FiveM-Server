@@ -59,9 +59,9 @@ onNetPromise<{ conversation_id: string }, void>(MessageEvents.SET_MESSAGE_READ, 
     resp({ status: 'ok' });
 });
 
-onNetPromise<{ conversation_id: string }, void>(MessageEvents.SET_CONVERSATION_ARCHIVED, async (reqObj, resp) => {
+onNetPromise<{ conversation_id: string, phone_number: string }, void>(MessageEvents.SET_CONVERSATION_ARCHIVED, async (reqObj, resp) => {
     const src = getSource();
-    MessagesService.handleSetConversationArchived(src, reqObj.data.conversation_id).catch(e => {
+    MessagesService.handleSetConversationArchived(src, reqObj.data.conversation_id, reqObj.data.phone_number).catch(e => {
         messagesLogger.error(`Error occurred in set message conversation archived (${src}), Error: ${e.message}`);
         resp({ status: 'error', errorMsg: 'INTERNAL_ERROR' });
     });
