@@ -86,8 +86,12 @@ export const Messages = () => {
         navigate(`/contacts/${getIdByNumber(phoneNumber)}`);
     };
 
-    const handleArchiveConversation = conversation_id => {
-        store.dispatch.simCard.setConversationArchived(conversation_id);
+    const handleArchiveConversation = (conversation_id, phone_number) => {
+        const data = {
+            conversation_id: conversation_id,
+            phone_number: phone_number,
+        };
+        store.dispatch.simCard.setConversationArchived(data);
         navigate(-1);
     };
 
@@ -126,7 +130,9 @@ export const Messages = () => {
                         <div className="flex gap-2.5">
                             <ArchiveIcon
                                 className="h-6 w-6 cursor-pointer"
-                                onClick={() => handleArchiveConversation(conversation.conversation_id)}
+                                onClick={() =>
+                                    handleArchiveConversation(conversation.conversation_id, conversation.phoneNumber)
+                                }
                             />
                             {getDisplayByNumber(conversation.phoneNumber) === conversation.phoneNumber && (
                                 <Button>
