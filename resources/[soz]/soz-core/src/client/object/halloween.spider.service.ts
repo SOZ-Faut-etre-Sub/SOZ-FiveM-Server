@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 
 import { ResourceLoader } from '../repository/resource.loader';
 
 const arachnophobeKvPKey = 'soz/arachnophobe';
 const spider = GetHashKey('spider');
-const cat = GetHashKey('v_res_r_figcat');
 
 const spiderlocations = [
     [8.688249, -715.2358, 55.9801826],
@@ -32,10 +32,9 @@ export class HalloweenSpiderService {
     private arachnophobe = !!GetResourceKvpInt(arachnophobeKvPKey);
 
     public async init() {
-        if (this.arachnophobe) {
-            await this.resourceLoader.loadModel(cat);
+        if (this.arachnophobe && isFeatureEnabled(Feature.Halloween)) {
             for (const spiderLoc of spiderlocations) {
-                CreateModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, cat, true);
+                CreateModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, 0, true);
             }
         }
     }
@@ -49,11 +48,10 @@ export class HalloweenSpiderService {
         SetResourceKvpInt(arachnophobeKvPKey, this.arachnophobe ? 1 : 0);
 
         for (const spiderLoc of spiderlocations) {
-            await this.resourceLoader.loadModel(cat);
             if (this.arachnophobe) {
-                CreateModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, cat, true);
+                CreateModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, 0, true);
             } else {
-                RemoveModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, cat, false);
+                RemoveModelSwap(spiderLoc[0], spiderLoc[1], spiderLoc[2], 38.2, spider, 0, false);
             }
         }
     }
