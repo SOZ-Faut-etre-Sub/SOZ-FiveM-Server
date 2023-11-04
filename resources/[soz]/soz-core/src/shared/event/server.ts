@@ -334,4 +334,5 @@ export enum ServerEvent {
     FDF_FIELD_PLOW = 'soz-core:server:fdf:field-plow',
     FDF_FIELD_PLANT = 'soz-core:server:fdf:field-plant',
     FDF_FIELD_CHECK = 'soz-core:server:fdf:field-check',
+    FDF_TRACTOR_HARVEST = 'soz-core:server:fdf:field-tractor-harvest',
 }
