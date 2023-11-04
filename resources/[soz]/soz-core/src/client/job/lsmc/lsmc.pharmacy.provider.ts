@@ -1,5 +1,6 @@
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ItemService } from '@public/client/item/item.service';
+import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
 
 import { Once, OnceStep } from '../../../core/decorators/event';
