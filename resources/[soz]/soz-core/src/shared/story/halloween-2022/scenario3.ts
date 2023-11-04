@@ -1,5 +1,8 @@
 import { Story } from '../story';
 
+export const Halloween2022Scenario3EnterBunker = 'Halloween2022Scenario3EnterBunker';
+export const Halloween2022Scenario3ExitBunker = 'Halloween2022Scenario3ExitBunker';
+
 export const Halloween2022Scenario3: Story = {
     name: 'La double personnalité',
     dialog: {

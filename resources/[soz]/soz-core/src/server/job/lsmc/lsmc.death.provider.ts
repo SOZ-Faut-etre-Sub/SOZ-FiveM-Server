@@ -1,14 +1,15 @@
-import { On, OnEvent } from '@core/decorators/event';
+import { On, Once, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { Monitor } from '@public/server/monitor/monitor';
 import { Notifier } from '@public/server/notifier';
+import { PlayerPositionProvider } from '@public/server/player/player.position.provider';
 import { PlayerService } from '@public/server/player/player.service';
 import { ServerStateService } from '@public/server/server.state.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
-import { BedLocations } from '@public/shared/job/lsmc';
+import { BedLocations, FailoverLocation, FailoverLocationName, getBedName } from '@public/shared/job/lsmc';
 import { PlayerData, PlayerMetadata } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -34,11 +35,22 @@ export class LSMCDeathProvider {
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
 
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
     private occupiedBeds: Record<number, number> = {};
 
     // Map the source id of the player dead and everyone that has been notified so that we can
     // inform them he has been revived even if they are not on duty anymore
     private playersNotifiedDeath: Map<number, number[]> = new Map();
+
+    @Once()
+    public onStart() {
+        this.playerPositionProvider.registerZone(FailoverLocationName, FailoverLocation);
+        BedLocations.forEach((zone, index) => {
+            this.playerPositionProvider.registerZone(getBedName(index), zone);
+        });
+    }
 
     @OnEvent(ServerEvent.LSMC_REVIVE)
     public async revive(source: number, targetid: number, admin: boolean, uniteHU: boolean, bloodbag: boolean) {
