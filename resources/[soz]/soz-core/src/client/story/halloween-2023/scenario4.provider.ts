@@ -16,7 +16,15 @@ import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { PlayerData } from '@public/shared/player';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { toVector3Object, toVector4Object, Vector4 } from '@public/shared/polyzone/vector';
-import { Halloween2023Scenario4 } from '@public/shared/story/halloween-2023/scenario4';
+import {
+    Halloween2023Scenario4,
+    Halloween2023Scenario4EnterCayo,
+    Halloween2023Scenario4EnterFinal,
+    Halloween2023Scenario4EnterMorgue,
+    Halloween2023Scenario4ExitCayo,
+    Halloween2023Scenario4ExitFinal,
+    Halloween2023Scenario4ExitMorgue,
+} from '@public/shared/story/halloween-2023/scenario4';
 
 import { StoryProvider } from '../story.provider';
 
@@ -286,7 +294,7 @@ export class Halloween2023Scenario4Provider {
                     icon: 'c:housing/enter.png',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 1),
                     action: async () => {
-                        this.playerPositionProvider.teleportPlayerToPosition([275.58, -1361.15, 24.54, 58.32]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4EnterMorgue);
                     },
                 },
             ]
@@ -307,7 +315,7 @@ export class Halloween2023Scenario4Provider {
                     icon: 'c:housing/enter.png',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 3),
                     action: async () => {
-                        this.playerPositionProvider.teleportPlayerToPosition([240.87, -1379.35, 33.74, 133.98]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4ExitMorgue);
                     },
                 },
             ]
@@ -328,7 +336,7 @@ export class Halloween2023Scenario4Provider {
                     icon: 'c:housing/enter.png',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 3),
                     action: async () => {
-                        this.playerPositionProvider.teleportPlayerToPosition([2493.23, -238.47, -70.74, 268.47]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4EnterCayo);
                     },
                 },
             ]
@@ -349,7 +357,7 @@ export class Halloween2023Scenario4Provider {
                     icon: 'c:housing/enter.png',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 4),
                     action: async () => {
-                        this.playerPositionProvider.teleportPlayerToPosition([5045.27, -5817.37, -11.21, 232.11]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4ExitCayo);
                     },
                 },
             ]
@@ -370,7 +378,7 @@ export class Halloween2023Scenario4Provider {
                     icon: 'c:housing/enter.png',
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario4', 6),
                     action: async () => {
-                        this.playerPositionProvider.teleportPlayerToPosition([111.54, -1304.22, 29.05, 300.05]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4ExitFinal);
                         TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_4, 7);
                         this.audioService.stopAudio(this.audioId);
                     },
@@ -4235,7 +4243,7 @@ export class Halloween2023Scenario4Provider {
 
     public async enterFinal() {
         TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_4, 5);
-        await this.playerPositionProvider.teleportPlayerToPosition([-1609.59, -3018.82, -79.01, 82.71]);
+        await this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario4EnterFinal);
         this.audioId = this.audioService.playAudio(`audio/album/900k_album/4.mp3`, 0.1, true);
     }
 }

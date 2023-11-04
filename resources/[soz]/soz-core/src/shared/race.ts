@@ -27,6 +27,14 @@ export type Race = {
     vehicleConfiguration: VehicleConfiguration;
 };
 
+export function getRacePosID(race: Race) {
+    return `RACE_${race.id}_START`;
+}
+
+export function getRacePNJPosID(race: Race) {
+    return `RACE_${race.id}_PNJ`;
+}
+
 export enum RaceCheckpointMenuOptions {
     delete = 'Supprimer',
     edit = 'Modifier Zone',

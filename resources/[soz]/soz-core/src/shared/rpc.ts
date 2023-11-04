@@ -43,6 +43,7 @@ export enum RpcServerEvent {
     PLAYER_GET_LIST_STATE = 'soz-core:player:get-list-state',
     PLAYER_GET_SERVER_STATE = 'soz-core:player:get-server-state',
     PLAYER_GET_JWT_TOKEN = 'soz-core:player:get-jwt-token',
+    PLAYER_TELEPORT = 'soz-core:player:teleport',
 
     CRAFTING_GET_RECIPES = 'soz-core:crafting:get-recipes',
     CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',

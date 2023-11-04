@@ -32,14 +32,19 @@ export const PHARMACY_PRICES = {
     health_book: 50,
 };
 
-export const BedLocations: Vector3[] = [
-    [312.84, -1433.25, 32.07],
-    [315.47, -1435.46, 32.07],
-    [318.02, -1437.59, 32.07],
-    [323.21, -1441.95, 32.07],
-    [325.71, -1444.05, 32.07],
-    [328.38, -1446.29, 32.07],
+export const BedLocations: Vector4[] = [
+    [312.84, -1433.25, 32.57, 320],
+    [315.47, -1435.46, 32.57, 320],
+    [318.02, -1437.59, 32.57, 320],
+    [323.21, -1441.95, 32.57, 320],
+    [325.71, -1444.05, 32.57, 320],
+    [328.38, -1446.29, 32.57, 320],
 ];
+export function getBedName(index: number) {
+    return `GARDEN_EXIT_POS_${index}`;
+}
+
+export const FailoverLocationName = 'UHU_FAILOVER_LCOCATION';
 export const FailoverLocation: Vector4 = [337.57, -1435.95, 32.51, 83.48];
 
 export const PatientClothes: WardrobeConfig = {

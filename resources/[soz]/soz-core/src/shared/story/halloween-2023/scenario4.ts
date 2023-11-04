@@ -2,6 +2,15 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 
 import { Story } from '../story';
 
+export const Halloween2023Scenario4EnterMorgue = 'Halloween2023Scenario4EnterMorgue';
+export const Halloween2023Scenario4ExitMorgue = 'Halloween2023Scenario4ExitMorgue';
+
+export const Halloween2023Scenario4EnterCayo = 'Halloween2023Scenario4EnterCayo';
+export const Halloween2023Scenario4ExitCayo = 'Halloween2023Scenario4ExitCayo';
+
+export const Halloween2023Scenario4EnterFinal = 'Halloween2023Scenario4EnterFinal';
+export const Halloween2023Scenario4ExitFinal = 'Halloween2023Scenario4ExitFinal';
+
 export const Halloween2023Scenario4: Story = {
     name: "L'oeil du diable",
     dialog: {
