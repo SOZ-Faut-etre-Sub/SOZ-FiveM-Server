@@ -32,8 +32,10 @@ export class LSMCPharmacyProvider {
             { name: 'painkiller', price: PHARMACY_PRICES.painkiller, amount: 2000 },
             { name: 'antiacide', price: PHARMACY_PRICES.antiacide, amount: 2000 },
             { name: 'health_book', price: PHARMACY_PRICES.health_book, amount: 2000 },
-            { name: 'horrific_lollipop', price: 15, amount: 2000 },
         ];
+        if (isFeatureEnabled(Feature.Halloween)) {
+            products.push({ name: 'horrific_lollipop', price: 15, amount: 2000 });
+        }
 
         const getLsmcShopProduct = products => {
             const hydratedProducts = products.map((product, id) => ({
