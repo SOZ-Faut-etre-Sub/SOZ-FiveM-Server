@@ -8,6 +8,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { RaceRepository } from '../repository/race.repository';
 
@@ -24,6 +25,9 @@ export class RaceProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     @OnEvent(ServerEvent.RACE_ADD)
     public async onRaceAdd(source: number, race: Race) {
@@ -44,6 +48,8 @@ export class RaceProvider {
         const races = await this.raceRepository.get();
         race.id = dbRace.id;
         races[dbRace.id] = race;
+
+        this.raceRepository.setupTp(race);
 
         this.notifier.notify(source, `Course ~g~${race.name}~s~ créée`, 'success');
 
@@ -74,6 +80,8 @@ export class RaceProvider {
 
         const races = await this.raceRepository.get();
         races[race.id] = race;
+
+        this.raceRepository.setupTp(race);
 
         this.notifier.notify(source, `Course ~g~${race.name}~s~ mise à jour`, 'success');
 

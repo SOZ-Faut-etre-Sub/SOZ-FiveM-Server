@@ -2,6 +2,16 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 
 import { Story } from '../story';
 
+export const Halloween2023Scenario3TPWhiteBox = 'Halloween2023Scenario3TPWhiteBox';
+export const Halloween2023Scenario3TPHangar = 'Halloween2023Scenario3TPHangar';
+export const Halloween2023Scenario3TPBureau = 'Halloween2023Scenario3TPBureau';
+export const Halloween2023Scenario3TPFBI = 'Halloween2023Scenario3TPFBI';
+export const Halloween2023Scenario3TPAvion = 'Halloween2023Scenario3TPAvion';
+export const Halloween2023Scenario3TPGarage = 'Halloween2023Scenario3TPGarage';
+export const Halloween2023Scenario3TPFalling = 'Halloween2023Scenario3TPFalling';
+export const Halloween2023Scenario3TPSubmarine = 'Halloween2023Scenario3TPSubmarine';
+export const Halloween2023Scenario3TPBack = 'Halloween2023Scenario3TPBack';
+
 export const Halloween2023Scenario3: Story = {
     name: 'Le visiteur',
     dialog: {

@@ -18,7 +18,18 @@ import { Feature, isFeatureEnabled } from '@public/shared/features';
 import { PlayerData } from '@public/shared/player';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { toVector4Object } from '@public/shared/polyzone/vector';
-import { Halloween2023Scenario3 } from '@public/shared/story/halloween-2023/scenario3';
+import {
+    Halloween2023Scenario3,
+    Halloween2023Scenario3TPAvion,
+    Halloween2023Scenario3TPBack,
+    Halloween2023Scenario3TPBureau,
+    Halloween2023Scenario3TPFalling,
+    Halloween2023Scenario3TPFBI,
+    Halloween2023Scenario3TPGarage,
+    Halloween2023Scenario3TPHangar,
+    Halloween2023Scenario3TPSubmarine,
+    Halloween2023Scenario3TPWhiteBox,
+} from '@public/shared/story/halloween-2023/scenario3';
 
 import { StoryProvider } from '../story.provider';
 
@@ -167,13 +178,13 @@ export class Halloween2023Scenario3Provider {
                         },
                         action: async () => {
                             this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-                            this.playerPositionProvider.teleportPlayerToPosition([405.9228, -954.1149, -99.6627, 0.1]);
+                            this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPWhiteBox);
                             this.audioService.playAudio('audio/halloween-2023/scenario3/song.mp3', 0.2);
 
                             await wait(30 * 1000);
 
                             this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-                            this.playerPositionProvider.teleportPlayerToPosition([-1266.32, -2962.67, -48.5, 178.4]);
+                            this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPHangar);
                         },
                     },
                 ],
@@ -265,7 +276,7 @@ export class Halloween2023Scenario3Provider {
                             return;
                         }
                         this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-                        this.playerPositionProvider.teleportPlayerToPosition([-1005.84, -478.92, 50.02733, 0.0]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPBureau);
                     },
                 },
             ]
@@ -476,7 +487,7 @@ export class Halloween2023Scenario3Provider {
                         this.storyService.canInteractForPart('halloween2023', 'scenario3', 2) && this.doorUnlock,
                     action: async () => {
                         this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-                        this.playerPositionProvider.teleportPlayerToPosition([151.51, -743.58, 254.15, 0.0]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPFBI);
                         TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_3, 3);
                     },
                 },
@@ -537,10 +548,10 @@ export class Halloween2023Scenario3Provider {
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario3', 4),
                     action: async () => {
                         this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-                        this.playerPositionProvider.teleportPlayerToPosition([150.46, -1301.75, 1308.99, 99.83]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPFalling);
                         await wait(20 * 1000);
                         this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-                        this.playerPositionProvider.teleportPlayerToPosition([1561.55, 411.93, -49.66, 0.0]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPSubmarine);
                     },
                 },
             ]
@@ -550,10 +561,10 @@ export class Halloween2023Scenario3Provider {
     private async exitFBI() {
         TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_3, 4);
         this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-        this.playerPositionProvider.teleportPlayerToPosition([520.0, 4750.0, -70.0, 0.0]);
+        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPAvion);
         await wait(5 * 1000);
         this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-        this.playerPositionProvider.teleportPlayerToPosition([-1520.8, -2978.92, -80.46, 271.53]);
+        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPGarage);
     }
 
     @Tick(TickInterval.EVERY_SECOND, 'halloween2023')
@@ -569,7 +580,7 @@ export class Halloween2023Scenario3Provider {
 
         if (!GetInteriorFromEntity(PlayerPedId())) {
             this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-            this.playerPositionProvider.teleportPlayerToPosition([151.51, -743.58, 254.15, 0.0]);
+            this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPFBI);
         }
     }
 
@@ -596,7 +607,7 @@ export class Halloween2023Scenario3Provider {
                     canInteract: () => this.storyService.canInteractForPart('halloween2023', 'scenario3', 5),
                     action: async () => {
                         this.audioService.playAudio('audio/halloween-2023/scenario3/teleportation.mp3', 0.2);
-                        this.playerPositionProvider.teleportPlayerToPosition([791.14, 1209.36, 339.23, 251.88]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2023Scenario3TPBack);
                         TriggerServerEvent(ServerEvent.STORY_HALLOWEEN_2023_SCENARIO_3, 6);
                     },
                 },

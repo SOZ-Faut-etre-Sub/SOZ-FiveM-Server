@@ -12,17 +12,25 @@ import { PhoneService } from '@public/client/phone/phone.service';
 import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerWalkstyleProvider } from '@public/client/player/player.walkstyle.provider';
-import { ProgressService } from '@public/client/progress.service';
 import { SoundService } from '@public/client/sound.service';
 import { VehicleSeatbeltProvider } from '@public/client/vehicle/vehicle.seatbelt.provider';
 import { WeaponDrawingProvider } from '@public/client/weapon/weapon.drawing.provider';
 import { OnEvent } from '@public/core/decorators/event';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
+import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { BedLocations, FailoverLocation, KillData, KillerVehData, PatientClothes } from '@public/shared/job/lsmc';
+import {
+    BedLocations,
+    FailoverLocationName,
+    getBedName,
+    KillData,
+    KillerVehData,
+    PatientClothes,
+} from '@public/shared/job/lsmc';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Animation } from '../../../shared/animation';
 import { PlayerZombieProvider } from '../../player/player.zombie.provider';
@@ -114,9 +122,6 @@ export class LSMCDeathProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
-
-    @Inject(ProgressService)
-    private progressService: ProgressService;
 
     @Inject(PlayerInOutService)
     private playerInOutService: PlayerInOutService;
@@ -397,29 +402,9 @@ export class LSMCDeathProvider {
 
         if (uniteHUBed == -1) {
             ClearPedTasksImmediately(ped);
-            SetEntityCoords(
-                ped,
-                FailoverLocation[0],
-                FailoverLocation[1],
-                FailoverLocation[2],
-                false,
-                false,
-                false,
-                false
-            );
-            SetEntityHeading(ped, FailoverLocation[3]);
+            await emitRpc(RpcServerEvent.PLAYER_TELEPORT, FailoverLocationName);
         } else {
-            SetEntityCoords(
-                ped,
-                BedLocations[uniteHUBed][0],
-                BedLocations[uniteHUBed][1],
-                BedLocations[uniteHUBed][2] + 0.5,
-                false,
-                false,
-                false,
-                false
-            );
-            SetEntityHeading(ped, 320);
+            await emitRpc(RpcServerEvent.PLAYER_TELEPORT, getBedName(uniteHUBed));
 
             this.playerInOutService.add(
                 'UniteHU',

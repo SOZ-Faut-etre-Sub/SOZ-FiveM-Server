@@ -1,4 +1,3 @@
-import { ClientEvent } from '@public/shared/event';
 import { PlayerData, PlayerMetadata } from '@public/shared/player';
 import { fromVector4Object } from '@public/shared/polyzone/vector';
 
@@ -11,6 +10,7 @@ import { BillboardService } from '../billboard/billboard.service';
 import { ItemService } from '../item/item.service';
 import { FDFFieldProvider } from '../job/fdf/fdf.field.provider';
 import { Notifier } from '../notifier';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
 
@@ -30,6 +30,9 @@ export class ApiProvider {
 
     @Inject(FDFFieldProvider)
     private FDFFieldProvider: FDFFieldProvider;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -143,11 +146,8 @@ export class ApiProvider {
 
             this.removeInside(player);
 
-            TriggerClientEvent(
-                ClientEvent.PLAYER_TELEPORT,
-                player.source,
-                fromVector4Object(player.metadata.inside.exitCoord)
-            );
+            const targetCoords = fromVector4Object(player.metadata.inside.exitCoord);
+            this.playerPositionProvider.teleportToCoords(player.source, targetCoords);
 
             return Response.ok();
         } else {
@@ -162,7 +162,7 @@ export class ApiProvider {
         if (player && player.source) {
             this.removeInside(player);
 
-            TriggerClientEvent(ClientEvent.PLAYER_TELEPORT, player.source, [-1037.47, -2737.59, 20.17, 330.0]);
+            this.playerPositionProvider.teleportToZone(player.source, this.playerPositionProvider.AIRPORT);
 
             return Response.ok();
         } else {

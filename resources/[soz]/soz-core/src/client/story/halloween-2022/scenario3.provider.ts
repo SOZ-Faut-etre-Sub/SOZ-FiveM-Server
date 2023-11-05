@@ -8,7 +8,11 @@ import { Provider } from '../../../core/decorators/provider';
 import { emitRpc } from '../../../core/rpc';
 import { Feature, isFeatureEnabled } from '../../../shared/features';
 import { RpcServerEvent } from '../../../shared/rpc';
-import { Halloween2022Scenario3 } from '../../../shared/story/halloween-2022/scenario3';
+import {
+    Halloween2022Scenario3,
+    Halloween2022Scenario3EnterBunker,
+    Halloween2022Scenario3ExitBunker,
+} from '../../../shared/story/halloween-2022/scenario3';
 import { Dialog } from '../../../shared/story/story';
 import { BlipFactory } from '../../blip';
 import { PedFactory } from '../../factory/ped.factory';
@@ -252,7 +256,7 @@ export class Halloween2022Scenario3Provider {
                     label: 'Entrer',
                     icon: 'c:housing/enter.png',
                     action: async () => {
-                        this.playerPositionProvider.teleportPlayerToPosition([894.74, -3245.37, -98.26, 91.46]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario3EnterBunker);
                     },
                 },
             ]
@@ -273,7 +277,7 @@ export class Halloween2022Scenario3Provider {
                     label: 'Sortir',
                     icon: 'c:housing/enter.png',
                     action: async () => {
-                        this.playerPositionProvider.teleportPlayerToPosition([604.61, 5556.5, 716.76, 37.74]);
+                        this.playerPositionProvider.teleportPlayerToPosition(Halloween2022Scenario3ExitBunker);
                     },
                 },
             ]
