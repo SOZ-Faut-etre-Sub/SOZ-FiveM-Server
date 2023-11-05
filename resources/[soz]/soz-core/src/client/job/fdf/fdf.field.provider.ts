@@ -382,7 +382,8 @@ export class FDFFieldProvider {
             }
 
             for (const [cropId, crop] of Object.entries(cropsToHarvest)) {
-                if (getDistance(crop.coords, coords) < 2 && canCropBeHarvest(crop)) {
+                const distance = crop.type === FDFCropType.corn ? 5 : 2;
+                if (getDistance(crop.coords, coords) < distance && canCropBeHarvest(crop)) {
                     const vehicleModel = GetEntityModel(trailer);
                     const vehicleClass = GetVehicleClass(trailer);
                     const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
