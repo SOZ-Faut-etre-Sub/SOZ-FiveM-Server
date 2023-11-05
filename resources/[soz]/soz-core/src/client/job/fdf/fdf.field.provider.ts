@@ -7,7 +7,6 @@ import { ObjectProvider } from '@public/client/object/object.provider';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
 import { VEHICLE_TRUNK_TYPES } from '@public/client/vehicle/vehicle.lock.provider';
-import { Command } from '@public/core/decorators/command';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
