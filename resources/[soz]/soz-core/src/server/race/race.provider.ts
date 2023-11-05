@@ -8,7 +8,6 @@ import { RpcServerEvent } from '@public/shared/rpc';
 
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
-import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { RaceRepository } from '../repository/race.repository';
 
@@ -25,9 +24,6 @@ export class RaceProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
-
-    @Inject(PlayerPositionProvider)
-    private playerPositionProvider: PlayerPositionProvider;
 
     @OnEvent(ServerEvent.RACE_ADD)
     public async onRaceAdd(source: number, race: Race) {
