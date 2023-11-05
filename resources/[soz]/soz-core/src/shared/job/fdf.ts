@@ -582,7 +582,7 @@ export const FDFConfig = {
     waterDelay: 20 * 60000,
     waterDelayTst: 20000,
     hillDelay: 30 * 60000,
-    plowDelay: 3600 * 1000,
+    plowDelay: 120000, //3600 * 1000,
     hillDelayTst: 60000,
     waterGain: 10 * 60000,
     waterGainTst: 60 * 60000,
