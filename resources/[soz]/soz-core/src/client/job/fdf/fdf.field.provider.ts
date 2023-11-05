@@ -304,16 +304,6 @@ export class FDFFieldProvider {
         ]);
     }
 
-    @Command('plow', {
-        role: 'admin',
-    })
-    public plow() {
-        const ped = PlayerPedId();
-        const coords = GetEntityCoords(ped) as Vector3;
-        const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
-        TriggerServerEvent(ServerEvent.FDF_FIELD_PLOW, field);
-    }
-
     private async tractorHarvest(trailer: number) {
         const ped = PlayerPedId();
         const coords = GetEntityCoords(ped) as Vector3;
@@ -392,7 +382,7 @@ export class FDFFieldProvider {
                     const cropped = await emitRpc<FDFHarvestStatus>(
                         RpcServerEvent.FDF_CROP_WITH_TRACTOR,
                         cropId,
-                        GetVehicleNumberPlateText(trailer),
+                        GetVehicleNumberPlateText(trailer).trim(),
                         {
                             model: vehicleModel,
                             class: vehicleClass,

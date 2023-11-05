@@ -81,12 +81,12 @@ export class InventoryManager {
         return inventoryItem;
     }
 
-    public async getOrCreateInventory(
+    public getOrCreateInventory(
         trunkType: string,
         plate: string,
         context: { model: string; class: string; entity: number }
     ) {
-        this.sozInventory.GetOrCreateInventory(trunkType, plate, context);
+        return this.sozInventory.GetOrCreateInventory(trunkType, plate, context);
     }
 
     public async getVehicleStorageWeight(plate: string): Promise<number> {
