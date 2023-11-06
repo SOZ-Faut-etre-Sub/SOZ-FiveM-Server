@@ -40,7 +40,7 @@ const DOOR_INDEX_CONFIG = {
     wheel_rr: [4, 6],
 };
 
-const VEHICLE_TRUNK_TYPES = {
+export const VEHICLE_TRUNK_TYPES = {
     [GetHashKey('tanker')]: 'tanker',
     [GetHashKey('tanker2')]: 'tanker',
     [GetHashKey('trailerlogs')]: 'trailerlogs',

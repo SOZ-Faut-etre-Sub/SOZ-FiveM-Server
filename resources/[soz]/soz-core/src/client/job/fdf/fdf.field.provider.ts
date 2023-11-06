@@ -6,6 +6,7 @@ import { Notifier } from '@public/client/notifier';
 import { ObjectProvider } from '@public/client/object/object.provider';
 import { PlayerService } from '@public/client/player/player.service';
 import { ProgressService } from '@public/client/progress.service';
+import { VEHICLE_TRUNK_TYPES } from '@public/client/vehicle/vehicle.lock.provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
@@ -20,6 +21,8 @@ import {
     FDFCropType,
     FDFFields,
     FDFGreenHouse,
+    FDFHarvestStatus,
+    FDFPlowStatus,
 } from '@public/shared/job/fdf';
 import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
 import { getDistance, Vector2, Vector3, Vector4 } from '@public/shared/polyzone/vector';
@@ -29,6 +32,7 @@ import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { TargetFactory, TargetOptions } from '../../target/target.factory';
 
 const RAKE_TRAILER = GetHashKey('raketrailer');
+const GRAIN_TRAILER = GetHashKey('graintrailer');
 const TRACTOR2 = GetHashKey('tractor2');
 
 const CheckPointMessages: Record<number, string> = {
@@ -270,12 +274,148 @@ export class FDFFieldProvider {
                 },
             },
         ]);
+
+        this.targetFactory.createForModel(GRAIN_TRAILER, [
+            {
+                icon: 'c:fdf/tractor.png',
+                label: 'Récolter',
+                blackoutJob: JobType.FDF,
+                blackoutGlobal: true,
+                job: JobType.FDF,
+                canInteract: async () => {
+                    if (!this.playerService.isOnDuty()) {
+                        return false;
+                    }
+
+                    const coords = GetEntityCoords(PlayerPedId()) as Vector3;
+                    const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
+
+                    if (!field) {
+                        return false;
+                    }
+
+                    return true;
+                },
+                action: async entity => {
+                    this.tractorHarvest(entity);
+                },
+            },
+        ]);
+    }
+
+    private async tractorHarvest(trailer: number) {
+        const ped = PlayerPedId();
+        const coords = GetEntityCoords(ped) as Vector3;
+        const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
+
+        const cropsToHarvest = await emitRpc<Record<string, FDFCrop>>(
+            RpcServerEvent.FDF_GET_CROP_TO_TRACTOR_HARVEST,
+            field
+        );
+
+        this.notifier.notify('Retourne à ton tracteur pour entamer la récolte.');
+
+        for (let k = 0; k < 100; k++) {
+            await wait(100);
+            const veh = GetVehiclePedIsIn(ped, false);
+            if (veh && GetEntityModel(GRAIN_TRAILER)) {
+                break;
+            }
+        }
+
+        this.notifier.notify("Allez, c'est parti.");
+
+        let harvesting = true;
+        while (Object.values(cropsToHarvest).length > 0 && harvesting) {
+            const veh = GetVehiclePedIsIn(ped, false);
+            const coords = GetEntityCoords(ped) as Vector3;
+            if (!veh || GetEntityModel(veh) != TRACTOR2) {
+                this.notifier.notify(
+                    "Il faut être dans un tracteur pour récolter, y a plus qu'à ~r~recommencer~s~ ...",
+                    'error'
+                );
+                break;
+            }
+
+            let outWarnDate;
+            const [attached, attachedVed] = GetVehicleTrailerVehicle(veh);
+            if (!attached || attachedVed != trailer) {
+                this.notifier.notify("Elle est où la remorque ?, y a plus qu'à ~r~recommencer~s~ ...", 'error');
+                break;
+            }
+
+            if (!FDFFields[field].isPointInside(coords)) {
+                if (outWarnDate == 0) {
+                    this.notifier.notify(
+                        'Restez dans le champ, sinon il faudra ~r~recommencer~s~ tout le travail.',
+                        'error'
+                    );
+                    outWarnDate = Date.now();
+                } else if (Date.now() - outWarnDate > 10000) {
+                    this.notifier.notify(
+                        "Il faut être dans un champs pour récolter, y a plus qu'à ~r~recommencer~s~ ...",
+                        'error'
+                    );
+                    break;
+                }
+            } else if (outWarnDate != 0) {
+                outWarnDate = 0;
+            }
+
+            if (GetEntitySpeed(ped) * 3.6 > 20) {
+                this.notifier.notify(
+                    'Tu roule trop vite, tu as gâché tout le travail. Il va falloir tout refaire maintenant.',
+                    'error'
+                );
+                break;
+            }
+
+            for (const [cropId, crop] of Object.entries(cropsToHarvest)) {
+                const distance = crop.type === FDFCropType.corn ? 5 : 2;
+                if (getDistance(crop.coords, coords) < distance && canCropBeHarvest(crop)) {
+                    const vehicleModel = GetEntityModel(trailer);
+                    const vehicleClass = GetVehicleClass(trailer);
+                    const trunkType = VEHICLE_TRUNK_TYPES[vehicleModel] || 'trunk';
+                    const vehicleNetworkId = NetworkGetNetworkIdFromEntity(trailer);
+
+                    const cropped = await emitRpc<FDFHarvestStatus>(
+                        RpcServerEvent.FDF_CROP_WITH_TRACTOR,
+                        cropId,
+                        GetVehicleNumberPlateText(trailer).trim(),
+                        {
+                            model: vehicleModel,
+                            class: vehicleClass,
+                            entity: vehicleNetworkId,
+                        },
+                        trunkType
+                    );
+                    if (cropped === FDFHarvestStatus.SUCCESS) {
+                        delete cropsToHarvest[cropId];
+                    } else if (cropped === FDFHarvestStatus.INVENTORY_FULL) {
+                        this.notifier.notify('La remorque est pleine, décharge la.', 'error');
+                        await wait(2000);
+                        harvesting = false;
+                        break;
+                    }
+                }
+            }
+
+            await wait(100);
+        }
     }
 
     private async tractorPlow(trailer: number) {
         const ped = PlayerPedId();
         const coords = GetEntityCoords(ped) as Vector3;
         const field = Object.keys(FDFFields).find(fieldId => FDFFields[fieldId].isPointInside(coords));
+
+        const plowStatus = await emitRpc<FDFPlowStatus>(RpcServerEvent.FDF_PLOW_STATUS, field);
+
+        if (plowStatus === FDFPlowStatus.WAITING) {
+            this.notifier.notify("Le champ doit reposer au moins une heure avant d'être à nouveau labouré.", 'error');
+            return;
+        }
+
         this.notifier.notify('Retourne à ton tracteur pour entamer le labour.');
 
         for (let k = 0; k < 100; k++) {
@@ -316,7 +456,7 @@ export class FDFFieldProvider {
 
             const [attached, attachedVed] = GetVehicleTrailerVehicle(veh);
             if (!attached || attachedVed != trailer) {
-                this.notifier.notify("Elle est la où charrue?, y a plus qu'à ~r~recommencer~s~ ...", 'error');
+                this.notifier.notify("Elle est où la charrue?, y a plus qu'à ~r~recommencer~s~ ...", 'error');
                 break;
             }
 
@@ -469,60 +609,74 @@ export class FDFFieldProvider {
     }
 
     @Rpc(RpcClientEvent.FDF_CHECK_ZONE)
-    public async checkZone(zone: Vector3): Promise<[boolean, number]> {
+    public async checkZone(): Promise<[boolean, Vector3[]]> {
         const playerPed = PlayerPedId();
         const coords = GetEntityCoords(playerPed) as Vector3;
+        const resultPosition: Vector3[] = [];
 
         if (IsPedInAnyVehicle(playerPed, true)) {
             this.notifier.notify("Impossible d'utiliser cela dans un vehicule", 'error');
-            return [true, 0];
+            return [true, resultPosition];
         }
 
         if (IsEntityInWater(playerPed)) {
             this.notifier.notify("Impossible d'utiliser cela dans l'eau", 'error');
-            return [true, 0];
+            return [true, resultPosition];
         }
 
-        const z = GetGroundZFor_3dCoord_2(zone[0], zone[1], zone[2], false);
-        if (!z[0]) {
-            this.notifier.notify('La zone est invalide', 'error');
-            return [true, 0];
+        const offsets = [
+            [0, 1, 0],
+            [2, 1, 0],
+            [-2, 1, 0],
+        ];
+
+        for (const offset of offsets) {
+            const zone = GetOffsetFromEntityInWorldCoords(playerPed, offset[0], offset[1], offset[2]) as Vector3;
+            const z = GetGroundZFor_3dCoord_2(zone[0], zone[1], zone[2], false);
+            if (!z[0]) {
+                continue;
+            }
+            zone[2] = z[1];
+
+            if (getDistance(GetEntityCoords(playerPed, true) as Vector3, zone) > 3) {
+                continue;
+            }
+
+            const rayHandle = StartShapeTestCapsule(
+                coords[0],
+                coords[1],
+                coords[2],
+                coords[0],
+                coords[1],
+                coords[2] + 1,
+                0.8,
+                58,
+                playerPed,
+                0
+            );
+
+            let result: [number, boolean, number[], number[], number];
+            do {
+                result = GetShapeTestResult(rayHandle);
+                await wait(0);
+            } while (result[0] == 1);
+
+            if (result[0] == 0) {
+                continue;
+            }
+
+            if (result[1]) {
+                continue;
+            }
+
+            resultPosition.push(zone);
         }
-        zone[2] = z[1];
 
-        if (getDistance(GetEntityCoords(playerPed, true) as Vector3, zone) > 3) {
-            this.notifier.notify("Impossible d'utiliser cela ici car le sol est trop loin", 'error');
-            return [true, 0];
+        if (!resultPosition.length) {
+            this.notifier.notify('Impossible de planter ici.', 'error');
+            return [true, resultPosition];
         }
 
-        const rayHandle = StartShapeTestCapsule(
-            coords[0],
-            coords[1],
-            coords[2],
-            coords[0],
-            coords[1],
-            coords[2] + 1,
-            0.8,
-            58,
-            playerPed,
-            0
-        );
-
-        let result: [number, boolean, number[], number[], number];
-        do {
-            result = GetShapeTestResult(rayHandle);
-            await wait(0);
-        } while (result[0] == 1);
-
-        if (result[0] == 0) {
-            this.notifier.notify('Erreur de detection', 'error');
-            return [true, 0];
-        }
-
-        if (result[1]) {
-            this.notifier.notify("Impossible d'utiliser cela ici  car la zone est occupée", 'error');
-            return [true, 0];
-        }
-        return [result[1], zone[2]];
+        return [false, resultPosition];
     }
 }
