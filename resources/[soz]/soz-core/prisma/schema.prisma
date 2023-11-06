@@ -716,3 +716,12 @@ model Zone {
 
     @@map("zone")
 }
+
+model fdf_crops {
+  id                  String    @id
+  field               String    @db.VarChar(50)
+  type                String    @db.VarChar(50)
+  coords              String    @db.VarChar(100)
+  hilled              Boolean
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+}

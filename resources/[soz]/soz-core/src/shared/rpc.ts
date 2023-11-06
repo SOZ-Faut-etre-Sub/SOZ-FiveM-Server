@@ -158,6 +158,9 @@ export enum RpcServerEvent {
     FDF_TREE_GET = 'soz-core:server:fdf:tree-get',
     FDF_CROP_GET = 'soz-core:server:fdf:crop-get',
     FDF_FIELD_ISPLOW = 'soz-core:server:fdf:field-isplow',
+    FDF_GET_CROP_TO_TRACTOR_HARVEST = 'soz-core:server:fdf:get-crops-to-harvest',
+    FDF_CROP_WITH_TRACTOR = 'soz-core:server:fdf:crop-with-tractor',
+    FDF_PLOW_STATUS = 'soz-core:server:fdf:get-plow-status',
 }
 
 export enum RpcClientEvent {
