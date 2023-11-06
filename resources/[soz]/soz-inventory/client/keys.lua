@@ -29,9 +29,12 @@ RegisterNetEvent("inventory:client:openPlayerKeyInventory", function(vehicleKeys
     SetNuiFocus(true, true)
 end)
 
+RegisterNUICallback("player/openPlayerKeyInventory", function(data, cb)
+    TriggerServerEvent("soz-core:server:vehicle:open-keys")
+end)
+
 RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
     local hit, _, _, entityHit, entityType, _ = ScreenToWorld()
-    SetNuiFocus(false, false)
 
     if hit == 1 and entityType == 1 then
         local playerHit = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entityHit))
@@ -40,6 +43,23 @@ RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
             TriggerServerEvent("soz-core:server:vehicle:give-key", data.plate, playerHit)
         elseif data.target == "apartment_access" then
             TriggerServerEvent("housing:server:GiveTemporaryAccess", data.propertyId, data.apartmentId, playerHit)
+        end
+    else
+        exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")
+    end
+
+    cb(true)
+end)
+
+RegisterNUICallback("player/giveAllKeysToTarget", function(data, cb)
+    local player, distance = QBCore.Functions.GetClosestPlayer()
+    if player ~= -1 and distance < 2.0 then
+        for _, key in pairs(data) do
+            if key.target == "vehicle_key" then
+                TriggerServerEvent("soz-core:server:vehicle:give-key", key.plate, GetPlayerServerId(player))
+            elseif key.target == "apartment_access" then
+                TriggerServerEvent("housing:server:GiveTemporaryAccess", key.propertyId, key.apartmentId, GetPlayerServerId(player))
+            end
         end
     else
         exports["soz-core"]:DrawNotification("Personne n'est à portée de vous", "error")

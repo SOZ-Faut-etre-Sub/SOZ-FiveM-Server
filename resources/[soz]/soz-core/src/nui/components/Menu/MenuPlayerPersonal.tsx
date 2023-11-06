@@ -5,7 +5,6 @@ import { AnimationConfigItem, WalkConfigItem } from '../../../shared/animation';
 import { ClothConfig } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
 import { JobPermission } from '../../../shared/job';
-import { CardType } from '../../../shared/nui/card';
 import { MenuType } from '../../../shared/nui/menu';
 import { JobMenuData, PlayerPersonalMenuData, Shortcut } from '../../../shared/nui/player';
 import { fetchNui } from '../../fetch';
@@ -35,10 +34,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
         return null;
     }
 
-    const openKeys = () => {
-        fetchNui(NuiEvent.PlayerMenuOpenKeys);
-    };
-
     return (
         <Menu type={MenuType.PlayerPersonal}>
             <MainMenu>
@@ -46,10 +41,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     {player.charinfo.firstname} {player.charinfo.lastname}
                 </MenuTitle>
                 <MenuContent>
-                    <MenuItemSubMenuLink id="identity" description="Voir/Montrer vos papiers d'identité">
-                        Mon identité
-                    </MenuItemSubMenuLink>
-                    <MenuItemButton onConfirm={openKeys}>Gestion des clés</MenuItemButton>
                     {data.deguisement ? (
                         <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuRemoveDeguisement)}>
                             Enlever le déguisement
@@ -73,7 +64,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     )}
                 </MenuContent>
             </MainMenu>
-            <MenuIdentity />
             <MenuClothing />
             <MenuAnimation shortcuts={data.shortcuts} />
             <SubMenu id="hud">
@@ -111,38 +101,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
             </SubMenu>
             <MenuJob data={data.job} />
         </Menu>
-    );
-};
-
-const MenuIdentity: FunctionComponent = () => {
-    const showOrSeeCard = (type: CardType) => {
-        return (index, value) => {
-            if (value === 'see') {
-                fetchNui(NuiEvent.PlayerMenuCardSee, { type });
-            } else {
-                fetchNui(NuiEvent.PlayerMenuCardShow, { type });
-            }
-        };
-    };
-
-    return (
-        <SubMenu id="identity">
-            <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion de l'identité</MenuTitle>
-            <MenuContent>
-                <MenuItemSelect title="Carte d'identité" onConfirm={showOrSeeCard('identity')}>
-                    <MenuItemSelectOption value="see">Voir</MenuItemSelectOption>
-                    <MenuItemSelectOption value="show">Montrer</MenuItemSelectOption>
-                </MenuItemSelect>
-                <MenuItemSelect title="Vos licences" onConfirm={showOrSeeCard('license')}>
-                    <MenuItemSelectOption value="see">Voir</MenuItemSelectOption>
-                    <MenuItemSelectOption value="show">Montrer</MenuItemSelectOption>
-                </MenuItemSelect>
-                <MenuItemSelect title="Carte de santé" onConfirm={showOrSeeCard('health')}>
-                    <MenuItemSelectOption value="see">Voir</MenuItemSelectOption>
-                    <MenuItemSelectOption value="show">Montrer</MenuItemSelectOption>
-                </MenuItemSelect>
-            </MenuContent>
-        </SubMenu>
     );
 };
 

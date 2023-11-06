@@ -20,7 +20,7 @@ export class VehicleKeysProvider {
     private notifier: Notifier;
 
     @OnEvent(ServerEvent.VEHICLE_OPEN_KEYS)
-    private onVehicleOpenKeys(source: number) {
+    public onVehicleOpenKeys(source: number) {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {

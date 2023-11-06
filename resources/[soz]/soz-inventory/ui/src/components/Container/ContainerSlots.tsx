@@ -9,11 +9,13 @@ type Props = {
     columns?: number;
     rows: number;
     money?: number;
+    wallet?:boolean;
+    keychain?:boolean;
     items: (InventoryItem & {id: number})[]
     action?: (action: string, item: InventoryItem, shortcut: number) => void;
 }
 
-export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, money, action}) => {
+export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows, items, money, wallet, keychain, action}) => {
     const [description, setDescription] = useState<string|null>('');
     const [inContextMenu, setInContextMenu] = useState<Record<string, boolean>>({});
 
@@ -51,7 +53,31 @@ export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows,
                         />
                     </Droppable>
                 )}
-                {[...Array((columns*(rows+1)) - (money ? 1 : 0))].map((_, i) => (
+                {wallet && (
+                    <Droppable key={"wallet"} id={`${id}_wallet`} containerName={id} slot={1} >
+                        <Draggable
+                            id={`${id}_drag_wallet`}
+                            containerName={id}
+                            wallet
+                            interactAction={action}
+                            key={0}
+                            undraggable
+                        />
+                    </Droppable>
+                )}
+                {keychain && (
+                    <Droppable key={"keychain"} id={`${id}_keychain`} containerName={id} slot={2} >
+                        <Draggable
+                            id={`${id}_drag_keychain`}
+                            containerName={id}
+                            keychain
+                            interactAction={action}
+                            key={0}
+                            undraggable
+                        />
+                    </Droppable>
+                )}
+                {[...Array((columns*(rows+1)) - (money ? 3 : 0))].map((_, i) => (
                     <Droppable key={i} id={`${id}_${i - 1}`} containerName={id} slot={i+1}>
                         <Draggable
                             id={`${id}_drag`}

@@ -73,7 +73,7 @@ export const PlayerContainer = () => {
                 }
             } else if (display && event.data.action === 'closeInventory') {
                 closeNUI(() => closeMenu());
-            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory' || event.data.action === 'openPlayerWalletInventory') {
                 closeMenu();
             }
         },
@@ -200,6 +200,8 @@ export const PlayerContainer = () => {
                         id="player"
                         rows={inventoryRow}
                         money={playerMoney}
+                        wallet
+                        keychain
                         items={playerInventory.items.map((item, i) => ({ ...item, id: i, shortcut: itemShortcut(item) }))}
                         action={interactAction}
                     />
