@@ -40,7 +40,9 @@ export class PlayerPositionProvider {
 
         FreezeEntityPosition(playerPed, false);
 
-        cb && cb();
+        if (cb) {
+            await cb();
+        }
 
         this.weaponDrawingProvider.drawWeapons();
         DoScreenFadeIn(this.fadeDelay);
