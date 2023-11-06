@@ -39,12 +39,7 @@ export class RaceRepository extends RepositoryLegacy<Record<number, Race>> {
     }
 
     public setupTp(race: Race) {
-        this.playerPositionProvider.registerZone(getRacePosID(race), [
-            race.start[0] + 3.0,
-            race.start[1],
-            race.start[2],
-            race.start[3],
-        ]);
+        this.playerPositionProvider.registerZone(getRacePosID(race), race.start);
 
         const coords = [...race.npcPosition] as Vector4;
         const heading = coords[3];

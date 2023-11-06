@@ -1,22 +1,12 @@
 import { Once } from '@public/core/decorators/event';
-import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { ClientEvent } from '@public/shared/event/client';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { Monitor } from '../monitor/monitor';
-import { PermissionService } from '../permission.service';
-
 @Provider()
 export class PlayerPositionProvider {
-    @Inject(Monitor)
-    private monitor: Monitor;
-
-    @Inject(PermissionService)
-    private permissionService: PermissionService;
-
     public AIRPORT = 'airport';
 
     private players: Record<number, Vector3> = {};
@@ -40,21 +30,7 @@ export class PlayerPositionProvider {
         }
 
         if (getDistance(coord, prevCoord) > 1000.0) {
-            if (this.permissionService.isHelper(source)) {
-                return;
-            }
-
-            this.monitor.publish(
-                'anti_cheat',
-                {
-                    type: 'teleportation',
-                    player_source: source,
-                },
-                {
-                    prev_coord: prevCoord,
-                    new_coord: coord,
-                }
-            );
+            exports['soz-core'].Report(source, 'teleportation', null, null, prevCoord);
         }
     }
 
