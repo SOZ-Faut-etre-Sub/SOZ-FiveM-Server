@@ -84,6 +84,9 @@ export class RebootProvider {
         await this.prismaService.playerVehicle.updateMany({
             where: {
                 life_counter: -1,
+                state: {
+                    not: PlayerVehicleState.Missing,
+                },
             },
             data: {
                 state: PlayerVehicleState.Missing,
