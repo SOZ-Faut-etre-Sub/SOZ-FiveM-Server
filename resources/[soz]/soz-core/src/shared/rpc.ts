@@ -45,6 +45,8 @@ export enum RpcServerEvent {
     PLAYER_GET_JWT_TOKEN = 'soz-core:player:get-jwt-token',
     PLAYER_TELEPORT = 'soz-core:player:teleport',
 
+    BANK_GET_ACCOUNT = 'soz-core:bank:get-account',
+
     CRAFTING_GET_RECIPES = 'soz-core:crafting:get-recipes',
     CRAFTING_DO_CRAFT = 'soz-core:crafting:do-craft',
     CRAFTING_DO_SALVAGE = 'soz-core:crafting:do-salvage',

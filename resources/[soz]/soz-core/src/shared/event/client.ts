@@ -146,6 +146,8 @@ export enum ClientEvent {
     PLAYER_ON_DEATH = 'ems:client:onDeath',
     PLAYER_ZOMBIE_TRANSFORM = 'soz-core:client:player:zombie:transform',
     PLAYER_ZOMBIE_REMOVE = 'soz-core:client:player:zombie:remove',
+    PLAYER_CARD_SHOW = 'soz-core:client:player:card:show',
+    PLAYER_CARD_SEE = 'soz-core:client:player:card:see',
 
     PROGRESS_START = 'soz-core:client:progress:start',
     PROGRESS_STOP = 'soz-core:client:progress:stop',

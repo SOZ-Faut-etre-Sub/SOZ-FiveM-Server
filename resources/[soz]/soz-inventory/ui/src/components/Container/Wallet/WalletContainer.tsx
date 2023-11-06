@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { InventoryItem, InventoryItemMetadata } from '../../../types/inventory';
+import { InventoryItem } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
-import style from './KeyContainer.module.css';
+import style from './WalletContainer.module.css';
 import { ContainerSlots } from '../ContainerSlots';
 import playerBanner from '/banner/player.jpg'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
 
-export const KeyContainer = () => {
+export const WalletContainer = () => {
     const [display, setDisplay] = useState<boolean>(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -20,10 +20,10 @@ export const KeyContainer = () => {
     }, [setDisplay, setPlayerInventory]);
 
 
-    const transfertItem = useCallback((event: any) => {
+    const showCard = useCallback((event: any) => {
         if (!event.active.data.current) return;
 
-        fetch(`https://soz-inventory/player/giveKeyToTarget`, {
+        fetch(`https://soz-inventory/player/showCard`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
@@ -32,35 +32,41 @@ export const KeyContainer = () => {
         })
     }, [closeMenu]);
 
+    const interactAction = useCallback(
+        (action: string, item: InventoryItem, shortcut: number) => {
+            fetch(`https://soz-inventory/player/${action}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify({ ...item, shortcut }),
+            }).then(() => closeNUI(() => closeMenu()));
+        },
+        [closeMenu]
+    );
 
-    const giveAllKeys = useCallback((keys: any) => {
-
-        fetch(`https://soz-inventory/player/giveAllKeysToTarget`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: JSON.stringify(keys)
-        })
-    }, [closeMenu]);
-
+    const backAction = useCallback(
+        () => {
+            fetch(`https://soz-inventory/player/openPlayerInventory`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+            });
+        },
+        []
+    );
+    
     const onMessageReceived = useCallback((event: MessageEvent) => {
-        if (event.data.action === "openPlayerKeyInventory") {
-            if (event.data.keys === undefined) return
+        if (event.data.action === "openPlayerWalletInventory") {
+            if (event.data.cards === undefined) return
 
-            setPlayerInventory(event.data.keys.filter((i: InventoryItem) => i !== null).map((item: InventoryItem) => ({ ...item, id: `key_${item.slot}` })));
+            setPlayerInventory(event.data.cards.filter((i: InventoryItem) => i !== null).map((item: InventoryItem) => ({ ...item, id: `key_${item.slot}` })));
             setDisplay(true);
-        } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerInventory' || event.data.action === 'openPlayerWalletInventory') {
+        } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerInventory'  || event.data.action === 'openPlayerKeyInventory' ) {
             closeMenu();
         }
     }, [setDisplay, setPlayerInventory]);
-
-    const onClickReceived = useCallback((event: MouseEvent) => {
-        if (display && menuRef.current && !menuRef.current.contains(event.target as Node)) {
-            event.preventDefault();
-            closeNUI(() => closeMenu());
-        }
-    }, [menuRef, display, closeMenu])
 
     const onKeyDownReceived = useCallback(
         (event: KeyboardEvent) => {
@@ -70,6 +76,13 @@ export const KeyContainer = () => {
         },
         [display, closeMenu]
     );
+
+    const onClickReceived = useCallback((event: MouseEvent) => {
+        if (display && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            event.preventDefault();
+            closeNUI(() => closeMenu());
+        }
+    }, [menuRef, display, closeMenu])
 
     useEffect(() => {
         window.addEventListener("contextmenu", onClickReceived);
@@ -101,19 +114,19 @@ export const KeyContainer = () => {
                         enabled: false,
                     }}
                     collisionDetection={rectIntersection}
-                    onDragEnd={transfertItem}
+                    onDragEnd={showCard}
                 >
                     <div className={clsx(style.Wrapper)}>
                         <ContainerWrapper
                             display={true}
                             banner={playerBanner}
                             maxWeight={-1}
-                            giveAllCallback={() => giveAllKeys(playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' })))}
                         >
                             <ContainerSlots
                                 id="player"
                                 rows={inventoryRow}
-                                items={playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' }))}
+                                items={playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'card' }))}
+                                action={interactAction}
                             />
                         </ContainerWrapper>
                     </div>

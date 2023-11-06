@@ -1,5 +1,7 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 PlayerData = QBCore.Functions.GetPlayerData()
+Handle = {}
+Handle.Functions = {}
 
 RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
     PlayerData = QBCore.Functions.GetPlayerData()
@@ -29,7 +31,7 @@ RegisterNetEvent("inventory:client:requestOpenInventory", function(data)
     TriggerServerEvent("inventory:server:openInventory", data.invType, data.invID)
 end)
 
-function handleFish(inventory)
+function Handle.Functions.handleFish(inventory)
     for _, value in ipairs(PlayerData.metadata.drugs_skills) do
         -- 2 is Zoologiste
         if value == 2 then
@@ -130,7 +132,7 @@ RegisterNUICallback("sortItem", function(data, cb)
     end
 
     QBCore.Functions.TriggerCallback("inventory:server:TransfertItem", function(success, reason, invSource, invTarget)
-        invSource = handleFish(invSource)
+        invSource = Handle.Functions.handleFish(invSource)
         cb({status = success, sourceInventory = invSource, targetInventory = invTarget})
         if not success then
             exports["soz-core"]:DrawNotification(Config.ErrorMessage[reason] or reason, "error")

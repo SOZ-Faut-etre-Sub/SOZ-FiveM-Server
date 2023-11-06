@@ -21,6 +21,7 @@ module.exports = {
             mono: ['input-mono', 'monospace'],
             lato: ['Lato', ...defaultTheme.fontFamily.sans],
             prompt: ['Prompt', 'sans-serif'],
+            kreditback: ['"Kredit Back"', 'sans-serif'],
             'delight-sunset': ['Delight-Sunset', 'sans-serif'],
         },
         extend: {
