@@ -228,6 +228,7 @@ const licenses: Record<DrivingSchoolLicenseType, DrivingSchoolLicense> = {
 
 export const DrivingSchoolConfig = {
     fadeDelay: 500, // in ms
+    playerDefaultLocationName: 'PERMIS_LOCATION_BACK',
     playerDefaultLocation: <Vector4>[-806.57, -1344.53, 5.5, 150.0],
     vehiclePlateText: 'P3RM15',
     maxGracePeriod: 4000, // in ms
