@@ -16,7 +16,7 @@ Config.StorageCapacity = {
     ["cloakroom"] = {slot = 10, weight = 1000000},
     --- houses
     ["house_stash"] = {
-        [-1] = {slot = 10, weight = 1000000000}, -- for GM House
+        [-2] = {slot = 10, weight = 1000000000}, -- for GM House
         [0] = {slot = 10, weight = 200000},
         [1] = {slot = 10, weight = 400000},
         [2] = {slot = 10, weight = 600000},
@@ -35,10 +35,19 @@ Config.StorageCapacity = {
     ["flavor_storage"] = {slot = 100, weight = 400000},
     ["liquor_storage"] = {slot = 100, weight = 600000},
     ["furniture_storage"] = {slot = 100, weight = 200000},
+    ["snack_storage"] = {slot = 100, weight = 200000},
     --- Jobs BlueBird
-    ["recycler_processing"] = {slot = 100, weight = 400000},
+    ["recycler_processing"] = {slot = 100, weight = 800000},
     --- Zkea
     ["cabinet_storage"] = {slot = 1, weight = 1600000}, -- 400 cabinet_zkea maximum
+    --- Smuggling Box
+    ["smuggling_box"] = {slot = 100, weight = 250000},
+    --- Jobs DMC
+    ["metal_converter"] = {slot = 100, weight = 500000},
+    ["metal_incinerator"] = {slot = 100, weight = 500000},
+    ["metal_storage"] = {slot = 100, weight = 10000000},
+    --- LS Custom
+    ["ls_custom_storage"] = {slot = 1, weight = 800000}, -- 400 ls_custom_upgrade_part maximum
 }
 
 Config.ErrorMessage = {

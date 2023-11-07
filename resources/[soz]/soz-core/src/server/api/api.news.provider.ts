@@ -13,7 +13,7 @@ export class ApiNewsProvider {
     @Inject(ApiClient)
     private apiClient: ApiClient;
 
-    @OnEvent(ServerEvent.TWITCH_ADD_FLASH_NEWS, false)
+    @OnEvent(ServerEvent.NEWS_ADD_FLASH, false)
     public async sendFlashNews(news: any) {
         const response = await this.apiClient.post('/news/add-flash', news);
 

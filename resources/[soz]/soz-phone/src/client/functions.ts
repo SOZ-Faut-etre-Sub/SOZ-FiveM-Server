@@ -24,7 +24,9 @@ export const newPhoneProp = async () => {
         const playerPed = PlayerPedId();
         const [x, y, z] = GetEntityCoords(playerPed, true);
         prop = CreateObject(GetHashKey(phoneModel), x, y, z + 0.2, true, true, true);
-        SetNetworkIdCanMigrate(ObjToNet(prop), false);
+        const netId = ObjToNet(prop);
+        SetNetworkIdCanMigrate(netId, false);
+        TriggerServerEvent('soz-core:client:object:attached:register', netId);
         SetEntityCollision(prop, false, true);
         const boneIndex = GetPedBoneIndex(playerPed, 28422);
         AttachEntityToEntity(
@@ -53,6 +55,7 @@ export const newPhoneProp = async () => {
 export function removePhoneProp() {
     //-- Triggered in newphoneProp function. Only way to destory the prop correctly.
     if (prop != 0) {
+        TriggerServerEvent('soz-core:client:object:attached:unregister', ObjToNet(prop));
         DeleteEntity(prop);
         prop = 0;
         propCreated = false;

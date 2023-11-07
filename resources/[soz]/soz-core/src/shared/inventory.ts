@@ -11,6 +11,7 @@ export enum StorageType {
     FurnitureStorage = 'furniture_storage',
     Inverter = 'inverter',
     LiquorStorage = 'liquor_storage',
+    SnackStorage = 'snack_storage',
     LogProcessing = 'log_processing',
     LogStorage = 'log_storage',
     Organ = 'organ',
@@ -22,6 +23,10 @@ export enum StorageType {
     Storage = 'storage',
     StorageTank = 'storage_tank',
     Trunk = 'trunk',
+    MetalConverter = 'metal_converter',
+    MetalIncinerator = 'metal_incinerator',
+    MetalStorage = 'metal_storage',
+    LsCustomStorage = 'ls_custom_storage',
 }
 
 export type Storage = {

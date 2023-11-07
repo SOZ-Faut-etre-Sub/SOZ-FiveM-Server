@@ -34,8 +34,10 @@ import { SuperetteShopMenu } from '../Shop/SuperetteShopMenu';
 import { TattooShopMenu } from '../Shop/TattooShopMenu';
 import { StonkJobMenu } from '../Stonk/StonkJobMenu';
 import { TaxiJobMenu } from '../Taxi/TaxiJobMenu';
+import { DmcJobMenu } from './Job/DmcJobMenu';
 import { GouvJobMenu } from './Job/GouvJobMenu';
 import { MenuBennys } from './Job/MenuBennys';
+import { MenuNews } from './Job/MenuNews';
 import { MenuUpw } from './Job/MenuUpw';
 import { MenuAlbum } from './MenuAlbum';
 import { MenuBennysUpgradeVehicle } from './MenuBennysUpgradeVehicle';
@@ -217,6 +219,8 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement data={menuData} />} />
             <Route path={`/${MenuType.FDFJobMenu}/*`} element={<FdfJobMenu data={menuData} />} />
+            <Route path={`/${MenuType.JobNews}/*`} element={<MenuNews data={menuData} />} />
+            <Route path={`/${MenuType.DmcJobMenu}/*`} element={<DmcJobMenu data={menuData} />} />
         </Routes>
     );
 };

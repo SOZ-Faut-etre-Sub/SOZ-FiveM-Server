@@ -34,7 +34,7 @@ Container["ammo"] = InventoryContainer:new({
 
 Container["armory"] = InventoryContainer:new({
     type = "armory",
-    allowedTypes = {"weapon"},
+    allowedTypes = {"weapon", "tool"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 
@@ -69,6 +69,7 @@ Container["trunk"] = InventoryContainer:new({
         "outfit",
         "crate",
         "drug_pot",
+        "tool",
     },
 })
 
@@ -97,12 +98,14 @@ Container["temporary_trunk"] = InventoryDatastore:new({
         "outfit",
         "crate",
         "drug_pot",
+        "tool",
     },
 })
 
 Container["tanker"] = InventoryContainer:new({type = "trunk", allowedTypes = {"oil", "oil_and_item"}})
 Container["brickade"] = InventoryContainer:new({type = "trunk", allowedTypes = {"energy"}})
 Container["trailerlogs"] = InventoryContainer:new({type = "trunk", allowedTypes = {"log"}})
+Container["tiptruck"] = InventoryContainer:new({type = "trunk", allowedTypes = {"metal"}})
 Container["trash"] = InventoryContainer:new({
     type = "trunk",
     allowedTypes = {
@@ -145,13 +148,13 @@ Container["storage_tank"] = InventoryContainer:new({
 --- Todo: convert to storage type : storage
 Container["seizure"] = InventoryContainer:new({
     type = "seizure",
-    allowedTypes = {"weapon", "weapon_attachment", "weapon_ammo", "drug", "item", "item_illegal", "drug_pot"},
+    allowedTypes = {"weapon", "weapon_attachment", "weapon_ammo", "drug", "item", "item_illegal", "drug_pot", "tool"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 --- Todo: convert to storage type : storage
 Container["boss_storage"] = InventoryContainer:new({
     type = "boss_storage",
-    allowedTypes = {"weapon", "weapon_ammo", "item", "oil_and_item"},
+    allowedTypes = {"weapon", "weapon_ammo", "item", "oil_and_item", "tool"},
     inventoryPermissionCallback = function(player, owner)
         return SozJobCore.Functions.HasPermission(owner, player.PlayerData.job.id, player.PlayerData.job.grade, SozJobCore.JobPermission.SocietyPrivateStorage)
     end,
@@ -201,6 +204,7 @@ Container["bin"] = InventoryDatastore:new({
         "outfit",
         "crate",
         "drug_pot",
+        "tool",
     },
     populateDatastoreCallback = function()
         local inventory = {}
@@ -252,6 +256,7 @@ Container["house_stash"] = InventoryContainer:new({
         "fishing_bait",
         "fish",
         "drug_pot",
+        "tool",
     },
 })
 Container["house_fridge"] = InventoryContainer:new({
@@ -313,6 +318,99 @@ Container["flavor_storage"] = InventoryContainer:new({
 Container["furniture_storage"] = InventoryContainer:new({
     type = "furniture_storage",
     allowedTypes = {"furniture"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+})
+
+Container["snack_storage"] = InventoryContainer:new({
+    type = "snack_storage",
+    allowedTypes = {"food"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+})
+
+Container["smuggling_box"] = InventoryDatastore:new({
+    type = "smuggling_box",
+    allowedTypes = {
+        "item",
+        "fishing_rod",
+        "fishing_garbage",
+        "fishing_bait",
+        "fish",
+        "drug",
+        "food",
+        "drink",
+        "cocktail",
+        "item_illegal",
+        "organ",
+        "oil",
+        "oil_and_item",
+        "log",
+        "sawdust",
+        "plank",
+        "flavor",
+        "furniture",
+        "liquor",
+        "outfit",
+        "crate",
+        "drug_pot",
+        "tool",
+        "energy",
+        "metal",
+        "weapon",
+        "weapon_ammo",
+    },
+})
+
+--- Jobs DMC
+
+local canAccessConverter = function(player, owner)
+    if player.PlayerData.job.id ~= owner or not player.PlayerData.job.onduty then
+        return false
+    end
+    if not exports["soz-core"]:CanAccessConverter() then
+        TriggerClientEvent("soz-core:client:notification:draw", player.PlayerData.source,
+                           "Impossible d'accéder au Convertisseur lorsque sa température s'ajuste.", "error")
+        return false
+    end
+    return true
+end
+
+Container["metal_converter"] = InventoryContainer:new({
+    type = "metal_converter",
+    allowedTypes = {"metal"},
+    inventoryPermissionCallback = canAccessConverter,
+    syncCallback = function(id, items)
+        local inv = GetOrCreateInventory("metal_converter", id)
+        if not inv then
+            return false
+        end
+        if table.length(inv.users) > 0 then
+            for player, _ in pairs(inv.users) do
+                TriggerClientEvent("inventory:client:updateTargetStoragesState", player, inv)
+            end
+        end
+
+    end,
+})
+
+Container["metal_incinerator"] = InventoryContainer:new({
+    type = "metal_incinerator",
+    allowedTypes = {"metal", "weapon", "weapon_ammo"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+    inventoryGetContentCallback = function()
+        return false
+    end,
+})
+
+Container["metal_storage"] = InventoryContainer:new({
+    type = "metal_storage",
+    allowedTypes = {"item", "oil_and_item", "outfit", "crate", "drug_pot", "metal"},
+    inventoryPermissionCallback = playerHaveJobAndDuty,
+})
+
+--- LS Custom
+Container["ls_custom_storage"] = InventoryContainer:new({
+    type = "ls_custom_storage",
+    allowedTypes = {"item"},
     inventoryPermissionCallback = playerHaveJobAndDuty,
 })
 

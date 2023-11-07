@@ -27,6 +27,7 @@ Config.FarmAccountMoney = {
     ["bennys_reseller"] = {money = 100000000, marked_money = 0},
     ["farm_bennys"] = {money = 300000, marked_money = 0},
     ["farm_news"] = {money = 300000, marked_money = 0},
+    ["farm_you-news"] = {money = 300000, marked_money = 0},
     ["farm_stonk"] = {money = 300000, marked_money = 0},
     ["farm_mtp"] = {money = 300000, marked_money = 0},
     ["farm_garbage"] = {money = 300000, marked_money = 0},
@@ -37,6 +38,7 @@ Config.FarmAccountMoney = {
     ["farm_baun"] = {money = 300000, marked_money = 0},
     ["farm_ffs"] = {money = 300000, marked_money = 0},
     ["farm_fdf"] = {money = 300000, marked_money = 0},
+    ["farm_dmc"] = {money = 300000, marked_money = 0},
 }
 
 Config.SocietyTaxes = {
@@ -47,11 +49,13 @@ Config.SocietyTaxes = {
         ["food"] = {"food", "safe_food"},
         ["garbage"] = {"garbage", "safe_garbage"},
         ["news"] = {"news", "safe_news"},
+        ["you-news"] = {"you-news", "safe_you-news"},
         ["oil"] = {"oil", "safe_oil"},
         ["pawl"] = {"pawl", "safe_pawl"},
         ["taxi"] = {"taxi", "safe_taxi"},
         ["upw"] = {"upw", "safe_upw"},
         ["fdf"] = {"fdf", "safe_fdf"},
+        ["dmc"] = {"dmc", "safe_dmc"},
     },
 
     taxRepartition = {["lspd"] = 30, ["bcso"] = 30, ["lsmc"] = 30, ["cash-transfer"] = 2, ["mdr"] = 8},
@@ -91,6 +95,15 @@ Config.SafeStorages = {
         owner = "news",
         position = vector3(-575.83, -937.5, 28.7),
         size = vec2(1.3, 2.5),
+    },
+    ["safe_you-news"] = {
+        label = "Coffre You News",
+        owner = "you-news",
+        position = vector3(-1057.23, -234.11, 44.02),
+        size = vec2(0.60, 1.80),
+        heading = 117.47,
+        minZ = 43.02,
+        maxZ = 44.02,
     },
     ["safe_garbage"] = {
         label = "Coffre BlueBird",
@@ -189,6 +202,13 @@ Config.SafeStorages = {
         position = vector3(-525.62, -590.78, 34.68),
         size = vec2(0.40, 1.00),
         heading = 0.0,
+    },
+    ["safe_dmc"] = {
+        label = "Coffre DeMetal Company",
+        owner = "dmc",
+        position = vector3(1076.19, -2008.55, 32.09),
+        size = vec2(1.00, 2.00),
+        heading = 143.57,
     },
 }
 

@@ -83,7 +83,7 @@ QBShared.Trunks = {
     [GetHashKey('burito6')] = { slot = 10, weight = 100000 },
 
     -- BlueBird
-    [GetHashKey('trash')] = { slot = 10, weight = 200000 },
+    [GetHashKey('trash')] = { slot = 10, weight = 400000 },
 
     -- Pole Emploi
     [GetHashKey('scrap')] = { slot = 10, weight = 100000 },
@@ -104,6 +104,10 @@ QBShared.Trunks = {
 
     -- FFS
     [GetHashKey('rumpo4')] = { slot = 10, weight = 200000 },
+
+    -- DMC
+    [GetHashKey('tiptruck2')] = { slot = 10, weight = 200000 },
+    [GetHashKey('rubble')] = { slot = 10, weight = 200000 },
     
     -- Army
     [GetHashKey('barracks')] = { slot = 50, weight = 1000000 },
@@ -127,7 +131,7 @@ QBShared.Trunks = {
     [GetHashKey('speeder2')] = { slot = 50, weight = 80000 },
 
     -- FDF
-    [GetHashKey('benson')] = { slot = 50, weight = 400000 },
+    [GetHashKey('benson')] = { slot = 50, weight = 250000 },
     [GetHashKey('tractor2')] = { slot = 50, weight = 20000 },
     [GetHashKey('graintrailer')] = { slot = 50, weight = 100000 },
 }

@@ -89,7 +89,9 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
         return null;
     }
 
-    const price = configuration
+    const price = data.admin
+        ? 0
+        : configuration
         ? getVehicleCustomPrice(data.vehiclePrice, data.options, data.currentConfiguration, configuration)
         : 0;
 
@@ -98,7 +100,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
             vehicleEntityId: data.vehicle,
             originalConfiguration: data.originalConfiguration,
             vehicleConfiguration: configuration,
-            usePricing: true,
+            usePricing: !data.admin,
             onlyPerformance: true,
         });
     };

@@ -9,6 +9,7 @@ import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
 import { BillboardService } from '../billboard/billboard.service';
 import { ItemService } from '../item/item.service';
+import { FDFFieldProvider } from '../job/fdf/fdf.field.provider';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
@@ -26,6 +27,9 @@ export class ApiProvider {
 
     @Inject(BillboardService)
     private billboardService: BillboardService;
+
+    @Inject(FDFFieldProvider)
+    private FDFFieldProvider: FDFFieldProvider;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -154,5 +158,10 @@ export class ApiProvider {
         } else {
             return Response.internalServerError('Joueur non trouvé ou non connecté');
         }
+    }
+
+    @Get('/fdf-data')
+    public async fdfData(): Promise<Response> {
+        return Response.json(this.FDFFieldProvider.exportData());
     }
 }

@@ -6,7 +6,7 @@ QBCore.Commands.Add("clearinv", "Clear Players Inventory (Admin Only)", {{name =
     else
         TriggerClientEvent("soz-core:client:notification:draw", source, "Joueur non trouvé", "error")
     end
-end, "admin")
+end, "gamemaster")
 
 QBCore.Commands.Add("giveitem", "Give An Item", {
     {name = "id", help = "Player ID"},
@@ -53,4 +53,4 @@ QBCore.Commands.Add("setinv", "Force player inventory weight (Admin Only)", {
     {name = "weight", help = "Weight"},
 }, true, function(source, args)
     Inventory.SetMaxWeight(tonumber(args[1]), tonumber(args[2]))
-end, "admin")
+end, "gamemaster")

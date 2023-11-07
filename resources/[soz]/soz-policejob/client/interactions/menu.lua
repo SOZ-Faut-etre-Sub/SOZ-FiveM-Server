@@ -56,7 +56,9 @@ local function BadgeEntity(menu)
             local badgeProp = CreateObject(Config.Badge, coords.x, coords.y, coords.z + 0.2, true, true, true)
             local boneIndex = GetPedBoneIndex(ped, 28422)
 
-            SetNetworkIdCanMigrate(ObjToNet(badgeProp), false)
+            local netId = ObjToNet(badgeProp);
+            SetNetworkIdCanMigrate(netId, false)
+            TriggerServerEvent("soz-core:client:object:attached:register", netId)
             AttachEntityToEntity(badgeProp, ped, boneIndex, 0.065, 0.029, -0.035, 80.0, -1.90, 75.0, true, true, false, true, 1, true)
             QBCore.Functions.RequestAnimDict("paper_1_rcm_alt1-9")
             TaskPlayAnim(ped, "paper_1_rcm_alt1-9", "player_one_dual-9", 8.0, -8, 10.0, 49, 0, 0, 0, 0)
@@ -89,6 +91,7 @@ local function BadgeEntity(menu)
 
             Citizen.Wait(3000)
             ClearPedSecondaryTask(ped)
+            TriggerServerEvent("soz-core:client:object:attached:unregister", netId)
             DeleteObject(badgeProp)
         end,
     })
@@ -124,7 +127,7 @@ local function WantedEntity(menu, job)
                     end
 
                     TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(),
-                                       {type = job, message = name})
+                                       {type = job, message = name, job = job})
                     menu:Close()
                 end,
             })
@@ -208,6 +211,28 @@ PoliceJob.Functions.Menu.GenerateJobMenu = function(job)
                             message = message,
                             reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
                             reporterId = PlayerData.citizenid,
+                            job = PlayerData.job.id,
+                        })
+                    end,
+                })
+            end
+            if PlayerData.job.id == "fbi" then
+                menu:AddButton({
+                    label = "Faire une communication Présidentielle",
+                    value = nil,
+                    select = function(_, value)
+                        local message = exports["soz-core"]:Input("Message de la communication", 235)
+                        if message == nil or message == "" then
+                            exports["soz-core"]:DrawNotification("Vous devez spécifier un message", "error")
+                            return
+                        end
+
+                        TriggerServerEvent("phone:app:news:createNewsBroadcast", "phone:app:news:createNewsBroadcast:" .. QBCore.Shared.UuidV4(), {
+                            type = "presidence",
+                            message = message,
+                            reporter = PlayerData.charinfo.firstname .. " " .. PlayerData.charinfo.lastname,
+                            reporterId = PlayerData.citizenid,
+                            job = PlayerData.job.id,
                         })
                     end,
                 })

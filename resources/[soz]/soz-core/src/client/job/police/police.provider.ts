@@ -233,6 +233,11 @@ export class PoliceProvider {
             true,
             true
         );
+
+        const netId = ObjToNet(object);
+        SetNetworkIdCanMigrate(netId, false);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
+
         SetEntityAsMissionEntity(object, true, true);
         AttachEntityToEntity(
             object,
@@ -289,6 +294,7 @@ export class PoliceProvider {
 
         animDuration = GetAnimDuration('amb@code_human_in_car_mp_actions@first_person@smoke@std@rps@base', 'exit');
         await wait(animDuration * 1000);
+        TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(object));
         DeleteEntity(object);
     }
 }

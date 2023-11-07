@@ -1,7 +1,7 @@
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, ServerEvent } from '../../shared/event';
 import { AnimationService } from '../animation/animation.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
@@ -85,12 +85,17 @@ export class ItemProvider {
 
         if (this.hasWalkStick.object) {
             DetachEntity(this.hasWalkStick.object, false, false);
+            TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_UNREGISTER, ObjToNet(this.hasWalkStick.object));
             DeleteEntity(this.hasWalkStick.object);
         }
 
         if (this.hasWalkStick.enable) {
             const ped = PlayerPedId();
             const object = CreateObject(GetHashKey('prop_cs_walking_stick'), 0, 0, 0, true, true, true);
+
+            const netId = ObjToNet(object);
+            SetNetworkIdCanMigrate(netId, false);
+            TriggerServerEvent(ServerEvent.OBJECT_ATTACHED_REGISTER, netId);
 
             AttachEntityToEntity(
                 object,

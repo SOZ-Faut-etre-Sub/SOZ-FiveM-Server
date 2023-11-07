@@ -130,7 +130,7 @@ export class PlayerService {
         min: number,
         max?: number
     ): number {
-        const currentValue = player.metadata[key] as number;
+        const currentValue = (player.metadata[key] as number) ?? 0;
         let newValue = currentValue + value;
 
         if (newValue < min) {
@@ -243,7 +243,7 @@ export class PlayerService {
             });
 
             if (!dbInfo) {
-                return null;
+                return 'Inconnu';
             }
 
             const charInfo = JSON.parse(dbInfo.charinfo) as PlayerCharInfo;

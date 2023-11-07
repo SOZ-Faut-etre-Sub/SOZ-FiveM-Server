@@ -20,6 +20,8 @@ import data from '@emoji-mart/data/sets/14/apple.json';
 import { useConfig } from "../../../hooks/usePhone";
 import cn from "classnames";
 
+const AnonymousAllowedSociety = ['555-LSMC', '555-POLICE', '555-LSPD', '555-BCSO', '555-SASP'];
+
 const ContactsInfoPage: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -124,7 +126,9 @@ const ContactsInfoPage: React.FC = () => {
                         enabled={position}
                         onClick={() => setPosition(s => !s)}
                     />
-                    <Checkbox title="Envoi anonyme" enabled={anonymous} onClick={() => setAnonymous(s => !s)} />
+                    {AnonymousAllowedSociety.includes(contact.number) && (
+                        <Checkbox title="Envoi anonyme" enabled={anonymous} onClick={() => setAnonymous(s => !s)} />
+                    )}
                 </div>
                 <div className="mt-2 mx-10">
                     <ActionButton onClick={handleSend} disabled={message.length < 5}>

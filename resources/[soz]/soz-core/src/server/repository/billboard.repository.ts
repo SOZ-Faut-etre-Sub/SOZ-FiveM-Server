@@ -28,6 +28,7 @@ export class BillboardRepository extends RepositoryLegacy<Record<number, Billboa
                 lastEdit: line.lastEdit,
                 lastEditor: line.lastEditor,
                 enabled: line.enabled,
+                owner: line.owner,
             };
         }
 

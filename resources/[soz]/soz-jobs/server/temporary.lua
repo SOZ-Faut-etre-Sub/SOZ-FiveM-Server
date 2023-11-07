@@ -33,42 +33,6 @@ RegisterServerEvent("job:payout", function(money)
     TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous recevez: %s $ pour votre travail", money))
 end)
 
-RegisterServerEvent("job:payout:metal", function(money, source)
-    local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    Player.Functions.AddMoney("money", money)
-    TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous recevez: %s $ pour votre travail", money))
-end)
-
 RegisterServerEvent("job:anounce", function(string)
     TriggerClientEvent("soz-core:client:notification:draw", source, string.format(string))
-end)
-
-RegisterServerEvent("job:get:metal", function(amount)
-    local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    local metadata = {}
-    exports["soz-inventory"]:AddItem(Player.PlayerData.source, Player.PlayerData.source, "metalscrap", amount, metadata, nil, function(success, reason)
-        if success then
-            TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous avez ramassé %d ferrailles", amount))
-        else
-            if reason == "invalid_weight" then
-                TriggerClientEvent("soz-core:client:notification:draw", source, "Vos poches sont pleines...", "error")
-            else
-                TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Il y a eu une erreur: %s", reason), "error")
-            end
-        end
-    end)
-end)
-
-RegisterServerEvent("job:remove:metal", function(amount)
-    local Player = QBCore.Functions.GetPlayer(tonumber(source))
-    local totalAmount = exports["soz-inventory"]:GetItem(Player.PlayerData.source, "metalscrap", nil, true)
-    if tonumber(amount) <= tonumber(totalAmount) then
-        exports["soz-inventory"]:RemoveItem(Player.PlayerData.source, "metalscrap", amount, nil)
-        TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous avez vendu %d ferrailles", amount))
-        local payout = amount * SozJobCore.metal_payout
-        TriggerEvent("job:payout:metal", payout, source)
-    else
-        TriggerClientEvent("soz-core:client:notification:draw", source, string.format("Vous essayez de vendre plus que ce que vous ne possédez", amount),
-                           "error")
-    end
 end)

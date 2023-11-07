@@ -117,6 +117,11 @@ export const Messages = () => {
             <AppWrapper>
                 <AppTitle
                     title={getDisplayByNumber(conversation.phoneNumber) || conversation.phoneNumber}
+                    subtitle={
+                        getDisplayByNumber(conversation.phoneNumber) !== conversation.phoneNumber
+                            ? conversation.phoneNumber
+                            : ''
+                    }
                     action={
                         <div className="flex gap-2.5">
                             <ArchiveIcon
@@ -152,7 +157,7 @@ export const Messages = () => {
                         <ChevronLeftIcon className="h-5 w-5" /> Fermer
                     </Link>
                 </AppTitle>
-                <AppContent className="mt-8 mb-4 h-[800px] overflow-scroll">
+                <AppContent className="mt-2 mb-4 h-[800px] overflow-scroll">
                     <div style={{ flex: 1, display: 'flex', overflowY: 'auto' }}>
                         <div
                             style={{

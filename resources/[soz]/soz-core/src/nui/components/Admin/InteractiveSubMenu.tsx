@@ -40,6 +40,7 @@ export const InteractiveSubMenu: FunctionComponent<InteractiveSubMenuProps> = ({
                             value: !state.displayPlayerNames,
                             withDetails: value === 1,
                         });
+                        state.displayPlayerNames = !state.displayPlayerNames;
                     }}
                 >
                     <MenuItemSelectOption>Sans détails</MenuItemSelectOption>

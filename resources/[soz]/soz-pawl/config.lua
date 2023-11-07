@@ -42,7 +42,7 @@ Config.Processing = {
     PlankAmount = 30,
     SawdustStorage = "pawl_sawdust_storage",
     SawdustItem = "sawdust",
-    SawdustAmount = 20,
+    SawdustAmount = 60,
 }
 
 Config.Degradation = {}

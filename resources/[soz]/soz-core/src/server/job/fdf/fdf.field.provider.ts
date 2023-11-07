@@ -368,4 +368,38 @@ export class FDFFieldProvider {
             'success'
         );
     }
+
+    public exportData() {
+        const ret = {
+            Champs: {},
+            Serres: {},
+        };
+
+        const fieldTypes = {
+            Champs: FDFFieldConfig.fields,
+            Serres: FDFGreenhouseConfig.fields,
+        };
+
+        for (const [kind, fields] of Object.entries(fieldTypes)) {
+            for (const [name, field] of Object.entries(fields)) {
+                const crops = this.cropsPerField.get(name);
+                if (crops && crops.size > 0) {
+                    const [firstValue] = crops.values();
+                    ret[kind][name] = {
+                        culture: this.itemService.getItem(firstValue.type).label,
+                        count: crops.size,
+                        location: [field.data[0], field.data[1], field.data[2]],
+                    };
+                } else {
+                    ret[kind][name] = {
+                        culture: null,
+                        count: 0,
+                        location: [field.data[0], field.data[1], field.data[2]],
+                    };
+                }
+            }
+        }
+
+        return ret;
+    }
 }

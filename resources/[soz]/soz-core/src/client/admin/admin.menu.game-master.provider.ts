@@ -117,40 +117,6 @@ export class AdminMenuGameMasterProvider {
         TriggerServerEvent(ServerEvent.ADMIN_UNCUFF_PLAYER);
     }
 
-    @OnNuiEvent(NuiEvent.AdminMenuGameMasterCreateNewCharacter)
-    public async createNewCharacter(): Promise<void> {
-        const firstName = await this.inputService.askInput({
-            maxCharacters: 30,
-            title: 'Prénom',
-            defaultValue: '',
-        });
-
-        if (!firstName) {
-            return;
-        }
-
-        await wait(100);
-
-        const lastName = await this.inputService.askInput({
-            maxCharacters: 30,
-            title: 'Nom',
-            defaultValue: '',
-        });
-
-        if (!lastName) {
-            return;
-        }
-
-        this.nuiMenu.closeAll();
-        TriggerServerEvent(ServerEvent.ADMIN_CREATE_CHARACTER, firstName, lastName);
-    }
-
-    @OnNuiEvent(NuiEvent.AdminMenuGameMasterSwitchCharacter)
-    public async switchCharacter(citizenId: string): Promise<void> {
-        this.nuiMenu.closeAll();
-        TriggerServerEvent(ServerEvent.ADMIN_SWITCH_CHARACTER, citizenId);
-    }
-
     @OnNuiEvent(NuiEvent.AdminSetAdminGPS)
     public async setAdminGPS(value: boolean): Promise<void> {
         this.hudMinimapProvider.hasAdminGps = value;

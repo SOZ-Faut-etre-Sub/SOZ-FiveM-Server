@@ -59,7 +59,7 @@ export class _MessagesDB {
                               phone_messages.conversation_id,
                               phone_messages.message,
                               phone_messages.author,
-                              phone_messages.createdAt
+                              unix_timestamp(phone_messages.createdAt)*1000 as createdAt
                        FROM phone_messages
                                 LEFT JOIN phone_messages_conversations ON phone_messages.conversation_id = phone_messages_conversations.conversation_id
                        WHERE phone_messages_conversations.participant_identifier = ? AND phone_messages.updatedAt >= DATE_SUB(NOW(), INTERVAL 14 DAY)

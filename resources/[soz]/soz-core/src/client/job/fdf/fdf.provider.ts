@@ -7,7 +7,7 @@ import { PlayerInOutService } from '@public/client/player/player.inout.service';
 import { emitRpc } from '@public/core/rpc';
 import { CraftsList } from '@public/shared/craft/craft';
 import { ClientEvent, NuiEvent } from '@public/shared/event';
-import { JobPermission, JobType } from '@public/shared/job';
+import { JobType } from '@public/shared/job';
 import {
     FDFConfig,
     FDFCraftZones,
@@ -59,6 +59,7 @@ export class FDFProvider {
         [FDFFieldBlips.apple]: false,
         [FDFFieldBlips.orange]: false,
         [FDFFieldBlips.resell]: false,
+        [FDFFieldBlips.lemon]: false,
     };
     private areaBlips = new Map<FDFFieldBlips, number[]>();
 
@@ -67,55 +68,6 @@ export class FDFProvider {
         Object.values(FDFFieldBlips).forEach(kind => this.areaBlips.set(kind, []));
 
         this.craftService.createBtargetZoneCraft(FDFCraftZones, 'c:/food/chef.png', 'Préparer', JobType.FDF);
-
-        this.targetFactory.createForBoxZone(
-            'fdf:duty',
-            {
-                center: [2437.28, 4964.28, 47.21],
-                heading: 45,
-                length: 0.2,
-                width: 1.8,
-                minZ: 47.01,
-                maxZ: 48.21,
-            },
-            [
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Prise de service',
-                    canInteract: () => {
-                        return !this.playerService.isOnDuty();
-                    },
-                    job: JobType.FDF,
-                },
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Fin de service',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
-                    job: JobType.FDF,
-                },
-                {
-                    icon: 'fas fa-users',
-                    label: 'Employé(e)s en service',
-                    action: () => {
-                        TriggerServerEvent('QBCore:GetEmployOnDuty');
-                    },
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-                        return (
-                            this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                        );
-                    },
-                    job: JobType.FDF,
-                },
-            ]
-        );
 
         FDFConfig.resellZones.forEach((zone, index) => {
             this.pedFactory.createPed({
@@ -209,6 +161,9 @@ export class FDFProvider {
                 case FDFFieldBlips.orange:
                     this.createOrangeBlips();
                     break;
+                case FDFFieldBlips.lemon:
+                    this.createLemonBlips();
+                    break;
             }
         } else {
             const blips = this.areaBlips.get(type);
@@ -237,6 +192,10 @@ export class FDFProvider {
 
     private createOrangeBlips() {
         this.createAreaBlips(FDFFieldBlips.orange, 47, FDFTreeField[FDFFieldKind.orange].data);
+    }
+
+    private createLemonBlips() {
+        this.createAreaBlips(FDFFieldBlips.lemon, 46, FDFTreeField[FDFFieldKind.lemon].data);
     }
 
     private createAreaBlips(name: FDFFieldBlips, color: number, data: Vector4) {

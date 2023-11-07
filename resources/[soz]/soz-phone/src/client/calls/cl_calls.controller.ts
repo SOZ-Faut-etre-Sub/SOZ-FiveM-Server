@@ -23,7 +23,7 @@ export const callService = new CallService();
 
 export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCallbackFunc) => {
     if (callService.isInCall()) {
-        cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
+        cb({ status: 'error', errorMsg: 'ALREADY IN CALL' });
         return;
     }
 
@@ -41,7 +41,7 @@ export const initializeCallHandler = async (data: InitializeCallDTO, cb?: NuiCal
         cb({ status: 'ok' });
     } catch (e) {
         console.error(e);
-        cb({ status: 'error', errorMsg: 'CLIENT_TIMED_OUT' });
+        cb({ status: 'error', errorMsg: 'FAILED TO START CALL' });
     }
 };
 

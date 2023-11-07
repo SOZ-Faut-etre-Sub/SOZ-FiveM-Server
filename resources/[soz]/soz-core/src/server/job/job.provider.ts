@@ -74,7 +74,24 @@ export class JobProvider {
             }
         }
 
-        return Object.values(jobs).filter(job => job.grades.length > 0);
+        return Object.values(jobs).map(job => {
+            if (job.grades.length > 0) {
+                return job;
+            }
+
+            job.grades.push({
+                id: 0,
+                jobId: job.id,
+                salary: 0,
+                name: 'Défaut',
+                is_default: true,
+                owner: 1,
+                permissions: [],
+                weight: 0,
+            });
+
+            return job;
+        });
     }
 
     @Rpc(RpcServerEvent.JOBS_USE_WORK_CLOTHES)

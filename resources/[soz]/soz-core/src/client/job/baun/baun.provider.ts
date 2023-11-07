@@ -40,6 +40,7 @@ export class BaunProvider {
         displayFlavorBlip: false,
         displayFurnitureBlip: false,
         displayResellBlip: false,
+        displaySnackBlip: false,
     };
 
     @Once(OnceStep.PlayerLoaded)
@@ -96,6 +97,15 @@ export class BaunProvider {
             scale: 0.9,
         });
         this.blipFactory.hide('displayFurnitureBlip', true);
+
+        this.blipFactory.create('displaySnackBlip', {
+            name: 'Point de récolte de snacks',
+            coords: { x: -753.6, y: -2571.93, z: 13.9 },
+            sprite: 478,
+            color: 28,
+            scale: 0.9,
+        });
+        this.blipFactory.hide('displaySnackBlip', true);
 
         this.blipFactory.create('displayResellBlip', {
             name: 'Point de vente des cocktails',

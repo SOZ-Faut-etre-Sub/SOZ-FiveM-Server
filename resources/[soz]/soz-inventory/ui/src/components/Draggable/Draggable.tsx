@@ -22,7 +22,7 @@ type Props = {
     price?: number
 }
 
-const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}
+const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "numeric", year: "numeric", hour: "numeric", minute: "numeric"}
 const FORMAT_CURRENCY: Intl.NumberFormatOptions = {style: "currency", currency: 'USD', maximumFractionDigits: 0}
 
 const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, onItemHover, price }) => {

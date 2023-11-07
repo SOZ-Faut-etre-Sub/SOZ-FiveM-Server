@@ -34,7 +34,7 @@ function SynchroniseJob()
         SozJobCore.Jobs[jobId].grades = tmpGrades[jobId]
     end
 
-    TriggerClientEvent("soz-jobs:Client:OnJobSync", -1, SozJobCore.Jobs)
+    TriggerLatentClientEvent("soz-jobs:Client:OnJobSync", 16384, -1, SozJobCore.Jobs)
 end
 
 function CheckPlayerJobPermission(player, targetJobId, permission)

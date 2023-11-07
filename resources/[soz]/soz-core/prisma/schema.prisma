@@ -298,6 +298,7 @@ model phone_twitch_news {
   reporterId String?  @db.VarChar(70)
   image      String?  @db.VarChar(256)
   message    String   @db.VarChar(512)
+  job        String   @db.VarChar(50) @default("news")
   createdAt  DateTime @default(now()) @db.Timestamp(0)
 
   @@index([type], map: "type")
@@ -595,6 +596,7 @@ model drugs_seedling {
   citizenid  String   @db.VarChar(50)
   skillBoost Boolean
   property   Int?
+  in_mlo     Boolean  @default(false)
 }
 
 model drugs_sell_location {
@@ -688,6 +690,7 @@ model billboard {
     height              Int       @db.Int
     lastEdit            DateTime  @default(now()) @db.Timestamp(0)
     lastEditor          String    @db.VarChar(50)
+    owner               String    @db.VarChar(50)
     enabled             Boolean
 }
 

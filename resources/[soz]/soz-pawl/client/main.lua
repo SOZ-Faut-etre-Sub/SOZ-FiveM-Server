@@ -88,14 +88,6 @@ RegisterNetEvent("QBCore:Client:OnPlayerLoaded", function()
         },
         distance = 2.5,
     })
-
-    -- Target
-    exports["qb-target"]:AddBoxZone("pawl:duty", vector3(-539.36, 5305.28, 76.37), 0.4, 1.2, {
-        name = "pawl:duty",
-        heading = 340,
-        minZ = 76.12,
-        maxZ = 76.77,
-    }, {options = SozJobCore.Functions.GetDutyActions("pawl"), distance = 2.5})
 end)
 
 --- Degradation

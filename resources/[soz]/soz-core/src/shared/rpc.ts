@@ -29,6 +29,8 @@ export enum RpcServerEvent {
     DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:server:driving-school:spawn-vehicle',
     DRIVING_SCHOOL_CHECK_REMAINING_SLOTS = 'soz-core:server:driving-school:check-vehicle-slots',
 
+    DMC_GET_CONVERTER_STATE = 'soz-core:server:job:dmc:get-converter-state',
+
     INVENTORY_SEARCH = 'soz-core:inventory:search',
 
     JOB_GET_JOBS = 'soz-core:jobs:get-jobs',
@@ -141,10 +143,10 @@ export enum RpcServerEvent {
     PROP_GET_SERVER_DATA = 'soz-core:server:prop:get-number-props',
     PROP_GET_LOADED_PROPS = 'soz-core:server:prop:get-all-props',
     PROP_REQUEST_CREATE_COLLECTION = 'soz-core:server:prop:create-collection',
+    PROP_REQUEST_RENAME_COLLECTION = 'soz-core:server:prop:rename-collection',
     PROP_REQUEST_DELETE_COLLECTION = 'soz-core:server:prop:delete-collection',
     PROP_REQUEST_CREATE_PROP = 'soz-core:server:prop:create-prop',
     PROP_REQUEST_TOGGLE_LOAD_COLLECTION = 'soz-core:server:prop:load-collection',
-    PROP_REQUEST_UNLOAD_PROPS = 'soz-core:server:prop:unload-props',
 
     CRAFT_GET_RECIPES = 'soz-core:server:craft:get-recipes',
     CRAFT_DO_RECIPES = 'soz-core:server:craft:do-recipes',

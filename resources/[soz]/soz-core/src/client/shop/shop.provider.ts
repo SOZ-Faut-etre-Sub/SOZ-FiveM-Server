@@ -72,6 +72,7 @@ export class ShopProvider {
             canInteract: entity => {
                 return (
                     this.currentShop !== null &&
+                    this.currentShopBrand !== ShopBrand.LsCustom &&
                     !IsEntityPlayingAnim(entity, 'random@robbery', 'robbery_main_female', 3)
                 );
             },
@@ -102,11 +103,21 @@ export class ShopProvider {
             icon: 'fas fa-store',
             label: 'Vérfier le stock',
             canInteract: () => {
-                return this.currentShop !== null && this.currentShopBrand === ShopBrand.Zkea;
+                return (
+                    this.currentShop !== null &&
+                    (this.currentShopBrand === ShopBrand.Zkea || this.currentShopBrand === ShopBrand.LsCustom)
+                );
             },
             blackoutGlobal: true,
             action: () => {
-                TriggerServerEvent(ServerEvent.ZKEA_CHECK_STOCK);
+                switch (this.currentShopBrand) {
+                    case ShopBrand.Zkea:
+                        TriggerServerEvent(ServerEvent.ZKEA_CHECK_STOCK);
+                        break;
+                    case ShopBrand.LsCustom:
+                        TriggerServerEvent(ServerEvent.LSC_CHECK_STOCK);
+                        break;
+                }
             },
         },
         {
@@ -235,6 +246,10 @@ export class ShopProvider {
         if (brand == ShopBrand.Ponsonbys || brand == ShopBrand.Suburban || brand == ShopBrand.Binco) {
             TriggerEvent(ClientEvent.FFS_ENTER_CLOTHING_SHOP, brand);
         }
+
+        if (brand == ShopBrand.LsCustom) {
+            TriggerEvent(ClientEvent.LSC_ENTER_SHOP, brand);
+        }
     }
 
     @OnEvent(ClientEvent.LOCATION_EXIT)
@@ -245,6 +260,9 @@ export class ShopProvider {
 
         if (brand == ShopBrand.Ponsonbys || brand == ShopBrand.Suburban || brand == ShopBrand.Binco) {
             TriggerEvent(ClientEvent.FFS_EXIT_CLOTHING_SHOP, brand);
+        }
+        if (brand == ShopBrand.LsCustom) {
+            TriggerEvent(ClientEvent.LSC_EXIT_SHOP, brand);
         }
     }
 

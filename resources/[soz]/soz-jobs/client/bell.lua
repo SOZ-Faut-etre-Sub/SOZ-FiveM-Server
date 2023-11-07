@@ -43,6 +43,12 @@ CreateThread(function()
         maxZ = 24.10,
     }, {options = callSociety("555-NEWS"), distance = 2.5})
 
+    exports["qb-target"]:AddBoxZone("bell:you-news", vector3(-1082.59, -246.58, 37.76), 1.6, 5.2,
+                                    {name = "bell:you-news", heading = 27.89, minZ = 36.76, maxZ = 38.76}, {
+        options = callSociety("555-YOUN"),
+        distance = 2.5,
+    })
+
     exports["qb-target"]:AddBoxZone("bell:food", vector2(-1884.4, 2063.0), 0.5, 0.5, {
         name = "bell:food",
         heading = 159.0,
@@ -131,6 +137,12 @@ CreateThread(function()
         minZ = 46.37,
         maxZ = 46.57,
     }, {options = callSociety("555-FDF"), distance = 2.5})
+    exports["qb-target"]:AddBoxZone("bell:dmc", vector3(1078.02, -1980.91, 31.37), 0.55, 0.50, {
+        name = "bell:gouv",
+        heading = 338,
+        minZ = 31.72,
+        maxZ = 31.87,
+    }, {options = callSociety("555-DMC"), distance = 2.5})
 end)
 
 RegisterNetEvent("jobs:client:callSociety", function(data)

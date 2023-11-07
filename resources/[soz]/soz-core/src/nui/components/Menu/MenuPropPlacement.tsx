@@ -5,9 +5,9 @@ import { useNuiEvent } from '@public/nui/hook/nui';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { PlacementProp, PropPlacementMenuData } from '@public/shared/nui/prop_placement';
-import { PropClientData, PropCollection, PropCollectionData, PropServerData } from '@public/shared/object';
+import { PropCollection, PropCollectionData, PropServerData } from '@public/shared/object';
 import { isOk, Result } from '@public/shared/result';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useCallback, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -33,10 +33,11 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     const player = usePlayer();
     const [collectionList, setCollectionList] = useState<PropCollectionData[]>(data.collections);
     const [serverData, setServerData] = useState<PropServerData>(data.serverData);
-    const [clientData, setClientData] = useState<PropClientData>(data.clientData);
+    const [showAll, setShowAll] = useState<boolean>(true);
     const [collection, setCollection] = useState<PropCollection>({
         name: '',
         creator_citizenID: '',
+        creatorName: '',
         creation_date: new Date(),
         size: 0,
         loaded_size: 0,
@@ -52,9 +53,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     useNuiEvent('placement_prop', 'SetCollectionList', (collectionList: PropCollectionData[]) => {
         setCollectionList(collectionList);
     });
-    useNuiEvent('placement_prop', 'SetDatas', ({ serverData, clientData }) => {
+    useNuiEvent('placement_prop', 'SetDatas', ({ serverData }) => {
         setServerData(serverData);
-        setClientData(clientData);
     });
     useNuiEvent('placement_prop', 'EnterEditorMode', () => {
         navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
@@ -62,12 +62,17 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     useNuiEvent('placement_prop', 'SetCurrentSearch', (search: string) => {
         setCurrentSearch(search);
     });
-    useBackspace(async () => {
+
+    const leaveEditorMode = useCallback(async () => {
         await fetchNui(NuiEvent.LeaveEditorMode);
         if (location.pathname == `/${MenuType.PropPlacementMenu}/collection`) {
             await fetchNui(NuiEvent.PropPlacementReturnToMainMenu);
         }
-    });
+    }, [location.pathname]);
+
+    useBackspace(leaveEditorMode);
+
+    const selectShowAll = useCallback(value => setShowAll(value), [showAll, setShowAll, collectionList]);
 
     if (!player) {
         return null;
@@ -104,8 +109,6 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     <MenuTitle>
                         Serveur : {serverData.loaded}/{serverData.total}
                     </MenuTitle>
-                    <MenuTitle> Total Client : {clientData.total}</MenuTitle>
-                    <MenuTitle> Chunk Client : {clientData.chunk}</MenuTitle>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.RequestCreatePropCollection);
@@ -113,24 +116,40 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     >
                         ➕ Créer une Collection
                     </MenuItemButton>
-                    <MenuTitle>Collections :</MenuTitle>
-                    {collectionList.map(collection => (
-                        <MenuItemButton key={collection.name} onConfirm={selectCollection(collection.name)}>
-                            <div className="pr-2 flex items-center justify-between">
-                                <span>
-                                    {collection.loaded_size == 0 || collection.loaded_size > collection.size
-                                        ? '🔴'
-                                        : collection.loaded_size < collection.size
-                                        ? '🔵'
-                                        : '🟢'}{' '}
-                                    {collection.name}
-                                </span>
-                                <span>
-                                    {collection.loaded_size}/{collection.size}
-                                </span>
-                            </div>
-                        </MenuItemButton>
-                    ))}
+                    <MenuTitle>Collections</MenuTitle>
+                    {['staff', 'admin'].includes(player.role) && (
+                        <MenuItemCheckbox
+                            checked={true}
+                            onChange={async value => {
+                                selectShowAll(value);
+                            }}
+                        >
+                            Voir toutes les collections
+                        </MenuItemCheckbox>
+                    )}
+                    {collectionList
+                        .filter(collection => showAll || collection.creator_citizenID == player.citizenid)
+                        .map(collection => (
+                            <MenuItemButton
+                                key={collection.name}
+                                onConfirm={selectCollection(collection.name)}
+                                description={collection.creatorName}
+                            >
+                                <div className="pr-2 flex items-center justify-between">
+                                    <span>
+                                        {collection.loaded_size == 0 || collection.loaded_size > collection.size
+                                            ? '🔴'
+                                            : collection.loaded_size < collection.size
+                                            ? '🔵'
+                                            : '🟢'}{' '}
+                                        {collection.name}
+                                    </span>
+                                    <span>
+                                        {collection.loaded_size}/{collection.size}
+                                    </span>
+                                </div>
+                            </MenuItemButton>
+                        ))}
                 </MenuContent>
             </MainMenu>
 
@@ -174,6 +193,14 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                     </MenuItemButton>
                     <MenuItemButton
                         onConfirm={async () => {
+                            await fetchNui(NuiEvent.PlacementCollectionRename);
+                            navigate(-1);
+                        }}
+                    >
+                        ✎ Renommer la collection
+                    </MenuItemButton>
+                    <MenuItemButton
+                        onConfirm={async () => {
                             await fetchNui(NuiEvent.RequestDeletePropCollection, { name: collection.name });
                             navigate(-1);
                         }}
@@ -209,19 +236,19 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                         }
                         return (
                             <MenuItemSelect
-                                key={prop.unique_id}
+                                key={prop.object.id}
                                 title={label}
                                 titleWidth={60}
                                 onSelected={async () => {
-                                    await fetchNui(NuiEvent.SelectPlacedProp, { id: prop.unique_id });
+                                    await fetchNui(NuiEvent.SelectPlacedProp, { id: prop.object.id });
                                 }}
                                 onConfirm={async (_, value) => {
                                     if (value == 'delete') {
-                                        await fetchNui(NuiEvent.RequestDeleteProp, { id: prop.unique_id });
+                                        await fetchNui(NuiEvent.RequestDeleteProp, { id: prop.object.id });
                                     }
                                     if (value == 'edit') {
                                         await fetchNui(NuiEvent.ChoosePlacedPropToEdit, {
-                                            id: prop.unique_id,
+                                            id: prop.object.id,
                                         });
                                     }
                                 }}

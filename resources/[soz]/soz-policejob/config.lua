@@ -89,8 +89,9 @@ Config.Fines = {
             label = "Catégorie 2",
             items = {
                 {label = "Détention d'objet prohibé", price = {min = 700, max = 2100}},
-                {label = "Délit de fuite", price = {min = 800, max = 2400}},
+                {label = "Refus d'obtempérer", price = {min = 800, max = 2400}},
                 {label = "Violation de propriété privée", price = {min = 850, max = 2550}},
+                {label = "Vente de stupéfiants", price = {min = 900, max = 2700}},
                 {label = "Dégradation de bien public", price = {min = 1000, max = 3000}},
                 {label = "Port d'arme illégal", price = {min = 1000, max = 3000}},
                 {label = "Menace ou Attaque", price = {min = 1200, max = 3600}},
@@ -103,6 +104,7 @@ Config.Fines = {
             items = {
                 {label = "Obstruction à la justice", price = {min = 1750, max = 5700}},
                 {label = "Divulgation d'info Confidentielle", price = {min = 2000, max = 6000}},
+                {label = "Usurpation d'identité / Impersonnification", price = {min = 2000, max = 6000}},
                 {label = "Détention de matériel militaire prohibé", price = {min = 2500, max = 7500}},
                 {label = "Menace à main armée", price = {min = 2500, max = 7500}},
                 {label = "Attaque à main armée", price = {min = 3500, max = 10500}},
@@ -139,8 +141,9 @@ Config.Fines = {
             label = "Catégorie 2",
             items = {
                 {label = "Détention d'objet prohibé", price = {min = 700, max = 2100}},
-                {label = "Délit de fuite", price = {min = 800, max = 2400}},
+                {label = "Refus d'obtempérer", price = {min = 800, max = 2400}},
                 {label = "Violation de propriété privée", price = {min = 850, max = 2550}},
+                {label = "Vente de stupéfiants", price = {min = 900, max = 2700}},
                 {label = "Dégradation de bien public", price = {min = 1000, max = 3000}},
                 {label = "Port d'arme illégal", price = {min = 1000, max = 3000}},
                 {label = "Menace ou Attaque", price = {min = 1200, max = 3600}},
@@ -153,6 +156,7 @@ Config.Fines = {
             items = {
                 {label = "Obstruction à la justice", price = {min = 1750, max = 5700}},
                 {label = "Divulgation d'info Confidentielle", price = {min = 2000, max = 6000}},
+                {label = "Usurpation d'identité / Impersonnification", price = {min = 2000, max = 6000}},
                 {label = "Détention de matériel militaire prohibé", price = {min = 2500, max = 7500}},
                 {label = "Menace à main armée", price = {min = 2500, max = 7500}},
                 {label = "Attaque à main armée", price = {min = 3500, max = 10500}},
@@ -189,8 +193,9 @@ Config.Fines = {
             label = "Catégorie 2",
             items = {
                 {label = "Détention d'objet prohibé", price = {min = 700, max = 2100}},
-                {label = "Délit de fuite", price = {min = 800, max = 2400}},
+                {label = "Refus d'obtempérer", price = {min = 800, max = 2400}},
                 {label = "Violation de propriété privée", price = {min = 850, max = 2550}},
+                {label = "Vente de stupéfiants", price = {min = 900, max = 2700}},
                 {label = "Dégradation de bien public", price = {min = 1000, max = 3000}},
                 {label = "Port d'arme illégal", price = {min = 1000, max = 3000}},
                 {label = "Menace ou Attaque", price = {min = 1200, max = 3600}},
@@ -203,6 +208,7 @@ Config.Fines = {
             items = {
                 {label = "Obstruction à la justice", price = {min = 1750, max = 5700}},
                 {label = "Divulgation d'info Confidentielle", price = {min = 2000, max = 6000}},
+                {label = "Usurpation d'identité / Impersonnification", price = {min = 2000, max = 6000}},
                 {label = "Détention de matériel militaire prohibé", price = {min = 2500, max = 7500}},
                 {label = "Menace à main armée", price = {min = 2500, max = 7500}},
                 {label = "Attaque à main armée", price = {min = 3500, max = 10500}},

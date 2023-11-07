@@ -1,3 +1,5 @@
+import { InventoryManager } from '@public/server/inventory/inventory.manager';
+
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -31,8 +33,17 @@ export class BennysVehicleProvider {
     @Inject(Monitor)
     private monitor: Monitor;
 
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_ENGINE)
     public async onRepairVehicleEngine(source: number, vehicleNetworkId: number) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_motor', 1)) {
+            this.notifier.error(source, `Vous n'avez pas de pièce de réparation moteur.`);
+
+            return;
+        }
+
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const damageDiff = 1000 - state.condition.engineHealth;
         const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
@@ -40,6 +51,8 @@ export class BennysVehicleProvider {
         if (!(await this.doRepairVehicle(source, repairTime))) {
             return;
         }
+
+        this.inventoryManager.removeItemFromInventory(source, 'repair_part_motor', 1);
 
         this.notifier.notify(source, `Le moteur a été réparé.`);
 
@@ -62,6 +75,12 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_BODY)
     public async onRepairVehicleEngineBody(source: number, vehicleNetworkId: number) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_body', 1)) {
+            this.notifier.error(source, `Vous n'avez pas de pièce de réparation carosserie.`);
+
+            return;
+        }
+
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const damageDiff = 1000 - state.condition.bodyHealth;
         const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
@@ -69,6 +88,8 @@ export class BennysVehicleProvider {
         if (!(await this.doRepairVehicle(source, repairTime))) {
             return;
         }
+
+        this.inventoryManager.removeItemFromInventory(source, 'repair_part_body', 1);
 
         this.notifier.notify(source, `La carrosserie a été réparée.`);
 
@@ -94,6 +115,12 @@ export class BennysVehicleProvider {
 
     @OnEvent(ServerEvent.BENNYS_REPAIR_VEHICLE_TANK)
     public async onRepairVehicleEngineTank(source: number, vehicleNetworkId: number) {
+        if (!this.inventoryManager.hasEnoughItem(source, 'repair_part_fuel_tank', 1)) {
+            this.notifier.error(source, `Vous n'avez pas de pièce de réparation réservoir.`);
+
+            return;
+        }
+
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
         const damageDiff = 1000 - state.condition.tankHealth;
         const repairTime = (damageDiff * 30000) / 1000 + 10000; // Between 10s and 40s
@@ -101,6 +128,8 @@ export class BennysVehicleProvider {
         if (!(await this.doRepairVehicle(source, repairTime))) {
             return;
         }
+
+        this.inventoryManager.removeItemFromInventory(source, 'repair_part_fuel_tank', 1);
 
         this.notifier.notify(source, `Le réservoir d'essence a été réparé.`);
 

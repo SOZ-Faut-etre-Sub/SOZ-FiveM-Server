@@ -25,7 +25,9 @@ export type ItemType =
     | 'liquor'
     | 'fish'
     | 'fishing_garbage'
-    | 'outfit';
+    | 'outfit'
+    | 'tool'
+    | 'metal';
 
 type BaseItem = {
     name: string;
@@ -83,6 +85,10 @@ export type SawdustItem = BaseItem & {
     type: 'sawdust';
 };
 
+export type ToolItem = BaseItem & {
+    type: 'tool';
+};
+
 export type PlankItem = BaseItem & {
     type: 'plank';
 };
@@ -101,6 +107,11 @@ export type LiquorItem = BaseItem & {
     nutrition: Nutrition;
     animation?: AnimationItem;
     prop?: PropItem;
+};
+
+// DMC
+export type MetalItem = BaseItem & {
+    type: 'metal';
 };
 
 export type FishItem = BaseItem & {
@@ -212,6 +223,8 @@ export type InventoryItemMetadata = {
     fuel?: number;
     drugContract?: DrugContractInfo;
     fakeIdData?: FakeId;
+    // Weapon certificate (DMC)
+    craftCertificate?: string;
 };
 
 export type InventoryItem = {
@@ -249,4 +262,6 @@ export type Item =
     | GarmentItem
     | OutfitItem
     | FishItem
-    | FishingGarbageItem;
+    | FishingGarbageItem
+    | ToolItem
+    | MetalItem;

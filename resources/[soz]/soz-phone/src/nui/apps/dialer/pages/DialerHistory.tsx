@@ -92,14 +92,31 @@ export const DialerHistory: React.FC = () => {
                                                         <PhoneIncomingIcon className="h-5 w-5 text-green-700 mr-3" />
                                                     )}
                                                 </div>
-                                                <p
-                                                    className={cn('text-left text-sm font-medium truncate', {
-                                                        'text-gray-100': config.theme.value === 'dark',
-                                                        'text-gray-600': config.theme.value === 'light',
-                                                    })}
+                                                <div
+                                                    className={cn(
+                                                        'grid grid-rows-2 text-left text-sm font-medium truncate',
+                                                        {
+                                                            'text-gray-100': config.theme.value === 'dark',
+                                                            'text-gray-600': config.theme.value === 'light',
+                                                        }
+                                                    )}
                                                 >
-                                                    {getDisplayByNumber(contactNumber)}
-                                                </p>
+                                                    <p
+                                                        className={cn({
+                                                            'row-span-2':
+                                                                getDisplayByNumber(contactNumber) === contactNumber,
+                                                            'row-span-1':
+                                                                getDisplayByNumber(contactNumber) !== contactNumber,
+                                                        })}
+                                                    >
+                                                        {getDisplayByNumber(contactNumber)}
+                                                    </p>
+                                                    {getDisplayByNumber(contactNumber) != contactNumber && (
+                                                        <p className="text-left text-sm font-medium truncate row-span-1">
+                                                            {contactNumber}
+                                                        </p>
+                                                    )}
+                                                </div>
                                             </div>
                                             <div className="text-gray-500 text-sm">
                                                 <DayAgo timestamp={call.start} />

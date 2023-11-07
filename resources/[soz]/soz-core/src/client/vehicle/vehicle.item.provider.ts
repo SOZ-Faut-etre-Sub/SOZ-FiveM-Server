@@ -26,13 +26,26 @@ export class VehicleItemProvider {
                 },
             },
             {
-                icon: 'c:mechanic/reparer.png',
-                label: 'Réparer (kit)',
+                icon: 'c:mechanic/reparer_mecanique.png',
+                label: 'Réparer mécanique (kit)',
                 item: 'repairkit',
                 action: entity => {
                     const networkId = NetworkGetNetworkIdFromEntity(entity);
 
                     TriggerServerEvent(ServerEvent.VEHICLE_USE_REPAIR_KIT, networkId);
+                },
+                canInteract: () => {
+                    return true;
+                },
+            },
+            {
+                icon: 'c:mechanic/reparer_carosserie.png',
+                label: 'Réparer carosserie (kit)',
+                item: 'bodyrepairkit',
+                action: entity => {
+                    const networkId = NetworkGetNetworkIdFromEntity(entity);
+
+                    TriggerServerEvent(ServerEvent.VEHICLE_USE_BODY_REPAIR_KIT, networkId);
                 },
                 canInteract: () => {
                     return true;

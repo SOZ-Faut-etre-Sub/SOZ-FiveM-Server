@@ -197,6 +197,40 @@ local Elevators = {
         downTo = {"mtp:0", "mtp:1"},
         spawnPoint = vector4(-244.10, 6074.65, 50.22, 310.85),
     },
+    --- You News
+    ["youn:0"] = {
+        name = "YOUN:Elevator0",
+        label = "Rez-de-chaussée",
+        buttons = vector2(-1074.48, -253.17),
+        size = vector2(0.40, 0.20),
+        heading = 315,
+        z = {min = 37.86, max = 38.06},
+        upTo = {"youn:1", "youn:2"},
+        downTo = nil,
+        spawnPoint = vector4(-1075.63, -252.99, 36.96, 30.87),
+    },
+    ["youn:1"] = {
+        name = "YOUN:Elevator1",
+        label = "Bureau",
+        buttons = vector2(-1074.57, -253.02),
+        size = vector2(0.20, 0.20),
+        heading = 27.18,
+        z = {min = 44.12, max = 44.37},
+        upTo = "youn:2",
+        downTo = "youn:0",
+        spawnPoint = vector4(-1075.45, -252.97, 43.22, 31.92),
+    },
+    ["youn:2"] = {
+        name = "YOUN:Elevator2",
+        label = "Toit",
+        buttons = vector2(-1073.21, -246.92),
+        size = vector2(1.00, 1.20),
+        heading = 297.41,
+        z = {min = 53.01, max = 55.01},
+        upTo = nil,
+        downTo = {"youn:0", "youn:1"},
+        spawnPoint = vector4(-1072.38, -246.64, 53.21, 302.00),
+    },
 }
 
 ---Create QB-Target options for a possible elevator destination

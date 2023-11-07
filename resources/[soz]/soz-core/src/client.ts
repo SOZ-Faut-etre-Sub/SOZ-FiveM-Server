@@ -18,6 +18,7 @@ import { InventoryModule } from './client/inventory/inventory.module';
 import { ItemModule } from './client/item/item.module';
 import { BaunModule } from './client/job/baun/baun.module';
 import { BennysModule } from './client/job/bennys/bennys.module';
+import { DMCModule } from './client/job/dmc/dmc.module';
 import { FDFModule } from './client/job/fdf/fdf.module';
 import { FightForStyleModule } from './client/job/ffs/ffs.module';
 import { FoodModule } from './client/job/food/food.module';
@@ -26,6 +27,7 @@ import { GouvModule } from './client/job/gouv/gouv.module';
 import { JobModule } from './client/job/job.module';
 import { LSMCModule } from './client/job/lsmc/lsmc.module';
 import { MandatoryModule } from './client/job/mdr/mdr.module';
+import { NewsModule } from './client/job/news/news.module';
 import { OilModule } from './client/job/oil/oil.module';
 import { PawlModule } from './client/job/pawl/pawl.module';
 import { PoliceModule } from './client/job/police/police.module';
@@ -109,6 +111,8 @@ async function bootstrap() {
         BillboardModule,
         CraftModule,
         FDFModule,
+        NewsModule,
+        DMCModule,
         ...PrivateModules
     );
 

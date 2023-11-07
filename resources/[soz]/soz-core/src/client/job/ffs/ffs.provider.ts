@@ -1,6 +1,6 @@
 import { emitRpc } from '@public/core/rpc';
 import { CraftsList } from '@public/shared/craft/craft';
-import { JobPermission, JobType } from '@public/shared/job';
+import { JobType } from '@public/shared/job';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
@@ -9,21 +9,11 @@ import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { BlipFactory } from '../../blip';
-import { InventoryManager } from '../../inventory/inventory.manager';
-import { ItemService } from '../../item/item.service';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
-import { TargetFactory } from '../../target/target.factory';
-import { JobService } from '../job.service';
 
 @Provider()
 export class FightForStyleProvider {
-    @Inject(InventoryManager)
-    private inventoryManager: InventoryManager;
-
-    @Inject(ItemService)
-    private itemService: ItemService;
-
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
@@ -33,12 +23,6 @@ export class FightForStyleProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
-    @Inject(TargetFactory)
-    private targetFactory: TargetFactory;
-
-    @Inject(JobService)
-    private jobService: JobService;
-
     private state = {
         ffs_cotton_bale: false,
     };
@@ -46,54 +30,6 @@ export class FightForStyleProvider {
     @Once(OnceStep.PlayerLoaded)
     public setupFfsJob() {
         this.createBlips();
-
-        this.targetFactory.createForBoxZone(
-            'ffs:duty',
-            {
-                center: [707.29, -967.58, 30.41],
-                length: 0.35,
-                width: 0.4,
-                minZ: 30.21,
-                maxZ: 30.66,
-            },
-            [
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Prise de service',
-                    canInteract: () => {
-                        return !this.playerService.isOnDuty();
-                    },
-                    job: JobType.Ffs,
-                },
-                {
-                    type: 'server',
-                    event: 'QBCore:ToggleDuty',
-                    icon: 'fas fa-sign-in-alt',
-                    label: 'Fin de service',
-                    canInteract: () => {
-                        return this.playerService.isOnDuty();
-                    },
-                    job: JobType.Ffs,
-                },
-                {
-                    icon: 'fas fa-users',
-                    label: 'Employé(e)s en service',
-                    action: () => {
-                        TriggerServerEvent('QBCore:GetEmployOnDuty');
-                    },
-                    canInteract: () => {
-                        const player = this.playerService.getPlayer();
-                        return (
-                            this.playerService.isOnDuty() &&
-                            this.jobService.hasPermission(player.job.id, JobPermission.OnDutyView)
-                        );
-                    },
-                    job: JobType.Ffs,
-                },
-            ]
-        );
     }
 
     @OnNuiEvent(NuiEvent.FfsDisplayBlip)

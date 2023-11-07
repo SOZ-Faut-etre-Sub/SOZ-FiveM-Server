@@ -1,3 +1,5 @@
+import { wait } from '@public/core/utils';
+
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -143,6 +145,7 @@ export class AdminMenuInteractiveProvider {
 
         this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
             const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
+
             this.playerBlips.forEach((BlipValue, BlipKey) => {
                 if (!players.some(player => player.citizenId === BlipKey)) {
                     this.QBCore.removeBlip('admin:player-blip:' + BlipKey);
@@ -167,6 +170,7 @@ export class AdminMenuInteractiveProvider {
                     });
                     SetBlipCategory(createdBlip, 7);
                     this.playerBlips.set(player.citizenId, createdBlip);
+                    await wait(1);
                 }
             }
         }, 2500);
@@ -179,8 +183,12 @@ export class AdminMenuInteractiveProvider {
         }
 
         const players = await emitRpc<AdminPlayer[]>(RpcServerEvent.ADMIN_GET_PLAYERS);
+        const playerId = PlayerId();
 
         players.forEach(player => {
+            if (player.id == GetPlayerServerId(playerId)) {
+                return;
+            }
             this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.id));
 
             let name = player.rpFullName;

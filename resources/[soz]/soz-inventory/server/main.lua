@@ -167,13 +167,15 @@ end
 
 function Inventory.SetMaxWeight(inv, weight)
     inv = Inventory(inv)
+    local overloaded = inv.maxWeight < inv.weight
     if inv then
         inv.maxWeight = weight
     end
-    if inv.type == "player" and inv.maxWeight < inv.weight then
-        TriggerClientEvent("inventory:client:overloaded", inv.id, true)
+    if inv.type == "player" and (inv.maxWeight < inv.weight or (overloaded and inv.maxWeight >= inv.weight)) then
+        TriggerClientEvent("inventory:client:overloaded", inv.id, inv.maxWeight < inv.weight)
     end
 end
+exports("CalculateAvailableWeight", Inventory.CalculateAvailableWeight)
 exports("CalculateWeight", Inventory.CalculateWeight)
 exports("SetMaxWeight", Inventory.SetMaxWeight)
 
@@ -399,6 +401,7 @@ end
 
 function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item, slotId)
     local slot = -1
+    local exist = false
 
     if slotItem.name == "empty_lunchbox" then
         Inventory.RemoveItem(inv, slotItem.name, 1, nil, slotId)
@@ -408,13 +411,23 @@ function Inventory.handleLunchbox(source, inv, slotItem, metadata, amount, item,
     end
 
     local lunchboxTotalWeight = Inventory.getCrateWeight(slotItem.metadata)
-    table.insert(slotItem.metadata.crateElements, {
-        name = item.name,
-        label = item.label,
-        metadata = metadata,
-        amount = amount,
-        weight = Inventory.GetItemWeight(item, metadata, 1),
-    })
+
+    for _, element in pairs(slotItem.metadata.crateElements) do
+        if element.name == item.name and metadata.expiration == element.metadata.expiration then
+            element.amount = element.amount + amount
+            exist = true
+        end
+    end
+
+    if not exist then
+        table.insert(slotItem.metadata.crateElements, {
+            name = item.name,
+            label = item.label,
+            metadata = metadata,
+            amount = amount,
+            weight = Inventory.GetItemWeight(item, metadata, 1),
+        })
+    end
 
     local notificationLunchboxLabel = tostring(slotItem.label)
     if slotItem.metadata.label then
@@ -996,7 +1009,8 @@ function GetOrCreateInventory(storageType, invID, ctx)
         if targetInv == nil then
             targetInv = Inventory.Create("bin_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
-    elseif storageType == "trunk" or storageType == "brickade" or storageType == "tanker" or storageType == "trailerlogs" or storageType == "trash" then
+    elseif storageType == "trunk" or storageType == "brickade" or storageType == "tanker" or storageType == "trailerlogs" or storageType == "trash" or
+        storageType == "tiptruck" then
         targetInv = Inventory("trunk_" .. invID)
 
         if targetInv == nil then
@@ -1026,15 +1040,20 @@ function GetOrCreateInventory(storageType, invID, ctx)
     elseif storageType == "house_stash" then
         targetInv = Inventory("house_stash_" .. invID)
 
+        local tier = 0
+        if ctx then
+            tier = exports["soz-housing"]:GetApartmentTier(ctx.propertyId, ctx.apartmentId)
+        end
+        if invID == "villa_cayo" then
+            tier = -2
+        end
+
         if targetInv == nil then
-            local tier = 0
-            if ctx then
-                tier = ctx.apartmentTier
-            end
-            if invID == "villa_cayo" then
-                tier = -1
-            end
             targetInv = Inventory.Create("house_stash_" .. invID, invID, storageType, storageConfig[tier].slot, storageConfig[tier].weight, invID)
+        else
+            if targetInv.maxWeight ~= storageConfig[tier].weight then
+                Inventory.SetHouseStashMaxWeightFromTier(invID, tier)
+            end
         end
     elseif storageType == "house_fridge" then
         targetInv = Inventory("house_fridge_" .. invID)
@@ -1047,6 +1066,10 @@ function GetOrCreateInventory(storageType, invID, ctx)
 
         if targetInv == nil then
             targetInv = Inventory.Create("inverter_" .. invID, invID, storageType, storageConfig.slot, storageConfig.weight, "upw")
+        end
+    elseif storageType == "smuggling_box" then
+        if targetInv == nil then
+            targetInv = Inventory.Create(invID, invID, storageType, storageConfig.slot, storageConfig.weight, invID)
         end
     end
 

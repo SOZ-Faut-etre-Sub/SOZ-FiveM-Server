@@ -33,8 +33,14 @@ export class GarbageProvider {
             GetHashKey('soz_prop_bb_bin_hs2'),
             GetHashKey('soz_prop_bb_bin_hs3'),
         ];
-        const bins = this.objectProvider.getObjects(object => binModels.includes(object.model));
 
+        const colorModels: Record<any, number> = {
+            [GetHashKey('soz_prop_bb_bin')]: 68,
+            [GetHashKey('soz_prop_bb_bin_hs2')]: 70,
+            [GetHashKey('soz_prop_bb_bin_hs3')]: 49,
+        };
+
+        const bins = this.objectProvider.getObjects(object => binModels.includes(object.model));
         for (const bin of bins) {
             if (value) {
                 this.blipFactory.create(bin.id, {
@@ -45,7 +51,7 @@ export class GarbageProvider {
                         z: bin.position[2],
                     },
                     sprite: 365,
-                    color: 21,
+                    color: colorModels[bin.model],
                 });
             } else {
                 this.blipFactory.remove(bin.id);

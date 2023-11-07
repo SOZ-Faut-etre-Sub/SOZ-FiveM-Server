@@ -1,3 +1,4 @@
+import { JobType } from '@public/shared/job';
 import { News } from '@public/shared/news';
 import { AdvancedNotification, BasicNotification, TPoliceNotification } from '@public/shared/notification';
 
@@ -10,7 +11,7 @@ export interface NuiHudMethodMap {
     UpdateMinimap: Minimap;
     UpdateVoiceMode: VoiceMode;
     SetSyringeDelay: number;
-    SetTwitchNewsOverlay: boolean;
+    SetTwitchNewsOverlay: JobType | null;
     SetShowHud: boolean;
     DrawNotification: Omit<BasicNotification | AdvancedNotification | TPoliceNotification, 'id'>;
     AddNews: Omit<News, 'id'>;

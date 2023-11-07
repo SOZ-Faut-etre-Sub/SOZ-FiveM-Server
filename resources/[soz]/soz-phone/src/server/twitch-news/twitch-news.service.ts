@@ -22,6 +22,7 @@ class _TwitchNewsService {
                 reporter: reqObj.data.reporter,
                 reporterId: reqObj.data.reporterId,
                 image: reqObj.data.image,
+                job: reqObj.data.job,
             });
 
             emitNet(TwitchNewsEvents.CREATE_NEWS_BROADCAST, -1, {
@@ -31,12 +32,20 @@ class _TwitchNewsService {
                 reporterId: reqObj.data.reporterId,
                 image: reqObj.data.image,
                 message: reqObj.data.message,
+                job: reqObj.data.job,
                 createdAt: new Date().getTime(),
             });
 
-            emitNet('soz-core:client:news:draw', -1, reqObj.data.type, reqObj.data.message, reqObj.data.reporter);
+            emitNet(
+                'soz-core:client:news:draw',
+                -1,
+                reqObj.data.type,
+                reqObj.data.message,
+                reqObj.data.reporter,
+                reqObj.data.job
+            );
         } catch (e) {
-            twitchNewsLogger.error(`Error in handleAddSociety, ${e.toString()}`);
+            twitchNewsLogger.error(`Error in handleSendNews, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }
@@ -46,7 +55,7 @@ class _TwitchNewsService {
             const contact = await this.twitchNewsDB.getNews();
             resp({ status: 'ok', data: contact });
         } catch (e) {
-            twitchNewsLogger.error(`Error in handleAddSociety, ${e.toString()}`);
+            twitchNewsLogger.error(`Error in fetchNews, ${e.toString()}`);
             resp({ status: 'error', errorMsg: 'DB_ERROR' });
         }
     }

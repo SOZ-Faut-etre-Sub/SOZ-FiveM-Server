@@ -12,6 +12,7 @@ export enum JobType {
     Taxi = 'taxi',
     Food = 'food',
     News = 'news',
+    YouNews = 'you-news',
     Garbage = 'garbage',
     Oil = 'oil',
     CashTransfer = 'cash-transfer',
@@ -25,6 +26,7 @@ export enum JobType {
     Gouv = 'gouv',
     FDF = 'fdf',
     SASP = 'sasp',
+    DMC = 'dmc',
 }
 
 export const BASE_FDO = [JobType.LSPD, JobType.BCSO];
@@ -86,13 +88,14 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.Adsl]: 'ADSL',
     [JobType.Delivery]: 'Fougère Prime',
     [JobType.Religious]: 'InfoChat',
-    [JobType.Scrapper]: 'DeMetal Company',
+    [JobType.Scrapper]: 'OldMetal',
     [JobType.LSPD]: 'Los Santos Police Department',
     [JobType.BCSO]: 'Blaine County Sheriff Office',
     [JobType.LSMC]: 'Los Santos Medical Center',
     [JobType.Taxi]: 'Carl Jr Services',
     [JobType.Food]: 'Château Marius',
     [JobType.News]: 'Twitch News',
+    [JobType.YouNews]: 'You News',
     [JobType.Garbage]: 'BlueBird',
     [JobType.Oil]: 'Michel Transport Petrol',
     [JobType.CashTransfer]: 'STONK Security',
@@ -106,6 +109,7 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.Gouv]: 'Gouvernement',
     [JobType.FDF]: 'Ferme de Fou',
     [JobType.SASP]: 'San Andreas State Police',
+    [JobType.DMC]: 'DeMetal Company',
 };
 
 export type JobPermissionData = {

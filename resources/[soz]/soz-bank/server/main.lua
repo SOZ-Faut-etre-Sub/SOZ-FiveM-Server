@@ -203,7 +203,6 @@ end)
 -- Source: Bank Account
 -- Target: Player server id
 exports("TransferCashMoney", function(source, target, amount, cb)
-    print("Source: " .. source .. " Target: " .. target .. " Amount: " .. amount)
     local player = QBCore.Functions.GetPlayer(target)
     amount = tonumber(amount)
     local money_type = "money"

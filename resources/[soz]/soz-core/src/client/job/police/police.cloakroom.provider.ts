@@ -98,9 +98,6 @@ export class PoliceCloakRoomProvider {
         if (!armour) {
             return;
         }
-
-        await this.playerWardrobe.waitProgress(false);
-
         TriggerServerEvent(
             ServerEvent.CHARACTER_SET_JOB_CLOTHES,
             { Components: { [Component.BodyArmor]: armour }, Props: {} },

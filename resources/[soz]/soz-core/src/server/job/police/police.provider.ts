@@ -5,6 +5,7 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { ItemService } from '@public/server/item/item.service';
 import { PlayerService } from '@public/server/player/player.service';
+import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem, Item } from '@public/shared/item';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -25,6 +26,9 @@ export class PoliceProvider {
     @Inject(PlayerStateService)
     private playerStateService: PlayerStateService;
 
+    @Inject(ProgressService)
+    private progressService: ProgressService;
+
     @Once(OnceStep.Start)
     public init() {
         this.itemService.setItemUseCallback('armor', this.useArmor.bind(this));
@@ -39,7 +43,7 @@ export class PoliceProvider {
         TriggerClientEvent(ClientEvent.TAKE_DOWN_TARGET, target);
     }
 
-    public useArmor(source: number, unused: Item, item: InventoryItem): Promise<void> {
+    public async useArmor(source: number, unused: Item, item: InventoryItem): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -47,6 +51,34 @@ export class PoliceProvider {
         }
 
         const armorType = item.metadata['type'] || 'unmark';
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'switch_clothes',
+            "Changement d'habits...",
+            5000,
+            {
+                name: 'male_shower_towel_dry_to_get_dressed',
+                dictionary: 'anim@mp_yacht@shower@male@',
+                options: {
+                    cancellable: false,
+                    enablePlayerControl: true,
+                    onlyUpperBody: true,
+                },
+            },
+            {
+                disableMovement: true,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
+                canCancel: false,
+                useAnimationService: true,
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
 
         if (this.inventoryManager.removeItemFromInventory(source, item.name, 1, item.metadata)) {
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });

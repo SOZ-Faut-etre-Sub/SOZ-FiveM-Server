@@ -6,23 +6,26 @@ export type WorldObject = {
     position: Vector4;
     rotation?: Vector3;
     placeOnGround?: boolean;
+    matrix?: Float32Array;
+    noCollision?: boolean;
 };
 
 export type WorldPlacedProp = {
-    unique_id: string | null;
-    model: string;
-    collection: string | null;
-    position: Vector4;
-    matrix: Float32Array;
+    collection: string;
     loaded: boolean;
-    collision: boolean;
+    model: string;
+    object: WorldObject;
 };
 
 export type DebugProp = {
-    entity: number;
+    id: string;
     model: string;
-    collection: string | null;
+    collection: string;
     matrix: Float32Array;
+    collision: boolean;
+    position: Vector4;
+    entity: number;
+    state: PropState;
 };
 
 export const enum PropState {
@@ -31,14 +34,10 @@ export const enum PropState {
     loaded = 2,
 }
 
-export type SpawedWorlPlacedProp = WorldPlacedProp & {
-    entity: number;
-    state: PropState;
-};
-
 export type PropCollectionData = {
     name: string;
     creator_citizenID: string;
+    creatorName: string;
     creation_date: Date;
     size: number;
     loaded_size: number;
@@ -48,17 +47,7 @@ export type PropCollection = PropCollectionData & {
     props: Record<string, WorldPlacedProp>;
 };
 
-export type SpawnedCollection = PropCollectionData & {
-    props: Record<string, SpawedWorlPlacedProp>;
-    uuid?: string[];
-};
-
 export type PropServerData = {
     total: number;
     loaded: number;
-};
-
-export type PropClientData = {
-    total: number;
-    chunk: number;
 };
