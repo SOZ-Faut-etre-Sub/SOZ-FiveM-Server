@@ -51,6 +51,8 @@ export class PlayerPositionProvider {
 
     async teleportAdminToPosition([x, y, z, w]: Vector4) {
         const playerPed = PlayerPedId();
+        DoScreenFadeOut(this.fadeDelay);
+        await wait(this.fadeDelay);
         await this.weaponDrawingProvider.undrawWeapons();
 
         FreezeEntityPosition(playerPed, true);
@@ -67,5 +69,7 @@ export class PlayerPositionProvider {
         FreezeEntityPosition(playerPed, false);
 
         this.weaponDrawingProvider.drawWeapons();
+        DoScreenFadeIn(this.fadeDelay);
+        await wait(this.fadeDelay);
     }
 }

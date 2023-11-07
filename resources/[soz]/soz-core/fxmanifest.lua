@@ -13,3 +13,5 @@ files {"public/**/*", "build/nui.js", "stream/int3232302352.gfx", "data/*"}
 data_file "SCALEFORM_DLC_FILE" "stream/int3232302352.gfx"
 
 data_file "TIMECYCLEMOD_FILE" "data/soz_timecyclemod_halloween.xml"
+
+data_file "FIVEM_LOVES_YOU_4B38E96CC036038F" "data/events.meta"

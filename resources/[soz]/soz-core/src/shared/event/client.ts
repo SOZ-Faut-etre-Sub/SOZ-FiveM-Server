@@ -18,9 +18,6 @@ export enum ClientEvent {
 
     CORE_CLOSE_MENU = 'soz-core:client:menu:close',
 
-    ADMIN_NOCLIP_ENABLED = 'soz-core:client:admin:noclip:enabled',
-    ADMIN_NOCLIP_DISABLED = 'soz-core:client:admin:noclip:disabled',
-
     AUDIO_PLAY = 'soz-core:client:audio:play',
     AUDIO_STOP = 'soz-core:client:audio:stop',
     CRIMI_USE_CLOAKROOM = 'soz-core:client:crimi:use-cloakroom',
@@ -60,6 +57,7 @@ export enum ClientEvent {
     ITEM_BOOK_USE = 'soz-core:client:item:book:use',
     ITEM_CAMERA_TOGGLE = 'soz-core:client:item:camera:toggle',
     ITEM_MICROPHONE_TOGGLE = 'soz-core:client:item:microphone:toggle',
+    ITEM_SCUBA_TOOGLE = 'soz-core:client:item:scuba:toggle',
 
     HELICO_UPDATE_LIGHT = 'soz-core:client:police:update-light',
 

@@ -390,4 +390,6 @@ export enum ServerEvent {
     FDF_TRACTOR_HARVEST = 'soz-core:server:fdf:field-tractor-harvest',
 
     ANIMATION_FX = 'soz-core:server:animation:fx',
+
+    DISPENSER_BUY = 'soz-core:server:dispenser:buy',
 }

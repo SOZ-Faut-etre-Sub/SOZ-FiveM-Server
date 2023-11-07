@@ -441,10 +441,10 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefill", function(data)
     while canFillTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("fill", "Vous remplissez...", 24000, false, true, {
+        local success = exports["soz-core"]:ProgressSynchrone("fill", "Vous remplissez...", 24000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, nil, nil)
 
         if success then
             local refillResponse = QBCore.Functions.TriggerRpc("jobs:server:fueler:refillTanker", Tanker.vehicle, currentField)
@@ -499,10 +499,10 @@ RegisterNetEvent("jobs:client:fueler:StartTankerRefining", function(data)
     while canRefiningTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("fill", "Vous raffinez...", 20000, false, true, {
+        local success = exports["soz-core"]:ProgressSynchrone("fill", "Vous raffinez...", 20000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, nil, nil)
 
         if success then
             TriggerServerEvent("jobs:server:fueler:refiningTanker", Tanker.vehicle)
@@ -636,10 +636,10 @@ RegisterNetEvent("jobs:client:fueler:StartTankerResell", function(data)
     while canResellTanker do
         Wait(500)
 
-        local success, _ = exports["soz-utils"]:Progressbar("resell", "Vous remplissez...", 3000, false, true, {
+        local success = exports["soz-core"]:ProgressSynchrone("resell", "Vous remplissez...", 3000, false, true, {
             disableMovement = true,
             disableCombat = true,
-        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, {}, {})
+        }, {animDict = "timetable@gardener@filling_can", anim = "gar_ig_5_filling_can", flags = 1}, nil, nil)
 
         if success then
             QBCore.Functions.TriggerRpc("jobs:server:fueler:resellTanker", Tanker.vehicle)
