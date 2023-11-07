@@ -15,17 +15,15 @@ function CreateResaleZone(data)
 end
 
 AddEventHandler("soz-upw:client:ResaleEnergy", function()
-    local progress, elapsed = exports["soz-utils"]:Progressbar("soz-upw:progressbar:resale", "Vous vendez de l'énergie", Config.Upw.Resale.Duration, false,
-                                                               true,
-                                                               {
+    local progress_success = exports["soz-core"]:ProgressSynchrone("soz-upw:progressbar:resale", "Vous vendez de l'énergie", Config.Upw.Resale.Duration, false,
+                                                                   true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
-    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a"}, {}, {})
+    }, {animDict = "anim@mp_radio@garage@low", anim = "action_a", flags = 1}, nil, nil)
 
-    if not progress then
-        exports["soz-core"]:DrawNotification("Il y a eu une erreur", "error")
+    if not progress_success then
         return
     end
 

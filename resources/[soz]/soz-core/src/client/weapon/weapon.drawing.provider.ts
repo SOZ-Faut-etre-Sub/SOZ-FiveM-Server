@@ -129,14 +129,12 @@ export class WeaponDrawingProvider {
         await this.refreshDrawWeapons();
     }
 
-    @OnEvent(ClientEvent.ADMIN_NOCLIP_ENABLED)
-    async undrawAdminWeapons() {
+    public async undrawAdminWeapons() {
         this.shouldAdminDrawWeapon = false;
         await this.undrawWeapon();
     }
 
-    @OnEvent(ClientEvent.ADMIN_NOCLIP_DISABLED)
-    async drawAdminWeapons() {
+    public async drawAdminWeapons() {
         this.shouldAdminDrawWeapon = true;
         await this.drawWeapon();
     }

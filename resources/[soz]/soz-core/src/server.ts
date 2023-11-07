@@ -47,6 +47,7 @@ import { store } from './server/store/store';
 import { StoreModule } from './server/store/store.module';
 import { StoryModule } from './server/story/story.module';
 import { StreamModule } from './server/stream/stream.module';
+import { UtilsModule } from './server/utils/utils.module';
 import { VehicleModule } from './server/vehicle/vehicle.module';
 import { VoipModule } from './server/voip/voip.module';
 import { WeaponModule } from './server/weapon/weapon.module';
@@ -104,6 +105,7 @@ async function bootstrap() {
         NewsModule,
         DMCModule,
         HousingModule,
+        UtilsModule,
         ...PrivateModules
     );
 
