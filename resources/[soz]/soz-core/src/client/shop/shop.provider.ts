@@ -5,13 +5,16 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
-import { JobType } from '@public/shared/job';
+import { JobPermission, JobType } from '@public/shared/job';
+import { MenuType } from '@public/shared/nui/menu';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../blip';
 import { PedFactory } from '../factory/ped.factory';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { JobService } from '../job/job.service';
 import { StonkCollectProvider } from '../job/stonk/stonk.collect.provider';
+import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory, TargetOptions } from '../target/target.factory';
 import { BarberShopProvider } from './barber.shop.provider';
@@ -61,6 +64,12 @@ export class ShopProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(JobService)
+    private jobService: JobService;
+
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
     private currentShop: string = null;
     private currentShopBrand: ShopBrand = null;
 
@@ -102,7 +111,7 @@ export class ShopProvider {
         },
         {
             icon: 'fas fa-store',
-            label: 'Vérfier le stock',
+            label: 'Vérifier le stock',
             canInteract: () => {
                 return (
                     this.currentShop !== null &&
@@ -119,6 +128,21 @@ export class ShopProvider {
                         TriggerServerEvent(ServerEvent.LSC_CHECK_STOCK);
                         break;
                 }
+            },
+        },
+        {
+            icon: 'c:mechanic/reparer.png',
+            label: 'Prix Pit Stop',
+            canInteract: () => {
+                return (
+                    this.currentShop !== null &&
+                    this.currentShopBrand === ShopBrand.LsCustom &&
+                    this.jobService.hasPermission(JobType.Bennys, JobPermission.BennysPitStopPrice)
+                );
+            },
+            blackoutGlobal: true,
+            action: async () => {
+                this.nuiMenu.openMenu(MenuType.PitStopPriceMenu);
             },
         },
         {

@@ -51,6 +51,10 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleOpenLSCustom);
     };
 
+    const onPitStop = price => {
+        fetchNui(NuiEvent.VehiclePitStop, price);
+    };
+
     const createOnDoorChange = (doorIndex: number) => {
         return async value => {
             await fetchNui(NuiEvent.VehicleSetDoorOpen, { doorIndex, open: value });
@@ -99,6 +103,14 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                             <MenuItemSubMenuLink id="door">Gestion des portes</MenuItemSubMenuLink>
                             {data.insideLSCustom && (
                                 <MenuItemButton onConfirm={() => onOpenLSCustom()}>LS Custom</MenuItemButton>
+                            )}
+                            {data.insideLSCustom && !data.onDutyNg && (
+                                <MenuItemButton
+                                    onConfirm={() => onPitStop(data.pitstopPrice)}
+                                    description={`Prix: ${data.pitstopPrice} $`}
+                                >
+                                    Pit Stop
+                                </MenuItemButton>
                             )}
                         </>
                     )}
