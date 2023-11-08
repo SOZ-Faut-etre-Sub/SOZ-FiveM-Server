@@ -13281,7 +13281,6 @@ QBShared.Items = {
         ['sozedex_id'] = 56,
         ['price'] = 54
     },
-
     ['soz_hammer'] = {
         ['name'] = 'soz_hammer',
         ['label'] = "Le Marteau",
@@ -13294,5 +13293,16 @@ QBShared.Items = {
         ['giveable'] = false,
         ['description'] = "Il en émane une puissance incommensurable. Il est dit que celui qui le possède peut façon le monde à sa guise. Vous ne vous sentez pas de le donner à quiconque.",
         ['illustrator'] = '.'
-    }
+    },
+    ['press_card'] = {
+        ['name'] = 'press_card',
+        ['label'] = 'Carte de presse',
+        ['weight'] = 150,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Multipass',
+        ['illustrator'] = '.'
+    },
 }
