@@ -10,6 +10,7 @@ import { VehicleGarageProvider } from './vehicle.garage.provider';
 import { VehicleKeysProvider } from './vehicle.keys.provider';
 import { VehicleLockProvider } from './vehicle.lock.provider';
 import { VehicleMigrationProvider } from './vehicle.migration.provider';
+import { VehiclePitStopProvider } from './vehicle.pitstop.provider';
 import { VehicleProvider } from './vehicle.provider';
 import { VehicleRadarProvider } from './vehicle.radar.provider';
 import { VehicleService } from './vehicle.service';
@@ -34,6 +35,7 @@ import { VehicleStateProvider } from './vehicle.state.provider';
         VehicleRadarProvider,
         VehicleElectricProvider,
         VehicleStateProvider,
+        VehiclePitStopProvider,
     ],
 })
 export class VehicleModule {}
