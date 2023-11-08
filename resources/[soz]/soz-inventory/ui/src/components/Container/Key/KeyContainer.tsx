@@ -3,7 +3,7 @@ import { InventoryItem, InventoryItemMetadata } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
 import style from './KeyContainer.module.css';
 import { ContainerSlots } from '../ContainerSlots';
-import playerBanner from '/banner/player.jpg'
+import keychainBanner from '/banner/keychain_banner.png'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
@@ -29,7 +29,7 @@ export const KeyContainer = () => {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(event.active.data.current.item)
-        })
+        }).then()
     }, [closeMenu]);
 
 
@@ -41,7 +41,7 @@ export const KeyContainer = () => {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(keys)
-        })
+        }).then()
     }, [closeMenu]);
 
     const onMessageReceived = useCallback((event: MessageEvent) => {
@@ -106,7 +106,7 @@ export const KeyContainer = () => {
                     <div className={clsx(style.Wrapper)}>
                         <ContainerWrapper
                             display={true}
-                            banner={playerBanner}
+                            banner={keychainBanner}
                             maxWeight={-1}
                             giveAllCallback={() => giveAllKeys(playerInventory.map((item, i) => ({ ...item, id: i, slot: i + 1, type: 'key' })))}
                         >

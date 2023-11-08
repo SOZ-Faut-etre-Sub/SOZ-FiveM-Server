@@ -4,7 +4,7 @@ import { InventoryItem, SozInventoryModel } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
 import style from './PlayerContainer.module.css';
 import { ContainerSlots } from '../ContainerSlots';
-import playerBanner from '/banner/player.jpg'
+import inventoryBanner from '/banner/inventory_banner.png'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
@@ -95,6 +95,9 @@ export const PlayerContainer = () => {
 
 
         if (event.over !== null) { // Do a sort in inventory
+            if (event.over.id == 'player_wallet' || event.over.id == 'player_keychain') {
+                return;
+            }
             if (event.active.id == 'player_drag_money_' || event.over.id == 'player_money') {
                 return;
             }
@@ -191,7 +194,7 @@ export const PlayerContainer = () => {
             <div className={clsx(style.Wrapper)}>
                 <ContainerWrapper
                     display={true}
-                    banner={playerBanner}
+                    banner={inventoryBanner}
                     weight={playerInventory.weight}
                     maxWeight={playerInventory.maxWeight}
                     sortCallback={() => handleSortInventory(playerInventory.id, setPlayerInventory)}

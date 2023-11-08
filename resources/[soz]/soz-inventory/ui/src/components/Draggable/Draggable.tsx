@@ -4,13 +4,13 @@ import { InventoryItem, ItemType } from '../../types/inventory';
 import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
 import apartmentKeyIcon from '/icon/apartment_key.png';
-import licenseCardIcon from '/icon/license.png';
-import healthCardIcon from '/icon/health.png';
-import identityCardIcon from '/icon/identity.png';
+import licenseCardIcon from '/icon/license.webp';
+import healthCardIcon from '/icon/health.webp';
+import identityCardIcon from '/icon/identity.webp';
 import moneyIcon from '/icon/money.png';
-import walletIcon from '/icon/wallet.png';
-import bankIcon from '/icon/bank.png'
-import keychainIcon from '/icon/keychain.png';
+import walletIcon from '/icon/wallet.webp';
+import bankIcon from '/icon/bank.webp'
+import keychainIcon from '/icon/keychain.webp';
 import vehicleKeyIcon from '/icon/vehicle_key.png';
 import { clsx } from 'clsx';
 import { WeaponAmmo } from '../../types/weapon';

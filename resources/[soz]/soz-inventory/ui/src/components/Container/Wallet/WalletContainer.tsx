@@ -3,7 +3,7 @@ import { InventoryItem } from '../../../types/inventory';
 import { ContainerWrapper } from '../ContainerWrapper';
 import style from './WalletContainer.module.css';
 import { ContainerSlots } from '../ContainerSlots';
-import playerBanner from '/banner/player.jpg'
+import walletBanner from '/banner/wallet_banner.png'
 import { closeNUI } from '../../../hooks/nui';
 import { clsx } from 'clsx';
 import { DndContext, rectIntersection } from '@dnd-kit/core';
@@ -43,18 +43,6 @@ export const WalletContainer = () => {
             }).then(() => closeNUI(() => closeMenu()));
         },
         [closeMenu]
-    );
-
-    const backAction = useCallback(
-        () => {
-            fetch(`https://soz-inventory/player/openPlayerInventory`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json; charset=UTF-8",
-                },
-            });
-        },
-        []
     );
     
     const onMessageReceived = useCallback((event: MessageEvent) => {
@@ -119,7 +107,7 @@ export const WalletContainer = () => {
                     <div className={clsx(style.Wrapper)}>
                         <ContainerWrapper
                             display={true}
-                            banner={playerBanner}
+                            banner={walletBanner}
                             maxWeight={-1}
                         >
                             <ContainerSlots
