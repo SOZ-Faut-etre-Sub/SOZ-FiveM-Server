@@ -1,12 +1,14 @@
-import { OnEvent } from '../../../core/decorators/event';
+import { Once, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { uuidv4 } from '../../../core/utils';
 import { ServerEvent } from '../../../shared/event';
+import { StudioEnterZone, StudioExitZone } from '../../../shared/job/news';
 import { Vector4 } from '../../../shared/polyzone/vector';
 import { InventoryManager } from '../../inventory/inventory.manager';
 import { Notifier } from '../../notifier';
 import { ObjectProvider } from '../../object/object.provider';
+import { PlayerPositionProvider } from '../../player/player.position.provider';
 import { ProgressService } from '../../player/progress.service';
 
 @Provider()
@@ -22,6 +24,15 @@ export class NewsProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
+    @Once()
+    public onStartNews() {
+        this.playerPositionProvider.registerZone(StudioEnterZone, [-1021.57, -91.34, -98.4, 350.16]);
+        this.playerPositionProvider.registerZone(StudioExitZone, [-839.36, -231.5, 36.22, 298.32]);
+    }
 
     @OnEvent(ServerEvent.NEWS_PLACE_OBJECT)
     public async onPlaceObject(source: number, item: string, object: string, position: Vector4) {
