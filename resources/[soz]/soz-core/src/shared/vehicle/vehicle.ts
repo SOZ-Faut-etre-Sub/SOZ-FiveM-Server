@@ -253,6 +253,8 @@ export type VehicleMenuData = {
     isAnchor: boolean;
     police: boolean;
     policeLocator: boolean;
+    onDutyNg: boolean;
+    pitstopPrice: number;
 };
 
 export type VehicleAuctionMenuData = {

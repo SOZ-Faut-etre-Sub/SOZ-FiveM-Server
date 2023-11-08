@@ -187,6 +187,9 @@ export enum NuiEvent {
     VehicleHandleRadio = 'soz-core:nui:vehicle:handle-radio',
     VehicleAnchorChange = 'soz-core:client:vehicle:anchor-change',
     VehiclePoliceDisplay = 'soz-core:client:vehicle:police-display',
+    VehiclePitStop = 'soz-core:client:vehicle:pitstop',
+    VehiclePitStopPrices = 'soz-core:client:vehicle:prices',
+    VehiclePitStopSetPrice = 'soz-core:client:vehicle:set-price',
 
     VehicleGarageTakeOut = 'soz-core:client:vehicle:garage:take-out',
     VehicleGarageSetName = 'soz-core:client:vehicle:garage:set-name',

@@ -35,4 +35,13 @@ export class BankService {
     public payInvoice(source: number, invoiceId: number, marked: boolean) {
         return exports['soz-bank'].PayInvoice(source, invoiceId, marked);
     }
+
+    public addMoney(
+        targetAccount: string,
+        amount: number,
+        type: 'money' | 'marked_money' = 'money',
+        allowOverflow = false
+    ) {
+        exports['soz-bank'].AddMoney(targetAccount, amount, type, allowOverflow);
+    }
 }

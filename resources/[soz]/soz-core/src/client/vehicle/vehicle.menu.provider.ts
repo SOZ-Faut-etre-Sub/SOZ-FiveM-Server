@@ -11,7 +11,6 @@ import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
-import { JobService } from '../job/job.service';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -27,9 +26,6 @@ export class VehicleMenuProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(JobService)
-    private jobService: JobService;
 
     @Inject(InputService)
     private inputService: InputService;
@@ -294,6 +290,11 @@ export class VehicleMenuProvider {
             doorStatus[i] = GetVehicleDoorAngleRatio(vehicle, i) >= 0.5;
         }
 
+        const pitstop = await emitRpc<[boolean, number]>(
+            RpcServerEvent.VEHICLE_PITSTOP_DATA,
+            NetworkGetNetworkIdFromEntity(vehicle)
+        );
+
         this.nuiMenu.openMenu<MenuType.Vehicle>(MenuType.Vehicle, {
             isDriver,
             engineOn: GetIsVehicleEngineRunning(vehicle),
@@ -306,6 +307,8 @@ export class VehicleMenuProvider {
             isBoat: GetVehicleClass(vehicle) == VehicleClass.Boats,
             police: FDO.includes(player.job.id) && FDO.includes(vehicleState.job),
             policeLocator: vehicleState.policeLocatorEnabled,
+            onDutyNg: pitstop[0],
+            pitstopPrice: pitstop[1],
         });
     }
 }
