@@ -31,6 +31,7 @@ end)
 
 RegisterNUICallback("player/openPlayerKeyInventory", function(data, cb)
     TriggerServerEvent("soz-core:server:vehicle:open-keys")
+    cb(true)
 end)
 
 RegisterNUICallback("player/giveKeyToTarget", function(data, cb)
