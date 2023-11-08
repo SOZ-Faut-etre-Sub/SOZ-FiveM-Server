@@ -3,12 +3,14 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../../shared/event';
 import { JobType } from '../../../shared/job';
-import { NewsDeliveryZones } from '../../../shared/job/news';
+import { NewsDeliveryZones, StudioEnterZone, StudioExitZone } from '../../../shared/job/news';
+import { BoxZone } from '../../../shared/polyzone/box.zone';
 import { Vector4 } from '../../../shared/polyzone/vector';
 import { getRandomItem } from '../../../shared/random';
 import { BlipFactory } from '../../blip';
 import { Notifier } from '../../notifier';
 import { ObjectProvider } from '../../object/object.provider';
+import { PlayerPositionProvider } from '../../player/player.position.provider';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
 
@@ -28,6 +30,9 @@ export class NewsProvider {
 
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     private currentZone: Vector4 = null;
 
@@ -123,6 +128,43 @@ export class NewsProvider {
                     job: JobType.YouNews,
                     canInteract: () => {
                         return this.playerService.isOnDuty();
+                    },
+                },
+            ]
+        );
+
+        this.targetFactory.createForBoxZone(
+            'studio_enter',
+            new BoxZone([-841.9, -231.16, 37.27], 1.2, 6.4, {
+                heading: 120.06,
+                minZ: 36.27,
+                maxZ: 38.27,
+            }),
+            [
+                {
+                    label: 'Rentrer dans le studio',
+                    item: 'press_card',
+                    icon: 'c:housing/enter.png',
+                    action: () => {
+                        this.playerPositionProvider.teleportPlayerToPosition(StudioEnterZone);
+                    },
+                },
+            ]
+        );
+
+        this.targetFactory.createForBoxZone(
+            'studio_exit',
+            new BoxZone([-1021.81, -93.38, -99.4], 1.0, 2.6, {
+                heading: 179.62,
+                minZ: -100.4,
+                maxZ: -98.4,
+            }),
+            [
+                {
+                    label: 'Sortir du studio',
+                    icon: 'c:housing/enter.png',
+                    action: () => {
+                        this.playerPositionProvider.teleportPlayerToPosition(StudioExitZone);
                     },
                 },
             ]

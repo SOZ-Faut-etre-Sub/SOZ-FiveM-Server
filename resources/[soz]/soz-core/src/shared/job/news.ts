@@ -1,6 +1,9 @@
 import { WardrobeConfig } from '../cloth';
 import { Vector4 } from '../polyzone/vector';
 
+export const StudioEnterZone = 'StudioEnterZone';
+export const StudioExitZone = 'StudioExitZone';
+
 export const NewsCloakroom: WardrobeConfig = {
     [GetHashKey('mp_m_freemode_01')]: {
         ['Tenue habillée']: {
