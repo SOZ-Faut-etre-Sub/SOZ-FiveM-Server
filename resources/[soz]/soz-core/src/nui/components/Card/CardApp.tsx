@@ -4,13 +4,15 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { uuidv4 } from '../../../core/utils';
 import { PlayerData } from '../../../shared/player';
 import { useNuiEvent } from '../../hook/nui';
+import { BankCard } from './BankCard';
 import { HealthCard } from './HealthCard';
 import { IdentityCard } from './IdentityCard';
 import { LicenseCard } from './LicenseCard';
 
 type CardData = {
-    type: 'identity' | 'license' | 'health';
+    type: 'identity' | 'license' | 'health' | 'bank';
     player: PlayerData;
+    iban?: string;
 };
 
 type CardItemProps = {
@@ -46,6 +48,12 @@ export const CardItem: FunctionComponent<CardItemProps> = ({ card }) => {
             {card.type === 'identity' && <IdentityCard player={card.player} />}
             {card.type === 'license' && <LicenseCard player={card.player} />}
             {card.type === 'health' && <HealthCard player={card.player} />}
+            {card.type === 'bank' && (
+                <BankCard
+                    account={card.iban}
+                    name={`${card.player.charinfo.firstname} ${card.player.charinfo.lastname}`}
+                />
+            )}
         </Transition>
     );
 };

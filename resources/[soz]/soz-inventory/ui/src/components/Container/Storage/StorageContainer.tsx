@@ -120,7 +120,7 @@ export const StorageContainer = () => {
                         target: targetInventory?.id,
                     },
                 );
-            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory') {
+            } else if (event.data.action === 'openShop' || event.data.action === 'openInventory' || event.data.action === 'openPlayerKeyInventory' || event.data.action === 'openPlayerWalletInventory') {
                 closeMenu();
             }
         },
