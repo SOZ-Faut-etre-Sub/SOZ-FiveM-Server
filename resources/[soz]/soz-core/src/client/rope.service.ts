@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
+import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 
@@ -103,57 +104,61 @@ export class RopeService {
             true
         );
         ActivatePhysics(this.ropeState.rope);
+        this.manageRopePhysics();
         return this.ropeState.rope;
     }
 
-    public manageRopePhysics() {
-        const ped = PlayerPedId();
-        const rope = this.ropeState.rope;
-        const ropeLength = GetRopeLength(rope);
-        const stationPosition = GetEntityCoords(this.ropeState.baseEntity) as Vector3;
-        const playerPosition = GetEntityCoords(ped, true) as Vector3;
-        const distanceStationPlayer = getDistance(stationPosition, playerPosition);
-        const floatingRange = 0.1;
+    private async manageRopePhysics() {
+        while (this.ropeState) {
+            const ped = PlayerPedId();
+            const rope = this.ropeState.rope;
+            const ropeLength = GetRopeLength(rope);
+            const stationPosition = GetEntityCoords(this.ropeState.baseEntity) as Vector3;
+            const playerPosition = GetEntityCoords(ped, true) as Vector3;
+            const distanceStationPlayer = getDistance(stationPosition, playerPosition);
+            const floatingRange = 0.1;
 
-        if (distanceStationPlayer < ropeLength) {
-            // current length > desired length : winding case
-            StopRopeUnwindingFront(rope);
-            StartRopeWinding(rope);
-            RopeForceLength(rope, distanceStationPlayer + floatingRange);
-        } else if (distanceStationPlayer > ropeLength) {
-            // current length < desired length : unwinding case
-            StopRopeWinding(rope);
-            StartRopeUnwindingFront(rope);
-            RopeForceLength(rope, distanceStationPlayer + floatingRange);
-        } else {
-            StopRopeWinding(rope);
-            StopRopeUnwindingFront(rope);
-            RopeForceLength(rope, distanceStationPlayer + floatingRange);
+            if (distanceStationPlayer < ropeLength) {
+                // current length > desired length : winding case
+                StopRopeUnwindingFront(rope);
+                StartRopeWinding(rope);
+                RopeForceLength(rope, distanceStationPlayer + floatingRange);
+            } else if (distanceStationPlayer > ropeLength) {
+                // current length < desired length : unwinding case
+                StopRopeWinding(rope);
+                StartRopeUnwindingFront(rope);
+                RopeForceLength(rope, distanceStationPlayer + floatingRange);
+            } else {
+                StopRopeWinding(rope);
+                StopRopeUnwindingFront(rope);
+                RopeForceLength(rope, distanceStationPlayer + floatingRange);
+            }
+
+            const handPosition = GetWorldPositionOfEntityBone(
+                PlayerPedId(),
+                GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
+            ) as Vector3;
+
+            const distance = Math.min(getDistance(stationPosition, handPosition) + 2.0, this.ropeState.maxLength);
+
+            AttachEntitiesToRope(
+                this.ropeState.rope,
+                this.ropeState.baseEntity,
+                PlayerPedId(),
+                this.ropeState.attachPosition[0],
+                this.ropeState.attachPosition[1],
+                this.ropeState.attachPosition[2],
+                handPosition[0],
+                handPosition[1],
+                handPosition[2],
+                distance,
+                true,
+                true,
+                null,
+                'BONETAG_L_FINGER2'
+            );
+            await wait(0);
         }
-
-        const handPosition = GetWorldPositionOfEntityBone(
-            PlayerPedId(),
-            GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
-        ) as Vector3;
-
-        const distance = Math.min(getDistance(stationPosition, handPosition) + 2.0, this.ropeState.maxLength);
-
-        AttachEntitiesToRope(
-            this.ropeState.rope,
-            this.ropeState.baseEntity,
-            PlayerPedId(),
-            this.ropeState.attachPosition[0],
-            this.ropeState.attachPosition[1],
-            this.ropeState.attachPosition[2],
-            handPosition[0],
-            handPosition[1],
-            handPosition[2],
-            distance,
-            true,
-            true,
-            null,
-            'BONETAG_L_FINGER2'
-        );
     }
 
     public getRopeDistance() {

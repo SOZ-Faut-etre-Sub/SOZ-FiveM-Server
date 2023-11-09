@@ -3338,6 +3338,18 @@ QBShared.Items = {
         ['description'] = 'Pour éviter de se retrouver à pieds.',
         ['illustrator'] = '.LeakFlood',
     },
+    ['tow_cable'] = {
+        ['name'] = 'tow_cable',
+        ['label'] = 'Cable de remorquage',
+        ['weight'] = 8000,
+        ['type'] = 'item',
+        ['unique'] = false,
+        ['useable'] = false,
+        ['shouldClose'] = true,
+        ['combinable'] = nil,
+        ['description'] = "Pour tracter n'importe quel véhicule",
+        ['illustrator'] = '.Poulpito',
+    },
     -- Medication
     ['firstaid'] = {
         ['name'] = 'firstaid',

@@ -168,14 +168,6 @@ export class BennysFlatbedProvider {
         ]);
     }
 
-    @Tick(TickInterval.EVERY_FRAME)
-    private async handleFlatbedAttach() {
-        if (!this.currentFlatbedAttach) {
-            return;
-        }
-        this.ropeService.manageRopePhysics();
-    }
-
     private async toggleFlatbedAttach(entity: number) {
         if (this.currentFlatbedAttach) {
             await this.disableFlatbedAttach();
@@ -429,7 +421,7 @@ export class BennysFlatbedProvider {
             return;
         }
 
-        this.soundService.play('seatbelt/buckle', 0.2);
+        this.soundService.playAround('seatbelt/buckle', 5, 0.2);
         this.notifier.notify('Le véhicule a été attaché au flatbed.');
 
         const vehicleFlatbedNetworkId = NetworkGetNetworkIdFromEntity(this.currentFlatbedAttach.entity);
