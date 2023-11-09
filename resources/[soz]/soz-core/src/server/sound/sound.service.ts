@@ -45,4 +45,8 @@ export class SoundService {
     public play(source: number, name: string, volume: number) {
         TriggerClientEvent('InteractSound_CL:PlayOnOne', source, name, volume);
     }
+
+    public playAround(source: number, name: string, distance: number, volume: number) {
+        TriggerEvent('InteractSound_SV:PlayWithinDistance', distance, name, volume);
+    }
 }

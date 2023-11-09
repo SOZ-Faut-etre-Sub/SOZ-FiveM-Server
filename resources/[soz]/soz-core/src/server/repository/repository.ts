@@ -95,7 +95,7 @@ export abstract class Repository<
         return this.data;
     }
 
-    public async get(predicate?: (value: V, index: number, array: V[]) => T): Promise<V[]> {
+    public async get(predicate?: (value: V, index: number, array: V[]) => boolean): Promise<V[]> {
         if (this.loadPromise) {
             await this.loadPromise;
         }
