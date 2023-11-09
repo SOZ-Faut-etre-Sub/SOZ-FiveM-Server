@@ -133,7 +133,7 @@ export class PlayerService {
         return player;
     }
 
-    public async showCard(type: CardType) {
+    public async showCard(type: CardType, accountId?: string) {
         const position = GetEntityCoords(PlayerPedId()) as Vector3;
         const players = this.getPlayersAround(position, 3.0);
 
@@ -156,7 +156,7 @@ export class PlayerService {
             },
         });
 
-        TriggerServerEvent(ServerEvent.PLAYER_SHOW_IDENTITY, type, players, player);
+        TriggerServerEvent(ServerEvent.PLAYER_SHOW_IDENTITY, type, players, player, accountId);
     }
 
     public toogleFakeId(fakeId: FakeId) {

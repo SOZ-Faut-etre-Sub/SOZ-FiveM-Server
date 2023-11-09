@@ -26,6 +26,7 @@ export type InventoryItem = {
     slot: number;
     useable: boolean;
     usableLabel?: string;  // added by inventory on the fly
+    giveLabel?: string; // added by inventory on the fly
     unique: boolean;
     type: ItemType;
     amount: number;
@@ -61,7 +62,8 @@ export type ItemType =
     | 'crate'
     | 'fish'
     | 'fishing_garbage'
-    | 'tool';
+    | 'tool'
+    | 'card';
 
 export type MealMetadata = {
         name: string;
@@ -96,6 +98,7 @@ export type InventoryItemMetadata = {
     fuel?: number;
     weight?: number;
     length?:number;
+    iban?: string;
 };
 
 

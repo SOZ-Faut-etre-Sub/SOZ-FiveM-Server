@@ -1,6 +1,7 @@
 import { FunctionComponent, PropsWithChildren } from 'react';
 import {clsx} from 'clsx'
 import style from './ContainerWrapper.module.css';
+import keysIcon from '/icon/givekeys.png';
 
 type Props = {
     display: boolean;
@@ -8,9 +9,11 @@ type Props = {
     weight?: number;
     maxWeight?: number;
     sortCallback?: () => void;
+    giveAllCallback?: () => void;
+    backAction?: () => void;
 }
 
-export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({display, banner, weight = 1000, maxWeight = 1000, sortCallback, children}) => {
+export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({display, banner, weight = 1000, maxWeight = 1000, sortCallback, giveAllCallback, children, backAction}) => {
     return (
         <main
             className={clsx(style.Wrapper, {
@@ -42,6 +45,26 @@ export const ContainerWrapper: FunctionComponent<PropsWithChildren<Props>> = ({d
                             {weight / 1000}/{maxWeight / 1000} Kg
                         </span>
                     </>
+                )}
+                {backAction && (
+                    <span className={style.GiveAll} onClick={backAction}>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                    </svg>
+                    Retour
+                </span>
+                )}
+                {giveAllCallback && (
+                    <span className={style.GiveAll} onClick={giveAllCallback}>
+                    <img src={keysIcon} />
+                        Tout donner
+                    </span>
                 )}
             </header>
 

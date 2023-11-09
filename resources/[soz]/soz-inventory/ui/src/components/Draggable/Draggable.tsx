@@ -1,10 +1,16 @@
 import { DragOverlay, useDraggable } from '@dnd-kit/core';
 import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
-import { InventoryItem } from '../../types/inventory';
+import { InventoryItem, ItemType } from '../../types/inventory';
 import style from './Item.module.css';
 import {CSS} from '@dnd-kit/utilities';
 import apartmentKeyIcon from '/icon/apartment_key.png';
+import licenseCardIcon from '/icon/license.webp';
+import healthCardIcon from '/icon/health.webp';
+import identityCardIcon from '/icon/identity.webp';
 import moneyIcon from '/icon/money.png';
+import walletIcon from '/icon/wallet.webp';
+import bankIcon from '/icon/bank.webp'
+import keychainIcon from '/icon/keychain.webp';
 import vehicleKeyIcon from '/icon/vehicle_key.png';
 import { clsx } from 'clsx';
 import { WeaponAmmo } from '../../types/weapon';
@@ -15,17 +21,20 @@ type Props = {
     containerName: string;
     item?: InventoryItem;
     money?: number;
+    wallet?: boolean;
+    keychain?:boolean;
     contextMenu?: boolean;
     interactAction?: any;
     setInContext?: (inContext: boolean) => void;
     onItemHover?: (description: string | null) => void;
     price?: number
+    undraggable?: boolean;
 }
 
 const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {day: "numeric", month: "numeric", year: "numeric", hour: "numeric", minute: "numeric"}
 const FORMAT_CURRENCY: Intl.NumberFormatOptions = {style: "currency", currency: 'USD', maximumFractionDigits: 0}
 
-const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, onItemHover, price }) => {
+const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, interactAction, wallet, keychain, onItemHover, price, undraggable }) => {
     const {attributes, listeners, setNodeRef, transform, isDragging} = useDraggable({
         id: `${id}_${item?.slot ?? ''}`,
         data: {
@@ -68,6 +77,10 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             if (item?.metadata?.bait) {
                 itemExtraLabel += ` [${item.metadata.bait?.label}]`
             }
+        } else if(item.name === 'bank'){
+            if (item?.metadata?.iban) {
+                itemExtraLabel += `[ IBAN : ${item.metadata.iban?.replace(/.{4}/g, '$& ')}]`
+            }
         } else if(item.name === 'chainsaw'){
             if (item?.metadata?.fuel) {
                 itemExtraLabel += ` [${item.metadata.fuel.toString()} L]`
@@ -102,8 +115,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             } else {
                 itemExtraLabel += ` [DLC: ${expiration.toLocaleDateString('fr-FR', FORMAT_LOCALIZED)}]`
             }
-        }
-        else if (item?.metadata?.type && !item?.metadata?.label) {
+        } else if (item?.metadata?.type && !item?.metadata?.label) {
             itemExtraLabel += ` [${item?.metadata?.type}]`
         }
 
@@ -158,12 +170,23 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
 
     const itemIcon = useCallback((item: InventoryItem) => {
         let path = item.name
-
         if (item.name === 'vehicle_key') {
             return vehicleKeyIcon;
         }
         if (item.name === 'apartment_key') {
             return apartmentKeyIcon;
+        }
+        if (item.name === 'health') {
+            return healthCardIcon;
+        }
+        if (item.name === 'license') {
+            return licenseCardIcon;
+        }
+        if (item.name === 'identity') {
+            return identityCardIcon;
+        }
+        if (item.name === 'bank') {
+            return bankIcon;
         }
 
         if (item.name === 'outfit' || item.name === 'armor') {
@@ -175,11 +198,11 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
         return `https://cfx-nui-soz-core/public/images/items/${path}.webp`
     }, []);
 
-    if (!item && !money) {
+    if (!item && !money && !wallet && !keychain) {
         return null
     }
 
-    if (isDragging) {
+    if (isDragging && !undraggable) {
         if (item) {
             return createPortal(
                 <DragOverlay className={style.Card}>
@@ -258,6 +281,30 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                         />
                     </>
                 )}
+                {wallet && (
+                    <>
+                        <span className={style.Amount}>
+                            Portefeuille
+                        </span>
+                        <img
+                            alt=""
+                            className={style.Icon}
+                            src={walletIcon}
+                        />
+                    </>
+                )}
+                {keychain && (
+                    <>
+                        <span className={style.Amount}>
+                            Trousseau
+                        </span>
+                        <img
+                            alt=""
+                            className={style.Icon}
+                            src={keychainIcon}
+                        />
+                    </>
+                )}
             </div>
 
             {interactAction && (
@@ -266,9 +313,10 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                     <div className={style.OptionsList}>
                         {item && (item.useable || item.type === 'weapon') && <li className={style.OptionListItem} onClick={createInteractAction('useItem')}>
                             {item.type === 'weapon' ? 'Équiper' : item.usableLabel || 'Utiliser'}
+
                         </li>}
-                        {item && <li className={style.OptionListItem} onClick={createInteractAction('giveItem')}>
-                            Donner
+                        {item && item.type !== 'card' && <li className={style.OptionListItem} onClick={createInteractAction('giveItem')}>
+                            {item.giveLabel || 'Donner'}
                         </li>}
                         {(item && item.type === 'weapon') && (
                             <>
@@ -310,6 +358,25 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                                 Donner en sale
                             </li>
                         </>)}
+                        {wallet && (<>
+                            <li className={style.OptionListItem} onClick={createInteractAction('openPlayerWalletInventory')}>
+                                Ouvrir le portefeuille
+                            </li>
+                        </>)}
+                        {keychain && (<>
+                            <li className={style.OptionListItem} onClick={createInteractAction('openPlayerKeyInventory')}>
+                                Ouvrir le trousseau
+                            </li>
+                        </>)}
+                        {item && item.type === 'card' && (<>
+                            <li className={style.OptionListItem} onClick={createInteractAction('showCard')}>
+                                Montrer
+                            </li>
+                            <li className={style.OptionListItem} onClick={createInteractAction('seeCard')}>
+                                Regarder
+                            </li>
+                        </>)}
+                        
                     </div>
                 </div>
             )}

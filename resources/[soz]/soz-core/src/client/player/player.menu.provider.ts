@@ -1,12 +1,14 @@
+import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { Feature, isFeatureEnabled } from '@public/shared/features';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { Command } from '../../core/decorators/command';
-import { Once, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClothConfig } from '../../shared/cloth';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { AnimationService } from '../animation/animation.service';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
@@ -94,22 +96,29 @@ export class PlayerMenuProvider {
         this.menu.closeMenu();
     }
 
+    @OnEvent(ClientEvent.PLAYER_CARD_SHOW)
     @OnNuiEvent(NuiEvent.PlayerMenuCardShow)
-    public async onPlayerMenuCardShow({ type }) {
-        await this.playerService.showCard(type);
+    public async onPlayerMenuCardShow(type, accountId?: string) {
+        await this.playerService.showCard(type, accountId);
     }
 
+    @OnEvent(ClientEvent.PLAYER_CARD_SEE)
     @OnNuiEvent(NuiEvent.PlayerMenuCardSee)
     public async seeCard({ type }) {
         const player = this.playerService.getId();
-
+        let iban = '';
         if (!player) {
             return;
+        }
+
+        if (type === 'bank') {
+            iban = await emitRpc<string>(RpcServerEvent.BANK_GET_ACCOUNT, player.citizenid);
         }
 
         this.dispatcher.dispatch('card', 'addCard', {
             type,
             player,
+            iban,
         });
     }
 

@@ -147,6 +147,8 @@ export enum ServerEvent {
     PLAYER_ZOMBIE_CONVERT = 'soz-core:server:player:zombie:convert',
     PLAYER_ZOMBIE_REMOVE = 'soz-core:server:player:zombie:remove',
 
+    PLAYER_OPEN_WALLET = 'soz-core:server:player:open-wallet',
+
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
     PROP_REQUEST_DELETE_PROP = 'soz-core:server:prop:request-delete',

@@ -4,12 +4,16 @@ import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
+import { VehicleKeysProvider } from '../vehicle/vehicle.keys.provider';
 import { ItemService } from './item.service';
 
 @Provider()
 export class ItemToolsProvider {
     @Inject(ItemService)
     private item: ItemService;
+
+    @Inject(VehicleKeysProvider)
+    private vehicleKeyProvider: VehicleKeysProvider;
 
     @Once()
     public onStart() {

@@ -7,6 +7,7 @@ export interface NuiCardMethodMap {
 export type CardData = {
     type: CardType;
     player: PlayerData;
+    iban?: string;
 };
 
 export type CardType = 'identity' | 'license' | 'health';
