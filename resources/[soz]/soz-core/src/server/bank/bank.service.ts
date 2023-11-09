@@ -49,4 +49,13 @@ export class BankService {
         });
         return bankAccount.accountid;
     }
+
+    public addMoney(
+        targetAccount: string,
+        amount: number,
+        type: 'money' | 'marked_money' = 'money',
+        allowOverflow = false
+    ) {
+        exports['soz-bank'].AddMoney(targetAccount, amount, type, allowOverflow);
+    }
 }

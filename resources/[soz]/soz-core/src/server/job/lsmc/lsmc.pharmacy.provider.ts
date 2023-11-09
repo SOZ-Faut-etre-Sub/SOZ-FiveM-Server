@@ -1,11 +1,13 @@
 import { OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { BankService } from '@public/server/bank/bank.service';
 import { InventoryManager } from '@public/server/inventory/inventory.manager';
 import { Notifier } from '@public/server/notifier';
 import { PlayerMoneyService } from '@public/server/player/player.money.service';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { JobType } from '@public/shared/job';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
 
 @Provider()
@@ -18,6 +20,9 @@ export class LSMCPharmacyProvider {
 
     @Inject(PlayerMoneyService)
     private playerMoneyService: PlayerMoneyService;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @Inject(Notifier)
     private notifier: Notifier;
@@ -32,6 +37,7 @@ export class LSMCPharmacyProvider {
         }
 
         if (this.playerMoneyService.remove(source, price)) {
+            this.bankService.addMoney('safe_' + JobType.LSMC, Math.round(price / 2));
             if (player.metadata.disease == 'grippe') {
                 this.playerService.setPlayerDisease(player.source, false);
                 this.notifier.notify(player.source, 'Vous êtes guéri!');

@@ -60,6 +60,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'n_camera', type: 'item', price: 250 },
             { id: 'n_bmic', type: 'item', price: 100 },
             { id: 'microphone', type: 'item', price: 50 },
+            { id: 'press_card', type: 'item', price: 1000 },
         ],
     },
     {
@@ -84,6 +85,7 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'n_camera', type: 'item', price: 250 },
             { id: 'n_bmic', type: 'item', price: 100 },
             { id: 'microphone', type: 'item', price: 50 },
+            { id: 'press_card', type: 'item', price: 1000 },
         ],
     },
     {

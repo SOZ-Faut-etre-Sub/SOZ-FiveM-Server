@@ -1,6 +1,6 @@
 import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 
-import { On } from '../../core/decorators/event';
+import { On, Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -11,6 +11,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 
@@ -31,6 +32,17 @@ export class DrivingSchoolProvider {
     @Inject(VehicleSpawner)
     private vehicleSpawner: VehicleSpawner;
 
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
+    @Once()
+    public onStart() {
+        this.playerPositionProvider.registerZone(
+            DrivingSchoolConfig.playerDefaultLocationName,
+            DrivingSchoolConfig.playerDefaultLocation
+        );
+    }
+
     @On(ServerEvent.DRIVING_SCHOOL_PLAYER_PAY)
     public makePlayerPay(source: number, licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4) {
         const lData = DrivingSchoolConfig.licenses[licenseType];
@@ -43,7 +55,10 @@ export class DrivingSchoolProvider {
             return;
         }
 
-        TriggerClientEvent(ClientEvent.DRIVING_SCHOOL_SETUP_EXAM, source, licenseType, spawnPoint);
+        const spawnName = 'PERMIS_SPAWN_POINT_' + source;
+        this.playerPositionProvider.registerZone(spawnName, spawnPoint);
+
+        TriggerClientEvent(ClientEvent.DRIVING_SCHOOL_SETUP_EXAM, source, licenseType, spawnPoint, spawnName);
     }
 
     @On(ServerEvent.DRIVING_SCHOOL_UPDATE_LICENSE)
