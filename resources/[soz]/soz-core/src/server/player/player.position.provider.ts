@@ -10,6 +10,7 @@ export class PlayerPositionProvider {
     public AIRPORT = 'airport';
 
     private players: Record<number, Vector3> = {};
+    private allowed = new Map<number, Vector3>();
     private zones = new Map<string, Vector4>();
 
     @Once()
@@ -25,11 +26,17 @@ export class PlayerPositionProvider {
             return;
         }
 
-        if (getDistance(coord, [0, 0, 0]) < 5 || getDistance(prevCoord, [0, 0, 0]) < 5) {
+        if (getDistance(coord, [0, 0]) < 15 || getDistance(prevCoord, [0, 0]) < 15) {
             return;
         }
 
         if (getDistance(coord, prevCoord) > 1000.0) {
+            const allowedTarget = this.allowed.get(source);
+            if (allowedTarget && getDistance(coord, allowedTarget) < 100.0) {
+                this.allowed.delete(source);
+                return;
+            }
+
             exports['soz-core'].Report(source, 'teleportation', null, null, prevCoord);
         }
     }
@@ -52,9 +59,11 @@ export class PlayerPositionProvider {
         }
 
         const ped = GetPlayerPed(source);
-        this.players[source] = [target[0], target[1], target[2]];
+        this.allowed.set(source, [target[0], target[1], target[2]]);
         SetEntityCoords(ped, target[0], target[1], target[2], false, false, false, false);
         SetEntityHeading(ped, target[3] || 0.0);
+
+        return true;
     }
 
     //Register allowed teleportation, to detect sinful ones

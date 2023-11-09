@@ -66,7 +66,7 @@ SozJobCore.JobPermission = {
     ManageRoster = "roster-manage",
     Baun = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
     Ffs = {Harvest = "harvest", Restock = "restock", Craft = "craft"},
-    Bennys = {Estimate = "estimate", Resell = "resell", Order = "order"},
+    Bennys = {Estimate = "estimate", Resell = "resell", Order = "order", PitStopPrice = "pitstop-price"},
     Mdr = {
         ViewOtherJobs = "view-other-jobs",
         ViewCitizenData = "view-citizen-data",
@@ -656,6 +656,7 @@ SozJobCore.Jobs = {
             [SozJobCore.JobPermission.Bennys.Estimate] = {label = "Estimer les véhicules"},
             [SozJobCore.JobPermission.Bennys.Order] = {label = "Commander un véhicule d'essai"},
             [SozJobCore.JobPermission.Bennys.Resell] = {label = "Revendre un véhicule"},
+            [SozJobCore.JobPermission.Bennys.PitStopPrice] = {label = "Changer le prix du Pit Stop"},
         },
         bossZones = {
             {

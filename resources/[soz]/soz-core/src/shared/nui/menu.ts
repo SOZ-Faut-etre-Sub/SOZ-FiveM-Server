@@ -89,6 +89,7 @@ export enum MenuType {
     GouvJobMenu = 'gouv_job',
     FDFJobMenu = 'fdf_job',
     DmcJobMenu = 'dmc_job',
+    PitStopPriceMenu = 'pitstop_price',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -135,4 +136,5 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.FDFJobMenu]: any;
     [MenuType.JobNews]: { job: JobType };
     [MenuType.DmcJobMenu]: DmcJobMenuData;
+    [MenuType.PitStopPriceMenu]: never;
 }

@@ -12248,7 +12248,7 @@ QBShared.Items = {
         ['weight'] = 200,
         ['type'] = 'fish',
         ['fish_generation'] = 'halloween',
-        ['description'] = "Le pagure rouge est de la même famille que le bernard-l'ermite. D'une taille et d'une force bien plus importantes que ses cousins, il n'attend pas toujours que la coquille soit vide pour y élire domicile.",
+        ['description'] = "Dans l'obscurité inquiétante des eaux troubles, le zilure démoniaque émerge, ses yeux luisant d'une lueur sinistre, ses écailles noires comme la nuit semblant refléter l'âme des pécheurs égarés. Ses mâchoires démesurées révèlent des dents acérées prêtes à dévorer tout ce qui ose s'aventurer dans ses sombres profondeurs.",
         ['illustrator'] = '.Aardocan',
         ['fishing_area'] = {'river', 'big_lake'},
         ['fishing_weather'] = {'allweather'},
@@ -12888,7 +12888,7 @@ QBShared.Items = {
         ['weight'] = 200,
         ['type'] = 'fish',
         ['fish_generation'] = 'halloween',
-        ['description'] = "Un poisson étonnant qui un organe lumineux dans son corp lorsque la nuit tombe de la lumière s'échappe de ses yeux et de sa bouche !",
+        ['description'] = "Un poisson étonnant qui a un organe lumineux dans son corps. Lorsque la nuit tombe, de la lumière s'échappe de ses yeux et de sa bouche !",
         ['illustrator'] = '.Pastouke',
         ['fishing_area'] = {'little_lake','canals'},
         ['fishing_weather'] = {'allweather'},
@@ -13128,7 +13128,7 @@ QBShared.Items = {
         ['weight'] = 200,
         ['type'] = 'fish',
         ['fish_generation'] = 'halloween',
-        ['description'] = "La Sisilione est une sirène spectrale qui séduit avec sa beauté ensorcelante. Cependant, elle se nourrit des âmes de ses proies, émettant un cri spectral qui piège ses victimes. Son chant mélancolique résonne comme une lamentation funèbre. Elle est une figure sinistre de l'océan, attirant les imprudents dans les profondeurs pour dévorer leurs âmes, condamnant ainsi leurs esprits à l'éternité en mer.",
+        ['description'] = "Un petit escargot qui craint la lumière du jour, ces déplacement se font que la nuit ! Bon il a des canines très longue qui lui permet de vider ces victimes de tout leurs sang mais bon ça c'est un détail... Une légende raconte que l'ail permettrai aussi de les faire fuir !",
         ['illustrator'] = '.Crash',
         ['fishing_area'] = {'little_lake','river'},
         ['fishing_weather'] = {'allweather'},
@@ -13281,7 +13281,6 @@ QBShared.Items = {
         ['sozedex_id'] = 56,
         ['price'] = 54
     },
-
     ['soz_hammer'] = {
         ['name'] = 'soz_hammer',
         ['label'] = "Le Marteau",
@@ -13293,6 +13292,17 @@ QBShared.Items = {
         ['combinable'] = nil,
         ['giveable'] = false,
         ['description'] = "Il en émane une puissance incommensurable. Il est dit que celui qui le possède peut façon le monde à sa guise. Vous ne vous sentez pas de le donner à quiconque.",
+        ['illustrator'] = '.'
+    },
+    ['press_card'] = {
+        ['name'] = 'press_card',
+        ['label'] = 'Carte de presse',
+        ['weight'] = 150,
+        ['useable'] = false,
+        ['type'] = 'item',
+        ['unique'] = true,
+        ['combinable'] = nil,
+        ['description'] = 'Multipass',
         ['illustrator'] = '.'
     },
 }
