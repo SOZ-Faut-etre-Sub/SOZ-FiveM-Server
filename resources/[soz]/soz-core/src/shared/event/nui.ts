@@ -181,6 +181,7 @@ export enum NuiEvent {
     VehicleDealershipBuyVehicle = 'soz-core:client:vehicle:dealership:buy-vehicle',
 
     VehicleSetEngine = 'soz-core:nui:vehicle:set-engine',
+    VehicleSetNeonStatus = 'soz-core:nui:vehicle:set-neon-status',
     VehicleSetSpeedLimit = 'soz-core:nui:vehicle:set-speed-limit',
     VehicleOpenLSCustom = 'soz-core:nui:vehicle:open-ls-custom',
     VehicleSetDoorOpen = 'soz-core:nui:vehicle:set-door-open',
