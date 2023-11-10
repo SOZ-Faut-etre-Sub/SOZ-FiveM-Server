@@ -27,7 +27,7 @@ export abstract class Repository<
         return this.data[id] ?? this.data[id.toString()] ?? null;
     }
 
-    public get(predicate?: (value: V, index: number, array: V[]) => T): V[] {
+    public get(predicate?: (value: V, index: number, array: V[]) => boolean): V[] {
         const values = Object.values(this.data) as V[];
 
         if (predicate) {

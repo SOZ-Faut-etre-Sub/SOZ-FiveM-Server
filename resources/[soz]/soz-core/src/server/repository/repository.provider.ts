@@ -19,6 +19,7 @@ import { JobGradeRepository } from './job.grade.repository';
 import { ObjectRepository } from './object.repository';
 import { RaceRepository } from './race.repository';
 import { Repository, RepositoryLegacy } from './repository';
+import { TowRopeRepository } from './tow.rope.repository';
 import { UnderTypesShopRepository } from './under_types.shop.repository';
 import { UpwChargerRepository } from './upw.charger.repository';
 import { UpwStationRepository } from './upw.station.repository';
@@ -46,6 +47,9 @@ export class RepositoryProvider {
 
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
+
+    @Inject(TowRopeRepository)
+    private towRopeRepository: TowRopeRepository;
 
     @Inject(ObjectRepository)
     private objectRepository: ObjectRepository;

@@ -17,6 +17,7 @@ import { VehicleRadarProvider } from './vehicle.radar.provider';
 import { VehicleSeatbeltProvider } from './vehicle.seatbelt.provider';
 import { VehicleSpawnProvider } from './vehicle.spawn.provider';
 import { VehicleStateProvider } from './vehicle.state.provider';
+import { VehicleTowProvider } from './vehicle.tow.provider';
 
 @Module({
     providers: [
@@ -38,6 +39,7 @@ import { VehicleStateProvider } from './vehicle.state.provider';
         VehicleStateProvider,
         VehiclePoliceLocator,
         VehiclePitStopProvider,
+        VehicleTowProvider,
     ],
 })
 export class VehicleModule {}

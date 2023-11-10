@@ -107,8 +107,8 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         ))}
                 </MenuContent>
             </SubMenu>
-            {players.map(player => (
-                <SubMenu id={'player_' + player.citizenId} key={player.citizenId}>
+            {players.map((player, index) => (
+                <SubMenu id={'player_' + player.citizenId} key={`player_index_${index}`}>
                     <MenuTitle banner={banner}>{player.name}</MenuTitle>
                     <MenuContent>
                         <MenuItemSelect

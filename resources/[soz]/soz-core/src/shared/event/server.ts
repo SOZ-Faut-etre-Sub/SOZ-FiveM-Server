@@ -230,6 +230,8 @@ export enum ServerEvent {
     VEHICLE_UPDATE_MILEAGE = 'soz-core:server:vehicle:update-mileage',
     VEHICLE_SET_OPEN = 'soz-core:server:vehicle:set-open',
     VEHICLE_PITSTOP = 'soz-core:server:vehicle:pitstop',
+    VEHICLE_TOW_ROPE_ADD = 'soz-core:server:vehicle:tow-rope-add',
+    VEHICLE_TOW_ROPE_DELETE = 'soz-core:server:vehicle:tow-rope-delete',
 
     VOIP_IS_MUTED = 'voip:server:player:isMuted',
     VOIP_MUTE = 'voip:server:player:mute',
