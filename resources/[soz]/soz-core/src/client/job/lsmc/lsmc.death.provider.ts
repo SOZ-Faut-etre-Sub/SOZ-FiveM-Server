@@ -475,15 +475,19 @@ export class LSMCDeathProvider {
 
     @OnEvent(ClientEvent.LSMC_CALL, false)
     public call() {
-        const ped = PlayerPedId();
-        const coords = GetEntityCoords(ped);
-        const street = GetStreetNameAtCoord(coords[0], coords[1], coords[2])[0];
-        const streetname = GetStreetNameFromHashKey(street);
+        const playerPed = PlayerPedId();
+        const coords = GetEntityCoords(playerPed);
+        const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
+        const zoneID = GetNameOfZone(coords[0], coords[1], coords[2]);
+
+        const name = street
+            ? `${GetStreetNameFromHashKey(street)}${street2 ? ` et ${GetStreetNameFromHashKey(street2)}` : ''}`
+            : GetLabelText(zoneID);
 
         TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
             anonymous: true,
             number: '555-LSMC',
-            message: `Besoin d'aide vers ${streetname}`,
+            message: `Besoin d'aide vers ${name}`,
             position: true,
         });
         TriggerServerEvent(ServerEvent.LSMC_NEW_URGENCY);
