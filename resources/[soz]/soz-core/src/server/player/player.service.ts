@@ -253,4 +253,8 @@ export class PlayerService {
 
         return this.names[citizenId];
     }
+
+    public playerHasAMask(player: PlayerData): boolean {
+        return  !player.cloth_config.Config.HideMask
+    }
 }
