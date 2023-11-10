@@ -12,7 +12,6 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import { VehicleCondition, VehicleLocation, VehicleSeat, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
-import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
 import { PlayerService } from '../player/player.service';
 import { VehicleStateService } from './vehicle.state.service';
@@ -30,9 +29,6 @@ export class VehicleStateProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(JobService)
-    private jobService: JobService;
 
     @Tick(TickInterval.EVERY_SECOND, 'vehicle:state:check')
     public async checkVehicleState() {

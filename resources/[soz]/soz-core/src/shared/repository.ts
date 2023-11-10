@@ -10,6 +10,7 @@ import { Race } from './race';
 import { ClothingShop } from './shop';
 import { Garage } from './vehicle/garage';
 import { Radar } from './vehicle/radar';
+import { TowRope } from './vehicle/tow.rope';
 import { Vehicle } from './vehicle/vehicle';
 
 export enum RepositoryType {
@@ -29,12 +30,14 @@ export enum RepositoryType {
     StationUpw = 'stationUpw',
     Vehicle = 'vehicle',
     Zone = 'zone',
+    TowRope = 'towRope',
 }
 
 export interface RepositoryConfig extends Record<RepositoryType, Record<any, any>> {
     // Implemented
     [RepositoryType.Housing]: Record<number, Property>;
     [RepositoryType.Zone]: Record<number, ZoneTyped>;
+    [RepositoryType.TowRope]: Record<string, TowRope>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

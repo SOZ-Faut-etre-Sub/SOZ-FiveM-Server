@@ -576,21 +576,12 @@ export class VehicleFuelProvider {
             return;
         }
 
-        this.soundService.playAround('fuel/refueling', 5, 0.3);
-    }
-
-    @Tick(TickInterval.EVERY_FRAME)
-    private async handleStationPistolPhysics() {
-        if (!this.currentStationPistol) {
-            return;
-        }
-
         if (this.ropeService.getRopeDistance() > MAX_LENGTH_ROPE) {
             await this.disableStationPistol();
             return;
         }
 
-        this.ropeService.manageRopePhysics();
+        this.soundService.playAround('fuel/refueling', 5, 0.3);
     }
 
     private async getStationFuelLevel(entity: number) {
