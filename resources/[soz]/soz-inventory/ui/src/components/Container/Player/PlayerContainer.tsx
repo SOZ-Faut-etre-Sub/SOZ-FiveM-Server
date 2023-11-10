@@ -106,8 +106,6 @@ export const PlayerContainer = () => {
                 return;
             }
 
-            console.log('ON PASSE ICI', event)
-
             fetch(`https://soz-inventory/sortItem`, {
                 method: "POST",
                 headers: {
