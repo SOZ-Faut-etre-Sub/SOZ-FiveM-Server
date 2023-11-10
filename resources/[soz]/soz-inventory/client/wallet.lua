@@ -15,6 +15,11 @@ RegisterNetEvent("inventory:client:openPlayerWalletInventory", function(cards)
     SetNuiFocus(true, true)
 end)
 
+RegisterKeyMapping("open-wallet", "Ouvrir le portefeuille", "keyboard", "")
+RegisterCommand("open-wallet", function()
+    TriggerServerEvent("soz-core:server:player:open-wallet")
+end, false)
+
 RegisterNUICallback("player/openPlayerWalletInventory", function(data, cb)
     TriggerServerEvent("soz-core:server:player:open-wallet")
     cb(true)
