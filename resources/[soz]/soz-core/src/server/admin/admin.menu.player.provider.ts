@@ -12,6 +12,7 @@ import { toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector'
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
 import { PlayerZombieProvider } from '../player/player.zombie.provider';
@@ -35,6 +36,9 @@ export class AdminMenuPlayerProvider {
 
     @Inject(PlayerZombieProvider)
     private playerZombieProvider: PlayerZombieProvider;
+
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
 
     @OnEvent(ServerEvent.ADMIN_ADD_PERSISTENT_PROP)
     public async addPersistentProp(source: number, model: number, event: string | null, position: Vector4) {
@@ -135,10 +139,9 @@ export class AdminMenuPlayerProvider {
 
     @OnEvent(ServerEvent.ADMIN_TELEPORT_PLAYER_TO_ME)
     public teleportPlayerToMe(source: number, player: AdminPlayer) {
-        const ped = GetPlayerPed(player.id);
         const position = GetEntityCoords(GetPlayerPed(source));
 
-        SetEntityCoords(ped, position[0], position[1], position[2], false, false, false, false);
+        this.playerPositionProvider.teleportToCoords(player.id, [position[0], position[1], position[2], 0.0]);
 
         this.playerService.setPlayerMetadata(player.id, 'inside', {
             apartment: false,
