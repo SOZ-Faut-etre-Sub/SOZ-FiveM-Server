@@ -45,7 +45,7 @@ export class ItemNutritionProvider {
             return;
         }
 
-        if (this.playerService.playerHasAMask(player)) {
+        if (!this.playerService.playerCanEat(player)) {
             this.notifier.notify(
               source,
               'Vous ne pouvez pas manger ou boire avec un masque sur le visage.',

@@ -254,7 +254,19 @@ export class PlayerService {
         return this.names[citizenId];
     }
 
-    public playerHasAMask(player: PlayerData): boolean {
-        return  !player.cloth_config.Config.HideMask
+    public playerCanEat(player: PlayerData): boolean {
+        const MaskWithMouth = [
+            11, 12, 27, 32, 33, 57, 58, 73, 77, 109, 117, 119, 120, 121, 122, 148, 145
+        ]
+        const HelmetWithoutMouth = [
+          16, 18, 38, 47, 48, 49, 50, 51, 52, 53, 57, 62, 67, 68, 69, 70, 71, 72, 73, 74, 78, 79, 80, 81, 82, 91, 92, 111, 115, 127, 128, 129, 133, 134
+          ]
+        if (!player.cloth_config.Config.HideMask) {
+            return MaskWithMouth.includes(player.cloth_config.BaseClothSet.Components["1"].Drawable);
+        }
+        if (player.cloth_config.Config.ShowHelmet) {
+            return !HelmetWithoutMouth.includes(player.cloth_config.BaseClothSet.Props.Helmet.Drawable);
+        }
+        return true
     }
 }
