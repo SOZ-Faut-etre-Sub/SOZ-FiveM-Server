@@ -158,6 +158,7 @@ export type VehicleVolatileState = {
     model: string;
     locatorEndJam: number;
     label: string;
+    neonLightsStatus: boolean | null;
 };
 
 export enum VehicleClass {
@@ -239,6 +240,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     model: null,
     locatorEndJam: 0,
     label: null,
+    neonLightsStatus: true,
 });
 
 export type VehicleMenuData = {
@@ -255,6 +257,8 @@ export type VehicleMenuData = {
     policeLocator: boolean;
     onDutyNg: boolean;
     pitstopPrice: number;
+    neonLightsStatus: boolean;
+    hasNeon: boolean;
 };
 
 export type VehicleAuctionMenuData = {

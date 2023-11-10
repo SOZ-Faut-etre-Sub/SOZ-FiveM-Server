@@ -39,6 +39,10 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         fetchNui(NuiEvent.VehicleSetEngine, value);
     };
 
+    const onNeonLightStatusChange = (value: boolean) => {
+        fetchNui(NuiEvent.VehicleSetNeonStatus, value);
+    };
+
     const onSpeedLimit = (value: number | null) => {
         fetchNui(NuiEvent.VehicleSetSpeedLimit, value);
     };
@@ -77,6 +81,11 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                     {data.isDriver && (
                         <MenuItemCheckbox onChange={onVehicleEngineChange} checked={data.engineOn}>
                             Moteur allumé
+                        </MenuItemCheckbox>
+                    )}
+                    {data.isDriver && data.hasNeon && (
+                        <MenuItemCheckbox onChange={onNeonLightStatusChange} checked={data.neonLightsStatus}>
+                            Néons allumés
                         </MenuItemCheckbox>
                     )}
                     {data.hasRadio && (
