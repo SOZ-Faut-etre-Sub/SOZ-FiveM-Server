@@ -95,12 +95,19 @@ export const PlayerContainer = () => {
 
 
         if (event.over !== null) { // Do a sort in inventory
-            if (event.over.id == 'player_wallet' || event.over.id == 'player_keychain') {
+
+            if (event.active.id == 'player_drag_keychain_' || 
+                event.over.id == 'player_keychain' ||
+                event.active.id == 'player_drag_wallet_' || 
+                event.over.id == 'player_wallet' || 
+                event.active.id == 'player_drag_money_' || 
+                event.over.id == 'player_money'
+                ) {
                 return;
             }
-            if (event.active.id == 'player_drag_money_' || event.over.id == 'player_money') {
-                return;
-            }
+
+            console.log('ON PASSE ICI', event)
+
             fetch(`https://soz-inventory/sortItem`, {
                 method: "POST",
                 headers: {
@@ -203,8 +210,8 @@ export const PlayerContainer = () => {
                         id="player"
                         rows={inventoryRow}
                         money={playerMoney}
-                        wallet
-                        keychain
+                        wallet={1}
+                        keychain={1}
                         items={playerInventory.items.map((item, i) => ({ ...item, id: i, shortcut: itemShortcut(item) }))}
                         action={interactAction}
                     />

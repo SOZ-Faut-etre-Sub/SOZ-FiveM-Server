@@ -12,20 +12,23 @@ RegisterNetEvent("inventory:client:openPlayerWalletInventory", function(cards)
         }
     end
     SendNUIMessage({action = "openPlayerWalletInventory", cards = playerCards})
+    SetNuiFocus(true, true)
 end)
 
 RegisterNUICallback("player/openPlayerWalletInventory", function(data, cb)
     TriggerServerEvent("soz-core:server:player:open-wallet")
+    cb(true)
 end)
 
 RegisterNUICallback("player/showCard", function(data, cb)
     local cardType = data.name;
     local accountId = data.metadata.iban
     TriggerEvent("soz-core:client:player:card:show", cardType, accountId)
+    cb(true)
 end)
 
 RegisterNUICallback("player/seeCard", function(data, cb)
     local cardType = data.name;
     TriggerEvent("soz-core:client:player:card:see", {type = cardType})
-
+    cb(true)
 end)

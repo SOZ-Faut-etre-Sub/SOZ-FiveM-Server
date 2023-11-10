@@ -21,8 +21,8 @@ type Props = {
     containerName: string;
     item?: InventoryItem;
     money?: number;
-    wallet?: boolean;
-    keychain?:boolean;
+    wallet?: number;
+    keychain?:number;
     contextMenu?: boolean;
     interactAction?: any;
     setInContext?: (inContext: boolean) => void;
@@ -41,7 +41,7 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
             container: containerName,
             item
         },
-        disabled: item?.disabled === true || money == -1,
+        disabled: item?.disabled === true || money == -1 || wallet == -1 || keychain == -1,
     });
 
     const itemRef = useRef<HTMLDivElement>(null);
@@ -238,8 +238,8 @@ const Draggable: FunctionComponent<Props> = ({ id, containerName, item, money, i
                 {...listeners}
                 {...attributes}
                 className={clsx(style.Card, {
-                    [style.Disabled]: item?.disabled === true || (money && money < 0),
-                })}
+                    [style.Disabled]: item?.disabled === true || (money && money < 0) || (wallet && wallet < 0) || (keychain && keychain < 0),
+                })} 
                 onMouseEnter={applyDescription}
                 onMouseLeave={resetDescription}
             >

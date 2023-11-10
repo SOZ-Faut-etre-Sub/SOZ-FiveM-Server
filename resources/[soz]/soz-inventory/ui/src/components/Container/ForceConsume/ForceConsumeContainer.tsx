@@ -112,6 +112,8 @@ export const ForceConsumeContainer = () => {
                                     rows={inventoryRow}
                                     items={playerInventory.map((item, i) => ({ ...item, id: i }))}
                                     money={-1}
+                                    wallet={-1}
+                                    keychain={-1}
                                 />
                             </ContainerWrapper>
                         </div>
