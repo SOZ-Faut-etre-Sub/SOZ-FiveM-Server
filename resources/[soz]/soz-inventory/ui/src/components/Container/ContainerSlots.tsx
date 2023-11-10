@@ -9,8 +9,8 @@ type Props = {
     columns?: number;
     rows: number;
     money?: number;
-    wallet?:boolean;
-    keychain?:boolean;
+    wallet?:number;
+    keychain?:number;
     items: (InventoryItem & {id: number})[]
     action?: (action: string, item: InventoryItem, shortcut: number) => void;
 }
@@ -58,7 +58,7 @@ export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows,
                         <Draggable
                             id={`${id}_drag_wallet`}
                             containerName={id}
-                            wallet
+                            wallet={wallet}
                             interactAction={action}
                             key={0}
                             undraggable
@@ -70,7 +70,7 @@ export const ContainerSlots: FunctionComponent<Props> = ({id, columns = 5, rows,
                         <Draggable
                             id={`${id}_drag_keychain`}
                             containerName={id}
-                            keychain
+                            keychain={keychain}
                             interactAction={action}
                             key={0}
                             undraggable

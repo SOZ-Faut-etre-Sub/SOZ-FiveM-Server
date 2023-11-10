@@ -29,8 +29,8 @@ export const WalletContainer = () => {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(event.active.data.current.item)
-        })
-    }, [closeMenu]);
+        }).then()
+    }, []);
 
     const interactAction = useCallback(
         (action: string, item: InventoryItem, shortcut: number) => {
@@ -40,9 +40,9 @@ export const WalletContainer = () => {
                     "Content-Type": "application/json; charset=UTF-8",
                 },
                 body: JSON.stringify({ ...item, shortcut }),
-            }).then(() => closeNUI(() => closeMenu()));
+            }).then();
         },
-        [closeMenu]
+        []
     );
     
     const onMessageReceived = useCallback((event: MessageEvent) => {

@@ -333,6 +333,8 @@ export const StorageContainer = () => {
                             id='player'
                             rows={playerInventoryRow}
                             money={playerMoney}
+                            wallet={-1}
+                            keychain={-1}
                             items={playerInventory.items.map((item, i) => ({ ...item, id: i }))}
                         />
                     </ContainerWrapper>
