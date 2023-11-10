@@ -56,6 +56,25 @@ export class VehicleMenuProvider {
         return true;
     }
 
+    @OnNuiEvent<boolean, boolean>(NuiEvent.VehicleSetNeonStatus)
+    async setNeonStatus(neonLightsEnabled: boolean) {
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        if (!vehicle) {
+            return false;
+        }
+
+        const state = await this.vehicleStateService.getVehicleState(vehicle).then(data => {
+            return data;
+        });
+
+        const neonLightsStatus = neonLightsEnabled;
+        this.vehicleStateService.updateVehicleState(vehicle, { neonLightsStatus }, false);
+
+        DisableVehicleNeonLights(vehicle, state.neonLightsStatus);
+        return true;
+    }
+
     @Command('vehiclelimitersetter', {
         description: 'Activer / Désactiver le limiteur',
         keys: [{ mapper: 'keyboard', key: 'slash' }],
@@ -295,6 +314,19 @@ export class VehicleMenuProvider {
             NetworkGetNetworkIdFromEntity(vehicle)
         );
 
+        const hasNeon = () => {
+            if (
+                IsVehicleNeonLightEnabled(vehicle, 0) ||
+                IsVehicleNeonLightEnabled(vehicle, 1) ||
+                IsVehicleNeonLightEnabled(vehicle, 2) ||
+                IsVehicleNeonLightEnabled(vehicle, 3)
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
         this.nuiMenu.openMenu<MenuType.Vehicle>(MenuType.Vehicle, {
             isDriver,
             engineOn: GetIsVehicleEngineRunning(vehicle),
@@ -309,6 +341,8 @@ export class VehicleMenuProvider {
             policeLocator: vehicleState.policeLocatorEnabled,
             onDutyNg: pitstop[0],
             pitstopPrice: pitstop[1],
+            neonLightsStatus: vehicleState.neonLightsStatus,
+            hasNeon: hasNeon(),
         });
     }
 }
