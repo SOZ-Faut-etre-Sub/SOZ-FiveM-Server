@@ -89,6 +89,10 @@ export class PlayerMenuProvider {
         });
     }
 
+    @Command('openPlayerKeyInventory', {
+        description: 'Ouvrir le trousseau de clés',
+        keys: [{ mapper: 'keyboard', key: '' }],
+    })
     @OnNuiEvent(NuiEvent.PlayerMenuOpenKeys)
     public async openKeys() {
         TriggerServerEvent(ServerEvent.VEHICLE_OPEN_KEYS);
