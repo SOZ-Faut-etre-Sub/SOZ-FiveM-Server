@@ -8,7 +8,7 @@ export class TowRopeRepository extends Repository<RepositoryType.TowRope> {
 
     public delete(id: string): void {
         const rope = this.find(id);
-        if (rope.ropeClientId) {
+        if (rope && rope.ropeClientId) {
             DeleteRope(rope.ropeClientId);
         }
 
