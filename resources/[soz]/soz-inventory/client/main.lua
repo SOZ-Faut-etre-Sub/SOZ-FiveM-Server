@@ -80,6 +80,11 @@ function getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
 end
 
 RegisterNUICallback("transfertItem", function(data, cb)
+    if not data then
+        -- Should not happen but logs show the opposite :sad:
+        cb({})
+    end
+
     local amount = data.item.amount
     local keyModifier = data.keyModifier
     local targetMaxWeight = tonumber(data.targetMaxWeight)
@@ -90,6 +95,7 @@ RegisterNUICallback("transfertItem", function(data, cb)
     amount = getAmountFromShortcutModifier(keyModifier, amount, maxAmount)
 
     if not amount or amount == 0 then
+        cb({})
         return
     end
 
@@ -128,6 +134,7 @@ RegisterNUICallback("sortItem", function(data, cb)
     amount = getAmountFromShortcutModifier(keyModifier, amount)
 
     if not amount or amount == 0 then
+        cb({})
         return
     end
 
