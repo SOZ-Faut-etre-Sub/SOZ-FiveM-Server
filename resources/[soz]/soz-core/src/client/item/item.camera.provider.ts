@@ -291,4 +291,8 @@ export class ItemCameraProvider {
         HideHudComponentThisFrame(18);
         HideHudComponentThisFrame(19);
     }
+
+    public isCamActive() {
+        return this.currentAnimation != null;
+    }
 }
