@@ -349,6 +349,10 @@ export class FDFFieldProvider {
         trunkType: string
     ) {
         const crop = this.crops.get(id);
+        if (!crop) {
+            return FDFHarvestStatus.UNKNOW_CROP;
+        }
+
         await this.inventoryManager.getOrCreateInventory(trunkType, trailerPlate, context);
         const nbItem = FDFCropConfig[crop.type].harvestCount;
         const { success } = this.inventoryManager.addItemToInventoryNotPlayer(

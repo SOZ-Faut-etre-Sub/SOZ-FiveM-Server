@@ -36,6 +36,7 @@ export enum FDFHarvestStatus {
     INVENTORY_FULL = 'INVENTORY_FULL',
     SUCCESS = 'SUCCESS',
     CROP_NOT_READY = 'CROP_NOT_READY',
+    UNKNOW_CROP = 'UNKNOW_CROP',
 }
 export enum FDFPlowStatus {
     WAITING = 'WAITING',
