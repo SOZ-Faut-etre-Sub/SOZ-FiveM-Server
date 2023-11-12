@@ -4311,7 +4311,7 @@ QBShared.Items = {
         ['shouldClose'] = true,
         ['combinable'] = nil,
         ['description'] = "Bienvenue à San Andreas ! N'hésitez pas à aller voir MANDATORY, le Gouvernement ou les Forces de l'ordre afin qu'ils t'initient à la vie de notre merveilleux État.",
-        ['illustrator'] = '.Kutz',
+        ['illustrator'] = '.Moonlight',
     },
     ['health_book'] = {
         ['name'] = 'health_book',
