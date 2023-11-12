@@ -58,8 +58,6 @@ RegisterNUICallback("player/giveAllKeysToTarget", function(data, cb)
         for _, key in pairs(data) do
             if key.target == "vehicle_key" then
                 TriggerServerEvent("soz-core:server:vehicle:give-key", key.plate, GetPlayerServerId(player))
-            elseif key.target == "apartment_access" then
-                TriggerServerEvent("housing:server:GiveTemporaryAccess", key.propertyId, key.apartmentId, GetPlayerServerId(player))
             end
         end
     else
