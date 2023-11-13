@@ -179,6 +179,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata['criminal_talents'] = PlayerData.metadata['criminal_talents'] or {}
     PlayerData.metadata['criminal_state'] = PlayerData.metadata['criminal_state'] or 0
     PlayerData.metadata['criminal_reputation'] = PlayerData.metadata['criminal_reputation'] or 0
+    PlayerData.metadata['criminal_lastaction'] = PlayerData.metadata['criminal_lastaction'] or 0
     PlayerData.metadata['drugs_skills'] = PlayerData.metadata['drugs_skills'] or {}
     PlayerData.metadata['drugs_heavy_contract_date'] = PlayerData.metadata['drugs_heavy_contract_date'] or 0
 

@@ -25,6 +25,7 @@ export enum RpcServerEvent {
     BENNYS_ORDER_VEHICLE = 'soz-core:server:job:bennys:order-vehicle',
 
     CRIMI_CAN_USE_CLOAKROOM = 'soz-core:server:crimi:can-use-cloakroom',
+    CRIMI_IS_NAKED = 'soz-core:server:crimi:is-naked',
 
     DRIVING_SCHOOL_SPAWN_VEHICLE = 'soz-core:server:driving-school:spawn-vehicle',
     DRIVING_SCHOOL_CHECK_REMAINING_SLOTS = 'soz-core:server:driving-school:check-vehicle-slots',
@@ -125,6 +126,8 @@ export enum RpcServerEvent {
     POLICE_GET_VEHICLE_OWNER = 'soz-core:server:police:get-vehicule-owner',
     POLICE_GET_MARKED_MONEY = 'soz-core:server:police:get-marked-money',
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
+    HUB_ENTRY_FETCH_ALL = 'soz-core:server:hub:fetch-all',
+    HUB_ENTRY_FETCH_ACTIVE = 'soz-core:server:hub:fetch-active',
 
     BIN_IS_NOT_LOCKED = 'soz-core:server:bin:is-locked',
 
