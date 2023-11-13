@@ -42,13 +42,20 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     {player.charinfo.firstname} {player.charinfo.lastname}
                 </MenuTitle>
                 <MenuContent>
-                    {data.deguisement ? (
+                    {data.deguisement && (
                         <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuRemoveDeguisement)}>
                             Enlever le déguisement
                         </MenuItemButton>
-                    ) : (
+                    )}
+                    {data.naked && (
+                        <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuReDress)}>
+                            Se rhabiller
+                        </MenuItemButton>
+                    )}
+                    {!data.naked && !data.deguisement && (
                         <MenuItemSubMenuLink id="clothing">Gestion de la tenue</MenuItemSubMenuLink>
                     )}
+
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
                     {data.job.enabled && <MenuItemSubMenuLink id="job">Gestion de votre métier</MenuItemSubMenuLink>}

@@ -331,6 +331,7 @@ model player {
   fishes                  player_fish[]            @relation("fishes")
   sozedex_rewards         player_sozedex_rewards[] @relation("sozedex_rewards")
   race_scores             race_score[]             @relation("race_scores")
+  criminal_actions        criminal_action[]       @relation("criminal_actions")
 
   @@index([id], map: "id")
   @@index([last_updated], map: "last_updated")
@@ -729,4 +730,20 @@ model fdf_crops {
 model pitstop_price {
   category        String @id
   price           Int    @db.Int
+}
+
+model criminal_action {
+  id          Int        @id @default(autoincrement())
+  player      player     @relation(fields: [citizenid], references: [citizenid], onDelete: Cascade, map: "FK_criminal_actions_player", name: "criminal_actions")
+  citizenid   String     @db.VarChar(50)
+  date        DateTime   @default(now()) @db.Timestamp(0)
+  type        String     @db.VarChar(50)
+  data        String     @db.VarChar(100)
+}
+
+model hub_entry {
+  id             Int        @id @default(autoincrement())
+  date           DateTime
+  lanternCoords  String     @db.VarChar(100)
+  exitCoords     String     @db.VarChar(100)
 }

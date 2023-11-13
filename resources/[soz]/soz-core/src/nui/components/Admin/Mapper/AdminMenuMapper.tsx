@@ -44,6 +44,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
         fetchNui(NuiEvent.DrugAdminMenuOpen);
     };
 
+    const onHubEntryAdminMenuOpen = () => {
+        fetchNui(NuiEvent.HubEntryAdminMenuOpen);
+    };
+
     if (!data) {
         return null;
     }
@@ -73,6 +77,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     <MenuItemButton onConfirm={onDrugAdminMenuOpen}>💊 Drogue</MenuItemButton>
                     <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
                     <MenuItemSubMenuLink id="zones">🗺️ Gestion des zones</MenuItemSubMenuLink>
+                    <MenuItemButton onConfirm={onHubEntryAdminMenuOpen}>[🕯] Lanterne</MenuItemButton>
                 </MenuContent>
             </MainMenu>
             <SubMenu id="objects">

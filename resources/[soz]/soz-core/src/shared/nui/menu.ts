@@ -101,6 +101,7 @@ export enum MenuType {
     PoliceJobFines = 'police_job_fines',
     PitStopPriceMenu = 'pitstop_price',
     Promote = 'promote',
+    HubEntryAdmin = 'hub_entry_admin',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {

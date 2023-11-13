@@ -147,6 +147,7 @@ export enum NuiEvent {
     PlayerMenuJobGradeUpdateWeight = 'soz-core:nui:player:menu:job-grade-update-weight',
     PlayerMenuJobGradePermissionUpdate = 'soz-core:nui:player:menu:job-grade-permission-update',
     PlayerMenuRemoveDeguisement = 'soz-core:nui:player:menu:cloth-remove-deguisement',
+    PlayerMenuReDress = 'soz-core:nui:player:menu:cloth-redress',
     PlayerMenuVoipReset = 'soz-core:nui:player:menu:voip-reset',
     PlayerMenuHudSetArachnophobe = 'soz-core:nui:player:menu:arachnophobe',
     SetFocusInput = 'soz-core:nui:set-focus-input',
@@ -321,4 +322,10 @@ export enum NuiEvent {
     CraftCancel = 'soz-core:client:craft:cancel',
 
     DmcToggleBlip = 'soz-core:client:job:dmc:toggle-blip',
+
+    HubEntryDisplay = 'soz-core:client:hub:entry-display',
+    HubEntryFetch = 'soz-core:client:hub:entry-fetch',
+    HubEntryAdd = 'soz-core:client:hub:entry-add',
+    HubEntryUpdate = 'soz-core:client:hub:entry-update',
+    HubEntryAdminMenuOpen = 'soz-core:client:hub:entry-open-menu',
 }

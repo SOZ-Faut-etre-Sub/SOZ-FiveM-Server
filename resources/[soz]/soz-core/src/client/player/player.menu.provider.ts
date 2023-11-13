@@ -84,6 +84,7 @@ export class PlayerMenuProvider {
             shortcuts: this.playerAnimationProvider.getShortcuts(),
             job: this.jobMenuProvider.getJobMenuData(),
             deguisement: this.playerService.hasDeguisement(),
+            naked: this.playerService.getPlayer().cloth_config.Config.Naked,
             halloween: isFeatureEnabled(Feature.Halloween),
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
         });
@@ -184,25 +185,7 @@ export class PlayerMenuProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuRemoveDeguisement)
     public async removeDeguisement() {
-        const progress = await this.progressService.progress(
-            'switch_clothes',
-            "Changement d'habits...",
-            5000,
-            {
-                name: 'male_shower_towel_dry_to_get_dressed',
-                dictionary: 'anim@mp_yacht@shower@male@',
-                options: {
-                    cancellable: false,
-                    enablePlayerControl: false,
-                },
-            },
-            {
-                useAnimationService: true,
-                disableCombat: true,
-                disableMovement: true,
-                canCancel: false,
-            }
-        );
+        const progress = await this.playerWardrobe.waitProgress(false);
 
         if (!progress.completed) {
             return;
@@ -213,5 +196,20 @@ export class PlayerMenuProvider {
         TriggerEvent('soz-character:Client:ApplyCurrent');
         this.playerService.setDeguisement(false);
         this.menu.closeMenu();
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuReDress)
+    public async reDrees() {
+        const progress = await this.playerWardrobe.waitProgress(false);
+
+        if (!progress.completed) {
+            return;
+        }
+
+        if (!progress.completed) {
+            return;
+        }
+
+        TriggerServerEvent('soz-character:server:UpdateClothConfig', 'Naked', false);
     }
 }

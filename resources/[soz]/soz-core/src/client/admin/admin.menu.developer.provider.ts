@@ -132,6 +132,11 @@ export class AdminMenuDeveloperProvider {
                     }
                 );
             }
+            this.draw.drawText(`~w~fuel :~b~ ${condition.fuelLevel.toFixed(2)}`, [0.8, 0.002], {
+                font: Font.ChaletComprimeCologne,
+                size: 0.4,
+                color: [66, 182, 245, 255],
+            });
         }
     }
 
